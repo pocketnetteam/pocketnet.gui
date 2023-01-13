@@ -273,7 +273,7 @@ successCheck = function (p) {
 
 	var render = function () {
 
-		var h = '<div class="successCheckWrapper table"><div><div class="chw">\
+		var h = '<div class="successCheckWrapper "><div><div class="chw">\
 		   <svg viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">\
 			   <path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#a4a4a4" fill="transparent"/>\
 		   </svg>\
@@ -284,18 +284,26 @@ successCheck = function (p) {
 			"html": h
 		});
 
-		el.append(ch);
+		window.requestAnimationFrame(() => {
+			el.append(ch);
+			ch.find('svg')[0].classList.add('animate')
 
-		ch.fadeIn(300);
-
-		ch.find('svg')[0].classList.add('animate')
-
+			window.requestAnimationFrame(() => {
+				ch.addClass('active')
+			})
+		})
 
 		setTimeout(function () {
-			ch.fadeOut(300);
+
+			window.requestAnimationFrame(() => {
+				ch.removeClass('active')
+			})
 
 			setTimeout(function () {
-				ch.remove()
+				window.requestAnimationFrame(() => {
+					ch.remove()
+				})
+				
 			}, 300)
 
 		}, 900)

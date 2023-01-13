@@ -132,8 +132,6 @@ var pSDK = function ({ app, api, actions }) {
 
         if (!dbname || !dbmeta[dbname]) return Promise.resolve()
 
-        console.log('clearfromdb', dbname, ids)
-
         if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
             return id + '_' + app.user.address.value
         })
@@ -500,7 +498,10 @@ var pSDK = function ({ app, api, actions }) {
 
         var cacheId = type + ":" + (helpId || "") + ":" + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
 
-        if (extendCache[cacheId]) return extendCache[cacheId]
+        if (extendCache[cacheId]) {
+
+            return extendCache[cacheId]
+        }
 
         var extendedObject = null
 
@@ -530,6 +531,9 @@ var pSDK = function ({ app, api, actions }) {
                     if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
+
+
+
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
                         if (applied) extendedObject = applied
@@ -539,6 +543,7 @@ var pSDK = function ({ app, api, actions }) {
             })
 
         })
+
 
         extendCache[cacheId] = extendedObject || object
 
@@ -698,8 +703,6 @@ var pSDK = function ({ app, api, actions }) {
 
         listener: function (exp, address, status) {
 
-            console.log("LISTEN", exp, address, status)
-
             if (status == 'completed') {
 
                 objects['userInfoFull'][address] = this.applyAction(objects['userInfoFull'][address], exp)
@@ -710,8 +713,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         applyAction: function (object, exp) {
-
-            console.log("applyAction")
 
             if (!object) {
 
@@ -1178,13 +1179,39 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
                 objects['comment'][exp.comment.v] = this.applyAction(objects['comment'][exp.comment.v], exp)
+
+                
+                var result = {
+                    key : exp.comment.v,
+                    data : {
+                        cmntid : exp.comment.v,
+                        myScore : Number(exp.value.v)
+                    }
+                }
+
+                settodb('myScore', [result]).then(() => {
+                    console.log("SUCCESS")
+                }).catch(e => {
+                    console.error(e)
+                })
             }
         },
         applyAction: function (comment, exp) {
 
             if (comment) {
-                if (comment.id == exp.comment.v && exp.actor == app.user.address.value) { /// for me
-                    comment.myScore = exp.value.v
+                if (comment.id == exp.comment.v && exp.actor == app.user.address.value) {
+                    
+                    var v = Number(exp.value.v)
+                    /// for me
+                    comment.myScore = v
+                    
+                    if(v > 0){
+                        comment.scoreUp = (comment.scoreUp || 0) + 1
+                    }
+
+                    else{
+                        comment.scoreDown = (comment.scoreDown || 0) + 1
+                    }
                 }
             }
 
@@ -1780,14 +1807,31 @@ var pSDK = function ({ app, api, actions }) {
     self.upvoteShare = {
         listener: function (exp, address, status) {
             if (status == 'completed') {
-                objects['share'][exp.share] = this.applyAction(objects['share'][exp.share], exp)
+                objects['share'][exp.share.v] = this.applyAction(objects['share'][exp.share.v], exp)
+
+                var result = {
+                    key : exp.share.v,
+                    data : {
+                        posttxid : exp.share.v,
+                        value : exp.value.v
+                    }
+                }
+
+
+                //// long like cache
+
+                settodb('myScore', [result]).then(() => {
+                    console.log("SUCCESS")
+                }).catch(e => {
+                    console.error(e)
+                })
             }
         },
         applyAction: function (share, exp) {
 
             if (share) {
-                if (share.txid == exp.share && exp.actor == app.user.address.value) { /// for me
-                    share.myVal = Number(exp.value)
+                if (share.txid == exp.share.v && exp.actor == app.user.address.value) { /// for me
+                    share.myVal = Number(exp.value.v)
                 }
             }
 
@@ -1805,6 +1849,7 @@ var pSDK = function ({ app, api, actions }) {
             var ids = [].concat(shareIds, commentIds)
 
             return loadList('myScore', ids, (ids) => {
+
 
                 var sIds = _.filter(ids, (id) => {
                     return _.indexOf(shareIds, id) > -1
@@ -1836,6 +1881,9 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         transform: function ({ key, data }) {
+
+            console.log("TRANSFORM LIKES", data)
+
             if (data.posttxid) {
                 if (objects.share[data.posttxid]) {
                     objects.share[data.posttxid].myVal = Number(data.value)
@@ -1995,8 +2043,6 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(keys, (k) => {
 
-                console.log('cleardb', k, key)
-
                 if (key) {
                     clearfromdb(k, [key]).catch(e => {
                         console.error(e)
@@ -2038,6 +2084,7 @@ var pSDK = function ({ app, api, actions }) {
     self.actions.on('actionFiltered', ({ action, address, status }) => {
 
         extendCache = {}
+
         var listener = self[action.object.type]?.listener
 
         if (!listener) return

@@ -2571,19 +2571,22 @@ input[type=radio].radio:checked + label {
     right : 0;
     top : 0;
     bottom : 0;
-    display: none;
-    width : 78px;
-    height : 78px;
+    //display: none;
+    opacity: 0;
     margin : auto;
     z-index: 20000;
+    contain: strict;
+    .transition(0.3s, opacity);
 
     .successCheckWrapper{
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         >div{
-            vertical-align: middle;
-            text-align: center;
+            
 
             .chw{
                 margin : 0 auto;
@@ -2596,6 +2599,10 @@ input[type=radio].radio:checked + label {
                 .shadowSmaller();
             }
         }
+    }
+
+    &.active{
+        opacity: 1;
     }
 
     .text{

@@ -2231,19 +2231,21 @@ input[type=radio].radio:checked + label {
   right: 0;
   top: 0;
   bottom: 0;
-  display: none;
-  width: 78px;
-  height: 78px;
+  opacity: 0;
   margin: auto;
   z-index: 20000;
+  contain: strict;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 .successCheck .successCheckWrapper {
   width: 100%;
   height: 100%;
-}
-.successCheck .successCheckWrapper > div {
-  vertical-align: middle;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .successCheck .successCheckWrapper > div .chw {
   margin: 0 auto;
@@ -2254,6 +2256,9 @@ input[type=radio].radio:checked + label {
   -webkit-backdrop-filter: blur(14px);
   padding: 1em;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.successCheck.active {
+  opacity: 1;
 }
 .successCheck .text {
   margin-top: 0.5em;

@@ -2689,7 +2689,7 @@ pShare = function(){
 		upvoteShare.value.set(value);
 		upvoteShare.address.set(self.address || '')
 
-		self.myVal = Number(value);		
+		//self.myVal = Number(value);		
 
 		return upvoteShare;
 	}

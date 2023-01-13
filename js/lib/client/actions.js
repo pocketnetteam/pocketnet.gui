@@ -90,7 +90,9 @@ var ActionOptions = {
 
             destination : function(action){
                 return []
-            }
+            },
+
+            burn : true
         },
 
         comment : {
@@ -235,8 +237,38 @@ var Action = function(account, object, priority){
         if(value == 0) value = 0.000000001
 
         var added = 0
+        var addedUnspents = {}
 
-        return _.filter(_.sortBy(unspents, (u) => {
+        while (added < value && unspents.length){
+            var diff = value - added
+
+            console.log('diff', diff)
+
+            console.log('unspents', unspents)
+
+            var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
+
+                return Math.abs(u.amount - diff)
+    
+            }), 5)
+
+            var unspent = iterationUnspents[rand(0, iterationUnspents.length - 1)]
+
+            console.log('unspent', unspent)
+
+            addedUnspents[unspent.txid + ':' + unspent.vout] = unspent
+            added += unspent.amount
+
+            unspents = _.filter(unspents, (unspent) => {
+                return !addedUnspents[unspent.txid + ':' + unspent.vout]
+            })
+        }
+
+        console.log('addedUnspents', addedUnspents, _.toArray(addedUnspents))
+
+        return _.toArray(addedUnspents)
+
+        /*return _.filter(_.sortBy(unspents, (u) => {
 
             return Math.abs(u.amount - value)
 
@@ -247,7 +279,7 @@ var Action = function(account, object, priority){
                 return true
             }
             
-        })
+        })*/
     }
 
     var buildTransaction = function({inputs, outputs, opreturnData}){
@@ -322,11 +354,7 @@ var Action = function(account, object, priority){
                 await account.loadUnspents().then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
-
-                     
-                            return Promise.reject('actions_noinputs')
-
-
+                        return Promise.reject('actions_noinputs')
                     }
 
                     clearUnspents = filterUnspents(clearUnspents)
@@ -337,7 +365,6 @@ var Action = function(account, object, priority){
     
                     unspents = account.getActualUnspents(true)
 
-                    console.log("unspent2s", unspents, account.address)
         
                 })
             }
@@ -356,7 +383,11 @@ var Action = function(account, object, priority){
             return Promise.reject('actions_noinputs_wait')
         }
 
-        var amount = (options.amount ? options.amount(self) : 0) + (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
+        var amount = (options.amount ? options.amount(self) : 0) 
+
+        if(!options.burn){
+            amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
+        }
 
         var inputs = getBestInputs(unspents, amount)
 
@@ -406,8 +437,6 @@ var Action = function(account, object, priority){
             _.each(options.destination(self, account), (d) => {
                 outputs.push(_.clone(d))
             })
-
-            
         }
         else{
 
@@ -449,10 +478,13 @@ var Action = function(account, object, priority){
         }, 0)
 
         if (totalOutputAmount < totalInputAmount){
+
             outputs.push({
                 address : changeAddresses[0],
-                amount : totalInputAmount - totalOutputAmount
+                amount : totalInputAmount - totalOutputAmount - (options.burn ? amount : 0)
             })
+
+            
         }
 
         var tx = null

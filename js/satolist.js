@@ -336,6 +336,7 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
+
         var listener = listeners[action.object.type]
 
         if(!listener) return
@@ -348,6 +349,7 @@ Platform = function (app, listofnodes) {
 
             window.requestAnimationFrame(() => {
                 _.each(self.actionListeners, (c) => {
+
                     c({type : action.object.type, alias, status})
                 })
             })
@@ -3119,7 +3121,7 @@ Platform = function (app, listofnodes) {
 
             self.app.actions.playingvideo(null)
             self.app.actions.pipwindow(p)
-            self.matrixchat.core.backtoapp()
+            self.matrixchat.backtoapp()
         },
 
         popup : function(key, always, data){
@@ -13677,6 +13679,9 @@ Platform = function (app, listofnodes) {
                         if(clbk) clbk()
                     }
                     else{
+
+                        console.log('shareIds, commentIds', shareIds, commentIds)
+
                         self.psdk.myScore.load(shareIds, commentIds).finally(() => {
                             if(clbk) clbk()
                         })

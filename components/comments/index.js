@@ -17,7 +17,7 @@ var comments = (function(){
 		var share = null
 		var authblock = false;
 
-		var paginationcount = 10;
+		var paginationcount = 25;
 
 		var errors = {
 			content : self.app.localization.e('e13029'),
@@ -75,12 +75,14 @@ var comments = (function(){
 				}
 
 				var cs = {
-					scoreUp : (comment.scoreUp || 0) + ((temp && value > 0) ? 1 : 0),
-					scoreDown : (comment.scoreDown || 0) + ((temp && value < 0) ? 1 : 0)
+					scoreUp : (comment.scoreUp || 0),
+					scoreDown : (comment.scoreDown || 0)
 				}
 
-				d_el.find('.scoreUp .commentScore').html(comment.scoreUp ? compressedNumber(cs.scoreUp, 1) : '1')
-				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '1')
+				console.log("UPVOTE COMMENT ", comment)
+
+				d_el.find('.scoreUp .commentScore').html(cs.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
+				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '')
 			},
 
 			post : function(comment, optype){
@@ -2648,7 +2650,7 @@ var comments = (function(){
 
 					if (comment){
 						if(comment.postid == txid){
-							clbks.upvote(null, comment, alias.value.v, alias.actor)
+							clbks.upvote(null, self.psdk.comment.get(alias.comment.v), alias.value.v, alias.actor)
 						}
 					}
 

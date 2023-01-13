@@ -723,7 +723,7 @@ var lenta = (function(){
 						el.c.addClass('networkError')
 
 						if (self.app.errors.connectionRs()){
-							self.iclbks.lenta = actions.loadmore
+							self.iclbks[mid] = actions.loadmore
 						}
 
 						return;
@@ -3296,9 +3296,14 @@ var lenta = (function(){
 					return
 				}
 
+				console.log('mystars shares', shares)
+
 				var _shares = _.filter(shares, function(s){
 					if(typeof s.myVal == 'undefined'){
 						return true;
+					}
+					else{
+						console.log("S", s)
 					}
 				})
 
@@ -3310,8 +3315,10 @@ var lenta = (function(){
 
 					_.each(shares, function(share){
 
-						if (share.myVal)
+						if (share.myVal){
 							renders.stars(share)
+
+						}
 
 					})
 
@@ -4689,7 +4696,7 @@ var lenta = (function(){
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 
-				delete self.iclbks.lenta
+				delete self.iclbks[mid]
 
 				if (self.app.platform.loadingWithErrors){
 					self.app.platform.appstate(function(){
@@ -4754,7 +4761,7 @@ var lenta = (function(){
 
 				if(!essenseData.txids){
 
-					self.app.platform.matrixchat.clbks.SHOWING.lenta = function(v){
+					self.app.platform.matrixchat.clbks.SHOWING[mid] = function(v){
 						if(v){
 							_.each(players, function(player){
 								if (player.error || !player.p) return
@@ -4768,131 +4775,8 @@ var lenta = (function(){
 							
 						}
 					}
-					/*
-					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-						
-						if (share.txidEdit){		
-													
-							delete initedcommentes[share.txidEdit]
-							delete shareInitedMap[share.txidEdit],
-							delete shareInitingMap[share.txidEdit]
 	
-							
-							var f = replaceEqual(sharesInview, {
-								txid : share.txidEdit
-							}, share)
-	
-							actions.destroyVideo(share)
-	
-							if (f){
-	
-								renders.shares([share], function(){
-									renders.sharesInview([share], function(){
-										
-									})
-								}, {
-									inner : replaceWith,
-									el : el.shares.find('#' + share.txidEdit),
-	
-									ignoresw : true,
-								})
-	
-							}
-						}
-						else{
-							
-
-							if (essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
-
-								actions.destroyVideo(share)
-
-								renders.shares([share], function(){
-									renders.sharesInview([share], function(){
-										
-									})
-								}, {
-									inner : prepend
-								})
-						}
-	
-						
-					}
-	
-					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
-						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
-	
-						if(data.temp){
-	
-							var s = _.find(sharesInview, function(sh){
-								if(sh.txid == data.temp.txid) return true
-							})
-	
-							if (s){
-	
-	
-								s.temp = false
-								
-	
-								s.scnt = "0"
-								s.score = "0"
-								s.myVal = 0
-	
-								s.time = new Date()
-	
-								
-								actions.destroyShare(s)
-
-								if (s.txidEdit){
-
-									if (el.share[s.txid]){
-
-										el.share[s.txidEdit] = el.share[s.txid]
-										el.share[s.txidEdit].attr('id', s.txidEdit)
-
-										delete el.share[s.txid]
-									}
-
-									s.txid = s.txidEdit
-									delete s.txidEdit 
-								}
-	
-								renders.sharesInview([s], function(){
-									
-								})
-	
-								
-							}
-	
-						}
-						
-					}
-					*/
-					/*self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
-						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
-	
-						if(data.txid){
-							var s = _.find(sharesInview, function(sh){
-								if(sh.txid == data.txid) return true
-							})
-	
-							if (s){
-
-								s.relay = false
-								s.checkSend = false
-								s.temp = true
-								
-								actions.destroyShare(s)
-	
-								renders.sharesInview([s], function(){
-									
-								})
-								
-							}
-	
-						}
-					}*/
-	
-					self.app.platform.ws.messages.event.clbks.lenta = function(data){
+					self.app.platform.ws.messages.event.clbks[mid] = function(data){
 	
 						if(data.mesType == 'upvoteShare' && data.share){
 	
@@ -4912,11 +4796,17 @@ var lenta = (function(){
 						
 					}
 
-					self.app.platform.actionListeners.lenta = function({type, alias, status}){
+
+					self.app.platform.actionListeners[mid] = function({type, alias, status}){
+
 
 						if(type == 'upvoteShare'){
 
-							var share = _.find(sharesInview, (share) => share.txid == alias.share)
+							var share = _.find(sharesInview, (share) => share.txid == alias.share.v) ? self.psdk.share.get(alias.share.v) : null
+
+
+							console.log('upvoteShare share', share)
+
 
 							if (share){
 								renders.stars(share)
@@ -4974,7 +4864,7 @@ var lenta = (function(){
 					}
 				}
 
-				self.app.platform.clbks._focus.lenta = function(time){
+				self.app.platform.clbks._focus[mid] = function(time){
 
 					if(self.app.mobileview && !fullscreenvideoShowed){
 						videosVolume = 0
@@ -4985,8 +4875,6 @@ var lenta = (function(){
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
 						if(!self.app.errors.connection()){
-							/*actions.loadprev()
-							self.app.actions.scroll(0)*/
 						}
 						
 					}
@@ -4994,12 +4882,12 @@ var lenta = (function(){
 			
 				if(!essenseData.txids){
 
-					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
-					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = actions.newmaterials
+					self.app.platform.ws.messages["newblocks"].clbks[mid] = 
+					self.app.platform.ws.messages["new block"].clbks[mid] = actions.newmaterials
 
-					self.app.platform.sdk.categories.clbks.excluded.lenta =
-					self.app.platform.sdk.categories.clbks.tags.lenta =
-					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
+					self.app.platform.sdk.categories.clbks.excluded[mid] =
+					self.app.platform.sdk.categories.clbks.tags[mid] =
+					self.app.platform.sdk.categories.clbks.selected[mid] = function(data){
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
 							actions.rebuilddelay()
@@ -5009,7 +4897,7 @@ var lenta = (function(){
 
 				}
 
-				self.app.platform.ws.messages.comment.clbks.lenta = function(data){
+				/*self.app.platform.ws.messages.comment.clbks.lenta = function(data){
 
 
 					if(shareInitedMap[data.posttxid]){
@@ -5020,17 +4908,17 @@ var lenta = (function(){
 
 					
 					
-				}
+				}*/
 
-				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
+				self.app.platform.clbks.api.actions.anysubscribe[mid] = actions.subscribeunsubscribeclbk
 
-				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
+				self.app.platform.clbks.api.actions.blocking[mid] = function(address){
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.addClass('blocking');
 						actions.stopPlayers()
 				}
 
-				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
+				self.app.platform.clbks.api.actions.unblocking[mid] = function(address){
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.removeClass('blocking');
 						actions.stopPlayers()
@@ -5128,7 +5016,7 @@ var lenta = (function(){
 				
 					//el.c.removeClass('loading')
 
-					self.iclbks.lenta = function(){
+					self.iclbks[mid] = function(){
 						make(null, _p)
 					}
 
@@ -5475,28 +5363,27 @@ var lenta = (function(){
 				initedcommentes = {}
 
 				delete self.app.events.resize[mid]
-				delete self.iclbks.lenta
+				delete self.iclbks[mid]
 
 				if(!essenseData.openapi && !essenseData.second && !essenseData.txids){
 
-					delete self.app.platform.sdk.categories.clbks.excluded.lenta
-					delete self.app.platform.sdk.categories.clbks.tags.lenta
-					delete self.app.platform.sdk.categories.clbks.selected.lenta
+					delete self.app.platform.sdk.categories.clbks.excluded[mid]
+					delete self.app.platform.sdk.categories.clbks.tags[mid]
+					delete self.app.platform.sdk.categories.clbks.selected[mid]
 
-					delete self.app.platform.ws.messages.comment.clbks.lenta
-					delete self.app.platform.sdk.node.shares.clbks.added.lenta
-					delete self.app.platform.ws.messages.transaction.clbks.temp
-					delete self.app.platform.ws.messages.event.clbks.lenta
+					delete self.app.platform.ws.messages.comment.clbks[mid]
+					delete self.app.platform.ws.messages.event.clbks[mid]
 
-					delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
+					delete self.app.platform.ws.messages["new block"].clbks[mid]
+					delete self.app.platform.ws.messages["newblocks"].clbks[mid]
 					
-					delete self.app.platform.clbks.api.actions.anysubscribe.lenta
+					delete self.app.platform.clbks.api.actions.anysubscribe[mid]
 
-					delete self.app.platform.clbks.api.actions.blocking.lenta
-					delete self.app.platform.clbks.api.actions.unblocking.lenta
+					delete self.app.platform.clbks.api.actions.blocking[mid]
+					delete self.app.platform.clbks.api.actions.unblocking[mid]
 
-					delete self.app.platform.clbks._focus.lenta
-					delete self.app.platform.matrixchat.clbks.SHOWING.lenta
+					delete self.app.platform.clbks._focus[mid]
+					delete self.app.platform.matrixchat.clbks.SHOWING[mid]
 				}
 
 				_.each(players, function(p){
@@ -5513,7 +5400,6 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
-					console.log("HERE")
 				}
 				
 
