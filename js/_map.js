@@ -112,6 +112,7 @@ __map =  {
 		{path : "js/module.js", babelify : true},
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
+		{path : "js/vendor/hex-captcha/js/captcha.js", babelify : true},
 		
 		{path : "js/image-uploader.js", babelify : true},
 		
@@ -434,15 +435,7 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 
-		relations : [
-			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
-			{src : 'js/validation.js',			   f : 'js'},
-			{src : 'js/vendor/hex-captcha/js/captcha.js', f : 'js'},
-			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
-				QRCode = require('./js/vendor/qr/qrcode.min.js')
-			}},	*/
-
-		],
+		
 		electronDontOpen : true
 	},
 
@@ -944,8 +937,6 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-			
-			{src : 'js/validation.js',			   f : 'js'},
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},				
 			
 		],
@@ -959,8 +950,6 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-		
-			{src : 'js/validation.js',			   f : 'js'},				
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
 			
 		]
@@ -1082,10 +1071,6 @@ __map =  {
 		href : "dust",
 		add : insertingfunc,
 
-		relations : [
-			{src : 'js/validation.js',			   f : 'js'},	
-		],
-
 		ignoreMinimize : true
 
 	},
@@ -1093,11 +1078,7 @@ __map =  {
 	testApi : {
 		uri : "testApi",
 		href : "testApi",
-		add : insertingfunc,
-
-		relations : [
-			{src : 'js/validation.js',			   f : 'js'},	
-		]
+		add : insertingfunc
 	},
 
 	commentBanner : {
