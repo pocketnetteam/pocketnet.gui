@@ -45,6 +45,7 @@ var leftpanel = (function(){
 
 				if (parameters().video) backlink = 'index?video=1'
 				if (parameters().read) backlink = 'index?read=1'
+				if (parameters().audio) backlink = 'index?audio=1'
 
 				self.shell({
 					name :  'currentsearch',

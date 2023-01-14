@@ -1467,10 +1467,11 @@ Share = function(lang){
 		if(!self.url.v) return
 
 		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
 
 		//if(meta.type) return true
 
-		if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube' && (!ch || ch.length <= 0 || ch[ch.length - 1] != 'audio')) return true
 	}
 
 	self.itisaudio = function(){
@@ -2240,8 +2241,9 @@ pShare = function(){
 		if(!self.url) return 
 
 		var meta = parseVideo(self.url)
+		var ch = self.url.replace('peertube://', '').split('/')
 
-		if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube' && (!ch || ch.length <= 0 || ch[ch.length - 1] != 'audio')) return true
 	}
 
 	self.itisaudio = function(){

@@ -903,6 +903,7 @@ _l.e13285 = "Ask before post from telegram"
 _l.e13286 = "Ask before send to telegram"
 _l.e13287 = "Send to telegram channel"
 _l.video = "Video"
+_l.audio = "Audio"
 _l.e13288 = "Main Widgets Page"
 _l.e13289 = "Integration with Telegram"
 
