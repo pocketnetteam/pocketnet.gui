@@ -29750,7 +29750,7 @@ Platform = function (app, listofnodes) {
 
     self.acceptterms = function(clbk){
 
-        if(window.cordova){
+        if(window.cordova && window.pocketnetstore){
             var key = 'acceptterms'
 
             var aterms = null
