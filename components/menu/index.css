@@ -696,6 +696,9 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+		.popupChatWrapper {
+			display: none;
+		}
   #menu {
     z-index: 4;
   }

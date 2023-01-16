@@ -124,7 +124,23 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 									<div class="item right onlyicon" events="openChatInPopup">
 							
 									 <div class="icon">
-									  <div class="icn">
+									  <div class="icn" style="position: relative;">
+										<div elementsid="eventschats" class="notificationsWrapper__count" events="chats">
+											<div class="amount" id="notificationsWrapper__count" style="
+												position: absolute;
+												right: -8px;
+												bottom: -8px;
+												background: rgba(0,163,247, 0.95);
+												box-shadow: 0 5px 7px -5px rgba(2, 18, 24, 0.4);
+												width: 16px; 
+												color: white;
+												border-radius: 50%;
+												font-size: 0.5em;
+												line-height: 16px;
+												display: none;
+												text-align: center;
+												justify-content: center;"></div>
+										</div>
 									   <i class="far fa-comment"></i>
 									  </div>
 									 </div>
@@ -133,14 +149,8 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 								   </div>
 
 								
-
-
-								<div elementsid="eventschats" class="item  chatwr" events="chats">
-									<div class="amount"></div>
-								</div>
 								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-									<div class="item  right onlyicon notifications" events="notifications">
-
+									<div class="item  right onlyicon notifications" events="notifications">										
 										<div class="icon">
 											<div class="icn">
 												<img src="img/christmas_bell.svg">
