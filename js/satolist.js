@@ -3237,8 +3237,19 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
 
             if (block){
-            
-                createComponent(address);
+                
+                            
+                try{
+                    const blockBanner =  JSON.parse(localStorage.blockBanner || '[]');
+                    if (blockBanner.indexOf(address) === -1){
+                        createComponent(address);
+                    }
+
+                }catch(e){
+                    
+                }
+
+                return;
 
             }
 

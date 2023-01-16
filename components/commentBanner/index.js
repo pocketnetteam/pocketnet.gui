@@ -8,22 +8,34 @@ const commentBanner = (function() {
 		let el, destroyDelay, address, block;
 
 		const actions = {
-			dontShowAgain() {
-				renders.closeBanner();
+			dontShowAgainBlock(){
+
+				renders.closeBanner(true);
+
+				const blockBanner = JSON.parse(localStorage.blockBanner || '[]');
+				blockBanner.push(address);
+
 				
+				try {
+					localStorage.setItem('blockBanner', JSON.stringify(blockBanner));
+				}
+				catch (e) { }
+			},
+
+			dontShowAgain() {
+
+				renders.closeBanner();
+
 				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
 				commentBanner.count = -1;
-
-				if (block){
-					el.c.closest('.share').removeClass('blurred');
-				}
 
 				try {
 					localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
 				}
 				catch (e) { }
-				
+			
 
+				
 			},
 			unsubscribe : function(address, clbk){
 
@@ -106,7 +118,12 @@ const commentBanner = (function() {
 			show() {
 				el.c.addClass('show')
 			},
-			closeBanner() {
+			closeBanner(block) {
+
+				if (block){
+					el.c.closest('.share').removeClass('blurred');
+				}
+				
 				el.c.removeClass('show');
 				destroyDelay = setTimeout(() => {
 					if (el.c) {
@@ -129,7 +146,8 @@ const commentBanner = (function() {
 
 		const initEvents = function() {
 
-			el.c.on('click', '.noShowAgain', actions.dontShowAgain)
+			el.c.on('click', '.noShowAgainComment', actions.dontShowAgain)
+			el.c.on('click', '.noShowAgainBlock', actions.dontShowAgainBlock)
 			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
 
 			el.c.on('click', '.subscribe', events.subscribe);
