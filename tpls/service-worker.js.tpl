@@ -118,4 +118,3 @@ async function onActivate(event) {
 
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
-self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
