@@ -1860,7 +1860,7 @@ var lenta = (function(){
 
 							topPreloader(100)
 
-							if (value === "5"){
+							if (value === "1"){
 
 								self.app.platform.ui.showCommentBanner(el.c.find('#' + obj.txid), (c) => {
 									bannerComment = c
@@ -4870,9 +4870,7 @@ var lenta = (function(){
 			if (isMobile()){
 
 				var onlongtouch; 
-				var timer;
-				var touchduration = 1000; 
-				var event = null;
+				var touchduration = 1000, timer, event; 
 				
 				function touchstart(e) {
 					event = e;
@@ -4892,30 +4890,12 @@ var lenta = (function(){
 	
 				onlongtouch = function() { 
 
-					new dialog({
-						html : self.app.localization.e('blockUserQ'),
-						btn1text :  self.app.localization.e('blockuser'),
-						btn2text : self.app.localization.e('ucancel') ,
+					var _el = $(event.target);
+					var id = $(event.target).closest('.share').attr('id');
 	
-						class : 'zindex',
-	
-						success : function(){
-	
-							self.app.mobile.vibration.small();
+					self.app.platform.api.metmenu(_el, id, actions);
 
-							var address = $(event.target).closest('.shareTable').attr('address');
-
-                            self.app.platform.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
-                                }
-                            })
-
-							event = null;
-	
-						}
-					})
-
+					event = null;
 					timer = null;
 				};
 	

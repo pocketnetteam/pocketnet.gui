@@ -687,7 +687,7 @@ var post = (function () {
 					
 				}
 
-				if (value === "4"){
+				if (value === "1"){
 
 					self.app.platform.ui.showCommentBanner(el.c, (c) => {
 						bannerComment = c
