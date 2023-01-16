@@ -680,9 +680,6 @@
   #lenta.horizontal.compact.mainvideo .shares .formeta {
     margin-left: 0.25em;
   }
-  #lenta.horizontal.compact .share .shareTable .metatable > div.metapanel .metapanelitem {
-    display: none;
-  }
   #lenta .loadprev.fxdp {
     position: fixed;
     left: 0;

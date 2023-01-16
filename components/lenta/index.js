@@ -4899,8 +4899,8 @@ var lenta = (function(){
 					timer = null;
 				};
 	
-				el.c.on('touchstart', '.opensviurl', touchstart)
-				el.c.on('touchend', '.opensviurl', touchend)
+				el.c.on('touchstart', '.anothercntswrk', touchstart)
+				el.c.on('touchend', '.anothercntswrk', touchend)
 				
 			} else {
 
