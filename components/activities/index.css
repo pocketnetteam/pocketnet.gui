@@ -1,3 +1,6 @@
+html [theme="black"] #activities {
+  background: rgb(var(--background-secondary-theme));
+}
 .container {
   min-height: 70vh;
   border-radius: 6px;
@@ -51,15 +54,6 @@
 .container .content {
   margin-top: 25px;
 }
-.container .content .empty {
-  width: 100%;
-  padding: 4em 0;
-  padding-bottom: 4em;
-  color: rgb(var(--neutral-grad-4));
-  text-align: center;
-  background: rgb(var(--background-total-theme));
-  border-radius: 12px;
-}
 .container .period {
   margin: 36px 0;
   background: rgb(var(--neutral-grad-1));
@@ -83,16 +77,12 @@
   flex-wrap: nowrap;
   background: transparent;
   transition: 0.3s ease all;
-  /*border-radius: 12px;*/
   cursor: pointer;
 }
-@media (pointer: fine) {
-  .container .comment:hover {
-    background: rgb(var(--neutral-grad-1));
-  }
+.container .comment:hover {
+  background: rgb(var(--neutral-grad-1));
 }
 .container .comment .description {
-  width: 100%;
   font-size: 14px;
   line-height: 14px;
   display: flex;
@@ -108,17 +98,13 @@
   font-size: 16px;
   line-height: 20px;
 }
-.container .comment i.fa-thumbs-up {
+.container .comment .description i.fa-thumbs-up {
   margin: 8px 0;
   color: rgb(var(--color-bg-ac-bright));
 }
-.container .comment i.fa-thumbs-down {
+.container .comment .description i.fa-thumbs-down {
   margin: 8px 0;
   color: rgb(var(--color-bad));
-}
-.container .comment .icon {
-  display: flex;
-  align-items: center;
 }
 .container .comment .avatar {
   display: flex;
@@ -138,10 +124,8 @@
   border: 1px solid transparent;
   transition: 0.3s all ease;
 }
-@media (pointer: fine) {
-  .container .comment .avatar:hover {
-    border: 1px solid rgb(var(--color-bg-ac-bright));
-  }
+.container .comment .avatar:hover {
+  border: 1px solid rgb(var(--color-bg-ac-bright));
 }
 .container .comment .avatar a {
   height: 100%;
@@ -238,7 +222,7 @@
   margin: 0 -2em;
   padding: 0 2em 12px;
   border-bottom: solid #E3E4EB 1px;
-  overflow-x: auto;
+  overflow: auto;
 }
 .normalizedmobile .filters .tab {
   font-weight: 400;
@@ -272,6 +256,7 @@
   flex-wrap: nowrap;
 }
 .normalizedmobile .comment .description {
+  width: 100%;
   font-size: 14px;
   line-height: 14px;
   display: flex;
