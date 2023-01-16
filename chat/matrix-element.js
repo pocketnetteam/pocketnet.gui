@@ -42911,14 +42911,16 @@ class application_Core {
         this.pcrypto.helpers.checkuser();
         if (functions["a" /* default */].deep(this.user, 'userinfo.name')) this.mtrx.client.setDisplayName(functions["a" /* default */].deep(this.user, 'userinfo.name'));
         return Promise.resolve();
-      }); // .catch(e => {
-      //     console.log("E", e)
-      //     this.loading = false
-      //     if(e == 'unauthorized' || e == 'unknown' || e == 'deleted'){
-      //         this.setUnauthorized(e)
-      //     }
-      //     return Promise.resolve()
-      // })
+      }).catch(e => {
+        console.log("E", e);
+        this.loading = false;
+
+        if (e == 'unauthorized' || e == 'unknown' || e == 'deleted') {
+          this.setUnauthorized(e);
+        }
+
+        return Promise.resolve();
+      });
     });
 
     Object(defineProperty["a" /* default */])(this, "initWithUser", function (credentials) {
