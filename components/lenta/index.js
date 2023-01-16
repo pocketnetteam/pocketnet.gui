@@ -4902,11 +4902,11 @@ var lenta = (function(){
 				el.c.on('touchstart', '.anothercntswrk', touchstart)
 				el.c.on('touchend', '.anothercntswrk', touchend)
 				
-			} else {
+			} 
 
-				el.c.on('click', '.opensviurl', events.opensvi)
+			el.c.on('click', '.opensviurl', events.opensvi)
 
-			}
+			
 
 
 			//////////////////////
