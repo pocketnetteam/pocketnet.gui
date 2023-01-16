@@ -685,6 +685,7 @@ var component = Object(componentNormalizer["a" /* default */])(
               e.event.content.edited = last.event.event_id;
               e.event.content.block = last.event.content.block;
               e.event.content.msgtype = last.event.content.msgtype;
+              e.event.decrypted = last.event.decrypted;
             }
           }
         } catch (e) {

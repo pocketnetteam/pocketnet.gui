@@ -1942,6 +1942,7 @@ var CancelablePromise = __webpack_require__("0bb9");
           relation: this.relationEvent
         });
       }).catch(e => {
+        console.error(e);
         this.$emit('sentMessageError', {
           error: e
         });
