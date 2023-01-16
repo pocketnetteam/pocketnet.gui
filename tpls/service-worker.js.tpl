@@ -22,8 +22,14 @@ self.addEventListener('fetch', (event) => {
     return await cache.match(request);
   }
 
-  function putCache(cache, response) {
-    if (response.type === 'opaque') {
+  async function putCache(cache, response) {
+    const responseClone = await response.clone();
+    const responseBuffer = await responseClone.arrayBuffer();
+
+    const isOpaque = (response.type === 'opaque');
+    const isBodyEmpty = (responseBuffer.length === 0);
+
+    if (isOpaque && isBodyEmpty) {
       return;
     }
 
