@@ -1586,6 +1586,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+
 		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
@@ -2398,7 +2399,7 @@ pShare = function(){
 			var v = videoImage(self.url)
 			if (v){
 				s.image = v;
-				s.images.unshift(v)
+				//s.images.unshift(v)
 			}
 		}
 
