@@ -512,6 +512,7 @@ Platform = function (app, listofnodes) {
             return true
         }
     }
+    
 
     self.values = {
         alph: [
@@ -30093,6 +30094,7 @@ Platform = function (app, listofnodes) {
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
+                                    massmailingenabled="` + Boolean(self.app.platform.istest() || self.app.platform.ui.markUser(self.app.user.address.value && self.app.user.address.value.toString('hex'))) +`"
                                 >
                                 </matrix-element>
                             </div>`
