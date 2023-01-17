@@ -206,6 +206,7 @@ var functions = __webpack_require__("3139");
     roomInfo: false,
     aboutUser: false
   },
+  inject: ['isChatEncrypted', 'matches'],
   components: {
     chatName: assets_name["a" /* default */],
     chatIcon: icon["a" /* default */],
@@ -313,7 +314,8 @@ var functions = __webpack_require__("3139");
       }, {
         value: 'exclude',
         label: this.$i18n.t("caption.toBePaidBySender")
-      }]
+      }],
+      hoverEncrypt: false
     };
   },
   watch: {//$route: 'getdata'
