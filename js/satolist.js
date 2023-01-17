@@ -28915,30 +28915,7 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
-            if (typeof PeerTubePocketnet != 'undefined'){
-                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                // Fetch the peertube servers
-                self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
-                    try {
-                        if (ptServers)
-                            self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
-                    } catch(err) {}
-                    console.log("Using Peertube server: ", self.app.options.peertubeServer);
-                    // Authenticate to this Peertube server
-                    self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
-                        if (client_id)
-                            self.app.options.peertubeCreds.client_id = client_id;
-                        if (client_secret)
-                            self.app.options.peertubeCreds.client_secret = client_secret;
-                    }, (err) => {
-                        console.log(err);
-                    });
-                }, (err) => {
-                    console.log(err);
-                });
-            }
-
-
+            self.preparePeertubeServer();
 
             self.prepareUser(function() {
 
@@ -28970,6 +28947,31 @@ Platform = function (app, listofnodes) {
         })
 
 
+    }
+
+    self.preparePeertubeServer = function() {
+        if (typeof PeerTubePocketnet != 'undefined' && !self.app.options.peertubeServer){
+            self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+            // Fetch the peertube servers
+            self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
+                try {
+                    if (ptServers)
+                        self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
+                } catch(err) {}
+                console.log("Using Peertube server: ", self.app.options.peertubeServer);
+                // Authenticate to this Peertube server
+                self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
+                    if (client_id)
+                        self.app.options.peertubeCreds.client_id = client_id;
+                    if (client_secret)
+                        self.app.options.peertubeCreds.client_secret = client_secret;
+                }, (err) => {
+                    console.log(err);
+                });
+            }, (err) => {
+                console.log(err);
+            });
+        }
     }
 
     self.prepareUserData = function(clbk){
