@@ -10,7 +10,7 @@ const promisedLocalhostChecker = import("is-localhost-ip");
 
 const dns = require("dns");
 
-const pingUtil = require("icmp-ping").createSession({
+const pingUtil = require("net-ping").createSession({
     packetSize: 64,
     timeout: 5000,
     retries: 3,
@@ -25,7 +25,10 @@ module.exports = function (enable = false) {
     const initHttpsAgent = async (opts, name) => {
         if (!torHttpsAgent) {
             await awaitTor();
-            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
+            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", {
+                keepAlive: true,
+                timeout: 60000,
+            });
         }
 
         opts[name] = torHttpsAgent;

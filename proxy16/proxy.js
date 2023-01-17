@@ -69,7 +69,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 	slidemodule.init()
 	var notifications = new Notifications()
 
-	var torapplications = new TorControl(settings.tor, self)
+	var torapplications = new TorControl(settings.tor, self, ipc)
 
 	var transports = new Transports(global.USE_PROXY_NODE);
 
@@ -578,10 +578,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 			}
 
 			return torapplications.application.init().then(async r => {
-				torapplications.onStatusChange((status) => {
-					console.log('LISTENING STATUS SOMEWHERE ELSE', status);
-				});
-
 				return await torapplications.init();
 			})
 		},

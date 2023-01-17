@@ -44,7 +44,21 @@ self.addEventListener('fetch', (event) => {
     const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
 
     if (isTorRequest) {
-      return await nodeFetch(request);
+      return await nodeFetch(request)
+        .then((response) => {
+          const hasTorHeader = response.headers.get('#bastyon-tor-used');
+
+          if (hasTorHeader) {
+            swBroadcaster.send('tor-stats', 'success');
+          }
+
+          return response;
+        })
+        .catch((err) => {
+          swBroadcaster.send('tor-stats', 'failed');
+
+          return err;
+        });
     }
   }
 

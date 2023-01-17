@@ -44,11 +44,20 @@ class TorControl {
     };
     statusListeners = [];
 
-    constructor(settings, proxy) {
+    constructor(settings, proxy, ipc) {
         this.settings = {};
         this.settings.path = f.path(settings?.dbpath || "data/tor");
         this.settings.enable = settings?.enabled || false;
         this.application = new Applications(settings,applicationRepository, proxy)
+
+        if (ipc) {
+            ipc.once("TorApplication :: SubscribeOnStateChange", (e) => {
+                this.onStatusChange((status) => {
+                    e.sender.send("TorApplication :: StateChange", status);
+                    console.log("LISTENING STATUS SOMEWHERE ELSE", status);
+                });
+            });
+        }
     }
 
     onStatusChange = (listener) => {
@@ -123,16 +132,48 @@ class TorControl {
         try {
             await fs.unlink(path.join(this.settings.path, "torrc"))
         }catch (e) {}
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `CookieAuthentication 1\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `DormantCanceledByStartup 1\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `DataDirectory ${path.join(this.settings.path, "data")}\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `Log notice stdout\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `GeoIPFile ${path.join(this.settings.path, "geoip")}\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `GeoIPv6File ${path.join(this.settings.path, "geoip6")}\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `UseBridges 1\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(this.settings.path, "PluggableTransports", this.helpers.bin_name("snowflake-client"))}\n`, {flag: "a+"})
-        await fs.writeFile(path.join(this.settings.path, "torrc"), `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
+
+        const getSettingsPath = (...parts) => path.join(this.settings.path, ...parts);
+
+        const snowflakeStuns = [
+            "stun.voip.blackberry.com:3478",
+            "stun.altar.com.pl:3478",
+            "stun.antisip.com:3478",
+            "stun.bluesip.net:3478",
+            "stun.dus.net:3478",
+            "stun.epygi.com:3478",
+            "stun.sonetel.com:3478",
+            "stun.sonetel.net:3478",
+            "stun.stunprotocol.org:3478",
+            "stun.uls.co.za:3478",
+            "stun.voipgate.com:3478",
+            "stun.voys.nl:3478",
+        ].map(s => `stun:${s}`).join(',');
+
+        const torConfig = [
+            "# This configuration was generated automatically.\n" +
+            "# The user is free to edit this config if he know\n" +
+            "# how to do that. This is not\n",
+
+            "CookieAuthentication 1",
+            "DormantCanceledByStartup 1",
+            `DataDirectory ${getSettingsPath("data")}`,
+            "Log notice stdout",
+            "AvoidDiskWrites 1",
+            `GeoIPFile ${getSettingsPath("geoip")}`,
+            `GeoIPv6File ${getSettingsPath("geoip6")}`,
+            "KeepalivePeriod 10",
+
+            "\n" +
+            "# If Tor is not blocked in your country or by your ISP\n",
+
+            "UseBridges 1",
+            "UpdateBridgesFromAuthority 1",
+            `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
+            `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
+        ].join('\n');
+
+        await fs.writeFile(path.join(this.settings.path, "torrc"), torConfig, {flag: "a+"})
     }
 
     install = async ()=>{
@@ -168,13 +209,14 @@ class TorControl {
         }
 
         const log = (data)=>{
-            const isBootstrapped100 = ({ data }) => data.includes('Bootstrapped 100%');
+            const isBootstrapped100 = ({ data }) => data?.includes('Bootstrapped 100%');
             const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
+            const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
 
             console.log('data', data.data)
 
-            if (isBrokerFailure(data)) {
+            if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.log("TOR connection lost")
                 this.state.status = "failure"
             } else if (isBootstrapped100(data) || isConnected(data)) {

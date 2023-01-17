@@ -1189,7 +1189,7 @@ function getKit(ipc) {
 
 			if (!proxy) {
 
-				proxy = new Proxy(settings, kit.manage, test, logger, reverseproxy)
+				proxy = new Proxy(settings, kit.manage, test, logger, reverseproxy, ipc)
 
 				if (hck.userDataPath) {
 					proxy.userDataPath = hck.userDataPath

@@ -300,6 +300,26 @@
 
 					&.on {
 						color: rgb(var(--color-good));
+
+						&::before {
+							content: '';
+							float: left;
+							position: relative;
+							left: 15px;
+							top: 15px;
+							display: block;
+							width: 3px;
+							height: 3px;
+							border-radius: 10000px;
+						}
+
+						&.failed::before {
+							background: rgb(var(--color-bad));
+						}
+
+						&.success::before {
+							background: rgb(var(--color-good));
+						}
 					}
 
 					/*&.auto {

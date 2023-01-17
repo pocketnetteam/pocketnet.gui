@@ -449,6 +449,29 @@ var menu = (function(){
 					})
 
 					const controlTorElem = _el.find('.control-tor-state');
+
+					swBroadcaster.on('tor-stats', (result) => {
+						console.log('Tor stats', result);
+
+						controlTorElem.addClass(result);
+
+						setTimeout(() => {
+							controlTorElem.removeClass(result);
+						}, 300);
+					});
+
+					electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
+						if (state === 'failure') {
+							controlTorElem.addClass('loading');
+							controlTorElem.removeClass(['on', 'off']);
+						} else if (state === 'started') {
+							controlTorElem.addClass('on');
+							controlTorElem.removeClass(['loading', 'off']);
+						}
+
+						console.log('TOR APPLICATION STATE CHANGED', state);
+					})
+
 					const currentProxy = app.api.get.current();
 					let proxyData;
 
