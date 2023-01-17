@@ -74,21 +74,26 @@ ImageUploader = function(app) {
 
             if (p.peertubeImage){
 
-                var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
+                // Fetch Peertube server if needed
+                app.platform.preparePeertubeServer().finally(() => {
 
-                p.url = server.current
-                if (p.url[p.url.length - 1] != '/')
-                    p.url += '/';
-                p.url += 'api/v1/';
+                    var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
 
-                p.success = function(data){
+                    p.url = server.current
+                    if (p.url[p.url.length - 1] != '/')
+                        p.url += '/';
+                    p.url += 'api/v1/';
 
-                    var url = 'https://' + data.url
+                    p.success = function(data){
 
-                    resolve(url)
-                }
+                        var url = 'https://' + data.url
 
-                app.ajax.run(p)
+                        resolve(url)
+                    }
+
+                    app.ajax.run(p)
+                    
+                });
 
                 return 
             }
