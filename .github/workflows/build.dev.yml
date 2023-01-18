@@ -11,9 +11,9 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
@@ -48,9 +48,9 @@ jobs:
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -76,9 +76,9 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
@@ -104,7 +104,7 @@ jobs:
         uses: actions/checkout@v1
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Install Cordova
         run: |
           npm i -g cordova@10
