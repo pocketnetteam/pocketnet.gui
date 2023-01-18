@@ -14,8 +14,8 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
-        "start": "electron . --development",
-        "start:test": "electron . --development --test",
+        "start": "npm run rebuild-binaries && electron . --development",
+        "start:test": "npm run rebuild-binaries && electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "build": "npm run dev:bastyon",
         "dist": "electron-builder -w --x64 --ia32 -p never",
