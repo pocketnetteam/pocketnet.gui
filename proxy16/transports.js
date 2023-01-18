@@ -10,11 +10,28 @@ const promisedLocalhostChecker = import("is-localhost-ip");
 
 const dns = require("dns");
 
-const pingUtil = require("net-ping").createSession({
-    packetSize: 64,
-    timeout: 5000,
-    retries: 3,
-});
+let netPing;
+let pingUtil;
+
+function initPingUtil() {
+    try {
+        netPing = require("net-ping");
+    } catch (err) {
+        console.log('-----------------------------------------------------');
+        console.log('Raw-Socket is not compiled for current platform/arch:', process.platform, process.arch);
+        console.log('-----------------------------------------------------');
+    }
+
+    if (netPing) {
+        pingUtil = netPing.createSession({
+            packetSize: 64,
+            timeout: 5000,
+            retries: 3,
+        });
+    }
+}
+
+initPingUtil();
 
 module.exports = function (enable = false) {
     const self = {};
@@ -130,6 +147,10 @@ module.exports = function (enable = false) {
         }
 
         function icmpPing() {
+            if (!pingUtil) {
+                return Promise.reject('ICMP_PING_FAILED');
+            }
+
             return new Promise(async (resolve, reject) => {
                 const hostIp = await getHostIp(host);
 
