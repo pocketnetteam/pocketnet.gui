@@ -6,7 +6,7 @@ const _axios = require("redaxios");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const tls = require("tls");
 
-const promisedLocalhostChecker = import("is-localhost-ip");
+const promisedLocalhostChecker = import("is-localhost-ip/index.js");
 
 const dns = require("dns");
 
