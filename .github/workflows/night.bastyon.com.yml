@@ -8,11 +8,12 @@ on:
 
 jobs:
   build:
-  
-    runs-on: gui 
+
+    runs-on: gui
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repository
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -33,7 +34,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -68,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
@@ -98,7 +99,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -125,7 +126,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
