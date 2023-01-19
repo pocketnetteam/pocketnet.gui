@@ -77,7 +77,7 @@ self.addEventListener('fetch', (event) => {
       }
     }
 
-    if (_Electron) {
+    if (typeof _Electron !== 'undefined') {
       console.log('Try to get TOR answer for', request.url);
       const torResponse = await torAnswer();
       if (torResponse) {
