@@ -30082,7 +30082,7 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-                            var massmailingenabled = self.app.platform.istest() || self.ui.usertype(self.app.user.address.value)
+                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
                             
 
