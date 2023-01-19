@@ -86,9 +86,18 @@ ImageUploader = function(app) {
 
                     p.success = function(data){
 
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_SUCCESS" });
+
                         var url = 'https://' + data.url
 
                         resolve(url)
+                    }
+
+                    p.fail = function(){
+
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_FAILED" });
+
+                        reject()
                     }
 
                     app.ajax.run(p)
@@ -109,6 +118,8 @@ ImageUploader = function(app) {
 
             if (p.imgur){
                 p.success = function(data){
+
+                    app.Logger.info({ actionId: "IMG_IMGUR_UPLOAD_SUCCESS" });
 
                     var url =  deep(data, 'data.link')
                     resolve(url)
