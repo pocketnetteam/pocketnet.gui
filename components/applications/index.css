@@ -149,6 +149,13 @@
   background: rgb(var(--color-bg-orange));
   border-color: rgb(var(--color-bg-orange));
 }
+.applicationWnd.wnd .wndinner {
+  height: 90%;
+  max-width: 800px;
+}
+.applicationWnd.wnd .wndcontent {
+  padding: 0;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #applications .oss {
