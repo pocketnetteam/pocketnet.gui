@@ -29274,7 +29274,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -29289,9 +29289,13 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (c.storage) {
-                c.storage = {}
+            if(id != 'tags'){
+                if (c.storage) {
+                    c.storage = {}
+                }
             }
+
+           
 
         })
 
@@ -29302,6 +29306,8 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
+
+
 
         /*self.sdk.node.shares.storage = {
             trx: {}
@@ -29339,7 +29345,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.clearlocal = function(){
-        self.sdk.tags.storage.cloud = null
+        self.sdk.tags.storage.cloud = {}
 
         self.sdk.newmaterials.clear()
     }
