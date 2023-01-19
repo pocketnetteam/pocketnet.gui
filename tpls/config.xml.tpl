@@ -180,22 +180,20 @@
             <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
+        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-            <% if(store) {%>
-                <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
-            <% } %>
         </edit-config>
 
+        
+
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
+            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
         </edit-config>
-        <preference name="LogLevel" value="VERBOSE"/>
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>

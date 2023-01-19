@@ -10,7 +10,7 @@ var menu = (function(){
 			authorForSearch = null,
 			menusearch = null;
 
-		var logotime = 180000
+		var logotime = 180000, changeLogoInterval = null
 
 		var loc = new Parameter({
 
