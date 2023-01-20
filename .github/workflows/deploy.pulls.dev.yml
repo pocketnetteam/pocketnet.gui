@@ -25,12 +25,12 @@ jobs:
           cd /tmp/repo
           tar czf /tmp/repo.tgz ./
       - name: Upload artifact repo.tgz
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: repo.tgz
           path: /tmp/repo.tgz
       - name: Save artifact head.txt
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: head
           path: ./head.txt
