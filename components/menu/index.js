@@ -762,7 +762,7 @@ var menu = (function(){
 
 			application : {
 				init : function(el){
-					var calculateMarketingLogo = function(currentLogo) {
+					/*var calculateMarketingLogo = function(currentLogo) {
 						var logosArr = ['fa-windows', 'fa-apple', 'fa-google-play'];
 			
 						return logosArr[(_.indexOf(logosArr, currentLogo) + 1) % logosArr.length];
@@ -789,7 +789,7 @@ var menu = (function(){
 
 					setTimeout(function(){
 						el.find('.changing-app-icon').css('opacity', '0')
-					}, logotime - 1000)
+					}, logotime - 1000)*/
 
 				},
 

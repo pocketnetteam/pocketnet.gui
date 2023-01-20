@@ -139,7 +139,10 @@ var mobilesearch = (function(){
 					events.search($(this).val())
 				}
 			})
-			//el.input.on('change', events.search)
+
+			el.input.on('change', function(e){
+				dfastsearch(e, $(this))
+			})
 
 		}
 
