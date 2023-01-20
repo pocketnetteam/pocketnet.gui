@@ -6,7 +6,7 @@ const _axios = require("redaxios");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const tls = require("tls");
 
-const promisedLocalhostChecker = import("is-localhost-ip/index.js");
+const checkIfLocalhost = require("is-localhost-ip");
 
 const dns = require("dns");
 
@@ -201,7 +201,6 @@ module.exports = function (enable = false) {
         }
 
         const urlParts = new URL(preparedOpts.url);
-        const checkIfLocalhost = (await promisedLocalhostChecker).default;
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
         if (!isLocalhost && isTorNeeded(preparedOpts.url) && enable) {
@@ -272,7 +271,6 @@ module.exports = function (enable = false) {
         }
 
         const urlParts = new URL(url);
-        const checkIfLocalhost = (await promisedLocalhostChecker).default;
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
         if (!isLocalhost && isTorNeeded(url) && enable) {
@@ -342,7 +340,6 @@ module.exports = function (enable = false) {
         let req = _request;
 
         const urlParts = new URL(options.url);
-        const checkIfLocalhost = (await promisedLocalhostChecker).default;
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
         if (!isLocalhost && isTorNeeded(options.url) && enable) {
