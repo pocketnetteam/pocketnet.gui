@@ -8730,8 +8730,6 @@
 
 			var elements = [
 
-				'<img class="christmasBranchRight" src="img/christmas_branch_right.svg">',
-
 				'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
 					'<i class="fas fa-circle-notch fa-spin"></i>') +
@@ -8747,9 +8745,7 @@
 							'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
 						'</div>' +
 					'</div>' +
-				'</div>',
-
-				'<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">'
+				'</div>'
 
 
 			]
