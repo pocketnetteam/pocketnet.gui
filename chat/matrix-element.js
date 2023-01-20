@@ -48858,7 +48858,6 @@ var Call_component = Object(componentNormalizer["a" /* default */])(
       this.$emit('updatedSize', before);
     },
     dropDownMenuShow: function () {
-      if (this.urlpreview) return;
       setTimeout(() => {
         this.setmenu();
       }, 200);
