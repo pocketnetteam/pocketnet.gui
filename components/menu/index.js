@@ -486,15 +486,15 @@ var menu = (function(){
 
 						proxyData = await currentProxy.get.info();
 
-						if (proxyData.info.tor.state.status === 'started') {
+						if (proxyData?.info.tor.state.status === 'started') {
 							controlTorElem.removeClass(['off', 'loading']);
 							controlTorElem.addClass('on');
 							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
-						} else if (proxyData.info.tor.state.status === 'running') {
+						} else if (proxyData?.info.tor.state.status === 'running') {
 							controlTorElem.removeClass(['on', 'off']);
 							controlTorElem.addClass('loading');
 							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
-						} else if (proxyData.info.tor.state.status === 'stopped') {
+						} else if (proxyData?.info.tor.state.status === 'stopped') {
 							controlTorElem.removeClass(['on', 'loading']);
 							controlTorElem.addClass('off');
 							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
@@ -503,8 +503,8 @@ var menu = (function(){
 
 					controlTorElem.on('click', () => {
 						const isTorEnabled = (
-							proxyData.info.tor.state.status === 'started' ||
-							proxyData.info.tor.state.status === 'loading'
+							proxyData?.info.tor.state.status === 'started' ||
+							proxyData?.info.tor.state.status === 'loading'
 						);
 
 						currentProxy.fetchauth('manage', {
