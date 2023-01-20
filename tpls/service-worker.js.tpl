@@ -1,15 +1,40 @@
 importScripts('./js/transports2/fetch/receiver.js');
 importScripts('./js/broadcaster.js');
 
-let isEnabled = false;
-let nodeFetch = (...args) => fetch(...args);
-
 const swBroadcaster = new Broadcaster('ServiceWorker');
 
-swBroadcaster.once('extended-fetch', async () => {
-  nodeFetch = FetchReceiver.init('ExtendedFetch');
-  isEnabled = true;
-});
+let _isElectron = null;
+
+const isElectron = async () => {
+  if (typeof _isElectron === 'boolean') {
+    return Promise.resolve(_isElectron);
+  }
+
+  const electronCheckInterval = setInterval(() => {
+    console.log('Service-Worker: Is it Electron?');
+
+    swBroadcaster.send('is-electron-request');
+  }, 500);
+
+  return new Promise((resolve, reject) => {
+    swBroadcaster.once('is-electron-confirm', () => {
+      console.log('Service-Worker: Yes, it is Electron');
+
+      nodeFetch = FetchReceiver.init('ExtendedFetch');
+      _isElectron = true;
+
+      resolve(true);
+    });
+
+    setTimeout(() => {
+      clearInterval(electronCheckInterval);
+
+      reject(false);
+    }, 5000);
+  });
+};
+
+let nodeFetch = (...args) => fetch(...args);
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -77,7 +102,7 @@ self.addEventListener('fetch', (event) => {
       }
     }
 
-    if (typeof _Electron !== 'undefined') {
+    if (await isElectron()) {
       console.log('Try to get TOR answer for', request.url);
       const torResponse = await torAnswer();
       if (torResponse) {

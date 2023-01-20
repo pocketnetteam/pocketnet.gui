@@ -20,9 +20,9 @@ if (typeof _Electron != 'undefined') {
         return electron.ipcRenderer.invoke('ReportAccessSuccess', url);
     });
 
-    setTimeout(() => {
-        swBroadcaster.send('extended-fetch');
-    }, 5000);
+    swBroadcaster.once('is-electron-request', () => {
+        swBroadcaster.send('is-electron-confirm');
+    });
 
     fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
 
