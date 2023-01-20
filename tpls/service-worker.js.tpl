@@ -36,7 +36,7 @@ const isElectron = async () => {
 
 let nodeFetch = (...args) => fetch(...args);
 
-self.addEventListener('fetch', (event) => {
+function onFetch(event) {
   const { request } = event;
 
   if (request.url.startsWith('file://')) {
@@ -152,7 +152,7 @@ self.addEventListener('fetch', (event) => {
 
     default: event.respondWith(handle()); break;
   }
-});
+}
 
 async function onInstall(event) {
   console.log('Service Worker was successfully installed');
@@ -165,3 +165,4 @@ async function onActivate(event) {
 
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
+self.addEventListener('fetch', event => onFetch(event));
