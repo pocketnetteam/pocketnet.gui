@@ -314,9 +314,10 @@ var activities = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.filters = p.el.find('.filters');
-				el.content = p.el.find('.content');
-				el.loader = p.el.find('.preloaderWrapper');
+				el.filters = el.c.find('.filters');
+				el.content = el.c.find('.content');
+				el.loader = el.c.find('.preloaderWrapper');
+
 
 				scnt = el.c.closest('.customscroll:not(body)')
 				if(!scnt.length) scnt = $(window);

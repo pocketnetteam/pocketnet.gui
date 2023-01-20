@@ -70,6 +70,7 @@ var userpage = (function(){
 				id : 'activities',
 				report : 'activities',
 				mobile : false,
+				openReportPageMobileInWindow : true,
 				if : function(){
 					return true
 				}

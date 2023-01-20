@@ -1,11 +1,11 @@
-.container {
+#activities .container {
   min-height: 70vh;
   border-radius: 6px;
   background: rgb(var(--background-main));
   padding: 1em 4em 2em;
   margin-bottom: 2em;
 }
-.container .title {
+#activities .container .title {
   display: block;
   margin-top: 25px;
   margin-bottom: 45px;
@@ -13,7 +13,7 @@
   line-height: 36px;
   font-weight: 300;
 }
-.container .filters {
+#activities .container .filters {
   display: flex;
   margin: 0 -4em;
   padding: 0 4em 12px;
@@ -23,11 +23,11 @@
   -ms-overflow-style: none;
   scroll-behavior: smooth;
 }
-.container .filters::-webkit-scrollbar {
+#activities .container .filters::-webkit-scrollbar {
   display: none !important;
   /*chrome*/
 }
-.container .filters .tab {
+#activities .container .filters .tab {
   font-weight: 400;
   cursor: pointer;
   font-size: 16px;
@@ -35,11 +35,11 @@
   margin-right: 24px;
   transition: all 0.3s ease;
 }
-.container .filters .tab.active {
+#activities .container .filters .tab.active {
   color: #2F80ED;
   position: relative;
 }
-.container .filters .tab.active::after {
+#activities .container .filters .tab.active::after {
   position: absolute;
   content: ' ';
   bottom: -12px;
@@ -48,19 +48,10 @@
   height: 2px;
   background-color: #2F80ED;
 }
-.container .content {
+#activities .container .content {
   margin-top: 25px;
 }
-.container .content .empty {
-  width: 100%;
-  padding: 4em 0;
-  padding-bottom: 4em;
-  color: rgb(var(--neutral-grad-4));
-  text-align: center;
-  background: rgb(var(--background-total-theme));
-  border-radius: 12px;
-}
-.container .period {
+#activities .container .period {
   margin: 36px 0;
   background: rgb(var(--neutral-grad-1));
   min-height: 36px;
@@ -68,14 +59,14 @@
   display: flex;
   align-items: center;
 }
-.container .period .title {
+#activities .container .period .title {
   padding-left: 1em;
   margin: 0;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
-.container .comment {
+#activities .container .comment {
   padding: 12px;
   margin-bottom: 16px;
   border-bottom: 1px solid #E3E4EB;
@@ -83,44 +74,36 @@
   flex-wrap: nowrap;
   background: transparent;
   transition: 0.3s ease all;
-  /*border-radius: 12px;*/
   cursor: pointer;
 }
-@media (pointer: fine) {
-  .container .comment:hover {
-    background: rgb(var(--neutral-grad-1));
-  }
+#activities .container .comment:hover {
+  background: rgb(var(--neutral-grad-1));
 }
-.container .comment .description {
-  width: 100%;
+#activities .container .comment .description {
   font-size: 14px;
   line-height: 14px;
   display: flex;
   flex-direction: column;
 }
-.container .comment .description .head {
+#activities .container .comment .description .head {
   line-height: 20px;
 }
-.container .comment .description div:not(:first-child) {
+#activities .container .comment .description div:not(:first-child) {
   margin-top: 8px;
 }
-.container .comment .description i {
+#activities .container .comment .description i {
   font-size: 16px;
   line-height: 20px;
 }
-.container .comment i.fa-thumbs-up {
+#activities .container .comment .description i.fa-thumbs-up {
   margin: 8px 0;
   color: rgb(var(--color-bg-ac-bright));
 }
-.container .comment i.fa-thumbs-down {
+#activities .container .comment .description i.fa-thumbs-down {
   margin: 8px 0;
   color: rgb(var(--color-bad));
 }
-.container .comment .icon {
-  display: flex;
-  align-items: center;
-}
-.container .comment .avatar {
+#activities .container .comment .avatar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,36 +121,34 @@
   border: 1px solid transparent;
   transition: 0.3s all ease;
 }
-@media (pointer: fine) {
-  .container .comment .avatar:hover {
-    border: 1px solid rgb(var(--color-bg-ac-bright));
-  }
+#activities .container .comment .avatar:hover {
+  border: 1px solid rgb(var(--color-bg-ac-bright));
 }
-.container .comment .avatar a {
+#activities .container .comment .avatar a {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.container .comment .avatar img {
+#activities .container .comment .avatar img {
   height: 100%;
   width: 100%;
 }
-.container .comment .avatar.multy {
+#activities .container .comment .avatar.multy {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
   pointer-events: none;
 }
-.container .comment .avatar.multy img,
-.container .comment .avatar.multy div {
+#activities .container .comment .avatar.multy img,
+#activities .container .comment .avatar.multy div {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
   height: 50%;
 }
-.container .comment .donateSum {
+#activities .container .comment .donateSum {
   margin: auto 0;
   max-height: 28px;
   display: inline;
@@ -183,7 +164,7 @@
   background: linear-gradient(-45deg, #4FACFE, #09D5DF, #4FACFE, #09D5DF);
   background-size: 400% 400%;
 }
-.container .comment .boostSum {
+#activities .container .comment .boostSum {
   margin: auto 0;
   max-height: 28px;
   display: inline;
@@ -199,7 +180,7 @@
   background: linear-gradient(-45deg, #F83600, #F9D423);
   background-size: 400% 400%;
 }
-.container .comment .message {
+#activities .container .comment .message {
   text-overflow: ellipsis;
   overflow: hidden;
   height: 14px;
@@ -207,25 +188,25 @@
   max-width: 90%;
   color: rgb(var(--neutral-grad-3));
 }
-.container .comment .date {
+#activities .container .comment .date {
   color: rgb(var(--neutral-grad-2));
 }
-.container .comment .stars {
+#activities .container .comment .stars {
   display: flex;
 }
-.container .comment .stars i {
+#activities .container .comment .stars i {
   width: 20px;
   color: rgb(var(--color-star-yellow));
   margin-right: 7px;
 }
-.normalizedmobile .container {
+.wndactivities.wnd #activities .container {
   min-height: 70vh;
   border-radius: 6px;
   background: initial;
   padding: 1em 2em 2em;
   margin-bottom: 2em;
 }
-.normalizedmobile .title {
+.wndactivities.wnd #activities .title {
   display: block;
   margin-top: 25px;
   margin-bottom: 45px;
@@ -233,14 +214,14 @@
   line-height: 36px;
   font-weight: 600;
 }
-.normalizedmobile .filters {
+.wndactivities.wnd #activities .filters {
   display: flex;
   margin: 0 -2em;
   padding: 0 2em 12px;
   border-bottom: solid #E3E4EB 1px;
-  overflow-x: auto;
+  overflow: auto;
 }
-.normalizedmobile .filters .tab {
+.wndactivities.wnd #activities .filters .tab {
   font-weight: 400;
   cursor: pointer;
   font-size: 20px;
@@ -248,11 +229,11 @@
   margin-right: 24px;
   transition: all 0.3s ease;
 }
-.normalizedmobile .filters .tab.active {
+.wndactivities.wnd #activities .filters .tab.active {
   color: #2F80ED;
   position: relative;
 }
-.normalizedmobile .filters .tab.active::after {
+.wndactivities.wnd #activities .filters .tab.active::after {
   position: absolute;
   content: ' ';
   bottom: -12px;
@@ -261,26 +242,27 @@
   height: 2px;
   background-color: #2F80ED;
 }
-.normalizedmobile .content {
+.wndactivities.wnd #activities .content {
   margin-top: 25px;
 }
-.normalizedmobile .comment {
+.wndactivities.wnd #activities .comment {
   padding-bottom: 16px;
   margin-bottom: 16px;
   border-bottom: 1px solid #E3E4EB;
   display: flex;
   flex-wrap: nowrap;
 }
-.normalizedmobile .comment .description {
+.wndactivities.wnd #activities .comment .description {
+  width: 100%;
   font-size: 14px;
   line-height: 14px;
   display: flex;
   flex-direction: column;
 }
-.normalizedmobile .comment .description div:not(:first-child) {
+.wndactivities.wnd #activities .comment .description div:not(:first-child) {
   margin-top: 8px;
 }
-.normalizedmobile .comment .avatar {
+.wndactivities.wnd #activities .comment .avatar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -296,20 +278,20 @@
   position: relative;
   overflow: hidden;
 }
-.normalizedmobile .comment .avatar img {
+.wndactivities.wnd #activities .comment .avatar img {
   height: 100%;
   width: 100%;
 }
-.normalizedmobile .comment .message {
+.wndactivities.wnd #activities .comment .message {
   color: rgb(var(--neutral-grad-3));
 }
-.normalizedmobile .comment .date {
+.wndactivities.wnd #activities .comment .date {
   color: rgb(var(--neutral-grad-2));
 }
-.normalizedmobile .comment .stars {
+.wndactivities.wnd #activities .comment .stars {
   display: flex;
 }
-.normalizedmobile .comment .stars i {
+.wndactivities.wnd #activities .comment .stars i {
   width: 20px;
   color: rgb(var(--color-star-yellow));
   margin-right: 7px;
