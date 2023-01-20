@@ -735,16 +735,6 @@
     line-height: 34px;
     font-size: 0.9em;
   }
-  #menu .sections .mobileUpperRight {
-    display: block;
-    position: absolute;
-    right: -22px;
-    top: 23px;
-    rotate: 35deg;
-  }
-  #menu .sections .mobileUpperRight .christmasBranch {
-    height: 40px;
-  }
   #menu .searchFastResultWrapper .fastsearch {
     padding-left: 40px;
   }
