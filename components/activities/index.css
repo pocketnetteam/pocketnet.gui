@@ -1,3 +1,21 @@
+html[theme="black"] #activities .container {
+  background: rgb(var(--background-secondary-theme));
+}
+html[theme="black"] #activities .container .period {
+  background: rgb(var(--background-total-theme));
+}
+html[theme="black"] #activities .container .empty {
+  background: rgb(var(--background-hidden-layer));
+}
+html[theme="black"] #activities .container .comment,
+html[theme="black"] #activities .container .filters {
+  border-bottom: 1px solid rgb(var(--background-total-theme));
+}
+@media (pointer: fine) {
+  html[theme="black"] #activities .container .comment:hover {
+    background: rgb(var(--background-total-theme));
+  }
+}
 .container {
   min-height: 70vh;
   border-radius: 6px;
@@ -17,7 +35,7 @@
   display: flex;
   margin: 0 -4em;
   padding: 0 4em 12px;
-  border-bottom: solid #E3E4EB 1px;
+  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -51,6 +69,14 @@
 .container .content {
   margin-top: 25px;
 }
+.container .content .empty {
+  padding: 4em 0;
+  padding-bottom: 4em;
+  color: rgb(var(--neutral-grad-4));
+  text-align: center;
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+}
 .container .period {
   margin: 36px 0;
   background: rgb(var(--neutral-grad-1));
@@ -69,11 +95,12 @@
 .container .comment {
   padding: 12px;
   margin-bottom: 16px;
-  border-bottom: 1px solid #E3E4EB;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
   display: flex;
   flex-wrap: nowrap;
   background: transparent;
   transition: 0.3s ease all;
+  border-radius: 12px;
   cursor: pointer;
 }
 .container .comment:hover {
@@ -91,15 +118,21 @@
 .container .comment .description div:not(:first-child) {
   margin-top: 8px;
 }
-.container .comment .description i {
+.container .comment .icon {
+  display: flex;
+  justify-content: end;
+  flex-grow: 1;
+  align-items: center;
+}
+.container .comment .icon i {
   font-size: 16px;
   line-height: 20px;
 }
-.container .comment .description i.fa-thumbs-up {
+.container .comment .icon i.fa-thumbs-up {
   margin: 8px 0;
   color: rgb(var(--color-bg-ac-bright));
 }
-.container .comment .description i.fa-thumbs-down {
+.container .comment .icon i.fa-thumbs-down {
   margin: 8px 0;
   color: rgb(var(--color-bad));
 }
@@ -218,7 +251,7 @@
   display: flex;
   margin: 0 -2em;
   padding: 0 2em 12px;
-  border-bottom: solid #E3E4EB 1px;
+  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
   overflow: auto;
 }
 .normalizedmobile .filters .tab {
@@ -248,7 +281,8 @@
 .normalizedmobile .comment {
   padding-bottom: 16px;
   margin-bottom: 16px;
-  border-bottom: 1px solid #E3E4EB;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  border-radius: 0;
   display: flex;
   flex-wrap: nowrap;
 }
