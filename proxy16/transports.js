@@ -23,11 +23,23 @@ function initPingUtil() {
     }
 
     if (netPing) {
-        pingUtil = netPing.createSession({
-            packetSize: 64,
-            timeout: 5000,
-            retries: 3,
-        });
+        try {
+            pingUtil = netPing.createSession({
+                packetSize: 64,
+                timeout: 5000,
+                retries: 3,
+            });
+        } catch (err) {
+            console.log('-----------------------------------------------------');
+
+            if (err.message === 'Operation not permitted') {
+                console.log('Raw-Socket is not permitted on current machine, looks like it is in sandbox...');
+            } else {
+                console.log('Raw-Socket encountered an unexpected error:', err.message);
+            }
+
+            console.log('-----------------------------------------------------');
+        }
     }
 }
 
