@@ -4,11 +4,11 @@ const _request = require("request");
 global.fetch = require("node-fetch");
 const _axios = require("redaxios");
 const { SocksProxyAgent } = require("socks-proxy-agent");
-const tls = require("tls");
 
 const checkIfLocalhost = require("is-localhost-ip");
 
 const dns = require("dns");
+const net = require("net");
 
 let netPing;
 let pingUtil;
@@ -140,20 +140,31 @@ module.exports = function (isTorEnabled = false) {
     }
 
     const pingHost = async function(host) {
-        function tlsPing() {
+        function synackPing() {
             return new Promise((resolve, reject) => {
-                const timeoutId = setTimeout(() => {
-                    reject('TLS_PING_FAILED');
-                }, 10000);
+                let socket;
 
-                const socket = tls.connect({ port: 443, host: host, servername: host }, () => {
-                    clearTimeout(timeoutId);
+                try {
+                    socket = net.createConnection(443, host, () => {
+                        socket.end();
+                        socket.destroy();
+                        resolve(true);
+                    });
+                } catch (err) {
+                    reject('SYNACK_PING_FAILED');
+                }
+
+                socket.setTimeout(3000);
+
+                socket.on('close', (err) => {
                     socket.destroy();
-                    resolve(true);
+                    reject('SYNACK_PING_FAILED');
                 });
 
-                socket.on('error', (err) => {
-                    reject('TLS_PING_TIMEOUT');
+                socket.on('timeout', (err) => {
+                    socket.end();
+                    socket.destroy();
+                    reject('SYNACK_PING_TIMEOUT');
                 });
             });
         }
@@ -180,7 +191,7 @@ module.exports = function (isTorEnabled = false) {
         console.log('Proxy16: Ping started', host);
         const pingStart = Date.now();
 
-        return Promise.any([icmpPing(), tlsPing()])
+        return Promise.any([icmpPing(), synackPing()])
             .then((response) => {
                 const pingTime = (Date.now() - pingStart) / 1000;
 
