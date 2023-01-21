@@ -33,7 +33,7 @@ function initPingUtil() {
 
 initPingUtil();
 
-module.exports = function (enable = false) {
+module.exports = function (isTorEnabled = false) {
     const self = {};
     self.proxyHosts = {};
     self.lastUpdate = Date.now();
@@ -203,7 +203,7 @@ module.exports = function (enable = false) {
         const urlParts = new URL(preparedOpts.url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
-        if (!isLocalhost && isTorNeeded(preparedOpts.url) && enable) {
+        if (!isLocalhost && isTorNeeded(preparedOpts.url) && isTorEnabled) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
         } else if (!isLocalhost) {
             const isPingSuccess = await pingHost(urlParts.hostname);
@@ -235,7 +235,7 @@ module.exports = function (enable = false) {
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (!isLocalhost && !isTorNeeded(preparedOpts.url) && isTorEnabled && enable) {
+            if (!isLocalhost && !isTorNeeded(preparedOpts.url) && isTorEnabled && isTorEnabled) {
                 return _axios(preparedOpts)
                     .then((response) => {
                         saveHostStats(preparedOpts.url);
@@ -273,7 +273,7 @@ module.exports = function (enable = false) {
         const urlParts = new URL(url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
-        if (!isLocalhost && isTorNeeded(url) && enable) {
+        if (!isLocalhost && isTorNeeded(url) && isTorEnabled) {
             await initHttpsAgent(opts, 'agent');
         } else {
             const isPingSuccess = await pingHost(urlParts.hostname);
@@ -312,7 +312,7 @@ module.exports = function (enable = false) {
             const isTorEnabled = await awaitTor();
             console.log('Proxy16: Is TOR active?', isTorEnabled);
 
-            if (!isLocalhost && enable && isTorEnabled && !isTorNeeded(url)) {
+            if (!isLocalhost && isTorEnabled && isTorEnabled && !isTorNeeded(url)) {
                 saveHostStats(url)
 
                 opts.agent = torHttpsAgent;
@@ -342,7 +342,7 @@ module.exports = function (enable = false) {
         const urlParts = new URL(options.url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
-        if (!isLocalhost && isTorNeeded(options.url) && enable) {
+        if (!isLocalhost && isTorNeeded(options.url) && isTorEnabled) {
             req = _request.defaults({agent: torHttpsAgent});
         }
 
@@ -353,7 +353,7 @@ module.exports = function (enable = false) {
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (!isLocalhost && enable && isTorEnabled && !isTorNeeded(options.url)) {
+            if (!isLocalhost && isTorEnabled && isTorEnabled && !isTorNeeded(options.url)) {
                 saveHostStats(options.url)
                 return self.request(options, callBack);
             }
@@ -367,6 +367,10 @@ module.exports = function (enable = false) {
     self.saveHostStats = (url, stats) => saveHostStats(url, stats);
 
     const awaitTor = async () => {
+        if (!isTorEnabled) {
+            return Promise.resolve(false);
+        }
+
         const torcontrol = self.torapplications;
 
         if (!torcontrol || torcontrol?.isStopped()) {
