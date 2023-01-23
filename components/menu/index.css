@@ -134,6 +134,10 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+#menu .sections .mobileUpperLeft,
+#menu .sections .mobileUpperRight {
+  display: none;
+}
 #menu .sections .section {
   min-height: 65px;
   height: 100%;
@@ -296,6 +300,12 @@
 }
 #menu .sections .items .item.onlyicon .icon {
   padding: 0.5em;
+}
+#menu .sections .items .item.onlyicon .icon .icn {
+  display: flex;
+}
+#menu .sections .items .item.onlyicon .icon .icn img {
+  height: 18px;
 }
 #menu .sections .items .item.onlyicon .count {
   color: rgb(var(--color-bg-ac-2));
@@ -589,6 +599,9 @@
   height: 100%;
   width: 100%;
 }
+#menu .postssearch .christmas_search {
+  height: 16px;
+}
 #menu .postssearch .searchInputIcon,
 #menu .postssearch .searchInput,
 #menu .postssearch .search {
@@ -648,6 +661,18 @@
   width: 2em;
   font-size: 0.8em;
   text-align: center;
+}
+#menu .postssearch .christmasBranchLeft {
+  position: absolute;
+  height: 52px;
+  bottom: -10px;
+  left: -35px;
+}
+#menu .postssearch .christmasBranchRight {
+  position: absolute;
+  bottom: -10px;
+  right: -21px;
+  height: 52px;
 }
 #menu .signup,
 #menu .signout,
@@ -734,6 +759,25 @@
     height: 34px;
     line-height: 34px;
     font-size: 0.9em;
+  }
+  #menu .sections .items .item .mobileUpperLeft {
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: -6px;
+  }
+  #menu .sections .items .item .mobileUpperLeft .christmasBranch {
+    height: 40px;
+  }
+  #menu .sections .mobileUpperRight {
+    display: block;
+    position: absolute;
+    right: -22px;
+    top: 23px;
+    rotate: 35deg;
+  }
+  #menu .sections .mobileUpperRight .christmasBranch {
+    height: 40px;
   }
   #menu .searchFastResultWrapper .fastsearch {
     padding-left: 40px;
