@@ -434,8 +434,17 @@
 					}
 				}
 
-				.icon .icn img{
-					height: 18px;					
+				.icon .icn {
+
+					img{
+						height: 18px;					
+					}
+					
+					svg{
+						height: 23px;
+						width: 23px;
+					}
+
 				}
 
 
@@ -1243,10 +1252,25 @@
 				width: 24px!important;
 			}
 
-			
+			.sections .items .item .icon .icn svg{
+				fill: rgba(var(--color-bg-ac-bright),0.9)
+			}	
 
 		}
 	} 
 
 	
 }
+
+html[theme="black"],
+html[theme="gray"]{
+	#menu{
+		.sections .items .item .icn svg{
+			fill: rgb(var(--text-color));
+		}
+	}
+}
+
+
+
+

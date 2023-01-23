@@ -313,6 +313,10 @@
 #menu .sections .items .item .icon .icn img {
   height: 18px;
 }
+#menu .sections .items .item .icon .icn svg {
+  height: 23px;
+  width: 23px;
+}
 #menu .sections .items .item.navWrapperItem {
   display: none;
 }
@@ -910,4 +914,11 @@
     overflow: hidden;
     width: 24px!important;
   }
+  html.allcontent #menu .sections .items .item .icon .icn svg {
+    fill: rgba(var(--color-bg-ac-bright), 0.9);
+  }
+}
+html[theme="black"] #menu .sections .items .item .icn svg,
+html[theme="gray"] #menu .sections .items .item .icn svg {
+  fill: rgb(var(--text-color));
 }
