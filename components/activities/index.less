@@ -116,16 +116,18 @@ html[theme="black"]{
     }
     .comment {
       padding: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 2px;
       border-bottom: 1px solid rgb(var(--neutral-grad-1));
       display: flex;
       flex-wrap: nowrap;
       background: transparent;
       transition: .3s ease all;
-      border-radius: 12px;
+      
       cursor: pointer;
+
       @media (pointer: fine) {
         &:hover {
+          border-radius: 12px;
           background: rgb(var(--neutral-grad-1));
         }
 
@@ -149,18 +151,15 @@ html[theme="black"]{
         display: flex;
         justify-content: end;
         flex-grow: 1;
-        align-items: center;
+        padding-left: @rhythm;
+        padding-right: @rhythm;
         i {
-          font-size: 16px;
-          line-height: 20px;
 
           &.fa-thumbs-up {
-            margin: 8px 0;
             color: rgb(var(--color-bg-ac-bright));
           }
 
           &.fa-thumbs-down {
-            margin: 8px 0;
             color : rgb(var(--color-bad));
           }
         }
@@ -171,23 +170,13 @@ html[theme="black"]{
         justify-content: center;
         align-items: center;
         margin-right: 16px;
-        background: rgb(var(--neutral-grad-0));
-        color: rgb(var(--color-txt-gray-dark));
-        box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
-        border-radius: 50%;
-        height: 48px;
         min-width: 48px;
         line-height: 3em;
         font-size: 1em;
         position: relative;
-        overflow: hidden;
-
-        border: 1px solid transparent;
 
         transition: .3s all ease;
-        &:hover {
-          border: 1px solid rgb(var(--color-bg-ac-bright));
-        }
+      
         a {
           height: 100%;
           width: 100%;
@@ -201,6 +190,9 @@ html[theme="black"]{
         }
 
         &.multy {
+          overflow: hidden;
+          border-radius: 50%;
+          height: 48px;
           flex-wrap: wrap;
           align-items: flex-start;
           justify-content: flex-start;
@@ -232,7 +224,6 @@ html[theme="black"]{
         background-size: 400% 400%;
       }
       .boostSum{
-        margin: auto 0;
         max-height: 28px;
         display: inline;
         border-radius: 25px;
@@ -277,22 +268,13 @@ html[theme="black"]{
 
   #activities{
     .container {
-      min-height: 70vh;
       border-radius: 6px;
       background: initial;
-      padding: 1em 2em 2em;
+      padding: 1em;
       margin-bottom: 2em;
 
     }
 
-    .title {
-      display: block;
-      margin-top: 25px;
-      margin-bottom: 45px;
-      font-size: 36px;
-      line-height: 36px;
-      font-weight: 600;
-    }
 
     .filters {
       display: flex;
@@ -300,8 +282,6 @@ html[theme="black"]{
       padding: 0 2em 12px;
       border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
       overflow: auto;
-
-
 
       .tab {
         font-weight: 400;
@@ -335,6 +315,8 @@ html[theme="black"]{
 
     .comment {
       padding-bottom: 16px;
+      padding-left: 0;
+      padding-right: 0;
       margin-bottom: 16px;
       border-bottom: 1px solid rgb(var(--neutral-grad-1));
       border-radius: 0;

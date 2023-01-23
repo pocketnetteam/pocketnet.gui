@@ -1,10 +1,10 @@
-var activities = (function(){
+var activities = (function () {
 
 	var self = new nModule();
 
 	var essenses = {};
 
-	var Essense = function(p){
+	var Essense = function (p) {
 
 		var primary = deep(p, 'history');
 
@@ -15,7 +15,7 @@ var activities = (function(){
 		var activities = []
 
 		var getters = {
-			getFilters : function(filter){
+			getFilters: function (filter) {
 				if (filter === 'all') return []
 				if (filter === 'interactions') return ['contentscore', 'boost']
 				if (filter === 'comment') return ['commentscore', 'comment']
@@ -25,7 +25,7 @@ var activities = (function(){
 				return [filter]
 			},
 
-			formatActivities: function() {
+			formatActivities: function () {
 				let res = activities.map(i => {
 					if (i.description) {
 						try {
@@ -54,11 +54,11 @@ var activities = (function(){
 						if (i.type === 'boost') {
 							out = i.outputs
 							inp = i.inputs
-							i.value = inp.reduce( (a,b) => a+b.value,0) - out.reduce( (a,b) => a+b.value,0)
+							i.value = inp.reduce((a, b) => a + b.value, 0) - out.reduce((a, b) => a + b.value, 0)
 						} else {
 							out = i.outputs.filter(t => t.addresshash === i.relatedContent.address)
 							inp = i.inputs.filter(t => t.addresshash === i.relatedContent.address)
-							i.value = out.reduce( (a,b) => a+b.value,0) - inp.reduce( (a,b) => a+b.value,0)
+							i.value = out.reduce((a, b) => a + b.value, 0) - inp.reduce((a, b) => a + b.value, 0)
 						}
 
 					}
@@ -66,7 +66,7 @@ var activities = (function(){
 					return i
 				})
 
-				res = group(res, function(n){
+				res = group(res, function (n) {
 					var currentDate = new Date();
 
 					var d = n.date._d
@@ -86,7 +86,7 @@ var activities = (function(){
 		}
 
 		var actions = {
-			setloading: function(v){
+			setloading: function (v) {
 
 				loading = v
 				if (loading) {
@@ -98,10 +98,10 @@ var activities = (function(){
 				}
 			},
 
-			getdata : function(){
+			getdata: function () {
 				actions.setloading(true)
-				if(!activities.length) {
-					return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
+				if (!activities.length) {
+					return self.app.api.fetch('ping', {}, { timeout: 4000 }).then(async (r) => {
 						block = r
 						try {
 							activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(currentFilter)])
@@ -110,7 +110,7 @@ var activities = (function(){
 						}
 
 					}).finally(() => {
-						setTimeout(actions.setloading.bind(false),300)
+						setTimeout(actions.setloading.bind(false), 300)
 					})
 				} else {
 					return new Promise(async (resolve, reject) => {
@@ -124,7 +124,7 @@ var activities = (function(){
 						} catch (e) {
 							reject(e)
 						} finally {
-							setTimeout(() => actions.setloading(false),300)
+							setTimeout(() => actions.setloading(false), 300)
 						}
 
 					})
@@ -146,7 +146,7 @@ var activities = (function(){
 
 				self.app.platform.app.nav.api.load({
 					open: true,
-					href: 'post?s=' + href ,
+					href: 'post?s=' + href,
 					inWnd: true,
 					history: true,
 					clbk: function (d, p) {
@@ -158,7 +158,7 @@ var activities = (function(){
 
 						reply: {
 							answerid: answer,
-							parentid:  parent,
+							parentid: parent,
 							noaction: true
 						}
 					}
@@ -166,17 +166,17 @@ var activities = (function(){
 			},
 			openMultiBlocks(data, clbk) {
 				self.app.nav.api.load({
-					open : true,
-					href : 'userslist',
-					inWnd : true,
-					history : true,
+					open: true,
+					href: 'userslist',
+					inWnd: true,
+					history: true,
 
-					essenseData : {
+					essenseData: {
 						addresses: Object.keys(data.multipleAddresses),
 						caption: self.app.localization.e('rblockinglist'),
 					},
 
-					clbk : function(){
+					clbk: function () {
 						if (clbk)
 							clbk()
 					}
@@ -186,8 +186,27 @@ var activities = (function(){
 		}
 
 		var events = {
+			showprofile : function(address){
 
-			filter : function(){
+				if (self.app.mobileview){
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							openprofilebutton : true
+						}
+					})
+
+					return true
+				}
+
+
+			},
+			filter: function () {
 				if (this.classList.contains('active')) {
 					return
 				}
@@ -210,7 +229,7 @@ var activities = (function(){
 			},
 
 
-			loadmorescroll : function(){
+			loadmorescroll: function () {
 
 				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end) {
 					actions.getdata()
@@ -219,15 +238,15 @@ var activities = (function(){
 		}
 
 		var renders = {
-			filters : function(clbk){
+			filters: function (clbk) {
 				self.shell({
 
-					name : 'filters',
-					el : el.filters,
-					data : {
-						filters : filtersList,
+					name: 'filters',
+					el: el.filters,
+					data: {
+						filters: filtersList,
 					},
-				}, function(_p){
+				}, function (_p) {
 					_p.el.find('.tab').on('click', events.filter)
 					if (clbk) {
 						clbk()
@@ -235,14 +254,14 @@ var activities = (function(){
 				})
 			},
 
-			content : function(type){
+			content: function (type) {
 				self.shell({
 
-					name : 'content',
-					el : el.content,
-					data : {
+					name: 'content',
+					el: el.content,
+					data: {
 						loading: loading,
-						activities : getters.formatActivities(),
+						activities: getters.formatActivities(),
 						openPost: actions.openPost,
 					},
 					// inner: (root, el) => {
@@ -252,47 +271,50 @@ var activities = (function(){
 					//
 					// }
 
-				}, function(_p){
+				}, function (_p) {
 					let interactions = _p.el.find('.interactive')
 					let multiblocking = _p.el.find('.blocking')
 
-					_.each(interactions, function(i){
-					i.addEventListener('click',(e) =>{
-							e.stopPropagation();
-							actions.openPost(...activities.filter(ac => ac.time === +i.attributes.tid.value))
-
-						} )
+					_.each(interactions, function (i) {
+						i.addEventListener('click', (e) => {
+							actions.openPost(...activities.filter(ac => ac.hash === i.attributes.tid.value))
+						})
 					})
 
+					_.each(multiblocking, function (i) {
+						i.addEventListener('click', (e) => {
+							actions.openMultiBlocks(...activities.filter(ac => ac.hash === i.attributes.tid.value))
+						})
+					})
 
+					_p.el.find('[profile]').on('click', function(e) {
+						if(events.showprofile($(this).attr('profile'))){
+							return false
+						}
 
-					_.each(multiblocking, function(i){
-					i.addEventListener('click',(e) =>{
-							e.stopPropagation();
-							actions.openMultiBlocks(...activities.filter(ac => ac.time === +i.attributes.tid.value))
-						} )
+						
 					})
 				})
 			}
 		}
 
 		var state = {
-			save : function(){
+			save: function () {
 
 			},
-			load : function(){
+			load: function () {
 
 			}
 		}
 
-		var initEvents = function(){
+		var initEvents = function () {
 
 		}
 
 		return {
-			primary : primary,
+			primary: primary,
 
-			getdata : function(clbk){
+			getdata: function (clbk) {
 
 				var data = {};
 
@@ -301,7 +323,7 @@ var activities = (function(){
 
 			},
 
-			destroy : function(){
+			destroy: function () {
 				activities = []
 				currentFilter = 'all'
 				el = {};
@@ -309,7 +331,7 @@ var activities = (function(){
 				delete self.app.events.scroll['activities']
 			},
 
-			init : function(p){
+			init: function (p) {
 				state.load();
 
 				el = {};
@@ -320,12 +342,12 @@ var activities = (function(){
 
 
 				scnt = el.c.closest('.customscroll:not(body)')
-				if(!scnt.length) scnt = $(window);
+				if (!scnt.length) scnt = $(window);
 
-				if(scnt.hasClass('applicationhtml')){
+				if (scnt.hasClass('applicationhtml')) {
 					self.app.events.scroll['activities'] = events.loadmorescroll
 				}
-				else{
+				else {
 					scnt.on('scroll', events.loadmorescroll)
 				}
 				renders.filters()
@@ -336,14 +358,14 @@ var activities = (function(){
 
 				p.clbk(null, p);
 			},
-			wnd : {
-				class : 'wndactivities normalizedmobile maxheight',
+			wnd: {
+				class: 'wndactivities normalizedmobile maxheight',
 			}
 		}
 	};
 
 
-	self.run = function(p){
+	self.run = function (p) {
 
 		var essense = self.addEssense(essenses, Essense, p);
 
@@ -351,9 +373,9 @@ var activities = (function(){
 
 	};
 
-	self.stop = function(){
+	self.stop = function () {
 
-		_.each(essenses, function(essense){
+		_.each(essenses, function (essense) {
 
 			essense.destroy();
 
