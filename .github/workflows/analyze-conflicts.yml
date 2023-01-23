@@ -1,0 +1,23 @@
+name: Analyze PR conflicts
+run-name: Analyzing marked PR for conflicts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze-conflicts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Start conflict analyzer
+        uses: shpingalet007/conflictor@v0.3.1
+        with:
+          repository: ${{ github.event.repository.full_name }}
+          deploy-label: deploy.dev
+          main-branch: master
+          create-graph: true
+          create-json: true

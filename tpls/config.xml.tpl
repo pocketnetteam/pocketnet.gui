@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
+<widget id="pocketnet.app" android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -170,14 +170,14 @@
     </platform>
     <platform name="android">
 
-        <preference name="AndroidXEnabled" value="true" />
+        <!--<preference name="AndroidXEnabled" value="true" />-->
 
         <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
             <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
@@ -195,7 +195,7 @@
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
         </edit-config>
-
+        <preference name="LogLevel" value="VERBOSE"/>
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>
