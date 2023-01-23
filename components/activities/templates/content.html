@@ -169,7 +169,9 @@ if(activity.multipleAddresses) {
 	</div>
 	<div class="description">
 		<div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%>
-				<strong><%-activity?.account?.n%></strong>
+			<a href="<%-activity?.account?.n%>">
+				<strong><%-activity?.account.n%></strong>
+			</a>
 		</div>
 		<div class="date"><%- activity.date.calendar() %></div>
 	</div>
