@@ -99,7 +99,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 				<div class="section right">
 
-						<% if (!window.cordova && typeof _Electron == 'undefined') {%>
+						<% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
 
 							<div class="items">
 								<div class="item table right application" events="application">
