@@ -53,7 +53,12 @@ module.exports = function (isTorEnabled = false) {
     let torHttpsAgent = null;
     const initHttpsAgent = async (opts, name) => {
         if (!torHttpsAgent) {
-            await awaitTor();
+            const isTorStateStarted = await isTorStarted(false);
+
+            if (!isTorStateStarted) {
+                return;
+            }
+
             torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", {
                 keepAlive: true,
                 timeout: 60000,
@@ -63,7 +68,44 @@ module.exports = function (isTorEnabled = false) {
         opts[name] = torHttpsAgent;
     };
 
-    const isTorNeeded = (url) => {
+    const isTorStarted = async (wait = true) => {
+        if (!isTorEnabled) {
+            return Promise.resolve(false);
+        }
+
+        const torcontrol = self.torapplications;
+
+        if (!torcontrol || torcontrol?.isStopped()) {
+            return Promise.resolve(false);
+        }
+
+        if (torcontrol.isStarted()) {
+            return Promise.resolve(true);
+        }
+
+        if (!wait) {
+            return Promise.resolve(false);
+        }
+
+        return new Promise((resolve, reject) => {
+            const torTimeout = setTimeout(() => {
+                resolve(false);
+            }, 60000);
+
+            self.torapplications.onStarted(() => {
+                resolve(true);
+                clearInterval(torTimeout);
+            });
+        });
+    };
+
+    const isTorNeeded = async (url) => {
+        const isTorStateStarted = await isTorStarted(false);
+
+        if (!isTorStateStarted) {
+            return false;
+        }
+
         const urlParts = new URL(url);
         const { hostname } = urlParts;
 
@@ -91,7 +133,13 @@ module.exports = function (isTorEnabled = false) {
         return true;
     }
 
-    const saveHostStats = (url, stats) => {
+    const saveHostStats = async (url, stats) => {
+        const isTorStateStarted = await isTorStarted(false);
+
+        if (!isTorStateStarted) {
+            return;
+        }
+
         const urlParts = new URL(url);
         const { hostname } = urlParts;
 
@@ -156,7 +204,8 @@ module.exports = function (isTorEnabled = false) {
 
                 socket.setTimeout(3000);
 
-                socket.on('close', (err) => {
+                socket.on('error', (err) => {
+                    socket.end();
                     socket.destroy();
                     reject('SYNACK_PING_FAILED');
                 });
@@ -225,8 +274,10 @@ module.exports = function (isTorEnabled = false) {
 
         const urlParts = new URL(preparedOpts.url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+        const isTorRequest = isTorNeeded(preparedOpts.url);
+        const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorNeeded(preparedOpts.url) && isTorEnabled) {
+        if (!isLocalhost && isTorRequest && isTorStateStarted) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
         } else if (!isLocalhost) {
             const isPingSuccess = await pingHost(urlParts.hostname);
@@ -256,9 +307,10 @@ module.exports = function (isTorEnabled = false) {
                     throw err;
               });
         } catch (e) {
-            const isTorEnabled = await awaitTor();
+            const isTorStateStarted = await isTorStarted();
+            const isTorRequest = isTorNeeded(preparedOpts.url);
 
-            if (!isLocalhost && !isTorNeeded(preparedOpts.url) && isTorEnabled && isTorEnabled) {
+            if (!isLocalhost && !isTorRequest && isTorStateStarted) {
                 return _axios(preparedOpts)
                     .then((response) => {
                         saveHostStats(preparedOpts.url);
@@ -295,8 +347,10 @@ module.exports = function (isTorEnabled = false) {
 
         const urlParts = new URL(url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+        const isTorRequest = isTorNeeded(url);
+        const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorNeeded(url) && isTorEnabled) {
+        if (!isLocalhost && isTorRequest && isTorStateStarted) {
             await initHttpsAgent(opts, 'agent');
         } else {
             const isPingSuccess = await pingHost(urlParts.hostname);
@@ -332,10 +386,11 @@ module.exports = function (isTorEnabled = false) {
                 });
         } catch (e) {
             console.log('Proxy16: Retry with TOR');
-            const isTorEnabled = await awaitTor();
-            console.log('Proxy16: Is TOR active?', isTorEnabled);
+            const isTorStateStarted = await isTorStarted();
+            const isTorRequest = isTorNeeded(url);
+            console.log('Proxy16: Is TOR active?', isTorStateStarted);
 
-            if (!isLocalhost && isTorEnabled && isTorEnabled && !isTorNeeded(url)) {
+            if (!isLocalhost && isTorStateStarted && !isTorRequest) {
                 saveHostStats(url)
 
                 opts.agent = torHttpsAgent;
@@ -354,8 +409,6 @@ module.exports = function (isTorEnabled = false) {
                       }
                   });
             }
-
-            throw e;
         }
     }
 
@@ -364,8 +417,10 @@ module.exports = function (isTorEnabled = false) {
 
         const urlParts = new URL(options.url);
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+        const isTorRequest = isTorNeeded(options.url);
+        const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorNeeded(options.url) && isTorEnabled) {
+        if (!isLocalhost && isTorRequest && isTorStateStarted) {
             req = _request.defaults({agent: torHttpsAgent});
         }
 
@@ -374,9 +429,10 @@ module.exports = function (isTorEnabled = false) {
                 callBack?.(...args)
             });
         } catch (e) {
-            const isTorEnabled = await awaitTor();
+            const isTorStateStarted = await isTorStarted();
+            const isTorRequest = isTorNeeded(options.url);
 
-            if (!isLocalhost && isTorEnabled && isTorEnabled && !isTorNeeded(options.url)) {
+            if (!isLocalhost && isTorStateStarted && !isTorRequest) {
                 saveHostStats(options.url)
                 return self.request(options, callBack);
             }
@@ -388,26 +444,6 @@ module.exports = function (isTorEnabled = false) {
     self.isTorNeeded = (url) => isTorNeeded(url);
 
     self.saveHostStats = (url, stats) => saveHostStats(url, stats);
-
-    const awaitTor = async () => {
-        if (!isTorEnabled) {
-            return Promise.resolve(false);
-        }
-
-        const torcontrol = self.torapplications;
-
-        if (!torcontrol || torcontrol?.isStopped()) {
-            return Promise.resolve(false);
-        }
-
-        if (torcontrol.isStarted()) {
-            return Promise.resolve(true);
-        }
-
-        return new Promise((resolve, reject) => {
-            self.torapplications.onStarted(() => resolve(true));
-        });
-    };
 
     return self;
 }
