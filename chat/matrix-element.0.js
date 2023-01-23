@@ -435,7 +435,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 
 /* harmony default export */ var chat_list_vue_type_script_lang_js_ = ({
-  name: 'chatList',
+  name: "chatList",
   props: {
     chat: Object,
     filterType: String,
@@ -488,27 +488,28 @@ var component = Object(componentNormalizer["a" /* default */])(
   },
   computed: Object(vuex_esm["c" /* mapState */])({
     lloading: function () {
-      return this.loading || this['p_f'] || this['p_b'];
+      return this.loading || this["p_f"] || this["p_b"];
     },
     auth: state => state.auth,
     settings_read: state => !state.dontreadreceipts,
     eventsTypes: function () {
       var types = {
-        'm.room.message': true,
-        'p.room.encrypt.message': true,
-        'p.room.': true,
-        'm.room.image': true,
-        'm.room.audio': true,
-        'm.room.file': true,
-        'm.call.invite': true,
-        'm.call.hangup': true,
-        'm.call.reject': true,
-        'm.fully_read': true
+        "m.room.message": true,
+        "p.room.encrypt.message": true,
+        "p.room.": true,
+        "m.room.image": true,
+        "m.room.audio": true,
+        "m.room.file": true,
+        "m.call.invite": true,
+        "m.room.request_calls_access": true,
+        "m.call.hangup": true,
+        "m.call.reject": true,
+        "m.fully_read": true
       };
 
       if (_.toArray(this.chat && this.chat.currentState.members || {}).length > 2) {
-        types['m.room.member'] = true;
-        types['m.room.power_levels'] = true;
+        types["m.room.member"] = true;
+        types["m.room.power_levels"] = true;
       }
 
       return types;
@@ -539,7 +540,7 @@ var component = Object(componentNormalizer["a" /* default */])(
         event,
         text
       } = _ref;
-      this.$emit('editingEvent', {
+      this.$emit("editingEvent", {
         event,
         text
       });
@@ -548,7 +549,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       let {
         event
       } = _ref2;
-      this.$emit('replyEvent', {
+      this.$emit("replyEvent", {
         event
       });
     },
@@ -560,6 +561,9 @@ var component = Object(componentNormalizer["a" /* default */])(
     },
     getEvents: function () {
       var events = this.timeline.getEvents();
+      var lastCallAccess = events.filter(e => {
+        return e.event.type === "m.room.request_calls_access";
+      }).pop();
       events = _.filter(events, e => {
         var type = e.event.type;
 
@@ -567,11 +571,27 @@ var component = Object(componentNormalizer["a" /* default */])(
           return;
         }
 
-        if (e.event.type === 'm.room.power_levels' && Object.keys(e.event.content.users).length === 1) {
+        if (e.event.type === "m.room.request_calls_access") {
+          if (e.event.event_id === lastCallAccess.event.event_id) {
+            if (e.event.content.accepted !== undefined) {
+              return false;
+            } else {
+              if (this.core.mtrx.me(e.event.sender)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+          } else {
+            return false;
+          }
+        }
+
+        if (e.event.type === "m.room.power_levels" && Object.keys(e.event.content.users).length === 1) {
           return;
         }
 
-        if (this.chat.currentState.getMembers().length <= 2 && e.event.type === 'm.room.member' && 'm.room.power_levels') {
+        if (this.chat.currentState.getMembers().length <= 2 && e.event.type === "m.room.member" && "m.room.power_levels") {
           return;
         }
 
@@ -590,7 +610,7 @@ var component = Object(componentNormalizer["a" /* default */])(
         return e.getDate() || Infinity;
       });
       events = events.reverse();
-      this.$emit('getEvents', events); // events = _.filter(events, function (e) {
+      this.$emit("getEvents", events); // events = _.filter(events, function (e) {
       //   return e.ty
       // })
 
@@ -602,35 +622,35 @@ var component = Object(componentNormalizer["a" /* default */])(
         if (!this.chat.pcrypto) return Promise.resolve();
         if (e.event.decrypted) return Promise.resolve();
         var pr = null;
-        var subtype = functions["a" /* default */].deep(e, 'event.content.msgtype'); //if(f.deep(e, 'event.content.msgtype') != 'm.encrypted') return Promise.resolve()
+        var subtype = functions["a" /* default */].deep(e, "event.content.msgtype"); //if(f.deep(e, 'event.content.msgtype') != 'm.encrypted') return Promise.resolve()
 
-        var einfo = functions["a" /* default */].deep(e, 'event.content.info.secrets') || functions["a" /* default */].deep(e, 'event.content.pbody.secrets');
+        var einfo = functions["a" /* default */].deep(e, "event.content.info.secrets") || functions["a" /* default */].deep(e, "event.content.pbody.secrets");
 
         if (einfo) {
-          if (subtype == 'm.image') {}
+          if (subtype == "m.image") {}
 
-          if (subtype == 'm.audio') {
+          if (subtype == "m.audio") {
             pr = this.core.mtrx.getAudio(this.chat, e).catch(error => {
               console.error(error);
               e.event.decrypted = {
-                msgtype: 'm.bad.encrypted'
+                msgtype: "m.bad.encrypted"
               };
             });
           }
 
-          if (subtype == 'm.encrypted') {
+          if (subtype == "m.encrypted") {
             pr = this.chat.pcrypto.decryptEvent(e.event).then(d => {
               e.event.decrypted = d;
               return Promise.resolve();
             }).catch(e => {
               e.event.decrypted = {
-                msgtype: 'm.bad.encrypted'
+                msgtype: "m.bad.encrypted"
               };
               return Promise.resolve();
             });
           }
         } else {
-          if (subtype == 'm.audio') {
+          if (subtype == "m.audio") {
             pr = this.core.mtrx.getAudioUnencrypt(this.chat, e);
           }
         }
@@ -640,13 +660,13 @@ var component = Object(componentNormalizer["a" /* default */])(
           return Promise.resolve();
         });
         /*return this.chat.pcrypto.decryptEvent(e.event).then(d => {
-          e.event.decrypted = d
-            return Promise.resolve()
+        e.event.decrypted = d
+          return Promise.resolve()
         }).catch(e => {
-            e.event.decrypted = {
-            msgtype : 'm.bad.encrypted'
-          }
-            return Promise.resolve()
+          e.event.decrypted = {
+          msgtype : 'm.bad.encrypted'
+        }
+          return Promise.resolve()
         })*/
       })).then(() => {
         return Promise.resolve(events);
@@ -658,7 +678,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       _.each(events, e => {
         try {
           //if(!e.event.content.edited){
-          var rt = ts.getRelationsForEvent(e.event.event_id, 'm.replace', 'm.room.message');
+          var rt = ts.getRelationsForEvent(e.event.event_id, "m.replace", "m.room.message");
 
           if (rt) {
             var last = rt.getLastReplacement();
@@ -680,10 +700,10 @@ var component = Object(componentNormalizer["a" /* default */])(
       var _ref3 = Object(asyncToGenerator["a" /* default */])(function* () {
         var filter = new this.core.mtrx.sdk.Filter(client.getUserId());
         filter.setDefinition({
-          "room": {
-            "timeline": {
-              "contains_url": true,
-              "types": ["m.room.message"]
+          room: {
+            timeline: {
+              contains_url: true,
+              types: ["m.room.message"]
             }
           }
         });
@@ -702,8 +722,8 @@ var component = Object(componentNormalizer["a" /* default */])(
         var timeline = this.chat.getLiveTimeline();
         var ts;
 
-        if (this.filterType === 'images') {
-          this.scrollType = 'custom';
+        if (this.filterType === "images") {
+          this.scrollType = "custom";
           ts = yield this.mediaTimelineSet();
         } else {
           ts = timeline.getTimelineSet();
@@ -736,9 +756,9 @@ var component = Object(componentNormalizer["a" /* default */])(
     },
     paginate: function (direction, rnd) {
       //$(this.$el).find('.eventsflex')[0]
-      if (!this.loading && this.timeline && !this['p_' + direction]) {
+      if (!this.loading && this.timeline && !this["p_" + direction]) {
         if (this.timeline.canPaginate(direction) || rnd) {
-          this['p_' + direction] = true;
+          this["p_" + direction] = true;
           let count =
           /*this.firstPaginate ? 24 : */
           20;
@@ -752,7 +772,7 @@ var component = Object(componentNormalizer["a" /* default */])(
             this.events = events;
             this.firstPaginate = false; // this.readAll();
 
-            this['p_' + direction] = false;
+            this["p_" + direction] = false;
           });
         } else {
           this.readAll();
@@ -760,11 +780,11 @@ var component = Object(componentNormalizer["a" /* default */])(
       }
     },
     autoPaginateAll: function () {
-      if (this.filterType === 'images') {
-        this.autoPaginate('b');
+      if (this.filterType === "images") {
+        this.autoPaginate("b");
       } else {
-        this.autoPaginate('b');
-        this.autoPaginate('f');
+        this.autoPaginate("b");
+        this.autoPaginate("f");
       }
     },
     needLoad: function (direction) {
@@ -773,7 +793,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       var scrollTop = this.esize.scrollTop || 0;
       var clientHeight = Math.max(this.esize.clientHeight || 0, 800);
 
-      if (direction == 'b') {
+      if (direction == "b") {
         var safespace = clientHeight;
         if (scrollHeight - scrollTop < clientHeight + safespace) r = true;
       } else {
@@ -840,7 +860,7 @@ var component = Object(componentNormalizer["a" /* default */])(
     //////////////
     scrollE: function (size) {
       this.updatedSize(size);
-      this.$emit('scroll', size);
+      this.$emit("scroll", size);
     },
     updatedSize: function (size) {
       this.esize = size;
@@ -857,13 +877,13 @@ var component = Object(componentNormalizer["a" /* default */])(
       this.scrolling = false;
     },
     imageGallery: function (e) {
-      this.$emit('eventImage', e);
+      this.$emit("eventImage", e);
     },
     menuIsVisibleHandler: function (isVisible) {
-      this.$emit('menuIsVisible', isVisible);
+      this.$emit("menuIsVisible", isVisible);
     },
     messagesIsDeleted: function (state) {
-      this.$emit('messagesIsDeleted', state);
+      this.$emit("messagesIsDeleted", state);
     }
   }
 });

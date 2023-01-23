@@ -40,20 +40,6 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "2192":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".nameWrapper[data-v-2e48f1c6]{display:flex;align-items:center;justify-content:center}.roomMuted[data-v-2e48f1c6]{margin-left:3px}.roomMuted i[data-v-2e48f1c6]{font-size:.7em}.editButton[data-v-2e48f1c6]{display:flex;justify-content:center;align-items:center}.editButton i[data-v-2e48f1c6]{font-size:1.5em}.nameline[data-v-2e48f1c6],[data-v-2e48f1c6] .nameline{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}[data-v-2e48f1c6] .nameline{max-width:250px}[data-v-2e48f1c6] #topheader.minimized.fix{background:transparent;overflow:inherit}[data-v-2e48f1c6] #search{padding-left:.5em;padding-right:.5em}.donationModalBody[data-v-2e48f1c6]{padding:1em;display:flex;flex-direction:column}.donationModalBody span[data-v-2e48f1c6]{color:rgb(var(--color-txt-ac))}.donationModalBody input[data-v-2e48f1c6],.donationModalBody select[data-v-2e48f1c6]{margin-top:.5em;margin-bottom:1.5em;border:1px solid rgb(var(--color-txt-ac));border-radius:3px;padding:.5em}.donationModalBody input.disabled[data-v-2e48f1c6],.donationModalBody select.disabled[data-v-2e48f1c6]{color:rgb(var(--neutral-grad-2));border:1px solid rgba(var(--neutral-grad-2),.5)}.donationModalBody button[data-v-2e48f1c6]{margin-top:1em}.donationModalBody button i[data-v-2e48f1c6]{margin-right:.2em}.donationModalBody .totalAmount[data-v-2e48f1c6]{font-weight:700;margin-left:.5em;margin-top:.5em;margin-bottom:1em}.donationModalBody .error[data-v-2e48f1c6]{color:rgb(var(--color-bad));text-align:center}.donationModalBody .linepreloader[data-v-2e48f1c6]{text-align:center;height:29px;margin-top:1em}.encrypted[data-v-2e48f1c6]{z-index:2;color:rgb(var(--color-good));padding:.25em .5em}.encrypted i[data-v-2e48f1c6]{font-size:.8em;cursor:pointer}.encryptedInfo[data-v-2e48f1c6]{cursor:default;margin-left:-25px;position:absolute;top:50%;transform:translateY(-50%);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column}.encryptedInfo #slide[data-v-2e48f1c6]{border-radius:8px;padding:0 .5em;position:absolute;left:0;background:#fff;-webkit-animation:slide-data-v-2e48f1c6 .1s forwards;-webkit-animation-delay:.3s;animation:slide-data-v-2e48f1c6 .1s forwards;animation-delay:.3s;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@-webkit-keyframes slide-data-v-2e48f1c6{left:0}@keyframes slide-data-v-2e48f1c6{to{left:0}}.encryptedInfo button[data-v-2e48f1c6]{cursor:pointer;display:flex;align-items:center;justify-content:flex-start;text-align:left}.encryptedInfo button i[data-v-2e48f1c6]{margin-right:5px}.encryptedInfo .encryptedTxtIcon[data-v-2e48f1c6]{flex-direction:column;align-items:center;justify-content:center;padding:.25em .25em;text-align:center}.encryptedInfo .encryptedTxtIcon span[data-v-2e48f1c6]{color:rgb(var(--color-good));font-size:.8em}.encryptedInfo .encryptedTxtIcon i[data-v-2e48f1c6]{color:rgb(var(--color-good));display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "3688":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66,14 +52,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "38fb":
+/***/ "506d":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e48f1c6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("7f17");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e48f1c6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e48f1c6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e48f1c6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e48f1c6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_91fdf176_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8bdb");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_91fdf176_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_91fdf176_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_91fdf176_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_91fdf176_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -140,24 +126,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "7f17":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("2192");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("d72e5588", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "8669":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -172,6 +140,24 @@ if(content.locals) module.exports = content.locals;
 var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("dfdc80cc", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "8bdb":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("d048");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7f1f7dc7", content, shadowRoot)
 };
 
 /***/ }),
@@ -274,6 +260,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8ae0c26_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5ab8");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8ae0c26_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8ae0c26_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8ae0c26_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8ae0c26_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "d048":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".call[data-v-91fdf176]{font-size:.8em}.call.disabled[data-v-91fdf176]{color:rgb(var(--neutral-grad-1));cursor:not-allowed}.call.wait[data-v-91fdf176]{color:rgb(var(--color-star-yellow));cursor:not-allowed}.nameWrapper[data-v-91fdf176]{display:flex;align-items:center;justify-content:center}.roomMuted[data-v-91fdf176]{margin-left:3px}.roomMuted i[data-v-91fdf176]{font-size:.7em}.editButton[data-v-91fdf176]{display:flex;justify-content:center;align-items:center}.editButton i[data-v-91fdf176]{font-size:1.5em}.nameline[data-v-91fdf176],[data-v-91fdf176] .nameline{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}[data-v-91fdf176] .nameline{max-width:250px}[data-v-91fdf176] #topheader.minimized.fix{background:transparent;overflow:inherit}[data-v-91fdf176] #search{padding-left:.5em;padding-right:.5em}.donationModalBody[data-v-91fdf176]{padding:1em;display:flex;flex-direction:column}.donationModalBody span[data-v-91fdf176]{color:rgb(var(--color-txt-ac))}.donationModalBody input[data-v-91fdf176],.donationModalBody select[data-v-91fdf176]{margin-top:.5em;margin-bottom:1.5em;border:1px solid rgb(var(--color-txt-ac));border-radius:3px;padding:.5em}.donationModalBody input.disabled[data-v-91fdf176],.donationModalBody select.disabled[data-v-91fdf176]{color:rgb(var(--neutral-grad-2));border:1px solid rgba(var(--neutral-grad-2),.5)}.donationModalBody button[data-v-91fdf176]{margin-top:1em}.donationModalBody button i[data-v-91fdf176]{margin-right:.2em}.donationModalBody .totalAmount[data-v-91fdf176]{font-weight:700;margin-left:.5em;margin-top:.5em;margin-bottom:1em}.donationModalBody .error[data-v-91fdf176]{color:rgb(var(--color-bad));text-align:center}.donationModalBody .linepreloader[data-v-91fdf176]{text-align:center;height:29px;margin-top:1em}.encrypted[data-v-91fdf176]{z-index:2;color:rgb(var(--color-good));padding:.25em .5em}.encrypted i[data-v-91fdf176]{font-size:.8em;cursor:pointer}.encryptedInfo[data-v-91fdf176]{cursor:default;margin-left:-25px;position:absolute;top:50%;transform:translateY(-50%);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column}.encryptedInfo #slide[data-v-91fdf176]{border-radius:8px;padding:0 .5em;position:absolute;left:0;background:#fff;-webkit-animation:slide-data-v-91fdf176 .1s forwards;-webkit-animation-delay:.3s;animation:slide-data-v-91fdf176 .1s forwards;animation-delay:.3s;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@-webkit-keyframes slide-data-v-91fdf176{left:0}@keyframes slide-data-v-91fdf176{to{left:0}}.encryptedInfo button[data-v-91fdf176]{cursor:pointer;display:flex;align-items:center;justify-content:flex-start;text-align:left}.encryptedInfo button i[data-v-91fdf176]{margin-right:5px}.encryptedInfo .encryptedTxtIcon[data-v-91fdf176]{flex-direction:column;align-items:center;justify-content:center;padding:.25em .25em;text-align:center}.encryptedInfo .encryptedTxtIcon span[data-v-91fdf176]{color:rgb(var(--color-good));font-size:.8em}.encryptedInfo .encryptedTxtIcon i[data-v-91fdf176]{color:rgb(var(--color-good));display:none}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -1124,12 +1124,18 @@ var chat_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var chat = (chat_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f682b48-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/topheader/index.vue?vue&type=template&id=2e48f1c6&scoped=true&
-var topheadervue_type_template_id_2e48f1c6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatTopheader"}},[(_vm.chat || _vm.u)?_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [_c('backButton',{attrs:{"action":"chats"}})]},proxy:true},{key:"leftadd",fn:function(){return [_c('search',{attrs:{"chat":"true","minimize":!_vm.matches.value}})]},proxy:true},{key:"info",fn:function(){return [(_vm.chat)?_c('router-link',{attrs:{"to":'chatInfo?id=' + _vm.chat.roomId}},[(_vm.m_chat)?_c('div',[_c('div',{staticClass:"nameWrapper"},[(!_vm.roomInfo)?_c('chatName',{attrs:{"preview":true,"chat":_vm.chat,"m_chat":_vm.m_chat}}):_vm._e(),(_vm.roomMuted)?_c('div',{staticClass:"roomMuted"},[_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e()],1),_c('transition',{attrs:{"name":"fade"}},[(_vm.m_chat_typing)?_c('chatTyping'):_vm._e()],1)],1):_vm._e(),(!_vm.m_chat && _vm.userinfo)?_c('div',[_c('span',{staticClass:"nameline"},[_vm._v(_vm._s(_vm.userinfo.name))])]):_vm._e()]):_vm._e()]},proxy:true},(_vm.callsEnabled)?{key:"rightadd",fn:function(){return [(_vm.isCallsActive && !_vm.isGroup)?_c('div',{staticClass:"call btn iconbutton",on:{"click":_vm.bcCall}},[_c('i',{staticClass:"fas fa-video"})]):_vm._e()]},proxy:true}:null,{key:"right",fn:function(){return [(_vm.chat)?_c('router-link',{attrs:{"to":'chatInfo?id=' + _vm.chat.roomId}},[_c('div',{staticClass:"iconbutton"},[_c('i',{staticClass:"fas fa-ellipsis-h"})])]):_vm._e()]},proxy:true}],null,true)}):_vm._e(),(_vm.donateUserOpened)?_c('modal',{on:{"close":_vm.closeDonateModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.donate")))])]},proxy:true},{key:"body",fn:function(){return [_c('div',{staticClass:"donationModalBody"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.source")))]),_c('input',{staticClass:"disabled",attrs:{"type":"text","value":"Account Address","disabled":true}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.amount")))]),_c('input',{directives:[{name:"model",rawName:"v-model.number",value:(_vm.donationAmount),expression:"donationAmount",modifiers:{"number":true}}],attrs:{"type":"number","disabled":_vm.sending},domProps:{"value":(_vm.donationAmount)},on:{"keyup":function($event){return _vm.resetDonation()},"input":function($event){if($event.target.composing){ return; }_vm.donationAmount=_vm._n($event.target.value)},"blur":function($event){return _vm.$forceUpdate()}}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.receiver")))]),_c('input',{staticClass:"disabled",attrs:{"type":"text","disabled":true},domProps:{"value":(_vm.receiver) ? _vm.receiver.name : ''}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.message")))]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.donationMessage),expression:"donationMessage"}],attrs:{"type":"text","placeholder":"Your message","disabled":_vm.sending},domProps:{"value":(_vm.donationMessage)},on:{"input":function($event){if($event.target.composing){ return; }_vm.donationMessage=$event.target.value}}}),(_vm.showFeesError && _vm.showFeesError == 'money')?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.balanceTooLow")))]):(_vm.showFeesError)?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.transactionError")))]):_vm._e(),(_vm.calculatingFees != true)?_c('button',{staticClass:"button small",attrs:{"disabled":!_vm.donationAmount || _vm.calculatedFees != null},on:{"click":_vm.onCalculateFeesClick}},[_c('i',{staticClass:"fas fa-chevron-circle-right"}),_vm._v(" "+_vm._s(_vm.$t("caption.calculateFees"))+" ")]):_vm._e(),(_vm.calculatingFees == true)?_c('div',{staticClass:"linepreloader"},[_c('linepreloader')],1):_vm._e()]),(_vm.calculatedFees != null)?_c('div',{staticClass:"donationModalBody"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.includeFeesInAmount")))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.feesDirection),expression:"feesDirection"}],attrs:{"disabled":_vm.sending},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.feesDirection=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.feesDirectionPossibleValues),function(feeDirection){return _c('option',{domProps:{"value":feeDirection.value}},[_vm._v(" "+_vm._s(feeDirection.label)+" ")])}),0),_c('span',[_vm._v(_vm._s(_vm.$t("caption.transactionFees")))]),_c('input',{staticClass:"disabled",attrs:{"type":"number","disabled":true},domProps:{"value":_vm.calculatedFees}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.totalAmount")))]),_c('span',{staticClass:"totalAmount"},[_vm._v(_vm._s(+_vm.totalDonationAmount.toFixed(5))+" PKOIN")]),(_vm.showTransactionError && _vm.showTransactionError == 'balance too low')?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.balanceTooLow")))]):(_vm.showTransactionError)?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.transactionError")))]):_vm._e(),(_vm.sending != true)?_c('button',{staticClass:"button small",attrs:{"disabled":_vm.sending},on:{"click":_vm.sendDonation}},[_c('i',{staticClass:"fas fa-arrow-alt-circle-right"}),_vm._v(" Send ")]):_vm._e(),(_vm.sending == true)?_c('div',{staticClass:"linepreloader"},[_c('linepreloader')],1):_vm._e()]):_vm._e()]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,2899695861)}):_vm._e()],1)}
-var topheadervue_type_template_id_2e48f1c6_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f682b48-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/topheader/index.vue?vue&type=template&id=91fdf176&scoped=true&
+var topheadervue_type_template_id_91fdf176_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatTopheader"}},[(_vm.chat || _vm.u)?_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [_c('backButton',{attrs:{"action":"chats"}})]},proxy:true},{key:"leftadd",fn:function(){return [_c('search',{attrs:{"chat":"true","minimize":!_vm.matches.value}})]},proxy:true},{key:"info",fn:function(){return [(_vm.chat)?_c('router-link',{attrs:{"to":'chatInfo?id=' + _vm.chat.roomId}},[(_vm.m_chat)?_c('div',[_c('div',{staticClass:"nameWrapper"},[(!_vm.roomInfo)?_c('chatName',{attrs:{"preview":true,"chat":_vm.chat,"m_chat":_vm.m_chat}}):_vm._e(),(_vm.roomMuted)?_c('div',{staticClass:"roomMuted"},[_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e()],1),_c('transition',{attrs:{"name":"fade"}},[(_vm.m_chat_typing)?_c('chatTyping'):_vm._e()],1)],1):_vm._e(),(!_vm.m_chat && _vm.userinfo)?_c('div',[_c('span',{staticClass:"nameline"},[_vm._v(_vm._s(_vm.userinfo.name))])]):_vm._e()]):_vm._e()]},proxy:true},(_vm.callsEnabled)?{key:"rightadd",fn:function(){return [(_vm.isCallsActive && !_vm.isGroup)?_c('div',{staticClass:"call btn iconbutton",class:_vm.checkCallsEnabled() === 'wait' || _vm.wait
+            ? 'wait'
+            : _vm.checkCallsEnabled()
+            ? ''
+            : 'disabled',on:{"click":_vm.bcCall}},[_c('i',{staticClass:"fas fa-video"})]):_vm._e()]},proxy:true}:null,{key:"right",fn:function(){return [(_vm.chat)?_c('router-link',{attrs:{"to":'chatInfo?id=' + _vm.chat.roomId}},[_c('div',{staticClass:"iconbutton"},[_c('i',{staticClass:"fas fa-ellipsis-h"})])]):_vm._e()]},proxy:true}],null,true)}):_vm._e(),(_vm.donateUserOpened)?_c('modal',{on:{"close":_vm.closeDonateModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.donate")))])]},proxy:true},{key:"body",fn:function(){return [_c('div',{staticClass:"donationModalBody"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.source")))]),_c('input',{staticClass:"disabled",attrs:{"type":"text","value":"Account Address","disabled":true}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.amount")))]),_c('input',{directives:[{name:"model",rawName:"v-model.number",value:(_vm.donationAmount),expression:"donationAmount",modifiers:{"number":true}}],attrs:{"type":"number","disabled":_vm.sending},domProps:{"value":(_vm.donationAmount)},on:{"keyup":function($event){return _vm.resetDonation()},"input":function($event){if($event.target.composing){ return; }_vm.donationAmount=_vm._n($event.target.value)},"blur":function($event){return _vm.$forceUpdate()}}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.receiver")))]),_c('input',{staticClass:"disabled",attrs:{"type":"text","disabled":true},domProps:{"value":_vm.receiver ? _vm.receiver.name : ''}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.message")))]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.donationMessage),expression:"donationMessage"}],attrs:{"type":"text","placeholder":"Your message","disabled":_vm.sending},domProps:{"value":(_vm.donationMessage)},on:{"input":function($event){if($event.target.composing){ return; }_vm.donationMessage=$event.target.value}}}),(_vm.showFeesError && _vm.showFeesError == 'money')?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.balanceTooLow")))]):(_vm.showFeesError)?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.transactionError")))]):_vm._e(),(_vm.calculatingFees != true)?_c('button',{staticClass:"button small",attrs:{"disabled":!_vm.donationAmount || _vm.calculatedFees != null},on:{"click":_vm.onCalculateFeesClick}},[_c('i',{staticClass:"fas fa-chevron-circle-right"}),_vm._v(" "+_vm._s(_vm.$t("caption.calculateFees"))+" ")]):_vm._e(),(_vm.calculatingFees == true)?_c('div',{staticClass:"linepreloader"},[_c('linepreloader')],1):_vm._e()]),(_vm.calculatedFees != null)?_c('div',{staticClass:"donationModalBody"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.includeFeesInAmount")))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.feesDirection),expression:"feesDirection"}],attrs:{"disabled":_vm.sending},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.feesDirection=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.feesDirectionPossibleValues),function(feeDirection){return _c('option',{domProps:{"value":feeDirection.value}},[_vm._v(" "+_vm._s(feeDirection.label)+" ")])}),0),_c('span',[_vm._v(_vm._s(_vm.$t("caption.transactionFees")))]),_c('input',{staticClass:"disabled",attrs:{"type":"number","disabled":true},domProps:{"value":_vm.calculatedFees}}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.totalAmount")))]),_c('span',{staticClass:"totalAmount"},[_vm._v(_vm._s(+_vm.totalDonationAmount.toFixed(5))+" PKOIN")]),(
+            _vm.showTransactionError && _vm.showTransactionError == 'balance too low'
+          )?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.balanceTooLow")))]):(_vm.showTransactionError)?_c('span',{staticClass:"error"},[_vm._v(_vm._s(_vm.$t("caption.transactionError")))]):_vm._e(),(_vm.sending != true)?_c('button',{staticClass:"button small",attrs:{"disabled":_vm.sending},on:{"click":_vm.sendDonation}},[_c('i',{staticClass:"fas fa-arrow-alt-circle-right"}),_vm._v(" Send ")]):_vm._e(),(_vm.sending == true)?_c('div',{staticClass:"linepreloader"},[_c('linepreloader')],1):_vm._e()]):_vm._e()]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,2978568404)}):_vm._e()],1)}
+var topheadervue_type_template_id_91fdf176_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chat/topheader/index.vue?vue&type=template&id=2e48f1c6&scoped=true&
+// CONCATENATED MODULE: ./src/components/chat/topheader/index.vue?vue&type=template&id=91fdf176&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -1149,14 +1155,14 @@ var contacts = __webpack_require__("71da");
 
 
 /* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
-  name: 'chatTopheader',
+  name: "chatTopheader",
   props: {
     chat: Object,
     u: String,
     roomInfo: false,
     aboutUser: false
   },
-  inject: ['isChatEncrypted', 'matches'],
+  inject: ["isChatEncrypted", "matches"],
   components: {
     chatName: assets_name["a" /* default */],
     chatIcon: icon["a" /* default */],
@@ -1233,6 +1239,7 @@ var contacts = __webpack_require__("71da");
         title: this.$i18n.t("caption.donate"),
         icon: "fas fa-money-bill-wave"
       }],
+      wait: false,
       loading: false,
       typing: false,
       userinfo: null,
@@ -1247,22 +1254,22 @@ var contacts = __webpack_require__("71da");
       // How much PKOIN we want to donate
       donationAmount: 0,
       // Optional message for the transaction
-      donationMessage: '',
+      donationMessage: "",
       // Calculated fees needed for the transaction
       calculatedFees: null,
       // Booleans to show errors
-      showFeesError: '',
-      showTransactionError: '',
+      showFeesError: "",
+      showTransactionError: "",
       // Booleans to show spinners
       calculatingFees: false,
       sending: false,
       // To choose by who the fee should be payed by
-      feesDirection: 'include',
+      feesDirection: "include",
       feesDirectionPossibleValues: [{
-        value: 'include',
+        value: "include",
         label: this.$i18n.t("caption.toBePaidByReceiver")
       }, {
-        value: 'exclude',
+        value: "exclude",
         label: this.$i18n.t("caption.toBePaidBySender")
       }],
       hoverEncrypt: false
@@ -1276,7 +1283,7 @@ var contacts = __webpack_require__("71da");
   computed: Object(vuex_esm["c" /* mapState */])({
     callsEnabled: state => state.isCallsEnabled,
     isGroup: function () {
-      return this.m_chat.name.slice(0, 1) === '@';
+      return this.m_chat.name.slice(0, 1) === "@";
     },
     auth: state => state.auth,
     isCallsActive: state => state.isCallsActive,
@@ -1309,33 +1316,66 @@ var contacts = __webpack_require__("71da");
       return userTyping || false;
     },
     totalDonationAmount: function () {
-      return this.feesDirection == 'include' ? this.donationAmount : this.donationAmount + this.calculatedFees;
+      return this.feesDirection == "include" ? this.donationAmount : this.donationAmount + this.calculatedFees;
     }
   }),
   methods: {
+    checkCallsEnabled: function () {
+      var _isEnabled$find, _isEnabled$find$event, _isEnabled$find$event2, _hasAccess$find, _hasAccess$find2, _hasAccess$find2$even, _hasAccess$find2$even2;
+
+      let isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
+      let hasAccess = this.m_chat.currentState.getStateEvents("m.room.request_calls_access");
+
+      if ((_isEnabled$find = isEnabled.find(e => {
+        var _e$event, _e$event2, _e$event3;
+
+        return !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
+      })) !== null && _isEnabled$find !== void 0 && (_isEnabled$find$event = _isEnabled$find.event) !== null && _isEnabled$find$event !== void 0 && (_isEnabled$find$event2 = _isEnabled$find$event.content) !== null && _isEnabled$find$event2 !== void 0 && _isEnabled$find$event2.enabled) {
+        console.log("enabled");
+        this.wait = false;
+        return true;
+      }
+
+      if ((_hasAccess$find = hasAccess.find(e => {
+        var _e$event4;
+
+        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event4 = e.event) === null || _e$event4 === void 0 ? void 0 : _e$event4.sender);
+      })) !== null && _hasAccess$find !== void 0 && _hasAccess$find.event && ((_hasAccess$find2 = hasAccess.find(e => {
+        var _e$event5;
+
+        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event5 = e.event) === null || _e$event5 === void 0 ? void 0 : _e$event5.sender);
+      })) === null || _hasAccess$find2 === void 0 ? void 0 : (_hasAccess$find2$even = _hasAccess$find2.event) === null || _hasAccess$find2$even === void 0 ? void 0 : (_hasAccess$find2$even2 = _hasAccess$find2$even.content) === null || _hasAccess$find2$even2 === void 0 ? void 0 : _hasAccess$find2$even2.accepted) === undefined) {
+        console.log("wait");
+        return "wait";
+      } else {
+        console.log("nonono");
+        return false;
+      }
+    },
     bcCall: function () {
-      var _res, _res$event, _res$event$content, _res2, _res2$event, _res2$event$content, _res3, _res3$event;
-
-      let res = this.m_chat.currentState.getStateEvents("m.room.calls");
-      let isEnable = (_res = res[res.length - 1]) !== null && _res !== void 0 && (_res$event = _res.event) !== null && _res$event !== void 0 && (_res$event$content = _res$event.content) !== null && _res$event$content !== void 0 && _res$event$content.enabled ? true : ((_res2 = res[res.length - 1]) === null || _res2 === void 0 ? void 0 : (_res2$event = _res2.event) === null || _res2$event === void 0 ? void 0 : (_res2$event$content = _res2$event.content) === null || _res2$event$content === void 0 ? void 0 : _res2$event$content.enabled) == undefined ? true : false;
-
-      if (!isEnable && this.m_chat.myUserId !== ((_res3 = res[res.length - 1]) === null || _res3 === void 0 ? void 0 : (_res3$event = _res3.event) === null || _res3$event === void 0 ? void 0 : _res3$event.sender)) {
-        var _res4, _res4$event, _res4$event$content;
-
-        console.log('The user has restricted the possibility of calls', (_res4 = res[res.length - 1]) === null || _res4 === void 0 ? void 0 : (_res4$event = _res4.event) === null || _res4$event === void 0 ? void 0 : (_res4$event$content = _res4$event.content) === null || _res4$event$content === void 0 ? void 0 : _res4$event$content.enabled);
+      if (!this.checkCallsEnabled() || this.checkCallsEnabled() === "wait") {
+        this.core.mtrx.client.sendStateEvent(this.chat.roomId, "m.room.callsEnabled", {
+          enabled: true
+        }, this.core.user.userinfo.id);
+        this.wait = true;
+        this.requestCallsAccess();
         return;
       }
 
-      let local = document.querySelector('body');
+      let local = document.querySelector("body");
 
       try {
         let matrixCall = this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local);
         console.log(matrixCall);
-        if (matrixCall) this.$store.dispatch('CALL', matrixCall);
+        if (matrixCall) this.$store.dispatch("CALL", matrixCall);
       } catch (e) {
-        console.log('ошибка при создании звонка', e);
+        console.log("ошибка при создании звонка", e);
         return;
       }
+    },
+
+    requestCallsAccess() {
+      this.core.mtrx.client.sendStateEvent(this.m_chat.roomId, "m.room.request_calls_access");
     },
 
     navigateToProfile(id) {
@@ -1369,12 +1409,12 @@ var contacts = __webpack_require__("71da");
     },
 
     menuItemClickHandler(item, rowObject) {
-      if (item.click === 'AddMember') {
-        this.$emit('addMember', true);
+      if (item.click === "AddMember") {
+        this.$emit("addMember", true);
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'MuteRoom') {
+      if (item.click === "MuteRoom") {
         var roomId = this.chat.roomId;
         var deviceID = this.core.mtrx.client.deviceId;
         let self = this;
@@ -1382,42 +1422,42 @@ var contacts = __webpack_require__("71da");
         let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
 
         if (pushRules !== null) {
-          self.core.mtrx.client.deletePushRule('global', 'room', roomId);
+          self.core.mtrx.client.deletePushRule("global", "room", roomId);
           this.roomMuted = false;
         } else {
-          self.core.mtrx.client.setRoomMutePushRule('global', roomId, 'true');
+          self.core.mtrx.client.setRoomMutePushRule("global", roomId, "true");
           this.roomMuted = true;
         }
 
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'LeaveFromRoom') {
+      if (item.click === "LeaveFromRoom") {
         let self = this;
         this.core.mtrx.client.leave(this.chat.roomId).then(r => {
           this.core.mtrx.client.forget(this.chat.roomId, true).then(r => {
-            this.$store.commit('DELETE_ROOM', this.chat.roomId);
+            this.$store.commit("DELETE_ROOM", this.chat.roomId);
           }).then(r => {
             this.$router.push({
-              path: '/chats'
+              path: "/chats"
             }).catch(e => {});
           });
         });
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'BanRoom') {
-        let banUserId = '';
+      if (item.click === "BanRoom") {
+        let banUserId = "";
         let banUser = this.findOtherUser();
         if (banUser && banUser.userId) banUserId = banUser.userId;
         let roomID = this.chat.roomId;
-        this.core.mtrx.client.ban(roomID, banUserId, 'ban').then(r => {});
+        this.core.mtrx.client.ban(roomID, banUserId, "ban").then(r => {});
         this.roomBanned = true;
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'Unban') {
-        let banUserId = '';
+      if (item.click === "Unban") {
+        let banUserId = "";
         let banUser = this.findOtherUser();
         if (banUser && banUser.userId) banUserId = banUser.userId;
         this.core.mtrx.client.unban(this.chat.roomId, banUserId).then(r => {
@@ -1434,7 +1474,7 @@ var contacts = __webpack_require__("71da");
         this.$refs.dropdownMenu.hidePopup(); // Find the user we are about to donate to
 
         let receiverObj = this.findOtherUser();
-        this.receiver = receiverObj ? this.$f.deep(this, '$store.state.users.' + this.$f.getmatrixid(receiverObj.name)) : null;
+        this.receiver = receiverObj ? this.$f.deep(this, "$store.state.users." + this.$f.getmatrixid(receiverObj.name)) : null;
       }
     },
 
@@ -1449,12 +1489,12 @@ var contacts = __webpack_require__("71da");
 
     calculateFees() {
       var self = this;
-      this.showFeesError = '';
+      this.showFeesError = "";
       return new Promise((resolve, reject) => {
         // Check parameters
         if (this.donationAmount <= 0 || !this.receiver || !this.receiver.source || !this.receiver.source.address) {
-          this.showFeesError = 'invalid';
-          return reject('Missing amount or receiver');
+          this.showFeesError = "invalid";
+          return reject("Missing amount or receiver");
         } // Try calculating fees
 
 
@@ -1493,12 +1533,12 @@ var contacts = __webpack_require__("71da");
       return Object(asyncToGenerator["a" /* default */])(function* () {
         var self = _this;
         _this.sending = true;
-        _this.showTransactionError = ''; // Recalculate the fees just before sending
+        _this.showTransactionError = ""; // Recalculate the fees just before sending
 
         try {
           yield _this.calculateFees();
         } catch (err) {
-          _this.showTransactionError = 'error';
+          _this.showTransactionError = "error";
           _this.sending = false;
           return;
         } // Check if current balance is enough
@@ -1508,7 +1548,7 @@ var contacts = __webpack_require__("71da");
         sdk.node.transactions.get.canSpend(sdk.address.pnet().address, currentBalance => {
           // If balance is too low
           if (!currentBalance || isNaN(currentBalance) || currentBalance < self.totalDonationAmount) {
-            self.showTransactionError = 'balance too low';
+            self.showTransactionError = "balance too low";
             self.sending = false;
             return;
           } // Start the send transaction process
@@ -1524,7 +1564,7 @@ var contacts = __webpack_require__("71da");
             sdk.wallet.txbase([sdk.address.pnet().address], outputs, self.calculatedFees, self.feesDirection, function (err, inputs, _outputs) {
               if (err) {
                 console.error(err);
-                self.showTransactionError = 'error';
+                self.showTransactionError = "error";
                 self.sending = false;
                 return reject(err);
               }
@@ -1537,7 +1577,7 @@ var contacts = __webpack_require__("71da");
               sdk.node.transactions.send(tx, function (d, err) {
                 if (err) {
                   sdk.node.transactions.releaseCS(inputs);
-                  self.showTransactionError = 'error';
+                  self.showTransactionError = "error";
                   self.sending = false;
                   return;
                 } // Transaction has been sent
@@ -1560,7 +1600,7 @@ var contacts = __webpack_require__("71da");
             });
           } catch (err) {
             console.error(err);
-            self.showTransactionError = 'error';
+            self.showTransactionError = "error";
             self.sending = false;
           }
         });
@@ -1569,8 +1609,8 @@ var contacts = __webpack_require__("71da");
 
     resetDonation() {
       this.calculatedFees = null;
-      this.showFeesError = '';
-      this.showTransactionError = '';
+      this.showFeesError = "";
+      this.showTransactionError = "";
     }
 
   }
@@ -1583,7 +1623,7 @@ var contacts = __webpack_require__("71da");
 
 function topheader_injectStyles (context) {
   
-  var style0 = __webpack_require__("38fb")
+  var style0 = __webpack_require__("506d")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -1592,11 +1632,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var topheader_component = Object(componentNormalizer["a" /* default */])(
   chat_topheader_vue_type_script_lang_js_,
-  topheadervue_type_template_id_2e48f1c6_scoped_true_render,
-  topheadervue_type_template_id_2e48f1c6_scoped_true_staticRenderFns,
+  topheadervue_type_template_id_91fdf176_scoped_true_render,
+  topheadervue_type_template_id_91fdf176_scoped_true_staticRenderFns,
   false,
   topheader_injectStyles,
-  "2e48f1c6",
+  "91fdf176",
   null
   ,true
 )

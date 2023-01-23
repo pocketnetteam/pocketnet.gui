@@ -28,6 +28,18 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "0fe1":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ee1dd3f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b82a");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ee1dd3f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ee1dd3f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ee1dd3f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ee1dd3f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "1036":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -165,12 +177,12 @@ var chatInfovue_type_template_id_02904b2d_scoped_true_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f682b48-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chatInfo/info/index.vue?vue&type=template&id=03c09311&scoped=true&
-var infovue_type_template_id_03c09311_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"aboutRoom"},[_c('div',{staticClass:"roomInfoWrapper noSwipe"},[_c('div',{class:{'chatIconWrapper':'chatIconWrapper'}},[_c('chatIcon',{attrs:{"slidesPerView":4,"dontuseslides":_vm.minimized && !_vm.active,"chat":_vm.chat,"m_chat":_vm.m_chat,"hideunseen":true}}),_c('div',{staticClass:"chatGroupIcon"},[_c('img',{attrs:{"src":_vm.groupAvatar,"alt":""}})])],1),_c('chatName',{staticClass:"roomNameLine",attrs:{"preview":true,"chat":_vm.chat,"m_chat":_vm.m_chat}}),(_vm.topicTxt)?_c('div',{staticClass:"roomInfo"},[_c('span',{staticClass:"topicTxt"},[_vm._v(_vm._s(_vm.topicTxt))])]):_vm._e()],1),_c('div',{staticClass:"roomAccordionsList"},[_vm._l((_vm.accordionList),function(item,index){return _c('div',{key:index,staticClass:"accordion",class:{active: _vm.isActive === index}},[_c('div',{staticClass:"aHeader",on:{"click":function($event){return _vm.toggleItem(index)}}},[_c('div',{staticClass:"head"},[_c('div',{staticClass:"leftBlock"},[(item.id === 'members')?_c('i',{staticClass:"fas fa-users"}):_vm._e(),(item.id === 'media')?_c('i',{staticClass:"far fa-image"}):_vm._e(),(item.id === 'files')?_c('i',{staticClass:"fas fa-folder"}):_vm._e(),_vm._v(" "+_vm._s(item.title)+" ")]),(item.id === 'members')?_c('div',{staticClass:"rightBlock"},[(_vm.membersList)?_c('div',{staticClass:"membersCount"},[_c('span',[_vm._v(_vm._s(_vm.membersList.length))])]):_vm._e()]):_vm._e()])]),_c('div',{staticClass:"body"},[(_vm.isActive === index && item.id === 'members')?_c('members',{attrs:{"membersList":_vm.membersList},on:{"admin":_vm.makeAdmin,"kick":_vm.kickUser,"ban":_vm.banUser}}):_vm._e(),(_vm.isActive === index && item.id === 'media')?_c('images',{attrs:{"chat":_vm.m_chat}}):_vm._e(),(_vm.isActive === index && item.id === 'files')?_c('files',{attrs:{"chat":_vm.m_chat,"fileEvents":_vm.fileEvents}}):_vm._e()],1)])}),(_vm.public)?_c('div',{staticClass:"publicRoomElements"},[_c('div',{staticClass:"linkwrapper"},[_c('div',{staticClass:"linkPlace"},[_c('i',{staticClass:"fas fa-link",on:{"click":function($event){return _vm.copyShareLink()}}}),_c('span',{on:{"click":function($event){return _vm.copyShareLink()}}},[_vm._v(_vm._s(_vm.shareRoomLink))])]),_c('div',{staticClass:"sharelink"},[_c('button',{staticClass:"button small rounded ghost",on:{"click":_vm.sharelink}},[_vm._v(" Share "),_c('i',{staticClass:"fas fa-share-alt"})])])])]):_vm._e()],2),_c('div',{staticClass:"roomActionsList"},[(_vm.canInvite)?_c('button',{staticClass:"button small rounded",on:{"click":_vm.modalInviteUser}},[_vm._v(" "+_vm._s(_vm.$t("caption.add"))+" "),_c('i',{staticClass:"fas fa-user-plus"})]):_vm._e(),_c('button',{staticClass:"button small black rounded",on:{"click":_vm.muteRoom}},[(!_vm.roomMuted)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.mute"))+" "),_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e(),(_vm.roomMuted)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.unmute"))+" "),_c('i',{staticClass:"fas fa-bell"})]):_vm._e()]),(!_vm.tetatet)?_c('button',{staticClass:"button small  rounded badbutton",on:{"click":function($event){return _vm.forgetRoom()}}},[_vm._v(" "+_vm._s(_vm.$t("caption.leave"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.tetatet && !_vm.blockedCheck)?_c('button',{staticClass:"button small  rounded badbutton",on:{"click":function($event){return _vm.blockUser()}}},[_vm._v(" "+_vm._s(_vm.$t("button.block"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.tetatet && _vm.blockedCheck)?_c('button',{staticClass:"button small rounded",on:{"click":function($event){return _vm.unblock()}}},[_vm._v(" "+_vm._s(_vm.$t("button.unblock"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.curation/* && (blockedCheck || !tetatet)*/)?_c('button',{staticClass:"button small rounded badbutton",on:{"click":function($event){return _vm.complain()}}},[_vm._v(" "+_vm._s(_vm.$t("button.Complain"))+" "),_c('i',{staticClass:"fas fa-exclamation-triangle"})]):_vm._e()]),(_vm.inviteUserOpened)?_c('modal',{on:{"close":_vm.closeModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.inviteUser")))])]},proxy:true},{key:"body",fn:function(){return [_c('invite',{attrs:{"chatRoomId":_vm.chat.roomId},on:{"completed":_vm.closeContactModal}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,2878587737)}):_vm._e()],1)}
-var infovue_type_template_id_03c09311_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f682b48-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chatInfo/info/index.vue?vue&type=template&id=1ee1dd3f&scoped=true&
+var infovue_type_template_id_1ee1dd3f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"aboutRoom"},[_c('div',{staticClass:"roomInfoWrapper noSwipe"},[_c('div',{class:{'chatIconWrapper':'chatIconWrapper'}},[_c('chatIcon',{attrs:{"slidesPerView":4,"dontuseslides":_vm.minimized && !_vm.active,"chat":_vm.chat,"m_chat":_vm.m_chat,"hideunseen":true}}),_c('div',{staticClass:"chatGroupIcon"},[_c('img',{attrs:{"src":_vm.groupAvatar,"alt":""}})])],1),_c('chatName',{staticClass:"roomNameLine",attrs:{"preview":true,"chat":_vm.chat,"m_chat":_vm.m_chat}}),(_vm.topicTxt)?_c('div',{staticClass:"roomInfo"},[_c('span',{staticClass:"topicTxt"},[_vm._v(_vm._s(_vm.topicTxt))])]):_vm._e()],1),_c('div',{staticClass:"roomAccordionsList"},[_vm._l((_vm.accordionList),function(item,index){return _c('div',{key:index,staticClass:"accordion",class:{active: _vm.isActive === index}},[_c('div',{staticClass:"aHeader",on:{"click":function($event){return _vm.toggleItem(index)}}},[_c('div',{staticClass:"head"},[_c('div',{staticClass:"leftBlock"},[(item.id === 'members')?_c('i',{staticClass:"fas fa-users"}):_vm._e(),(item.id === 'media')?_c('i',{staticClass:"far fa-image"}):_vm._e(),(item.id === 'files')?_c('i',{staticClass:"fas fa-folder"}):_vm._e(),_vm._v(" "+_vm._s(item.title)+" ")]),(item.id === 'members')?_c('div',{staticClass:"rightBlock"},[(_vm.membersList)?_c('div',{staticClass:"membersCount"},[_c('span',[_vm._v(_vm._s(_vm.membersList.length))])]):_vm._e()]):_vm._e()])]),_c('div',{staticClass:"body"},[(_vm.isActive === index && item.id === 'members')?_c('members',{attrs:{"membersList":_vm.membersList},on:{"admin":_vm.makeAdmin,"kick":_vm.kickUser,"ban":_vm.banUser}}):_vm._e(),(_vm.isActive === index && item.id === 'media')?_c('images',{attrs:{"chat":_vm.m_chat}}):_vm._e(),(_vm.isActive === index && item.id === 'files')?_c('files',{attrs:{"chat":_vm.m_chat,"fileEvents":_vm.fileEvents}}):_vm._e()],1)])}),(_vm.public)?_c('div',{staticClass:"publicRoomElements"},[_c('div',{staticClass:"linkwrapper"},[_c('div',{staticClass:"linkPlace"},[_c('i',{staticClass:"fas fa-link",on:{"click":function($event){return _vm.copyShareLink()}}}),_c('span',{on:{"click":function($event){return _vm.copyShareLink()}}},[_vm._v(_vm._s(_vm.shareRoomLink))])]),_c('div',{staticClass:"sharelink"},[_c('button',{staticClass:"button small rounded ghost",on:{"click":_vm.sharelink}},[_vm._v(" Share "),_c('i',{staticClass:"fas fa-share-alt"})])])])]):_vm._e()],2),_c('div',{staticClass:"roomActionsList"},[(_vm.canInvite)?_c('button',{staticClass:"button small rounded",on:{"click":_vm.modalInviteUser}},[_vm._v(" "+_vm._s(_vm.$t("caption.add"))+" "),_c('i',{staticClass:"fas fa-user-plus"})]):_vm._e(),_c('button',{staticClass:"button small black rounded",on:{"click":_vm.muteRoom}},[(!_vm.roomMuted)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.mute"))+" "),_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e(),(_vm.roomMuted)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.unmute"))+" "),_c('i',{staticClass:"fas fa-bell"})]):_vm._e()]),_c('button',{staticClass:"button small black rounded",on:{"click":_vm.muteCalls}},[(!_vm.roomCallsDisabled)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.disableCalls"))+" "),_c('i',{staticClass:"fas fa-video-slash"})]):_vm._e(),(_vm.roomCallsDisabled)?_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.enableCalls"))+" "),_c('i',{staticClass:"fas fa-video"})]):_vm._e()]),(!_vm.tetatet)?_c('button',{staticClass:"button small  rounded badbutton",on:{"click":function($event){return _vm.forgetRoom()}}},[_vm._v(" "+_vm._s(_vm.$t("caption.leave"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.tetatet && !_vm.blockedCheck)?_c('button',{staticClass:"button small  rounded badbutton",on:{"click":function($event){return _vm.blockUser()}}},[_vm._v(" "+_vm._s(_vm.$t("button.block"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.tetatet && _vm.blockedCheck)?_c('button',{staticClass:"button small rounded",on:{"click":function($event){return _vm.unblock()}}},[_vm._v(" "+_vm._s(_vm.$t("button.unblock"))+" "),_c('i',{staticClass:"fas fa-sign-out-alt"})]):_vm._e(),(_vm.curation/* && (blockedCheck || !tetatet)*/)?_c('button',{staticClass:"button small rounded badbutton",on:{"click":function($event){return _vm.complain()}}},[_vm._v(" "+_vm._s(_vm.$t("button.Complain"))+" "),_c('i',{staticClass:"fas fa-exclamation-triangle"})]):_vm._e()]),(_vm.inviteUserOpened)?_c('modal',{on:{"close":_vm.closeModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.inviteUser")))])]},proxy:true},{key:"body",fn:function(){return [_c('invite',{attrs:{"chatRoomId":_vm.chat.roomId},on:{"completed":_vm.closeContactModal}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,2878587737)}):_vm._e()],1)}
+var infovue_type_template_id_1ee1dd3f_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chatInfo/info/index.vue?vue&type=template&id=03c09311&scoped=true&
+// CONCATENATED MODULE: ./src/components/chatInfo/info/index.vue?vue&type=template&id=1ee1dd3f&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -199,14 +211,14 @@ var functions = __webpack_require__("3139");
 
 
 /* harmony default export */ var chat_topheader = ({
-  name: 'chatTopheader',
+  name: "chatTopheader",
   props: {
     chat: Object,
     u: String,
     roomInfo: false,
     aboutUser: false
   },
-  inject: ['isChatEncrypted', 'matches'],
+  inject: ["isChatEncrypted", "matches"],
   components: {
     chatName: assets_name["a" /* default */],
     chatIcon: icon["a" /* default */],
@@ -283,6 +295,7 @@ var functions = __webpack_require__("3139");
         title: this.$i18n.t("caption.donate"),
         icon: "fas fa-money-bill-wave"
       }],
+      wait: false,
       loading: false,
       typing: false,
       userinfo: null,
@@ -297,22 +310,22 @@ var functions = __webpack_require__("3139");
       // How much PKOIN we want to donate
       donationAmount: 0,
       // Optional message for the transaction
-      donationMessage: '',
+      donationMessage: "",
       // Calculated fees needed for the transaction
       calculatedFees: null,
       // Booleans to show errors
-      showFeesError: '',
-      showTransactionError: '',
+      showFeesError: "",
+      showTransactionError: "",
       // Booleans to show spinners
       calculatingFees: false,
       sending: false,
       // To choose by who the fee should be payed by
-      feesDirection: 'include',
+      feesDirection: "include",
       feesDirectionPossibleValues: [{
-        value: 'include',
+        value: "include",
         label: this.$i18n.t("caption.toBePaidByReceiver")
       }, {
-        value: 'exclude',
+        value: "exclude",
         label: this.$i18n.t("caption.toBePaidBySender")
       }],
       hoverEncrypt: false
@@ -326,7 +339,7 @@ var functions = __webpack_require__("3139");
   computed: Object(vuex_esm["c" /* mapState */])({
     callsEnabled: state => state.isCallsEnabled,
     isGroup: function () {
-      return this.m_chat.name.slice(0, 1) === '@';
+      return this.m_chat.name.slice(0, 1) === "@";
     },
     auth: state => state.auth,
     isCallsActive: state => state.isCallsActive,
@@ -359,33 +372,66 @@ var functions = __webpack_require__("3139");
       return userTyping || false;
     },
     totalDonationAmount: function () {
-      return this.feesDirection == 'include' ? this.donationAmount : this.donationAmount + this.calculatedFees;
+      return this.feesDirection == "include" ? this.donationAmount : this.donationAmount + this.calculatedFees;
     }
   }),
   methods: {
+    checkCallsEnabled: function () {
+      var _isEnabled$find, _isEnabled$find$event, _isEnabled$find$event2, _hasAccess$find, _hasAccess$find2, _hasAccess$find2$even, _hasAccess$find2$even2;
+
+      let isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
+      let hasAccess = this.m_chat.currentState.getStateEvents("m.room.request_calls_access");
+
+      if ((_isEnabled$find = isEnabled.find(e => {
+        var _e$event, _e$event2, _e$event3;
+
+        return !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
+      })) !== null && _isEnabled$find !== void 0 && (_isEnabled$find$event = _isEnabled$find.event) !== null && _isEnabled$find$event !== void 0 && (_isEnabled$find$event2 = _isEnabled$find$event.content) !== null && _isEnabled$find$event2 !== void 0 && _isEnabled$find$event2.enabled) {
+        console.log("enabled");
+        this.wait = false;
+        return true;
+      }
+
+      if ((_hasAccess$find = hasAccess.find(e => {
+        var _e$event4;
+
+        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event4 = e.event) === null || _e$event4 === void 0 ? void 0 : _e$event4.sender);
+      })) !== null && _hasAccess$find !== void 0 && _hasAccess$find.event && ((_hasAccess$find2 = hasAccess.find(e => {
+        var _e$event5;
+
+        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event5 = e.event) === null || _e$event5 === void 0 ? void 0 : _e$event5.sender);
+      })) === null || _hasAccess$find2 === void 0 ? void 0 : (_hasAccess$find2$even = _hasAccess$find2.event) === null || _hasAccess$find2$even === void 0 ? void 0 : (_hasAccess$find2$even2 = _hasAccess$find2$even.content) === null || _hasAccess$find2$even2 === void 0 ? void 0 : _hasAccess$find2$even2.accepted) === undefined) {
+        console.log("wait");
+        return "wait";
+      } else {
+        console.log("nonono");
+        return false;
+      }
+    },
     bcCall: function () {
-      var _res, _res$event, _res$event$content, _res2, _res2$event, _res2$event$content, _res3, _res3$event;
-
-      let res = this.m_chat.currentState.getStateEvents("m.room.calls");
-      let isEnable = (_res = res[res.length - 1]) !== null && _res !== void 0 && (_res$event = _res.event) !== null && _res$event !== void 0 && (_res$event$content = _res$event.content) !== null && _res$event$content !== void 0 && _res$event$content.enabled ? true : ((_res2 = res[res.length - 1]) === null || _res2 === void 0 ? void 0 : (_res2$event = _res2.event) === null || _res2$event === void 0 ? void 0 : (_res2$event$content = _res2$event.content) === null || _res2$event$content === void 0 ? void 0 : _res2$event$content.enabled) == undefined ? true : false;
-
-      if (!isEnable && this.m_chat.myUserId !== ((_res3 = res[res.length - 1]) === null || _res3 === void 0 ? void 0 : (_res3$event = _res3.event) === null || _res3$event === void 0 ? void 0 : _res3$event.sender)) {
-        var _res4, _res4$event, _res4$event$content;
-
-        console.log('The user has restricted the possibility of calls', (_res4 = res[res.length - 1]) === null || _res4 === void 0 ? void 0 : (_res4$event = _res4.event) === null || _res4$event === void 0 ? void 0 : (_res4$event$content = _res4$event.content) === null || _res4$event$content === void 0 ? void 0 : _res4$event$content.enabled);
+      if (!this.checkCallsEnabled() || this.checkCallsEnabled() === "wait") {
+        this.core.mtrx.client.sendStateEvent(this.chat.roomId, "m.room.callsEnabled", {
+          enabled: true
+        }, this.core.user.userinfo.id);
+        this.wait = true;
+        this.requestCallsAccess();
         return;
       }
 
-      let local = document.querySelector('body');
+      let local = document.querySelector("body");
 
       try {
         let matrixCall = this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local);
         console.log(matrixCall);
-        if (matrixCall) this.$store.dispatch('CALL', matrixCall);
+        if (matrixCall) this.$store.dispatch("CALL", matrixCall);
       } catch (e) {
-        console.log('ошибка при создании звонка', e);
+        console.log("ошибка при создании звонка", e);
         return;
       }
+    },
+
+    requestCallsAccess() {
+      this.core.mtrx.client.sendStateEvent(this.m_chat.roomId, "m.room.request_calls_access");
     },
 
     navigateToProfile(id) {
@@ -419,12 +465,12 @@ var functions = __webpack_require__("3139");
     },
 
     menuItemClickHandler(item, rowObject) {
-      if (item.click === 'AddMember') {
-        this.$emit('addMember', true);
+      if (item.click === "AddMember") {
+        this.$emit("addMember", true);
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'MuteRoom') {
+      if (item.click === "MuteRoom") {
         var roomId = this.chat.roomId;
         var deviceID = this.core.mtrx.client.deviceId;
         let self = this;
@@ -432,42 +478,42 @@ var functions = __webpack_require__("3139");
         let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
 
         if (pushRules !== null) {
-          self.core.mtrx.client.deletePushRule('global', 'room', roomId);
+          self.core.mtrx.client.deletePushRule("global", "room", roomId);
           this.roomMuted = false;
         } else {
-          self.core.mtrx.client.setRoomMutePushRule('global', roomId, 'true');
+          self.core.mtrx.client.setRoomMutePushRule("global", roomId, "true");
           this.roomMuted = true;
         }
 
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'LeaveFromRoom') {
+      if (item.click === "LeaveFromRoom") {
         let self = this;
         this.core.mtrx.client.leave(this.chat.roomId).then(r => {
           this.core.mtrx.client.forget(this.chat.roomId, true).then(r => {
-            this.$store.commit('DELETE_ROOM', this.chat.roomId);
+            this.$store.commit("DELETE_ROOM", this.chat.roomId);
           }).then(r => {
             this.$router.push({
-              path: '/chats'
+              path: "/chats"
             }).catch(e => {});
           });
         });
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'BanRoom') {
-        let banUserId = '';
+      if (item.click === "BanRoom") {
+        let banUserId = "";
         let banUser = this.findOtherUser();
         if (banUser && banUser.userId) banUserId = banUser.userId;
         let roomID = this.chat.roomId;
-        this.core.mtrx.client.ban(roomID, banUserId, 'ban').then(r => {});
+        this.core.mtrx.client.ban(roomID, banUserId, "ban").then(r => {});
         this.roomBanned = true;
         this.$refs.dropdownMenu.hidePopup();
       }
 
-      if (item.click === 'Unban') {
-        let banUserId = '';
+      if (item.click === "Unban") {
+        let banUserId = "";
         let banUser = this.findOtherUser();
         if (banUser && banUser.userId) banUserId = banUser.userId;
         this.core.mtrx.client.unban(this.chat.roomId, banUserId).then(r => {
@@ -484,7 +530,7 @@ var functions = __webpack_require__("3139");
         this.$refs.dropdownMenu.hidePopup(); // Find the user we are about to donate to
 
         let receiverObj = this.findOtherUser();
-        this.receiver = receiverObj ? this.$f.deep(this, '$store.state.users.' + this.$f.getmatrixid(receiverObj.name)) : null;
+        this.receiver = receiverObj ? this.$f.deep(this, "$store.state.users." + this.$f.getmatrixid(receiverObj.name)) : null;
       }
     },
 
@@ -499,12 +545,12 @@ var functions = __webpack_require__("3139");
 
     calculateFees() {
       var self = this;
-      this.showFeesError = '';
+      this.showFeesError = "";
       return new Promise((resolve, reject) => {
         // Check parameters
         if (this.donationAmount <= 0 || !this.receiver || !this.receiver.source || !this.receiver.source.address) {
-          this.showFeesError = 'invalid';
-          return reject('Missing amount or receiver');
+          this.showFeesError = "invalid";
+          return reject("Missing amount or receiver");
         } // Try calculating fees
 
 
@@ -543,12 +589,12 @@ var functions = __webpack_require__("3139");
       return Object(asyncToGenerator["a" /* default */])(function* () {
         var self = _this;
         _this.sending = true;
-        _this.showTransactionError = ''; // Recalculate the fees just before sending
+        _this.showTransactionError = ""; // Recalculate the fees just before sending
 
         try {
           yield _this.calculateFees();
         } catch (err) {
-          _this.showTransactionError = 'error';
+          _this.showTransactionError = "error";
           _this.sending = false;
           return;
         } // Check if current balance is enough
@@ -558,7 +604,7 @@ var functions = __webpack_require__("3139");
         sdk.node.transactions.get.canSpend(sdk.address.pnet().address, currentBalance => {
           // If balance is too low
           if (!currentBalance || isNaN(currentBalance) || currentBalance < self.totalDonationAmount) {
-            self.showTransactionError = 'balance too low';
+            self.showTransactionError = "balance too low";
             self.sending = false;
             return;
           } // Start the send transaction process
@@ -574,7 +620,7 @@ var functions = __webpack_require__("3139");
             sdk.wallet.txbase([sdk.address.pnet().address], outputs, self.calculatedFees, self.feesDirection, function (err, inputs, _outputs) {
               if (err) {
                 console.error(err);
-                self.showTransactionError = 'error';
+                self.showTransactionError = "error";
                 self.sending = false;
                 return reject(err);
               }
@@ -587,7 +633,7 @@ var functions = __webpack_require__("3139");
               sdk.node.transactions.send(tx, function (d, err) {
                 if (err) {
                   sdk.node.transactions.releaseCS(inputs);
-                  self.showTransactionError = 'error';
+                  self.showTransactionError = "error";
                   self.sending = false;
                   return;
                 } // Transaction has been sent
@@ -610,7 +656,7 @@ var functions = __webpack_require__("3139");
             });
           } catch (err) {
             console.error(err);
-            self.showTransactionError = 'error';
+            self.showTransactionError = "error";
             self.sending = false;
           }
         });
@@ -619,8 +665,8 @@ var functions = __webpack_require__("3139");
 
     resetDonation() {
       this.calculatedFees = null;
-      this.showFeesError = '';
-      this.showTransactionError = '';
+      this.showFeesError = "";
+      this.showTransactionError = "";
     }
 
   }
@@ -1248,8 +1294,9 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     return {
       usr: {},
       ind: 0,
-      topicTxt: '',
+      topicTxt: "",
       roomMuted: false,
+      roomCallsDisabled: false,
       publicRoom: {},
       public: false,
       encryptedEvents: [],
@@ -1284,7 +1331,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       }],
       admin: String,
       imagesList: [],
-      localRoomName: '',
+      localRoomName: "",
       humanSize: Number,
       inviteUserOpened: false,
       msList: [],
@@ -1296,21 +1343,21 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
         fullscreenEl: false,
         shareEl: false
       },
-      roomName: '',
+      roomName: "",
       nameEdit: false,
       accordionList: [{
         title: this.$i18n.t("caption.members"),
-        id: 'members'
+        id: "members"
       }, {
         title: this.$i18n.t("caption.media"),
-        id: 'media'
+        id: "media"
       }, {
         title: this.$i18n.t("caption.files"),
-        id: 'files'
+        id: "files"
       }],
       isActive: null,
       isActiveAction: null,
-      currentUser: '',
+      currentUser: "",
       actionUser: {},
       actionUserMenu: false,
       chatMembers: []
@@ -1347,12 +1394,12 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       immediate: true,
       handler: function () {
         if (this.chat) {
-          this.$store.commit('SET_CURRENT_ROOM', this.chat.roomId);
-        } else this.$store.commit('SET_CURRENT_ROOM', false);
+          this.$store.commit("SET_CURRENT_ROOM", this.chat.roomId);
+        } else this.$store.commit("SET_CURRENT_ROOM", false);
       }
     }
   },
-  computed: { ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active']),
+  computed: { ...Object(vuex_esm["c" /* mapState */])(["minimized", "active"]),
     curation: function () {
       if (window.POCKETNETINSTANCE && window.POCKETNETINSTANCE.curation()) return true;
     },
@@ -1377,8 +1424,19 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     events: function () {
       var pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
 
+      var isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
+      console.log(this.core.user.userinfo);
+
       if (pushRules !== null) {
         this.roomMuted = true;
+      }
+
+      if (isEnabled.find(e => {
+        var _this$core$mtrx$me, _this$core$mtrx$me$ev, _this$core$mtrx$me$ev2, _e$event, _e$event2, _e$event3;
+
+        return ((_this$core$mtrx$me = !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender)) === null || _this$core$mtrx$me === void 0 ? void 0 : (_this$core$mtrx$me$ev = _this$core$mtrx$me.event) === null || _this$core$mtrx$me$ev === void 0 ? void 0 : (_this$core$mtrx$me$ev2 = _this$core$mtrx$me$ev.content) === null || _this$core$mtrx$me$ev2 === void 0 ? void 0 : _this$core$mtrx$me$ev2.enabled) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
+      })) {
+        this.roomCallsDisabled = true;
       }
 
       return this.m_chat.timeline || {};
@@ -1411,7 +1469,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     galleryImages: function () {
       var imgArr = [];
       this.imageEvents.forEach(function (event) {
-        if (event.event.content.msgtype === 'm.image') {
+        if (event.event.content.msgtype === "m.image") {
           imgArr.push({
             src: event.event.content.url,
             w: event.event.content.info.w,
@@ -1422,18 +1480,18 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       return imgArr;
     },
     membersList: function () {
-      return this.core.mtrx.chatUsers(this.chat.roomId).filter(user => user.membership !== 'leave');
+      return this.core.mtrx.chatUsers(this.chat.roomId).filter(user => user.membership !== "leave");
     },
     tetatet: function () {
       return this.core.mtrx.kit.tetatetchat(this.m_chat);
     },
     changeRoomName: function () {
       var roomName = this.m_chat.name;
-      return roomName.replace('_', ' ');
+      return roomName.replace("_", " ");
     },
     groupAvatar: function () {
-      if (this.m_chat.currentState.getStateEvents('m.room.avatar')[0]) {
-        return this.m_chat.currentState.getStateEvents('m.room.avatar')[0].event.content.avatarUrl;
+      if (this.m_chat.currentState.getStateEvents("m.room.avatar")[0]) {
+        return this.m_chat.currentState.getStateEvents("m.room.avatar")[0].event.content.avatarUrl;
       }
     }
   },
@@ -1443,7 +1501,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
 
     this.eventsList();
 
-    if (this.m_chat.getJoinRule() === 'public') {
+    if (this.m_chat.getJoinRule() === "public") {
       this.public = true;
       this.getPublicRoom();
     }
@@ -1477,14 +1535,14 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
         this.publicRoom = r.chunk.filter(room => room.room_id === this.chat.roomId)[0];
 
         if (this.publicRoom.topic) {
-          return this.topicTxt = this.publicRoom.topic.replace(/_/g, ' ');
+          return this.topicTxt = this.publicRoom.topic.replace(/_/g, " ");
         }
       });
     },
 
     //// ???
     banForgetRoom() {
-      var banUserId = '';
+      var banUserId = "";
       var my = this.m_chat.myUserId;
       var members = this.m_chat.currentState.getMembers();
       members.forEach(function (member) {
@@ -1492,9 +1550,24 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
           banUserId = member.userId;
         }
       });
-      this.core.mtrx.client.ban(this.chat.roomId, banUserId, 'leave').then(r => {
+      this.core.mtrx.client.ban(this.chat.roomId, banUserId, "leave").then(r => {
         return r;
       });
+    },
+
+    muteCalls() {
+      let roomId = this.chat.roomId;
+      const self = this;
+
+      if (self.roomCallsDisabled) {
+        self.roomCallsDisabled = false;
+      } else {
+        self.roomCallsDisabled = true;
+      }
+
+      self.core.mtrx.client.sendStateEvent(roomId, "m.room.callsEnabled", {
+        enabled: !self.roomCallsDisabled
+      }, this.core.user.userinfo.id);
     },
 
     muteRoom() {
@@ -1503,17 +1576,12 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       var self = this;
 
       if (this.roomMuted) {
-        self.core.mtrx.client.deletePushRule('global', 'room', roomId);
+        self.core.mtrx.client.deletePushRule("global", "room", roomId);
         self.roomMuted = false;
       } else {
-        self.core.mtrx.client.setRoomMutePushRule('global', roomId, 'true');
+        self.core.mtrx.client.setRoomMutePushRule("global", roomId, "true");
         self.roomMuted = true;
       }
-
-      self.core.mtrx.client.sendStateEvent(roomId, "m.room.calls", {
-        enabled: !self.roomMuted
-      }, undefined);
-      console.log(this.m_chat.currentState.getStateEvents("m.room.calls"), !self.roomMuted);
     },
 
     blockUser() {
@@ -1537,9 +1605,9 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
 
     eventsList() {
-      if (typeof this.events.filter == 'function') {
-        this.imageEvents = this.events.filter(event => event.event.content.msgtype === 'm.image' || event.event.type === 'm.room.encrypted' && event.getClearContent().msgtype === 'm.image');
-        this.fileEvents = this.events.filter(event => event.event.content.msgtype === 'm.file');
+      if (typeof this.events.filter == "function") {
+        this.imageEvents = this.events.filter(event => event.event.content.msgtype === "m.image" || event.event.type === "m.room.encrypted" && event.getClearContent().msgtype === "m.image");
+        this.fileEvents = this.events.filter(event => event.event.content.msgtype === "m.file");
       }
     },
 
@@ -1549,7 +1617,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
 
     forgetRoom() {
-      this.$dialog.confirm('Do you really want to leave room?', {
+      this.$dialog.confirm("Do you really want to leave room?", {
         okText: this.$i18n.t("yes"),
         cancelText: this.$i18n.t("cancel")
       }).then(dialog => {
@@ -1557,9 +1625,9 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
           this.core.mtrx.client.forget(this.chat.roomId, true).then(r => {
             return r;
           }).then(r => {
-            this.$store.commit('DELETE_ROOM', this.chat.roomId);
+            this.$store.commit("DELETE_ROOM", this.chat.roomId);
             this.$router.push({
-              path: '/chats'
+              path: "/chats"
             }).catch(e => {});
           });
         });
@@ -1569,28 +1637,28 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     ////// TODO
     changeName() {
       this.localRoomName = this.m_chat.name.replace(/@/g, "");
-      this.localRoomName.replace('_', ' ');
+      this.localRoomName.replace("_", " ");
     },
 
     saveRoomName() {
       this.nameEdit = false;
       this.inputActive = false;
-      this.core.mtrx.client.setRoomName(this.m_chat.roomId, '@' + this.roomName.replace(/[@]*/g, ""));
+      this.core.mtrx.client.setRoomName(this.m_chat.roomId, "@" + this.roomName.replace(/[@]*/g, ""));
     },
 
     ///////////////
     banUser(user) {
-      if (user.membership === 'ban') {
+      if (user.membership === "ban") {
         this.core.mtrx.client.unban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain)).then(r => {
           this.core.mtrx.client.invite(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain)).then(r => {});
         });
       } else {
-        this.core.mtrx.client.ban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin ban').then(r => {});
+        this.core.mtrx.client.ban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), "admin ban").then(r => {});
       }
     },
 
     kickUser(user) {
-      this.core.mtrx.client.kick(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin kicked').then(this.$nextTick(function () {}));
+      this.core.mtrx.client.kick(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), "admin kicked").then(this.$nextTick(function () {}));
     },
 
     makeAdmin(user) {
@@ -1616,11 +1684,11 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
 
     showPhotoSwipe(index) {
       this.isOpen = true;
-      this.$set(this.options, 'index', index);
+      this.$set(this.options, "index", index);
     },
 
     accordion: function (event) {
-      event.target.classList.toggle('active');
+      event.target.classList.toggle("active");
     },
 
     hidePhotoSwipe() {
@@ -1632,11 +1700,11 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
 
     showUserAbout(user) {
-      this.$emit('showAbout', user);
+      this.$emit("showAbout", user);
     },
 
     getClick(room) {
-      this.$emit('showRoomInfo', room);
+      this.$emit("showRoomInfo", room);
     },
 
     modalInviteUser() {
@@ -1652,20 +1720,20 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
 
     addTopic() {
-      this.core.mtrx.client.setRoomTopic(this.chat.roomId, this.topicTxt.replace(/ /g, '_')).then(r => {
+      this.core.mtrx.client.setRoomTopic(this.chat.roomId, this.topicTxt.replace(/ /g, "_")).then(r => {
         this.getPublicRoom();
       });
     },
 
     copyShareLink() {
       this.$f.copytext(this.shareRoomLink);
-      this.core.sitemessage('The link was copied successfully');
+      this.core.sitemessage("The link was copied successfully");
     },
 
     sharelink() {
       this.core.share({
         urls: [this.shareRoomLink],
-        route: 'chatInfo?id=' + this.chat.roomId
+        route: "chatInfo?id=" + this.chat.roomId
       });
     }
 
@@ -1679,7 +1747,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
 
 function info_injectStyles (context) {
   
-  var style0 = __webpack_require__("5e58")
+  var style0 = __webpack_require__("0fe1")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -1688,11 +1756,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var info_component = Object(componentNormalizer["a" /* default */])(
   chatInfo_info_vue_type_script_lang_js_,
-  infovue_type_template_id_03c09311_scoped_true_render,
-  infovue_type_template_id_03c09311_scoped_true_staticRenderFns,
+  infovue_type_template_id_1ee1dd3f_scoped_true_render,
+  infovue_type_template_id_1ee1dd3f_scoped_true_staticRenderFns,
   false,
   info_injectStyles,
-  "03c09311",
+  "1ee1dd3f",
   null
   ,true
 )
@@ -1902,20 +1970,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "4c8c":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".linkwrapper[data-v-03c09311]{position:relative;display:flex;align-items:center}.linkwrapper button[data-v-03c09311]{min-width:0;width:100px;text-align:right;padding-right:1em}.linkPlace[data-v-03c09311]{padding:1em;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.linkPlace i[data-v-03c09311]{width:30px}.linkPlace span[data-v-03c09311]{font-size:.8em;text-align:left;max-width:400px}.linkPlace .shareLink[data-v-03c09311]:hover{color:rgb(var(--color-bg-ac))}.chatIconWrapper[data-v-03c09311]{width:90%;margin:0 auto;padding:.5em 0}.chatIconWrapper[data-v-03c09311] .swiperWrapperFlex .imageSwiper{width:100px;height:100px;line-height:100px}.chatIconWrapper[data-v-03c09311] .swiperWrapperFlex{padding-bottom:1em}.chatIconWrapper[data-v-03c09311] .fourAvatars,.chatIconWrapper[data-v-03c09311] .threeAvatars,.chatIconWrapper[data-v-03c09311] .twoAvatars{width:50%;padding-bottom:50%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);background:rgba(var(--background-total-theme),.3)}.chatIconWrapper[data-v-03c09311] .oneuser{width:50%;margin:0 auto}.chatIconWrapper[data-v-03c09311] .bgimage{box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.aboutRoom[data-v-03c09311]{padding-bottom:100px}.aboutRoom .roomInfoWrapper[data-v-03c09311]{background:rgb(var(--background-secondary-theme));padding:1em 0}.aboutRoom .roomInfoWrapper .roomNameLine[data-v-03c09311]{text-overflow:ellipsis;overflow:hidden;width:90%;height:1.2em;font-weight:500;white-space:nowrap;text-align:center;margin:0 auto;display:block}.aboutRoom .roomInfoWrapper .namewrapper[data-v-03c09311]{position:relative;text-align:center;padding:1em 0}.aboutRoom .roomInfoWrapper .namewrapper input[data-v-03c09311]{text-align:center;font-weight:700}.aboutRoom .roomInfoWrapper .namewrapper .active[data-v-03c09311]{border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomInfoWrapper .namewrapper .iconwrapper[data-v-03c09311]{position:absolute;right:1em;top:50%;bottom:0;transform:translateY(-50%)}.aboutRoom .roomInfoWrapper .userpicWrapper[data-v-03c09311]{border-bottom:1px solid rgb(var(--neutral-grad-0));padding:1em}.aboutRoom .roomInfoWrapper .roomInfo[data-v-03c09311]{position:relative}.aboutRoom .roomInfoWrapper .roomInfo .name label[data-v-03c09311]{display:flex;justify-content:space-between;align-items:center;width:100%;height:60px;border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomInfoWrapper .roomInfo .name label input[data-v-03c09311]{padding:.1em;display:block;border:0;height:90%;width:90%;font-size:.6em;font-weight:700;text-align:center}.aboutRoom .roomInfoWrapper .roomInfo .name span[data-v-03c09311]{font-weight:700}.aboutRoom .roomInfoWrapper .topicTxt[data-v-03c09311]{text-align:center;font-weight:400;font-size:.9em;display:block;margin:10px 0;padding:0 1em;word-break:break-word;height:44px}.aboutRoom .roomAccordionsList .active .body[data-v-03c09311]{border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomAccordionsList .accordion .membersCount[data-v-03c09311]{font-weight:700}.aboutRoom .roomAccordionsList .accordion .aHeader .head[data-v-03c09311]{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1em;border-bottom:1px solid rgb(var(--neutral-grad-0));transition:.3s}.aboutRoom .roomAccordionsList .accordion .aHeader .head .leftBlock[data-v-03c09311]{flex-grow:1;position:relative}.aboutRoom .roomAccordionsList .accordion .aHeader .head .leftBlock i[data-v-03c09311]{font-size:.8em;width:30px;color:#606369}.roomActionsList[data-v-03c09311]{padding:1em 0;padding-top:2em;background:rgb(var(--neutral-grad-1));text-align:center}.roomActionsList .button[data-v-03c09311]{width:80%;margin-bottom:1em}.roomActionsList .actionsItem[data-v-03c09311]{padding:.5em;border-radius:1em;width:80px;box-shadow:0 0 10px rgba(0,0,0,.1)}[data-v-03c09311] #modal .modal-wrapper{right:0}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "593d":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1924,18 +1978,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_02904b2d_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1036");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_02904b2d_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_02904b2d_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_02904b2d_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_02904b2d_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "5e58":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_03c09311_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a6c5");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_03c09311_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_03c09311_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_03c09311_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_03c09311_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -2010,21 +2052,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "a6c5":
+/***/ "9c7b":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".linkwrapper[data-v-1ee1dd3f]{position:relative;display:flex;align-items:center}.linkwrapper button[data-v-1ee1dd3f]{min-width:0;width:100px;text-align:right;padding-right:1em}.linkPlace[data-v-1ee1dd3f]{padding:1em;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.linkPlace i[data-v-1ee1dd3f]{width:30px}.linkPlace span[data-v-1ee1dd3f]{font-size:.8em;text-align:left;max-width:400px}.linkPlace .shareLink[data-v-1ee1dd3f]:hover{color:rgb(var(--color-bg-ac))}.chatIconWrapper[data-v-1ee1dd3f]{width:90%;margin:0 auto;padding:.5em 0}.chatIconWrapper[data-v-1ee1dd3f] .swiperWrapperFlex .imageSwiper{width:100px;height:100px;line-height:100px}.chatIconWrapper[data-v-1ee1dd3f] .swiperWrapperFlex{padding-bottom:1em}.chatIconWrapper[data-v-1ee1dd3f] .fourAvatars,.chatIconWrapper[data-v-1ee1dd3f] .threeAvatars,.chatIconWrapper[data-v-1ee1dd3f] .twoAvatars{width:50%;padding-bottom:50%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);background:rgba(var(--background-total-theme),.3)}.chatIconWrapper[data-v-1ee1dd3f] .oneuser{width:50%;margin:0 auto}.chatIconWrapper[data-v-1ee1dd3f] .bgimage{box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.aboutRoom[data-v-1ee1dd3f]{padding-bottom:100px}.aboutRoom .roomInfoWrapper[data-v-1ee1dd3f]{background:rgb(var(--background-secondary-theme));padding:1em 0}.aboutRoom .roomInfoWrapper .roomNameLine[data-v-1ee1dd3f]{text-overflow:ellipsis;overflow:hidden;width:90%;height:1.2em;font-weight:500;white-space:nowrap;text-align:center;margin:0 auto;display:block}.aboutRoom .roomInfoWrapper .namewrapper[data-v-1ee1dd3f]{position:relative;text-align:center;padding:1em 0}.aboutRoom .roomInfoWrapper .namewrapper input[data-v-1ee1dd3f]{text-align:center;font-weight:700}.aboutRoom .roomInfoWrapper .namewrapper .active[data-v-1ee1dd3f]{border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomInfoWrapper .namewrapper .iconwrapper[data-v-1ee1dd3f]{position:absolute;right:1em;top:50%;bottom:0;transform:translateY(-50%)}.aboutRoom .roomInfoWrapper .userpicWrapper[data-v-1ee1dd3f]{border-bottom:1px solid rgb(var(--neutral-grad-0));padding:1em}.aboutRoom .roomInfoWrapper .roomInfo[data-v-1ee1dd3f]{position:relative}.aboutRoom .roomInfoWrapper .roomInfo .name label[data-v-1ee1dd3f]{display:flex;justify-content:space-between;align-items:center;width:100%;height:60px;border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomInfoWrapper .roomInfo .name label input[data-v-1ee1dd3f]{padding:.1em;display:block;border:0;height:90%;width:90%;font-size:.6em;font-weight:700;text-align:center}.aboutRoom .roomInfoWrapper .roomInfo .name span[data-v-1ee1dd3f]{font-weight:700}.aboutRoom .roomInfoWrapper .topicTxt[data-v-1ee1dd3f]{text-align:center;font-weight:400;font-size:.9em;display:block;margin:10px 0;padding:0 1em;word-break:break-word;height:44px}.aboutRoom .roomAccordionsList .active .body[data-v-1ee1dd3f]{border-bottom:1px solid rgb(var(--neutral-grad-0))}.aboutRoom .roomAccordionsList .accordion .membersCount[data-v-1ee1dd3f]{font-weight:700}.aboutRoom .roomAccordionsList .accordion .aHeader .head[data-v-1ee1dd3f]{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1em;border-bottom:1px solid rgb(var(--neutral-grad-0));transition:.3s}.aboutRoom .roomAccordionsList .accordion .aHeader .head .leftBlock[data-v-1ee1dd3f]{flex-grow:1;position:relative}.aboutRoom .roomAccordionsList .accordion .aHeader .head .leftBlock i[data-v-1ee1dd3f]{font-size:.8em;width:30px;color:#606369}.roomActionsList[data-v-1ee1dd3f]{padding:1em 0;padding-top:2em;background:rgb(var(--neutral-grad-1));text-align:center}.roomActionsList .button[data-v-1ee1dd3f]{width:80%;margin-bottom:1em}.roomActionsList .actionsItem[data-v-1ee1dd3f]{padding:.5em;border-radius:1em;width:80px;box-shadow:0 0 10px rgba(0,0,0,.1)}[data-v-1ee1dd3f] #modal .modal-wrapper{right:0}", ""]);
+// Exports
+module.exports = exports;
 
-// load the styles
-var content = __webpack_require__("4c8c");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("5cc8c682", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -2073,6 +2111,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_53c7b98a_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_53c7b98a_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_53c7b98a_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_53c7b98a_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
+
+/***/ }),
+
+/***/ "b82a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("9c7b");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("28d619b6", content, shadowRoot)
+};
 
 /***/ }),
 

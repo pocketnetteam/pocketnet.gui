@@ -1400,7 +1400,7 @@ var CancelablePromise = __webpack_require__("0bb9");
 
 
 /* harmony default export */ var input_vue_type_script_lang_js_ = ({
-  name: 'chatInput',
+  name: "chatInput",
   props: {
     chat: Object,
     u: String,
@@ -1419,12 +1419,12 @@ var CancelablePromise = __webpack_require__("0bb9");
       upload: true,
       test: [],
       loading: false,
-      text: '',
+      text: "",
       file: {},
       fileInfo: {},
       ready: false,
       creating: false,
-      userId: '',
+      userId: "",
       showuserselect: null,
       anyUrlMeta: String,
       joinedMembers: [],
@@ -1491,11 +1491,11 @@ var CancelablePromise = __webpack_require__("0bb9");
           icon: "fas fa-camera",
           upload: {
             multiple: true,
-            extensions: ['jpg', 'jpeg', 'png', 'webp'],
+            extensions: ["jpg", "jpeg", "png", "webp"],
             maxsize: 100,
             images: {
               resize: {
-                type: 'fit'
+                type: "fit"
               }
             }
           }
@@ -1512,7 +1512,7 @@ var CancelablePromise = __webpack_require__("0bb9");
           maxsize: 25,
           images: {
             resize: {
-              type: 'fit'
+              type: "fit"
             }
           }
         }
@@ -1528,17 +1528,17 @@ var CancelablePromise = __webpack_require__("0bb9");
 
       return menuItems;
     },
-    ...Object(vuex_esm["c" /* mapState */])(['chats']),
+    ...Object(vuex_esm["c" /* mapState */])(["chats"]),
     userlist: function () {
       if (!this.chat) return [];
-      return this.core.mtrx.chatUsersInfo(this.chat.roomId, 'anotherChatUsers');
+      return this.core.mtrx.chatUsersInfo(this.chat.roomId, "anotherChatUsers");
     },
     transaction: function () {
-      return functions["a" /* default */].deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send');
+      return functions["a" /* default */].deep(window, "POCKETNETINSTANCE.platform.ui.wallet.send");
     },
     uusers: function () {
       if (this.u) {
-        return _.map(this.u.split(','), u => {
+        return _.map(this.u.split(","), u => {
           return u;
         });
       }
@@ -1547,7 +1547,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
     ausers: function () {
       if (this.u) {
-        return _.map(this.u.split(','), u => {
+        return _.map(this.u.split(","), u => {
           return this.core.user.matrixId(u);
         });
       }
@@ -1565,7 +1565,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
 
       return _.map(_.filter(this.chat.currentState.getMembers(), function (m, v) {
-        return m.membership === 'invite';
+        return m.membership === "invite";
       }), function (u) {
         return u.userId;
       });
@@ -1577,7 +1577,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       let arr = [];
       let members = 0;
       this.chat.currentState.getMembers().forEach(function (user) {
-        if (user.membership === 'join') {
+        if (user.membership === "join") {
           arr.push(user.userId);
         }
       });
@@ -1585,7 +1585,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
     tipusers: function () {
       if (this.tipvalue === null) return [];
-      if (this.tipvalue === '') return this.userlist;
+      if (this.tipvalue === "") return this.userlist;
       var value = this.tipvalue.toLowerCase();
 
       var u = _.filter(this.userlist, function (u) {
@@ -1638,8 +1638,8 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
     insertuser: function () {
       let user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var name = user.name || '';
-      this.$refs['newinput'].inserttip(name);
+      var name = user.name || "";
+      this.$refs["newinput"].inserttip(name);
     },
     tipBySearch: function (value) {
       this.tipvalue = value;
@@ -1648,9 +1648,9 @@ var CancelablePromise = __webpack_require__("0bb9");
       this[action](contact);
     },
     resizeImage: function (base64) {
-      var ftype = base64.split(';')[0].split('/')[1];
+      var ftype = base64.split(";")[0].split("/")[1];
       var images = new utils_images["a" /* default */]();
-      return images.resize['fit'](base64, 1024, 1024, ftype, 0.95).then(base64 => {
+      return images.resize["fit"](base64, 1024, 1024, ftype, 0.95).then(base64 => {
         return Promise.resolve(base64);
       }).catch(e => {
         return Promise.reject(e);
@@ -1689,7 +1689,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       this.menuIsVisible = false;
 
       var users = _.filter(_.map(this.joined, j => {
-        return this.$f.deep(this, '$store.state.users.' + this.$f.getmatrixid(j)) || null;
+        return this.$f.deep(this, "$store.state.users." + this.$f.getmatrixid(j)) || null;
       }), r => {
         var _this$core$user$useri;
 
@@ -1697,24 +1697,24 @@ var CancelablePromise = __webpack_require__("0bb9");
       });
 
       if (!users.length) {
-        return 'users.length';
+        return "users.length";
       }
 
       if (users.length > 1) {
-        this.core.store.commit('setmodal', {
+        this.core.store.commit("setmodal", {
           caption: this.$i18n.t("caption.sendTransactionTo"),
-          type: 'showuserselect',
+          type: "showuserselect",
           data: {
             users: users,
-            action: 'sendtransaction',
+            action: "sendtransaction",
             userselected: c => {
-              this.showuserselected(c, 'sendtransaction');
+              this.showuserselected(c, "sendtransaction");
             }
           }
         });
         /*this.showuserselect = {
-          users : users,
-          action : 'sendtransaction'
+        users : users,
+        action : 'sendtransaction'
         }*/
       } else {
         this.sendtransaction(users[0]);
@@ -1730,13 +1730,11 @@ var CancelablePromise = __webpack_require__("0bb9");
         address: user.source.address
       });
       /*.then(({txid, from}) => {
-      
-        return this.core.mtrx.transaction(this.chat.roomId, txid)
-      
-      })*/
+      		  return this.core.mtrx.transaction(this.chat.roomId, txid)
+      		})*/
     },
     emitInputData: function () {
-      this.$emit('emptyInput');
+      this.$emit("emptyInput");
       this.upload = true;
     },
 
@@ -1745,7 +1743,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     emitUrl: function (url) {
-      this.$emit('setMetaUrl', url);
+      this.$emit("setMetaUrl", url);
     },
 
     newchat() {
@@ -1754,21 +1752,21 @@ var CancelablePromise = __webpack_require__("0bb9");
         var matrixId = null;
         var myMatrixId = null;
         var chat = null;
-        var id = '';
+        var id = "";
         this.creating = true;
         return this.core.user.usersInfo(this.uusers).then(info => {
           if (this.uusers.length == 1) {
             var _info = info[0];
 
             if (!_info || !_info.keys || _info.keys.length < 12) {
-              this.$emit('cantchatcrypto');
-              return Promise.reject('ny2');
+              this.$emit("cantchatcrypto");
+              return Promise.reject("ny2");
             }
           }
 
           if (this.core.user.userinfo.keys.length < 12) {
-            this.$emit('cantchatcrypto');
-            return Promise.reject('ny2');
+            this.$emit("cantchatcrypto");
+            return Promise.reject("ny2");
           } //return Promise.reject('ny3')
 
 
@@ -1776,17 +1774,17 @@ var CancelablePromise = __webpack_require__("0bb9");
           matrixId = this.core.user.matrixId(info[0].id);
           myMatrixId = this.core.user.matrixId(this.core.user.userinfo.id);
           var initialstate = [{
-            "type": "m.set.encrypted",
-            "state_key": "",
-            "content": {
+            type: "m.set.encrypted",
+            state_key: "",
+            content: {
               encrypted: true
             }
           }];
           return this.core.mtrx.client.createRoom({
             room_alias_name: id,
-            visibility: 'private',
+            visibility: "private",
             invite: [matrixId],
-            name: '#' + id,
+            name: "#" + id,
             initial_state: initialstate
           });
         }).then(_chat => {
@@ -1802,20 +1800,20 @@ var CancelablePromise = __webpack_require__("0bb9");
             this.greetings();
           }
 
-          this.$store.commit('CONTACT', false);
+          this.$store.commit("CONTACT", false);
           return Promise.resolve();
         }).catch(e => {
           this.creating = false;
           this.$store.state.globalpreloader = false;
 
-          if (e && e.errcode == 'M_ROOM_IN_USE') {
-            return this.core.mtrx.client.joinRoom('#' + id + ':' + this.core.mtrx.baseUrl.replace("https://", "")).then(() => {}).catch(e => {});
+          if (e && e.errcode == "M_ROOM_IN_USE") {
+            return this.core.mtrx.client.joinRoom("#" + id + ":" + this.core.mtrx.baseUrl.replace("https://", "")).then(() => {}).catch(e => {});
           }
 
           return Promise.reject(e);
         });
       } else {
-        return Promise.reject('u');
+        return Promise.reject("u");
       }
     },
 
@@ -1824,7 +1822,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     greetings() {
-      this.send('👋').then(r => {
+      this.send("👋").then(r => {
         return Promise.resolve(r);
       });
     },
@@ -1844,7 +1842,7 @@ var CancelablePromise = __webpack_require__("0bb9");
 
     replaceMentions(text) {
       _.each(this.userlist, function (user) {
-        text = text.replace(new RegExp('@' + user.name, 'g'), '@' + user.id + ':' + user.name);
+        text = text.replace(new RegExp("@" + user.name, "g"), "@" + user.id + ":" + user.name);
       });
 
       return text;
@@ -1867,15 +1865,15 @@ var CancelablePromise = __webpack_require__("0bb9");
       return this.$f.pretry(() => {
         return this.chat && !this.creating;
       }).then(r => {
-        this.$emit('sent');
+        this.$emit("sent");
         text = this.replaceMentions(text);
 
         if (this.relationEvent) {
-          if (this.relationEvent.type == 'm.replace' && this.relationEvent.event) {
+          if (this.relationEvent.type == "m.replace" && this.relationEvent.event) {
             return this.core.mtrx.textEvent(this.chat, text).then(r => {
-              r['m.relates_to'] = {
-                "rel_type": "m.replace",
-                "event_id": this.core.mtrx.clearEventId(this.relationEvent.event) || functions["a" /* default */].makeid()
+              r["m.relates_to"] = {
+                rel_type: "m.replace",
+                event_id: this.core.mtrx.clearEventId(this.relationEvent.event) || functions["a" /* default */].makeid()
               };
               var editEvent = r;
               this.relationEvent.event.event.content.body = r.body;
@@ -1883,11 +1881,11 @@ var CancelablePromise = __webpack_require__("0bb9");
               this.relationEvent.event.event.content.msgtype = r.msgtype;
               delete this.relationEvent.event.event.decryptKey;
               delete this.relationEvent.event.event.decrypted;
-              return this.core.mtrx.client.sendEvent(this.chat.roomId, 'm.room.message', editEvent);
+              return this.core.mtrx.client.sendEvent(this.chat.roomId, "m.room.message", editEvent);
             }).then(r => {
-              this.core.store.dispatch('FETCH_EVENTS');
-              this.$emit('clearRelationEvent');
-              this.$emit('force');
+              this.core.store.dispatch("FETCH_EVENTS");
+              this.$emit("clearRelationEvent");
+              this.$emit("force");
               return Promise.resolve();
             }).catch(e => {
               console.error(e);
@@ -1900,7 +1898,7 @@ var CancelablePromise = __webpack_require__("0bb9");
           relation: this.relationEvent
         });
       }).catch(e => {
-        this.$emit('sentMessageError', {
+        this.$emit("sentMessageError", {
           error: e
         });
       });
@@ -1928,19 +1926,19 @@ var CancelablePromise = __webpack_require__("0bb9");
       this.$f.pretry(() => {
         return this.chat;
       }).then(() => {
-        if (meta.aborted) return Promise.reject('aborted');
+        if (meta.aborted) return Promise.reject("aborted");
         return this.core.mtrx.sendImage(this.chat, base64, null, meta, {
           relation: this.relationEvent
         });
       }).then(r => {
-        this.$emit('clearRelationEvent');
+        this.$emit("clearRelationEvent");
         this.$emit("sentData", {
           id: id
         });
         return Promise.resolve();
       }).catch(e => {
         console.error(e);
-        this.$emit('sentError', {
+        this.$emit("sentError", {
           id: id,
           error: e
         });
@@ -1955,13 +1953,13 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
 
       if (file.size > s) {
-        return this.$dialog.confirm('Files larger than 10 megabytes are not encrypted. Do you want to send the file unencrypted?', {
-          okText: 'Yes',
-          cancelText: 'No, cancel'
+        return this.$dialog.confirm("Files larger than 10 megabytes are not encrypted. Do you want to send the file unencrypted?", {
+          okText: "Yes",
+          cancelText: "No, cancel"
         }).then(dialog => {
           return Promise.resolve(true);
         }).catch(e => {
-          return Promise.reject('cancel');
+          return Promise.reject("cancel");
         });
       }
 
@@ -1990,53 +1988,53 @@ var CancelablePromise = __webpack_require__("0bb9");
           relation: this.relationEvent
         }, notenc);
       }).then(() => {
-        this.$emit('clearRelationEvent');
+        this.$emit("clearRelationEvent");
         this.$emit("sentData", {
           id: id
         });
         return Promise.resolve();
       }).catch(e => {
         console.error(e);
-        this.$emit('sentError', {
+        this.$emit("sentError", {
           id: id,
           error: e
         });
       });
     },
     focus: function () {
-      if (this.$refs['newinput']) this.$refs['newinput'].focus();
+      if (this.$refs["newinput"]) this.$refs["newinput"].focus();
     },
     focused: function () {
-      this.$emit('focused');
+      this.$emit("focused");
     },
     blur: function () {
-      if (this.$refs['newinput']) this.$refs['newinput'].blur();
+      if (this.$refs["newinput"]) this.$refs["newinput"].blur();
     },
     blurifempty: function () {
-      if (this.$refs['newinput']) this.$refs['newinput'].blurifempty();
+      if (this.$refs["newinput"]) this.$refs["newinput"].blurifempty();
     },
     change: function () {},
     setText: function (text) {
       this.text = text;
-      if (this.$refs['newinput']) this.$refs['newinput'].setText(text);
+      if (this.$refs["newinput"]) this.$refs["newinput"].setText(text);
     },
     keyup: function (evt) {
       var value = evt.target.value;
 
-      if (value === '') {
-        this.$emit('inputClean', false);
+      if (value === "") {
+        this.$emit("inputClean", false);
         return;
       } else {
-        this.$emit('inputClean', true);
+        this.$emit("inputClean", true);
       }
 
       this.text = value;
       this.anyUrlMeta = functions["a" /* default */].getUrl(this.text);
 
       if (this.anyUrlMeta !== undefined) {
-        this.$emit('setMetaUrl', this.anyUrlMeta);
+        this.$emit("setMetaUrl", this.anyUrlMeta);
       } else {
-        this.$emit('inputClean', false);
+        this.$emit("inputClean", false);
       }
 
       if (this.chat) this.core.mtrx.client.sendTyping(this.chat.roomId, true, 100);
@@ -2054,8 +2052,8 @@ var CancelablePromise = __webpack_require__("0bb9");
     uploadStart(item, files) {},
 
     uploadError(item, error) {
-      this.$store.commit('icon', {
-        icon: 'error',
+      this.$store.commit("icon", {
+        icon: "error",
         message: error.text
       });
     },
@@ -2071,7 +2069,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     uploadUploaded(item, data) {
-      const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
+      const validImageTypes = ["image/gif", "image/jpeg", "image/png", "image/webp"];
 
       if (!validImageTypes.includes(data.file.type)) {
         this.sendFile(data);
@@ -2104,15 +2102,15 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     catchPermissonsError(err) {
-      if (err == 'permissions' || err.toString && err.toString().indexOf('Permission') > -1) {
+      if (err == "permissions" || err.toString && err.toString().indexOf("Permission") > -1) {
         this.microphoneDisabled = true;
 
         if (window.cordova) {
-          this.$dialog.confirm(this.$i18n.t('micaccesscordova'), {
+          this.$dialog.confirm(this.$i18n.t("micaccesscordova"), {
             okText: this.$i18n.t("button.ok")
           });
         } else {
-          this.$dialog.confirm(this.$i18n.t('micaccessbrowser'), {
+          this.$dialog.confirm(this.$i18n.t("micaccessbrowser"), {
             okText: this.$i18n.t("button.ok")
           });
         }
@@ -2120,14 +2118,14 @@ var CancelablePromise = __webpack_require__("0bb9");
         return;
       }
 
-      if (err.toString && err.toString().indexOf('device not found') > -1) {
-        this.$dialog.confirm(this.$i18n.t('micdevicenotfound'), {
+      if (err.toString && err.toString().indexOf("device not found") > -1) {
+        this.$dialog.confirm(this.$i18n.t("micdevicenotfound"), {
           okText: this.$i18n.t("button.ok")
         });
         return;
       }
 
-      this.$dialog.confirm(this.$i18n.t('micaccesscommonproblem'), {
+      this.$dialog.confirm(this.$i18n.t("micaccesscommonproblem"), {
         okText: this.$i18n.t("button.ok")
       });
       console.error(err);
@@ -2137,7 +2135,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       return new Promise((resolve, reject) => {
         window.resolveLocalFileSystemURL(path, entry => {
           if (!entry) {
-            return reject('noentry');
+            return reject("noentry");
           }
 
           entry.file(file => {
@@ -2177,8 +2175,8 @@ var CancelablePromise = __webpack_require__("0bb9");
       }));
       this.prepareRecording.then(() => {
         this.microphoneDisabled = false;
-        var path = 'recording.mp3';
-        if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
+        var path = "recording.mp3";
+        if (functions["a" /* default */].isios()) path = "cdvfile://localhost/temporary/recording.m4a";
         var sec = 0;
         this.audioContext = this.core.getAudioContext(); //var startedTime = (new Date()).getTime() / 1000
 
@@ -2200,18 +2198,18 @@ var CancelablePromise = __webpack_require__("0bb9");
             });
           });
           /*}
-          		else{
-          	fu = f.fetchLocal(path)
+          else{
+          fu = f.fetchLocal(path)
           }*/
 
           fu.then(r => {
             ///temp
 
             /*if (f.isios())
-            	r.duration = (new Date()).getTime() / 1000 - startedTime
-            		console.log("R", r)
-            		/*var e = {
-            	data : r.data
+            r.duration = (new Date()).getTime() / 1000 - startedTime
+            console.log("R", r)
+            /*var e = {
+            data : r.data
             }*/
             if (media.duration && media.duration > 0) {
               r.duration = media.duration;
@@ -2309,7 +2307,7 @@ var CancelablePromise = __webpack_require__("0bb9");
         currentPlaying.pause();
       }
 
-      this.$store.commit('SET_VOICERECORDING', true);
+      this.$store.commit("SET_VOICERECORDING", true);
       this.isRecording = true;
       this.cancelOpacity = 0;
       this.recordRmsData = [];
@@ -2360,7 +2358,7 @@ var CancelablePromise = __webpack_require__("0bb9");
 
     createVoiceMessage(event, sendnow) {
       var c = () => {
-        //this.record = 
+        //this.record =
         this.checkaudioForSend({
           file: event.data,
           id: functions["a" /* default */].makeid(),
@@ -2380,22 +2378,22 @@ var CancelablePromise = __webpack_require__("0bb9");
         });
       }
       /*f.readFile(event.data).then(arraybuffer => {
-      			console.log('arraybuffer', arraybuffer)
-      			this.audioContext.decodeAudioData(arraybuffer, (buffer) => {
-      				console.log('this.record', this.record)
-      		console.log('this.buffer', buffer)
-      		
-      				this.record = {
-      			file: event.data,
-      			id: f.makeid()
-      		}
-      				this.record.duration = buffer.duration
-      				this.checkaudioForSend(sendnow)
-      			})
-      		}).catch(e => {
-      	console.error('e', e)
-      	this.clear()
-      	//
+      console.log('arraybuffer', arraybuffer)
+      this.audioContext.decodeAudioData(arraybuffer, (buffer) => {
+      	console.log('this.record', this.record)
+      console.log('this.buffer', buffer)
+      
+      	this.record = {
+      file: event.data,
+      id: f.makeid()
+      }
+      	this.record.duration = buffer.duration
+      	this.checkaudioForSend(sendnow)
+      })
+      }).catch(e => {
+      console.error('e', e)
+      this.clear()
+      //
       })*/
 
     },
@@ -2410,7 +2408,7 @@ var CancelablePromise = __webpack_require__("0bb9");
         sendnow
       } = _ref4;
       console.log("STOP RECORDING", this.isRecording);
-      this.$store.commit('SET_VOICERECORDING', false);
+      this.$store.commit("SET_VOICERECORDING", false);
 
       if (this.prepareRecording) {
         this.prepareRecording.cancel();
@@ -2428,7 +2426,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       if (this.mediaRecorder) {
         if (cancel) {//this.mediaRecorder.ondataavailable = () => { }
         } else {
-          this.mediaRecorder.addEventListener('dataavailable', event => {
+          this.mediaRecorder.addEventListener("dataavailable", event => {
             this.createVoiceMessage(event, sendnow);
           }); //ondataavailable = (event) => this.createVoiceMessage(event, sendnow)
         }
@@ -2480,9 +2478,9 @@ var CancelablePromise = __webpack_require__("0bb9");
             relation: _this.relationEvent
           });
         }).then(() => {
-          _this.$emit('clearRelationEvent');
+          _this.$emit("clearRelationEvent");
         }).catch(e => {
-          _this.$emit('sentError', {
+          _this.$emit("sentError", {
             id: id,
             error: e
           });
@@ -2514,19 +2512,19 @@ var CancelablePromise = __webpack_require__("0bb9");
         this.mediaRecorder = null;
       }
       /*if (this.audioContext){
-      	this.audioContext.close()
+      this.audioContext.close()
       }*/
 
     },
 
     /*async convertAudioToBase64(blob) {
-    	const reader = new FileReader()
-    	reader.readAsDataURL(blob)
-    	return new Promise(resolve => {
-    		reader.onloadend = () => {
-    			resolve(reader.result)
-    		}
-    	})
+    const reader = new FileReader()
+    reader.readAsDataURL(blob)
+    return new Promise(resolve => {
+    reader.onloadend = () => {
+    	resolve(reader.result)
+    }
+    })
     },*/
     setOpacity(opacity) {
       this.cancelOpacity = opacity;
