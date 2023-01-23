@@ -121,7 +121,7 @@ const commentBanner = (function() {
 			closeBanner(block) {
 
 				if (block){
-					el.c.closest('.share').removeClass('blurred');
+					el.c.closest('.share').removeClass('ultrablurred');
 				}
 				
 				el.c.removeClass('show');
@@ -156,7 +156,7 @@ const commentBanner = (function() {
 			el.c.on('click', '.block', events.block);
 
 			if (block){
-				el.c.closest('.share').addClass('blurred');
+				el.c.closest('.share').addClass('ultrablurred');
 			}
 
 		};
