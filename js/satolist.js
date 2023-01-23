@@ -10580,7 +10580,11 @@ Platform = function (app, listofnodes) {
 
                 if(!ustate) return false
 
-                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var totalComplains = typeof ustate.flags === 'object' ? _.reduce(ustate.flags, (mem, a, b) => {
+                    return mem + (b == 2 ? a * 3 : a)
+                }, 0) : 0
+                
+
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
@@ -25156,6 +25160,7 @@ Platform = function (app, listofnodes) {
                         platform.ws.messageHandler(data.data)
 
 
+
                     if (data.room_id) {
 
                         if (data.tap) {
@@ -25201,6 +25206,9 @@ Platform = function (app, listofnodes) {
                                     },
                                 });
                             }else {
+
+                                console.log('body', body)
+
                                 const params = new URLSearchParams(body.url);
                                 platform.app.nav.api.load({
                                     open: true,
@@ -29743,7 +29751,7 @@ Platform = function (app, listofnodes) {
 
     self.acceptterms = function(clbk){
 
-        if(window.cordova){
+        if(window.cordova && window.pocketnetstore){
             var key = 'acceptterms'
 
             var aterms = null
