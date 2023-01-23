@@ -3724,7 +3724,7 @@ module.exports = function (obj) {
 /***/ "0825":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"hasInvited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato da\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"select\":\"Selezionare\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"hasInvited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato da\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"select\":\"Selezionare\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -3836,7 +3836,8 @@ var icon = __webpack_require__("3094");
   props: {
     chat: Object,
     dummy: Boolean,
-    search: String
+    search: String,
+    messages: Array
   },
   inject: ["matches"],
   components: {
@@ -3892,6 +3893,7 @@ var icon = __webpack_require__("3094");
       }
     },
     chatevents: function () {
+      console.log('this.messages', this.messages);
       return (this.events[this.chat.roomId] || {}).timeline || [];
     },
     key: function () {
@@ -3903,14 +3905,18 @@ var icon = __webpack_require__("3094");
     },
     matrixevent: function () {
       var e = this.event;
+      console.log("E", e);
 
       if (e) {
-        return e.get();
+        return e.get ? e.get() : e;
       }
     },
     event: function () {
       if (this.chat && this.chat.roomId) {
-        var _this$matches;
+        if (this.messages && this.messages.length) {
+          console.log('this.messages', this.messages[0]);
+          return this.messages[0];
+        }
 
         var members = this.m_chat.currentState.getMembers();
         var lastCallAccess = this.chatevents.filter(e => {
@@ -3957,19 +3963,21 @@ var icon = __webpack_require__("3094");
         });
         /*Show matched message instead of last*/
 
-        if ((_this$matches = this.matches) !== null && _this$matches !== void 0 && _this$matches.value) {
-          var _this$chat;
-
-          const messages = _.filter((_this$chat = this.chat) === null || _this$chat === void 0 ? void 0 : _this$chat.events, f => {
-            var _f$event, _f$event2;
-
-            return (((_f$event = f.event) === null || _f$event === void 0 ? void 0 : _f$event.content) || ((_f$event2 = f.event) === null || _f$event2 === void 0 ? void 0 : _f$event2.decrypted)).body.includes(this.matches.value);
-          });
-
-          if (messages.length) {
-            return _.filter(events, f => f.event.event_id === messages[messages.length - 1].event.event_id)[0];
-          }
-        }
+        /*if (this.matches?.value) {
+        	const messages = _.filter(this.chat?.events, (f) => {
+        		return (f.event?.content || f.event?.decrypted).body.includes(
+        			this.matches.value
+        		);
+        	});
+        			if (messages.length) {
+        		return _.filter(
+        			events,
+        			(f) =>
+        				f.event.event_id ===
+        				messages[messages.length - 1].event.event_id
+        		)[0];
+        	}
+        }*/
 
         if (events.length) {
           return events[events.length - 1];
@@ -5615,6 +5623,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7df18b93_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ef61");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7df18b93_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7df18b93_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7df18b93_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7df18b93_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "11bb":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_00aa9160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("55e6");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_00aa9160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_00aa9160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_00aa9160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_00aa9160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -10582,24 +10602,6 @@ module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? c
   return call.apply(apply, arguments);
 });
 
-
-/***/ }),
-
-/***/ "2bc1":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("660d");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("246f7209", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -17158,24 +17160,6 @@ module.exports = function enhanceError(error, config, code, request, response) {
   return error;
 };
 
-
-/***/ }),
-
-/***/ "389a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("5e60");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("541b2de7", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -24325,20 +24309,6 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "3fa6":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chatswrapper[data-v-2e66f40a]{padding-top:.25em}.section-title[data-v-2e66f40a]{background:rgb(var(--background-secondary-theme));color:rgb(var(--text-color));margin:.5em 0;padding:.5em .5em;width:100%;text-align:center}.section-title span[data-v-2e66f40a]{font-size:.8em;font-weight:700}.contact[data-v-2e66f40a]{cursor:pointer}.show-more[data-v-2e66f40a]{text-align:center}.show-more a[data-v-2e66f40a]{color:#00a4ff}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "3fb5":
 /***/ (function(module, exports) {
 
@@ -26119,36 +26089,6 @@ module.exports = function (input, pref) {
 
 /***/ }),
 
-/***/ "4882":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e66f40a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("4885");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e66f40a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e66f40a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e66f40a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2e66f40a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "4885":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("3fa6");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("733825bf", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "4930":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26526,6 +26466,20 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, "#maincontent .expandp[data-v-b9afe7cc]{position:absolute;left:0;right:-.5em;top:0;bottom:0;cursor:pointer;overflow-y:hidden;z-index:3}#maincontent .expandp .etablew[data-v-b9afe7cc]{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}#maincontent .expandp .etable[data-v-b9afe7cc]{height:100%;width:100%}#maincontent .expandp .etable>div[data-v-b9afe7cc]{transition:.3s;opacity:0;color:rgb(var(--text-on-bg-ac-color));vertical-align:middle;text-align:center}#maincontent .expandp[data-v-b9afe7cc]:before{--size:0;content:\"\";position:absolute;left:var(--x);top:50%;width:var(--size);height:var(--size);background:radial-gradient(circle closest-side,rgba(0,24,48,.34902),transparent);transform:translate(-50%,-50%);transition:.3s}#maincontent .expandp:hover .etable>div[data-v-b9afe7cc]{opacity:1}#maincontent .expandp[data-v-b9afe7cc]:hover:before{--size:400px}#maincontent.bout .expandp[data-v-b9afe7cc]{display:none}#maincontent[data-v-b9afe7cc] .resize-observer{height:1px;overflow:hidden}#maincontent .headerSpacer[data-v-b9afe7cc]{position:static;left:0;right:0;top:0;bottom:0;padding-bottom:0;margin:0 auto;max-width:640px}#maincontent .headerSpacerWrapper[data-v-b9afe7cc]{position:absolute;left:0;right:0;top:calc(65px + var(--app-margin-top));bottom:0;overflow-y:auto;overflow-x:hidden}#maincontent .headerSpacerWrapperOvf[data-v-b9afe7cc]{position:absolute;left:0;right:0;top:0;bottom:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain}#maincontent.minimized .headerSpacerWrapper[data-v-b9afe7cc]{top:55px}#maincontent.minimized.fix .headerSpacerWrapper[data-v-b9afe7cc]{overflow-y:inherit;overflow-x:inherit;top:0;bottom:56px;will-change:transform;transition:transform .3s}#maincontent.minimized.fix:not(.active):not(.unauthorized) .headerSpacerWrapperOvf[data-v-b9afe7cc]{-webkit-mask-image:linear-gradient(0deg,transparent 3%,#000 10%);mask-image:linear-gradient(0deg,transparent 3%,#000 10%)}#maincontent.minimized.fix[data-v-b9afe7cc]:not(.active):not(.unauthorized) .maskedtop{-webkit-mask-image:linear-gradient(180deg,transparent 3%,#000 10%);mask-image:linear-gradient(180deg,transparent 3%,#000 10%)}#maincontent.minimized.fix .headerSpacerWrapperOvf[data-v-b9afe7cc]{position:relative;width:344px;height:100%;overflow:visible;will-change:transform;transition:transform .3s}#maincontent.minimized.fix .headerSpacer[data-v-b9afe7cc]{position:absolute;height:100%;left:0;width:344px;padding:0;overflow-x:hidden;will-change:transform;overscroll-behavior:contain}#maincontent.minimized.fix.active .expandp[data-v-b9afe7cc]{display:none}#maincontent.minimized.fix.active .headerSpacerWrapper[data-v-b9afe7cc]{transform:translateZ(0);z-index:130}#maincontent.minimized.fix.active .headerSpacerWrapperOvf[data-v-b9afe7cc]{transform:translate3d(-300px,4px,0)}#maincontent.minimized.fix.active .headerSpacerWrapperOvf .headerSpacer[data-v-b9afe7cc]{border-radius:8px;border-top-left-radius:0;border-top-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-2),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);right:0}.modalcommoncontent[data-v-b9afe7cc] .previewContact{padding-left:.75em}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "4da3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".chats-list .searchWrapperEA[data-v-19e35e6c]{margin-top:.5em}.removeRoom[data-v-19e35e6c]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-19e35e6c]{color:#fff}.chatsearchingempty[data-v-19e35e6c]{padding:2em;text-align:center}.chatsearchingempty span[data-v-19e35e6c]{font-size:1.5em;font-weight:100}.generatekeys[data-v-19e35e6c],.inviteUserDiv[data-v-19e35e6c]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-19e35e6c],.generatekeys .inviteButton[data-v-19e35e6c],.inviteUserDiv .generatekeysButton[data-v-19e35e6c],.inviteUserDiv .inviteButton[data-v-19e35e6c]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-19e35e6c],.generatekeys .inviteButton i[data-v-19e35e6c],.inviteUserDiv .generatekeysButton i[data-v-19e35e6c],.inviteUserDiv .inviteButton i[data-v-19e35e6c]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-19e35e6c] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-19e35e6c]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-19e35e6c]{height:70px;contain:strict}.selectedForShare[data-v-19e35e6c]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-19e35e6c]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-19e35e6c]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-19e35e6c] .chatInputWrapper{display:none}.previewWrapper[data-v-19e35e6c]:last-child{border-bottom:0}.swipeout-list[data-v-19e35e6c]{display:flex;flex-direction:column}.startnewchat[data-v-19e35e6c],.unauthorized[data-v-19e35e6c]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-19e35e6c],.unauthorized .buttonWrapper[data-v-19e35e6c]{padding:1em}.startnewchat .captionWrapper[data-v-19e35e6c],.unauthorized .captionWrapper[data-v-19e35e6c]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-19e35e6c],.unauthorized .captionWrapper span[data-v-19e35e6c]{font-size:1.5em;font-weight:100}.card[data-v-19e35e6c]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-19e35e6c]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-19e35e6c],.chats-list.minimized:not(.active) .startnewchat[data-v-19e35e6c],.chats-list.minimized:not(.active) .unauthorized[data-v-19e35e6c],.unauthorized.minimized[data-v-19e35e6c]:not(.active){display:none}", ""]);
 // Exports
 module.exports = exports;
 
@@ -28417,6 +28371,24 @@ if(content.locals) module.exports = content.locals;
 var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("c0347f20", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "55e6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("5eb2");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("a0150502", content, shadowRoot)
 };
 
 /***/ }),
@@ -31113,7 +31085,7 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=f8b28e32&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=0ff1f640&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
 			pip: _vm.pip,
 			bin: _vm.pocketnet,
@@ -31127,7 +31099,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=f8b28e32&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=0ff1f640&shadow
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=be5e52cc&scoped=true&
 var mainvue_type_template_id_be5e52cc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{ minimized: _vm.minimized, active: _vm.active }},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.showFooter)?_c('FooterChat'):_vm._e(),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1)}
@@ -45368,10 +45340,16 @@ var searchvue_type_template_id_80e152ba_scoped_true_staticRenderFns = []
       if (this.searchTxt) this.clear();
     },
     clear: function (event) {
-      var _this$matches6, _this$matches7;
+      var _this$matches6;
 
       this.searchTxt = "";
-      if (typeof ((_this$matches6 = this.matches) === null || _this$matches6 === void 0 ? void 0 : _this$matches6.clear) === "function") (_this$matches7 = this.matches) === null || _this$matches7 === void 0 ? void 0 : _this$matches7.clear();
+
+      if (typeof ((_this$matches6 = this.matches) === null || _this$matches6 === void 0 ? void 0 : _this$matches6.clear) === "function") {
+        var _this$matches7;
+
+        (_this$matches7 = this.matches) === null || _this$matches7 === void 0 ? void 0 : _this$matches7.clear();
+        this.toggle();
+      }
     },
     clickicon: function () {
       this.$refs["input"].focus();
@@ -46126,7 +46104,7 @@ var scriptsadded = false;
   },
 
   created() {
-    //this.pocketnet = true;
+    //this.pocketnet = false;
     //this.mobile = !this.pocketnet
     //this.recording = true
     //this.iscallsenabled = true
@@ -46876,20 +46854,6 @@ module.exports = pipeline;
 
 /***/ }),
 
-/***/ "5e60":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".deletedMessage[data-v-7ed0e9b2]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-7ed0e9b2]{opacity:0;transition:.3s}.event.readyToRender[data-v-7ed0e9b2]{opacity:1}.event .loading[data-v-7ed0e9b2]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-7ed0e9b2],.event .loading[data-v-7ed0e9b2]{position:relative;left:0;top:0;padding:.5em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "5e77":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46910,6 +46874,20 @@ module.exports = {
   PROPER: PROPER,
   CONFIGURABLE: CONFIGURABLE
 };
+
+
+/***/ }),
+
+/***/ "5eb2":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".chatswrapper[data-v-00aa9160]{padding-top:.25em}.section-title[data-v-00aa9160]{background:rgb(var(--background-secondary-theme));color:rgb(var(--text-color));margin:.5em 0;padding:.5em .5em;width:100%;text-align:center}.section-title span[data-v-00aa9160]{font-size:.8em;font-weight:700}.contact[data-v-00aa9160]{cursor:pointer}.show-more[data-v-00aa9160]{text-align:center}.show-more a[data-v-00aa9160]{color:#00a4ff}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -47486,14 +47464,14 @@ function exists(indexedDB, dbName) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=7ed0e9b2&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=3573289a&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (
 		!_vm.event.localRedactionEvent() && !_vm.event.getRedactionEvent() && !_vm.removed
 	)?_c('div',{ref:"msgElement",staticClass:"event",class:{ readyToRender: _vm.readyToRender, my: _vm.my }},[(_vm.type === 'member' && !_vm.preview)?_c('member',{attrs:{"chat":_vm.chat,"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false},on:{"readyToRender":_vm.setReadyToRender}}):_vm._e(),(_vm.type === 'message' || _vm.preview)?_c('message',{attrs:{"chat":_vm.chat,"event":_vm.event,"prevevent":_vm.prevevent,"origin":_vm.event,"decryptEvent":_vm.decryptEvent,"decryptedInfo":_vm.decryptedInfo,"encryptedData":_vm.encryptedData,"imgEvent":_vm.galleryData,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false,"withImage":_vm.withImage || false,"clientWidth":_vm.clientWidth,"encrypted":_vm.encrypted,"subtype":_vm.subtype,"error":_vm.error,"reference":_vm.reference,"downloaded":_vm.downloaded,"last":_vm.last,"showmyicontrue":_vm.showmyicontrue,"fromreference":_vm.fromreference,"searchText":_vm.searchText,"multiSelect":_vm.multiSelect,"selectedMessages":_vm.selectedMessages,"audioBuffer":_vm.audioBuffer,"isRemoveSelectedMessages":_vm.isRemoveSelectedMessages},on:{"openGalleryImg":_vm.openImage,"readyToRender":_vm.setReadyToRender,"remove":_vm.removeEvent,"download":_vm.downloadFile,"decryptagain":_vm.decryptAgain,"showMultiSelect":function($event){return _vm.$emit('showMultiSelect')},"selectMessage":_vm.selectMessage,"removeMessage":_vm.removeMessage,"messagesIsDeleted":_vm.messagesIsDeleted,"editing":_vm.editing,"reply":_vm.reply,"share":_vm.share,"menuIsVisible":_vm.menuIsVisibleHandler}}):_vm._e(),(_vm.type === 'common')?_c('common',{attrs:{"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false}}):_vm._e(),(_vm.downloading)?_c('div',{staticClass:"loading"},[_c('linepreloader')],1):_vm._e()],1):_c('div',{staticClass:"deletedMessage"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=7ed0e9b2&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=3573289a&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -49527,6 +49505,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 
 
 
+var rendered = {};
 /* harmony default export */ var eventvue_type_script_lang_js_ = ({
   name: "eventsEvent",
   components: {
@@ -49580,15 +49559,6 @@ var message_component = Object(componentNormalizer["a" /* default */])(
     isRemoveSelectedMessages: false
   },
   computed: {
-    /*readyToRender : function(){
-        if(this.$refs["cmessage"]) {
-    
-          if(this.$refs["cmessage"].readyToRender){
-            return true
-          }
-          }
-          return true
-      },*/
     type: function () {
       var t = functions["a" /* default */].deep(this, "event.event.type");
       if (["m.room.member"].indexOf(t) > -1) return "member";
@@ -49634,6 +49604,13 @@ var message_component = Object(componentNormalizer["a" /* default */])(
     if (this.readedInterval) {
       clearInterval(this.readedInterval);
       this.readedInterval = null;
+    }
+  },
+  beforeMount: function () {
+    if (this.event && this.event.event) {
+      if (rendered[this.event.event.event_id] || this.event._txnId && rendered[this.event._txnId]) {
+        this.readyToRender = true;
+      }
     }
   },
   mounted: function () {
@@ -49684,6 +49661,16 @@ var message_component = Object(componentNormalizer["a" /* default */])(
   },
   methods: {
     setReadyToRender() {
+      if (this.readyToRender) return;
+
+      if (this.event) {
+        rendered[this.event.event.event_id] = true;
+
+        if (this.event._txnId) {
+          rendered[this.event._txnId] = true;
+        }
+      }
+
       setTimeout(() => {
         this.readyToRender = true;
       }, 20);
@@ -49895,7 +49882,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 
 function event_injectStyles (context) {
   
-  var style0 = __webpack_require__("a4d3")
+  var style0 = __webpack_require__("acec")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -49908,7 +49895,7 @@ var event_component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   event_injectStyles,
-  "7ed0e9b2",
+  "3573289a",
   null
   ,true
 )
@@ -53049,20 +53036,6 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "660d":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chats-list .searchWrapperEA[data-v-a7708640]{margin-top:.5em}.removeRoom[data-v-a7708640]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-a7708640]{color:#fff}.chatsearchingempty[data-v-a7708640]{padding:2em;text-align:center}.chatsearchingempty span[data-v-a7708640]{font-size:1.5em;font-weight:100}.generatekeys[data-v-a7708640],.inviteUserDiv[data-v-a7708640]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-a7708640],.generatekeys .inviteButton[data-v-a7708640],.inviteUserDiv .generatekeysButton[data-v-a7708640],.inviteUserDiv .inviteButton[data-v-a7708640]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-a7708640],.generatekeys .inviteButton i[data-v-a7708640],.inviteUserDiv .generatekeysButton i[data-v-a7708640],.inviteUserDiv .inviteButton i[data-v-a7708640]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-a7708640] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-a7708640]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-a7708640]{height:70px;contain:strict}.selectedForShare[data-v-a7708640]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-a7708640]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-a7708640]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-a7708640] .chatInputWrapper{display:none}.previewWrapper[data-v-a7708640]:last-child{border-bottom:0}.swipeout-list[data-v-a7708640]{display:flex;flex-direction:column}.startnewchat[data-v-a7708640],.unauthorized[data-v-a7708640]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-a7708640],.unauthorized .buttonWrapper[data-v-a7708640]{padding:1em}.startnewchat .captionWrapper[data-v-a7708640],.unauthorized .captionWrapper[data-v-a7708640]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-a7708640],.unauthorized .captionWrapper span[data-v-a7708640]{font-size:1.5em;font-weight:100}.card[data-v-a7708640]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-a7708640]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-a7708640],.chats-list.minimized:not(.active) .startnewchat[data-v-a7708640],.chats-list.minimized:not(.active) .unauthorized[data-v-a7708640],.unauthorized.minimized[data-v-a7708640]:not(.active){display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "67ac":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54601,7 +54574,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "6ce2":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"hasInvited\":\"eingeladen \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message from\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"select\":\"Auswählen\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"hasInvited\":\"eingeladen \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message from\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"select\":\"Auswählen\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -58322,7 +58295,7 @@ exports.f = Object.getOwnPropertySymbols;
 /***/ "7704":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"disableCalls\":\"Запретить входящие звонки\",\"enableCalls\":\"Разрешить входящие звонки\",\"allow\":\"Разрешить\",\"prohibit\":\"Отклонить\",\"requestCallAccess\":\"Пользователь запрашивает разрешение на звонки\",\"callAccessWarning\":\"Принимайте запросы ТОЛЬКО от доверенных людей.\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"settings_disturb\":\"Не беспокоить\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\",\"endedCall\":\"Звонок завершён\",\"incomingCall\":\"Входящий звонок\",\"outgoingCall\":\"Исходящий звонок\",\"m.call.invite\":\"Входящий звонок от\",\"m.call.hangup\":\"Звонок завершён\",\"m.call.reject\":\"Звонок отклонён\",\"m.call.answer\":\"Активный звонок\",\"wait\":\"Ожидание ответа\",\"ended\":\"Звонок завершён\",\"reject\":\"Звонок отклонён\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"disableCalls\":\"Запретить входящие звонки\",\"enableCalls\":\"Разрешить входящие звонки\",\"allow\":\"Разрешить\",\"prohibit\":\"Отклонить\",\"requestCallAccess\":\"Пользователь запрашивает разрешение на звонки\",\"callAccessWarning\":\"Принимайте запросы ТОЛЬКО от доверенных людей.\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\",\"messages\":\"Сообщения\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"settings_disturb\":\"Не беспокоить\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\",\"endedCall\":\"Звонок завершён\",\"incomingCall\":\"Входящий звонок\",\"outgoingCall\":\"Исходящий звонок\",\"m.call.invite\":\"Входящий звонок от\",\"m.call.hangup\":\"Звонок завершён\",\"m.call.reject\":\"Звонок отклонён\",\"m.call.answer\":\"Активный звонок\",\"wait\":\"Ожидание ответа\",\"ended\":\"Звонок завершён\",\"reject\":\"Звонок отклонён\"}");
 
 /***/ }),
 
@@ -59633,6 +59606,24 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
+
+/***/ }),
+
+/***/ "8361":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("4da3");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7407fb13", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -62103,7 +62094,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 /***/ "96ee":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"轉發的消息來自\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"select\":\"選擇\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"轉發的消息來自\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"select\":\"選擇\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -68666,22 +68657,22 @@ var staticRenderFns = []
 
 // CONCATENATED MODULE: ./src/views/chats.vue?vue&type=template&id=275c009a&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=a7708640&scoped=true&
-var listvue_type_template_id_a7708640_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{
-			bin: _vm.pocketnet,
-			bout: !_vm.pocketnet,
-			minimized: _vm.minimized,
-			fix: _vm.pocketnet,
-			active: _vm.active,
-			empty: _vm.empty,
-		}},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"searchWrapperEA"},[_c('search')],1):_vm._e(),(!_vm.matches.value && this.chats.length <= 2 && _vm.chatsready === true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"desktopList"},[(!_vm.matches.value)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.chats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
-		var item = ref.item;
-		var active = ref.active;
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=19e35e6c&scoped=true&
+var listvue_type_template_id_19e35e6c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{
+		bin: _vm.pocketnet,
+		bout: !_vm.pocketnet,
+		minimized: _vm.minimized,
+		fix: _vm.pocketnet,
+		active: _vm.active,
+		empty: _vm.empty,
+	}},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"searchWrapperEA"},[_c('search')],1):_vm._e(),(!_vm.matches.value && this.chats.length <= 2 && _vm.chatsready === true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"desktopList"},[(!_vm.matches.value)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.chats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+	var item = ref.item;
+	var active = ref.active;
 return [(item)?_c('div',{ref:"content",staticClass:"card-content",on:{"click":function (e) { return _vm.itemClick(item); }}},[(active)?_c('preview',{attrs:{"chat":item}}):_vm._e()],1):_vm._e()]}}],null,false,363748812)})],1):_c('AllContacts',{attrs:{"chats":_vm.chats}})],1)])],1)],1):_c('div',{staticClass:"dmdv"})])}
-var listvue_type_template_id_a7708640_scoped_true_staticRenderFns = []
+var listvue_type_template_id_19e35e6c_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=a7708640&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=19e35e6c&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -68692,12 +68683,15 @@ var dummypreviews = __webpack_require__("a54c");
 // EXTERNAL MODULE: ./src/components/chats/preview/index.vue + 9 modules
 var preview = __webpack_require__("087d");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/all/index.vue?vue&type=template&id=2e66f40a&scoped=true&
-var allvue_type_template_id_2e66f40a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatswrapper"},_vm._l((_vm.lists),function(section){return (_vm.getList(section).length)?_c('section',{staticClass:"chats"},[_c('div',{staticClass:"section-title"},[_c('span',[_vm._v(_vm._s(_vm.$t(("caption." + section))))])]),_vm._l((_vm.loadList(section)),function(item){return _c('div',{key:item.roomId || item.id,staticClass:"card-content",on:{"click":function($event){return _vm.itemClick(item)}}},[(item.roomId)?_c('previewRoom',{staticClass:"room",attrs:{"chat":item}}):_c('previewContact',{staticClass:"contact",attrs:{"contact":item,"mode":_vm.mode}})],1)})],2):_vm._e()}),0)}
-var allvue_type_template_id_2e66f40a_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"123a731a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/all/index.vue?vue&type=template&id=00aa9160&scoped=true&
+var allvue_type_template_id_00aa9160_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatswrapper"},_vm._l((_vm.filteredLists),function(ref){
+var section = ref.section;
+var items = ref.items;
+return _c('section',{staticClass:"chats"},[_c('div',{staticClass:"section-title"},[_c('span',[_vm._v(_vm._s(_vm.$t(("caption." + (section.key)))))])]),_vm._l((items),function(item){return _c('div',{key:item.roomId || item.id,staticClass:"card-content",on:{"click":function($event){return _vm.itemClick(item, section)}}},[(section.view == 'room')?_c('previewRoom',{staticClass:"room",attrs:{"chat":item}}):_vm._e(),(section.view == 'roomWithMessage')?_c('previewRoom',{staticClass:"room",attrs:{"chat":item.chat,"messages":item.messages}}):_vm._e(),(section.view == 'contact')?_c('previewContact',{staticClass:"contact",attrs:{"contact":item,"mode":_vm.mode}}):_vm._e()],1)})],2)}),0)}
+var allvue_type_template_id_00aa9160_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/contacts/all/index.vue?vue&type=template&id=2e66f40a&scoped=true&
+// CONCATENATED MODULE: ./src/components/contacts/all/index.vue?vue&type=template&id=00aa9160&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/underscore/underscore-node-f.cjs
 var underscore_node_f = __webpack_require__("5661");
@@ -68737,18 +68731,79 @@ var contacts_preview = __webpack_require__("92a6");
     return {
       loading: false,
       users: [],
-      lists: ["contacts", "other", "chats"],
+      lists: [{
+        key: "chats",
+        view: 'room',
+        action: 'navigateToRoom'
+      }, {
+        key: "contacts",
+        view: 'contact',
+        action: 'navigateToContact'
+      }, {
+        key: "other",
+        view: 'contact',
+        action: 'navigateToContact'
+      }, {
+        key: "messages",
+        view: 'roomWithMessage',
+        keepMatches: true,
+        action: 'navigateToRoomFromMsg'
+      }],
       searchChanged: true
     };
   },
   computed: { ...Object(vuex_esm["c" /* mapState */])(["contactsMap"]),
+    filteredLists: function () {
+      var object = {};
 
-    filteredChats() {
+      underscore_node_f["_"].each(this.lists, section => {
+        var items = this.getList(section.key);
+
+        if (items.length) {
+          object[section.key] = {
+            items,
+            section
+          };
+        }
+      });
+
+      return object;
+    },
+
+    filteredMessages() {
       var _this$matches;
 
       let chats = this.chats;
 
       if ((_this$matches = this.matches) !== null && _this$matches !== void 0 && _this$matches.value) {
+        return underscore_node_f["_"].filter(underscore_node_f["_"].map(chats, c => {
+          var messages = underscore_node_f["_"].filter(c.events, m => {
+            var _this$matches2;
+
+            const match = (m.event.decrypted || m.event.content).body.toLowerCase().includes((_this$matches2 = this.matches) === null || _this$matches2 === void 0 ? void 0 : _this$matches2.value);
+            return match && m.event || null;
+          });
+
+          return {
+            chat: c,
+            messages: underscore_node_f["_"].sortBy(messages, m => {
+              return -(m.origin_server_ts || 1);
+            })
+          };
+        }), cm => {
+          return cm.messages.length;
+        });
+      }
+
+      return [];
+    },
+
+    filteredChats() {
+      var _this$matches3;
+
+      let chats = this.chats;
+
+      if ((_this$matches3 = this.matches) !== null && _this$matches3 !== void 0 && _this$matches3.value) {
         let mc = underscore_node_f["_"].filter(underscore_node_f["_"].map(chats, c => {
           const users = this.core.mtrx.chatUsersInfo(c.roomId, "anotherChatUsers"),
                 mChat = this.core.mtrx.client.getRoom(c.roomId),
@@ -68762,18 +68817,10 @@ var contacts_preview = __webpack_require__("92a6");
 
             chatName = (_mChat$currentState$g = mChat.currentState.getStateEvents("m.room.name", "")[0]) === null || _mChat$currentState$g === void 0 ? void 0 : _mChat$currentState$g.getContent().name;
           }
-          /*Search by messages*/
-
-
-          const messages = (c.events || []).filter(m => {
-            var _this$matches2;
-
-            const match = (m.event.decrypted || m.event.content).body.toLowerCase().includes((_this$matches2 = this.matches) === null || _this$matches2 === void 0 ? void 0 : _this$matches2.value);
-            return match && m.event || null;
-          });
           /*Filter chat that not reach search*/
 
-          if (!chatName || messages.length) {
+
+          if (!chatName) {
             chatName = mChat.name;
             if (chatName[0] === "#") chatName = "";
           }
@@ -68781,7 +68828,7 @@ var contacts_preview = __webpack_require__("92a6");
           const uString = (chatName + userNameString).toLowerCase();
           let point = 0;
 
-          if (uString.includes(this.matches.value) || messages.length) {
+          if (uString.includes(this.matches.value)) {
             point = this.matches.value.length / uString.length;
           }
 
@@ -68831,9 +68878,7 @@ var contacts_preview = __webpack_require__("92a6");
     },
 
     itemClick(item) {
-      if (!item.events) {
-        return this.navigateToProfile(item.id, item);
-      }
+      let section = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       if (this.mode) {
         this.$store.commit("active", true);
@@ -68842,13 +68887,21 @@ var contacts_preview = __webpack_require__("92a6");
           item: "main"
         });
         this.$store.commit("setiteraction", true);
-        /*if (
-              !this.share &&
-              this.$store.state.lastroom &&
-              this.$store.state.lastroom.id == item.roomId) {
-              this.$router.push('chat?id=' + this.$store.state.lastroom.id)
-            }*/
-      } else {
+        return;
+      }
+
+      if (!section.keepMatches) {
+        this.matches.clear();
+      }
+
+      if (section.action == 'navigateToProfile') {
+        return this.navigateToProfile(item.id, item);
+      }
+
+      if (section.action == 'navigateToRoom' || section.action == 'navigateToRoomFromMsg') {
+        var chat = item;
+        if (section.action == 'navigateToRoomFromMsg') chat = item.chat;
+
         if (this.share) {
           var _share = this.share;
           this.$store.commit("SHARE", null);
@@ -68857,13 +68910,12 @@ var contacts_preview = __webpack_require__("92a6");
             message: "",
             manual: true
           });
-          console.log("_share", _share);
-          this.core.mtrx.shareInChat(item.roomId, _share).then(r => {
+          this.core.mtrx.shareInChat(chat.roomId, _share).then(r => {
             this.$store.commit("icon", {
               icon: "success",
               message: ""
             });
-            this.$router.push(_share.route || "chat?id=" + item.roomId).catch(e => {});
+            this.$router.push(_share.route || "chat?id=" + chat.roomId).catch(e => {});
           }).catch(e => {
             console.error(e);
             this.$store.commit("icon", {
@@ -68876,8 +68928,10 @@ var contacts_preview = __webpack_require__("92a6");
             }
           });
         } else {
-          this.$router.push("chat?id=" + item.roomId).catch(e => {});
+          this.$router.push("chat?id=" + chat.roomId).catch(e => {});
         }
+
+        return;
       }
     },
 
@@ -68910,7 +68964,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("4882")
+  var style0 = __webpack_require__("11bb")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -68919,11 +68973,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var component = Object(componentNormalizer["a" /* default */])(
   contacts_all_vue_type_script_lang_js_,
-  allvue_type_template_id_2e66f40a_scoped_true_render,
-  allvue_type_template_id_2e66f40a_scoped_true_staticRenderFns,
+  allvue_type_template_id_00aa9160_scoped_true_render,
+  allvue_type_template_id_00aa9160_scoped_true_staticRenderFns,
   false,
   injectStyles,
-  "2e66f40a",
+  "00aa9160",
   null
   ,true
 )
@@ -69336,7 +69390,7 @@ var functions = __webpack_require__("3139");
 
 function list_injectStyles (context) {
   
-  var style0 = __webpack_require__("b240")
+  var style0 = __webpack_require__("a18e")
 if (style0.__inject__) style0.__inject__(context)
 var style1 = __webpack_require__("b551")
 if (style1.__inject__) style1.__inject__(context)
@@ -69347,11 +69401,11 @@ if (style1.__inject__) style1.__inject__(context)
 
 var list_component = Object(componentNormalizer["a" /* default */])(
   chats_list_vue_type_script_lang_js_,
-  listvue_type_template_id_a7708640_scoped_true_render,
-  listvue_type_template_id_a7708640_scoped_true_staticRenderFns,
+  listvue_type_template_id_19e35e6c_scoped_true_render,
+  listvue_type_template_id_19e35e6c_scoped_true_staticRenderFns,
   false,
   list_injectStyles,
-  "a7708640",
+  "19e35e6c",
   null
   ,true
 )
@@ -84704,6 +84758,18 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "a18e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_19e35e6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8361");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_19e35e6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_19e35e6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_19e35e6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_19e35e6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "a255":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -84965,7 +85031,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "a306":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"hasInvited\":\"invitado \",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado de\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"select\":\"Seleccione\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"hasInvited\":\"invitado \",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado de\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"select\":\"Seleccione\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -85291,18 +85357,6 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("2241a715", content, shadowRoot)
 };
-
-/***/ }),
-
-/***/ "a4d3":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed0e9b2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("389a");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed0e9b2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed0e9b2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed0e9b2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed0e9b2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -86067,6 +86121,32 @@ module.exports = function (O, options) {
     createNonEnumerableProperty(O, 'cause', options.cause);
   }
 };
+
+
+/***/ }),
+
+/***/ "ab60":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".deletedMessage[data-v-3573289a]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-3573289a]{opacity:0;transition:.3s}.event.readyToRender[data-v-3573289a]{opacity:1}.event .loading[data-v-3573289a]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-3573289a],.event .loading[data-v-3573289a]{position:relative;left:0;top:0;padding:.5em}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "acec":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_3573289a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b135");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_3573289a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_3573289a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_3573289a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_3573289a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -87419,6 +87499,24 @@ exports.PolyfillCryptoProvider = PolyfillCryptoProvider;
 
 /***/ }),
 
+/***/ "b135":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("ab60");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("9ceed88e", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "b190":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -87575,18 +87673,6 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   }
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("4362")))
-
-/***/ }),
-
-/***/ "b240":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a7708640_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("2bc1");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a7708640_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a7708640_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a7708640_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a7708640_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -93058,7 +93144,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "c1af":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"hasInvited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"에서 전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"select\":\"고르다\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"hasInvited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"에서 전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"select\":\"고르다\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -98252,7 +98338,7 @@ module.exports.__inject__ = function (shadowRoot) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".searchWrapperEA .searchWrapper[data-v-80e152ba]{padding:0 .25em}.searchWrapper[data-v-80e152ba],.searchWrapperEA .searchWrapper[data-v-80e152ba]{background:rgb(var(--background-secondary-theme))}.searchWrapper[data-v-80e152ba]{display:flex;justify-content:stretch;overflow:hidden;border-radius:32px;color:rgb(var(--neutral-grad-2));align-items:center}.searchWrapper .inputWrapper[data-v-80e152ba]{flex:1;margin-left:.25em}.searchWrapper .inputWrapper input[data-v-80e152ba]{color:rgb(var(--text-color));padding:0;height:44px;width:100%;font-size:.9em}.searchWrapper .inputWrapper+.iconWrapper i[data-v-80e152ba]{color:rgb(var(--neutral-grad-4))}.searchWrapper .iconWrapper[data-v-80e152ba]{display:flex;align-items:center;justify-content:center;text-align:center}.searchWrapper .iconWrapper i[data-v-80e152ba]{font-size:.8em;width:100%}.searchWrapper .iconWrapper .fa-angle-left[data-v-80e152ba]{font-size:1em;color:rgb(var(--color-txt-ac));transition:color .3s}.searchWrapper .iconWrapper .fa-angle-left[data-v-80e152ba]:hover{color:rgb(var(--neutral-grad-3))}#search[data-v-80e152ba]{padding:0 1em;width:100%}#search.minimized:not(.active) .searchWrapper[data-v-80e152ba]{border-radius:0;background:transparent;padding:0}#search.minimized:not(.active) .searchWrapper .inputWrapper[data-v-80e152ba]{display:none}#search.minimized:not(.active) .searchWrapper .iconWrapper[data-v-80e152ba]{text-align:center;width:44px;height:44px;line-height:44px;padding:0;border-radius:50%;background:rgba(var(--color-txt-gray-dark),.4);color:rgba(var(--color-txt-gray-dark),.8)}#search.minimized:not(.active) .searchWrapper .iconWrapper i[data-v-80e152ba]{font-size:.8em}#search.collapsed[data-v-80e152ba]{padding:0}#search.collapsed .searchWrapper[data-v-80e152ba]{background:none}#search.collapsed .searchWrapper .inputWrapper[data-v-80e152ba],#search.collapsed .searchWrapper .matches[data-v-80e152ba]{overflow:hidden;padding:0;width:0}#search.collapsed .searchWrapper .inputWrapper input[data-v-80e152ba],#search.collapsed .searchWrapper .matches input[data-v-80e152ba]{padding:0}#search.collapsed .searchWrapper .iconWrapper[data-v-80e152ba]{width:auto}#search.expanded[data-v-80e152ba]{position:absolute;left:0;bottom:0;right:0;padding-bottom:.5em}#search.expanded.bin[data-v-80e152ba]{padding-bottom:.25em}#search.expanded .searchWrapper .iconWrapper[data-v-80e152ba]{min-width:44px}.searchWrapperEA #search[data-v-80e152ba]{display:block;padding:0 .25em;position:static;transform:none}.iconWrapper i[data-v-80e152ba]{color:rgb(var(--neutral-grad-4));cursor:pointer}.matches[data-v-80e152ba]{font-size:.8em;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-user-select--khtml-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select--ms-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select--ms-user-select-user-select:none}.matches i[data-v-80e152ba]{background:rgb(var(--background-secondary-theme))}.matches .current-match[data-v-80e152ba],.matches i[data-v-80e152ba]{color:rgb(var(--neutral-grad-4))}.matches .next-match[data-v-80e152ba],.matches .prev-match[data-v-80e152ba]{cursor:pointer}", ""]);
+exports.push([module.i, ".searchWrapperEA .searchWrapper[data-v-80e152ba]{padding:0 .25em}.searchWrapper[data-v-80e152ba],.searchWrapperEA .searchWrapper[data-v-80e152ba]{background:rgb(var(--background-secondary-theme))}.searchWrapper[data-v-80e152ba]{display:flex;justify-content:stretch;overflow:hidden;border-radius:32px;color:rgb(var(--neutral-grad-2));align-items:center}.searchWrapper .inputWrapper[data-v-80e152ba]{flex:1;margin-left:.25em}.searchWrapper .inputWrapper input[data-v-80e152ba]{color:rgb(var(--text-color));padding:0;height:44px;width:100%;font-size:.9em}.searchWrapper .inputWrapper+.iconWrapper i[data-v-80e152ba]{color:rgb(var(--neutral-grad-4))}.searchWrapper .iconWrapper[data-v-80e152ba]{display:flex;align-items:center;justify-content:center;text-align:center}.searchWrapper .iconWrapper i[data-v-80e152ba]{font-size:.8em;width:100%}.searchWrapper .iconWrapper .fa-angle-left[data-v-80e152ba]{font-size:1em;color:rgb(var(--color-txt-ac));transition:color .3s}.searchWrapper .iconWrapper .fa-angle-left[data-v-80e152ba]:hover{color:rgb(var(--neutral-grad-3))}#search[data-v-80e152ba]{padding:0 1em;width:100%}#search.minimized:not(.active) .searchWrapper[data-v-80e152ba]{border-radius:0;background:transparent;padding:0}#search.minimized:not(.active) .searchWrapper .inputWrapper[data-v-80e152ba]{display:none}#search.minimized:not(.active) .searchWrapper .iconWrapper[data-v-80e152ba]{text-align:center;width:44px;height:44px;line-height:44px;padding:0;border-radius:50%;background:rgba(var(--color-txt-gray-dark),.4);color:rgba(var(--color-txt-gray-dark),.8)}#search.minimized:not(.active) .searchWrapper .iconWrapper i[data-v-80e152ba]{font-size:.8em}#search.collapsed[data-v-80e152ba]{padding:0}#search.collapsed .searchWrapper[data-v-80e152ba]{background:none}#search.collapsed .searchWrapper .inputWrapper[data-v-80e152ba],#search.collapsed .searchWrapper .matches[data-v-80e152ba]{overflow:hidden;padding:0;width:0}#search.collapsed .searchWrapper .inputWrapper input[data-v-80e152ba],#search.collapsed .searchWrapper .matches input[data-v-80e152ba]{padding:0}#search.collapsed .searchWrapper .iconWrapper[data-v-80e152ba]{width:auto}#search.expanded[data-v-80e152ba]{position:absolute;left:0;bottom:0;right:0;padding-bottom:.5em}#search.expanded.bin[data-v-80e152ba]{padding-bottom:.25em}#search.expanded .searchWrapper .iconWrapper[data-v-80e152ba]{min-width:44px}.searchWrapperEA #search[data-v-80e152ba]{display:block;padding:0 .25em;position:static;transform:none}.iconWrapper i[data-v-80e152ba]{color:rgb(var(--neutral-grad-4));cursor:pointer}.matches[data-v-80e152ba]{font-size:.8em;display:flex;padding-right:.5em;align-items:center;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-user-select--khtml-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select--ms-user-select:none;-webkit-user-select--khtml-user-select--moz-user-select--ms-user-select-user-select:none}.matches i[data-v-80e152ba],.matches span[data-v-80e152ba]{padding:.5em;background:rgb(var(--background-secondary-theme))}.matches .current-match[data-v-80e152ba],.matches i[data-v-80e152ba],.matches span[data-v-80e152ba]{color:rgb(var(--neutral-grad-4))}.matches .next-match[data-v-80e152ba],.matches .prev-match[data-v-80e152ba]{cursor:pointer}", ""]);
 // Exports
 module.exports = exports;
 
@@ -105611,7 +105697,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ "edd4":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"disableCalls\":\"Prohibit incoming calls\",\"enableCalls\":\"Allow incoming calls\",\"allow\":\"Allow\",\"prohibit\":\"Reject\",\"requestCallAccess\":\"The user requests permission to make calls\",\"callAccessWarning\":\"Accept requests ONLY from trusted people.\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"other\":\"Other\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"hasInvited\":\"has invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message from\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"select\":\"Select\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"settings_disturb\":\"Do not disturb\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\",\"endedCall\":\"Call completed\",\"incomingCall\":\"Incoming call\",\"outgoingCall\":\"Outgoing call\",\"m.call.invite\":\"Incoming call from\",\"m.call.hangup\":\"Call completed\",\"m.call.reject\":\"Call rejected\",\"m.call.answer\":\"Active call\",\"wait\":\"Waiting for a response\",\"ended\":\"Call completed\",\"reject\":\"Call rejected\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"disableCalls\":\"Prohibit incoming calls\",\"enableCalls\":\"Allow incoming calls\",\"allow\":\"Allow\",\"prohibit\":\"Reject\",\"requestCallAccess\":\"The user requests permission to make calls\",\"callAccessWarning\":\"Accept requests ONLY from trusted people.\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"other\":\"Other\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"hasInvited\":\"has invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message from\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"select\":\"Select\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"settings_disturb\":\"Do not disturb\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\",\"endedCall\":\"Call completed\",\"incomingCall\":\"Incoming call\",\"outgoingCall\":\"Outgoing call\",\"m.call.invite\":\"Incoming call from\",\"m.call.hangup\":\"Call completed\",\"m.call.reject\":\"Call rejected\",\"m.call.answer\":\"Active call\",\"wait\":\"Waiting for a response\",\"ended\":\"Call completed\",\"reject\":\"Call rejected\"}");
 
 /***/ }),
 
@@ -107390,7 +107476,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ "f693":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"hasInvited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message de\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"select\":\"Sélectionner\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"hasInvited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message de\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"messages\":\"Messages\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"select\":\"Sélectionner\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
