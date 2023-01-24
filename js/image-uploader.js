@@ -9,19 +9,29 @@ ImageUploader = function(app) {
 
         if (base64.indexOf('data:image') > -1){
 
-            return self.uploadImage({ base64 }, 'imgur').catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })
-            
-            return self.uploadImage({ base64 }, 'peertube')/*.catch(err => {
-                return self.uploadImage({ base64 }, 'imgur')
-            }).catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })*/
+            // If we are in test environment, try to upload images to Peertube
+            // (fallback to Imgur if failure)
+            if (window.testpocketnet) {
+
+                return self.uploadImage({ base64 }, 'peertube').catch(err => {
+                    return self.uploadImage({ base64 }, 'imgur')
+                }).catch(err => {
+                    return self.uploadImage({ base64 }, 'up1')
+                }).then(url => {
+                    return Promise.resolve(url)
+                })
+
+            }
+            // Else, upload images to Imgur
+            else {
+
+                return self.uploadImage({ base64 }, 'imgur').catch(err => {
+                    return self.uploadImage({ base64 }, 'up1')
+                }).then(url => {
+                    return Promise.resolve(url)
+                })
+
+            }
         }
         else{
             return Promise.resolve(base64)
@@ -64,18 +74,35 @@ ImageUploader = function(app) {
 
             if (p.peertubeImage){
 
-                var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
+                // Fetch Peertube server if needed
+                app.platform.preparePeertubeServer().finally(() => {
 
-                p.url = server.current
+                    var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
 
-                p.success = function(data){
+                    p.url = server.current
+                    if (p.url[p.url.length - 1] != '/')
+                        p.url += '/';
+                    p.url += 'api/v1/';
 
-                    var url = 'peertube://' +  data.image.filename
+                    p.success = function(data){
 
-                    resolve(url)
-                }
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_SUCCESS" });
 
-                app.ajax.run(p)
+                        var url = 'https://' + data.url
+
+                        resolve(url)
+                    }
+
+                    p.fail = function(){
+
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_FAILED" });
+
+                        reject()
+                    }
+
+                    app.ajax.run(p)
+                    
+                });
 
                 return 
             }
@@ -91,6 +118,8 @@ ImageUploader = function(app) {
 
             if (p.imgur){
                 p.success = function(data){
+
+                    app.Logger.info({ actionId: "IMG_IMGUR_UPLOAD_SUCCESS" });
 
                     var url =  deep(data, 'data.link')
                     resolve(url)
