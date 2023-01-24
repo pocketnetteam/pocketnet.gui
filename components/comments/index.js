@@ -412,15 +412,6 @@ var comments = (function(){
 						}
 					})
 				}
-				/*else{
-					self.nav.api.load({
-						open : true,
-						href : 'author?address=' + address,
-						history : true
-					})
-				}*/
-
-				
 			},
 			lightarea : function(id, c){
 
@@ -670,7 +661,13 @@ var comments = (function(){
 						multiple : true,
 						
 						onSuccess : function(imgs){
-							_.each(imgs, added)
+
+							Promise.all(_.map(imgs, (img) => {
+								return resizePromise(img, 1080, 1080)
+							})).then(imgs => {
+								_.each(imgs, added)
+							})
+							
 						}
 					})
 

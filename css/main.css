@@ -325,6 +325,10 @@ html.testpocketnet .testpocketnetbg {
 }
 [image][visibleimage] {
   opacity: 1;
+  -moz-transition: 0;
+  -o-transition: 0;
+  -webkit-transition: 0;
+  transition: 0;
 }
 [imageloaded="true"] {
   opacity: 1;

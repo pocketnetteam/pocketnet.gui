@@ -147,6 +147,11 @@
         .vjs-volume-control{
             display: none;
         }
+		&.vjs-is-audio {
+            .vjs-control-bar .vjs-volume-control {
+				display: inherit;
+			}
+        }
     }
 	.fullScreenVideo{
 		.video-js{
@@ -807,7 +812,9 @@
 					}
 
 					.metatable>div.metapanel .metapanelitem{
-						display: none;
+						position: absolute;
+						right: 1px;
+						font-size: 0.7em;
 					}
 
 					.anothercntswrk{
@@ -853,7 +860,7 @@
 							flex-grow: 1;
 							max-width: 200px;
 							padding-top : 0.5 * @rhythm;
-							padding-right: @rhythm;
+							padding-right: 2.5 * @rhythm;
 							font-size: 0.85em!important;
 
 							span{

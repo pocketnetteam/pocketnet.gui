@@ -144,6 +144,10 @@
   min-width: 60px;
   text-align: center;
 }
+#camerapreview .lefticons i {
+  height: 25px;
+  line-height: 25px;
+}
 #camerapreview .openexternal {
   padding: 1.5em 0;
   color: #fff;

@@ -14,7 +14,8 @@ var main = (function(){
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null, leftparallax = null;
 
 		var videomain = false,
-			readmain = false
+			readmain = false,
+			audiomain = false
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
@@ -54,6 +55,11 @@ var main = (function(){
 				label : () => self.app.localization.e('longreads'),
 				value : 'read'
 			},
+			{
+				link : "index?audio=1",
+				label : () => self.app.localization.e('audio'),
+				value : 'audio'
+			},
 
 			{
 				link : "index?r=saved",
@@ -85,9 +91,11 @@ var main = (function(){
 				var r = pss.r || 'index'
 				var video = pss.video || false
 				var read = pss.read || false
+				var audio = pss.audio || false
 
 				if(video) r = 'video'
 				if(read) r = 'read'
+				if(audio) r = 'audio'
 
 				return r
 			},
@@ -108,7 +116,9 @@ var main = (function(){
 
 					video : "index?video=1",
 
-					read : "index?read=1"
+					read : "index?read=1",
+
+					audio : "index?audio=1"
 				}
 
 				if (self.app.savesupported() || self.app.savesupportedForBrowser()) {
@@ -423,7 +433,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
+				if (!isMobile() && !videomain && !readmain && !audiomain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
 
 					//el.c.removeClass('wshar')
 
@@ -709,6 +719,7 @@ var main = (function(){
 							search : searchvalue || searchtags ? true : false,
 							searchTags : searchtags,
 							read : readmain,
+							audio : audiomain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
 							observe : searchvalue || searchtags ? null : mode,
@@ -740,6 +751,7 @@ var main = (function(){
 
 								if (parameters().video) backlink = 'index?video=1'
 								if (parameters().read) backlink = 'index?read=1'
+								if (parameters().audio) backlink = 'index?audio=1'
 
 
 								self.nav.api.load({
@@ -1021,6 +1033,10 @@ var main = (function(){
 				if (parameters().read){
 					localStorage['lentakey'] = 'read'
 				}
+
+				if (parameters().audio){
+					localStorage['lentakey'] = 'audio'
+				}
 			}
 			catch (e) { }
 
@@ -1035,7 +1051,7 @@ var main = (function(){
 			renders.menu()
 
 
-			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
+			if (currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
 				renders.topvideos(false)
@@ -1087,7 +1103,7 @@ var main = (function(){
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
-				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : parameters().audio ? 'audio' : (parameters().r || 'index')
 
 				self.app.Logger.info({
 					actionId: 'SELECT_FEED_SECTION',
@@ -1096,6 +1112,7 @@ var main = (function(){
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'
+				var naudiomain = nlentakey == 'audio'
 				var page = parameters().page
 
 				var changes = false
@@ -1117,6 +1134,10 @@ var main = (function(){
 
 				if (readmain != nreadmain){
 					readmain = nreadmain; changes = true
+				}
+
+				if (audiomain != naudiomain){
+					audiomain = naudiomain; changes = true
 				}
 
 				if (searchvalue != nsearchvalue){
@@ -1155,7 +1176,7 @@ var main = (function(){
 						external = null
 					}
 
-					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
+					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
 
 					if (lenta) {
 						lenta.clearessense()
@@ -1412,7 +1433,16 @@ var main = (function(){
 				
 				readmain = parameters().read ? true : false
 
-				if(readmain) videomain = false
+				audiomain = parameters().audio ? true : false
+
+				if(readmain) {
+					videomain = false
+					audiomain = false
+				}
+				if (audiomain) {
+					readmain = false
+					videomain = false
+				}
 
 				if(videomain && !isMobile()){
 					window.requestAnimationFrame(() => {

@@ -426,6 +426,7 @@ _l.youarefollowing = "Stai seguendo";
 _l.follow = "Segui";
 _l.blocked = "Bloccato";
 _l.e13021 = "Mostra di più";
+_l.block = "Blocca";
 _l.blockuser = "Blocca utente";
 _l.unblockuser = "Sblocca Utente";
 _l.e13022 = "Vuoi davvero togliere il follow all'utente?";
@@ -789,6 +790,7 @@ _l.e13285 = "Chiedi prima di postare da Telegram";
 _l.e13286 = "Chiedi prima di inviare a Telegram";
 _l.e13287 = "Invia al canale Telegram";
 _l.video = "Video";
+_l.audio = "Audio";
 _l.e13288 = "Pagina principale dei widget";
 _l.e13289 = "Integrazione con Telegram";
 

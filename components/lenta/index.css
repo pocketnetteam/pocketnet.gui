@@ -115,6 +115,9 @@
 #lenta .video-js .vjs-volume-control {
   display: none;
 }
+#lenta .video-js.vjs-is-audio .vjs-control-bar .vjs-volume-control {
+  display: inherit;
+}
 #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: inherit;
 }
@@ -587,7 +590,9 @@
   display: none;
 }
 #lenta.horizontal.compact .share .shareTable .metatable > div.metapanel .metapanelitem {
-  display: none;
+  position: absolute;
+  right: 1px;
+  font-size: 0.7em;
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk {
   position: absolute;
@@ -628,7 +633,7 @@
   flex-grow: 1;
   max-width: 200px;
   padding-top: 0.25em;
-  padding-right: 0.5em;
+  padding-right: 1.25em;
   font-size: 0.85em !important;
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption span {

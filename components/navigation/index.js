@@ -63,6 +63,9 @@ var navigation = (function(){
 						if (k == 'read'){
 							k = indexkey + '?read=1'
 						}
+						else if (k == 'audio'){
+							k = indexkey + '?audio=1'
+						}
 						else{
 							k = indexkey + '?r=' + k
 						}

@@ -5,7 +5,8 @@
 
 		var src = image.csrc || image.src;
 
-		src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.', '')
+		if (src && src.indexOf('peertube') == -1)
+			src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.', '')
 
 	%>
 

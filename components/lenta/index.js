@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -1860,13 +1860,20 @@ var lenta = (function(){
 
 							topPreloader(100)
 
+							if (value === "1"){
+
+								self.app.platform.ui.showCommentBanner(el.c.find('#' + obj.txid), (c) => {
+									bannerComment = c
+								}, obj.address, true);
+	
+							}
+
 							if(!tx){				
 
 								upvoteShare.myVal = null;	
 								obj.myVal = 0;	
 
 								self.app.platform.errorHandler(error, true)	
-
 
 								if(clbk)
 									clbk(false)
@@ -1891,10 +1898,6 @@ var lenta = (function(){
 						clbk(false)
 				})
 			},
-
-			block : function(address, clbk){
-				
-			},	
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -2766,9 +2769,9 @@ var lenta = (function(){
 				actions.fullScreenVideo(shareId)
 			},
 
-			opensvi : function(){
+			opensvi : function(e){
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(e.target).closest('.share').attr('id');
 
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
@@ -4654,6 +4657,7 @@ var lenta = (function(){
 
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
+							if(essenseData.audio){ type = 'audio'}
 
 							
 
@@ -4816,7 +4820,6 @@ var lenta = (function(){
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
-			el.c.on('click', '.opensviurl', events.opensvi)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
 			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
@@ -4864,6 +4867,48 @@ var lenta = (function(){
 				}
 
 			})
+
+			if (isMobile()){
+
+				var onlongtouch; 
+				var touchduration = 1000, timer, event; 
+				
+				function touchstart(e) {
+					event = e;
+					e.preventDefault();
+					if (!timer) {
+						timer = setTimeout(onlongtouch, touchduration);
+					}
+				}
+				
+				function touchend(e) {
+					if (timer) {
+						clearTimeout(timer);
+						timer = null;
+						events.opensvi(e);
+					}
+				}
+	
+				onlongtouch = function() { 
+
+					var _el = $(event.target);
+					var id = $(event.target).closest('.share').attr('id');
+	
+					self.app.platform.api.metmenu(_el, id, actions);
+
+					event = null;
+					timer = null;
+				};
+	
+				el.c.on('touchstart', '.anothercntswrk', touchstart)
+				el.c.on('touchend', '.anothercntswrk', touchend)
+				
+			} 
+
+			el.c.on('click', '.opensviurl', events.opensvi)
+
+			
+
 
 			//////////////////////
 
@@ -5147,13 +5192,13 @@ var lenta = (function(){
 				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
 
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+					var addressEl = el.c.closest('.cnt').find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.addClass('blocking');
 						actions.stopPlayers()
 				}
 
 				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+					var addressEl = el.c.closest('.cnt').find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.removeClass('blocking');
 						actions.stopPlayers()
 				}

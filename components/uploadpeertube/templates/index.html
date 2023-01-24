@@ -7,7 +7,7 @@
       <div class="logo-container">
         <img src="img/logo201.png" />
       </div>
-      <div><span><%- e('uploadNewVideo') %></span></div>
+      <div><span><%- (isAudio) ? e('uploadNewAudio') : e('uploadNewVideo') %></span></div>
     </div>
   </div>
 
@@ -25,7 +25,7 @@
                         for="upload-video-file"
                         class="upload-peertube-label upload-video-file-label"
                         elementsid="upload-video-file"
-                        ><%- e('selectVideoFile') %></label
+                        ><%- (isAudio) ? e('selectAudioFile') : e('selectVideoFile') %></label
                       >
                       <input elementsid="upload-video-file"
                         type="file"
@@ -37,18 +37,20 @@
                     </div>
                   </div>
                 </div>
-                <% if((deep(app,
+                <% if(((deep(app,
                 'platform.real.'+user.address.value.toString('hex')) ||
-                window.testpocketnet) && !isMobile()) {%>
+                window.testpocketnet) && !isMobile()) && !isAudio) {%>
                   <div elementsid="caption-container" class="caption-container import-container">
                     <%- e('importFromExternal') %>
                   </div>
                 <% } %>
 
-                <div class="note">
-                  <%- e('videoSizeAtt') %>
-                  <%- e('videoFormats') %>
-                </div>
+                <% if(!isAudio){%>
+                  <div class="note">
+                    <%- e('videoSizeAtt') %>
+                    <%- e('videoFormats') %>
+                  </div>
+                <% } %>
 
               </div>
               <div class="activeOnRolled verticalSection progressSection">
@@ -56,7 +58,7 @@
                   <div class="barWrapper activeOnRolled">
                     <div class="upload-progress-caption">
                       <span class="bold-font">
-                        <%- e('uploadVideoProgress_uploading') %>
+                        <%- (isAudio) ? e('uploadAudioProgress_uploading') : e('uploadVideoProgress_uploading') %>
                       </span>
                       <span class="upload-progress-percentage"></span>
                     </div>
@@ -73,13 +75,15 @@
           </div>
         </div>
 
-        <div
-          class="caption-container quality-limit-container tooltip"
-          title="<%- e('videoQualityInfo') %>"
-        >
-          <i class="fas fa-question-circle"></i>
-          <%- e('videoQualityCaption') %>
-        </div>
+        <% if(!isAudio){%>
+          <div
+            class="caption-container quality-limit-container tooltip"
+            title="<%- e('videoQualityInfo') %>"
+          >
+            <i class="fas fa-question-circle"></i>
+            <%- e('videoQualityCaption') %>
+          </div>
+        <% } %>
       </div>
      
       <div class="challengeoffer" image="img/videoofferbg2.jpg">

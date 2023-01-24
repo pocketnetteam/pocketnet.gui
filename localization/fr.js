@@ -402,6 +402,7 @@ _l.youarefollowing = "Estas siguiendo"
 _l.follow = "S'abonner"
 _l.blocked = "Bloque"
 _l.e13021 = "Montrer plus"
+_l.block = "Bloquer"
 _l.blockuser = "Bloquer l'utilisateur"
 _l.unblockuser = "Débloquer l'utilisateur"
 _l.e13022 = "Voulez-vous vraiment ne plus suivre l'utilisateur?"
@@ -750,6 +751,7 @@ _l.e13285 = 'Demander avant de poster du télégramme'
 _l.e13286 = 'Demander avant d`envoyer au télégramme'
 _l.e13287 = "Envoyer vers le canal de télégramme"
 _l.video = "Vidéo"
+_l.audio = "Audio"
 _l.e13288 = "Vidgets de la page principale"
 _l.e13289 = "Intagration avec Telegram"
 
