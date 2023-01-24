@@ -3,7 +3,9 @@ importScripts('./js/broadcaster.js');
 
 const swBroadcaster = new Broadcaster('ServiceWorker');
 
-const isElectron = new URL(location).searchParams.get('platform');
+const swArgs = new URL(location).searchParams;
+
+const isElectron = (swArgs.get('platform') === 'electron');
 
 let nodeFetch = (...args) => fetch(...args);
 
