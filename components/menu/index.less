@@ -427,13 +427,24 @@
 						}
 					}
 
+
+
 					.count{
 						color: rgb(var(--color-bg-ac-2));	
 					}
 				}
 
-				.icon .icn img{
-					height: 18px;					
+				.icon .icn {
+
+					img{
+						height: 18px;					
+					}
+					
+					svg{
+						height: 23px;
+						width: 23px;
+					}
+
 				}
 
 
@@ -905,6 +916,8 @@
 			height: 52px;
 		}
 		
+
+		
 	}
 
 	.signup,
@@ -1018,17 +1031,17 @@
 							font-size: 0.9em;
 						}
 					}
-				}
-			}
 
-			.mobileUpperLeft{
-				display: block;
-				position: absolute;
-				left: -20px;
-				top: -6px;
-
-				.christmasBranch{
-					height: 40px;
+					.mobileUpperLeft{
+						display: block;
+						position: absolute;
+						left: -20px;
+						top: -6px;
+		
+						.christmasBranch{
+							height: 40px;
+						}
+					}
 				}
 			}
 
@@ -1043,7 +1056,9 @@
 					height: 40px;
 				}
 			}
+
 		}
+
 	}
 
 	#menu{
@@ -1237,10 +1252,25 @@
 				width: 24px!important;
 			}
 
-			
+			.sections .items .item .icon .icn svg{
+				fill: rgba(var(--color-bg-ac-bright),0.9)
+			}	
 
 		}
 	} 
 
 	
 }
+
+html[theme="black"],
+html[theme="gray"]{
+	#menu{
+		.sections .items .item .icn svg{
+			fill: rgb(var(--text-color));
+		}
+	}
+}
+
+
+
+

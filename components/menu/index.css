@@ -313,6 +313,10 @@
 #menu .sections .items .item .icon .icn img {
   height: 18px;
 }
+#menu .sections .items .item .icon .icn svg {
+  height: 23px;
+  width: 23px;
+}
 #menu .sections .items .item.navWrapperItem {
   display: none;
 }
@@ -760,13 +764,13 @@
     line-height: 34px;
     font-size: 0.9em;
   }
-  #menu .sections .mobileUpperLeft {
+  #menu .sections .items .item .mobileUpperLeft {
     display: block;
     position: absolute;
     left: -20px;
     top: -6px;
   }
-  #menu .sections .mobileUpperLeft .christmasBranch {
+  #menu .sections .items .item .mobileUpperLeft .christmasBranch {
     height: 40px;
   }
   #menu .sections .mobileUpperRight {
@@ -910,4 +914,11 @@
     overflow: hidden;
     width: 24px!important;
   }
+  html.allcontent #menu .sections .items .item .icon .icn svg {
+    fill: rgba(var(--color-bg-ac-bright), 0.9);
+  }
+}
+html[theme="black"] #menu .sections .items .item .icn svg,
+html[theme="gray"] #menu .sections .items .item .icn svg {
+  fill: rgb(var(--text-color));
 }
