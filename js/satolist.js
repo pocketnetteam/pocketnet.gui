@@ -10597,6 +10597,7 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
+                
                 var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
                 if(!ustate) return false
@@ -10631,11 +10632,11 @@ Platform = function (app, listofnodes) {
                 //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
                 //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
-                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 && ustate.likers_count < totalComplainsFirstFlags ) {
                     return true
                 }
 
-                if(totalComplainsFirstFlags > 10){
+                if(totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags ){
                     return true
                 }
 
