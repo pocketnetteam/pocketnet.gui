@@ -133,6 +133,7 @@ html[theme="black"]{
 #activities .container .comment .icon {
   display: flex;
   justify-content: end;
+  align-items: center;
   flex-grow: 1;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -148,7 +149,7 @@ html[theme="black"]{
   justify-content: center;
   align-items: center;
   margin-right: 16px;
-  min-width: 48px;
+  width: 48px;
   line-height: 3em;
   font-size: 1em;
   position: relative;
@@ -298,7 +299,7 @@ html[theme="black"]{
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
   border-radius: 50%;
   height: 48px;
-  min-width: 48px;
+  width: 48px;
   line-height: 3em;
   font-size: 1em;
   position: relative;
