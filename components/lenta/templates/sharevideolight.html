@@ -35,51 +35,67 @@ var metadisplay = function(){ %>
 
 			<% if(!emptywithrepost) {%>
 
-				<div class="author">
+				<div class="metatable">
+					<div class="author">
 
-					<div class="authorTable">
-                        <div class="iconWrapper">
-                            <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-        
-        
-                                <% 
-									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');  
-									var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');	
-									var letter = name ? name[0] : '';
-
-								%>
-        
-                                <div class="icon">
-                                    <div elementsid="<%-src || 'usericon'%>"  contain="none" ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
-                                     
-										<% if (!src && letter) {%>
-											<span 
-												class="letter"
-											>
-												<%-letter.toUpperCase()%>
-											</span>
-										<% } %>
+						<div class="authorTable">
+							<div class="iconWrapper">
+								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 			
-										<% if(app.platform.ui.markUser) {%>
-
-											<%= app.platform.ui.markUser(share.address)%>
-		
-										<% } %>
-
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-						<% if(!ed.horizontal) {%>
-							<div class="authorCell">
-								<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-							</div>		
-
-							<div class="datetime">
-								<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
+			
+									<% 
+										var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');  
+										var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');	
+										var letter = name ? name[0] : '';
+	
+									%>
+			
+									<div class="icon">
+										<div elementsid="<%-src || 'usericon'%>"  contain="none" ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
+										 
+											<% if (!src && letter) {%>
+												<span 
+													class="letter"
+												>
+													<%-letter.toUpperCase()%>
+												</span>
+											<% } %>
+				
+											<% if(app.platform.ui.markUser) {%>
+	
+												<%= app.platform.ui.markUser(share.address)%>
+			
+											<% } %>
+	
+										</div>
+									</div>
+								</a>
+							</div>
+							<% if(!ed.horizontal) {%>
+								<div class="authorCell">
+									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								</div>		
+	
+								<div class="datetime">
+									<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
+								</div>
+							<% } %>
+							
+						</div>
+					</div>
+	
+					
+					<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+						<% if((typeof openapi == 'undefined' || !openapi)) {%>
+							<div class="metapanelitem metmenu">
+								<i class="fas fa-ellipsis-h"></i>
+							</div>
+						<% } else { %> 
+							<div class="metapanelitem">
+								
 							</div>
 						<% } %>
-						
+	
 					</div>
 				</div>
 
@@ -163,6 +179,15 @@ var metadisplay = function(){ %>
 				<div class="cntswrk formeta">
 						<% metadisplay() %> 
 				</div>
+			</div>
+		</div>
+
+		<div class="blockAuthor">
+			<div class="blockCell">
+				<div class="label"><%=e('e13131')%></div>
+				<button class="button small unblockbutton">
+					<%=e('unblock')%>
+				</button>
 			</div>
 		</div>
 		

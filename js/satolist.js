@@ -3162,7 +3162,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk, address) {
+        showCommentBanner : function(contextElem, clbk, address, block) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
                 return 
@@ -3180,12 +3180,16 @@ Platform = function (app, listofnodes) {
                     value: true,
                 });
 
+                const bannerComment = contextElem.find('.bannerComment');
+
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
-                    el: contextElem.find('.bannerComment'),
+                    el: bannerComment,
                     essenseData: {
-                        address: address
+                        address: address,
+                        block: block
                     },
 
                     clbk : function(e, p){
@@ -3233,6 +3237,22 @@ Platform = function (app, listofnodes) {
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
 
+            if (block){
+                
+                            
+                try{
+                    const blockBanner =  JSON.parse(localStorage.blockBanner || '[]');
+                    if (blockBanner.indexOf(address) === -1){
+                        createComponent(address);
+                    }
+
+                }catch(e){
+                    
+                }
+
+                return;
+
+            }
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
