@@ -14,15 +14,14 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
-        "start": "npm run rebuild-binaries && electron . --development",
-        "start:test": "npm run rebuild-binaries && electron . --development --test",
+        "start": "electron . --development",
+        "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "build": "npm run dev:bastyon",
         "dist": "electron-builder -w --x64 --ia32 -p never",
         "distl": "electron-builder -l --x64 -p never",
         "distm": "electron-builder -m --x64 -p never",
         "dist:arm64": "electron-builder -m --arm64",
-        "rebuild-binaries": "electron-rebuild",
         "publish": "build --win --x64 --ia32 -p always",
         "minimize": "node minimize.js -prodaction=true -vendor=30068 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=30068 -test=true -path=/",
@@ -42,7 +41,6 @@
         "@babel/cli": "^7.17.6",
         "@babel/core": "^7.17.9",
         "@babel/preset-env": "^7.16.11",
-        "@electron/rebuild": "^3.2.10",
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^21.0.2",
         "electron-builder": "^23.0.4",
@@ -53,7 +51,6 @@
         "humanize": "0.0.9"
     },
     "dependencies": {
-        "@shpingalet007/node-yaping": "github:shpingalet007/node-yaping#v0.0.5",
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
@@ -107,7 +104,6 @@
         "mjml": "^4.6.3",
         "ncp": "^2.0.0",
         "nedb": "^1.8.0",
-        "net-ping": "^1.2.3",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
         "node-fetch": "^2.6.7",
@@ -145,11 +141,6 @@
         "underscore": "",
         "winston": "^3.3.3",
         "yuicompressor": "^2.4.8"
-    },
-    "overrides": {
-        "raw-socket": {
-            "nan": "^2.17.0"
-        }
     },
     "build": {
         "productName": "Bastyon",

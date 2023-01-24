@@ -1139,16 +1139,6 @@ function getKit(ipc) {
 						return proxy.transports.isAltTransportSet(url);
 					})
 				},
-				reportAccessProblem: function (url) {
-					return kit.proxy().then(async proxy => {
-						return proxy.transports.reportAccessProblem(url);
-					})
-				},
-				reportAccessSuccess: function (url) {
-					return kit.proxy().then(async proxy => {
-						return proxy.transports.reportAccessSuccess(url);
-					})
-				},
 			},
 
 			slide: {

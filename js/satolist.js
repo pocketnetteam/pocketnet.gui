@@ -12,14 +12,6 @@ if (typeof _Electron != 'undefined') {
         return electron.ipcRenderer.invoke('AltTransportActive', url);
     });
 
-    swBroadcaster.handle('ReportAccessProblem', (url) => {
-        return electron.ipcRenderer.invoke('ReportAccessProblem', url);
-    });
-
-    swBroadcaster.handle('ReportAccessSuccess', (url) => {
-        return electron.ipcRenderer.invoke('ReportAccessSuccess', url);
-    });
-
     swBroadcaster.once('is-electron-request', () => {
         swBroadcaster.send('is-electron-confirm');
     });

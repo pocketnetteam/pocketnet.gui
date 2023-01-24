@@ -744,20 +744,10 @@ function createWindow() {
           this.ipc.handle('AltTransportActive', async (event, url) => {
             return await this.functions.isAltTransportSet(url)
           });
-
-          this.ipc.handle('ReportAccessProblem', async (event, url) => {
-            return await this.functions.reportAccessProblem(url)
-          });
-
-          this.ipc.handle('ReportAccessSuccess', async (event, url) => {
-            return await this.functions.reportAccessSuccess(url)
-          });
         }
 
         destroy() {
           this.ipc.removeHandler('AltTransportActive');
-          this.ipc.removeHandler('ReportAccessProblem');
-          this.ipc.removeHandler('ReportAccessSuccess');
 
           delete this.functions;
           delete this.ipc;

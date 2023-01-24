@@ -67,8 +67,6 @@ var IPC = function(ipc, wc, proxyBridges){
 	var fetchBridge = new proxyBridges.Fetch(ipc, kit.manage.transports.fetch)
 	var comLayerBridge = new proxyBridges.CommunicationLayer(ipc, {
 		isAltTransportSet: kit.manage.transports.isAltTransportSet,
-		reportAccessProblem: kit.manage.transports.reportAccessProblem,
-		reportAccessSuccess: kit.manage.transports.reportAccessSuccess,
 	})
 
 	var tickInterval = function(){

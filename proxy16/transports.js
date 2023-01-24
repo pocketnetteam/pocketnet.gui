@@ -7,50 +7,13 @@ const { SocksProxyAgent } = require("socks-proxy-agent");
 
 const checkIfLocalhost = require("is-localhost-ip");
 
-const dns = require("dns");
 const net = require("net");
 const fs = require("fs");
 const path = require("path");
 
-let netPing;
-let pingUtil;
-
-function initPingUtil() {
-    try {
-        netPing = require("net-ping");
-    } catch (err) {
-        console.log('-----------------------------------------------------');
-        console.log('Raw-Socket is not compiled for current platform/arch:', process.platform, process.arch);
-        console.log('-----------------------------------------------------');
-    }
-
-    if (netPing) {
-        try {
-            pingUtil = netPing.createSession({
-                packetSize: 64,
-                timeout: 5000,
-                retries: 3,
-            });
-        } catch (err) {
-            console.log('-----------------------------------------------------');
-
-            if (err.message === 'Operation not permitted') {
-                console.log('Raw-Socket is not permitted on current machine, looks like it is in sandbox...');
-            } else {
-                console.log('Raw-Socket encountered an unexpected error:', err.message);
-            }
-
-            console.log('-----------------------------------------------------');
-        }
-    }
-}
-
-initPingUtil();
-
 module.exports = function (isTorEnabled = false) {
     const self = {};
     self.accessRecords = {};
-    self.proxyHosts = {};
     self.lastUpdate = Date.now();
 
     let torHttpsAgent = null;
@@ -102,108 +65,6 @@ module.exports = function (isTorEnabled = false) {
         });
     };
 
-    const isTorNeeded = async (url) => {
-        const torcontrol = self.torapplications;
-
-        const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
-        const areStatsEmpty = (Object.keys(self.proxyHosts).length === 0);
-
-        if (areStatsEmpty && fs.existsSync(statsFilePath)) {
-            const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
-            self.proxyHosts = JSON.parse(fileData);
-        }
-
-        try {
-            fs.writeFileSync(statsFilePath, JSON.stringify(self.proxyHosts, null, 2));
-        } catch (err) {
-            console.log('Looks like stats file is busy. Will write data next time...');
-        }
-
-        const isTorStateStarted = await isTorStarted(false);
-
-        if (!isTorStateStarted) {
-            return false;
-        }
-
-        const urlParts = new URL(url);
-        const { hostname } = urlParts;
-
-        const timeNow = Date.now();
-
-        const hostStats = self.proxyHosts[hostname];
-
-        if (!hostStats) {
-            return false;
-        }
-
-        if (timeNow >= hostStats.nextTry) {
-            delete self.proxyHosts[hostname];
-
-            console.log('Proxy16: Tor needed? false. Tries left for', hostname, hostStats.triesLeft);
-            return false;
-        }
-
-        if (hostStats.triesLeft || hostStats.accessible) {
-            console.log('Proxy16: Tor needed? false. Tries left for', hostname, hostStats.triesLeft);
-            return false;
-        }
-
-        console.log('Proxy16: Tor needed? true. Tries left for', hostname, hostStats.triesLeft);
-        return true;
-    }
-
-    const saveHostStats = async (url, stats) => {
-        const isTorStateStarted = await isTorStarted(false);
-
-        if (!isTorStateStarted) {
-            return;
-        }
-
-        const urlParts = new URL(url);
-        const { hostname } = urlParts;
-
-        const oneHour = 60 * 60 * 1000;
-        const limitTries = 1;
-
-        const hostStats = self.proxyHosts[hostname];
-
-        if (stats) {
-            self.proxyHosts[hostname] = {
-                ...self.proxyHosts[hostname],
-                ...stats,
-            };
-        }
-
-        if (hostStats) {
-            if (hostStats.triesLeft === 0 || hostStats.accessible) {
-                return;
-            }
-
-            const timeNow = Date.now();
-
-            if (timeNow >= hostStats.nextTry - oneHour + 60 * 60) {
-                console.log('Proxy16: Remove 1 try for', hostname);
-                hostStats.triesLeft -= 1;
-            }
-        }
-
-        self.proxyHosts[hostname] = {
-            triesLeft: limitTries - 1,
-            ...self.proxyHosts[hostname],
-            nextTry: Date.now() + oneHour,
-        };
-
-        const torcontrol = self.torapplications;
-
-        const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
-
-        try {
-            fs.writeFileSync(statsFilePath, JSON.stringify(self.proxyHosts, null, 2));
-        } catch (err) {
-            console.log('Looks like stats file is busy. Will write data next time...');
-        }
-    }
-
     const isDirectAccess = async (hostname) => {
         const isLocalhost = await checkIfLocalhost(hostname);
 
@@ -253,18 +114,6 @@ module.exports = function (isTorEnabled = false) {
         return isAccessOk || isNextTryTime;
     }
 
-    const getHostIp = async (host) => {
-        return new Promise((resolve, reject) => {
-            dns.lookup(host, 4, (err, address) => {
-                if (err) {
-                    reject(err);
-                }
-
-                resolve(address);
-            });
-        });
-    }
-
     const pingHost = async function(host) {
         function synackPing() {
             return new Promise((resolve, reject) => {
@@ -296,41 +145,7 @@ module.exports = function (isTorEnabled = false) {
             });
         }
 
-        function icmpPing() {
-            if (!pingUtil) {
-                return Promise.reject('ICMP_PING_FAILED');
-            }
-
-            return new Promise(async (resolve, reject) => {
-                const hostIp = await getHostIp(host);
-
-                pingUtil.pingHost(hostIp, (err, target) => {
-                    if (err) {
-                        reject('ICMP_PING_FAILED');
-                        return;
-                    }
-
-                    resolve(true);
-                });
-            });
-        }
-
-        console.log('Proxy16: Ping started', host);
-        const pingStart = Date.now();
-
-        return Promise.any([icmpPing(), synackPing()])
-            .then((response) => {
-                const pingTime = (Date.now() - pingStart) / 1000;
-
-                console.log('Proxy16: Ping success', host, pingTime);
-                return true;
-            })
-            .catch(() => {
-                const pingTime = (Date.now() - pingStart) / 1000;
-
-                console.log('Proxy16: Ping fail', host, pingTime);
-                return false;
-            });
+        return synackPing().catch(() => false);
     }
 
     const axiosRequest = async (arg1, arg2, child)=> {
@@ -358,7 +173,7 @@ module.exports = function (isTorEnabled = false) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
         }
 
-        return await _axios(preparedOpts)
+        return _axios(preparedOpts)
             .catch(async (err) => {
                 if (preparedOpts.httpsAgent) {
                     throw err;
@@ -370,7 +185,10 @@ module.exports = function (isTorEnabled = false) {
                 if (!isDirectRequest && isTorStateStarted) {
                     await initHttpsAgent(preparedOpts, 'httpsAgent');
 
-                    return await _axios(preparedOpts);
+                    return _axios(preparedOpts)
+                        .catch(async (err) => {
+                            throw err;
+                        });
                 }
 
                 throw Error('Tor not started. No fallback');
@@ -407,7 +225,7 @@ module.exports = function (isTorEnabled = false) {
         opts.signal = timeout(30);
 
         console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-        return await fetch(url, opts)
+        return fetch(url, opts)
             .catch(async (err) => {
                 if (opts.agent) {
                     throw err;
@@ -421,7 +239,10 @@ module.exports = function (isTorEnabled = false) {
 
                     await initHttpsAgent(opts, 'agent');
 
-                    return await fetch(url, opts);
+                    return fetch(url, opts)
+                        .catch(() => {
+                            throw err;
+                        });
                 }
 
                 throw Error('Tor not started. No fallback');
@@ -469,8 +290,6 @@ module.exports = function (isTorEnabled = false) {
 
         return !directAccess;
     };
-
-    self.saveHostStats = (url, stats) => undefined; //saveHostStats(url, stats);
 
     return self;
 }

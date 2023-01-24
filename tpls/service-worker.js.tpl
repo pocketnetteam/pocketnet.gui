@@ -118,10 +118,7 @@ function onFetch(event) {
     }
 
     console.log('Try to get fetch answer for', request.url);
-    const fetchResponse = await fetch(request)
-        .catch(() => {
-          swBroadcaster.invoke('ReportAccessProblem', request.url);
-        });
+    const fetchResponse = await fetch(request);
 
     if (fetchResponse) {
       console.log('Using NORMAL fetch for', request.url);

@@ -560,14 +560,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 		isAltTransportSet: (url) => {
 			return transports.isTorNeeded(url)
 		},
-
-		reportAccessProblem: (url) => {
-			return transports.saveHostStats(url);
-		},
-
-		reportAccessSuccess: (url) => {
-			return transports.saveHostStats(url, { accessible: true });
-		},
 	}
 
 	self.torapplications = {
@@ -669,14 +661,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 		isAltTransportSet: (url) => {
 			return transports.isTorNeeded(url);
-		},
-
-		reportAccessProblem: (url) => {
-			return transports.saveHostStats(url);
-		},
-
-		reportAccessSuccess: (url) => {
-			return transports.saveHostStats(url, { accessible: true });
 		},
 	}
 
