@@ -940,6 +940,18 @@
   border-radius: 30px;
   font-size: 0.8em;
 }
+.share_common.blurred .images,
+.share_common.blurred .videoWrapper,
+.share_common.blurred .blackmatte,
+.share_common.blurred .article_image {
+  filter: blur(8px);
+}
+.share_common.ultrablurred .images,
+.share_common.ultrablurred .videoWrapper,
+.share_common.ultrablurred .blackmatte,
+.share_common.ultrablurred .article_image {
+  filter: blur(30px);
+}
 .share_common.blocking .commentsWrapperHb {
   display: none;
 }

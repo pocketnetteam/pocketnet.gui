@@ -2091,6 +2091,12 @@ resize = function (srcData, width, height, clbk, format) {
 
 }
 
+resizePromise = function(srcData, width, height, format) {
+	return new Promise((resolve) => {
+		resize(srcData, width, height, resolve, format)
+	})
+}
+
 imagetojpegifneed = function ({ base64, name }) {
 
 	var nm = name.split('.')
@@ -6564,7 +6570,7 @@ Caption = function (p) {
 
 /* AJAX */
 
-AJAX = function (p) {
+AJAX = function(p) {
 
 	/*---------------------------------------------------------------------------------------*/
 	/*   Private Variables
@@ -6580,16 +6586,18 @@ AJAX = function (p) {
 	/*   Init
 	/*---------------------------------------------------------------------------------------*/
 
-	var error = function (res, p, errorData) {
+	var error = function(res, p, errorData){
 
-		if (!p) p = {}
+		if(!p) p = {}
 
 		if (errorData && errorData.code) return errorData.code
 
-		if (app.errorHandler && p.errorHandler) {
+		if (app.errorHandler && p.errorHandler)
+		{
 			var h = app.errorHandler(res, p);
 
-			if (h) {
+			if (h)
+			{
 				return h;
 			}
 		}
@@ -6606,17 +6614,17 @@ AJAX = function (p) {
 		});*/
 
 	self.set = {
-		user: function (u) {
+		user : function(u){
 			user = u;
 		}
 	}
 
-	self.clearCashe = function () {
+	self.clearCashe = function(){
 		cashe = {};
 	}
 
-	self.run = function (p) {
-		if (!p) p = {};
+	self.run = function(p) {
+		if(!p) p = {};
 
 		var url = p.url || server,
 			dataType = p.dataType || 'json',
@@ -6629,21 +6637,22 @@ AJAX = function (p) {
 		//	data.system = app.name;
 
 		/*---------------------------------------------------------------------------------------*/
-		if (user !== false && user.extendAjaxData && (!p.anon || p.anon !== true) && !p.imgur && !p.up1) user.extendAjaxData(data, url);
+		if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur && !p.up1) user.extendAjaxData(data, url);
 		/*---------------------------------------------------------------------------------------*/
 
 		/*---------------------------------------------------------------------------------------*/
-		if (user !== false && user.signature && p.signature) data.signature = user.signature();
+		if (user !== false && user.signature &&  p.signature) data.signature = user.signature();
 		/*---------------------------------------------------------------------------------------*/
 
 		/*if (app.fingerPrint)
 			data.fingerPrint = app.fingerPrint;*/
 
-		if (dataCashe) {
+		if(dataCashe){
 
 			var responsedata = deep(cashe, deepkey);
 
-			if (responsedata) {
+			if (responsedata)
+			{
 				if (p.success)
 					p.success(_.clone(responsedata));
 
@@ -6651,14 +6660,14 @@ AJAX = function (p) {
 			}
 		}
 
-		if (typeof performance != 'undefined')
+		if(typeof performance != 'undefined')
 
 			var time = performance.now();
 
 
 
 		var success = {
-			json: function (data) {
+			json : function(data){
 
 				var storage = data;
 				var status;
@@ -6666,20 +6675,21 @@ AJAX = function (p) {
 
 				if (storage.root) storage = storage.root;
 
-				if (!p.imgur && !p.up1) {
+				if(!p.imgur && !p.up1){
 					status = (storage.Result || storage.status || "").toLowerCase();
 
-					if (!status && storage.result && !storage.error) {
+					if(!status && storage.result && !storage.error){
 						status = 'success'
 					}
 				}
-				else {
-					if (storage.success) {
+				else
+				{
+					if (storage.success){
 						status = 'success'
 					}
 				}
 
-				if (!status) {
+				if(!status) {
 
 					e = error("noresult", p);
 
@@ -6688,17 +6698,19 @@ AJAX = function (p) {
 
 				}
 
-				else {
-					if (status != 'success' && status != 'ok') {
+				else
+				{
+					if(status != 'success' && status != 'ok'){
 
-						if (typeof p.errors == 'undefined' || p.errors == true) {
+						if(typeof p.errors == 'undefined' || p.errors == true)
+						{
 							e = error(status, p);
 						}
 
-						if (status == 'wrong token') {
+						if(status == 'wrong token'){
 
 
-							if (app.unathorizated) {
+							if (app.unathorizated){
 								app.unathorizated();
 							}
 						}
@@ -6709,21 +6721,25 @@ AJAX = function (p) {
 
 					}
 
-					else {
+					else
+					{
 
-						if (app.successHandler && p.errorHandler) {
+						if(app.successHandler && p.errorHandler)
+						{
 							var h = app.successHandler(p);
 
-							if (h) {
+							if (h)
+							{
 								return;
 							}
 						}
 
-						if (dataCashe) {
+						if (dataCashe)
+						{
 							deepInsert(cashe, deepkey, _.clone(storage));
 						}
 
-						if (p.success) {
+						if (p.success){
 
 							if (user !== false && !p.noExtend && user.extendFromAjaxData) user.extendFromAjaxData(storage);
 
@@ -6732,7 +6748,7 @@ AJAX = function (p) {
 					}
 				}
 			},
-			html: function (data) {
+			html : function(data){
 
 				if (p.success)
 					p.success(data);
@@ -6740,9 +6756,10 @@ AJAX = function (p) {
 			}
 		}
 
-		var checkTime = function (clbk) {
+		var checkTime = function(clbk){
 
-			if (typeof performance == 'undefined') {
+			if(typeof performance == 'undefined')
+			{
 				clbk();
 
 				return;
@@ -6750,14 +6767,15 @@ AJAX = function (p) {
 
 			time = performance.now() - time;
 
-			if (p.timeout && p.timeout > time) {
-				setTimeout(function () {
+			if (p.timeout && p.timeout > time){
+				setTimeout(function(){
 
 					clbk();
 
 				}, p.timeout - time)
 			}
-			else {
+			else
+			{
 				clbk();
 			}
 		}
@@ -6769,7 +6787,7 @@ AJAX = function (p) {
 		if (p.preloader)
 			preloader(true);
 
-		if (_Node) {
+		if(_Node) {
 
 			//data.node = "NODE";
 
@@ -6779,50 +6797,56 @@ AJAX = function (p) {
 				rejectUnauthorized: false,
 			}
 
-			if (data) {
+			if(data){
 
 				_d.body = collectParameters(data).substr(1)
 
 			}
 
 			request(_d,
-				function (_error, response, body) {
+			function (_error, response, body) {
 
 
-					if (_error) {
-						error(_error);
+				if(_error)
+				{
+					error(_error);
 
-						if (_SEO) {
-							self.run(p);
+					if(_SEO){
+						self.run(p);
 
-							return;
+						return;
+					}
+
+					else
+
+					if (p.fail)
+						p.fail(null);
+				}
+				else
+				{
+					if(dataType == 'json')
+					{
+						try
+						{
+							body = JSON.parse(body)
 						}
-
-						else
+						catch (e)
+						{
+							error("Unexpected end of input TE");
 
 							if (p.fail)
 								p.fail(null);
-					}
-					else {
-						if (dataType == 'json') {
-							try {
-								body = JSON.parse(body)
-							}
-							catch (e) {
-								error("Unexpected end of input TE");
-
-								if (p.fail)
-									p.fail(null);
-							}
-
-							success.json(body);
 						}
-						else
-							success.html(body);
+
+						success.json(body);
 					}
-				})
+					else
+						success.html(body);
+				}
+			})
 		}
-		else {
+		else
+		{
 
 
 			var ap = {
@@ -6830,21 +6854,21 @@ AJAX = function (p) {
 				url: url,
 				data: data,
 				dataType: dataType,
-				headers: p.headers,
+				headers : p.headers,
 				beforeSend: p.beforeSend,
 
-				success: function (data) {
+				success: function(data){
 
 					if (p.preloader) preloader(false);
 
-					checkTime(function () {
+					checkTime(function(){
 
 						success[dataType](data);
 
 					})
 
 				},
-				error: function (r, s, e) {
+				error: function(r, s, e) {
 
 					var data = null;
 					var e = ''
@@ -6855,13 +6879,15 @@ AJAX = function (p) {
 
 						data = JSON.parse(r.responseText);
 
-						if (typeof p.errors == 'undefined' || p.errors == true) {
+						if(typeof p.errors == 'undefined' || p.errors == true)
+						{
 							e = error(data.status, p, data.data);
 
 						}
 
 					}
-					else {
+					else
+					{
 						e = error(null, p);
 					}
 
@@ -6876,7 +6902,7 @@ AJAX = function (p) {
 
 				// Prepare URL
 				/*var url = new URL(app.peertubeServer);
- 
+
 				if (data.ipAddress) {
 					url.hostname = data.ipAddress;
 					url.protocol = 'http:';
@@ -6899,15 +6925,15 @@ AJAX = function (p) {
 				xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				xmlHttp.send(toUrlEncoded({
 					grant_type: 'password',
-					...user.peertube
+					...app.peertubeCreds
 				}));
 				var res = JSON.parse(xmlHttp.responseText), auth;
 				// Set auth header
 				if (res && res.access_token) auth = 'Bearer ' + res.access_token;
 
-				ap.headers = {
-					Authorization: auth
-				}
+					ap.headers = {
+						Authorization: auth
+					}
 
 				// Prepare image data for request
 				const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
@@ -6915,7 +6941,7 @@ AJAX = function (p) {
 				const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
 
 				var formData = new FormData();
-				formData.append("imagefile", blob);
+					formData.append("imagefile", blob);
 
 				ap.data = formData;
 				ap.processData = false;
@@ -6927,11 +6953,11 @@ AJAX = function (p) {
 
 			}
 
-			if (p.imgur) {
+			if (p.imgur){
 				ap.url = app.imageServer + data.Action;
 				delete data.Action;
 
-				if (user) {
+				if(user){
 					var auth;
 
 					if (user.imgur.token) auth = 'Bearer ' + user.imgur.token;
@@ -6945,13 +6971,13 @@ AJAX = function (p) {
 
 			}
 
-			if (p.up1) {
+			if (p.up1){
 
 				ap.url = 'https://pocketnet.app:8092/up'
 				//ap.url = app.imageServerup1;
 				delete data.Action;
 
-				if (user) {
+				if(user){
 
 					data.api_key = 'c61540b5ceecd05092799f936e277552'
 
@@ -6967,9 +6993,9 @@ AJAX = function (p) {
 
 	}
 
-	self.api = function (p) {
+	self.api = function(p){
 
-		if (p.main) {
+		if (p.main){
 
 			self.apim(p)
 
@@ -6979,24 +7005,24 @@ AJAX = function (p) {
 		if (typeof p.errorHandler == 'undefined')
 			p.errorHandler = true
 
-		if (app.platform.apiproxy) {
+		if (app.platform.apiproxy){
 
 			p.url = 'https://' + app.platform.apiproxy.host + ":" + app.platform.apiproxy.port + "/" + (p.action || "")
 			p.api = true
 			self.run(p)
 
 		}
-		else {
+		else{
 
 
 
 			if (p.fail)
-				p.fail(null, error('proxy', p) || 'network')
+				 p.fail(null, error('proxy', p) || 'network')
 		}
 
 	}
 
-	self.apim = function (p) {
+	self.apim = function(p){
 
 		if (typeof p.errorHandler == 'undefined')
 			p.errorHandler = true
@@ -7008,7 +7034,7 @@ AJAX = function (p) {
 
 	}
 
-	self.fb = function (p) {
+	self.fb = function(p){
 
 		p.url = app.firebase + "/" + (p.action || "").split('.').join('/');
 		p.fb = true
@@ -7016,7 +7042,7 @@ AJAX = function (p) {
 		self.run(p)
 	}
 
-	self.rtchttp = function (p) {
+	self.rtchttp = function(p){
 
 		p.url = app.rtchttp + "/" + (p.action || "").split('.').join('/')
 		p.rtchttp = true
@@ -7024,22 +7050,22 @@ AJAX = function (p) {
 		self.run(p)
 	}
 
-	/*self.rpc = function(p){
- 
+	self.rpc = function(p){
+
 		p.rpc = true
- 
- 
+
+
 		if(typeof p.nodeFix == 'undefined' && app.platform.nodeid != 'undefined'){
- 
+
 			var fail = p.fail || function(){}
- 
+
 			p.nodeFix = app.platform.nodeid;
 			p.fail = function(r){
- 
+
 				if(r && (r.statusCode == 500 || r.statusCode == 521) && (!r.data || _.isEmpty(r.data))){
 					app.platform.autochange()
- 
- 
+
+
 					if(app.platform.nodeid == p.nodeFix){
 						fail(r)
 					}
@@ -7052,78 +7078,78 @@ AJAX = function (p) {
 				{
 					fail(r)
 				}
- 
+
 			}
 		}
- 
+
 		if(app.platform.dontuseapiproxy){
- 
+
 			var id = parseInt(Math.random() * 100000)
- 
- 
-			//p.url = app.platform.sdk.system.nodeexdirect();
+
+
+			p.url = app.platform.sdk.system.nodeexdirect();
 			p.nodedirect = true;
- 
+
 			if (p.url){
- 
+
 				p.data = JSON.stringify({
 					method: p.method,
 					params: p.parameters,
 					id: id
 				})
- 
- 
+
+
 				var success = p.success;
- 
+
 				p.success =  function(storage){
 					success(deep(storage, 'result') || storage)
 				}
- 
+
 				self.run(p)
 			}
- 
+
 			else{
- 
+
 				if (p.fail)
 					p.fail(null, 'nodedirect')
- 
+
 			}
- 
- 
+
+
 			return
- 
- 
+
+
 		}
 		else
 		{
 			p.action = 'rpc-' + p.method
- 
+
 			p.data = {
 				method : p.method,
 				parameters : hexEncode(JSON.stringify(p.parameters || ""))
 			}
- 
- 
+
+
 			if(app.platform.nodeid){
- 
+
 				app.platform.sdk.system.nodeex(p.data)
 			}
- 
+
 			var success = p.success;
- 
+
 			p.success =  function(storage){
- 
+
 				success(deep(storage, 'data.result') || storage)
- 
+
 			}
- 
- 
- 
+
+
+
 		}
- 
- 
+
+
 		self.api(p)
-	}*/
+	}
 
 
 	return self;
@@ -7296,8 +7322,6 @@ search = function (el, p) {
 
 		var elements = [
 
-			'<img class="christmasBranchRight" src="img/christmas_branch_right.svg">',
-
 			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 				'<i class="fa fa-search" aria-hidden="true"></i>' +
 				'<i class="fas fa-circle-notch fa-spin"></i>') +
@@ -7313,9 +7337,7 @@ search = function (el, p) {
 						'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
 					'</div>' +
 				'</div>' +
-			'</div>',
-
-			'<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">'
+			'</div>'
 
 		]
 

@@ -64,6 +64,19 @@ var userpage = (function(){
 				}
 			}
 
+
+			reports.push({
+				name : self.app.localization.e('ractivities'),
+				id : 'activities',
+				report : 'activities',
+				mobile : false,
+				openReportPageMobileInWindow : true,
+				if : function(){
+					return true
+				}
+			})
+			
+
 			reports.push({
 				name : self.app.localization.e('notifications'),
 				id : 'notifications',
@@ -84,7 +97,7 @@ var userpage = (function(){
 
 			
 				if : function(){
-					
+
 					if(!self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()) return true
 				},
 
@@ -235,7 +248,7 @@ var userpage = (function(){
 					//openReportPageMobileInWindow : true
 				})
 			}
-			
+
 
 			if(self.app.user.validate() && !self.app.pkoindisable) {
 
@@ -494,7 +507,7 @@ var userpage = (function(){
 					el.c.removeClass('reportshowed')
 				})
 
-				
+
 			},
 
 			openReport : function(id, addToHistory){
@@ -529,7 +542,6 @@ var userpage = (function(){
 						inWnd : true,
 						history : true
 					})
-
 					return
 				}
 				
@@ -770,7 +782,7 @@ var userpage = (function(){
 						if (primary){
 							self.app.actions.scroll(0)
 						}
-							
+
 						else{
 							el.c.closest('.customscroll:not(body)').scrollTop(0)
 						}
@@ -1141,6 +1153,8 @@ var userpage = (function(){
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 
 					mestate = _mestate
+
+
 
 					clbk(data);
 

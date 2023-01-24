@@ -383,7 +383,7 @@ var share = (function(){
 
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo') {
+				if (type === 'addVideo' || type === 'addAudio') {
 
 					if(currentShare.images.v.length){
 						new dialog({
@@ -1948,6 +1948,7 @@ var share = (function(){
 
 				var typeDictionary = {
 					addVideo: 'uploadpeertube',
+					addAudio: 'uploadpeertube',
 					addStream: 'streampeertube',
 				};
 
@@ -1971,6 +1972,7 @@ var share = (function(){
 					essenseData : {
 						storage : p.storage,
 						value : p.value,
+						isAudio: (p.type == 'addAudio') ? true : false,
 						currentLink : currentShare.url ? currentShare.url.v : '',
 						inLentaWindow : true,
 						scrollElementName: '.wnd.videoCabinet .wndcontent'
@@ -2821,6 +2823,10 @@ var share = (function(){
 
 					external.addclbk('share' + key, actions.videoadded)
 					external.addclbk('share' + key, actions.closeexternal, 'closed')
+				}
+
+				if (essenseData.images){
+					currentShare.images.set(essenseData.images);
 				}
 
 				make();

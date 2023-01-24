@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -1825,6 +1825,16 @@ var lenta = (function(){
 					}
 				}
 
+				if (value === "1"){
+
+					//// TODO_CHECK
+
+					self.app.platform.ui.showCommentBanner(el.c.find('#' + obj.txid), (c) => {
+						bannerComment = c
+					}, obj.address, true);
+
+				}
+
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
 					var upvoteShare = obj.upvote(value);
@@ -1855,10 +1865,6 @@ var lenta = (function(){
 						clbk(false)
 				})
 			},
-
-			block : function(address, clbk){
-				
-			},	
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -2695,9 +2701,9 @@ var lenta = (function(){
 				actions.fullScreenVideo(shareId)
 			},
 
-			opensvi : function(){
+			opensvi : function(e){
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(e.target).closest('.share').attr('id');
 
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
@@ -4515,6 +4521,7 @@ var lenta = (function(){
 
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
+							if(essenseData.audio){ type = 'audio'}
 
 							
 
@@ -4667,7 +4674,6 @@ var lenta = (function(){
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
-			el.c.on('click', '.opensviurl', events.opensvi)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
 			//el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
@@ -4715,6 +4721,81 @@ var lenta = (function(){
 				}
 
 			})
+
+			if (isMobile()){
+
+				var onlongtouch; 
+				var touchduration = 1000, timer, event; 
+				
+				function touchstart(e) {
+					event = e;
+					e.preventDefault();
+					if (!timer) {
+						timer = setTimeout(onlongtouch, touchduration);
+					}
+				}
+				
+				function touchend(e) {
+					if (timer) {
+						clearTimeout(timer);
+						timer = null;
+						events.opensvi(e);
+					}
+				}
+	
+				onlongtouch = function() { 
+
+					var _el = $(event.target);
+					var id = $(event.target).closest('.share').attr('id');
+	
+					self.app.platform.api.metmenu(_el, id, actions);
+
+					event = null;
+					timer = null;
+				};
+	
+				el.c.on('touchstart', '.anothercntswrk', touchstart)
+				el.c.on('touchend', '.anothercntswrk', touchend)
+				
+			} 
+
+			el.c.on('click', '.opensviurl', events.opensvi)
+
+			
+
+
+			//////////////////////
+
+			/*if(self.app.mobileview && canloadprev && !essenseData.openapi){
+
+				var cc = el.c.find('.circularprogress');
+				var maxheight = 220;
+
+				progress = new CircularProgress({
+					radius: 30,
+					strokeStyle: '#00A3F7',
+					lineCap: 'round',
+					lineWidth: 1,
+					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
+					fillStyle : "#00A3F7",
+					text : {						
+						value : ""
+					},
+					initial: {
+						strokeStyle: '#fff',
+						lineWidth: 1
+					}
+				});
+
+				progress.update(70);
+
+				el.c.find('.circularprogressWrapper').html(progress.el);
+
+				var tp = el.c.find('.loadprev')
+
+				var trueshold = 80
+
+			}*/
 
 			if(!essenseData.openapi){
 

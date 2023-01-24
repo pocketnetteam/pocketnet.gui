@@ -43,6 +43,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -60,6 +64,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -149,9 +157,9 @@ jobs:
       - name: Unpack artifact
         run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
@@ -189,9 +197,9 @@ jobs:
       - name: Unpack artifact
         run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -221,9 +229,9 @@ jobs:
       - name: Unpack artifact
         run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
@@ -252,9 +260,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - uses: actions/setup-node@v3
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Install Cordova
         run: |
           npm i -g cordova@10

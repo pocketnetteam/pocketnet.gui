@@ -188,6 +188,10 @@ var applications = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'applicationWnd normalizedmobile maxheight withoutButtons withoutHeader',
 			}
 		}
 	};

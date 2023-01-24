@@ -2,6 +2,7 @@
 
 var r = parameters(app.nav.current.completeHref, true).r;
 var video = parameters(app.nav.current.completeHref, true).video;
+var audio = parameters(app.nav.current.completeHref, true).audio;
 var read = parameters(app.nav.current.completeHref, true).read;
 
 %>
@@ -11,7 +12,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
         <div class="tabs">
 
             <div class="tab">
-                <span class="pcenterLabel fresh <% if(!r && !video && !read && pathname=='index') {%> active <% } %> ">
+                <span class="pcenterLabel fresh <% if(!r && !video && !read && !audio && pathname=='index') {%> active <% } %> ">
                     <a href="index" handler="true"><i class="far fa-calendar"></i><span class="text"><%=e('e13136')%> </span><span class="lentaunseen" key="common"></span></a>
                 </span>
                 
@@ -32,6 +33,14 @@ var read = parameters(app.nav.current.completeHref, true).read;
                     <a href="index?video=1"  handler="true"><i class="far fa-play-circle"></i><span class="text"><%=e('video')%> </span><span class="lentaunseen" key="video"></span></a>
                 </span>
             </div>
+
+            <% if (window.testpocketnet == true) { %>
+            <div class="tab">
+                <span class="pcenterLabel <% if(audio && pathname=='index') {%> active <% } %>">
+                    <a href="index?audio=1"  handler="true"><i class="fas fa-volume-up"></i><span class="text"><%=e('audio')%> </span><span class="lentaunseen" key="audio"></span></a>
+                </span>
+            </div>
+            <% } %>
 
             <div class="tab">
                 <span class="pcenterLabel <% if(read && pathname=='index') {%> active <% } %>">

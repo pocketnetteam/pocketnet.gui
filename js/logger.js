@@ -355,7 +355,7 @@ class FrontendLogger {
 
     if (!loggerActive) return;
 
-    const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const infoType = logCodes[actionId] ? logCodes[actionId].id : actionId;
     const language = (app.localization || {}).key || 'no';
 
     const info = {

@@ -11,6 +11,9 @@ var menu = (function(){
 			menusearch = null;
 
 		/*var loc = new Parameter({
+		var logotime = 180000, changeLogoInterval = null
+
+		var loc = new Parameter({
 
 			type : "VALUES",
 			name : "Localization",
@@ -198,6 +201,9 @@ var menu = (function(){
 
 									if (k == 'read'){
 										k = 'index?read=1'
+									}
+									else if (k == 'audio'){
+										k = 'index?audio=1'
 									}
 									else{
 										k = 'index?r=' + k
@@ -499,7 +505,7 @@ var menu = (function(){
 
 					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
-						icon : '<img class="christmas_search" src="img/christmas_search.svg"></img>',
+						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
 						mobileSearch : self.app.width <= 768,
 
@@ -717,6 +723,53 @@ var menu = (function(){
 					})
 
 					
+				}
+			},
+
+			application : {
+				init : function(el){
+					/*var calculateMarketingLogo = function(currentLogo) {
+						var logosArr = ['fa-windows', 'fa-apple', 'fa-google-play'];
+			
+						return logosArr[(_.indexOf(logosArr, currentLogo) + 1) % logosArr.length];
+					}
+			
+					var changeLogo = function() {
+						var element = el.find('.changing-app-icon');
+
+						element.css('opacity', '1')
+			
+						var iconLogoClasses = _.find((element.attr('class') || '').split(' '), function(elem) {
+							return elem.indexOf('fa-') > -1;
+						});
+
+						element.removeClass(iconLogoClasses);
+						element.addClass(calculateMarketingLogo(iconLogoClasses));
+			
+						setTimeout(function() {
+							element.css('opacity', '0')
+						}, logotime - 1500)
+					}
+
+					changeLogoInterval = setInterval(changeLogo, logotime);
+
+					setTimeout(function(){
+						el.find('.changing-app-icon').css('opacity', '0')
+					}, logotime - 1000)*/
+
+				},
+
+				click : function(){
+
+					var wnd = isMobile() || isTablet()
+
+					self.nav.api.go({
+						open : true,
+						href : 'applications',
+						inWnd : wnd,
+						history : !wnd
+					})
+
 				}
 			},
 	
@@ -1109,6 +1162,11 @@ var menu = (function(){
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
+
+				if (changeLogoInterval){
+					clearInterval(changeLogoInterval)
+					changeLogoInterval = null
+				}
 
 				_.each(events, function(e){
 

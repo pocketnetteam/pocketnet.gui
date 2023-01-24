@@ -186,9 +186,13 @@ function injectOptions(manifestData, pluginPreferences) {
   launchActivity = activitiesList[launchActivityIndex];
 
   // generate intent-filters
+
+  ulIntentFilters.push(createIntentReceiver());
+
   pluginPreferences.hosts.forEach(function(host) {
     host.paths.forEach(function(hostPath) {
       ulIntentFilters.push(createIntentFilter(host.name, host.scheme, hostPath));
+
     });
   });
 
@@ -285,6 +289,47 @@ function createIntentFilter(host, scheme, pathName) {
   };
 
   injectPathComponentIntoIntentFilter(intentFilter, pathName);
+
+
+  return intentFilter;
+}
+
+function createIntentReceiver() {
+  var intentFilter = {
+
+    'data': [
+      {
+        '$': {
+          'android:mimeType':'audio/*'      
+        }
+      }, {
+        '$': {
+          'android:mimeType':'application/*'
+        }
+      },
+      {
+        '$': {
+          'android:mimeType':'image/*'
+        }
+      }, {
+        '$': {
+          'android:mimeType':'text/*'
+        }
+      }
+    ],
+    'action': [{
+      '$': {
+        'android:name': 'android.intent.action.SEND'
+      }
+    }],
+    'category': [{
+      '$': {
+        'android:name':'android.intent.category.DEFAULT'
+      }
+    }]
+  };
+
+  injectPathComponentIntoIntentFilter(intentFilter, '*');
 
   return intentFilter;
 }
