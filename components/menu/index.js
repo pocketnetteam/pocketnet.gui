@@ -201,6 +201,9 @@ var menu = (function(){
 									if (k == 'read'){
 										k = 'index?read=1'
 									}
+									else if (k == 'audio'){
+										k = 'index?audio=1'
+									}
 									else{
 										k = 'index?r=' + k
 									}

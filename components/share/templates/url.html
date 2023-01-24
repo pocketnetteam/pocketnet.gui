@@ -128,7 +128,7 @@
 				
 				</div>	
 
-				<% if(typeof video == 'undefined' || !video) { %> 
+				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) { %> 
 					<div class="videoTips">
 						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>

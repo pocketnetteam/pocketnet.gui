@@ -250,7 +250,9 @@ var uploadpeertube = (function () {
 					return;
 				}
 
-				if (!videoInputFile[0].type.includes('video')) {
+				var isAudio = videoInputFile[0].type.includes('audio')
+
+				if (!videoInputFile[0].type.includes('video') && !isAudio) {
 					showerror('videoFormatError')
 					return;
 				}
@@ -291,6 +293,10 @@ var uploadpeertube = (function () {
 
 				let transcodingAllowed = (transcodeOption && transcodeOption.value);
 
+				// For audio files, disable the transcoding
+				if (isAudio)
+					transcodingAllowed = false;
+
 				let transcoded = null;
 
 
@@ -299,7 +305,7 @@ var uploadpeertube = (function () {
 
 				showerror()
 				processing(true)
-				loadProgress(0, 'uploadVideoProgress_start');
+				loadProgress(0, (isAudio) ? 'uploadAudioProgress_start' : 'uploadVideoProgress_start');
 
 				if (transcodingAllowed && typeof _Electron !== 'undefined') {
 					const file = evt.target.files[0];
@@ -434,10 +440,10 @@ var uploadpeertube = (function () {
 				}
 
 
-				loadProgress(0, 'uploadVideoProgress_uploading');
+				loadProgress(0, (isAudio) ? 'uploadAudioProgress_uploading' : 'uploadVideoProgress_uploading');
 
 				uploader.loadProgress = (percent) => {
-					loadProgress(percent, 'uploadVideoProgress_uploading');
+					loadProgress(percent, (isAudio) ? 'uploadAudioProgress_uploading' : 'uploadVideoProgress_uploading');
 				};
 
 				uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
@@ -646,6 +652,7 @@ var uploadpeertube = (function () {
 				var data = {
 					hasAccess: false,
 					increase: {},
+					isAudio: (ed.isAudio != undefined) ? ed.isAudio : false
 				};
 
 				error = false;

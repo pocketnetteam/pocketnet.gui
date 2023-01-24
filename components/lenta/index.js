@@ -4657,6 +4657,7 @@ var lenta = (function(){
 
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
+							if(essenseData.audio){ type = 'audio'}
 
 							
 

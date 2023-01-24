@@ -732,6 +732,7 @@ _l.e13285 = "Preguntalo antes de publicar desde Telegram"
 _l.e13286 = "Preguntar antes de enviar a Telegram"
 _l.e13287 = "Enviar al canal de telegramas"
 _l.video = "Video"
+_l.audio = "Audio"
 _l.e13288 = "Widgets de la página de inicio"
 _l.e13289 = "Integración de Telegram"
 

@@ -790,6 +790,7 @@ _l.e13285 = "Chiedi prima di postare da Telegram";
 _l.e13286 = "Chiedi prima di inviare a Telegram";
 _l.e13287 = "Invia al canale Telegram";
 _l.video = "Video";
+_l.audio = "Audio";
 _l.e13288 = "Pagina principale dei widget";
 _l.e13289 = "Integrazione con Telegram";
 

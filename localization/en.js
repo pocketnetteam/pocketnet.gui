@@ -905,6 +905,7 @@ _l.e13285 = "Ask before post from telegram"
 _l.e13286 = "Ask before send to telegram"
 _l.e13287 = "Send to telegram channel"
 _l.video = "Video"
+_l.audio = "Audio"
 _l.e13288 = "Main Widgets Page"
 _l.e13289 = "Integration with Telegram"
 
@@ -1101,6 +1102,7 @@ _l.e14110 = "Google Play Market"
 
 
 _l.peertubeAddVideo = "Upload Video"
+_l.peertubeAddAudio = "Upload Audio"
 _l.peertubeAddStream = "Add live stream to post"
 
 _l.e14111 = "There was a problem with loading images"
@@ -1177,11 +1179,15 @@ _l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with
 _l.videoTranscodingError = "There was an error with processing your video"
 _l.videoUploadingFinish = "Finishing uploading..."
 _l.uploadNewVideo = "Upload New Pocketvideo"
+_l.uploadNewAudio = "Upload New Pocketaudio"
 _l.selectVideoFile = "Select video file"
+_l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
 _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
+_l.uploadAudioProgress_uploading = "Uploading audio:"
 _l.uploadVideoProgress_start = "Video download initialization:"
+_l.uploadAudioProgress_start = "Audio download initialization:"
 _l.uploadCanceled = "Upload canceled"
 
 _l.pleaseTryAgain = "Something was wrong there. Please try again"

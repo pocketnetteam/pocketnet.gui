@@ -1467,10 +1467,23 @@ Share = function(lang){
 		if(!self.url.v) return
 
 		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
 
 		//if(meta.type) return true
 
-		if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube' && (!ch || ch.length <= 0 || ch[ch.length - 1] != 'audio')) return true
+	}
+
+	self.itisaudio = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url.v) return 
+
+		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
 	self.canSend = function(app, clbk) {
@@ -1578,6 +1591,7 @@ Share = function(lang){
 	self.optstype = function(platform){
 
 		if(self.itisvideo()) return 'video'
+		if(self.itisaudio()) return 'audio'
 		if(self.itisarticle()) return 'article'
 
 		return self.type	
@@ -1586,6 +1600,8 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+
+		if (self.itisaudio()) return 'audio'
 
 		if (self.itisarticle()) return 'article'
 
@@ -2225,8 +2241,21 @@ pShare = function(){
 		if(!self.url) return 
 
 		var meta = parseVideo(self.url)
+		var ch = self.url.replace('peertube://', '').split('/')
 
-		if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube' && (!ch || ch.length <= 0 || ch[ch.length - 1] != 'audio')) return true
+	}
+
+	self.itisaudio = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url) return 
+
+		var meta = parseVideo(self.url)
+		var ch = self.url.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
 	self.hasexchangetag = function(){

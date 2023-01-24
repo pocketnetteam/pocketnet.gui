@@ -148,8 +148,9 @@ PeerTubePocketnet = function (app) {
 		};
 	};
 
-	self.composeLink = function (host, videoid) {
-		return PEERTUBE_ID + host + '/' + videoid;
+	self.composeLink = function (host, videoid, isAudio = false) {
+		let url = PEERTUBE_ID + host + '/' + videoid;
+		return (isAudio == true) ? url + '/audio' : url;
 	};
 
 	self.checkTranscoding = function(url) {
@@ -773,7 +774,7 @@ PeerTubePocketnet = function (app) {
 								if (!r.video) return Promise.reject(error('uploaderror'));
 
 								return Promise.resolve({
-									videoLink: self.composeLink(options.host, r.video.uuid),
+									videoLink: self.composeLink(options.host, r.video.uuid, r.video.isAudio),
 								});
 							})
 							.catch((e) => {
@@ -804,7 +805,7 @@ PeerTubePocketnet = function (app) {
 						const optionsPrepared = {
 							headers: {
 								"X-Upload-Content-Length": parameters.video.size,
-								"X-Upload-Content-Type": 'video/mp4', // FIXME: Is dynamic variable...
+								"X-Upload-Content-Type": parameters.video.type, // FIXME: Is dynamic variable...
 							},
 							...options,
 						};
@@ -905,7 +906,7 @@ PeerTubePocketnet = function (app) {
 						});
 						const handleLastChunk = () => Promise.resolve({
 							responseType: 'upload_end',
-							videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid),
+							videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid, r.data.video.isAudio),
 						});
 						const handleNotFound = () => Promise.resolve({
 							responseType: 'not_found',
@@ -968,7 +969,7 @@ PeerTubePocketnet = function (app) {
 								if (!r.video) return Promise.reject(error('uploaderror'));
 
 								return Promise.resolve(
-									self.composeLink(options.host, r.video.uuid)
+									self.composeLink(options.host, r.video.uuid, r.video.isAudio)
 								);
 							})
 							.catch((e) => {
@@ -1008,7 +1009,7 @@ PeerTubePocketnet = function (app) {
 
 						return Promise.resolve({
 							...result.video,
-							formattedLink: self.composeLink(options.host, result.video.uuid),
+							formattedLink: self.composeLink(options.host, result.video.uuid, result.video.isAudio),
 							host: options.host,
 						});
 					})
