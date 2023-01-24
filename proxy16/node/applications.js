@@ -27,7 +27,7 @@ var Applications = function(settings, applications = {}, proxy) {
     self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
-        console.log(meta[key].url)
+
         return proxy.transports.axios.get(meta[key].url).then(function(response) {
 
             var d = response.data

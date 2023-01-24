@@ -12,7 +12,6 @@ var readline = require('readline');
 
 
 
-console.log('global.WRITE_LOGS ', global.WRITE_LOGS )
 
 var destroy = function(repeat){
 

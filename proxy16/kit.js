@@ -426,9 +426,6 @@ var kit = {
 					var ctx = kit.manage.set.server
 					var notification = {}
 
-					console.log('settings', settings)
-
-
 					if(typeof settings.domain != 'undefined') notification.domain = settings.domain
 					if(settings.ports) notification.ports = settings.ports
 					if(typeof settings.enabled != 'undefined') notification.enabled = settings.enabled

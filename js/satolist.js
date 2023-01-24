@@ -3041,9 +3041,9 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        capcha : function(){
+        captcha : function(){
 
-            var getcapcha = function(){
+            var getcapcha = function(refresh){
 
                 var regproxy = null
 
@@ -3053,6 +3053,8 @@ Platform = function (app, listofnodes) {
                     }
                 }
                 catch (e) { }
+
+                globalpreloader(true)
 
                 return self.app.api.get.proxywithwallet().then(r => {
 
@@ -3069,6 +3071,10 @@ Platform = function (app, listofnodes) {
 
                 }).then((proxy) => {
 
+                    var proxyOptions = {
+                        proxy : proxy.id
+                    }
+
                     return new Promise((resolve, reject) => {
 
                         self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
@@ -3080,49 +3086,59 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-                            resolve(captcha)
+                            console.log('captcha', captcha)
+
+                            resolve({captcha, proxyOptions})
 
                             
                             
 
-                        }, true, {
-                            proxy : proxy.id
-                        })
+                        }, refresh || false, proxyOptions)
                         
                     })
 
+                }).finally(() => {
+                    globalpreloader(false)
                 })
 
             }
             
-            return getcapcha().then(captcha => {
+            return getcapcha().then(({captcha, proxyOptions}) => {
 
-                if (captcha.done){
+                return new Promise ((resolve, reject) => {
 
-                    resolve(captcha)
-    
-                }
-                else{
-    
-                    app.nav.api.load({
-                        open : true,
-                        id : 'capcha',
-                        inWnd : true,
+                    if (captcha.done){
+
+                        resolve(captcha)
         
-                        essenseData : {
-                            getcapcha,
-                            success : (data) => {
-                                resolve(data)
-                            }
-                        },
-    
-                        closecross : function(){
-                            reject('close')
-                        }
-                        
-                    })
-    
-                }
+                    }
+                    else{
+
+                        app.nav.api.load({
+                            open : true,
+                            id : 'captcha',
+                            inWnd : true,
+            
+                            essenseData : {
+                                captcha,
+                                proxyOptions,
+                                getcapcha : () => getcapcha(true),
+                                success : (data) => {
+                                    resolve(data)
+                                },
+
+                                fail : function(){
+                                    reject('close')
+                                },
+                            },
+        
+                         
+
+                        })
+        
+                    }
+
+                })
 
             })
 
@@ -9992,6 +10008,8 @@ Platform = function (app, listofnodes) {
             get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
+                console.log('proxyoptions', proxyoptions)
+
                 self.app.api.fetchauth('captcha', {
                     captcha: this.done || this.current || null
                 }, proxyoptions).then(d => {
@@ -10006,7 +10024,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.captcha.save()
 
                     if (d.result && !d.done) {
-                        self.sdk.captcha.make(d.result, function (err) {
+                        self.sdk.captcha.make(d.result, null, function (err) {
 
                             if (!err) {
 
@@ -10042,7 +10060,6 @@ Platform = function (app, listofnodes) {
                     language: self.app.localization.key
                 }, proxyoptions).then(d => {
             
-            
                     self.sdk.captcha.current = d.id
             
                     if (d.id != self.sdk.captcha.done) {
@@ -10052,7 +10069,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.captcha.save()
             
                     if (d.result && !d.done) {
-                        self.sdk.captcha.make(d.result, function (err) {
+                        self.sdk.captcha.make(d.result, d.angles, function (err) {
                     
                             if (!err) {
                         
@@ -10095,6 +10112,7 @@ Platform = function (app, listofnodes) {
                         clbk(null, d)
 
                 }).catch(e => {
+                    console.error(e)
                     if (clbk)
                         clbk(e)
                 })

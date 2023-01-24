@@ -125,9 +125,6 @@ var Action = function(account, object, priority){
 
     var options = ActionOptions.objects[object.type] || {}
 
-    console.log('object.type', object.type, object)
-
-        
     var self = this
 
     self.object = object
@@ -228,8 +225,6 @@ var Action = function(account, object, priority){
 
         options = ActionOptions.objects[self.object.type] || {}
 
-        console.log('options', options, self.object.type, object)
-
     }
 
     var getBestInputs = function(unspents, value){
@@ -242,10 +237,6 @@ var Action = function(account, object, priority){
         while (added < value && unspents.length){
             var diff = value - added
 
-            console.log('diff', diff)
-
-            console.log('unspents', unspents)
-
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
 
                 return Math.abs(u.amount - diff)
@@ -253,8 +244,6 @@ var Action = function(account, object, priority){
             }), 5)
 
             var unspent = iterationUnspents[rand(0, iterationUnspents.length - 1)]
-
-            console.log('unspent', unspent)
 
             addedUnspents[unspent.txid + ':' + unspent.vout] = unspent
             added += unspent.amount
@@ -264,7 +253,6 @@ var Action = function(account, object, priority){
             })
         }
 
-        console.log('addedUnspents', addedUnspents, _.toArray(addedUnspents))
 
         return _.toArray(addedUnspents)
 
@@ -493,7 +481,7 @@ var Action = function(account, object, priority){
             tx = buildTransaction({inputs, outputs, opreturnData})
         }
         catch(e){
-            console.error(e)
+            //console.error(e)
             return Promise.reject(e)
         }
 
@@ -584,8 +572,6 @@ var Action = function(account, object, priority){
 
                     data || (data = {})
 
-                    console.log("CHECK", data)
-
                     if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                         self.sent = null
                         self.transaction = null
@@ -665,7 +651,6 @@ var Action = function(account, object, priority){
 
         if (!account.status.value){
             if(!options.sendWithNullStatus) {
-                console.log('options', options)
                 return Promise.reject('actions_waitUserStatus')
             }
         }
@@ -1053,13 +1038,12 @@ var Account = function(address, parent){
                 var action = new Action(self, {})
                     action.import(exported)
 
-                console.log('exported', exported, action)
 
                 self.actions.value.push(action)
             }
             catch(e){
-                console.log('exported', exported)
-                console.error(e)
+                //console.log('exported', exported)
+                //console.error(e)
             }
 
             
@@ -1314,7 +1298,7 @@ var Account = function(address, parent){
             }
             catch(e){
 
-                if(e != 'completed' && e != 'rejected') console.error(e)
+                //if(e != 'completed' && e != 'rejected') console.error(e)
             }
 
         }
@@ -1562,8 +1546,6 @@ var Actions = function(app, api, storage = localStorage){
 
         _.each(value, (data, address) => {
 
-            console.log('data, address', data, address)
-
             accounts[address] = new Account(address, self)
             accounts[address].import(data)
         })
@@ -1768,7 +1750,7 @@ var Actions = function(app, api, storage = localStorage){
                     update(JSON.parse(e.newValue || "{}"))
                 }
                 catch(e){
-                    console.error(e)
+                    //console.error(e)
                 }
 
                 

@@ -839,8 +839,6 @@ var Nodemanager = function(p){
 
             db.remove({ version: {$in : ['0.20.22', '0.20.21', '0.20.20', '0.20.19', '0.20.16', '0.20.17', '0.20.18', '0.20.16', '0.20.15', '0.20.14']}  }, { multi: true }, function (err, numRemoved) {
 
-                console.log("db cleared", numRemoved)
-                
                 if(err) return reject(err)
                 
                 resolve()

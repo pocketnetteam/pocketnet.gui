@@ -1,5 +1,65 @@
 @import "../../css/__cssvar";
 
-#pdf{
+#captcha{
+    .captchaImageWrapper{
+        text-align: center;
+    }
 
+    .subcaption,
+    .subsubcaption{
+        margin : 0 auto;
+        margin-top: @rhythm;
+        font-weight: 700;
+        text-align: center;
+        max-width: 300px;
+    }
+
+    .inputWrapper{
+        max-width: 300px;
+        margin : 0 auto;
+        margin-bottom: @rhythm;
+    }
+
+    input{
+        font-size: 1.4em;
+        border: 0;
+        border-bottom: 1px solid rgb(var(--neutral-grad-2));
+        .transition(0.3s);
+        border-radius: 0;
+        width: 100%;
+        background: transparent;
+        text-align : center;
+  
+    }
+
+    .addContainer{
+        text-align: center;
+
+        button{
+            min-width: 300px;
+        }
+    }
+
+    .redoContainer{
+        text-align: center;
+        margin-top: @rhythm;
+        margin-bottom: @rhythm;
+    }
+
+    button{
+        min-width: 180px;
+        .transition(0.3s);
+        
+        &.next{
+            color : rgb(var(--color-txt-ac));
+        }
+
+    }
+}
+
+.wnd.captchaWindow{
+    .wndinner{
+        max-width: 450px;
+        max-height: 550px;
+    }
 }

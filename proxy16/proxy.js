@@ -1091,7 +1091,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
-			console.log('settings.server.hexCaptcha', settings.server.hexCaptcha)
 
 			return {
 				status: status,
@@ -1288,8 +1287,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			console.log('method', method)
-
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
@@ -1325,8 +1322,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
-
-					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -2349,7 +2344,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: self.test ? captcha.text : null, ///
+							result: null, //self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
@@ -2380,6 +2375,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							font : 'black 22px Monospace'
 						}
 					});
+
 					captcha.id = f.makeid();
 					
 					return new Promise((resolve, reject) => {
@@ -2400,8 +2396,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 									id: captcha.id,
 									frames: frames,
 									overlay: layers,
-									result: self.test ? captcha.text : null, ///
-									done: false
+									angles : null, //self.test ? captcha.angles : null,
+									result: null, //self.test ? captcha.text : null, ///
+									done: false,
+									hex : true
 								}
 							});
 						});
@@ -2416,6 +2414,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
+
+					console.log('captcha', captcha, captchas)
 
 					var captcha = captchas[captcha];
 

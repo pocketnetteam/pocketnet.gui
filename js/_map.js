@@ -472,6 +472,13 @@ __map =  {
 			anonimus : true
 		},
 
+		captcha : {
+			uri : "captcha",
+			href : "captcha",
+			add : insertingfunc,
+			anonimus : true
+		},
+
 		test : {
 			uri : "test",
 			href : "test",

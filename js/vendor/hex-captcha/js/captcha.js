@@ -55,7 +55,7 @@ class HexCaptcha {
    */
   #create () {
     /*Main holders and controls*/
-    this.#holder = document.querySelector(this.#options.holder) || document.body;
+    this.#holder = this.#options.holder; ///document.querySelector(this.#options.holder) || document.body;
     //this.#root = this.#holder.attachShadow({ mode: 'closed' });
     this.#container = document.createElement('section');
     this.#canvas = document.createElement('div');

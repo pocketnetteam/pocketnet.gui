@@ -751,7 +751,10 @@ wnd = function (p) {
 
 
 
-			if (cl) if (p.closecross) p.closecross(wnd, self);
+			if (cl) {
+				console.log("HERE")
+				if (p.closecross) p.closecross(wnd, self);
+			}
 
 			if (p.close) p.close(wnd, self);
 

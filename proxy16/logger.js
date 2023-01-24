@@ -120,9 +120,6 @@ var Logger = function(_loggers){
     self.init = function(){
 
         self.prepare()
-
-        console.log('writelogs', writelogs, global.WRITE_LOGS)
-
         _.each(loggers, function(key){
 
             var logger = winston.loggers.add(key, { 

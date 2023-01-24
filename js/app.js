@@ -1109,6 +1109,17 @@ Application = function (p) {
 					}
 				}, 2000)
 
+				console.log('self.platform.ui', self.platform.ui)
+
+				setTimeout(() => {
+					self.platform.ui.captcha().then(R => {
+						console.log(R)
+
+					}).catch(e => {
+						console.error(e)
+					})
+				}, 300)
+
 
 				self.realtime();
 
