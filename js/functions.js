@@ -2227,6 +2227,12 @@
 
 	}
 
+	resizePromise = function(srcData, width, height, format) {
+		return new Promise((resolve) => {
+			resize(srcData, width, height, resolve, format)
+		})
+	}
+
 	imagetojpegifneed = function ({base64, name}) {
 
 		var nm = name.split('.')

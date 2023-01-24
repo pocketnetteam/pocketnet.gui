@@ -10,6 +10,8 @@ var menu = (function(){
 			authorForSearch = null,
 			menusearch = null;
 
+		var logotime = 180000, changeLogoInterval = null
+
 		var loc = new Parameter({
 
 			type : "VALUES",
@@ -757,6 +759,53 @@ var menu = (function(){
 					
 				}
 			},
+
+			application : {
+				init : function(el){
+					/*var calculateMarketingLogo = function(currentLogo) {
+						var logosArr = ['fa-windows', 'fa-apple', 'fa-google-play'];
+			
+						return logosArr[(_.indexOf(logosArr, currentLogo) + 1) % logosArr.length];
+					}
+			
+					var changeLogo = function() {
+						var element = el.find('.changing-app-icon');
+
+						element.css('opacity', '1')
+			
+						var iconLogoClasses = _.find((element.attr('class') || '').split(' '), function(elem) {
+							return elem.indexOf('fa-') > -1;
+						});
+
+						element.removeClass(iconLogoClasses);
+						element.addClass(calculateMarketingLogo(iconLogoClasses));
+			
+						setTimeout(function() {
+							element.css('opacity', '0')
+						}, logotime - 1500)
+					}
+
+					changeLogoInterval = setInterval(changeLogo, logotime);
+
+					setTimeout(function(){
+						el.find('.changing-app-icon').css('opacity', '0')
+					}, logotime - 1000)*/
+
+				},
+
+				click : function(){
+
+					var wnd = isMobile() || isTablet()
+
+					self.nav.api.go({
+						open : true,
+						href : 'applications',
+						inWnd : wnd,
+						history : !wnd
+					})
+
+				}
+			},
 	
 			state : {
 				init : function(el){
@@ -1143,6 +1192,11 @@ var menu = (function(){
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
+
+				if (changeLogoInterval){
+					clearInterval(changeLogoInterval)
+					changeLogoInterval = null
+				}
 
 				_.each(events, function(e){
 

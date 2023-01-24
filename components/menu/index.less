@@ -55,6 +55,11 @@
 
 	}
 
+	.changing-app-icon {
+        opacity: 1;
+        transition: all 0.5s;
+    }
+
 	&.static{
 		.menuWrapper{
 			position: absolute;
@@ -381,6 +386,10 @@
 							opacity: 1;
 						}
 					}
+				}
+
+				&.application{
+					color : rgb(var(--color-bg-orange));
 				}
 
 				&.user{
@@ -1233,6 +1242,7 @@
 			}
 
 			//.centerpart,
+			.application,
 			.walletsWrapper,
 			.keyexportWrapper,
 			.notificationsWrapper{

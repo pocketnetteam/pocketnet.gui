@@ -40,6 +40,10 @@
 #menu .usericon {
   position: relative;
 }
+#menu .changing-app-icon {
+  opacity: 1;
+  transition: all 0.5s;
+}
 #menu.static .menuWrapper {
   position: absolute;
 }
@@ -279,6 +283,9 @@
 }
 #menu .sections .items .item.changeaccount .icon:hover {
   opacity: 1;
+}
+#menu .sections .items .item.application {
+  color: rgb(var(--color-bg-orange));
 }
 #menu .sections .items .item.user .icon {
   padding-right: 0;
@@ -899,6 +906,7 @@
   html.allcontent #menu .mobsearch i {
     color: rgba(var(--color-bg-ac-bright), 0.9);
   }
+  html.allcontent #menu .application,
   html.allcontent #menu .walletsWrapper,
   html.allcontent #menu .keyexportWrapper,
   html.allcontent #menu .notificationsWrapper {
