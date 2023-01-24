@@ -9,6 +9,8 @@ const checkIfLocalhost = require("is-localhost-ip");
 
 const dns = require("dns");
 const net = require("net");
+const fs = require("fs");
+const path = require("path");
 
 let netPing;
 let pingUtil;
@@ -47,6 +49,7 @@ initPingUtil();
 
 module.exports = function (isTorEnabled = false) {
     const self = {};
+    self.accessRecords = {};
     self.proxyHosts = {};
     self.lastUpdate = Date.now();
 
@@ -100,6 +103,22 @@ module.exports = function (isTorEnabled = false) {
     };
 
     const isTorNeeded = async (url) => {
+        const torcontrol = self.torapplications;
+
+        const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
+        const areStatsEmpty = (Object.keys(self.proxyHosts).length === 0);
+
+        if (areStatsEmpty && fs.existsSync(statsFilePath)) {
+            const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
+            self.proxyHosts = JSON.parse(fileData);
+        }
+
+        try {
+            fs.writeFileSync(statsFilePath, JSON.stringify(self.proxyHosts, null, 2));
+        } catch (err) {
+            console.log('Looks like stats file is busy. Will write data next time...');
+        }
+
         const isTorStateStarted = await isTorStarted(false);
 
         if (!isTorStateStarted) {
@@ -173,6 +192,65 @@ module.exports = function (isTorEnabled = false) {
             ...self.proxyHosts[hostname],
             nextTry: Date.now() + oneHour,
         };
+
+        const torcontrol = self.torapplications;
+
+        const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
+
+        try {
+            fs.writeFileSync(statsFilePath, JSON.stringify(self.proxyHosts, null, 2));
+        } catch (err) {
+            console.log('Looks like stats file is busy. Will write data next time...');
+        }
+    }
+
+    const isDirectAccess = async (hostname) => {
+        const isLocalhost = await checkIfLocalhost(hostname);
+
+        if (isLocalhost) {
+            return true;
+        }
+
+        const isHostListed = (hostname in self.accessRecords);
+
+        if (!isHostListed) {
+            self.accessRecords[hostname] = {};
+
+            const pingResult = await pingHost(hostname);
+
+            if (pingResult) {
+                self.accessRecords[hostname] = {
+                    accessOk: true,
+                    nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
+                };
+            } else {
+                self.accessRecords[hostname] = {
+                    accessOk: false,
+                    nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
+                };
+            }
+
+            const torcontrol = self.torapplications;
+
+            const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
+            const areStatsEmpty = (Object.keys(self.accessRecords).length === 0);
+
+            if (areStatsEmpty && fs.existsSync(statsFilePath)) {
+                const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
+                self.accessRecords = JSON.parse(fileData);
+            }
+
+            try {
+                fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2));
+            } catch (err) {
+                console.log('Looks like stats file is busy. Will write data next time...');
+            }
+        }
+
+        const isAccessOk = (self.accessRecords[hostname].accessOk === true);
+        const isNextTryTime = (self.accessRecords[hostname].nextTry <= Date.now());
+
+        return isAccessOk || isNextTryTime;
     }
 
     const getHostIp = async (host) => {
@@ -245,7 +323,7 @@ module.exports = function (isTorEnabled = false) {
                 const pingTime = (Date.now() - pingStart) / 1000;
 
                 console.log('Proxy16: Ping success', host, pingTime);
-                return response;
+                return true;
             })
             .catch(() => {
                 const pingTime = (Date.now() - pingStart) / 1000;
@@ -273,57 +351,30 @@ module.exports = function (isTorEnabled = false) {
         }
 
         const urlParts = new URL(preparedOpts.url);
-        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
-        const isTorRequest = isTorNeeded(preparedOpts.url);
+        const isDirectRequest = await isDirectAccess(urlParts.hostname);
         const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorRequest && isTorStateStarted) {
+        if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
-        } else if (!isLocalhost) {
-            const isPingSuccess = await pingHost(urlParts.hostname);
-
-            if (!isPingSuccess) {
-                console.log('Proxy16: Proxifing', urlParts.host)
-
-                saveHostStats(preparedOpts.url);
-
-                await initHttpsAgent(preparedOpts, 'httpsAgent');
-            }
         }
 
-        try {
-            return await _axios(preparedOpts)
-              .then((response) => {
-                    if (preparedOpts.httpsAgent) {
-                        saveHostStats(preparedOpts.url);
-                    } else {
-                        saveHostStats(preparedOpts.url, { accessible: true });
-                    }
-
-                  return response;
-                })
-                .catch((err) => {
-                    saveHostStats(preparedOpts.url);
+        return await _axios(preparedOpts)
+            .catch(async (err) => {
+                if (preparedOpts.httpsAgent) {
                     throw err;
-              });
-        } catch (e) {
-            const isTorStateStarted = await isTorStarted();
-            const isTorRequest = isTorNeeded(preparedOpts.url);
+                }
 
-            if (!isLocalhost && !isTorRequest && isTorStateStarted) {
-                return _axios(preparedOpts)
-                    .then((response) => {
-                        saveHostStats(preparedOpts.url);
-                        return response;
-                    })
-                    .catch((err) => {
-                        saveHostStats(preparedOpts.url);
-                        throw err;
-                    });
-            }
+                const isDirectRequest = await isDirectAccess(urlParts.hostname);
+                const isTorStateStarted = await isTorStarted(false);
 
-            throw e;
-        }
+                if (!isDirectRequest && isTorStateStarted) {
+                    await initHttpsAgent(preparedOpts, 'httpsAgent');
+
+                    return await _axios(preparedOpts);
+                }
+
+                throw Error('Tor not started. No fallback');
+            });
     }
 
     self.axios = (...args) => axiosRequest(...args);
@@ -346,82 +397,46 @@ module.exports = function (isTorEnabled = false) {
         }
 
         const urlParts = new URL(url);
-        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
-        const isTorRequest = isTorNeeded(url);
+        const isDirectRequest = await isDirectAccess(urlParts.hostname);
         const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorRequest && isTorStateStarted) {
+        if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(opts, 'agent');
-        } else {
-            const isPingSuccess = await pingHost(urlParts.hostname);
-
-            if (!isPingSuccess) {
-                console.log('Proxy16: Proxifing', urlParts.host)
-
-                saveHostStats(url);
-
-                await initHttpsAgent(opts, 'agent');
-            }
         }
 
-        try {
-            opts.signal = timeout(30);
+        opts.signal = timeout(30);
 
-            console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-            return await fetch(url, opts)
-                .then(async (res) => {
-                    console.log('Proxy16: Fetch request received SUCCESS', 'tor enabled?', !!opts.agent);
-
-                    if (opts.agent) {
-                        saveHostStats(url);
-                    } else {
-                        saveHostStats(url, { accessible: true });
-                    }
-
-                    return res;
-                })
-                .catch((err) => {
-                    console.log('Proxy16: Fetch request received ERROR', 'tor enabled?', !!opts.agent);
+        console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
+        return await fetch(url, opts)
+            .catch(async (err) => {
+                if (opts.agent) {
                     throw err;
-                });
-        } catch (e) {
-            console.log('Proxy16: Retry with TOR');
-            const isTorStateStarted = await isTorStarted();
-            const isTorRequest = isTorNeeded(url);
-            console.log('Proxy16: Is TOR active?', isTorStateStarted);
+                }
 
-            if (!isLocalhost && isTorStateStarted && !isTorRequest) {
-                saveHostStats(url)
+                const isDirectRequest = await isDirectAccess(urlParts.hostname);
+                const isTorStateStarted = await isTorStarted(false);
 
-                opts.agent = torHttpsAgent;
-                opts.signal = timeout(40);
+                if (!isDirectRequest && isTorStateStarted) {
+                    opts.signal = timeout(40);
 
-                return await fetch(url, opts)
-                  .then((res) => {
-                      console.log('Proxy16: TOR Fetch request received SUCCESS');
-                      return res;
-                  })
-                  .catch((err) => {
-                      console.log('Proxy16: TOR Fetch request received ERROR');
-                      if (err.code !== 'FETCH_ABORTED') {
-                          // For debugging, don't remove
-                          // console.log(err);
-                      }
-                  });
-            }
-        }
+                    await initHttpsAgent(opts, 'agent');
+
+                    return await fetch(url, opts);
+                }
+
+                throw Error('Tor not started. No fallback');
+            });
     }
 
     self.request = async (options, callBack) => {
         let req = _request;
 
         const urlParts = new URL(options.url);
-        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
-        const isTorRequest = isTorNeeded(options.url);
+        const isDirectRequest = await isDirectAccess(urlParts.hostname);
         const isTorStateStarted = await isTorStarted(false);
 
-        if (!isLocalhost && isTorRequest && isTorStateStarted) {
-            req = _request.defaults({agent: torHttpsAgent});
+        if (!isDirectRequest && isTorStateStarted) {
+            await initHttpsAgent(options, 'agent');
         }
 
         try {
@@ -429,21 +444,33 @@ module.exports = function (isTorEnabled = false) {
                 callBack?.(...args)
             });
         } catch (e) {
-            const isTorStateStarted = await isTorStarted();
-            const isTorRequest = isTorNeeded(options.url);
-
-            if (!isLocalhost && isTorStateStarted && !isTorRequest) {
-                saveHostStats(options.url)
-                return self.request(options, callBack);
+            if (options.agent) {
+                throw err;
             }
 
-            callBack?.(e);
+            const isDirectRequest = await isDirectAccess(urlParts.hostname);
+            const isTorStateStarted = await isTorStarted(false);
+
+            if (!isDirectRequest && isTorStateStarted) {
+                await initHttpsAgent(options, 'agent');
+
+                return req(options, (...args) => {
+                    callBack?.(...args)
+                });
+            }
+
+            throw Error('Tor not started. No fallback');
         }
     }
 
-    self.isTorNeeded = (url) => isTorNeeded(url);
+    self.isTorNeeded = async (url) => {
+        const urlParts = new URL(url);
+        const directAccess = await isDirectAccess(urlParts.hostname);
 
-    self.saveHostStats = (url, stats) => saveHostStats(url, stats);
+        return !directAccess;
+    };
+
+    self.saveHostStats = (url, stats) => undefined; //saveHostStats(url, stats);
 
     return self;
 }
