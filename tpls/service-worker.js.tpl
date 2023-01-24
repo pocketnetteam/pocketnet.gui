@@ -28,6 +28,7 @@ const isElectron = async () => {
 
     setTimeout(() => {
       clearInterval(electronCheckInterval);
+      _isElectron = false;
 
       resolve(false);
     }, 5000);
