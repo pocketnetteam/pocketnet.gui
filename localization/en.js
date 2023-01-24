@@ -2460,4 +2460,7 @@ _l.authHeading = "Auth";
 _l.terms = 'Terms and Conditions for Bastyon';
 _l.daccept = "Accept and continue";
 
+_l.sendToChat = "Send message to chat";
+_l.createPost = "Create and publish the post";
+
 

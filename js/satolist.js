@@ -31091,14 +31091,74 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
-                        self.matrixchat.wait().then(r => {
-                            return self.matrixchat.share.object(sharing)
-                        }).catch(r => {
+                        self.app.user.isState(function (state) {
 
-                            sitemessage(self.app.localization.e('e13293')+' /ul102')
+                            if (state){
 
+                                menuDialog({
+
+                                    items: [
+        
+                                        {
+                                            text: self.app.localization.e('sendToChat'),
+                                            class: 'itemmain',
+                                            action: function (clbk) {
+        
+                                                self.matrixchat.wait().then(r => {
+                                                    return self.matrixchat.share.object(sharing)
+                                                }).catch(r => {
+                        
+                                                    sitemessage(self.app.localization.e('e13293')+' /ul102')
+                        
+                                                })
+                                                
+                                                clbk()
+                                            }
+                                        },
+        
+                                        {
+                                            text:  self.app.localization.e('createPost'),
+                                            action: function (clbk) {
+        
+                                                var shareEssenseData = {
+                                                    close : function(){
+                                                    },
+                                                    post : function(){
+                                                    },
+                                                    absolute : true,
+                                                }
+        
+                                                if (sharing.messages && sharing.messages[0]){
+                                                    shareEssenseData.description = sharing.messages[0];
+                                                }
+        
+                                                if (sharing.images){
+                                                    shareEssenseData.images = sharing.images;
+                                                }
+        
+                                                app.nav.api.load({
+                                                    open : true,
+                                                    id : 'share',
+                                                    inWnd : true,
+                                                    eid : 'postin',
+                                                    mid : 'postin',
+                                
+                                                    clbk : function(e, p){
+                                                        globalpreloader(false)
+                                                    },
+                                
+                                                    essenseData : shareEssenseData
+                                                })
+        
+                                                clbk()
+                                            }
+                                        }
+        
+        
+                                    ]
+                                })
+                            }
                         })
-
 
                     }
                 })
@@ -31123,12 +31183,11 @@ Platform = function (app, listofnodes) {
 
         if(window.cordova){
             setupOpenwith()
+            
         }
 
 
-
     }
-
 
     self.navManager = function(){
 
