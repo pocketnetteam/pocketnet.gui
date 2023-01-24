@@ -29,7 +29,7 @@ const isElectron = async () => {
     setTimeout(() => {
       clearInterval(electronCheckInterval);
 
-      reject(false);
+      resolve(false);
     }, 5000);
   });
 };
