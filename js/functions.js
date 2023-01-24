@@ -9672,7 +9672,7 @@ edjsHTML = function () {
 
 			apply: function (_e, fu) {
 
-				if (!fu) fu = encodeURIComponent
+				if (!fu) fu = (f) => f
 
 				var e = { ..._e };
 
