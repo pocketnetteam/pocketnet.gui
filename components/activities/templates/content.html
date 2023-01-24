@@ -1,0 +1,246 @@
+<%
+
+var showAvatar = function(relatedContent){ 
+	
+	if(relatedContent && relatedContent.account){
+
+		var letter = (relatedContent.account.n || '')[0] || 'U'
+		var src = relatedContent.account.a
+
+		%>
+
+		<% if(!app.mobileview) {%><a href="<%-relatedContent.account.n%>"><% } %>
+
+				
+			<div class="icon" profile="<%-relatedContent.address%>" >
+				<div class="usericon usericonsbsa another" image="<%-src || '*'%>" visibleimage="true" ban=".gif" contain="none">
+
+					<% if(!src && letter) { %>
+
+						<span class="letter">
+							<%-letter.toUpperCase()%>
+						</span>
+
+					<% } %>
+
+					<%= app.platform.ui.markUser(relatedContent.address)%>
+					
+				</div>
+			</div>
+			
+
+		<% if(!app.mobileview) {%></a><% } %>
+
+	<% } %>
+	
+	
+	
+
+<% }
+
+
+if(activities) {
+
+_.each(activities, function(period, index){
+%>
+<div class="period <%-index%>">
+	<div class="title">
+		<%=e(index)%>
+	</div>
+</div>
+<%
+_.each(period, function(activity){
+if(activity.txType === 1) { %>
+<div class="comment">
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+
+	</div>
+	<div class="description">
+		<div class="head"> <%=e('sentmoney')%> <% if(activity.account) { %> <strong><%-activity.account.n%></strong> <%
+			} else { %>
+				<strong><%-activity?.account?.n%></strong>
+			<% } %>
+		</div>
+		<% if(activity.val) { %>
+		<div class="message"></div>
+		<% } %>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+</div>
+<%}
+//	Comment
+if(activity.txType === 204)
+{ %>
+<div class="comment interactive" tid="<%-activity.hash%>">
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+	</div>
+	<div class="description">
+		<div class="head"> <%=e( activity.type === "answer" ? 'ranswer' : 'commented')%>
+			<a href="<%-activity?.relatedContent?.account?.n%>">
+				<strong><%-activity?.relatedContent?.account.n%></strong>
+			</a>
+		</div>
+		<% if(activity.description) { %>
+		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<% } %>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+	<% if(activity.value) {%>
+	<div class="donateSum">
+		<i class="fas fa-plus-circle"></i> <%=activity.value / 100000000 %> PKOIN
+	</div>
+	<% }%>
+</div>
+<%}
+//	Comment score
+if(activity.txType === 301) { %>
+<div class="comment interactive" tid="<%-activity.hash%>">
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+	</div>
+	<div class="description">
+		<div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%>
+			<a href="<%-activity?.relatedContent?.account?.n%>">
+				<strong><%-activity?.relatedContent?.account.n%></strong>
+			</a>
+		</div>
+		<% if(activity.description) { %>
+		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<% } %>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+	<div class="icon">
+		<% if(activity.val === 1) { %>
+		<i class="fas fa-thumbs-up"></i>
+		<% } %>
+		<% if(activity.val === -1) { %>
+		<i class="fas fa-thumbs-down"></i>
+		<% } %>
+	</div>
+</div>
+<%}
+//	Subscribe
+if(activity.txType === 302 || activity.txType === 304) { %>
+<div class="comment">
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+	</div>
+	<div class="description">
+		<div class="head"><%=e(activity.txType === 302 ? 'a_subscribe' : 'a_unsubscribe')%>
+			<a href="<%-activity?.relatedContent?.account?.n%>">
+				<strong><%-activity?.relatedContent?.account.n%></strong>
+			</a>
+		</div>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+</div>
+<%}
+//	Blocking
+if(activity.txType === 305 || activity.txType === 306) {
+if(activity.multipleAddresses) {
+%>
+<div class="comment <%=activity.multipleAddresses ? 'blocking' : ''%>" id="<%=activity.hash%>" tid="<%-activity.hash%>">
+	<div class="avatar multy">
+		<%
+			_.each(Object.values(activity.multipleAddresses).slice(0,4), function(e) {
+			if(e.a){
+		%>
+			<img src="<%-e.a%>" alt="">
+		<%} else { %>
+		<div class="">
+			<%-e.n[0].toUpperCase()%>
+		</div>
+		<% }}) %>
+	</div>
+	<div class="description">
+		<div class="head"><%-e('a_block', Object.keys(activity.multipleAddresses).length)%>
+		</div>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+</div>
+<%
+} else {
+%>
+<div class="comment">
+	<div class="avatar">
+		<% showAvatar(activity) %>
+	</div>
+	<div class="description">
+		<div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%>
+			<a href="<%-activity?.account?.n%>">
+				<strong><%-activity?.account.n%></strong>
+			</a>
+		</div>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+</div>
+<%}}
+//	Boost
+if(activity.txType === 208)
+{
+%>
+<div class="comment interactive" tid="<%-activity.hash%>" >
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+
+	</div>
+	<div class="description">
+		<div class="head"> <%=e('a_boost')%>
+			<a href="<%-activity?.relatedContent?.account?.n%>">
+				<strong><%-activity?.relatedContent?.account.n%></strong>
+			</a>
+		</div>
+		<% if(activity.description) { %>
+		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<% } %>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+	<% if(activity.value) {%>
+	<div class="boostSum">
+		<i class="fas fa-bolt"></i> <%=activity.value / 100000000 %> PKOIN
+	</div>
+	<% }%>
+</div>
+<%}
+//	Content Score
+if(activity.txType === 300) {
+%>
+<div class="comment interactive" tid="<%-activity.hash%>">
+	<div class="avatar">
+		<% showAvatar(activity?.relatedContent) %>
+	</div>
+	<div class="description">
+		<div class="head"><%=e('contentscore')%>
+			<a href="<%-activity?.relatedContent?.account?.n%>">
+				<strong><%-activity?.relatedContent?.account.n%></strong>
+			</a>
+		</div>
+		<% if(activity.description) { %>
+		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<% } %>
+		<div class="stars">
+			<%
+			for(i = 0; i < activity.val; i++){
+			%>
+			<i class="fas fa-star"></i>
+			<%}%>
+		</div>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+</div>
+<%}%>
+<%
+})})
+%>
+<%
+}
+if( Object.keys(activities).length === 0 && !loading) {
+%>
+<div class="empty"><%=e('a_empty')%></div>
+<%
+}
+%>
+
+

@@ -1,4 +1,4 @@
-if(typeof loclib == "undefined" || !loclib)
+﻿if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.ru = {};
@@ -89,6 +89,31 @@ _l.chooseThemes = "Выберите темы, которые Вам интере
 _l.bloggers = "Блогеры";
 _l.chooseBloggers = "Подпишитесь на популярных блоггеров";
 _l.showmorebloggers = "Показать больше блогеров";
+
+//Activities
+
+_l.ractivities = "Моя активность";
+_l.rall = "Все";
+_l.rinteractions = "Взаимодействия";
+_l.rblocking = "Блокировки";
+_l.rblockinglist = "Список заблокированных пользователей";
+_l.rcomment = "Комментарии";
+_l.rsubscriber = "Подписки";
+_l.contentscore = "Вы оставили оценку публикации";
+_l.commentscorelike = "Вам нравится комментарий";
+_l.commentscoredislike = "Вам не нравится комментарий	";
+_l.commented= "Вы прокомментировали публикацию";
+_l.ranswer= "Вы ответили на комментарий";
+_l.sentmoney= "Вы перевели средства";
+_l.a_unsubscribe= "Вы отписались от";
+_l.a_subscribe= "Вы подписались на";
+_l.a_boost= "Вы подняли публикацию ";
+_l.a_block = function(c){
+	return c ? `Вы заблокировали ${c} пользователей` : `Вы заблокировали`
+};
+_l.a_unblock= "Вы разблокировали";
+_l.a_empty = "Нет статистики за последние 3 месяца";
+
 //user page
 
 _l.rstate = "Репутация";
@@ -105,18 +130,12 @@ _l.signout = "Выйти";
 
 //send
 
-
-
-//send
-
 _l.postlabel = "Пожертвование связанное с публикацией";
 _l.donationlabel = "Пожертвование";
 _l.donationwel = "Если вы хотите отблагодарить автора публикации вы можете воспользоваться транзакцией "+appname+"";
 _l.donationwela = "Отправлено с помощью "+appname+"";
 _l.donationwelan = "Также можно использовать другие криптовалютные системы";
 _l.successfullycopiedaddress = "Адрес был успешно скопирован";
-
-
 
 //wallet
 
@@ -273,6 +292,13 @@ _l.aynofollowing = "Вы еще ни на кого не подписаны";
 _l.blockedusers = "Заблокированные";
 _l.anoblocked = "Этот пользователь еще никого не заблокировал";
 _l.aynoblocked = "Вы еще никого не заблокировали";
+
+
+_l.all= "Все";
+_l.ratings= "Все";
+_l.all= "Все";
+_l.all= "Все";
+
 
 //lenta
 _l.lloadmore = "Загрузить больше публикаций!";
@@ -2248,4 +2274,7 @@ _l.daccept = "Принять и продолжить";
 
 _l.sendToChat = "Отправить сообщение в чат";
 _l.createPost = "Создать и опубликовать пост";
+
+
+
 

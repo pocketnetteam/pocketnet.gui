@@ -412,15 +412,6 @@ var comments = (function(){
 						}
 					})
 				}
-				/*else{
-					self.nav.api.load({
-						open : true,
-						href : 'author?address=' + address,
-						history : true
-					})
-				}*/
-
-				
 			},
 			lightarea : function(id, c){
 

@@ -93,6 +93,32 @@ _l.chooseThemes = "Choose interesting themes";
 _l.bloggers = "Bloggers";
 _l.chooseBloggers = "Follow Popular Bloggers";
 _l.showmorebloggers = "Show more bloggers";
+
+
+//Activities
+
+//Activities
+
+_l.ractivities = "My activity";
+_l.rall = "All";
+_l.rinteractions = "Interactions";
+_l.rblocking = "Blocking";
+_l.rblockinglist = "List of blocked users";
+_l.rcomment = "Comments";
+_l.rsubscriber = "Subscriptions";
+_l.contentscore = "You have left a rating of the publication";
+_l.commentscorelike = "You liked the comment.";
+_l.commentscoredislike = "You don't like the comment";
+_l.commented = "You commented on the publication";
+_l.ranswer= "You have responded to the comment";
+_l.sentmoney = "You transferred funds to";
+_l.a_unsubscribe = "You have unsubscribed from";
+_l.a_subscribe = "You have subscribed to";
+_l.a_block = function(c){
+    return c ? `You have blocked ${c} users` : `You have blocked`
+};
+_l.a_unblock= "You have unblocked";
+_l.a_empty = "No statistics for the last 3 months";
 //user page
 
 

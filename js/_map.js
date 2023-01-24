@@ -1040,6 +1040,14 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 	},
+
+	activities : {
+		uri : "activities",
+		href : "activities",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	ustate : {
 		uri : "ustate",
 		href : "ustate",

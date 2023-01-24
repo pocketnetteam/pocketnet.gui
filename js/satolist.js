@@ -25565,6 +25565,7 @@ Platform = function (app, listofnodes) {
             },
 
             comment: function (comment, share) {
+
                 var t = comment.renders.previewEmojidis();
 
 
