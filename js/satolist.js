@@ -512,6 +512,7 @@ Platform = function (app, listofnodes) {
             return true
         }
     }
+    
 
     self.values = {
         alph: [
@@ -30087,6 +30088,10 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
+                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
+                            
+                            
+
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -30099,6 +30104,7 @@ Platform = function (app, listofnodes) {
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
+                                    massmailingenabled="` + massmailingenabled +`"
                                 >
                                 </matrix-element>
                             </div>`
