@@ -7239,7 +7239,7 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : "Apple App",
-                                    q : "Est-ce que Bastyon peut être ajouté à Apple?",
+                                    q : "Est-ce que Bastyon peubastyonCalls.min.jst être ajouté à Apple?",
                                     a : "<div>Apple a décidé de ne pas autoriser Bastyon en raison du manque d`opportunités de censure centralisée par Apple, nous le portons comme un insigne d`honneur. </div>",
                                 },
                                 {
@@ -30118,6 +30118,7 @@ Platform = function (app, listofnodes) {
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
+                                    iscallsenabled="true"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
@@ -31194,6 +31195,29 @@ Platform = function (app, listofnodes) {
 
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
+
+	  self.getCallsOptions = function(){
+		return {
+			el : $("#bastyonCalls").first()[0],
+			parameters : {
+				getUserInfo: async (address) => {
+					let res = new Promise((resolve, reject) => {
+						address = hexDecode(address.split(':')[0].replace('@',''))
+						this.sdk.users.getone(address, () => {
+							console.log('stor',this.sdk.users.storage)
+							resolve(this.sdk.users.storage[address])
+						})
+					})
+
+					return res
+				},
+				getWithLocale: (key) => {
+					return  self.app.localization.e(key)
+				}
+			}
+
+		}
+	  }
 
     return self;
 
