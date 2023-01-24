@@ -10,30 +10,6 @@ var menu = (function(){
 			authorForSearch = null,
 			menusearch = null;
 
-		/*var loc = new Parameter({
-		var logotime = 180000, changeLogoInterval = null
-
-		var loc = new Parameter({
-
-			type : "VALUES",
-			name : "Localization",
-			id : 'localization',
-			defaultValue : app.localization.current().name,
-			possibleValues : app.localization.availableMap('name'),
-			format : {
-				right : true
-			},
-
-			_onChange : function(value){
-				var a = app.localization.findByName(value);
-
-				if (a && a.key != app.localization.key)
-				{
-					app.localization.set(a.key);
-				}
-			}
-
-		})*/
 
 		var updateNew = function(){
 
@@ -1163,10 +1139,6 @@ var menu = (function(){
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
-				if (changeLogoInterval){
-					clearInterval(changeLogoInterval)
-					changeLogoInterval = null
-				}
 
 				_.each(events, function(e){
 
