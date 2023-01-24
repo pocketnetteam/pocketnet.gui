@@ -3,7 +3,13 @@ const DEFAULT_CONTENT_TYPE = 'text/plain';
 const SENDING_INTERVAL = 30000;
 
 class FrontendLogger {
-  constructor(userAgent = '', userData = '', uri = '', timezone = '', app = {}) {
+  constructor(
+    userAgent = '',
+    userData = '',
+    uri = '',
+    timezone = '',
+    app = {},
+  ) {
     this.userAgent = userAgent;
     this.userData = userData;
     this.uri = uri;
@@ -76,9 +82,9 @@ class FrontendLogger {
       description: 'One of the best videos selected',
     },
 
-    USER_COMPLAIN : {
+    USER_COMPLAIN: {
       id: 'USER_COMPLAIN',
-      description: 'user send complain'
+      description: 'user send complain',
     },
 
     SESSION_STARTED: {
@@ -143,9 +149,9 @@ class FrontendLogger {
     err = '',
     guid = '',
     userAgent = '',
-    userData = '',
-    uri = '',
-    timezone = ''
+    // userData = '',
+    // uri = '',
+    // timezone = '',
   }) {
     const parametersOrder = [
       level,
@@ -173,9 +179,9 @@ class FrontendLogger {
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '0.0.1',
     userAgent = '',
-    userData = '',
-    uri = '',
-    timezone = '',
+    // userData = '',
+    // uri = '',
+    // timezone = '',
     guid = '',
     language = 'no',
   }) {
@@ -186,9 +192,9 @@ class FrontendLogger {
       date,
       moduleVersion,
       userAgent,
-      userData,
-      uri,
-      timezone,
+      // userData,
+      // uri,
+      // timezone,
       guid,
       language,
     ].map((element) =>
@@ -225,7 +231,15 @@ class FrontendLogger {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
 
-    const formattedError = { ...error, guid, userAgent, userData, uri, timezone, payload: errorBody };
+    const formattedError = {
+      ...error,
+      guid,
+      userAgent,
+      // userData,
+      // uri,
+      // timezone,
+      payload: errorBody,
+    };
 
     if (error.level) formattedError.level = error.level;
 
@@ -238,7 +252,6 @@ class FrontendLogger {
     } else {
       _addLogWithAggregation.default(formattedError, _errorsCache);
     }
-
   }
 
   _addLogWithAggregation = {
@@ -364,18 +377,16 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
-      userData,
-      uri,
-      timezone,
+      // userData,
+      // uri,
+      // timezone,
       language,
     };
-
 
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);
     } else {
       _addLogWithAggregation.default(info, _logsCache);
     }
-
   }
 }
