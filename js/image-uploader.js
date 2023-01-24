@@ -83,7 +83,7 @@ ImageUploader = function(app) {
             if (p.up1){
                 p.success = function(data){
 
-                    var url = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident')
+                    var url = 'https://bastyon.com:8092/i/' + deep(data, 'data.ident')
 
                     resolve(url)
                 }

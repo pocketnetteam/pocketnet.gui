@@ -477,6 +477,7 @@ _l.follow = "Follow"
 _l.blocked = "Blocked"
 _l.e13021 = "Show more"
 
+_l.block = "Block"
 _l.blockuser = "Block User"
 _l.unblockuser = "Unblock User"
 _l.e13022 = "Do you really want to unfollow user?"
@@ -502,6 +503,7 @@ _l.autoplayVideo = "Autoplay Video"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
+_l.blockUserQ = "Do you really want to block user?"
 _l.e13023 = "Do you really want to unblock user?"
 _l.e13024 = "Your Private Login Key"
 _l.e13025 = "Create a new account"
@@ -2406,7 +2408,11 @@ _l.boost_c40 = 'Deposit the required amount of PKOIN to start advertising'
 _l.boost_c41 = 'Click the lightning bolt icon in the lower right corner of the selected post:'
 _l.boost_c42 = 'Enter PKOIN in the "Amount" field and click "Send":'
 _l.boost_c43 = 'Congratulations! You have launched an advertisement on Bastyon!'
-_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+_l.boost_c44 = 'Learn more about ads on Bastyon'
+_l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on Bastyon.';
+
+_l.reach = 'Reach'
+_l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
 
 
 _l.gotopage = 'Go to page'

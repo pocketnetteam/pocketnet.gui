@@ -512,6 +512,7 @@ Platform = function (app, listofnodes) {
             return true
         }
     }
+    
 
     self.values = {
         alph: [
@@ -3161,7 +3162,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk, address) {
+        showCommentBanner : function(contextElem, clbk, address, block) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
                 return 
@@ -3179,12 +3180,16 @@ Platform = function (app, listofnodes) {
                     value: true,
                 });
 
+                const bannerComment = contextElem.find('.bannerComment');
+
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
-                    el: contextElem.find('.bannerComment'),
+                    el: bannerComment,
                     essenseData: {
-                        address: address
+                        address: address,
+                        block: block
                     },
 
                     clbk : function(e, p){
@@ -3232,6 +3237,22 @@ Platform = function (app, listofnodes) {
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
 
+            if (block){
+                
+                            
+                try{
+                    const blockBanner =  JSON.parse(localStorage.blockBanner || '[]');
+                    if (blockBanner.indexOf(address) === -1){
+                        createComponent(address);
+                    }
+
+                }catch(e){
+                    
+                }
+
+                return;
+
+            }
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
@@ -29274,7 +29295,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -29289,9 +29310,13 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (c.storage) {
-                c.storage = {}
+            if(id != 'tags'){
+                if (c.storage) {
+                    c.storage = {}
+                }
             }
+
+           
 
         })
 
@@ -29302,6 +29327,8 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
+
+
 
         /*self.sdk.node.shares.storage = {
             trx: {}
@@ -29339,7 +29366,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.clearlocal = function(){
-        self.sdk.tags.storage.cloud = null
+        self.sdk.tags.storage.cloud = {}
 
         self.sdk.newmaterials.clear()
     }
@@ -29750,7 +29777,7 @@ Platform = function (app, listofnodes) {
 
     self.acceptterms = function(clbk){
 
-        if(window.cordova){
+        if(window.cordova && window.pocketnetstore){
             var key = 'acceptterms'
 
             var aterms = null
@@ -30081,6 +30108,10 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
+                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
+                            
+                            
+
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -30094,6 +30125,7 @@ Platform = function (app, listofnodes) {
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
+                                    massmailingenabled="` + massmailingenabled +`"
                                 >
                                 </matrix-element>
                             </div>`

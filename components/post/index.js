@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment;
 
 		var progressInterval;
 
@@ -685,6 +685,14 @@ var post = (function () {
 						})
 					}, 300)
 					
+				}
+
+				if (value === "1"){
+
+					self.app.platform.ui.showCommentBanner(el.c, (c) => {
+						bannerComment = c
+					}, share.address, true);
+
 				}
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){

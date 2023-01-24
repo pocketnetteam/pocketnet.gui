@@ -188,12 +188,9 @@ var Control = function(settings, proxy) {
                     'staticrpcport=38082' + EOL +
                     'restrpcport=38083' + EOL +
                     'wsport=8087' + EOL +
-                    'rpcallowip=127.0.0.1' + EOL +
-                    'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
                     'rpcpassword=' + f.randomString(256) + EOL +
                     'api=1' + EOL +
-                    'wsuse=1' + EOL +
                     'rest=0' + EOL
     
                 fs.writeFileSync(node.confPath, data)

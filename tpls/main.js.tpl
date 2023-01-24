@@ -115,6 +115,7 @@ if (is.macOS()) {
 }
 
 var protocols = ['pocketnet', 'bastyon']
+var currenturl = ''
 
 function showHideWindow(show) {
 
@@ -430,9 +431,14 @@ function createWindow() {
     var refresh = function(){
         win.reload()
 
-        win.loadFile('index_el.html', {
-            search : 'path=' + hexEncode(currenturl)
-        }).then(r => {
+        var ps = {}
+
+        if (currenturl){
+            ps.search = 'path=' + hexEncode(currenturl)
+        }
+
+
+        win.loadFile('index_el.html', ps).then(r => {
             win.webContents.clearHistory()
         })
 
