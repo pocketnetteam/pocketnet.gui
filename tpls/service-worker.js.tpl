@@ -3,39 +3,13 @@ importScripts('./js/broadcaster.js');
 
 const swBroadcaster = new Broadcaster('ServiceWorker');
 
-let _isElectron = null;
-
-const isElectron = async () => {
-  if (typeof _isElectron === 'boolean') {
-    return Promise.resolve(_isElectron);
-  }
-
-  const electronCheckInterval = setInterval(() => {
-    console.log('Service-Worker: Is it Electron?');
-
-    swBroadcaster.send('is-electron-request');
-  }, 500);
-
-  return new Promise((resolve, reject) => {
-    swBroadcaster.once('is-electron-confirm', () => {
-      console.log('Service-Worker: Yes, it is Electron');
-
-      nodeFetch = FetchReceiver.init('ExtendedFetch');
-      _isElectron = true;
-
-      resolve(true);
-    });
-
-    setTimeout(() => {
-      clearInterval(electronCheckInterval);
-      _isElectron = false;
-
-      resolve(false);
-    }, 5000);
-  });
-};
+const isElectron = new URL(location).searchParams.get('platform');
 
 let nodeFetch = (...args) => fetch(...args);
+
+if (isElectron) {
+  nodeFetch = FetchReceiver.init('ExtendedFetch');
+}
 
 function onFetch(event) {
   const { request } = event;
@@ -103,7 +77,7 @@ function onFetch(event) {
       }
     }
 
-    if (await isElectron()) {
+    if (isElectron) {
       console.log('Try to get TOR answer for', request.url);
       const torResponse = await torAnswer();
       if (torResponse) {
@@ -159,6 +133,7 @@ async function onInstall(event) {
 
 async function onActivate(event) {
   console.log('Service Worker was successfully activated');
+  self.clients.claim();
 }
 
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));

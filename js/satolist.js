@@ -12,10 +12,6 @@ if (typeof _Electron != 'undefined') {
         return electron.ipcRenderer.invoke('AltTransportActive', url);
     });
 
-    swBroadcaster.once('is-electron-request', () => {
-        swBroadcaster.send('is-electron-confirm');
-    });
-
     fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
 
     proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);

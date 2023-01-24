@@ -1,8 +1,16 @@
+let platform = 'web';
+
 if(typeof _Electron != 'undefined'){
     electron = require('electron');
+    platform = 'electron';
 }
+
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
+    const swArgs = new URLSearchParams({
+        platform,
+    }).toString();
+
+    navigator.serviceWorker.register(`./service-worker.js?${swArgs}`).then(function (registration) {
         console.log('Service worker registration succeeded:', registration);
     });
 
