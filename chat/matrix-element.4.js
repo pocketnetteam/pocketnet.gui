@@ -1396,6 +1396,14 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
         if (this.chat) {
           this.$store.commit("SET_CURRENT_ROOM", this.chat.roomId);
         } else this.$store.commit("SET_CURRENT_ROOM", false);
+
+        if (this.chat && this.chat.roomId) {
+          let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
+
+          if (pushRules !== null) {
+            this.roomMuted = true;
+          }
+        }
       }
     }
   },
@@ -1412,9 +1420,9 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     shareRoomLink: function () {
       return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`;
       /*if(this.chat.info.title === '@New Room'){
-           return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`
-         }
-         return `https://bastyon.com/welcome?publicroom=${this.chat.info.title.replace(/ /g, '_')}`*/
+      return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`
+      }
+      return `https://bastyon.com/welcome?publicroom=${this.chat.info.title.replace(/ /g, '_')}`*/
     },
     me: function () {
       return _.find(this.membersList, m => {
