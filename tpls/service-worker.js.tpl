@@ -16,7 +16,12 @@ if (isElectron) {
 function onFetch(event) {
   const { request } = event;
 
-  if (request.url.startsWith('file://')) {
+  const isHttps = request.url.startsWith('https://');
+  const isHttp = request.url.startsWith('http://');
+
+  const isProtocolSupported = (isHttps || isHttp);
+
+  if (!isProtocolSupported) {
     return;
   }
 
@@ -139,5 +144,5 @@ async function onActivate(event) {
 }
 
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
-self.addEventListener('install', event => event.waitUntil(onInstall(event)));
+self.addEventListener('install', event => onInstall(event));
 self.addEventListener('fetch', event => onFetch(event));

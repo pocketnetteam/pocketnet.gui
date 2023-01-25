@@ -7,8 +7,24 @@ if(typeof _Electron != 'undefined'){
 
 if ('serviceWorker' in navigator) {
     const swArgs = new URLSearchParams({
+        appVersion: `${packageversion}-${versionsuffix}`,
         platform,
     }).toString();
+
+    navigator.serviceWorker.getRegistration().then((registration) => {
+        if (!registration) {
+            return;
+        }
+
+        registration.addEventListener('updatefound', async() => {
+            console.log('Service Worker update detected!');
+
+            const cacheNames = await caches.keys();
+            cacheNames.forEach((cacheName) => (
+                caches.delete(cacheName)
+            ));
+        });
+    });
 
     navigator.serviceWorker.register(`./service-worker.js?${swArgs}`).then(function (registration) {
         console.log('Service worker registration succeeded:', registration);
