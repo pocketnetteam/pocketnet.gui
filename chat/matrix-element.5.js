@@ -1353,8 +1353,8 @@ var contacts = __webpack_require__("71da");
     bcCall: function () {
       if (!this.checkCallsEnabled()) {
         this.$dialog.confirm(this.$t("caption.request"), {
-          okText: "Yes",
-          cancelText: "No, cancel"
+          okText: this.$t("yes"),
+          cancelText: this.$t("cancel")
         }).then(() => {
           this.core.mtrx.client.sendStateEvent(this.chat.roomId, "m.room.callsEnabled", {
             enabled: true
