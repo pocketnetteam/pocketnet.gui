@@ -1229,7 +1229,7 @@ _l.pleaseTryAgain = "Something was wrong there. Please try again"
 
 _l.pbp_1 = "Bastyon Bonus Program"
 _l.pbp_2 = "Criteria for bonus for original content:"
-_l.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
+_l.pbp_3 = "Every 15k views + 1250 five star ratings from unique users  + 1500 referral users"
 _l.pbp_4 = "PKOIN Equivalent:"
 _l.pbp_5 = "1,000 USDT"
 _l.pbp_6 = "How You Speed Up Your Bonus?"
