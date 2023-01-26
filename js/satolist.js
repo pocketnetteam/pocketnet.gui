@@ -283,6 +283,8 @@ Platform = function (app, listofnodes) {
         'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
+        'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
+        'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true
     }
 
     self.bch = {
@@ -29721,7 +29723,11 @@ Platform = function (app, listofnodes) {
         return new Promise((resolve, reject) => {
             if (self.app.options.peertubeServer)
                 return resolve();
+
+            console.log("PeerTubePocketnet", PeerTubePocketnet)
+
             if (typeof PeerTubePocketnet != 'undefined'){
+                
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
                 // Fetch the peertube servers
                 self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {

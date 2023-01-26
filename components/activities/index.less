@@ -34,38 +34,37 @@ html[theme="black"]{
     min-height: 70vh;
     border-radius: 6px;
     background: rgb(var(--background-main));
-    padding: 1em 4em 2em;
+    padding: 0em 4em 2em;
     margin-bottom: 2em;
 
-    .title {
+    .subcaption {
       display: block;
-      margin-top: 25px;
-      margin-bottom: 45px;
-      font-size: 36px;
-      line-height: 36px;
-      font-weight: 300;
+      padding-top: 2 * @rhythm;
+      margin-bottom: 2 * @rhythm;
+      font-size: 2em;
+      font-weight: 100;
     }
 
     .filters {
       display: flex;
-      margin: 0 -4em;
-      padding: 0 4em 12px;
+      margin: 0 0;
+      padding: 0 0 2 * @rhythm;
       border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
-
-      //scroll-snap-type: x mandatory;
+      touch-action: manipulation;
       overflow-x: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
+      flex-wrap: nowrap;
 
       &::-webkit-scrollbar {
-        display: none !important; /*chrome*/
+        display: none !important;
       }
 
       .tab {
-        font-weight: 400;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 1em;
         line-height: 20px;
         margin-right: 24px;
         transition: all .3s ease;
@@ -109,20 +108,19 @@ html[theme="black"]{
       .title {
         padding-left: 1em;
         margin: 0;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 20px;
+        font-size: 1.2em;
+        font-weight: 700;
       }
     }
     .comment {
-      padding: 12px;
-      margin-bottom: 2px;
+      padding: @rhythm;
+      margin-bottom: 0.25 * @rhythm;
       border-bottom: 1px solid rgb(var(--neutral-grad-1));
       display: flex;
       flex-wrap: nowrap;
       background: transparent;
       transition: .3s ease all;
-      
+      align-items: flex-start;
       cursor: pointer;
 
       @media (pointer: fine) {
@@ -134,15 +132,12 @@ html[theme="black"]{
       }
 
       .description {
-        font-size: 14px;
-        line-height: 14px;
+        font-size: 0.9em;
         display: flex;
         flex-direction: column;
-        .head {
-          line-height: 20px;
-        }
+        
         & div:not(:first-child) {
-          margin-top: 8px;
+          margin-top: @rhythm;
         }
 
 
@@ -154,6 +149,7 @@ html[theme="black"]{
         flex-grow: 1;
         padding-left: @rhythm;
         padding-right: @rhythm;
+        padding-top: @rhythm;
         i {
 
           &.fa-thumbs-up {
@@ -170,11 +166,6 @@ html[theme="black"]{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 16px;
-        width: 48px;
-        min-width: 48px;
-        line-height: 3em;
-        font-size: 1em;
         position: relative;
 
         transition: .3s all ease;
@@ -245,8 +236,6 @@ html[theme="black"]{
       .message {
         text-overflow: ellipsis;
         overflow: hidden;
-        height: 14px;
-        white-space: nowrap;
         max-width: 90%;
         color: rgb(var(--neutral-grad-3));
       }
@@ -282,8 +271,8 @@ html[theme="black"]{
 
     .filters {
       display: flex;
-      margin: 0 -2em;
-      padding: 0 2em 12px;
+      margin: 0 0;
+      padding: 0 0 12px;
       border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
       overflow: auto;
 
@@ -318,24 +307,21 @@ html[theme="black"]{
     }
 
     .comment {
-      padding-bottom: 16px;
+      padding-bottom: @rhythm;
       padding-left: 0;
       padding-right: 0;
-      margin-bottom: 16px;
       border-bottom: 1px solid rgb(var(--neutral-grad-1));
       border-radius: 0;
       display: flex;
       flex-wrap: nowrap;
 
       .description {
-        width: 100%;
-        font-size: 14px;
-        line-height: 14px;
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
 
         & div:not(:first-child) {
-          margin-top: 8px;
+          margin-top: @rhythm;
         }
       }
 
@@ -343,7 +329,7 @@ html[theme="black"]{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 16px;
+        margin-right: 2 * @rhythm;
         background: rgb(var(--neutral-grad-0));
         color: rgb(var(--color-txt-gray-dark));
         box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
