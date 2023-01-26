@@ -31314,15 +31314,23 @@ Platform = function (app, listofnodes) {
 					return  self.app.localization.e(key)
 				},
 				onError:(err) => {
+                    console.error(err)
 
+                    //add to logger
 				},
 				onInitCall:(call) => {
 
 				},
 				onEnded:(call) => {
-
+                    self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+
+                    if (self.app.playingvideo){
+                        self.app.playingvideo.pause()
+                    }
+
+                    self.app.mobile.unsleep(true)
 
 				}
 			}

@@ -7,11 +7,11 @@ if(!_Node)
 
 	var _listofproxies =  [
 
-		{
+		/*{
 			host : '127.0.0.1',
 			port : 8887,
 			wss : 8087
-		},
+		},*/
 			
 		/*{
 			host : 'pocketnet.app',
