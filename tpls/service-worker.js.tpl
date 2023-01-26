@@ -36,7 +36,7 @@ function onFetch(event) {
     const isOpaque = (response.type === 'opaque');
     const isBodyEmpty = (responseBuffer.length === 0);
 
-    if (isOpaque && isBodyEmpty) {
+    if (isOpaque || isBodyEmpty) {
       return;
     }
 
