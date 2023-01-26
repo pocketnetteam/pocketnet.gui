@@ -283,6 +283,8 @@ Platform = function (app, listofnodes) {
         'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
+        'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
+        'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true
     }
 
     self.bch = {
@@ -24969,6 +24971,12 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
+
+            if(!using && !usingWeb) return
+            if(!currenttoken) return
+
+            console.log('current', current)
+
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -29721,7 +29729,11 @@ Platform = function (app, listofnodes) {
         return new Promise((resolve, reject) => {
             if (self.app.options.peertubeServer)
                 return resolve();
+
+            console.log("PeerTubePocketnet", PeerTubePocketnet)
+
             if (typeof PeerTubePocketnet != 'undefined'){
+                
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
                 // Fetch the peertube servers
                 self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
@@ -30768,9 +30780,9 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
-            setTimeout(function(){
+            //setTimeout(function(){
 
-                if (self.focus) return
+                //if (self.focus) return
 
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
@@ -30779,7 +30791,10 @@ Platform = function (app, listofnodes) {
 
                 }
 
-            }, 200)
+
+                ///// TODO CALLs
+
+            //}, 200)
 
 
             //if (self.app.playingvideo)
@@ -31306,6 +31321,26 @@ Platform = function (app, listofnodes) {
 				},
 				getWithLocale: (key) => {
 					return  self.app.localization.e(key)
+				},
+				onError:(err) => {
+                    console.error(err)
+
+                    //add to logger
+				},
+				onInitCall:(call) => {
+
+				},
+				onEnded:(call) => {
+                    self.app.mobile.unsleep(false)
+				},
+				onConnected:(call)=> {
+
+                    if (self.app.playingvideo){
+                        self.app.playingvideo.pause()
+                    }
+
+                    self.app.mobile.unsleep(true)
+
 				}
 			}
 
