@@ -181,10 +181,6 @@ if(share){
 
 		if(!my && me){
 
-			if(true){
-				m.push('complain')
-			}
-
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
 			}
@@ -206,6 +202,11 @@ if(share){
 					m.push('unsubscribe')
 				}
 			}
+
+			if(true){
+				m.unshift('complain')
+			}
+
 
 			m.unshift('block')
 
