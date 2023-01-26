@@ -2481,6 +2481,9 @@ _l.earnings = "Total earnings";
 
 
 
+_l.endedCall = "Call ended",
+_l.incomingCall = "Incoming call"
+
 _l.authHeading = "Auth";
 
 _l.terms = 'Terms and Conditions for Bastyon';
