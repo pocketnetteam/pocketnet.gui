@@ -1411,15 +1411,12 @@ var contacts = __webpack_require__("71da");
       }
 
       let local = document.querySelector("body");
-
-      try {
-        let matrixCall = this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local);
-        console.log(matrixCall);
+      this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local).then(matrixCall => {
+        console.log('matrixCall', matrixCall);
         if (matrixCall) this.$store.dispatch("CALL", matrixCall);
-      } catch (e) {
-        console.log("ошибка при создании звонка", e);
-        return;
-      }
+      }).catch(e => {
+        console.log("error", e);
+      });
     },
 
     requestCallsAccess() {
