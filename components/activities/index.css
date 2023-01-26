@@ -224,6 +224,17 @@ html[theme="black"]{
   max-width: 90%;
   color: rgb(var(--neutral-grad-3));
 }
+#activities .container .comment .images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+#activities .container .comment .images img {
+  max-width: 35px;
+  max-height: 35px;
+  background: rgb(var(--neutral-grad-1));
+  border-radius: 5px;
+}
 #activities .container .comment .date {
   color: rgb(var(--neutral-grad-2));
 }
