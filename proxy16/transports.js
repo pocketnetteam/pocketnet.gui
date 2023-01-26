@@ -111,7 +111,23 @@ module.exports = function (isTorEnabled = false) {
         const isAccessOk = (self.accessRecords[hostname].accessOk === true);
         const isNextTryTime = (self.accessRecords[hostname].nextTry <= Date.now());
 
-        return isAccessOk || isNextTryTime;
+        if (isNextTryTime) {
+            const pingResult = await pingHost(hostname);
+
+            if (pingResult) {
+                self.accessRecords[hostname] = {
+                    accessOk: true,
+                    nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
+                };
+            } else {
+                self.accessRecords[hostname] = {
+                    accessOk: false,
+                    nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
+                };
+            }
+        }
+
+        return isAccessOk;
     }
 
     const pingHost = async function(host) {
