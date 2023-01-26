@@ -100,20 +100,20 @@ function onFetch(event) {
     }
 
     console.log('Try to get fetch answer for', request.url);
-    const fetchResponse = await fetch(request);
+    try {
+      const fetchResponse = await fetch(request);
 
-    if (fetchResponse) {
-      console.log('Using NORMAL fetch for', request.url);
-      resolve(fetchResponse.clone());
+      if (fetchResponse) {
+        console.log('Using NORMAL fetch for', request.url);
+        resolve(fetchResponse.clone());
 
-      if (cacheName) {
-        putCache(cache, fetchResponse);
+        if (cacheName) {
+          putCache(cache, fetchResponse);
+        }
       }
-
-      return;
+    } catch (err) {
+      reject(err);
     }
-
-    reject(Error('SERVICE_WORKER_NO_DATA'));
   });
 
   console.log('GOING WITH', request.url, request);
