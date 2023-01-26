@@ -24971,6 +24971,12 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
+
+            if(!using && !usingWeb) return
+            if(!currenttoken) return
+
+            console.log('current', current)
+
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -30774,9 +30780,9 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
-            setTimeout(function(){
+            //setTimeout(function(){
 
-                if (self.focus) return
+                //if (self.focus) return
 
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
@@ -30785,7 +30791,10 @@ Platform = function (app, listofnodes) {
 
                 }
 
-            }, 200)
+
+                ///// TODO CALLs
+
+            //}, 200)
 
 
             //if (self.app.playingvideo)
