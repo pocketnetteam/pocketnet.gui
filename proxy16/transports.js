@@ -190,6 +190,7 @@ module.exports = function (isTorEnabled = false) {
         }
 
         return _axios(preparedOpts)
+            .then(res => res)
             .catch(async (err) => {
                 if (preparedOpts.httpsAgent) {
                     throw err;
@@ -242,6 +243,7 @@ module.exports = function (isTorEnabled = false) {
 
         console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
         return fetch(url, opts)
+            .then(res => res)
             .catch(async (err) => {
                 if (opts.agent) {
                     throw err;
