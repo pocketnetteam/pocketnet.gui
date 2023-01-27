@@ -9,11 +9,11 @@ var fs = require('fs');
 class wsstransport extends Transport {
     constructor(opts) {
       super(opts);
-      
+
       this.logger = opts.logger
 
     }
-   
+
     log(info, callback) {
       setImmediate(() => {
         this.emit('logged', info);
@@ -21,7 +21,7 @@ class wsstransport extends Transport {
 
       if(this.logger.app)
          this.logger.app.wss.sendlogs(info)
-      
+
       callback();
     }
 };
@@ -38,7 +38,7 @@ var Logger = function(_loggers){
     var self = this
     var loggers = _loggers
     var level = 'info'
-    var writelogs = false
+    var writelogs = true
 
     self.app = null
 
@@ -70,9 +70,9 @@ var Logger = function(_loggers){
 
         if(writelogs){
             tr.push(
-                new winston.transports.File({ 
+                new winston.transports.File({
                     filename: f.path('logs/'+key+'.log'),
-                    maxsize: 5242880, 
+                    maxsize: 5242880,
                     maxFiles: 5,
                 })
             )
@@ -94,13 +94,13 @@ var Logger = function(_loggers){
     }
 
     self.prepare = function(){
-        
+
         if(global.WRITE_LOGS){
             try{
                 if(!fs.existsSync(f.path('logs'))){
                     fs.mkdirSync(f.path('logs'))
                 }
-    
+
                 writelogs = true
             }
             catch(e){
@@ -112,10 +112,10 @@ var Logger = function(_loggers){
         if (global.LOG_LEVEL) {
             self.setlevel(global.LOG_LEVEL);
         }
-        
+
     }
 
-   
+
 
     self.init = function(){
 
@@ -125,10 +125,10 @@ var Logger = function(_loggers){
 
         _.each(loggers, function(key){
 
-            var logger = winston.loggers.add(key, { 
+            var logger = winston.loggers.add(key, {
 
                 level : level,
-                
+
                 format: combine(
                     //winston.format.colorize(),
                     label({ label: key }),
@@ -136,7 +136,7 @@ var Logger = function(_loggers){
                     prettyPrint(),
                     myFormat
                 ),
-        
+
                 transports: transports(key),
             });
 
