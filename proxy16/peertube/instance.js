@@ -174,15 +174,16 @@ var instance = function (host, ip, Roy) {
 					method: method,
 				};
 
-				if (meta.code == 500) {
-					statistic.penalty.set(0.9, 30000, 500);
-                    Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
-				}
+			    Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
 
-				statistic.add(meta);
+			    if (meta.code == 500) {
+				    statistic.penalty.set(0.9, 30000, 500);
+			    }
 
-				throw (error || {}).response || {};
-			});
+			    statistic.add(meta);
+
+			    throw (error || {}).response || {};
+		    });
 	};
 
 	self.availability = function(){
