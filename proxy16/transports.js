@@ -167,7 +167,7 @@ module.exports = function (isTorEnabled = false) {
         }
 
         return synackPing().catch(() => {
-            self.logger.w('transports', 'error', `Host ${hostname} is not responding on SYN ping`);
+            self.logger.w('transports', 'error', `Host ${host} is not responding on SYN ping`);
             return false;
         });
     }
