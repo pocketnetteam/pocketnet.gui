@@ -77,6 +77,12 @@ ImageUploader = function(app) {
                 // Fetch Peertube server if needed
                 app.platform.preparePeertubeServer().finally(() => {
 
+                    if(!app.options.peertubeServer){
+                        reject()
+
+                        return
+                    }
+
                     var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
 
                     p.url = server.current
