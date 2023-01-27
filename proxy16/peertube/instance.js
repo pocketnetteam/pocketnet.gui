@@ -142,6 +142,8 @@ var instance = function (host, ip, Roy) {
 		if (typeof url == 'function') url = url(data);
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
+
+		Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
 		
 		return Roy.parent.transports.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 			var meta = {
@@ -160,18 +162,17 @@ var instance = function (host, ip, Roy) {
 
 		}).catch((error) => {
 
-			
-
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,
 				difference : performance.now() - responseTime,
 				method : method
 			}
 
+			Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
+
 
 			if (meta.code == 500) {
 				statistic.penalty.set(0.9, 30000, 500)
-				Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
 			}
 
 			statistic.add(meta);
