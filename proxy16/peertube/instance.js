@@ -176,6 +176,7 @@ var instance = function (host, ip, Roy) {
 
 				if (meta.code == 500) {
 					statistic.penalty.set(0.9, 30000, 500);
+                    Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
 				}
 
 				statistic.add(meta);

@@ -7101,6 +7101,7 @@
 			var mainDirection = null;
 
 			var statusf = function(e, phase, direction, distance){
+				
 
 				//if(phase == 'start' && !direction) return // ?
 
@@ -7133,6 +7134,7 @@
 
 
 				if(!direction || !p.directions[direction]) {
+					console.log("HERE???")
 					return true
 				}
 
@@ -7190,6 +7192,7 @@
 				}
 
 			}
+
 
 			p.el.swipe({
 				preventDefaultEvents : p.preventDefaultEvents,
