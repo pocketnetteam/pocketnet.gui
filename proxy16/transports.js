@@ -1,7 +1,8 @@
 'use strict';
 
 const _request = require("request");
-global.fetch = require("node-fetch");
+const nodeFetch = require("node-fetch");
+global.fetch = (...args) => nodeFetch(...args);
 const _axios = require("redaxios");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 
@@ -106,9 +107,9 @@ module.exports = function (isTorEnabled = false) {
                     fs.mkdirSync(torcontrol.settings.path, { recursive: true });
                 }
 
-                fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2));
+                fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
             } catch (err) {
-                console.log('Looks like stats file is busy. Will write data next time...');
+                console.log('STATS_BUSY??', err);
             }
         }
 
