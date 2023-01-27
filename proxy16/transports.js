@@ -231,17 +231,6 @@ module.exports = function (isTorEnabled = false) {
     self.axios.patch = (...args) => axiosRequest(...args);
 
     self.fetch = async (url, opts = {}) => {
-        let parentAbortControlSignal = opts?.signal;
-
-        function timeout(time) {
-            const abortControl = new AbortController();
-
-            parentAbortControlSignal?.addEventListener('abort', () => abortControl.abort());
-            setTimeout(() => abortControl.abort(), time * 1000);
-
-            return abortControl.signal;
-        }
-
         const urlParts = new URL(url);
         const isDirectRequest = await isDirectAccess(urlParts.hostname);
         const isTorStateStarted = await isTorStarted(false);
@@ -249,8 +238,6 @@ module.exports = function (isTorEnabled = false) {
         if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(opts, 'agent');
         }
-
-        opts.signal = timeout(30);
 
         console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
         return fetch(url, opts)
@@ -265,8 +252,6 @@ module.exports = function (isTorEnabled = false) {
                 const isTorStateStarted = await isTorStarted(false);
 
                 if (!isDirectRequest && isTorStateStarted) {
-                    opts.signal = timeout(40);
-
                     await initHttpsAgent(opts, 'agent');
 
                     return fetch(url, opts)
