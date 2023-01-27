@@ -25,7 +25,7 @@ var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
-var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube']).init()
+var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports']).init()
 
 var testnodes = [
 	{
@@ -171,7 +171,7 @@ var defaultSettings = {
 	admins : [],
 
 	testkeys : [],
-	
+
 	nodes : {
 		dbpath : 'data/nodes'
 	},
@@ -192,12 +192,12 @@ var defaultSettings = {
 			count  : 500,
 			blacklistcount : 3
 		},
-		
+
 		ports : {
 			https : 8899,
 			wss : 8099
 		},
-		
+
 		ssl : {
 			name : "Default",
 			key : 'cert/key.pem',
@@ -231,7 +231,7 @@ var defaultSettings = {
 		dataPath: '', //// deleted
 		ndataPath : ''
     },
-	
+
 	bots : {
 		dbpath : 'data/bots',
 	},
@@ -251,7 +251,7 @@ var defaultSettings = {
 		private : '',
 		public : ''
 	}*/
-	
+
 	slide : {
 		dbpath : 'data/slide',
 	},
@@ -359,7 +359,7 @@ var state = {
                 }
             });
         })
-		
+
 	},
 
 	rewrite : function(){
@@ -395,7 +395,7 @@ var state = {
 		})
 	},
 	prepare : function(){
-	
+
 		try{
 			if(!fs.existsSync(f.path('data'))){
 				fs.mkdirSync(f.path('data'))
@@ -403,9 +403,9 @@ var state = {
 		}
 		catch(e){
 		}
-		
-		
-			
+
+
+
 	}
 }
 

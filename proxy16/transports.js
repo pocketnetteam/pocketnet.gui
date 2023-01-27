@@ -166,7 +166,10 @@ module.exports = function (isTorEnabled = false) {
             });
         }
 
-        return synackPing().catch(() => false);
+        return synackPing().catch(() => {
+            self.logger.w('transports', 'error', `Host ${hostname} is not responding on SYN ping`);
+            return false;
+        });
     }
 
     const axiosRequest = async (arg1, arg2, child)=> {
@@ -197,6 +200,8 @@ module.exports = function (isTorEnabled = false) {
         return _axios(preparedOpts)
             .then(res => res)
             .catch(async (err) => {
+                self.logger.w('transports', 'error', `Axios request failed for ${preparedOpts.url}: ${err}`);
+
                 if (preparedOpts.httpsAgent) {
                     throw err;
                 }
@@ -209,6 +214,7 @@ module.exports = function (isTorEnabled = false) {
 
                     return _axios(preparedOpts)
                         .catch(async (err) => {
+                            self.logger.w('transports', 'error', `Axios nested request failed for ${preparedOpts.url}: ${err}`);
                             throw err;
                         });
                 }
@@ -250,6 +256,8 @@ module.exports = function (isTorEnabled = false) {
         return fetch(url, opts)
             .then(res => res)
             .catch(async (err) => {
+                self.logger.w('transports', 'error', `Fetch request failed for ${url}: ${err}`);
+
                 if (opts.agent) {
                     throw err;
                 }
@@ -264,6 +272,7 @@ module.exports = function (isTorEnabled = false) {
 
                     return fetch(url, opts)
                         .catch(() => {
+                            self.logger.w('transports', 'error', `Fetch nested request failed for ${url}: ${err}`);
                             throw err;
                         });
                 }
@@ -288,6 +297,8 @@ module.exports = function (isTorEnabled = false) {
                 callBack?.(...args)
             });
         } catch (e) {
+            self.logger.w('transports', 'error', `Regular request failed for ${options.url}: ${err}`);
+
             if (options.agent) {
                 throw err;
             }
@@ -303,6 +314,7 @@ module.exports = function (isTorEnabled = false) {
                 });
             }
 
+            self.logger.w('transports', 'error', `Regular nested request failed for ${options.url}: ${err}`);
             throw Error('Tor not started. No fallback');
         }
     }

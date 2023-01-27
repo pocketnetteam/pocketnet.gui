@@ -71,7 +71,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 	var torapplications = new TorControl(settings.tor, self, ipc)
 
-	var transports = new Transports(global.USE_PROXY_NODE);
+	var transports = new Transports(global.USE_PROXY_NODE, logger);
 
 	var dump = {}
 
@@ -1023,7 +1023,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 						cantuploading: true,
 					},
 				],
-				
+
 				33: [
 					{
 						host : 'peertube27.pocketnet.app',
@@ -2211,7 +2211,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 			},
 		},
 
-		
+
 
 		firebase: {
 			set: {
