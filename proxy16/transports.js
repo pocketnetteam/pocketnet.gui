@@ -203,7 +203,7 @@ module.exports = function (isTorEnabled = false) {
                 self.logger.w('transports', 'error', `Axios request failed for ${preparedOpts.url}: ${err}`);
 
                 if (preparedOpts.httpsAgent) {
-                    throw err;
+                    return Promise.reject(err);
                 }
 
                 const isDirectRequest = await isDirectAccess(urlParts.hostname);
@@ -215,11 +215,11 @@ module.exports = function (isTorEnabled = false) {
                     return _axios(preparedOpts)
                         .catch(async (err) => {
                             self.logger.w('transports', 'error', `Axios nested request failed for ${preparedOpts.url}: ${err}`);
-                            throw err;
+                            return Promise.reject(err);
                         });
                 }
 
-                throw Error('Tor not started. No fallback');
+                return Promise.reject(err);
             });
     }
 
@@ -254,12 +254,11 @@ module.exports = function (isTorEnabled = false) {
 
         console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
         return fetch(url, opts)
-            .then(res => res)
             .catch(async (err) => {
                 self.logger.w('transports', 'error', `Fetch request failed for ${url}: ${err}`);
 
                 if (opts.agent) {
-                    throw err;
+                    return Promise.reject(err);
                 }
 
                 const isDirectRequest = await isDirectAccess(urlParts.hostname);
@@ -273,11 +272,11 @@ module.exports = function (isTorEnabled = false) {
                     return fetch(url, opts)
                         .catch(() => {
                             self.logger.w('transports', 'error', `Fetch nested request failed for ${url}: ${err}`);
-                            throw err;
+                            return Promise.reject(err);
                         });
                 }
 
-                throw Error('Tor not started. No fallback');
+                return Promise.reject(err);
             });
     }
 
@@ -300,7 +299,7 @@ module.exports = function (isTorEnabled = false) {
             self.logger.w('transports', 'error', `Regular request failed for ${options.url}: ${err}`);
 
             if (options.agent) {
-                throw err;
+                return Promise.reject(err);
             }
 
             const isDirectRequest = await isDirectAccess(urlParts.hostname);
@@ -315,7 +314,7 @@ module.exports = function (isTorEnabled = false) {
             }
 
             self.logger.w('transports', 'error', `Regular nested request failed for ${options.url}: ${err}`);
-            throw Error('Tor not started. No fallback');
+            return Promise.reject(err);
         }
     }
 
