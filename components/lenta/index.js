@@ -4657,6 +4657,7 @@ var lenta = (function(){
 
 							if(video || essenseData.videomobile){ type = 'video'}
 							if(essenseData.read){ type = 'article'}
+							if(essenseData.audio){ type = 'audio'}
 
 							
 
@@ -4896,12 +4897,14 @@ var lenta = (function(){
 	
 					self.app.platform.api.metmenu(_el, id, actions, true);
 
+
 					event = null;
 					timer = null;
 				};
 	
 				el.c.on('touchstart', '.anothercntswrk .cntswrk', touchstart)
 				el.c.on('touchend', '.anothercntswrk .cntswrk', touchend)
+
 				
 			} 
 

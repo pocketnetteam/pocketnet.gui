@@ -283,6 +283,8 @@ Platform = function (app, listofnodes) {
         'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
+        'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
+        'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true
     }
 
     self.bch = {
@@ -512,6 +514,7 @@ Platform = function (app, listofnodes) {
             return true
         }
     }
+    
 
     self.values = {
         alph: [
@@ -7245,7 +7248,7 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : "Apple App",
-                                    q : "Est-ce que Bastyon peut être ajouté à Apple?",
+                                    q : "Est-ce que Bastyon peubastyonCalls.min.jst être ajouté à Apple?",
                                     a : "<div>Apple a décidé de ne pas autoriser Bastyon en raison du manque d`opportunités de censure centralisée par Apple, nous le portons comme un insigne d`honneur. </div>",
                                 },
                                 {
@@ -10603,6 +10606,7 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
+                
                 var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
                 if(!ustate) return false
@@ -10637,11 +10641,11 @@ Platform = function (app, listofnodes) {
                 //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
                 //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
-                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 && ustate.likers_count < totalComplainsFirstFlags ) {
                     return true
                 }
 
-                if(totalComplainsFirstFlags > 10){
+                if(totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags ){
                     return true
                 }
 
@@ -24974,6 +24978,12 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
+
+            if(!using && !usingWeb) return
+            if(!currenttoken) return
+
+            console.log('current', current)
+
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -25571,6 +25581,7 @@ Platform = function (app, listofnodes) {
             },
 
             comment: function (comment, share) {
+
                 var t = comment.renders.previewEmojidis();
 
 
@@ -29301,7 +29312,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -29316,9 +29327,13 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (c.storage) {
-                c.storage = {}
+            if(id != 'tags'){
+                if (c.storage) {
+                    c.storage = {}
+                }
             }
+
+           
 
         })
 
@@ -29329,6 +29344,8 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
+
+
 
         /*self.sdk.node.shares.storage = {
             trx: {}
@@ -29366,7 +29383,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.clearlocal = function(){
-        self.sdk.tags.storage.cloud = null
+        self.sdk.tags.storage.cloud = {}
 
         self.sdk.newmaterials.clear()
     }
@@ -29681,11 +29698,7 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
-            if (typeof PeerTubePocketnet != 'undefined'){
-                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-            }
-
-
+            self.preparePeertubeServer();
 
             self.prepareUser(function() {
 
@@ -29717,6 +29730,46 @@ Platform = function (app, listofnodes) {
         })
 
 
+    }
+
+    self.preparePeertubeServer = function() {
+        return new Promise((resolve, reject) => {
+            if (self.app.options.peertubeServer)
+                return resolve();
+
+            console.log("PeerTubePocketnet", PeerTubePocketnet)
+
+            if (typeof PeerTubePocketnet != 'undefined'){
+                
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                // Fetch the peertube servers
+                self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
+                    try {
+                        if (ptServers)
+                            self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
+                    } catch(err) {
+                        console.log(err);
+                        return reject(err);
+                    }
+                    console.log("Using Peertube server: ", self.app.options.peertubeServer);
+                    // Authenticate to this Peertube server
+                    self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
+                        if (client_id)
+                            self.app.options.peertubeCreds.client_id = client_id;
+                        if (client_secret)
+                            self.app.options.peertubeCreds.client_secret = client_secret;
+                        return resolve();
+                    }, (err) => {
+                        console.log(err);
+                        return reject(err);
+                    });
+                }, (err) => {
+                    console.log(err);
+                    return reject(err);
+                });
+            } else
+                return reject('No peertube handler');
+        });
     }
 
     self.prepareUserData = function(clbk){
@@ -29777,7 +29830,7 @@ Platform = function (app, listofnodes) {
 
     self.acceptterms = function(clbk){
 
-        if(window.cordova){
+        if(window.cordova && window.pocketnetstore){
             var key = 'acceptterms'
 
             var aterms = null
@@ -30108,18 +30161,24 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
+                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
+                            
+                            
+
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
+                                    iscallsenabled="true"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
+                                    massmailingenabled="` + massmailingenabled +`"
                                 >
                                 </matrix-element>
                             </div>`
@@ -30728,9 +30787,9 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
-            setTimeout(function(){
+            //setTimeout(function(){
 
-                if (self.focus) return
+                //if (self.focus) return
 
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
@@ -30739,7 +30798,10 @@ Platform = function (app, listofnodes) {
 
                 }
 
-            }, 200)
+
+                ///// TODO CALLs
+
+            //}, 200)
 
 
             //if (self.app.playingvideo)
@@ -31053,14 +31115,74 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
-                        self.matrixchat.wait().then(r => {
-                            return self.matrixchat.share.object(sharing)
-                        }).catch(r => {
+                        self.app.user.isState(function (state) {
 
-                            sitemessage(self.app.localization.e('e13293')+' /ul102')
+                            if (state){
 
+                                menuDialog({
+
+                                    items: [
+        
+                                        {
+                                            text: self.app.localization.e('sendToChat'),
+                                            class: 'itemmain',
+                                            action: function (clbk) {
+        
+                                                self.matrixchat.wait().then(r => {
+                                                    return self.matrixchat.share.object(sharing)
+                                                }).catch(r => {
+                        
+                                                    sitemessage(self.app.localization.e('e13293')+' /ul102')
+                        
+                                                })
+                                                
+                                                clbk()
+                                            }
+                                        },
+        
+                                        {
+                                            text:  self.app.localization.e('createPost'),
+                                            action: function (clbk) {
+        
+                                                var shareEssenseData = {
+                                                    close : function(){
+                                                    },
+                                                    post : function(){
+                                                    },
+                                                    absolute : true,
+                                                }
+        
+                                                if (sharing.messages && sharing.messages[0]){
+                                                    shareEssenseData.description = sharing.messages[0];
+                                                }
+        
+                                                if (sharing.images){
+                                                    shareEssenseData.images = sharing.images;
+                                                }
+        
+                                                app.nav.api.load({
+                                                    open : true,
+                                                    id : 'share',
+                                                    inWnd : true,
+                                                    eid : 'postin',
+                                                    mid : 'postin',
+                                
+                                                    clbk : function(e, p){
+                                                        globalpreloader(false)
+                                                    },
+                                
+                                                    essenseData : shareEssenseData
+                                                })
+        
+                                                clbk()
+                                            }
+                                        }
+        
+        
+                                    ]
+                                })
+                            }
                         })
-
 
                     }
                 })
@@ -31085,12 +31207,11 @@ Platform = function (app, listofnodes) {
 
         if(window.cordova){
             setupOpenwith()
+            
         }
 
 
-
     }
-
 
     self.navManager = function(){
 
@@ -31189,6 +31310,49 @@ Platform = function (app, listofnodes) {
 
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
+
+	  self.getCallsOptions = function(){
+		return {
+			el : $("#bastyonCalls").first()[0],
+			parameters : {
+				getUserInfo: async (address) => {
+					let res = new Promise((resolve, reject) => {
+						address = hexDecode(address.split(':')[0].replace('@',''))
+						this.sdk.users.getone(address, () => {
+							console.log('stor',this.sdk.users.storage)
+							resolve(this.sdk.users.storage[address])
+						})
+					})
+
+					return res
+				},
+				getWithLocale: (key) => {
+					return  self.app.localization.e(key)
+				},
+				onError:(err) => {
+                    console.error(err)
+
+                    //add to logger
+				},
+				onInitCall:(call) => {
+
+				},
+				onEnded:(call) => {
+                    self.app.mobile.unsleep(false)
+				},
+				onConnected:(call)=> {
+
+                    if (self.app.playingvideo){
+                        self.app.playingvideo.pause()
+                    }
+
+                    self.app.mobile.unsleep(true)
+
+				}
+			}
+
+		}
+	  }
 
     return self;
 

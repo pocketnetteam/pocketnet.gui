@@ -75,7 +75,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 		
 		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted) { 
 			
-			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
+			var embedimage = window.testpocketnet || app.platform.sdk.user.canuseimagesincomments(); 
 			var hasdonate = sender && sender !== receiver
 			var hasemoji = !isMobile() && !isTablet()
 			

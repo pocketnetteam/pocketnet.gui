@@ -69,7 +69,7 @@ var camerapreview = (function(){
                 if (window.cordova && window.cordova.plugins.photoLibrary && window.cordova.plugins.photoLibrary.saveImage ){
 
 					permissions.get().then(() => {
-						window.cordova.plugins.photoLibrary.saveImage(url, 'Bastyon', function (libraryItem) {
+						window.cordova.plugins.photoLibrary.saveImage(url, null, function (libraryItem) {
 							resolve(libraryItem)
 						}, (e) => {
 	
@@ -404,11 +404,19 @@ var camerapreview = (function(){
 				}
 			},
 			startcamera : function(){
+
+				console.log("STARTCAMERA", data)
+
 				if (data.cameraenabled && !data.gallery){
+					console.log("HERE")
 					CameraPreview.startCamera(getcameraoptions());
 				}
 			},
 			stopcamera : function(){
+
+				console.log("stopcamera", data)
+
+
 				if (data.cameraenabled){
 					CameraPreview.stopCamera();
 				}
@@ -436,6 +444,9 @@ var camerapreview = (function(){
 			},
 
 			takepicture : function(){
+
+				console.log('data', data)
+
 				if (!data.cameraenabled){
 					data.current = eximw
 	
@@ -443,6 +454,8 @@ var camerapreview = (function(){
 				}
 				else{
 					CameraPreview.getSupportedPictureSizes((dimensions) => {
+
+						console.log('dimensions,', dimensions)
 
 						dimensions = _.filter(dimensions, function(d){
 							return d.width * d.height < 3 * 1000 * 1000
@@ -457,12 +470,16 @@ var camerapreview = (function(){
 							(base64PictureData) => {
 			
 								data.current = 'data:image/jpeg;base64,' + base64PictureData
+
+								console.log('data2', data)
 	
 								renders.state()
 		
 							}, (e) => {
-		
+								console.error(e)
 							})
+					}, (e) => {
+						console.error(e)
 					})
 				}
 				
@@ -487,7 +504,7 @@ var camerapreview = (function(){
 
 					name :  'state',
 					el :   el.state,
-					data : data,
+					data : {...data},
 
 				}, function(p){
 
@@ -702,9 +719,11 @@ var camerapreview = (function(){
 			})
 
 			self.app.platform.clbks._focus.camera = function(time){
+				console.log("HERE")
 				actions.startcamera()
 			}
 			self.app.platform.clbks._unfocus.camera = function(time){
+				console.log("HERE2")
 				actions.stopcamera()
 			}
 
@@ -733,11 +752,10 @@ var camerapreview = (function(){
 
 			getdata : function(clbk, p){
 				ed = p.settings.essenseData
-				var data = {};
 
 				console.log("ED", ed)
 
-				clbk(data);
+				clbk({});
 
 			},
 
@@ -751,6 +769,9 @@ var camerapreview = (function(){
 				if(prlx) prlx.destroy()
 	
 				prlx = null
+
+				self.app.mobile.unsleep(false)
+
 
 				window.requestAnimationFrame(() => {
 			
@@ -812,7 +833,7 @@ var camerapreview = (function(){
 				}, 300)
 
 		
-
+				self.app.mobile.unsleep(true)
 
 				state.load();
 
@@ -830,17 +851,17 @@ var camerapreview = (function(){
 
 				compute()
 
-				getlibrary().then(() => {
-					data.gallery = true
-					renders.gallery()
-				}).catch((e) => {
+				getlibrary().catch(e => {
+					console.log(e)
+				}).then(() => {
 
 					data.gallery = true
 					renders.gallery()
 
 				}).then(() => {
+
 					renders.selectedButton()
-					actions.startcamera()
+					//actions.startcamera()
 					renders.state()
 
 					el.c.addClass('ready')

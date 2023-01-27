@@ -147,6 +147,11 @@
         .vjs-volume-control{
             display: none;
         }
+		&.vjs-is-audio {
+            .vjs-control-bar .vjs-volume-control {
+				display: inherit;
+			}
+        }
     }
 	.fullScreenVideo{
 		.video-js{

@@ -115,6 +115,9 @@
 #lenta .video-js .vjs-volume-control {
   display: none;
 }
+#lenta .video-js.vjs-is-audio .vjs-control-bar .vjs-volume-control {
+  display: inherit;
+}
 #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: inherit;
 }

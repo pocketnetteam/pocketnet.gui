@@ -751,6 +751,7 @@ _l.e13285 = 'Demander avant de poster du télégramme'
 _l.e13286 = 'Demander avant d`envoyer au télégramme'
 _l.e13287 = "Envoyer vers le canal de télégramme"
 _l.video = "Vidéo"
+_l.audio = "Audio"
 _l.e13288 = "Vidgets de la page principale"
 _l.e13289 = "Intagration avec Telegram"
 

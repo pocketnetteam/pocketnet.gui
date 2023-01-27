@@ -552,6 +552,12 @@
 #share .attachements .vjs-paused .vjs-control-bar.warning-overlay {
   display: block!important;
 }
+#share .attachements .vjs-paused.vjs-is-audio .vjs-poster {
+  display: none !important;
+}
+#share .attachements .vjs-paused.vjs-is-audio .vjs-control-bar {
+  display: flex !important;
+}
 #share .attachements .video-js:not(.vjs-is-mobile) .vjs-big-play-button,
 #share .attachements .video-js.vjs-is-mobile.vjs-paused:not(.vjs-has-started) .vjs-big-play-button {
   left: 1em;

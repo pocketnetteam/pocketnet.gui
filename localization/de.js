@@ -753,6 +753,7 @@ _l.e13285 = "Fragen, bevor Sie aus Telegram posten"
 _l.e13286 = "Fragen, bevor Sie zu Telegram senden"
 _l.e13287 = "Zum Telegram Kanal senden"
 _l.video = "Video"
+_l.audio = "Audio"
 _l.e13288 = "Hauptseite Vidgets"
 _l.e13289 = "Integration mit Telegram"
 
