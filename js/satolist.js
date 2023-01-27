@@ -4417,9 +4417,10 @@ Platform = function (app, listofnodes) {
 
         },
 
-        mobiletooltip : function(_el, content, clbk, p){
+        mobiletooltip : function(_el, content, clbk, p, tooltip){
 
             var d = function(){
+                
                 var dialog =  tooltipMobileDialog({
 
                     html : content(),
@@ -4436,7 +4437,9 @@ Platform = function (app, listofnodes) {
                 })
             }
 
-            if(_el.attr('mobiletooltip')) return
+            var mobiletooltip =  _el.attr('mobiletooltip');
+
+            if(mobiletooltip) return
 
             d()
 
@@ -4444,18 +4447,22 @@ Platform = function (app, listofnodes) {
                 d()
             })
 
-            _el.attr('mobiletooltip', true)
+            if (!tooltip){
+                _el.attr('mobiletooltip', true)
+            }
+            
         },
 
-        tooltip: function (_el, content, clbk, p) {
+        tooltip: function (_el, content, clbk, p, tooltip) {
 
             if(!p) p = {}
 
             if (self.app.mobileview || p.dlg){
-                return self.api.mobiletooltip(_el, content, clbk, p)
+                return self.api.mobiletooltip(_el, content, clbk, p, tooltip)
             }
 
             if (_el.hasClass('tooltipstered')) return;
+
 
             if (!p) p = {};
 
@@ -4868,7 +4875,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        metmenu: function (_el, id, actions) {
+        metmenu: function (_el, id, actions, longtouch) {
             var share = self.sdk.node.shares.storage.trx[id];
 
             if (!share) {
@@ -5500,7 +5507,7 @@ Platform = function (app, listofnodes) {
 
                             close()
                         })
-                    })
+                    }, false, longtouch)
 
                 }, d, 'components/lenta')
             })
