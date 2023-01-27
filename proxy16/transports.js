@@ -102,6 +102,10 @@ module.exports = function (isTorEnabled = false) {
             }
 
             try {
+                if (!fs.existsSync(torcontrol.settings.path)) {
+                    fs.mkdirSync(torcontrol.settings.path, { recursive: true });
+                }
+
                 fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2));
             } catch (err) {
                 console.log('Looks like stats file is busy. Will write data next time...');

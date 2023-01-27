@@ -64,7 +64,7 @@ function onFetch(event) {
         .catch((err) => {
           swBroadcaster.send('tor-stats', 'failed');
 
-          return err;
+          throw err;
         });
     }
   }
@@ -86,16 +86,22 @@ function onFetch(event) {
 
     if (isElectron) {
       console.log('Try to get TOR answer for', request.url);
-      const torResponse = await torAnswer();
-      if (torResponse) {
-        console.log('Using TOR for', request.url);
-        resolve(torResponse.clone());
 
-        if (cacheName) {
-          putCache(cache, torResponse);
+      try {
+        const torResponse = await torAnswer();
+
+        if (torResponse) {
+          console.log('Using TOR for', request.url);
+          resolve(torResponse.clone());
+
+          if (cacheName) {
+            putCache(cache, torResponse);
+          }
+
+          return;
         }
-
-        return;
+      } catch(err) {
+        reject(err);
       }
     }
 
