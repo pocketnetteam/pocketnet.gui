@@ -31220,7 +31220,7 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=bea33fc0&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=44eee01e&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
 			pip: _vm.pip,
 			bin: _vm.pocketnet,
@@ -31234,7 +31234,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=bea33fc0&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=44eee01e&shadow
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=be5e52cc&scoped=true&
 var mainvue_type_template_id_be5e52cc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{ minimized: _vm.minimized, active: _vm.active }},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.showFooter)?_c('FooterChat'):_vm._e(),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1)}
@@ -39656,6 +39656,7 @@ class mtrxkit_MTRXKIT {
 
             return Promise.resolve();
           }).catch(e => {
+            console.log("ER", e);
             chat.summary.membersloading = false;
             return Promise.resolve();
           });
@@ -43103,19 +43104,25 @@ class mtrx_MTRX {
   }
 
   textEvent(chat, text) {
+    let clbks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
     if (chat.pcrypto.canBeEncrypt()) {
-      return chat.pcrypto.encryptEvent(text);
+      if (clbks.encryptEvent) clbks.encryptEvent();
+      return chat.pcrypto.encryptEvent(text).then(e => {
+        if (clbks.encryptedEvent) clbks.encryptedEvent(e);
+        return Promise.resolve(e);
+      });
     }
 
     return Promise.resolve(this.sdk.ContentHelpers.makeTextMessage(text));
   }
 
-  sendtext(chat, text, _ref) {
+  sendtext(chat, text, _ref, clbks) {
     let {
       relation,
       from
     } = _ref;
-    return this.textEvent(chat, text).then(r => {
+    return this.textEvent(chat, text, clbks).then(r => {
       if (relation) {
         r["m.relates_to"] = {
           rel_type: relation.type,
@@ -47174,7 +47181,7 @@ var scriptsadded = false;
       address: this.address ? functions["a" /* default */].hexEncode(this.address) : "",
       privateKey: this.privatekey
     };
-    var username = "nevermore";
+    var username = "alchemist";
     var user = this.address && this.privatekey ? actualUser : testUsers[`${username}`];
     var listofproxies = functions["a" /* default */].deep(window, "window.POCKETNETINSTANCE.options.listofproxies") || [{
       host: "test.pocketnet.app",
@@ -47230,9 +47237,7 @@ var scriptsadded = false;
       return Appvue_type_script_lang_js_shadow_core.mtrx.wait().then(() => {
         Appvue_type_script_lang_js_shadow_core.user.getContacts();
         setTimeout(() => {
-          if (this.$route.name !== "chats" &&
-          /*this.$route.name !== 'chat' &&*/
-
+          if (this.$route.name !== "chats" && this.$route.name !== 'chat' &&
           /*this.$route.name !== 'chatInfo' &&*/
           this.$route.name !== "publicPreview" && this.$route.name !== "chatSettings" && this.$route.name !== "contact" && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
             this.$router.push("/chats").catch(e => {});
@@ -71828,13 +71833,37 @@ var PcryptoRoom = /*#__PURE__*/function () {
       users = {};
     };
 
-    var lcachekey = "pcrypto7_" + chat.roomId + "_";
-    var ecachekey = "e_pcrypto7_";
+    var lcachekey = "pcrypto8_" + chat.roomId + "_";
+    var ecachekey = "e_pcrypto8_";
     var cache = {};
 
     self.preparedUsers = function (time) {
       return _.filter(getusersinfobytime(time), function (ui) {
         return ui.keys && ui.keys.length >= m;
+      });
+      return _.sortBy(_.filter(getusersinfobytime(time), function (ui) {
+        return ui.keys && ui.keys.length >= m;
+      }), u => {
+        return u.source.id;
+      });
+    };
+
+    self.preparedUsersById = function (ids) {
+      var ui = [];
+
+      _.each(users, u => {
+        if (_.indexOf(ids, u.id) > -1) {
+          var u = usersinfo[u.id];
+
+          if (u && u.keys && u.keys.length >= m) {
+            ui.push(u);
+          }
+        }
+      });
+
+      return ui;
+      return _.sortBy(ui, u => {
+        return u.source.id;
       });
     };
 
@@ -71898,7 +71927,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
         var event = ue.event;
         var membership = event.content.membership;
 
-        if (membership == "invite" || membership == "join" || membership == "leave" && !tetatet //(tetatet && membership == "invite")
+        if (membership == "invite" || membership == "join" || membership == "leave" && !tetatet // ||
+        //(tetatet && membership == "invite")
         ) {
           return {
             time: event.origin_server_ts || 1,
@@ -71946,7 +71976,9 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         var l = users[ui.id].life;
 
-        if (ui.membership && (ui.membership == "join" || ui.membership == "invite")) {
+        if (ui.membership && (ui.membership == "join" || ui.membership == "invite"
+        /* && tetatet*/
+        )) {
           l.push({
             start: tetatet ? 1 : ui.time
           });
@@ -72019,7 +72051,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
       }
     };
     var eaac = {
-      aeskeysls: function (time, block) {
+      aeskeysls: function (time, block, users) {
         if (!time) time = 0;
 
         if (!block) {
@@ -72034,7 +72066,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
                  }*/
 
 
-        var k = period(time) + "-" + block;
+        var k = (users ? 'ul+' + _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].md5(users.length) : period(time)) + "-" + block;
         return ls.get(`${lcachekey + pcrypto.user.userinfo.id}-${k}`).then(keys => {
           const keysPrepared = convert.aeskeys.out(keys);
           return {
@@ -72043,7 +72075,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
           };
         }).catch( /*#__PURE__*/function () {
           var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
-            const keysPrepared = eaac.aeskeys(time, block);
+            const keysPrepared = eaac.aeskeys(time, block, users);
 
             if (self.preparedUsers(time).length > 1) {
               const itemId = `${lcachekey + pcrypto.user.userinfo.id}-${k}`;
@@ -72061,10 +72093,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
           };
         }());
       },
-      aeskeys: function (time, block) {
+      aeskeys: function (time, block, users) {
         if (!time) time = 0;
         if (!block) block = pcrypto.currentblock.height;
-        return eaa.aeskeys(time, block);
+        return eaa.aeskeys(time, block, users);
       }
     };
     var eaa = {
@@ -72073,8 +72105,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
           return u.keys[num];
         }).join("") + (block || pcrypto.currentblock.height)).toString("hex"), salt, 1, 32, "sha256");
       },
-      userspublics: function (time, block) {
-        var users = self.preparedUsers(time);
+      userspublics: function (time, block, usersIds) {
+        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
         var sum = {};
 
         _.each(users, function (user) {
@@ -72086,23 +72118,23 @@ var PcryptoRoom = /*#__PURE__*/function () {
             return Buffer.from(key, "hex");
           });
 
-          sum[user.id] = eaa.points(time, block, publics);
+          sum[user.id] = eaa.points(time, block, publics, usersIds);
         });
 
         return sum;
       },
-      current: function (time, block) {
+      current: function (time, block, users) {
         var privates = _.map(pcrypto.user.private, function (key) {
           return key.private;
         });
 
         var buf = Buffer.allocUnsafe(32);
-        var sc = eaa.scalars(time, block, privates).toBuffer();
+        var sc = eaa.scalars(time, block, privates, users).toBuffer();
         sc.copy(buf, 32 - sc.length);
         return buf;
       },
-      scalars: function (time, block, scalars) {
-        var users = self.preparedUsers(time);
+      scalars: function (time, block, scalars, usersIds) {
+        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
         var sum = null;
 
         for (var i = 0; i < m; i++) {
@@ -72119,8 +72151,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         return sum;
       },
-      points: function (time, block, points) {
-        var users = self.preparedUsers(time);
+      points: function (time, block, points, usersIds) {
+        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
         var sum = null;
 
         for (var i = 0; i < m; i++) {
@@ -72136,9 +72168,9 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         return sum;
       },
-      aeskeys: function (time, block) {
-        var us = eaa.userspublics(time, block);
-        var c = eaa.current(time, block);
+      aeskeys: function (time, block, usersIds) {
+        var us = eaa.userspublics(time, block, usersIds);
+        var c = eaa.current(time, block, usersIds);
         var su = {};
 
         _.each(us, function (s, id) {
@@ -72153,7 +72185,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
     };
 
     self.decrypt = /*#__PURE__*/function () {
-      var _ref4 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, _ref5, time, block) {
+      var _ref4 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, _ref5, time, block, users) {
         let {
           encrypted,
           nonce
@@ -72161,7 +72193,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         let {
           keys,
           k
-        } = yield eaac.aeskeysls(time, block);
+        } = yield eaac.aeskeysls(time, block, users);
         var error = null;
 
         if (keys[userid]) {
@@ -72183,7 +72215,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         throw new Error(error);
       });
 
-      return function (_x5, _x6, _x7, _x8) {
+      return function (_x5, _x6, _x7, _x8, _x9) {
         return _ref4.apply(this, arguments);
       };
     }();
@@ -72201,7 +72233,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         throw new Error("emptykey");
       });
 
-      return function (_x9, _x10) {
+      return function (_x10, _x11) {
         return _ref6.apply(this, arguments);
       };
     }();
@@ -72264,7 +72296,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
             });
           });
 
-          return function (_x12) {
+          return function (_x13) {
             return _ref8.apply(this, arguments);
           };
         }()).finally(() => {
@@ -72274,7 +72306,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return dpromise;
       });
 
-      return function (_x11) {
+      return function (_x12) {
         return _ref7.apply(this, arguments);
       };
     }();
@@ -72296,7 +72328,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x13, _x14) {
+      return function (_x14, _x15) {
         return _ref9.apply(this, arguments);
       };
     }();
@@ -72308,7 +72340,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x15, _x16, _x17) {
+      return function (_x16, _x17, _x18) {
         return _ref10.apply(this, arguments);
       };
     }();
@@ -72335,7 +72367,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encrypted;
       });
 
-      return function (_x18) {
+      return function (_x19) {
         return _ref11.apply(this, arguments);
       };
     }();
@@ -72366,6 +72398,13 @@ var PcryptoRoom = /*#__PURE__*/function () {
         var body = JSON.parse(_application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].Base64.decode(secrets));
         var time = event.origin_server_ts || 1;
 
+        var users = _.map(body, (v, i) => {
+          return i;
+        });
+
+        users.push(sender);
+        users = _.uniq(users);
+
         if (sender == me) {
           _.find(body, function (s, i) {
             if (i != me) {
@@ -72380,11 +72419,11 @@ var PcryptoRoom = /*#__PURE__*/function () {
         }
 
         if (!body[bodyindex]) throw new Error("emptyforme");
-        var decryptedKey = yield self.decrypt(keyindex, body[bodyindex], time, block);
+        var decryptedKey = yield self.decrypt(keyindex, body[bodyindex], time, block, users);
         return decryptedKey;
       });
 
-      return function (_x19) {
+      return function (_x20) {
         return _ref12.apply(this, arguments);
       };
     }();
@@ -72415,7 +72454,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encryptedEvent;
       });
 
-      return function (_x20) {
+      return function (_x21) {
         return _ref13.apply(this, arguments);
       };
     }();
@@ -72426,7 +72465,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return user.id;
       }), uid => {
         return uid && uid != pcrypto.user.userinfo.id;
-      }).join("") + "_v4");
+      }).join("") + "_v10");
       return hash;
     };
 
@@ -72564,7 +72603,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x21) {
+      return function (_x22) {
         return _ref14.apply(this, arguments);
       };
     }();
@@ -72586,7 +72625,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return decrypted;
       });
 
-      return function decrypt(_x22, _x23) {
+      return function decrypt(_x23, _x24) {
         return _ref15.apply(this, arguments);
       };
     }();
@@ -72605,7 +72644,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encrypted;
       });
 
-      return function encrypt(_x24, _x25) {
+      return function encrypt(_x25, _x26) {
         return _ref17.apply(this, arguments);
       };
     }();
@@ -72783,7 +72822,7 @@ var Pcrypto = function (core, p) {
         return room.prepare();
       });
 
-      return function (_x26) {
+      return function (_x27) {
         return _ref18.apply(this, arguments);
       };
     }());

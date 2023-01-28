@@ -1605,6 +1605,16 @@ var CancelablePromise = __webpack_require__("0bb9");
       return text;
     },
 
+    clbkEncrypt() {
+      console.log("ECN");
+      this.$emit('encrypt');
+    },
+
+    clbkEncrypted() {
+      console.log("ECN2");
+      this.$emit('encrypted');
+    },
+
     send(text) {
       if (!this.chat) {
         this.newchat().catch(e => {});
@@ -1627,7 +1637,10 @@ var CancelablePromise = __webpack_require__("0bb9");
 
         if (this.relationEvent) {
           if (this.relationEvent.type == "m.replace" && this.relationEvent.event) {
-            return this.core.mtrx.textEvent(this.chat, text).then(r => {
+            return this.core.mtrx.textEvent(this.chat, text, {
+              encryptEvent: this.clbkEncrypt,
+              encryptedEvent: this.clbkEncrypted
+            }).then(r => {
               r["m.relates_to"] = {
                 rel_type: "m.replace",
                 event_id: this.core.mtrx.clearEventId(this.relationEvent.event) || functions["a" /* default */].makeid()
@@ -1653,6 +1666,9 @@ var CancelablePromise = __webpack_require__("0bb9");
 
         return this.core.mtrx.sendtext(this.chat, text, {
           relation: this.relationEvent
+        }, {
+          encryptEvent: this.clbkEncrypt,
+          encryptedEvent: this.clbkEncrypted
         });
       }).catch(e => {
         this.$emit("sentMessageError", {
