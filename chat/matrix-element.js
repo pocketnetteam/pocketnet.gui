@@ -31220,7 +31220,7 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=44eee01e&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=bb8ea080&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
 			pip: _vm.pip,
 			bin: _vm.pocketnet,
@@ -31234,7 +31234,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=44eee01e&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=bb8ea080&shadow
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"98045b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=be5e52cc&scoped=true&
 var mainvue_type_template_id_be5e52cc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{ minimized: _vm.minimized, active: _vm.active }},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.showFooter)?_c('FooterChat'):_vm._e(),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1)}
@@ -42948,6 +42948,7 @@ class mtrx_MTRX {
       }
     });
     this.client.on("Room.timeline", (message, member) => {
+      console.log("HERERERER!!!!");
       if (!this.chatsready) return;
       if (!message.event.content) return;
 
@@ -47181,7 +47182,7 @@ var scriptsadded = false;
       address: this.address ? functions["a" /* default */].hexEncode(this.address) : "",
       privateKey: this.privatekey
     };
-    var username = "alchemist";
+    var username = "nevermore";
     var user = this.address && this.privatekey ? actualUser : testUsers[`${username}`];
     var listofproxies = functions["a" /* default */].deep(window, "window.POCKETNETINSTANCE.options.listofproxies") || [{
       host: "test.pocketnet.app",
@@ -71825,6 +71826,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
     var usershistory = [];
     var pcryptoFile = new PcryptoFile();
     chat.pcrypto = self;
+    self.version = 1;
 
     self.clear = function () {
       hashes = {};
@@ -71835,20 +71837,27 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
     var lcachekey = "pcrypto8_" + chat.roomId + "_";
     var ecachekey = "e_pcrypto8_";
+    var usershashVersion = 11;
     var cache = {};
 
-    self.preparedUsers = function (time) {
-      return _.filter(getusersinfobytime(time), function (ui) {
-        return ui.keys && ui.keys.length >= m;
-      });
-      return _.sortBy(_.filter(getusersinfobytime(time), function (ui) {
-        return ui.keys && ui.keys.length >= m;
-      }), u => {
-        return u.source.id;
-      });
+    self.preparedUsers = function (time, v) {
+      console.log('preparedUsers', v);
+
+      if (!v || v <= 1) {
+        return _.filter(getusersinfobytime(time), function (ui) {
+          return ui.keys && ui.keys.length >= m;
+        });
+      } else {
+        return _.sortBy(_.filter(getusersinfobytime(time), function (ui) {
+          return ui.keys && ui.keys.length >= m;
+        }), u => {
+          return u.source.id;
+        });
+      }
     };
 
-    self.preparedUsersById = function (ids) {
+    self.preparedUsersById = function (ids, v) {
+      console.log('preparedUsersById', v);
       var ui = [];
 
       _.each(users, u => {
@@ -71861,7 +71870,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
         }
       });
 
-      return ui;
+      if (!v || v <= 1) {
+        return ui;
+      }
+
       return _.sortBy(ui, u => {
         return u.source.id;
       });
@@ -72051,7 +72063,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
       }
     };
     var eaac = {
-      aeskeysls: function (time, block, users) {
+      aeskeysls: function (time, block, users, v) {
         if (!time) time = 0;
 
         if (!block) {
@@ -72066,7 +72078,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
                  }*/
 
 
-        var k = (users ? 'ul+' + _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].md5(users.length) : period(time)) + "-" + block;
+        var k = (users ? 'ul+' + orderedIdsHash(users) : period(time)) + "-" + block + '-' + (v || self.version);
         return ls.get(`${lcachekey + pcrypto.user.userinfo.id}-${k}`).then(keys => {
           const keysPrepared = convert.aeskeys.out(keys);
           return {
@@ -72075,7 +72087,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
           };
         }).catch( /*#__PURE__*/function () {
           var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
-            const keysPrepared = eaac.aeskeys(time, block, users);
+            const keysPrepared = eaac.aeskeys(time, block, users, v || self.version);
 
             if (self.preparedUsers(time).length > 1) {
               const itemId = `${lcachekey + pcrypto.user.userinfo.id}-${k}`;
@@ -72093,10 +72105,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
           };
         }());
       },
-      aeskeys: function (time, block, users) {
+      aeskeys: function (time, block, users, v) {
         if (!time) time = 0;
         if (!block) block = pcrypto.currentblock.height;
-        return eaa.aeskeys(time, block, users);
+        return eaa.aeskeys(time, block, users, v);
       }
     };
     var eaa = {
@@ -72105,8 +72117,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
           return u.keys[num];
         }).join("") + (block || pcrypto.currentblock.height)).toString("hex"), salt, 1, 32, "sha256");
       },
-      userspublics: function (time, block, usersIds) {
-        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
+      userspublics: function (time, block, usersIds, v) {
+        var users = usersIds ? self.preparedUsersById(usersIds, v) : self.preparedUsers(time, v);
         var sum = {};
 
         _.each(users, function (user) {
@@ -72118,23 +72130,23 @@ var PcryptoRoom = /*#__PURE__*/function () {
             return Buffer.from(key, "hex");
           });
 
-          sum[user.id] = eaa.points(time, block, publics, usersIds);
+          sum[user.id] = eaa.points(time, block, publics, usersIds, v);
         });
 
         return sum;
       },
-      current: function (time, block, users) {
+      current: function (time, block, users, v) {
         var privates = _.map(pcrypto.user.private, function (key) {
           return key.private;
         });
 
         var buf = Buffer.allocUnsafe(32);
-        var sc = eaa.scalars(time, block, privates, users).toBuffer();
+        var sc = eaa.scalars(time, block, privates, users, v).toBuffer();
         sc.copy(buf, 32 - sc.length);
         return buf;
       },
-      scalars: function (time, block, scalars, usersIds) {
-        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
+      scalars: function (time, block, scalars, usersIds, v) {
+        var users = usersIds ? self.preparedUsersById(usersIds, v) : self.preparedUsers(time, v);
         var sum = null;
 
         for (var i = 0; i < m; i++) {
@@ -72151,8 +72163,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         return sum;
       },
-      points: function (time, block, points, usersIds) {
-        var users = usersIds ? self.preparedUsersById(usersIds) : self.preparedUsers(time);
+      points: function (time, block, points, usersIds, v) {
+        var users = usersIds ? self.preparedUsersById(usersIds, v) : self.preparedUsers(time, v);
         var sum = null;
 
         for (var i = 0; i < m; i++) {
@@ -72168,9 +72180,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         return sum;
       },
-      aeskeys: function (time, block, usersIds) {
-        var us = eaa.userspublics(time, block, usersIds);
-        var c = eaa.current(time, block, usersIds);
+      aeskeys: function (time, block, usersIds, v) {
+        console.log("CALCULATION", time, block, usersIds, v);
+        var us = eaa.userspublics(time, block, usersIds, v);
+        var c = eaa.current(time, block, usersIds, v);
         var su = {};
 
         _.each(us, function (s, id) {
@@ -72185,15 +72198,19 @@ var PcryptoRoom = /*#__PURE__*/function () {
     };
 
     self.decrypt = /*#__PURE__*/function () {
-      var _ref4 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, _ref5, time, block, users) {
+      var _ref4 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, _ref5, time, block, users, v) {
         let {
           encrypted,
           nonce
         } = _ref5;
+        console.log('userid, { encrypted, nonce }, time, block, users, v', userid, {
+          encrypted,
+          nonce
+        }, time, block, users, v);
         let {
           keys,
           k
-        } = yield eaac.aeskeysls(time, block, users);
+        } = yield eaac.aeskeysls(time, block, users, v);
         var error = null;
 
         if (keys[userid]) {
@@ -72215,16 +72232,16 @@ var PcryptoRoom = /*#__PURE__*/function () {
         throw new Error(error);
       });
 
-      return function (_x5, _x6, _x7, _x8, _x9) {
+      return function (_x5, _x6, _x7, _x8, _x9, _x10) {
         return _ref4.apply(this, arguments);
       };
     }();
 
     self.encrypt = /*#__PURE__*/function () {
-      var _ref6 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, text) {
+      var _ref6 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (userid, text, version) {
         let {
           keys
-        } = yield eaac.aeskeysls();
+        } = yield eaac.aeskeysls(undefined, undefined, undefined, version || undefined);
 
         if (keys[userid]) {
           return yield encrypt(text, keys[userid]);
@@ -72233,7 +72250,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         throw new Error("emptykey");
       });
 
-      return function (_x10, _x11) {
+      return function (_x11, _x12, _x13) {
         return _ref6.apply(this, arguments);
       };
     }();
@@ -72296,7 +72313,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
             });
           });
 
-          return function (_x13) {
+          return function (_x15) {
             return _ref8.apply(this, arguments);
           };
         }()).finally(() => {
@@ -72306,7 +72323,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return dpromise;
       });
 
-      return function (_x12) {
+      return function (_x14) {
         return _ref7.apply(this, arguments);
       };
     }();
@@ -72328,7 +72345,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x14, _x15) {
+      return function (_x16, _x17) {
         return _ref9.apply(this, arguments);
       };
     }();
@@ -72340,26 +72357,27 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x16, _x17, _x18) {
+      return function (_x18, _x19, _x20) {
         return _ref10.apply(this, arguments);
       };
     }();
 
     self.encryptKey = /*#__PURE__*/function () {
       var _ref11 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (key) {
-        var users = self.preparedUsers();
+        var users = self.preparedUsers(undefined, self.version);
         var block = pcrypto.currentblock.height;
         if (!pcrypto.core.mtrx.kit.tetatetchat(chat)) block = 10;
         var encrypted = {
           block: block,
-          keys: {}
+          keys: {},
+          v: self.version
         };
 
         for (var i = 0; i < users.length; i++) {
           var user = users[i];
 
           if (user.id != pcrypto.user.userinfo.id || users.length <= 1) {
-            encrypted.keys[user.id] = yield self.encrypt(user.id, key);
+            encrypted.keys[user.id] = yield self.encrypt(user.id, key, self.version);
           }
         }
 
@@ -72367,7 +72385,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encrypted;
       });
 
-      return function (_x19) {
+      return function (_x21) {
         return _ref11.apply(this, arguments);
       };
     }();
@@ -72380,15 +72398,20 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
         var secrets = "";
         var block = "";
+        var v = undefined;
 
         if (event.type == "m.room.encryption") {
           secrets = event.content.keys;
           block = event.content.block;
+          v = event.content.version || 1;
         } else {
           secrets = _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.info.secrets.keys") || _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.pbody.secrets.keys");
           block = _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.info.secrets.block") || _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.pbody.secrets.block");
+          v = _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.info.secrets.version") || _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].deep(event, "content.pbody.secrets.version") || 1;
         }
 
+        console.log('secrets, block, v', secrets, block, v);
+        console.log("FROM EVENT", event);
         if (!secrets) throw new Error("secrets");
         if (!block) throw new Error("block");
         var sender = _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].getmatrixid(event.sender);
@@ -72419,11 +72442,11 @@ var PcryptoRoom = /*#__PURE__*/function () {
         }
 
         if (!body[bodyindex]) throw new Error("emptyforme");
-        var decryptedKey = yield self.decrypt(keyindex, body[bodyindex], time, block, users);
+        var decryptedKey = yield self.decrypt(keyindex, body[bodyindex], time, block, users, v);
         return decryptedKey;
       });
 
-      return function (_x20) {
+      return function (_x22) {
         return _ref12.apply(this, arguments);
       };
     }();
@@ -72446,7 +72469,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
           var user = users[i];
 
           if (user.id != pcrypto.user.userinfo.id || users.length <= 1) {
-            encryptedEvent.body[user.id] = yield self.encrypt(user.id, text);
+            encryptedEvent.body[user.id] = yield self.encrypt(user.id, text, self.version);
           }
         }
 
@@ -72454,7 +72477,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encryptedEvent;
       });
 
-      return function (_x21) {
+      return function (_x23) {
         return _ref13.apply(this, arguments);
       };
     }();
@@ -72465,13 +72488,20 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return user.id;
       }), uid => {
         return uid && uid != pcrypto.user.userinfo.id;
-      }).join("") + "_v10");
+      }).join("") + "_v" + usershashVersion + '_' + self.version);
       return hash;
+    };
+
+    var orderedIdsHash = function (ids) {
+      return _application_functions__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].md5(_.sortBy(ids, id => {
+        return Number(id.replace(/[^0-9]/g));
+      }).join(''));
     };
 
     self.sendCommonKey = function () {
       return self.createMyCommonKey().then(result => {
         //return Promise.reject("HI")
+        console.log("result", result);
         return pcrypto.core.mtrx.client.sendStateEvent(chat.roomId, "m.room.encryption", result.export, "pcrypto." + pcrypto.user.userinfo.id + "." + result.export.hash);
       }).then(r => {
         return self.getCommonKey();
@@ -72530,7 +72560,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return {
           key,
           hash: _e.content.hash,
-          block: _e.content.block
+          block: _e.content.block,
+          version: _e.content.version || undefined
         };
       });
     };
@@ -72539,7 +72570,9 @@ var PcryptoRoom = /*#__PURE__*/function () {
       var hash = usershash();
       var result = {
         private: {},
-        export: {}
+        export: {
+          version: self.version
+        }
       };
       return pcryptoFile.randomkey().then(key => {
         result.private.secret = key;
@@ -72603,7 +72636,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         });
       });
 
-      return function (_x22) {
+      return function (_x24) {
         return _ref14.apply(this, arguments);
       };
     }();
@@ -72625,7 +72658,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return decrypted;
       });
 
-      return function decrypt(_x23, _x24) {
+      return function decrypt(_x25, _x26) {
         return _ref15.apply(this, arguments);
       };
     }();
@@ -72644,7 +72677,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encrypted;
       });
 
-      return function encrypt(_x25, _x26) {
+      return function encrypt(_x27, _x28) {
         return _ref17.apply(this, arguments);
       };
     }();
@@ -72822,7 +72855,7 @@ var Pcrypto = function (core, p) {
         return room.prepare();
       });
 
-      return function (_x27) {
+      return function (_x29) {
         return _ref18.apply(this, arguments);
       };
     }());

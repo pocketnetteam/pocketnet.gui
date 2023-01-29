@@ -492,7 +492,8 @@ var component = Object(componentNormalizer["a" /* default */])(
       updateTimeout: null,
       updateInterval: null,
       events: [],
-      firstPaginate: true
+      firstPaginate: true,
+      readPromise: null
     };
   },
   mounted: function () {
@@ -684,15 +685,6 @@ var component = Object(componentNormalizer["a" /* default */])(
         return pr.catch(e => {
           return Promise.resolve();
         });
-        /*return this.chat.pcrypto.decryptEvent(e.event).then(d => {
-             e.event.decrypted = d
-               return Promise.resolve()
-           }).catch(e => {
-               e.event.decrypted = {
-               msgtype : 'm.bad.encrypted'
-             }
-               return Promise.resolve()
-           })*/
       })).then(() => {
         return Promise.resolve(events);
       });
@@ -893,30 +885,46 @@ var component = Object(componentNormalizer["a" /* default */])(
       });
     },
 
-    readAll: function () {
-      if (document.hasFocus() && (!this.pocketnet || this.active) && !this.core.hiddenInParent && this.chat && this.chat.getJoinedMemberCount() > 0 && this.chat.getUnreadNotificationCount() !== 0) setTimeout(() => {
-        if (!this.chat) return;
-        var i = this.chat.timeline.length - 1;
-        var event = null;
+    debouncedReadAll: _.debounce(function () {
+      if (!this.chat) return;
+      if (this.readPromise) return;
+      var i = this.chat.timeline.length - 1;
+      var event = null;
+      console.log('debouncedReadAll');
 
-        while (i >= 0 && !event) {
-          var e = this.chat.timeline[i];
+      while (i >= 0 && !event) {
+        var e = this.chat.timeline[i];
+        var type = e.event.type || "";
+        console.log("E", e);
 
-          if (!this.core.mtrx.me(e.sender.userId)) {
-            event = e;
+        if (!this.core.mtrx.me(e.sender.userId)) {
+          event = e;
+        } else {
+          if (type.indexOf('m.call') > -1) {
+            if (type.indexOf('candidates') > -1) {
+              console.log('type', type);
+              return;
+            }
           }
-
-          i--;
         }
 
-        if (e) {
-          this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, e.eventId, e, {
-            hidden: !this.settings_read ? true : false
-          }).then(r => {
-            return r;
-          });
-        }
-      }, 1000);
+        i--;
+      }
+
+      console.log("event", event);
+
+      if (event) {
+        this.readPromise = this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, e.eventId, e, {
+          hidden: !this.settings_read ? true : false
+        }).then(r => {
+          return r;
+        }).finally(() => {
+          this.readPromise = null;
+        });
+      }
+    }, 500),
+    readAll: function () {
+      if (document.hasFocus() && (!this.pocketnet || this.active) && !this.core.hiddenInParent && this.chat && this.chat.getJoinedMemberCount() > 0 && this.chat.getUnreadNotificationCount() !== 0) this.debouncedReadAll();
     },
     //////////////
     scrollE: function (size) {
