@@ -5704,7 +5704,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'earnbastyon1en',
                                     q : '',
-                                    a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 50 GB empty space on your SSD<br />•	Your computer has at least 2 GB free RAM <br />•	Your internet speed is at least 10 Mb/sec',
+                                    a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 200 GB empty space on your SSD<br />•	Your computer has at least 3 GB free RAM <br />•	Your internet speed is at least 100 Mb/sec',
                                     img: ''
                                 },
                                 {
@@ -6025,7 +6025,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'banning',
                                     q : 'Can people be banned?',
-                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like porn/nudity, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
+                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like porn/nudity, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2023, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
                                 },
                                 {
                                     id : 'Apple App',
@@ -6097,7 +6097,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'specific',
                                     q : 'Specifics of curation on '+self.app.meta.fullname+'.',
-                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted porn/nudity, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
+                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2023. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted porn/nudity, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
                                 },
                                 // {
                                 // 	id : 'racism',
@@ -6457,7 +6457,7 @@ Platform = function (app, listofnodes) {
                                     {
                                         id : 'earnbastyon1',
                                         q : '',
-                                        a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 50 ГБ свободного места<br />- На вашем компьютере имеется не менее 2 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 10 Мбит/сек',
+                                        a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 200 ГБ свободного места<br />- На вашем компьютере имеется не менее 3 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 100 Мбит/сек',
                                         img: ''
                                     },
                                     {
@@ -6634,7 +6634,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'запрет ',
                         q : 'Можно ли банить людей?',
-                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порно/обнаженка, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
+                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порно/обнаженка, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К лету 2023 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
                         },
                         {
                         id : 'Приложение Apple',
@@ -6853,7 +6853,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'конкретный',
                         q : 'Особенности модерации на '+self.app.meta.fullname+'.',
-                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порно/обнаженку, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
+                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к лету 2023 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порно/обнаженку, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
                         },
                         {
                         id : 'взаимный',
@@ -7014,23 +7014,23 @@ Platform = function (app, listofnodes) {
                             ]
 
                         },
-                        {
+                        // {
 
-                            name : 'Бонусная Программа Bastyon',
-                            id : 'bonus',
+                        //     name : 'Бонусная Программа Bastyon',
+                        //     id : 'bonus',
 
-                            group : [
+                        //     group : [
 
-                                {
-                                    id : 'bonus1',
-                                    q : '',
-                                    a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
-                                    img: ''
-                                },
+                        //         {
+                        //             id : 'bonus1',
+                        //             q : '',
+                        //             a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1250 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
+                        //             img: ''
+                        //         },
 
-                            ]
+                        //     ]
 
-                        },
+                        // },
                         {
 
                             name : 'Как работает репутация в Бастионе и какая от нее польза?',
@@ -7244,7 +7244,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : "banning",
                                     q : "Est-ce que les gens peuvent être bannis?",
-                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la porn/nudity, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
+                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la porn/nudity, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2023, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
                                 },
                                 {
                                     id : "Apple App",
@@ -7357,7 +7357,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : "specific",
                                     q : "Caractéristiques de la curation "+self.app.meta.fullname+".",
-                                    a : "<div> Actuellement, la modération du contenu se fait par le biais de votes 1 étoile par des utilisateurs de haute réputation. Lorsque la réputation atteint -30, l`accès au compte est restreint. Cependant, il existe un tout nouvel algorithme de modération qui sera publié d`ici la fin de 2021. Sous les nouveaux algorithmes, il y aura une option pour signaler un utilisateur ou un message par n`importe quel utilisateur de haute réputation, mais cela ne va pas affecter le compte directement. Après un certain nombre de drapeaux, une loterie sur la blockchain sera tirée et un groupe de modérateurs jurés sera choisi pour ce compte. Les jurés doivent convenir que cet utilisateur a publié de la pornographie, des stupéfiants ou une menace directe de violence. Tout autre avis ou désaccord ne constitue pas un motif de signalement ni de sanction.</div> ",
+                                    a : "<div> Actuellement, la modération du contenu se fait par le biais de votes 1 étoile par des utilisateurs de haute réputation. Lorsque la réputation atteint -30, l`accès au compte est restreint. Cependant, il existe un tout nouvel algorithme de modération qui sera publié d`ici la fin de 2023. Sous les nouveaux algorithmes, il y aura une option pour signaler un utilisateur ou un message par n`importe quel utilisateur de haute réputation, mais cela ne va pas affecter le compte directement. Après un certain nombre de drapeaux, une loterie sur la blockchain sera tirée et un groupe de modérateurs jurés sera choisi pour ce compte. Les jurés doivent convenir que cet utilisateur a publié de la pornographie, des stupéfiants ou une menace directe de violence. Tout autre avis ou désaccord ne constitue pas un motif de signalement ni de sanction.</div> ",
                                 },
                                     {
                                     id : "reciprocal",
