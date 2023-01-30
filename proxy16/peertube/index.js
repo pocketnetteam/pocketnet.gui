@@ -430,6 +430,8 @@ var Peertube = function (settings) {
 
 		statistic.init();
 
+		self.logger.w('peertube', 'info', `peertube initing`)
+
 		return Promise.resolve();
 	};
 
