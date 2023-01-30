@@ -595,11 +595,6 @@
 #lenta.horizontal.compact .share .shareTable .authorTable > div.authorCell {
   display: none;
 }
-#lenta.horizontal.compact .share .shareTable .metatable > div.metapanel .metapanelitem {
-  position: absolute;
-  right: 1px;
-  font-size: 0.7em;
-}
 #lenta.horizontal.compact .share .shareTable .anothercntswrk {
   position: absolute;
   left: 0;
@@ -648,6 +643,20 @@
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption .adr {
   font-weight: 700;
+}
+#lenta.horizontal.compact .share .shareTable .anothercntswrk .metapanel {
+  position: absolute;
+  bottom: 50px;
+  right: 6px;
+  border-radius: 12px;
+  background: rgba(var(--color-shadow-base), 0.8);
+  color: rgb(var(--text-on-bg-shadow-color));
+  padding: 0.25em 0.5em;
+  padding-top: 0.25em;
+  font-size: 0.8em;
+}
+#lenta.horizontal.compact .share .shareTable .anothercntswrk .metapanel .metmenu {
+  height: 100%;
 }
 #lenta.horizontal.compact.mainvideo .share .shareTable {
   height: 180px;
