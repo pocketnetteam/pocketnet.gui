@@ -1519,6 +1519,7 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
         this.selectedMessages = [];
       }).catch(e => {
         console.error(e);
+        this.selectedMessages = [];
         this.$store.commit("icon", {
           icon: "error",
           message: ""
