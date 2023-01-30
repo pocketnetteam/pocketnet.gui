@@ -76,6 +76,12 @@ ImageUploader = function(app) {
 
                 // Fetch Peertube server if needed
                 app.platform.preparePeertubeServer().finally(() => {
+                    if (!app.options.peertubeServer) {
+
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_PROXY_FAILED" });
+
+                        return reject();
+                    }
 
                     if(!app.options.peertubeServer){
                         reject()
