@@ -1,4 +1,4 @@
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -529,7 +529,7 @@ _l.autoplayVideo = "Autoplay Video"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
-_l.blockUserQ = "Do you really want to block user?"
+_l.blockUserQ = "Do you want to block user?"
 _l.e13023 = "Do you really want to unblock user?"
 _l.e13024 = "Your Private Login Key"
 _l.e13025 = "Create a new account"

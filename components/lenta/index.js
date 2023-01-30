@@ -4892,16 +4892,19 @@ var lenta = (function(){
 				onlongtouch = function() { 
 
 					var _el = $(event.target);
-					var id = $(event.target).closest('.share').attr('id');
+					var shareEl = $(event.target).closest('.share')
+					var id = shareEl.attr('id');
 	
-					self.app.platform.api.metmenu(_el, id, actions);
+					self.app.platform.api.metmenu(_el, id, actions, true);
+
 
 					event = null;
 					timer = null;
 				};
 	
-				el.c.on('touchstart', '.anothercntswrk', touchstart)
-				el.c.on('touchend', '.anothercntswrk', touchend)
+				el.c.on('touchstart', '.anothercntswrk .cntswrk', touchstart)
+				el.c.on('touchend', '.anothercntswrk .cntswrk', touchend)
+
 				
 			} 
 
