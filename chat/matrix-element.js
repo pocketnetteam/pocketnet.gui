@@ -70561,6 +70561,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
       var hashes = {};
       var users = {};
       var m = 12;
+      var lsspromises = {};
       var usersinfo = {};
       var usershistory = [];
       var pcryptoFile = new PcryptoFile();
@@ -70773,7 +70774,9 @@ var PcryptoRoom = /*#__PURE__*/function () {
                    }*/
 
           var k = (users ? 'ul+' + orderedIdsHash(users) : period(time)) + "-" + block + '-' + (v || self.version);
-          return ls.get(`${lcachekey + pcrypto.user.userinfo.id}-${k}`).then(keys => {
+          var ek = `${lcachekey + pcrypto.user.userinfo.id}-${k}`;
+          if (users) console.log("-CALC" + k, orderedIdsHash(users), users, block);
+          if (!lsspromises[ek]) lsspromises[ek] = ls.get(ek).then(keys => {
             const keysPrepared = convert.aeskeys.out(keys);
             return {
               keys: keysPrepared,
@@ -70781,9 +70784,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
             };
           }).catch( /*#__PURE__*/function () {
             var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
+              console.error('e', e);
               const keysPrepared = eaac.aeskeys(time, block, users, v || self.version);
               if (self.preparedUsers(time).length > 1) {
-                const itemId = `${lcachekey + pcrypto.user.userinfo.id}-${k}`;
+                const itemId = ek;
                 yield ls.set(itemId, convert.aeskeys.inp(keysPrepared)).catch(() => {});
               }
               return {
@@ -70794,7 +70798,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
             return function (_x4) {
               return _ref3.apply(this, arguments);
             };
-          }());
+          }()).finally(() => {
+            delete lsspromises[ek];
+          });
+          return lsspromises[ek];
         },
         aeskeys: function (time, block, users, v) {
           if (!time) time = 0;
@@ -71122,7 +71129,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
       };
       var orderedIdsHash = function (ids) {
         return _application_functions__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"].md5(_.sortBy(ids, id => {
-          return Number(id.replace(/[^0-9]/g));
+          return Number(id.replace(/[^0-9]/g, ''));
         }).join(''));
       };
       self.sendCommonKey = function () {
