@@ -1,5 +1,5 @@
 {
-    "name": "pocketnet",
+    "name": "pocketnet-tor",
 
 
     "version": "0.8.39",
@@ -143,9 +143,9 @@
         "yuicompressor": "^2.4.8"
     },
     "build": {
-        "productName": "Bastyon",
+        "productName": "Bastyon + Tor",
         "afterSign": "electron-builder-notarize",
-        "appId": "app.pocketnet.gui",
+        "appId": "torapp.pocketnet.gui",
         "files": [
             "**/*",
             "!cordova${/*}",
@@ -188,7 +188,7 @@
         },
         "mac": {
             "target": "dmg",
-            "artifactName": "${productName}Setup.${ext}",
+            "artifactName": "BastyonSetup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
@@ -206,13 +206,13 @@
                     "target": "rpm"
                 }
             ],
-            "artifactName": "${productName}Setup.${ext}",
+            "artifactName": "BastyonSetup.${ext}",
             "category": "Network",
-            "executableName": "bastyon",
+            "executableName": "bastyon-torred",
             "description": "Bastyon Desktop Browser"
         },
         "appImage": {
-            "artifactName": "${productName}.${ext}"
+            "artifactName": "Bastyon.${ext}"
         },
         "win": {
             "target": [
@@ -223,7 +223,7 @@
             "icon": "res/electron/icons/win/icon.ico"
         },
         "nsis": {
-            "artifactName": "${productName}Setup.${ext}",
+            "artifactName": "BastyonSetup.${ext}",
             "oneClick": true,
             "perMachine": false,
             "allowToChangeInstallationDirectory": false,
@@ -277,7 +277,7 @@
         },
         "mac": {
             "target": "dmg",
-            "artifactName": "${productName}Setup.${ext}",
+            "artifactName": "BastyonSetup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "entitlements": "build/entitlements.mac.plist",
             "extendInfo": "bastyon"
@@ -291,9 +291,9 @@
                     "target": "deb"
                 }
             ],
-            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "artifactName": "Bastyon_${platform}_${arch}.${ext}",
             "category": "Network",
-            "description": "${productName} Desktop Browser"
+            "description": "Bastyon Desktop Browser"
         },
         "win": {
             "target": [
@@ -304,7 +304,7 @@
             "icon": "res/electron/icons/win/test_icon.ico"
         },
         "nsis": {
-            "artifactName": "${productName}Setup.${ext}",
+            "artifactName": "BastyonSetup.${ext}",
             "oneClick": true,
             "perMachine": false,
             "allowToChangeInstallationDirectory": false,
