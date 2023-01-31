@@ -1003,7 +1003,9 @@ var Account = function(address, parent){
 
             //action.options.sendAgain
             //action.options.rejectedAsk
-            //// check Node Block(compare with other) and send Again now or ask
+            ////check Node Block(compare with other) and send Again now or ask
+            /// and maybe wait 10 minutes
+
 
             if (action.options.sendAgain) {
 
