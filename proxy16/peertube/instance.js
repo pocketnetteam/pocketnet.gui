@@ -143,6 +143,8 @@ var instance = function (host, ip, Roy) {
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000;
 
+		Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
+
 		if (self.offline) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}

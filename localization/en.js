@@ -1,4 +1,4 @@
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -529,7 +529,7 @@ _l.autoplayVideo = "Autoplay Video"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
-_l.blockUserQ = "Do you really want to block user?"
+_l.blockUserQ = "Do you want to block user?"
 _l.e13023 = "Do you really want to unblock user?"
 _l.e13024 = "Your Private Login Key"
 _l.e13025 = "Create a new account"
@@ -1229,7 +1229,7 @@ _l.pleaseTryAgain = "Something was wrong there. Please try again"
 
 _l.pbp_1 = "Bastyon Bonus Program"
 _l.pbp_2 = "Criteria for bonus for original content:"
-_l.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
+_l.pbp_3 = "Every 15k views + 1250 five star ratings from unique users  + 1500 referral users"
 _l.pbp_4 = "PKOIN Equivalent:"
 _l.pbp_5 = "1,000 USDT"
 _l.pbp_6 = "How You Speed Up Your Bonus?"
