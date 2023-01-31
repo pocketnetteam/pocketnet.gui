@@ -70756,7 +70756,6 @@ var PcryptoRoom = /*#__PURE__*/function () {
               };
             }).catch( /*#__PURE__*/function () {
               var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
-                console.error('e', e);
                 const keysPrepared = eaac.aeskeys(time, block, users, v || self.version);
                 if (self.preparedUsers(time).length > 1) {
                   const itemId = ek;
