@@ -70746,32 +70746,34 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
           var k = (users ? 'ul+' + orderedIdsHash(users) : period(time)) + "-" + block + '-' + (v || self.version);
           var ek = `${lcachekey + pcrypto.user.userinfo.id}-${k}`;
-          if (users) console.log("-CALC" + k, orderedIdsHash(users), users, block);
-          if (!lsspromises[ek]) lsspromises[ek] = ls.get(ek).then(keys => {
-            const keysPrepared = convert.aeskeys.out(keys);
-            return {
-              keys: keysPrepared,
-              k
-            };
-          }).catch( /*#__PURE__*/function () {
-            var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
-              console.error('e', e);
-              const keysPrepared = eaac.aeskeys(time, block, users, v || self.version);
-              if (self.preparedUsers(time).length > 1) {
-                const itemId = ek;
-                yield ls.set(itemId, convert.aeskeys.inp(keysPrepared)).catch(() => {});
-              }
+          if (!lsspromises[ek]) {
+            if (users) console.log("-CALC" + k, orderedIdsHash(users), users, block);
+            lsspromises[ek] = ls.get(ek).then(keys => {
+              const keysPrepared = convert.aeskeys.out(keys);
               return {
                 keys: keysPrepared,
                 k
               };
+            }).catch( /*#__PURE__*/function () {
+              var _ref3 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (e) {
+                console.error('e', e);
+                const keysPrepared = eaac.aeskeys(time, block, users, v || self.version);
+                if (self.preparedUsers(time).length > 1) {
+                  const itemId = ek;
+                  yield ls.set(itemId, convert.aeskeys.inp(keysPrepared)).catch(() => {});
+                }
+                return {
+                  keys: keysPrepared,
+                  k
+                };
+              });
+              return function (_x4) {
+                return _ref3.apply(this, arguments);
+              };
+            }()).finally(() => {
+              delete lsspromises[ek];
             });
-            return function (_x4) {
-              return _ref3.apply(this, arguments);
-            };
-          }()).finally(() => {
-            delete lsspromises[ek];
-          });
+          }
           return lsspromises[ek];
         },
         aeskeys: function (time, block, users, v) {
