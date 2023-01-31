@@ -796,6 +796,10 @@ var component = Object(componentNormalizer["a" /* default */])(
               };
             });
           }
+        } else {
+          if (subtype == "m.audio") {
+            pr = this.core.mtrx.getAudioUnencrypt(this.chat, e);
+          }
           if (subtype == "m.encrypted") {
             pr = this.chat.pcrypto.decryptEvent(e.event).then(d => {
               e.event.decrypted = d;
@@ -806,10 +810,6 @@ var component = Object(componentNormalizer["a" /* default */])(
               };
               return Promise.resolve();
             });
-          }
-        } else {
-          if (subtype == "m.audio") {
-            pr = this.core.mtrx.getAudioUnencrypt(this.chat, e);
           }
         }
         if (!pr) return Promise.resolve();
