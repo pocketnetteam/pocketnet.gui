@@ -1037,12 +1037,15 @@ var registration = (function(){
 			},
 
 			preloader : function(sh){
-				if(sh){
-					el.c.addClass('loading')
-				}
-				else{
-					el.c.removeClass('loading')
-				}
+				window.requestAnimationFrame(() => {
+					if(sh){
+						el.c.addClass('loading')
+					}
+					else{
+						el.c.removeClass('loading')
+					}
+				})
+				
 			},
 
 			signin : function(clbk){
@@ -1105,31 +1108,30 @@ var registration = (function(){
 
 					actions.preloader(true)
 
-					step.prev(function(){
+					setTimeout(() => {
+						step.prev(function(){
 
-						if(!el.c){
-
-							return
-						}
-
-						el.c.attr('step', step.id)
-
-						renders.step(step, function(el){
-							//renders.panel(step, function(pel){
+							if(!el.c){
+	
+								return
+							}
+	
+							el.c.attr('step', step.id)
+	
+							renders.step(step, function(el){
 
 								actions.preloader(false)
 
 								_scrollTop(el, scrollel)
 
-								//pel.find('.elpanel').addClass('active')
-							
 								step.after(el)
-
-							//})
-
+	
+							})
+	
 						})
+					}, 300)
 
-					})
+					
 
 				}
 				else
@@ -1641,7 +1643,6 @@ var registration = (function(){
 				}
 				catch (e) { }
 
-				
 
 				self.app.api.get.proxywithwallet().then(r => {
 					//const isHex = (p) => p?.info?.captcha?.hexCaptcha;

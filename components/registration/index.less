@@ -41,7 +41,9 @@
 	}
 
 	.upanelloader{
-		display: none;
+		/*display: none;*/
+		visibility: hidden;
+		opacity: 0;
 		position: absolute;
 		left : 0;
 		right : 0;
@@ -49,6 +51,7 @@
 		bottom : 0;
 		z-index: 3000;
 		background: rgba(var(--background-total-theme));
+		.transition(0.3s, opacity);
 
 		.table{
 			width : 100%;
@@ -62,8 +65,12 @@
 	}
 
 	&.loading{
+		.stepsWrapper{
+			opacity: 0;
+		}
 		.upanelloader{
-			display: block;
+			visibility: visible;
+			opacity: 1;
 		}
 
 		.hasaccount{
@@ -78,6 +85,7 @@
 		
 
 		.stepsWrapper{
+			.transition(0.3s, opacity);
 			overflow: hidden;
 
 			.stepsWrapperLine{

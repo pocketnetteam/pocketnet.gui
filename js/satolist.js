@@ -3043,7 +3043,7 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        captcha : function(){
+        captcha : function(reason){
 
             var getcapcha = function(refresh){
 
@@ -3104,8 +3104,14 @@ Platform = function (app, listofnodes) {
                 })
 
             }
-            
-            return getcapcha().then(({captcha, proxyOptions}) => {
+
+            return self.app.user.isStatePromise().then((state) => {
+
+                if(!state) return Promise.reject('state')
+
+                return getcapcha()
+
+            }).then(({captcha, proxyOptions}) => {
 
                 return new Promise ((resolve, reject) => {
 
@@ -3124,6 +3130,7 @@ Platform = function (app, listofnodes) {
                             essenseData : {
                                 captcha,
                                 proxyOptions,
+                                reason,
                                 getcapcha : () => getcapcha(true),
                                 success : (data) => {
                                     resolve(data)
@@ -3143,6 +3150,8 @@ Platform = function (app, listofnodes) {
                 })
 
             })
+            
+            
 
             
             

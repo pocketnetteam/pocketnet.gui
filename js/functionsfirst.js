@@ -294,6 +294,18 @@ retryLazy = function(_function, clbk, time){
     f();
 }
 
+processArray = function(array, fn) {
+	var results = [];
+	return array.reduce(function(p, item) {
+		return p.then(function() {
+			return fn(item).then(function(data) {
+				results.push(data);
+				return results;
+			});
+		});
+	}, Promise.resolve());
+}
+
 slowMade = function(_function, timer, time){
 
     if (!time) time = 20

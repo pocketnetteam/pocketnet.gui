@@ -2352,7 +2352,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			
 			getHex: {
-				authorization: 'signaturelight',
+				authorization: 'signature',
 				path: '/captchaHex',
 				
 				action: function ({ captcha, ip }) {
@@ -2372,7 +2372,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					captcha = hexCaptcha({
 						text: {
 							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
-							font : 'black 22px Monospace'
+							font : 'black 24px Monospace'
 						}
 					});
 
@@ -2408,7 +2408,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 
 			make: {
-				authorization: 'signaturelight',
+				authorization: 'signature',
 				path: '/makecaptcha',
 
 				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {

@@ -48,7 +48,9 @@ var ActionOptions = {
             },
         },
         userInfo : {
-
+            rejectedAsk : false, /// orfens
+            sendAgain : true,   /// orfens
+            attentionIfRecectCodes : [18],
             change : function(action, account){
 
                 if (action.transaction){
@@ -84,6 +86,7 @@ var ActionOptions = {
         },
 
         contentBoost : {
+            rejectedAsk : true,
             amount : function(action){
                 return action.object.amount.v
             },
@@ -96,6 +99,7 @@ var ActionOptions = {
         },
 
         comment : {
+            rejectedAsk : true,
             destination : function(action){
 
 
@@ -121,7 +125,7 @@ var ActionOptions = {
     }
 }
 
-var Action = function(account, object, priority){
+var Action = function(account, object, priority, settings){
 
     var options = ActionOptions.objects[object.type] || {}
 
@@ -131,6 +135,7 @@ var Action = function(account, object, priority){
     self.priority = priority || options.priority || 3
     self.added = new Date()
     self.until = (new Date()).addSeconds(60 * 60 * 12)
+    self.settings = settings || {}
 
     self.sent = null
     self.checkedUntil = null
@@ -163,6 +168,7 @@ var Action = function(account, object, priority){
         e.outputs = _.clone(self.outputs)
         e.attempts = self.attempts
         e.transaction = self.transaction
+        e.settings = self.settings
 
         e.rejected = self.rejected
         e.completed = self.completed
@@ -202,6 +208,7 @@ var Action = function(account, object, priority){
         self.outputs = _.clone(e.outputs)
         self.attempts = e.attempts
         self.transaction = e.transaction
+        self.settings = e.settings || {}
 
         if (e.object){
             self.object = e.object
@@ -224,7 +231,7 @@ var Action = function(account, object, priority){
         }
 
         options = ActionOptions.objects[self.object.type] || {}
-
+        self.options = options
     }
 
     var getBestInputs = function(unspents, value){
@@ -341,14 +348,14 @@ var Action = function(account, object, priority){
             try{
                 await account.updateUnspents(retry ? 0 : 60).then((clearUnspents) => {
 
-                    if(!clearUnspents.length && !account.unspents.willChange){
+                    /*if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('actions_noinputs')
-                    }
+                    }*/
 
                     clearUnspents = filterUnspents(clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange){
-                        return Promise.reject('actions_noinputs_on_address')
+                        return Promise.reject('actions_noinputs')
                     }
     
                     unspents = account.getActualUnspents(true)
@@ -545,9 +552,11 @@ var Action = function(account, object, priority){
                 return makeTransaction(true, calculatedFee, send)
             }
 
-            if (options.rejectedAsk){
+            /*if (options.rejectedAsk){
 
-            }
+            }*/
+
+            console.error(e)
 
             self.rejected = code || (e.toString ? e.toString() : 'actions_rejected')
 
@@ -580,12 +589,19 @@ var Action = function(account, object, priority){
                         self.attempts ++ 
 
                         if (self.attempts > 2){
-                            self.rejected = 'actions_rejectedFromNodes'
 
-                            if(options.change) options.change(self, account)
+                            if (options.rejectedAsk || options.sendAgain){
+                                self.rejected = 'actions_rejectedFromNodes'
+                            }
+                            else{
+                                self.rejected = 'actions_rejectedFromNodes_ignore'
+                            }
+
+                            
+
+                            if (options.change) options.change(self, account)
 
                             trigger(self)
-
 
                             return reject(self.rejected)
                         }
@@ -647,14 +663,11 @@ var Action = function(account, object, priority){
             return Promise.reject('actions_alreadySending')
         }
 
-        
-
         if (!account.status.value){
             if(!options.sendWithNullStatus) {
                 return Promise.reject('actions_waitUserStatus')
             }
         }
-
 
         if (self.until < new Date()){
             self.rejected = 'actions_rejectedByTime'
@@ -690,7 +703,7 @@ var Action = function(account, object, priority){
                     self.checkedUntil = null
 
                     if(r){
-                        makeTransaction(false, null, true).then(resolve).catch(reject)
+                        makeTransaction(false, (self.settings || {}).calculateFee || null, true).then(resolve).catch(reject)
                     }
                     else{
                         reject('actions_checkFail')
@@ -701,8 +714,49 @@ var Action = function(account, object, priority){
 
         }
 
-        return makeTransaction(false, null, true)
+        return makeTransaction(false, (self.settings || {}).calculateFee || null, true)
 
+    }
+
+    self.processingWithIteractions = async function(){
+
+        var error = null
+
+        try{
+            await self.processing()
+        }
+        catch(e){
+
+            if (
+                e == 'actions_rejectedFromNodes' || 
+                e == 'actions_noinputs' || 
+                (self.options.attentionIfRecectCodes && _.indexOf(self.options.attentionIfRecectCodes, e) > -1)
+                ){
+                    error = e
+                
+            }
+            
+        }
+
+        if(error){
+            try{
+                await account.actionRejected(self, e)
+
+                error = null
+            }
+            catch(e){
+
+                if (e == 'rejected_by_user'){
+                    self.rejected = 'rejected_by_user'
+                    trigger()
+                }
+
+                error = e
+            }
+        }
+
+        if(error) throw error
+        
     }
 
     self.prepareTransaction = function(fee = 0){
@@ -777,6 +831,7 @@ var Action = function(account, object, priority){
 
 var Account = function(address, parent){
     var self = this
+    var waitUserAction = false
 
     self.address = address
 
@@ -811,53 +866,9 @@ var Account = function(address, parent){
         unspents : null
     }
 
-    var checkTransactionByUnspents = function(){
-
-        _.each(self.unspents.value, (u) => {
-            var action = _.find(self.actions.value, (action) => {
-
-                if(action.completed || action.rejected) return
-
-                if(action.transaction == u.txid){
-                    return true
-                }
-            })
-
-            if (action){
-                action.completed = true
-
-                if(action.change) action.change(action, self)
-
-                self.trigger(action)
-
-            }
-
-            /*if (self.unspents.willChange){
-                if (self.unspents.willChange.transaction == out.txid){
-                    self.unspents.willChange = null
-                }
-            }*/
-        })
-
+    var setWaitUserAction = function(v){
+        waitUserAction = v
     }
-
-    self.willChangeUnspentsCallback = function(actionId, proxy){
-
-        self.unspents.willChange = {
-            transaction : null,
-            id : actionId,
-            until : (new Date).addSeconds(280),
-            proxy
-        }
-
-        self.trigger()
-    }
-
-
-    self.requestUnspents = function(){
-
-    }
-
 
     var checkTransactionById = function(ids){
 
@@ -893,6 +904,192 @@ var Account = function(address, parent){
         return actions
     }
 
+    var cleanOutputs = function(){
+        self.unspents.value = _.uniq(self.unspents.value, (v) => {
+            return v.txid + ";" + v.vout
+        })
+    }
+
+    var checkTransactionByUnspents = function(){
+
+        _.each(self.unspents.value, (u) => {
+            var action = _.find(self.actions.value, (action) => {
+
+                if(action.completed || action.rejected) return
+
+                if(action.transaction == u.txid){
+                    return true
+                }
+            })
+
+            if (action){
+                action.completed = true
+
+                if(action.change) action.change(action, self)
+
+                self.trigger(action)
+
+            }
+
+            /*if (self.unspents.willChange){
+                if (self.unspents.willChange.transaction == out.txid){
+                    self.unspents.willChange = null
+                }
+            }*/
+        })
+
+    }
+
+    var checkUnspentReadyBlockChain = function(u){
+        var wait = 0
+
+        if (u.confirmations <= 11 && u.pockettx) {
+
+            wait = 11 - u.confirmations
+
+        }
+
+        if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
+
+            wait = 1
+
+        }
+
+        if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
+
+            wait = 100 - u.confirmations
+
+        }
+
+        if(wait) return false
+
+
+        return true
+    }
+
+    var getActionById = function(id){
+        return _.find(self.actions.value, (a) => {
+            return a.id == id
+        })
+    }
+
+    self.isCurrentAccount = function(){
+        var account = parent.getCurrentAccount()
+
+        if(!account) return false
+
+        return account.address == self.address
+    }
+    ///promise
+
+    self.actionRejected = async function(action, error){
+
+        //// use getActionById(in clbk)
+
+
+        if(error == 'actions_noinputs'){
+
+            var parameters = {
+                reason : ""
+            }
+
+            return await self.userInteractive(action, 'requestUnspents', parameters)
+
+            //checkBalance on account in blockchain, calc reason, and maybe show captcha
+            
+        }
+
+        if(error == 'actions_rejectedFromNodes'){
+
+            //action.options.sendAgain
+            //action.options.rejectedAsk
+            //// check Node Block(compare with other) and send Again now or ask
+
+            if (action.options.sendAgain) {
+
+                //// update action status
+
+                return
+            }
+
+            if (action.options.rejectedAsk) {
+
+
+                return await self.userInteractive(action, 'sendTransactionAgainQuestion', {})
+
+                ///// rejected_by_user
+
+                return
+            }
+
+        }
+
+        if(action.options.attentionIfRecectCodes && _.indexOf(action.options.attentionIfRecectCodes, error) > -1){
+            
+
+            if (action.type == 'userInfo' && error == 18){
+                //// ask change user name
+
+                return await self.userInteractive(action, 'changeUserName', {})
+
+                return
+            }
+        }
+
+        
+
+        //// actionRejected
+    }
+
+    self.userInteractive = function(action, type, parameters){
+
+        if(!self.isCurrentAccount()) return Promise.reject('userInteractive')
+
+        if (waitUserAction) return Promise.reject('waitUserInteractive')
+
+        setWaitUserAction(action.id)
+
+        if(type == 'requestUnspents'){
+            return self.requestUnspents(parameters).then((captcha) => {
+                ///request balance
+            }).finally(() => {
+                setWaitUserAction(null)
+            })
+        }
+
+        if(type == 'sendTransactionAgainQuestion'){
+            return Promise.reject('todo')
+        }
+
+        if(type == 'changeUserName'){
+            return Promise.reject('todo')
+        }
+
+        setWaitUserAction(null)
+    }
+
+    self.solveCaptcha = function(parameters = {}){
+        return self.platform.ui.captcha(parameters.reason)
+    }
+
+    self.willChangeUnspentsCallback = function(actionId, proxy){
+
+        self.unspents.willChange = {
+            transaction : null,
+            id : actionId,
+            until : (new Date).addSeconds(280),
+            proxy
+        }
+
+        self.trigger()
+    }
+
+
+    self.requestUnspents = function(parameters){
+        return self.solveCaptcha(parameters.reason).then((captcha) => {
+            //// TODO
+        })
+    }
 
     /*self.setWaitCoins = function(value){
         self.unspents.willChange = value ? true : false
@@ -961,13 +1158,7 @@ var Account = function(address, parent){
 
         cleanOutputs()
     }
-
-    var cleanOutputs = function(){
-        self.unspents.value = _.uniq(self.unspents.value, (v) => {
-            return v.txid + ";" + v.vout
-        })
-    }
-
+    
     self.setWaitCoins = function(transaction){
         self.unspents.willChange = {
             transaction,
@@ -1006,8 +1197,6 @@ var Account = function(address, parent){
         return e
     }
 
- 
-
     self.import = function(e, flag){
         self.status = e.status
         self.unspents = e.unspents
@@ -1023,7 +1212,11 @@ var Account = function(address, parent){
 
 
             //withcompleted
-            if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected))){
+            if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || 
+            
+            ( exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && ActionOptions.clearRejected))
+            
+            ){
 
                 _.each(self.emitted, (category) => {
                     if(exported.id && category[exported.id]){
@@ -1206,33 +1399,6 @@ var Account = function(address, parent){
         }
     }
 
-    var checkUnspentReadyBlockChain = function(u){
-        var wait = 0
-
-        if (u.confirmations <= 11 && u.pockettx) {
-
-            wait = 11 - u.confirmations
-
-        }
-
-        if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
-
-            wait = 1
-
-        }
-
-        if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
-
-            wait = 100 - u.confirmations
-
-        }
-
-        if(wait) return false
-
-
-        return true
-    }
-
     self.getActualUnspents = function(onlyReady, adresses){
 
         var unspents = self.unspents.value
@@ -1281,7 +1447,11 @@ var Account = function(address, parent){
         })
     }
 
+    
+
     self.processing = async function(){
+
+        if(waitUserAction) return
 
         if(!self.isCurrentNetwork()) return
 
@@ -1294,12 +1464,14 @@ var Account = function(address, parent){
             var action = sorted[index]
 
             try{
-                await action.processing()
+                await action.processingWithIteractions()
             }
             catch(e){
 
-                //if(e != 'completed' && e != 'rejected') console.error(e)
             }
+            
+
+            
 
         }
         
@@ -1528,7 +1700,7 @@ var Actions = function(app, api, storage = localStorage){
     var inited = false
 
     var processInterval = null
-    var waitUserAction = false
+    
     
     var exports = function(){
         var e = {}
@@ -1593,9 +1765,9 @@ var Actions = function(app, api, storage = localStorage){
         
     }
 
-    self.waitUserAction = function(v){
-        waitUserAction = v ? true : false
-    }
+   
+
+    
    
     self.on = function(key, f){
         if(!events[key]){
@@ -1650,7 +1822,7 @@ var Actions = function(app, api, storage = localStorage){
 
     self.processing = function(){
 
-        if(waitUserAction) return
+        
 
         _.each(accounts, (account) => {
             account.processing()
@@ -1682,11 +1854,13 @@ var Actions = function(app, api, storage = localStorage){
             return Promise.reject('actions_address')
         }
 
-        var action = self.addAction(address, object, priority)
+        var action = self.addAction(address, object, priority, p)
 
         if (accounts[address].checkAccountReadySend()){
 
-            return action.makeTransaction(null, p.calculateFee || null, true).then(() => {
+            ////processing
+
+            return action.processingWithIteractions().then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
 

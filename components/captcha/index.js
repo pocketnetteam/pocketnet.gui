@@ -141,12 +141,17 @@ var captcha = (function(){
 							
 								if (captcha.done){
 
-									if(ed.success){
+									
+
+									if (ed.success){
 										ed.success(captcha)
-										
 									}
 
 									self.closeContainer()
+
+									setTimeout(() => {
+										successCheck()
+									}, 200)
 									
 								}
 						

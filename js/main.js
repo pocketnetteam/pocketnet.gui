@@ -8,11 +8,11 @@ if(!_Node)
 	var _listofproxies =  [
 		
 
-		/*{
+		{
 			host : '127.0.0.1',
 			port : 8887,
 			wss : 8087
-		},*/
+		},
 			
 		/*{
 			host : 'pocketnet.app',
@@ -20,7 +20,7 @@ if(!_Node)
 			wss : 8099
 	    },*/
 		
-		{
+		/*{
 			host : '1.pocketnet.app',
 			port : 8899,
 			wss : 8099
@@ -49,7 +49,7 @@ if(!_Node)
 			host : '5.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		},
+		},*/
 		
 		/*{
 			host : '6.pocketnet.app',
