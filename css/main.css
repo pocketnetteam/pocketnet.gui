@@ -2140,6 +2140,11 @@ input[type=radio].radio:checked + label {
   text-align: left;
   max-width: 150px;
 }
+.m-message-container .notificationWrapper .m-message-content .listPreview .previewMessage label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .m-message-container .notificationWrapper .m-message-icons {
   float: none;
 }

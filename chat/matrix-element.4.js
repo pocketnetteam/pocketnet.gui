@@ -611,10 +611,18 @@ var functions = __webpack_require__("3139");
   computed: Object(vuex_esm["c" /* mapState */])({
     callsEnabled: state => state.isCallsEnabled,
     isGroup: function () {
-      return this.m_chat.name.slice(0, 1) === "@";
+      var _this$m_chat;
+      return ((_this$m_chat = this.m_chat) === null || _this$m_chat === void 0 ? void 0 : _this$m_chat.name.slice(0, 1)) === "@";
     },
     auth: state => state.auth,
     isCallsActive: state => state.isCallsActive,
+    lastEnabled: function () {
+      var _chat$timeline$filter;
+      let chat = this.core.mtrx.client.getRoom(this.chat.roomId);
+      console.log('chat.timeline', chat.timeline);
+      let res = (_chat$timeline$filter = chat.timeline.filter(i => i.event.type === 'm.room.callsEnabled').pop()) === null || _chat$timeline$filter === void 0 ? void 0 : _chat$timeline$filter.event.content.enabled;
+      return res;
+    },
     m_chat: function () {
       if (this.chat && this.chat.roomId) {
         let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
@@ -665,7 +673,7 @@ var functions = __webpack_require__("3139");
         console.log("wait");
         return "wait";
       } else {
-        console.log("nonono");
+        console.log("rejected");
         return false;
       }
     },
@@ -688,7 +696,8 @@ var functions = __webpack_require__("3139");
       let local = document.querySelector("body");
       this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local).then(matrixCall => {
         console.log('matrixCall', matrixCall);
-        if (matrixCall) this.$store.dispatch("CALL", matrixCall);
+
+        // if (matrixCall) this.$store.dispatch("CALL", matrixCall);
       }).catch(e => {
         console.log("error", e);
       });
