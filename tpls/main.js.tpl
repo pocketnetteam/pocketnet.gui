@@ -32,7 +32,7 @@ const { SocksProxyAgent } = require('socks-proxy-agent');
 
 FetchHandler.init(ipcMain, {
   prepareOptions: () => ({
-      agent: new SocksProxyAgent('socks5h://127.0.0.1:9050'),
+      agent: new SocksProxyAgent('socks5h://127.0.0.1:9151'),
   }),
   prepareResponse: (response) => {
     response.headers.append('#bastyon-tor-used', true);

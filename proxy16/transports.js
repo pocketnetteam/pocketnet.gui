@@ -26,7 +26,7 @@ module.exports = function (isTorEnabled = false) {
                 return;
             }
 
-            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", {
+            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9151", {
                 keepAlive: true,
                 timeout: 60000,
             });
