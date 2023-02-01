@@ -977,6 +977,26 @@ var Api = function(app){
         })
     }
 
+    self.rpcwide = function(method, parameters, options){
+
+        var results = {}
+
+        return Promise.all(proxies, (proxy) => {
+            var localoptions = {...options}
+
+            localoptions.proxy = proxy.id
+
+            return self.rpc(method, parameters, options).then(data => {
+                results[proxy.id] = {data : options.changedata ? options.changedata(data) : data}
+            }).catch(error => {
+                results[proxy.id] = {error}
+            })
+        }).then(() => {
+            return results
+        })
+      
+    }
+
     self.rpc = function(method, parameters, options, trying){
         var selectedProxy;
 
@@ -1308,6 +1328,33 @@ var Api = function(app){
             return Promise.resolve(self.get.direct())
         },
 
+        proxywithwalletls : function(){
+            var regproxy = null
+
+            try {
+                if (localStorage['regproxy']){
+                    regproxy = self.get.byid(localStorage['regproxy'])
+                }
+            }
+            catch (e) { }
+
+            globalpreloader(true)
+
+            return self.get.proxywithwallet().then(r => {
+
+                if(r && !regproxy) regproxy = r
+
+                if (regproxy){
+                    try {
+                        localStorage['regproxy'] = regproxy.id
+                    }
+                    catch (e) { }
+                }
+
+                return Promise.resolve(regproxy)
+
+            })
+        },
 
         proxywithwallet : function(){
 
@@ -1321,7 +1368,6 @@ var Api = function(app){
                     var wallet = deep(r, 'info.wallet.addresses.registration') || {}
                     var hexCaptcha = p.hasHexCaptcha()
 
-                    console.log('hexCaptcha', hexCaptcha)
                     
                     if (wallet.ready && wallet.unspents /*&& hexCaptcha*/){
                         f = p
@@ -1334,7 +1380,7 @@ var Api = function(app){
                 }).finally(() => {
                     es++
             
-                    if(es >= proxies.length){
+                    if (es >= proxies.length){
                         e = true
                     }
             
@@ -1347,6 +1393,8 @@ var Api = function(app){
             }).then(() => {
 
                 console.log("E", e, f)
+
+                if(!f) return Promise.reject('noproxywithwallet')
 
                 return Promise.resolve(f)
             })

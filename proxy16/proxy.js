@@ -2513,7 +2513,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					}
 
 					return self.wallet
-						.addqueue(key || 'registration', address, ip)
+						.addqueue('registration', address, ip)
 						.then((r) => {
 
 							if (settings.server.captcha) {
@@ -2532,7 +2532,36 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			freebalance: {
+				path: '/free/balance',
+				authorization: self.test ? false : 'signature',
+				action: function ({ captcha, key, address, ip }) {
 
+					if (settings.server.captcha && !self.test) {
+						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+							return Promise.reject('captcha');
+						}
+					}
+
+					return self.wallet
+						.addqueue(key, address, ip)
+						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 
 			clearexecuting: {
 				path: '/wallet/clearexecuting',

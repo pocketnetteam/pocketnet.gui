@@ -3043,66 +3043,64 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        captcha : function(reason){
+        sendTransactionAgainQuestion : function(reason, clbk){
+            return new Promise ((resolve, reject) => {
+                
+            })
+        },
+
+        edituserinfo : function(reason, clbk){
+            return new Promise ((resolve, reject) => {
+                app.nav.api.load({
+                    open : true,
+                    id : 'test',
+                    inWnd : true,
+
+                    essenseData : {
+                        reason,
+                        success : (action) => {
+                            resolve(action)
+                        },
+
+                        fail : function(){
+                            reject('close')
+                        },
+                    },
+
+                
+                    clbk : function(s, p){
+                        if(clbk) clbk(p)
+                    }
+                })
+            })
+        },
+
+        captcha : function(reason, clbk, proxyOptions){
 
             var getcapcha = function(refresh){
 
-                var regproxy = null
-
-                try {
-                    if (localStorage['regproxy']){
-                        regproxy = self.app.api.get.byid(localStorage['regproxy'])
-                    }
-                }
-                catch (e) { }
-
                 globalpreloader(true)
 
-                return self.app.api.get.proxywithwallet().then(r => {
+                return new Promise((resolve, reject) => {
 
-                    if(r && !regproxy) regproxy = r
+                    self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
 
-                    if (regproxy){
-                        try {
-                            localStorage['regproxy'] = regproxy.id
+                        if (error){
+
+                            reject('network')
+
+                            return
                         }
-                        catch (e) { }
-                    }
 
-                    return Promise.resolve(regproxy)
+                        console.log('captcha', captcha)
 
-                }).then((proxy) => {
+                        resolve({captcha})
 
-                    var proxyOptions = {
-                        proxy : proxy.id
-                    }
-
-                    return new Promise((resolve, reject) => {
-
-                        self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
-
-                            if (error){
-
-                                reject('network')
-
-                                return
-                            }
-
-                            console.log('captcha', captcha)
-
-                            resolve({captcha, proxyOptions})
-
-                            
-                            
-
-                        }, refresh || false, proxyOptions)
-                        
-                    })
-
+                    }, refresh || false, proxyOptions)
+                    
                 }).finally(() => {
                     globalpreloader(false)
                 })
-
             }
 
             return self.app.user.isStatePromise().then((state) => {
@@ -3111,7 +3109,7 @@ Platform = function (app, listofnodes) {
 
                 return getcapcha()
 
-            }).then(({captcha, proxyOptions}) => {
+            }).then(({captcha}) => {
 
                 return new Promise ((resolve, reject) => {
 
@@ -3142,7 +3140,9 @@ Platform = function (app, listofnodes) {
                             },
         
                          
-
+                            clbk : function(s, p){
+                                if(clbk) clbk(p)
+                            }
                         })
         
                     }
@@ -15482,6 +15482,22 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
+                    },
+
+                    txwide: function(id){
+                        return api.rpcwide('getrawtransaction', [id, 1], {
+                            changedata : (d) => {
+                                if (!d.confirmations) {
+                                    d.confirmations = 0
+            
+                                    if (d.height) {
+                                        app.platform.currentBlock ? (d.confirmations = Math.max(app.platform.currentBlock - d.height, 0)) : null
+                                    } else {
+                                        app.platform.currentBlock ? (d.height = app.platform.currentBlock) : null
+                                    }
+                                }
+                            }
+                        })
                     }
                 },
 

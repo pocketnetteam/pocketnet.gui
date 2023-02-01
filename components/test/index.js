@@ -167,7 +167,7 @@ var test = (function(){
 
 					saving = true
 
-				var allclbk = function(){
+				var allclbk = function(action){
 
 					actions.loading(false)
 
@@ -188,7 +188,7 @@ var test = (function(){
 					else
 					{	
 						if (ed.success){							
-							ed.success()
+							ed.success(action)
 						}
 						else
 						{
@@ -341,14 +341,14 @@ var test = (function(){
 
 										self.closeContainer()
 
-										
-
-											if (ed.presuccess){
-												ed.presuccess(allclbk)
-											}
-											else{
-												allclbk()
-											}
+										if (ed.presuccess){
+											ed.presuccess(() => {
+												allclbk(action)
+											})
+										}
+										else{
+											allclbk(action)
+										}
 	
 
 									}).catch(e => {
@@ -1198,7 +1198,10 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow normalizedmobile'
+				class : 'withoutButtons allscreen testwindow normalizedmobile',
+				closecross : function(){
+					if(ed.fail) ed.fail()
+				}
 			}
 		}
 	};

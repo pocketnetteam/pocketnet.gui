@@ -1913,7 +1913,7 @@ var pSDK = function ({ app, api, actions }) {
             return loadone('transaction', id, (ids) => {
                 return api.rpc('getrawtransaction', [ids[0], 1]).then(d => {
 
-                    if (_.isEmpty(d)) {
+                    if(_.isEmpty(d)) {
                         return []
                     }
 

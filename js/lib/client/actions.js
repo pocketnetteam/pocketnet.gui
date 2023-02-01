@@ -582,22 +582,22 @@ var Action = function(account, object, priority, settings){
                     data || (data = {})
 
                     if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
-                        self.sent = null
-                        self.transaction = null
 
                         self.attempts || (self.attempts = 0)
                         self.attempts ++ 
 
                         if (self.attempts > 2){
 
+                            
+
                             if (options.rejectedAsk || options.sendAgain){
                                 self.rejected = 'actions_rejectedFromNodes'
                             }
                             else{
+                                self.sent = null
+                                self.transaction = null
                                 self.rejected = 'actions_rejectedFromNodes_ignore'
                             }
-
-                            
 
                             if (options.change) options.change(self, account)
 
@@ -625,11 +625,60 @@ var Action = function(account, object, priority, settings){
 
                     return reject('actions_waitConfirmation')
 
-
                 })
 
             })
         })
+    }
+
+    self.checkTransactionWide = async function(){
+
+        var rs = 0
+        
+        return account.parent.app.platform.sdk.node.transactions.get.txwide(self.transaction, (results = {}) => {
+
+            _.each(results, result => {
+
+                if(result.data){
+                    if(result.data.confirmations > 0){
+                        rs++
+                    }
+                }
+
+                if(result.error){
+                    if(result.error.code == -5 || result.error.code == -8){
+                        rs--
+                    }
+                }
+                
+            })
+           
+        }).then(() => {
+
+            if(rs > 0) return 1
+            if(rs == 0) return 0
+            if(rs < 0) return -1
+
+        })
+    }
+
+    self.sendAgain = function(){
+        delete self.rejected
+
+        trigger(self)
+    }
+
+    self.rejectedByUser = function(){
+        self.rejected = 'rejected_by_user'
+
+        trigger(self)
+    }
+
+    self.setCompleted = function(){
+        delete self.rejected
+        self.completed = true
+
+        trigger(self)
     }
 
     self.processing = async function(){
@@ -831,7 +880,11 @@ var Action = function(account, object, priority, settings){
 
 var Account = function(address, parent){
     var self = this
-    var waitUserAction = false
+
+
+    var waitUserActionComponent = null
+    self.waitUserAction = null
+
 
     self.address = address
 
@@ -867,7 +920,8 @@ var Account = function(address, parent){
     }
 
     var setWaitUserAction = function(v){
-        waitUserAction = v
+        self.waitUserAction = v
+        self.trigger()
     }
 
     var checkTransactionById = function(ids){
@@ -986,6 +1040,8 @@ var Account = function(address, parent){
 
         //// use getActionById(in clbk)
 
+        if(action.checkInAnotherSession) return
+
 
         if(error == 'actions_noinputs'){
 
@@ -993,7 +1049,21 @@ var Account = function(address, parent){
                 reason : ""
             }
 
-            return await self.userInteractive(action, 'requestUnspents', parameters)
+            if (action.type == 'userInfo' && self.getStatus() != 'registered'){
+                parameters.reason = 'registration'
+            }else{
+                parameters.reason = 'balance'
+            }
+
+            return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
+
+                action.checkInAnotherSession = true
+
+                if(e == 'support'){
+                    
+                }
+
+            })
 
             //checkBalance on account in blockchain, calc reason, and maybe show captcha
             
@@ -1001,40 +1071,112 @@ var Account = function(address, parent){
 
         if(error == 'actions_rejectedFromNodes'){
 
-            //action.options.sendAgain
-            //action.options.rejectedAsk
-            ////check Node Block(compare with other) and send Again now or ask
-            /// and maybe wait 10 minutes
+            if (action.options.sendAgain || action.options.rejectedAsk){
+                ////check Node Block(compare with other) and send Again now or ask
+                /// and maybe wait 10 minutes
+
+                if(!action.sent || !action.transaction){
+                    console.error("!action.sent || !action.transaction", action)
+                    return
+                }
+
+                if (action.sent > (new Date()).addSeconds(- 60 * 20)){
+                    console.log("WAIT 20 min")
+                    return
+                }
+
+                else{
+
+                    try{
+                        var result = await action.checkTransactionWide()
+
+                        if (result > 1){
+                            action.setCompleted()
+                            ///completed
+                            return
+                        }
+
+                        if(result == 0){
+                            action.checkInAnotherSession = true
+                            /// undefined
+                            return
+                        }
+
+                        if(result < 0){
+                            
+                        }
+                    }
+                    catch(e){
+                        console.error(e)
+                        action.checkInAnotherSession = true
+
+                        /// undefined
+                        return
+                    }
+                    
+                }
+
+                
+            }
+            else{
+                action.rejectedByUser()
+                return
+            }
 
 
             if (action.options.sendAgain) {
 
                 //// update action status
 
+                action.sendAgain()
+
                 return
             }
 
             if (action.options.rejectedAsk) {
 
+                return self.userInteractive(action, error, 'sendTransactionAgainQuestion', {}).then(() => {
 
-                return await self.userInteractive(action, 'sendTransactionAgainQuestion', {})
+                    action.sendAgain()
 
-                ///// rejected_by_user
+                }).catch(e => {
 
-                return
+                    if (e == 'rejectedByUser' || e == 'todo'){
+                        action.rejectedByUser()
+                    }
+
+                    else{
+                        action.checkInAnotherSession = true
+                    }
+                    
+
+                })
+
             }
 
         }
 
         if(action.options.attentionIfRecectCodes && _.indexOf(action.options.attentionIfRecectCodes, error) > -1){
             
-
             if (action.type == 'userInfo' && error == 18){
                 //// ask change user name
 
-                return await self.userInteractive(action, 'changeUserName', {})
+                return await self.userInteractive(action, error, 'changeUserName', {}).then(() => {
+                    //// new action instead
+                    action.rejectedByUser()
+                }).catch(e => {
 
-                return
+                    if (e == 'rejectedByUser'){
+                        action.rejectedByUser()
+                    }
+
+                    else{
+                        action.checkInAnotherSession = true
+                    }
+                    
+
+                })
+
             }
         }
 
@@ -1043,13 +1185,13 @@ var Account = function(address, parent){
         //// actionRejected
     }
 
-    self.userInteractive = function(action, type, parameters){
+    self.userInteractive = function(action, error, type, parameters){
 
         if(!self.isCurrentAccount()) return Promise.reject('userInteractive')
 
-        if (waitUserAction) return Promise.reject('waitUserInteractive')
+        if (self.waitUserAction) return Promise.reject('waitUserInteractive')
 
-        setWaitUserAction(action.id)
+        setWaitUserAction({action : action.id, error})
 
         if(type == 'requestUnspents'){
             return self.requestUnspents(parameters).then((captcha) => {
@@ -1061,17 +1203,43 @@ var Account = function(address, parent){
 
         if(type == 'sendTransactionAgainQuestion'){
             return Promise.reject('todo')
+            return self.ui.sendTransactionAgainQuestion(action, (component) => {
+
+                waitUserActionComponent = component
+
+            }).finally(() => {
+                setWaitUserAction(null)
+            })
         }
 
         if(type == 'changeUserName'){
-            return Promise.reject('todo')
+
+            return self.ui.edituserinfo(type, (component) => {
+
+                waitUserActionComponent = component
+
+            }).then(newaction => {
+                return Promise.resolve(newaction)
+            }).catch(e => {
+                
+                if (self.getStatus() != 'registered'){
+                    return Promise.reject('rejectedByUser')
+                }
+                
+                return Promise.reject(e)
+            }).finally(() => {
+                setWaitUserAction(null)
+            })
+  
         }
 
         setWaitUserAction(null)
     }
 
-    self.solveCaptcha = function(parameters = {}){
-        return self.platform.ui.captcha(parameters.reason)
+    self.solveCaptcha = function(parameters = {}, proxyOptions){
+        return self.platform.ui.captcha(parameters.reason, (component) => {
+            waitUserActionComponent = component
+        }, proxyOptions)
     }
 
     self.willChangeUnspentsCallback = function(actionId, proxy){
@@ -1086,10 +1254,48 @@ var Account = function(address, parent){
         self.trigger()
     }
 
+    self.requestUnspents = function(parameters, proxyoptions = null){
 
-    self.requestUnspents = function(parameters){
-        return self.solveCaptcha(parameters.reason).then((captcha) => {
+        return new Promise((resolve, reject) => {
+
+            if(proxyoptions){
+                return resolve(proxyoptions)
+            }
+
+            parent.api.get.proxywithwalletls(proxy => {
+                proxyoptions = {
+                    proxy : proxy.id
+                }
+            }).then(resolve).catch(reject)
+
+        }).then(() => {
+
+            return self.solveCaptcha(parameters.reason, proxyoptions)
+
+        }).then((captcha) => {
+
+            return parent.api.fetchauth('free/balance', {
+                                
+                address: self.address,
+                captcha: captcha.id,
+                key : parameters.reason
+    
+            }, proxyoptions)
+
             //// TODO
+        }).catch(e => {
+
+            if(e == 'captcha'){
+                return self.requestUnspents(parameters, proxyoptions)
+            }
+
+            if(e == 'noproxywithwallet' || e == 'error' || e == 'iplimit'){
+                //moneyfail to support
+
+                return Promise.reject('support')
+            }
+
+            return Promise.reject(e)
         })
     }
 
@@ -1182,6 +1388,7 @@ var Account = function(address, parent){
 
         e.status = _.clone(self.status)
         e.unspents = _.clone(self.unspents)
+        e.waitUserAction = _.clone(self.waitUserAction)
 
         e.actions = {
             updated : self.actions.updated,
@@ -1207,6 +1414,7 @@ var Account = function(address, parent){
         self.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
         self.actions.value = []
+        self.waitUserAction = e.waitUserAction || null
 
         _.each(e.actions.value, (exported) => {
 
@@ -1243,6 +1451,18 @@ var Account = function(address, parent){
 
             
         })
+
+        if (self.waitUserAction){
+            self.actionRejected(self.waitUserAction.action, self.waitUserAction.error)
+        }
+        else{
+
+            if (waitUserActionComponent){
+                waitUserActionComponent.destroy()
+                waitUserActionComponent = null
+            }
+
+        }
 
     }
 
@@ -1453,7 +1673,10 @@ var Account = function(address, parent){
 
     self.processing = async function(){
 
-        if(waitUserAction) return
+        if(self.waitUserAction) {
+
+            return
+        }
 
         if(!self.isCurrentNetwork()) return
 

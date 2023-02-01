@@ -141,8 +141,6 @@ var captcha = (function(){
 							
 								if (captcha.done){
 
-									
-
 									if (ed.success){
 										ed.success(captcha)
 									}
