@@ -1194,7 +1194,7 @@ var Account = function(address, parent){
         setWaitUserAction({action : action.id, error})
 
         if(type == 'requestUnspents'){
-            return self.requestUnspents(parameters).then((captcha) => {
+            return self.requestUnspents(parameters).then(() => {
                 ///request balance
             }).finally(() => {
                 setWaitUserAction(null)
@@ -1283,6 +1283,15 @@ var Account = function(address, parent){
             }, proxyoptions)
 
             //// TODO
+        }).then((action) => {
+
+            self.willChangeUnspentsCallback(action, proxyoptions.proxy)
+
+            return Promise.resolve({
+                action,
+                proxy : proxyoptions.proxy
+            })
+
         }).catch(e => {
 
             if(e == 'captcha'){
