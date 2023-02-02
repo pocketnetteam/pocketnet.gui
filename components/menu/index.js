@@ -9,7 +9,9 @@ var menu = (function(){
 		var el = {},
 			authorForSearch = null,
 			menusearch = null,
-		    torIntervalId = null;
+		    torIntervalId = null,
+			controlTorElem = null,
+			networkStatsListenerId = null;
 
 		var logotime = 180000, changeLogoInterval = null
 
@@ -111,7 +113,17 @@ var menu = (function(){
 				})
 			},
 
-			
+			receiveNetworkStats : function(stats) {
+				console.log('Tor stats', stats);
+
+				if (stats.torUsed) {
+					controlTorElem.addClass(stats.status);
+
+					setTimeout(() => {
+						controlTorElem.removeClass(stats.status);
+					}, 300);
+				}
+			}
 		}
 
 		var searchlickaction = function(link){
@@ -453,17 +465,9 @@ var menu = (function(){
 							electron.ipcRenderer.send('electron-refresh');
 					})
 
-					const controlTorElem = _el.find('.control-tor-state');
+					controlTorElem = _el.find('.control-tor-state');
 
-					swBroadcaster.on('tor-stats', (result) => {
-						console.log('Tor stats', result);
-
-						controlTorElem.addClass(result);
-
-						setTimeout(() => {
-							controlTorElem.removeClass(result);
-						}, 300);
-					});
+					networkStatsListenerId = swBroadcaster.on('network-stats', actions.receiveNetworkStats);
 
 					electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
 						if (state === 'failure') {
@@ -1275,7 +1279,11 @@ var menu = (function(){
 				})
 
 				clearInterval(torIntervalId);
+				swBroadcaster.remove('network-stats', networkStatsListenerId);
+
 				torIntervalId = null;
+				controlTorElem = null;
+				networkStatsListenerId = null;
 
 				//if (el.c) el.c.empty()
 

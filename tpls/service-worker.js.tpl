@@ -9,6 +9,15 @@ const isElectron = (swArgs.get('platform') === 'electron');
 
 let nodeFetch = (...args) => fetch(...args);
 
+const networkTotalStats = {
+  torSuccessCount: 0,
+  directSuccessCount: 0,
+  torFailCount: 0,
+  directFailCount: 0,
+  torBytes: 0,
+  directBytes: 0,
+};
+
 if (isElectron) {
   nodeFetch = FetchReceiver.init('ExtendedFetch');
 }
@@ -52,17 +61,40 @@ function onFetch(event) {
 
     if (isTorRequest) {
       return await nodeFetch(request)
-        .then((response) => {
+        .then(async (response) => {
           const hasTorHeader = response.headers.get('#bastyon-tor-used');
 
+          const responseClone = response.clone();
+          const responseBuffer = await responseClone.arrayBuffer();
+
           if (hasTorHeader) {
-            swBroadcaster.send('tor-stats', 'success');
+            networkTotalStats.torSuccessCount++;
+            networkTotalStats.totalTorBytes += responseBuffer.byteLength;
+          } else {
+            networkTotalStats.directSuccessCount++;
+            networkTotalStats.directBytes += responseBuffer.byteLength;
           }
+
+          swBroadcaster.send('network-stats', {
+            status: 'success',
+            url: request.url,
+            torUsed: hasTorHeader,
+            bytesLength: responseBuffer.byteLength,
+            totalStats: networkTotalStats,
+          });
 
           return response;
         })
         .catch((err) => {
-          swBroadcaster.send('tor-stats', 'failed');
+          networkTotalStats.torFailCount++;
+
+          swBroadcaster.send('network-stats', {
+            status: 'failed',
+            reason: err,
+            url: request.url,
+            torUsed: hasTorHeader,
+            totalStats: networkTotalStats,
+          });
 
           throw err;
         });
@@ -110,6 +142,19 @@ function onFetch(event) {
       const fetchResponse = await fetch(request);
 
       if (fetchResponse) {
+        const responseClone = fetchResponse.clone();
+        const responseBuffer = await responseClone.arrayBuffer();
+
+        networkTotalStats.directSuccessCount++;
+        networkTotalStats.directBytes += responseBuffer.byteLength;
+
+        swBroadcaster.send('network-stats', {
+          status: 'success',
+          url: request.url,
+          bytesLength: responseBuffer.byteLength,
+          totalStats: networkTotalStats,
+        });
+
         console.log('Using NORMAL fetch for', request.url);
         resolve(fetchResponse.clone());
 
@@ -118,6 +163,15 @@ function onFetch(event) {
         }
       }
     } catch (err) {
+      networkTotalStats.directFailCount++;
+
+      swBroadcaster.send('network-stats', {
+        status: 'failed',
+        reason: err,
+        url: request.url,
+        totalStats: networkTotalStats,
+      });
+
       reject(err);
     }
   });
