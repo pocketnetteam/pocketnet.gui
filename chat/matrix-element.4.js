@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("c906");
+var content = __webpack_require__("c9065");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -487,9 +487,13 @@ var functions = __webpack_require__("3139");
     chat: Object,
     u: String,
     roomInfo: false,
-    aboutUser: false
+    aboutUser: false,
+    search: String,
+    process: String,
+    searchresults: null,
+    focusedevent: null
   },
-  inject: ["isChatEncrypted", "matches"],
+  inject: ["matches"],
   components: {
     chatName: assets_name["a" /* default */],
     chatIcon: icon["a" /* default */],
@@ -573,6 +577,7 @@ var functions = __webpack_require__("3139");
       aboutUserShow: false,
       roomBanned: false,
       roomMuted: false,
+      searchactive: false,
       // --- Variables for the donation part ---
       // Boolean when the donation modal is open
       donateUserOpened: false,
@@ -607,14 +612,40 @@ var functions = __webpack_require__("3139");
   },
   mounted: function () {
     this.getuserinfo();
+    if (this.search) {
+      this.searchactive = true;
+    }
   },
   computed: Object(vuex_esm["c" /* mapState */])({
+    focusedeventIndex: function () {
+      if (!this.searchresults || !this.focusedevent) {
+        return null;
+      }
+      var i = -1;
+      _.find(this.searchresults, (e, index) => {
+        if (e.event.event_id == this.focusedevent.event.event_id) {
+          i = index;
+          return true;
+        }
+      });
+
+      //if (i < 1) i = 1
+
+      return i;
+    },
     callsEnabled: state => state.isCallsEnabled,
     isGroup: function () {
-      return this.m_chat.name.slice(0, 1) === "@";
+      var _this$m_chat;
+      return ((_this$m_chat = this.m_chat) === null || _this$m_chat === void 0 ? void 0 : _this$m_chat.name.slice(0, 1)) === "@";
     },
     auth: state => state.auth,
     isCallsActive: state => state.isCallsActive,
+    lastEnabled: function () {
+      var _chat$timeline$filter;
+      let chat = this.core.mtrx.client.getRoom(this.chat.roomId);
+      let res = (_chat$timeline$filter = chat.timeline.filter(i => i.event.type === 'm.room.callsEnabled').pop()) === null || _chat$timeline$filter === void 0 ? void 0 : _chat$timeline$filter.event.content.enabled;
+      return res;
+    },
     m_chat: function () {
       if (this.chat && this.chat.roomId) {
         let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
@@ -643,6 +674,42 @@ var functions = __webpack_require__("3139");
     }
   }),
   methods: {
+    searchControlKey: function (key) {
+      if (key == 'up') this.tobottomsearch();
+      if (key == 'down') this.toupsearch();
+    },
+    toupsearch: function () {
+      if (!this.searchresults) return;
+      var i = this.focusedeventIndex;
+      if (i <= this.searchresults.length - 2) {
+        this.$emit('tosearchevent', this.searchresults[this.focusedeventIndex + 1]);
+      }
+    },
+    tobottomsearch: function () {
+      if (!this.searchresults && this.searchresults.length) return;
+      var i = this.focusedeventIndex;
+      if (i > 0) this.$emit('tosearchevent', this.searchresults[this.focusedeventIndex - 1]);
+    },
+    backfromsearch: function () {
+      if (this.process) {
+        this.$router.push("chats?process=" + this.process).catch(e => {});
+      } else {
+        this.searchactive = false;
+        this.searching('');
+      }
+    },
+    tosearch: function () {
+      this.searchactive = true;
+      setTimeout(() => {
+        if (this.$refs.search) this.$refs.search.focus();
+      }, 100);
+    },
+    searching: function (str) {
+      this.$emit('searching', str);
+      if (!str) {
+        this.searchactive = false;
+      }
+    },
     checkCallsEnabled: function () {
       var _isEnabled$find, _isEnabled$find$event, _isEnabled$find$event2, _hasAccess$find, _hasAccess$find2, _hasAccess$find2$even, _hasAccess$find2$even2;
       let isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
@@ -651,7 +718,6 @@ var functions = __webpack_require__("3139");
         var _e$event, _e$event2, _e$event3;
         return !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
       })) !== null && _isEnabled$find !== void 0 && (_isEnabled$find$event = _isEnabled$find.event) !== null && _isEnabled$find$event !== void 0 && (_isEnabled$find$event2 = _isEnabled$find$event.content) !== null && _isEnabled$find$event2 !== void 0 && _isEnabled$find$event2.enabled) {
-        console.log("enabled");
         this.wait = false;
         return true;
       }
@@ -662,10 +728,9 @@ var functions = __webpack_require__("3139");
         var _e$event5;
         return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event5 = e.event) === null || _e$event5 === void 0 ? void 0 : _e$event5.sender);
       })) === null || _hasAccess$find2 === void 0 ? void 0 : (_hasAccess$find2$even = _hasAccess$find2.event) === null || _hasAccess$find2$even === void 0 ? void 0 : (_hasAccess$find2$even2 = _hasAccess$find2$even.content) === null || _hasAccess$find2$even2 === void 0 ? void 0 : _hasAccess$find2$even2.accepted) === undefined) {
-        console.log("wait");
         return "wait";
       } else {
-        console.log("nonono");
+        this.wait = false;
         return false;
       }
     },
@@ -688,7 +753,8 @@ var functions = __webpack_require__("3139");
       let local = document.querySelector("body");
       this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local).then(matrixCall => {
         console.log('matrixCall', matrixCall);
-        if (matrixCall) this.$store.dispatch("CALL", matrixCall);
+
+        // if (matrixCall) this.$store.dispatch("CALL", matrixCall);
       }).catch(e => {
         console.log("error", e);
       });
@@ -2274,7 +2340,7 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "4e16":
+/***/ "4e16a":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -2352,7 +2418,7 @@ __webpack_require__.r(__webpack_exports__);
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("4e16");
+var content = __webpack_require__("4e16a");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -2412,7 +2478,7 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "c906":
+/***/ "c9065":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
