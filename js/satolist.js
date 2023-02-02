@@ -14,8 +14,6 @@ if (typeof _Electron != 'undefined') {
 
     fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
 
-    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
-    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
     fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
     peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;

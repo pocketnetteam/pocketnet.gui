@@ -14,9 +14,6 @@ const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { initFsFetchBridge } = require('./js/transports/fs-fetch.js');
 const VideoDownload = require('./js/electron/video-download.js');
 
-const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
-const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
-
 const electronLocalshortcut = require('electron-localshortcut');
 
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
@@ -28,18 +25,6 @@ const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeI
 app.allowRendererProcessReuse = false
 
 const FetchHandler = require('./js/transports2/fetch/handler.js');
-const { SocksProxyAgent } = require('socks-proxy-agent');
-
-FetchHandler.init(ipcMain, {
-  prepareOptions: () => ({
-      agent: new SocksProxyAgent('socks5h://127.0.0.1:9151'),
-  }),
-  prepareResponse: (response) => {
-    response.headers.append('#bastyon-tor-used', true);
-
-    return response;
-  },
-});
 
 // app.commandLine.appendSwitch('proxy-server', "socks5h://127.0.0.1:9050")
 
@@ -737,18 +722,24 @@ function createWindow() {
      */
     new TranscoderBridge(ipcMain, Storage);
 
-    proxyInterface = new ProxyInterface(ipcMain, win.webContents, {
-      Axios: ProxifiedAxiosBridge,
-      Fetch: ProxifiedFetchBridge,
-      CommunicationLayer: class ProxyCommunicationLayer {
+    class ProxyCommunicationLayer {
         constructor(ipc, functions) {
           this.ipc = ipc;
           this.functions = functions;
         }
 
         init() {
+            FetchHandler.init(ipcMain, {
+                fetchFunction: (...args) => this.functions.fetch(...args),
+                prepareResponse: (response) => {
+                    response.headers.append('#bastyon-tor-used', true);
+
+                    return response;
+                },
+            });
+
           this.ipc.handle('AltTransportActive', async (event, url) => {
-            return await this.functions.isAltTransportSet(url)
+                return await this.functions.isAltTransportSet(url);
           });
         }
 
@@ -759,7 +750,8 @@ function createWindow() {
           delete this.ipc;
         }
       }
-    });
+
+    proxyInterface = new ProxyInterface(ipcMain, win.webContents, ProxyCommunicationLayer);
 
     proxyInterface.init()
 

@@ -58,16 +58,15 @@ var WssDummy = function(wc){
 	return self
 }
 
-var IPC = function(ipc, wc, proxyBridges){
+var IPC = function(ipc, wc, ComLayer){
 	var self = this;
 
 	var wssdummy = new WssDummy(wc)
 
-	var axiosBridge = new proxyBridges.Axios(ipc, kit.manage.transports.axios)
-	var fetchBridge = new proxyBridges.Fetch(ipc, kit.manage.transports.fetch)
-	var comLayerBridge = new proxyBridges.CommunicationLayer(ipc, {
+	const comLayerBridge = new ComLayer(ipc, {
 		isAltTransportSet: kit.manage.transports.isAltTransportSet,
-	})
+		fetch: kit.manage.transports.fetch,
+	});
 
 	var tickInterval = function(){
 
@@ -265,8 +264,6 @@ var IPC = function(ipc, wc, proxyBridges){
 		ipc.on('proxy-message', handleMessage)
 
 		wssdummy.init()
-		axiosBridge.init()
-		fetchBridge.init()
 		comLayerBridge.init()
 
         tickInterval = setInterval(tick, 2500)
@@ -277,8 +274,6 @@ var IPC = function(ipc, wc, proxyBridges){
 		ipc.off('proxy-message', handleMessage)
 
 		wssdummy.destroy()
-		axiosBridge.destroy()
-		fetchBridge.destroy()
 		comLayerBridge.destroy()
 
 		if (tickInterval){
