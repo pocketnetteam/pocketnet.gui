@@ -5,8 +5,8 @@ on:
 
 jobs:
   build:
-
-    runs-on: gui
+  
+    runs-on: gui 
 
     steps:
       - name: Checkout git repository

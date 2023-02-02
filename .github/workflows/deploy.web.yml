@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     if: github.ref == 'refs/heads/master'
-
+    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -19,7 +19,7 @@ jobs:
         run: |
           npm i
           npm run minimize:bastyon
-
+        
       - name: Prepare archive
         run: |
           mkdir /tmp/bastyon

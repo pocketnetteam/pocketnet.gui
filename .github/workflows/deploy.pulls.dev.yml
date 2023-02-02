@@ -145,7 +145,7 @@ jobs:
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
-
+  
   # Build applications
   build-app-macos:
     needs: merge
@@ -186,7 +186,7 @@ jobs:
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
-
+        
   build-app-unix:
     needs: merge
     runs-on: ubuntu-latest
@@ -218,7 +218,7 @@ jobs:
             ./dist/BastyonSetup.deb
             ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
-
+    
   build-app-windows:
     needs: merge
     runs-on: windows-latest
@@ -320,3 +320,4 @@ jobs:
         run: cp ./head/head.txt /data/dev/binaries/dev/head.txt
       - name: Clean work dir
         run: rm -rf ./*
+      
