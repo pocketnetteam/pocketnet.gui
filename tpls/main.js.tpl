@@ -19,8 +19,6 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const transports = require('./proxy16/transports')()
-
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 

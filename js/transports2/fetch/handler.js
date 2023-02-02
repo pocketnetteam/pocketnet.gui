@@ -64,7 +64,7 @@ class FetchMainHandler {
 
       delete requestData.url;
 
-      const request = self.fetch(url, { signal, ...requestData, ...options.prepareOptions() })
+      const request = options.fetchFunction(url, { signal, ...requestData, ...options.prepareOptions?.(url) })
         .then((data) => {
           if (typeof options.prepareResponse === 'function') {
             return options.prepareResponse(data);
