@@ -18,7 +18,7 @@ var taginput = (function(){
 				s = mobsearch(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
 
-					mobileSearch : self.app.width <= 768,
+					mobileSearch : self.app.width <= 768 || isMobile(),
 
 					app : self.app,
 
@@ -42,7 +42,7 @@ var taginput = (function(){
 								var char = String.fromCharCode(e.keyCode || e.which);
 	
 								if ((/[,.!?;:() ]/).test(char)) {
-	
+
 									events.addTag(value.replace(/#/g,''))
 	
 									//el.tagSearch.find('input').val('').focus()

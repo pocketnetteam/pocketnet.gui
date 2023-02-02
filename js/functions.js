@@ -913,7 +913,7 @@
 
 				}
 
-				if (!isMobile()){
+				if ($(window).width() > 768 || !isMobile()){
 					cl()
 				}
 				else{
