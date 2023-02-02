@@ -30163,7 +30163,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            
+                            var iscallsenabled = self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -30171,7 +30171,7 @@ Platform = function (app, listofnodes) {
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
-                                    iscallsenabled="true"
+                                    iscallsenabled="`+iscallsenabled+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
