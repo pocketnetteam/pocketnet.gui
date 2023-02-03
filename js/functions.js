@@ -9157,6 +9157,27 @@ var fkit = {
 	}
 }
 
+simpleRequest = function (url, name) {
+	return new Promise(function (resolve, reject) {
+		var xhr = new XMLHttpRequest
+
+		xhr.onload = function () {
+
+			//resolve(new Blob([xhr.response], { type: xhr.getResponseHeader('content-type'), name }))
+
+			resolve(xhr.response)
+		}
+
+		xhr.onerror = function (e) {
+			reject(e)
+		}
+
+		xhr.open('GET', url)
+		//xhr.responseType = "arraybuffer"
+		xhr.send(null)
+	})
+};
+
 fetchLocal = function (url, name = 'file') {
 	return new Promise(function (resolve, reject) {
 		var xhr = new XMLHttpRequest

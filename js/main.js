@@ -4,6 +4,11 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 
 if(!_Node)
 {
+
+	var developapps = [{
+		"id" : 'demo.pocketnet.app',
+    	"version": "0.0.1"
+	}]
 	
 	var _listofproxies =  [
 		
@@ -133,7 +138,8 @@ if(!_Node)
 
 	app = new Application({
 		listofproxies : _listofproxies,
-		matrix : matrix
+		matrix : matrix,
+		developapps
 	});
 
 	app.preapi()

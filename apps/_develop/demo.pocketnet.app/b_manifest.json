@@ -1,0 +1,11 @@
+{
+    "id": "demo.pocketnet.app",
+    "name": "Demo",
+    "version": "0.0.1",
+    "description": "Demo application",
+    "author": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+    "develop": true,
+    "scope" : "demo.bastyonapps.com",
+    "start_url" : "index.html",
+    "permissions" : ["userinfo", "notifications", "messaging", "payment", "sign", "camera", "gallery"]
+}

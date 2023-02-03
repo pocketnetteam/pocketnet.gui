@@ -2161,8 +2161,6 @@ var Actions = function(app, api, storage = localStorage){
                     //console.error(e)
                 }
 
-                
-
             });
 
             self.processing()

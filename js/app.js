@@ -53,6 +53,8 @@ Application = function (p) {
 	var realtimeInterval = null;
 	var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
 	var electron = null
+	
+	self.developapps = p.developapps
 
 	if (typeof _Electron != 'undefined' && _Electron) {
 		electron = require('electron');
