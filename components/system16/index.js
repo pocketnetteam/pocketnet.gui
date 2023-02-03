@@ -649,9 +649,24 @@ var system16 = (function(){
 
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+						function onSettingsReceived(settings) {
+							if (settings.tor.enabled) {
+								selected.fetchauth('manage', {
+									action: 'tor.start',
+									data: { persistence: false },
+								});
+							}
+						}
+
+						if (!selected.direct) {
+							use.fetchauth('manage', {
+								action: 'tor.stop',
+								data: { persistence: false },
+							});
+						}
 
 						api.set.currentwithnode(selected.id, true).then(r => {
-							make(api.get.current())
+							make(api.get.current(), { onSettingsReceived })
 						})
 
 					})
@@ -3900,7 +3915,7 @@ var system16 = (function(){
 			}
 		}
 
-		var make = function(prx){
+		var make = function(prx, callbacks){
 
 			destroy()
 
@@ -3979,6 +3994,8 @@ var system16 = (function(){
 						.then((r) => {
 						  system = r;
 		  
+						  callbacks.onSettingsReceived?.(r);
+
 						  return Promise.resolve();
 						})
 						.then((r) => {
