@@ -1089,17 +1089,29 @@ function getKit(ipc) {
 			},
 
 			tor: {
-				start: function () {
+				start: function (data) {
+					const isPersistent = data?.persistence;
+
 					return kit.proxy().then(async proxy => {
 						await proxy.torapplications.start();
-						settings.tor.enabled = true
+
+						if (isPersistent) {
+							settings.tor.enabled = true
+						}
+
 						await state.save();
 					})
 				},
-				stop: function () {
+				stop: function (data) {
+					const isPersistent = data?.persistence;
+
 					return kit.proxy().then(async proxy => {
 						await proxy.torapplications.stop();
-						settings.tor.enabled = false
+
+						if (isPersistent) {
+							settings.tor.enabled = false
+						}
+
 						await state.save()
 					})
 				},

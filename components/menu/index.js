@@ -481,7 +481,6 @@ var menu = (function(){
 						console.log('TOR APPLICATION STATE CHANGED', state);
 					})
 
-					const currentProxy = app.api.get.current();
 					let proxyData;
 
 					if (torIntervalId) {
@@ -489,7 +488,13 @@ var menu = (function(){
 					}
 
 					torIntervalId = setInterval(async () => {
+						const currentProxy = app.api.get.current();
+
 						if (!currentProxy.direct) {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+
 							return;
 						}
 
@@ -515,6 +520,8 @@ var menu = (function(){
 							proxyData?.info.tor.state.status === 'started' ||
 							proxyData?.info.tor.state.status === 'loading'
 						);
+
+						const currentProxy = app.api.get.current();
 
 						currentProxy.fetchauth('manage', {
 							action: isTorEnabled ? 'tor.stop' : 'tor.start',

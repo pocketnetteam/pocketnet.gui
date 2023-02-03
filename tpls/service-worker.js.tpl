@@ -92,7 +92,7 @@ function onFetch(event) {
             status: 'failed',
             reason: err,
             url: request.url,
-            torUsed: hasTorHeader,
+            torUsed: true,
             totalStats: networkTotalStats,
           });
 
