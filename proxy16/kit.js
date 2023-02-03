@@ -178,7 +178,7 @@ var defaultSettings = {
 
 	tor : {
 		dbpath : 'data/tor',
-		enabled: true,
+		enabled: false,
 	},
 
 	server : {
