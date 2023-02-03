@@ -1116,7 +1116,6 @@ var component = Object(componentNormalizer["a" /* default */])(
       this.$emit("menuIsVisible", isVisible);
     },
     scrollToEvent: function (reference) {
-      console.log('scrollToEvent', reference.event.event_id);
       functions["a" /* default */].pretry(() => {
         return !this.loading && this.timeline && !this["p_b"];
       }).then(() => {
