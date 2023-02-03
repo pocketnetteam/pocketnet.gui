@@ -22157,7 +22157,8 @@ Platform = function (app, listofnodes) {
         checkfeatures()
 
         app.user.isState(function(state){
-            
+
+
             if (state) {
 
                 lazyActions([
@@ -22266,6 +22267,7 @@ Platform = function (app, listofnodes) {
                 if (clbk)
                     clbk()
             }
+            
 
         })
 

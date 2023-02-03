@@ -7,5 +7,5 @@
     "develop": true,
     "scope" : "demo.bastyonapps.com",
     "start_url" : "index.html",
-    "permissions" : ["userinfo", "notifications", "messaging", "payment", "sign", "camera", "gallery"]
+    "permissions" : ["account", "notifications", "messaging", "payment", "sign", "camera", "gallery"]
 }

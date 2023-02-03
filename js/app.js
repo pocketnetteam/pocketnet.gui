@@ -1147,7 +1147,8 @@ Application = function (p) {
 
 				})
 
-
+				self.apps = new BastyonApps(self)
+				self.apps.init()
 
 			})
 

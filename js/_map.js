@@ -115,6 +115,7 @@ __map =  {
 		{path : "js/vendor/hex-captcha/js/captcha.js", babelify : true},
 		{path : "js/image-uploader.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
+		{path : "js/lib/apps/index.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		"js/bastyonCalls/bastyonCalls.min.js",
 		{path : "js/lib/client/p2pvideo.js", babelify : true},
