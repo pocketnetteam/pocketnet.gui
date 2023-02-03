@@ -90,6 +90,8 @@ var boost = (function(){
 
 		var initEvents = function(){
 			
+		
+			
 
 		}
 
@@ -139,6 +141,9 @@ var boost = (function(){
 
 				el.faqWrapper = el.c.find('.faqWrapper')
 				el.lenta = el.c.find('.lentaWrapper')
+				el.c.find('.click').on('click', function(){ 
+					el.c.find('.formula').toggleClass("hidden")
+				})
 
 				initEvents();
 
@@ -185,3 +190,4 @@ else{
 	app.modules.boost.module = boost;
 
 }
+
