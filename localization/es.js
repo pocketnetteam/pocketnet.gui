@@ -602,7 +602,7 @@ _l.e13176 = "Tipo de dirección"
 _l.e13177 = "Cargar foto"
 
 _l.requiredfields = "campos obligatorios"
-_l.e13178 = "No asociado con su perfil"
+_l.e13178 = "Opcional"
 _l.e13179 = "Lista de transacciones no gastadas"
 _l.e13180 = "Su cuenta se ha creado correctamente"
 _l.e13181 = "Se produjo un error al crear una oferta"
