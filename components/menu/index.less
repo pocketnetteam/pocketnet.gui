@@ -17,14 +17,14 @@
 		&.workstation{
 			height: 20px;
 		}
-		
+
 		vertical-align: bottom;
 	}
 
 	.sitenamelabel{
 		text-transform: uppercase;
 	}
-	
+
 	.menuWrapper{
 		width: 100%;
 		position: fixed;
@@ -37,7 +37,7 @@
 		z-index: 20;
 		contain: strict;
 		background: rgb(var(--background-total-theme));
-		
+
 		// electronnav
 		/*
 		.sections{
@@ -105,11 +105,11 @@
 		font-size: 0.9em;
 	}
 
-	
+
 	&.searchactive{
 		.sections{
 			.items{
-				
+
 				&.searchWrapper{
 					display: block;
 				}
@@ -128,10 +128,10 @@
 
 				.item{
 
-					
-				
+
+
 					&.wallets{
-						
+
 						&:hover{
 							padding-right: 0;
 							padding-left: 0;
@@ -142,7 +142,7 @@
 						display: none;
 					}
 
-					
+
 
 				}
 			}
@@ -157,7 +157,7 @@
 		&:not(.searchactive){
 
 			.sections{
-				.items{				
+				.items{
 					.item{
 						&.navWrapperItem{
 							display: block;
@@ -167,30 +167,30 @@
 			}
 
 			.postssearch{
-		
+
 				.searchPanel,
 				.searchInputWrapper{
 					display: none;
 				}
-	
+
 				.searchInput{
 					background: transparent;
 					border : 1px solid transparent;
 				}
-		
-		
+
+
 				input{
 					color : @color-black2;
 					background: transparent;
 				}
-		
+
 				.searchIconLabel,
 				.searchPanel{
 					color : @color-black2;
 					background: transparent;
 				}
-		
-				
+
+
 			}
 
 			.sections{
@@ -265,11 +265,11 @@
 					vertical-align: middle;
 				}
 			}
-		
-			
+
+
 			&.keyexportWrapper{
 				margin-left : @rhythm;
-				color : rgb(var(--color-txt-orange));	
+				color : rgb(var(--color-txt-orange));
 			}
 
 			&.control-app{
@@ -327,35 +327,16 @@
 						}
 					}
 
-					/*&.auto {
-						color: @color-azure;
-
-						i::after {
-							content: 'A';
-							font-size: 0.5em;
-							font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-							margin-top: 1.6em;
-							margin-left: -0.2em;
-						}
-					}*/
-
 					&.off {
 						color: rgb(var(--neutral-grad-1));
 					}
 
 					&.loading {
 						color: rgb(var(--neutral-grad-1));
+						animation: torPulse 2s linear infinite;
 
-						i::after {
-							content: '\f2f9';
-							font-size: 0.4em;
-							animation: rotate 1.5s linear infinite;
-							margin-top: 2.2em;
-							margin-left: -0.3em;
-						}
-
-						@keyframes rotate {
-							to { transform: rotate(360deg) }
+						@keyframes torPulse {
+							50% { color: rgb(var(--color-txt-ac)) }
 						}
 					}
 				}
@@ -366,7 +347,7 @@
 			}
 
 			&.gethotpostsWrapper{
-				color : rgb(var(--color-txt-orange));	
+				color : rgb(var(--color-txt-orange));
 				margin-left : 2 * @rhythm;
 
 				i{
@@ -397,7 +378,7 @@
 					cursor: pointer;
 					.transition(0.3s);
 					&:hover{
-						color : rgb(var(--color-txt-ac));	
+						color : rgb(var(--color-txt-ac));
 					}
 				}
 			}
@@ -481,9 +462,9 @@
                 }
 
 				&.signup{
-					color : rgb(var(--color-txt-orange));	
+					color : rgb(var(--color-txt-orange));
 				}
-				
+
 				&.onlyicon{
 
 					.icon{
@@ -501,16 +482,16 @@
 
 
 					.count{
-						color: rgb(var(--color-bg-ac-2));	
+						color: rgb(var(--color-bg-ac-2));
 					}
 				}
 
 				.icon .icn {
 
 					img{
-						height: 18px;					
+						height: 18px;
 					}
-					
+
 					svg{
 						height: 23px;
 						width: 23px;
@@ -521,7 +502,7 @@
 
 				&.navWrapperItem{
 					display: none;
-					
+
 					.panelitemCenter{
 						height: 100%;
 						margin : 0 auto;
@@ -542,21 +523,21 @@
 								padding : 0 2 * @rhythm;
 								.transition(0.3s);
 								font-weight: 400;
-								
+
 								&:hover,
 								&.active{
-									color : rgb(var(--color-txt-ac));	
+									color : rgb(var(--color-txt-ac));
 
 									a{
 										span{
-											background: rgba(var(--color-txt-ac), 0.7);	
+											background: rgba(var(--color-txt-ac), 0.7);
 										}
 									}
 								}
 
 								a{
 									position: relative;
-			
+
 									span{
 										position: absolute;
 										display: block;
@@ -573,15 +554,15 @@
 										top : 0;
 										margin-left : 0.5 * @rhythm;
 										.transition(0.3s);
-			
+
 										&.hasunseen{
 											opacity: 1;
 										}
 									}
-			
+
 									&:hover{
 										span{
-											background: rgba(var(--color-bg-ac), 0.7); 
+											background: rgba(var(--color-bg-ac), 0.7);
 										}
 									}
 								}
@@ -641,13 +622,13 @@
 						.pcenterLabel{
 							font-size : 0.9em;
 							&.active{
-								color : rgb(var(--color-txt-ac)); 
-								border-bottom: 1px solid rgb(var(--color-txt-ac)); 
-							
+								color : rgb(var(--color-txt-ac));
+								border-bottom: 1px solid rgb(var(--color-txt-ac));
+
 							}
 						}
 
-						
+
 					}
 
 					&.lentamenu{
@@ -664,13 +645,13 @@
 				&.localization{
 					margin-right: 2 * @rhythm;
 					position: relative;
-					
+
 
 					.label{
 						font-weight: 100;
 						cursor: pointer;
 					}
-					
+
 					.vc_valuecustom{
 						width: 100px;
 						position: relative;
@@ -685,7 +666,7 @@
 						}
 
 						.vc_selectInput{
-							border: 1px solid rgb(var(--neutral-grad-4)); 
+							border: 1px solid rgb(var(--neutral-grad-4));
 						}
 
 						input{
@@ -749,7 +730,7 @@
 								}
 							}
 
-							
+
 						}
 					}
 
@@ -759,11 +740,11 @@
 						}
 					}
 				}
-				
+
 			}
 
-		
-			
+
+
 		}
 	}
 
@@ -778,7 +759,7 @@
 		background-color: rgb(var(--background-total-theme));
 		padding: @rhythm;
 		margin-top : @rhythm;
-		
+
 		.table{
 			>div{
 				padding : 0;
@@ -796,7 +777,7 @@
 		.user{
 			cursor: pointer;
 			.transition(0.3s);
-			
+
 			&:hover{
 				color : rgb(var(--color-txt-ac));
 			}
@@ -830,7 +811,7 @@
 					align-items: center;
 					padding : 2 * @rhythm 0;
 					>div{
-						color : rgba(var(--color-txt-gray-dark), 0.8); 
+						color : rgba(var(--color-txt-gray-dark), 0.8);
 						.transition(0.3s);
 
 						&.rsicon{
@@ -838,7 +819,7 @@
 							text-align: center;
 							font-size: 0.8em;
 						}
-	
+
 						&.label{
 							text-align: left;
 						}
@@ -849,8 +830,8 @@
 							color : rgb(var(--color-txt-gray-dark));
 						}
 					}
-				}	
-				
+				}
+
 			}
 		}
 
@@ -915,7 +896,7 @@
 			max-width: 700px;
 			margin : 0 auto;
 
-			
+
 		}
 
 		.searchInputIcon{
@@ -956,7 +937,7 @@
 			z-index: 1;
 		}
 
-		
+
 		.searchIconLabel{
 			position: relative;
 			z-index: 1;
@@ -970,7 +951,7 @@
 			z-index: 1;
 			width: 4 * @rhythm;
 			font-size: 0.8em;
-			text-align: center;			
+			text-align: center;
 		}
 
 		.christmasBranchLeft{
@@ -986,9 +967,9 @@
 			right: -21px;
 			height: 52px;
 		}
-		
 
-		
+
+
 	}
 
 	.signup,
@@ -1008,11 +989,11 @@
 
 	.signup{
 		margin-left: 4 * @rhythm;
-		
+
 	}
 
 
-	
+
 }
 
 
@@ -1023,7 +1004,7 @@
 			margin-left: 2 * @rhythm;
 			margin-right: 2 * @rhythm;
 		}
-		
+
 
 		.sections{
 			width: 100%;
@@ -1031,7 +1012,7 @@
 			padding : 0  2 * @rhythm;
 			padding-right: 0;
 
-			
+
 			.section{
 				padding: 0;
 				width: auto;
@@ -1050,8 +1031,8 @@
 				}
 
 				&:nth-child(1){
-					padding-left: 0;				
-				}			
+					padding-left: 0;
+				}
 			}
 
 			.items{
@@ -1108,7 +1089,7 @@
 						position: absolute;
 						left: -20px;
 						top: -6px;
-		
+
 						.christmasBranch{
 							height: 40px;
 						}
@@ -1122,7 +1103,7 @@
 				right: -22px;
 				top: 23px;
 				rotate: 35deg;
-				
+
 				.christmasBranch{
 					height: 40px;
 				}
@@ -1145,7 +1126,7 @@
 
 		&:not(.searchactive){
 			.postssearch{
-		
+
 				.searchPanel,
 				.searchInputWrapper{
 					display: none;
@@ -1155,12 +1136,12 @@
 					background: transparent!important;
 					border : 1px solid transparent!important;
 				}
-		
+
 				input{
 					color : rgb(var(--text-color));
 					background: transparent;
 				}
-		
+
 				.searchIconLabel,
 				.searchPanel{
 					color : rgb(var(--text-color));
@@ -1170,7 +1151,7 @@
 				.searchFastResultWrapper{
 					display: none;
 				}
-				
+
 			}
 			.sections{
 				.items.searchWrapper{
@@ -1183,7 +1164,7 @@
 			input{
 				padding : 0;
 			}
-			
+
 		}
 
 		.sections{
@@ -1216,7 +1197,7 @@
 							}
 						}
 					}
-				}	
+				}
 
 				&.navWrapper{
 					display: none!important;
@@ -1241,7 +1222,7 @@
 					&.right{
 						width : 100%;
 					}
-					
+
 					.items.searchWrapper{
 						width : 100%;
 
@@ -1283,7 +1264,7 @@
 		#menu{
 			.menuWrapper {
 				backdrop-filter: blur(2px);
-                -webkit-backdrop-filter: blur(2px);  
+                -webkit-backdrop-filter: blur(2px);
 				background: transparent;
 				.searchIconLabel i,
 				.icon i{
@@ -1294,7 +1275,7 @@
 				.sitename .label{
 					display: none;
 				}
-		
+
 			}
 
 			.mobsearch{
@@ -1326,12 +1307,12 @@
 
 			.sections .items .item .icon .icn svg{
 				fill: rgba(var(--color-bg-ac-bright),0.9)
-			}	
+			}
 
 		}
-	} 
+	}
 
-	
+
 }
 
 html[theme="black"],

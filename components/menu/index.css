@@ -207,19 +207,6 @@
 #menu .sections .items.control-app.control-right {
   padding-left: 1.5em;
 }
-#menu .sections .items.control-app .control-tor-state {
-  /*&.auto {
-						color: @color-azure;
-
-						i::after {
-							content: 'A';
-							font-size: 0.5em;
-							font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-							margin-top: 1.6em;
-							margin-left: -0.2em;
-						}
-					}*/
-}
 #menu .sections .items.control-app .control-tor-state i::after {
   position: absolute;
 }
@@ -243,25 +230,16 @@
 #menu .sections .items.control-app .control-tor-state.on.success::before {
   background: rgb(var(--color-good));
 }
-#menu .sections .items.control-app .control-tor-state.fail {
-  color: rgb(var(--neutral-grad-1));
-}
 #menu .sections .items.control-app .control-tor-state.off {
   color: rgb(var(--neutral-grad-1));
 }
 #menu .sections .items.control-app .control-tor-state.loading {
   color: rgb(var(--neutral-grad-1));
+  animation: torPulse 2s linear infinite;
 }
-#menu .sections .items.control-app .control-tor-state.loading i::after {
-  content: '\f2f9';
-  font-size: 0.4em;
-  animation: rotate 1.5s linear infinite;
-  margin-top: 2.2em;
-  margin-left: -0.3em;
-}
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
+@keyframes torPulse {
+  50% {
+    color: rgb(var(--color-txt-ac));
   }
 }
 #menu .sections .items.notificationsWrapper {
@@ -911,7 +889,7 @@
 					&.right{
 						width : 100%;
 					}
-					
+
 					.items.searchWrapper{
 						width : 100%;
 
