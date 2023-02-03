@@ -97,21 +97,30 @@ var BastyonApps = function(app){
         'account' : {
             name : 'permissions.name.account',
             description : 'permissions.descriptions.account',
-            level : 9
+            level : 9,
+            action : function({data, application}){
+                return Promise.resolve({})
+            }
         },
 
         'sign' : {
             name : 'permissions.name.account',
             description : 'permissions.descriptions.account',
             level : 1,
-            uniq : true
+            uniq : true,
+            action : function({data, application}){
+                return Promise.reject(appsError('todo:action:sign'))
+            }
         },
 
         'payment' : {
             name : 'permissions.name.payment',
             description : 'permissions.descriptions.payment',
             level : 2,
-            uniq : true
+            uniq : true,
+            action : function({data, application}){
+                return Promise.reject(appsError('todo:action:sign'))
+            }
         }
     }
 
@@ -273,7 +282,10 @@ var BastyonApps = function(app){
 
             else{   
                 promise = requestPermissions(application, actions[data.action].permissions || [], data.data).then(() => {
-
+                    return actions[data.action].action({
+                        data : data.data,
+                        application
+                    })
                 })
             }
             
