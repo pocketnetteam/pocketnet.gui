@@ -91,28 +91,56 @@ var BastyonApps = function(app){
     var installing = {}
     var localdata = {}
 
-    var install = function(application){
+    var appfiles = [
+        {
+            name : 'b_manifest.json',
+            id : "manifest",
+            type : "application/json",
+            importer : importManifest,
+            cache : true
+        },
+
+        {
+            name : 'b_icon.png',
+            id : "icon",
+            type : 'image/png',
+            importer : importIcon,
+            cache : true
+        },
+        
+    ]
+
+    var install = function(application, cached = {}){
 
         if (installing[application.id]) return installing[application.id]
 
         var promises = []
-        var result = {}
+        var result = {
+            fromcache : {}
+        }
 
         if (application.develop){
-            application.path = 'apps/_develop/' + application.id + '/b_manifest.json'
+            application.path = 'apps/_develop/' + application.id
         }
         else{   
-            application.path = application.scope + '/b_manifest.json'
+            application.path = application.scope
         }
-      
-        promises.push(importManifest(application).then((manifest) => {
-            result.manifest = manifest
-        }))
 
-        promises.push(importIcon(application).then((icon) => {
-            result.icon = icon
+        promises = promises.concat(_.map(appfiles, (file) => {
+
+            if(file.cache && cached[file.id]){
+                result[file.id] = cached[file.id]
+                result.fromcache[file.id] = true
+            }
+            else{
+                file.importer(application).then(data => {
+                    result[file.id] = data
+
+                    delete result.fromcache[file.id]
+                })
+            }
+            
         }))
-        
 
         installing[application.id] = Promise.all(promises).then(() => {
 
@@ -138,7 +166,21 @@ var BastyonApps = function(app){
     var savelocaldata = function(){
         var tosave = {}
 
-        _.each(localdata)
+        _.each(localdata, (info, id) => {
+
+            var saving = {
+                id,
+                cached : {}
+            }
+
+            _.each(appfiles, (file) => {
+                if(file.cache){
+                    saving.cached[file.id] = (installed[id] ? installed[id][file.id] : null) || info.cached[file.id] || null
+                }
+            })
+
+        
+        })
     }
 
     var setlocaldata = function(data){
@@ -150,7 +192,7 @@ var BastyonApps = function(app){
 
         }
 
-        localdata = newlocaldata
+        //localdata = newlocaldata
     }
 
     self.init = function(){
