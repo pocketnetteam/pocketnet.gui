@@ -172,24 +172,23 @@
 
         <!--<preference name="AndroidXEnabled" value="true" />-->
 
-        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+        <!--<edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
             <manifest xmlns:tools="http://schemas.android.com/tools" />
-        </edit-config>
+        </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-        </edit-config>
-
-        
+            <uses-permission android:name="android.permission.CAMERA" />
+        </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
