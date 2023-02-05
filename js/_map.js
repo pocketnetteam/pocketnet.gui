@@ -358,6 +358,20 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	requestpermission : {
+		uri : "requestpermission",
+		href : "requestpermission",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
+	application : {
+		uri : "application",
+		href : "application",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	applications : {
 		uri : "applications",
 		href : "applications",

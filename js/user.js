@@ -168,7 +168,7 @@ User = function(app, p) {
 					}
 
 					
-
+					app.apps.emit('state', 1)
 
 					self.prepare(clbk)
 				}
@@ -253,6 +253,10 @@ User = function(app, p) {
 		app.platform.clear();
 
 		app.platform.matrixchat.destroy();
+
+		if (app.apps){
+			app.apps.emit('state', 0)
+		}
 
 		self.address.set()
 
@@ -351,7 +355,7 @@ User = function(app, p) {
 							
 						}
 							
-
+						
 						state = 0;	
 						clbk(state);
 					}

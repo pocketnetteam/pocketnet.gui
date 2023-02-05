@@ -14,7 +14,28 @@
     <body id="application">
         DEMO
 
-        <script async join src="https://localhost/pocketnet/js/lib/apps/sdk.js"></script>
+        <script src="https://localhost/pocketnet/js/lib/apps/sdk.js"></script>
+        <script>
+            console.log('application:')
+
+            document.write('application')
+
+            
+
+            var sdk = new BastyonSdk()
+
+            sdk.get.account().then(address => {
+                console.log("applications: NODEINFO", address)
+            })
+
+            /*sdk.rpc('getnodeinfo').then(data => {
+                console.log("applications: NODEINFO", data)
+            })*/
+
+            
+        </script>
+
+        
         
     </body>
 </html>

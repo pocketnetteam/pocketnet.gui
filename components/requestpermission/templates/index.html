@@ -1,0 +1,53 @@
+<div id="<%-module.map.id%>">
+
+	<div class="wrapper">
+		<div class="applicationInfo">
+			<div class="appicon" image="<%-ed.application.icon%>">
+			</div>
+			<div class="appname" >
+				<span><%- ed.application.manifest.name %></span>
+			</div>
+		</div>
+
+		<div class="caption">
+			<span><%- ed.application.manifest.name %> asks for permission</span>
+		</div>
+
+		<div class="permissionForm">
+			<div class="permissionName">
+				<span><%-ed.meta.name%></span>
+			</div>
+
+			<div class="permissionDescription">
+				<span><%-ed.meta.description%></span>
+			</div>
+
+			<div class="jsontemp">
+				<div>
+					<%- JSON.stringify(ed) %>
+				</div>
+
+				<!--<div>
+					<%- JSON.stringify(additional || {}) %>
+				</div>-->
+			</div>
+		</div>
+
+		<div class="panel">
+			<button class="button granted">
+				Allow
+			</button>
+
+			<% if(!ed.meta.once) {%>
+				<button class="button once gray">
+					Allow once
+				</button>
+			<% } %>
+
+			<button class="button forbid gray">
+				Forbid
+			</button>
+		</div>
+	</div>
+
+</div>

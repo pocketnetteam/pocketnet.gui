@@ -1717,8 +1717,8 @@ var Account = function(address, parent){
         }
     }
 
-    self.addAction = function(object, priority){
-        var action = new Action(self, object, priority)
+    self.addAction = function(object, priority, p){
+        var action = new Action(self, object, priority, p)
         
         if (action.options.collision){
 
@@ -1914,6 +1914,7 @@ var Account = function(address, parent){
     }
 
     self.parent = parent
+    self.getActionById = getActionById
 
     return self
 }
@@ -2063,7 +2064,7 @@ var Actions = function(app, api, storage = localStorage){
         })
     } 
 
-    self.addAction = function(address, object, priority){
+    self.addAction = function(address, object, priority, p = {}){
 
     
         if(!address) return Promise.reject('address')
@@ -2141,6 +2142,21 @@ var Actions = function(app, api, storage = localStorage){
         }
         catch(e){
         }
+    }
+
+    self.getActionById = function(id){
+        var action = null
+
+        _.find(accounts, (account) => {
+            var _a = account.getActionById(id)
+
+            if (_a){
+                action = _a
+                return true
+            }
+        })
+
+        return action
     }
 
     self.init = function(){

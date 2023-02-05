@@ -338,7 +338,6 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
-
         var listener = listeners[action.object.type]
 
         if(!listener) return
@@ -361,6 +360,9 @@ Platform = function (app, listofnodes) {
         
 
     })
+
+
+    
 
 
     var listeners = {
@@ -3043,6 +3045,31 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        requestPermission : function(parameters){
+            return new Promise ((resolve, reject) => {
+                app.nav.api.load({
+                    open : true,
+                    id : 'requestpermission',
+                    inWnd : true,
+
+                    essenseData : {
+                        ...parameters,
+
+                        success : (state) => {
+                            resolve(state)
+                        },
+
+                        fail : function(state){
+
+                            if(state == 'closed') state = 'cancel'
+                            
+                            reject(state)
+                        },
+                    }
+                })
+            })
+        },
+
         sendTransactionAgainQuestion : function(reason, clbk){
             return new Promise ((resolve, reject) => {
                 
@@ -4845,7 +4872,6 @@ Platform = function (app, listofnodes) {
 
                 self.app.platform.actions.addActionAndSendIfCan(blocking).then(action => {
                     var alias = action.object
-
                   
 					successCheck()
 

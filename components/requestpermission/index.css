@@ -1,0 +1,15 @@
+#requestpermission .applicationInfo {
+  display: flex;
+  align-items: center;
+}
+#requestpermission .applicationInfo .appicon {
+  height: 44px;
+  width: 44px;
+}
+#requestpermission .applicationInfo .appname {
+  margin-left: 0.5em;
+}
+#requestpermission .wrapper {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}

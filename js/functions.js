@@ -9184,7 +9184,9 @@ fetchLocal = function (url, name = 'file') {
 
 		xhr.onload = function () {
 
-			var type = xhr.getResponseHeader('content-type')
+			var type = xhr.getResponseHeader('content-type').replace(' charset=UTF-8', '')
+
+			console.log("type", type)
 
 			name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
 

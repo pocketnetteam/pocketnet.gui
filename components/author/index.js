@@ -1589,7 +1589,6 @@ var author = (function(){
 
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent')
-
 				})
 
 				self.app.platform.sdk.search.clear()

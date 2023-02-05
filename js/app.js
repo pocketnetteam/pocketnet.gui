@@ -1150,6 +1150,31 @@ Application = function (p) {
 				self.apps = new BastyonApps(self)
 				self.apps.init()
 
+
+				self.platform.actions.clbk('change', 'apps', () => {
+					var account = self.app.platform.actions.getCurrentAccount()
+
+					if (account){
+						var balance = account.actualBalance()
+
+						self.apps.emit('balance', balance)
+					}
+				})
+
+				self.platform.actions.on('actionFiltered', ({action, address, status}) => {
+
+					if (action.settings && action.settings.application){
+						self.apps.emit('action', action.export(), action.settings.application)
+					}
+			
+				})
+
+				/*setInterval(() => {
+					self.apps.emit('test', {
+						success : true
+					})
+				}, 2000)*/
+
 			})
 
 		})

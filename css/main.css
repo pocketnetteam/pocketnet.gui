@@ -4687,6 +4687,9 @@ html.mobileview.fullscreen #menuWrapper {
 html.mobileview.fullscreen #navigationWrapper {
   display: none!important;
 }
+html.allcontent_application #footerWrapper {
+  display: none!important;
+}
 .windowsContainer {
   position: relative;
 }
