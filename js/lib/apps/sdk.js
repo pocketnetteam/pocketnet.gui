@@ -140,6 +140,13 @@ var BastyonSdk = function(){
         })
     }
 
+    self.emit = function(type, data){
+        send({
+            event : type,
+            data
+        })
+    }
+
     listen()
 
     return self

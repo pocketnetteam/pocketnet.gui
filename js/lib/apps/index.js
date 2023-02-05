@@ -223,20 +223,31 @@ var BastyonApps = function(app){
     }
 
     var events = {
-        popstate : function(application, data){
+        popstate : function(application, data, source){
             var value = hexEncode(application.manifest.id + ':' + data.value)
 
             trigger('popstate', {
+
                 application : application.manifest.id,
-                value : value,
-                encoded : hexEncode(data.value)
-            })
+                data : {
+                    value : value,
+                    encoded : hexEncode(data.value)
+                }
+                
+            }, source)
+        },
+
+        loaded : function(application, data, source){
+            trigger('loaded', {
+                application : application.manifest.id,
+                data
+            }, source)
         }
     }
 
-    var trigger = function(key, data){
+    var trigger = function(key, data, source){
         _.each(clbks[key] || [], (f) => {
-            f(data)
+            f(data, source)
         })
     }
 
@@ -429,7 +440,7 @@ var BastyonApps = function(app){
 
         if (data.event){
             if (events[data.event]){
-                events[data.event](application, data)
+                events[data.event](application, data, event.source)
             }
         }
 
