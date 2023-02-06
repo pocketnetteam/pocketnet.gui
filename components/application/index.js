@@ -133,7 +133,7 @@ var application = (function(){
 
 				
 				/////
-
+				/*
 				setTimeout(() => {
 
 					self.app.platform.matrixchat.core.renderChatToElement(el.c.find('.temp')[0], '').then((r) => {
@@ -142,7 +142,7 @@ var application = (function(){
 						console.error(e)
 					})
 
-				}, 5000)
+				}, 5000)*/
 
 				/////
 			}
