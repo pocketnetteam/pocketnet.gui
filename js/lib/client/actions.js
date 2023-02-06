@@ -13,6 +13,9 @@ var ActionOptions = {
                     return m + dn.amount
                 }, 0)
             },
+            validation : function(action){
+                return action.object.reciever.v && action.object.reciever.v.length
+            },
             destination : function(action){
                 return _.clone(action.object.reciever.v)
             },
@@ -738,6 +741,11 @@ var Action = function(account, object, priority, settings){
             }
         }
 
+        if (options.validation && !options.validation(self)){
+            self.rejected = 'validation'
+            return Promise.reject(self.rejected)
+        }
+
         if (self.object.canSend){
 
             if (self.checkedUntil && self.checkedUntil > new Date()){
@@ -775,6 +783,8 @@ var Action = function(account, object, priority, settings){
             await self.processing()
         }
         catch(e){
+
+            console.error(e)
 
             if (
                 e == 'actions_rejectedFromNodes' || 
@@ -1429,6 +1439,8 @@ var Account = function(address, parent){
 
             if (exported.until < new Date()) return
 
+
+            console.log('exported', exported)
 
             //withcompleted
             if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || 
@@ -2158,6 +2170,8 @@ var Actions = function(app, api, storage = localStorage){
 
         return action
     }
+
+    
 
     self.init = function(){
 

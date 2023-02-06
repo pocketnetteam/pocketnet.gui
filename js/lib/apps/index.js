@@ -54,7 +54,7 @@ var importFile = function(application, path){
 }
 
 var importFileAsBase64 = function(application, path){
-    return fetchLocal(application.path + '/' + path, path).then(d => {
+    return fetchLocalAppCopy(application.path + '/' + path, path).then(d => {
         return getBase64(d.data)
     })
 }
@@ -99,13 +99,13 @@ var importManifest = function(application){
 }
 
 var validateParameters = function(data, parameters){
-    var e = _.find(parameters, (p), data => {
+    var e = _.find(parameters, (p) => {
         if(!data[p]) return true
     })
 
     if(!e) return null
 
-    return appsError('parameters:' + e)
+    return appsError('parameters:missing:' + e)
 
 
 }
@@ -157,6 +157,21 @@ var BastyonApps = function(app){
             }
         },
 
+        balance : {
+            permissions : ['account'],
+            action : function(){
+                var account = self.platform.actions.getCurrentAccount()
+
+                if (account){
+                    var balance = account.actualBalance([account.address])
+                    return Promise.resolve(balance)
+                }
+                else{
+                    return Promise.resolve({})
+                }
+            }
+        },
+
         sign : {
             permissions : ['sign'],
             action : function({data, application}){
@@ -165,11 +180,20 @@ var BastyonApps = function(app){
         },
 
         payment : {
-            parameters : ['amount', 'reciever', 'feemode', 'message'],
+            parameters : ['recievers', 'feemode', 'message'],
             permissions : ['payment'],
             action : function({data, application}){
 
-                var transaction = actions.getTransaction(data.amount, data.reciever, data.feemode, data.message)
+                var source = [app.user.address.value];
+
+                var transaction = new Transaction()
+				
+					transaction.source.set(source)
+					transaction.reciever.set(data.recievers)
+					transaction.feemode.set(data.feemode)
+
+                if (data.message)
+					transaction.message.set(data.message)
 
                 return makeAction(transaction, application)
 
@@ -415,7 +439,9 @@ var BastyonApps = function(app){
 
                 promise = requestPermissions(application, actions[data.action].permissions || [], data.data).then(() => {
 
-                    var error = validateParameters(data.data)
+                    var error = validateParameters(data.data, actions[data.action].parameters)
+
+                    console.log('error', error)
 
                     if (error) return Promise.reject(error)
 

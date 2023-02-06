@@ -61,22 +61,29 @@ var requestpermission = (function(){
 
 					var result = {}
 
-					self.sdk.users.get(data.reciever, function(){
-						result.recieverInfo = self.psdk.userInfo.get(data.reciever)
+					var recievers = _.map(data.recievers, (a) => {
+						return a.address
+					})
 
-						if(!result.recieverInfo){
-							return reject('unableGetData:recieverInfo')
+					self.sdk.users.get(recievers, function(){
+						result.recieversInfo = _.map(recievers, (r) => {
+							return self.psdk.userInfo.get(r)
+						})
+
+						var unloaded = _.find(recievers, (r) => {
+							return !_.find(result.recieversInfo, (reciever) => {
+								return reciever.address == r
+							})
+						})
+
+						if (unloaded){
+							return reject('unableGetData:recieverInfo:' + unloaded)
 						}
 
 						resolve(result)
 					})
 				})
 				
-
-				
-
-				return Promise.resolve()
-				//// data.to upload profile info
 			}
 		}
 

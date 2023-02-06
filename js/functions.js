@@ -9184,6 +9184,35 @@ fetchLocal = function (url, name = 'file') {
 
 		xhr.onload = function () {
 
+			var type = xhr.getResponseHeader('content-type')
+
+			console.log("type", type)
+
+			name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
+
+			resolve({
+				data: new Blob([xhr.response], { type: type, name: name })
+			})
+
+			// resolve()
+		}
+
+		xhr.onerror = function () {
+			reject(new TypeError('Local request failed'))
+		}
+
+		xhr.open('GET', url)
+		xhr.responseType = "arraybuffer";
+		xhr.send(null)
+	})
+};
+
+fetchLocalAppCopy = function (url, name = 'file') {
+	return new Promise(function (resolve, reject) {
+		var xhr = new XMLHttpRequest
+
+		xhr.onload = function () {
+
 			var type = xhr.getResponseHeader('content-type').replace(' charset=UTF-8', '')
 
 			console.log("type", type)

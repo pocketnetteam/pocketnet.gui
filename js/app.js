@@ -1152,10 +1152,10 @@ Application = function (p) {
 
 
 				self.platform.actions.clbk('change', 'apps', () => {
-					var account = self.app.platform.actions.getCurrentAccount()
+					var account = self.platform.actions.getCurrentAccount()
 
 					if (account){
-						var balance = account.actualBalance()
+						var balance = account.actualBalance([account.address])
 
 						self.apps.emit('balance', balance)
 					}

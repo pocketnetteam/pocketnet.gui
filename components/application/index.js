@@ -55,6 +55,11 @@ var application = (function(){
 
 		var initEvents = function(){
 			
+			self.app.apps.on('loaded', (p) => {
+				if (p.application == application.manifest.id){
+					el.c.find('.iframewrapper').addClass('loaded')
+				}
+			})
 
 		}
 
