@@ -213,7 +213,7 @@ module.exports = function (isTorEnabled = false) {
                 }
 
                 const isDirectRequest = await isDirectAccess(preparedOpts.url);
-                const isTorStateStarted = await isTorStarted(false);
+                const isTorStateStarted = await isTorStarted();
 
                 if (!isDirectRequest && isTorStateStarted) {
                     await initHttpsAgent(preparedOpts, 'httpsAgent');
@@ -254,7 +254,7 @@ module.exports = function (isTorEnabled = false) {
                 }
 
                 const isDirectRequest = await isDirectAccess(url);
-                const isTorStateStarted = await isTorStarted(false);
+                const isTorStateStarted = await isTorStarted();
 
                 if (!isDirectRequest && isTorStateStarted) {
                     await initHttpsAgent(opts, 'agent');
@@ -292,7 +292,7 @@ module.exports = function (isTorEnabled = false) {
             }
 
             const isDirectRequest = await isDirectAccess(options.url);
-            const isTorStateStarted = await isTorStarted(false);
+            const isTorStateStarted = await isTorStarted();
 
             if (!isDirectRequest && isTorStateStarted) {
                 await initHttpsAgent(options, 'agent');
