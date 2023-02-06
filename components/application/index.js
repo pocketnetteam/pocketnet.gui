@@ -127,7 +127,24 @@ var application = (function(){
 
 				renders.frame()
 
+
+
 				p.clbk(null, p);
+
+				
+				/////
+
+				setTimeout(() => {
+
+					self.app.platform.matrixchat.core.renderChatToElement(el.c.find('.temp')[0], '').then((r) => {
+						console.log("R", r)
+					}).catch(e => {
+						console.error(e)
+					})
+
+				}, 5000)
+
+				/////
 			}
 		}
 	};
