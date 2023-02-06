@@ -38,7 +38,7 @@ var Logger = function(_loggers){
     var self = this
     var loggers = _loggers
     var level = 'info'
-    var writelogs = false
+    var writelogs = true
 
     self.app = null
 
