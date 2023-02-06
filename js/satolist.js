@@ -19974,7 +19974,14 @@ Platform = function (app, listofnodes) {
                     if (a) {
                         self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp3') || "{}")
 
+                        _.each(self.sdk.node.transactions.temp, function(vs, t){
 
+                            self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
+                                return typeof alias.txid == 'string'
+                            })
+                            
+                            console.log('self.sdk.node.transactions.temp[t]', self.sdk.node.transactions.temp[t])
+                        })
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
@@ -21580,7 +21587,11 @@ Platform = function (app, listofnodes) {
                                                             temp[obj.type] = {};
                                                         }
 
-                                                        temp[obj.type][d] = alias;
+                                                        if(typeof alias.txid == "string") {
+                                                            console.log("ADDED TEMP")
+                                                            temp[obj.type][d] = alias;
+                                                        }
+                                                        
 
                                                         alias.inputs = inputs
 
@@ -21591,6 +21602,9 @@ Platform = function (app, listofnodes) {
                                                                 deleted : output.deleted
                                                             }
                                                         })
+
+
+                                                        
 
                                                         self.sdk.node.transactions.saveTemp()
 
