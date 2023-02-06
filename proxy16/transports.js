@@ -66,7 +66,13 @@ module.exports = function (isTorEnabled = false) {
         });
     };
 
-    const isDirectAccess = async (hostname) => {
+    const isDirectAccess = async (url) => {
+        let { hostname, port, protocol } = new URL(url);
+
+        if (!port) {
+            port = (protocol === 'https:') ? 443 : 80;
+        }
+
         const isLocalhost = await checkIfLocalhost(hostname);
 
         if (isLocalhost) {
@@ -78,7 +84,7 @@ module.exports = function (isTorEnabled = false) {
         if (!isHostListed) {
             self.accessRecords[hostname] = {};
 
-            const pingResult = await pingHost(hostname);
+            const pingResult = await pingHost(hostname, port);
 
             if (pingResult) {
                 self.accessRecords[hostname] = {
@@ -117,7 +123,7 @@ module.exports = function (isTorEnabled = false) {
         const isNextTryTime = (self.accessRecords[hostname].nextTry <= Date.now());
 
         if (isNextTryTime) {
-            const pingResult = await pingHost(hostname);
+            const pingResult = await pingHost(hostname, port);
 
             if (pingResult) {
                 self.accessRecords[hostname] = {
@@ -135,13 +141,13 @@ module.exports = function (isTorEnabled = false) {
         return isAccessOk;
     }
 
-    const pingHost = async function(host) {
+    const pingHost = async function(host, port) {
         function synackPing() {
             return new Promise((resolve, reject) => {
                 let socket;
 
                 try {
-                    socket = net.createConnection(443, host, () => {
+                    socket = net.createConnection(port, host, () => {
                         socket.end();
                         socket.destroy();
                         resolve(true);
@@ -189,8 +195,7 @@ module.exports = function (isTorEnabled = false) {
             preparedOpts = arg1;
         }
 
-        const urlParts = new URL(preparedOpts.url);
-        const isDirectRequest = await isDirectAccess(urlParts.hostname);
+        const isDirectRequest = await isDirectAccess(preparedOpts.url);
         const isTorStateStarted = await isTorStarted(false);
 
         if (!isDirectRequest && isTorStateStarted) {
@@ -206,7 +211,7 @@ module.exports = function (isTorEnabled = false) {
                     return Promise.reject(err);
                 }
 
-                const isDirectRequest = await isDirectAccess(urlParts.hostname);
+                const isDirectRequest = await isDirectAccess(preparedOpts.url);
                 const isTorStateStarted = await isTorStarted(false);
 
                 if (!isDirectRequest && isTorStateStarted) {
@@ -231,8 +236,7 @@ module.exports = function (isTorEnabled = false) {
     self.axios.patch = (...args) => axiosRequest(...args);
 
     self.fetch = async (url, opts = {}) => {
-        const urlParts = new URL(url);
-        const isDirectRequest = await isDirectAccess(urlParts.hostname);
+        const isDirectRequest = await isDirectAccess(url);
         const isTorStateStarted = await isTorStarted(false);
 
         if (!isDirectRequest && isTorStateStarted) {
@@ -248,7 +252,7 @@ module.exports = function (isTorEnabled = false) {
                     return Promise.reject(err);
                 }
 
-                const isDirectRequest = await isDirectAccess(urlParts.hostname);
+                const isDirectRequest = await isDirectAccess(url);
                 const isTorStateStarted = await isTorStarted(false);
 
                 if (!isDirectRequest && isTorStateStarted) {
@@ -268,8 +272,7 @@ module.exports = function (isTorEnabled = false) {
     self.request = async (options, callBack) => {
         let req = _request;
 
-        const urlParts = new URL(options.url);
-        const isDirectRequest = await isDirectAccess(urlParts.hostname);
+        const isDirectRequest = await isDirectAccess(options.url);
         const isTorStateStarted = await isTorStarted(false);
 
         if (!isDirectRequest && isTorStateStarted) {
@@ -287,7 +290,7 @@ module.exports = function (isTorEnabled = false) {
                 return Promise.reject(err);
             }
 
-            const isDirectRequest = await isDirectAccess(urlParts.hostname);
+            const isDirectRequest = await isDirectAccess(options.url);
             const isTorStateStarted = await isTorStarted(false);
 
             if (!isDirectRequest && isTorStateStarted) {
@@ -304,8 +307,7 @@ module.exports = function (isTorEnabled = false) {
     }
 
     self.isTorNeeded = async (url) => {
-        const urlParts = new URL(url);
-        const directAccess = await isDirectAccess(urlParts.hostname);
+        const directAccess = await isDirectAccess(url);
 
         return !directAccess;
     };
