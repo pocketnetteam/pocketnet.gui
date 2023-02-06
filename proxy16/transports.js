@@ -82,21 +82,21 @@ module.exports = function (isTorEnabled = false) {
         const isHostListed = (hostname in self.accessRecords);
 
         if (!isHostListed) {
-            self.accessRecords[hostname] = { inProgress: true };
+            self.accessRecords[hostname] = {};
+            self.accessRecords[hostname].inProgress = await pingHost(hostname, port)
+                .then((result) => {
+                    self.accessRecords[hostname] = { accessOk: result };
 
-            const pingResult = await pingHost(hostname, port);
+                    if (result === true) {
+                        // Retry in 30 minutes
+                        self.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 60 * 1000;
+                    } else {
+                        // Retry in 10 minutes
+                        self.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 60 * 1000;
+                    }
 
-            if (pingResult) {
-                self.accessRecords[hostname] = {
-                    accessOk: true,
-                    nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
-                };
-            } else {
-                self.accessRecords[hostname] = {
-                    accessOk: false,
-                    nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
-                };
-            }
+                    return result;
+                });
 
             const torcontrol = self.torapplications;
 
@@ -117,6 +117,13 @@ module.exports = function (isTorEnabled = false) {
             } catch (err) {
                 console.log('STATS_BUSY??', err);
             }
+        }
+
+        const pingPromise = self.accessRecords[hostname].inProgress;
+        const isPingIsPromised = (pingPromise instanceof Promise);
+
+        if (isPingIsPromised) {
+            await pingPromise;
         }
 
         const isAccessOk = (self.accessRecords[hostname].accessOk === true);
