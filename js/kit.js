@@ -1930,6 +1930,7 @@ UserInfo = function(){
 	}
 
 	self.import = function(v){
+
 		self.name.set(v.c || v.name)
 		self.language.set(v.l || v.language)
 		self.about.set(v.a || v.about)	
@@ -2038,12 +2039,41 @@ pUserInfo = function(){
 		if (v.txid)
 			self.txid = v.txid;
 
-			
+
 		try{
-			self.addresses = JSON.parse(v.b || v.addresses || "[]")
+			// self.addresses = JSON.parse(v.b || v.addresses || "[]")
+
+		
+			self.addresses = [];
+
+			var extractDeep = str => {
+
+				const parsed = JSON.parse(str);
+
+				console.log('parsed', parsed);
+
+				if (parsed.length){
+
+					parsed.forEach(obj => {
+
+						console.log('obj', typeof obj, obj, self.addresses);
+
+						if (typeof obj === 'string'){
+							extractDeep(obj);
+							
+						} else if (typeof obj === 'object'){
+							self.addresses.push(obj);
+							
+						}
+					})
+				}
+			}
+
+			extractDeep(v.b || v.addresses || '[]');
+
 		}
 		catch (e){
-			
+			console.log('e!!!!!!!!!!!!!', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial
