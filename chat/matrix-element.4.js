@@ -627,18 +627,24 @@ var functions = __webpack_require__("3139");
       return i;
     },
     callsEnabled: state => state.isCallsEnabled,
+    checkCallsEnabled: function () {
+      var _this$$store$state$Ch, _this$$store$state$Ch2;
+      if ((_this$$store$state$Ch = this.$store.state.ChatStatuses[this.m_chat.roomId]) !== null && _this$$store$state$Ch !== void 0 && _this$$store$state$Ch.enabled) {
+        this.wait = false;
+        return true;
+      } else if ((_this$$store$state$Ch2 = this.$store.state.ChatStatuses[this.m_chat.roomId]) !== null && _this$$store$state$Ch2 !== void 0 && _this$$store$state$Ch2.isWaiting) {
+        return "wait";
+      } else {
+        this.wait = false;
+        return false;
+      }
+    },
     isGroup: function () {
       var _this$m_chat;
       return ((_this$m_chat = this.m_chat) === null || _this$m_chat === void 0 ? void 0 : _this$m_chat.name.slice(0, 1)) === "@";
     },
     auth: state => state.auth,
     isCallsActive: state => state.isCallsActive,
-    lastEnabled: function () {
-      var _chat$timeline$filter;
-      let chat = this.core.mtrx.client.getRoom(this.chat.roomId);
-      let res = (_chat$timeline$filter = chat.timeline.filter(i => i.event.type === 'm.room.callsEnabled').pop()) === null || _chat$timeline$filter === void 0 ? void 0 : _chat$timeline$filter.event.content.enabled;
-      return res;
-    },
     m_chat: function () {
       if (this.chat && this.chat.roomId) {
         let pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
@@ -705,32 +711,8 @@ var functions = __webpack_require__("3139");
         this.searchactive = false;
       }
     },
-    checkCallsEnabled: function () {
-      var _isEnabled$find, _isEnabled$find$event, _isEnabled$find$event2, _hasAccess$find, _hasAccess$find2, _hasAccess$find2$even, _hasAccess$find2$even2;
-      let isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
-      let hasAccess = this.m_chat.currentState.getStateEvents("m.room.request_calls_access");
-      if ((_isEnabled$find = isEnabled.find(e => {
-        var _e$event, _e$event2, _e$event3;
-        return !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
-      })) !== null && _isEnabled$find !== void 0 && (_isEnabled$find$event = _isEnabled$find.event) !== null && _isEnabled$find$event !== void 0 && (_isEnabled$find$event2 = _isEnabled$find$event.content) !== null && _isEnabled$find$event2 !== void 0 && _isEnabled$find$event2.enabled) {
-        this.wait = false;
-        return true;
-      }
-      if ((_hasAccess$find = hasAccess.find(e => {
-        var _e$event4;
-        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event4 = e.event) === null || _e$event4 === void 0 ? void 0 : _e$event4.sender);
-      })) !== null && _hasAccess$find !== void 0 && _hasAccess$find.event && ((_hasAccess$find2 = hasAccess.find(e => {
-        var _e$event5;
-        return this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event5 = e.event) === null || _e$event5 === void 0 ? void 0 : _e$event5.sender);
-      })) === null || _hasAccess$find2 === void 0 ? void 0 : (_hasAccess$find2$even = _hasAccess$find2.event) === null || _hasAccess$find2$even === void 0 ? void 0 : (_hasAccess$find2$even2 = _hasAccess$find2$even.content) === null || _hasAccess$find2$even2 === void 0 ? void 0 : _hasAccess$find2$even2.accepted) === undefined) {
-        return "wait";
-      } else {
-        this.wait = false;
-        return false;
-      }
-    },
     bcCall: function () {
-      if (!this.checkCallsEnabled()) {
+      if (!this.checkCallsEnabled) {
         this.$dialog.confirm(this.$t("caption.request"), {
           okText: this.$t("yes"),
           cancelText: this.$t("cancel")
@@ -742,7 +724,7 @@ var functions = __webpack_require__("3139");
           this.requestCallsAccess();
         });
         return;
-      } else if (this.checkCallsEnabled() === "wait") {
+      } else if (this.checkCallsEnabled === "wait") {
         return;
       }
       let local = document.querySelector("body");
@@ -755,7 +737,9 @@ var functions = __webpack_require__("3139");
       });
     },
     requestCallsAccess() {
-      this.core.mtrx.client.sendStateEvent(this.m_chat.roomId, "m.room.request_calls_access");
+      this.core.mtrx.client.sendStateEvent(this.m_chat.roomId, "m.room.request_calls_access", {
+        accepted: null
+      });
     },
     navigateToProfile(id) {
       this.$router.push({
@@ -1895,16 +1879,15 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     events: function () {
       var pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
-      var isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled");
-      console.log(this.core.user.userinfo);
+      let isEnabled = this.m_chat.currentState.getStateEvents("m.room.callsEnabled").find(e => {
+        var _e$event, _e$event2, _e$event3;
+        return !!this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
+      });
       if (pushRules !== null) {
         this.roomMuted = true;
       }
-      if (isEnabled.find(e => {
-        var _this$core$mtrx$me, _this$core$mtrx$me$ev, _this$core$mtrx$me$ev2, _e$event, _e$event2, _e$event3;
-        return ((_this$core$mtrx$me = !this.core.mtrx.me(e === null || e === void 0 ? void 0 : (_e$event = e.event) === null || _e$event === void 0 ? void 0 : _e$event.sender)) === null || _this$core$mtrx$me === void 0 ? void 0 : (_this$core$mtrx$me$ev = _this$core$mtrx$me.event) === null || _this$core$mtrx$me$ev === void 0 ? void 0 : (_this$core$mtrx$me$ev2 = _this$core$mtrx$me$ev.content) === null || _this$core$mtrx$me$ev2 === void 0 ? void 0 : _this$core$mtrx$me$ev2.enabled) && (e === null || e === void 0 ? void 0 : (_e$event2 = e.event) === null || _e$event2 === void 0 ? void 0 : _e$event2.sender.split(":")[0].replace("@", "")) === (e === null || e === void 0 ? void 0 : (_e$event3 = e.event) === null || _e$event3 === void 0 ? void 0 : _e$event3.state_key);
-      })) {
-        this.roomCallsDisabled = true;
+      if (isEnabled) {
+        this.roomCallsDisabled = !isEnabled.event.content.enabled;
       }
       return this.m_chat.timeline || {};
     },
