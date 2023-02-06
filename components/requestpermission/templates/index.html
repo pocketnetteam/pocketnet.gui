@@ -10,42 +10,98 @@
 		</div>
 
 		<div class="caption">
-			<span><%- ed.application.manifest.name %> asks for permission</span>
+			<span><%- ed.application.manifest.name %> <%-e('permissions_ask')%></span> <span><%-e(ed.meta.name)%></span>
 		</div>
 
 		<div class="permissionForm">
-			<div class="permissionName">
-				<span><%-ed.meta.name%></span>
-			</div>
 
-			<div class="permissionDescription">
-				<span><%-ed.meta.description%></span>
-			</div>
 
-			<div class="jsontemp">
+			<% if(ed.permission == 'payment') { %> 
+
+				<div class="paymentForm">
+					<% _.each(ed.data.recievers, function(reciever) {
+						
+						var sUserInfo = psdk.userInfo.getShortForm(reciever.address)
+
+						if(!sUserInfo) return
+
+						var src = sUserInfo.image;
+						var name = sUserInfo.name;
+						var letter = sUserInfo.letter;  
+						
+						%> 
+
+						<div class="reciever">
+							<div class="userIcon">
+
+								<div class="icon">
+		
+									<div  ban=".gif" contain="none" class="usericon" <%=bgImagesClApplyTemplate(src)%>>
+		
+										<% if(!src && letter) { %>
+		
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+						
+										<% } %>
+		
+										<% if(app.platform.ui.markUser) {%>
+		
+											<%= app.platform.ui.markUser(reciever.address)%>
+		
+										<% } %>
+		
+									</div>
+									
+								</div>
+
+							</div>
+
+							<div class="userName">
+								<span class="adr"><%-sUserInfo.name %></span>
+							</div>
+
+							<div class="amount">
+								<span><%- app.platform.mp.coin(reciever.amount) %> PKOIN</span>
+							</div>
+						</div>
+						
+					<% }) %>
+				</div>
+				
+			<% } %>
+
+			<!--<div class="jsontemp">
 				<div>
 					<%- JSON.stringify(ed) %>
 				</div>
 
-				<!--<div>
+				<div>
 					<%- JSON.stringify(additional || {}) %>
-				</div>-->
-			</div>
+				</div>
+			</div>-->
+
+			
+		</div>
+
+		<div class="permissionDescription">
+			<span><%-e(ed.meta.description)%></span>
 		</div>
 
 		<div class="panel">
 			<button class="button granted">
-				Allow
+				<%-e('permissions_allow')%>
 			</button>
 
-			<% if(!ed.meta.once) {%>
-				<button class="button once gray">
-					Allow once
+			<% if(!ed.meta.uniq) {%>
+				<button class="button once ghost">
+					<%-e('permissions_allow_once')%>
 				</button>
 			<% } %>
 
-			<button class="button forbid gray">
-				Forbid
+			<button class="button forbid ghost">
+				<%-e('permissions_forbid')%>
 			</button>
 		</div>
 	</div>

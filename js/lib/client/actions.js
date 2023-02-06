@@ -2084,7 +2084,7 @@ var Actions = function(app, api, storage = localStorage){
 
         var account = self.addAccount(address)
 
-        var action = account.addAction(object, priority)
+        var action = account.addAction(object, priority, p)
 
         self.save()
 

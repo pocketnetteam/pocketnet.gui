@@ -2282,6 +2282,17 @@ _l.sendToChat = "Отправить сообщение в чат";
 _l.createPost = "Создать и опубликовать пост";
 
 
-
-
 _l.captchanotequal_angles = "Сегменты капчи должны быть повёрнуты на правильный угол"
+
+
+_l.permissions_name_account = "Доступ к информации об аккаунте"
+_l.permissions_descriptions_account = "Данное разрешение даёт приложению информацию: ваш адрес аккаунта; общедоступне данные, связанные с вашим аккаунтом; баланс кошелька"
+_l.permissions_name_sign = "Цифровая подпись данных"
+_l.permissions_descriptions_sign = "Вы разрешаете подписать своей уникальной подписью данные"
+_l.permissions_name_payment = "Совершить платёж"
+_l.permissions_descriptions_payment = "Приложение запрашивает разрешения совершить платёж в PKOIN"
+
+_l.permissions_ask = "запрашивает разрешение"
+_l.permissions_allow = "Разрешить"
+_l.permissions_allow_once = "Разрешить только сейчас"
+_l.permissions_forbid = "Запретить"

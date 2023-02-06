@@ -53,8 +53,9 @@
   justify-content: center;
 }
 #application .iframewrapper .loadingIcon .appicon {
-  width: 128px;
-  height: 128px;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 48px;
 }
 #application .iframewrapper.loaded iframe {
   opacity: 1;

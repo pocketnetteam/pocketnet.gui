@@ -10,6 +10,15 @@ var makeid = function(){
    
 }
 
+var actionHelper = function(action){
+
+
+    if(!action.transaction) { action.relay = true }
+    if (action.transaction && !action.completed && !action.rejected) { action.temp = true }
+
+    return action
+}
+
 var BastyonSdk = function(){
     var self = this
     var clbks = {}
@@ -47,9 +56,23 @@ var BastyonSdk = function(){
     })
 
     var on = function(key, data){
-        (listeners[key] || []).forEach(f => {
-            f(data)
-        });
+
+        try{
+            if(key == 'action') actionHelper(data)
+
+            console.log('listeners', listeners, key)
+
+            if (listeners[key]){
+                listeners[key].forEach(f => {
+                    f(data)
+                });
+            }
+        }
+        catch(e){
+            console.error(e)
+        }
+
+       
         
     }
 
@@ -123,7 +146,9 @@ var BastyonSdk = function(){
     }
 
     self.payment = function(data){
-        return action('payment', data)
+        return action('payment', data).then(action => {
+            return actionHelper(action)
+        })
     }
 
     self.on = function(key, action){
@@ -141,6 +166,8 @@ var BastyonSdk = function(){
     }
 
     self.emit = function(type, data){
+
+        
         send({
             event : type,
             data

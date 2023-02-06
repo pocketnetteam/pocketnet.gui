@@ -1163,6 +1163,8 @@ Application = function (p) {
 
 				self.platform.actions.on('actionFiltered', ({action, address, status}) => {
 
+					console.log("actionFiltered apps", action)
+
 					if (action.settings && action.settings.application){
 						self.apps.emit('action', action.export(), action.settings.application)
 					}

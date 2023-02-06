@@ -122,21 +122,25 @@ var BastyonApps = function(app){
 
     var permissions = {
         'account' : {
-            name : 'permissions.name.account',
-            description : 'permissions.descriptions.account',
-            level : 9
+            name : 'permissions_name_account',
+            description : 'permissions_descriptions_account',
+            level : 9,
+
+            canrequest : function(){
+                return app.user.address.value ? true : false
+            }
         },
 
         'sign' : {
-            name : 'permissions.name.account',
-            description : 'permissions.descriptions.account',
+            name : 'permissions_name_sign',
+            description : 'permissions_descriptions_sign',
             level : 1,
             uniq : true
         },
 
         'payment' : {
-            name : 'permissions.name.payment',
-            description : 'permissions.descriptions.payment',
+            name : 'permissions_name_payment',
+            description : 'permissions_descriptions_payment',
             level : 2,
             uniq : true
         }
@@ -180,8 +184,8 @@ var BastyonApps = function(app){
         },
 
         payment : {
-            parameters : ['recievers', 'feemode', 'message'],
-            permissions : ['payment'],
+            parameters : ['recievers', 'feemode'],
+            permissions : ['account', 'payment'],
             action : function({data, application}){
 
                 var source = [app.user.address.value];
@@ -220,7 +224,9 @@ var BastyonApps = function(app){
             application : application.manifest.id
         }).then(action => {
 
-            return Promise.resolve(action)
+            console.log('action', action.export())
+
+            return Promise.resolve(action.export())
 
         }).catch(e => {
 
@@ -234,6 +240,10 @@ var BastyonApps = function(app){
         },
 
         state : {
+
+        },
+
+        action : {
 
         },
 
@@ -503,12 +513,16 @@ var BastyonApps = function(app){
 
         var meta = permissions[permission]
 
+        if (meta.canrequest && !meta.canrequest()){
+            return Promise.reject(appsError('permission:request:cantrequest:' + permission))
+        }
+
         return app.platform.ui.requestPermission({application, meta, permission, data}).then((reason) => {
             return Promise.resolve(reason)
         }).catch(reason => {
 
             if (reason == 'error'){
-                return Promise.reject(appsError('permission:requestform:error'))
+                return Promise.reject(appsError('permission:request:error:' + permission))
             }
 
             return Promise.resolve(reason)
@@ -524,13 +538,9 @@ var BastyonApps = function(app){
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
 
-        console.log('application:localdata', data)
-
         if(!appdata) return Promise.reject(appsError('error:code:appdata'))
 
         return requestPermissionForm(application, permission, data).then(state => {
-
-            console.log('state', state)
 
             if(state == 'granted'){
 
@@ -572,9 +582,16 @@ var BastyonApps = function(app){
 
     var requestPermissions = function(application, permissions, data){
 
-        return Promise.all(_.map(permissions, (permission) => {
-            return requestPermission(application, permission, data)
-        }))
+
+        return processArray(permissions, (permission) => {
+            return new Promise((resovle, reject) => {
+                setTimeout(() => {
+                    requestPermission(application, permission, data).then(resovle).catch(reject)
+                }, 250)
+            })
+        })
+
+     
         
     }
 
@@ -590,15 +607,22 @@ var BastyonApps = function(app){
 
     var emit = function(key, data, applicationId){
 
+        console.log("EMIT", key, data, applicationId)
+
         var filteredListeners = listening
 
         if (applicationId){
 
-            if(!listening[applicationId]) return
+            if(!listening[applicationId]) {
+                console.warn('application:notlistening:' + applicationId)
+                return
+            }
 
             filteredListeners = {}
             filteredListeners[applicationId] = listening[applicationId]
         }
+
+        console.log('filteredListeners', filteredListeners)
 
         _.each(filteredListeners, (listener, id) => {
             var application = installed[id]

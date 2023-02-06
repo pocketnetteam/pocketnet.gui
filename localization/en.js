@@ -2522,3 +2522,17 @@ _l.commentBannedWarning = function(name){
 	return name + " blocked you. You won't be able to comment on it.";
 };
 _l.captchanotequal_angles = "Captcha segments must be rotated to the correct angle"
+
+
+_l.permissions_name_account = "Access to account information"
+_l.permissions_descriptions_account = "This permission gives the application information: your account address; publicly available data associated with your account; wallet balance"
+_l.permissions_name_sign = "Digital Signature of Data"
+_l.permissions_descriptions_sign = "You authorize the data to be signed with your unique signature"
+_l.permissions_name_payment = "Make a payment"
+_l.permissions_descriptions_payment = "The application asks for permission to make a payment in PKOIN"
+
+_l.permissions_ask = "asks for permission"
+_l.permissions_allow = "Allow"
+_l.permissions_allow_once = "Allow once"
+_l.permissions_forbid = "Forbid"
+
