@@ -82,7 +82,7 @@ module.exports = function (isTorEnabled = false) {
         const isHostListed = (hostname in self.accessRecords);
 
         if (!isHostListed) {
-            self.accessRecords[hostname] = {};
+            self.accessRecords[hostname] = { inProgress: true };
 
             const pingResult = await pingHost(hostname, port);
 
@@ -120,9 +120,10 @@ module.exports = function (isTorEnabled = false) {
         }
 
         const isAccessOk = (self.accessRecords[hostname].accessOk === true);
+        const isPingInProgress = (self.accessRecords[hostname].inProgress === true);
         const isNextTryTime = (self.accessRecords[hostname].nextTry <= Date.now());
 
-        if (isNextTryTime) {
+        if (isNextTryTime && !isPingInProgress) {
             const pingResult = await pingHost(hostname, port);
 
             if (pingResult) {
