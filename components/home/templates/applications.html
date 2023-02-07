@@ -9,11 +9,11 @@
     _.each(sorted, function(ins){ %> 
 
         <% if(ins.installed) {%>
-            <div class="application installed" application="<%- application.manifest.id %>">
-                <div class="icon" image="<%-application.icon%>">
+            <div class="application installed" application="<%- ins.manifest.id %>">
+                <div class="icon" image="<%-ins.icon%>">
                 </div>
                 <div class="name">
-                    <span><%- application.manifest.name %></span>
+                    <span><%- ins.manifest.name %></span>
                 </div>
                 <div class="badge" num="0">
                 </div>
@@ -33,11 +33,11 @@
         <% } %>
 
         <% if(!ins.installing && !ins.installed) {%>
-            <div class="application" application="<%- application.manifest.id %>">
-                <div class="icon" image="<%-application.icon%>">
+            <div class="application" application="<%- ins.manifest.id %>">
+                <div class="icon" image="<%-ins.icon%>">
                 </div>
                 <div class="name">
-                    <span><%- application.manifest.name %></span>
+                    <span><%- ins.manifest.name %></span>
                 </div>
             </div>
         <% } %>

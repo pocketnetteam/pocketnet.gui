@@ -507,7 +507,7 @@ var BastyonApps = function(app){
         if (application.develop){
             application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
 
-            result.develop = true
+            
         }
         else{   
             application.path = 'https://' + application.scope
@@ -567,6 +567,11 @@ var BastyonApps = function(app){
         if (application.production){
             result.production = true
         }
+        
+        if (application.develop){
+            result.develop = true
+        }
+
 
         installing[application.id] = {promise : resources(application, cached).then((resourses) => {
             result.path = application.path

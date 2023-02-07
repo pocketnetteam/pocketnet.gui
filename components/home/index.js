@@ -14,9 +14,9 @@ var home = (function(){
 			applicationSearchClear : function(){
 				renders.applications()
 			},
-			applicationSearch : function(p){
-				acsearch = new search(p.el.find('.applicationSearch'), {
-					placeholder : self.app.localization.e('e13140'),
+			applicationSearch : function(){
+				acsearch = new search(el.c.find('.applicationSearch'), {
+					placeholder : self.app.localization.e('searchbyapplications'),
 
 					clbk : function(_el){
 
@@ -45,6 +45,38 @@ var home = (function(){
 					}
 					
 				})
+			},
+
+			applicationClick : function(applicationId){
+				var applications = self.app.apps.get.installedAndInstalling()
+
+				var application = applications[applicationId]
+
+				if(!application){
+					//// not installed application from search, to app page
+
+					return
+				}
+
+				if(application.installing){
+
+					//// not installed application, to app page with installing bar 
+
+					return
+				}
+
+				if(application.installed){
+
+					self.nav.api.go({
+						href : 'application?id=' + applicationId,
+						history : true,
+						open : true
+					})	
+
+					//// not installed application, to app page with installing bar 
+
+					return
+				}
 			}
 		}
 
@@ -62,16 +94,31 @@ var home = (function(){
 				self.shell({
 
 					name :  'applications',
-					el :   el.c.find('.applications'),
+					el :   el.c.find('.applicationsList'),
 					data : {
 						applications
 					},
 
 				}, function(p){
 
+					p.el.find('.application').on('click', function(){
+
+						var application = $(this).attr('application')
+
+							actions.applicationClick(application)
+					})
+
 					if (clbk)
 						clbk()
 
+				})
+
+				_.each(applications, (ins) => {
+					if (ins.installing){
+						ins.promise.then(() => {
+							renders.applications()
+						})
+					}
 				})
 			}
 		}

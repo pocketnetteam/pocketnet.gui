@@ -9,7 +9,8 @@ if(!_Node)
 		"id" : 'demo.pocketnet.app',
     	"version": "0.0.1",
 		"scope" : "localhost:8081",
-		"cantdelete" : true
+		"cantdelete" : true,
+		"name" : "Demo application"
 	}]
 	
 	var _listofproxies =  [
