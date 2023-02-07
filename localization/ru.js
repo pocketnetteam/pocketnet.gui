@@ -2292,6 +2292,12 @@ _l.permissions_descriptions_sign = "Вы разрешаете подписать
 _l.permissions_name_payment = "Совершить платёж"
 _l.permissions_descriptions_payment = "Приложение запрашивает разрешения совершить платёж в PKOIN"
 
+_l.permissions_name_messaging = "Отображение сообщений"
+_l.permissions_descriptions_messaging = "Дать приложению разрешения отображать информационное сообщение"
+
+_l.permissions_name_mobilecamera = "Возможность загрузить фотографию"
+_l.permissions_descriptions_mobilecamera = "Дать приложению возможность открывать мобильную галерею"
+
 _l.permissions_ask = "запрашивает разрешение"
 _l.permissions_allow = "Разрешить"
 _l.permissions_allow_once = "Разрешить только сейчас"

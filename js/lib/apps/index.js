@@ -116,8 +116,6 @@ var validateParameters = function(data, parameters){
     if(!e) return null
 
     return appsError('parameters:missing:' + e)
-
-
 }
 
 var BastyonApps = function(app){
@@ -143,7 +141,7 @@ var BastyonApps = function(app){
         'account' : {
             name : 'permissions_name_account',
             description : 'permissions_descriptions_account',
-            level : 6,
+            level : 5,
 
             canrequest : function(){
                 return app.user.address.value ? true : false
@@ -650,7 +648,7 @@ var BastyonApps = function(app){
         })
     }
 
-    var requestPermissionForm = function(application, permission, data){
+    var requestPermissionForm = function(application, permission, data, p = {}){
 
 
         var meta = permissions[permission]
@@ -661,7 +659,7 @@ var BastyonApps = function(app){
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                return app.platform.ui.requestPermission({application, meta, permission, data}).then((reason) => {
+                return app.platform.ui.requestPermission({application, meta, permission, data}, p).then((reason) => {
                     return resolve(reason)
                 }).catch(reason => {
         
@@ -679,9 +677,59 @@ var BastyonApps = function(app){
       
     }
 
-    var requestPermission = function(application, permission, data){
+    var givePermission = function(application, permission){
+        var meta = permissions[permission]
+        var appdata = localdata[application.manifest.id]
 
-        if(application.manifest.permissions.indexOf(permission) == -1){
+        if (application.manifest.permissions.indexOf(permission) == -1){
+            return false
+        }
+
+        if(!meta) return false
+
+        appdata.permissions = _.filter(appdata.permissions, (_permission) => {
+            return _permission.id != permission
+        })
+
+        appdata.permissions.push({
+            id : permission,
+            state : 'granted'
+        })
+
+        savelocaldata()
+
+        return true
+
+    }
+
+    var removePermission = function(application, permission){
+        var meta = permissions[permission]
+        var appdata = localdata[application.manifest.id]
+
+        if (application.manifest.permissions.indexOf(permission) == -1){
+            return false
+        }
+
+        if(!meta) return false
+
+        appdata.permissions = _.filter(appdata.permissions, (_permission) => {
+            return _permission.id != permission
+        })
+
+        appdata.permissions.push({
+            id : permission,
+            state : 'forbid'
+        })
+
+        savelocaldata()
+
+        return true
+
+    }
+
+    var requestPermission = function(application, permission, data, p){
+
+        if (application.manifest.permissions.indexOf(permission) == -1){
             return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
         }
 
@@ -707,7 +755,7 @@ var BastyonApps = function(app){
         }
         
 
-        return requestPermissionForm(application, permission, data).then(state => {
+        return requestPermissionForm(application, permission, data, p).then(state => {
 
             if(state == 'granted'){
 
@@ -747,12 +795,12 @@ var BastyonApps = function(app){
         
     }
 
-    var requestPermissions = function(application, permissions, data){
+    var requestPermissions = function(application, permissions, data, p){
 
         if(!_.isArray(permissions)) return Promise.reject(appsError('permissions:type:array'))
 
         return processArray(permissions, (permission) => {
-            return requestPermission(application, permission, data)
+            return requestPermission(application, permission, data, p)
         })
     }
 
@@ -946,6 +994,10 @@ var BastyonApps = function(app){
     }
 
     self.emit = emit
+
+    self.requestPermissions = requestPermissions
+    self.givePermission = givePermission
+    self.removePermission = removePermission
 
     return self
 }

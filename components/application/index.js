@@ -99,8 +99,6 @@ var application = (function(){
 						self.app.nav.api.load({
 							open : true,
 							href : 'page404',
-							history : true,
-							replaceState : true
 						})
 	
 						return

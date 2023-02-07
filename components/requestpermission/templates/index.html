@@ -94,7 +94,7 @@
 				<%-e('permissions_allow')%>
 			</button>
 
-			<% if(!ed.meta.uniq) {%>
+			<% if(!ed.meta.uniq && !ed.noonce) {%>
 				<button class="button once ghost">
 					<%-e('permissions_allow_once')%>
 				</button>

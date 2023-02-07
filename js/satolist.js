@@ -3045,7 +3045,7 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        requestPermission : function(parameters){
+        requestPermission : function(parameters, settings){
             return new Promise ((resolve, reject) => {
                 app.nav.api.load({
                     open : true,
@@ -3054,7 +3054,7 @@ Platform = function (app, listofnodes) {
 
                     essenseData : {
                         ...parameters,
-
+                        ...settings,
                         success : (state) => {
                             resolve(state)
                         },

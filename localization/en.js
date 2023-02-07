@@ -2531,6 +2531,14 @@ _l.permissions_descriptions_sign = "You authorize the data to be signed with you
 _l.permissions_name_payment = "Make a payment"
 _l.permissions_descriptions_payment = "The application asks for permission to make a payment in PKOIN"
 
+_l.permissions_name_messaging = "Message display"
+_l.permissions_descriptions_messaging = "Give the app permission to display an informational message"
+
+_l.permissions_name_mobilecamera = "Possibility to upload a photo"
+_l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
+
+
+
 _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"

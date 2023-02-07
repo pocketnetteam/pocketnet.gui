@@ -11,7 +11,60 @@ var applicationmeta = (function(){
 		var el, ed, application, appdata;
 
 		var actions = {
+			managePermission : function(permission){
 
+				var appsinfo = self.app.apps.info()
+
+				var meta = appsinfo.permissions[permission]
+            
+				var status = _.find(appdata.permissions, function(_permission){
+					return _permission.id == permission
+				})
+
+				var pr = Promise.resolve()
+
+				console.log('status', status, meta, permission)
+
+				if((!status && !meta.auto) || (status && status.state == 'forbid')){
+					if(meta.auto || meta.level > 5){
+
+						var r = self.app.apps.givePermission(application, permission)
+
+						if(!r){
+							console.error('permissions:unableGive:error')
+							return
+						}
+						/// give
+					}
+					else{
+						// ask
+
+						console.log("HERE")
+
+						pr = self.app.apps.requestPermissions(application, [permission], {}, {
+							noonce : true
+						}).catch(e => {
+							console.error(e)
+							return Promise.resolve()
+						})
+					}
+				}
+
+				else{
+
+					var r = self.app.apps.removePermission(application, permission)
+
+					if(!r){
+						console.error('permissions:unableRemove:error')
+						return
+					}
+					
+				}
+
+				pr.then(() => {
+					renders.permissions()
+				})
+			}
 		}
 
 		var events = {
@@ -54,6 +107,12 @@ var applicationmeta = (function(){
 					},
 
 				}, function(p){
+
+					p.el.find('.permission').on('click', function(){
+						var permission = $(this).attr('permission')
+
+						actions.managePermission(permission)
+					})
 
 					if (clbk)
 						clbk()
