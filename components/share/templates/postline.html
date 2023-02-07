@@ -29,11 +29,9 @@
                         
                     if (!share.repost.v && !share.itisvideo() && !share.aliasid && !app.pkoindisable) { %>
 
-                        <% if (window.testpocketnet == true) { %>
                         <div elementsid="peertubeAddAudio" class="item peertube tooltip nowidth" embeding="addAudio" title="<%=e('peertubeAddAudio')%>">
-                            <i class="fas fa-volume-up"></i>
+                            <i class="fas fa-volume-up"></i> <span><%- e('peertubeAddAudio') %></span>
                         </div>
-                        <% } %>
 
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>

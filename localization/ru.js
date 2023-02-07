@@ -1015,11 +1015,15 @@ _l.videoTranscodingNotOptimal = "Неверный результат обраб�
 _l.videoTranscodingError = "Произошла ошибка при обработке вашего видео"
 _l.videoUploadingFinish = "Завершение загрузки..."
 _l.uploadNewVideo = "Добавить новое видео"
-_l.selectVideoFile = "Выберите файл"
+_l.uploadNewAudio = "Добавить новое аудио"
+_l.selectVideoFile = "Выберите видео файл"
+_l.selectVideoFile = "Выберите аудио файл"
 _l.uploadVideoProgress_binaries = "Подготовка библиотек:"
 _l.uploadVideoProgress_processing = "Обработка видео:"
 _l.uploadVideoProgress_uploading = "Загрузка видео:"
+_l.uploadAudioProgress_uploading = "Загрузка аудио:"
 _l.uploadVideoProgress_start = "Инициализация загрузки видео:"
+_l.uploadAudioProgress_start = "Инициализация загрузки аудио:"
 
 
 
@@ -1058,6 +1062,7 @@ _l.streamCreating = "Трансляция Создается"
 _l.importFromExternal = "или импортируйте видео из YouTube"
 
 _l.peertubeAddVideo = "Загрузить Видео"
+_l.peertubeAddAudio = "Загрузить Аудио"
 
 
 
