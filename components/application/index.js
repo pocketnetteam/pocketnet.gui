@@ -165,6 +165,7 @@ var application = (function(){
 				
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent_application')
+					self.app.mobile.reload.destroyparallax()
 				})
 
 				var id = parameters().id
@@ -198,6 +199,7 @@ var application = (function(){
 
 				window.requestAnimationFrame(() => {
 					self.app.el.html.removeClass('allcontent_application')
+					self.app.mobile.reload.initparallax()
 				})
 
 				self.app.apps.off('loaded', events.loaded)

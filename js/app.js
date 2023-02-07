@@ -2629,7 +2629,7 @@ Application = function (p) {
 			},
 			initparallax: function () {
 
-				if (isTablet() || isMobile()) {
+				if ((isTablet() || isMobile()) && !self.el.html.hasClass('allcontent_application')) {
 
 					if (self.mobile.reload.parallax) return
 					if (self.mobile.reload.reloading) return

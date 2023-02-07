@@ -686,7 +686,12 @@ __map =  {
 
 		},
 
-	
+		home : {
+			uri : "home",
+			href : "home",
+			add : insertingfunc,
+		},
+
 
 		donations : {
 			uri : "donations",

@@ -126,11 +126,13 @@ var validateParameters = function(data, parameters){
 var BastyonApps = function(app){
     var self = this
     var installed = {}
-    var downloading = {}
     var installing = {}
+    var downloading = {}
     var localdata = {}
     var windows = {}
     var clbks = {}
+    var allresources = {}
+    var getresources = {}
 
     var key = app.user.address.value || ''
 
@@ -205,6 +207,8 @@ var BastyonApps = function(app){
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
+
+                //// TODO CHECK ELECTRON NODE SAFE
                 return app.api.rpc(data.method, data.parameters)
             }
         },
@@ -495,26 +499,10 @@ var BastyonApps = function(app){
         })
     }
 
-    var install = function(application, cached = {}){
-
-        if (installed[application.id]) return Promise.resolve(installed[application.id])
-
-        if (installing[application.id]) return installing[application.id]
-
-        var promises = []
-        var result = {
-            fromcache : {}
-        }
-
-        if (application.cantdelete){
-            result.cantdelete = true
-        }
-
-        if (application.production){
-            result.production = true
-        }
-
-        console.log('application', application)
+    var resources = function(application, cached = {}){
+        
+        if (allresources[application.id]) return Promise.resolve(allresources[application.id])
+        if (getresources[application.id]) return Promise.resolve(getresources[application.id])
 
         if (application.develop){
             application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
@@ -525,7 +513,10 @@ var BastyonApps = function(app){
             application.path = 'https://' + application.scope
         }
 
-        result.path = application.path
+        var promises = []
+        var result = {
+            fromcache : {}
+        }
 
         promises = promises.concat(Promise.all(_.map(appfiles, (file) => {
 
@@ -546,16 +537,41 @@ var BastyonApps = function(app){
                     }).catch(reject)
                 }
             })
-
-            
             
         })))
 
-        installing[application.id] = Promise.all(promises).then(() => {
+        getresources[application.id] = Promise.all(promises).then(() => {
 
-            console.log("INSTALLED")
+            allresources[application.id] = result
 
-            installed[application.id] = result
+            return allresources[application.id]
+
+        }).finally(() => {
+            delete getresources[application.id]
+        })
+
+        return getresources[application.id]
+    }
+
+    var install = function(application, cached = {}){
+
+        if (installed[application.id]) return Promise.resolve(installed[application.id])
+        if (installing[application.id]) return installing[application.id].promise
+
+        var result = {}
+
+        if (application.cantdelete){
+            result.cantdelete = true
+        }
+
+        if (application.production){
+            result.production = true
+        }
+
+        installing[application.id] = {promise : resources(application, cached).then((resourses) => {
+            result.path = application.path
+
+            installed[application.id] = {result, ...resourses}
 
             registerLocal(application)
 
@@ -563,9 +579,10 @@ var BastyonApps = function(app){
 
         }).finally(() => {
             delete installing[application.id]
-        })
+        }), application}
 
         return installing[application.id]
+        
     }
 
     var remove = function(id){
@@ -994,6 +1011,9 @@ var BastyonApps = function(app){
     }
 
     self.get = {
+        installing : function(){
+            return installing
+        },
         output : function(id){
             return self.get.application(id).then(({application}) => {
                 return download(application)
@@ -1008,7 +1028,7 @@ var BastyonApps = function(app){
             }
 
             if (installing[id]){
-                return installing[id].then(() => {
+                return installing[id].promise.then(() => {
 
                     return Promise.resolve({
                         application : installed[id],
@@ -1019,6 +1039,65 @@ var BastyonApps = function(app){
                     return Promise.resolve(null)
                 })
             }
+        },
+
+        installed : function(){
+            return installed
+        },
+
+        resourcesForApplications : function(appsmeta){
+
+            var results = {}
+
+            /*
+
+                [{
+                    "id" : 'demo2.pocketnet.app',
+                    "version": "0.0.1",
+                    "scope" : "localhost:8081",
+                    "cantdelete" : true
+                }]
+
+            */
+
+            return Promise.all(_.map(appsmeta, (appmeta) => {
+
+                if(!appmeta) return Promise.resolve()
+                if(!appmeta.scope) return Promise.resolve()
+                if(!appmeta.id) return Promise.resolve()
+
+                return resources(appmeta).then((resources) => {
+                    var result = {...resources}
+                        result.path = appmeta.path
+
+                        results[appmeta.id] = {
+                            application : result,
+                        }
+                })
+            })).then(() => {
+                return Promise.resolve(results)
+            })
+        },
+
+        installedAndInstalling : function(){
+            var result = {}
+
+            _.each(installing, (ins, id) => {
+                result[id] = {
+                    application : ins.application,
+                    installing : true,
+                    promise : ins.promise
+                }
+            })
+
+            _.each(installed, (ins, id) => {
+                result[id] = {
+                    ...ins,
+                    installed : true
+                }
+            })
+
+            return result
         }
     }
 
@@ -1042,6 +1121,7 @@ var BastyonApps = function(app){
     self.givePermission = givePermission
     self.removePermission = removePermission
     self.clearPermission = clearPermission
+    
 
     return self
 }
