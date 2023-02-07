@@ -8,7 +8,8 @@ if(!_Node)
 	var developapps = [{
 		"id" : 'demo.pocketnet.app',
     	"version": "0.0.1",
-		"scope" : "localhost:8081"
+		"scope" : "localhost:8081",
+		"cantdelete" : true
 	}]
 	
 	var _listofproxies =  [

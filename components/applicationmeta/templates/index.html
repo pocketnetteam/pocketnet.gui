@@ -1,0 +1,33 @@
+<div id="<%-module.map.id%>">
+	<div class="wrapper">
+		<div class="applicationInfo">
+			<div class="appicon" image="<%-application.icon%>">
+			</div>
+			<div class="appname" >
+				<span><%- application.manifest.name %></span>
+			</div>
+		</div>
+
+		<div class="version">
+			<span>Version: <%- application.manifest.versiontxt %></span>
+		</div>
+
+		<div class="desctiption">
+			<%- application.manifest.description %>
+		</div>
+
+		<div class="permissions">
+
+		</div>
+
+		
+		<% if(!application.cantdelete) {%>
+			<% } %>
+			<div class="panel">
+				<button class="button remove">
+					Delete application
+				</button>
+			</div>
+		
+	</div>
+</div>

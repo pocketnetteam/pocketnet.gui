@@ -11,7 +11,17 @@ var application = (function(){
 		var el, ed, application, appdata;
 
 		var actions = {
+			openinfo : function(){
+				app.nav.api.load({
+                    open : true,
+                    id : 'applicationmeta',
+                    inWnd : true,
 
+                    essenseData : {
+                        application : application.manifest.id
+                    }
+                })
+			}
 		}
 
 		var events = {
@@ -21,7 +31,6 @@ var application = (function(){
 		var renders = {
 			frame : function(clbk){
 
-				console.log('application', application)
 
 				var src = application.manifest.scope + '/' + (application.manifest.start || '')
 
@@ -37,6 +46,9 @@ var application = (function(){
 
 				}, function(p){
 
+					p.el.find('.settings .icon').on('click', () => {
+						actions.openinfo()
+					})
 
 					if (clbk)
 						clbk();
@@ -61,6 +73,8 @@ var application = (function(){
 				}
 			})
 
+			
+
 		}
 
 		return {
@@ -68,12 +82,20 @@ var application = (function(){
 
 			getdata : function(clbk, p){
 				
+				window.requestAnimationFrame(() => {
+					self.app.el.html.addClass('allcontent_application')
+				})
 
 				var id = parameters().id
 
 				self.app.apps.get.application(id).then((f) => {
 
 					if(!f){
+
+						window.requestAnimationFrame(() => {
+							self.app.el.html.removeClass('allcontent_application')
+						})
+
 						self.app.nav.api.load({
 							open : true,
 							href : 'page404',
@@ -84,9 +106,7 @@ var application = (function(){
 						return
 					}
 	
-					window.requestAnimationFrame(() => {
-						self.app.el.html.addClass('allcontent_application')
-					})
+					
 					
 	
 					application = f.application
@@ -131,20 +151,7 @@ var application = (function(){
 
 				p.clbk(null, p);
 
-				
-				/////
-				/*
-				setTimeout(() => {
-
-					self.app.platform.matrixchat.core.renderChatToElement(el.c.find('.temp')[0], '').then((r) => {
-						console.log("R", r)
-					}).catch(e => {
-						console.error(e)
-					})
-
-				}, 5000)*/
-
-				/////
+			
 			}
 		}
 	};

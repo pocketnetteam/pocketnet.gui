@@ -69,19 +69,3 @@
   border: 0;
   outline: 0;
 }
-#application .tmpchat {
-  display: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-}
-#application .tmpchat .eventsflex,
-#application .tmpchat #chatExported {
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-}

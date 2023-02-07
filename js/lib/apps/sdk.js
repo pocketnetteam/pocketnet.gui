@@ -132,25 +132,6 @@ var BastyonSdk = function(){
         })
     }
 
-    self.rpc = function(method, parameters = []){
-        return action('rpc', {
-            method,
-            parameters
-        })
-    }
-
-    self.get = {
-        account : function(){
-            return action('account', {})
-        }
-    }
-
-    self.payment = function(data){
-        return action('payment', data).then(action => {
-            return actionHelper(action)
-        })
-    }
-
     self.on = function(key, action){
         if(!listeners[key]) listeners[key] = []
 
@@ -172,6 +153,47 @@ var BastyonSdk = function(){
             event : type,
             data
         })
+    }
+
+    //////////////////
+
+    self.rpc = function(method, parameters = []){
+        return action('rpc', {
+            method,
+            parameters
+        })
+    }
+
+    self.get = {
+        account : function(){
+            return action('account', {})
+        },
+
+        imageFromMobileCamera : function(){
+            return action('mobile.camera', {})
+        }
+    }
+
+    self.request = {
+        permissions : function(permissions){
+            return action('account', {permissions})
+        }
+    }
+
+    self.payment = function(data){
+        return action('payment', data).then(action => {
+            return actionHelper(action)
+        })
+    }
+
+    self.helpers = {
+        alert : function(message){
+            return action('alert', {message})
+        },
+
+        opensettings: function(){
+            return action('opensettings', {})
+        },
     }
 
     listen()

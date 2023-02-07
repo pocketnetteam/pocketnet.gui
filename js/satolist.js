@@ -3202,13 +3202,6 @@ Platform = function (app, listofnodes) {
 
         uploadImage : function(p){
 
-            
-
-            /*if (self.uicamerapreview){
-                self.uicamerapreview.destroy()
-                self.uicamerapreview = null
-            }*/
-
             app.nav.api.load({
                 open : true,
                 id : 'camerapreview',

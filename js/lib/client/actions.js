@@ -2069,11 +2069,10 @@ var Actions = function(app, api, storage = localStorage){
 
     self.processing = function(){
 
-        
-
         _.each(accounts, (account) => {
             account.processing()
         })
+
     } 
 
     self.addAction = function(address, object, priority, p = {}){
@@ -2195,8 +2194,20 @@ var Actions = function(app, api, storage = localStorage){
 
             self.processing()
 
+            var rif = null
+
             processInterval = setInterval(() => {
-                self.processing()
+
+                if (rif){
+                    cancelAnimationFrame(rif)
+                }
+
+                rif = window.requestAnimationFrame(() => {
+                    rif = null
+
+                    self.processing()
+                })
+                
             }, 3000)
         }
 

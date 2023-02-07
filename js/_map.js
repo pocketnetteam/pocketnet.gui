@@ -365,6 +365,13 @@ __map =  {
 		anonimus : true,
 	},
 
+	applicationmeta : {
+		uri : "applicationmeta",
+		href : "applicationmeta",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	application : {
 		uri : "application",
 		href : "application",

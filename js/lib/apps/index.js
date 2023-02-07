@@ -20,9 +20,10 @@ var parseManifest = function(json){
     }
 
     result.id = data.id.replace(/[^a-z0-9\.]/g, '')
-    result.name = data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, '')
+    result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
     result.version = numfromreleasestring(data.version)
-    result.description = data.description
+    result.versiontxt = superXSS(data.version)
+    result.description = superXSS(data.description || "").substr(0, 2000)
     result.author = data.author
     result.develop = data.develop == false ? false : true
     result.scope = data.scope
@@ -80,7 +81,16 @@ var importManifest = function(application){
 
         if(manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
         if(manifest.develop != application.develop) return Promise.reject(appsError('discrepancy:develop'))
-        if(manifest.version < application.version) return Promise.reject(appsError('version'))
+        
+        if(manifest.version < application.version) {
+            console.log("APPLICATION UPDATING")
+            return Promise.reject(appsError('version'))
+        }
+
+        if(manifest.version > application.version) {
+            console.log("APPLICATION UPDATING")
+            return Promise.reject(appsError('version'))
+        }
 
 
         if (application.develop) {
@@ -120,11 +130,20 @@ var BastyonApps = function(app){
 
     var key = app.user.address.value || ''
 
+    self.info = function(){
+        return {
+            permissions,
+            actions,
+            emitters,
+            events
+        }
+    }
+
     var permissions = {
         'account' : {
             name : 'permissions_name_account',
             description : 'permissions_descriptions_account',
-            level : 9,
+            level : 6,
 
             canrequest : function(){
                 return app.user.address.value ? true : false
@@ -138,6 +157,20 @@ var BastyonApps = function(app){
             uniq : true
         },
 
+        'messaging' : {
+            name : 'permissions_name_messaging',
+            description : 'permissions_descriptions_messaging',
+            level : 9,
+            auto : true
+        },
+
+        'mobilecamera' : {
+            name : 'permissions_name_mobilecamera',
+            description : 'permissions_descriptions_mobilecamera',
+            level : 9,
+            auto : true
+        },
+
         'payment' : {
             name : 'permissions_name_payment',
             description : 'permissions_descriptions_payment',
@@ -147,6 +180,24 @@ var BastyonApps = function(app){
     }
 
     var actions = {
+        opensettings : {
+            parameters : [],
+
+            action : function({data, application}){
+
+                app.nav.api.load({
+                    open : true,
+                    id : 'applicationmeta',
+                    inWnd : true,
+
+                    essenseData : {
+                        application : application.manifest.id
+                    }
+                })
+
+                return Promise.resolve('application:settings:opened')
+            }
+        },
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
@@ -215,6 +266,93 @@ var BastyonApps = function(app){
 
                 return action.export()
             }
+        },
+
+        alert : {
+            permissions : ['messaging'],
+            parameters : ['message'],
+
+            action : function({data, application}){
+
+                console.log('data', data)
+
+                var message = superXSS(data.message)
+
+                console.log('message', message)
+
+                if(!message){
+                    return Promise.reject(appsError('message:empty'))
+                }
+
+                sitemessage(message)
+
+                return Promise.resolve()
+             
+            }
+        },
+
+        requestPermissions : {
+            parameters : ['permissions'],
+            action : function({data, application}){
+
+                if(!data.permissions.lenght) return Promise.reject(appsError('permissions:empty'))
+
+                var failedError = ''
+                var permissionFailed = _.find(data.permissions, (permission) => {
+                    if(!permissions[permission]) {
+                        failedError = 'notexist'
+                        return true
+                    }
+
+                    if (permissions[permission].once){
+                        failedError = 'uniq'
+                        return true
+                    }
+                })
+
+                if(permissionFailed){
+                    return Promise.reject(appsError('permissions:' + failedError + ':' + permissionFailed))
+                }
+
+                return requestPermissions(application, data.permissions)
+            }
+        },
+
+        mobile : {
+            camera : {
+                permissions : ['mobilecamera'],
+                parameters : [],
+                action : function({data, application}){
+
+                    if(!app.mobile.supportimagegallery()){
+                        return Promise.reject(appsError('mobile:camera:notsupported'))
+                    }
+
+                    return new Promise((resolve, reject) => {
+
+                        var images = []
+
+                        app.platform.ui.uploadImage({
+                            action : (image) => {
+                                images.push({
+                                    image : image.base64
+                                })
+                            },
+                            onSuccess : () => {
+                                return resolve({images})
+                            },
+
+                            onCancel : function(){
+                                return reject(appsError('mobile:camera:cancel'))
+                            }
+                        })
+
+                    })
+
+                    
+                    
+                }
+            }
         }
 
     }
@@ -223,8 +361,6 @@ var BastyonApps = function(app){
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
             application : application.manifest.id
         }).then(action => {
-
-            console.log('action', action.export())
 
             return Promise.resolve(action.export())
 
@@ -331,6 +467,11 @@ var BastyonApps = function(app){
         var promises = []
         var result = {
             fromcache : {}
+        }
+
+
+        if (application.cantdelete){
+            result.cantdelete = true
         }
 
 
@@ -441,21 +582,22 @@ var BastyonApps = function(app){
 
         if (data.action){
 
-            if(!actions[data.action]){
+            var action = deep(actions, data.action)
+
+            if(!action){
                 promise = Promise.reject(appsError('missing:action in actions'))
             }
 
             else{   
 
-                promise = requestPermissions(application, actions[data.action].permissions || [], data.data).then(() => {
+                promise = requestPermissions(application, action.permissions || [], data.data).then(() => {
 
-                    var error = validateParameters(data.data, actions[data.action].parameters)
+                    var error = validateParameters(data.data, action.parameters)
 
-                    console.log('error', error)
 
                     if (error) return Promise.reject(error)
 
-                    return actions[data.action].action({
+                    return action.action({
                         data : data.data,
                         application
                     })
@@ -517,28 +659,53 @@ var BastyonApps = function(app){
             return Promise.reject(appsError('permission:request:cantrequest:' + permission))
         }
 
-        return app.platform.ui.requestPermission({application, meta, permission, data}).then((reason) => {
-            return Promise.resolve(reason)
-        }).catch(reason => {
-
-            if (reason == 'error'){
-                return Promise.reject(appsError('permission:request:error:' + permission))
-            }
-
-            return Promise.resolve(reason)
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                return app.platform.ui.requestPermission({application, meta, permission, data}).then((reason) => {
+                    return resolve(reason)
+                }).catch(reason => {
+        
+                    if (reason == 'error'){
+                        return Promise.reject(appsError('permission:request:error:' + permission))
+                    }
+        
+                    return reject(reason)
+                })
+            }, 250)
         })
+
+        
 
       
     }
 
     var requestPermission = function(application, permission, data){
-        if(checkPermission(application, permission)) return Promise.resolve()
-        if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
+
+        if(application.manifest.permissions.indexOf(permission) == -1){
+            return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
+        }
 
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
 
         if(!appdata) return Promise.reject(appsError('error:code:appdata'))
+        if(!meta) return Promise.reject(appsError('permission:missing'))
+
+        if(checkPermission(application, permission)) return Promise.resolve()
+        if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
+
+        
+        if (meta.auto && !meta.uniq){
+            appdata.permissions.push({
+                id : permission,
+                state : 'granted'
+            })
+
+            savelocaldata()
+    
+            return Promise.resolve()
+        }
+        
 
         return requestPermissionForm(application, permission, data).then(state => {
 
@@ -582,17 +749,11 @@ var BastyonApps = function(app){
 
     var requestPermissions = function(application, permissions, data){
 
+        if(!_.isArray(permissions)) return Promise.reject(appsError('permissions:type:array'))
 
         return processArray(permissions, (permission) => {
-            return new Promise((resovle, reject) => {
-                setTimeout(() => {
-                    requestPermission(application, permission, data).then(resovle).catch(reject)
-                }, 250)
-            })
+            return requestPermission(application, permission, data)
         })
-
-     
-        
     }
 
     var checkPermission = function(application, permission, state = 'granted'){
