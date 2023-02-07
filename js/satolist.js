@@ -9,7 +9,13 @@ if (typeof _Electron != 'undefined') {
     swBroadcaster = new Broadcaster('ServiceWorker');
 
     swBroadcaster.handle('AltTransportActive', (url) => {
-        return electron.ipcRenderer.invoke('AltTransportActive', url);
+        const wait = (seconds, returnValue) => new Promise(r => (
+            setTimeout(() => r(returnValue), seconds * 1000)
+        ));
+
+        const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+        return Promise.race([ transportCheck, wait(1, false) ]);
     });
 
     fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
