@@ -20,7 +20,7 @@ class FetchReceiver {
         return (Math.random() + 1).toString(36).substring(2);
     }
 
-    send(eventName, requestId, data) {
+    async send(eventName, requestId, data) {
         // console.log('LEVEL-1: SEND', eventName, requestId, data);
 
         const message = {
@@ -30,6 +30,24 @@ class FetchReceiver {
 
         if (data) {
             message.data = data;
+
+            if (data.body instanceof ReadableStream) {
+                const reader = data.body.getReader();
+
+                let bodyBytes = [];
+                let result;
+
+                while (!(result = await reader.read()).done) {
+                    bodyBytes.push([...result.value]);
+                }
+
+                const bytesArr = bodyBytes.flat();
+                const bytesUint8 = Uint8Array.from(bytesArr);
+
+                const textDec = new TextDecoder('utf-8');
+
+                message.data.body = textDec.decode(bytesUint8);
+            }
         }
 
         this.broadcastChannel.postMessage(message);
