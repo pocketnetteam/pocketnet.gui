@@ -2302,3 +2302,6 @@ _l.permissions_ask = "запрашивает разрешение"
 _l.permissions_allow = "Разрешить"
 _l.permissions_allow_once = "Разрешить только сейчас"
 _l.permissions_forbid = "Запретить"
+
+_l.deleteapplication = "Удалить приложение"
+_l.complainapplication = "Пожаловаться на приложение"

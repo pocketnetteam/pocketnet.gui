@@ -39,14 +39,19 @@ var applicationmeta = (function(){
 					else{
 						// ask
 
-						console.log("HERE")
+						if(self.app.apps.clearPermission(application, permission)){
+							pr = self.app.apps.requestPermissions(application, [permission], {}, {
+								noonce : true
+							}).catch(e => {
+								console.error(e)
+								return Promise.resolve()
+							})
+						}
 
-						pr = self.app.apps.requestPermissions(application, [permission], {}, {
-							noonce : true
-						}).catch(e => {
-							console.error(e)
+						else{
+							console.error('permissions:unableRemove:error')
 							return Promise.resolve()
-						})
+						}
 					}
 				}
 
@@ -165,6 +170,8 @@ var applicationmeta = (function(){
 	
 					application = f.application
 					appdata = f.appdata
+
+					console.log('application', application)
 	
 					var data = {
 						application,

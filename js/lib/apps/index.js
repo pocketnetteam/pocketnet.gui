@@ -23,7 +23,12 @@ var parseManifest = function(json){
     result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
     result.version = numfromreleasestring(data.version)
     result.versiontxt = superXSS(data.version)
-    result.description = superXSS(data.description || "").substr(0, 2000)
+    result.descriptions = {}
+
+    _.each(data.descriptions, (description, l) => {
+        result.descriptions[l] = superXSS(description || "").substr(0, 2000)
+    })
+
     result.author = data.author
     result.develop = data.develop == false ? false : true
     result.scope = data.scope
@@ -36,7 +41,7 @@ var parseManifest = function(json){
     if(!result.id) throw appsError('missing:id')
     if(!result.name) throw appsError('missing:name')
     if(!result.version) throw appsError('missing:version')
-    if(!result.description) throw appsError('missing:description')
+    if(!result.descriptions['en']) throw appsError('missing:description:en')
     if(!result.scope) throw appsError('missing:scope')
 
     
@@ -720,18 +725,7 @@ var BastyonApps = function(app){
     }
 
     var givePermission = function(application, permission){
-        var meta = permissions[permission]
-        var appdata = localdata[application.manifest.id]
-
-        if (application.manifest.permissions.indexOf(permission) == -1){
-            return false
-        }
-
-        if(!meta) return false
-
-        appdata.permissions = _.filter(appdata.permissions, (_permission) => {
-            return _permission.id != permission
-        })
+        if(!this.clearPermission(application, permission)) return false
 
         appdata.permissions.push({
             id : permission,
@@ -744,7 +738,7 @@ var BastyonApps = function(app){
 
     }
 
-    var removePermission = function(application, permission){
+    var clearPermission = function(application, permission){
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
 
@@ -757,6 +751,12 @@ var BastyonApps = function(app){
         appdata.permissions = _.filter(appdata.permissions, (_permission) => {
             return _permission.id != permission
         })
+
+        return true
+    } 
+
+    var removePermission = function(application, permission){
+        if(!this.clearPermission(application, permission)) return false
 
         appdata.permissions.push({
             id : permission,
@@ -1041,6 +1041,7 @@ var BastyonApps = function(app){
     self.requestPermissions = requestPermissions
     self.givePermission = givePermission
     self.removePermission = removePermission
+    self.clearPermission = clearPermission
 
     return self
 }

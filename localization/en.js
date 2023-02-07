@@ -2544,3 +2544,6 @@ _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
 
+_l.deleteapplication = "Delete application"
+_l.complainapplication = "Complain application"
+

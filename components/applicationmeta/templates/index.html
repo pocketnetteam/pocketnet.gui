@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="desctiption">
-			<%- application.manifest.description %>
+			<%- application.manifest.descriptions[app.localization.current().key] || application.manifest.descriptions['en'] || "" %>
 		</div>
 
 		<div class="permissions">
@@ -25,7 +25,7 @@
 			<% } %>
 			<div class="panel">
 				<button class="button remove">
-					Delete application
+					<%- e('deleteapplication')%>
 				</button>
 			</div>
 		
