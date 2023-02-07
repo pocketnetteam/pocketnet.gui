@@ -25,18 +25,82 @@ var application = (function(){
 		}
 
 		var events = {
-			
+			pageevents : function(p){
+				p.el.find('.settings .icon').on('click', () => {
+					actions.openinfo()
+				})
+			},
+
+			loaded : function(p){
+
+				if(!application) return
+
+				if (p.application == application.manifest.id){
+					el.c.find('.iframewrapper').addClass('loaded')
+				}
+			}
 		}
 
 		var renders = {
-			frame : function(clbk){
+			error : function(error, clbk){
 
+				self.shell({
+
+					name :  'error',
+					el :   el.c,
+					data : {
+						application,
+						error
+					},
+
+				}, function(p){
+
+					events.pageevents(p)
+					
+					if (clbk)
+						clbk();
+				})
+			},
+			frame : function(html, clbk){
+
+				/// unsafe, no use
+
+				/*var blb = new Blob([html], {type: "text/html"});
+
+				var src = URL.createObjectURL(blb)*/
+
+				self.shell({
+
+					name :  'frame',
+					el :   el.c,
+
+					data : {
+						application
+					},
+
+				}, function(p){
+
+					//iframeElem.contentDocument.documentElement.appendChild(m);
+
+					var frame = p.el.find('iframe')[0]
+
+					frame.contentWindow.document.open();
+					frame.contentWindow.document.write(html);
+					frame.contentWindow.document.close();
+
+					events.pageevents(p)
+
+					if (clbk)
+						clbk();
+				})
+			},
+			frameremote : function(clbk){
 
 				var src = application.manifest.scope + '/' + (application.manifest.start || '')
 
 				self.shell({
 
-					name :  'frame',
+					name :  'frameremote',
 					el :   el.c,
 
 					data : {
@@ -46,9 +110,7 @@ var application = (function(){
 
 				}, function(p){
 
-					p.el.find('.settings .icon').on('click', () => {
-						actions.openinfo()
-					})
+					events.pageevents(p)
 
 					if (clbk)
 						clbk();
@@ -66,14 +128,33 @@ var application = (function(){
 		}
 
 		var initEvents = function(){
-			
-			self.app.apps.on('loaded', (p) => {
-				if (p.application == application.manifest.id){
-					el.c.find('.iframewrapper').addClass('loaded')
-				}
-			})
+			self.app.apps.on('loaded', events.loaded)
+		}
 
-			
+		var make = function(){
+
+			if(!application || !appdata){
+				renders.error('notexist')
+				return
+			}
+
+			renders.frameremote()
+
+			/*if (application.develop && !application.production){
+				renders.frameremote()
+			}
+			else{
+
+				self.app.apps.get.output(application.manifest.id).then((html) => {
+
+					renders.frame(html)
+
+				}).catch(e => {
+					console.error(e)
+					renders.error(e)
+				})
+				
+			}*/
 
 		}
 
@@ -90,25 +171,11 @@ var application = (function(){
 
 				self.app.apps.get.application(id).then((f) => {
 
-					if(!f){
-
-						window.requestAnimationFrame(() => {
-							self.app.el.html.removeClass('allcontent_application')
-						})
-
-						self.app.nav.api.load({
-							open : true,
-							href : 'page404',
-						})
-	
-						return
+					if (f){
+						application = f.application
+						appdata = f.appdata
 					}
-	
 					
-					
-	
-					application = f.application
-					appdata = f.appdata
 	
 					ed = p.settings.essenseData
 	
@@ -132,6 +199,9 @@ var application = (function(){
 				window.requestAnimationFrame(() => {
 					self.app.el.html.removeClass('allcontent_application')
 				})
+
+				self.app.apps.off('loaded', events.loaded)
+
 			},
 			
 			init : function(p){
@@ -143,7 +213,7 @@ var application = (function(){
 
 				initEvents();
 
-				renders.frame()
+				make()
 
 
 

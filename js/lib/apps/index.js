@@ -121,6 +121,7 @@ var validateParameters = function(data, parameters){
 var BastyonApps = function(app){
     var self = this
     var installed = {}
+    var downloading = {}
     var installing = {}
     var localdata = {}
     var windows = {}
@@ -293,7 +294,7 @@ var BastyonApps = function(app){
             parameters : ['permissions'],
             action : function({data, application}){
 
-                if(!data.permissions.lenght) return Promise.reject(appsError('permissions:empty'))
+                if(!data.permissions.length) return Promise.reject(appsError('permissions:empty'))
 
                 var failedError = ''
                 var permissionFailed = _.find(data.permissions, (permission) => {
@@ -456,6 +457,39 @@ var BastyonApps = function(app){
             
     }
 
+    var download = function(application){
+
+        var key = application.manifest.id + '+' + application.manifest.version
+
+        console.log('application', application)
+
+        if(!downloading[key]) {
+            downloading[key] = importFile(application, 'output.html').then((html) => {
+
+                /// to indexedDB
+
+                return Promise.resolve(html)
+
+            }).finally(() => {
+                delete downloading[key]
+            })
+        }
+
+        return downloading[key].then(html => {
+
+            console.log('html.length', html.length)
+
+            if(!application.develop){
+                //// check hash with manifest
+                /// return Promise.reject('hash')
+            }
+
+            
+
+            return html
+        })
+    }
+
     var install = function(application, cached = {}){
 
         if (installed[application.id]) return Promise.resolve(installed[application.id])
@@ -467,18 +501,26 @@ var BastyonApps = function(app){
             fromcache : {}
         }
 
-
         if (application.cantdelete){
             result.cantdelete = true
         }
 
+        if (application.production){
+            result.production = true
+        }
+
+        console.log('application', application)
 
         if (application.develop){
             application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
+
+            result.develop = true
         }
         else{   
             application.path = 'https://' + application.scope
         }
+
+        result.path = application.path
 
         promises = promises.concat(Promise.all(_.map(appfiles, (file) => {
 
@@ -816,8 +858,6 @@ var BastyonApps = function(app){
 
     var emit = function(key, data, applicationId){
 
-        console.log("EMIT", key, data, applicationId)
-
         var filteredListeners = listening
 
         if (applicationId){
@@ -830,8 +870,6 @@ var BastyonApps = function(app){
             filteredListeners = {}
             filteredListeners[applicationId] = listening[applicationId]
         }
-
-        console.log('filteredListeners', filteredListeners)
 
         _.each(filteredListeners, (listener, id) => {
             var application = installed[id]
@@ -956,6 +994,11 @@ var BastyonApps = function(app){
     }
 
     self.get = {
+        output : function(id){
+            return self.get.application(id).then(({application}) => {
+                return download(application)
+            })
+        },
         application : function(id){
             if(installed[id]){
                 return Promise.resolve({
