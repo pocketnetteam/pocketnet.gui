@@ -434,7 +434,8 @@
 			margin-left: 0.25em;
 			padding: 0 0.5em;
 			overflow: hidden;
-			height: calc(100vh - var(--offset, 100px));
+			//height: calc(100vh - var(--offset, 100px));
+			height: 70vh;
 
 			.stream {
 				position: absolute;
@@ -446,12 +447,12 @@
 				height: 100%;
 				width: 100%;
 
-				.inputWrapper .center {
-					position: static;
-				}
+				#events {
+					padding: 0 @rhythm 50px;
 
-				.eventWrapper .event {
-					padding: .25em;
+					.messageRow {
+						padding: 0;
+					}
 				}
 
 				.eventsflex {
@@ -462,6 +463,24 @@
 					background: transparent;
 					box-shadow: none;
 					height: auto;
+				}
+
+				.chatInputWrapper {
+					.center {
+						position: static;
+					}
+
+					#chatInput {
+						padding-bottom: .6em;
+
+						.work {
+							padding: 0 @rhythm;
+						}
+
+						.input_component {
+							height: 35px;
+						}
+					}
 				}
 			}
 		}
