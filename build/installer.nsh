@@ -1,4 +1,4 @@
-InstallDir "$LocalAppData\Programs\PocketnetTorEdition"
+InstallDir "$LocalAppData\Programs\pocketnet-tor"
 
 !macro customRemoveFiles
     # RMDir /r "$INSTDIR"
