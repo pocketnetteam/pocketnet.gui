@@ -2048,15 +2048,11 @@ pUserInfo = function(){
 
 			var extractDeep = str => {
 
-				const parsed = JSON.parse(str);
-
-				console.log('parsed', parsed);
+				var parsed = JSON.parse(str);
 
 				if (parsed.length){
 
 					parsed.forEach(obj => {
-
-						console.log('obj', typeof obj, obj, self.addresses);
 
 						if (typeof obj === 'string'){
 							extractDeep(obj);
@@ -2073,7 +2069,7 @@ pUserInfo = function(){
 
 		}
 		catch (e){
-			console.log('e!!!!!!!!!!!!!', e);
+			console.log('err addresses', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial
