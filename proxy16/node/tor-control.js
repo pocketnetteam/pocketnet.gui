@@ -124,11 +124,16 @@ class TorControl {
         }
     }
 
-    makeConfig = async ()=>{
-        const check = await this.helpers.checkPath(this.settings.path)
-        if(!check.exists){
-            return
+    makeConfig = async (config = {})=>{
+        const useSnowflake = config.useSnowflake || false;
+        const isOverwrite = config.overwrite || false;
+
+        const check = await this.helpers.checkPath(this.settings.path);
+
+        if (check.exists && !isOverwrite) {
+            return;
         }
+
         try {
             await fs.unlink(path.join(this.settings.path, "torrc"))
         }catch (e) {}
@@ -150,10 +155,10 @@ class TorControl {
             "stun.voys.nl:3478",
         ].map(s => `stun:${s}`).join(',');
 
-        const torConfig = [
+        let torConfig = [
             "# This configuration was generated automatically.\n" +
             "# The user is free to edit this config if he know\n" +
-            "# how to do that. This is not\n",
+            "# how to do that. Read TOR documentation before...\n",
 
             "SocksPort 0.0.0.0:9151",
             "CookieAuthentication 1",
@@ -164,15 +169,20 @@ class TorControl {
             `GeoIPFile ${getSettingsPath("geoip")}`,
             `GeoIPv6File ${getSettingsPath("geoip6")}`,
             "KeepalivePeriod 10",
+        ];
 
-            "\n" +
-            "# If Tor is not blocked in your country or by your ISP\n",
+        if (useSnowflake) {
+            torConfig.push(
+                "# Bridges configurations\n",
 
-            "UseBridges 1",
-            "UpdateBridgesFromAuthority 1",
-            `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
-            `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
-        ].join('\n');
+                "UseBridges 1",
+                "UpdateBridgesFromAuthority 1",
+                `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
+                `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
+            )
+        }
+
+        torConfig = torConfig.join('\n');
 
         await fs.writeFile(path.join(this.settings.path, "torrc"), torConfig, {flag: "a+"})
     }
@@ -203,6 +213,8 @@ class TorControl {
             console.log("NO BIN")
             await this.install();
         }
+
+        await this.makeConfig();
 
         const checkRunning = await this.checkRunning()
         if(checkRunning){
