@@ -2276,6 +2276,7 @@ _l.probabilitytext = function(lang){
 };
 
 _l.probabilitytexterror = "Unable to calculate promotion probability";
+_l.reachtexterror = "Unable to calculate reach";
 
 _l.image = "Image";
 _l.file = "File";
@@ -2444,6 +2445,8 @@ _l.boost_c44 = 'Learn more about ads on Bastyon'
 _l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on Bastyon.';
 
 _l.reach = 'Reach'
+_l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com)' 
+
 _l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
 
 
