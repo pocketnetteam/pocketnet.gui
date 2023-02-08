@@ -214,6 +214,7 @@ class TorControl {
             const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
+            const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
 
             console.log('data', data.data)
 
@@ -223,6 +224,9 @@ class TorControl {
             } else if (isBootstrapped100(data) || isConnected(data)) {
                 console.log("TOR started")
                 this.state.status = "started"
+            } else if (isRetryingConnection(data)) {
+                console.log("TOR retrying circuit")
+                this.state.status = "running"
             }
             // console.log(data)
         }

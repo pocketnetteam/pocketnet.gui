@@ -470,7 +470,7 @@ var menu = (function(){
 					networkStatsListenerId = swBroadcaster.on('network-stats', actions.receiveNetworkStats);
 
 					electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
-						if (state === 'failure') {
+						if (state === 'failure' || state === 'running') {
 							controlTorElem.addClass('loading');
 							controlTorElem.removeClass(['on', 'off']);
 						} else if (state === 'started') {
