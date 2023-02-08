@@ -4921,6 +4921,17 @@ html.mobileview.fullscreen #navigationWrapper {
 .usericon .realperson .dev .fa-code {
   color: rgb(var(--text-on-bg-ac-color));
 }
+.usericon .realperson .shark .fa-certificate,
+.usericon .realperson .moderator .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.usericon .realperson .shark .fa-crown,
+.usericon .realperson .moderator .fa-crown,
+.usericon .realperson .shark .fa-flag,
+.usericon .realperson .moderator .fa-flag {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+}
 .usericon .letter {
   font-size: 1.5em;
 }

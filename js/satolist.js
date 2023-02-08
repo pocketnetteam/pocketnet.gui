@@ -287,6 +287,9 @@ Platform = function (app, listofnodes) {
         'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true
     }
 
+    self.shark = {}
+    self.moderator = {}
+
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
     }
@@ -3375,6 +3378,8 @@ Platform = function (app, listofnodes) {
 
             var t = self.ui.usertype(address)
 
+            if (self.moderator[address]) return this.markModerator();
+            if (self.shark[address]) return this.markShark();
             if (t == 'dev') return this.markDev();
             if (t == 'real') return this.markReal();
 
@@ -3401,6 +3406,25 @@ Platform = function (app, listofnodes) {
                     </span>
                 </div>`
 
+        },
+
+        markShark : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
 
         recommendations : function(el, share, ed, clbk){
@@ -11218,6 +11242,11 @@ Platform = function (app, listofnodes) {
                         }
 
                     }
+
+                    if (!_.isEmpty(info) && info.badges && info.badges.indexOf('shark') > -1)
+                        self.shark[info.address] = true;
+                    if (!_.isEmpty(info) && info.badges && info.badges.indexOf('moderator') > -1)
+                        self.moderator[info.address] = true;
 
                     if (clbk)
                         clbk(info)
