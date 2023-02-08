@@ -1745,6 +1745,8 @@ var post = (function () {
 			},
 			
 			stream : function(clbk) {
+				const parent = el.stream.parent();
+				
 				self.app.platform.matrixchat.core.renderChatToElement(
 					el.stream[0],
 					'!IdBmHKWdPNzILMFHaY:matrix.pocketnet.app',
@@ -1753,7 +1755,7 @@ var post = (function () {
 					}
 				)
 					.then(() => {
-						el.stream.css('--offset', `${ el.stream.offset().top + 30 }px`);
+						// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
 					})
 					.catch(e => console.error(e));
 				
