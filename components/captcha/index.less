@@ -2,7 +2,18 @@
 
 #captcha{
     .captchaImageWrapper{
-        text-align: center;
+    }
+
+    .reason{
+        margin-top: @rhythm;
+        margin-bottom: @rhythm;
+        padding : 2 * @rhythm;
+
+        span{
+            font-size: 1.2em;
+            font-weight: 700;
+            color : rgb(var(--color-txt-orange));
+        }
     }
 
     .subcaption,
@@ -10,14 +21,15 @@
         margin : 0 auto;
         margin-top: @rhythm;
         font-weight: 700;
-        text-align: center;
-        max-width: 300px;
+        padding-left: 2 * @rhythm;
+        padding-right: 2 * @rhythm;
     }
 
     .inputWrapper{
-        max-width: 300px;
         margin : 0 auto;
         margin-bottom: @rhythm;
+        padding-left: 2 * @rhythm;
+        padding-right: 2 * @rhythm;
     }
 
     input{
@@ -28,20 +40,15 @@
         border-radius: 0;
         width: 100%;
         background: transparent;
-        text-align : center;
-  
     }
 
     .addContainer{
-        text-align: center;
-
-        button{
-            min-width: 300px;
-        }
+        margin-top: 4 * @rhythm;
+        padding-left: 2 * @rhythm;
+        padding-right: 2 * @rhythm;
     }
 
     .redoContainer{
-        text-align: center;
         margin-top: @rhythm;
         margin-bottom: @rhythm;
     }

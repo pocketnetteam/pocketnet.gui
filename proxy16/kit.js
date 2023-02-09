@@ -221,6 +221,13 @@ var defaultSettings = {
 				amount : 0.0006,
 				outs : 30,
 				check : 'ipAndUniqAddress'
+			},
+
+			balance : {
+				privatekey : "",
+				amount : 0.0002,
+				outs : 10,
+				check : 'ipAndUniqAddress' //// ipAndUniqAddress4m 
 			}
 		}
 	},
@@ -328,6 +335,9 @@ var state = {
 
 			if (exporting.wallet.addresses.registration.privatekey)
 				exporting.wallet.addresses.registration.privatekey = "*"
+
+			if (exporting.wallet.addresses.balance.privatekey)
+				exporting.wallet.addresses.balance.privatekey = "*"
 		}
 
 		return exporting

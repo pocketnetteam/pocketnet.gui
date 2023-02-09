@@ -2236,10 +2236,10 @@ _l.videobloggerRequest_pl_notes = "Notes: any additional information"
 _l.videobloggerRequest_pl_email = "Contact email"
 
 _l.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
-
 _l.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
 _l.videobloggerRequest_er_info = "Additional information required"
 _l.videobloggerRequest_er_email = "Leave an email for feedback"
+
 
 _l.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
@@ -2494,6 +2494,8 @@ _l.actions_collision = 'The operation was replaced by another'
 _l.actions_actionId = 'Unable to cancel operation, ID missing'
 _l.actions_address = 'Adress missing, user unregistered'
 _l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+
+
 _l.diagnosticsPage = "Diagnostics";
 _l.startDiagnose = "Run Diagnostics";
 _l.videoServerName = "Server URL";
@@ -2548,3 +2550,24 @@ _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
 
 _l.searchbyapplications = "Find an app"
+
+_l.actions_reason_registration = "In order to complete the registration you need to solve the captcha"
+_l.actions_reason_balance = "To perform actions on the Bastyon you need to solve the captcha"
+
+
+_l.commonsubmitapplicationVideoSmall = "Submit"
+_l.commonRequest_pl_notes = "Notes: any additional information"
+_l.commonRequest_pl_email = "Contact email"
+_l.commonRequest_caption = "Support Request"
+_l.commonRequest_er_info = "Additional information required"
+_l.commonRequest_er_email = "Leave an email for feedback"
+
+
+_l.registration_e13114 = "There is some problem with your registration due to strange activity."
+_l.balance_e13114 = "There is some problem with sending your actions due to strange activity."
+
+_l.solutionbalance_1 = "To continue interacting with Bastion, you can replenish the balance of your wallet yourself"
+_l.solutionbalance_2 = "or contact support"
+_l.solutionbalance_3 = "To continue interacting with Bastion, you can contact support"
+
+_l.commonRequest_submitted = "Thank you for contacting us, we will review your application"

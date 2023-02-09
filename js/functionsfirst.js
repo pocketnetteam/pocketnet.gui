@@ -245,16 +245,26 @@ retry = function(_function, clbk, time, totaltime){
     if(!time) time = 20;
 
     var totalTimeCounter = 0 
+    var rif = null
 
     var interval = setInterval(function(){
 
-        if(_function() || (totaltime && totaltime <= totalTimeCounter)){
-
-            clearInterval(interval);
-
-            if(clbk) clbk();
-
+        if (rif){
+            cancelAnimationFrame(rif)
         }
+
+        rif = window.requestAnimationFrame(() => {
+            rif = null
+
+            if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+
+                clearInterval(interval);
+
+                if(clbk) clbk();
+
+            }
+
+        })
 
         totalTimeCounter += time
 

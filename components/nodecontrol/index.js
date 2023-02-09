@@ -711,9 +711,8 @@ var nodecontrol = (function(){
 							el : p.el.find('.applicationscontainer'),
 
 							essenseData : {
-								filter : function(os){
-									return os.node
-								}
+								key  :'node',
+								
 							}
 						})
 

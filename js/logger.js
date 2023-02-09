@@ -161,7 +161,7 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
-      userData,
+      //userData,
       uri,
       timezone,
       guid,

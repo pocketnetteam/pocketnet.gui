@@ -89,7 +89,6 @@ var comments = (function(){
 
 				console.log("comment", comment, optype)
 
-
 				actions.showhideLabel()
 
 				var p = {
@@ -675,6 +674,8 @@ var comments = (function(){
 						}
 
 						self.app.platform.sdk.comments.send(current, function(error, alias){
+
+							console.log('error, alias', error, alias)
 
 							if(!editid && ed.send){
 								ed.send(alias, alias)
@@ -1935,8 +1936,6 @@ var comments = (function(){
 
 			})
 
-			console.log('actions.checkBanned', p)
-
 			actions.checkBanned(p).then((user) => {
 				console.log('user', user)
 				if (user){
@@ -2624,10 +2623,14 @@ var comments = (function(){
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
+			
 				if(type == 'comment'){
 					var comment = alias
 
 					if (comment.postid == txid){
+
+						console.log('type, alias, status', type, alias, status)
+
 
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						/*

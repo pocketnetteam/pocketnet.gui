@@ -1,14 +1,16 @@
 <div class="ucaptcha">
-    <% if(captcha.hex) {%>
-        <div class="subcaption"><%=e('e13109h')%></div>
-    <% } else { %>
-        <div class="subcaption"><%=e('e13109')%></div>
+
+    <% if(typeof reason != 'undefined' && reason) {%>
+        <div class="reason"><span><%=e('actions_reason_' + reason)%></span></div>
     <% } %>
 
-    <div class="redoContainer">
-        <button elementsid="filluser_redo" class="redo ghost"><%=e('refresh')%></button>
-    </div>
-    
+    <% if(captcha.hex) {%>
+        <div class="subcaption"><span><%=e('e13109h')%></span></div>
+    <% } else { %>
+        <div class="subcaption"><span><%=e('e13109')%></span></div>
+    <% } %>
+
+  
     <div class="captchaImageWrapper">
         <div class="captchaImage">
             <%=captcha.img ? captcha.img : ''%>
@@ -21,7 +23,7 @@
     </div>
   
     <div class="addContainer">
-        <button elementsid="filluser_addCaptcha" class="addCaptcha disabled"><%=e('next')%></button>
+        <button elementsid="filluser_addCaptcha" class="addCaptcha disabled"><%=e('next')%></button> <button elementsid="filluser_redo" class="redo ghost"><%=e('refresh')%></button>
     </div>
   
    

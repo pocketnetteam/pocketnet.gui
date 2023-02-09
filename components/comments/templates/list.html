@@ -76,9 +76,9 @@ var commentf = function(comment){
 								
 							<% if(comment.temp || comment.relay || comment.rejected) {%>
 								<% if(comment.rejected) {%>
-									<i class="fas fa-ban tempicon"></i>
+									<i class="fas fa-ban tempicon"></i> &middot; <span class="templabel"><%- e('error') %></span>
 								<% } else {%> 
-									<i class="fas fa-stopwatch tempicon"></i> <span class="date"><%-e('ntnow').toLowerCase()%></span>
+									<i class="fas fa-stopwatch tempicon"></i> &middot; <span class="templabel date"><%-e('ntnow').toLowerCase()%></span>
 								<%} %>
 								
 							<% } else { %> 
@@ -257,7 +257,7 @@ var commentf = function(comment){
 								<% } %> 
 
 
-								<% if((!state || mestate.reputation >= -50) && !comment.deleted && !comment.rejected && !lockedaccount && !ed.cantsend) { %> 
+								<% if((!state || mestate.reputation >= -50) && !comment.deleted && !comment.relay && !comment.temp && !comment.rejected && !lockedaccount && !ed.cantsend) { %> 
 									<div elementsid="comments_reply" class="item reply">
 										<div class="label cact">
 											<span><%=e('reply')%></span>

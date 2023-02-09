@@ -2307,3 +2307,17 @@ _l.deleteapplication = "Удалить приложение"
 _l.complainapplication = "Пожаловаться на приложение"
 
 _l.searchbyapplications = "Поиск приложений"
+
+
+_l.actions_reason_registration = "Для того, чтобы завершить регистрацию вам необходимо решить капчу"
+_l.actions_reason_balance = "Для совершения действий в Бастионе вам необходимо решить капчу"
+
+
+
+_l.commonsubmitapplicationVideoSmall = "Отправить"
+_l.commonRequest_pl_notes = "Любая дополнительная информация"
+_l.commonRequest_pl_email = "Email для обратной связи"
+_l.commonRequest_caption = "Запрос в поддержку"
+_l.commonRequest_er_info = "Требуется дополнительная информация"
+_l.commonRequest_er_email = "Оставьте email для обратной связи"
+_l.ok = "Хорошо"

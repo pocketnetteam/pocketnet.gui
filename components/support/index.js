@@ -8,11 +8,11 @@ var support = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, template, current, options;
+		var el, template, current, options, labels = 'common';
 
 		var actions = {
 			showerror : function(error){
-				sitemessage(self.app.localization.e('videobloggerRequest_er_' + error.t))
+				sitemessage(self.app.localization.e(labels + 'Request_er_' + error.t))
 
 				el.c.find(error.el).focus()
 			},
@@ -44,10 +44,7 @@ var support = (function(){
 
 				self.app.letters[current.letter](values, function(){
 
-					
-
 					prepare()
-					
 
 					setTimeout(function(){
 
@@ -60,8 +57,8 @@ var support = (function(){
 						successCheck();
 
 						new dialog({
-							html: self.app.localization.e('videobloggerRequest_submitted'),
-							btn1text: self.app.localization.e('daccept'),
+							html: self.app.localization.e(labels + 'Request_submitted'),
+							btn1text: self.app.localization.e('ok'),
 							btn2text: "Cancel",
 							class: 'one zindex',
 							success: () => {
@@ -72,7 +69,7 @@ var support = (function(){
 
 					
 
-				})
+				}, ed)
 
 			}	
 		}
@@ -94,6 +91,44 @@ var support = (function(){
 				}, function(p){
 					ParametersLive(options, p.el)
 				})
+			},
+
+			solution : function(){
+				self.shell({
+					name :  'solution',
+					el : el.c.find('.solutionWrapper'),
+					data : {
+						template,
+						ed
+					}
+	
+				}, function(p){
+				})
+			},
+
+			solutions : {
+				balance : function(){
+					self.shell({
+						name :  'solutionsbalance',
+						el : el.c.find('.solutionWrapper'),
+						data : {
+							template,
+							ed
+						}
+		
+					}, function(p){
+
+						
+						p.el.find('.copyvalue').on('click', function(){
+
+							var el = $(this).find('span')
+	
+							copyText(el)
+	
+							sitemessage(self.app.localization.e('successcopied'))
+						})
+					})
+				},
 			}
 		}
 
@@ -167,8 +202,68 @@ var support = (function(){
 						placeholder : '*@*.*'
 					},
 				} 
+			},
+
+			common : {
+
+				letter : 'common',
+				
+				validation : function(values){
+					if(!values['info']) return {t : 'info', el : '[parameter="info"] textarea'}
+
+					if(!values['email']) return {t : 'email', el : '[parameter="email"] input'}
+				},
+
+				meta :{
+
+					email : {
+						name: labels + 'Request_pl_email',
+						id: 'email',
+						type: "STRINGANY",
+						value: '',
+						placeholder : '*@*.*'
+					},
+
+					info : {
+						name: labels + 'Request_pl_notes',
+						id: 'info',
+						type: "TEXT",
+						value: ''
+					},
+					
+				} 
+			},
+
+			balance : {
+
+				letter : 'common',
+				
+				validation : function(values){
+					if(!values['email']) return {t : 'email', el : '[parameter="email"] input'}
+				},
+
+				meta :{
+
+					email : {
+						name: labels + 'Request_pl_email',
+						id: 'email',
+						type: "STRINGANY",
+						value: '',
+						placeholder : '*@*.*'
+					}
+					
+				} 
 			}
 		}
+
+		var solutions = {
+			balance : {
+				render : renders.solutions.balance
+			}
+		}
+
+		templates.registration = templates.balance
+		solutions.registration = solutions.balance
 
 		var state = {
 			save : function(){
@@ -199,8 +294,20 @@ var support = (function(){
 				var data = {};
 
 				template = deep(p, 'settings.essenseData.template') || 'common'
+
+				ed = deep(p, 'settings.essenseData') || {};
+
+				if(!templates[template]) {
+					template = 'common'
+				}
 				
+				if(template == 'videoblogger'){
+					labels = 'videoblogger'
+				}else labels = 'common'
+
 				prepare()
+
+				data.labels = labels
 
 				clbk(data);
 
@@ -217,6 +324,10 @@ var support = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.options = el.c.find('.optionsWrapper')
+
+				if (solutions[template] && (!solutions[template].statement || solutions[template].statement())){
+					solutions[template].render()
+				}
 
 				renders.options()
 

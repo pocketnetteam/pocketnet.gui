@@ -184,11 +184,14 @@ var system16 = (function(){
 		
 			admin : function(){
 
-				var address = self.app.user.value
+				var address = self.app.user.address.value
+				
 
 				if(!address) return false
+
+
 				if (proxy && info){
-					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}
 			},
 

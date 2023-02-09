@@ -1196,7 +1196,6 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 settodb('myScore', [result]).then(() => {
-                    console.log("SUCCESS")
                 }).catch(e => {
                     console.error(e)
                 })
@@ -1496,7 +1495,6 @@ var pSDK = function ({ app, api, actions }) {
                     c.i = _.map(c.i || [], function(i){return clearStringXss(i)});
                 }
                 catch (e) {
-                    console.log(c)
                     console.error(e)
 
                     return null
@@ -1827,7 +1825,6 @@ var pSDK = function ({ app, api, actions }) {
                 //// long like cache
 
                 settodb('myScore', [result]).then(() => {
-                    console.log("SUCCESS")
                 }).catch(e => {
                     console.error(e)
                 })
@@ -1887,8 +1884,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         transform: function ({ key, data }) {
-
-            console.log("TRANSFORM LIKES", data)
 
             if (data.posttxid) {
                 if (objects.share[data.posttxid]) {

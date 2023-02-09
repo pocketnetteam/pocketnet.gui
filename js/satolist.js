@@ -1142,9 +1142,7 @@ Platform = function (app, listofnodes) {
             }
         },
         "actions_noinputs_wait" : {
-            message: function () {
-                return self.app.localization.e('actions_noinputs_wait')
-            }
+           
         },
         "actions_totalAmountZero" : {
             message: function () {
@@ -3045,6 +3043,19 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        support : function(template, parameters){
+            app.nav.api.load({
+                open : true,
+                id : 'support',
+                inWnd : true,
+
+                essenseData : {
+                    template,
+                    parameters
+                }
+            })
+        },
+
         requestPermission : function(parameters, settings){
             return new Promise ((resolve, reject) => {
                 app.nav.api.load({
@@ -3102,7 +3113,16 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        captcha : function(reason, clbk, proxyOptions){
+        captcha : function(reason, clbk, proxyOptions = {}){
+
+            console.log('reason', reason)
+
+            if(!proxyOptions.proxy) return Promise.reject('noproxy')
+
+            var proxy = self.app.api.get.byid(proxyOptions.proxy)
+
+            if(!proxy) return Promise.reject('noproxy')
+
 
             var getcapcha = function(refresh){
 
@@ -10046,8 +10066,6 @@ Platform = function (app, listofnodes) {
             get: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
 
-                console.log('proxyoptions', proxyoptions)
-
                 self.app.api.fetchauth('captcha', {
                     captcha: this.done || this.current || null
                 }, proxyoptions).then(d => {
@@ -13889,8 +13907,6 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
-                        console.log('shareIds, commentIds', shareIds, commentIds)
-
                         self.psdk.myScore.load(shareIds, commentIds).finally(() => {
                             if(clbk) clbk()
                         })
@@ -17336,8 +17352,6 @@ Platform = function (app, listofnodes) {
             if(!using && !usingWeb) return
             if(!currenttoken) return
 
-            console.log('current', current)
-
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -17594,8 +17608,6 @@ Platform = function (app, listofnodes) {
                                     },
                                 });
                             }else {
-
-                                console.log('body', body)
 
                                 const params = new URLSearchParams(body.url);
                                 platform.app.nav.api.load({
@@ -22033,8 +22045,6 @@ Platform = function (app, listofnodes) {
             if (self.app.options.peertubeServer)
                 return resolve();
 
-            console.log("PeerTubePocketnet", PeerTubePocketnet)
-
             if (typeof PeerTubePocketnet != 'undefined'){
                 
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
@@ -22047,7 +22057,6 @@ Platform = function (app, listofnodes) {
                         console.log(err);
                         return reject(err);
                     }
-                    console.log("Using Peertube server: ", self.app.options.peertubeServer);
                     // Authenticate to this Peertube server
                     self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
                         if (client_id)
@@ -23576,7 +23585,6 @@ Platform = function (app, listofnodes) {
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
-							console.log('stor',this.sdk.users.storage)
 							resolve(this.sdk.users.storage[address])
 						})
 					})

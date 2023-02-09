@@ -98,6 +98,10 @@ var application = (function(){
 
 				var src = application.manifest.scope + '/' + (application.manifest.start || '')
 
+				if(window.testpocketnet){
+					src = src + '?testnetwork=true'
+				}
+
 				self.shell({
 
 					name :  'frameremote',

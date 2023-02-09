@@ -2,7 +2,7 @@ var electron = null
 
 let apiFetch = (...args) => fetch(...args);
 
-if (typeof _Electron != 'undefined') {
+if (typeof _Electron != 'undefined' && typeof proxyFetch != 'undefined') {
     electron = require('electron');
     apiFetch = (...args) => proxyFetch(...args);
 }
@@ -293,8 +293,11 @@ var Proxy16 = function(meta, app, api){
 
         if (node && (!self.current || self.current.key != node.key)){
             self.current = node
-
-            app.platform.ws.reconnect()
+            
+            if (app.platform && app.platform.ws){
+                app.platform.ws.reconnect()
+            }
+            
 
             _.each(self.clbks.changednode, function(c){
                 c()
@@ -341,13 +344,12 @@ var Proxy16 = function(meta, app, api){
 
             self.id = self.host + ":" + self.port + ":" + self.wss
 
-            var currentapi = app.api.get.currentstring()
+            var currentapi = api.get.currentstring()
 
-
-            app.api.editinsaved(lastid, self)
+            api.editinsaved(lastid, self)
 
             if (currentapi == lastid){
-                app.api.set.current(self.id, reconnectws)
+                api.set.current(self.id, reconnectws)
             }
         }
 
@@ -600,7 +602,6 @@ var Proxy16 = function(meta, app, api){
 
         info : function(){
             return self.fetchauth('info').then((r) => {
-                console.log("R", r)
                 self.lastinfo = (r || {}).info || {}
 
                 return Promise.resolve(r)
@@ -1013,9 +1014,11 @@ var Api = function(app){
             return proxy.rpc(method, parameters, options.rpc)
 
         }).then(r => {
-            app.apiHandlers.success({
-                rpc : true
-            })
+
+            if (app.apiHandlers)
+                app.apiHandlers.success({
+                    rpc : true
+                })
 
             return Promise.resolve(r)
 
@@ -1052,9 +1055,10 @@ var Api = function(app){
 
                 if (e == 'TypeError: Failed to fetch' || e == 'proxy' || (e.code == 408 || e.code == -28)){
 
-                    app.apiHandlers.error({
-                        rpc : true
-                    })
+                    if (app.apiHandlers)
+                        app.apiHandlers.error({
+                            rpc : true
+                        })
 
                 }
             }
@@ -1134,20 +1138,26 @@ var Api = function(app){
 
         }).then(r => {
 
-            if (requestto == current)
+            if (requestto == current){
+                if (app.apiHandlers){
+                    app.apiHandlers.success({
+                        api : true
+                    })
+                }
+            }
 
-                app.apiHandlers.success({
-                    api : true
-                })
+                
 
             return Promise.resolve(r)
 
         }).catch(e => {
 
             if (requestto == current && e == 'TypeError: Failed to fetch'){
-                app.apiHandlers.error({
-                    api : true
-                })
+                if (app.apiHandlers){
+                    app.apiHandlers.error({
+                        api : true
+                    })
+                }
             }
 
             return Promise.reject(e)
@@ -1197,8 +1207,10 @@ var Api = function(app){
             localStorage['currentproxy'] = current
 
             return proxy.api.nodes.select().then(r => {
-                if (reconnectws && app.platform.ws)
+                if (reconnectws && app.platform && app.platform.ws){
                     app.platform.ws.reconnect()
+                }
+                    
 
                  return Promise.resolve(proxy)
             })
@@ -1213,8 +1225,10 @@ var Api = function(app){
 
             localStorage['currentproxy'] = current
 
-            if (reconnectws && app.platform.ws)
+            if (reconnectws && app.platform && app.platform.ws){
                 app.platform.ws.reconnect()
+            }
+                
 
             return Promise.resolve(proxy)
 
@@ -1391,8 +1405,6 @@ var Api = function(app){
             return pretry(function(){
                 return e || f
             }).then(() => {
-
-                console.log("E", e, f)
 
                 if(!f) return Promise.reject('noproxywithwallet')
 

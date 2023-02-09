@@ -52,7 +52,8 @@ var captcha = (function(){
 					name :  'captcha',
 					el :   el.c.find('.captchaWrapper'),
 					data : {
-						captcha
+						captcha,
+						reason : ed.reason
 					},
 
 				}, function(_p){

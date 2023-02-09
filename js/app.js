@@ -333,9 +333,9 @@ Application = function (p) {
 		return isElectron || (window.cordova && !isios());
 	}
 
-  self.savesupportedForBrowser = function(){
-    return !self.savesupported() && localStorage;
-  }
+	self.savesupportedForBrowser = function(){
+		return !self.savesupported() && localStorage;
+	}
 
 	self.useip = function () {
 		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
@@ -526,6 +526,67 @@ Application = function (p) {
 	}
 
 	self.letters = {
+		common : function({email, info, address}, clbk, data = {}){
+
+			var template = data.template || 'general'
+
+			var json = "{}"
+			try{
+				json = JSON.stringify(data)
+			}catch(e){
+				console.error(e)
+			}
+
+			var _p = {
+				info,
+				email,
+				address,
+				json,
+				template,
+				lang : localization.key
+			}
+
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2002'
+
+			var body = ''
+
+			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support ('+template+')</p>'
+
+			if (address){
+				body += '<p>Address: ' + (address) + '</p>'
+			}
+
+			if(info){
+				body += '<p>Info: ' + (info) + '</p>'
+			}
+
+			if (json){
+				body += '<p>JSON: ' + (json) + '</p>'
+			}
+			
+			body += '<p>Email: ' + email + '</p>'
+
+			_p.body = encodeURIComponent(body)
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
+					if (clbk)
+						clbk(true);
+				},
+
+				error: function () {
+					if (clbk)
+						clbk(true);
+				}
+			});
+
+
+		},
 		videoblogger: function ({
 			link1 = '',
 			link2 = '',
@@ -606,7 +667,7 @@ Application = function (p) {
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
-			_p.TemplateID = '2000'
+			_p.TemplateID = '2002'
 
 			var body = ''
 			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
@@ -1112,7 +1173,10 @@ Application = function (p) {
 				}, 2000)
 
 				
-
+				/*self.platform.ui.support('balance', {
+					error : 'uniq',
+					additionalData : {}
+				})*/
 
 				self.realtime();
 

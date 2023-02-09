@@ -3146,7 +3146,7 @@ html.mobileview.android .wnd .wndback {
   bottom: 0;
   right: 0;
   background: rgba(var(--color-shadow-var), 0.9);
-  z-index: 150;
+  z-index: 1010;
 }
 .dialog.zindex {
   z-index: 5000;

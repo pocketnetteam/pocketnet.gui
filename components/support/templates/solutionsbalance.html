@@ -1,0 +1,26 @@
+<div class="solution">
+    <div class="caption">
+        <span><%=e(template + '_e13114')%></span>
+    </div>
+
+    <% if(!app.pkoindisable) {%>
+
+        <div class="text">
+            <%=e('solutionbalance_1')%>
+        </div>
+        
+        <div class="addressWrapper copyvalue">
+            <span><%-user.address.value.toString('hex')%></span>
+        </div>
+
+        <div class="text">
+            <%=e('solutionbalance_2')%>
+        </div>
+
+    <% } else {%> 
+        <div class="text">
+            <%=e('solutionbalance_3')%>
+        </div>
+    <% } %>
+
+</div>
