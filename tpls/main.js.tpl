@@ -729,11 +729,6 @@ function createWindow() {
         init() {
             FetchHandler.init(ipcMain, {
                 fetchFunction: (...args) => this.functions.fetch(...args),
-                prepareResponse: (response) => {
-                    response.headers.append('#bastyon-tor-used', true);
-
-                    return response;
-                },
             });
 
           this.ipc.handle('AltTransportActive', async (event, url) => {

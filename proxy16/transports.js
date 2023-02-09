@@ -255,6 +255,13 @@ module.exports = function (isTorEnabled = false) {
         console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
         self.logger.w('transports', 'error', `Sending request ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         return fetch(url, opts)
+            .then((response) => {
+                if (opts.agent) {
+                    response.headers.append('#bastyon-tor-used', true);
+                }
+
+                return response;
+            })
             .catch(async (err) => {
                 self.logger.w('transports', 'error', `Fetch request failed for ${url}: ${err}`);
 
@@ -271,6 +278,13 @@ module.exports = function (isTorEnabled = false) {
                     await initHttpsAgent(opts, 'agent');
 
                     return fetch(url, opts)
+                        .then((response) => {
+                            if (opts.agent) {
+                                response.headers.append('#bastyon-tor-used', true);
+                            }
+
+                            return response;
+                        })
                         .catch(() => {
                             self.logger.w('transports', 'error', `Fetch nested request failed for ${url}: ${err}`);
                             return Promise.reject(err);
