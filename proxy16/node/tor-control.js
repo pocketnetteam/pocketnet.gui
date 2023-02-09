@@ -128,9 +128,9 @@ class TorControl {
         const useSnowflake = config.useSnowflake || false;
         const isOverwrite = config.overwrite || false;
 
-        const check = await this.helpers.checkPath(this.settings.path);
+        const torrcConfig = await this.helpers.checkPath(path.join(this.settings.path, 'torrc'));
 
-        if (check.exists && !isOverwrite) {
+        if (torrcConfig.exists && !isOverwrite) {
             return;
         }
 
