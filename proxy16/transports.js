@@ -70,7 +70,7 @@ class WrappedAxios {
             .then(WrappedAxios.handleSuccess)
             .catch(async (error) => {
                 const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
-                const isAgentError = false; // TODO
+                const isAgentError = this.transports.checkForAgentError(error);
 
                 if (isAgentAttached && isAgentError) {
                     return WrappedAxios.handleError(error);
@@ -160,7 +160,7 @@ class WrappedFetch {
             })
             .catch(async (error) => {
                 const isAgentAttached = WrappedFetch.isAgentAttached(preparedArgs);
-                const isAgentError = false; // TODO
+                const isAgentError = this.transports.checkForAgentError(error);
 
                 if (isAgentAttached && isAgentError) {
                     return WrappedFetch.handleError(error);
@@ -256,7 +256,7 @@ class WrappedRequest {
 
             if (error) {
                 const isAgentAttached = WrappedRequest.isAgentAttached(preparedArgs);
-                const isAgentError = false; // TODO
+                const isAgentError = this.transports.checkForAgentError(error);
 
                 if (isAgentAttached && isAgentError) {
                     preparedResult.error = WrappedRequest.handleError(error);
@@ -491,6 +491,16 @@ class Transports {
         }
 
         return false;
+    }
+
+    checkForAgentError(error) {
+        const isSocksRejected = /Socks5 proxy rejected connection - Failed/;
+        const isSocketNotCreated = /A "socket" was not created/;
+
+        return (
+            isSocksRejected.test(error.message) ||
+            isSocketNotCreated.test(error.message)
+        );
     }
 }
 
