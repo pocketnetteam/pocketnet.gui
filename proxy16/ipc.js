@@ -6,7 +6,7 @@ const { dialog } = require('electron');
 
 const transports = require('./transports')(true);
 
-global.USE_PROXY_NODE = true
+//global.USE_PROXY_NODE = true
 
 var WssDummy = function(wc){
 	var self = this

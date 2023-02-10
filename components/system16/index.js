@@ -160,9 +160,19 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
-			'torenabled' : function(_el){
-				changes.server.enabledtor = !JSON.parse(_el.attr('value'))
-				if(changes.server.enabledtor == system.tor.enabled) delete changes.server.enabledtor
+			'torenabled2' : function(_el){
+
+				var values = ['neveruse', 'auto', 'always']
+				
+				changes.server.torenabled2 = nextElCircle(values, _el.attr('value'))
+				 
+				if(changes.server.torenabled2 == system.tor.enabled2) delete changes.server.torenabled2
+				renders.webserveradmin(el.c)
+			},
+			'useSnowFlake' : function(_el){
+				changes.server.useSnowFlake = !JSON.parse(_el.attr('value'))
+				if(changes.server.useSnowFlake == system.tor.useSnowFlake) delete changes.server.useSnowFlake
+
 				renders.webserveradmin(el.c)
 			},
 		}
@@ -2838,7 +2848,10 @@ var system16 = (function(){
 			},
 			webserveradmin : function(elc, clbk){
 
-				if(actions.admin() && system){
+				if(actions.admin() && system && info){
+
+
+					console.log("system", system, info)
 
 					self.shell({
 						inner : html,
@@ -2847,7 +2860,8 @@ var system16 = (function(){
 							admin : actions.admin(),
 							system : system,
 							proxy : proxy,
-							changes : changes.server
+							changes : changes.server,
+							info : info
 						},
 
 						el : elc.find('.adminPanelWrapper')
@@ -2896,16 +2910,16 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
-								if(typeof changes.server.enabledtor != 'undefined') {
+								/*if(typeof changes.server.torenabled2 != 'undefined') {
 									proxy.fetchauth('manage', {
-										action: changes.server.enabledtor ? 'tor.start' : 'tor.stop',
+										action: changes.server.torenabled2 ? 'tor.start' : 'tor.stop',
 										data: {}
 									}).catch(e => {
 										globalpreloader(false)
 										return Promise.resolve()
 
 									}).then(r => {
-										delete changes.server.enabledtor;
+										delete changes.server.torenabled2;
 										make(proxy || api.get.current());
 
 										globalpreloader(false)
@@ -2913,7 +2927,7 @@ var system16 = (function(){
 										topPreloader(100);
 
 									})
-								}
+								}*/
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',
@@ -2936,7 +2950,7 @@ var system16 = (function(){
 								})
 							}
 							
-							if(typeof changes.server.enabledtor != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+							if(typeof changes.server.torenabled2 != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 								new dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",
@@ -3048,6 +3062,53 @@ var system16 = (function(){
 							}
 
 							renders.webserveradmin(elc)
+						})
+
+						p.el.find('.reinstalltor').on('click', function(){
+
+							topPreloader(20);
+
+							proxy.fetchauth('manage', {
+								action : 'tor.reinstall',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
+						})
+
+						p.el.find('.installtor').on('click', function(){
+							proxy.fetchauth('manage', {
+								action : 'tor.install',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
 						})
 
 						if (clbk)

@@ -45,10 +45,12 @@ class TorControl {
     statusListeners = [];
 
     constructor(settings, proxy, ipc) {
-        this.settings = {};
-        this.settings.path = f.path(settings?.dbpath || "data/tor");
-        this.settings.enable = settings?.enabled || false;
-        this.application = new Applications(settings,applicationRepository, proxy)
+        this.settings = settings;
+
+        //this.settings.path = f.path(settings?.dbpath || "data/tor");
+        //this.settings.enable = settings?.enabled || false;
+        
+        this.application = new Applications(settings, applicationRepository, proxy)
 
         if (ipc) {
             ipc.once("TorApplication :: SubscribeOnStateChange", (e) => {
@@ -126,7 +128,7 @@ class TorControl {
 
     makeConfig = async (config = {})=>{
         const useSnowflake = config.useSnowflake || false;
-        const isOverwrite = config.overwrite || false;
+        const isOverwrite = true; //config.overwrite || false;
 
         const torrcConfig = await this.helpers.checkPath(path.join(this.settings.path, 'torrc'));
 
@@ -300,6 +302,11 @@ class TorControl {
         console.log("TOR stop")
         this.settings.enable = false;
         return true;
+    }
+
+    restart = async()=>{
+        await this.stop()
+        await this.start()
     }
 
     info = (compact)=>{

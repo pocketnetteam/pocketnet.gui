@@ -18,7 +18,7 @@ var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
-var TorControl = require('./node/tor-control.js');
+var TorControl = require('./node/torcontrol.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remotelight.js');
@@ -71,7 +71,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 	var torapplications = new TorControl(settings.tor, self, ipc)
 
-	var transports = new Transports(global.USE_PROXY_NODE, logger);
+	var transports = new Transports(logger);
 
 	var dump = {}
 
@@ -419,8 +419,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 		}
 	}
 
-
-
 	self.systemnotify = {
 
 		init: function () {
@@ -564,81 +562,32 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 	self.torapplications = {
 		init: function () {
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			return torapplications.application.init().then(async r => {
-				return await torapplications.init();
-			})
+			return torapplications.init()
 		},
 
-		start: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.start();
+		settingChanged: function(settings){
+			return torapplications.settingChanged(settings)
 		},
 
-		info: (compact)=>{
+		info: (compact) => {
 			return torapplications.info(compact);
 		},
 
-		stop: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.stop();
+		destroy: () => {
+			return torapplications.destroy();
 		},
 
-		isStarted: () => {
-			if (!global.USE_PROXY_NODE) return false;
-			return torapplications.isStarted();
+		remove: () => {
+			return torapplications.remove();
 		},
 
-		isStopped: () => {
-			if (!global.USE_PROXY_NODE) return true;
-			return torapplications.isStopped();
+		install: () => {
+			return torapplications.installManual();
 		},
 
-		isInstalling: () => {
-			if (!global.USE_PROXY_NODE) return false;
-			return torapplications.isInstalling();
-		},
-
-		isRunning: () => {
-			if (!global.USE_PROXY_NODE) return false;
-			return torapplications.isRunning();
-		},
-
-		onStarted: (listener) => {
-			if (!global.USE_PROXY_NODE) return;
-			torapplications.onStarted(listener);
-		},
-
-		onStopped: (listener) => {
-			if (!global.USE_PROXY_NODE) return listener();
-			torapplications.onStopped(listener);
-		},
-
-		onInstalling: (listener) => {
-			if (!global.USE_PROXY_NODE) return;
-			torapplications.onInstalling(listener);
-		},
-
-		onRunning: (listener) => {
-			if (!global.USE_PROXY_NODE) return;
-			torapplications.onRunning(listener);
-		},
-
-		destroy: async ()=>{
-			await torapplications.destroy();
-		},
+		reinstall: () => {
+			return torapplications.reinstall();
+		}
 	}
 
 	const axiosTransport = (...args) => transports.axios(...args);

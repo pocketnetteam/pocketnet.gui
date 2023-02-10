@@ -186,7 +186,9 @@ f.downloadgitrelease = function(name, p, repo = { user: "pocketnetteam", name: "
     var filterRelease = function(release) {
         return release.prerelease === false
     }
+    
 
+    console.log('repo.user, repo.name, dest', repo.user, repo.name, dest)
 
     return downloadRelease(repo.user, repo.name, dest, filterRelease, filterAsset, false).then(function() {
 

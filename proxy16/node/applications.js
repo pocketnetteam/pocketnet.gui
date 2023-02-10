@@ -170,6 +170,7 @@ var Applications = function(settings, applications = {}, proxy) {
         return self.getinfo(key).then(asset => {
             r.asset = asset
 
+            console.log('asset', asset)
 
             return f.downloadgitrelease(r.asset.name, {
                 check : function(stats){

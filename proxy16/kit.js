@@ -177,8 +177,10 @@ var defaultSettings = {
 	},
 
 	tor : {
-		dbpath : 'data/tor',
-		enabled: false,
+		dbpath : 'data/tordb',
+		path : 'data/tor',
+		enabled2: 'neveruse',
+		useSnowFlake : false
 	},
 
 	server : {
@@ -300,7 +302,8 @@ var state = {
 			},
 			tor : {
 				dbpath : settings.tor.dbpath,
-				enabled: settings.tor.enabled,
+				enabled2: settings.tor.enabled2,
+				useSnowFlake : settings.tor.useSnowFlake
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -416,13 +419,61 @@ function getKit(ipc) {
 		manage: {
 			set: {
 
+				tor : {
+
+					changeSettings: function (data) {
+
+						return kit.proxy().then((proxy) => {
+							
+
+							if (typeof data.useSnowFlake != 'undefined')
+								settings.tor.useSnowFlake = data.useSnowFlake 
+
+							if (typeof data.enable2 != 'undefined')
+								settings.tor.enable2 = data.enable2 
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+					
+					useSnowFlake: function (data) {
+
+						return kit.proxy().then((proxy) => {
+	
+							settings.tor.useSnowFlake = data.useSnowFlake || false
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+	
+					enable2: function (data) {
+	
+						return kit.proxy().then((proxy) => {
+	
+							settings.tor.enable2 = data.enable2 || false
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+				},
+
 				server: {
 
 					settings: function ({
-											settings = {}
-										}) {
+						settings = {}
+					}) {
 
 						var ctx = kit.manage.set.server
+						var tctx = kit.manage.set.tor
 						var notification = {}
 
 						if (typeof settings.domain != 'undefined') notification.domain = settings.domain
@@ -430,6 +481,8 @@ function getKit(ipc) {
 						if (typeof settings.enabled) notification.enabled = settings.enabled
 						if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
 						if (settings.ssl) notification.ssl = true
+						if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
+						if (settings.useSnowFlake) notification.useSnowFlake = settings.useSnowFlake
 
 
 						return kit.proxy().then(proxy => {
@@ -443,6 +496,19 @@ function getKit(ipc) {
 
 						}).then(() => {
 							var promises = []
+
+							if(settings.torenabled2 || settings.useSnowFlake){
+								promises.push(tctx.changeSettings({
+
+									enabled2 : settings.torenabled2,
+									useSnowFlake : useSnowFlake
+									
+								}).catch(e => {
+									console.error(e)
+
+									return Promise.resolve('firebase.id error')
+								}))
+							}
 
 
 							if (settings.firebase && settings.firebase.id)
@@ -1089,7 +1155,42 @@ function getKit(ipc) {
 			},
 
 			tor: {
-				start: function (data) {
+
+				info: function () {
+					return kit.proxy().then(proxy => {
+						return proxy.torapplications.info();
+					})
+				},
+
+				install : function(){
+					return kit.proxy().then(proxy => {
+						proxy.torapplications.install().catch(e => {
+							console.log(e)
+						})
+
+						return Promise.resolve(proxy.torapplications.info())
+					})
+				},
+
+				reinstall : function(){
+					return kit.proxy().then(proxy => {
+						proxy.torapplications.reinstall().catch(e => {
+							console.log(e)
+						})
+
+						return Promise.resolve(proxy.torapplications.info())
+
+					})
+				}
+
+				/*remove: function () {
+					return kit.proxy().then(proxy => {
+						return proxy.torapplications.remove();
+					})
+				}*/
+				//settings.tor.useSnowFlake
+
+				/*start: function (data) {
 					const isPersistent = data?.persistence;
 
 					return kit.proxy().then(async proxy => {
@@ -1114,12 +1215,8 @@ function getKit(ipc) {
 
 						await state.save()
 					})
-				},
-				info: function () {
-					return kit.proxy().then(async proxy => {
-						return proxy.torapplications.info();
-					})
-				},
+				},*/
+				
 			},
 
 			notifications: {

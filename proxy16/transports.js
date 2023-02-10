@@ -12,7 +12,7 @@ const net = require("net");
 const fs = require("fs");
 const path = require("path");
 
-module.exports = function (isTorEnabled = false) {
+module.exports = function () {
     const self = {};
     self.accessRecords = {};
     self.lastUpdate = Date.now();
@@ -36,11 +36,14 @@ module.exports = function (isTorEnabled = false) {
     };
 
     const isTorStarted = async (wait = true) => {
-        if (!isTorEnabled) {
+
+        const torcontrol = self.torapplications;
+
+        if(!torcontrol) {
             return Promise.resolve(false);
         }
 
-        const torcontrol = self.torapplications;
+        if(torcontrol.settings.enable2 == 'neveruse') return false
 
         if (!torcontrol || torcontrol?.isStopped()) {
             return Promise.resolve(false);
@@ -67,6 +70,9 @@ module.exports = function (isTorEnabled = false) {
     };
 
     const isDirectAccess = async (url) => {
+
+        const torcontrol = self.torapplications;
+
         let { hostname, port, protocol } = new URL(url);
 
         if (!port) {
@@ -78,6 +84,8 @@ module.exports = function (isTorEnabled = false) {
         if (isLocalhost) {
             return true;
         }
+
+        if(torcontrol.settings.enable2 == 'always') return false
 
         const isHostListed = (hostname in self.accessRecords);
 
@@ -115,7 +123,7 @@ module.exports = function (isTorEnabled = false) {
 
                 fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
             } catch (err) {
-                console.log('STATS_BUSY??', err);
+                //console.log('STATS_BUSY??', err);
             }
         }
 
@@ -210,7 +218,7 @@ module.exports = function (isTorEnabled = false) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
         }
 
-        self.logger.w('transports', 'error', `Sending request ${preparedOpts.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        self.logger.w('transports', 'info', `Sending request ${preparedOpts.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         return _axios(preparedOpts)
             .then(res => res)
             .catch(async (err) => {
@@ -252,8 +260,8 @@ module.exports = function (isTorEnabled = false) {
             await initHttpsAgent(opts, 'agent');
         }
 
-        console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-        self.logger.w('transports', 'error', `Sending request ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        //console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
+        self.logger.w('transports', 'info', `Sending request ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         return fetch(url, opts)
             .then((response) => {
                 if (opts.agent) {
@@ -272,7 +280,7 @@ module.exports = function (isTorEnabled = false) {
                 const isDirectRequest = await isDirectAccess(url);
                 const isTorStateStarted = await isTorStarted();
 
-                self.logger.w('transports', 'error', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
+                self.logger.w('transports', 'info', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
 
                 if (!isDirectRequest && isTorStateStarted) {
                     await initHttpsAgent(opts, 'agent');
@@ -305,7 +313,7 @@ module.exports = function (isTorEnabled = false) {
             await initHttpsAgent(options, 'agent');
         }
 
-        self.logger.w('transports', 'error', `Sending request ${options.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        self.logger.w('transports', 'info', `Sending request ${options.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         try {
             return req(options, (...args) => {
                 callBack?.(...args)
@@ -320,7 +328,7 @@ module.exports = function (isTorEnabled = false) {
             const isDirectRequest = await isDirectAccess(options.url);
             const isTorStateStarted = await isTorStarted();
 
-            self.logger.w('transports', 'error', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
+            self.logger.w('transports', 'info', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
 
             if (!isDirectRequest && isTorStateStarted) {
                 await initHttpsAgent(options, 'agent');
