@@ -54,7 +54,13 @@ class WrappedAxios {
         const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
         const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
         const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-        const isTorReady = this.transports.isTorReady();
+
+        let isTorReady = this.transports.isTorReady();
+
+        if (isDirectAccessRestricted) {
+            isTorReady = await this.transports.waitTorReady();
+        }
+
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
