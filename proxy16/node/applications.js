@@ -8,6 +8,7 @@ var Datastore = require('nedb');
 var progress = require('request-progress');
 var targz = require('targz');
 const request = require("request");
+const axios = require('axios');
 
 var Applications = function(settings, applications = {}, proxy) {
     if(!settings) settings = {}
@@ -28,7 +29,7 @@ var Applications = function(settings, applications = {}, proxy) {
 
         if(!meta) return Promise.reject('platform')
         console.log(meta[key].url)
-        return proxy.transports.axios.get(meta[key].url).then(function(response) {
+        return axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
