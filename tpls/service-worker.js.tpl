@@ -64,6 +64,7 @@ function onFetch(event) {
         .then(async (response) => {
           const proxyTransportHeader = response.headers.get('#bastyon-proxy-transport');
 
+
           const hasUsedTor = (proxyTransportHeader === 'tor');
 
           const responseClone = response.clone();

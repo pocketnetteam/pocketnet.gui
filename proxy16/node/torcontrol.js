@@ -4,6 +4,7 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const fssync = require("fs");
+var kill = require('tree-kill');
 
 class Helpers {
     bin_name = (name)=> {
@@ -339,7 +340,7 @@ class TorControl {
                 this.state.status = "started"
             } else if (isRetryingConnection(data)) {
                 console.log("TOR retrying circuit")
-                this.state.status = "running"
+                //this.state.status = "running"
             }
         }
         catch(e){
@@ -416,7 +417,7 @@ class TorControl {
             var pid = await fs.readFile(path.join(this.getsettingspath(), "tor.pid"), {encoding: "utf-8"})
 
             if (pid){
-                process.kill(+pid.toString(), 9)
+                kill(+pid.toString())
             }
 
 
@@ -431,10 +432,10 @@ class TorControl {
 
         if (this.instance){
             try{
-                process.kill(+pid.toString(), 9)
+                kill(+this.instance.pid.toString())
             }
             catch(e){
-
+                console.log("KILL ERROR", e)
             }
         }
 
