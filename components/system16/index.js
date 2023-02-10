@@ -2910,43 +2910,24 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
-								/*if(typeof changes.server.torenabled2 != 'undefined') {
-									proxy.fetchauth('manage', {
-										action: changes.server.torenabled2 ? 'tor.start' : 'tor.stop',
-										data: {}
-									}).catch(e => {
-										globalpreloader(false)
-										return Promise.resolve()
-
-									}).then(r => {
-										delete changes.server.torenabled2;
-										make(proxy || api.get.current());
-
-										globalpreloader(false)
-
-										topPreloader(100);
-
-									})
-								}*/
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',
 									data: {
 										settings: changes.server
 									}
-								}).catch(e => {
-									globalpreloader(false)
-									return Promise.resolve()
-		
 								}).then(r => {
+
 									changes.server = {}
 		
 									make(proxy || api.get.current());
 
+									
+		
+								}).finally(() => {
 									globalpreloader(false)
 				
 									topPreloader(100);
-		
 								})
 							}
 							

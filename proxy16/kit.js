@@ -177,7 +177,7 @@ var defaultSettings = {
 	},
 
 	tor : {
-		dbpath : 'data/tordb',
+		dbpath2 : 'data/tordb',
 		path : 'data/tor',
 		enabled2: 'neveruse',
 		useSnowFlake : false
@@ -423,14 +423,16 @@ function getKit(ipc) {
 
 					changeSettings: function (data) {
 
+						console.log("data", data)
+
 						return kit.proxy().then((proxy) => {
 							
 
 							if (typeof data.useSnowFlake != 'undefined')
 								settings.tor.useSnowFlake = data.useSnowFlake 
 
-							if (typeof data.enable2 != 'undefined')
-								settings.tor.enable2 = data.enable2 
+							if (typeof data.enabled2 != 'undefined')
+								settings.tor.enabled2 = data.enabled2 
 	
 							return proxy.torapplications.settingChanged(settings.tor)
 	
@@ -452,11 +454,11 @@ function getKit(ipc) {
 						})
 					},
 	
-					enable2: function (data) {
+					enabled2: function (data) {
 	
 						return kit.proxy().then((proxy) => {
 	
-							settings.tor.enable2 = data.enable2 || false
+							settings.tor.enabled2 = data.enabled2 || false
 	
 							return proxy.torapplications.settingChanged(settings.tor)
 	
@@ -484,7 +486,7 @@ function getKit(ipc) {
 						if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
 						if (settings.useSnowFlake) notification.useSnowFlake = settings.useSnowFlake
 
-
+						console.log('settings', settings)
 						return kit.proxy().then(proxy => {
 
 							return proxy.wss.sendtoall({
@@ -501,7 +503,7 @@ function getKit(ipc) {
 								promises.push(tctx.changeSettings({
 
 									enabled2 : settings.torenabled2,
-									useSnowFlake : useSnowFlake
+									useSnowFlake : settings.useSnowFlake
 									
 								}).catch(e => {
 									console.error(e)
@@ -1178,7 +1180,13 @@ function getKit(ipc) {
 							console.log(e)
 						})
 
-						return Promise.resolve(proxy.torapplications.info())
+						return new Promise(resolve => {
+							setTimeout(() => {
+								return resolve(proxy.torapplications.info())
+							}, 1000)
+						})
+
+						
 
 					})
 				}

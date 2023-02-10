@@ -20,6 +20,8 @@ class Helpers {
             return { exists: true, isFolder: stat.isDirectory()};
         }catch (e) {
 
+            console.log(e)
+
             return { exists: false, isFolder: null };
         }
     }
@@ -101,6 +103,8 @@ class TorControl {
 
         this.settings = {...settings};
 
+        console.log('needRestart', needRestart,  this.settings )
+
         if (needRestart){
             await this.autorun()
         }
@@ -133,7 +137,11 @@ class TorControl {
     }
 
     getpath = () => {
-        return path.join(this.settings.path, this.helpers.bin_name("tor"))
+        return path.join(this.getsettingspath(), this.helpers.bin_name("tor"))
+    }
+
+    getsettingspath = () => {
+        return f.path(this.settings.path)
     }
 
     needinstall = () => {
@@ -145,18 +153,18 @@ class TorControl {
 
     folders = async() => {
 
-        const check = await this.helpers.checkPath(this.settings.path)
+        const check = await this.helpers.checkPath(this.getsettingspath())
         
         if(!check.exists){
             try{
-                await fs.mkdir(this.settings.path, { recursive: true });
+                await fs.mkdir(this.getsettingspath(), { recursive: true });
             }catch(e){
                 throw 'tordatapath'
             }
         }
 
         if (check.exists && !check.isFolder){
-            await fs.rm(this.settings.path, { recursive: true })
+            await fs.rm(this.getsettingspath(), { recursive: true })
             await this.folders();
         }
     }
@@ -165,17 +173,17 @@ class TorControl {
         const useSnowflake = this.settings.useSnowflake || false;
         const isOverwrite = true; //config.overwrite || false;
 
-        const torrcConfig = await this.helpers.checkPath(path.join(this.settings.path, 'torrc'));
+        const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
 
         if (torrcConfig.exists && !isOverwrite) {
             return true;
         }
 
         try {
-            await fs.unlink(path.join(this.settings.path, "torrc"))
+            await fs.unlink(path.join(this.getsettingspath(), "torrc"))
         }catch (e) {}
 
-        const getSettingsPath = (...parts) => path.join(this.settings.path, ...parts);
+        const getSettingsPath = (...parts) => path.join(this.getsettingspath(), ...parts);
 
         const snowflakeStuns = [
             "stun.voip.blackberry.com:3478",
@@ -222,7 +230,7 @@ class TorControl {
         torConfig = torConfig.join('\n');
 
         try{
-            await fs.writeFile(path.join(this.settings.path, "torrc"), torConfig, {flag: "a+"})
+            await fs.writeFile(path.join(this.getsettingspath(), "torrc"), torConfig, {flag: "a+"})
 
         }catch(e) {
             return false
@@ -249,14 +257,12 @@ class TorControl {
 
         try{
 
-            console.log("TRY TO INSTALl")
-
             this.state.status = "install";
 
             const download = await this.application.download('bin', {user: "cenitelas", name: "tor"});
-            await this.application.decompress(download.path, this.settings.path)
+            await this.application.decompress(download.path, this.getsettingspath())
             await fs.unlink(download.path)
-            await fs.chmod(this.settings.path, 0o755)
+            await fs.chmod(this.getsettingspath(), 0o755)
             await fs.chmod(this.getpath(), 0o755)
 
             this.state.status = "stopped";
@@ -265,8 +271,6 @@ class TorControl {
 
         }catch (e) {
 
-            console.error("TOR INSTALL ERROR", e)
-            
             this.installfailed = {
                 code : 500,
                 error : 'cantcopy'
@@ -285,7 +289,7 @@ class TorControl {
         if(!this.needinstall()){
 
             try{
-                fssync.rmdirSync(this.settings.path, { recursive: true });
+                fssync.rmdirSync(this.getsettingspath(), { recursive: true });
             }catch(e){
 
                 console.log(e)
@@ -308,29 +312,38 @@ class TorControl {
         })
     }
 
-    torlog = (data) => {
-        const isBootstrapped100 = ({ data }) => data?.includes('Bootstrapped 100%');
-        const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
-        const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
-        const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
-        const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
+    log = (data) => {
 
-        //console.log('data', data.data)
+        try{
+            const isBootstrapped100 = ({ data }) => data?.includes('Bootstrapped 100%');
+            const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
+            const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
+            const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
+            const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
 
-        if (isBrokerFailure(data) || isConnectionFailure(data)) {
-            console.log("TOR connection lost")
-            this.state.status = "failure"
-        } else if (isBootstrapped100(data) || isConnected(data)) {
-            console.log("TOR started")
-            this.state.status = "started"
-        } else if (isRetryingConnection(data)) {
-            console.log("TOR retrying circuit")
-            this.state.status = "running"
+            console.log(data)
+    
+            if (isBrokerFailure(data) || isConnectionFailure(data)) {
+                console.log("TOR connection lost")
+                this.state.status = "failure"
+            } else if (isBootstrapped100(data) || isConnected(data)) {
+                console.log("TOR started")
+                this.state.status = "started"
+            } else if (isRetryingConnection(data)) {
+                console.log("TOR retrying circuit")
+                this.state.status = "running"
+            }
         }
+        catch(e){
+            console.error(e)
+        }
+        
         // console.log(data)
     }
 
     start = async ()=>{
+
+        console.log("START")
 
         if(this.instance) return true
 
@@ -344,14 +357,16 @@ class TorControl {
 
         this.state.status = "running"
 
+        await this.getpidandkill()
+
         this.instance = child_process.spawn(this.getpath(), [
-            "-f",`${path.join(this.settings.path, "torrc")}`,
+            "-f",`${path.join(this.getsettingspath(), "torrc")}`,
         ], { 
             stdio: ['ignore'], 
             detached : false, 
             shell : false,
             env: {
-                'LD_LIBRARY_PATH': this.settings.path
+                'LD_LIBRARY_PATH': this.getsettingspath()
             }
         })
 
@@ -371,9 +386,37 @@ class TorControl {
         this.instance.stderr.on("data", (chunk) => this.log({error: String(chunk)}));
         this.instance.stdout.on("data", (chunk) => this.log({data: String(chunk)}));
 
+        this.savepid(this.instance.pid)
+
         console.log("TOR running with pid: ", this.instance.pid)
 
         return true;
+    }
+
+    savepid = async (pid) => {
+        try {
+            await fs.writeFile(path.join(this.getsettingspath(), "tor.pid"), pid.toString(), { encoding: "utf-8"});
+        }catch (e) {
+            console.error(e)
+        }
+    }
+
+    getpidandkill = async () => {
+
+        try{
+
+        var pid = await fs.readFile(path.join(this.getsettingspath(), "tor.pid"), {encoding: "utf-8"})
+
+            if (pid){
+                process.kill(+pid.toString(), 9)
+            }
+                
+                
+        }
+
+        catch(e){
+
+        }
     }
 
     stop = async ()=>{
@@ -394,9 +437,14 @@ class TorControl {
         return true
     }
 
-    restart = async()=>{
-        await this.stop()
-        await this.start()
+    restart = async() => {
+        try{
+            await this.stop()
+            await this.start()
+        }catch(e){
+            console.error(e)
+        }
+        
     }
 
     info = (compact)=>{
@@ -411,7 +459,7 @@ class TorControl {
                 status : this.state.status
             },
             binPath : path.join(this.getpath()),
-            dataPath : this.settings.path,
+            dataPath : this.getsettingspath(),
             installed : !this.needinstall()
         }
     }

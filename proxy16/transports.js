@@ -20,7 +20,7 @@ module.exports = function () {
     let torHttpsAgent = null;
     const initHttpsAgent = async (opts, name) => {
         if (!torHttpsAgent) {
-            const isTorStateStarted = await isTorStarted(false);
+            const isTorStateStarted = await isTorStarted(true);
 
             if (!isTorStateStarted) {
                 return;
@@ -43,7 +43,10 @@ module.exports = function () {
             return Promise.resolve(false);
         }
 
-        if(torcontrol.settings.enable2 == 'neveruse') return false
+        if(torcontrol.settings.enabled2 == 'neveruse') return false
+
+
+        console.log('torcontrol?.isStopped()', torcontrol.state.status, torcontrol.isStarted())
 
         if (!torcontrol || torcontrol?.isStopped()) {
             return Promise.resolve(false);
@@ -58,13 +61,13 @@ module.exports = function () {
         }
 
         return new Promise((resolve, reject) => {
-            const torTimeout = setTimeout(() => {
+            /*const torTimeout = setTimeout(() => {
                 resolve(false);
-            }, 60000);
+            }, 60000);*/
 
             self.torapplications.onStarted(() => {
                 resolve(true);
-                clearInterval(torTimeout);
+                //clearInterval(torTimeout);
             });
         });
     };
@@ -85,7 +88,9 @@ module.exports = function () {
             return true;
         }
 
-        if(torcontrol.settings.enable2 == 'always') return false
+        console.log('torcontrol.settings.enabled2', torcontrol.settings.enabled2)
+
+        if(torcontrol.settings.enabled2 == 'always') return false
 
         const isHostListed = (hostname in self.accessRecords);
 
@@ -212,7 +217,7 @@ module.exports = function () {
         }
 
         const isDirectRequest = await isDirectAccess(preparedOpts.url);
-        const isTorStateStarted = await isTorStarted(false);
+        const isTorStateStarted = await isTorStarted(!isDirectRequest);
 
         if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
@@ -254,7 +259,7 @@ module.exports = function () {
 
     self.fetch = async (url, opts = {}) => {
         const isDirectRequest = await isDirectAccess(url);
-        const isTorStateStarted = await isTorStarted(false);
+        const isTorStateStarted = await isTorStarted(!isDirectRequest);
 
         if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(opts, 'agent');
@@ -307,7 +312,7 @@ module.exports = function () {
         let req = _request;
 
         const isDirectRequest = await isDirectAccess(options.url);
-        const isTorStateStarted = await isTorStarted(false);
+        const isTorStateStarted = await isTorStarted(!isDirectRequest);
 
         if (!isDirectRequest && isTorStateStarted) {
             await initHttpsAgent(options, 'agent');

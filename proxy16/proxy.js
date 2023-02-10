@@ -566,6 +566,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 		},
 
 		settingChanged: function(settings){
+
+			console.log('settingChanged', settings)
+
 			return torapplications.settingChanged(settings)
 		},
 

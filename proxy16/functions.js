@@ -192,6 +192,8 @@ f.downloadgitrelease = function(name, p, repo = { user: "pocketnetteam", name: "
 
     return downloadRelease(repo.user, repo.name, dest, filterRelease, filterAsset, false).then(function() {
 
+        console.log("DOWNLOADED")
+
 
         return Promise.resolve(fullname)
     })
