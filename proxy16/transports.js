@@ -357,7 +357,7 @@ class Transports {
 
             const torcontrol = this.torapplications;
 
-            const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
+            const statsFilePath = path.join(torcontrol.getsettingspath(), 'hosts-stats.json');
             const areStatsEmpty = (Object.keys(this.accessRecords).length === 0);
 
             if (areStatsEmpty && fs.existsSync(statsFilePath)) {
