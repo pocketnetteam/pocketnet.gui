@@ -207,6 +207,9 @@
 #menu .sections .items.control-app.control-right {
   padding-left: 1.5em;
 }
+#menu .sections .items.control-app .control-tor-state {
+  position: relative;
+}
 #menu .sections .items.control-app .control-tor-state i::after {
   position: absolute;
 }
@@ -215,14 +218,14 @@
 }
 #menu .sections .items.control-app .control-tor-state.on::before {
   content: '';
-  float: left;
-  position: relative;
+  position: absolute;
   left: 15px;
   top: 15px;
   display: block;
   width: 3px;
   height: 3px;
-  border-radius: 10000px;
+  border-radius: 3px;
+  overflow: hidden;
 }
 #menu .sections .items.control-app .control-tor-state.on.failed::before {
   background: rgb(var(--color-bad));

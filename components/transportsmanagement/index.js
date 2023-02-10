@@ -11,7 +11,11 @@ var transportsmanagement = (function(){
 		var el, ed;
 
 		var actions = {
+			directProxy : function(){
+				const currentProxy = app.api.get.current();
 
+				return currentProxy.direct ? true : false
+			}
 		}
 
 		var events = {

@@ -2466,7 +2466,7 @@ var system16 = (function(){
 						using : use,
 						error : errors[error] || errors['undefinedError']
 					},
-
+					insertimmediately : true,
 					el : el
 
 				},
@@ -2499,7 +2499,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							electron : typeof _Electron != 'undefined' ? _Electron : false
 						},
-	
+						insertimmediately : true,
 						el : el.proxycontent
 	
 					},
@@ -2534,8 +2534,8 @@ var system16 = (function(){
 						data : {
 							admin : actions.admin()
 						},
-						el : elc.find('.botsWrapper')
-
+						el : elc.find('.botsWrapper'),
+						insertimmediately : true,
 					},
 					function(p){
 
@@ -2561,7 +2561,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							bots : bots
 						},
-
+						insertimmediately : true,
 						el : elc.find('.webbotsContentWrapper')
 
 					},
@@ -2617,7 +2617,7 @@ var system16 = (function(){
 						using : use,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.proxyServers')
 
 				},
@@ -2646,7 +2646,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.serverWrapper')
 
 				},
@@ -2675,7 +2675,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webserverstatusWrapper')
 
 				},
@@ -2700,7 +2700,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webServerWrapper')
 
 				},
@@ -2863,7 +2863,7 @@ var system16 = (function(){
 							changes : changes.server,
 							info : info
 						},
-
+						insertimmediately : true,
 						el : elc.find('.adminPanelWrapper')
 
 					},
@@ -2921,8 +2921,6 @@ var system16 = (function(){
 									changes.server = {}
 		
 									make(proxy || api.get.current());
-
-									
 		
 								}).catch(e => {
 									console.error(e)
@@ -3118,7 +3116,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin()
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.webAdminsWrapper')
 	
 					},
@@ -3169,7 +3167,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webdistributionwalletsWrapper')
 
 				},
@@ -3346,7 +3344,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webDistributionWrapper')
 
 				},
@@ -3394,7 +3392,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper')
 
 				},
@@ -3421,7 +3419,7 @@ var system16 = (function(){
 						currentinstance : null,
 						//peertubePerformance,
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper .instances')
 
 				},
@@ -3485,7 +3483,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin(),
 					},
-
+					insertimmediately : true,
 					el : elc.find('.chainWrapper')
 
 				},
@@ -3526,7 +3524,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper')
 
 					},
@@ -3560,7 +3558,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper .notifications')
 
 					},
@@ -3596,7 +3594,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper .notifications-users')
 
 					},
@@ -3626,7 +3624,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper')
 
 				},
@@ -3679,7 +3677,7 @@ var system16 = (function(){
 						currentnode : currentnode,
 						fixednode : api.get.fixednode()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper .nodes')
 
 				},
@@ -3865,7 +3863,7 @@ var system16 = (function(){
 						data : {
 							direct : direct
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.localnodeWrapper')
 	
 					},
@@ -3975,6 +3973,8 @@ var system16 = (function(){
 			var expanded = el.c.find('.collapsepart').map(function(){
 				return $(this).hasClass('expanded')
 			})
+			
+			console.log('expanded', expanded)
 
 			if (proxy) {
 
@@ -4007,6 +4007,10 @@ var system16 = (function(){
 
 				}).then(data => {
 
+					el.c.find('.collapsepart').each(function (i) {
+						if (expanded[i]) $(this).addClass('expanded');
+					});
+
 
 					stats = data.stats
 
@@ -4037,8 +4041,11 @@ var system16 = (function(){
 						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
-		  
-						  callbacks.onSettingsReceived?.(r);
+							
+						  if(callbacks){
+							callbacks.onSettingsReceived?.(r);
+						  }
+						  
 
 						  return Promise.resolve();
 						})
@@ -4049,16 +4056,21 @@ var system16 = (function(){
 							
 						  bots = r.bots || [];
 						  renders.bots(el.c);
+
+						  console.log('expanded2', expanded)
 		  
-						  el.c.find('.collapsepart').each(function (i) {
+						  /*el.c.find('.collapsepart').each(function (i) {
 							if (expanded[i]) $(this).addClass('expanded');
-						  });
+						  });*/
 						  
+						}).catch(e => {
+							console.error(e)
 						});
 
 					}
 
 				}).catch(e => {
+					console.error(e)
 					makers.proxycontent()
 				})
 			}
