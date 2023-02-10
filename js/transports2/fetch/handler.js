@@ -69,6 +69,8 @@ class FetchMainHandler {
           if (typeof options.prepareResponse === 'function') {
             return options.prepareResponse(data);
           }
+
+          return data;
         })
         .then((data) => {
           const { status } = data;
