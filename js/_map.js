@@ -669,7 +669,11 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-
+		transportsmanagement : {
+			uri : "transportsmanagement",
+			href : "transportsmanagement",
+			add : insertingfunc
+		},
 
 		
 	

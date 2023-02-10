@@ -73,23 +73,42 @@ class FetchMainHandler {
           return data;
         })
         .then((data) => {
-          const { status } = data;
 
-          const headers = {};
 
-          data.headers.forEach((value, name) => {
-            headers[name] = value;
-          });
+          /// /????
 
-          self.sendInitialData(requestId, { status, headers });
-
-          data.body.on('data', (chunk) => {
-            self.sendData(requestId, chunk);
-          });
-
-          data.body.on('end', () => {
+          if(!data){
+            self.sendData(requestId, '');
             self.sendEnd(requestId);
-          });
+
+            return
+          }
+
+          try{
+            const { status } = data;
+
+            const headers = {};
+  
+            data.headers.forEach((value, name) => {
+              headers[name] = value;
+            });
+  
+            self.sendInitialData(requestId, { status, headers });
+  
+            data.body.on('data', (chunk) => {
+              self.sendData(requestId, chunk);
+            });
+  
+            data.body.on('end', () => {
+              self.sendEnd(requestId);
+            });
+          }
+
+          catch(e){
+            console.log(data)
+            console.log(e)
+          }
+          
         })
         .catch((err) => {
           if (err.code !== 'FETCH_ABORTED') {

@@ -75,8 +75,8 @@ var testnodes = [
 
 
 var activenodes = [
-	{
-		host : '178.217.159.221', /*  */
+	/*{
+		host : '178.217.159.221',
 		port: 38381,
 		ws: 8387,
 		name : 'test3.v.pocketnet.app',
@@ -87,7 +87,7 @@ var activenodes = [
 	},
 
 	{
-		host : '65.21.252.135', /*  */
+		host : '65.21.252.135',
 		port: 38081,
 		ws: 8087,
 		name : 'test4.v.pocketnet.app',
@@ -95,7 +95,7 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 	//////////////
 	{
 		host : '135.181.196.243',
@@ -177,8 +177,10 @@ var defaultSettings = {
 	},
 
 	tor : {
-		dbpath : 'data/tor',
-		enabled: false,
+		dbpath2 : 'data/tordb',
+		path : 'data/tor',
+		enabled2: 'neveruse',
+		useSnowFlake : false
 	},
 
 	server : {
@@ -300,7 +302,8 @@ var state = {
 			},
 			tor : {
 				dbpath : settings.tor.dbpath,
-				enabled: settings.tor.enabled,
+				enabled2: settings.tor.enabled2,
+				useSnowFlake : settings.tor.useSnowFlake
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -416,13 +419,63 @@ function getKit(ipc) {
 		manage: {
 			set: {
 
+				tor : {
+
+					changeSettings: function (data) {
+
+						console.log("data", data)
+
+						return kit.proxy().then((proxy) => {
+							
+
+							if (typeof data.useSnowFlake != 'undefined')
+								settings.tor.useSnowFlake = data.useSnowFlake 
+
+							if (typeof data.enabled2 != 'undefined')
+								settings.tor.enabled2 = data.enabled2 
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+					
+					useSnowFlake: function (data) {
+
+						return kit.proxy().then((proxy) => {
+	
+							settings.tor.useSnowFlake = data.useSnowFlake || false
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+	
+					enabled2: function (data) {
+	
+						return kit.proxy().then((proxy) => {
+	
+							settings.tor.enabled2 = data.enabled2 || false
+	
+							return proxy.torapplications.settingChanged(settings.tor)
+	
+						}).then(() => {
+							return state.save()
+						})
+					},
+				},
+
 				server: {
 
 					settings: function ({
-											settings = {}
-										}) {
+						settings = {}
+					}) {
 
 						var ctx = kit.manage.set.server
+						var tctx = kit.manage.set.tor
 						var notification = {}
 
 						if (typeof settings.domain != 'undefined') notification.domain = settings.domain
@@ -430,8 +483,10 @@ function getKit(ipc) {
 						if (typeof settings.enabled) notification.enabled = settings.enabled
 						if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
 						if (settings.ssl) notification.ssl = true
+						if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
+						if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
 
-
+						console.log('settings', settings)
 						return kit.proxy().then(proxy => {
 
 							return proxy.wss.sendtoall({
@@ -443,6 +498,19 @@ function getKit(ipc) {
 
 						}).then(() => {
 							var promises = []
+
+							if(settings.torenabled2 || typeof settings.useSnowFlake != 'undefined'){
+								promises.push(tctx.changeSettings({
+
+									enabled2 : settings.torenabled2,
+									useSnowFlake : settings.useSnowFlake
+									
+								}).catch(e => {
+									console.error(e)
+
+									return Promise.resolve('firebase.id error')
+								}))
+							}
 
 
 							if (settings.firebase && settings.firebase.id)
@@ -1089,7 +1157,48 @@ function getKit(ipc) {
 			},
 
 			tor: {
-				start: function (data) {
+
+				info: function () {
+					return kit.proxy().then(proxy => {
+						return proxy.torapplications.info();
+					})
+				},
+
+				install : function(){
+					return kit.proxy().then(proxy => {
+						proxy.torapplications.install().catch(e => {
+							console.log(e)
+						})
+
+						return Promise.resolve(proxy.torapplications.info())
+					})
+				},
+
+				reinstall : function(){
+					return kit.proxy().then(proxy => {
+						proxy.torapplications.reinstall().catch(e => {
+							console.log(e)
+						})
+
+						return new Promise(resolve => {
+							setTimeout(() => {
+								return resolve(proxy.torapplications.info())
+							}, 1000)
+						})
+
+						
+
+					})
+				}
+
+				/*remove: function () {
+					return kit.proxy().then(proxy => {
+						return proxy.torapplications.remove();
+					})
+				}*/
+				//settings.tor.useSnowFlake
+
+				/*start: function (data) {
 					const isPersistent = data?.persistence;
 
 					return kit.proxy().then(async proxy => {
@@ -1114,12 +1223,8 @@ function getKit(ipc) {
 
 						await state.save()
 					})
-				},
-				info: function () {
-					return kit.proxy().then(async proxy => {
-						return proxy.torapplications.info();
-					})
-				},
+				},*/
+				
 			},
 
 			notifications: {

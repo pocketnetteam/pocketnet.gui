@@ -14,7 +14,7 @@ var Applications = function(settings, applications = {}, proxy) {
 
     var self = this;
 
-    var db = new Datastore(f.path(settings.dbpath));
+    var db = new Datastore(f.path(settings.dbpath2 || settings.dbpath));
     
     
     var platform = process.platform
@@ -170,6 +170,7 @@ var Applications = function(settings, applications = {}, proxy) {
         return self.getinfo(key).then(asset => {
             r.asset = asset
 
+            console.log('asset', asset)
 
             return f.downloadgitrelease(r.asset.name, {
                 check : function(stats){

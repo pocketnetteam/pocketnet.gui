@@ -33,6 +33,20 @@ if (typeof _Electron != 'undefined' && _Electron){
   EmojioneArea = require('./js/vendor/emojionearea.js')
   filterXss = require('./js/vendor/xss.min.js')
 
+  Broadcaster = require('./js/broadcaster.js');
+
+  swBroadcaster = new Broadcaster('ServiceWorker');
+
+  swBroadcaster.handle('AltTransportActive', (url) => {
+      const wait = (seconds, returnValue) => new Promise(r => (
+          setTimeout(() => r(returnValue), seconds * 1000)
+      ));
+
+      const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+      return Promise.race([ transportCheck, wait(1, false) ]);
+  });
+
 }
 
 if(typeof _Node == 'undefined') _Node = false;

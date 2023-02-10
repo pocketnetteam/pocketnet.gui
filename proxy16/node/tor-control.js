@@ -3,7 +3,7 @@ const child_process = require("child_process");
 const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
-const {settings} = require("express/lib/application");
+const fssync = require("fs");
 
 class Helpers {
     bin_name = (name)=> {
@@ -13,132 +13,181 @@ class Helpers {
         return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
     }
 
-    checkPath = async (pathname)=>{
+    checkPath = (pathname) => {
         try {
-            const stat = await fs.lstat(pathname)
+            const stat = fssync.lstatSync(pathname)
+
             return { exists: true, isFolder: stat.isDirectory()};
         }catch (e) {
+
+            console.log(e)
+
             return { exists: false, isFolder: null };
         }
     }
 }
 
-class TorControl {
-    helpers = new Helpers();
-    state = {
-        instance: this,
-        _status: 'not_started',
-        get status() { return this._status },
-        set status(stateValue) {
-            this._status = stateValue;
-
-            this.instance.statusListeners.forEach((statusListener) => {
-                const isAnyListener = (statusListener.type === 'any');
-                const isTargetListenerType = (statusListener.type === stateValue);
-
-                if (isAnyListener || isTargetListenerType) {
-                    statusListener.listener(stateValue);
-                }
-            });
-        },
+class State {
+    instance = null;
+    _status = 'stopped';
+    constructor(control) {
+        this.instance = control
     };
-    statusListeners = [];
 
-    constructor(settings, proxy, ipc) {
-        this.settings = {};
-        this.settings.path = f.path(settings?.dbpath || "data/tor");
-        this.settings.enable = settings?.enabled || false;
-        this.application = new Applications(settings,applicationRepository, proxy)
+    get status() { return this._status };
 
-        if (ipc) {
-            ipc.once("TorApplication :: SubscribeOnStateChange", (e) => {
-                this.onStatusChange((status) => {
-                    e.sender.send("TorApplication :: StateChange", status);
-                    console.log("LISTENING STATUS SOMEWHERE ELSE", status);
-                });
-            });
-        }
-    }
+    set status(stateValue) {
+        this._status = stateValue;
 
-    onStatusChange = (listener) => {
-        this.statusListeners.push({
-            type: 'any',
-            listener,
+        this.instance.listeners.forEach((listener) => {
+            const isAnyListener = (listener.type === 'any');
+            const isTargetListenerType = (listener.type === stateValue);
+
+            if (isAnyListener || isTargetListenerType) {
+                listener.listener(stateValue);
+            }
         });
     };
+}
 
-    offStatusChange = (listener) => {
-        const listenerId = this.statusListeners.findIndex(l => (
-          l.toString() === listener.toString()
-        ));
+class TorControl {
+    helpers = new Helpers();
+    state = new State(this);
+    instance = null; /// tor instance
+    listeners = [];
+    settings = {};
+    application = null;
+    installfailed = null;
 
-        if (listenerId) {
-            delete this.statusListeners[listenerId];
-            this.statusListeners = this.statusListeners.flat();
-        }
-    };
+    constructor(settings, proxy/*, ipc*/) {
+        this.settings = {...settings};
+
+        console.log('settings', settings)
+
+        this.application = new Applications(settings, applicationRepository, proxy)
+
+    }
 
     isStarted = () => (this.state.status === 'started');
     isStopped = () => (this.state.status === 'stopped');
     isInstalling = () => (this.state.status === 'install');
     isRunning = () => (this.state.status === 'running');
 
-    onStarted = (listener) => this.statusListeners.push({ type: 'started', listener });
-    onStopped = (listener) => this.statusListeners.push({ type: 'stopped', listener });
-    onInstalling = (listener) => this.statusListeners.push({ type: 'install', listener });
-    onRunning = (listener) => this.statusListeners.push({ type: 'running', listener });
+    onStarted = (listener) => this.listeners.push({ type: 'started', listener });
+    onStopped = (listener) => this.listeners.push({ type: 'stopped', listener });
+    onInstalling = (listener) => this.listeners.push({ type: 'install', listener });
+    onRunning = (listener) => this.listeners.push({ type: 'running', listener });
 
-    init = async ()=>{
+    init = async() => {
         try {
+
+            await this.application.init();
+
             await this.folders();
-            const checkRunning = await this.checkRunning(this.settings.path)
-            if (checkRunning) {
-                await this.stop();
-            }
 
-            const checkBin = await this.helpers.checkPath(path.join(this.settings.path, this.helpers.bin_name("tor")));
-            if (!checkBin.exists) {
-                await this.install()
-            }
+            this.autorun()
 
-            if (this.settings.enable)
-                return this.start();
+
         } catch (e) {
+            console.log("E", e)
             this.state.status = "stopped";
         }
     }
 
-    folders = async ()=>{
-        const check = await this.helpers.checkPath(this.settings.path)
+    settingChanged = async(settings) => {
+
+        var needRestart = false
+
+        console.log("settings.useSnowFlake", settings.useSnowFlake, this.settings.useSnowFlake)
+
+        if(settings.useSnowFlake != this.settings.useSnowFlake) needRestart = true
+        if(settings.enabled2 != this.settings.enabled2 && settings.enabled2 != 'auto') needRestart = true
+
+        this.settings = {...settings};
+
+        console.log('needRestart', needRestart,  this.settings , settings)
+
+        if (needRestart){
+            await this.autorun()
+        }
+    }
+
+    autorun = async () =>{
+
+        if (this.instance){
+            if (this.settings.enabled2 == 'neveruse'){
+                this.stop()
+            }
+            else{
+                await this.restart()
+            }
+        }
+
+        if (!this.instance){
+
+            if (this.settings.enabled2 != 'neveruse'){
+                if (this.needinstall()){
+
+                    await this.install()
+                }
+            }
+
+            if (this.settings.enabled2 == 'always'){
+                await this.restart()
+            }
+        }
+    }
+
+    getpath = () => {
+        return path.join(this.getsettingspath(), this.helpers.bin_name("tor"))
+    }
+
+    getsettingspath = () => {
+        return f.path(this.settings.path)
+    }
+
+    needinstall = () => {
+
+        var existsBin = this.helpers.checkPath(this.getpath());
+
+        return existsBin.exists ? false : true
+    }
+
+    folders = async() => {
+
+        const check = await this.helpers.checkPath(this.getsettingspath())
+
         if(!check.exists){
             try{
-                await fs.mkdir(this.settings.path, { recursive: true });
+                await fs.mkdir(this.getsettingspath(), { recursive: true });
             }catch(e){
                 throw 'tordatapath'
             }
         }
 
-        if(check.exists && !check.isFolder){
-            await fs.rm(this.settings.path, { recursive: true })
+        if (check.exists && !check.isFolder){
+            await fs.rm(this.getsettingspath(), { recursive: true })
             await this.folders();
         }
     }
 
-    makeConfig = async (config = {})=>{
-        const useSnowflake = config.useSnowflake || false;
-        const isOverwrite = config.overwrite || false;
+    makeConfig = async() => {
+        const useSnowFlake = this.settings.useSnowFlake || false;
+        const isOverwrite = true; //config.overwrite || false;
 
-        const torrcConfig = await this.helpers.checkPath(path.join(this.settings.path, 'torrc'));
+        console.log('useSnowFlake', useSnowFlake)
+
+        const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
 
         if (torrcConfig.exists && !isOverwrite) {
-            return;
+            return true;
         }
 
         try {
-            await fs.unlink(path.join(this.settings.path, "torrc"))
+            await fs.unlink(path.join(this.getsettingspath(), "torrc"))
         }catch (e) {}
 
-        const getSettingsPath = (...parts) => path.join(this.settings.path, ...parts);
+        const getSettingsPath = (...parts) => path.join(this.getsettingspath(), ...parts);
 
         const snowflakeStuns = [
             "stun.voip.blackberry.com:3478",
@@ -171,7 +220,7 @@ class TorControl {
             "KeepalivePeriod 10",
         ];
 
-        if (useSnowflake) {
+        if (useSnowFlake) {
             torConfig.push(
                 "# Bridges configurations\n",
 
@@ -184,51 +233,103 @@ class TorControl {
 
         torConfig = torConfig.join('\n');
 
-        await fs.writeFile(path.join(this.settings.path, "torrc"), torConfig, {flag: "a+"})
+        try{
+            await fs.writeFile(path.join(this.getsettingspath(), "torrc"), torConfig, {flag: "a+"})
+
+            console.log("CONFIG MAKED")
+
+        }catch(e) {
+
+            console.log(e)
+            return false
+
+        }
+
+        return true
+
+
     }
 
-    install = async ()=>{
+    installManual = async() => {
+
+        this.installfailed = null
+
+        return await this.install()
+    }
+
+    install = async() => {
+
+        if (this.installfailed){
+            throw this.installfailed
+        }
+
         try{
+
             this.state.status = "install";
+
             const download = await this.application.download('bin', {user: "cenitelas", name: "tor"});
-            await this.application.decompress(download.path, this.settings.path)
+            await this.application.decompress(download.path, this.getsettingspath())
             await fs.unlink(download.path)
-            await fs.chmod(this.settings.path, 0o755)
-            await fs.chmod(path.join(this.settings.path, this.helpers.bin_name("tor")), 0o755)
-            await this.makeConfig()
-            //return this.application.save(download.asset)
+            await fs.chmod(this.getsettingspath(), 0o755)
+            await fs.chmod(this.getpath(), 0o755)
+
+            this.state.status = "stopped";
+
             return true;
+
         }catch (e) {
-            console.error(e)
-            throw {
+
+            this.installfailed = {
                 code : 500,
                 error : 'cantcopy'
             }
+
+            this.state.status = "stopped";
+
+            throw this.installfailed
         }
     }
 
-    start = async ()=>{
-        const existsBin = await this.helpers.checkPath(path.join(this.settings.path,this.helpers.bin_name("tor")))
-        if(!existsBin.exists){
-            console.log("NO BIN")
-            await this.install();
+    remove = () => {
+
+        this.stop()
+
+        if(!this.needinstall()){
+
+            try{
+                fssync.rmdirSync(this.getsettingspath(), { recursive: true });
+            }catch(e){
+
+                console.log(e)
+
+                return Promise.reject('path')
+            }
+
         }
 
-        await this.makeConfig();
+        return this.application.removeAll()
+    }
 
-        const checkRunning = await this.checkRunning()
-        if(checkRunning){
-            return true;
-        }
+    reinstall = () => {
+        return this.remove().then(() => {
+            return this.installManual()
+        }).catch(e => {
+            console.log(e)
 
-        const log = (data)=>{
+            return Promise.reject(e)
+        })
+    }
+
+    log = (data) => {
+
+        try{
             const isBootstrapped100 = ({ data }) => data?.includes('Bootstrapped 100%');
             const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
             const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
 
-            console.log('data', data.data)
+            console.log(data)
 
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.log("TOR connection lost")
@@ -240,66 +341,118 @@ class TorControl {
                 console.log("TOR retrying circuit")
                 this.state.status = "running"
             }
-            // console.log(data)
+        }
+        catch(e){
+            console.error(e)
+        }
+
+        // console.log(data)
+    }
+
+    start = async ()=>{
+
+        console.log("START")
+
+        if(this.instance) return true
+
+        if(this.needinstall()) return false
+
+        var configCreated = await this.makeConfig();
+
+        if(!configCreated){
+            console.log("tor config fail")
         }
 
         this.state.status = "running"
-        this.instance = child_process.spawn(path.join(this.settings.path, this.helpers.bin_name("tor")), [
-            "-f",`${path.join(this.settings.path,"torrc")}`,
-        ], { stdio: ['ignore'], detached : false, shell : false, env: {'LD_LIBRARY_PATH': this.settings.path}})
-        this.instance.on("error", (err)=>log({error: err}));
+
+        await this.getpidandkill()
+
+        this.instance = child_process.spawn(this.getpath(), [
+            "-f",`${path.join(this.getsettingspath(), "torrc")}`,
+        ], {
+            stdio: ['ignore'],
+            detached : false,
+            shell : false,
+            env: {
+                'LD_LIBRARY_PATH': this.getsettingspath()
+            }
+        })
+
+        this.instance.on("error", (error) => this.log({ error }));
+
         this.instance.on("exit", async (code) => {
-            this.state.status = "stopped"
-            try {
-                await this.stop()
-            }catch (e) {}
+
+            this.stop()
+
             if(code){
                 console.error(`TOR exit with code: ${code}`)
             }
-            log({exit: code})
+
+            this.log({exit: code})
         });
-        this.instance.stderr.on("data", (chunk) => log({error: String(chunk)}));
-        this.instance.stdout.on("data", (chunk) => log({data: String(chunk)}));
-        if (this.instance?.pid){
-            try {
-                await fs.writeFile(path.join(this.settings.path, "tor.pid"), this.instance.pid.toString(), { encoding: "utf-8"});
-            }catch (e) {
-                console.error(e)
-            }
-        }
-        console.log("TOR running with pid: ", this.instance?.pid)
-        this.settings.enable = true;
+
+        this.instance.stderr.on("data", (chunk) => this.log({error: String(chunk)}));
+        this.instance.stdout.on("data", (chunk) => this.log({data: String(chunk)}));
+
+        this.savepid(this.instance.pid)
+
+        console.log("TOR running with pid: ", this.instance.pid)
+
         return true;
     }
 
-    stop = async ()=>{
-        const existsBin = await this.helpers.checkPath(path.join(this.settings.path,this.helpers.bin_name("tor")))
-        if(!existsBin.exists){
-            return true;
+    savepid = async (pid) => {
+        try {
+            await fs.writeFile(path.join(this.getsettingspath(), "tor.pid"), pid.toString(), { encoding: "utf-8"});
+        }catch (e) {
+            console.error(e)
+        }
+    }
+
+    getpidandkill = async () => {
+
+        try{
+
+            var pid = await fs.readFile(path.join(this.getsettingspath(), "tor.pid"), {encoding: "utf-8"})
+
+            if (pid){
+                process.kill(+pid.toString(), 9)
+            }
+
+
         }
 
-        let pid = this.instance?.pid
-        try {
-            if(!pid || this.state.status === "stopped") {
-                pid = await fs.readFile(path.join(this.settings.path, "tor.pid"), {encoding: "utf-8"})
-            }
-        }catch (e) {}
-        if(pid) {
-            try {
+        catch(e){
+
+        }
+    }
+
+    stop = async ()=>{
+
+        if (this.instance){
+            try{
                 process.kill(+pid.toString(), 9)
-            }catch (e) {
-                try {
-                    this.instance?.kill(9)
-                }catch (e) {}
-            }finally {
-                try{
-                    await fs.unlink(path.join(this.settings.path, "tor.pid"))
-                }catch (e) {}
+            }
+            catch(e){
+
             }
         }
-        console.log("TOR stop")
-        this.settings.enable = false;
-        return true;
+
+        this.state.status = "stopped"
+
+        this.instance = null
+
+        return true
+    }
+
+    restart = async() => {
+        try{
+            await this.stop()
+            await this.start()
+        }catch(e){
+            console.error(e)
+        }
+
     }
 
     info = (compact)=>{
@@ -307,26 +460,23 @@ class TorControl {
         delete stateNormalized.instance;
 
         return {
-            enabled : this.settings.enable,
-            instance : !!this.instance,
-            state : stateNormalized,
-            binPath : path.join(this.settings.path, this.helpers.bin_name("tor")),
-            dataPath : this.settings.path,
-        }
-    }
-
-    checkRunning = async ()=> {
-        try {
-            const pid = await fs.readFile(path.join(this.settings.path, "tor.pid"), {encoding: "utf-8"})
-            return process.kill(+pid, 0);
-        } catch (error) {
-            return false;
+            enabled : this.settings.enabled2,
+            useSnowFlake : this.settings.useSnowFlake,
+            instance : this.instance ? this.instance.pid : null,
+            state : {
+                status : this.state.status
+            },
+            binPath : path.join(this.getpath()),
+            dataPath : this.getsettingspath(),
+            installed : !this.needinstall()
         }
     }
 
     destroy = async ()=>{
-        await this.stop();
-        return this.application?.destroy()
+
+        this.stop();
+
+        return this.application.destroy()
     }
 }
 
