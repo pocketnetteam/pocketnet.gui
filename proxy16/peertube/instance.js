@@ -143,7 +143,7 @@ var instance = function (host, ip, Roy) {
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000;
 
-		Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
+		//Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
 
 		if (self.offline) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
@@ -177,7 +177,7 @@ var instance = function (host, ip, Roy) {
 				method: method,
 			};
 
-			Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
+			//Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
 
 			if (meta.code == 500) {
 				statistic.penalty.set(0.9, 30000, 500);

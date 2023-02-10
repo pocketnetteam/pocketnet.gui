@@ -46,9 +46,9 @@ module.exports = function () {
         if(torcontrol.settings.enabled2 == 'neveruse') return false
 
 
-        console.log('torcontrol?.isStopped()', torcontrol.state.status, torcontrol.isStarted())
+        //console.log('torcontrol?.isStopped()', torcontrol.state.status, torcontrol.isStarted())
 
-        if (!torcontrol || torcontrol?.isStopped()) {
+        if (!torcontrol /*|| torcontrol?.isStopped()*/) {
             return Promise.resolve(false);
         }
 
@@ -87,8 +87,6 @@ module.exports = function () {
         if (isLocalhost) {
             return true;
         }
-
-        console.log('torcontrol.settings.enabled2', torcontrol.settings.enabled2)
 
         if(torcontrol.settings.enabled2 == 'always') return false
 
@@ -200,6 +198,7 @@ module.exports = function () {
     }
 
     const axiosRequest = async (arg1, arg2, child)=> {
+        console.log('arg1, arg2', arg1, arg2)
         let preparedOpts = {};
 
         if (!arg1) {
@@ -223,7 +222,7 @@ module.exports = function () {
             await initHttpsAgent(preparedOpts, 'httpsAgent');
         }
 
-        self.logger.w('transports', 'info', `Sending request ${preparedOpts.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        self.logger.w('transports', 'info', `Sending request(axios) ${preparedOpts.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         return _axios(preparedOpts)
             .then(res => res)
             .catch(async (err) => {
@@ -266,9 +265,12 @@ module.exports = function () {
         }
 
         //console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-        self.logger.w('transports', 'info', `Sending request ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        self.logger.w('transports', 'info', `Sending request(fetch) ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         return fetch(url, opts)
             .then((response) => {
+
+                console.log("${url} success", url)
+
                 if (opts.agent) {
                     response.headers.append('#bastyon-tor-used', true);
                 }
@@ -311,6 +313,8 @@ module.exports = function () {
     self.request = async (options, callBack) => {
         let req = _request;
 
+        console.log('options.url',options.url)
+
         const isDirectRequest = await isDirectAccess(options.url);
         const isTorStateStarted = await isTorStarted(!isDirectRequest);
 
@@ -318,7 +322,7 @@ module.exports = function () {
             await initHttpsAgent(options, 'agent');
         }
 
-        self.logger.w('transports', 'info', `Sending request ${options.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
+        self.logger.w('transports', 'info', `Sending request(request) ${options.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
         try {
             return req(options, (...args) => {
                 callBack?.(...args)

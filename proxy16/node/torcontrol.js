@@ -98,12 +98,14 @@ class TorControl {
 
         var needRestart = false
 
-        if(settings.useSnowflake != this.settings.useSnowflake) needRestart = true
+        console.log("settings.useSnowFlake", settings.useSnowFlake, this.settings.useSnowFlake)
+
+        if(settings.useSnowFlake != this.settings.useSnowFlake) needRestart = true
         if(settings.enabled2 != this.settings.enabled2 && settings.enabled2 != 'auto') needRestart = true
 
         this.settings = {...settings};
 
-        console.log('needRestart', needRestart,  this.settings )
+        console.log('needRestart', needRestart,  this.settings , settings)
 
         if (needRestart){
             await this.autorun()
@@ -170,8 +172,10 @@ class TorControl {
     }
 
     makeConfig = async() => {
-        const useSnowflake = this.settings.useSnowflake || false;
+        const useSnowFlake = this.settings.useSnowFlake || false;
         const isOverwrite = true; //config.overwrite || false;
+
+        console.log('useSnowFlake', useSnowFlake)
 
         const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
 
@@ -216,7 +220,7 @@ class TorControl {
             "KeepalivePeriod 10",
         ];
 
-        if (useSnowflake) {
+        if (useSnowFlake) {
             torConfig.push(
                 "# Bridges configurations\n",
 
@@ -232,7 +236,11 @@ class TorControl {
         try{
             await fs.writeFile(path.join(this.getsettingspath(), "torrc"), torConfig, {flag: "a+"})
 
+            console.log("CONFIG MAKED")
+
         }catch(e) {
+
+            console.log(e)
             return false
 
         }
@@ -453,7 +461,7 @@ class TorControl {
 
         return {
             enabled : this.settings.enabled2,
-            useSnowflake : this.settings.useSnowflake,
+            useSnowFlake : this.settings.useSnowFlake,
             instance : this.instance ? this.instance.pid : null,
             state : {
                 status : this.state.status

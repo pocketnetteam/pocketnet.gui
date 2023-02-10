@@ -484,7 +484,7 @@ function getKit(ipc) {
 						if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
 						if (settings.ssl) notification.ssl = true
 						if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
-						if (settings.useSnowFlake) notification.useSnowFlake = settings.useSnowFlake
+						if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
 
 						console.log('settings', settings)
 						return kit.proxy().then(proxy => {
@@ -499,7 +499,7 @@ function getKit(ipc) {
 						}).then(() => {
 							var promises = []
 
-							if(settings.torenabled2 || settings.useSnowFlake){
+							if(settings.torenabled2 || typeof settings.useSnowFlake != 'undefined'){
 								promises.push(tctx.changeSettings({
 
 									enabled2 : settings.torenabled2,

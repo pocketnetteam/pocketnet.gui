@@ -127,7 +127,7 @@ class TorControl {
     }
 
     makeConfig = async (config = {})=>{
-        const useSnowflake = config.useSnowflake || false;
+        const useSnowFlake = config.useSnowFlake || false;
         const isOverwrite = true; //config.overwrite || false;
 
         const torrcConfig = await this.helpers.checkPath(path.join(this.settings.path, 'torrc'));
@@ -173,7 +173,7 @@ class TorControl {
             "KeepalivePeriod 10",
         ];
 
-        if (useSnowflake) {
+        if (useSnowFlake) {
             torConfig.push(
                 "# Bridges configurations\n",
 
