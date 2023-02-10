@@ -488,9 +488,15 @@ class Transports {
         const hasDirectAccess = await this.hasDirectAccess(url);
         const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
         const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-        const isTorStarted = await this.waitTorReady();
+
+        let isTorReady = this.isTorReady();
+
+        if (isDirectAccessRestricted) {
+            isTorReady = await this.waitTorReady();
+        }
+
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const useTor = (!useDirectAccess && isTorStarted && isTorEnabledInSettings);
+        const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         if (useTor) {
             return true;
