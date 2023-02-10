@@ -71,7 +71,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 	var torapplications = new TorControl(settings.tor, self, ipc)
 
-	var transports = new Transports(global.USE_PROXY_NODE, logger);
+	var transports = new Transports();
 
 	var dump = {}
 

@@ -1,72 +1,302 @@
 'use strict';
 
-const _request = require("request");
-const nodeFetch = require("node-fetch");
+const request = require('request');
+const nodeFetch = require('node-fetch');
 global.fetch = (...args) => nodeFetch(...args);
-const _axios = require("redaxios");
-const { SocksProxyAgent } = require("socks-proxy-agent");
+const axios = require('redaxios');
+const { SocksProxyAgent } = require('socks-proxy-agent');
 
-const checkIfLocalhost = require("is-localhost-ip");
+const checkIfLocalhost = require('is-localhost-ip');
 
-const net = require("net");
-const fs = require("fs");
-const path = require("path");
+const net = require('net');
+const fs = require('fs');
+const path = require('path');
 
-module.exports = function (isTorEnabled = false) {
-    const self = {};
-    self.accessRecords = {};
-    self.lastUpdate = Date.now();
+class WrappedAxios {
+    constructor(transportsInstance) {
+        this.transports = transportsInstance;
+    }
 
-    let torHttpsAgent = null;
-    const initHttpsAgent = async (opts, name) => {
-        if (!torHttpsAgent) {
-            const isTorStateStarted = await isTorStarted(false);
+    static instantiate(transportsInstance) {
+        const wrappedAxios = new WrappedAxios(transportsInstance);
 
-            if (!isTorStateStarted) {
-                return;
+        const axiosMethods = (...args) => wrappedAxios.axios(...args);
+        axiosMethods.get = (...args) => wrappedAxios.axios(...args);
+        axiosMethods.post = (...args) => wrappedAxios.axios(...args);
+        axiosMethods.put = (...args) => wrappedAxios.axios(...args);
+        axiosMethods.delete = (...args) => wrappedAxios.axios(...args);
+        axiosMethods.patch = (...args) => wrappedAxios.axios(...args);
+
+        return axiosMethods;
+    }
+
+    static prepareArguments(arg1, arg2) {
+        if (!arg1) {
+            return Promise.reject('AXIOS_INVALID_ARG_TYPE');
+        }
+
+        if (typeof arg1 === 'string') {
+            preparedOpts.url = arg1;
+
+            if (typeof arg2 === 'object') {
+                return { ...preparedOpts, ...arg2 };
+            }
+        } else if (typeof arg1 === 'object') {
+            return arg1;
+        }
+    }
+
+    async axios(...args) {
+        const preparedArgs = WrappedAxios.prepareArguments(...args);
+
+        const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+        const isTorReady = this.transports.isTorReady();
+
+        console.log('D0, Axios wait');
+
+        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+            this.attachAgent(preparedArgs);
+        }
+
+        console.log('D1, Axios args', preparedArgs);
+
+        return axios(preparedArgs)
+            .then(WrappedAxios.handleSuccess)
+            .catch(async (error) => {
+                const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
+                const isAgentError = false; // TODO
+
+                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                    return WrappedAxios.handleError(error);
+                }
+
+                const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+                const isTorStarted = await this.transports.waitTorReady();
+
+                if (!useDirectAccess && isTorStarted) {
+                    this.attachAgent(preparedArgs);
+                }
+
+                return axios(preparedArgs)
+                    .then((response) => WrappedAxios.handleSuccess(response))
+                    .catch((error) => WrappedAxios.handleError(error));
+            });
+    }
+
+    attachAgent(preparedArgs) {
+        const urlInfo = new URL(preparedArgs.url);
+        const isHttps = (urlInfo.protocol === 'https:');
+
+        if (isHttps) {
+            preparedArgs.httpsAgent = this.transports.getTorAgent();
+        } else {
+            preparedArgs.httpAgent = this.transports.getTorAgent();
+        }
+    }
+
+    static isAgentAttached = (preparedArgs) => (!!preparedArgs.httpsAgent);
+
+    static handleSuccess(response) {
+        return Promise.resolve(response);
+    }
+
+    static handleError(error) {
+        return Promise.reject(error);
+    }
+}
+
+class WrappedFetch {
+    constructor(transportsInstance) {
+        this.transports = transportsInstance;
+    }
+
+    static instantiate(transportsInstance) {
+        const wrappedFetch = new WrappedFetch(transportsInstance);
+
+        return (...args) => wrappedFetch.fetch(...args);
+    }
+
+    async fetch(url, options) {
+        const preparedArgs = {...options};
+
+        const useDirectAccess = await this.transports.hasDirectAccess(url); // TODO: Add manual mode here
+        const isTorReady = this.transports.isTorReady();
+
+        console.log('D0, Fetch wait');
+
+        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+            this.attachAgent(preparedArgs);
+        }
+
+        console.log('D1, Fetch args', url, preparedArgs);
+
+        return fetch(url, preparedArgs)
+            .then((response) => {
+                return WrappedFetch.handleSuccess(response, {
+                    isAgentAttached: WrappedFetch.isAgentAttached(preparedArgs),
+                });
+            })
+            .catch(async (error) => {
+                const isAgentAttached = WrappedFetch.isAgentAttached(preparedArgs);
+                const isAgentError = false; // TODO
+
+                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                    return WrappedFetch.handleError(error);
+                }
+
+                const useDirectAccess = await this.transports.hasDirectAccess(url); // TODO: Add manual mode here
+                const isTorStarted = await this.transports.waitTorReady();
+
+                if (!useDirectAccess && isTorStarted) {
+                    this.attachAgent(preparedArgs);
+                }
+
+                return fetch(url, preparedArgs)
+                    .then((response) => {
+                        return WrappedFetch.handleSuccess(response, {
+                            isAgentAttached: WrappedFetch.isAgentAttached(preparedArgs),
+                        });
+                    })
+                    .catch((error) => WrappedFetch.handleError(error));
+            });
+    }
+
+    attachAgent(preparedArgs) {
+        preparedArgs.agent = this.transports.getTorAgent();
+    }
+
+    static isAgentAttached = (preparedArgs) => (!!preparedArgs.agent);
+
+    static handleSuccess(response, args = {}) {
+        if (args.isAgentAttached) {
+            response.headers.append('#bastyon-proxy-transport', 'tor');
+        } else {
+            response.headers.append('#bastyon-proxy-transport', 'direct');
+        }
+
+        return Promise.resolve(response);
+    }
+
+    static handleError(error) {
+        return Promise.reject(error);
+    }
+}
+
+class WrappedRequest {
+    constructor(transportsInstance) {
+        this.transports = transportsInstance;
+    }
+
+    static instantiate(transportsInstance) {
+        const wrappedRequest = new WrappedRequest(transportsInstance);
+
+        return (...args) => wrappedRequest.request(...args);
+    }
+
+    async request(options, callback) {
+        const preparedArgs = {...options};
+
+        const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+        const isTorReady = this.transports.isTorReady();
+
+        console.log('D0, Request wait');
+
+        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+            this.attachAgent(preparedArgs);
+        }
+
+        console.log('D1, Request args', preparedArgs);
+
+        try {
+            request(preparedArgs, async (error, response, body) => {
+                let preparedResult = {};
+
+                if (error) {
+                    const isAgentAttached = WrappedRequest.isAgentAttached(preparedArgs);
+                    const isAgentError = false; // TODO
+
+                    if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                        preparedResult.error = WrappedRequest.handleError(error);
+                        callback?.(preparedResult.error, response, body);
+                    }
+
+                    const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+                    const isTorStarted = await this.transports.waitTorReady();
+
+                    if (!useDirectAccess && isTorStarted) {
+                        this.attachAgent(preparedArgs);
+                    }
+
+                    request(preparedArgs, () => {
+                        if (error) {
+                            preparedResult.error = WrappedRequest.handleError(error);
+                        } else {
+                            const success = WrappedRequest.handleSuccess(response, body);
+                            preparedResult.response = success.response;
+                            preparedResult.body = success.body;
+                        }
+
+                        callback?.(preparedResult.error, preparedResult.response, preparedResult.body);
+                    });
+                } else {
+                    const success = WrappedRequest.handleSuccess(response, body);
+                    preparedResult.response = success.response;
+                    preparedResult.body = success.body;
+
+                    callback?.(error, preparedResult.response, preparedResult.body);
+                }
+            });
+        } catch (err) {
+            const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+            const isTorReady = this.transports.isTorReady();
+
+            if (!useDirectAccess && isTorReady) {
+                this.attachAgent(preparedArgs);
             }
 
-            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9151", {
-                keepAlive: true,
-                timeout: 60000,
+            request(preparedArgs, () => {
+                if (error) {
+                    preparedResult.error = WrappedRequest.handleError(error);
+                } else {
+                    const success = WrappedRequest.handleSuccess(response, body);
+                    preparedResult.response = success.response;
+                    preparedResult.body = success.body;
+                }
+
+                callback?.(preparedResult.error, preparedResult.response, preparedResult.body);
             });
         }
+    }
 
-        opts[name] = torHttpsAgent;
-    };
+    attachAgent(preparedArgs) {
+        preparedArgs.agent = this.transports.getTorAgent();
+    }
 
-    const isTorStarted = async (wait = true) => {
-        if (!isTorEnabled) {
-            return Promise.resolve(false);
-        }
+    static isAgentAttached = (preparedArgs) => (!!preparedArgs.agent);
 
-        const torcontrol = self.torapplications;
+    static handleSuccess(response, body) {
+        return { response, body };
+    }
 
-        if (!torcontrol || torcontrol?.isStopped()) {
-            return Promise.resolve(false);
-        }
+    static handleError(error) {
+        return error;
+    }
+}
 
-        if (torcontrol.isStarted()) {
-            return Promise.resolve(true);
-        }
+class Transports {
+    accessRecords = {};
+    torAgent = null;
+    torStartPromise = null;
 
-        if (!wait) {
-            return Promise.resolve(false);
-        }
+    axios = WrappedAxios.instantiate(this);
+    fetch = WrappedFetch.instantiate(this);
+    request = WrappedRequest.instantiate(this);
 
-        return new Promise((resolve, reject) => {
-            const torTimeout = setTimeout(() => {
-                resolve(false);
-            }, 60000);
+    static waitTimeout = (seconds, orReturn) => new Promise((resolve) => {
+        setTimeout(() => resolve(orReturn), seconds * 1000);
+    });
 
-            self.torapplications.onStarted(() => {
-                resolve(true);
-                clearInterval(torTimeout);
-            });
-        });
-    };
-
-    const isDirectAccess = async (url) => {
+    async hasDirectAccess(url) {
         let { hostname, port, protocol } = new URL(url);
 
         if (!port) {
@@ -79,33 +309,33 @@ module.exports = function (isTorEnabled = false) {
             return true;
         }
 
-        const isHostListed = (hostname in self.accessRecords);
+        const isHostListed = (hostname in this.accessRecords);
 
         if (!isHostListed) {
-            self.accessRecords[hostname] = {};
-            self.accessRecords[hostname].inProgress = await pingHost(hostname, port)
+            this.accessRecords[hostname] = {};
+            this.accessRecords[hostname].inProgress = await this.pingHost(hostname, port)
                 .then((result) => {
-                    self.accessRecords[hostname] = { accessOk: result };
+                    this.accessRecords[hostname] = { accessOk: result };
 
                     if (result === true) {
                         // Retry in 30 minutes
-                        self.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 60 * 1000;
                     } else {
                         // Retry in 10 minutes
-                        self.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 60 * 1000;
                     }
 
                     return result;
                 });
 
-            const torcontrol = self.torapplications;
+            const torcontrol = this.torapplications;
 
             const statsFilePath = path.join(torcontrol.settings.path, 'hosts-stats.json');
-            const areStatsEmpty = (Object.keys(self.accessRecords).length === 0);
+            const areStatsEmpty = (Object.keys(this.accessRecords).length === 0);
 
             if (areStatsEmpty && fs.existsSync(statsFilePath)) {
                 const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
-                self.accessRecords = JSON.parse(fileData);
+                this.accessRecords = JSON.parse(fileData);
             }
 
             try {
@@ -113,33 +343,33 @@ module.exports = function (isTorEnabled = false) {
                     fs.mkdirSync(torcontrol.settings.path, { recursive: true });
                 }
 
-                fs.writeFileSync(statsFilePath, JSON.stringify(self.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
+                fs.writeFileSync(statsFilePath, JSON.stringify(this.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
             } catch (err) {
                 console.log('STATS_BUSY??', err);
             }
         }
 
-        const pingPromise = self.accessRecords[hostname].inProgress;
+        const pingPromise = this.accessRecords[hostname].inProgress;
         const isPingIsPromised = (pingPromise instanceof Promise);
 
         if (isPingIsPromised) {
             await pingPromise;
         }
 
-        const isAccessOk = (self.accessRecords[hostname].accessOk === true);
-        const isPingInProgress = (self.accessRecords[hostname].inProgress === true);
-        const isNextTryTime = (self.accessRecords[hostname].nextTry <= Date.now());
+        const isAccessOk = (this.accessRecords[hostname].accessOk === true);
+        const isPingInProgress = (this.accessRecords[hostname].inProgress === true);
+        const isNextTryTime = (this.accessRecords[hostname].nextTry <= Date.now());
 
         if (isNextTryTime && !isPingInProgress) {
-            const pingResult = await pingHost(hostname, port);
+            const pingResult = await this.pingHost(hostname, port);
 
             if (pingResult) {
-                self.accessRecords[hostname] = {
+                this.accessRecords[hostname] = {
                     accessOk: true,
                     nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
                 };
             } else {
-                self.accessRecords[hostname] = {
+                this.accessRecords[hostname] = {
                     accessOk: false,
                     nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
                 };
@@ -149,7 +379,7 @@ module.exports = function (isTorEnabled = false) {
         return isAccessOk;
     }
 
-    const pingHost = async function(host, port) {
+    async pingHost(host, port) {
         function synackPing() {
             return new Promise((resolve, reject) => {
                 let socket;
@@ -181,165 +411,49 @@ module.exports = function (isTorEnabled = false) {
         }
 
         return synackPing().catch(() => {
-            self.logger.w('transports', 'error', `Host ${host}:${port} was not responding 100 ms`);
             return false;
         });
     }
 
-    const axiosRequest = async (arg1, arg2, child)=> {
-        let preparedOpts = {};
+    async waitTorReady() {
+        const timeout = Transports.waitTimeout(60, false);
 
-        if (!arg1) {
-            return Promise.reject('AXIOS_INVALID_ARG_TYPE');
-        }
+        let torStart;
 
-        if (typeof arg1 === 'string') {
-            preparedOpts.url = arg1;
-
-            if (typeof arg2 === 'object') {
-                preparedOpts = { ...preparedOpts, ...arg2 };
-            }
-        } else if (typeof arg1 === 'object') {
-            preparedOpts = arg1;
-        }
-
-        const isDirectRequest = await isDirectAccess(preparedOpts.url);
-        const isTorStateStarted = await isTorStarted(false);
-
-        if (!isDirectRequest && isTorStateStarted) {
-            await initHttpsAgent(preparedOpts, 'httpsAgent');
-        }
-
-        self.logger.w('transports', 'error', `Sending request ${preparedOpts.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
-        return _axios(preparedOpts)
-            .then(res => res)
-            .catch(async (err) => {
-                self.logger.w('transports', 'error', `Axios request failed for ${preparedOpts.url}: ${err}`);
-
-                if (preparedOpts.httpsAgent) {
-                    return Promise.reject(err);
-                }
-
-                const isDirectRequest = await isDirectAccess(preparedOpts.url);
-                const isTorStateStarted = await isTorStarted();
-
-                if (!isDirectRequest && isTorStateStarted) {
-                    await initHttpsAgent(preparedOpts, 'httpsAgent');
-
-                    return _axios(preparedOpts)
-                        .catch(async (err) => {
-                            self.logger.w('transports', 'error', `Axios nested request failed for ${preparedOpts.url}: ${err}`);
-                            return Promise.reject(err);
-                        });
-                }
-
-                return Promise.reject(err);
+        if (this.torStartPromise) {
+            torStart = this.torStartPromise;
+        } else {
+            torStart = new Promise((resolve) => {
+                this.torapplications.onStarted(() => resolve(true));
             });
+
+            this.torStartPromise = torStart;
+        }
+
+        return Promise.race([ torStart, timeout ]);
     }
 
-    self.axios = (...args) => axiosRequest(...args);
-    self.axios.get = (...args) => axiosRequest(...args);
-    self.axios.post = (...args) => axiosRequest(...args);
-    self.axios.put = (...args) => axiosRequest(...args);
-    self.axios.delete = (...args) => axiosRequest(...args);
-    self.axios.patch = (...args) => axiosRequest(...args);
-
-    self.fetch = async (url, opts = {}) => {
-        const isDirectRequest = await isDirectAccess(url);
-        const isTorStateStarted = await isTorStarted(false);
-
-        if (!isDirectRequest && isTorStateStarted) {
-            await initHttpsAgent(opts, 'agent');
-        }
-
-        console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-        self.logger.w('transports', 'error', `Sending request ${url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
-        return fetch(url, opts)
-            .then((response) => {
-                if (opts.agent) {
-                    response.headers.append('#bastyon-tor-used', true);
-                }
-
-                return response;
-            })
-            .catch(async (err) => {
-                self.logger.w('transports', 'error', `Fetch request failed for ${url}: ${err}`);
-
-                if (opts.agent) {
-                    return Promise.reject(err);
-                }
-
-                const isDirectRequest = await isDirectAccess(url);
-                const isTorStateStarted = await isTorStarted();
-
-                self.logger.w('transports', 'error', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
-
-                if (!isDirectRequest && isTorStateStarted) {
-                    await initHttpsAgent(opts, 'agent');
-
-                    return fetch(url, opts)
-                        .then((response) => {
-                            if (opts.agent) {
-                                response.headers.append('#bastyon-tor-used', true);
-                            }
-
-                            return response;
-                        })
-                        .catch(() => {
-                            self.logger.w('transports', 'error', `Fetch nested request failed for ${url}: ${err}`);
-                            return Promise.reject(err);
-                        });
-                }
-
-                return Promise.reject(err);
-            });
+    isTorReady() {
+        const torCtrl = this.torapplications;
+        return torCtrl && torCtrl.isStarted();
     }
 
-    self.request = async (options, callBack) => {
-        let req = _request;
-
-        const isDirectRequest = await isDirectAccess(options.url);
-        const isTorStateStarted = await isTorStarted(false);
-
-        if (!isDirectRequest && isTorStateStarted) {
-            await initHttpsAgent(options, 'agent');
-        }
-
-        self.logger.w('transports', 'error', `Sending request ${options.url} via ${(!isDirectRequest && isTorStateStarted) ? 'TOR TRANSPORT' : 'NATIVE TRANSPORT' }`);
-        try {
-            return req(options, (...args) => {
-                callBack?.(...args)
+    getTorAgent() {
+        if (!this.torAgent) {
+            this.torAgent = new SocksProxyAgent('socks5h://127.0.0.1:9151', {
+                keepAlive: true,
+                timeout: 60000,
             });
-        } catch (e) {
-            self.logger.w('transports', 'error', `Regular request failed for ${options.url}: ${err}`);
-
-            if (options.agent) {
-                return Promise.reject(err);
-            }
-
-            const isDirectRequest = await isDirectAccess(options.url);
-            const isTorStateStarted = await isTorStarted();
-
-            self.logger.w('transports', 'error', `Pre request TOR checkpoint. Is TOR state = STARTED? ${isTorStateStarted}`);
-
-            if (!isDirectRequest && isTorStateStarted) {
-                await initHttpsAgent(options, 'agent');
-
-                return req(options, (...args) => {
-                    callBack?.(...args)
-                });
-            }
-
-            self.logger.w('transports', 'error', `Regular nested request failed for ${options.url}: ${err}`);
-            return Promise.reject(err);
         }
+
+        return this.torAgent;
     }
 
-    self.isTorNeeded = async (url) => {
-        const directAccess = await isDirectAccess(url);
+    async isTorNeeded(url) {
+        const directAccess = await this.hasDirectAccess(url);
 
         return !directAccess;
-    };
-
-    return self;
+    }
 }
+
+module.exports = Transports;

@@ -62,12 +62,14 @@ function onFetch(event) {
     if (isTorRequest) {
       return await nodeFetch(request)
         .then(async (response) => {
-          const hasTorHeader = response.headers.get('#bastyon-tor-used');
+          const proxyTransportHeader = response.headers.get('#bastyon-proxy-transport');
+
+          const hasUsedTor = (proxyTransportHeader === 'tor');
 
           const responseClone = response.clone();
           const responseBuffer = await responseClone.arrayBuffer();
 
-          if (hasTorHeader) {
+          if (hasUsedTor) {
             networkTotalStats.torSuccessCount++;
             networkTotalStats.totalTorBytes += responseBuffer.byteLength;
           } else {
@@ -78,7 +80,7 @@ function onFetch(event) {
           swBroadcaster.send('network-stats', {
             status: 'success',
             url: request.url,
-            torUsed: hasTorHeader,
+            torUsed: hasUsedTor,
             bytesLength: responseBuffer.byteLength,
             totalStats: networkTotalStats,
           });
