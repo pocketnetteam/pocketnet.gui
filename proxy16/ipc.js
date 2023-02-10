@@ -4,8 +4,6 @@ const electron = require('electron')
 const kit = require('./kit.js')(electron.ipcMain);
 const { dialog } = require('electron');
 
-const transports = require('./transports')(true);
-
 global.USE_PROXY_NODE = true
 
 var WssDummy = function(wc){
