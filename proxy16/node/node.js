@@ -317,6 +317,8 @@ var Node = function(options, manager){
 
             pending++
 
+            console.log('self.host', self.host)
+
             return self.rpc[method](parsed).catch(e => {
 
 
@@ -331,6 +333,8 @@ var Node = function(options, manager){
                 return Promise.resolve(null)
     
             }).then(data => {
+
+                console.log('self.host success', self.host, method)
 
                 pending--
     

@@ -116,7 +116,7 @@ var menu = (function(){
 			receiveNetworkStats : function(stats) {
 				console.log('Tor stats', stats);
 
-				if (stats.torUsed) {
+				if (stats.torUsed && controlTorElem) {
 					controlTorElem.addClass(stats.status);
 
 					setTimeout(() => {
@@ -467,9 +467,13 @@ var menu = (function(){
 
 					controlTorElem = _el.find('.control-tor-state');
 
-					networkStatsListenerId = swBroadcaster.on('network-stats', actions.receiveNetworkStats);
+					self.sdk.broadcaster.clbks['menu'] = function(data){
+						actions.receiveNetworkStats(data)
+					}
 
-					electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
+					//networkStatsListenerId = swBroadcaster.on('network-stats', actions.receiveNetworkStats);
+
+					/*electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
 						if (state === 'failure' || state === 'running') {
 							controlTorElem.addClass('loading');
 							controlTorElem.removeClass(['on', 'off']);
@@ -479,7 +483,7 @@ var menu = (function(){
 						}
 
 						console.log('TOR APPLICATION STATE CHANGED', state);
-					})
+					})*/
 
 					let proxyData;
 
@@ -516,7 +520,14 @@ var menu = (function(){
 					}, 2000);
 
 					controlTorElem.on('click', () => {
-						const isTorEnabled = (
+
+						self.nav.api.go({
+							open : true,
+							href : 'transportsmanagement',
+							inWnd : true,
+						})
+							
+						/*const isTorEnabled = (
 							proxyData?.info.tor.state.status === 'started' ||
 							proxyData?.info.tor.state.status === 'loading'
 						);
@@ -526,7 +537,7 @@ var menu = (function(){
 						currentProxy.fetchauth('manage', {
 							action: isTorEnabled ? 'tor.stop' : 'tor.start',
 							data: {}
-						});
+						});*/
 					});
 				},
 				fast : true,
@@ -1271,6 +1282,8 @@ var menu = (function(){
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
+
+				delete self.sdk.broadcaster.clbks['menu']
 
 				if (changeLogoInterval){
 					clearInterval(changeLogoInterval)

@@ -4,19 +4,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
-    Broadcaster = require('./js/broadcaster.js');
-
-    swBroadcaster = new Broadcaster('ServiceWorker');
-
-    swBroadcaster.handle('AltTransportActive', (url) => {
-        const wait = (seconds, returnValue) => new Promise(r => (
-            setTimeout(() => r(returnValue), seconds * 1000)
-        ));
-
-        const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
-
-        return Promise.race([ transportCheck, wait(1, false) ]);
-    });
+    
 
     fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
 
@@ -5531,6 +5519,20 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        broadcaster : {
+            clbks : {},
+            init : function(clbk){
+                if(typeof swBroadcaster != 'undefined')
+                    swBroadcaster.on('network-stats', (data) => {
+                        _.each(self.sdk.broadcaster.clbks, (c) => {
+                            c(data)
+                        })
+                    })
+
+                if(clbk) clbk()
+            }
+        },
 
         faqLangs : {
             get : function(){
@@ -29901,7 +29903,7 @@ Platform = function (app, listofnodes) {
             if (state) {
 
                 lazyActions([
-
+                    self.sdk.broadcaster.init,
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
@@ -29910,6 +29912,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    
                     /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,
