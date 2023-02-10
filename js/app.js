@@ -42,7 +42,23 @@ if (typeof _Electron != 'undefined' && _Electron){
           setTimeout(() => r(returnValue), seconds * 1000)
       ));
 
+      const proxy = self.app.api.get.current();
+
       const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+      if (proxy.direct) {
+          return new Promise((resolve) => {
+              proxy.get.info().then(({ info }) => {
+                  if (info?.tor.enabled === 'always') {
+                      resolve(true);
+                      return;
+                  }
+
+                  Promise.race([ transportCheck, wait(1, false) ])
+                      .then((value) => resolve(value));
+              });
+          });
+      }
 
       return Promise.race([ transportCheck, wait(1, false) ]);
   });
