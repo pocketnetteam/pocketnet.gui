@@ -10,6 +10,7 @@ const isElectron = (swArgs.get('platform') === 'electron');
 let nodeFetch = (...args) => fetch(...args);
 
 const networkTotalStats = {
+  totalTorBytes: 0,
   torSuccessCount: 0,
   directSuccessCount: 0,
   torFailCount: 0,
