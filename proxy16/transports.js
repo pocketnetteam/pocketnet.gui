@@ -60,7 +60,7 @@ class WrappedAxios {
 
         console.log('D0, Axios wait');
 
-        if (global.USE_PROXY_NODE && useTor) {
+        if (useTor) {
             this.attachAgent(preparedArgs);
         }
 
@@ -72,7 +72,7 @@ class WrappedAxios {
                 const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
                 const isAgentError = false; // TODO
 
-                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                if (isAgentAttached && isAgentError) {
                     return WrappedAxios.handleError(error);
                 }
 
@@ -140,7 +140,7 @@ class WrappedFetch {
 
         console.log('D0, Fetch wait');
 
-        if (global.USE_PROXY_NODE && useTor) {
+        if (useTor) {
             this.attachAgent(preparedArgs);
         }
 
@@ -156,7 +156,7 @@ class WrappedFetch {
                 const isAgentAttached = WrappedFetch.isAgentAttached(preparedArgs);
                 const isAgentError = false; // TODO
 
-                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                if (isAgentAttached && isAgentError) {
                     return WrappedFetch.handleError(error);
                 }
 
@@ -227,7 +227,7 @@ class WrappedRequest {
 
         console.log('D0, Request wait');
 
-        if (global.USE_PROXY_NODE && useTor) {
+        if (useTor) {
             this.attachAgent(preparedArgs);
         }
 
@@ -240,7 +240,7 @@ class WrappedRequest {
                 const isAgentAttached = WrappedRequest.isAgentAttached(preparedArgs);
                 const isAgentError = false; // TODO
 
-                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
+                if (isAgentAttached && isAgentError) {
                     preparedResult.error = WrappedRequest.handleError(error);
                     callback?.(preparedResult.error, response, body);
                 }
