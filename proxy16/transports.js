@@ -47,14 +47,20 @@ class WrappedAxios {
     }
 
     async axios(...args) {
+        const torCtrl = this.transports.torapplications;
+
         const preparedArgs = WrappedAxios.prepareArguments(...args);
 
-        const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+        const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
         const isTorReady = this.transports.isTorReady();
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+        const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         console.log('D0, Axios wait');
 
-        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+        if (global.USE_PROXY_NODE && useTor) {
             this.attachAgent(preparedArgs);
         }
 
@@ -70,10 +76,14 @@ class WrappedAxios {
                     return WrappedAxios.handleError(error);
                 }
 
-                const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
-                const isTorStarted = await this.transports.waitTorReady();
+                const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+                const isTorReady = await this.transports.waitTorReady();
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-                if (!useDirectAccess && isTorStarted) {
+                if (useTor) {
                     this.attachAgent(preparedArgs);
                 }
 
@@ -117,14 +127,20 @@ class WrappedFetch {
     }
 
     async fetch(url, options) {
+        const torCtrl = this.transports.torapplications;
+
         const preparedArgs = {...options};
 
-        const useDirectAccess = await this.transports.hasDirectAccess(url); // TODO: Add manual mode here
+        const hasDirectAccess = await this.transports.hasDirectAccess(url);
+        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
         const isTorReady = this.transports.isTorReady();
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+        const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         console.log('D0, Fetch wait');
 
-        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+        if (global.USE_PROXY_NODE && useTor) {
             this.attachAgent(preparedArgs);
         }
 
@@ -144,10 +160,14 @@ class WrappedFetch {
                     return WrappedFetch.handleError(error);
                 }
 
-                const useDirectAccess = await this.transports.hasDirectAccess(url); // TODO: Add manual mode here
-                const isTorStarted = await this.transports.waitTorReady();
+                const hasDirectAccess = await this.transports.hasDirectAccess(url);
+                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+                const isTorReady = await this.transports.waitTorReady();
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-                if (!useDirectAccess && isTorStarted) {
+                if (useTor) {
                     this.attachAgent(preparedArgs);
                 }
 
@@ -194,78 +214,67 @@ class WrappedRequest {
     }
 
     async request(options, callback) {
+        const torCtrl = this.transports.torapplications;
+
         const preparedArgs = {...options};
 
-        const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
+        const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
         const isTorReady = this.transports.isTorReady();
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+        const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         console.log('D0, Request wait');
 
-        if (global.USE_PROXY_NODE && !useDirectAccess && isTorReady) {
+        if (global.USE_PROXY_NODE && useTor) {
             this.attachAgent(preparedArgs);
         }
 
         console.log('D1, Request args', preparedArgs);
 
-        try {
-            request(preparedArgs, async (error, response, body) => {
-                let preparedResult = {};
+        request(preparedArgs, async (error, response, body) => {
+            let preparedResult = {};
 
-                if (error) {
-                    const isAgentAttached = WrappedRequest.isAgentAttached(preparedArgs);
-                    const isAgentError = false; // TODO
+            if (error) {
+                const isAgentAttached = WrappedRequest.isAgentAttached(preparedArgs);
+                const isAgentError = false; // TODO
 
-                    if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
-                        preparedResult.error = WrappedRequest.handleError(error);
-                        callback?.(preparedResult.error, response, body);
-                    }
-
-                    const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
-                    const isTorStarted = await this.transports.waitTorReady();
-
-                    if (!useDirectAccess && isTorStarted) {
-                        this.attachAgent(preparedArgs);
-                    }
-
-                    request(preparedArgs, () => {
-                        if (error) {
-                            preparedResult.error = WrappedRequest.handleError(error);
-                        } else {
-                            const success = WrappedRequest.handleSuccess(response, body);
-                            preparedResult.response = success.response;
-                            preparedResult.body = success.body;
-                        }
-
-                        callback?.(preparedResult.error, preparedResult.response, preparedResult.body);
-                    });
-                } else {
-                    const success = WrappedRequest.handleSuccess(response, body);
-                    preparedResult.response = success.response;
-                    preparedResult.body = success.body;
-
-                    callback?.(error, preparedResult.response, preparedResult.body);
-                }
-            });
-        } catch (err) {
-            const useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url); // TODO: Add manual mode here
-            const isTorReady = this.transports.isTorReady();
-
-            if (!useDirectAccess && isTorReady) {
-                this.attachAgent(preparedArgs);
-            }
-
-            request(preparedArgs, () => {
-                if (error) {
+                if (!global.USE_PROXY_NODE || (isAgentAttached && isAgentError)) {
                     preparedResult.error = WrappedRequest.handleError(error);
-                } else {
-                    const success = WrappedRequest.handleSuccess(response, body);
-                    preparedResult.response = success.response;
-                    preparedResult.body = success.body;
+                    callback?.(preparedResult.error, response, body);
                 }
 
-                callback?.(preparedResult.error, preparedResult.response, preparedResult.body);
-            });
-        }
+                const hasDirectAccess = await this.transports.hasDirectAccess(url);
+                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+                const isTorReady = await this.transports.waitTorReady();
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 === 'neveruse');
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+
+                if (useTor) {
+                    this.attachAgent(preparedArgs);
+                }
+
+                request(preparedArgs, () => {
+                    if (error) {
+                        preparedResult.error = WrappedRequest.handleError(error);
+                    } else {
+                        const success = WrappedRequest.handleSuccess(response, body);
+                        preparedResult.response = success.response;
+                        preparedResult.body = success.body;
+                    }
+
+                    callback?.(preparedResult.error, preparedResult.response, preparedResult.body);
+                });
+            } else {
+                const success = WrappedRequest.handleSuccess(response, body);
+                preparedResult.response = success.response;
+                preparedResult.body = success.body;
+
+                callback?.(error, preparedResult.response, preparedResult.body);
+            }
+        });
     }
 
     attachAgent(preparedArgs) {
