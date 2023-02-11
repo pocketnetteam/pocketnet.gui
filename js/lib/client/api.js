@@ -1328,8 +1328,6 @@ var Api = function(app){
         var pr = getproxyas()
         var promise = null
 
-
-
         if (pr){
             promise = pr.api.actualping().catch(e => {
                 return Promise.resolve(false)
@@ -1355,7 +1353,42 @@ var Api = function(app){
                 })
             }
         })
-    },
+    }
+
+    self.changeProxyRandom = function(){
+
+        return internal.proxy.api.ping(proxies).then(() => {
+            return self.get.working()
+        })
+
+       .then(wproxies => {
+
+            console.log('wproxies', wproxies)
+
+            if (wproxies.length){ 
+                self.set.currentwithnode(wproxies[rand(wproxies.length - 1, 0)].id, true)
+            }
+
+            return Promise.resolve(wproxies.length)
+        })
+    }
+
+    self.changeProxyRandomWithoutPing = function(){
+
+        self.set.currentwithnode(proxies[rand(proxies.length - 1, 0)].id, true)
+
+        var current = self.get.current()
+
+        console.log('current', current)
+
+        return current.api.ping().then(() => {
+
+            console.log("HERE")
+
+            return Promise.resolve(true)
+        })
+
+    }
 
     self.init = function(){
 

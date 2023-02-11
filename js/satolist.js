@@ -29572,7 +29572,6 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
                     self.app.api.set.current(proxy.id).then(r => {
-
                         resolve()
                     }).catch(resolve)
                 },

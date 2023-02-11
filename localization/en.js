@@ -2499,3 +2499,22 @@ _l.torusing_neveruse = "Never";
 _l.torusing_auto = "Auto";
 _l.torusing_always = "Always";
 
+_l.torusing_directProxy = "Built-in proxy";
+_l.torusing_notdirectProxy = "External proxy";
+
+_l.torusing_changedirectProxy = "Change to External proxy";
+_l.torusing_changenotdirectProxy = "Change to Built-in proxy";
+
+
+_l.torusing_disclaimer = "This function only works when using the built-in proxy.";
+_l.torusing_Networking = "Networking";
+_l.torusing_proxyCaption = "Choosing a proxy server";
+
+_l.torusing_stat_currentbytesLength = "Current, direct"
+_l.torusing_stat_torbytesLength = "Current, TOR"
+_l.torusing_stat_directBytes = "Total, current"
+_l.torusing_stat_totalTorBytes = "Total, TOR"
+_l.torusing_settings = "TOR settings"
+_l.torusing_stats = "Networking statistics"
+_l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
+

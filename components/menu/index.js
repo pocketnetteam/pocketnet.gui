@@ -1299,7 +1299,6 @@ var menu = (function(){
 				})
 
 				clearInterval(torIntervalId);
-				swBroadcaster.remove('network-stats', networkStatsListenerId);
 
 				torIntervalId = null;
 				controlTorElem = null;

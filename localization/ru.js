@@ -2281,3 +2281,22 @@ _l.createPost = "Создать и опубликовать пост";
 
 
 
+_l.torusing_directProxy = "Встроенный прокси";
+_l.torusing_notdirectProxy = "Внешний прокси";
+
+_l.torusing_changedirectProxy = "Сменить на внешний прокси";
+_l.torusing_changenotdirectProxy = "Сменить на встроенный прокси";
+
+
+_l.torusing_disclaimer = "Данная функция работает лишь при использовании встроенного прокси.";
+
+_l.torusing_Networking = "Сеть";
+_l.torusing_proxyCaption = "Выбор прокси сервера";
+
+_l.torusing_stat_currentbytesLength = "Сейчас, прямые вызовы"
+_l.torusing_stat_torbytesLength = "Сейчас, вызовы TOR"
+_l.torusing_stat_directBytes = "Всего, прямые вызовы"
+_l.torusing_stat_totalTorBytes = "Всего, вызовы TOR"
+_l.torusing_settings = "Настройки TOR"
+_l.torusing_stats = "Статистика запросов"
+_l.torusing_proxychangequestion = "Вы уверены, что хотите изменить прокси?"
