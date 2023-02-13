@@ -9333,6 +9333,30 @@ Platform = function (app, listofnodes) {
             },
         },
 
+        jury: {
+
+            // Fetch all the jurys
+            getalljury: function() {
+
+                return self.app.api.rpc('getalljury');
+
+            },
+
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function(address) {
+
+                return self.app.api.rpc('getjuryassigned', [address]);
+
+            },
+
+            getjurymoderators: function(juryId) {
+
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+
+            },
+
+        },
+
         lentaMethod: {
             all: {
                 hierarchical: 'hierarchical',
@@ -10578,6 +10602,13 @@ Platform = function (app, listofnodes) {
 
                     return me
                 }
+            },
+
+            isjury : function() {
+                var address = self.app.platform.sdk.address.pnet()
+                if (address && self.moderator[address.address])
+                    return true
+                return false
             },
 
             itisme : function(_address){
@@ -12020,6 +12051,7 @@ Platform = function (app, listofnodes) {
 
                 ld[address] = true
 
+                console.log("getcontents");
                 self.app.api.rpc('getcontents', [address]).then(d => {
 
                     var list = [];
@@ -12646,6 +12678,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
+                console.log("getrecomendedaccountsbyscoresfromaddress");
                 self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
                 .then(function(d){
 
@@ -12700,6 +12733,7 @@ Platform = function (app, listofnodes) {
 
                 var my = self.app.user.address.value;
 
+                console.log("getrecomendedcontentsbyscoresfromaddress");
                 self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
                 .then(function(d){
 
@@ -12718,6 +12752,7 @@ Platform = function (app, listofnodes) {
 
             getRecommendedPostsContents : function(parameters, clbk){
 
+                console.log("getrawtransactionwithmessagebyid");
                 self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
                 .then(function(d){
 
@@ -18557,6 +18592,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.user.isState(function (state) {
 
+                            console.log("getrawtransactionwithmessagebyid");
                             self.app.api.rpc('getrawtransactionwithmessagebyid', parameters).then(d => {
 
                                 if (d && !_.isArray(d)) d = [d];
@@ -18757,6 +18793,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.isState(function (state) {
 
+                        console.log("variable: " + method);
                         self.app.api.rpc(method, parameters).then(d => {
 
                             if (d && d.contents && d.contents.length > 0)
@@ -18792,6 +18829,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.isState(function (state) {
 
+                        console.log("variable 2: " + method);
                         self.app.api.rpc(method, parameters, {
                             rpc : rpc
                         }).then(d => {
@@ -20841,6 +20879,7 @@ Platform = function (app, listofnodes) {
                         else {
                             self.sdk.node.transactions.loading[id] = true;
 
+                            console.log("getrawtransaction");
                             self.app.api.rpc('getrawtransaction', [id, 1]).then(d => {
 
                                 self.sdk.node.transactions.loading[id] = false;
@@ -25470,6 +25509,8 @@ Platform = function (app, listofnodes) {
             share: function (share, extra, extendedpreview) {
                 var h = '';
 
+                if (!share) return;
+                
                 var m = share.caption;
 
                 if(!m) m = share.renders.text()

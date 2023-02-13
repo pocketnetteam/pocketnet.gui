@@ -2493,3 +2493,4 @@ _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
 
+_l.jury = "Jury"

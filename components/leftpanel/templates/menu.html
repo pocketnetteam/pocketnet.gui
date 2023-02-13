@@ -69,7 +69,13 @@ var read = parameters(app.nav.current.completeHref, true).read;
                 </span>
             </div>
 
-
+            <% if (app.platform.sdk.user.isjury()) { %>
+                <div class="tab">
+                    <span class="pcenterLabel <% if(r == 'jury' && pathname=='index') {%> active <% } %>">
+                        <a href="index?r=jury"  handler="true"><i class="fas fa-balance-scale"></i><span class="text"><%=e('jury')%></span></a>
+                    </span>
+                </div>
+            <% } %>
 
             
         </div>

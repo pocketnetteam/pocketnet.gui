@@ -66,7 +66,7 @@ var metadisplay = function(){ %>
 
 							
 
-							<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted()) && recommended != 'jury') { %> 
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
 									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
@@ -387,6 +387,17 @@ var arranges = {
 				</div> 
 
 			</div>
+
+			<% if (recommended == 'jury') { %>
+
+				<div class="cntswrk">
+
+					Do you confirm this post is offensive?
+
+				</div>
+				<br/>
+
+			<% } %>
 			
 			<% if(!checkvisibility && !lockedaccount) {%>
 
@@ -511,7 +522,7 @@ var arranges = {
 						<% } %>
 						
 
-						<% if(!share.temp && (typeof repost == 'undefined' || !repost || fromempty)) {%>
+						<% if(!share.temp && (typeof repost == 'undefined' || !repost || fromempty) && recommended != 'jury') {%>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
@@ -583,7 +594,7 @@ var arranges = {
 							
 						<% };
 
-						if (share.relay && share.checkSend) { %>
+						if (share.relay && share.checkSend && recommended != 'jury') { %>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
 
@@ -600,7 +611,7 @@ var arranges = {
 								</div>
 								<div class="clearfix"></div>
 							</div>
-						<% } else if(share.temp) {%>
+						<% } else if(share.temp && recommended != 'jury') {%>
 
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
@@ -631,7 +642,7 @@ var arranges = {
 
 				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
 
-					<% if(!emptywithrepost) {%>
+					<% if(!emptywithrepost && recommended != 'jury') {%>
 
 						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 							<div class="cntswrk forcomments">
@@ -675,7 +686,7 @@ var arranges = {
 
 	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
-		<% if(!emptywithrepost) {%>
+		<% if(!emptywithrepost && recommended != 'jury') {%>
 
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 

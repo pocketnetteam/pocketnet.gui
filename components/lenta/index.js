@@ -3221,6 +3221,7 @@ var lenta = (function(){
 						mestate : mestate,
 						all : all || false,
 						tplvideo : video ,
+						recommended : recommended,
 						openapi : essenseData.openapi,
 						sharesFromSub,
 						boosted : p.boosted,
@@ -4605,6 +4606,10 @@ var lenta = (function(){
 									
 								}
 
+								else if(recommended == 'jury'){
+									loader = 'jury'
+								}
+
 								else
 								{
 									loader = 'common'
@@ -4684,42 +4689,72 @@ var lenta = (function(){
 							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
-							self.app.platform.sdk.node.shares[loader]({
+							if (loader == 'jury') {
 
-								author : author,
-								begin : _beginmaterial || '',
-								txids : essenseData.txids,
-								height : fixedblock,
-								tagsfilter : tagsfilter,
-								lang: essenseData.lang,
+								self.app.platform.sdk.jury.getjuryassigned(self.user.address.value).then((shares) => {
 
-								type : type,
+									newShares = shares.map((share) => {
+										var s = new pShare();
+										s._import(share);
+										s.txid = share.txid;
+										s.time = new Date();
+										s.address = share.address;
+										s.time.setTime(share.time * 1000);
+										s.score = share.scoreSum;
+										s.scnt = share.scoreCnt;
+										s.edit = false;
+										s.info = null;
+										return s;
+									});
 
-								count : count,
-								offset : offsetblock,
-								page : page,
-								period : period,
-								tagsexcluded : tagsexcluded
+									load.sstuff(newShares, false, { count: 0 }, clbk, [], false);
 
-							}, function(shares, error, pr){
+								}, (err) => {
+									console.log(err);
+								}).catch((err) => {
+									console.log(err);
+								});
 
-								offsetblock = offsetblock + period
+							} else {
 
-								///
+								self.app.platform.sdk.node.shares[loader]({
 
-								if(pr.blocknumber) fixedblock = pr.blocknumber
-								
-								if (essenseData.shuffle) {
-									shares = _.shuffle(shares)
-								}
+									author : author,
+									begin : _beginmaterial || '',
+									txids : essenseData.txids,
+									height : fixedblock,
+									tagsfilter : tagsfilter,
+									lang: essenseData.lang,
 
-								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
+									type : type,
 
-								if (recommended == 'b'){
-									beginmaterial = ''
-								}
+									count : count,
+									offset : offsetblock,
+									page : page,
+									period : period,
+									tagsexcluded : tagsexcluded
 
-							}, cache)
+								}, function(shares, error, pr){
+
+									offsetblock = offsetblock + period
+
+									///
+
+									if(pr.blocknumber) fixedblock = pr.blocknumber
+									
+									if (essenseData.shuffle) {
+										shares = _.shuffle(shares)
+									}
+
+									load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
+
+									if (recommended == 'b'){
+										beginmaterial = ''
+									}
+
+								}, cache)
+
+							}
 
 						})
 

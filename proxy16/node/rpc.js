@@ -133,6 +133,11 @@ const publics = {
     gettopaccounts: true,
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
+
+    // Jury
+    getalljury: true,
+    getjuryassigned: true,
+    getjurymoderators: true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -499,6 +504,11 @@ RpcClient.callspec = {
     stop: '',
     dumpwallet: 'str',
     importwallet: 'str',
+
+    // Jury
+    getalljury: '',
+    getjuryassigned: 'str',
+    getjurymoderators: 'str',
 };
 
 var slice = function(arr, start, end) {
