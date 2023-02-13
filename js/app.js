@@ -37,30 +37,26 @@ if (typeof _Electron != 'undefined' && _Electron){
 
   swBroadcaster = new Broadcaster('ServiceWorker');
 
-  swBroadcaster.handle('AltTransportActive', (url) => {
-      const wait = (seconds, returnValue) => new Promise(r => (
-          setTimeout(() => r(returnValue), seconds * 1000)
-      ));
+  swBroadcaster.handle('AltTransportActive', async (url) => {
+    const wait = (seconds, returnValue) => new Promise(r => (
+      setTimeout(() => r(returnValue), seconds * 1000)
+    ));
 
-      const proxy = self.app.api.get.current();
+    const proxy = self.app.api.get.current();
 
-      const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+    if (!proxy.direct) {
+      return false;
+    }
 
-      if (proxy.direct) {
-          return new Promise((resolve) => {
-              proxy.get.info().then(({ info }) => {
-                  if (info?.tor.enabled === 'always') {
-                      resolve(true);
-                      return;
-                  }
+    const proxyInfo = await proxy.get.info();
 
-                  Promise.race([ transportCheck, wait(1, false) ])
-                      .then((value) => resolve(value));
-              });
-          });
-      }
+    if (proxyInfo.info?.tor?.enabled === 'always') {
+      return true;
+    }
 
-      return Promise.race([ transportCheck, wait(1, false) ]);
+    const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+    return await Promise.race([ transportCheck, wait(1, false) ]);
   });
 
 }
