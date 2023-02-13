@@ -67,6 +67,12 @@ class WrappedAxios {
         //console.log('D0, Axios wait');
 
         if (useTor) {
+            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+            if (isTorAutoEnabled) {
+                torCtrl.resetTimer();
+            }
+
             this.attachAgent(preparedArgs);
         }
 
@@ -90,6 +96,12 @@ class WrappedAxios {
                 const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
                 if (useTor) {
+                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+                    if (isTorAutoEnabled) {
+                        torCtrl.resetTimer();
+                    }
+
                     this.attachAgent(preparedArgs);
                 }
 
@@ -153,6 +165,12 @@ class WrappedFetch {
         //console.log('D0, Fetch wait');
 
         if (useTor) {
+            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+            if (isTorAutoEnabled) {
+                torCtrl.resetTimer();
+            }
+
             this.attachAgent(preparedArgs);
         }
 
@@ -186,6 +204,12 @@ class WrappedFetch {
                 const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
                 if (useTor) {
+                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+                    if (isTorAutoEnabled) {
+                        torCtrl.resetTimer();
+                    }
+
                     this.attachAgent(preparedArgs);
                 }
 
@@ -252,6 +276,12 @@ class WrappedRequest {
         //console.log('D0, Request wait');
 
         if (useTor) {
+            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+            if (isTorAutoEnabled) {
+                torCtrl.resetTimer();
+            }
+
             this.attachAgent(preparedArgs);
         }
 
@@ -277,6 +307,12 @@ class WrappedRequest {
                 const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
                 if (useTor) {
+                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
+                    if (isTorAutoEnabled) {
+                        torCtrl.resetTimer();
+                    }
+
                     this.attachAgent(preparedArgs);
                 }
 
@@ -486,23 +522,21 @@ class Transports {
         const torCtrl = this.torapplications;
 
         const hasDirectAccess = await this.hasDirectAccess(url);
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+        const isDirectRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+        const useDirectAccess = (hasDirectAccess && !isDirectRestricted);
 
         let isTorReady = this.isTorReady();
 
-        if (isDirectAccessRestricted) {
+        if (isDirectRestricted || (isTorAutoEnabled && !hasDirectAccess && !isTorReady)) {
+            torCtrl.start();
             isTorReady = await this.waitTorReady();
         }
 
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-        if (useTor) {
-            return true;
-        }
-
-        return false;
+        return !!useTor;
     }
 
     checkForAgentError(error) {

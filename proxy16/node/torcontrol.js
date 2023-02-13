@@ -59,6 +59,8 @@ class TorControl {
     settings = {};
     application = null;
     installfailed = null;
+    timeoutIntervalId = null;
+    timeoutCounter = null;
 
     constructor(settings, proxy/*, ipc*/) {
         this.settings = {...settings};
@@ -350,9 +352,37 @@ class TorControl {
         // console.log(data)
     }
 
+    startTimer = () => {
+        const minutes5 = 5 * 60 * 1000;
+        this.timeoutCounter = minutes5;
+
+        this.timeoutIntervalId = setInterval(() => {
+            this.timeoutCounter -= 5000;
+
+            if (this.timeoutCounter <= 0) {
+                console.log("TOR WAS NOT RECEIVING REQUESTS, STOPPING");
+
+                this.stop();
+                this.timeoutCounter = null;
+                clearInterval(this.timeoutIntervalId);
+            }
+        }, 5000);
+    }
+
+    resetTimer = () => {
+        console.log("RESETTING TIMER")
+        const minutes5 = 5 * 60 * 1000;
+        this.timeoutCounter = minutes5;
+    }
+
     start = async ()=>{
 
         console.log("START")
+
+        if (this.settings.enabled2 === 'auto') {
+            console.log("TOR IS IN AUTO MODE, SETTING TIMEOUT")
+            this.startTimer()
+        }
 
         if(this.instance) return true
 
@@ -442,6 +472,9 @@ class TorControl {
         this.state.status = "stopped"
 
         this.instance = null
+
+        clearInterval(this.timeoutIntervalId);
+        this.timeoutIntervalId = null;
 
         return true
     }
