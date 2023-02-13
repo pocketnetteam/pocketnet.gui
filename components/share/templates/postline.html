@@ -6,7 +6,7 @@
 
             <% if(!external) {%>
             
-                <% if(!share.itisvideo()) {%>
+                <% if(!share.itisvideo() && !share.itisaudio()) {%>
 
                     <div elementsid="saddimages" class="item images tooltip" title="<%=e('saddimages')%>">
                         <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
@@ -27,13 +27,11 @@
                 if(!share.hasexchangetag() && !share.repost.v){
 
                         
-                    if (!share.repost.v && !share.itisvideo() && !share.aliasid && !app.pkoindisable) { %>
+                    if (!share.repost.v && !share.itisvideo() && !share.itisaudio() && !share.aliasid && !app.pkoindisable) { %>
 
-                        <% if (window.testpocketnet == true) { %>
                         <div elementsid="peertubeAddAudio" class="item peertube tooltip nowidth" embeding="addAudio" title="<%=e('peertubeAddAudio')%>">
-                            <i class="fas fa-volume-up"></i>
+                            <i class="fas fa-volume-up"></i> <span><%- e('peertubeAddAudio') %></span>
                         </div>
-                        <% } %>
 
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
@@ -45,8 +43,8 @@
                 } %>
             
                 <% if(!share.aliasid && !share.repost.v) {%>
-                    <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
-                        <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
+                    <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.itisaudio() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                        <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.itisaudio() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
                     </div>
                 <% } %>
 
