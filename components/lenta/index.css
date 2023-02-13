@@ -332,6 +332,19 @@
 #lenta.sharesEnded .loadmore {
   display: none;
 }
+#lenta .jury-text {
+  text-align: center;
+  margin-top: 20px;
+}
+#lenta .jury-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+#lenta .jury-buttons button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .commentRegisterDiv .commentRegister {
   background-color: rgb(var(--background-total-theme));
   padding: 1em 1em 2em 1em;

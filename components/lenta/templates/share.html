@@ -91,7 +91,7 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<% if(!share.temp && !share.relay) {%>
+					<% if(!share.temp && !share.relay && recommended != 'jury') {%>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
@@ -335,6 +335,25 @@ var arranges = {
 
 	<div class="work unselectablemobile">
 
+		<% if (recommended == 'jury') { %>
+
+			<div class="cntswrk">
+
+				<div class="sharecaption jury-text">
+
+					<span>Do you confirm this post is offensive?</span>
+
+				</div>
+
+				<div class="jury-buttons">
+					<button class="button medium">YES</button>
+					<button class="button medium black">NO</button>
+				</div>
+
+			</div>
+
+		<% } %>
+
 		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			
@@ -388,16 +407,6 @@ var arranges = {
 
 			</div>
 
-			<% if (recommended == 'jury') { %>
-
-				<div class="cntswrk">
-
-					Do you confirm this post is offensive?
-
-				</div>
-				<br/>
-
-			<% } %>
 			
 			<% if(!checkvisibility && !lockedaccount) {%>
 
