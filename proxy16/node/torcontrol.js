@@ -379,12 +379,12 @@ class TorControl {
 
         console.log("START")
 
+        if(this.instance) return true
+
         if (this.settings.enabled2 === 'auto') {
             console.log("TOR IS IN AUTO MODE, SETTING TIMEOUT")
             this.startTimer()
         }
-
-        if(this.instance) return true
 
         if(this.needinstall()) return false
 
