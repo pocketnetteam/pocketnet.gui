@@ -376,6 +376,11 @@ class TorControl {
     }
 
     start = async ()=>{
+        if (this.status === "triggered") {
+            return true;
+        }
+
+        this.status = "triggered";
 
         console.log("START")
 
