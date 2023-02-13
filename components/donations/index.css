@@ -19,6 +19,12 @@
   background: rgb(var(--background-secondary-theme));
   vertical-align: middle;
 }
+#donations .splits > div.dsplit .donate {
+  font-size: 2em;
+}
+#donations .splits > div.dsplit .donate .label {
+  cursor: pointer;
+}
 #donations .donate {
   text-align: center;
 }
