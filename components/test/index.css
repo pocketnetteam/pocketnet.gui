@@ -270,7 +270,7 @@
   vertical-align: middle;
 }
 #test .adressesInput .addedAddressesWrapper .addedAddressWrapper .addedAddress > div.currencyWrapper {
-  width: 80px;
+  width: 115px;
   font-weight: 700;
   color: rgb(var(--color-txt-ac));
 }
@@ -335,7 +335,7 @@
   vertical-align: middle;
 }
 .addaddressDialog .addaddress .inputsWrapper .inputsWrapperTable > div.curWrapper {
-  width: 150px;
+  width: 160px;
 }
 .addaddressDialog .addaddress .inputsWrapper .inputsWrapperTable > div.curWrapper select {
   border: 0;
@@ -348,6 +348,9 @@
   background-image: url(../../img/arrow_wh.png);
   background-position: right 10px center;
   background-repeat: no-repeat;
+}
+.addaddressDialog .addaddress .inputsWrapper .inputsWrapperTable > div.curWrapper select option {
+  background: rgb(var(--background-hidden-layer));
 }
 .addaddressDialog .addaddress .inputsWrapper .inputsWrapperTable > div.addressWrapper input {
   width: 100%;
