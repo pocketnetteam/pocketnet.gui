@@ -2372,7 +2372,8 @@ var lenta = (function(){
 					_.each(players, function(player){
 
 						if (player.error) return
-							player.p.muted = true;
+
+						//	player.p.muted = true;
 
 						if (player.p.playing){
 							player.p.stop()
