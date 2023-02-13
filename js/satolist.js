@@ -75,6 +75,17 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
+        'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
+        'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy' : true,
+        'PF4eMjha9MFs4F3CaiHG1CJjDJGS7w8tvF' : true,
+        'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK' : true,
+        'P9igzkJ57DYXyXMjCyTLvHmJJTjwDBB8Ug' : true,
+        'PHPrCVNBHMJCD2fVUFXLw92rZnAMJ1UFF6' : true,
+        'PEXsbgKmfxxMGhaqELM7FdhgexhhvtrirY' : true,
+        'PHLz9EhgvPDZx9Erer3romhcNSGRw2FUmu' : true,
+        'PXasvRAZmYYvX7bxCXoSD6xskKsXFAt3jg' : true,
+        'PUcbjUHfSTSYxLwqmndEzWVyxwTCiGjkTL' : true,
+        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC' : true,
         'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
@@ -335,6 +346,8 @@ Platform = function (app, listofnodes) {
         'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
+		'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
+		'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
     ];
 
     self.whiteList = [
@@ -19984,7 +19997,7 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.app.settings.set(self.sdk.address.pnet().address, 'temp2', JSON.stringify(self.sdk.node.transactions.temp))
+                        self.app.settings.set(self.sdk.address.pnet().address, 'temp3', JSON.stringify(self.sdk.node.transactions.temp))
                     }
 
                     if (clbk)
@@ -19997,9 +20010,16 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp2') || "{}")
+                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp3') || "{}")
 
+                        _.each(self.sdk.node.transactions.temp, function(vs, t){
 
+                            self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
+                                return typeof alias.txid == 'string'
+                            })
+                            
+                            console.log('self.sdk.node.transactions.temp[t]', self.sdk.node.transactions.temp[t])
+                        })
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
@@ -21605,7 +21625,11 @@ Platform = function (app, listofnodes) {
                                                             temp[obj.type] = {};
                                                         }
 
-                                                        temp[obj.type][d] = alias;
+                                                        if(typeof alias.txid == "string") {
+                                                            console.log("ADDED TEMP")
+                                                            temp[obj.type][d] = alias;
+                                                        }
+                                                        
 
                                                         alias.inputs = inputs
 
@@ -21616,6 +21640,9 @@ Platform = function (app, listofnodes) {
                                                                 deleted : output.deleted
                                                             }
                                                         })
+
+
+                                                        
 
                                                         self.sdk.node.transactions.saveTemp()
 
@@ -30188,7 +30215,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            
+                            var iscallsenabled = self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -30196,7 +30223,7 @@ Platform = function (app, listofnodes) {
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
-                                    iscallsenabled="true"
+                                    iscallsenabled="`+iscallsenabled+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"

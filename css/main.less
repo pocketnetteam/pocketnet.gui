@@ -2456,6 +2456,12 @@ input[type=radio].radio:checked + label {
         text-align: left;
         max-width: 150px;
     }
+
+    .notificationWrapper .m-message-content .listPreview .previewMessage label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     
     .notificationWrapper .m-message-icons {
         float: none;
@@ -8140,7 +8146,7 @@ html.mobileview{
                 width: 100%;
                 background: transparent!important;
                 will-change: transform;
-                
+                box-shadow: none!important;
             }
 
             .wndback{

@@ -1,21 +1,62 @@
-<div class="boostinfodata">
+<div class="boostinfoblocks <%-hiddenBlocks ? 'hiddenBlocks' : ''%>">
 
-    <% if(app.localization.available[language]) {%>
-        <div class="label">
-            <span><%= e('probability') %></span>
-        </div>
-        
-        <div class="probability">
-            <span><%- (probability * 100).toFixed(1) %> %</span>
-        </div>
-        
-        <div class="text">
-            <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
-        </div>
+    <div class="showMore">
+        <button class="ghost show">
+            <%=e('showmore')%>
+        </button>
+        <button class="ghost hide">
+            <%=e('hide')%>
+        </button>
+    </div>
 
-    <% } else { %> 
-        <div class="text">
-            <span><%= e('probabilitytexterror') %></span>
-        </div>
+    <div class="boostinfodata">
+
+        <% if(app.localization.available[language]) {%>
+            <div class="label">
+                <span><%= e('probability') %></span>
+            </div>
+            
+            <div class="probability">
+                <span><%- (probability * 100).toFixed(1) %> %</span>
+            </div>
+            
+            <div class="text">
+                <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
+            </div>
+    
+        <% } else { %> 
+            <div class="text">
+                <span><%= e('probabilitytexterror') %></span>
+            </div>
+        <% } %>
+    </div>
+    
+    <br>
+    
+    <% if(language === 'en' || language === 'ru') {%>
+    
+    <div class="boostinfodata">
+    
+        <% if(app.localization.available[language]) {%>
+            <div class="label">
+                <span><%= e('reach') %></span>
+            </div>
+            
+            <div class="probability">
+                <span><%- (probability * (language === 'en' ? 3500 : language === 'ru' ? 31500 : 0)).toFixed(0) %> </span>
+            </div>
+            
+            <div class="text">
+                <span><%= e('reachAudience') %></span>
+            </div>
+    
+        <% } else { %> 
+            <div class="text">
+                <span><%= e('reachtexterror') %></span>
+            </div>
+        <% } %>
+    </div>
+    
     <% } %>
 </div>
+

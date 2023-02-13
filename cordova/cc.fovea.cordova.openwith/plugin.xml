@@ -40,7 +40,7 @@ SOFTWARE.
     <keywords>cordova,phonegap,openwith,ios,android</keywords>
 
     <!-- ios -->
-        <platform name="ios">
+    <platform name="ios">
         <preference name="IOS_URL_SCHEME" />
         <preference name="IOS_UNIFORM_TYPE_IDENTIFIER" />
 
@@ -93,7 +93,7 @@ SOFTWARE.
             <clobbers target="cordova.openwith" />
         </js-module>
 
-        <config-file target="AndroidManifest.xml" mode="merge" parent="/manifest/application/activity">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
                 <!-- category android:name="android.intent.category.BROWSABLE" / -->
                 <!-- See https://developer.android.com/guide/topics/manifest/data-element.html -->
