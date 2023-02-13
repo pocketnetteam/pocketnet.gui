@@ -702,8 +702,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 			var ins = {
 				1: [
-				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
-					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
+				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120', offline: true },
+					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24', offline: true },
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 				5: [
@@ -716,6 +716,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 					host: 'pocketnetpeertube7.nohost.me',
 					cantuploading: true,
 					ip: '188.187.45.218',
+					offline: true,
 				  },
 				],
 				6: [
@@ -790,6 +791,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 					{
 						host: 'peertube15.pocketnet.app',
 						ip: '192.236.199.174',
+						offline: true,
 					},
 				],
 
@@ -800,6 +802,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '178.217.155.168',
+						offline: true,
 					},
 					{
 						host : 'poketnetpeertube.ru',
@@ -818,6 +821,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '81.23.152.91',
+						offline: true,
 					},
 					{
 						host : 'storemi.ru',
@@ -825,6 +829,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '93.100.117.108',
+						offline: true,
 					},
 				],
 
@@ -835,6 +840,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '81.23.151.94',
+						offline: true,
 					},
 					{
 						host : 'gf110.ru',
@@ -842,6 +848,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '46.175.123.16',
+						offline: true,
 					},
 				],
 
@@ -850,11 +857,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 						host : 'bastyonpeertube.ru',
 						cantuploading: true,
 						ip: '178.217.155.169',
+						offline: true,
 					},
 					{
 						host : 'bastyonpeertube.site',
 						cantuploading: true,
 						ip: '178.217.155.170',
+						offline: true,
 					},
 
 				],
