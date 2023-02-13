@@ -1635,6 +1635,26 @@ var share = (function(){
 						el.selectTime = el.c.find('.selectedTimeWrapper')
 						el.post = el.c.find('.post')
 						el.times = el.c.find('.panel .times')
+						el.uploadButtons = el.c.find('.postpanel .panelWrapper div[elementsid]')
+
+						// Function to show/hide the upload buttons
+						let setUploadButtons = function(buttons, show) {
+							if (!buttons || buttons.length <= 0) return;
+							for (let i = 0; i < buttons.length; i++) {
+								let attribute = buttons[i].getAttribute('elementsid');
+								if (attribute && attribute != 'stimes' && show == false)
+									buttons[i].style.display = 'none';
+								else
+									buttons[i].style.display = 'block';
+							}
+						}
+						// If uploading an audio file, remove all the other upload buttons
+						// But leave the "clear post" button
+						if (currentShare && currentShare.itisaudio())
+							setUploadButtons(el.uploadButtons, false);
+						// Else, show all the upload buttons
+						else
+							setUploadButtons(el.uploadButtons, true);
 
 						el.changePostTime.on('change', events.changePostTime)
 						el.selectTime.on('click', events.selectTime)
