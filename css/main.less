@@ -2351,11 +2351,12 @@ input[type=radio].radio:checked + label {
     
     
 .m-message-container{
+    
     .notificationWrapper {
         display: block;
-        max-width: none;
         /*width: 100%*/
         font-family: @font;
+        
     }
     
     .notificationWrapper.m-message-wrapper + .m-message-wrapper {
@@ -2388,6 +2389,8 @@ input[type=radio].radio:checked + label {
     
     .notificationWrapper .m-message-content {
         flex-grow: 1;
+        max-width: 450px;
+        overflow: hidden;
     }
     
     .notificationWrapper .m-message-content .listPreview {

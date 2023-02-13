@@ -846,7 +846,7 @@ var share = (function(){
 			},
 
 			checktranscoding : function(clbk){
-				if(currentShare.itisvideo() && !currentShare.aliasid){
+				if((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid){
 
 					currentShare.canSend(self.app, (result) => {
 						clbk(result)
@@ -959,7 +959,7 @@ var share = (function(){
 		
 											self.app.platform.sdk.node.shares.add(alias);
 
-											if (alias.itisvideo()) {
+											if (alias.itisvideo() || alias.itisaudio()) {
 												var unpostedVideos;
 
 												try {
@@ -1084,7 +1084,7 @@ var share = (function(){
 						return
 					}
 
-					if (currentShare.itisvideo()) {
+					if (currentShare.itisvideo() || currentShare.itisaudio()) {
 
 						const options = {};
 	
@@ -1893,7 +1893,7 @@ var share = (function(){
 
 			caption : function(){
 
-				if(currentShare.caption.v || currentShare.itisvideo()){
+				if(currentShare.caption.v || currentShare.itisvideo() || currentShare.itisaudio()){
 
 					if(!el.cpt.hasClass('active'))
 						el.cpt.addClass('active');
@@ -2546,7 +2546,7 @@ var share = (function(){
 
 					if (lastvideo && !lastvideo.wasclbk){
 
-						if(!currentShare.itisvideo())
+						if(!currentShare.itisvideo() && !currentShare.itisaudio())
 							actions._videoadded(lastvideo.link, lastvideo.name)
 							
 						self.app.settings.delete('common', 'lastuploadedvideo');

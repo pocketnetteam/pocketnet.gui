@@ -1017,7 +1017,7 @@ _l.videoUploadingFinish = "Завершение загрузки..."
 _l.uploadNewVideo = "Добавить новое видео"
 _l.uploadNewAudio = "Добавить новое аудио"
 _l.selectVideoFile = "Выберите видео файл"
-_l.selectVideoFile = "Выберите аудио файл"
+_l.selectAudioFile = "Выберите аудио файл"
 _l.uploadVideoProgress_binaries = "Подготовка библиотек:"
 _l.uploadVideoProgress_processing = "Обработка видео:"
 _l.uploadVideoProgress_uploading = "Загрузка видео:"
@@ -2092,7 +2092,7 @@ _l.welcomecaption3 = "Общайтесь с друзьями в зашифров
 
 
 _l.shareexternal = "Открыто другое окно";
-_l.shareexternaluploadpeertube = "Открыто окно загрузки видео";
+_l.shareexternaluploadpeertube = "Открыто окно загрузки медиа";
 
 _l.removeimageswhenvideo = "Прикреплённые к публикации изображения удалятся, если вы продолжите загружать видео. Перейти к загрузке видео?";
 

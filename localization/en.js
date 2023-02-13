@@ -1181,14 +1181,14 @@ _l.shareBareLink = "Share Video Link";
 _l.videoCopied = "Video link successfully copied to clipboard";
 
 _l.editWallpaper = "Change Preview Image";
-_l.removeVideo = "Remove Video";
+_l.removeVideo = "Remove Media";
 
 _l.removeVideoDialog = "Are you sure you want to delete this video?"
 
 _l.pterror_meta = "Peertube: Undefined request"
 _l.pterror_host = "Peertube: Peertube server not found"
 _l.pterror_link = "Peertube: Unknown Peertube link"
-_l.pterror_removeerror = "Peertube: Unable to remove video. Pleasy try again"
+_l.pterror_removeerror = "Peertube: Unable to remove media. Pleasy try again"
 _l.pterror_updateempty = "Peertube: No changes found to update"
 _l.pterror_uploaderror = "Peertube: Video has not been uploaded"
 _l.pterror_dailyquotalimit = "Peertube: You have reached your video upload limit"
@@ -2297,7 +2297,7 @@ _l.welcomecaption3 = "Chat privately with friends - no SIM card";
 
 
 _l.shareexternal = "Another window is open";
-_l.shareexternaluploadpeertube = "Video upload window open";
+_l.shareexternaluploadpeertube = "Media upload window open";
 
 _l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
