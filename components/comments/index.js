@@ -452,7 +452,6 @@ var comments = (function(){
 					}
 				})	
 			},
-			
 
 			stateAction : function(clbk){
 
@@ -1592,20 +1591,39 @@ var comments = (function(){
 							close()
 						})
 
-						__el.find('.block').on('click', function(){
-
+						__el.find('.block').on('click', async function(){
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
+							let likers = await self.app.api.rpc('getaccountraters', [d.caddress])
+							likers = self.app.platform.api.actions.getfilteredlikers(likers)
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
                                 if (!tx) {
                                     self.app.platform.errorHandler(error, true)
+																	return error
                                 }
 								else
 								{
+
+									if (!likers.length) return close()
 									parent.addClass('hiddenBlockedUserComment');
 									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
 									var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
+									new dialog({
+										html: self.app.localization.e('blockingdisclaimer'),
+										btn1text: self.app.localization.e('dyes'),
+										btn2text: self.app.localization.e('dno'),
+										class: 'zindex',
+										success: () => {
+											self.app.platform.api.actions.block(d.caddress, likers,  function (error) {
+												console.log(error)
+											})
+										}
+									});
 								}
 
                             })
@@ -2430,7 +2448,7 @@ var comments = (function(){
 						clbk()
 
 				/*_el.imagesLoadedPN({ imageAttr: true }, function(image) {
-					
+
 					if(ed.renderClbk) ed.renderClbk()
 
 					if (clbk)
@@ -3046,7 +3064,7 @@ var comments = (function(){
 						alredyCommented = true;
 					}
 				}
-					
+
 				if (alredyCommented) {
 					return false;
 				}

@@ -304,6 +304,12 @@ _l.lloadmore = "Load More Awesome Posts!";
 _l.lloadprev = "Load New Awesome Posts";
 
 
+//blocking
+_l.blockinglimit_100 = "You cannot select more than 100 users at a time"
+_l.blockingdisclaimer = "Do you want to block linked accounts as well? Do this only for suspected bots."
+_l.blockingsuccess = "The blocking was successful"
+_l.blockinginprogress = "Multiple blocking is currently in progress, try again later"
+
 _l.lend = "End of Posts";
 _l.zerop = "There currently no posts by this author";
 
@@ -348,7 +354,9 @@ _l.spostnow = "Post Now";
 _l.stimenotselected = "Time Not Selected";
 _l.spost = "Post";
 _l.sdate = "Date";
+_l.regdate = "Date of registration";
 _l.stime = "Time";
+_l.ratings = "Ratings";
 _l.snotags = "Add tag";
 _l.expandvideo = "Click to expand";
 _l.emptymessage = "Message is empty";
@@ -509,6 +517,7 @@ _l.unblockuser = "Unblock User"
 _l.e13022 = "Do you really want to unfollow user?"
 _l.unfollow = "Unfollow"
 _l.unblock = "Unblock"
+_l.block = "Block"
 _l.share = "Share"
 _l.info = "Info"
 _l.copyLink = "Copy direct Link"

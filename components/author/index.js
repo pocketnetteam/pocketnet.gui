@@ -501,15 +501,37 @@ var author = (function(){
 
 						})
 
-						el.find('.block').on('click', function(){
-							self.app.mobile.vibration.small()
-							self.app.platform.api.actions.blocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
+						el.find('.block').on('click', async function(){
 
-							close()
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
+
+							let likers = await self.app.api.rpc('getaccountraters', [author.address])
+							likers = self.app.platform.api.actions.getfilteredlikers(likers)
+							self.app.mobile.vibration.small()
+								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
+										return
+									}
+								})
+							if (!likers.length) return close()
+
+								dialog({
+									html: self.app.localization.e('blockingdisclaimer'),
+									btn1text: self.app.localization.e('dyes'),
+									btn2text: self.app.localization.e('dno'),
+									class: 'zindex',
+									success: () => {
+										self.app.platform.api.actions.block(author.address, likers, function (error) {
+											console.log(error)
+										})
+									}
+								});
+
+								close()
 
 						})
 
@@ -1304,8 +1326,6 @@ var author = (function(){
 						el.caption.addClass('blocking');
 					}
 				}
-				
-				
 
 			})
 			

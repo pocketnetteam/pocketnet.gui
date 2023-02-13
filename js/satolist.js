@@ -4620,6 +4620,46 @@ Platform = function (app, listofnodes) {
         },
 
         actions: {
+			getfilteredlikers: function(likers) {
+				let blocked
+				try {
+
+					blocked = JSON.parse(JSON.stringify(self.app.platform.sdk.user.storage.me.blocking))
+					blocked.forEach((item, id) => {
+						if (typeof item === 'object') {
+							blocked.splice(id, 1)
+							blocked.push(...item)
+						}
+					})
+					likers = likers.filter(liker => {
+						let res = !(blocked.includes(liker.address) || liker.address === self.app.platform.sdk.user.storage.me.address)
+						return res
+					})
+					return likers
+				} catch (e) {
+					console.error(e)
+				}
+			},
+
+			block : function(address, likers,  clbk){
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address,
+						likers
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
@@ -5262,13 +5302,31 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        el.find('.block').on('click', function () {
+                        el.find('.block').on('click', async function () {
+                            if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+                                sitemessage(self.app.localization.e('blockinginprogress'))
+                                return
+                            }
                             self.app.mobile.vibration.small()
-                            self.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+							let likers = await self.app.api.rpc('getaccountraters', [address])
+							likers = self.api.actions.getfilteredlikers(likers)
+							self.api.actions.blocking(address, function (tx, error) {
+                                 if (!tx) {
+                                     self.errorHandler(error, true)
+                                 }
+                             })
+							if (!likers.length) return close()
+                            dialog({
+                                html: self.app.localization.e('blockingdisclaimer'),
+								btn1text: self.app.localization.e('dyes'),
+								btn2text: self.app.localization.e('dno'),
+                                class: 'zindex',
+                                success: () => {
+									self.api.actions.block(address, likers, function (error) {
+                                        console.log(error)
+                                    })
                                 }
-                            })
+                            });
 
                             close()
 
@@ -20425,6 +20483,14 @@ Platform = function (app, listofnodes) {
                             c(-amount);
                         })
                     }
+                },
+
+                hasUnspentMultyBlocking: function() {
+					if (!self.sdk.node.transactions.temp.blocking) return false
+                    var s = Object.values(self.sdk.node.transactions.temp.blocking)
+                    return s.some(blocking => {
+                        return typeof blocking.vsaddress === 'object'
+                    })
                 },
 
                 get: {

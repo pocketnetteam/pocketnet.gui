@@ -152,28 +152,49 @@ Blocking = function(){
 		v : ''
 	};
 
+	self.addresses = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
 	self.validation = function(){
-		if(!self.address.v){
+		if(!self.address.v && !self.addresses){
 			return 'address';
 		}
-	}
+	};
 
 	self.serialize = function(){
-		return self.address.v
-	}
+		let a = self.addresses.v
+		return self.address.v || self.addresses.v.join(',')
+	};
 
 	self.export = function(alias){
 
 		if(alias){
+			if (self.addresses.v) {
+				return {
+					vsaddress : self.addresses.v
+				}
+			}
 			return {
 				vsaddress : self.address.v
 			}
 		}
 
-		return {
-			address : self.address.v
+		if (self.address.v) {
+			return {
+				address : self.address.v
+			}
 		}
-	}
+
+		if (self.addresses.v) {
+			return {
+				addresses : self.addresses.v
+			}
+		}
+	};
 
 	self.import = function(p){
 
@@ -182,6 +203,12 @@ Blocking = function(){
 
 		if (p.vsaddress)
 			self.address.v =  p.vsaddress
+
+		if (p.addresses)
+			self.addresses.v = p.addresses
+
+		if (p.vsaddresses)
+			self.addresses.v =  p.vsaddresses
 			
 	}
 
@@ -1183,7 +1210,7 @@ Share = function(lang){
 						}
 					}
 
-					
+
 
 
 					if(tta.length > 15){
@@ -1478,7 +1505,7 @@ Share = function(lang){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url.v) return 
+		if(!self.url.v) return
 
 		var meta = parseVideo(self.url.v)
 		var ch = self.url.v.replace('peertube://', '').split('/')
@@ -1950,7 +1977,7 @@ UserInfo = function(){
 
 DeleteAccount = function(){
 	var self = this;
-	
+
 	self.validation = function(){
 		return false;
 	}
@@ -2154,26 +2181,26 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		self[key] || (self[key] = [])
-
-		try{
-			self[key].push(obj)	
-
-			if (key === 'subscribers'){
-
-				self['subscribers_count'] || (self['subscribers_count'] = 0);
-				self['subscribers_count']++;
-
-			}
-
-			if (key === 'subscribes'){
-
-				self['subscribes_count'] || (self['subscribes_count'] = 0);
-				self['subscribes_count']++;
-				
-			}
+		if (typeof obj === 'object') {
+			self[key].push(...obj)
+		} else {
+			self[key].push(obj)
 		}
-		catch(e){
-			console.error(e)
+
+
+
+		if (key === 'subscribers'){
+
+			self['subscribers_count'] || (self['subscribers_count'] = 0);
+			self['subscribers_count']++;
+
+		}
+
+		if (key === 'subscribes'){
+
+			self['subscribes_count'] || (self['subscribes_count'] = 0);
+			self['subscribes_count']++;
+
 		}
 
 	}
@@ -2276,7 +2303,7 @@ pShare = function(){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url) return 
+		if(!self.url) return
 
 		var meta = parseVideo(self.url)
 		var ch = self.url.replace('peertube://', '').split('/')
@@ -2400,7 +2427,7 @@ pShare = function(){
 		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
 		v.i = _.clone(self.images)
 		v._time = self._time;
-		v.s = _.clone(self.settings)	
+		v.s = _.clone(self.settings)
 		v.l = self.language
 		v.p = self.poll
 		v.deleted = self.deleted
@@ -2426,7 +2453,7 @@ pShare = function(){
 			var message = edjs.apply(self.message, decodeURIComponent)
 			text = edjs.text(message);
 			text = self.caption + `\n\n` + text;
-	
+
 		} else {
 
 			text = self.renders.text(text);
