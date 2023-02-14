@@ -625,7 +625,7 @@ _l.e13176 = "Adressen Typ"
 _l.e13177 = "Foto hochladen"
 
 _l.requiredfields = "benötigte Felder"
-_l.e13178 = "Nicht auf dein Profil verlinkt"
+_l.e13178 = "Optional"
 _l.e13179 = "Nicht ausgegebene Liste"
 _l.e13180 = "Ihr Invoice wurde erfolgreich erstellt"
 _l.e13181 = "Ein Fehler ist während des Erstellens des Angebotes aufgetreten"

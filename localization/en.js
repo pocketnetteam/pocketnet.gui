@@ -771,7 +771,7 @@ _l.e13176 = "Address type"
 _l.e13177 = "Upload photo"
 
 _l.requiredfields = "required fields"
-_l.e13178 = "Not linked to your profile"
+_l.e13178 = "Optional"
 _l.e13179 = "Unspent List"
 _l.e13180 = "Your Invoice has Been Successfully Created"
 _l.e13181 = "An Error has Occurred During the offer creating process"
