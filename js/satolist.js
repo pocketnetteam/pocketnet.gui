@@ -19071,6 +19071,69 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                jury: function (p, clbk, cache) {
+
+                    if (!p) p = {};
+
+                    var address = deep(app, 'user.address.value')
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'jury'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+
+                            self.app.platform.sdk.jury.getjuryassigned(address).then((shares) => {
+
+                                console.log(shares);
+
+                                newShares = shares.map((share) => {
+                                    var s = new pShare();
+                                    s._import(share);
+                                    s.txid = share.txid;
+                                    s.time = new Date();
+                                    s.address = share.address;
+                                    s.time.setTime(share.time * 1000);
+                                    s.score = share.scoreSum;
+                                    s.scnt = share.scoreCnt;
+                                    s.edit = false;
+                                    s.info = null;
+                                    s.jury = share.jury;
+                                    return s;
+                                });
+
+                                if (clbk)
+                                    clbk(newShares, null, p);
+
+                            }, (err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            }).catch((err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            });
+
+                        }
+                    })
+                },
+
                 common: function (p, clbk, cache) {
 
                     self.app.user.isState(function (state) {

@@ -3242,7 +3242,7 @@ var lenta = (function(){
 						})
 					}))
 
-					if(!share.temp && !share.relay){
+					if(!share.temp && !share.relay && recommended != 'jury'){
 
 						promises.push(new Promise((resolve, reject) => {
 
@@ -4689,72 +4689,42 @@ var lenta = (function(){
 							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
-							if (loader == 'jury') {
+							self.app.platform.sdk.node.shares[loader]({
 
-								self.app.platform.sdk.jury.getjuryassigned(self.user.address.value).then((shares) => {
+								author : author,
+								begin : _beginmaterial || '',
+								txids : essenseData.txids,
+								height : fixedblock,
+								tagsfilter : tagsfilter,
+								lang: essenseData.lang,
 
-									newShares = shares.map((share) => {
-										var s = new pShare();
-										s._import(share);
-										s.txid = share.txid;
-										s.time = new Date();
-										s.address = share.address;
-										s.time.setTime(share.time * 1000);
-										s.score = share.scoreSum;
-										s.scnt = share.scoreCnt;
-										s.edit = false;
-										s.info = null;
-										return s;
-									});
+								type : type,
 
-									load.sstuff(newShares, false, { count: 0 }, clbk, [], false);
+								count : count,
+								offset : offsetblock,
+								page : page,
+								period : period,
+								tagsexcluded : tagsexcluded
 
-								}, (err) => {
-									console.log(err);
-								}).catch((err) => {
-									console.log(err);
-								});
+							}, function(shares, error, pr){
 
-							} else {
+								offsetblock = offsetblock + period
 
-								self.app.platform.sdk.node.shares[loader]({
+								///
 
-									author : author,
-									begin : _beginmaterial || '',
-									txids : essenseData.txids,
-									height : fixedblock,
-									tagsfilter : tagsfilter,
-									lang: essenseData.lang,
+								if(pr.blocknumber) fixedblock = pr.blocknumber
+								
+								if (essenseData.shuffle) {
+									shares = _.shuffle(shares)
+								}
 
-									type : type,
+								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
 
-									count : count,
-									offset : offsetblock,
-									page : page,
-									period : period,
-									tagsexcluded : tagsexcluded
+								if (recommended == 'b'){
+									beginmaterial = ''
+								}
 
-								}, function(shares, error, pr){
-
-									offsetblock = offsetblock + period
-
-									///
-
-									if(pr.blocknumber) fixedblock = pr.blocknumber
-									
-									if (essenseData.shuffle) {
-										shares = _.shuffle(shares)
-									}
-
-									load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
-
-									if (recommended == 'b'){
-										beginmaterial = ''
-									}
-
-								}, cache)
-
-							}
+							}, cache)
 
 						})
 
