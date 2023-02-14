@@ -1551,6 +1551,8 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 				var localParent = _el.closest('.commentBody')
 
+				var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
@@ -1559,6 +1561,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
+					paddress: post.address,
 					txid : id
 				};
 
