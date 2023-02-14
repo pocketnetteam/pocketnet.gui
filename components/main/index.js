@@ -55,11 +55,11 @@ var main = (function(){
 				label : () => self.app.localization.e('longreads'),
 				value : 'read'
 			},
-			/*{
+			{
 				link : "index?audio=1",
 				label : () => self.app.localization.e('audio'),
 				value : 'audio'
-			},*/
+			},
 
 			{
 				link : "index?r=saved",
