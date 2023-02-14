@@ -36,11 +36,15 @@ class WrappedAxios {
         }
 
         if (typeof arg1 === 'string') {
+            const preparedOpts = {};
+
             preparedOpts.url = arg1;
 
             if (typeof arg2 === 'object') {
                 return { ...preparedOpts, ...arg2 };
             }
+
+            return preparedOpts;
         } else if (typeof arg1 === 'object') {
             return arg1;
         }
