@@ -2075,7 +2075,8 @@ pUserInfo = function(){
 
 		}
 		catch (e){
-			console.log('err addresses', e);
+			self.addresses = []
+			//console.log('err addresses', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial
