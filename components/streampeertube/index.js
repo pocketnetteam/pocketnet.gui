@@ -298,9 +298,9 @@ var streampeertube = (function () {
         header: '',
 
         close: function () {
-          if (ed.closeClbk) {
-            ed.closeClbk();
-          }
+          _.each(self.closed, function(c){
+						c()
+					})
         },
         postRender: function (_wnd, _wndObj, clbk) {
           wndObj = _wndObj;
