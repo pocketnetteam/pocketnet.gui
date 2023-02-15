@@ -55,7 +55,7 @@ var streampeertube = (function () {
           }),
         );
       }
-      debugger;
+
       _.each(self.added, function (a) {
         a(v);
       });

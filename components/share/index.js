@@ -1940,7 +1940,6 @@ var share = (function(){
 					},
 
 					clbk : function(p, element){
-						debugger;
 						external = element;
 
 						external.addclbk('share' + key, actions.videoadded)
