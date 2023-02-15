@@ -19,6 +19,53 @@ var streampeertube = (function () {
 
     var actions = {};
 
+    self.added = {};
+    self.closed = {};
+
+    var add = function (v) {
+      self.app.settings.set('common', 'lastuploadedvideo', {
+        link: v,
+        name: '',
+        wasclbk: !_.isEmpty(self.added),
+      });
+
+      try {
+        var currentUnloadedVideos = JSON.parse(
+          localStorage.getItem('unpostedVideos') || '{}',
+        );
+
+        if (
+          currentUnloadedVideos[self.app.user.address.value] &&
+          typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+        ) {
+          currentUnloadedVideos[self.app.user.address.value].push(v);
+        } else {
+          currentUnloadedVideos[self.app.user.address.value] = [v];
+        }
+
+        localStorage.setItem(
+          'unpostedVideos',
+          JSON.stringify(currentUnloadedVideos),
+        );
+      } catch (error) {
+        localStorage.setItem(
+          'unpostedVideos',
+          JSON.stringify({
+            [self.app.user.address.value]: [v],
+          }),
+        );
+      }
+      debugger;
+      _.each(self.added, function (a) {
+        a(v);
+      });
+
+      if (_.isEmpty(self.added))
+        if (el.c && el.c.closest('.wnd').hasClass('hiddenState')) {
+          sitemessage(self.app.localization.e('importingVideoSuccess'));
+        }
+    };
+
     var events = {
       createStream(clbk = () => {}) {
         if (streamCreated) {
@@ -86,9 +133,11 @@ var streampeertube = (function () {
                 rtmpInput.val(res.rtmpUrl);
                 streamKeyInput.val(res.streamKey);
 
-                actions.added(response.formattedLink);
+                // actions.added(response.formattedLink);
 
                 clbk();
+
+                add(response.formattedLink);
               });
           });
       },
@@ -130,6 +179,21 @@ var streampeertube = (function () {
 
     return {
       primary: primary,
+
+      addclbk : function(index, fun, event){
+				if(!event) event = 'added'
+
+				if (self[event])
+					self[event][index] = fun
+			},
+
+			removeclbk : function(index, event){
+
+				if(!event) event = 'added'
+
+				if (self[event])
+					delete self[event][index]
+			},
 
       getdata: function (clbk, p) {
         ed = p.settings.essenseData;
@@ -269,8 +333,8 @@ var streampeertube = (function () {
   self.stop = function () {
     _.each(essenses, function (essense) {
       window.requestAnimationFrame(() => {
-				essense.destroy();
-			})
+        essense.destroy();
+      });
     });
   };
 

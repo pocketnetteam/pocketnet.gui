@@ -397,7 +397,7 @@ var share = (function(){
 
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo' || type === 'addAudio') {
+				if (type === 'addVideo' || type === 'addAudio' || type === 'addStream') {
 
 					if(currentShare.images.v.length){
 						new dialog({
@@ -1940,7 +1940,7 @@ var share = (function(){
 					},
 
 					clbk : function(p, element){
-
+						debugger;
 						external = element;
 
 						external.addclbk('share' + key, actions.videoadded)
