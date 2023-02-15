@@ -12,6 +12,9 @@
 		}
 	}*/
 }
+#leftpanel .downloadapplication {
+  margin-bottom: 1em;
+}
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
