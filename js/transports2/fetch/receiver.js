@@ -42,11 +42,7 @@ class FetchReceiver {
                 }
 
                 const bytesArr = bodyBytes.flat();
-                const bytesUint8 = Uint8Array.from(bytesArr);
-
-                const textDec = new TextDecoder('utf-8');
-
-                message.data.body = textDec.decode(bytesUint8);
+                message.data.body = Uint8Array.from(bytesArr);
             }
         }
 
