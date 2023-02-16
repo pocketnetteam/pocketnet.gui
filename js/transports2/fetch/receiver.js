@@ -30,20 +30,6 @@ class FetchReceiver {
 
         if (data) {
             message.data = data;
-
-            if (data.body instanceof ReadableStream) {
-                const reader = data.body.getReader();
-
-                let bodyBytes = [];
-                let result;
-
-                while (!(result = await reader.read()).done) {
-                    bodyBytes.push([...result.value]);
-                }
-
-                const bytesArr = bodyBytes.flat();
-                message.data.body = Uint8Array.from(bytesArr);
-            }
         }
 
         this.broadcastChannel.postMessage(message);
@@ -84,7 +70,7 @@ class FetchReceiver {
     }
 
     static init(broadcastChannelName) {
-        const serializeRequest = (request) => {
+        const serializeRequest = async (request) => {
             const instanceToObject = (instance) => {
                 const originalClass = instance || {};
                 const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(originalClass));
@@ -116,6 +102,21 @@ class FetchReceiver {
 
                 return preparedHeaders;
             };
+            const prepareBody = async (body) => {
+                if (body instanceof ReadableStream) {
+                    const reader = body.getReader();
+
+                    let bodyBytes = [];
+                    let result;
+
+                    while (!(result = await reader.read()).done) {
+                        bodyBytes.push([...result.value]);
+                    }
+
+                    const bytesArr = bodyBytes.flat();
+                    return Uint8Array.from(bytesArr);
+                }
+            };
 
             const preparedRequest = {};
 
@@ -127,8 +128,13 @@ class FetchReceiver {
 
             const requestParams = Object.keys(requestObject);
 
-            requestParams.forEach((paramName) => {
+            for (let i = 0; i < requestParams.length; i++) {
+                const paramName = requestParams[i];
+
                 switch (paramName) {
+                    case 'body':
+                        preparedRequest.body = await prepareBody(requestObject.body);
+                        break;
                     case 'headers':
                         preparedRequest.headers = prepareHeaders(requestObject.headers);
                         break;
@@ -138,7 +144,7 @@ class FetchReceiver {
                     default:
                         preparedRequest[paramName] = requestObject[paramName];
                 }
-            });
+            }
 
             return preparedRequest;
         }
@@ -154,19 +160,19 @@ class FetchReceiver {
             const abortController = new AbortController();
             const abortSignal = abortController.signal;
 
-            const override1 = (url, options = {}) => {
+            const override1 = async (url, options = {}) => {
                 reqUrl = url;
 
-                const serializedOptions = serializeRequest(options);
+                const serializedOptions = await serializeRequest(options);
 
                 self.sendRequest(requestId, { ...serializedOptions, url });
             };
 
-            const override2 = (request, options = {}) => {
+            const override2 = async (request, options = {}) => {
                 reqUrl = request.url;
 
-                const serializedRequest = serializeRequest(request);
-                const serializedOptions = serializeRequest(options);
+                const serializedRequest = await serializeRequest(request);
+                const serializedOptions = await serializeRequest(options);
 
                 self.sendRequest(requestId, { ...serializedRequest, ...serializedOptions });
             };
