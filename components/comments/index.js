@@ -1645,7 +1645,7 @@ var comments = (function(){
 											var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
-											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()
