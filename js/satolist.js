@@ -31365,9 +31365,11 @@ Platform = function (app, listofnodes) {
 
 				},
 				onEnded:(call) => {
+                    console.log("HERE")
                     self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+                    console.log("HERE2")
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()

@@ -2422,7 +2422,7 @@ Application = function(p)
     fullscreenmode : function(v){
 
       var cl = function(){
-        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+        v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
         v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
       }
       
