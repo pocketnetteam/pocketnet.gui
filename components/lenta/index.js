@@ -2261,6 +2261,52 @@ var lenta = (function(){
 				_.each(willshowed, function(share){
 					actions.shareReturnAfterOptimization(share)
 				})
+			},
+
+			getJuryShare : function(id) {
+
+				let juryShares = self.app.platform.sdk.node.shares.storage['jury']
+				if (!juryShares || juryShares.length <= 0)
+					return;
+
+				let s = juryShares.filter((s) => s.txid == id);
+				if (s.length > 0)
+					return s[0]
+
+			},
+
+			sendJuryVote : function(share, verdict, clbk) {
+
+				if (!share || !share.jury || !share.jury.juryid || (verdict != 0 && verdict != 1))
+					return;
+
+				var modVote = share.modVote(share.jury.juryid, verdict);
+
+				topPreloader(30);
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					modVote,
+
+					function(tx, error){
+
+						topPreloader(100)
+
+						if(!tx){
+
+							self.app.platform.errorHandler(error, true)
+
+						} else {
+
+							successCheck()
+							sitemessage(self.app.localization.e('juryvote_success'))
+							if (clbk)
+								clbk()
+
+						}
+
+					}
+				)
+
 			}
 
 		}
@@ -2850,7 +2896,26 @@ var lenta = (function(){
 			loadprev : function(){
 				actions.loadprev();
 
-			}
+			},
+
+			modVoteYes : function(){
+				var id = $(this).closest('.share').attr('id');
+				if(!id) id = $(this).closest('.truerepost').attr('stxid')
+				let s = actions.getJuryShare(id)
+				actions.sendJuryVote(s, 1, function() {
+					// Vote sent successfully, remove share from view
+					s.hasVoted = true;
+				});
+			},
+			modVoteNo : function(){
+				var id = $(this).closest('.share').attr('id');
+				if(!id) id = $(this).closest('.truerepost').attr('stxid')
+				let s = actions.getJuryShare(id)
+				actions.sendJuryVote(s, 0, function() {
+					// Vote sent successfully, remove share from view
+					s.hasVoted = true;
+				});
+			},
 		}
 
 		var renders = {
@@ -4842,6 +4907,8 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
+			el.c.on('click', '.jury-buttons .yes', events.modVoteYes)
+			el.c.on('click', '.jury-buttons .no', events.modVoteNo)
 
 			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
 

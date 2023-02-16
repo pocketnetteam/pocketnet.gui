@@ -19115,6 +19115,8 @@ Platform = function (app, listofnodes) {
                                     return s;
                                 });
 
+                                storage[key] = newShares;
+
                                 if (clbk)
                                     clbk(newShares, null, p);
 
@@ -22032,6 +22034,10 @@ Platform = function (app, listofnodes) {
 
                     modFlag: function (inputs, modFlag, clbk, p) {
                         this.common(inputs, modFlag, TXFEE, clbk, p)
+                    },
+
+                    modVote: function (inputs, modVote, clbk, p) {
+                        this.common(inputs, modVote, TXFEE, clbk, p)
                     },
 
                     comment: function (inputs, comment, /*fees, */clbk, p) {

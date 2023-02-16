@@ -2496,3 +2496,4 @@ _l.createPost = "Create and publish the post";
 
 _l.jury = "Jury"
 _l.juryquestion = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
