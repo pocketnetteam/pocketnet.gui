@@ -105,7 +105,6 @@
       "cordova-plugin-insomnia": {},
       "cordova-plugin-taptic-engine": {},
       "cordova-plugin-background-download": {},
-      "cordova-plugin-fullscreen": {},
       "cordova-plugin-firebasex": {
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
         "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
