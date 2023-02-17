@@ -2066,7 +2066,7 @@ var comments = (function(){
 						})
 					})
 
-					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+					bgImagesCl(_p.el).then(() => {
 
 						if(!el.c) return
 

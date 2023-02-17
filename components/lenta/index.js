@@ -3795,25 +3795,6 @@ var lenta = (function(){
 
 								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
 							})
-
-							/*var aspectRatio = 0
-							
-							_.each(image.images, function(img){
-								var _img = img.img;
-
-								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-							})
-
-							if (aspectRatio){
-
-								if(aspectRatio > 1.66) aspectRatio = 1.66
-
-								ch = Math.min(400, cwidth ) * aspectRatio
-
-								sel.find('.imagesWrapper').height(ch)
-							}*/
 							
 						}
 						else{
@@ -3826,9 +3807,6 @@ var lenta = (function(){
 								var el = $(image.elements[n]).closest('.imagesWrapper');
 
 								var ac = '';
-
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
 
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()

@@ -607,6 +607,7 @@ var imagegallery = (function(){
 
 				delete self.app.events.resize.imagegallery
 
+				essenseData = null
 
 				making = false;
 
