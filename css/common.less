@@ -459,9 +459,7 @@
 
                 cursor: pointer;
 
-                &:hover{
-                    color: rgb(var(--color-txt-ac)); 
-                }
+               
             }
 
             .notificationturn {
@@ -579,12 +577,6 @@
             border-radius: 18px;
             overflow: hidden;
 
-            @media (pointer:fine) {
-
-                &:hover{
-                    opacity: 0.9;
-                }
-            }
         }
 
 
@@ -1211,10 +1203,7 @@
                         color : rgb(var(--color-txt-orange));	
                     }
                     .icon{
-                        border-radius : 0;
-                        box-shadow: none;
                         color : rgb(var(--color-txt-orange));
-                        background: transparent;
                     }
                 }
             }
@@ -2622,9 +2611,6 @@ html.mobileview.ios{
         border-radius: 10000px;
     }
 
-    &:hover::after {
-        color: var(--lineColor);
-    }
 
     &[data-loading=false]::after {
         content: '\f04b';

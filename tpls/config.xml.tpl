@@ -177,7 +177,7 @@
         </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">

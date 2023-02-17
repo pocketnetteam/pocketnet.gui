@@ -581,6 +581,7 @@
   Background.prototype = Object.create( LoadingImage.prototype );
   
   Background.prototype.check = function() {
+
     this.img.addEventListener( 'load', this );
     this.img.addEventListener( 'error', this );
     this.img.src = this.url;

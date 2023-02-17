@@ -611,8 +611,9 @@ var imagegallery = (function(){
 				making = false;
 
 				_.each(hammers, function(h, i){
-					if(h) h.destroy
-					hammers[i] = null
+					if(h && h.destroy) h.destroy()
+
+						hammers[i] = null
 				})
 
 				//self.app.nav.api.history.removeParameters(['i', 'num', 's', 'com'])

@@ -27894,7 +27894,7 @@ Platform = function (app, listofnodes) {
                 destroyclbk: destroyclbk
             }
 
-            bgImages(el)
+            bgImagesCl(el)
 
 
             self.fastMessages.push(message);
@@ -29716,7 +29716,6 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -29733,23 +29732,6 @@ Platform = function (app, listofnodes) {
 
                 clbk();
             });
-
-            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
-
-                bastyonhelperOpened = true
-
-                setTimeout(function(){
-
-                    app.nav.api.load({
-                        open : true,
-                        id : 'bastyonhelper',
-                        inWnd : true,
-                    })
-
-                }, 1000)
-
-            }*/
-
 
 
         }).catch(e => {

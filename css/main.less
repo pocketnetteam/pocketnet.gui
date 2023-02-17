@@ -11,6 +11,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
+ 
 :root{
     --background-hidden-layer: 255, 255, 255;
     --background-total-theme: 255, 255, 255;
@@ -129,6 +130,7 @@
     --color-yellow : 255, 238, 0;
     --color-not-catchy-grey: 94, 98, 100;
 }
+
 
 :root[theme='gray']{
     --background-hidden-layer:  12, 12, 12; //@color-black
@@ -356,8 +358,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-    overscroll-behavior: none;
-    scroll-behavior: smooth;
+    
     
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -402,10 +403,7 @@ html {
     height: 16px;
 }
 
-.disable-hover,
-.disable-hover * {
-  pointer-events: none !important;
-}
+
 
 .fadeoverflow{
     -webkit-mask-image: linear-gradient(to left, transparent 3%, black 10%);
@@ -960,7 +958,7 @@ button{
     }
 }
 ///// HOVER REFACTORING
-@media (pointer:fine) {
+@media (pointer:hover) {
     button{
 
         &:hover{
@@ -988,7 +986,7 @@ button{
         &.black{
             &:hover{
                 background: rgba(var(--background-main-contrast), 0.3);
-                border: 1px solid rgba(var(--background-main-contrast), 0.3);
+                border-color: rgba(var(--background-main-contrast), 0.3);
                 color : rgb(var(--text-on-bg-ac-color));
             }
         }
@@ -1110,6 +1108,7 @@ l{
 
 .radio{
     label {
+        cursor: pointer;
         display: block;
         margin-bottom: 2 * @rhythm;
 
@@ -1137,9 +1136,7 @@ l{
     label > input:checked + i {
         background: rgb(var(--color-bg-ac));
     }
-    label:hover {
-        cursor: pointer;
-    } 
+
 }
 
 pie {
@@ -1696,11 +1693,11 @@ html.mobileview{
             }
         }
     }
-    @media (pointer:fine) {
+    @media (pointer:hover) {
        
         &:hover{
             .tstars{
-                display: none;
+                visibility: hidden;
             }
         }
     }
@@ -1721,33 +1718,16 @@ html.mobileview{
             }
         }
 
-        @media (pointer:fine) {
+        @media (pointer:hover) {
             &:hover{
                 .tstars{
-                    display: block;
+                    visibility: visible;
                 }
             }
         }
 
     }
 
-    /*&.disabled{
-        cursor: default!important;
-
-        [value]{
-            cursor: default!important;
-            .disabled()
-        }
-
-        @media (pointer:fine) {
-            &:hover{
-                .tstars{
-                    display: block;
-                }
-            }
-        }
-
-    }*/
     
 }
 
@@ -1773,7 +1753,7 @@ html.mobileview{
             background: rgb(var(--color-bg-ac));
             border-color: rgb(var(--color-bg-ac));
 
-            @media (pointer:fine) {
+            @media (pointer:hover) {
                 &:hover{
                     background: transparent;
                     color: rgb(var(--color-bg-ac));
@@ -1862,7 +1842,7 @@ html.mobileview{
             display: none;
         }
 
-        @media (pointer:fine) {
+        @media (pointer:hover) {
             &:hover{
                 .fa-search{
                     color : rgb(var(--color-txt-ac));
@@ -1898,7 +1878,7 @@ html.mobileview{
                     color : rgb(var(--neutral-grad-2));
                 }
 
-                @media (pointer:fine) {
+                @media (pointer:hover) {
                     &:hover{
                         color: rgb(var(--color-txt-ac));
                     }
@@ -1983,7 +1963,7 @@ html.mobileview{
 }
 
 .hoverColorChange{
-    @media (pointer:fine) {
+    @media (pointer:hover) {
         &:hover{
             animation: colorChange 5s infinite ease-in-out;
         }
@@ -2185,7 +2165,7 @@ html.mobileview{
 
         }
 
-        @media (pointer:fine) {
+        @media (pointer:hover) {
             &:hover{
                 &:before {
                     border-color: rgb(var(--color-bg-ac));
@@ -2199,7 +2179,7 @@ html.mobileview{
             &:before {             
               
             }
-            @media (pointer:fine) {
+            @media (pointer:hover) {
                 &:hover{
                     &:before {
                         color: rgb(var(--neutral-grad-2));
@@ -2213,7 +2193,7 @@ html.mobileview{
         &+label {
             cursor: default;
 
-            @media (pointer:fine) {
+            @media (pointer:hover) {
                 &:hover{
                     &:before {
                         border-color: rgb(var(--neutral-grad-2));
@@ -2223,7 +2203,7 @@ html.mobileview{
         }
         &:checked {
             &+label{
-                @media (pointer:fine) {
+                @media (pointer:hover) {
                     &:hover{
                         &:before {
                             color: rgb(var(--color-bg-ac));
@@ -2582,7 +2562,7 @@ input[type=radio].radio:checked + label {
     cursor: pointer;
     .shadowText();
 
-    @media (pointer:fine) {
+    @media (pointer:hover) {
         &:hover{
             background : rgba(var(--background-total-theme), 0.2);
             .shadowSmaller();
@@ -2592,7 +2572,7 @@ input[type=radio].radio:checked + label {
     &.onwhite{
         color : rgb(var(--text-color));
 
-        @media (pointer:fine) {
+        @media (pointer:hover) {
             &:hover{
                 background : rgba(var(--background-main-contrast), 0.1);
                 color : rgb(var(--text-on-bg-ac-color));
@@ -3425,7 +3405,7 @@ html.mobileview.android{
             color : #fff;
             border : 1px solid rgb(var(--color-bg-orange)); 
 
-            @media (pointer:fine) {
+            @media (pointer:hover) {
 
                 &:hover{
                     border : 1px solid rgb(var(--color-bg-orange)); 
