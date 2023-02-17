@@ -2041,9 +2041,9 @@ var comments = (function(){
 						})
 					})
 
-					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+					//_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(!el.c) return
+						//if(!el.c) return
 
 						/*var elimages = _p.el.find('.imagesEmbWr')
 
@@ -2068,7 +2068,7 @@ var comments = (function(){
 
 						elimages.isotope()*/
 						
-					}, self.app);
+					//}, self.app);
 
 					
 				})

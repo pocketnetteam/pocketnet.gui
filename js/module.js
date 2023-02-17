@@ -560,64 +560,67 @@ nModule = function(){
 		beforegetdata(settings, function(){
 			self.user.isState(function(state){	
 				
-				
-				settings.getdata(function(data, err){
+				window.requestAnimationFrame(() => {
 
-					if(err){
+					settings.getdata(function(data, err){
 
-						topPreloader(100);
+						if(err){
 
-						if(globalpreloaderTimer){
+							topPreloader(100);
 
-							globalpreloader(false)
+							if(globalpreloaderTimer){
 
-							clearTimeout(globalpreloaderTimer)
-						}
+								globalpreloader(false)
 
-						return
-					}
-
-					topPreloader(45);
-
-					settings.data = data || {};
-
-					if(p.preshell) p.preshell();
-
-					self.shell(settings, function(p){
-
-						if(globalpreloaderTimer){
-
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
-						topPreloader(100);	
-
-						p.clbk = addToFunction(p.clbk, function(){
-
-							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-								self.app.actions.scrollToTop()
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							if (settings.auto){
-								settings.auto(p)
+							return
+						}
+
+						topPreloader(45);
+
+						settings.data = data || {};
+
+						if(p.preshell) p.preshell();
+
+						self.shell(settings, function(p){
+
+							if(globalpreloaderTimer){
+
+								globalpreloader(false)
+
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							//p = null
+							topPreloader(100);	
 
-						})				
+							p.clbk = addToFunction(p.clbk, function(){
+
+								if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+									self.app.actions.scrollToTop()
+								}
+
+								if (settings.auto){
+									settings.auto(p)
+								}
+
+								//p = null
+
+							})				
 
 
-						if (settings.init)
-							settings.init(p)
+							if (settings.init)
+								settings.init(p)
 
-					}, frommodule)
+						}, frommodule)
 
-				}, {
-					state : state,
-					settings : settings
-				});	
+					}, {
+						state : state,
+						settings : settings
+					});	
+
+				})
 
 			})
 		})

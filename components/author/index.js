@@ -1466,8 +1466,6 @@ var author = (function(){
 			author = {};
 
 			if (address){
-
-				
 				
 				author.address = address
 
@@ -1587,6 +1585,9 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 
+				console.log("getdata")
+
+
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent')
 				})
@@ -1620,6 +1621,8 @@ var author = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROY")
 
 				if(el.c) el.c.empty()
 
