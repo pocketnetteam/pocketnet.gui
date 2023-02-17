@@ -12357,7 +12357,7 @@ var connectionSpeed = function()
 };
 
 /*test*/
-
+/*
 Window.prototype._addEventListener = Window.prototype.addEventListener;
 
 Window.prototype.addEventListener = function(a, b, c) {
@@ -12450,4 +12450,4 @@ EventTarget.prototype.removeEventListener = function(a, b ,c) {
 	}
   
 	return elements.sort();
-  }
+  }*/
