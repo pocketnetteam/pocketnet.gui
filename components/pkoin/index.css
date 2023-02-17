@@ -203,6 +203,21 @@
   cursor: default;
   background: rgb(var(--color-bg-ac-1));
 }
+#pkoin .boostinfoblocks .showMore .hide {
+  display: block;
+}
+#pkoin .boostinfoblocks .showMore .show {
+  display: none;
+}
+#pkoin .boostinfoblocks.hiddenBlocks .showMore .hide {
+  display: none;
+}
+#pkoin .boostinfoblocks.hiddenBlocks .showMore .show {
+  display: block;
+}
+#pkoin .boostinfoblocks.hiddenBlocks .boostinfodata {
+  display: none;
+}
 #pkoin .boostinfodata {
   text-align: center;
   margin-top: 0.5em;

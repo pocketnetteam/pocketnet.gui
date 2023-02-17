@@ -2055,7 +2055,6 @@ input[type=radio].radio:checked + label {
 }
 .m-message-container .notificationWrapper {
   display: block;
-  max-width: none;
   /*width: 100%*/
   font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -2084,6 +2083,8 @@ input[type=radio].radio:checked + label {
 }
 .m-message-container .notificationWrapper .m-message-content {
   flex-grow: 1;
+  max-width: 450px;
+  overflow: hidden;
 }
 .m-message-container .notificationWrapper .m-message-content .listPreview {
   cursor: pointer;
@@ -2139,6 +2140,11 @@ input[type=radio].radio:checked + label {
   white-space: nowrap;
   text-align: left;
   max-width: 150px;
+}
+.m-message-container .notificationWrapper .m-message-content .listPreview .previewMessage label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .m-message-container .notificationWrapper .m-message-icons {
   float: none;
@@ -6594,6 +6600,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   width: 100%;
   background: transparent!important;
   will-change: transform;
+  box-shadow: none!important;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   backface-visibility: hidden;

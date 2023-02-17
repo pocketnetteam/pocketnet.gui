@@ -108,6 +108,12 @@ var Server = function(settings, admins, manage){
             
         });
 
+        app.use('/proxylogs', express.static('logs', {
+            setHeaders : function(res){
+                res.setHeader('Access-Control-Allow-Origin', '*');
+            }
+        }));
+
         if(!printstatsInterval)
             printstatsInterval = setInterval(function(){
                 middle.printstats()

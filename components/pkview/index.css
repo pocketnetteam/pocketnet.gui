@@ -158,6 +158,7 @@
   }
   .wnd.pkviewwnd #pkview .mnemonicKey {
     height: 90px;
+    font-size: 1.2em;
   }
   .wnd.pkviewwnd #pkview .mnemonicKeyTable > div.iconWrapper {
     padding: 0;
@@ -165,10 +166,5 @@
   }
   .wnd.pkviewwnd #pkview .mnemonicKeyTable > div.iconWrapper img {
     margin: 0 auto;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .wnd.pkviewwnd #pkview .mnemonicKey {
-    font-size: 5vw;
   }
 }

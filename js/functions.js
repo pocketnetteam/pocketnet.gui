@@ -913,7 +913,7 @@
 
 				}
 
-				if (!isMobile()){
+				if (!isTablet()){
 					cl()
 				}
 				else{

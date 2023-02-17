@@ -85,6 +85,14 @@ if(activity.txType === 204)
 		<% if(activity.description) { %>
 		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
 		<% } %>
+			<% if(activity.description.images) {
+		%>
+		<div class="images">
+			<%_.each(activity.description.images, function(image){%>
+				<img src="<%-decodeURIComponent(image)%>" alt="">
+			<% }) %>
+		</div>
+		<% } %>
 		<div class="date"><%- activity.date.calendar() %></div>
 	</div>
 	<% if(activity.value) {%>

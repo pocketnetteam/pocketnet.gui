@@ -47,6 +47,7 @@
     "cordova-ios": "^6.2.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^2.0.2",
+    "cordova-plugin-android-enumeratedevices": "file:cordova-plugin-android-enumeratedevices",
     "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
     "cordova-plugin-audioinput": "^1.0.2",
     "cordova-plugin-background-download": "0.0.2",
@@ -74,6 +75,7 @@
   },
   "cordova": {
     "plugins": {
+      "cordova-plugin-android-enumeratedevices": {},
       "cordova-plugin-device": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-badge": {},
