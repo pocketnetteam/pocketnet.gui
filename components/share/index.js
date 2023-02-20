@@ -1357,7 +1357,7 @@ var share = (function(){
 
 					icon.attr('image', src);
 
-					bgImages(el.c.find('.icon'))
+					bgImagesCl(el.c.find('.icon'))
 				}
 				else
 				{
