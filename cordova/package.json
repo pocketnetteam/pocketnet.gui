@@ -51,7 +51,7 @@
     "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
     "cordova-plugin-audioinput": "^1.0.2",
     "cordova-plugin-background-download": "0.0.2",
-    "cordova-plugin-background-mode": "file:cordova-plugin-run-in-background",
+    "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-badge": "file:cordova-plugin-badge",
     "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-camera-preview": "^0.12.3",
@@ -105,7 +105,6 @@
       "cordova-plugin-insomnia": {},
       "cordova-plugin-taptic-engine": {},
       "cordova-plugin-background-download": {},
-      "cordova-plugin-fullscreen": {},
       "cordova-plugin-firebasex": {
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
         "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
@@ -146,7 +145,6 @@
       "cordova-plugin-vibration": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-actionsheet": {},
-      "cordova-plugin-background-mode": {},
       "cordova-plugin-media": {
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
       },

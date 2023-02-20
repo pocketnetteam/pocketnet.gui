@@ -33,7 +33,7 @@
   bottom: 0;
   padding: 1.5em 1em;
   background: rgba(var(--background-secondary-theme), 0.9);
-  z-index: 150;
+  z-index: 6;
 }
 #share.loading .sLoader {
   display: block;

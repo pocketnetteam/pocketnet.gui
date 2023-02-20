@@ -177,7 +177,7 @@
         </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -186,12 +186,11 @@
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
             <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
+            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
