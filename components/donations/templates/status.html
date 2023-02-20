@@ -1,9 +1,9 @@
-<% if(info.Status == 'AWAITINGFUNDS') {%>
+<% if(info.status == 'AWAITINGFUNDS') {%>
 
-	<%=e('e13074')%> <b> <%- info.MinutesLeft %> <%=e('minutes')%></b>
+	<%=e('e13074')%> <b> <%- info.minutesLeft %> <%=e('sminutes')%></b>
 
 <% } %>
 
-<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
+<% if(info.status == 'EXPIREDAWAITINGFUNDS') {%>
 	<%=e('e13075')%> <div class="reactivate"><%=e('reactivate')%></div>
 <% } %>

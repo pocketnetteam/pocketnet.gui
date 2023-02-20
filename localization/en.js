@@ -620,6 +620,10 @@ _l.e13085 = "Link to your "+appname+" profile will be listed below driving more 
 _l.e13086 = "Support Decentralized Web Now"
 _l.e13087 = "Bitcoin, Litecoin"
 
+_l.supportFormTitle = "Do you have any questions about donates? Contact us"
+
+
+
 _l.e13088 = ""+appname+" members who donated to support "+appname+""
 _l.thankyou = "Thank you!"
 _l.e13089 = "If you would like us to list your "+appname+" profile in the list of donors, please send us information about your donation"

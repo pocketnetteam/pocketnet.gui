@@ -8,6 +8,7 @@
 		font-size : 2em;
 		padding-top : 2 * @rhythm;
 		position: relative;
+		text-align: center;
 	}
 
 	.text{
@@ -134,6 +135,272 @@
 					color : rgb(var(--color-txt-ac));
 				}
 			}
+		}
+	}
+
+	.supportForm{
+		max-width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+		padding : 4 * @rhythm 0;
+		position: relative;
+
+
+		.require{
+			color : rgb(var(--color-bad));
+		}
+
+		.reqsnoska{
+			font-size: 0.7em;
+		}
+
+		.upanelloader{
+			display: none;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 65px;
+			bottom: 0;
+			padding :  4 * @rhythm 4 * @rhythm;
+			background: rgb(var(--background-secondary-theme));
+
+			.table{
+				>div{
+					vertical-align: middle;
+					text-align: center;
+				}
+			}
+		}
+
+		&.loading{
+			.upanelloader{
+				display: block;
+			}
+		}
+		
+		.pgroupIconWrapper{
+			margin-bottom: 6 * @rhythm;
+			
+			.pgroup{
+				height: 100%;
+				margin-bottom : 0;
+			}
+
+			.upload .fileUploader, .upload .fileUploader .elContent{
+				position: relative;
+			}
+		}
+		.pgroup{
+			margin-bottom: 6 * @rhythm;
+		}
+
+		.uploadPhoto{
+			height: 60px;
+		}
+
+		.uploadTable{
+
+			>div{
+				vertical-align: middle;
+				&.iconWrapper{
+
+					width : 85px;
+					.usericon{
+						width : 60px;
+						height: 60px;
+						line-height: 60px;
+					}
+					
+				}
+
+				&.label{
+					font-weight: 700;
+					font-size: 0.9em;
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+		}
+	
+		.referalMaketWrapper{
+			margin-top : @rhythm;
+			>div{
+				vertical-align: middle;
+
+				&.refLabel{
+					padding-top: @rhythm;
+					padding-right : @rhythm;
+					width: 190px;
+
+					.span{
+						color : rgb(var(--color-txt-ac));
+						font-weight: 700;
+					}
+				}
+
+				.refNameTable{
+
+					>div{
+						vertical-align: middle;
+
+						&.refAv{
+							width: 40px;
+
+							.usericon{
+								width: 40px;
+								height: 40px;
+							}
+						}
+						&.refName{
+							padding-left: 2 * @rhythm;
+							padding-right: 2 * @rhythm;
+						}
+
+						&.refRemove{
+							width: 30px;
+							text-align: center;
+							.transition(0.3s);
+							cursor: pointer;
+
+							&:hover{
+								color : rgb(var(--color-txt-ac));
+							}
+						}
+
+
+					}					
+				}
+			}
+		}
+
+		.parameter{
+			max-width: 600px;
+			width: 100%;
+
+			>div{
+				padding: @rhythm 0;
+				vertical-align: top;
+			}
+
+			.pName{
+				vertical-align: top;
+				padding-top: 2 * @rhythm;
+				padding-right : @rhythm;
+				width: 190px;
+
+				.pNameW{
+					padding-top : @rhythm  / 3;
+					font-weight: 700;
+					font-size: 0.8em;
+					line-height: 1.4em;
+				}
+				
+			}
+
+			.pInput{
+				position: relative;
+				vertical-align: top;
+
+				.vm_valuesmulti{
+					padding-top: @rhythm / 2;
+				}
+			}
+
+		}
+	
+
+		.subcaption{
+			margin-bottom : 2 * @rhythm;
+			font-size: 2em;
+			font-weight: 100;
+		}
+
+		.upanel{
+			margin-top: 2 * @rhythm;
+			overflow: hidden;
+			>div{
+				float: left;
+				margin-right: 2 * @rhythm;
+
+				button{
+					min-width : 170px;
+					
+					&.cancel{
+
+					}
+				}
+
+				.save{
+					cursor: default;
+					background: rgb(var(--neutral-grad-2));
+					border-color : rgb(var(--neutral-grad-2));
+					color: #fff;
+				}
+
+				&.loadingToB{
+
+					display: none;
+
+					.label{
+						font-weight: 500;
+						font-size: 0.85em;
+						color : rgb(var(--color-bg-ac));
+						padding-top : @rhythm;
+					}
+				}
+
+				&.cancelwr{
+					display: none;
+
+				}
+			}
+
+
+
+			&.changes{
+				>div{
+					float: left;
+					margin-right: 2 * @rhythm;
+
+					.save{
+						cursor: pointer;
+						background: rgb(var(--color-bg-ac));
+						border-color : rgb(var(--color-bg-ac));
+
+						&:hover{
+							background : rgb(var(--color-txt-gray-dark));
+						}
+					}
+
+					&.cancelwr{
+						display: block;
+					}
+				}
+				
+			}
+
+			&.wait{
+				>div{
+					display: none;
+
+					&.cancelwr{
+						display: none;
+					}
+
+					&.loadingToB{
+						display: block;
+					}
+				}
+			}
+		
+		}
+
+		input, textarea, .text{
+			padding: @rhythm;
+		}
+
+		.send{
+			padding-left: @rhythm * 6;
+			padding-right: @rhythm * 6;
 		}
 	}
 

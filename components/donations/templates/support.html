@@ -1,0 +1,60 @@
+<div class="caption">
+	<%=e('supportFormTitle')%>
+</div>
+<div class="text">
+	<% _.each(supportOptions, function(parameter){ %>
+
+		<div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+			<div class="parameter table <%-parameter.type%>">
+	
+				<div class="pName">
+					<div class="pNameW">
+						<%= parameter.name %><% 
+							var unit = deep(parameter, 'format.Unit');
+	
+							if(unit) { %>, <span class="unit"><%-unit%></span>
+	
+						<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
+						
+						<% if(parameter.require){ %>
+	
+							<span class="require">*</span>
+							
+	
+						<% } %>
+	
+						
+					</div>
+	
+					
+	
+				</div>
+	
+				<div class="pInput">
+					<%= parameter.input({
+						init : true
+					}) %>
+				</div>
+	
+	
+	
+				
+	
+			</div>
+	
+	
+			<% if(parameter.id == 'name') { %>
+				<div class="errorname">
+					<span></span>
+				</div>
+			<% } %>
+			
+		</div>
+	
+	<% }) %>
+</div>
+<div>
+	<button elementsid="formsend" class="button send">
+		<%=e('send')%>
+	</button>
+</div>

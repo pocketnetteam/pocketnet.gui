@@ -13104,32 +13104,27 @@ Platform = function (app, listofnodes) {
             },
             status: function (currency, address, clbk) {
 
+                fetch(`https://pkoin.net/Shifter/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETPOCDEALSTATUS',
-                        Currency: currency,
-                        Address: address
-                    },
-                    success: function (d) {
-
-
-                        if (d.Deal) {
-                            if (clbk)
-                                clbk(null, d.Deal)
-                        }
-                        else {
-                            if (clbk)
-                                clbk('empty', null)
-                        }
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
+					return d.json();
+				
+                }).then(function(d){
+                    
+                    if (d[0]) {
+                        if (clbk)
+                            clbk(null, d[0])
                     }
+                    else {
+                        if (clbk)
+                            clbk('empty', null)
+                    }
+                }).catch(function(err){
+
+                    if (clbk) {
+                        clbk('server')
+                    }    
                 })
+                
 
             },
 

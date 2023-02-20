@@ -6,6 +6,7 @@
   font-size: 2em;
   padding-top: 1em;
   position: relative;
+  text-align: center;
 }
 #donations .text {
   padding: 1.5em 0;
@@ -110,6 +111,204 @@
 }
 #donations .ways .back span:hover {
   color: rgb(var(--color-txt-ac));
+}
+#donations .supportForm {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2em 0;
+  position: relative;
+}
+#donations .supportForm .require {
+  color: rgb(var(--color-bad));
+}
+#donations .supportForm .reqsnoska {
+  font-size: 0.7em;
+}
+#donations .supportForm .upanelloader {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 65px;
+  bottom: 0;
+  padding: 2em 2em;
+  background: rgb(var(--background-secondary-theme));
+}
+#donations .supportForm .upanelloader .table > div {
+  vertical-align: middle;
+  text-align: center;
+}
+#donations .supportForm.loading .upanelloader {
+  display: block;
+}
+#donations .supportForm .pgroupIconWrapper {
+  margin-bottom: 3em;
+}
+#donations .supportForm .pgroupIconWrapper .pgroup {
+  height: 100%;
+  margin-bottom: 0;
+}
+#donations .supportForm .pgroupIconWrapper .upload .fileUploader,
+#donations .supportForm .pgroupIconWrapper .upload .fileUploader .elContent {
+  position: relative;
+}
+#donations .supportForm .pgroup {
+  margin-bottom: 3em;
+}
+#donations .supportForm .uploadPhoto {
+  height: 60px;
+}
+#donations .supportForm .uploadTable > div {
+  vertical-align: middle;
+}
+#donations .supportForm .uploadTable > div.iconWrapper {
+  width: 85px;
+}
+#donations .supportForm .uploadTable > div.iconWrapper .usericon {
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+}
+#donations .supportForm .uploadTable > div.label {
+  font-weight: 700;
+  font-size: 0.9em;
+  color: rgb(var(--color-txt-ac));
+}
+#donations .supportForm .referalMaketWrapper {
+  margin-top: 0.5em;
+}
+#donations .supportForm .referalMaketWrapper > div {
+  vertical-align: middle;
+}
+#donations .supportForm .referalMaketWrapper > div.refLabel {
+  padding-top: 0.5em;
+  padding-right: 0.5em;
+  width: 190px;
+}
+#donations .supportForm .referalMaketWrapper > div.refLabel .span {
+  color: rgb(var(--color-txt-ac));
+  font-weight: 700;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div {
+  vertical-align: middle;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div.refAv {
+  width: 40px;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div.refAv .usericon {
+  width: 40px;
+  height: 40px;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div.refName {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div.refRemove {
+  width: 30px;
+  text-align: center;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+#donations .supportForm .referalMaketWrapper > div .refNameTable > div.refRemove:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#donations .supportForm .parameter {
+  max-width: 600px;
+  width: 100%;
+}
+#donations .supportForm .parameter > div {
+  padding: 0.5em 0;
+  vertical-align: top;
+}
+#donations .supportForm .parameter .pName {
+  vertical-align: top;
+  padding-top: 1em;
+  padding-right: 0.5em;
+  width: 190px;
+}
+#donations .supportForm .parameter .pName .pNameW {
+  padding-top: 0.5em / 3;
+  font-weight: 700;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+#donations .supportForm .parameter .pInput {
+  position: relative;
+  vertical-align: top;
+}
+#donations .supportForm .parameter .pInput .vm_valuesmulti {
+  padding-top: 0.5em / 2;
+}
+#donations .supportForm .subcaption {
+  margin-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+#donations .supportForm .upanel {
+  margin-top: 1em;
+  overflow: hidden;
+}
+#donations .supportForm .upanel > div {
+  float: left;
+  margin-right: 1em;
+}
+#donations .supportForm .upanel > div button {
+  min-width: 170px;
+}
+#donations .supportForm .upanel > div .save {
+  cursor: default;
+  background: rgb(var(--neutral-grad-2));
+  border-color: rgb(var(--neutral-grad-2));
+  color: #fff;
+}
+#donations .supportForm .upanel > div.loadingToB {
+  display: none;
+}
+#donations .supportForm .upanel > div.loadingToB .label {
+  font-weight: 500;
+  font-size: 0.85em;
+  color: rgb(var(--color-bg-ac));
+  padding-top: 0.5em;
+}
+#donations .supportForm .upanel > div.cancelwr {
+  display: none;
+}
+#donations .supportForm .upanel.changes > div {
+  float: left;
+  margin-right: 1em;
+}
+#donations .supportForm .upanel.changes > div .save {
+  cursor: pointer;
+  background: rgb(var(--color-bg-ac));
+  border-color: rgb(var(--color-bg-ac));
+}
+#donations .supportForm .upanel.changes > div .save:hover {
+  background: rgb(var(--color-txt-gray-dark));
+}
+#donations .supportForm .upanel.changes > div.cancelwr {
+  display: block;
+}
+#donations .supportForm .upanel.wait > div {
+  display: none;
+}
+#donations .supportForm .upanel.wait > div.cancelwr {
+  display: none;
+}
+#donations .supportForm .upanel.wait > div.loadingToB {
+  display: block;
+}
+#donations .supportForm input,
+#donations .supportForm textarea,
+#donations .supportForm .text {
+  padding: 0.5em;
+}
+#donations .supportForm .send {
+  padding-left: 3em;
+  padding-right: 3em;
 }
 #donations .thankyou {
   max-width: 640px;
