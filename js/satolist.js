@@ -30172,7 +30172,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            var iscallsenabled = self.app.platform.istest() ? true : false
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
