@@ -1,42 +1,38 @@
 @import "../../css/__cssvar";
 
 #donations{
-	padding : 6 * @rhythm 0;
+	padding : 2 * @rhythm 0;
 	padding-bottom : 0;
+
+	.work{
+		max-width: 840px;
+	}
 
 	.caption{
 		font-size : 2em;
-		padding-top : 2 * @rhythm;
+		padding-top : @rhythm;
 		position: relative;
 		text-align: center;
 	}
 
 	.text{
 		padding : 3 * @rhythm 0;
-		max-width: 640px;
 	}
 
-	.splits{
-		>div{
-			&.textsplit{
-				padding-right: 4 * @rhythm;
-			}
+	.dsplit{
+		padding: 4 * @rhythm;
+		background: rgb(var(--background-secondary-theme));
+		vertical-align: middle;
 
-			&.dsplit{
-				padding: 4 * @rhythm;
-				background: rgb(var(--background-secondary-theme));
-				vertical-align: middle;
+		.donate{
+			font-size: @rhythm * 4;
 
-				.donate{
-					font-size: @rhythm * 4;
-
-					.label{
-						cursor: pointer;
-					}
-				}
+			.label{
+				cursor: pointer;
 			}
 		}
 	}
+
 
 	.donate{
 		text-align: center;
@@ -142,8 +138,12 @@
 		max-width: 800px;
 		margin-left: auto;
 		margin-right: auto;
-		padding : 4 * @rhythm 0;
+		padding : 4 * @rhythm;
 		position: relative;
+
+		.form{
+			margin-top: @rhythm * 4;
+		}
 
 
 		.require{
@@ -229,7 +229,7 @@
 				&.refLabel{
 					padding-top: @rhythm;
 					padding-right : @rhythm;
-					width: 190px;
+					width: 140px;
 
 					.span{
 						color : rgb(var(--color-txt-ac));
@@ -273,7 +273,6 @@
 		}
 
 		.parameter{
-			max-width: 600px;
 			width: 100%;
 
 			>div{
@@ -399,6 +398,9 @@
 		}
 
 		.send{
+			margin-top: @rhythm * 3;
+			margin-left: auto;
+			display: flex;
 			padding-left: @rhythm * 6;
 			padding-right: @rhythm * 6;
 		}
@@ -583,6 +585,8 @@
 /*t*/ @media only screen and (max-width: 768px){
 #donations{
 	padding : 2 * @rhythm @rhythm;
+
+
 	
 	.caption{
 		font-size : 2em;
@@ -641,6 +645,20 @@
 
 		}
 	}
+
+	.supportForm .parameter .pName {
+		width: 85px;
+	}
+
+	.dsplit, .supportForm{
+		padding: 0;
+	}
+
+	.dsplit{
+		margin-top: @rhythm * 4;
+	}
+
+
 
 	.thankyou{
 		padding : 2 * @rhythm 2 * @rhythm;

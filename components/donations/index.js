@@ -69,7 +69,6 @@ var donations = (function(){
 				id : 'subject',
 				type : "STRINGANY",
 				onType : true,
-				require : true,
 				onFocus : function(pn){
 					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
@@ -279,8 +278,6 @@ var donations = (function(){
 
 						actions.status(cur, storage[cur], function(err, info){
 
-							debugger;
-
 							if (info){
 
 								if(info.status == "AWAITINGFUNDS" || info.status == "AWAITINGDONATION"){
@@ -364,6 +361,10 @@ var donations = (function(){
 				el.c.find('.hideprocess').fadeIn(200, clbk);
 			},
 
+			support : function(payload, clbk){
+				self.app.platform.sdk.exchanges.support(payload, clbk)
+			},
+
 
 			status : function(currency, address, clbk){
 				self.app.platform.sdk.exchanges.status(currency, address, clbk)
@@ -371,34 +372,17 @@ var donations = (function(){
 
 			address : function(cur, clbk){
 
-				var me = self.app.user.address.value;
-                
-                fetch('https://pkoin.net/Shifter/PocShifter/' + cur + '/' + me).then(function(d){
-
-					var text = d.text();
-
-					return text;
-				
-                }).then(function(address){
-
+				self.app.platform.sdk.exchanges.address(cur, function(address, err){
 
 					if (address){
 						if (clbk)
 							clbk(address)
 					}
 					else
-					{
+					{	console.log('err address', err)
 						sitemessage(self.app.localization.e('e13094'));
 					}
-
-				}).catch(function(err){
-
-					debugger;
-
-					sitemessage(self.app.localization.e('e13094'));
-
-
-                })
+				})
 
 			}
 			
@@ -421,6 +405,42 @@ var donations = (function(){
 					},
 
 				}, function(p){
+
+					ParametersLive(supportOptions, p.el)
+
+					p.el.find('.send').on('click', function(){
+
+						var subject = supportOptions.subject.value;
+						var email = supportOptions.email.value;
+						var message = supportOptions.message.value;
+
+						if (!(subject && email && message)){
+							sitemessage(self.app.localization.e('e13057'))
+							return;
+						}
+
+						actions.support({
+							paddress: self.app.user.address.value,
+							subject: subject,
+							email: email,
+							text: message
+						}, function(result, err){
+							
+							if (err){
+								sitemessage(err);
+								return;
+							}
+
+							supportOptions.subject.value = '';
+							supportOptions.email.value = '';
+							supportOptions.message.value = '';
+
+							renders.support();
+
+							successCheck();
+
+						})
+					})
 					
 
 				})
@@ -736,6 +756,11 @@ var donations = (function(){
 				initEvents();
 
 				p.clbk(null, p);
+			},
+
+			
+			wnd : {
+				class : 'normalizedmobile'
 			}
 		}
 	};

@@ -1,29 +1,28 @@
 #donations {
-  padding: 3em 0;
+  padding: 1em 0;
   padding-bottom: 0;
+}
+#donations .work {
+  max-width: 840px;
 }
 #donations .caption {
   font-size: 2em;
-  padding-top: 1em;
+  padding-top: 0.5em;
   position: relative;
   text-align: center;
 }
 #donations .text {
   padding: 1.5em 0;
-  max-width: 640px;
 }
-#donations .splits > div.textsplit {
-  padding-right: 2em;
-}
-#donations .splits > div.dsplit {
+#donations .dsplit {
   padding: 2em;
   background: rgb(var(--background-secondary-theme));
   vertical-align: middle;
 }
-#donations .splits > div.dsplit .donate {
+#donations .dsplit .donate {
   font-size: 2em;
 }
-#donations .splits > div.dsplit .donate .label {
+#donations .dsplit .donate .label {
   cursor: pointer;
 }
 #donations .donate {
@@ -116,8 +115,11 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  padding: 2em 0;
+  padding: 2em;
   position: relative;
+}
+#donations .supportForm .form {
+  margin-top: 2em;
 }
 #donations .supportForm .require {
   color: rgb(var(--color-bad));
@@ -184,7 +186,7 @@
 #donations .supportForm .referalMaketWrapper > div.refLabel {
   padding-top: 0.5em;
   padding-right: 0.5em;
-  width: 190px;
+  width: 140px;
 }
 #donations .supportForm .referalMaketWrapper > div.refLabel .span {
   color: rgb(var(--color-txt-ac));
@@ -217,7 +219,6 @@
   color: rgb(var(--color-txt-ac));
 }
 #donations .supportForm .parameter {
-  max-width: 600px;
   width: 100%;
 }
 #donations .supportForm .parameter > div {
@@ -307,6 +308,9 @@
   padding: 0.5em;
 }
 #donations .supportForm .send {
+  margin-top: 1.5em;
+  margin-left: auto;
+  display: flex;
   padding-left: 3em;
   padding-right: 3em;
 }
@@ -493,6 +497,16 @@
     padding: 2em 0;
   }
   #donations .ways .back {
+    margin-top: 2em;
+  }
+  #donations .supportForm .parameter .pName {
+    width: 85px;
+  }
+  #donations .dsplit,
+  #donations .supportForm {
+    padding: 0;
+  }
+  #donations .dsplit {
     margin-top: 2em;
   }
   #donations .thankyou {

@@ -1,11 +1,11 @@
 <div class="caption">
 	<%=e('supportFormTitle')%>
 </div>
-<div class="text">
+<div class="text form">
 	<% _.each(supportOptions, function(parameter){ %>
 
 		<div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
-			<div class="parameter table <%-parameter.type%>">
+			<div class="parameter table">
 	
 				<div class="pName">
 					<div class="pNameW">
@@ -53,8 +53,6 @@
 	
 	<% }) %>
 </div>
-<div>
-	<button elementsid="formsend" class="button send">
-		<%=e('send')%>
-	</button>
-</div>
+<button elementsid="formsend" class="button send">
+	<%=e('send')%>
+</button>

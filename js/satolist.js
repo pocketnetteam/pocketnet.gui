@@ -12874,6 +12874,8 @@ Platform = function (app, listofnodes) {
 
             info: {},
 
+            api: 'https://pkoin.net/Shifter',
+
             find: function (address) {
                 var ar = self.sdk.exchanges.get();
 
@@ -12986,65 +12988,33 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            address: function (p, clbk) {
-                var storage = self.sdk.exchanges.storage
+            address: function (cur, clbk) {
 
-                var t = this
+                var me = self.app.user.address.value;
+                
+                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
-                storage[p.currency] || (storage[p.currency] = {})
-                storage[p.currency][p.address] || (storage[p.currency][p.address] = {})
+					var text = d.text();
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETADDRESSFORPOC',
-                        Currency: p.currency,
-                        address: p.address
-                    },
-                    success: function (d) {
-
-                        if (d.Address) {
-
-                            storage[p.currency][p.address][d.Address.Address] = {
-                                address: d.Address.Address,
-
-                                amount: p.amount,
-                                currencyAmount: p.currencyAmount,
-
-                                time: self.currentTime()
-                            };
-
-                            t.save()
-
-                            self.sdk.exchanges.info[d.Address.Address] = d.Address
+					return text;
+				
+                }).then(function(address){
 
 
+					if (address){
+						if (clbk)
+							clbk(address)
+					}
+					else
+					{
+						clbk(null, self.app.localization.e('e13094'))
+					}
+
+				}).catch(function(err){
+
+					clbk(null, err);
 
 
-                            if (clbk)
-                                clbk(null, {
-
-                                    pocaddress: p.address,
-                                    currency: p.currency,
-                                    info: storage[p.currency][p.address]
-
-                                }, d.Address)
-                        }
-
-                        else {
-                            if (clbk)
-                                clbk('error', null)
-                        }
-
-
-
-
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
-                    }
                 })
 
 
@@ -13102,9 +13072,31 @@ Platform = function (app, listofnodes) {
                 })
 
             },
+            support: function (payload, clbk) {
+                
+                fetch(this.api + '/PocShifter/SupportTicket', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(payload)
+                  }).then(function(r){
+                    console.log('r', r, r.text())
+                    return r.text();
+                  }).then(function(r){
+
+                    clbk(r);
+
+                  }).catch(function(err){
+
+                    clbk(null, err);
+
+                  })
+
+            },
             status: function (currency, address, clbk) {
 
-                fetch(`https://pkoin.net/Shifter/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
+                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
 
 					return d.json();
 				
