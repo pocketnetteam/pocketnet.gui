@@ -925,7 +925,7 @@ ModVote = function(){
 			return 'jury'
 		}
 
-		if(!self.i1.v){
+		if(self.i1.v != 0 && self.i1.v != 1){
 			return 'verdict'
 		}
 	}
