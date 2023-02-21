@@ -2902,18 +2902,20 @@ var lenta = (function(){
 				var id = $(this).closest('.share').attr('id');
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 				let s = actions.getJuryShare(id)
+				var shareDiv = $(this).closest('.share')
 				actions.sendJuryVote(s, 1, function() {
 					// Vote sent successfully, remove share from view
-					s.hasVoted = true;
+					shareDiv.remove()
 				});
 			},
 			modVoteNo : function(){
 				var id = $(this).closest('.share').attr('id');
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 				let s = actions.getJuryShare(id)
+				var shareDiv = $(this).closest('.share')
 				actions.sendJuryVote(s, 0, function() {
 					// Vote sent successfully, remove share from view
-					s.hasVoted = true;
+					shareDiv.remove()
 				});
 			},
 		}

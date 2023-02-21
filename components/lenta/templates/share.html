@@ -347,13 +347,13 @@ var arranges = {
 
 				</div>
 
-				<% if (share && share.jury && share.jury.hasVoted == undefined) { %>
+				<% if (share && share.jury) { %>
 					<div class="jury-buttons">
 						<button class="button medium yes"><%=e('yes')%></button>
 						<button class="button medium no black"><%=e('no')%></button>
 					</div>
 				<% } %>
-				<% if (share && share.jury && share.jury.hasVoted == true) { %>
+				<% if (share && share.jury) { %>
 					<div class="jury-buttons">
 						<span><%=e('juryvote_success')%>:</span>
 					</div>
