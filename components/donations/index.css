@@ -472,7 +472,8 @@
     display: block;
   }
   #donations .splits > div.textsplit {
-    padding-right: 0;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
   }
   #donations .splits > div.dsplit {
     padding: 4em 0.5em;

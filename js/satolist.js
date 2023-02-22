@@ -13090,8 +13090,9 @@ Platform = function (app, listofnodes) {
                     },
                     body: JSON.stringify(payload)
                   }).then(function(r){
-                    console.log('r', r, r.text())
+
                     return r.text();
+                    
                   }).then(function(r){
 
                     clbk(r);
