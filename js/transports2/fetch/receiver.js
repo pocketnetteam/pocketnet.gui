@@ -30,10 +30,6 @@ class FetchReceiver {
 
         if (data) {
             message.data = data;
-
-            if ('body' in data) {
-                message.data.body = await data.body;
-            }
         }
 
         this.broadcastChannel.postMessage(message);
@@ -106,21 +102,6 @@ class FetchReceiver {
 
                 return preparedHeaders;
             };
-            const prepareBody = async (body) => {
-                if (body instanceof ReadableStream) {
-                    const reader = body.getReader();
-
-                    let bodyBytes = [];
-                    let result;
-
-                    while (!(result = await reader.read()).done) {
-                        bodyBytes.push([...result.value]);
-                    }
-
-                    const bytesArr = bodyBytes.flat();
-                    return Uint8Array.from(bytesArr);
-                }
-            };
 
             const preparedRequest = {};
 
@@ -137,7 +118,7 @@ class FetchReceiver {
 
                 switch (paramName) {
                     case 'body':
-                        preparedRequest.body = prepareBody(requestObject.body);
+                        preparedRequest.body = request.arrayBuffer();
                         break;
                     case 'headers':
                         preparedRequest.headers = prepareHeaders(requestObject.headers);
@@ -169,16 +150,30 @@ class FetchReceiver {
 
                 const serializedOptions = serializeRequest(options);
 
+                serializedOptions.body = await serializedOptions.body;
+
+                if (serializedOptions.body.byteLength === 0) {
+                    delete serializedOptions.body;
+                }
+
                 self.sendRequest(requestId, { ...serializedOptions, url });
             };
 
             const override2 = async (request, options = {}) => {
                 reqUrl = request.url;
 
-                const serializedRequest = serializeRequest(request);
-                const serializedOptions = serializeRequest(options);
+                const serializedPart1 = serializeRequest(request);
+                const serializedPart2 = serializeRequest(options);
 
-                self.sendRequest(requestId, { ...serializedRequest, ...serializedOptions });
+                const serializedOptions = { ...serializedPart1, ...serializedPart2 };
+
+                serializedOptions.body = await serializedOptions.body;
+
+                if (serializedOptions.body.byteLength === 0) {
+                    delete serializedOptions.body;
+                }
+
+                self.sendRequest(requestId, serializedOptions);
             };
 
             const readStream = new ReadableStream({
