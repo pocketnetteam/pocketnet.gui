@@ -621,7 +621,9 @@ _l.e13086 = "Support Decentralized Web Now"
 _l.e13087 = "Bitcoin, Litecoin"
 
 _l.supportFormTitle = "Do you have any questions about donates? Contact us"
-
+_l.addrNotAvailable = function(cur){
+    return "address address for " + cur + " is not available at the moment";
+} 
 
 
 _l.e13088 = ""+appname+" members who donated to support "+appname+""

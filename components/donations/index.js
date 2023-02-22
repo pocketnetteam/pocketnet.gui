@@ -271,8 +271,19 @@ var donations = (function(){
 			},	
 			ways : {
 				openAddress : function(curobj){
+					
+					var createNewAddress = function(cur){
 
-					var cur = curobj.id
+						actions.address(cur, function(address, err){		
+
+							actions.status(cur, address, function(err, info){
+						
+								actions.waitfunds(cur, address, info, curobj);
+							})
+						})
+					}
+
+					var cur = curobj.id;
 
 					if(storage[cur]){
 
@@ -288,13 +299,7 @@ var donations = (function(){
 								
 								if(info.status == "EXPIREDAWAITINGFUNDS"){
 
-
-									actions.address(cur, function(address, info){
-
-										// renders.address(cur, address, curobj)
-										actions.waitfunds(cur, address, info, curobj)
-									})
-
+									createNewAddress(cur);
 
 								}
 
@@ -308,25 +313,15 @@ var donations = (function(){
 								}
 
 							} else {
-
-								actions.address(cur, function(address, info){
-									
-									actions.status(cur, address, function(err, info){
-										actions.waitfunds(cur, address, info, curobj);
-									})
-								})
+								
+								createNewAddress(cur);
 							}
 
 						})
 					}
 					else
 					{
-						actions.address(cur, function(address){
-
-							actions.status(cur, address, function(err, info){
-								actions.waitfunds(cur, address, info, curobj);
-							})
-						})
+						createNewAddress(cur);
 					}
 
 					
@@ -373,6 +368,7 @@ var donations = (function(){
 			address : function(cur, clbk){
 
 				self.app.platform.sdk.exchanges.address(cur, function(address, err){
+					
 
 					if (address){
 						if (clbk)
@@ -380,7 +376,7 @@ var donations = (function(){
 					}
 					else
 					{	console.log('err address', err)
-						sitemessage(self.app.localization.e('e13094'));
+						sitemessage(err || self.app.localization.e('e13094'));
 					}
 				})
 

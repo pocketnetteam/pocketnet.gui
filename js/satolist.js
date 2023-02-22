@@ -13000,10 +13000,19 @@ Platform = function (app, listofnodes) {
 				
                 }).then(function(address){
 
+                    console.log('address', address);
 
 					if (address){
-						if (clbk)
-							clbk(address)
+
+                        if (address.indexOf('is not available at the moment') > -1){
+
+                            clbk(null, self.app.localization.e('addrNotAvailable', cur));
+
+                        } else{
+
+                            clbk(address);
+ 
+                        }
 					}
 					else
 					{
