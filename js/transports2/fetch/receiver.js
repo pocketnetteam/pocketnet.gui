@@ -30,6 +30,10 @@ class FetchReceiver {
 
         if (data) {
             message.data = data;
+
+            if ('body' in data) {
+                message.data.body = await data.body;
+            }
         }
 
         this.broadcastChannel.postMessage(message);
@@ -70,7 +74,7 @@ class FetchReceiver {
     }
 
     static init(broadcastChannelName) {
-        const serializeRequest = async (request) => {
+        const serializeRequest = (request) => {
             const instanceToObject = (instance) => {
                 const originalClass = instance || {};
                 const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(originalClass));
@@ -133,7 +137,7 @@ class FetchReceiver {
 
                 switch (paramName) {
                     case 'body':
-                        preparedRequest.body = await prepareBody(requestObject.body);
+                        preparedRequest.body = prepareBody(requestObject.body);
                         break;
                     case 'headers':
                         preparedRequest.headers = prepareHeaders(requestObject.headers);
@@ -163,7 +167,7 @@ class FetchReceiver {
             const override1 = async (url, options = {}) => {
                 reqUrl = url;
 
-                const serializedOptions = await serializeRequest(options);
+                const serializedOptions = serializeRequest(options);
 
                 self.sendRequest(requestId, { ...serializedOptions, url });
             };
@@ -171,8 +175,8 @@ class FetchReceiver {
             const override2 = async (request, options = {}) => {
                 reqUrl = request.url;
 
-                const serializedRequest = await serializeRequest(request);
-                const serializedOptions = await serializeRequest(options);
+                const serializedRequest = serializeRequest(request);
+                const serializedOptions = serializeRequest(options);
 
                 self.sendRequest(requestId, { ...serializedRequest, ...serializedOptions });
             };
