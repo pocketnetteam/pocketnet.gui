@@ -12990,7 +12990,7 @@ Platform = function (app, listofnodes) {
 
             address: function (cur, clbk) {
 
-                var me = self.app.user.address.value;
+                var me = self.app.user.address.value || '';
                 
                 fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
