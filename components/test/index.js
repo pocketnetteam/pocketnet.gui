@@ -681,7 +681,7 @@ var test = (function(){
 
 			email : new Parameter({
 				name : 'Email',
-				placeholder : 'Email',
+				placeholder : 'Email (' + self.app.localization.e('e13178') + ')',
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,

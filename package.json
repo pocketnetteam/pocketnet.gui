@@ -1,9 +1,9 @@
 {
     "name": "pocketnet-tor",
-    "version": "0.8.40",
+    "version": "0.8.41",
     "versionsuffix": "1",
-    "cordovaversion": "1.8.40",
-    "cordovaversioncode": "180400",
+    "cordovaversion": "1.8.41",
+    "cordovaversioncode": "180410",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",

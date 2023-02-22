@@ -1118,6 +1118,11 @@ Share = function(lang){
 			return 'video'
 		}
 
+		if(self.itisaudio()){
+			return 'audio'
+		}
+
+
 		if(self.itisarticle()){
 			return 'article'
 		}
@@ -1401,9 +1406,9 @@ Share = function(lang){
 			return 'language'
 		}
 
-		if(self.itisvideo() && !self.caption.v) return 'videocaption'
+		if((self.itisvideo() || self.itisaudio()) && !self.caption.v) return 'videocaption'
 
-		if(self.url.v && self.url.v.length && !self.itisvideo()){
+		if(self.url.v && self.url.v.length && !self.itisvideo() && !self.itisaudio()){
 
 			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
 
@@ -1423,6 +1428,7 @@ Share = function(lang){
 			self.tags.v.length > 1 || 
 			self.repost.v || 
 			self.itisvideo() || 
+			self.itisaudio() ||
 			(self.url.v && self.url.v.length) 
 			
 			)){
@@ -2069,7 +2075,8 @@ pUserInfo = function(){
 
 		}
 		catch (e){
-			console.log('err addresses', e);
+			self.addresses = []
+			//console.log('err addresses', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial

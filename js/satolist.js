@@ -27919,7 +27919,7 @@ Platform = function (app, listofnodes) {
                 destroyclbk: destroyclbk
             }
 
-            bgImages(el)
+            bgImagesCl(el)
 
 
             self.fastMessages.push(message);
@@ -29740,7 +29740,6 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -29757,23 +29756,6 @@ Platform = function (app, listofnodes) {
 
                 clbk();
             });
-
-            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
-
-                bastyonhelperOpened = true
-
-                setTimeout(function(){
-
-                    app.nav.api.load({
-                        open : true,
-                        id : 'bastyonhelper',
-                        inWnd : true,
-                    })
-
-                }, 1000)
-
-            }*/
-
 
 
         }).catch(e => {
@@ -30215,7 +30197,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            var iscallsenabled = self.app.platform.istest() ? true : false
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -31390,9 +31372,11 @@ Platform = function (app, listofnodes) {
 
 				},
 				onEnded:(call) => {
+                    console.log("HERE")
                     self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+                    console.log("HERE2")
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()

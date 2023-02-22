@@ -623,7 +623,7 @@ _l.e13176 = "Type d'adresse"
 _l.e13177 = "Envoyer la photo"
 
 _l.requiredfields = "Champs obligatoires"
-_l.e13178 = "Non lié à votre profil"
+_l.e13178 = "Facultatif"
 _l.e13179 = "Liste non dépensée"
 _l.e13180 = "Votre facture a été créée avec succès"
 _l.e13181 = "Une erreur s'est produite lors du processus de crèation de l'offre"

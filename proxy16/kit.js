@@ -84,10 +84,10 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 
-	{
-		host : '65.21.252.135',
+	/*{
+		host : '65.21.252.135', 
 		port: 38081,
 		ws: 8087,
 		name : 'test4.v.pocketnet.app',

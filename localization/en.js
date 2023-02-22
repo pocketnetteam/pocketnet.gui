@@ -771,7 +771,7 @@ _l.e13176 = "Address type"
 _l.e13177 = "Upload photo"
 
 _l.requiredfields = "required fields"
-_l.e13178 = "Not linked to your profile"
+_l.e13178 = "Optional"
 _l.e13179 = "Unspent List"
 _l.e13180 = "Your Invoice has Been Successfully Created"
 _l.e13181 = "An Error has Occurred During the offer creating process"
@@ -1181,14 +1181,14 @@ _l.shareBareLink = "Share Video Link";
 _l.videoCopied = "Video link successfully copied to clipboard";
 
 _l.editWallpaper = "Change Preview Image";
-_l.removeVideo = "Remove Video";
+_l.removeVideo = "Remove Media";
 
 _l.removeVideoDialog = "Are you sure you want to delete this video?"
 
 _l.pterror_meta = "Peertube: Undefined request"
 _l.pterror_host = "Peertube: Peertube server not found"
 _l.pterror_link = "Peertube: Unknown Peertube link"
-_l.pterror_removeerror = "Peertube: Unable to remove video. Pleasy try again"
+_l.pterror_removeerror = "Peertube: Unable to remove media. Pleasy try again"
 _l.pterror_updateempty = "Peertube: No changes found to update"
 _l.pterror_uploaderror = "Peertube: Video has not been uploaded"
 _l.pterror_dailyquotalimit = "Peertube: You have reached your video upload limit"
@@ -1337,7 +1337,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to Bastyon yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2298,7 +2298,7 @@ _l.welcomecaption3 = "Chat privately with friends - no SIM card";
 
 
 _l.shareexternal = "Another window is open";
-_l.shareexternaluploadpeertube = "Video upload window open";
+_l.shareexternaluploadpeertube = "Media upload window open";
 
 _l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
@@ -2419,8 +2419,9 @@ _l.boost_c17 = 'Censorship resistant'
 _l.boost_c18 = 'Buying PKOIN peer-to-peer'
 _l.boost_c19 = 'To buy a Pocketcoin "from hand to hand", you need to sort the news feed by category "PKOIN/peer-to-peer"'
 
-_l.boost_c20 = 'Find Your Audience'
-_l.boost_c21 = 'Profitable Advertising on the Fast-Growing Blockchain Social Network'
+// _l.boost_c20 = 'Find Your Audience'
+_l.boost_c20 = 'Incredibly Low CPM:'
+_l.boost_c21 = ' Cost per Thousand Impressions is 28 cents!'
 _l.boost_c22 = 'Advertising for Pocketcoin - Cost-Effective Coverage'
 _l.boost_c23 = 'Are you trying to be heard on the internet?'
 _l.boost_c24 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
@@ -2451,6 +2452,33 @@ _l.reach = 'Reach'
 _l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com' 
 
 _l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
+_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+_l.boost_c45 = 'Incredibly Low CPM'
+_l.boost_c46 = 'Cost per Thousand Impressions is 28 cents!'
+_l.boost_c47 = '(average CPM for large networks is over $1)'
+_l.boost_c48 = '(How is this derived?)'
+_l.boost_c49 = 'Bastyon has about 1.68 MILLION unique visitors a month. Average visitor visits 5 times per month, and English language feed is 10% of Bastyon, so TOTAL NUMBER OF MONTHLY VISITS = 	840,000'
+_l.boost_c50 = 'STEPS TO CALCULATE CPM ON BASTYON'
+_l.boost_c51 = '*There are TOTAL 1.68 MILLION unique visitors per month (1.4M on bastyon.com, 130k on Android, 100k on Desktop app)'
+_l.boost_c52 = 'STEP 1.'
+_l.boost_c53 = '1.4M is on Bastyon.com (SEMRUSH data)'
+_l.boost_c54 = 'STEP 2.'
+_l.boost_c55 = 'Number of active android users is 130,000+'
+_l.boost_c56 = 'STEP 3.'
+_l.boost_c57 = 'Number of desktop app users is 150,000+'
+_l.boost_c58 = '(After every app update users gradually update desktop app, approx. Half of users updates one week after update)'
+_l.boost_c59 = '*this screen shows that 76 thousand users updated their apps immediately on day one, only half of the people update so quickly, so the real number is 150k users approximately'
+_l.boost_c60 = 'STEP 4.'
+_l.boost_c61 = 'Calculate CPM'
+_l.boost_c62 = 'Every boost ad runs for 3 hours. So, we divide total monthly visits by 30 days and by 8 to get 3 hour intervals'
+_l.boost_c63 = 'Total monthly visits = 8.4 million'
+_l.boost_c64 = 'Total daily visits = 28,000'
+_l.boost_c65 = 'English feed has 10% of all visitors'
+_l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
+_l.boost_c67 = 'Average cost of ad is $1 '
+_l.boost_c68 = 'CPM = $. 28'
+_l.boost_c69 = '28 cents on average is a very low CPM'
+
 
 
 _l.gotopage = 'Go to page'
