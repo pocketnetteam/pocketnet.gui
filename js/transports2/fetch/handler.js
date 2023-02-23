@@ -81,42 +81,23 @@ class FetchMainHandler {
           return data;
         })
         .then((data) => {
-          self.offAbort(requestId);
+          const { status } = data;
 
-          /// /????
+          const headers = {};
 
-          if(!data){
-            self.sendData(requestId, '');
+          data.headers.forEach((value, name) => {
+            headers[name] = value;
+          });
+
+          self.sendInitialData(requestId, { url, status, headers });
+
+          data.body.on('data', (chunk) => {
+            self.sendData(requestId, chunk);
+          });
+
+          data.body.on('end', () => {
             self.sendEnd(requestId);
-
-            return
-          }
-
-          try{
-            const { status } = data;
-
-            const headers = {};
-
-            data.headers.forEach((value, name) => {
-              headers[name] = value;
-            });
-
-            self.sendInitialData(requestId, { url, status, headers });
-
-            data.body.on('data', (chunk) => {
-              self.sendData(requestId, chunk);
-            });
-
-            data.body.on('end', () => {
-              self.sendEnd(requestId);
-            });
-          }
-
-          catch(e){
-            console.log(data)
-            console.log(e)
-          }
-
+          });
         })
         .catch((err) => {
           if (err.code !== 'FETCH_ABORTED') {
