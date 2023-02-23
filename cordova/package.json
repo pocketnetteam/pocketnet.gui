@@ -50,6 +50,7 @@
     "cordova-plugin-android-enumeratedevices": "file:cordova-plugin-android-enumeratedevices",
     "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
     "cordova-plugin-audioinput": "^1.0.2",
+    "cordova-plugin-audiotoggle": "file:cordova-plugin-audiotoggle",
     "cordova-plugin-background-download": "0.0.2",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-badge": "file:cordova-plugin-badge",
@@ -157,7 +158,8 @@
       "cordova-plugin-gallery-refresh": {
         "CAMERA_USAGE_DESCRIPTION": "",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
-      }
+      },
+      "cordova-plugin-audiotoggle": {}
     },
     "platforms": [
       "ios",
