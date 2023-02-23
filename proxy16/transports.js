@@ -2,7 +2,14 @@
 
 const request = require('request');
 const nodeFetch = require('node-fetch');
-global.fetch = (...args) => nodeFetch(...args);
+global.fetch = (...args) => {
+    try {
+        return nodeFetch(...args);
+    } catch (err) {
+        console.warn('Strange fetch error happened', err);
+        return Promise.reject(err);
+    }
+}
 const axios = require('redaxios');
 const { SocksProxyAgent } = require('socks-proxy-agent');
 
