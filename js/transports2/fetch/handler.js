@@ -88,17 +88,17 @@ class FetchMainHandler {
             const { status } = data;
 
             const headers = {};
-  
+
             data.headers.forEach((value, name) => {
               headers[name] = value;
             });
-  
-            self.sendInitialData(requestId, { status, headers });
-  
+
+            self.sendInitialData(requestId, { url, status, headers });
+
             data.body.on('data', (chunk) => {
               self.sendData(requestId, chunk);
             });
-  
+
             data.body.on('end', () => {
               self.sendEnd(requestId);
             });
@@ -108,7 +108,7 @@ class FetchMainHandler {
             console.log(data)
             console.log(e)
           }
-          
+
         })
         .catch((err) => {
           if (err.code !== 'FETCH_ABORTED') {
