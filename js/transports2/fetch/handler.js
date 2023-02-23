@@ -19,11 +19,15 @@ class FetchMainHandler {
   listen(eventName, requestId, listener) {
     // console.log('LEVEL-3: LISTEN', `${FetchBridgeEventsGroup}:${requestId}:${eventName}`, eventName, requestId);
 
-    this.ipcMain.on(`${FetchBridgeEventsGroup}:${requestId}:${eventName}`, (...args) => {
+    this.ipcMain.once(`${FetchBridgeEventsGroup}:${requestId}:${eventName}`, (...args) => {
       // console.log('LEVEL-3: RECEIVE', eventName, requestId, args);
 
       listener(...args);
     });
+  }
+
+  unlisten(eventName, requestId) {
+    this.ipcMain.removeAllListeners(`${FetchBridgeEventsGroup}:${requestId}:${eventName}`);
   }
 
   onRequest(listener) {
@@ -35,6 +39,10 @@ class FetchMainHandler {
 
   onAbort(requestId) {
     this.listen('Abort', requestId);
+  }
+
+  offAbort(requestId) {
+    this.unlisten('Abort', requestId);
   }
 
   sendInitialData(requestId, initData) {
@@ -73,7 +81,7 @@ class FetchMainHandler {
           return data;
         })
         .then((data) => {
-
+          self.offAbort(requestId);
 
           /// /????
 
@@ -112,6 +120,7 @@ class FetchMainHandler {
         })
         .catch((err) => {
           if (err.code !== 'FETCH_ABORTED') {
+            self.offAbort(requestId);
             self.sendError(requestId);
 
             throw err;
