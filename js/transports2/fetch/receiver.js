@@ -176,45 +176,35 @@ class FetchReceiver {
                 self.sendRequest(requestId, serializedOptions);
             };
 
-            const readStream = new ReadableStream({
+            let readStream = new ReadableStream({
                 async start(controller) {
-                    const closeReadStream = () => {
-                        if (isEmpty) {
-                            const emptyData = new Uint8Array([]);
-                            controller.enqueue(emptyData);
-                        }
-
-                        controller.close();
-                        closed = true;
-                    }
-
-                    let isEmpty = true;
-                    let closed = false;
-
                     if (abortSignal) {
                         abortSignal.onabort = () => {
-                            if (!closed) {
-                                self.sendAbort(requestId);
-                                closeReadStream();
-                            }
+                            self.sendAbort(requestId);
+                            controller.close();
                         };
                     }
 
                     self.onData(requestId, (data) => {
-                        isEmpty = false;
-
                         const chunkUint8 = new Uint8Array(data);
                         controller.enqueue(chunkUint8);
                     });
 
                     self.onEnd(requestId, () => {
-                        closeReadStream();
+                        controller.close();
                     });
                 }
             });
 
             return new Promise((resolve, reject) => {
                 self.onInitialData(requestId, (initialData) => {
+                    const isNullBodyStatus = FetchReceiver.NullBytesStatuses.includes(initialData.status);
+
+                    if (isNullBodyStatus) {
+                        readStream = null;
+                        self.offAll(requestId);
+                    }
+
                     const response = new Response(readStream, initialData);
 
                     Object.defineProperty(response, 'url', { value: reqUrl });
@@ -240,6 +230,8 @@ class FetchReceiver {
             });
         };
     }
+
+    static NullBytesStatuses = [101, 103, 204, 205, 304];
 }
 
 self.FetchReceiver = FetchReceiver;
