@@ -96,6 +96,7 @@ class FetchMainHandler {
           });
 
           data.body.on('end', () => {
+            self.offAbort(requestId);
             self.sendEnd(requestId);
           });
         })
