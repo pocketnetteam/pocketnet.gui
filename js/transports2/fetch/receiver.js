@@ -12,7 +12,7 @@ class FetchReceiver {
                 return;
             }
 
-            this.onmessageListeners[message.id][message.name](message.data);
+            this.onmessageListeners?.[message.id]?.[message.name](message.data);
         };
     }
 
@@ -45,6 +45,14 @@ class FetchReceiver {
         };
     }
 
+    unlisten(eventName, requestId) {
+        delete this.onmessageListeners[requestId][eventName];
+    }
+
+    unlistenAll(eventName, requestId) {
+        delete this.onmessageListeners[requestId];
+    }
+
     sendRequest(requestId, request) {
         this.send('Request', requestId, request);
     }
@@ -61,12 +69,28 @@ class FetchReceiver {
         this.listen('Data', requestId, listener);
     }
 
+    offData(requestId) {
+        this.unlisten('Data', requestId);
+    }
+
     onEnd(requestId, listener) {
         this.listen('End', requestId, listener);
     }
 
+    offEnd(requestId) {
+        this.unlisten('End', requestId);
+    }
+
     onError(requestId, listener) {
         this.listen('Error', requestId, listener);
+    }
+
+    offError(requestId) {
+        this.unlisten('Error', requestId);
+    }
+
+    offAll(requestId) {
+        this.unlistenAll(requestId);
     }
 
     static init(broadcastChannelName) {
@@ -216,6 +240,7 @@ class FetchReceiver {
                     });
 
                     resolve(response);
+                    self.offAll();
                 });
 
                 self.onError(requestId, (err) => {
