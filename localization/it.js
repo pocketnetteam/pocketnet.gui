@@ -661,7 +661,7 @@ _l.e13176 = "Tipo di indirizzo";
 _l.e13177 = "Carica foto";
 
 _l.requiredfields = "campi obbligatori";
-_l.e13178 = "Non collegato al tuo profilo";
+_l.e13178 = "Opzionale";
 _l.e13179 = "Elenco non utilizzato";
 _l.e13180 = "La tua fattura è stata creata con successo";
 _l.e13181 = "Si è verificato un errore durante il processo";

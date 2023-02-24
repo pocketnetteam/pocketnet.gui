@@ -7,19 +7,49 @@ on:
       - master
 
 jobs:
-  build:
-  
-    runs-on: gui 
 
+  prepare:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
+      - name: Archive repo
+        run: |
+          mkdir -p /tmp/repo
+          rsync -ah --exclude={'.git','.gitignore','.github','node_modules','.well-known'} ./ /tmp/repo/
+          cd /tmp/repo
+          tar czf /tmp/repo.tgz ./
+      - name: Upload artifact repo.tgz
+        uses: actions/upload-artifact@v3
+        with:
+          name: repo.tgz
+          path: /tmp/repo.tgz
+      - name: Save artifact head.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: head
+          path: ./head.txt
+          
+  deploy-pre:
+    needs: prepare
+    runs-on: gui
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
       - name: Prepare
         run: |
+          tar xzf repo.tgz
+          rm -rf repo.tgz
           npm i
           npm run minimize:bastyon
       - name: Copy to dest dir
@@ -29,12 +59,17 @@ jobs:
         shell: bash
       - name: Clean work dir
         run: rm -rf ./*
-
+        
   build-macos:
+    needs: prepare
     runs-on: macos-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -64,14 +99,17 @@ jobs:
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
-
+        
   build-unix:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-      - name: Save HEAD information
-        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -93,13 +131,17 @@ jobs:
             ./dist/BastyonSetup.deb
             ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
-            ./head.txt
-
+    
   build-windows:
+    needs: prepare
     runs-on: windows-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -119,14 +161,19 @@ jobs:
           path: ./dist/BastyonSetup.exe
 
   build-android:
+    needs: prepare
     runs-on: ubuntu-20.04
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Check out Git repository
-        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -151,10 +198,10 @@ jobs:
           ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
-          cd $ANDROID_HOME/build-tools/33.0.0
-          mv d8 dx
-          cd lib
-          mv d8.jar dx.jar
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
       - name: Configure Cordova Plugins
         run: |
           cd ./cordova
@@ -174,7 +221,7 @@ jobs:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
-  deploy-binaries:
+  deploy-app-binaries:
     needs: [ build-macos, build-unix, build-windows, build-android ]
     runs-on: dev.pocketnet.app
     steps:
@@ -183,6 +230,6 @@ jobs:
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/night/
       - name: Copy HEAD information
-        run: cp ./unix/head.txt /data/dev/binaries/night/head.txt
+        run: cp ./head/head.txt /data/dev/binaries/night/head.txt
       - name: Clean work dir
         run: rm -rf ./*

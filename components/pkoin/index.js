@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = true;
 
 		var renders = {
 
@@ -185,10 +185,24 @@ var pkoin = (function(){
 						data : {
 							probability,
 							share,
-							language : share.language
+							language : share.language,
+							hiddenBlocks: hiddenBlocks
 						},
 
 					}, function(_p){
+
+						_p.el.find('.showMore').on('click', function(){
+
+							var boostinfoblocks = _p.el.find('.boostinfoblocks');
+
+							if (boostinfoblocks.hasClass('hiddenBlocks')){
+								hiddenBlocks = false;
+							} else {
+								hiddenBlocks = true;
+							}
+
+							boostinfoblocks.toggleClass('hiddenBlocks')
+						})
 						
 					})
 					

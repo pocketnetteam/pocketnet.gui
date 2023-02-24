@@ -1,9 +1,15 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
+
+	
 	padding-right: 16px;
 	color : rgb(var(--text-on-main-bg-color));
 	padding-top: 15px;
+
+	.downloadapplication{
+		margin-bottom: 2 * @rhythm;
+	}
 
 	>div{
 		.wrp{
@@ -259,7 +265,7 @@
 			
 		}
 
-		@media (pointer:fine) {
+		@media (pointer:hover) {
 			a{
 				&:hover{
 					color : rgb(var(--color-txt-ac));
@@ -336,7 +342,7 @@
 				font-size: 0.8em;
 			}
 
-			@media (pointer:fine) {
+			@media (pointer:hover) {
 				.vc_value{
 					
 					&:hover{

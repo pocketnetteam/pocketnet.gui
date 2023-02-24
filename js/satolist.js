@@ -73,6 +73,9 @@ Platform = function (app, listofnodes) {
 
     self.lastblocktime = null
     self.lasttimecheck = null
+    
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
+
     self.real = {
         'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
         'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy' : true,
@@ -10684,7 +10687,14 @@ Platform = function (app, listofnodes) {
                 if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
                 }
+
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+
+                var bwf = _.find(self.bwdictionary, (bww) => {
+                    return name.indexOf(bww) > -1
+                })
+                
+                if(bwf) return true
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
@@ -10720,6 +10730,8 @@ Platform = function (app, listofnodes) {
 
             scamcriteria : function(address){
 
+                return false
+
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 var info = deep(self, 'sdk.users.storage.' + address);
@@ -10731,6 +10743,8 @@ Platform = function (app, listofnodes) {
             },
 
             upvotevalueblockcriteria : function(value, address){
+
+                return false
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
@@ -27891,7 +27905,7 @@ Platform = function (app, listofnodes) {
                 destroyclbk: destroyclbk
             }
 
-            bgImages(el)
+            bgImagesCl(el)
 
 
             self.fastMessages.push(message);
@@ -29713,7 +29727,6 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -29730,23 +29743,6 @@ Platform = function (app, listofnodes) {
 
                 clbk();
             });
-
-            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
-
-                bastyonhelperOpened = true
-
-                setTimeout(function(){
-
-                    app.nav.api.load({
-                        open : true,
-                        id : 'bastyonhelper',
-                        inWnd : true,
-                    })
-
-                }, 1000)
-
-            }*/
-
 
 
         }).catch(e => {
@@ -30187,7 +30183,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            var iscallsenabled = self.app.platform.istest() ? true : false
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -31340,6 +31336,7 @@ Platform = function (app, listofnodes) {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
 				getUserInfo: async (address) => {
+
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
@@ -31362,9 +31359,15 @@ Platform = function (app, listofnodes) {
 
 				},
 				onEnded:(call) => {
+
+                    console.log("HERE")
                     self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+
+                    self.app.mobile.audiotoggle()
+
+                    console.log("HERE2")
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()

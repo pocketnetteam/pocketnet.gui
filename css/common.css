@@ -364,9 +364,6 @@
 .share_common .shareTable .sbtnxs span {
   cursor: pointer;
 }
-.share_common .shareTable .sbtnxs span:hover {
-  color: rgb(var(--color-txt-ac));
-}
 .share_common .shareTable .sbtnxs .notificationturn {
   display: none;
 }
@@ -436,11 +433,6 @@
   cursor: pointer;
   border-radius: 18px;
   overflow: hidden;
-}
-@media (pointer: fine) {
-  .share_common .jsPlayerPreview .wpl:hover {
-    opacity: 0.9;
-  }
 }
 .share_common .jsPlayerPreview .statswrapper,
 .share_common .jsPlayerPreview .durationWrapper {
@@ -891,10 +883,7 @@
   color: rgb(var(--color-txt-orange));
 }
 .share_common .sharepanel > div.sharesocial:hover .icon {
-  border-radius: 0;
-  box-shadow: none;
   color: rgb(var(--color-txt-orange));
-  background: transparent;
 }
 .share_common .exitFull {
   display: none;
@@ -1923,9 +1912,6 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   color: transparent;
   transition: color 0.1s ease-in-out;
   border-radius: 10000px;
-}
-.loading-bar:hover::after {
-  color: var(--lineColor);
 }
 .loading-bar[data-loading=false]::after {
   content: '\f04b';

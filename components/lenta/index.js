@@ -2372,7 +2372,8 @@ var lenta = (function(){
 					_.each(players, function(player){
 
 						if (player.error) return
-							player.p.muted = true;
+
+						//	player.p.muted = true;
 
 						if (player.p.playing){
 							player.p.stop()
@@ -3794,25 +3795,6 @@ var lenta = (function(){
 
 								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
 							})
-
-							/*var aspectRatio = 0
-							
-							_.each(image.images, function(img){
-								var _img = img.img;
-
-								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-							})
-
-							if (aspectRatio){
-
-								if(aspectRatio > 1.66) aspectRatio = 1.66
-
-								ch = Math.min(400, cwidth ) * aspectRatio
-
-								sel.find('.imagesWrapper').height(ch)
-							}*/
 							
 						}
 						else{
@@ -3825,9 +3807,6 @@ var lenta = (function(){
 								var el = $(image.elements[n]).closest('.imagesWrapper');
 
 								var ac = '';
-
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
 
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
@@ -4868,45 +4847,7 @@ var lenta = (function(){
 
 			})
 
-			if (isMobile()){
-
-				var onlongtouch; 
-				var touchduration = 1000, timer, event; 
-				
-				function touchstart(e) {
-					event = e;
-					e.preventDefault();
-					if (!timer) {
-						timer = setTimeout(onlongtouch, touchduration);
-					}
-				}
-				
-				function touchend(e) {
-					if (timer) {
-						clearTimeout(timer);
-						timer = null;
-						events.opensvi(e);
-					}
-				}
-	
-				onlongtouch = function() { 
-
-					var _el = $(event.target);
-					var shareEl = $(event.target).closest('.share')
-					var id = shareEl.attr('id');
-	
-					self.app.platform.api.metmenu(_el, id, actions, true);
-
-
-					event = null;
-					timer = null;
-				};
-	
-				el.c.on('touchstart', '.anothercntswrk .cntswrk', touchstart)
-				el.c.on('touchend', '.anothercntswrk .cntswrk', touchend)
-
-				
-			} 
+			
 
 			el.c.on('click', '.opensviurl', events.opensvi)
 

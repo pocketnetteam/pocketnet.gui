@@ -271,6 +271,31 @@
 
 	}
 
+	.boostinfoblocks{
+		.showMore{
+			.hide{
+				display: block;
+			}
+			.show{
+				display: none;
+			}
+		}
+		
+		&.hiddenBlocks{
+			.showMore{
+				.hide{
+					display: none;
+				}
+				.show{
+					display: block;
+				}
+			}
+			.boostinfodata{
+				display: none;
+			}
+		}
+	}
+
 	.boostinfodata{
 		text-align: center;
 		margin-top : @rhythm;

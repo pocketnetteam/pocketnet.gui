@@ -60,11 +60,6 @@ var lastcomments = (function(){
 				}, function(p){
 					p.el.find('.comment').on('click', events.show)
 
-					/*p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
-
-						if(ed.renderclbk) ed.renderclbk()
-
-					}, self.app);*/
 
 
 					if(ed.renderclbk) ed.renderclbk()

@@ -12,6 +12,9 @@
 		}
 	}*/
 }
+#leftpanel .downloadapplication {
+  margin-bottom: 1em;
+}
 #leftpanel > div .wrp {
   padding-bottom: 10px;
 }
@@ -183,7 +186,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #leftpanel .rightbottomnav a:hover {
     color: rgb(var(--color-txt-ac));
   }
@@ -248,7 +251,7 @@
   transition: 0.3s;
   font-size: 0.8em;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
     color: rgb(var(--color-txt-ac));
     background: transparent;
