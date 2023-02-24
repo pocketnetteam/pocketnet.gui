@@ -1,4 +1,14 @@
 <div class="rightbottomlinks">
+    
+    <% if(!window.cordova || !window.pocketnetstore) {%>
+        <div class="download-button">
+            <a elementsid="applications" href="applications">
+                <button class="fitem">
+                    <%=e('e13120')%>
+                </button>
+            </a>
+        </div>
+    <% } %>
     <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/"><%= e('e13182') %></a>
     <span>&middot;</span>
     <% if(!app.cutversion) {%>
