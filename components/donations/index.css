@@ -92,10 +92,29 @@
   padding: 0.5em 0;
 }
 #donations .ways .way > div.icon {
+  position: relative;
   width: 40px;
+}
+#donations .ways .way > div.icon .fa-check {
+  display: none;
+  position: absolute;
+  left: 3px;
+  top: 19px;
+  font-size: 0.7em;
 }
 #donations .ways .way > div.name span {
   font-size: 1.4em;
+}
+#donations .ways .way.active {
+  color: rgb(var(--color-txt-orange));
+  border-bottom: 1px solid --color-txt-orange;
+}
+#donations .ways .way.active .icon {
+  position: relative;
+  width: 40px;
+}
+#donations .ways .way.active .icon .fa-check {
+  display: block;
 }
 #donations .ways .back {
   margin-top: 2em;
@@ -113,14 +132,15 @@
 }
 #donations .supportForm {
   max-width: 800px;
-  margin-top: 1.5em;
   margin-left: auto;
   margin-right: auto;
-  padding: 2em;
   position: relative;
 }
 #donations .supportForm .form {
   margin-top: 2em;
+}
+#donations .supportForm .subcaption {
+  font-size: 1.5em !important;
 }
 #donations .supportForm .require {
   color: rgb(var(--color-bad));

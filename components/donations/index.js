@@ -216,7 +216,12 @@ var donations = (function(){
 				"name": "New Economy Movement (XEM)",
 				"qrname": "XEM",
 				"action": function(s){actions.ways.openAddress(s)}
-
+			},
+			{
+				"id": "other",
+				"name": self.app.localization.e('e13315'),
+				"qrname": "XEM",
+				"action": function(s){}
 			}
 		];
 
@@ -679,9 +684,20 @@ var donations = (function(){
 							return w.id == id
 						})
 
+						console.log('curobj', curobj)
+						if (curobj.id === 'other'){
+							$(this).toggleClass('active');
+					
+							el.supportForm = p.el.find('.supportForm');
+							renders.support();						
+
+							return;
+						}
+
 						if (curobj){
 							curobj.action(curobj)
 						}
+
 						
 					})
 
@@ -743,11 +759,10 @@ var donations = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				el.supportForm = el.c.find('.supportForm')
+				
 				el.process = el.c.find('.process')
 				el.donate = el.c.find('.donate')
 
-				renders.support()
 
 				initEvents();
 

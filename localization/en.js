@@ -617,10 +617,10 @@ _l.e13082 = "What you will get for your donation besides knowing you supported f
 _l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
 _l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in Bastyon"
 _l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-_l.e13086 = "Support Decentralized Web Now"
+_l.e13086 = "Support Bastyon Now"
 _l.e13087 = "Bitcoin, Litecoin"
 
-_l.supportFormTitle = "Do you have any questions about donates? Contact us"
+_l.supportFormTitle = "Do you want to donate in another way or have other questions? Contact us"
 _l.addrNotAvailable = function(cur){
     return "address address for " + cur + " is not available at the moment";
 } 

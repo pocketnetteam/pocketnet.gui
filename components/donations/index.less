@@ -15,6 +15,7 @@
 		text-align: center;
 	}
 
+
 	.text{
 		padding : 3 * @rhythm 0;
 	}
@@ -32,6 +33,7 @@
 			}
 		}
 	}
+	
 
 
 	.donate{
@@ -108,7 +110,16 @@
 			>div{
 				padding : @rhythm 0;
 				&.icon{
+					position: relative;
 					width: 40px;
+
+					.fa-check{
+						display: none;
+						position: absolute;
+						left: 3px;
+						top: 19px;
+						font-size: 0.7em;
+					}
 				}
 
 				&.name{
@@ -116,6 +127,21 @@
 						font-size: 1.4em;
 					}
 				}
+			}
+
+			&.active{
+				color : rgb(var(--color-txt-orange));
+				border-bottom : 1px solid --color-txt-orange;
+
+				.icon{
+					position: relative;
+					width: 40px;
+
+					.fa-check{
+						display: block;
+					}
+				}
+				
 			}
 		}
 
@@ -136,16 +162,17 @@
 
 	.supportForm{
 		max-width: 800px;
-		margin-top: @rhythm * 3;
 		margin-left: auto;
 		margin-right: auto;
-		padding : 4 * @rhythm;
 		position: relative;
 
 		.form{
 			margin-top: @rhythm * 4;
 		}
 
+		.subcaption{
+			font-size: @rhythm * 3!important;
+		}
 
 		.require{
 			color : rgb(var(--color-bad));
@@ -590,9 +617,10 @@
 
 	
 	.caption{
-		font-size : 2em;
+		font-size : @rhythm * 4;
 
 	}
+	
 
 	.splits{
 		display: block;
