@@ -12888,6 +12888,8 @@ Platform = function (app, listofnodes) {
 
             info: {},
 
+            api: 'https://pkoin.net/Shifter',
+
             find: function (address) {
                 var ar = self.sdk.exchanges.get();
 
@@ -13000,65 +13002,42 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            address: function (p, clbk) {
-                var storage = self.sdk.exchanges.storage
+            address: function (cur, clbk) {
 
-                var t = this
+                var me = self.app.user.address.value || '';
+                
+                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
-                storage[p.currency] || (storage[p.currency] = {})
-                storage[p.currency][p.address] || (storage[p.currency][p.address] = {})
+					var text = d.text();
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETADDRESSFORPOC',
-                        Currency: p.currency,
-                        address: p.address
-                    },
-                    success: function (d) {
+					return text;
+				
+                }).then(function(address){
 
-                        if (d.Address) {
+                    console.log('address', address);
 
-                            storage[p.currency][p.address][d.Address.Address] = {
-                                address: d.Address.Address,
+					if (address){
 
-                                amount: p.amount,
-                                currencyAmount: p.currencyAmount,
+                        if (address.indexOf('is not available at the moment') > -1){
 
-                                time: self.currentTime()
-                            };
+                            clbk(null, self.app.localization.e('addrNotAvailable', cur));
 
-                            t.save()
+                        } else{
 
-                            self.sdk.exchanges.info[d.Address.Address] = d.Address
-
-
-
-
-                            if (clbk)
-                                clbk(null, {
-
-                                    pocaddress: p.address,
-                                    currency: p.currency,
-                                    info: storage[p.currency][p.address]
-
-                                }, d.Address)
+                            clbk(address);
+ 
                         }
+					}
+					else
+					{
+						clbk(null, self.app.localization.e('e13094'))
+					}
 
-                        else {
-                            if (clbk)
-                                clbk('error', null)
-                        }
+				}).catch(function(err){
+
+					clbk(null, err);
 
 
-
-
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
-                    }
                 })
 
 
@@ -13116,34 +13095,52 @@ Platform = function (app, listofnodes) {
                 })
 
             },
+            support: function (payload, clbk) {
+                
+                fetch(this.api + '/PocShifter/SupportTicket', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(payload)
+                  }).then(function(r){
+
+                    return r.text();
+                    
+                  }).then(function(r){
+
+                    clbk(r);
+
+                  }).catch(function(err){
+
+                    clbk(null, err);
+
+                  })
+
+            },
             status: function (currency, address, clbk) {
 
+                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETPOCDEALSTATUS',
-                        Currency: currency,
-                        Address: address
-                    },
-                    success: function (d) {
-
-
-                        if (d.Deal) {
-                            if (clbk)
-                                clbk(null, d.Deal)
-                        }
-                        else {
-                            if (clbk)
-                                clbk('empty', null)
-                        }
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
+					return d.json();
+				
+                }).then(function(d){
+                    
+                    if (d[0]) {
+                        if (clbk)
+                            clbk(null, d[0])
                     }
+                    else {
+                        if (clbk)
+                            clbk('empty', null)
+                    }
+                }).catch(function(err){
+
+                    if (clbk) {
+                        clbk('server')
+                    }    
                 })
+                
 
             },
 

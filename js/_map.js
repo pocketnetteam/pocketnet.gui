@@ -641,9 +641,7 @@ __map =  {
 		donations : {
 			uri : "donations",
 			href : "donations",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
 
