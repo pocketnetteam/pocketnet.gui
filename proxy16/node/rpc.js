@@ -486,7 +486,7 @@ RpcClient.callspec = {
     getrecommendedaccountbyaddress: 'str str obj str int',
 
     getcontentactions : 'str',  
-
+    getnotifications : 'int',
     
     getcompactblock: "str int",
     searchbyhash: "str",
