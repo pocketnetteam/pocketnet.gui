@@ -111,7 +111,8 @@ var vars = {
 		path : args.path,
 		project : args.project,
 		store : args.store || false,
-		name : _meta[args.project].name
+		name : _meta[args.project].name,
+		sha : args.sha || false,
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
@@ -121,8 +122,8 @@ var vars = {
 		path : args.path,
 		project : args.project,
 		store : args.store || false,
-		name : _meta[args.project].name
-
+		name : _meta[args.project].name,
+		sha : args.sha || false,
 	}
 }
 
@@ -897,6 +898,16 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.pocketnetstore = ' + VARS.store + ';</script>\n';
 							}
 							
+							if(VARS.sha){
+								const isHex = /^[0-9A-Fa-f]+$/;
+
+								if (isHex.test(VARS.sha)) {
+									const shaShort = VARS.sha.slice(0, 7);
+
+									JSENV += '<script>window.builtfromsha = "' + shaShort + '";</script>\n';
+								}
+							}
+
 
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>\n';
 							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>\n';
