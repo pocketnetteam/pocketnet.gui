@@ -1982,6 +1982,14 @@ Application = function(p)
 
   self.mobile = {
 
+    audiotoggle : function(mode = 'SPEAKER'){
+      
+      if(typeof window.AudioToggle != 'undefined'){
+        window.AudioToggle.setAudioMode(window.AudioToggle[mode]);
+      }
+    
+    },
+
     webviewchecker : function(){
 
       if(window.plugins && window.plugins.webViewChecker){

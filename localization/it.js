@@ -519,7 +519,7 @@ _l.e13082 = "Cosa otterrai per la tua donazione oltre a sapere che hai sostenuto
 _l.e13083 = "Come segno della nostra gratitudine per la donazione, riceverai un regalo in una certa quantità di Pocketcoin";
 _l.e13084 = "Inoltre, quando costruiremo la chat di gruppo, sarai membro di un gruppo speciale di donatori che avranno accesso diretto al team di " + appname + ", anche quando la piattaforma crescerà";
 _l.e13085 = "Il link al tuo profilo" + appname + " sarà elencato di seguito portando più persone ai tuoi post (a meno che tu non ci chieda di non farlo)";
-_l.e13086 = "Supporta il web decentralizzato ora";
+_l.e13086 = "Supporta Bastyon ora";
 _l.e13087 = "Bitcoin, Litecoin";
 
 _l.e13088 = "Membri "+appname+" che hanno donato per sostenere "+appname+"";
