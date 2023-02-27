@@ -2530,4 +2530,5 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
+_l.anotherSupport = "Support Bastyon in another way"
 
