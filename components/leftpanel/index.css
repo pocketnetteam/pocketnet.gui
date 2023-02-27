@@ -12,7 +12,16 @@
 		}
 	}*/
 }
-#leftpanel .downloadapplication {
+#leftpanel .downloadapplication,
+#leftpanel .donations {
+  width: 150px;
+}
+#leftpanel .downloadapplication button,
+#leftpanel .donations button {
+  width: 100%;
+}
+#leftpanel .donations {
+  margin-top: 0.5em;
   margin-bottom: 1em;
 }
 #leftpanel > div .wrp {
