@@ -76,6 +76,7 @@ __map =  {
 		
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
+		"js/vendor/wallet-address-validator.min.js",
 		{path : "js/functionsfirst.js", babelify : true},
 		"js/localization.js",
 		//"js/notifications.js",
@@ -641,9 +642,7 @@ __map =  {
 		donations : {
 			uri : "donations",
 			href : "donations",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
 
