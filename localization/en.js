@@ -610,15 +610,22 @@ _l.e13076 = "Scan this code to send"
 _l.back = "Back"
 _l.e13077 = "Add your profile to Donors List"
 _l.e13078 = "Why are we asking for donations?"
-_l.e13079 = "We have spent 14+ months in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
+_l.e13079 = "We have spent 6+ years in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
 _l.e13080 = "How will the funds be used?"
 _l.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
 _l.e13082 = "What you will get for your donation besides knowing you supported freedom:"
 _l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-_l.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to "+appname+" team, even as the platform grows"
+_l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in Bastyon"
 _l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-_l.e13086 = "Support Decentralized Web Now"
+_l.e13086 = "Support Bastyon Now"
 _l.e13087 = "Bitcoin, Litecoin"
+
+_l.supportFormTitle = "Do you want to donate in another way or have other questions? Contact us"
+_l.addrNotAvailable = function(cur){
+    return "address address for " + cur + " is not available at the moment";
+} 
+_l.subject = "Subject";
+
 
 _l.e13088 = ""+appname+" members who donated to support "+appname+""
 _l.thankyou = "Thank you!"
