@@ -299,20 +299,38 @@
 		.copyright {
 			display: flex;
 			justify-content: flex-start;
-			align-items: center;
 			margin-top: 4 * @rhythm;
 
-			.copy_logo {
+			.app-logo {
 				width: 14px;
 				height: 14px;
+				margin-top: 3px;
+				background-image: url('../../img/logotypes/bastyon_logo_black.svg');
+				background-size: cover;
+				background-repeat: no-repeat;
+				filter: grayscale(1) brightness(1.8) contrast(0.5);
 			}
 
-			img{
-				opacity: 0.5;
-			}
-
-			.copyright_text {
+			.text {
 				margin-left: @rhythm;
+			}
+
+			.app-name,
+			.app-version,
+			.app-builtfrom {
+				display: inline-block;
+			}
+
+			.app-builtfrom {
+				position: absolute;
+				margin-left: 5px;
+				padding: 2px 5px;
+				font-family: Consolas, "courier new";
+				font-weight: bold;
+				line-height: 1;
+				background: rgba(var(--color-txt-gray-dark), 0.1);
+				color: rgba(var(--text-on-main-bg-color), 0.7);
+				border-radius: 2px;
 			}
 		}
 	}
