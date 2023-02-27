@@ -446,21 +446,27 @@ class TorControl {
     }
 
     getpidandkill = async () => {
+        const torPidFile = path.join(this.getsettingspath(), 'tor.pid');
 
-        try{
+        let pid;
 
-            var pid = await fs.readFile(path.join(this.getsettingspath(), "tor.pid"), {encoding: "utf-8"})
-
-            if (pid){
-                kill(+pid.toString())
-            }
-
-
+        try {
+            pid = await fs.readFile(torPidFile, { encoding: 'utf-8' });
+        } catch (err) {
+            return Promise.resolve(false);
         }
 
-        catch(e){
+        return new Promise((resolve) => {
+            kill(+pid.toString(), (err) => {
+                if (err) {
+                    console.error('Unable to open kill TOR instance', err);
+                    resolve(false);
+                    return;
+                }
 
-        }
+                resolve(true);
+            });
+        });
     }
 
     stop = async ()=>{
