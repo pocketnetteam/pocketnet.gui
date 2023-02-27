@@ -588,7 +588,7 @@ Platform = function (app, listofnodes) {
                     modile : true,
                     image : 'applications_ios.jpg',
 
-                    href: 'https://pocketnet.app/bastyon_iphone',
+                    href: 'https://apps.apple.com/app/id1537944200',
                     hreflabel : 'installpwa',
                 },
 
@@ -19983,7 +19983,7 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.app.settings.set(self.sdk.address.pnet().address, 'temp3', JSON.stringify(self.sdk.node.transactions.temp))
+                        self.app.settings.set(self.sdk.address.pnet().address, 'temp4', JSON.stringify(self.sdk.node.transactions.temp))
                     }
 
                     if (clbk)
@@ -19996,15 +19996,24 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp3') || "{}")
+                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp4') || "{}")
 
                         _.each(self.sdk.node.transactions.temp, function(vs, t){
 
-                            self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
-                                return typeof alias.txid == 'string'
+                            var d = []
+
+                            _.each(vs, (alias) => {
+                                if(typeof alias.txid != 'string') d.push(alias.txid)
                             })
+
+                            _.each(d, (id) => {
+                                delete self.sdk.node.transactions.temp[t][id]
+                            })
+
+                            /*self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
+                                return typeof alias.txid == 'string'
+                            })*/
                             
-                            console.log('self.sdk.node.transactions.temp[t]', self.sdk.node.transactions.temp[t])
                         })
                     }
                     else {
@@ -20134,6 +20143,8 @@ Platform = function (app, listofnodes) {
                         array: temps,
                         action: function (p) {
                             c(p.item, function (result) {
+
+                                console.log('p.item, c', p.item, result, t)
 
                                 if (result) {
                                     _.each(t, function (ts) {
