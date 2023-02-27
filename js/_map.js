@@ -645,6 +645,13 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
+		
+		howtobuy : {
+			uri : "howtobuy",
+			href : "how-to-buy",
+			add : insertingfunc,
+			anonimus : true,
+		},
 
 		faq : {
 			uri : "faq",
