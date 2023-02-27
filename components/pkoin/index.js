@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = true;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = false;
 
 		var renders = {
 
