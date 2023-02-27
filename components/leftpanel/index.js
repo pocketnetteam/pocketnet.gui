@@ -207,8 +207,7 @@ var leftpanel = (function(){
 						self.nav.api.go({
 							open : true,
 							href : 'donations',
-							inWnd : true,
-							history : !wnd
+							history : true
 						})
 					})
 
