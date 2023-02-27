@@ -202,6 +202,16 @@ var leftpanel = (function(){
 						})
 					})
 
+					_p.el.find(".donations button").on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'donations',
+							inWnd : true,
+							history : !wnd
+						})
+					})
+
 					if(clbk) clbk()
 				})
 			},
