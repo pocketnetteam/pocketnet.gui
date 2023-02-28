@@ -1219,6 +1219,8 @@ _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bast
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
 
+_l.copybuiltfrom = "Numero di montaggio copiato"
+
 _l.profanity_tag = 'volgarità'
 
 _l.saved = "Salvati"

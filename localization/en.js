@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -2517,9 +2517,9 @@ _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 
+_l.copybuiltfrom = "Application build version copied"
 
-
-_l.endedCall = "Call ended",
+_l.endedCall = "Call ended"
 _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";

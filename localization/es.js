@@ -854,6 +854,7 @@ _l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de es
 _l.desktopPopupAgree = "Descargar la aplicación"
 _l.desktopPopupDisagree = "Ahora no"
 
+_l.copybuiltfrom = "Número de conjunto copiado"
 
 _l.profanity_tag = 'blasfemia'
 

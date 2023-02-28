@@ -856,6 +856,8 @@ _l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져�
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
 
+_l.copybuiltfrom = "어셈블리 번호 복사 성공"
+
 _l.profanity_tag = '욕설'
 
 _l.saved = "저장됨"
