@@ -22,7 +22,7 @@
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
         "download-github-release": "^0.3.2",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
         "firebase-admin": "^9.3.0",
