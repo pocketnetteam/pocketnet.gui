@@ -91,7 +91,7 @@
         "jquery-bridget": "^2.0.1",
         "jquery-textcomplete": "^1.8.5",
         "jquery.animate-number": "0.0.14",
-        "jsdom": "^7.2.2",
+        "jsdom": "^16.5.0",
         "jsonwebtoken": "^8.5.1",
         "lambda-rate-limiter": "",
         "lodash": "^4.17.15",
