@@ -68,7 +68,7 @@
         "electron-updater": "^4.0.0",
         "email-validator": "^2.0.4",
         "emojione": "^4.5.0",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
         "ffbinaries": "file:ffbinary-node.tgz",
