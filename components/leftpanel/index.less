@@ -7,8 +7,17 @@
 	color : rgb(var(--text-on-main-bg-color));
 	padding-top: 15px;
 
-	.downloadapplication{
-		margin-bottom: 2 * @rhythm;
+	.downloadapplication, .donations{
+		width: 150px;
+
+		button{
+			width: 100%;
+		}
+	}
+
+	.donations{
+		margin-top: @rhythm;
+		margin-bottom: @rhythm * 2;
 	}
 
 	>div{
@@ -277,13 +286,17 @@
 			margin-top: 1em;
 			padding-top: @rhythm;
 
+			button{
+				padding-left: 0;
+				padding-right: 0;
+				font-size: 0.85em;
+				width: 150px;
+			}
+
 			.download-button{
 				margin-bottom: @rhythm;
 
-				button{
-					font-size: 0.8em;
-					width: 140px;
-				}
+				
 			}
 		}
 

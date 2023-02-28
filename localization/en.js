@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -2536,6 +2536,8 @@ _l.createPost = "Create and publish the post";
 _l.torusing_neveruse = "Never";
 _l.torusing_auto = "Auto";
 _l.torusing_always = "Always";
+
+_l.anotherSupport = "Support Bastyon in another way"
 
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";

@@ -219,7 +219,7 @@ var donations = (function(){
 			},
 			{
 				"id": "other",
-				"name": self.app.localization.e('e13315'),
+				"name": self.app.localization.e('anotherSupport'),
 				"qrname": "XEM",
 				"action": function(s){}
 			}
@@ -245,6 +245,8 @@ var donations = (function(){
 				storage[currency] = address;
 
 				state.save()
+
+				globalpreloader(false);
 
 				renders.address(currency, address, curobj, info, function(el){
 
@@ -279,16 +281,29 @@ var donations = (function(){
 					
 					var createNewAddress = function(cur){
 
-						actions.address(cur, function(address, err){		
 
-							actions.status(cur, address, function(err, info){
+						actions.address(cur, function(address, err){
+							
+							if (err){
+
+								globalpreloader(false);
+
+							} else {
+
+								actions.status(cur, address, function(err, info){
 						
-								actions.waitfunds(cur, address, info, curobj);
-							})
+									actions.waitfunds(cur, address, info, curobj);
+								})
+							}
+
+
 						})
 					}
 
 					var cur = curobj.id;
+
+					globalpreloader(10)
+
 
 					if(storage[cur]){
 
@@ -310,6 +325,8 @@ var donations = (function(){
 
 								else
 								{
+									globalpreloader(false)
+
 									delete storage[cur]
 
 									state.save();
@@ -374,7 +391,6 @@ var donations = (function(){
 
 				self.app.platform.sdk.exchanges.address(cur, function(address, err){
 					
-
 					if (address){
 						if (clbk)
 							clbk(address)
@@ -382,6 +398,7 @@ var donations = (function(){
 					else
 					{	console.log('err address', err)
 						sitemessage(err || self.app.localization.e('e13094'));
+						clbk(null, err)
 					}
 				})
 
