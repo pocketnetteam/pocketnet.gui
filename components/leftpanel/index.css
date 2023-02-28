@@ -204,12 +204,14 @@
   margin-top: 1em;
   padding-top: 0.5em;
 }
+#leftpanel .rightbottomnav .rightbottomlinks button {
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.85em;
+  width: 150px;
+}
 #leftpanel .rightbottomnav .rightbottomlinks .download-button {
   margin-bottom: 0.5em;
-}
-#leftpanel .rightbottomnav .rightbottomlinks .download-button button {
-  font-size: 0.8em;
-  width: 140px;
 }
 #leftpanel .rightbottomnav .copyright {
   display: flex;
