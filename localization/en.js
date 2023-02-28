@@ -2530,5 +2530,6 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
-_l.anotherSupport = "Support Bastyon in another way"
+_l.anotherSupport = "Support Bastyon in another way";
+_l.txtNotLinked = "Transaction will not be linked to your profile";
 
