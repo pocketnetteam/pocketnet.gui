@@ -36,10 +36,11 @@
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                         </div>
-
-                        <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
-                            <i class="fas fa-dot-circle"></i> <span><%- e('peertubeAddStream') %></span>
-                        </div>
+                        <% if (window.testpocketnet) { %>
+                            <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
+                                <i class="fas fa-dot-circle"></i> <span><%- e('peertubeAddStream') %></span>
+                            </div>
+                        <% } %>
                     <% }
 
                 } %>
