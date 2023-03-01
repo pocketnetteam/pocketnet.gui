@@ -13096,13 +13096,23 @@ Platform = function (app, listofnodes) {
 
             },
             support: function (payload, clbk) {
+
+                var serialize = function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                      if (obj.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                    return str.join("&");
+                }
+
+                var query = serialize(payload);
                 
-                fetch(this.api + '/PocShifter/SupportTicket', {
+                fetch(this.api + '/PocShifter/SupportTicket?' + query, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify(payload)
+                    }
                   }).then(function(r){
 
                     return r.text();
