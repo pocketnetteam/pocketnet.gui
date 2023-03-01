@@ -455,6 +455,8 @@ var donations = (function(){
 
 							renders.support();
 
+							sitemessage(self.app.localization.e('supportTicketSuccess'))
+
 							successCheck();
 
 						})
