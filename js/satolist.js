@@ -24537,7 +24537,6 @@ Platform = function (app, listofnodes) {
 
             },
             info : function(links){
-
                 var s = self.sdk.videos.storage
 
 
@@ -24549,7 +24548,7 @@ Platform = function (app, listofnodes) {
                         meta : meta,
                         link : l
                     }
-                })
+                });
 
                 lmap = _.filter(lmap, function(l){
 
@@ -24563,7 +24562,7 @@ Platform = function (app, listofnodes) {
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
-                    return l.meta.type
+                    return l.meta.subType || l.meta.type;
                 })
 
 
@@ -24630,7 +24629,7 @@ Platform = function (app, listofnodes) {
                     const linkInfo = linksInfo[link.link];
                     if (linkInfo){
 
-                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive){
                             linkInfo.aspectRatio = 1.78
                         }
 
@@ -24680,6 +24679,32 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve(links);
                     })
 
+                },
+
+                peertubeStream : function(links) {
+                    const promisesStack = links.map((link) =>
+                      self.app.peertubeHandler.api.videos
+                        .getDirectVideoInfo(
+                          { id: link.meta.id },
+                          { host: link.meta.host_name },
+                        )
+                        .then((res) => ({
+                          ...res,
+                          linkFull: link.link,
+                        })),
+                    );
+
+                    return Promise.all(promisesStack).then((res) => {
+                      const linksInfoObject = res.reduce(
+                        (acc, curVal) => ({
+                          ...acc,
+                          [curVal.linkFull]: curVal,
+                        }),
+                        {},
+                      );
+                      self.sdk.videos.catchPeertubeLinks(linksInfoObject, links)
+                      return Promise.resolve(links);
+                    });
                 },
 
                 bitchute : function(links){
