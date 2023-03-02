@@ -117,7 +117,6 @@ var streampeertube = (function () {
                 }
 
                 streamCreated = true;
-
                 resultElement.removeClass('hidden');
                 el.streamButton.html(
                   '<i class="fas fa-check"></i> Stream Created',
@@ -138,6 +137,9 @@ var streampeertube = (function () {
                 clbk();
 
                 add(response.formattedLink);
+              }).catch(err => {
+                sitemessage(`${self.app.localization.e('error')} ${JSON.stringify(err)}`)
+                wndObj.close();
               });
           });
       },
