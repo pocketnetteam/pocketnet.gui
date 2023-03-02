@@ -28,33 +28,33 @@ var streampeertube = (function () {
         name: '',
         wasclbk: !_.isEmpty(self.added),
       });
+      // For videocabinet
+      // try {
+      //   var currentUnloadedVideos = JSON.parse(
+      //     localStorage.getItem('unpostedVideos') || '{}',
+      //   );
 
-      try {
-        var currentUnloadedVideos = JSON.parse(
-          localStorage.getItem('unpostedVideos') || '{}',
-        );
+      //   if (
+      //     currentUnloadedVideos[self.app.user.address.value] &&
+      //     typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+      //   ) {
+      //     currentUnloadedVideos[self.app.user.address.value].push(v);
+      //   } else {
+      //     currentUnloadedVideos[self.app.user.address.value] = [v];
+      //   }
 
-        if (
-          currentUnloadedVideos[self.app.user.address.value] &&
-          typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
-        ) {
-          currentUnloadedVideos[self.app.user.address.value].push(v);
-        } else {
-          currentUnloadedVideos[self.app.user.address.value] = [v];
-        }
-
-        localStorage.setItem(
-          'unpostedVideos',
-          JSON.stringify(currentUnloadedVideos),
-        );
-      } catch (error) {
-        localStorage.setItem(
-          'unpostedVideos',
-          JSON.stringify({
-            [self.app.user.address.value]: [v],
-          }),
-        );
-      }
+      //   localStorage.setItem(
+      //     'unpostedVideos',
+      //     JSON.stringify(currentUnloadedVideos),
+      //   );
+      // } catch (error) {
+      //   localStorage.setItem(
+      //     'unpostedVideos',
+      //     JSON.stringify({
+      //       [self.app.user.address.value]: [v],
+      //     }),
+      //   );
+      // }
 
       _.each(self.added, function (a) {
         a(v);
@@ -117,7 +117,6 @@ var streampeertube = (function () {
                 }
 
                 streamCreated = true;
-
                 resultElement.removeClass('hidden');
                 el.streamButton.html(
                   '<i class="fas fa-check"></i> Stream Created',
@@ -138,6 +137,9 @@ var streampeertube = (function () {
                 clbk();
 
                 add(response.formattedLink);
+              }).catch(err => {
+                sitemessage(`${self.app.localization.e('error')} ${JSON.stringify(err)}`)
+                wndObj.close();
               });
           });
       },
