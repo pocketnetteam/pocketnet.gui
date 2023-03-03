@@ -2537,7 +2537,8 @@ _l.torusing_neveruse = "Never";
 _l.torusing_auto = "Auto";
 _l.torusing_always = "Always";
 
-_l.anotherSupport = "Support Bastyon in another way"
+_l.anotherSupport = "Support Bastyon in another way";
+_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
 
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";

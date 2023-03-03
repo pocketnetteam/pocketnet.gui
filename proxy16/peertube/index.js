@@ -17,9 +17,12 @@ var Peertube = function (settings) {
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
 
+		var isStream = ch[ch.length - 1] === 'stream';
+
 		return {
 			host: ch[0],
 			id: ch[1],
+			isStream,
 		};
 	};
 
@@ -57,11 +60,15 @@ var Peertube = function (settings) {
 	};
 
 	self.request = function (method, data, host, parameters = {}) {
+		
 		var roy = getroy(host);
 
 		if (!roy) return Promise.reject('roy');
 
 		var responseTime = performance.now();
+
+		// Direct server call for streams
+		if (data.isStream) parameters.host = host;
 
 		return roy
 			.request(method, data, parameters)
@@ -89,10 +96,11 @@ var Peertube = function (settings) {
 
 	self.inner = {
 		video: function (parsed) {
+
 			if (!parsed.id) return Promise.reject('No id info received');
 
 			return self
-				.request('video', { id: parsed.id }, parsed.host)
+				.request('video', { id: parsed.id, isStream: parsed.isStream }, parsed.host)
 				.then((res) => {
 					return Promise.resolve(res);
 				})
@@ -254,6 +262,7 @@ var Peertube = function (settings) {
 		},
 
 		videos: function ({ urls, fast }, cache) {
+
 			var result = {};
 
 			return Promise.all(
