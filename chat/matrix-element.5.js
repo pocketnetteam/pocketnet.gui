@@ -1,6 +1,6 @@
 (window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[5],{
 
-/***/ "09dc":
+/***/ "09dc1":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("09dc");
+var content = __webpack_require__("09dc1");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, "PhotoSwipe", function() { return /* reexport */ src_photoswipe; });
 __webpack_require__.d(__webpack_exports__, "PhotoSwipeGallery", function() { return /* reexport */ photoswipe_gallery; });
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"51cbae86-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/v-photoswipe/src/photoswipe.vue?vue&type=template&id=48f1a720&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2008bd1c-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/v-photoswipe/src/photoswipe.vue?vue&type=template&id=48f1a720&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
@@ -310,7 +310,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var src_photoswipe = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"51cbae86-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/v-photoswipe/src/photoswipe-gallery.vue?vue&type=template&id=8756bcce&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2008bd1c-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/v-photoswipe/src/photoswipe-gallery.vue?vue&type=template&id=8756bcce&
 var photoswipe_galleryvue_type_template_id_8756bcce_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
