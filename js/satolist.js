@@ -3733,36 +3733,50 @@ Platform = function (app, listofnodes) {
 
         wallet : {
 
-            donate : function(receiver, clbk){
+            donate : function(p){
 
-                var sender = self.sdk.address.pnet().address;
-			
-				if (sender === receiver){
-					sitemessage(self.app.localization.e('donateself'));
-				}
+                return new Promise((resolve, reject) => {
 
-                else{
-                    app.nav.api.load({
-                        open : true,
-                        id : 'donate',
-                        inWnd : true,
-            
-                        essenseData : {
-                            type : 'donate',
-                            sender: sender, 
-                            receiver: receiver,
-                            send : true,
-                            value : 1,
-                            min : 0.5,
-                            clbk  : function(value, txid){
-                                if(clbk) clbk(txid)
+                    var receiver = p.receiver
+
+                    var sender = self.sdk.address.pnet().address;
+                
+                    if (sender === receiver){
+                        sitemessage(self.app.localization.e('donateself'));
+
+                        reject()
+                    }
+
+                    else{
+                        app.nav.api.load({
+                            open : true,
+                            id : 'donate',
+                            inWnd : true,
+                
+                            essenseData : {
+                                type : 'donate',
+                                sender: sender, 
+                                receiver: receiver,
+                                send : true,
+                                value : 1,
+                                min : 0.5,
+                                clbk  : function(value, txid){
+
+                                    if (p.roomid && txid){
+                                        self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
+                                    }
+
+                                    resolve({txid, value})
+                                }
+                            },
+                
+                            clbk : function(s, p){
                             }
-                        },
-            
-                        clbk : function(s, p){
-                        }
-                    })
-                }
+                        })
+                    }
+                })
+
+                
                 
 
                 

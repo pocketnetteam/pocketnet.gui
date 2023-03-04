@@ -1451,7 +1451,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       return this.core.mtrx.chatUsersInfo(this.chat.roomId, "anotherChatUsers");
     },
     transaction: function () {
-      return functions["a" /* default */].deep(window, "POCKETNETINSTANCE.platform.ui.wallet.send");
+      return functions["a" /* default */].deep(window, "POCKETNETINSTANCE.platform.ui.wallet.donate");
     },
     uusers: function () {
       if (this.u) {
@@ -1628,7 +1628,7 @@ var CancelablePromise = __webpack_require__("0bb9");
 
       api({
         roomid: this.chat.roomId,
-        address: user.source.address
+        receiver: user.source.address
       });
 
       /*.then(({txid, from}) => {

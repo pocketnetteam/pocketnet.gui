@@ -683,7 +683,7 @@ var author = (function(){
 					}, function(p){
 
 						p.el.find('.todonate').on('click', () => {
-							self.app.platform.ui.wallet.donate(author.address)
+							self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
 							
 						})
 
