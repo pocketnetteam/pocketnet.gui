@@ -638,7 +638,7 @@ _l.e13093 = "Please choose donation way"
 _l.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 _l.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
 _l.e13096 = "Please fill amount of donation"
-_l.e130961 = "How much do you want to donate?"
+_l.e130961 = "How much PKOIN do you want to send?"
 _l.e130962 = "Available balance"
 
 _l.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"

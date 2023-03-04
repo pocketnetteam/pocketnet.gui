@@ -682,6 +682,11 @@ var author = (function(){
 
 					}, function(p){
 
+						p.el.find('.todonate').on('click', () => {
+							self.app.platform.ui.wallet.donate(author.address)
+							
+						})
+
 						p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
 						p.el.find('.copyaddress').on('click', function(){
