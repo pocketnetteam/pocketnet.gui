@@ -1,4 +1,4 @@
-InstallDir "$LocalAppData\Programs\pocketnet-tor"
+InstallDir "$LocalAppData\Programs\Pocketnet"
 
 !macro customRemoveFiles
     # RMDir /r "$INSTDIR"
@@ -24,6 +24,6 @@ InstallDir "$LocalAppData\Programs\pocketnet-tor"
     Delete "$INSTDIR\LICENSE.electron.txt"
     Delete "$INSTDIR\vk_swiftshader_icd.json"
 
-    Delete "$SMSTARTUP\Bastyon + Tor.lnk"
+    Delete "$SMSTARTUP\Bastyon.lnk"
 
 !macroend
