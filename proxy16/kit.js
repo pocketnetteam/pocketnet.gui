@@ -422,9 +422,6 @@ function getKit(ipc) {
 				tor : {
 
 					changeSettings: function (data) {
-
-						console.log("data", data)
-
 						return kit.proxy().then((proxy) => {
 							
 

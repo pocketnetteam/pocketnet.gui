@@ -1362,9 +1362,6 @@ var Api = function(app){
         })
 
        .then(wproxies => {
-
-            console.log('wproxies', wproxies)
-
             if (wproxies.length){ 
                 self.set.currentwithnode(wproxies[rand(wproxies.length - 1, 0)].id, true)
             }
@@ -1379,12 +1376,7 @@ var Api = function(app){
 
         var current = self.get.current()
 
-        console.log('current', current)
-
         return current.api.ping().then(() => {
-
-            console.log("HERE")
-
             return Promise.resolve(true)
         })
 

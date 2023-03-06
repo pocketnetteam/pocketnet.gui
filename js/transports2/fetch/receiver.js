@@ -21,8 +21,6 @@ class FetchReceiver {
     }
 
     async send(eventName, requestId, data) {
-        // console.log('LEVEL-1: SEND', eventName, requestId, data);
-
         const message = {
             name: eventName,
             id: requestId,
@@ -36,11 +34,7 @@ class FetchReceiver {
     }
 
     listen(eventName, requestId, listener) {
-        // console.log('LEVEL-1: LISTEN', eventName, requestId);
-
         this.onmessageListeners[requestId][eventName] = async (data) => {
-            // console.log('LEVEL-1: RECEIVED', eventName, requestId);
-
             listener(data);
         };
     }

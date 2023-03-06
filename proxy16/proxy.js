@@ -40,12 +40,6 @@ process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-//////////////
-/*
-if (process.platform === 'win32') expectedExitCodes = [3221225477];
-
-console.log('expectedExitCodes' , expectedExitCodes)*/
-
 var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 	var self = this;
 
@@ -566,9 +560,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 		},
 
 		settingChanged: function(settings){
-
-			console.log('settingChanged', settings)
-
 			return torapplications.settingChanged(settings)
 		},
 

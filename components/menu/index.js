@@ -114,8 +114,6 @@ var menu = (function(){
 			},
 
 			receiveNetworkStats : function(stats) {
-				console.log('Tor stats', stats);
-
 				if (stats.torUsed && controlTorElem) {
 					controlTorElem.addClass(stats.status);
 
@@ -470,20 +468,6 @@ var menu = (function(){
 					self.sdk.broadcaster.clbks['menu'] = function(data){
 						actions.receiveNetworkStats(data)
 					}
-
-					//networkStatsListenerId = swBroadcaster.on('network-stats', actions.receiveNetworkStats);
-
-					/*electron.ipcRenderer.on('TorApplication :: StateChange', (e, state) => {
-						if (state === 'failure' || state === 'running') {
-							controlTorElem.addClass('loading');
-							controlTorElem.removeClass(['on', 'off']);
-						} else if (state === 'started') {
-							controlTorElem.addClass('on');
-							controlTorElem.removeClass(['loading', 'off']);
-						}
-
-						console.log('TOR APPLICATION STATE CHANGED', state);
-					})*/
 
 					let proxyData;
 

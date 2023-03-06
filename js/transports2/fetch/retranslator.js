@@ -39,8 +39,6 @@ class FetchRetranslator {
   }
 
   postMessage(eventName, requestId, data) {
-    // console.log('LEVEL-2: SEND', eventName, requestId, data);
-
     const message = {
       name: eventName,
       id: requestId,
@@ -50,13 +48,10 @@ class FetchRetranslator {
       message.data = data;
     }
 
-    // console.log('Broadcast SH008', message);
     this.broadcastChannel.postMessage(message);
   }
 
   onMessage(eventName, listener) {
-    // console.log('LEVEL-2: LISTEN', eventName);
-
     this.onmessageListeners[eventName] = listener;
   }
 

@@ -111,23 +111,19 @@ function onFetch(event) {
     if (cacheName) {
       cache = await caches.open(cacheName);
 
-      console.log('Try to get cache for', request.url);
-      const cacheResponse = await getCache(cache)
+      const cacheResponse = await getCache(cache);
+
       if (cacheResponse) {
-        console.log('Using cache for', request.url);
         resolve(cacheResponse);
         return;
       }
     }
 
     if (isElectron) {
-      console.log('Try to get TOR answer for', request.url);
-
       try {
         const torResponse = await torAnswer();
 
         if (torResponse) {
-          console.log('Using TOR for', request.url);
           resolve(torResponse.clone());
 
           if (cacheName) {
@@ -141,7 +137,6 @@ function onFetch(event) {
       }
     }
 
-    console.log('Try to get fetch answer for', request.url);
     try {
       const fetchResponse = await fetch(request);
 
@@ -159,7 +154,6 @@ function onFetch(event) {
           totalStats: networkTotalStats,
         });
 
-        console.log('Using NORMAL fetch for', request.url);
         resolve(fetchResponse.clone());
 
         if (cacheName) {
@@ -179,8 +173,6 @@ function onFetch(event) {
       reject(err);
     }
   });
-
-  console.log('GOING WITH', request.url, request);
 
   switch (request.destination) {
     case 'image':

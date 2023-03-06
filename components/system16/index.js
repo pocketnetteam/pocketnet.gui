@@ -2849,10 +2849,6 @@ var system16 = (function(){
 			webserveradmin : function(elc, clbk){
 
 				if(actions.admin() && system && info){
-
-
-					console.log("system", system, info)
-
 					self.shell({
 						inner : html,
 						name : 'webserveradmin',
@@ -4057,8 +4053,6 @@ var system16 = (function(){
 						  bots = r.bots || [];
 						  renders.bots(el.c);
 
-						  console.log('expanded2', expanded)
-		  
 						  /*el.c.find('.collapsepart').each(function (i) {
 							if (expanded[i]) $(this).addClass('expanded');
 						  });*/

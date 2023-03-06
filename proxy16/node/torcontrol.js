@@ -20,8 +20,7 @@ class Helpers {
 
             return { exists: true, isFolder: stat.isDirectory()};
         }catch (e) {
-
-            console.log(e)
+            console.warn("Tor file was not found", pathname, e.message);
 
             return { exists: false, isFolder: null };
         }
@@ -65,8 +64,6 @@ class TorControl {
     constructor(settings, proxy/*, ipc*/) {
         this.settings = {...settings};
 
-        console.log('settings', settings)
-
         this.application = new Applications(settings, applicationRepository, proxy)
 
     }
@@ -92,23 +89,18 @@ class TorControl {
 
 
         } catch (e) {
-            console.log("E", e)
+            console.log("Tor control failed to start:", e.message);
             this.state.status = "stopped";
         }
     }
 
     settingChanged = async(settings) => {
-
         var needRestart = false
-
-        console.log("settings.useSnowFlake", settings.useSnowFlake, this.settings.useSnowFlake)
 
         if(settings.useSnowFlake != this.settings.useSnowFlake) needRestart = true
         if(settings.enabled2 != this.settings.enabled2 && settings.enabled2 != 'auto') needRestart = true
 
         this.settings = {...settings};
-
-        console.log('needRestart', needRestart,  this.settings , settings)
 
         if (needRestart){
             await this.autorun()
@@ -178,8 +170,6 @@ class TorControl {
         const useSnowFlake = this.settings.useSnowFlake || false;
         const isOverwrite = true; //config.overwrite || false;
 
-        console.log('useSnowFlake', useSnowFlake)
-
         const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
 
         if (torrcConfig.exists && !isOverwrite) {
@@ -239,11 +229,9 @@ class TorControl {
         try{
             await fs.writeFile(path.join(this.getsettingspath(), "torrc"), torConfig, {flag: "a+"})
 
-            console.log("CONFIG MAKED")
-
+            console.log("Tor config successfully created");
         }catch(e) {
-
-            console.log(e)
+            console.error("Tor config was not created:", e.message);
             return false
 
         }
@@ -294,7 +282,6 @@ class TorControl {
     }
 
     remove = () => {
-
         this.stop()
 
         if(!this.needinstall()){
@@ -302,8 +289,7 @@ class TorControl {
             try{
                 fssync.rmdirSync(this.getsettingspath(), { recursive: true });
             }catch(e){
-
-                console.log(e)
+                console.log("Failed to delete Tor folder:", e.message)
 
                 return Promise.reject('path')
             }
@@ -332,24 +318,20 @@ class TorControl {
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
             const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
 
-            console.log(data)
-
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
-                console.log("TOR connection lost")
+                console.warn("Tor connection lost")
                 this.state.status = "failure"
             } else if (isBootstrapped100(data) || isConnected(data)) {
-                console.log("TOR started")
+                console.log("Tor instance started again")
                 this.state.status = "started"
             } else if (isRetryingConnection(data)) {
-                console.log("TOR retrying circuit")
+                console.warn("Tor retrying circuit")
                 //this.state.status = "running"
             }
         }
         catch(e){
             console.error(e)
         }
-
-        // console.log(data)
     }
 
     startTimer = () => {
@@ -360,7 +342,7 @@ class TorControl {
             this.timeoutCounter -= 5000;
 
             if (this.timeoutCounter <= 0) {
-                console.log("TOR WAS NOT RECEIVING REQUESTS, STOPPING");
+                console.log("Tor was idle for 5 minutes, switching it off");
 
                 this.stop();
                 this.timeoutCounter = null;
@@ -370,7 +352,6 @@ class TorControl {
     }
 
     resetTimer = () => {
-        console.log("RESETTING TIMER")
         const minutes5 = 5 * 60 * 1000;
         this.timeoutCounter = minutes5;
     }
@@ -382,12 +363,11 @@ class TorControl {
 
         this.status = "triggered";
 
-        console.log("START")
+        console.log("Tor start triggered");
 
         if(this.instance) return true
 
         if (this.settings.enabled2 === 'auto') {
-            console.log("TOR IS IN AUTO MODE, SETTING TIMEOUT")
             this.startTimer()
         }
 
@@ -396,7 +376,7 @@ class TorControl {
         var configCreated = await this.makeConfig();
 
         if(!configCreated){
-            console.log("tor config fail")
+            console.log("Tor config creation failed")
         }
 
         this.state.status = "running"
@@ -432,7 +412,7 @@ class TorControl {
 
         this.savepid(this.instance.pid)
 
-        console.log("TOR running with pid: ", this.instance.pid)
+        console.log("Tor running with pid:", this.instance.pid)
 
         return true;
     }
@@ -476,7 +456,7 @@ class TorControl {
                 kill(+this.instance.pid.toString())
             }
             catch(e){
-                console.log("KILL ERROR", e)
+                console.warn('Tor instance kill error:', e.message)
             }
         }
 

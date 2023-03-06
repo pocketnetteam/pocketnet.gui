@@ -11,17 +11,11 @@ class FetchMainHandler {
   send(eventName, requestId, data) {
     const sender = this.requests[requestId].sender;
 
-    // console.log('LEVEL-3: SEND', `${FetchBridgeEventsGroup}:${requestId}:${eventName}`, eventName, requestId, data);
-
     sender.send(`${FetchBridgeEventsGroup}:${requestId}:${eventName}`, data);
   }
 
   listen(eventName, requestId, listener) {
-    // console.log('LEVEL-3: LISTEN', `${FetchBridgeEventsGroup}:${requestId}:${eventName}`, eventName, requestId);
-
     this.ipcMain.once(`${FetchBridgeEventsGroup}:${requestId}:${eventName}`, (...args) => {
-      // console.log('LEVEL-3: RECEIVE', eventName, requestId, args);
-
       listener(...args);
     });
   }

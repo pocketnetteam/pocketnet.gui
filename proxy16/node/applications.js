@@ -28,7 +28,6 @@ var Applications = function(settings, applications = {}, proxy) {
     self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
-        console.log(meta[key].url)
         return axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
@@ -170,8 +169,6 @@ var Applications = function(settings, applications = {}, proxy) {
 
         return self.getinfo(key).then(asset => {
             r.asset = asset
-
-            console.log('asset', asset)
 
             return f.downloadgitrelease(r.asset.name, {
                 check : function(stats){

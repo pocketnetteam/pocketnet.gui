@@ -5549,8 +5549,6 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.broadcaster.history.push(data)
 
-                        console.log('history', self.sdk.broadcaster.history)
-
                         _.each(self.sdk.broadcaster.clbks, (c) => {
                             c(data)
                         })

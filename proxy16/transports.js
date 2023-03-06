@@ -75,8 +75,6 @@ class WrappedAxios {
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-        //console.log('D0, Axios wait');
-
         if (useTor) {
             const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -86,8 +84,6 @@ class WrappedAxios {
 
             this.attachAgent(preparedArgs);
         }
-
-        //console.log('D1, Axios args', preparedArgs);
 
         return axios(preparedArgs)
             .then(WrappedAxios.handleSuccess)
@@ -173,8 +169,6 @@ class WrappedFetch {
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-        //console.log('D0, Fetch wait');
-
         if (useTor) {
             const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -184,8 +178,6 @@ class WrappedFetch {
 
             this.attachAgent(preparedArgs);
         }
-
-        //console.log('D1, Fetch args', url, preparedArgs);
 
         return fetch(url, preparedArgs)
             .then((response) => {
@@ -284,8 +276,6 @@ class WrappedRequest {
         const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
-        //console.log('D0, Request wait');
-
         if (useTor) {
             const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -295,8 +285,6 @@ class WrappedRequest {
 
             this.attachAgent(preparedArgs);
         }
-
-        //console.log('D1, Request args', preparedArgs);
 
         request(preparedArgs, async (error, response, body) => {
             let preparedResult = {};
@@ -425,7 +413,7 @@ class Transports {
 
                 fs.writeFileSync(statsFilePath, JSON.stringify(this.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
             } catch (err) {
-                //console.log('STATS_BUSY??', err);
+                console.warn('Hosts stats are not available:', err.message);
             }
         }
 
