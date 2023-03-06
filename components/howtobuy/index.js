@@ -145,6 +145,13 @@ var howtobuy = (function(){
 					el.c.find('.formula').toggleClass("hidden")
 				})
 
+				p.el.find('.links .anchor').on('click', function(){
+
+					var anchor = $(this).attr('anchor');
+
+					p.el.find('.buy-pkoin #' + anchor)[0].scrollIntoView();
+				})
+
 				initEvents();
 
 				make()
