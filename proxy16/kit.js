@@ -171,7 +171,7 @@ var defaultSettings = {
 	admins : [],
 
 	testkeys : [],
-
+	
 	nodes : {
 		dbpath : 'data/nodes'
 	},
@@ -194,12 +194,12 @@ var defaultSettings = {
 			count  : 500,
 			blacklistcount : 3
 		},
-
+		
 		ports : {
 			https : 8899,
 			wss : 8099
 		},
-
+		
 		ssl : {
 			name : "Default",
 			key : 'cert/key.pem',
@@ -233,7 +233,7 @@ var defaultSettings = {
 		dataPath: '', //// deleted
 		ndataPath : ''
     },
-
+	
 	bots : {
 		dbpath : 'data/bots',
 	},
@@ -253,7 +253,7 @@ var defaultSettings = {
 		private : '',
 		public : ''
 	}*/
-
+	
 	slide : {
 		dbpath : 'data/slide',
 	},
@@ -362,7 +362,7 @@ var state = {
                 }
             });
         })
-
+		
 	},
 
 	rewrite : function(){
@@ -398,7 +398,7 @@ var state = {
 		})
 	},
 	prepare : function(){
-
+	
 		try{
 			if(!fs.existsSync(f.path('data'))){
 				fs.mkdirSync(f.path('data'))
@@ -406,9 +406,9 @@ var state = {
 		}
 		catch(e){
 		}
-
-
-
+		
+		
+			
 	}
 }
 

@@ -984,7 +984,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 						cantuploading: true,
 					},
 				],
-
+				
 				33: [
 					{
 						host : 'peertube27.pocketnet.app',
@@ -2172,7 +2172,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 			},
 		},
 
-
+		
 
 		firebase: {
 			set: {

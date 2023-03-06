@@ -73,7 +73,6 @@ var Peertube = function (settings) {
 		return roy
 			.request(method, data, parameters)
 			.then((r) => {
-
 				statistic.add({
 					code: 200,
 					difference: performance.now() - responseTime,
@@ -83,7 +82,6 @@ var Peertube = function (settings) {
 				return Promise.resolve(r);
 			})
 			.catch((e) => {
-
 				statistic.add({
 					code: e == 'failed' ? 501 : (e || {}).code || 500,
 					difference: performance.now() - responseTime,
