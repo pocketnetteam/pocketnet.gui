@@ -2448,7 +2448,7 @@ _l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on
 _l.reach = 'Reach'
 _l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com' 
 
-_l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
+_l.reachDescription = 'Average cost of thousand impressions (CPM) is 28 cents'
 _l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
 _l.boost_c45 = 'Incredibly Low CPM'
 _l.boost_c46 = 'Cost per Thousand Impressions is 28 cents!'
