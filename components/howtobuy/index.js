@@ -152,6 +152,12 @@ var howtobuy = (function(){
 					p.el.find('.buy-pkoin #' + anchor)[0].scrollIntoView();
 				})
 
+				p.el.find('.cta').on('click', function(){
+					self.app.platform.sdk.categories.clear();
+					self.app.platform.sdk.categories.select('c63');
+					window.open('index')
+				})
+
 				initEvents();
 
 				make()
