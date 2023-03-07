@@ -4,10 +4,15 @@
         <div class="downloadapplication">
             <button class="button small"><%= e('e13120') %></button>
         </div>
+
+    <% } %>
+
+    <% if (!window.cordova && !isMobile()) {%>
         <div class="donations">
             <button class="button small good"><%= e('donate') %></button>
         </div>
     <% } %>
+
 
     <div>
 
@@ -24,6 +29,7 @@
         <% if(!app.cutversion) {%>
             <span>&middot;</span>
             <a elementsid="help" href="help"><%= e('e14100') %></a>
+            <span>&middot;</span>
             <a elementsid="boost" href="boost">Boost</a>
         <% } %>
     </div>
