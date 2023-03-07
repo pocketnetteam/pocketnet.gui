@@ -126,7 +126,11 @@ public class EnumerateDevicesPlugin extends CordovaPlugin {
                     device.put("deviceId", Integer.toString(mics[i].getId()));
                     device.put("groupId", "");
                     device.put("kind", "audioinput");
-                    device.put("label", label);
+                    if (i == 0) {
+                        device.put("label", label);
+                    } else {
+                        device.put("label", "back");
+                    }
                     this.devicesArray.put(device);
                 } catch (JSONException e) {
                     System.out.println("ERROR JSONException " + e.toString());
@@ -152,7 +156,11 @@ public class EnumerateDevicesPlugin extends CordovaPlugin {
                 device.put("deviceId", cameraId[i]);
                 device.put("groupId", "");
                 device.put("kind", "videoinput");
-                device.put("label", label);
+                if (i == 0) {
+                    device.put("label", "front");
+                } else {
+                    device.put("label", "back");
+                }
                 this.devicesArray.put(device);
             }
 

@@ -288,6 +288,7 @@ Application = function(p)
   }
 
   var checkTouchStyle = function(){
+    
     var mobileview = istouchstylecalculate()
 
     if(self.mobileview != mobileview){
@@ -1283,7 +1284,7 @@ Application = function(p)
     self
   );
 
-  if (Math.random() <= 0.05) {
+  /*if (Math.random() <= 0.05) {
     window.onerror = function (errorMsg, url) {
       self.Logger.error({
         err: errorMsg,
@@ -1292,7 +1293,7 @@ Application = function(p)
       });
       return false;
     };
-  }
+  }*/
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
@@ -1689,8 +1690,8 @@ Application = function(p)
     }, 100)
 
     var t = false
-
-    window.addEventListener('touchstart', function(e){
+    
+    /*window.addEventListener('touchstart', function(e){
       t = true
     })
 
@@ -1700,7 +1701,7 @@ Application = function(p)
 
     window.addEventListener('touchcancel', function(e){
       t = false
-    })
+    })*/
 
     window.addEventListener('scroll', function(){
       scrolling()
@@ -1980,6 +1981,14 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    audiotoggle : function(mode = 'SPEAKER'){
+      
+      if(typeof window.AudioToggle != 'undefined'){
+        window.AudioToggle.setAudioMode(window.AudioToggle[mode]);
+      }
+    
+    },
 
     webviewchecker : function(){
 
@@ -2422,7 +2431,7 @@ Application = function(p)
     fullscreenmode : function(v){
 
       var cl = function(){
-        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+        v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
         v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
       }
       

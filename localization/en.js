@@ -610,15 +610,22 @@ _l.e13076 = "Scan this code to send"
 _l.back = "Back"
 _l.e13077 = "Add your profile to Donors List"
 _l.e13078 = "Why are we asking for donations?"
-_l.e13079 = "We have spent 14+ months in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
+_l.e13079 = "We have spent 6+ years in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
 _l.e13080 = "How will the funds be used?"
 _l.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
 _l.e13082 = "What you will get for your donation besides knowing you supported freedom:"
 _l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-_l.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to "+appname+" team, even as the platform grows"
+_l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in Bastyon"
 _l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-_l.e13086 = "Support Decentralized Web Now"
+_l.e13086 = "Support Bastyon Now"
 _l.e13087 = "Bitcoin, Litecoin"
+
+_l.supportFormTitle = "Do you want to donate in another way or have other questions? Contact us"
+_l.addrNotAvailable = function(cur){
+    return "address address for " + cur + " is not available at the moment";
+} 
+_l.subject = "Subject";
+
 
 _l.e13088 = ""+appname+" members who donated to support "+appname+""
 _l.thankyou = "Thank you!"
@@ -2432,7 +2439,7 @@ _l.boost_c31 = 'Where to buy PKOIN?'
 _l.boost_c32 = 'PKOIN can be purchased on the following sites.'
 _l.boost_c33 = '- here you can buy PKOIN for other cryptocurrencies.'
 _l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
-_l.boost_c34 = 'Buying PKOIN from hand to hand on Bastyon'
+_l.boost_c34 = 'Buying PKOIN peer-to-peer on Bastyon'
 _l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
 _l.boost_c36 = 'How do I start advertising?'
 _l.boost_c37 = 'Launching ads on Bastion is very simple. To do this, you need:'
@@ -2475,6 +2482,29 @@ _l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
 _l.boost_c67 = 'Average cost of ad is $1 '
 _l.boost_c68 = 'CPM = $. 28'
 _l.boost_c69 = '28 cents on average is a very low CPM'
+
+
+
+_l.howtobuy_c1 = 'How To Buy'
+_l.howtobuy_c2 = 'PKOIN'
+_l.howtobuy_c3 = 'Cryptocurrency Exchanges'
+_l.howtobuy_c4 = 'Buying For A Visa/Mastercard'
+_l.howtobuy_c5 = 'Buying PKOIN with cryptocurrency'
+_l.howtobuy_c6 = 'Buying PKOIN peer-to-peer on Bastyon'
+_l.howtobuy_c7 = 'Buying with cards in Russia/Ukraine/Belarus'
+_l.howtobuy_c8 = 'Next, select the appropriate profile offering the purchase/sale of PKOIN. Be careful when buying with your hands. Look at the reviews and do not take large amounts.'
+_l.howtobuy_c9 = 'Next, go to the chat and discuss the terms of the exchange'
+_l.howtobuy_c10 = 'Find peer-to-peer Sellers'
+_l.howtobuy_c11 = '(except Russian Federation cards)'
+_l.howtobuy_c12 = ''
+_l.howtobuy_c13 = ''
+_l.howtobuy_c14 = ''
+_l.howtobuy_c15 = ''
+_l.howtobuy_c16 = ''
+_l.howtobuy_c17 = ''
+_l.howtobuy_c18 = ''
+_l.howtobuy_c19 = ''
+_l.howtobuy_c20 = ''
 
 
 
@@ -2522,5 +2552,8 @@ _l.daccept = "Accept and continue";
 
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
+
+_l.anotherSupport = "Support Bastyon in another way";
+_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
 
 

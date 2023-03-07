@@ -12,7 +12,16 @@
 		}
 	}*/
 }
-#leftpanel .downloadapplication {
+#leftpanel .downloadapplication,
+#leftpanel .donations {
+  width: 150px;
+}
+#leftpanel .downloadapplication button,
+#leftpanel .donations button {
+  width: 100%;
+}
+#leftpanel .donations {
+  margin-top: 0.5em;
   margin-bottom: 1em;
 }
 #leftpanel > div .wrp {
@@ -186,7 +195,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #leftpanel .rightbottomnav a:hover {
     color: rgb(var(--color-txt-ac));
   }
@@ -194,6 +203,15 @@
 #leftpanel .rightbottomnav .rightbottomlinks {
   margin-top: 1em;
   padding-top: 0.5em;
+}
+#leftpanel .rightbottomnav .rightbottomlinks button {
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.85em;
+  width: 150px;
+}
+#leftpanel .rightbottomnav .rightbottomlinks .download-button {
+  margin-bottom: 0.5em;
 }
 #leftpanel .rightbottomnav .copyright {
   display: flex;
@@ -244,7 +262,7 @@
   transition: 0.3s;
   font-size: 0.8em;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
     color: rgb(var(--color-txt-ac));
     background: transparent;

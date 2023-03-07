@@ -5,7 +5,7 @@
 #categories .pocketcaption span {
   margin-right: 0;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #categories .pocketcaption:hover {
     color: rgb(var(--color-txt-ac));
   }
@@ -210,7 +210,7 @@
 #categories .tg.selected .cat .times {
   display: flex;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   #categories .tg .cat .cattable > div.catvalue:hover {
     color: rgb(var(--color-txt-ac));
   }

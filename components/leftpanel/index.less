@@ -1,12 +1,23 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
+
+	
 	padding-right: 16px;
 	color : rgb(var(--text-on-main-bg-color));
 	padding-top: 15px;
 
-	.downloadapplication{
-		margin-bottom: 2 * @rhythm;
+	.downloadapplication, .donations{
+		width: 150px;
+
+		button{
+			width: 100%;
+		}
+	}
+
+	.donations{
+		margin-top: @rhythm;
+		margin-bottom: @rhythm * 2;
 	}
 
 	>div{
@@ -263,7 +274,7 @@
 			
 		}
 
-		@media (pointer:fine) {
+		@media (pointer:hover) {
 			a{
 				&:hover{
 					color : rgb(var(--color-txt-ac));
@@ -274,6 +285,19 @@
 		.rightbottomlinks {
 			margin-top: 1em;
 			padding-top: @rhythm;
+
+			button{
+				padding-left: 0;
+				padding-right: 0;
+				font-size: 0.85em;
+				width: 150px;
+			}
+
+			.download-button{
+				margin-bottom: @rhythm;
+
+				
+			}
 		}
 
 		.copyright {
@@ -331,7 +355,7 @@
 				font-size: 0.8em;
 			}
 
-			@media (pointer:fine) {
+			@media (pointer:hover) {
 				.vc_value{
 					
 					&:hover{

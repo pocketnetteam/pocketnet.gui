@@ -75,8 +75,8 @@ var testnodes = [
 
 
 var activenodes = [
-	{
-		host : '178.217.159.221', /*  */
+	/*{
+		host : '178.217.159.221',
 		port: 38381,
 		ws: 8387,
 		name : 'test3.v.pocketnet.app',
@@ -84,10 +84,10 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 
-	{
-		host : '65.21.252.135', /*  */
+	/*{
+		host : '65.21.252.135', 
 		port: 38081,
 		ws: 8087,
 		name : 'test4.v.pocketnet.app',
@@ -95,7 +95,7 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 	//////////////
 	{
 		host : '135.181.196.243',

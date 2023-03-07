@@ -1,0 +1,104 @@
+<div id="<%-module.map.id%>">
+	<div class="work adj">
+	<div class="links">
+			<div class="column">
+				<span class="anchor" anchor="exchanges">
+					<%-e('howtobuy_c3')%> <span>></span>					
+				</span>
+				<span class="anchor" anchor="visa">
+					<%-e('howtobuy_c4')%> <span>></span>
+				</span>
+				<span class="anchor" anchor="crypto">
+					<%-e('howtobuy_c5')%> <span>></span>
+				</span>
+				<span class="anchor" anchor="ptp">
+					<%-e('howtobuy_c6')%> <span>></span>
+				</span>				
+			</div>
+		</div>
+		<header class="header">
+			<h1 class="header__title yellow">
+				<span class="red"><%-e('howtobuy_c1')%></span> <br> <%-e('howtobuy_c2')%> 						
+			</h1>
+			
+			<div class="buy-pkoin">			
+				<h2 id="exchanges" class="yellow">1. <%-e('howtobuy_c3')%></h2>
+				<!--<p>					
+					<%-e('howtobuy_c4')%>
+				</p> -->
+				<div class="sites">
+					<a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">1.
+						<img class="img" src="./img/bitforex.png"/>
+						<!--<span>
+							Bitforex.com
+						</span> -->
+					</a>
+					<a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">2.
+						<img src="./img/Digifinex.png"/>
+						<!--<span>
+						Digifinex.com
+						</span>-->						
+					</a>
+					<h2 id="visa"  class="yellow">2. <%-e('howtobuy_c4')%><br><%-e('howtobuy_c11')%>	</h2>
+					<a target="_blank" style="max-width:400px" href="https://buy.pkoin.indacoin.io/">
+						<img src="./img/INDACOIN.22f2245a.svg"/>
+						<!--<span class	= "span">
+							<%-e('boost_c45')%>							 
+						</span>-->						
+					</a>
+					<h2 id="crypto" class="yellow">3. <%-e('howtobuy_c5')%></h2>
+					<a target="_blank" style="font-size: 2em; background-image: linear-gradient(90deg, #00A4ff, #AAFFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" href="https://pkoin.net/">
+						<!--<img src="./img/Digifinex.png"/> -->
+						PKOIN.NET
+					<!--	<span class	= "span">
+							<%-e('boost_c33')%>							 
+						</span>-->
+					</a>
+				</div>
+
+				<h2 id="ptp" class="yellow">
+					4. <%-e('howtobuy_c6')%>					
+				</h2>
+				<p class="subtitle"><%-e('howtobuy_c7')%></p>
+				<p class="text">
+					<%-e('boost_c35')%>					
+				</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/peer-to-peer.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/peer-to-peer-en.jpg"/>
+				<% } %>				
+				<p class="text">
+					<%-e('howtobuy_c8')%>					
+				</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/seller_ru.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/seller_en.jpg"/>
+				<% } %>	
+				<p class="text">
+					<%-e('howtobuy_c9')%>					
+				</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/chat_ru.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/chat_en.png"/>
+				<% } %>	
+	
+				
+				<div class="cta"> 
+					<%-e('howtobuy_c10')%>					
+				</div>
+			
+			</div>
+			
+			
+		</header>
+	
+
+	</div>
+
+</div>
