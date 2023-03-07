@@ -1408,7 +1408,9 @@ function getKit(ipc) {
 		destroyhard: function () {
 
 			return kit.destroy().then(r => {
-				return this.destroy()
+				return kit.proxy().then(proxy => {
+					return proxy.kit.destroy()
+				})
 			})
 
 		},
