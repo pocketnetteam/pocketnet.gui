@@ -148,9 +148,13 @@ PeerTubePocketnet = function (app) {
 		};
 	};
 
-	self.composeLink = function (host, videoid, isAudio = false) {
+	self.composeLink = function (host, videoid, isAudio = false, isLive = false) {
 		let url = PEERTUBE_ID + host + '/' + videoid;
-		return (isAudio == true) ? url + '/audio' : url;
+
+		if (isAudio === true) url = `${url}/audio`;
+		if (isLive === true) url = `${url}/stream`;
+		
+		return url;
 	};
 
 	self.checkTranscoding = function(url) {
@@ -1007,9 +1011,11 @@ PeerTubePocketnet = function (app) {
 					.then((result) => {
 						if (!result.video) return Promise.reject(error('uploaderror'));
 
+						const isLive = true;
+
 						return Promise.resolve({
 							...result.video,
-							formattedLink: self.composeLink(options.host, result.video.uuid, result.video.isAudio),
+							formattedLink: self.composeLink(options.host, result.video.uuid, result.video.isAudio, isLive),
 							host: options.host,
 						});
 					})
