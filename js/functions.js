@@ -10284,11 +10284,13 @@
 	    var type = null
 		var id = null
 		var host_name = null
+		var subType = null
 
 		if(_url && _url.indexOf('peertube://') > -1){
 			var ch = _url.replace('peertube://', '').split('/');
 			id = ch[1]
-			type = 'peertube'
+			type = 'peertube';
+			subType = _url.includes('/stream') ? 'peertubeStream' : 'common';
 			host_name = ch[0]
 
 		}
@@ -10325,13 +10327,12 @@
 
 	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
-
-
 	    return {
 	        type: type,
 	        url : url,
 	        id : id,
-			host_name : host_name
+			host_name : host_name,
+			subType : subType,
 	    };
 	}
 	nl2br = function(str){
