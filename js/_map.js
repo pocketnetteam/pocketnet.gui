@@ -80,6 +80,7 @@ __map =  {
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		"js/vendor/xss.min.js", //
+		
 		{path : "js/functionsfirst.js", babelify : true},
 
 		"js/localization.js",
@@ -121,8 +122,8 @@ __map =  {
 		{path : "js/lib/client/p2pvideo.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
-		{path : "js/file-hash.js", babelify : true}
-		
+		{path : "js/file-hash.js", babelify : true},
+		"js/vendor/wallet-address-validator.min.js",
 	],
 
 	__css : [
@@ -696,9 +697,14 @@ __map =  {
 		donations : {
 			uri : "donations",
 			href : "donations",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
+		howtobuy : {
+			uri : "howtobuy",
+			href : "howtobuy",
+			add : insertingfunc,
 			anonimus : true,
 		},
 

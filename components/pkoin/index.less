@@ -271,9 +271,34 @@
 
 	}
 
+	.boostinfoblocks{
+		.showMore{
+			.hide{
+				display: block;
+			}
+			.show{
+				display: none;
+			}
+		}
+		
+		&.hiddenBlocks{
+			.showMore{
+				.hide{
+					display: none;
+				}
+				.show{
+					display: block;
+				}
+			}
+			.boostinfodata{
+				display: none;
+			}
+		}
+	}
+
 	.boostinfodata{
 		text-align: center;
-		margin-top : @rhythm;
+		margin-top : @rhythm * 3;
 		border-radius: 12px;
 		background: rgb(var(--background-secondary-theme));
 		border : 1px solid rgb(var(--neutral-grad-0));

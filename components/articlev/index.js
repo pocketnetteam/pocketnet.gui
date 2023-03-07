@@ -587,7 +587,7 @@ var articlev = (function(){
 				if (art.cover){
 
 					el.cover.attr('image', art.cover)
-					bgImages(el.c)
+					bgImagesCl(el.c)
 
 					el.cover.addClass('hascover')
 					el.blackmatte.addClass('hascover')

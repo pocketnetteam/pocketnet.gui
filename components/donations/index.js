@@ -40,41 +40,190 @@ var donations = (function(){
 			}),
 		}
 
-		var ways = [{
-			id : 'btc',
-			name : "Bitcoin",
+		var currencies = [
+			// {name: 'Mastercard/Visa', code: 'MC/Visa'},
+			{name: 'Bitcoin (BTC)', code: 'BTC'},
+			{name: 'Ethereum (ETH)', code: 'ETH'},
+			{name: 'Tether (USDT) ERC-20', code: 'USDT'},
+			{name: 'Binance Coin (BNB) ERC-20', code: 'BNB'},
+			{name: 'Dogecoin (DOGE)', code: 'DOGE'},
+			{name: 'XPR (XRP)', code: 'XRP'},
+			{name: 'Uniswap (UNI) ERC-20', code: 'UNI'},
+			{name: 'Bitcoin Cash (BCH)', code: 'BCH'},
+			{name: 'Litecoin (LTC)', code: 'LTC'},
+			{name: 'Stellar (XLM)', code: 'XLM'},
+			{name: 'TRON (TRX)', code: 'TRX'},
+			{name: 'DAI (DAI) ERC-20', code: 'DAI'},
+			{name: 'NEO (NEO)', code: 'NEO'},
+			{name: 'Bitcoin SV (BSV)', code: 'BSV'},
+			{name: 'Dash (DASH)', code: 'DASH'},
+			{name: 'Zcash (ZEC)', code: 'ZEC'},
+			{name: 'Basic Attention Token (BAT) ERC-20', code: 'BAT'},
+			{name: 'New Economy Movement (XEM)', code: 'XEM'},
+		];
 
-			action : function(s){
-				actions.ways.ltcbtc(s)
+		var supportOptions = {
+			subject : new Parameter({
+				name : self.app.localization.e('subject'),
+				placeholder : self.app.localization.e('subject'),
+				id : 'subject',
+				type : "STRINGANY",
+				onType : true,
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+			email : new Parameter({
+				name : 'Email',
+				placeholder : 'Email',
+				id : 'email',
+				type : "STRINGANY",
+				onType : true,
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+			message : new Parameter({
+				name : self.app.localization.e('message'),
+				id : 'message',
+				type : "TEXT",
+				onType : true,
+				
+				placeholder : self.app.localization.e('message')
+			}),
+
+		}
+
+		var ways = [
+			{
+				"id": "BTC",
+				"name": "Bitcoin (BTC)",
+				"qrname": "BTC",
+				"action": function(s){actions.ways.openAddress(s)}
 			},
+			{
+				"id": "ETH",
+				"name": "Ethereum (ETH)",
+				"qrname": "ETH",
+				"action": function(s){actions.ways.openAddress(s)}
 
-			qrname : 'bitcoin'
-		},{
-			id : 'ltc',
-			name : "Litecoin",
+			},
+			{
+				"id": "USDT",
+				"name": "Tether (USDT) ERC-20",
+				"qrname": "USDT",
+				"action": function(s){actions.ways.openAddress(s)}
 
-			qrname : 'litecoin',
+			},
+			{
+				"id": "BNB",
+				"name": "Binance Coin (BNB) ERC-20",
+				"qrname": "BNB",
+				"action": function(s){actions.ways.openAddress(s)}
 
-			action : function(s){
-				actions.ways.ltcbtc(s)
+			},
+			{
+				"id": "DOGE",
+				"name": "Dogecoin (DOGE)",
+				"qrname": "DOGE",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "XRP",
+				"name": "XPR (XRP)",
+				"qrname": "XRP",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "UNI",
+				"name": "Uniswap (UNI) ERC-20",
+				"qrname": "UNI",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "BCH",
+				"name": "Bitcoin Cash (BCH)",
+				"qrname": "BCH",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "LTC",
+				"name": "Litecoin (LTC)",
+				"qrname": "LTC",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "XLM",
+				"name": "Stellar (XLM)",
+				"qrname": "XLM",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "TRX",
+				"name": "TRON (TRX)",
+				"qrname": "TRX",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "DAI",
+				"name": "DAI (DAI) ERC-20",
+				"qrname": "DAI",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "NEO",
+				"name": "NEO (NEO)",
+				"qrname": "NEO",
+				"action": function(s){actions.ways.openAddress(s)}
+			},
+			{
+				"id": "BSV",
+				"name": "Bitcoin SV (BSV)",
+				"qrname": "BSV",
+				"action": function(s){actions.ways.openAddress(s)}
+			},
+			{
+				"id": "DASH",
+				"name": "Dash (DASH)",
+				"qrname": "DASH",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "ZEC",
+				"name": "Zcash (ZEC)",
+				"qrname": "ZEC",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "BAT",
+				"name": "Basic Attention Token (BAT) ERC-20",
+				"qrname": "BAT",
+				"action": function(s){actions.ways.openAddress(s)}
+
+			},
+			{
+				"id": "XEM",
+				"name": "New Economy Movement (XEM)",
+				"qrname": "XEM",
+				"action": function(s){actions.ways.openAddress(s)}
+			},
+			{
+				"id": "other",
+				"name": self.app.localization.e('anotherSupport'),
+				"qrname": "XEM",
+				"action": function(s){}
 			}
-		}/*,{
-			id : 'xmr',
-			name : "Monero",
-
-			qrname : 'monero',
-
-			action : function(s){
-				actions.ways.xmr(s)
-			}
-		}*//*,{
-			id : 'paypal',
-			name : "Paypal",
-
-			action : function(s){
-				actions.ways.paypal(s)
-			}
-		}*/];
+		];
 
 		var storage = {}
 
@@ -97,20 +246,22 @@ var donations = (function(){
 
 				state.save()
 
+				globalpreloader(false);
+
 				renders.address(currency, address, curobj, info, function(el){
 
 					autoupdate = setInterval(function(){
 
 						actions.checkFunds(currency, address, function(ninfo){
 
-							if(ninfo.Status != 'AWAITINGFUNDS' && ninfo.Status != "AWAITINGDONATION"){
+							if(ninfo.status != 'AWAITINGFUNDS' && ninfo.status != "AWAITINGDONATION"){
 
 								clearInterval(autoupdate)
 								autoupdate = null
 
 							}
 
-							if(ninfo.Status == 'AWAITINGFUNDS' || ninfo.Status == 'AWAITINGDONATION' || ninfo.Status == 'EXPIREDAWAITINGFUNDS'){
+							if(ninfo.status == 'AWAITINGFUNDS' || ninfo.status == 'AWAITINGDONATION' || ninfo.status == 'EXPIREDAWAITINGFUNDS'){
 								renders.address(currency, address, curobj, ninfo)
 							}
 							else
@@ -126,45 +277,73 @@ var donations = (function(){
 				})
 			},	
 			ways : {
-				ltcbtc : function(curobj){
+				openAddress : function(curobj){
+					
+					var createNewAddress = function(cur){
 
-					var cur = curobj.id
+
+						actions.address(cur, function(address, err){
+							
+							if (err){
+
+								globalpreloader(false);
+
+							} else {
+
+								actions.status(cur, address, function(err, info){
+						
+									actions.waitfunds(cur, address, info, curobj);
+								})
+							}
+
+
+						})
+					}
+
+					var cur = curobj.id;
+
+					globalpreloader(10)
+
 
 					if(storage[cur]){
 
 						actions.status(cur, storage[cur], function(err, info){
-							if(info.Status == "AWAITINGFUNDS" || info.Status == "AWAITINGDONATION"){
-								actions.waitfunds(cur, storage[cur], info, curobj)
-							}
 
-							else
-							
-							if(info.Status == "EXPIREDAWAITINGFUNDS"){
+							if (info){
 
+								if(info.status == "AWAITINGFUNDS" || info.status == "AWAITINGDONATION"){
+									actions.waitfunds(cur, storage[cur], info, curobj)
+								}
 
-								actions.address(cur, function(address, info){
-									actions.waitfunds(cur, address, info, curobj)
-								})
+								else
+								
+								if(info.status == "EXPIREDAWAITINGFUNDS"){
 
+									createNewAddress(cur);
 
-							}
+								}
 
-							else
-							{
-								delete storage[cur]
+								else
+								{
+									globalpreloader(false)
 
-								state.save();
+									delete storage[cur]
 
-								renders.thankyou(curobj, true, info);
+									state.save();
+
+									renders.thankyou(curobj, true, info);
+								}
+
+							} else {
+								
+								createNewAddress(cur);
 							}
 
 						})
 					}
 					else
 					{
-						actions.address(cur, function(address, info){
-							actions.waitfunds(cur, address, info, curobj)
-						})
+						createNewAddress(cur);
 					}
 
 					
@@ -199,6 +378,10 @@ var donations = (function(){
 				el.c.find('.hideprocess').fadeIn(200, clbk);
 			},
 
+			support : function(payload, clbk){
+				self.app.platform.sdk.exchanges.support(payload, clbk)
+			},
+
 
 			status : function(currency, address, clbk){
 				self.app.platform.sdk.exchanges.status(currency, address, clbk)
@@ -206,32 +389,21 @@ var donations = (function(){
 
 			address : function(cur, clbk){
 
-				self.app.ajax.run({
-					data : {
-						Action : 'GETADDRESSFORDONATION',
-						Currency : cur.toUpperCase()
-					},
-					success : function(d){
-
-						var address = deep(d, 'Address.Address')
-
-						if (address){
-							if (clbk)
-								clbk(address, d.Address)
-						}
-						else
-						{
-							sitemessage(self.app.localization.e('e13094'))
-						}
-						
-					},
-
-					fail : function(){
-						sitemessage(self.app.localization.e('e13094'))
+				self.app.platform.sdk.exchanges.address(cur, function(address, err){
+					
+					if (address){
+						if (clbk)
+							clbk(address)
+					}
+					else
+					{	console.log('err address', err)
+						sitemessage(err || self.app.localization.e('e13094'));
+						clbk(null, err)
 					}
 				})
 
 			}
+			
 		}
 
 		var events = {
@@ -241,6 +413,58 @@ var donations = (function(){
 		}
 
 		var renders = {
+			support: function(){
+				self.shell({
+					name :  'support',
+					inner : html,
+					el : el.supportForm,
+					data : {
+						supportOptions : supportOptions
+					},
+
+				}, function(p){
+
+					ParametersLive(supportOptions, p.el)
+
+					p.el.find('.send').on('click', function(){
+
+						var subject = supportOptions.subject.value;
+						var email = supportOptions.email.value;
+						var message = supportOptions.message.value;
+
+						if (!(subject && email && message)){
+							sitemessage(self.app.localization.e('e13057'))
+							return;
+						}
+
+						actions.support({
+							paddress: self.app.user.address.value,
+							subject: subject,
+							email: email,
+							text: message
+						}, function(result, err){
+							
+							if (err){
+								sitemessage(err);
+								return;
+							}
+
+							supportOptions.subject.value = '';
+							supportOptions.email.value = '';
+							supportOptions.message.value = '';
+
+							renders.support();
+
+							sitemessage(self.app.localization.e('supportTicketSuccess'))
+
+							successCheck();
+
+						})
+					})
+					
+
+				})
+			},
 			thankyou : function(curobj, second, info){
 				self.app.actions.scroll(0)
 				
@@ -479,9 +703,20 @@ var donations = (function(){
 							return w.id == id
 						})
 
+						console.log('curobj', curobj)
+						if (curobj.id === 'other'){
+							$(this).toggleClass('active');
+					
+							el.supportForm = p.el.find('.supportForm');
+							renders.support();						
+
+							return;
+						}
+
 						if (curobj){
 							curobj.action(curobj)
 						}
+
 						
 					})
 
@@ -543,12 +778,19 @@ var donations = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
+				
 				el.process = el.c.find('.process')
 				el.donate = el.c.find('.donate')
+
 
 				initEvents();
 
 				p.clbk(null, p);
+			},
+
+			
+			wnd : {
+				class : 'normalizedmobile'
 			}
 		}
 	};

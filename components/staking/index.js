@@ -257,7 +257,9 @@ var staking = (function(){
 								enabled: false
 							},
 							states: {
+								enableMouseTracking: false,
 								hover: {
+									enabled: false,
 									lineWidth: 1,
 									lineWidthPlus: 0,
 									marker: {
@@ -608,6 +610,7 @@ var staking = (function(){
 
 			destroy : function(){
 				delete self.iclbks.mainstacking;
+				graph.destroy()
 				graph = null
 				charts = {}
 				el = {};

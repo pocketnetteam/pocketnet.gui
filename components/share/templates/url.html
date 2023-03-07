@@ -136,7 +136,7 @@
 					</div>
 				<% } %>
 
-				<% if(typeof remove != 'undefined' && share && share.itisvideo()) { %>
+				<% if(typeof remove != 'undefined' && share && (share.itisvideo() || share.itisaudio())) { %>
 
 					<div class="peertubepanel">
 
@@ -236,7 +236,7 @@
 		
 	<% } %> 
 
-	<% if( (typeof remove != 'undefined' || (!og || _.isEmpty(og)) ) && !share.itisvideo()  ) {
+	<% if( (typeof remove != 'undefined' || (!og || _.isEmpty(og)) ) && !share.itisvideo() && !share.itisaudio()  ) {
 		
 		if(!meta.type || typeof remove != 'undefined'){
 		%>
@@ -251,7 +251,7 @@
 				</span>
 			</div>
 
-			<% if(typeof remove != 'undefined' && (!share.aliasid || !share.itisvideo || !share.itisvideo())) {%>
+			<% if(typeof remove != 'undefined' && (!share.aliasid || !share.itisvideo || !share.itisaudio())) {%>
 
 				<div class="removeWrapper">
 					<div elementsid="removelink" class="removelink">

@@ -65,6 +65,11 @@ console.log('comment!', comment)
 
 	}
 	else{
+		
+		if (address === paddress){
+			m.push('remove');
+		}
+
 		m.push('share')
 
 		if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){

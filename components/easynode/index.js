@@ -59,7 +59,7 @@ var easynode = (function(){
 
 				}
 
-				return amount / calc.netstakeweight() * 4.75 * 1440 * t
+				return amount / calc.netstakeweight() * 2.5 * 1440 * t
 
 			}
 

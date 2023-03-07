@@ -721,7 +721,7 @@ var uploadpeertube = (function () {
 				uploading = false
 				cancel = null
 
-				self.app.mobile.backgroundMode(false)
+				self.app.mobile.unsleep(false)
 
 
 			},
@@ -765,7 +765,7 @@ var uploadpeertube = (function () {
 
 				p.clbk(null, p);
 
-				self.app.mobile.backgroundMode(true)
+				self.app.mobile.unsleep(true)
 
 			},
 

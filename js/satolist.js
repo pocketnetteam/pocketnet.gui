@@ -28,7 +28,21 @@ Platform = function (app, listofnodes) {
 
     self.lastblocktime = null
     self.lasttimecheck = null
+    
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
+
     self.real = {
+        'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
+        'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy' : true,
+        'PF4eMjha9MFs4F3CaiHG1CJjDJGS7w8tvF' : true,
+        'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK' : true,
+        'P9igzkJ57DYXyXMjCyTLvHmJJTjwDBB8Ug' : true,
+        'PHPrCVNBHMJCD2fVUFXLw92rZnAMJ1UFF6' : true,
+        'PEXsbgKmfxxMGhaqELM7FdhgexhhvtrirY' : true,
+        'PHLz9EhgvPDZx9Erer3romhcNSGRw2FUmu' : true,
+        'PXasvRAZmYYvX7bxCXoSD6xskKsXFAt3jg' : true,
+        'PUcbjUHfSTSYxLwqmndEzWVyxwTCiGjkTL' : true,
+        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC' : true,
         'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
@@ -288,6 +302,8 @@ Platform = function (app, listofnodes) {
         'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
+		'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
+		'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
     ];
 
     self.whiteList = [
@@ -593,7 +609,7 @@ Platform = function (app, listofnodes) {
                     modile : true,
                     image : 'applications_ios.jpg',
 
-                    href: 'https://pocketnet.app/bastyon_iphone',
+                    href: 'https://apps.apple.com/app/id1537944200',
                     hreflabel : 'installpwa',
                 },
 
@@ -3984,6 +4000,56 @@ Platform = function (app, listofnodes) {
         },
 
         wallet : {
+
+            donate : function(p){
+
+                return new Promise((resolve, reject) => {
+
+                    var receiver = p.receiver
+
+                    var sender = self.sdk.address.pnet().address;
+                
+                    if (sender === receiver){
+                        sitemessage(self.app.localization.e('donateself'));
+
+                        reject()
+                    }
+
+                    else{
+                        app.nav.api.load({
+                            open : true,
+                            id : 'donate',
+                            inWnd : true,
+                
+                            essenseData : {
+                                type : 'donate',
+                                sender: sender, 
+                                receiver: receiver,
+                                send : true,
+                                value : 1,
+                                min : 0.5,
+                                clbk  : function(value, txid){
+
+                                    if (p.roomid && txid){
+                                        self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
+                                    }
+
+                                    resolve({txid, value})
+                                }
+                            },
+                
+                            clbk : function(s, p){
+                            }
+                        })
+                    }
+                })
+
+                
+                
+
+                
+
+            },
 
             send : function(p, clbk, el){
 
@@ -8504,6 +8570,12 @@ Platform = function (app, listofnodes) {
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
+                var bwf = _.find(self.bwdictionary, (bww) => {
+                    return name.indexOf(bww) > -1
+                })
+                
+                if(bwf) return true
+
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
                         return false
@@ -8537,6 +8609,7 @@ Platform = function (app, listofnodes) {
             },
 
             scamcriteria : function(address){
+                return false
 
                 if(!address) address = self.app.user.address.value
 
@@ -8551,7 +8624,7 @@ Platform = function (app, listofnodes) {
             },
 
             upvotevalueblockcriteria : function(value, address){
-
+                return false
                 if(!address) address = self.app.user.address.value
 
                 var info = self.psdk.userInfo.get(address); 
@@ -9880,11 +9953,11 @@ Platform = function (app, listofnodes) {
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
                 p.tagsfilter = _.map(p.tagsfilter, function(t){
-                    return (t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                    return (t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.depth || (p.depth = 10000);
@@ -10182,6 +10255,8 @@ Platform = function (app, listofnodes) {
 
             info: {},
 
+            api: 'https://pkoin.net/Shifter',
+
             find: function (address) {
                 var ar = self.sdk.exchanges.get();
 
@@ -10294,65 +10369,40 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            address: function (p, clbk) {
-                var storage = self.sdk.exchanges.storage
+            address: function (cur, clbk) {
 
-                var t = this
+                var me = self.app.user.address.value || '';
+                
+                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
-                storage[p.currency] || (storage[p.currency] = {})
-                storage[p.currency][p.address] || (storage[p.currency][p.address] = {})
+					var text = d.text();
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETADDRESSFORPOC',
-                        Currency: p.currency,
-                        address: p.address
-                    },
-                    success: function (d) {
+					return text;
+				
+                }).then(function(address){
 
-                        if (d.Address) {
+					if (address){
 
-                            storage[p.currency][p.address][d.Address.Address] = {
-                                address: d.Address.Address,
+                        if (address.indexOf('is not available at the moment') > -1){
 
-                                amount: p.amount,
-                                currencyAmount: p.currencyAmount,
+                            clbk(null, self.app.localization.e('addrNotAvailable', cur));
 
-                                time: self.currentTime()
-                            };
+                        } else{
 
-                            t.save()
-
-                            self.sdk.exchanges.info[d.Address.Address] = d.Address
-
-
-
-
-                            if (clbk)
-                                clbk(null, {
-
-                                    pocaddress: p.address,
-                                    currency: p.currency,
-                                    info: storage[p.currency][p.address]
-
-                                }, d.Address)
+                            clbk(address);
+ 
                         }
+					}
+					else
+					{
+						clbk(null, self.app.localization.e('e13094'))
+					}
 
-                        else {
-                            if (clbk)
-                                clbk('error', null)
-                        }
+				}).catch(function(err){
+
+					clbk(null, err);
 
 
-
-
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
-                    }
                 })
 
 
@@ -10410,34 +10460,62 @@ Platform = function (app, listofnodes) {
                 })
 
             },
+            support: function (payload, clbk) {
+
+                var serialize = function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                      if (obj.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                    return str.join("&");
+                }
+
+                var query = serialize(payload);
+                
+                fetch(this.api + '/PocShifter/SupportTicket?' + query, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    }
+                  }).then(function(r){
+
+                    return r.text();
+                    
+                  }).then(function(r){
+
+                    clbk(r);
+
+                  }).catch(function(err){
+
+                    clbk(null, err);
+
+                  })
+
+            },
             status: function (currency, address, clbk) {
 
+                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETPOCDEALSTATUS',
-                        Currency: currency,
-                        Address: address
-                    },
-                    success: function (d) {
-
-
-                        if (d.Deal) {
-                            if (clbk)
-                                clbk(null, d.Deal)
-                        }
-                        else {
-                            if (clbk)
-                                clbk('empty', null)
-                        }
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
+					return d.json();
+				
+                }).then(function(d){
+                    
+                    if (d[0]) {
+                        if (clbk)
+                            clbk(null, d[0])
                     }
+                    else {
+                        if (clbk)
+                            clbk('empty', null)
+                    }
+                }).catch(function(err){
+
+                    if (clbk) {
+                        clbk('server')
+                    }    
                 })
+                
 
             },
 
@@ -14796,6 +14874,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
+
                                                 if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
@@ -14803,6 +14882,7 @@ Platform = function (app, listofnodes) {
                                                 }
                                             })
                                         }
+
 
                                         storage[key] = shares;
 
@@ -14948,11 +15028,11 @@ Platform = function (app, listofnodes) {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return (t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return (t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
@@ -15067,12 +15147,12 @@ Platform = function (app, listofnodes) {
 
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return (t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return (t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             /////temp
@@ -16840,7 +16920,6 @@ Platform = function (app, listofnodes) {
 
             },
             info : function(links){
-
                 var s = self.sdk.videos.storage
 
 
@@ -16852,7 +16931,7 @@ Platform = function (app, listofnodes) {
                         meta : meta,
                         link : l
                     }
-                })
+                });
 
                 lmap = _.filter(lmap, function(l){
 
@@ -16866,7 +16945,7 @@ Platform = function (app, listofnodes) {
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
-                    return l.meta.type
+                    return l.meta.subType || l.meta.type;
                 })
 
 
@@ -16951,10 +17030,9 @@ Platform = function (app, listofnodes) {
                 links.forEach(link => {
 
                     const linkInfo = linksInfo[link.link];
-
                     if (linkInfo){
 
-                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive){
                             linkInfo.aspectRatio = 1.78
                         }
 
@@ -17005,6 +17083,44 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve(links);
                     })
 
+                },
+
+                common : function(links){
+
+                    return self.app.api.fetch('peertube/videos', {
+                        urls: links.map(link => link.link),
+                    }).then(linksInfo => {
+                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
+                        return Promise.resolve(links);
+                    })
+
+                },
+
+               
+                peertubeStream : function(links) {
+                    const promisesStack = links.map((link) =>
+                      self.app.peertubeHandler.api.videos
+                        .getDirectVideoInfo(
+                          { id: link.meta.id },
+                          { host: link.meta.host_name },
+                        )
+                        .then((res) => ({
+                          ...res,
+                          linkFull: link.link,
+                        })),
+                    );
+
+                    return Promise.all(promisesStack).then((res) => {
+                      const linksInfoObject = res.reduce(
+                        (acc, curVal) => ({
+                          ...acc,
+                          [curVal.linkFull]: curVal,
+                        }),
+                        {},
+                      );
+                      self.sdk.videos.catchPeertubeLinks(linksInfoObject, links)
+                      return Promise.resolve(links);
+                    });
                 },
 
                 bitchute : function(links){
@@ -20175,7 +20291,7 @@ Platform = function (app, listofnodes) {
                 destroyclbk: destroyclbk
             }
 
-            bgImages(el)
+            bgImagesCl(el)
 
 
             self.fastMessages.push(message);
@@ -21997,7 +22113,6 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -22014,23 +22129,6 @@ Platform = function (app, listofnodes) {
 
                 clbk();
             });
-
-            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
-
-                bastyonhelperOpened = true
-
-                setTimeout(function(){
-
-                    app.nav.api.load({
-                        open : true,
-                        id : 'bastyonhelper',
-                        inWnd : true,
-                    })
-
-                }, 1000)
-
-            }*/
-
 
 
         }).catch(e => {
@@ -22468,7 +22566,7 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -22476,7 +22574,7 @@ Platform = function (app, listofnodes) {
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
-                                    iscallsenabled="true"
+                                    iscallsenabled="`+iscallsenabled+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
@@ -23582,6 +23680,7 @@ Platform = function (app, listofnodes) {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
 				getUserInfo: async (address) => {
+
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
@@ -23603,9 +23702,12 @@ Platform = function (app, listofnodes) {
 
 				},
 				onEnded:(call) => {
+
                     self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+
+                    self.app.mobile.audiotoggle()
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()

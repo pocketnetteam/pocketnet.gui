@@ -1537,6 +1537,8 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 				var localParent = _el.closest('.commentBody')
 
+				var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
@@ -1547,6 +1549,7 @@ var comments = (function(){
 					address : self.app.user.address.value,
 					caddress : comment.address,
 					txid : id,
+					paddress: post.address,
 					comment
 				};
 
@@ -1627,7 +1630,7 @@ var comments = (function(){
 											/*var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
-											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()

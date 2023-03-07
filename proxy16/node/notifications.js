@@ -73,6 +73,7 @@ class Notifications{
             const ts = Date.now();
             try {
                 const {events, block} = await this.generateEvents(item)
+      
                 if(events.length){
 
                     this.firebase.sendEvents(events, block);
@@ -98,6 +99,7 @@ class Notifications{
                     this.queue.push(item)
                 }
                 else{
+
                     this.statsShort.reject++;
                     this.logger.w('system', 'error', `Notification: Response from the node:${e?.message || e}`)
                 }
@@ -118,8 +120,12 @@ class Notifications{
             await this.nodeManager.waitready()
             node = this.nodeManager.selectbest();
         }
+
+
         const notifications = await node.rpcs("getnotifications", [data.height])
         const block = new NotificationBlock()
+
+
         block.height = data.height
         block.time = new Date(Date.now()).toISOString()
         block.eventsCount = notifications.data.length

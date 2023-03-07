@@ -419,7 +419,7 @@ var menu = (function(){
 
 							clbk(tpl, function(el, helpers){
 
-								bgImages(el)
+								bgImagesCl(el)
 
 								self.app.nav.api.links(null, el, function(){
 

@@ -285,7 +285,6 @@
   background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
 }
 body {
-  overflow-x: hidden;
   overscroll-behavior: none;
   scroll-behavior: smooth;
   /* scroll-snap-type: y proximity;*/
@@ -297,8 +296,6 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: overlay;
-  overscroll-behavior: none;
-  scroll-behavior: smooth;
   /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -336,10 +333,6 @@ html.testpocketnet .testpocketnetbg {
 .joypixels,
 .emojione {
   height: 16px;
-}
-.disable-hover,
-.disable-hover * {
-  pointer-events: none !important;
 }
 .fadeoverflow {
   -webkit-mask-image: linear-gradient(to left, transparent 3%, black 10%);
@@ -803,7 +796,7 @@ button.nopadding {
   padding-left: 0;
   padding-right: 0;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   button:hover {
     background: transparent;
     color: rgb(var(--color-bg-ac-bright));
@@ -818,7 +811,7 @@ button.nopadding {
   }
   button.black:hover {
     background: rgba(var(--background-main-contrast), 0.3);
-    border: 1px solid rgba(var(--background-main-contrast), 0.3);
+    border-color: rgba(var(--background-main-contrast), 0.3);
     color: rgb(var(--text-on-bg-ac-color));
   }
   button.good:hover {
@@ -909,6 +902,7 @@ l {
   font-weight: 100;
 }
 .radio label {
+  cursor: pointer;
   display: block;
   margin-bottom: 1em;
 }
@@ -932,9 +926,6 @@ l {
 }
 .radio label > input:checked + i {
   background: rgb(var(--color-bg-ac));
-}
-.radio label:hover {
-  cursor: pointer;
 }
 .ten {
   background-image: linear-gradient(126deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%);
@@ -1089,6 +1080,9 @@ html.mobileview #footerWrapper {
 html.mobileview .upbutton {
   display: none;
 }
+html.mobileview body {
+  overflow-x: hidden;
+}
 .table {
   width: 100%;
   height: 100%;
@@ -1162,23 +1156,6 @@ html.mobileview .upbutton {
   position: relative;
   font-size: 1.1em;
   color: rgb(var(--neutral-grad-3));
-  /*&.disabled{
-        cursor: default!important;
-
-        [value]{
-            cursor: default!important;
-            .disabled()
-        }
-
-        @media (pointer:fine) {
-            &:hover{
-                .tstars{
-                    display: block;
-                }
-            }
-        }
-
-    }*/
 }
 .stars .starsWrapper {
   overflow: hidden;
@@ -1324,9 +1301,9 @@ html.mobileview .upbutton {
 .stars .tstars .tstarsov .starsWrapper {
   width: 20em;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .stars:hover .tstars {
-    display: none;
+    visibility: hidden;
   }
 }
 .stars.liked .starsWrapperM i {
@@ -1335,9 +1312,9 @@ html.mobileview .upbutton {
 .stars.liked .tstars i {
   font-weight: 400;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .stars.liked:hover .tstars {
-    display: block;
+    visibility: visible;
   }
 }
 .subscribebuttons {
@@ -1357,7 +1334,7 @@ html.mobileview .upbutton {
   background: rgb(var(--color-bg-ac));
   border-color: rgb(var(--color-bg-ac));
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .subscribebuttons > div button:hover {
     background: transparent;
     color: rgb(var(--color-bg-ac));
@@ -1424,7 +1401,7 @@ html.mobileview .upbutton {
 .search .searchIconLabel .fa-circle-notch {
   display: none;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .search .searchIconLabel:hover .fa-search {
     color: rgb(var(--color-txt-ac));
   }
@@ -1457,7 +1434,7 @@ html.mobileview .upbutton {
   display: none;
   color: rgb(var(--neutral-grad-2));
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .search .searchPanel .searchPanelWrapper > div:hover {
     color: rgb(var(--color-txt-ac));
   }
@@ -1516,7 +1493,7 @@ html.mobileview .upbutton {
   -webkit-transition: width 0.3s;
   transition: width 0.3s;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .hoverColorChange:hover {
     animation: colorChange 5s infinite ease-in-out;
   }
@@ -1685,12 +1662,12 @@ html.mobileview .upbutton {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .checkbox + label:hover:before {
     border-color: rgb(var(--color-bg-ac));
   }
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .checkbox:checked + label:hover:before {
     color: rgb(var(--neutral-grad-2));
   }
@@ -1698,12 +1675,12 @@ html.mobileview .upbutton {
 .checkbox[disabled] + label {
   cursor: default;
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .checkbox[disabled] + label:hover:before {
     border-color: rgb(var(--neutral-grad-2));
   }
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .checkbox[disabled]:checked + label:hover:before {
     color: rgb(var(--color-bg-ac));
   }
@@ -2027,7 +2004,6 @@ input[type=radio].radio:checked + label {
 }
 .m-message-container .notificationWrapper {
   display: block;
-  max-width: none;
   /*width: 100%*/
   font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -2056,6 +2032,8 @@ input[type=radio].radio:checked + label {
 }
 .m-message-container .notificationWrapper .m-message-content {
   flex-grow: 1;
+  max-width: 450px;
+  overflow: hidden;
 }
 .m-message-container .notificationWrapper .m-message-content .listPreview {
   cursor: pointer;
@@ -2111,6 +2089,11 @@ input[type=radio].radio:checked + label {
   white-space: nowrap;
   text-align: left;
   max-width: 150px;
+}
+.m-message-container .notificationWrapper .m-message-content .listPreview .previewMessage label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .m-message-container .notificationWrapper .m-message-icons {
   float: none;
@@ -2213,7 +2196,7 @@ input[type=radio].radio:checked + label {
   cursor: pointer;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .roundclosebutton:hover {
     background: rgba(var(--background-total-theme), 0.2);
     box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
@@ -2222,7 +2205,7 @@ input[type=radio].radio:checked + label {
 .roundclosebutton.onwhite {
   color: rgb(var(--text-color));
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .roundclosebutton.onwhite:hover {
     background: rgba(var(--background-main-contrast), 0.1);
     color: rgb(var(--text-on-bg-ac-color));
@@ -2888,7 +2871,7 @@ html.mobileview.android .wnd .wndback {
   color: #fff;
   border: 1px solid rgb(var(--color-bg-orange));
 }
-@media (pointer: fine) {
+@media (pointer: hover) {
   .sitemessage.lightcenter .black:hover {
     border: 1px solid rgb(var(--color-bg-orange));
     background: rgb(var(--color-bg-orange));
@@ -6575,6 +6558,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   width: 100%;
   background: transparent!important;
   will-change: transform;
+  box-shadow: none!important;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   backface-visibility: hidden;

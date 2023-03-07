@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="addressline">
-		<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+		<% if(info.status == 'AWAITINGFUNDS' || info.status == 'AWAITINGDONATION') {%>
 			<b><span class="aw"><%- address %></span></b>
 		<% } else { %> 
 
@@ -26,17 +26,17 @@
 	</div>
 
 	<div class="status">
-		<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+		<% if(info.status == 'AWAITINGFUNDS' || info.status == 'AWAITINGDONATION') {%>
 
-			<%=e('e13074')%> <b> <%- info.MinutesLeft %> <%=e('minutes')%></b>
+			<%=e('e13074')%> <b> <%- info.minutesLeft %> <%=e('sminutes')%></b>
 
 		<% } %>
 
-		<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
+		<% if(info.status == 'EXPIREDAWAITINGFUNDS') {%>
 			<%=e('e13075')%> <div elementsid="donations_reactivate" class="reactivate"><%=e('reactivate')%></div>
 		<% } %>
 	</div>
-	<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+	<% if(info.status == 'AWAITINGFUNDS' || info.status == 'AWAITINGDONATION') {%>
 
 		<div class="qrcode">
 			<div class="subcaption">
@@ -59,13 +59,13 @@
 			</div>
 		</div>
 
-		<div class="nextwrapper">
+		<!-- <div class="nextwrapper">
 			<div elementsid="donations_address_next" class="next">
 				<span>
 					<i class="far fa-check-circle"></i> <%=e('e13077')%>
 				</span>
 			</div>
-		</div>
+		</div> -->
 
 	</div>
 

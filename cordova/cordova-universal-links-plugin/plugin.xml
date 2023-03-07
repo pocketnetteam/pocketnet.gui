@@ -25,7 +25,7 @@
   </js-module>
 
 <!-- Hooks -->
-  <hook src="hooks/afterPrepareHook.js" type="before_prepare"/>
+  <hook src="hooks/afterPrepareHook.js" type="after_prepare"/>
   <hook src="hooks/beforePluginInstallHook.js" type="before_plugin_install" />
 
   <platform name="ios">

@@ -708,6 +708,11 @@ var author = (function(){
 
 					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
+					p.el.find('.todonate').on('click', () => {
+						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+						
+					})
+
 					p.el.find('.copyaddress').on('click', function(){
 						copyText($(this))
 

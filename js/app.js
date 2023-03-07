@@ -1474,7 +1474,7 @@ Application = function (p) {
     self
   );
 
-  if (Math.random() <= 0.05) {
+  /*if (Math.random() <= 0.05) {
     window.onerror = function (errorMsg, url) {
       self.Logger.error({
         err: errorMsg,
@@ -1483,7 +1483,7 @@ Application = function (p) {
       });
       return false;
     };
-  }
+  }*/
 
 	self.scrollRemoved = 0;
 	self.scrollTop = 0
@@ -2647,7 +2647,7 @@ Application = function (p) {
 		fullscreenmode: function (v) {
 
 			var cl = function () {
-				v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+				v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
 				v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
 			}
 

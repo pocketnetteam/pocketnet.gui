@@ -493,7 +493,7 @@ _l.e13082 = "Ce que vous obtiendrez pour votre don en plus de savoir que vous av
 _l.e13083 = "En signe de gratitude pour le don, vous recevez un cadeau d'une certaine quantité de Pocketcoin"
 _l.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe spécial de donateurs qui ont un accès direct à l'équipe "+appname+", même si la plate-forme se développe."
 _l.e13085 = "Le lien vers votre profil "+appname+" sera répertorié ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
-_l.e13086 = "Soutenez maintenant le Webm décentralisé"
+_l.e13086 = "Soutenez maintenant Bastyon"
 _l.e13087 = "Bitcoin, Litecoin, Monero"
 
 _l.e13088 = "Membres "+appname+" qui ont fait un don pour soutenir "+appname+""
@@ -626,7 +626,7 @@ _l.e13176 = "Type d'adresse"
 _l.e13177 = "Envoyer la photo"
 
 _l.requiredfields = "Champs obligatoires"
-_l.e13178 = "Non lié à votre profil"
+_l.e13178 = "Facultatif"
 _l.e13179 = "Liste non dépensée"
 _l.e13180 = "Votre facture a été créée avec succès"
 _l.e13181 = "Une erreur s'est produite lors du processus de crèation de l'offre"

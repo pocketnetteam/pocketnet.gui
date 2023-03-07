@@ -53,18 +53,18 @@
 
 <% } %>
 
-<div class="additionalinfo <% if(hasabout) { %> hasabout <% } %>">
+	<div class="additionalinfo <% if(hasabout) { %> hasabout <% } %>">
 
-	<% 
+		<% 
 
-	var _d = deep(author, 'data.regdate')
+		var _d = deep(author, 'data.regdate')
 
-	if(_d ) {
+		if(_d ) {
 
-		var d = new Date();
-			d.setTime(_d * 1000);	
+			var d = new Date();
+				d.setTime(_d * 1000);	
 
-	%>
+		%>
 
 		<div class="item date">
 			<div class="itemtable">
@@ -106,7 +106,16 @@
 			</div>
 		</div>
 	</div>
+	<% if(state && user.address.value != (author || {}).address) {%>
+	<% if(!app.pkoindisable) {%>
 
-</div>
+		<div class="item donateWrapper">
+			<button class="button good medium todonate">
+				<%- e('donate') %>
+			</button>
+		</div>
+
+	<% } %>
+	<% } %>
 		
 </div>

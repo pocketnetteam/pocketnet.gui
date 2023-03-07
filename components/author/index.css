@@ -180,6 +180,10 @@
   display: flex;
   align-items: center;
 }
+#author .authorinfo .donateWrapper {
+  margin-top: 2em;
+  padding-left: 1em;
+}
 #author .authorinfo .itemtable > div.icon {
   min-width: 30px;
   width: 30px;
