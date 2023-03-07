@@ -1190,6 +1190,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		destroy: function () {
 
+			console.log("DESTROY")
+
 			if (statInterval) {
 				clearInterval(statInterval)
 				statInterval = null
@@ -1205,9 +1207,38 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
-				return self[i].destroy().catch(catchError(i)).then(() => {
-					return Promise.resolve()
+				
+				return new Promise((resolve, reject) => {
+					try{
+
+						if(!self[i].destroy){
+							resolve()
+
+							return
+						}
+
+						var destroy = self[i].destroy()
+
+						if(!destroy || !destroy.catch){
+							return resolve()
+						}
+
+						return destroy.catch(catchError(i)).then(() => {
+							console.log('i', i)
+							return Promise.resolve()
+						}).then(resolve)
+
+					}catch(e){
+						console.log("ERROR",i)
+						console.log(e)
+
+						resolve()
+					}
 				})
+
+					
+
+				
 			})
 
 			return Promise.all(promises).then(r => {
