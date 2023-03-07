@@ -177,6 +177,10 @@
   font-size: 0.9em;
   margin-bottom: 3.5em;
 }
+#author .authorinfo .donateWrapper {
+  margin-top: 2em;
+  padding-left: 1em;
+}
 #author .authorinfo .itemtable > div.icon {
   width: 30px;
   padding-top: 0.5em;
