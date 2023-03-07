@@ -12,7 +12,7 @@ ImageUploader = function(app) {
             // If we are in test environment, try to upload images to Peertube
             // (fallback to Imgur if failure)
 
-            if (window.testpocketnet) {
+            if (1 == 1) {
                 
                 return self.uploadImage({ base64 }, 'peertube').catch(err => {
                     return self.uploadImage({ base64 }, 'imgur')

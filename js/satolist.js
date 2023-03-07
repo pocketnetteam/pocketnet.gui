@@ -3733,6 +3733,56 @@ Platform = function (app, listofnodes) {
 
         wallet : {
 
+            donate : function(p){
+
+                return new Promise((resolve, reject) => {
+
+                    var receiver = p.receiver
+
+                    var sender = self.sdk.address.pnet().address;
+                
+                    if (sender === receiver){
+                        sitemessage(self.app.localization.e('donateself'));
+
+                        reject()
+                    }
+
+                    else{
+                        app.nav.api.load({
+                            open : true,
+                            id : 'donate',
+                            inWnd : true,
+                
+                            essenseData : {
+                                type : 'donate',
+                                sender: sender, 
+                                receiver: receiver,
+                                send : true,
+                                value : 1,
+                                min : 0.5,
+                                clbk  : function(value, txid){
+
+                                    if (p.roomid && txid){
+                                        self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
+                                    }
+
+                                    resolve({txid, value})
+                                }
+                            },
+                
+                            clbk : function(s, p){
+                            }
+                        })
+                    }
+                })
+
+                
+                
+
+                
+
+            },
+
             send : function(p, clbk, el){
 
                 if(!p) p = {}
@@ -12574,11 +12624,11 @@ Platform = function (app, listofnodes) {
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
                 p.tagsfilter = _.map(p.tagsfilter, function(t){
-                    return encodeURIComponent(t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                    return encodeURIComponent(t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.depth || (p.depth = 10000);
@@ -13225,6 +13275,13 @@ Platform = function (app, listofnodes) {
 
                                         self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
+                                        var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
+
+                                        if(address == self.app.user.address.value){
+                                            self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
+                                        }
+
+
                                         if (clbk)
                                             clbk(null, d, inputs, _outputs)
                                     }
@@ -13443,7 +13500,7 @@ Platform = function (app, listofnodes) {
                     amount: amount
                 }]
 
-                var keyPair = self.api.keypair(mnemonic.replace(/\+/g, ' '))
+                var keyPair = mnemonic ? self.api.keypair(mnemonic.replace(/\+/g, ' ')) : self.app.user.keys()
 
                 if (!keyPair) {
                     if (clbk)
@@ -13452,7 +13509,8 @@ Platform = function (app, listofnodes) {
                 else {
                     var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
 
-                    this.embed(outputs, embdedtext)
+                    if (embdedtext)
+                        this.embed(outputs, embdedtext)
 
 
                     self.sdk.wallet.txBaseFeesWithCache(address, outputs, keyPair, feerate, function (err, d) {
@@ -19318,11 +19376,11 @@ Platform = function (app, listofnodes) {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
@@ -19452,12 +19510,12 @@ Platform = function (app, listofnodes) {
 
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             /////temp

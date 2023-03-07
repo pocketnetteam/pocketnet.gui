@@ -53,60 +53,71 @@
 
 <% } %>
 
-<div class="additionalinfo <% if(hasabout) { %> hasabout <% } %>">
+	<div class="additionalinfo <% if(hasabout) { %> hasabout <% } %>">
 
-	<% 
+		<% 
 
-	var _d = deep(author, 'data.regdate')
+		var _d = deep(author, 'data.regdate')
 
-	if(_d ) {
+		if(_d ) {
 
-		var d = new Date();
-			d.setTime(_d * 1000);	
+			var d = new Date();
+				d.setTime(_d * 1000);	
 
-	%>
+		%>
 
-		<div class="item date">
+			<div class="item date">
+				<div class="itemtable table">
+					<div class="icon"><i class="far fa-calendar"></i></div>
+					<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+				</div>
+			</div>
+
+		<% } %>
+
+		<% if(deep(author, 'data.postcnt')) {%>
+
+			<div elementsid="author_postcnt" class="item postcnt">
+				<div class="itemtable table">
+					<div class="icon"><i class="fas fa-rss"></i></div>
+					<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
+				</div>
+			</div>
+
+		<% } %>
+
+		<% if(deep(author, 'data.site')) {%>
+
+			<div class="item site">
+				<div class="itemtable table">
+					<div class="icon"><i class="fas fa-link"></i></div>
+					<div class="label"><a elementsid="<%-deep(author, 'data.site')%>" href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+				</div>
+			</div>
+
+		<% } %>
+
+		<div class="item foraddress">
 			<div class="itemtable table">
-				<div class="icon"><i class="far fa-calendar"></i></div>
-				<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+				<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+				<div class="label">
+				
+					<span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
+				</div>
 			</div>
 		</div>
 
-	<% } %>
-
-	<% if(deep(author, 'data.postcnt')) {%>
-
-		<div elementsid="author_postcnt" class="item postcnt">
-			<div class="itemtable table">
-				<div class="icon"><i class="fas fa-rss"></i></div>
-				<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
-			</div>
-		</div>
-
-	<% } %>
-
-	<% if(deep(author, 'data.site')) {%>
-
-		<div class="item site">
-			<div class="itemtable table">
-				<div class="icon"><i class="fas fa-link"></i></div>
-				<div class="label"><a elementsid="<%-deep(author, 'data.site')%>" href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
-			</div>
-		</div>
-
-	<% } %>
-
-	<div class="item foraddress">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
-			<div class="label">
-			
-				<span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
-			</div>
-		</div>
 	</div>
+	<% if(state && user.address.value != (author || {}).address) {%>
+	<% if(!app.pkoindisable) {%>
 
-</div>
+		<div class="item donateWrapper">
+			<button class="button good medium todonate">
+				<%- e('donate') %>
+			</button>
+		</div>
+
+	<% } %>
+	<% } %>
 		
 </div>
