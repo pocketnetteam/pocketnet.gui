@@ -12,11 +12,11 @@ var donate = (function(){
 
 		
 		var actions = {
-			getTransaction : function(amout, reciever){
+			getTransaction : function(amount, reciever){
 
 				var transaction = new Transaction()
 				
-					transaction.source.set(self.app.user.address.value)
+					transaction.source.set([self.app.user.address.value])
 					transaction.reciever.set([
 						{
 							address : reciever,
@@ -24,6 +24,9 @@ var donate = (function(){
 						}
 					])
 					transaction.feemode.set('include')
+					transaction.message.set('')
+
+				console.log('transaction', transaction, amount, ed)
 
 				return transaction
 
@@ -32,11 +35,13 @@ var donate = (function(){
 
 				globalpreloader(true)
 
-				var transaction = actions.getTransaction(amount, ed.reciever)
+				var transaction = actions.getTransaction(amount, ed.receiver)
 
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 					calculatedFee : 0
 				}).then((txdata) => {
+
+					console.log('txdata', txdata)
 
 					setTimeout(() => {
 
@@ -49,6 +54,8 @@ var donate = (function(){
 					}, 300)
 
 				}).catch(e => {
+
+					console.error('e', e)
 
 					sitemessage(e)
 

@@ -383,6 +383,8 @@ var Action = function(account, object, priority, settings){
 
                     clearUnspents = filterUnspents(clearUnspents)
 
+                    console.log('clearUnspents', clearUnspents)
+
                     if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('actions_noinputs')
                     }
@@ -402,12 +404,12 @@ var Action = function(account, object, priority, settings){
 
         //options.addresses ? options.addresses() : null
 
-        if(account.unspents.willChange){
+        /*if(account.unspents.willChange){
             return Promise.reject('actions_noinputs_wait')
         }   
         else{
             return Promise.reject('actions_noinputs')
-        }
+        }*/
         
 
         if(!unspents.length){
@@ -1104,7 +1106,7 @@ var Account = function(address, parent){
         try{
             await self.actionRejected(action, error)
 
-            trigger()
+            self.trigger(action)
 
             error = null
         }
@@ -1112,7 +1114,7 @@ var Account = function(address, parent){
 
             if (e == 'rejected_by_user'){
                 self.rejected = 'rejected_by_user'
-                trigger()
+                self.trigger(action)
             }
 
             error = e
