@@ -175,14 +175,15 @@
 }
 #author .authorinfo {
   font-size: 0.9em;
-}
-#author .authorinfo .itemtable {
-  display: flex;
-  align-items: center;
+  margin-bottom: 3.5em;
 }
 #author .authorinfo .donateWrapper {
   margin-top: 2em;
   padding-left: 1em;
+}
+#author .authorinfo .itemtable {
+  display: flex;
+  align-items: center;
 }
 #author .authorinfo .itemtable > div.icon {
   min-width: 30px;

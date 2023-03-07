@@ -12,31 +12,48 @@ var donate = (function(){
 
 		
 		var actions = {
+			getTransaction : function(amout, reciever){
+
+				var transaction = new Transaction()
+				
+					transaction.source.set(self.app.user.address.value)
+					transaction.reciever.set([
+						{
+							address : reciever,
+							amount : amount
+						}
+					])
+					transaction.feemode.set('include')
+
+				return transaction
+
+			},
 			send : function(amount, clbk){
 
 				globalpreloader(true)
 
-				self.app.platform.sdk.wallet.send(ed.receiver, null, amount, (err, d) => {
+				var transaction = actions.getTransaction(amount, ed.reciever)
+
+				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
+					calculatedFee : 0
+				}).then((txdata) => {
 
 					setTimeout(() => {
-						globalpreloader(false)
 
-						if(err){
-							sitemessage(err.text || err)
-						}
-	
-						else{
+						sitemessage(self.app.localization.e('wssuccessfully'))
+		
+						successCheck()
+		
+						if(clbk) clbk(txdata)
 
-							sitemessage(self.app.localization.e('wssuccessfully'))
-	
-							successCheck()
-	
-							if(clbk) clbk(d)
-						}
 					}, 300)
 
-					
+				}).catch(e => {
 
+					sitemessage(e)
+
+				}).finally(() => {
+					globalpreloader(false)
 				})
 
 			}
