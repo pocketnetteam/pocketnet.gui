@@ -1381,6 +1381,8 @@ _l.desktopPopupDisagree = "Pas maintenant"
 
 _l.profanity_tag = 'impiété'
 
+_l.copybuiltfrom = "Numéro d'assemblage copié"
+
 _l.saved = "Sauvegardé"
 _l.savePost = "Sauvegarder le post"
 _l.postsaved = "Post sauvegardé"

@@ -1,4 +1,4 @@
-﻿if(typeof loclib == "undefined" || !loclib)
+if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.ru = {};
@@ -2330,6 +2330,8 @@ _l.goToDiagnose = "Перейти на страницу диагностики";
 _l.connectingTo = "Проверка";
 
 _l.earnings = "Всего заработано";
+
+_l.copybuiltfrom = "Номер сборки скопирован"
 
 _l.authHeading = "Авторизация";
 

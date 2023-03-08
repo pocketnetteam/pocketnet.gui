@@ -191,6 +191,11 @@
                             <%=e('applicationversion')%> &middot; <%- window.packageversion %>
                         </span>
                         
+                        <% if (window.builtfromsha) { %>
+                            &nbsp;&middot;&nbsp;
+                            <span class="app-builtfrom"><%- window.builtfromsha %></span>
+                        <% } %>
+
                     <% } %>
                     
                 </div>

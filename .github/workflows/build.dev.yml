@@ -17,7 +17,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -55,7 +55,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
@@ -82,7 +82,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
@@ -112,7 +112,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova
+          npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
       - name: Prepare configuration

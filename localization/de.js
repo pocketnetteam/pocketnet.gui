@@ -859,6 +859,8 @@ _l.desktopPopupDisagree = "Nicht jetzt"
 
 _l.profanity_tag = 'profanität'
 
+_l.copybuiltfrom = "Versammlungsnummer erfolgreich kopiert"
+
 _l.saved = "Gespeicherte"
 _l.savePost = "Beitrag speichern"
 _l.postsaved = "Beitrag gespeichert"

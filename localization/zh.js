@@ -1026,6 +1026,7 @@ _l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的�
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
 
+_l.copybuiltfrom = "组装号被复制到剪贴板上"
 
 _l.profanity_tag = '褻瀆'
 

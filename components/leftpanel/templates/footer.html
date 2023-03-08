@@ -38,7 +38,16 @@
     <% var year = new Date().getFullYear() %>
 
     <div class="copyright">
-        <img class="copy_logo" src="img/logogray.png" alt="logo">
-        <span class="copyright_text"><%-app.meta.fullname%> <% if(window.packageversion) {%> <%-window.packageversion%><% } %>, 2019&mdash;<%-year%></span>
+        <div class="app-logo"></div>
+        <span class="text">
+            <div class="app-name"><%-app.meta.fullname%></div>
+            <% if (window.packageversion) { %>
+                <div class="app-version"><%-window.packageversion%></div>
+            <% } %>
+            <% if (window.builtfromsha) { %>
+                <div class="app-builtfrom"><%-window.builtfromsha%></div>
+            <% } %>
+            <div class="app-years">2019 &mdash; <%-year%></div>
+        </span>
     </div>
 </div>
