@@ -160,9 +160,19 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
-			'torenabled' : function(_el){
-				changes.server.enabledtor = !JSON.parse(_el.attr('value'))
-				if(changes.server.enabledtor == system.tor.enabled) delete changes.server.enabledtor
+			'torenabled2' : function(_el){
+
+				var values = ['neveruse', 'auto', 'always']
+				
+				changes.server.torenabled2 = nextElCircle(values, _el.attr('value'))
+				 
+				if(changes.server.torenabled2 == system.tor.enabled2) delete changes.server.torenabled2
+				renders.webserveradmin(el.c)
+			},
+			'useSnowFlake' : function(_el){
+				changes.server.useSnowFlake = !JSON.parse(_el.attr('value'))
+				if(changes.server.useSnowFlake == system.tor.useSnowFlake) delete changes.server.useSnowFlake
+
 				renders.webserveradmin(el.c)
 			},
 		}
@@ -649,9 +659,24 @@ var system16 = (function(){
 
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+						function onSettingsReceived(settings) {
+							if (settings.tor.enabled) {
+								selected.fetchauth('manage', {
+									action: 'tor.start',
+									data: { persistence: false },
+								});
+							}
+						}
+
+						if (!selected.direct) {
+							use.fetchauth('manage', {
+								action: 'tor.stop',
+								data: { persistence: false },
+							});
+						}
 
 						api.set.currentwithnode(selected.id, true).then(r => {
-							make(api.get.current())
+							make(api.get.current(), { onSettingsReceived })
 						})
 
 					})
@@ -2441,7 +2466,7 @@ var system16 = (function(){
 						using : use,
 						error : errors[error] || errors['undefinedError']
 					},
-
+					insertimmediately : true,
 					el : el
 
 				},
@@ -2474,7 +2499,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							electron : typeof _Electron != 'undefined' ? _Electron : false
 						},
-	
+						insertimmediately : true,
 						el : el.proxycontent
 	
 					},
@@ -2509,8 +2534,8 @@ var system16 = (function(){
 						data : {
 							admin : actions.admin()
 						},
-						el : elc.find('.botsWrapper')
-
+						el : elc.find('.botsWrapper'),
+						insertimmediately : true,
 					},
 					function(p){
 
@@ -2536,7 +2561,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							bots : bots
 						},
-
+						insertimmediately : true,
 						el : elc.find('.webbotsContentWrapper')
 
 					},
@@ -2592,7 +2617,7 @@ var system16 = (function(){
 						using : use,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.proxyServers')
 
 				},
@@ -2621,7 +2646,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.serverWrapper')
 
 				},
@@ -2650,7 +2675,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webserverstatusWrapper')
 
 				},
@@ -2675,7 +2700,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webServerWrapper')
 
 				},
@@ -2823,8 +2848,7 @@ var system16 = (function(){
 			},
 			webserveradmin : function(elc, clbk){
 
-				if(actions.admin() && system){
-
+				if(actions.admin() && system && info){
 					self.shell({
 						inner : html,
 						name : 'webserveradmin',
@@ -2832,9 +2856,10 @@ var system16 = (function(){
 							admin : actions.admin(),
 							system : system,
 							proxy : proxy,
-							changes : changes.server
+							changes : changes.server,
+							info : info
 						},
-
+						insertimmediately : true,
 						el : elc.find('.adminPanelWrapper')
 
 					},
@@ -2881,47 +2906,28 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
-								if(typeof changes.server.enabledtor != 'undefined') {
-									proxy.fetchauth('manage', {
-										action: changes.server.enabledtor ? 'tor.start' : 'tor.stop',
-										data: {}
-									}).catch(e => {
-										globalpreloader(false)
-										return Promise.resolve()
-
-									}).then(r => {
-										delete changes.server.enabledtor;
-										make(proxy || api.get.current());
-
-										globalpreloader(false)
-
-										topPreloader(100);
-
-									})
-								}
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',
 									data: {
 										settings: changes.server
 									}
-								}).catch(e => {
-									globalpreloader(false)
-									return Promise.resolve()
-		
 								}).then(r => {
+
 									changes.server = {}
 		
 									make(proxy || api.get.current());
-
+		
+								}).catch(e => {
+									console.error(e)
+								}).finally(() => {
 									globalpreloader(false)
 				
 									topPreloader(100);
-		
 								})
 							}
 							
-							if(typeof changes.server.enabledtor != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+							if(typeof changes.server.torenabled2 != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 								new dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",
@@ -3035,6 +3041,53 @@ var system16 = (function(){
 							renders.webserveradmin(elc)
 						})
 
+						p.el.find('.reinstalltor').on('click', function(){
+
+							topPreloader(20);
+
+							proxy.fetchauth('manage', {
+								action : 'tor.reinstall',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
+						})
+
+						p.el.find('.installtor').on('click', function(){
+							proxy.fetchauth('manage', {
+								action : 'tor.install',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
+						})
+
 						if (clbk)
 							clbk()
 					})
@@ -3059,7 +3112,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin()
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.webAdminsWrapper')
 	
 					},
@@ -3110,7 +3163,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webdistributionwalletsWrapper')
 
 				},
@@ -3287,7 +3340,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webDistributionWrapper')
 
 				},
@@ -3335,7 +3388,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper')
 
 				},
@@ -3362,7 +3415,7 @@ var system16 = (function(){
 						currentinstance : null,
 						//peertubePerformance,
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper .instances')
 
 				},
@@ -3426,7 +3479,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin(),
 					},
-
+					insertimmediately : true,
 					el : elc.find('.chainWrapper')
 
 				},
@@ -3467,7 +3520,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper')
 
 					},
@@ -3501,7 +3554,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper .notifications')
 
 					},
@@ -3537,7 +3590,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 						},
-
+						insertimmediately : true,
 						el : elc.find('.notificationsWrapper .notifications-users')
 
 					},
@@ -3567,7 +3620,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper')
 
 				},
@@ -3620,7 +3673,7 @@ var system16 = (function(){
 						currentnode : currentnode,
 						fixednode : api.get.fixednode()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper .nodes')
 
 				},
@@ -3806,7 +3859,7 @@ var system16 = (function(){
 						data : {
 							direct : direct
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.localnodeWrapper')
 	
 					},
@@ -3900,7 +3953,7 @@ var system16 = (function(){
 			}
 		}
 
-		var make = function(prx){
+		var make = function(prx, callbacks){
 
 			destroy()
 
@@ -3916,6 +3969,8 @@ var system16 = (function(){
 			var expanded = el.c.find('.collapsepart').map(function(){
 				return $(this).hasClass('expanded')
 			})
+			
+			console.log('expanded', expanded)
 
 			if (proxy) {
 
@@ -3948,6 +4003,10 @@ var system16 = (function(){
 
 				}).then(data => {
 
+					el.c.find('.collapsepart').each(function (i) {
+						if (expanded[i]) $(this).addClass('expanded');
+					});
+
 
 					stats = data.stats
 
@@ -3978,7 +4037,12 @@ var system16 = (function(){
 						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
-		  
+							
+						  if(callbacks){
+							callbacks.onSettingsReceived?.(r);
+						  }
+						  
+
 						  return Promise.resolve();
 						})
 						.then((r) => {
@@ -3988,16 +4052,19 @@ var system16 = (function(){
 							
 						  bots = r.bots || [];
 						  renders.bots(el.c);
-		  
-						  el.c.find('.collapsepart').each(function (i) {
+
+						  /*el.c.find('.collapsepart').each(function (i) {
 							if (expanded[i]) $(this).addClass('expanded');
-						  });
+						  });*/
 						  
+						}).catch(e => {
+							console.error(e)
 						});
 
 					}
 
 				}).catch(e => {
+					console.error(e)
 					makers.proxycontent()
 				})
 			}

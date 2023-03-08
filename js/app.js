@@ -33,6 +33,32 @@ if (typeof _Electron != 'undefined' && _Electron){
   EmojioneArea = require('./js/vendor/emojionearea.js')
   filterXss = require('./js/vendor/xss.min.js')
 
+  Broadcaster = require('./js/broadcaster.js');
+
+  swBroadcaster = new Broadcaster('ServiceWorker');
+
+  swBroadcaster.handle('AltTransportActive', async (url) => {
+    const wait = (seconds, returnValue) => new Promise(r => (
+      setTimeout(() => r(returnValue), seconds * 1000)
+    ));
+
+    const proxy = self.app.api.get.current();
+
+    if (!proxy.direct) {
+      return false;
+    }
+
+    const proxyInfo = await proxy.get.info();
+
+    if (proxyInfo.info?.tor?.enabled === 'always') {
+      return true;
+    }
+
+    const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+    return await Promise.race([ transportCheck, wait(1, false) ]);
+  });
+
 }
 
 if(typeof _Node == 'undefined') _Node = false;

@@ -4,9 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    
 
-    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
-    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
+
     fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
     peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
@@ -5584,6 +5585,28 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        broadcaster : {
+            clbks : {},
+            history : [],
+            init : function(clbk){
+                if(typeof swBroadcaster != 'undefined')
+                    swBroadcaster.on('network-stats', (data) => {
+
+                        if (self.sdk.broadcaster.history.length > 600){
+                            self.sdk.broadcaster.history.splice(0, 100)
+                        }
+
+                        self.sdk.broadcaster.history.push(data)
+
+                        _.each(self.sdk.broadcaster.clbks, (c) => {
+                            c(data)
+                        })
+                    })
+
+                if(clbk) clbk()
+            }
+        },
 
         faqLangs : {
             get : function(){
@@ -29693,7 +29716,6 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
                     self.app.api.set.current(proxy.id).then(r => {
-
                         resolve()
                     }).catch(resolve)
                 },
@@ -30014,7 +30036,7 @@ Platform = function (app, listofnodes) {
             if (state) {
 
                 lazyActions([
-
+                    self.sdk.broadcaster.init,
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
@@ -30023,6 +30045,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    
                     /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,

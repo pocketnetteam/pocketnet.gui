@@ -1,0 +1,51 @@
+<div class="setting togglebutton">
+    <div class="settingTable table">
+        <div class="label">
+            <span>Use Tor</span>
+        </div>
+
+        <div elementsid="torenabled" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
+            <span><%- e('torusing_' + ((typeof changes.torenabled2!= 'undefined' ? changes.torenabled2 : system.tor.enabled2)  || 'neveruse')) %></span>
+        </div>
+
+        <% if(typeof changes.torenabled2 != 'undefined') {%>
+            <div class="icon">
+                <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled2"></i>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<div class="setting togglebutton">
+    <div class="settingTable table">
+        <div class="label">
+            <span>Use SnowFlake</span>
+        </div>
+
+        <div elementsid="torenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) || false%>">
+            <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? "Yes" : "No" %></span>
+        </div>
+
+        <% if(typeof changes.useSnowFlake != 'undefined') {%>
+            <div class="icon">
+                <i elementsid="fa-times-circle" class="far fa-times-circle" remove="useSnowFlake"></i>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<% if(!_.isEmpty(changes)) {%>
+
+    <div class="haschanges">
+        <div class="buttons">
+            <button elementsid="savewebserveradmin" class="button save">
+                Save Changes
+            </button>
+
+            <button elementsid="discardwebserveradmin" class="button ghost discard">
+                Discard Changes
+            </button>
+        </div>
+    </div>
+
+<% } %>

@@ -986,7 +986,7 @@ var Nodemanager = function(p){
             clearInterval(statscalculationInterval)
             statscalculationInterval = null
         }
-
+        
         return Promise.resolve()
         
     }
