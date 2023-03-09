@@ -83,6 +83,9 @@ class WrappedAxios {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         return axios(preparedArgs)
@@ -110,6 +113,9 @@ class WrappedAxios {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 return axios(preparedArgs)
@@ -177,6 +183,9 @@ class WrappedFetch {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         return fetch(url, preparedArgs)
@@ -214,6 +223,9 @@ class WrappedFetch {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 return fetch(url, preparedArgs)
@@ -284,6 +296,9 @@ class WrappedRequest {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         request(preparedArgs, async (error, response, body) => {
@@ -313,6 +328,9 @@ class WrappedRequest {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 request(preparedArgs, () => {
@@ -484,7 +502,7 @@ class Transports {
     }
 
     async waitTorReady() {
-        const timeout = Transports.waitTimeout(60, false);
+        const timeout = Transports.waitTimeout(60 * 5, false);
 
         let torStart;
 
