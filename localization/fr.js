@@ -186,6 +186,9 @@ _l.uwebsite = "Site web";
 _l.uaddresesd = "Adresses pour les dons";
 _l.usavechanges = "Voulez-vous enregistrer vos modifications?";
 
+_l.settings_save = "Sauver les modifications";
+_l.settings_discard = "Annuler les modifications";
+
 //ustate
 
 _l.sreps = "Réputation et limites";
@@ -1391,3 +1394,28 @@ _l.doYouDownloadVideo = "Voulez-vous télécharger la vidéo sur votre appareil 
 _l.gotosaved2 = "Afficher les posts"
 _l.yes = "Oui"
 _l.no = "Non"
+
+_l.torusing_neveruse = "Jamais";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Toujours";
+
+_l.torusing_directProxy = "Proxy intégré";
+_l.torusing_notdirectProxy = "Proxy externe";
+
+_l.torusing_changedirectProxy = "Passer à un proxy externe";
+_l.torusing_changenotdirectProxy = "Passer à un proxy intégré";
+
+_l.torusing_disclaimer = "Cette fonction ne fonctionne que lors de l'utilisation d'un proxy intégré.";
+
+_l.torusing_Networking = "Réseau";
+_l.torusing_proxyCaption = "Sélection d'un serveur proxy";
+_l.torusing_useTor = "Utiliser TOR";
+_l.torusing_useSnowflakeBridge = "Utiliser Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Maintenant, les requêtes directs"
+_l.torusing_stat_torbytesLength = "Maintenant, TOR requêtes"
+_l.torusing_stat_directBytes = "Total, appels directs"
+_l.torusing_stat_totalTorBytes = "Total, TOR requêtes"
+_l.torusing_settings = "Paramètres TOR"
+_l.torusing_stats = "Statistiques sur les requêtes"
+_l.torusing_proxychangequestion = "Êtes-vous sûr de vouloir changer de proxy?"

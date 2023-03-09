@@ -223,6 +223,9 @@ _l.uwebsite = "Веб сайт";
 _l.uaddresesd = "Адреса для пожертвований";
 _l.usavechanges = "Вы хотите сохранить изменения?";
 
+_l.settings_save = "Сохранить изменения";
+_l.settings_discard = "Сбросить изменения";
+
 // statistic
 _l.referralsCount = 'Пользователей воспользовавшихся реферальной ссылкой';
 _l.commentatorsCount = function(limit){
@@ -2347,7 +2350,9 @@ _l.createPost = "Создать и опубликовать пост";
 _l.anotherSupport = "Поддержать Бастион другим способом";
 _l.supportTicketSuccess = "Ваше сообщение отправлено, и волонтёры с вами свяжутся. Благодарим за желание помочь Бастиону!";
 
-
+_l.torusing_neveruse = "Никогда";
+_l.torusing_auto = "Авто";
+_l.torusing_always = "Всегда";
 
 _l.torusing_directProxy = "Встроенный прокси";
 _l.torusing_notdirectProxy = "Внешний прокси";
@@ -2360,6 +2365,8 @@ _l.torusing_disclaimer = "Данная функция работает лишь 
 
 _l.torusing_Networking = "Сеть";
 _l.torusing_proxyCaption = "Выбор прокси сервера";
+_l.torusing_useTor = "Использовать TOR";
+_l.torusing_useSnowflakeBridge = "Использовать Snowflake";
 
 _l.torusing_stat_currentbytesLength = "Сейчас, прямые вызовы"
 _l.torusing_stat_torbytesLength = "Сейчас, вызовы TOR"
