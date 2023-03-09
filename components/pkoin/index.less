@@ -298,7 +298,6 @@
 
 	.boostinfodata{
 		text-align: center;
-		margin-top : @rhythm * 3;
 		border-radius: 12px;
 		background: rgb(var(--background-secondary-theme));
 		border : 1px solid rgb(var(--neutral-grad-0));
@@ -332,16 +331,17 @@
 	.wndinner{
 		
 		&.pkoin, &.boost{
-            max-width: 370px;
 			box-shadow: none;
         }
 
-		&.pkoin{
+		&.pkoin{            
+			max-width: 370px;
 			max-height: 620px;
 		}
 
 		&.boost{
-			max-height: 500px;
+			max-width: 480px;
+			max-height: 640px;
 		}
 
 		.wndheader{
