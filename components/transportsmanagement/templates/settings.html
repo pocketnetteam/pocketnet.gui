@@ -22,7 +22,7 @@
             <span><%- e('torusing_useSnowflakeBridge') %></span>
         </div>
 
-        <div elementsid="torenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) || false%>">
+        <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) || false%>">
             <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? e('dyes') : e('dno') %></span>
         </div>
 

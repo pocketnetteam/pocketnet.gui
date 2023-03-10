@@ -177,6 +177,7 @@ class TorControl {
 
     makeConfig = async() => {
         const useSnowFlake = this.settings.useSnowFlake || false;
+        const customObfs4 = this.settings.customObfs4 || null;
         const isOverwrite = true; //config.overwrite || false;
 
         const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
@@ -230,6 +231,15 @@ class TorControl {
                 "UpdateBridgesFromAuthority 1",
                 `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
                 `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
+            )
+        } else if (customObfs4) {
+            torConfig.push(
+                "# Custom OBFS4 bridges configurations\n",
+
+                "UseBridges 1",
+                `ClientTransportPlugin obfs4 exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("obfs4proxy"))} managed`,
+
+                customObfs4.map(b => `Bridge ${b}`).join('\n'),
             )
         }
 
@@ -366,12 +376,6 @@ class TorControl {
     }
 
     start = async ()=>{
-        if (this.status === "triggered") {
-            return true;
-        }
-
-        this.status = "triggered";
-
         console.log("Tor start triggered");
 
         if(this.instance) return true
@@ -500,6 +504,7 @@ class TorControl {
         return {
             enabled : this.settings.enabled2,
             useSnowFlake : this.settings.useSnowFlake,
+            customObfs4 : this.settings.customObfs4,
             instance : this.instance ? this.instance.pid : null,
             state : {
                 status : this.state.status

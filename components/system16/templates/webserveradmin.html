@@ -161,7 +161,7 @@
                         <span>Use Tor</span>
                     </div>
 
-                    <div elementsid="torenabled" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
+                    <div elementsid="torenabled2" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
                         <span><%- e('torusing_' + (typeof changes.torenabled2!= 'undefined' ? changes.torenabled2 : system.tor.enabled2)) %></span>
                     </div>
 
@@ -179,7 +179,7 @@
                         <span>Use SnowFlake</span>
                     </div>
 
-                    <div elementsid="torenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake)%>">
+                    <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake)%>">
                         <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? "Yes" : "No" %></span>
                     </div>
 
@@ -188,6 +188,18 @@
                             <i elementsid="fa-times-circle" class="far fa-times-circle" remove="useSnowFlake"></i>
                         </div>
                     <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Custom OBFS4</span>
+                    </div>
+
+                    <div elementsid="customobfs4" class="value" sys="customObfs4">
+                        <span><%- (!!system.tor.customObfs4 || !!changes.server?.customObfs4) ? 'Loaded' : 'None' %></span>
+                    </div>
                 </div>
             </div>
 

@@ -180,7 +180,8 @@ var defaultSettings = {
 		dbpath2 : 'data/tordb',
 		path : 'data/tor',
 		enabled2: 'neveruse',
-		useSnowFlake : false
+		useSnowFlake : false,
+		customObfs4 : false,
 	},
 
 	server : {
@@ -303,7 +304,8 @@ var state = {
 			tor : {
 				dbpath : settings.tor.dbpath,
 				enabled2: settings.tor.enabled2,
-				useSnowFlake : settings.tor.useSnowFlake
+				useSnowFlake : settings.tor.useSnowFlake,
+				customObfs4 : settings.tor.customObfs4,
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -428,6 +430,12 @@ function getKit(ipc) {
 							if (typeof data.useSnowFlake != 'undefined')
 								settings.tor.useSnowFlake = data.useSnowFlake 
 
+							if (typeof data.customObfs4 != 'undefined') {
+								settings.tor.customObfs4 = data.customObfs4
+							} else {
+								settings.tor.customObfs4 = null;
+							}
+
 							if (typeof data.enabled2 != 'undefined')
 								settings.tor.enabled2 = data.enabled2 
 	
@@ -451,6 +459,19 @@ function getKit(ipc) {
 						})
 					},
 	
+					customObfs4: function (data) {
+
+						return kit.proxy().then((proxy) => {
+
+							settings.tor.customObfs4 = data.customObfs4 || false
+
+							return proxy.torapplications.settingChanged(settings.tor)
+
+						}).then(() => {
+							return state.save()
+						})
+					},
+
 					enabled2: function (data) {
 	
 						return kit.proxy().then((proxy) => {
@@ -482,6 +503,7 @@ function getKit(ipc) {
 						if (settings.ssl) notification.ssl = true
 						if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
 						if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
+						if (settings.customObfs4) notification.customObfs4 = settings.customObfs4
 
 						console.log('settings', settings)
 						return kit.proxy().then(proxy => {
@@ -496,12 +518,17 @@ function getKit(ipc) {
 						}).then(() => {
 							var promises = []
 
-							if(settings.torenabled2 || typeof settings.useSnowFlake != 'undefined'){
+							const hasPropTorEnabled2 = ('torenabled2' in settings);
+							const hasPropUseSnowFlake = ('useSnowFlake' in settings);
+							const hasPropCustomObfs4 = ('customObfs4' in settings);
+
+							if(hasPropTorEnabled2 || hasPropUseSnowFlake || hasPropCustomObfs4){
 								promises.push(tctx.changeSettings({
 
 									enabled2 : settings.torenabled2,
-									useSnowFlake : settings.useSnowFlake
-									
+									useSnowFlake : settings.useSnowFlake,
+									customObfs4 : settings.customObfs4,
+
 								}).catch(e => {
 									console.error(e)
 
