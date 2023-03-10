@@ -142,6 +142,14 @@ class WrappedAxios {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return Promise.reject(error);
     }
 }
@@ -255,6 +263,14 @@ class WrappedFetch {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return Promise.reject(error);
     }
 }
@@ -365,6 +381,14 @@ class WrappedRequest {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return error;
     }
 }
