@@ -1,9 +1,9 @@
 if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
-loclib.cmn = {};
+loclib.zh = {};
 
-var _l = loclib.cmn;
+var _l = loclib.zh;
 var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 //time
