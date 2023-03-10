@@ -30328,6 +30328,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+                                    cssrules='["/css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
                             </div>`
