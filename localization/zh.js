@@ -191,6 +191,9 @@ _l.uwebsite = "网站";
 _l.uaddresesd = "捐款地址";
 _l.usavechanges = "是否保存你的修改？";
 
+_l.settings_save = "保存更改";
+_l.settings_discard = "重置更改";
+
 //ustate
 
 _l.sreps = "信誉与限制";
@@ -1038,3 +1041,28 @@ _l.doYouDownloadVideo = "你想在你的设备上下载视频吗？"
 _l.gotosaved2 = "转到已保存"
 _l.yes = "是"
 _l.no = "拒绝"
+
+_l.torusing_neveruse = "从不";
+_l.torusing_auto = "自动";
+_l.torusing_always = "始终";
+
+_l.torusing_directProxy = "内置代理";
+_l.torusing_notdirectProxy = "外部代理";
+
+_l.torusing_changedirectProxy = "改变为外部代理";
+_l.torusing_changenotdirectProxy = "改为内置代理";
+
+_l.torusing_disclaimer = "这个功能只在使用内置代理时有效。";
+
+_l.torusing_Networking = "网络";
+_l.torusing_proxyCaption = "选择一个代理服务器";
+_l.torusing_useTor = "使用TOR";
+_l.torusing_useSnowflakeBridge = "使用Snowflake";
+
+_l.torusing_stat_currentbytesLength = "现在，直接通话"
+_l.torusing_stat_torbytesLength = "现在，TOR电话"
+_l.torusing_stat_directBytes = "共计，直接通话"
+_l.torusing_stat_totalTorBytes = "总计，TOR电话"
+_l.torusing_settings = "TOR设置"
+_l.torusing_stats = "查询统计"
+_l.torusing_proxychangequestion = "你确定你要改变代理服务器吗？"

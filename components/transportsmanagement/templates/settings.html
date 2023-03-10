@@ -1,7 +1,7 @@
 <div class="setting togglebutton">
     <div class="settingTable table">
         <div class="label">
-            <span>Use Tor</span>
+            <span><%- e('torusing_useTor') %></span>
         </div>
 
         <div elementsid="torenabled" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
@@ -19,11 +19,11 @@
 <div class="setting togglebutton">
     <div class="settingTable table">
         <div class="label">
-            <span>Use SnowFlake</span>
+            <span><%- e('torusing_useSnowflakeBridge') %></span>
         </div>
 
-        <div elementsid="torenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) || false%>">
-            <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? "Yes" : "No" %></span>
+        <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) || false%>">
+            <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? e('dyes') : e('dno') %></span>
         </div>
 
         <% if(typeof changes.useSnowFlake != 'undefined') {%>
@@ -39,11 +39,11 @@
     <div class="haschanges">
         <div class="buttons">
             <button elementsid="savewebserveradmin" class="button save">
-                Save Changes
+                <%- e('settings_save') %>
             </button>
 
             <button elementsid="discardwebserveradmin" class="button ghost discard">
-                Discard Changes
+                <%- e('settings_discard') %>
             </button>
         </div>
     </div>

@@ -801,6 +801,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 
 						old : true,
 						ip: '178.217.159.224',
+						offline: true,
 					}
 				],
 

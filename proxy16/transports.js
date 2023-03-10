@@ -83,6 +83,9 @@ class WrappedAxios {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         return axios(preparedArgs)
@@ -110,6 +113,9 @@ class WrappedAxios {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 return axios(preparedArgs)
@@ -136,6 +142,14 @@ class WrappedAxios {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return Promise.reject(error);
     }
 }
@@ -177,6 +191,9 @@ class WrappedFetch {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         return fetch(url, preparedArgs)
@@ -214,6 +231,9 @@ class WrappedFetch {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 return fetch(url, preparedArgs)
@@ -243,6 +263,14 @@ class WrappedFetch {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return Promise.reject(error);
     }
 }
@@ -284,6 +312,9 @@ class WrappedRequest {
             }
 
             this.attachAgent(preparedArgs);
+        } else if (isDirectAccessRestricted && !isTorReady) {
+            const failedFetch = new TypeError('Failed to fetch');
+            return Promise.reject(failedFetch);
         }
 
         request(preparedArgs, async (error, response, body) => {
@@ -313,6 +344,9 @@ class WrappedRequest {
                     }
 
                     this.attachAgent(preparedArgs);
+                } else if (isDirectAccessRestricted && !isTorReady) {
+                    const failedFetch = new TypeError('Failed to fetch');
+                    return Promise.reject(failedFetch);
                 }
 
                 request(preparedArgs, () => {
@@ -347,6 +381,14 @@ class WrappedRequest {
     }
 
     static handleError(error) {
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
+
+        if (isConnRefused || isSocksRejection) {
+            console.warn('SOCKS5 proxy rejection');
+            return;
+        }
+
         return error;
     }
 }
@@ -484,7 +526,7 @@ class Transports {
     }
 
     async waitTorReady() {
-        const timeout = Transports.waitTimeout(60, false);
+        const timeout = Transports.waitTimeout(60 * 5, false);
 
         let torStart;
 

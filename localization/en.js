@@ -230,6 +230,9 @@ _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
 
+_l.settings_save = "Save changes";
+_l.settings_discard = "Discard changes";
+
 //statistic
 
 _l.referralsCount = 'Users who have used the referral link.';
@@ -2573,6 +2576,8 @@ _l.torusing_changenotdirectProxy = "Change to Built-in proxy";
 _l.torusing_disclaimer = "This function only works when using the built-in proxy.";
 _l.torusing_Networking = "Networking";
 _l.torusing_proxyCaption = "Choosing a proxy server";
+_l.torusing_useTor = "Use Tor";
+_l.torusing_useSnowflakeBridge = "Use SnowFlake";
 
 _l.torusing_stat_currentbytesLength = "Current, direct"
 _l.torusing_stat_torbytesLength = "Current, TOR"

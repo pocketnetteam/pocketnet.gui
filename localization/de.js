@@ -191,6 +191,9 @@ _l.uwebsite = "Website";
 _l.uaddresesd = "Adresse für Spenden";
 _l.usavechanges = "Wollen Sie die änderungen speichern?";
 
+_l.settings_save = "Änderungen speichern";
+_l.settings_discard = "Änderungen verwerfen";
+
 //ustate
 _l.sreps = "Ansehen und Einschränkungen";
 _l.sdisconnected = "Vom Netzwerkknoten getrennt";
@@ -869,3 +872,28 @@ _l.doYouDownloadVideo = "Möchten Sie das Video auf Ihr Gerät herunterladen?"
 _l.gotosaved2 = "Gehe zu gespeichert"
 _l.yes = "Ja"
 _l.no = "Nein"
+
+_l.torusing_neveruse = "Niemals";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Immer";
+
+_l.torusing_directProxy = "Eingebauter proxy";
+_l.torusing_notdirectProxy = "Externer proxy";
+
+_l.torusing_changedirectProxy = "Wechsel zum externen proxy";
+_l.torusing_changenotdirectProxy = "Wechsel zum eingebauter proxy";
+
+_l.torusing_disclaimer = "Diese funktion funktioniert nur bei verwendung eines eingebauten proxys.";
+
+_l.torusing_Networking = "Netzwerk";
+_l.torusing_proxyCaption = "Proxy auswählen";
+_l.torusing_useTor = "TOR verwenden";
+_l.torusing_useSnowflakeBridge = "Snowflake verwenden";
+
+_l.torusing_stat_currentbytesLength = "Jetzt, direkte anrufe"
+_l.torusing_stat_torbytesLength = "Jetzt, TOR anrufe"
+_l.torusing_stat_directBytes = "Gesamt, direkte anrufe"
+_l.torusing_stat_totalTorBytes = "Gesamt, TOR anrufe"
+_l.torusing_settings = "TOR einstellungen"
+_l.torusing_stats = "Statistik abfragen"
+_l.torusing_proxychangequestion = "Sind Sie sicher, dass Sie den proxy ändern wollen?"

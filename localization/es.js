@@ -869,3 +869,28 @@ _l.doYouDownloadVideo = "Quieres descargar el vídeo en tu dispositivo?"
 _l.gotosaved2 = "Ir a guardado"
 _l.yes = "Sí"
 _l.no = "No"
+
+_l.torusing_neveruse = "Nunca";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Siempre";
+
+_l.torusing_directProxy = "Proxy interno";
+_l.torusing_notdirectProxy = "Proxy externo";
+
+_l.torusing_changedirectProxy = "Cambiar a proxy externo";
+_l.torusing_changenotdirectProxy = "Cambiar a proxy interno";
+
+_l.torusing_disclaimer = "Esta función solo funciona cuando se utiliza un proxy interno.";
+
+_l.torusing_Networking = "Red";
+_l.torusing_proxyCaption = "Selección de proxy";
+_l.torusing_useTor = "Usar TOR";
+_l.torusing_useSnowflakeBridge = "Usar Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Ahora, solicitudes directas"
+_l.torusing_stat_torbytesLength = "Ahora, solicitudes TOR"
+_l.torusing_stat_directBytes = "Total, solicitudes directas"
+_l.torusing_stat_totalTorBytes = "Total, solicitudes TOR"
+_l.torusing_settings = "Ajustes TOR"
+_l.torusing_stats = "Estadísticas de solicitudes"
+_l.torusing_proxychangequestion = "Seguro que quieres cambiar el proxy?"

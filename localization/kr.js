@@ -191,6 +191,9 @@ _l.uwebsite = "웹사이트";
 _l.uaddresesd = "기부 주소";
 _l.usavechanges = "변경 사항을 저장 하시겠습니까?";
 
+_l.settings_save = "변경 사항 저장";
+_l.settings_discard = "변경 사항 재설정";
+
 //ustate
 _l.sreps = "평판과 한계";
 _l.sdisconnected = "노드에서 연결해제 됨";
@@ -868,3 +871,28 @@ _l.doYouDownloadVideo = "당신은 당신의 장치에 비디오를 다운로드
 _l.gotosaved2 = "저장된 항목으로 이동"
 _l.yes = "예"
 _l.no = "아니"
+
+_l.torusing_neveruse = "절대로";
+_l.torusing_auto = "자동으로";
+_l.torusing_always = "항상";
+
+_l.torusing_directProxy = "기본 제공 프록시";
+_l.torusing_notdirectProxy = "외부 프록시";
+
+_l.torusing_changedirectProxy = "외부 프록시로 변경";
+_l.torusing_changenotdirectProxy = "기본 제공 프록시로 변경";
+
+_l.torusing_disclaimer = "이 기능은 기본 제공 프록시를 사용할 때만 작동합니다.";
+
+_l.torusing_Networking = "네트워크";
+_l.torusing_proxyCaption = "프록시 서버 선택";
+_l.torusing_useTor = "TOR 사용";
+_l.torusing_useSnowflakeBridge = "Snowflake 사용";
+
+_l.torusing_stat_currentbytesLength = "현재 순간, 직접 통화"
+_l.torusing_stat_torbytesLength = "지금 이 순간, TOR 통화"
+_l.torusing_stat_directBytes = "합계, 직접 통화"
+_l.torusing_stat_totalTorBytes = "합계, TOR 통화"
+_l.torusing_settings = "TOR 설정"
+_l.torusing_stats = "쿼리 통계"
+_l.torusing_proxychangequestion = "정말 프록시를 변경하시겠습니까?"

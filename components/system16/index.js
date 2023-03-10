@@ -175,6 +175,43 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
+			'customObfs4' : function(){
+				var v = system.tor.customObfs4 || changes.server?.customObfs4;
+
+				var d = inputDialogNew({
+					caption : "OBFS4 settings",
+					wrap : true,
+					values : [{
+						defValue : (Array.isArray(v)) ? v.join('\n') : undefined,
+						label : "OBFS4 bridges list",
+						placeholder : "Use TOR project syntax",
+						text : 'None',
+					}],
+
+					success : function(v){
+						if (v[0].length === 0) {
+							sitemessage('OBFS4 bridges are unloaded');
+							changes.server.customObfs4 = undefined;
+							renders.webserveradmin(el.c);
+							return true;
+						}
+
+						const bridgeList = v[0].split('\n')
+							.filter(b => b.includes('obfs4'));
+
+						if (!bridgeList.length) {
+							sitemessage('Invalid OBFS4 bridges format');
+							return false;
+						}
+
+						changes.server.customObfs4 = bridgeList;
+
+						renders.webserveradmin(el.c);
+						return true;
+					}
+				})
+
+			},
 		}
 
 		var actions = {

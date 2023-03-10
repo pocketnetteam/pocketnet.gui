@@ -97,8 +97,19 @@ class TorControl {
     settingChanged = async(settings) => {
         var needRestart = false
 
-        if(settings.useSnowFlake != this.settings.useSnowFlake) needRestart = true
-        if(settings.enabled2 != this.settings.enabled2 && settings.enabled2 != 'auto') needRestart = true
+        const isSnowflakeChanged = (settings.useSnowFlake !== this.settings.useSnowFlake);
+        const isTorStateChanged = (settings.enabled2 !== this.settings.enabled2);
+
+        const keepInstanceAlive = (
+            settings.enabled2 === 'auto' && this.settings.enabled2 === 'always' ||
+            settings.enabled2 === 'always' && this.settings.enabled2 === 'auto'
+        );
+
+        const isCustomObfs4Changed = (settings.customObfs4 !== this.settings.customObfs4);
+
+        if(isSnowflakeChanged || isCustomObfs4Changed || (isTorStateChanged && !keepInstanceAlive)) {
+            needRestart = true;
+        }
 
         this.settings = {...settings};
 
@@ -116,9 +127,7 @@ class TorControl {
             else{
                 await this.restart()
             }
-        }
-
-        if (!this.instance){
+        } else {
 
             if (this.settings.enabled2 != 'neveruse'){
                 if (this.needinstall()){
@@ -168,6 +177,7 @@ class TorControl {
 
     makeConfig = async() => {
         const useSnowFlake = this.settings.useSnowFlake || false;
+        const customObfs4 = this.settings.customObfs4 || null;
         const isOverwrite = true; //config.overwrite || false;
 
         const torrcConfig = await this.helpers.checkPath(path.join(this.getsettingspath(), 'torrc'));
@@ -221,6 +231,15 @@ class TorControl {
                 "UpdateBridgesFromAuthority 1",
                 `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
                 `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
+            )
+        } else if (customObfs4) {
+            torConfig.push(
+                "# Custom OBFS4 bridges configurations\n",
+
+                "UseBridges 1",
+                `ClientTransportPlugin obfs4 exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("obfs4proxy"))} managed`,
+
+                customObfs4.map(b => `Bridge ${b}`).join('\n'),
             )
         }
 
@@ -357,12 +376,6 @@ class TorControl {
     }
 
     start = async ()=>{
-        if (this.status === "triggered") {
-            return true;
-        }
-
-        this.status = "triggered";
-
         console.log("Tor start triggered");
 
         if(this.instance) return true
@@ -426,20 +439,24 @@ class TorControl {
     }
 
     getpidandkill = async () => {
-        const torPidFile = path.join(this.getsettingspath(), 'tor.pid');
-
         let pid;
 
-        try {
-            pid = await fs.readFile(torPidFile, { encoding: 'utf-8' });
-        } catch (err) {
-            return Promise.resolve(false);
+        if (this.instance) {
+            pid = +this.instance.pid.toString();
+        } else {
+            const torPidFile = path.join(this.getsettingspath(), 'tor.pid');
+
+            try {
+                pid = await fs.readFile(torPidFile, { encoding: 'utf-8' });
+            } catch (err) {
+                return Promise.resolve(false);
+            }
         }
 
         return new Promise((resolve) => {
             kill(+pid.toString(), (err) => {
                 if (err) {
-                    console.error('Unable to open kill TOR instance', err);
+                    console.error('Unable to kill TOR instance', err);
                     resolve(false);
                     return;
                 }
@@ -453,7 +470,7 @@ class TorControl {
 
         if (this.instance){
             try{
-                kill(+this.instance.pid.toString())
+                await this.getpidandkill()
             }
             catch(e){
                 console.warn('Tor instance kill error:', e.message)
@@ -473,7 +490,7 @@ class TorControl {
     restart = async() => {
         try{
             await this.stop()
-            await this.start()
+            setTimeout(() => this.start(), 2000);
         }catch(e){
             console.error(e)
         }
@@ -487,6 +504,7 @@ class TorControl {
         return {
             enabled : this.settings.enabled2,
             useSnowFlake : this.settings.useSnowFlake,
+            customObfs4 : this.settings.customObfs4,
             instance : this.instance ? this.instance.pid : null,
             state : {
                 status : this.state.status
