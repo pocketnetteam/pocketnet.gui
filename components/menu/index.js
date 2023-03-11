@@ -8,7 +8,10 @@ var menu = (function(){
 
 		var el = {},
 			authorForSearch = null,
-			menusearch = null;
+			menusearch = null,
+		    torIntervalId = null,
+			controlTorElem = null,
+			networkStatsListenerId = null;
 
 		var logotime = 180000, changeLogoInterval = null
 
@@ -110,7 +113,15 @@ var menu = (function(){
 				})
 			},
 
-			
+			receiveNetworkStats : function(stats) {
+				if (stats.torUsed && controlTorElem) {
+					controlTorElem.addClass(stats.status);
+
+					setTimeout(() => {
+						controlTorElem.removeClass(stats.status);
+					}, 300);
+				}
+			}
 		}
 
 		var searchlickaction = function(link){
@@ -451,7 +462,67 @@ var menu = (function(){
 						if (electron)
 							electron.ipcRenderer.send('electron-refresh');
 					})
-					
+
+					controlTorElem = _el.find('.control-tor-state');
+
+					self.sdk.broadcaster.clbks['menu'] = function(data){
+						actions.receiveNetworkStats(data)
+					}
+
+					let proxyData;
+
+					if (torIntervalId) {
+						clearInterval(torIntervalId);
+					}
+
+					torIntervalId = setInterval(async () => {
+						const currentProxy = app.api.get.current();
+
+						if (!currentProxy.direct) {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+
+							return;
+						}
+
+						proxyData = await currentProxy.get.info();
+
+						if (proxyData?.info.tor.state.status === 'started') {
+							controlTorElem.removeClass(['off', 'loading']);
+							controlTorElem.addClass('on');
+							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
+						} else if (proxyData?.info.tor.state.status === 'running') {
+							controlTorElem.removeClass(['on', 'off']);
+							controlTorElem.addClass('loading');
+							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
+						} else if (proxyData?.info.tor.state.status === 'stopped') {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						}
+					}, 2000);
+
+					controlTorElem.on('click', () => {
+
+						self.nav.api.go({
+							open : true,
+							href : 'transportsmanagement',
+							inWnd : true,
+						})
+							
+						/*const isTorEnabled = (
+							proxyData?.info.tor.state.status === 'started' ||
+							proxyData?.info.tor.state.status === 'loading'
+						);
+
+						const currentProxy = app.api.get.current();
+
+						currentProxy.fetchauth('manage', {
+							action: isTorEnabled ? 'tor.stop' : 'tor.start',
+							data: {}
+						});*/
+					});
 				},
 				fast : true,
 			},
@@ -1196,6 +1267,8 @@ var menu = (function(){
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
+				delete self.sdk.broadcaster.clbks['menu']
+
 				if (changeLogoInterval){
 					clearInterval(changeLogoInterval)
 					changeLogoInterval = null
@@ -1208,6 +1281,12 @@ var menu = (function(){
 					if (e.destroy)
 						e.destroy()
 				})
+
+				clearInterval(torIntervalId);
+
+				torIntervalId = null;
+				controlTorElem = null;
+				networkStatsListenerId = null;
 
 				//if (el.c) el.c.empty()
 

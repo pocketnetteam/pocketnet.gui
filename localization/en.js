@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -229,6 +229,9 @@ _l.uabout = "About myself";
 _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
+
+_l.settings_save = "Save changes";
+_l.settings_discard = "Discard changes";
 
 //statistic
 
@@ -2319,6 +2322,9 @@ _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After t
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
+_l.torHintStateEnabled = "Tor network state - enabled"
+_l.torHintStateDisabled = "Tor network state - disabled"
+_l.torHintStateLoading = "Tor network state - loading"
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
@@ -2540,9 +2546,9 @@ _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 
+_l.copybuiltfrom = "Application build version copied"
 
-
-_l.endedCall = "Call ended",
+_l.endedCall = "Call ended"
 _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";
@@ -2553,7 +2559,31 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
+_l.torusing_neveruse = "Never";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Always";
+
 _l.anotherSupport = "Support Bastyon in another way";
 _l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
 
+_l.torusing_directProxy = "Built-in proxy";
+_l.torusing_notdirectProxy = "External proxy";
+
+_l.torusing_changedirectProxy = "Change to External proxy";
+_l.torusing_changenotdirectProxy = "Change to Built-in proxy";
+
+
+_l.torusing_disclaimer = "This function only works when using the built-in proxy.";
+_l.torusing_Networking = "Networking";
+_l.torusing_proxyCaption = "Choosing a proxy server";
+_l.torusing_useTor = "Use Tor";
+_l.torusing_useSnowflakeBridge = "Use SnowFlake";
+
+_l.torusing_stat_currentbytesLength = "Current, direct"
+_l.torusing_stat_torbytesLength = "Current, TOR"
+_l.torusing_stat_directBytes = "Total, current"
+_l.torusing_stat_totalTorBytes = "Total, TOR"
+_l.torusing_settings = "TOR settings"
+_l.torusing_stats = "Networking statistics"
+_l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 

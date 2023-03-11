@@ -207,6 +207,44 @@
 #menu .sections .items.control-app.control-right {
   padding-left: 1.5em;
 }
+#menu .sections .items.control-app .control-tor-state {
+  position: relative;
+}
+#menu .sections .items.control-app .control-tor-state i::after {
+  position: absolute;
+}
+#menu .sections .items.control-app .control-tor-state.on {
+  color: rgb(var(--color-good));
+}
+#menu .sections .items.control-app .control-tor-state.on::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+#menu .sections .items.control-app .control-tor-state.on.failed::before {
+  background: rgb(var(--color-bad));
+}
+#menu .sections .items.control-app .control-tor-state.on.success::before {
+  background: rgb(var(--color-good));
+}
+#menu .sections .items.control-app .control-tor-state.off {
+  color: rgb(var(--neutral-grad-1));
+}
+#menu .sections .items.control-app .control-tor-state.loading {
+  color: rgb(var(--neutral-grad-1));
+  animation: torPulse 2s linear infinite;
+}
+@keyframes torPulse {
+  50% {
+    color: rgb(var(--color-txt-ac));
+  }
+}
 #menu .sections .items.notificationsWrapper {
   margin-right: 0.5em;
 }
@@ -854,7 +892,7 @@
 					&.right{
 						width : 100%;
 					}
-					
+
 					.items.searchWrapper{
 						width : 100%;
 

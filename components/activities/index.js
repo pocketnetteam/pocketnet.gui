@@ -18,7 +18,7 @@ var activities = (function () {
 			getFilters: function (filter) {
 				if (filter === 'all') return []
 				if (filter === 'interactions') return ['contentscore', 'boost','commentscore']
-				if (filter === 'comment') return [ 'comment']
+				if (filter === 'comment') return [ 'comment', 'answer']
 				if (filter === 'subscriber') return ['subscriber']
 				if (filter === 'blocking') return ['blocking']
 				if (!filter) return []
