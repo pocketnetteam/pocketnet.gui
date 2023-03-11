@@ -18,6 +18,7 @@
     "author": "Max Grishkov",
     "license": "ISC",
     "dependencies": {
+        "arch": "^2.2.0",
         "axios": "^0.21.1",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",

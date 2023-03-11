@@ -64,7 +64,7 @@ class TorControl {
     constructor(settings, proxy/*, ipc*/) {
         this.settings = {...settings};
 
-        this.application = new Applications(settings, applicationRepository, proxy)
+        this.application = new Applications(settings, applicationRepository, proxy, true)
 
     }
 
@@ -229,7 +229,7 @@ class TorControl {
 
                 "UseBridges 1",
                 "UpdateBridgesFromAuthority 1",
-                `ClientTransportPlugin snowflake exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("snowflake-client"))}`,
+                `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
                 `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
             )
         } else if (customObfs4) {
@@ -237,7 +237,7 @@ class TorControl {
                 "# Custom OBFS4 bridges configurations\n",
 
                 "UseBridges 1",
-                `ClientTransportPlugin obfs4 exec ${getSettingsPath("PluggableTransports", this.helpers.bin_name("obfs4proxy"))} managed`,
+                `ClientTransportPlugin obfs4 exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("obfs4proxy"))} managed`,
 
                 customObfs4.map(b => `Bridge ${b}`).join('\n'),
             )
@@ -277,7 +277,7 @@ class TorControl {
 
             this.state.status = "install";
 
-            const download = await this.application.download('bin', {user: "cenitelas", name: "tor"});
+            const download = await this.application.download('bin', {user: "shpingalet007", name: "tor-builds"});
             await this.application.decompress(download.path, this.getsettingspath())
             await fs.unlink(download.path)
             await fs.chmod(this.getsettingspath(), 0o755)
@@ -524,25 +524,39 @@ class TorControl {
 }
 
 const applicationRepository = {
-    darwin:{
+    darwin_x64:{
         bin: {
-            name: "osx-latest.tgz",
-            page: 'https://github.com/cenitelas/tor/releases/latest',
-            url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+            name: "macos-x86_64.tar.gz",
+            page: 'https://github.com/shpingalet007/tor-builds/releases/latest',
+            url: 'https://api.github.com/repos/shpingalet007/tor-builds/releases/latest'
         },
     },
-    win32:{
+    win32_x86:{
         bin: {
-            name: "win-latest.tgz",
-            page: 'https://github.com/cenitelas/tor/releases/latest',
-            url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+            name: "windows-i686.tar.gz",
+            page: 'https://github.com/shpingalet007/tor-builds/releases/latest',
+            url: 'https://api.github.com/repos/shpingalet007/tor-builds/releases/latest'
         },
     },
-    linux:{
+    win32_x64:{
         bin: {
-            name: "linux-latest.tgz",
-            page: 'https://github.com/cenitelas/tor/releases/latest',
-            url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+            name: "windows-x86_64.tar.gz",
+            page: 'https://github.com/shpingalet007/tor-builds/releases/latest',
+            url: 'https://api.github.com/repos/shpingalet007/tor-builds/releases/latest'
+        },
+    },
+    linux_x86:{
+        bin: {
+            name: "linux-i686.tar.gz",
+            page: 'https://github.com/shpingalet007/tor-builds/releases/latest',
+            url: 'https://api.github.com/repos/shpingalet007/tor-builds/releases/latest'
+        },
+    },
+    linux_x64:{
+        bin: {
+            name: "linux-x86_64.tar.gz",
+            page: 'https://github.com/shpingalet007/tor-builds/releases/latest',
+            url: 'https://api.github.com/repos/shpingalet007/tor-builds/releases/latest'
         },
     }
 }
