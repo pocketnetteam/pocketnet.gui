@@ -38,6 +38,30 @@ if (typeof _Electron != 'undefined' && _Electron){
   swBroadcaster = new Broadcaster('ServiceWorker');
 
   swBroadcaster.handle('AltTransportActive', async (url) => {
+    function isWhitelisted(url) {
+      const { hostname } = new URL(url);
+
+      const whitelistHosts = [
+        /.*\.?youtube\.com/,
+        /.*\.?vimeocdn\.com/,
+        /.*\.?vimeo\.com/,
+        /.*\.?bitchute\.com/,
+        /photos\.brighteon\.com/,
+      ];
+
+      for (let i = 0; i < whitelistHosts.length; i++) {
+        if (whitelistHosts[i].test(hostname)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (isWhitelisted(url)) {
+      return false;
+    }
+
     const wait = (seconds, returnValue) => new Promise(r => (
       setTimeout(() => r(returnValue), seconds * 1000)
     ));
