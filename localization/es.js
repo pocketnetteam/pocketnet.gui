@@ -837,6 +837,9 @@ _l.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 _l.buy = 'Comprar';
 
 _l.usetor = "Conexión a través de la red Tor"
+_l.torHintStateEnabled = "Estado de red Tor - activado"
+_l.torHintStateDisabled = "Estado de red Tor - desactivado"
+_l.torHintStateLoading = "Estado de red Tor - cargando"
 
 _l.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
 _l.lowstar_reason_1 = "Erótico/Porno"
@@ -854,6 +857,7 @@ _l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de es
 _l.desktopPopupAgree = "Descargar la aplicación"
 _l.desktopPopupDisagree = "Ahora no"
 
+_l.copybuiltfrom = "Número de conjunto copiado"
 
 _l.profanity_tag = 'blasfemia'
 
@@ -865,3 +869,28 @@ _l.doYouDownloadVideo = "Quieres descargar el vídeo en tu dispositivo?"
 _l.gotosaved2 = "Ir a guardado"
 _l.yes = "Sí"
 _l.no = "No"
+
+_l.torusing_neveruse = "Nunca";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Siempre";
+
+_l.torusing_directProxy = "Proxy interno";
+_l.torusing_notdirectProxy = "Proxy externo";
+
+_l.torusing_changedirectProxy = "Cambiar a proxy externo";
+_l.torusing_changenotdirectProxy = "Cambiar a proxy interno";
+
+_l.torusing_disclaimer = "Esta función solo funciona cuando se utiliza un proxy interno.";
+
+_l.torusing_Networking = "Red";
+_l.torusing_proxyCaption = "Selección de proxy";
+_l.torusing_useTor = "Usar TOR";
+_l.torusing_useSnowflakeBridge = "Usar Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Ahora, solicitudes directas"
+_l.torusing_stat_torbytesLength = "Ahora, solicitudes TOR"
+_l.torusing_stat_directBytes = "Total, solicitudes directas"
+_l.torusing_stat_totalTorBytes = "Total, solicitudes TOR"
+_l.torusing_settings = "Ajustes TOR"
+_l.torusing_stats = "Estadísticas de solicitudes"
+_l.torusing_proxychangequestion = "Seguro que quieres cambiar el proxy?"

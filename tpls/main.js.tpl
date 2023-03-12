@@ -14,18 +14,15 @@ const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { initFsFetchBridge } = require('./js/transports/fs-fetch.js');
 const VideoDownload = require('./js/electron/video-download.js');
 
-const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
-const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
-
 const electronLocalshortcut = require('electron-localshortcut');
 
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const transports = require('./proxy16/transports')()
-
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
+
+const FetchHandler = require('./js/transports2/fetch/handler.js');
 
 // app.commandLine.appendSwitch('proxy-server', "socks5h://127.0.0.1:9050")
 
@@ -723,10 +720,31 @@ function createWindow() {
      */
     new TranscoderBridge(ipcMain, Storage);
 
-    proxyInterface = new ProxyInterface(ipcMain, win.webContents, {
-      Axios: ProxifiedAxiosBridge,
-      Fetch: ProxifiedFetchBridge,
-    });
+    class ProxyCommunicationLayer {
+        constructor(ipc, functions) {
+          this.ipc = ipc;
+          this.functions = functions;
+        }
+
+        init() {
+            FetchHandler.init(ipcMain, {
+                fetchFunction: (...args) => this.functions.fetch(...args),
+            });
+
+          this.ipc.handle('AltTransportActive', async (event, url) => {
+                return await this.functions.isAltTransportSet(url);
+          });
+        }
+
+        destroy() {
+          this.ipc.removeHandler('AltTransportActive');
+
+          delete this.functions;
+          delete this.ipc;
+        }
+      }
+
+    proxyInterface = new ProxyInterface(ipcMain, win.webContents, ProxyCommunicationLayer);
 
     proxyInterface.init()
 

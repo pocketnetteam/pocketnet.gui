@@ -58,6 +58,7 @@ var Roy = function (parent) {
 		if (options.cantuploading) instance.cantuploading = true;
 		if (options.special) instance.special = true;
 		if (options.old) instance.old = true;
+		if (options.offline) instance.offline = true;
 
 		instance.init();
 

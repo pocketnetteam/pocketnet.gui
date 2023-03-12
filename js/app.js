@@ -33,6 +33,56 @@ if (typeof _Electron != 'undefined' && _Electron){
   EmojioneArea = require('./js/vendor/emojionearea.js')
   filterXss = require('./js/vendor/xss.min.js')
 
+  Broadcaster = require('./js/broadcaster.js');
+
+  swBroadcaster = new Broadcaster('ServiceWorker');
+
+  swBroadcaster.handle('AltTransportActive', async (url) => {
+    function isWhitelisted(url) {
+      const { hostname } = new URL(url);
+
+      const whitelistHosts = [
+        /.*\.?youtube\.com/,
+        /.*\.?vimeocdn\.com/,
+        /.*\.?vimeo\.com/,
+        /.*\.?bitchute\.com/,
+        /photos\.brighteon\.com/,
+      ];
+
+      for (let i = 0; i < whitelistHosts.length; i++) {
+        if (whitelistHosts[i].test(hostname)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (isWhitelisted(url)) {
+      return false;
+    }
+
+    const wait = (seconds, returnValue) => new Promise(r => (
+      setTimeout(() => r(returnValue), seconds * 1000)
+    ));
+
+    const proxy = self.app.api.get.current();
+
+    if (!proxy.direct) {
+      return false;
+    }
+
+    const proxyInfo = await proxy.get.info();
+
+    if (proxyInfo.info?.tor?.enabled === 'always') {
+      return true;
+    }
+
+    const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+    return await Promise.race([ transportCheck, wait(1, false) ]);
+  });
+
 }
 
 if(typeof _Node == 'undefined') _Node = false;

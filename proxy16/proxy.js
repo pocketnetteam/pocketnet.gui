@@ -18,7 +18,7 @@ var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
-var TorControl = require('./node/tor-control.js');
+var TorControl = require('./node/torcontrol.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remotelight.js');
@@ -31,7 +31,7 @@ var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 var bitcoin = require('./lib/btc16.js');
-var Slidemodule = require("./slidemodule") 
+var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -40,13 +40,7 @@ process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-//////////////
-/*
-if (process.platform === 'win32') expectedExitCodes = [3221225477];
-
-console.log('expectedExitCodes' , expectedExitCodes)*/
-
-var Proxy = function (settings, manage, test, logger, reverseproxy) {
+var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 	var self = this;
 
 		self.test = test
@@ -69,9 +63,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	slidemodule.init()
 	var notifications = new Notifications()
 
-	var torapplications = new TorControl(settings.tor, self)
+	var torapplications = new TorControl(settings.tor, self, ipc)
 
-	var transports = new Transports(global.USE_PROXY_NODE);
+	var transports = new Transports();
 
 	var dump = {}
 
@@ -419,8 +413,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
-
-
 	self.systemnotify = {
 
 		init: function () {
@@ -556,51 +548,40 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
+	self.transports = {
+		isAltTransportSet: (url) => {
+			return transports.isTorNeeded(url)
+		},
+	}
+
 	self.torapplications = {
 		init: function () {
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			return torapplications.application.init().then(async r => {
-				return await torapplications.init();
-			})
+			return torapplications.init()
 		},
 
-		start: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.start();
+		settingChanged: function(settings){
+			return torapplications.settingChanged(settings)
 		},
 
-		info: (compact)=>{
+		info: (compact) => {
 			return torapplications.info(compact);
 		},
 
-		stop: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.stop();
+		destroy: () => {
+			return torapplications.destroy();
 		},
 
-		statusListener: async (callBack)=>{
-			if(!global.USE_PROXY_NODE) {
-				callBack?.('stopped')
-			}else {
-				torapplications.statusListener(callBack)
-			}
+		remove: () => {
+			return torapplications.remove();
 		},
 
-		destroy: async ()=>{
-			await torapplications.destroy();
+		install: () => {
+			return torapplications.installManual();
 		},
+
+		reinstall: () => {
+			return torapplications.reinstall();
+		}
 	}
 
 	const axiosTransport = (...args) => transports.axios(...args);
@@ -619,7 +600,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		request: (option, callback)=>{
 			return transports.request(option, callback)
-		}
+		},
+
+		isAltTransportSet: (url) => {
+			return transports.isTorNeeded(url);
+		},
 	}
 
 	///
@@ -708,8 +693,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var ins = {
 				1: [
-				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
-					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
+				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120', offline: true },
+					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24', offline: true },
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 				5: [
@@ -722,6 +707,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					host: 'pocketnetpeertube7.nohost.me',
 					cantuploading: true,
 					ip: '188.187.45.218',
+					offline: true,
 				  },
 				],
 				6: [
@@ -739,6 +725,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				8: [
 				  {
 					host: 'pocketnetpeertube8.nohost.me',
+				    offline: true,
 					cantuploading: true,
 					old : true,
 
@@ -795,6 +782,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host: 'peertube15.pocketnet.app',
 						ip: '192.236.199.174',
+						offline: true,
 					},
 				],
 
@@ -805,6 +793,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '178.217.155.168',
+						offline: true,
 					},
 					{
 						host : 'poketnetpeertube.ru',
@@ -812,6 +801,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '178.217.159.224',
+						offline: true,
 					}
 				],
 
@@ -823,6 +813,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '81.23.152.91',
+						offline: true,
 					},
 					{
 						host : 'storemi.ru',
@@ -830,6 +821,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '93.100.117.108',
+						offline: true,
 					},
 				],
 
@@ -840,6 +832,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '81.23.151.94',
+						offline: true,
 					},
 					{
 						host : 'gf110.ru',
@@ -847,6 +840,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						old : true,
 						ip: '46.175.123.16',
+						offline: true,
 					},
 				],
 
@@ -855,11 +849,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'bastyonpeertube.ru',
 						cantuploading: true,
 						ip: '178.217.155.169',
+						offline: true,
 					},
 					{
 						host : 'bastyonpeertube.site',
 						cantuploading: true,
 						ip: '178.217.155.170',
+						offline: true,
 					},
 
 				],
@@ -1190,6 +1186,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		destroy: function () {
 
+			console.log("DESTROY")
+
 			if (statInterval) {
 				clearInterval(statInterval)
 				statInterval = null
@@ -1205,9 +1203,38 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
-				return self[i].destroy().catch(catchError(i)).then(() => {
-					return Promise.resolve()
+				
+				return new Promise((resolve, reject) => {
+					try{
+
+						if(!self[i].destroy){
+							resolve()
+
+							return
+						}
+
+						var destroy = self[i].destroy()
+
+						if(!destroy || !destroy.catch){
+							return resolve()
+						}
+
+						return destroy.catch(catchError(i)).then(() => {
+							console.log('i', i)
+							return Promise.resolve()
+						}).then(resolve)
+
+					}catch(e){
+						console.log("ERROR",i)
+						console.log(e)
+
+						resolve()
+					}
 				})
+
+					
+
+				
 			})
 
 			return Promise.all(promises).then(r => {

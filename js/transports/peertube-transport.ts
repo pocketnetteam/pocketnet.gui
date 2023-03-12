@@ -1,7 +1,6 @@
 import type { IpcRenderer } from 'electron';
 
 import { fsFetchFactory } from './fs-fetch';
-import { proxifiedFetchFactory } from './proxified-fetch';
 
 /** Partial type for LocalVideo */
 type LocalVideo = {
@@ -11,9 +10,7 @@ type LocalVideo = {
 }
 
 export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVideo) {
-    let fsFetch;
-
-    const proxyFetch = proxifiedFetchFactory(ipcRenderer);
+    let fsFetch: (arg0: RequestInfo, arg1: RequestInit) => Response | PromiseLike<Response>;
 
     if (localVideo) {
         fsFetch = fsFetchFactory(ipcRenderer, localVideo.video.internalURL);
@@ -29,10 +26,10 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
         }
 
         if (localVideo) {
-            const isViewsRequest = url.endsWith('views');
+            const isViewsRequest = url!.endsWith('views');
 
             if (isViewsRequest) {
-                return proxyFetch(input, init);
+                return fetch(input, init);
             }
 
             return fsFetch(input, init);
@@ -42,12 +39,8 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
         const proxy = await app.api.get.directpr();
         const info = await proxy.get.info();
 
-        if (info?.info?.tor?.enabled) {
-            return proxyFetch(input, init);
-        }
-
         return fetch(input, init);
     }
 
-    return (input: RequestInfo, init?: RequestInit) => fetchRouter(input, init);
+    return (input: RequestInfo, init?: RequestInit) => fetchRouter(input, init!);
 }

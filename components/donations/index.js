@@ -4,7 +4,7 @@ var donations = (function(){
 
 	var essenses = {};
 
-	
+	var supportOptions, ways;
 
 	var Essense = function(p){
 
@@ -40,29 +40,8 @@ var donations = (function(){
 			}),
 		}
 
-		var currencies = [
-			// {name: 'Mastercard/Visa', code: 'MC/Visa'},
-			{name: 'Bitcoin (BTC)', code: 'BTC'},
-			{name: 'Ethereum (ETH)', code: 'ETH'},
-			{name: 'Tether (USDT) ERC-20', code: 'USDT'},
-			{name: 'Binance Coin (BNB) ERC-20', code: 'BNB'},
-			{name: 'Dogecoin (DOGE)', code: 'DOGE'},
-			{name: 'XPR (XRP)', code: 'XRP'},
-			{name: 'Uniswap (UNI) ERC-20', code: 'UNI'},
-			{name: 'Bitcoin Cash (BCH)', code: 'BCH'},
-			{name: 'Litecoin (LTC)', code: 'LTC'},
-			{name: 'Stellar (XLM)', code: 'XLM'},
-			{name: 'TRON (TRX)', code: 'TRX'},
-			{name: 'DAI (DAI) ERC-20', code: 'DAI'},
-			{name: 'NEO (NEO)', code: 'NEO'},
-			{name: 'Bitcoin SV (BSV)', code: 'BSV'},
-			{name: 'Dash (DASH)', code: 'DASH'},
-			{name: 'Zcash (ZEC)', code: 'ZEC'},
-			{name: 'Basic Attention Token (BAT) ERC-20', code: 'BAT'},
-			{name: 'New Economy Movement (XEM)', code: 'XEM'},
-		];
 
-		var supportOptions = {
+		supportOptions = {
 			subject : new Parameter({
 				name : self.app.localization.e('subject'),
 				placeholder : self.app.localization.e('subject'),
@@ -94,7 +73,7 @@ var donations = (function(){
 
 		}
 
-		var ways = [
+		ways = [
 			{
 				"id": "BTC",
 				"name": "Bitcoin (BTC)",
@@ -454,6 +433,8 @@ var donations = (function(){
 							supportOptions.message.value = '';
 
 							renders.support();
+
+							sitemessage(self.app.localization.e('supportTicketSuccess'))
 
 							successCheck();
 

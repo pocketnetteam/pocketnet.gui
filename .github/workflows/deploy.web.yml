@@ -18,7 +18,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
-          npm run minimize:bastyon
+          npm run minimize:bastyon -- -sha=${{ github.sha }}
         
       - name: Prepare archive
         run: |

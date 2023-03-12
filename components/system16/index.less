@@ -292,7 +292,24 @@
         .clearfirebase{
             cursor: pointer;
         }
+
+        .values{
+            display: flex;
+            align-items: center;
+            >div{
+                margin-right: 2 * @rhythm;
+            }
+
+            .status{
+                color : rgb(var(--color-txt-ac));
+            }
+
+            button{
+                font-size: 0.8em;
+            }
+        }
     }
+    
 
     .managepanel{
         padding : 2 * @rhythm 0;
