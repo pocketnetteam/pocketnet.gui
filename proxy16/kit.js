@@ -482,8 +482,6 @@ function getKit(ipc) {
 
 							if (typeof data.customObfs4 != 'undefined') {
 								settings.tor.customObfs4 = data.customObfs4
-							} else {
-								settings.tor.customObfs4 = null;
 							}
 
 							if (typeof data.enabled2 != 'undefined')
@@ -573,16 +571,24 @@ function getKit(ipc) {
 							const hasPropCustomObfs4 = ('customObfs4' in settings);
 
 							if(hasPropTorEnabled2 || hasPropUseSnowFlake || hasPropCustomObfs4){
-								promises.push(tctx.changeSettings({
+								const newSettings = {};
 
-									enabled2 : settings.torenabled2,
-									useSnowFlake : settings.useSnowFlake,
-									customObfs4 : settings.customObfs4,
+								if ('torenabled2' in settings) {
+									newSettings.enabled2 = settings.torenabled2;
+								}
 
-								}).catch(e => {
+								if ('useSnowFlake' in settings) {
+									newSettings.useSnowFlake = settings.useSnowFlake;
+								}
+
+								if ('customObfs4' in settings) {
+									newSettings.customObfs4 = settings.customObfs4;
+								}
+
+								promises.push(tctx.changeSettings(newSettings).catch(e => {
 									console.error(e)
 
-									return Promise.resolve('firebase.id error')
+									return Promise.resolve('change settings error')
 								}))
 							}
 
