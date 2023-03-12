@@ -62,6 +62,8 @@ class Notifications{
 
         // this.test()
 
+        //this.checkBlock(2126503)
+
         return this;
     }
 
@@ -79,7 +81,9 @@ class Notifications{
                 const {events, block} = await this.generateEvents(item)
       
                 if (events.length){
-                    this.firebase.sendEvents(events, block);
+                    this.logger.w('system', 'info', `Notification: Generated Events.length: ${item.height}-${events.length}`)
+
+                    //this.firebase.sendEvents(events, block);
                 }
 
                 for(const event of events){
@@ -216,19 +220,18 @@ class Notifications{
         }
     }
 
-    addblock(block, node){
+    addblock(block, node, ignore){
         if(!node.version || f.numfromreleasestring(node.version) < 0.21) {
             // this.logger.w('system', 'warn', `Notification: Node version is lower: ${node?.version}`)
             return;
         }
 
-        if (this.height >= block.height) {
+        if (this.height >= block.height && !ignore) {
             this.logger.w('system', 'warn', `Notification: Block height is lower or equal: Current:${this.height} >= Incoming:${block.height}`)
             return;
         }
 
         this.logger.w('system', 'info', `Notification: Block height: Incoming:${block.height}`)
-
 
         const info = this?.firebase?.info();
         this.height = block.height
@@ -251,16 +254,26 @@ class Notifications{
         this.queue.push(notification)
         this.startWorker()
     }
+    ///2126503
+    async checkBlock(number){
+        await this.nodeManager.waitready()
+        var node = this.nodeManager.selectbest();
+        var block = {
+            height : number
+        }
 
-    async test(){
-        setInterval(async ()=>{
-            try {
-                await new Promise(resolve => setTimeout(resolve, 10000))
-                const {events, block} = await this.generateEvents({height: 1934174})
-            }catch (e) {
-                console.log(e)
-            }
-        }, 5000)
+        this.addblock(block, node, true)
+    }
+    //// 2126503
+    async test(height){
+        //setInterval(async ()=>{
+        try {
+            await new Promise(resolve => setTimeout(resolve, 10000))
+            const {events, block} = await this.generateEvents({height: height})
+        }catch (e) {
+            console.log(e)
+        }
+        //}, 5000)
     }
 
     transaction(notification, address){
