@@ -22,9 +22,10 @@ class NotificationStats{
     }
 
     addBlock(block){
+
         this.blocks.unshift(block)
-        if(this.blocks.length > 100)
-            this.blocks.pop()
+
+        if (this.blocks.length > 10) this.blocks.pop()
     }
 }
 
@@ -72,21 +73,20 @@ class Notifications{
         while (item){
             const ts = Date.now();
             try {
+
+                this.logger.w('system', 'info', `Notification: Generate Events: ${item.height}`)
+
                 const {events, block} = await this.generateEvents(item)
       
-                if(events.length){
-
+                if (events.length){
                     this.firebase.sendEvents(events, block);
-                    // for(const event of events) {
-                    //     this.firebase.sendToAll(event.notification, block)
-                    // }
                 }
 
                 for(const event of events){
-                    if(this.statsShort.maxSendPush < event.addresses.length){
+                    if (this.statsShort.maxSendPush < event.addresses.length){
                         this.statsShort.maxSendPush = event.addresses.length
                     }
-                    if(this.statsShort.minSendPush === 0 || this.statsShort.minSendPush > event.addresses.length){
+                    if (this.statsShort.minSendPush === 0 || this.statsShort.minSendPush > event.addresses.length){
                         this.statsShort.minSendPush = event.addresses.length
                     }
                     this.statsShort.totalSendPush += 1;
@@ -209,8 +209,11 @@ class Notifications{
     }
 
     startWorker(){
-        if(!this.workerEnable)
-            this.worker()
+        if(!this.workerEnable) this.worker()
+
+        else{
+            this.logger.w('system', 'warn', `Notification: WorkerEnabled Queue: ${this.queue.length}`)
+        }
     }
 
     addblock(block, node){
@@ -219,10 +222,13 @@ class Notifications{
             return;
         }
 
-        if(this.height >= block.height) {
+        if (this.height >= block.height) {
             this.logger.w('system', 'warn', `Notification: Block height is lower or equal: Current:${this.height} >= Incoming:${block.height}`)
             return;
         }
+
+        this.logger.w('system', 'info', `Notification: Block height: Incoming:${block.height}`)
+
 
         const info = this?.firebase?.info();
         this.height = block.height
