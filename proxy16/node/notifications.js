@@ -79,6 +79,8 @@ class Notifications{
                 const {events, block} = await this.generateEvents(item)
       
                 if (events.length){
+                    this.logger.w('system', 'info', `Notification: Generated Events.length: ${item.height}-${events.length}`)
+
                     this.firebase.sendEvents(events, block);
                 }
 
