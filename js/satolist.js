@@ -30314,6 +30314,15 @@ Platform = function (app, listofnodes) {
                             
                             var iscallsenabled = true///self.app.platform.istest() ? true : false
 
+                            var path = '/'
+
+                            if(!window.cordova && typeof _Electron == 'undefined'){
+                                path = window.pocketnetpublicpath
+                            }
+
+                            if(typeof _Electron != 'undefined') path = './'
+
+                            
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -30328,7 +30337,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
-                                    cssrules='["/css/fontawesome/css/all.min.css"]'
+                                    cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
                             </div>`
