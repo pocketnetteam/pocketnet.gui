@@ -1949,6 +1949,12 @@
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 				
+				if (src.includes('www.youtube.com')) {
+					const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+					src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+				}
+
 				image.src = src
 				image.onload = () => {
 

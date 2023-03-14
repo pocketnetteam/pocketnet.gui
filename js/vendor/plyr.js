@@ -1376,6 +1376,10 @@ typeof navigator === "object" && (function (global, factory) {
       args[_key - 1] = arguments[_key];
     }
 
+    if (input.includes('/shorts/')) {
+      input.replace('/shorts/', '/embed/');
+    }
+
     if (is$1.empty(input)) {
       return input;
     }
@@ -4304,6 +4308,10 @@ typeof navigator === "object" && (function (global, factory) {
         (image.naturalWidth >= minWidth ? resolve : reject)(image);
       };
 
+      if (src?.includes?.('/shorts/')) {
+        src = src.replace('/shorts/', '/embed/');
+      }
+
       Object.assign(image, {
         onload: handler,
         onerror: handler,
@@ -6019,6 +6027,10 @@ typeof navigator === "object" && (function (global, factory) {
     getTitle: function getTitle(videoId) {
       var _this2 = this;
 
+      if (videoId.includes('/shorts/')) {
+        videoId = videoId.replace('/shorts/', '/embed/');
+      }
+
       var url = format(this.config.urls.youtube.api, videoId);
       fetch(url).then(function (data) {
         if (is$1.object(data)) {
@@ -6055,6 +6067,9 @@ typeof navigator === "object" && (function (global, factory) {
         source = player.media.getAttribute(this.config.attributes.embed.id);
       } // Replace the <iframe> with a <div> due to YouTube API issues
 
+      if (source?.includes?.('/shorts/')) {
+        source = source.replace('/shorts/', '/embed/');
+      }
 
       var videoId = parseId$1(source);
       var id = generateId(player.provider); // Get poster, if already set
