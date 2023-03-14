@@ -10299,45 +10299,45 @@
 		}
 
 		const { hostname, pathname, searchParams } = new URL(url);
+		const path = pathname.slice(1);
+		const pathParts = path.split('/');
 
 		if (type === 'peertube') {
 			host_name = hostname;
 
-			if (pathname.includes('stream')) {
+			if (path.includes('stream')) {
 				subType = 'peertubeStream';
-				id = pathname.slice(1).split('/')[1];
+				id = pathParts[1];
 			} else {
 				subType = 'common';
-				id = pathname.slice(1);
+				id = path;
 			}
 		} else if (hostname.includes('youtube.com')) {
 			type = 'youtube';
 			url = `https://youtu.be/${id}`;
 
-			if (pathname.includes('watch')) {
+			if (path.includes('watch')) {
 				id = searchParams.get('v');
-			} else if (pathname.includes('shorts')) {
-				id = pathname.slice(1).split('/')[1];
+			} else if (path.includes('shorts')) {
+				id = pathParts[1];
 			}
 		} else if (hostname.includes('youtu.be')) {
 			type = 'youtube';
-			id = pathname.slice(1);
+			id = path;
 		} else if (hostname.includes('player.vimeo.com')) {
 			type = 'vimeo';
-			id = pathname.slice(1).split('/')[1];
+			id = pathParts[1];
 		} else if (hostname.includes('vimeo.com')) {
-			rawId = pathname.slice(1);
-
-			if (!isNaN(rawId)) {
+			if (!isNaN(path)) {
 				type = 'vimeo';
-				id = rawId;
+				id = path;
 			}
 		} else if (hostname.includes('bitchute.com')) {
 			type = 'bitchute';
-			id = pathname.slice(1).split('/')[1];
+			id = pathParts[1];
 		} else if (hostname.includes('brighteon.com')) {
 			type = 'brighteon';
-			id = pathname.slice(1);
+			id = path;
 		}
 
 		/* else if (hostname.includes('stream.brighteon.com')) {
