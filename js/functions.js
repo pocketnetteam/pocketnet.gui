@@ -10248,7 +10248,7 @@
 		}
 
 		if(v.type == 'vimeo'){
-			return 'https://i.vimeocdn.com/video/'+v.id+'_320.jpg'
+			return 'https://vumbnail.com/'+v.id+'.jpg'
 		}
 
 		if(v.type == 'peertube'){
