@@ -10298,7 +10298,18 @@
 			url = url.replace('peertube:', 'http:');
 		}
 
-		const { hostname, pathname, searchParams } = new URL(url);
+		let hostname, pathname, searchParams;
+
+		try {
+			const urlParts = new URL(url);
+
+			hostname = urlParts.hostname;
+			pathname = urlParts.pathname;
+			searchParams = urlParts.searchParams;
+		} catch (err) {
+			return {};
+		}
+
 		const path = pathname.slice(1);
 		const pathParts = path.split('/');
 
