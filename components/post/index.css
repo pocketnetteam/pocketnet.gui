@@ -387,6 +387,7 @@
   }
   #post.videomainpost.recommendationsenabled .recomandationsFromContent {
     display: flex;
+    flex-direction: column;
     max-width: 390px !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
