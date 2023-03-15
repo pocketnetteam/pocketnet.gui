@@ -9,8 +9,9 @@ var progress = require('request-progress');
 var targz = require('targz');
 const request = require("request");
 const axios = require('axios');
+const arch = require('arch');
 
-var Applications = function(settings, applications = {}, proxy) {
+var Applications = function(settings, applications = {}, proxy, useArch = false) {
     if(!settings) settings = {}
 
     var self = this;
@@ -19,6 +20,11 @@ var Applications = function(settings, applications = {}, proxy) {
     
     
     var platform = process.platform
+
+    if (useArch) {
+        platform += `_${arch()}`
+    }
+
     var meta = applications[platform]
 
     self.getMeta = function() {

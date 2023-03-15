@@ -196,8 +196,9 @@ var system16 = (function(){
 							return true;
 						}
 
-						const bridgeList = v[0].split('\n')
-							.filter(b => b.includes('obfs4'));
+						const bridgeParser = /obfs4\s((?:[0-9]{1,3}\.){3}[0-9]{1,3}:\d+)\s([A-Z0-9]{40})\scert=([A-z0-9+\/]{70})\siat-mode=\d$/gm;
+
+						const bridgeList = v[0].match(bridgeParser);
 
 						if (!bridgeList.length) {
 							sitemessage('Invalid OBFS4 bridges format');

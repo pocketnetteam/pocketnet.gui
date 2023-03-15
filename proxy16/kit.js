@@ -104,21 +104,71 @@ var activenodes = [
 		name : '135.181.196.243',
 		stable : true
 	},
+	
+
 	{
-		host : '65.21.56.203',
+		host : '136.243.145.143',
 		port : 38081,
 		ws : 8087,
-		name : '65.21.56.203',
+		name : '136.243.145.143',
+		stable : true
+	},
+
+	{
+		host : '140.99.153.138',
+		port : 38081,
+		ws : 8087,
+		name : '140.99.153.138',
+		stable : true
+	},
+
+	
+	{
+		host : '172.83.108.41',
+		port : 38081,
+		ws : 8087,
+		name : '172.83.108.41',
+		stable : true
+	},
+
+	{
+		host : '188.18.52.142',
+		port : 38081,
+		ws : 8087,
+		name : '188.18.52.142',
+		stable : true
+	},
+	
+
+	{
+		host : '142.116.40.18',
+		port : 38081,
+		ws : 8087,
+		name : '142.116.40.18',
 		stable : true
 	},
 	{
+		host : '162.246.52.155',
+		port : 38081,
+		ws : 8087,
+		name : '162.246.52.155',
+		stable : true
+	},
+	{
+		host : '172.83.108.40',
+		port : 38081,
+		ws : 8087,
+		name : '172.83.108.40',
+		stable : true
+	},
+	/*{
 		host : '178.217.159.227',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.159.227',
 		stable : true
-	},
-	{
+	},*/
+	/*{
 		host : '178.217.159.221',
 		port : 38081,
 		ws : 8087,
@@ -152,7 +202,7 @@ var activenodes = [
 		ws : 8087,
 		name : '178.217.155.170',
 		stable : true
-	},
+	},*/
 	{
 		host : '93.100.117.108',
 		port : 38081,
@@ -432,8 +482,6 @@ function getKit(ipc) {
 
 							if (typeof data.customObfs4 != 'undefined') {
 								settings.tor.customObfs4 = data.customObfs4
-							} else {
-								settings.tor.customObfs4 = null;
 							}
 
 							if (typeof data.enabled2 != 'undefined')
@@ -523,16 +571,24 @@ function getKit(ipc) {
 							const hasPropCustomObfs4 = ('customObfs4' in settings);
 
 							if(hasPropTorEnabled2 || hasPropUseSnowFlake || hasPropCustomObfs4){
-								promises.push(tctx.changeSettings({
+								const newSettings = {};
 
-									enabled2 : settings.torenabled2,
-									useSnowFlake : settings.useSnowFlake,
-									customObfs4 : settings.customObfs4,
+								if ('torenabled2' in settings) {
+									newSettings.enabled2 = settings.torenabled2;
+								}
 
-								}).catch(e => {
+								if ('useSnowFlake' in settings) {
+									newSettings.useSnowFlake = settings.useSnowFlake;
+								}
+
+								if ('customObfs4' in settings) {
+									newSettings.customObfs4 = settings.customObfs4;
+								}
+
+								promises.push(tctx.changeSettings(newSettings).catch(e => {
 									console.error(e)
 
-									return Promise.resolve('firebase.id error')
+									return Promise.resolve('change settings error')
 								}))
 							}
 

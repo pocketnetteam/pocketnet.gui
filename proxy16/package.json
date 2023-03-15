@@ -18,6 +18,7 @@
     "author": "Max Grishkov",
     "license": "ISC",
     "dependencies": {
+        "arch": "^2.2.0",
         "axios": "^0.21.1",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
@@ -36,7 +37,7 @@
         "md5": "^2.3.0",
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
-        "node-fetch": "^2.6.9",
+        "node-fetch": "^3.3.1",
         "nodejs-base64": "^1.0.3",
         "nodemon": "^2.0.7",
         "random": "^2.2.0",

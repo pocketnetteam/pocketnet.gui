@@ -16,6 +16,7 @@
     </div>
 </div>
 
+<% if(system.tor.enabled2 !== 'neveruse') {%>
 <div class="setting togglebutton">
     <div class="settingTable table">
         <div class="label">
@@ -33,6 +34,7 @@
         <% } %>
     </div>
 </div>
+<% } %>
 
 <% if(!_.isEmpty(changes)) {%>
 
