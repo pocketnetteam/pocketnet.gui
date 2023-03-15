@@ -2482,6 +2482,10 @@ _l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
 _l.boost_c67 = 'Average cost of ad is $1 '
 _l.boost_c68 = 'CPM = $. 28'
 _l.boost_c69 = '28 cents on average is a very low CPM'
+_l.boost_c70 = 'Bastyon is a new, fast-growing decentralized social network with millions of users and super-profitable advertising'
+_l.boost_c71 = 'Distribution by Country'
+_l.boost_c72 = 'Employment Status'
+_l.boost_c73 = 'Audience'
 
 
 
