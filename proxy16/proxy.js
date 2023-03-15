@@ -40,7 +40,7 @@ process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
+var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var self = this;
 
 		self.test = test
@@ -63,7 +63,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 	slidemodule.init()
 	var notifications = new Notifications()
 
-	var torapplications = new TorControl(settings.tor, self, ipc)
+	var torapplications = new TorControl(settings.tor, self)
 
 	var transports = new Transports();
 
