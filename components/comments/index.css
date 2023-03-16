@@ -325,19 +325,19 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
-#comments .list .comment.hiddenBlockedUserComment .commentimages,
-#comments .list .comment.hiddenComment .commentimages,
-#comments .list .comment.hiddenBlockedUserComment .commentmessage,
-#comments .list .comment.hiddenComment .commentmessage {
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
+#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage,
+#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenBlockedUserComment .hiddenCommentLabel,
-#comments .list .comment.hiddenComment .hiddenCommentLabel {
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .hiddenCommentLabel,
+#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .hiddenCommentLabel {
   display: block;
   color: rgb(var(--neutral-grad-2));
 }
-#comments .list .comment.hiddenBlockedUserComment .showBlockedUserCommentWrapper,
-#comments .list .comment.hiddenComment .showBlockedUserCommentWrapper {
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .showBlockedUserCommentWrapper,
+#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .showBlockedUserCommentWrapper {
   display: block;
 }
 #comments .list .comment .hiddenCommentLabel .ghost {
