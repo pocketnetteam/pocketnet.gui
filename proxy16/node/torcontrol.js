@@ -61,7 +61,7 @@ class TorControl {
     timeoutIntervalId = null;
     timeoutCounter = null;
 
-    constructor(settings, proxy/*, ipc*/) {
+    constructor(settings, proxy) {
         this.settings = {...settings};
 
         this.application = new Applications(settings, applicationRepository, proxy, true)
