@@ -1,7 +1,7 @@
 var Path = require('path');
 var f = require('./functions');
 const electron = require('electron')
-const kit = require('./kit.js')(electron.ipcMain);
+const kit = require('./kit.js');
 const { dialog } = require('electron');
 
 var WssDummy = function(wc){
