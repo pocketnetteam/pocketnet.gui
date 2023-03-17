@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -229,6 +229,9 @@ _l.uabout = "About myself";
 _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
+
+_l.settings_save = "Save changes";
+_l.settings_discard = "Discard changes";
 
 //statistic
 
@@ -638,7 +641,7 @@ _l.e13093 = "Please choose donation way"
 _l.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 _l.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
 _l.e13096 = "Please fill amount of donation"
-_l.e130961 = "How much do you want to donate?"
+_l.e130961 = "How much PKOIN do you want to send?"
 _l.e130962 = "Available balance"
 
 _l.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
@@ -2319,6 +2322,9 @@ _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After t
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
+_l.torHintStateEnabled = "Tor network state - enabled"
+_l.torHintStateDisabled = "Tor network state - disabled"
+_l.torHintStateLoading = "Tor network state - loading"
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
@@ -2439,7 +2445,7 @@ _l.boost_c31 = 'Where to buy PKOIN?'
 _l.boost_c32 = 'PKOIN can be purchased on the following sites.'
 _l.boost_c33 = '- here you can buy PKOIN for other cryptocurrencies.'
 _l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
-_l.boost_c34 = 'Buying PKOIN from hand to hand on Bastyon'
+_l.boost_c34 = 'Buying PKOIN peer-to-peer on Bastyon'
 _l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
 _l.boost_c36 = 'How do I start advertising?'
 _l.boost_c37 = 'Launching ads on Bastion is very simple. To do this, you need:'
@@ -2455,7 +2461,7 @@ _l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on
 _l.reach = 'Reach'
 _l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com' 
 
-_l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
+_l.reachDescription = 'Average cost of thousand impressions (CPM) is 28 cents'
 _l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
 _l.boost_c45 = 'Incredibly Low CPM'
 _l.boost_c46 = 'Cost per Thousand Impressions is 28 cents!'
@@ -2482,6 +2488,29 @@ _l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
 _l.boost_c67 = 'Average cost of ad is $1 '
 _l.boost_c68 = 'CPM = $. 28'
 _l.boost_c69 = '28 cents on average is a very low CPM'
+
+
+
+_l.howtobuy_c1 = 'How To Buy'
+_l.howtobuy_c2 = 'PKOIN'
+_l.howtobuy_c3 = 'Cryptocurrency Exchanges'
+_l.howtobuy_c4 = 'Buying For A Visa/Mastercard'
+_l.howtobuy_c5 = 'Buying PKOIN with cryptocurrency'
+_l.howtobuy_c6 = 'Buying PKOIN peer-to-peer on Bastyon'
+_l.howtobuy_c7 = 'Buying with cards in Russia/Ukraine/Belarus'
+_l.howtobuy_c8 = 'Next, select the appropriate profile offering the purchase/sale of PKOIN. Be careful when buying with your hands. Look at the reviews and do not take large amounts.'
+_l.howtobuy_c9 = 'Next, go to the chat and discuss the terms of the exchange'
+_l.howtobuy_c10 = 'Find peer-to-peer Sellers'
+_l.howtobuy_c11 = '(except Russian Federation cards)'
+_l.howtobuy_c12 = ''
+_l.howtobuy_c13 = ''
+_l.howtobuy_c14 = ''
+_l.howtobuy_c15 = ''
+_l.howtobuy_c16 = ''
+_l.howtobuy_c17 = ''
+_l.howtobuy_c18 = ''
+_l.howtobuy_c19 = ''
+_l.howtobuy_c20 = ''
 
 
 
@@ -2517,9 +2546,9 @@ _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 
+_l.copybuiltfrom = "Application build version copied"
 
-
-_l.endedCall = "Call ended",
+_l.endedCall = "Call ended"
 _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";
@@ -2530,6 +2559,32 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
-_l.anotherSupport = "Support Bastyon in another way";
 _l.txtNotLinked = "Transaction will not be linked to your profile";
+_l.torusing_neveruse = "Never";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Always";
+
+_l.anotherSupport = "Support Bastyon in another way";
+_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
+
+_l.torusing_directProxy = "Built-in proxy";
+_l.torusing_notdirectProxy = "External proxy";
+
+_l.torusing_changedirectProxy = "Change to External proxy";
+_l.torusing_changenotdirectProxy = "Change to Built-in proxy";
+
+
+_l.torusing_disclaimer = "This function only works when using the built-in proxy.";
+_l.torusing_Networking = "Networking";
+_l.torusing_proxyCaption = "Choosing a proxy server";
+_l.torusing_useTor = "Use Tor";
+_l.torusing_useSnowflakeBridge = "Use SnowFlake";
+
+_l.torusing_stat_currentbytesLength = "Current, direct"
+_l.torusing_stat_torbytesLength = "Current, TOR"
+_l.torusing_stat_directBytes = "Total, current"
+_l.torusing_stat_totalTorBytes = "Total, TOR"
+_l.torusing_settings = "TOR settings"
+_l.torusing_stats = "Networking statistics"
+_l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 

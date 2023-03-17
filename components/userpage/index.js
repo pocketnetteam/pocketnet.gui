@@ -796,8 +796,11 @@ var userpage = (function(){
 							})
 						})
 
-	
-	
+						_p.el.find('.app-builtfrom').on('click', () => {
+							navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
+							sitemessage(self.app.localization.e('copybuiltfrom'));
+						});
+
 						if (clbk)
 							clbk();
 					})

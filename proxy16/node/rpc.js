@@ -182,7 +182,7 @@ function rpc(request, callback, obj) {
 
         return
     }
-    
+
     var signal = null
 
     ///need to test

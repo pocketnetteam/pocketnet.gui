@@ -220,7 +220,6 @@
 }
 #pkoin .boostinfodata {
   text-align: center;
-  margin-top: 1.5em;
   border-radius: 12px;
   background: rgb(var(--background-secondary-theme));
   border: 1px solid rgb(var(--neutral-grad-0));
@@ -244,14 +243,15 @@
 }
 .wnd.pkoinwindow .wndinner.pkoin,
 .wnd.pkoinwindow .wndinner.boost {
-  max-width: 370px;
   box-shadow: none;
 }
 .wnd.pkoinwindow .wndinner.pkoin {
+  max-width: 370px;
   max-height: 620px;
 }
 .wnd.pkoinwindow .wndinner.boost {
-  max-height: 500px;
+  max-width: 480px;
+  max-height: 640px;
 }
 .wnd.pkoinwindow .wndinner .wndheader {
   display: none;

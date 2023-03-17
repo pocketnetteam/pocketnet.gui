@@ -106,23 +106,28 @@ var vars = {
 	test : {
 		proxypath : '"https://test.pocketnet.app:8899/"',
 		domain : _meta[args.project].turl,
+		packageVersion: package.version,
 		test : '<script>window.testpocketnet = true;</script>',
 		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
 		project : args.project,
 		store : args.store || false,
-		name : _meta[args.project].name
+		name : _meta[args.project].name,
+		sha : args.sha || false,
+		run : args.run || false,
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
 		domain : _meta[args.project].url,
+		packageVersion: package.version,
 		test : '',
 		globaltest : '',
 		path : args.path,
 		project : args.project,
 		store : args.store || false,
-		name : _meta[args.project].name
-
+		name : _meta[args.project].name,
+		sha : args.sha || false,
+		run : args.run || false,
 	}
 }
 
@@ -897,6 +902,22 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.pocketnetstore = ' + VARS.store + ';</script>\n';
 							}
 							
+							if(VARS.sha){
+								const isHex = /^[0-9A-Fa-f]+$/;
+
+								if (isHex.test(VARS.sha)) {
+									const shaShort = VARS.sha.slice(0, 7);
+
+									let builtFrom = shaShort;
+
+									if (VARS.run) {
+										builtFrom += `-${VARS.run}`;
+									}
+
+									JSENV += '<script>window.builtfromsha = "' + builtFrom + '";</script>\n';
+								}
+							}
+
 
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>\n';
 							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>\n';

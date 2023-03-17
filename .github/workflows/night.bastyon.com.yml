@@ -51,7 +51,7 @@ jobs:
           tar xzf repo.tgz
           rm -rf repo.tgz
           npm i
-          npm run minimize:bastyon
+          npm run minimize:bastyon -- -sha=${{ github.sha }}
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
       - name: Reset nginx cache
@@ -77,7 +77,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -118,7 +118,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
@@ -149,7 +149,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
@@ -185,7 +185,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova
+          npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
       - name: Prepare configuration
