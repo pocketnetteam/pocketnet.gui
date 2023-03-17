@@ -409,9 +409,6 @@
 #donations .backnext .next span:hover {
   color: rgb(var(--color-txt-ac));
 }
-#donations .xmraddress .addressline {
-  padding: 3em;
-}
 #donations .address {
   max-width: 640px;
   margin: 0 auto;
@@ -468,10 +465,21 @@
   margin-top: 1em;
   text-align: center;
 }
+#donations .address .warning {
+  margin: 1em 0;
+  text-align: center;
+}
 #donations .address .addressline {
   background: rgb(var(--background-total-theme));
-  padding: 3em 0;
+  padding: 3em 1.5em;
   text-align: center;
+}
+#donations .address .addressline b {
+  white-space: pre-line;
+  line-break: loose;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 #donations .address .qrcode {
   margin-top: 1em;
@@ -574,12 +582,6 @@
   }
   #donations .backnext > div.nextwrapper {
     text-align: right;
-  }
-  #donations .xmraddress .addressline {
-    padding: 3em 0;
-  }
-  #donations .xmraddress .addressline div {
-    font-size: 0.8em;
   }
   #donations .address {
     padding: 1em 1em;

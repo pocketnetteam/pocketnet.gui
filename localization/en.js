@@ -2563,6 +2563,7 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
+_l.txtNotLinked = "Transaction will not be linked to your profile";
 _l.torusing_neveruse = "Never";
 _l.torusing_auto = "Auto";
 _l.torusing_always = "Always";

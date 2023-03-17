@@ -525,11 +525,6 @@
 		}
 	}
 
-	.xmraddress{
-		.addressline{
-			padding : 6 * @rhythm;
-		}
-	}
 
 	.address{
 
@@ -595,10 +590,23 @@
 			text-align: center;
 		}
 
+		.warning{
+			margin: 2 * @rhythm 0;
+			text-align: center;
+		}
+
 		.addressline{
 			background: rgb(var(--background-total-theme));
-			padding : 6 * @rhythm 0;
+			padding : 6 * @rhythm 3 * @rhythm;
 			text-align: center;
+
+			b{
+				white-space: pre-line;
+				line-break: loose;
+				overflow-wrap: break-word;
+				word-wrap: break-word;
+				word-break: break-word;
+			}
 		}
 
 		.qrcode{
@@ -748,18 +756,6 @@
 			}
 		}
 
-	}
-
-	.xmraddress{
-		.addressline{
-			padding : 6 * @rhythm 0;
-			.av{
-
-			}
-			div{
-				font-size: 0.8em;
-			}
-		}
 	}
 
 	.address{
