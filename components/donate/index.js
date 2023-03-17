@@ -12,7 +12,34 @@ var donate = (function(){
 
 		
 		var actions = {
+			send : function(amount, clbk){
 
+				globalpreloader(true)
+
+				self.app.platform.sdk.wallet.send(ed.receiver, null, amount, (err, d) => {
+
+					setTimeout(() => {
+						globalpreloader(false)
+
+						if(err){
+							sitemessage(err.text || err)
+						}
+	
+						else{
+
+							sitemessage(self.app.localization.e('wssuccessfully'))
+	
+							successCheck()
+	
+							if(clbk) clbk(d)
+						}
+					}, 300)
+
+					
+
+				})
+
+			}
 		}
 
 		var events = {
@@ -36,12 +63,34 @@ var donate = (function(){
 			
 			el.c.find('.apply').on('click', function(){
 
-				var val = input.get();
+				var val = Number(input.get() || '0');
 
-					ed.clbk(val)
+				if(ed.min){
+					if (val < ed.min){
+						sitemessage(self.app.localization.e('minPkoin', 0.5))
+                        return;
+					}
+				}
 
-				self.closeContainer()
-				
+				if (ed.send){
+					actions.send(val, (txid) => {
+
+						if (ed.clbk){
+							ed.clbk(val, txid)
+						}
+
+						self.closeContainer()
+					})
+				}
+				else{
+
+					if (ed.clbk){
+						ed.clbk(val)
+					}
+
+					self.closeContainer()
+				}
+
 			})
 		}
 

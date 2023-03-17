@@ -28,7 +28,7 @@ var Exchanges = function(){
 
     self.api = {
         price : {
-            bilaxy : function(){
+            /*bilaxy : function(){
 
                 return self.transports.axios.get(apis.bilaxy).then(function(response) {
 

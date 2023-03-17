@@ -11414,14 +11414,13 @@ edjsHTML = function() {
         embed: function(e) {
             var t = e.data;
 
-
             switch (t.service) {
 
 				case "vimeo":
-                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
+                    return '<div class="js-player-ini" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				case "youtube":
-					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
+					return '<div class="js-player-ini" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
 					//console.log(t)
