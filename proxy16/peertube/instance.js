@@ -153,7 +153,7 @@ var instance = function (host, ip, Roy) {
 		return Roy.parent.transports.fetch(`http://${host}${url}`, {
 			method: p.type || 'get',
 			timeout,
-		}).then((res) => res.json()).then((result) => {
+		}).then(async (result) => {
 
 			const meta = {
 				code: 200,
@@ -163,8 +163,16 @@ var instance = function (host, ip, Roy) {
 
 			statistic.add(meta);
 
+			let resultStr;
+
+			try {
+				resultStr = JSON.parse(await result.text());
+			} catch (err) {
+				resultStr = {};
+			}
+
 			return Promise.resolve({
-				data: result || {},
+				data: resultStr,
 				meta,
 				host,
 			});

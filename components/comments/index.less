@@ -421,18 +421,22 @@
 
 			&.hiddenBlockedUserComment,
 			&.hiddenComment{
-				.commentimages,
-				.commentmessage{
-					display: none;
-				}
+				>.commentPaddingWrapper >.commentWrapper >.commentBody >.cbodyWrapper{
 
-				.hiddenCommentLabel{
-					display: block;
-					color : rgb(var(--neutral-grad-2));
-				}
+					.commentimages,
+					.commentmessage{
+						display: none;
+					}
+	
+					.hiddenCommentLabel{
+						display: block;
+						color : rgb(var(--neutral-grad-2));
+					}
+	
+					.showBlockedUserCommentWrapper{
+						display: block;
+					}
 
-				.showBlockedUserCommentWrapper{
-					display: block;
 				}
 			} 
 

@@ -3,7 +3,7 @@ global.WRITE_LOGS = true
 global.USE_TRUST_NODES_ONLY = false
 
 
-var kit = require('./kit.js')();
+var kit = require('./kit.js');
 var f = require('./functions');
 var readline = require('readline');
 
