@@ -1,12 +1,8 @@
 'use strict';
 
 const request = require('request');
-let nodeFetch = import('node-fetch');
-global.fetch = async (...args) => {
-    if (nodeFetch instanceof Promise) {
-        nodeFetch = (await import('node-fetch')).default;
-    }
-
+const nodeFetch = require('node-fetch');
+global.fetch = (...args) => {
     try {
         return nodeFetch(...args);
     } catch (err) {

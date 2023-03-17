@@ -197,6 +197,12 @@ var donations = (function(){
 				"action": function(s){actions.ways.openAddress(s)}
 			},
 			{
+				"id": "XMR",
+				"name": "Monero (XMR)",
+				"qrname": "XMR",
+				"action": function(s){actions.ways.openAddressStatic(s, "48sfLqSiTZhhbfiUELdfTefrAZ2EDjaKSMnWvPiMc4kWMwCUbPFRJwxMPJVL72MGVqC1jzMbUeGXhRGS3abcnoYbUcKKPDD")}
+			},
+			{
 				"id": "other",
 				"name": self.app.localization.e('anotherSupport'),
 				"qrname": "XEM",
@@ -256,6 +262,10 @@ var donations = (function(){
 				})
 			},	
 			ways : {
+				openAddressStatic : function(curobj, address){
+					renders.addressStatic(curobj.id, address, curobj);
+				},
+
 				openAddress : function(curobj){
 					
 					var createNewAddress = function(cur){
@@ -579,6 +589,48 @@ var donations = (function(){
 						clbk(p.el)
 				})
 			},
+			addressStatic : function(currency, address, curobj, info, clbk){
+				self.shell({
+					name :  'addressStatic',
+					inner : html,
+					el : el.process.find('.step'),
+					data : {
+						curobj : curobj,
+						address : address,
+						currency : currency,
+						info : info
+					},
+
+				}, function(p){
+
+					p.el.find('.back').on('click', function(){
+						p.el.html('')
+
+						setTimeout(function(){
+							renders.ways()
+						}, 100)
+
+						if(autoupdate){
+
+							clearInterval(autoupdate)
+
+							autoupdate = null
+						}
+						
+					})
+
+					p.el.on('click', '.copyaddress', function(){
+
+						copyText(p.el.find('.aw'))
+
+						sitemessage(self.app.localization.e('waddresswascop'))
+
+					})
+
+					if (clbk)
+						clbk(p.el)
+				})
+			},	
 			address : function(currency, address, curobj, info, clbk){
 				self.shell({
 					name :  'address',

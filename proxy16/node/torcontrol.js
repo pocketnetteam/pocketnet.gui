@@ -61,11 +61,12 @@ class TorControl {
     timeoutIntervalId = null;
     timeoutCounter = null;
 
-    constructor(settings, proxy/*, ipc*/) {
+    constructor(settings, proxy) {
         this.settings = {...settings};
 
         this.application = new Applications(settings, applicationRepository, proxy, true)
 
+        this.needinstall();
     }
 
     isStarted = () => (this.state.status === 'started');
@@ -154,7 +155,9 @@ class TorControl {
 
         var existsBin = this.helpers.checkPath(this.getpath());
 
-        return existsBin.exists ? false : true
+        this.isInstalled = existsBin.exists;
+
+        return !existsBin.exists;
     }
 
     folders = async() => {
@@ -284,6 +287,8 @@ class TorControl {
             await fs.chmod(this.getpath(), 0o755)
 
             this.state.status = "stopped";
+
+            this.needinstall();
 
             return true;
 
@@ -511,7 +516,7 @@ class TorControl {
             },
             binPath : path.join(this.getpath()),
             dataPath : this.getsettingspath(),
-            installed : !this.needinstall()
+            installed : this.isInstalled,
         }
     }
 
