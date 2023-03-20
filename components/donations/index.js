@@ -75,6 +75,12 @@ var donations = (function(){
 
 		ways = [
 			{
+				"id": "PKOIN",
+				"name": "Pocketcoin (PKOIN)",
+				"qrname": "PKOIN",
+				"action": function(s){actions.ways.openAddress(s)}
+			},
+			{
 				"id": "BTC",
 				"name": "Bitcoin (BTC)",
 				"qrname": "BTC",
