@@ -1692,6 +1692,8 @@ var share = (function(){
 								actions.addimage(images)
 
 								tstorage = []
+
+								renders.postline();
 							
 							}
 						})
@@ -2127,6 +2129,8 @@ var share = (function(){
 						var r = $(this).closest('.imageContainer').attr('value');
 
 						actions.removeImage(r)
+
+						renders.postline();
 					})
 
 					p.el.find('.edit').on('click', function(){
