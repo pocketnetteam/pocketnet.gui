@@ -2380,3 +2380,5 @@ _l.torusing_stat_totalTorBytes = "Всего, вызовы TOR"
 _l.torusing_settings = "Настройки TOR"
 _l.torusing_stats = "Статистика запросов"
 _l.torusing_proxychangequestion = "Вы уверены, что хотите изменить прокси?"
+
+_l.listeners = "Прослушали";

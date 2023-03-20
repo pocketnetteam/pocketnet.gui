@@ -2592,3 +2592,4 @@ _l.torusing_settings = "TOR settings"
 _l.torusing_stats = "Networking statistics"
 _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 
+_l.listeners = "Listeners";
