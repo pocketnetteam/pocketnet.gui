@@ -10102,9 +10102,16 @@
 					update_elem: function(event){
 						if( event.target == dragout.current_elem ) return
 						if( dragout.current_elem ) {
-							$(dragout.current_elem).parents().andSelf().each(function(){
-								if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
-							})
+
+							var pr = $(dragout.current_elem).parents()
+
+							if (pr && pr.andSelf){
+								pr.andSelf().each(function(){
+									if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
+								})
+							}
+
+							
 						}
 						dragout.current_elem = event.target
 						event.stopPropagation()
