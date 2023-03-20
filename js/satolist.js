@@ -3789,7 +3789,7 @@ Platform = function (app, listofnodes) {
                                     }
 
                                     p.value = value;
-                                    p.send = (p, clbk) => {
+                                    p.send = (clbk) => {
                                         globalpreloader(true)
 
                                         return new Promise((resolve, reject) => {

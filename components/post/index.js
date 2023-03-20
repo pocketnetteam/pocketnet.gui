@@ -1766,6 +1766,15 @@ var post = (function () {
 								.catch(e => {
 									if (e) console.error(e);
 								});
+
+							const
+								wrp = document.querySelector(".videoWrapper"),
+								animation = document.createElement("div");
+
+							animation.classList.add("animation");
+							animation.style.display = "none";
+
+							wrp.append(animation);
 							
 							if(clbk) clbk();
 						} else {
