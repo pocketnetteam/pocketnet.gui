@@ -250,8 +250,8 @@ var comments = (function(){
 		
 								var result = Boolean(value);
 
-								if (value < 0.5){
-									sitemessage(self.app.localization.e('minPkoin', 0.5))
+								if (value < 0.1){
+									sitemessage(self.app.localization.e('minPkoin', 0.1))
 									return;
 								}
 					
