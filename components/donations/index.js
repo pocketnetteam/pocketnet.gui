@@ -75,12 +75,6 @@ var donations = (function(){
 
 		ways = [
 			{
-				"id": "PKOIN",
-				"name": "Pocketcoin (PKOIN)",
-				"qrname": "PKOIN",
-				"action": function(s){actions.ways.openAddress(s)}
-			},
-			{
 				"id": "BTC",
 				"name": "Bitcoin (BTC)",
 				"qrname": "BTC",
@@ -209,6 +203,12 @@ var donations = (function(){
 				"action": function(s){actions.ways.openAddressStatic(s, "48sfLqSiTZhhbfiUELdfTefrAZ2EDjaKSMnWvPiMc4kWMwCUbPFRJwxMPJVL72MGVqC1jzMbUeGXhRGS3abcnoYbUcKKPDD")}
 			},
 			{
+				"id": "PKOIN",
+				"name": "Pocketcoin (PKOIN)",
+				"qrname": "PKOIN",
+				"action": function(s){actions.ways.openAddressPkoin(s, "PMycE6uGqwAzwqhdajmj3pDgTcSeQNyiy4")}
+			},
+			{
 				"id": "other",
 				"name": self.app.localization.e('anotherSupport'),
 				"qrname": "XEM",
@@ -268,7 +268,24 @@ var donations = (function(){
 				})
 			},	
 			ways : {
+
+				openAddressPkoin : function(curobj, address){
+
+					self.nav.api.load({
+						open: true,
+						href: 'wallet',
+						history: true,
+						inWnd: true,
+	
+						essenseData: {
+							simple: true,
+							action: 'send',
+							address: address
+						},
+					});
+				},
 				openAddressStatic : function(curobj, address){
+
 					renders.addressStatic(curobj.id, address, curobj);
 				},
 
