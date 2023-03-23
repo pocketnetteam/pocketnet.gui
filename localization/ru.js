@@ -2337,6 +2337,11 @@ _l.goToDiagnose = "Перейти на страницу диагностики";
 _l.connectingTo = "Проверка";
 
 _l.earnings = "Всего заработано";
+_l.earnings2 = "Заработок";
+
+_l.amountLottery = "Лотерея";
+_l.amountDonation = "Пожертвования";
+_l.amountTransfer = "Переводы";
 
 _l.copybuiltfrom = "Номер сборки скопирован"
 

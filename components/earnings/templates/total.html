@@ -1,0 +1,57 @@
+<div class="totalItem" item="<%-item.id%>">
+
+	<div class="canvasWrapper">
+
+		<canvas class="chart" id="chart<%-item.id%>" height="250"></canvas>
+
+		<div class="infoWrapper">
+			<div class="infoWrapperTable table">
+				<div class="infoWrapperCell">
+
+					<div class="label">
+						<span>
+							<%-item.label%>
+						</span>
+					</div>
+
+					<div class="balance">
+						<div class="balanceWrapper">
+							<%= app.platform.mp.coinwithsmall(item.balance) %>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	
+
+	<% var t = (item, 'move.positive.summary') || 0 + deep(item, 'move.negative.summary') || 0 %>
+
+	<% if(t > 0) {%>
+
+		<div class="summary">
+			<div class="line">
+				<div class="positive" style="width : <%-(deep(item, 'move.positive.summary') || 0) / (t) * 100%>%">
+				</div>
+
+				<div class="negative" style="width : <%-(deep(item, 'move.negative.summary') || 0) / (t) * 100%>%">
+
+				</div>
+			</div>
+
+			<div class="numbers">
+				<div class="positive">
+					<span>+<%-(deep(item, 'move.positive.summary') || 0)%></span>
+				</div>
+
+				<div class="negative">
+					<span><%-(deep(item, 'move.negative.summary'))%></span>
+				</div>
+			</div>
+		</div>
+	<% } %>
+	
+</div>

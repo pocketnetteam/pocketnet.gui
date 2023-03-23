@@ -2549,6 +2549,12 @@ _l.videoServerVideo = "Video Info";
 _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
+_l.earnings2 = "Total earnings";
+
+_l.amountLottery = "Lottery";
+_l.amountDonation = "Donations";
+_l.amountTransfer = "Transfers";
+
 
 _l.copybuiltfrom = "Application build version copied"
 

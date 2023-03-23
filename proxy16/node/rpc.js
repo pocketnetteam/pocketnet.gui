@@ -133,6 +133,9 @@ const publics = {
     gettopaccounts: true,
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
+
+    getaccountearning : true
+
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -499,6 +502,9 @@ RpcClient.callspec = {
     stop: '',
     dumpwallet: 'str',
     importwallet: 'str',
+
+    getaccountearning : 'str int int'
+
 };
 
 var slice = function(arr, start, end) {

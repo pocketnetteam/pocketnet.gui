@@ -1,0 +1,438 @@
+@import "../../css/__cssvar";
+
+#earnings {
+	.earnings {
+
+		background: rgb(var(--background-secondary-theme));
+		min-height: 600px;
+		overflow : hidden;
+		position: relative;
+		padding: @rhythm * 4 @rhythm * 3;
+
+		.caption{
+			max-width: 700px;
+			font-size: 2em;
+			font-weight: 100;
+			padding-left: @rhythm * 3;
+		}
+	
+		.content{
+			margin-top: @rhythm * 3;
+	
+			.tttlforerror{
+				position: absolute;
+				font-size: 0.8em;
+				font-weight: 100;
+				left : 0;
+				right: 0;
+				top : 0;
+				bottom : 0;
+				background: rgba(var(--background-secondary-theme), 0.95);
+				display: none;
+	
+				&.active{
+					display: block;
+				}
+	
+				.table{
+					>div{
+						vertical-align: middle;
+						text-align: center;
+						color : rgb(var(--neutral-grad-4));
+					}
+				}
+			}
+	
+			.totalItem{
+				padding :0 2 * @rhythm;
+				padding-bottom: @rhythm;
+				float: left;
+				width: 33%;
+	
+				.canvasWrapper{
+					width: 100%;
+					position: relative;
+	
+					canvas{
+						width: 100%;
+						height: 100%;
+					}
+	
+					.infoWrapper{
+						position : absolute;
+						left: 0;
+						right: 0;
+						top: 0;
+						bottom: 0;
+	
+					}
+	
+					.infoWrapperTable{
+						>div{
+							vertical-align: middle;
+							text-align: center;
+							padding : 3 * @rhythm;
+						}
+					}
+				}
+	
+			}
+	
+			.balance{
+				.balanceWrapper{
+					font-size: 1.6em;
+					color : rgb(var(--color-txt-gray));
+	
+					.table{
+						margin : 0 auto;
+					}
+				}
+			}
+	
+			.summary{
+				margin-top: @rhythm;
+				.line{
+					width: 100%;
+					height: 2px;
+	
+					>div{
+						float: left;
+						height: 100%;
+					}
+	
+					.positive{
+						background: rgb(var(--color-good));
+					}
+	
+					.negative{
+						background: rgb(var(--color-bad));
+					}
+				}
+	
+				.numbers{
+					>div{
+						width: 50%;
+						float: left;
+						height: 100%;
+	
+						span{
+							font-size: 0.8em;
+						}
+					}
+	
+					.positive{
+						color: rgb(var(--color-good));
+					}
+	
+					.negative{
+						color: rgb(var(--color-bad));
+						text-align: right;
+					}
+				}
+			}
+	
+			.label{
+				padding : @rhythm 0;
+	
+				span{
+					font-size: 0.7em;
+					font-weight: 700;
+				}
+			}
+	
+	
+		}
+
+	
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#earnings{
+		min-height: none;
+	
+	
+		.earnings{
+			
+			background: rgb(var(--background-secondary-theme));
+			padding : 0;
+			overflow : hidden;
+
+			.content{
+	
+				.totalItem{
+					padding : 0 2 * @rhythm;
+					padding-bottom: @rhythm;
+					float: left;
+					width: 100%;
+		
+		
+		
+					.canvasWrapper{
+						width: 100%;
+						position: relative;
+		
+						canvas{
+							width: 100%;
+							height: 100%;
+						}
+		
+						.infoWrapper{
+							position : absolute;
+							left: 0;
+							right: 0;
+							top: 0;
+							bottom: 0;
+		
+						}
+		
+						.infoWrapperTable{
+							>div{
+								vertical-align: middle;
+								text-align: center;
+								padding : 3 * @rhythm;
+							}
+						}
+					}
+		
+				}
+
+			}
+	
+		}
+
+		.buypkoin{
+			padding : @rhythm;
+	
+			.ways{
+				display : flex;
+				align-items: flex-start;
+				flex-wrap: wrap;
+	
+				>div{
+					flex-shrink: 1;
+					  flex-basis: content;
+					flex-grow: 1;
+					padding-bottom: 6 * @rhythm;
+				}
+			}
+			
+			.row{
+				padding : 0;
+	
+				.button{
+					min-width: 310px;
+				}
+	
+				&.flx{
+					justify-content: center;
+					>div{
+						width: 12.5%;
+						padding : @rhythm @rhythm;
+						text-align: center;
+					}
+				}
+	
+				&.forfiats{
+					justify-content: center;
+	
+					>div{
+						width: 25%;
+					}
+				}
+	
+				&.one{
+					display: block;
+					padding : @rhythm 0;
+					margin-bottom: 3 * @rhythm;
+	
+					.wrp{
+						padding : 4 * @rhythm 2 * @rhythm;
+					}
+	
+					.flxbtn{
+						flex-direction: column;
+						text-align: center;
+						justify-content: center;
+	
+						div{
+							margin-right: 0;
+						}
+					}
+	
+					.flxbtnlbk{
+						margin-top : 2 * @rhythm;
+					}
+				}
+	
+				&.table{
+					display: block;
+					text-align: center;
+	
+					>div{
+						display: block;
+					}
+	
+					.reciever{
+						margin : 0 auto;
+					}
+				}
+				
+			}
+	
+		}
+	
+		.htls,
+		.crowdfunding,
+		.deposit,
+		.send{
+	
+			border :0;
+	
+			.linkForDepositReady,
+			.linkForDeposit,
+			.addressForDeposit,
+			.action{
+				margin-top: @rhythm;
+				padding :  @rhythm 0;
+			}
+	
+			.linkparams{
+				padding : 2 * @rhythm 0;
+	
+				.value{
+					font-size: 0.9em;
+				}
+	
+	
+			}
+	
+			button{
+				min-width : 0;
+				width: 100%;
+				max-width: none!important;
+			}
+	
+			.row{
+				display: block;
+	
+				>div{
+					display: block;
+					width: 100%;
+	
+					&.changer{
+						display: none;
+	
+					}
+	
+					&.address{
+						width: 100%;
+					}
+	
+					&.label{
+						width: 100%;
+					}
+				}
+			}
+		}
+	
+		.crowdfunding{
+			border : 0;
+			background: rgb(var(--background-secondary-theme));
+		}
+	
+		.deposit{
+			border : 0;
+			background: rgb(var(--background-secondary-theme));
+	
+			
+	
+			.qrcoderesult{
+				.imageqr{
+					width: 225px;
+					height: 225px;
+					margin : 0 auto;
+				}
+			}
+	
+			.depositaddress{
+				.adrwrapper{
+					padding : 2 * @rhythm 0;
+	
+					.adr{
+						font-size: 0.9em;
+					}
+				}
+			}
+	
+			.actionbody{
+			
+				textarea{
+					padding : @rhythm;
+					height: 150px;
+				}
+	
+				button{
+					width: 100%;
+					min-width : 0;
+				}
+	
+				
+			}
+		}
+	
+		.addresses{
+			.addressesGroupCaption{
+				padding : @rhythm;
+			}
+	
+			.adressesTable{
+				border-bottom: 1px solid rgb(var(--color-medium-theme));
+				padding : 0 @rhythm;
+	
+				>div{
+					vertical-align: top;
+					padding : 3 * @rhythm 0;
+	
+					&.name{
+						padding-left: 0;
+						font-weight: 500;
+						overflow: hidden;
+						text-overflow: ellipsis;
+	
+						
+					}
+	
+					&.panel{
+						display: none;
+					}
+	
+	
+					&.balance{
+						padding-left: 2 * @rhythm;
+						width: 31%;
+						font-weight: 700;
+					}
+	
+					&.percent{
+						font-weight: 700;
+						width: 22%;
+					}
+	
+					a{
+						display: none;
+					}
+	
+					&:nth-last-child(1){
+						padding-right: 0;
+					}
+				}
+			}
+	
+			
+		}
+	
+		
+	}
+
+}
