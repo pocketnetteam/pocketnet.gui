@@ -750,7 +750,7 @@ var share = (function(){
 
 
 				if(!currentShare.url.v){
-					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi; 
+					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
 					
 
 					var matches = text.match(r);
@@ -1983,7 +1983,7 @@ var share = (function(){
 
 					if(currentShare.url.v && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
 
 							destroyPlayer()
 

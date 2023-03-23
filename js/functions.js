@@ -10349,6 +10349,16 @@
 		} else if (hostname.includes('brighteon.com')) {
 			type = 'brighteon';
 			id = path;
+		} else if (pathname.includes('/ipfs/')) {
+			const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+			const ipfsId = path.match(ipfsIdRegex)[1];
+
+			if (!ipfsId) {
+				return {};
+			}
+
+			type = 'ipfs';
+			id = ipfsId;
 		}
 
 		/* else if (hostname.includes('stream.brighteon.com')) {
