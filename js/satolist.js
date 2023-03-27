@@ -3760,7 +3760,7 @@ Platform = function (app, listofnodes) {
                                 receiver: receiver,
                                 send : true,
                                 value : 1,
-                                min : 0.5,
+                                min : 0.1,
                                 clbk  : function(value, txid){
 
                                     if (p.roomid && txid){
