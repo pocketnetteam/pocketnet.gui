@@ -119,7 +119,8 @@ var donateAnimations = (function(){
 
 			destroy : function(){
 				el = {};
-				self.app.platform.donateAnimation.destroy() = null;
+				self.app.platform.donateAnimation.destroy();
+				self.app.platform.donateAnimation = null;
 			},
 			
 			init : function(p){
