@@ -795,7 +795,7 @@ var share = (function(){
 								if(currentShare.url.v) return;
 
 								const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
-								const ipfsId = url.match(ipfsIdRegex)[1];
+								const ipfsId = url.match(ipfsIdRegex)?.[1];
 
 								if (ipfsId) {
 									const ipfsUrl = `https://ipfs.io/ipfs/${ipfsId}`;

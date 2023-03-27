@@ -5973,8 +5973,6 @@ typeof navigator === "object" && (function (global, factory) {
       const clearIpfsId = this.media.getAttribute('data-plyr-video-id');
       var src = format(this.config.urls.ipfs.source, clearIpfsId);
 
-      console.log('SH011', src);
-
       const embedVideo = createElement('video');
       embedVideo.setAttribute('src', src);
       embedVideo.setAttribute('controls', '');
