@@ -746,6 +746,26 @@ var share = (function(){
 				}
 			},
 
+			isIpfsVideo : async function(url) {
+				const abortControl = new AbortController();
+				const signal = abortControl.signal;
+
+				return fetch(url, { signal })
+					.then((res) => {
+						abortControl.abort();
+
+						const contentType = res.headers.get('content-type');
+
+						const isMp4 = (contentType === 'video/mp4');
+						const isOgg = (contentType === 'video/ogg');
+						const isWebm = (contentType === 'video/webm');
+
+						return isMp4 || isOgg || isWebm;
+					}).catch(() => {
+						return false;
+					})
+			},
+
 			linksFromText : function(text){
 
 
@@ -758,7 +778,7 @@ var share = (function(){
 
 					if(matches && matches.length > 0){
 
-						_.each(matches, function(url){
+						_.each(matches, async function(url){
 							if(actions.checkUrlForImage(url)){
 
 								/*if (currentShare.images.v.indexOf(url) == -1){
@@ -773,6 +793,18 @@ var share = (function(){
 							else
 							{
 								if(currentShare.url.v) return;
+
+								const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+								const ipfsId = url.match(ipfsIdRegex)[1];
+
+								if (ipfsId) {
+									const ipfsUrl = `https://ipfs.io/ipfs/${ipfsId}`;
+									const isVideo = await actions.isIpfsVideo(ipfsUrl);
+
+									if (isVideo) {
+										url += '?type=video'
+									}
+								}
 
 								currentShare.url.set(url)
 

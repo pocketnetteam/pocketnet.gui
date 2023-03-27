@@ -10352,8 +10352,9 @@
 		} else if (pathname.includes('/ipfs/')) {
 			const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
 			const ipfsId = path.match(ipfsIdRegex)[1];
+			const isVideo = (searchParams.get('type') === 'video');
 
-			if (!ipfsId) {
+			if (!ipfsId || !isVideo) {
 				return {};
 			}
 
