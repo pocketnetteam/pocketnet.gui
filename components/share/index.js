@@ -747,13 +747,8 @@ var share = (function(){
 			},
 
 			isIpfsVideo : async function(url) {
-				const abortControl = new AbortController();
-				const signal = abortControl.signal;
-
-				return fetch(url, { signal })
+				return fetch(url, { method: 'HEAD' })
 					.then((res) => {
-						abortControl.abort();
-
 						const contentType = res.headers.get('content-type');
 
 						const isMp4 = (contentType === 'video/mp4');
