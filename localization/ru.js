@@ -99,6 +99,7 @@ _l.rblocking = "Блокировки";
 _l.rblockinglist = "Список заблокированных пользователей";
 _l.rcomment = "Комментарии";
 _l.rsubscriber = "Подписки";
+_l.a_unabledvideo = "В данный момент видео не доступно";
 _l.rvideo = "Видео";
 _l.contentscore = "Вы оставили оценку публикации";
 _l.commentscorelike = "Вам нравится комментарий";
