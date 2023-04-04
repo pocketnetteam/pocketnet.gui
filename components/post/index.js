@@ -1723,7 +1723,8 @@ var post = (function () {
 							meta.type == 'youtube' ||
 							meta.type == 'vimeo' ||
 							meta.type == 'bitchute' ||
-							meta.type == 'peertube'
+							meta.type == 'peertube' ||
+							meta.type == 'ipfs'
 						) {
 							if (clbk) clbk();
 						} else {

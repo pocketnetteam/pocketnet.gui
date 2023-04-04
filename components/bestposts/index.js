@@ -116,7 +116,7 @@ var bestposts = (function(){
 					if(
 						url && !og && 
 
-						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
+						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') &&
 
 						!self.app.platform.sdk.usersettings.meta.preview.value
 					){
