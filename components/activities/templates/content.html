@@ -268,7 +268,7 @@ _.each(videos, function(video, index){
 		%>
 			<div class="blocked">
 				<i class="fa fa-ban"></i>
-				 <span>В данный момент видео не доступно</span>
+				 <span><%=e('a_unabledvideo')%></span>
 			</div>
 		<%
 			}
@@ -294,7 +294,7 @@ _.each(videos, function(video, index){
 			<%
 			} if(video?.rating) {
 			%>
-			<div class="comments"><i class="fa fa-star"></i><%-video?.rating.toPrecision(2)%></div>
+			<div class="rating"><i class="fa fa-star"></i><%-video?.rating.toPrecision(2)%></div>
 			<%
 			}
 			%>

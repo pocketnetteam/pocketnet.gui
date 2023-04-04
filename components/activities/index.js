@@ -89,7 +89,7 @@ var activities = (function () {
 
 		var actions = {
 			setloading: function (v) {
-
+				console.log('loadrind', v)
 				loading = v
 				if (loading) {
 					el.loader[0].style.display = 'block'
@@ -144,7 +144,6 @@ var activities = (function () {
 						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
 							if (!r?.[0]?.[0]?.data) {
 								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
-								console.log('p',p,)
 								resolve({...p.data, date: video.date, name: video.data.value.caption, comments:video.data.value.comments,  txid: video.data.value.txid, rating : +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
 								return
 							}
@@ -252,26 +251,33 @@ var activities = (function () {
 				if (currentFilter === 'video') {
 					actions.setloading(true)
 					let a = actions.getVideos()
-					Promise.all(a).then(v => {
-						actions.setloading(false)
-					})
+
+					let b = []
+
 					a.forEach(i => i.then((value) => {
-						return new Promise((res)=>{
-							self.sdk.users.get([value?.original?.account?.name], (info) => {
+						let c = new Promise((res)=>{
+							return self.sdk.users.get([value?.original?.account?.name], (info) => {
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								res(value)
+								console.log('res',value)
 							})
 						})
+						b.push(c)
+						return c
 					}).then(readyVideo => {
 							videos.push(readyVideo)
+						if (videos.length === a.length) {
+							console.log('all',videos, a)
+							actions.setloading(false)
+						}
 							videos.sort((a, b) => b.date - a.date);
 							renders.content()
-							el.c.find('.tab').removeClass('active')
-							el.c.find('[rid="' + currentFilter + '"]').addClass('active')
-							_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
 						})
 				)
+					el.c.find('.tab').removeClass('active')
+					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
+					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
 					return
 				} else {
 					videos = []
