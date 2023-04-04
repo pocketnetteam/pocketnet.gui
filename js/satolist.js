@@ -14681,7 +14681,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            adduser : function(key, address, value){
+            adduser : function(key, address, value, videoData){
 
                 if(!address) return
 
@@ -14701,7 +14701,10 @@ Platform = function (app, listofnodes) {
                             subscribes_count : user.subscribes_count,
                             value: Number(value || '0')
                         }
-
+                        if(videoData) {
+                            self.sdk.activity.add(key, 'video', info, videoData)
+                            return
+                        }
                         var error = self.sdk.activity.add(key, 'user', info)
 
                     }
@@ -14710,7 +14713,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            add : function(key, type, info){
+            add : function(key, type, info, videoData){
 
                 var l = self.sdk.activity.latest
 
@@ -14772,6 +14775,12 @@ Platform = function (app, listofnodes) {
 
                     obj.data = {
                         value : info.value
+                    }
+                }
+
+                if(type == 'video') {
+                    obj.data = {
+                        value : videoData
                     }
                 }
 
@@ -24582,6 +24591,7 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
+                lasthistory.txid = txid
 
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
@@ -24656,7 +24666,7 @@ Platform = function (app, listofnodes) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
-                        return Promise.resolve()
+                        return Promise.resolve(r)
                     }).catch(e => {
                         return Promise.resolve()
                     })

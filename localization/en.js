@@ -106,6 +106,7 @@ _l.rblocking = "Blocking";
 _l.rblockinglist = "List of blocked users";
 _l.rcomment = "Comments";
 _l.rsubscriber = "Subscriptions";
+_l.rvideo = "Video";
 _l.contentscore = "You have left a rating of the publication";
 _l.commentscorelike = "You liked the comment.";
 _l.commentscoredislike = "You don't like the comment";
