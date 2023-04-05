@@ -932,7 +932,6 @@ var functions = __webpack_require__("3139");
       }
       let local = document.querySelector("body");
       this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local).then(matrixCall => {
-        console.log('matrixCall', matrixCall);
 
         // if (matrixCall) this.$store.dispatch("CALL", matrixCall);
       }).catch(e => {

@@ -1739,11 +1739,9 @@ var CancelablePromise = __webpack_require__("0bb9");
       return text;
     },
     clbkEncrypt() {
-      console.log("ECN");
       this.$emit('encrypt');
     },
     clbkEncrypted() {
-      console.log("ECN2");
       this.$emit('encrypted');
     },
     send(text) {
@@ -2260,7 +2258,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         cancel,
         sendnow
       } = _ref4;
-      console.log("STOP RECORDING", this.isRecording);
       this.$store.commit("SET_VOICERECORDING", false);
       if (this.prepareRecording) {
         this.prepareRecording.cancel();

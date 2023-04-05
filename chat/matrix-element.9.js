@@ -427,7 +427,6 @@ var upload = __webpack_require__("6b57");
     },
     uploadUploaded(data) {
       this.userImagebase64 = data.base64;
-      console.log("DATA", data);
     },
     uploadError() {},
     createBase64Image(FileObject) {
