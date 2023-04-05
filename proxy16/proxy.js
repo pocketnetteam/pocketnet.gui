@@ -1384,7 +1384,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				else{
 					videosPr = videosapi({
 						urls : videos,
-						fast : options.fastvideo
+						fast : true//options.fastvideo
 					}).then(videos => {
 
 						result.data.videos = videos.data
