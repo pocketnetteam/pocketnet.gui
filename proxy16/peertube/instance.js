@@ -150,6 +150,7 @@ var instance = function (host, ip, Roy) {
 		}
 
 
+		try {
 		return Roy.parent.transports.fetch(`http://${host}${url}`, {
 			method: p.type || 'get',
 			timeout,
@@ -176,9 +177,8 @@ var instance = function (host, ip, Roy) {
 				meta,
 				host,
 			});
-		})
-		.catch((error) => {
-
+			});
+		} catch(error) {
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
 				difference: performance.now() - responseTime,
@@ -194,7 +194,7 @@ var instance = function (host, ip, Roy) {
 			statistic.add(meta);
 
 			return Promise.reject(error || {}).response || {};
-		});
+		}
 	};
 
 	self.availability = function(){
