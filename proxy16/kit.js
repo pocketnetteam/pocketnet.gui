@@ -27,6 +27,8 @@ var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVE
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports', 'logs290323']).init()
 
+logger.setlevel('debug');
+
 var testnodes = [
 	{
 		host : '78.37.233.202',
