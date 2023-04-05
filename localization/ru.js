@@ -216,7 +216,7 @@ _l.uwaitb = "Ожидание подтверждений для сохранен
 _l.uchanges = "Вы не ввели изменений";
 _l.uchangesvalid = "Вы должны ввести имя пользователя";
 _l.uname = "Имя";
-_l.unickname = "Псевдоним";
+_l.unickname = "Придумайте псевдоним";
 _l.ulanguage = "Язык";
 _l.uabout = "О себе";
 _l.uwebsite = "Веб сайт";
@@ -2380,3 +2380,5 @@ _l.torusing_stat_totalTorBytes = "Всего, вызовы TOR"
 _l.torusing_settings = "Настройки TOR"
 _l.torusing_stats = "Статистика запросов"
 _l.torusing_proxychangequestion = "Вы уверены, что хотите изменить прокси?"
+
+_l.listeners = "Прослушали";

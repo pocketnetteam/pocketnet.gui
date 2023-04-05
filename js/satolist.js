@@ -3760,7 +3760,7 @@ Platform = function (app, listofnodes) {
                                 receiver: receiver,
                                 send : true,
                                 value : 1,
-                                min : 0.5,
+                                min : 0.1,
                                 clbk  : function(value, txid){
 
                                     if (p.roomid && txid){
@@ -24841,7 +24841,20 @@ Platform = function (app, listofnodes) {
 
                     return Promise.all(promises)
 
-                }
+                },
+
+                ipfs : function(links) {
+                    const dataMap = links.map((l) => {
+                        l.data = {
+                            views : 0,
+                            image : null
+                        };
+
+                        return l;
+                    });
+
+                    return Promise.resolve(dataMap);
+                },
             },
 
             volume : 0,
