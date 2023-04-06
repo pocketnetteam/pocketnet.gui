@@ -273,7 +273,10 @@ var activities = (function () {
 						}
 							videos.sort((a, b) => b.date - a.date);
 							renders.content()
-						})
+						}).catch(e => {
+						actions.setloading(false)
+						console.log('err', e)
+					})
 				)
 					el.c.find('.tab').removeClass('active')
 					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
@@ -331,14 +334,7 @@ var activities = (function () {
 						loading: loading,
 						activities: getters.formatActivities(),
 						videos : videos,
-						openPost: actions.openPost,
 					},
-					// inner: (root, el) => {
-					// 	el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
-					// 	let v = el.replace(root[0].innerHTML, "")
-					// 	root.append(v)
-					//
-					// }
 
 				}, function (_p) {
 					let interactions = _p.el.find('.interactive')

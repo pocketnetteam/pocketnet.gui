@@ -349,6 +349,7 @@ html[theme="black"]{
   line-height: 20px;
   margin-right: 24px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 .wndactivities.wnd #activities .filters .tab.active {
   color: #2F80ED;
