@@ -7846,9 +7846,6 @@ Platform = function (app, listofnodes) {
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
-
-                        
-
                         var infos = {
                             thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                             videoDetails : videoDetails,
@@ -24716,7 +24713,7 @@ Platform = function (app, listofnodes) {
 
                         linkInfo ? link.data = {
                             image : 'https://' + linkInfo.from + linkInfo.previewPath,
-                            thumbnail : 'https://' + linkInfo.from + (linkInfo.thumbnailPath || linkInfo.previewPath),
+                            thumbnail : 'https://' + linkInfo.from + linkInfo.thumbnailPath,
                             views : linkInfo.views,
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
