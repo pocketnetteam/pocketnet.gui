@@ -14,7 +14,7 @@
   font-size: 0.4em;
 }
 #test .errorname {
-  color: rgb(var(--color-txt-ac));
+  color: rgb(var(--color-bad));
   padding: 1em;
   text-align: center;
   display: none;

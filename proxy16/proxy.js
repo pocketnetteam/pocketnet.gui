@@ -702,6 +702,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					host: 'pocketnetpeertube5.nohost.me',
 					cantuploading: true,
 					ip: '95.217.209.217',
+					offline: true,
 				  },
 				  {
 					host: 'pocketnetpeertube7.nohost.me',
@@ -709,17 +710,30 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					ip: '188.187.45.218',
 					offline: true,
 				  },
+				  { 
+					host: 'peertube.archive.pocketnet.app',
+					cantuploading: true,
+					ip: '178.217.159.221'
+				  },
+
 				],
 				6: [
 				  {
 					host: 'pocketnetpeertube4.nohost.me',
 					cantuploading: true,
 					ip: '135.181.108.193',
+					offline: true,
 				  },
 				  {
 					host: 'pocketnetpeertube6.nohost.me',
 					cantuploading: true,
 					ip: '159.69.127.9',
+					offline: true,
+				  },
+				  { 
+					host: 'peertube.archive.pocketnet.app',
+					cantuploading: true,
+					ip: '178.217.159.221'
 				  },
 				],
 				8: [
@@ -735,6 +749,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					host: 'pocketnetpeertube9.nohost.me',
 					cantuploading: true,
 					ip: '178.154.200.50',
+					offline: true,					
+				  },
+				  { 
+					host: 'peertube.archive.pocketnet.app',
+					cantuploading: true,
+					ip: '178.217.159.221'
 				  },
 				],
 
@@ -899,7 +919,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
-						cantuploading: true,
 					}
 				],
 
@@ -1010,6 +1029,27 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube31.pocketnet.app',
 						ip: '185.148.146.11',
 						special: true,
+					}
+				],
+
+				37: [
+					{
+						host: 'peertube5new.pocketnet.app',
+						ip: '95.217.209.217',
+					}
+				],
+
+				38: [
+					{
+						host: 'peertube4new.pocketnet.app',
+						ip: '135.181.108.193',
+					}
+				],
+
+				39: [
+					{
+						host: 'peertube6new.pocketnet.app',
+						ip: '159.69.127.9',
 					}
 				],
       		};
@@ -1384,7 +1424,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				else{
 					videosPr = videosapi({
 						urls : videos,
-						fast : options.fastvideo
+						fast : true//options.fastvideo
 					}).then(videos => {
 
 						result.data.videos = videos.data

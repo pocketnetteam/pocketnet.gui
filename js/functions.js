@@ -1949,6 +1949,12 @@
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 				
+				if (src.includes('www.youtube.com')) {
+					const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+					src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+				}
+
 				image.src = src
 				image.onload = () => {
 
@@ -10242,7 +10248,7 @@
 		}
 
 		if(v.type == 'vimeo'){
-			return 'https://i.vimeocdn.com/video/'+v.id+'_320.jpg'
+			return 'https://vumbnail.com/'+v.id+'.jpg'
 		}
 
 		if(v.type == 'peertube'){
@@ -10278,63 +10284,92 @@
 	}
 
 	parseVideo = function(url) {
-		var _url = url;
+		if (!url) {
+			return {};
+		}
 
-	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com|brighteon\.com|stream\.brighteon\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
-	    var type = null
-		var id = null
-		var host_name = null
-		var subType = null
+		let id = null;
+		let type = null;
+		let host_name = null;
+		let subType = null;
 
-		if(_url && _url.indexOf('peertube://') > -1){
-			var ch = _url.replace('peertube://', '').split('/');
-			id = ch[1]
+		if (url.startsWith('peertube:')) {
 			type = 'peertube';
-			subType = _url.includes('/stream') ? 'peertubeStream' : 'common';
-			host_name = ch[0]
-
+			url = url.replace('peertube:', 'http:');
 		}
-		else{
-			if(test && test[2]){
 
-				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
-					type = 'youtube'
-			        id = test[9]
-					url = 'https://youtu.be/' + id
-			    }
-				if (test.indexOf('vimeo.com') > -1) {
-					type = 'vimeo'
-                    id = test[9]
-			    }
-				if (test.indexOf('bitchute.com') > -1) {
-					type = 'bitchute'
-					id = test[9]
-			    }
-				if (test.indexOf('brighteon.com') > -1) {
-					type = 'brighteon'
-					id = test[9]
-				}
-				if (test.indexOf('stream.brighteon.com') > -1) {
-					type = 'stream.brighteon'
-					let tempUrl = url;
-					if (tempUrl.indexOf('/live/') != -1)
-						tempUrl = tempUrl.replace('/live/', '/embed/');
-					id = url.substring(url.lastIndexOf('/') + 1);
-				}
+		let hostname, pathname, searchParams;
 
+		try {
+			const urlParts = new URL(url);
+
+			hostname = urlParts.hostname;
+			pathname = urlParts.pathname;
+			searchParams = urlParts.searchParams;
+		} catch (err) {
+			return {};
+		}
+
+		const path = pathname.slice(1);
+		const pathParts = path.split('/');
+
+		if (type === 'peertube') {
+			host_name = hostname;
+
+			if (path.includes('stream')) {
+				subType = 'peertubeStream';
+				id = pathParts[1];
+			} else {
+				subType = 'common';
+				id = path;
 			}
+		} else if (hostname.includes('youtube.com')) {
+			type = 'youtube';
+			url = `https://youtu.be/${id}`;
+
+			if (path.includes('watch')) {
+				id = searchParams.get('v');
+			} else if (path.includes('shorts')) {
+				id = pathParts[1];
+			}
+		} else if (hostname.includes('youtu.be')) {
+			type = 'youtube';
+			id = path;
+		} else if (hostname.includes('player.vimeo.com')) {
+			type = 'vimeo';
+			id = pathParts[1];
+		} else if (hostname.includes('vimeo.com')) {
+			if (!isNaN(path)) {
+				type = 'vimeo';
+				id = path;
+			}
+		} else if (hostname.includes('bitchute.com')) {
+			type = 'bitchute';
+			id = pathParts[1];
+		} else if (hostname.includes('brighteon.com')) {
+			type = 'brighteon';
+			id = path;
+		} else if (pathname.includes('/ipfs/')) {
+			const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+			const ipfsId = path.match(ipfsIdRegex)[1];
+			const isVideo = (searchParams.get('type') === 'video');
+
+			if (!ipfsId || !isVideo) {
+				return {};
+			}
+
+			type = 'ipfs';
+			id = ipfsId;
 		}
 
-	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
+		/* else if (hostname.includes('stream.brighteon.com')) {
+			type = 'brighteon';
+			id = pathname.slice(1);
+		}*/
 
-	    return {
-	        type: type,
-	        url : url,
-	        id : id,
-			host_name : host_name,
-			subType : subType,
-	    };
+		return { type, url, id, host_name, subType };
 	}
+
 	nl2br = function(str){
 		return str.replace(/\n/g, '<br/>');
 	}

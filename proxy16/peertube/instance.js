@@ -150,35 +150,35 @@ var instance = function (host, ip, Roy) {
 		}
 
 
-		return Roy.parent.transports.fetch(`http://${host}${url}`, {
-			method: p.type || 'get',
-			timeout,
-		}).then(async (result) => {
+		try {
+			return Roy.parent.transports.fetch(`http://${host}${url}`, {
+				method: p.type || 'get',
+				timeout,
+			}).then(async (result) => {
 
-			const meta = {
-				code: 200,
-				difference: performance.now() - responseTime,
-				method: method,
-			};
+				const meta = {
+					code: 200,
+					difference: performance.now() - responseTime,
+					method: method,
+				};
 
-			statistic.add(meta);
+				statistic.add(meta);
 
-			let resultStr;
+				let resultStr;
 
-			try {
-				resultStr = JSON.parse(await result.text());
-			} catch (err) {
-				resultStr = {};
-			}
+				try {
+					resultStr = JSON.parse(await result.text());
+				} catch (err) {
+					resultStr = {};
+				}
 
-			return Promise.resolve({
-				data: resultStr,
-				meta,
-				host,
+				return Promise.resolve({
+					data: resultStr,
+					meta,
+					host,
+				});
 			});
-		})
-		.catch((error) => {
-
+		} catch(error) {
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
 				difference: performance.now() - responseTime,
@@ -194,7 +194,7 @@ var instance = function (host, ip, Roy) {
 			statistic.add(meta);
 
 			return Promise.reject(error || {}).response || {};
-		});
+		}
 	};
 
 	self.availability = function(){
