@@ -1,29 +1,38 @@
 <div class="totalItem" item="<%-item.id%>">
 
-	<div class="canvasWrapper">
+	<div class="metricablockwrapper">
+		<div class="metricablock">
+			<div class="blockWrapper">
+				<div class="blockContentWrapper">
+					<div class="blockContent">
+						<div class="vidgetNameWrapper">
 
-		<canvas class="chart" id="chart<%-item.id%>" height="250"></canvas>
+							<div class="vidgetNameWrapperTable table">
+								<div class="cellleft"><span>
+										<%-item.label%>
+									</span>
+								</div>
+							</div>
+						</div>
 
-		<div class="infoWrapper">
-			<div class="infoWrapperTable table">
-				<div class="infoWrapperCell">
-
-					<div class="label">
-						<span>
-							<%-item.label%>
-						</span>
-					</div>
-
-					<div class="balance">
-						<div class="balanceWrapper">
-							<%= app.platform.mp.coinwithsmall(item.balance) %>
+						<div class="vidgetIconWrapper">
+							<div class="vidgetIcon">
+								<div class="table">
+									<div>
+										<div class="unspentWrapper repv">
+												<span class="value">
+													<%= app.platform.mp.coinwithsmall(item.balance) %>
+												</span>
+		
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	

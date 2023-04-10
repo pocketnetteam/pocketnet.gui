@@ -168,55 +168,7 @@ var earnings = (function () {
 
     var renders = {
     
-      
-			datasets : function(item, last){
 
-				var mainbg = [];
-				var main = _.map(item.move, function(m){
-
-					mainbg.push(m.color)
-
-					return Number(m.summary || 0)
-				})
-
-				var details = [];
-				var colors = [];
-				var t = [];
-				var bw = [];
-
-
-				var n = 'rgb(' + self.app.platform.sdk.theme.getstyle('--background-secondary-theme') || '241,241,241' + ')'
-
-				_.each(item.move, function(m){
-					_.each(m.items, function(i){
-						details.push(Number(i.value))
-						colors.push(i.color)
-						t.push(n)
-						bw.push(8)
-					})
-				})
-
-				var datasets = [{
-			        data : main,
-			       	backgroundColor : mainbg,
-			       	borderColor : [n, n],
-			       	borderWidth : [8, 8]
-			
-			    },{
-			        data : details,
-			       	backgroundColor : colors,
-			       	borderColor : t,
-			       	borderWidth : bw
-			    }]
-
-			    _.each(last, function(l, i){
-			    	l.data = datasets[i].data
-			    })
-
-
-			    return datasets
-			},
-      
       total: function(item, clbk){
 
         self.shell({
@@ -230,21 +182,6 @@ var earnings = (function () {
 
 				}, function(_p){
 
-					var ctx = _p.el.find('#chart' + item.id)[0].getContext('2d');					
-
-						charts[item.id] = new Chart(ctx, {
-							type: 'doughnut',
-							data : {
-								datasets : renders.datasets(item)
-							},
-							options: {
-								rotation : 0.5 * Math.PI,
-								cutoutPercentage : 85
-							}
-						});
-
-					if (clbk)
-						clbk();
 
 				})
 
