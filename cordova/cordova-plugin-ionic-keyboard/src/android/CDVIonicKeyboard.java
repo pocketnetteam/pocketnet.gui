@@ -105,19 +105,7 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                             int resultBottom = r.bottom;
 
 
-                            if (Build.VERSION.SDK_INT >= 28) {
-
-                                final WindowInsets insets = getInsets();
-                                boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
-
-                                if (isKeyboardVisible){
-                                    float keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom / density;
-
-                                    resultBottom = rootViewHeight - (int) keyboardHeight;
-                                }
-
-                                
-                            }
+                            
                             
 
                             // calculate screen height differently for android versions >= 21: Lollipop 5.x, Marshmallow 6.x
@@ -136,6 +124,21 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                             int heightDiff = screenHeight - resultBottom;
 
                             int pixelHeightDiff = (int)(heightDiff / density);
+
+                            if (Build.VERSION.SDK_INT >= 30) {
+
+                                final WindowInsets insets = getInsets();
+                                boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+
+                                if (isKeyboardVisible){
+                                    float keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom / density;
+
+                                    pixelHeightDiff = (int) keyboardHeight;
+                                }
+
+                                
+                            }
+
                             if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                                 String msg = "S" + Integer.toString(pixelHeightDiff);
                                 result = new PluginResult(PluginResult.Status.OK, msg);
