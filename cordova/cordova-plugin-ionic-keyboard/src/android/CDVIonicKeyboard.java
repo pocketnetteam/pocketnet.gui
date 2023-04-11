@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 // import additionally required classes for calculating screen height
 import android.view.Display;
 import android.graphics.Point;
@@ -26,6 +28,13 @@ import android.widget.FrameLayout;
 //
 import android.view.WindowManager.LayoutParams;
 import android.view.WindowManager;
+
+import android.view.WindowInsets;
+import android.view.DisplayCutout;
+
+import androidx.core.view.WindowInsetsCompat;
+
+
 
 public class CDVIonicKeyboard extends CordovaPlugin {
     private OnGlobalLayoutListener list;
@@ -94,6 +103,22 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                             // cache properties for later use
                             int rootViewHeight = rootView.getRootView().getHeight();
                             int resultBottom = r.bottom;
+
+
+                            if (Build.VERSION.SDK_INT >= 28) {
+
+                                final WindowInsets insets = getInsets();
+                                boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+
+                                if (isKeyboardVisible){
+                                    float keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom / density;
+
+                                    resultBottom = rootViewHeight - (int) keyboardHeight;
+                                }
+
+                                
+                            }
+                            
 
                             // calculate screen height differently for android versions >= 21: Lollipop 5.x, Marshmallow 6.x
                             //http://stackoverflow.com/a/29257533/3642890 beware of nexus 5
@@ -174,6 +199,69 @@ public class CDVIonicKeyboard extends CordovaPlugin {
             return true;
         }
 
+        if ("getinsets".equals(action)) {
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+
+                    JSONObject json = new JSONObject();
+
+                    DisplayMetrics dm = new DisplayMetrics();
+                    cordova.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                    final float density = dm.density;
+
+                    
+
+                    if (Build.VERSION.SDK_INT >= 28) {
+
+                        final WindowInsets insets = getInsets();
+                        final DisplayCutout cutout = insets.getDisplayCutout();
+
+                        boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+
+                        float dens = 1 / density;
+                        float bottom = cutout != null ? (cutout.getSafeInsetBottom() * dens) : 0; 
+                        float left = cutout != null ? (cutout.getSafeInsetLeft() * dens) : 0; 
+                        float right = cutout != null ? (cutout.getSafeInsetRight() * dens) : 0; 
+                        float top = cutout != null ? (cutout.getSafeInsetTop() * dens) : 0; 
+
+                        float keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom * dens;
+
+
+                        
+                        try {
+
+                            json.put("bottom", bottom);
+                            json.put("left", left);
+                            json.put("right", right);
+                            json.put("top", top);
+                            json.put("keyboardHeight", keyboardHeight);
+
+                            PluginResult r = new PluginResult(PluginResult.Status.OK, json);
+
+                            callbackContext.sendPluginResult(r);
+
+                        }
+
+                        catch (JSONException e) {
+                            callbackContext.error(e.getMessage());
+                        }
+                    }
+
+                    else{
+
+                        PluginResult r = new PluginResult(PluginResult.Status.OK, json);
+
+                        callbackContext.sendPluginResult(r);
+                    }
+
+
+
+                    
+                }
+            });
+            return true;
+        }
+
          if ("adjustresize".equals(action)) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
@@ -189,6 +277,10 @@ public class CDVIonicKeyboard extends CordovaPlugin {
         }
 
         return false;  // Returning false results in a "MethodNotFound" error.
+    }
+
+    private WindowInsets getInsets() {
+        return this.webView.getView().getRootWindowInsets();
     }
 
     @Override
