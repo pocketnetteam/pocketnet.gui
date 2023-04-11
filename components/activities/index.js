@@ -10,9 +10,10 @@ var activities = (function () {
 
 		var el, loading, scnt, currentFilter = 'all', end = false, block;
 
-		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking']
+		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
 		var activities = []
+		var videos = []
 
 		var getters = {
 			getFilters: function (filter) {
@@ -21,7 +22,8 @@ var activities = (function () {
 				if (filter === 'comment') return [ 'comment', 'answer']
 				if (filter === 'subscriber') return ['subscriber']
 				if (filter === 'blocking') return ['blocking']
-				if (!filter) return []
+				if (filter === 'video') return ['video']
+				if (!filter) return ['']
 				return [filter]
 			},
 
@@ -87,7 +89,7 @@ var activities = (function () {
 
 		var actions = {
 			setloading: function (v) {
-
+				console.log('loadrind', v)
 				loading = v
 				if (loading) {
 					el.loader[0].style.display = 'block'
@@ -132,13 +134,44 @@ var activities = (function () {
 
 			},
 
+			getVideos: () => {
+				videos = []
+				let vid = JSON.parse(localStorage.getItem('latestactivity'))?.activity?.video
+				let res = []
+
+				_.each(vid, (video) => {
+					let a = new Promise((resolve, reject) => {
+						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
+							if (!r?.[0]?.[0]?.data) {
+								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
+								resolve({...p.data, date: video.date, name: video.data.value.caption, comments:video.data.value.comments,  txid: video.data.value.txid, rating : +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+								return
+							}
+							resolve({...r[0][0].data, date: video.date, name: video.data.value.caption, comments:video.data.value.comments, txid: video.data.value.txid, rating : +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+
+						}).catch(e => {
+							console.log(e)
+						})
+					})
+					res.push(a)
+				})
+				return res
+			},
+
 			openPost(data) {
-				console.log('open post')
 
 				let href, answer, parent
 
+				if (data) {
+					if (data?.date) {
+						href = data.txid
+					} else {
+						href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : data.relatedContent.hash
+					}
 
-				href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : data.relatedContent.hash
+				} else {
+					return
+				}
 
 				answer = data.type === "answer" ? data.hash : ''
 
@@ -206,14 +239,52 @@ var activities = (function () {
 
 
 			},
-			filter: function () {
+			filter: async function () {
 				if (this.classList.contains('active')) {
 					return
 				}
 				activities = []
-				renders.content()
+
 				end = false
 				currentFilter = $(this).attr('rid');
+				renders.content()
+				if (currentFilter === 'video') {
+					actions.setloading(true)
+					let a = actions.getVideos()
+
+					let b = []
+
+					a.forEach(i => i.then((value) => {
+						let c = new Promise((res)=>{
+							return self.sdk.users.get([value?.original?.account?.name], (info) => {
+								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
+								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
+								res(value)
+								console.log('res',value)
+							})
+						})
+						b.push(c)
+						return c
+					}).then(readyVideo => {
+							videos.push(readyVideo)
+						if (videos.length === a.length) {
+							console.log('all',videos, a)
+							actions.setloading(false)
+						}
+							videos.sort((a, b) => b.date - a.date);
+							renders.content()
+						}).catch(e => {
+						actions.setloading(false)
+						console.log('err', e)
+					})
+				)
+					el.c.find('.tab').removeClass('active')
+					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
+					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
+					return
+				} else {
+					videos = []
+				}
 
 				actions.getdata().then((e) => {
 					if (e) return sitemessage(e.error.message || e.error?.error || e.error)
@@ -231,7 +302,7 @@ var activities = (function () {
 
 			loadmorescroll: function () {
 
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end) {
+				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video') {
 					actions.getdata()
 				}
 			},
@@ -262,17 +333,12 @@ var activities = (function () {
 					data: {
 						loading: loading,
 						activities: getters.formatActivities(),
-						openPost: actions.openPost,
+						videos : videos,
 					},
-					// inner: (root, el) => {
-					// 	el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
-					// 	let v = el.replace(root[0].innerHTML, "")
-					// 	root.append(v)
-					//
-					// }
 
 				}, function (_p) {
 					let interactions = _p.el.find('.interactive')
+					let vid = _p.el.find('.video')
 					let multiblocking = _p.el.find('.blocking')
 
 					_.each(interactions, function (i) {
@@ -280,10 +346,17 @@ var activities = (function () {
 							actions.openPost(...activities.filter(ac => ac.hash === i.attributes.tid.value))
 						})
 					})
+					_.each(vid, function (i) {
+						i.addEventListener('click', (e) => {
+							actions.openPost(...videos.filter(ac => {
+								return ac.txid === i.attributes.tid.value
+							}))
+						})
+					})
 
 					_.each(multiblocking, function (i) {
 						i.addEventListener('click', (e) => {
-							actions.openMultiBlocks(...activities.filter(ac => ac.hash === i.attributes.tid.value))
+							actions.openMultiBlocks(...activities.filter(ac => ac.id === i.attributes.tid.value))
 						})
 					})
 
@@ -325,6 +398,7 @@ var activities = (function () {
 
 			destroy: function () {
 				activities = []
+				videos = []
 				currentFilter = 'all'
 				el = {};
 				scnt.off('scroll', events.loadmorescroll)

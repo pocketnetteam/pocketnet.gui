@@ -65,16 +65,16 @@ var userpage = (function(){
 			}
 
 
-			reports.push({
-				name : self.app.localization.e('ractivities'),
-				id : 'activities',
-				report : 'activities',
-				mobile : false,
-				openReportPageMobileInWindow : true,
-				if : function(){
-					return true
-				}
-			})
+			// reports.push({
+			// 	name : self.app.localization.e('ractivities'),
+			// 	id : 'activities',
+			// 	report : 'activities',
+			// 	mobile : false,
+			// 	openReportPageMobileInWindow : true,
+			// 	if : function(){
+			// 		return true
+			// 	}
+			// })
 			
 
 			reports.push({

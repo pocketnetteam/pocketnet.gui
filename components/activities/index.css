@@ -236,6 +236,99 @@ html[theme="black"]{
   color: rgb(var(--color-star-yellow));
   margin-right: 7px;
 }
+#activities .container .videos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#activities .container .videos .video {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 120px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
+  cursor: pointer;
+}
+#activities .container .videos .video .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 120px;
+  min-width: 150px;
+  max-width: 150px;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 100%;
+}
+#activities .container .videos .video .image img {
+  width: 100%;
+  min-height: 100%;
+}
+#activities .container .videos .video .blocked {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  background: rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-1));
+}
+#activities .container .videos .video .blocked i {
+  font-size: 32px;
+  color: rgb(var(--neutral-grad-1));
+  margin-bottom: 5px;
+}
+#activities .container .videos .video .blocked span {
+  font-size: 12px;
+}
+#activities .container .videos .video .info {
+  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+}
+#activities .container .videos .video .info span {
+  margin: 0 8px;
+  font-size: 30px;
+}
+#activities .container .videos .video .info > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 12px;
+}
+#activities .container .videos .video .info .name {
+  max-width: 100%;
+  font-weight: bold;
+}
+#activities .container .videos .video .info .second,
+#activities .container .videos .video .info .third {
+  display: flex;
+  color: rgb(var(--neutral-grad-2));
+  align-items: center;
+}
+#activities .container .videos .video .info .second > div,
+#activities .container .videos .video .info .third > div {
+  margin-right: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 50%;
+  font-weight: 400;
+  font-size: 14px;
+}
+#activities .container .videos .video .info .second i,
+#activities .container .videos .video .info .third i {
+  margin-right: 8px;
+}
 .wndactivities.wnd #activities .container {
   border-radius: 6px;
   background: initial;
@@ -256,6 +349,7 @@ html[theme="black"]{
   line-height: 20px;
   margin-right: 24px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 .wndactivities.wnd #activities .filters .tab.active {
   color: #2F80ED;
@@ -322,4 +416,90 @@ html[theme="black"]{
   width: 20px;
   color: rgb(var(--color-star-yellow));
   margin-right: 7px;
+}
+.wndactivities.wnd #activities .videos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.wndactivities.wnd #activities .videos .video {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 110px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
+}
+.wndactivities.wnd #activities .videos .video .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 110px;
+  min-width: 120px;
+  max-width: 120px;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 100%;
+}
+.wndactivities.wnd #activities .videos .video .image img {
+  width: 100%;
+  min-height: 100%;
+}
+.wndactivities.wnd #activities .videos .video .blocked {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-1));
+  text-align: center;
+}
+.wndactivities.wnd #activities .videos .video .blocked i {
+  font-size: 26px;
+  color: rgb(var(--neutral-grad-1));
+  margin-bottom: 5px;
+}
+.wndactivities.wnd #activities .videos .video .blocked span {
+  font-size: 10px;
+}
+.wndactivities.wnd #activities .videos .video .info {
+  margin: 0 0.5em;
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+}
+.wndactivities.wnd #activities .videos .video .info span {
+  margin: 0 8px;
+  font-size: 30px;
+}
+.wndactivities.wnd #activities .videos .video .info > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 12px;
+}
+.wndactivities.wnd #activities .videos .video .info .name {
+  max-width: 100%;
+  font-weight: bold;
+}
+.wndactivities.wnd #activities .videos .video .info .second,
+.wndactivities.wnd #activities .videos .video .info .third {
+  display: flex;
+  color: rgb(var(--neutral-grad-2));
+  align-items: center;
+}
+.wndactivities.wnd #activities .videos .video .info .second > div,
+.wndactivities.wnd #activities .videos .video .info .third > div {
+  margin-right: 8px;
+}
+.wndactivities.wnd #activities .videos .video .info .second i,
+.wndactivities.wnd #activities .videos .video .info .third i {
+  margin-right: 8px;
 }

@@ -382,7 +382,7 @@ var menu = (function(){
 				}
 			},
 
-			
+
 			savecross : {
 				init : function(el){
 
@@ -1116,6 +1116,17 @@ var menu = (function(){
                     items: items
 				})
 				
+			})
+
+			el.c.find('.activities').on('click', function () {
+				console.log('activities')
+				self.nav.api.load({
+					eid : 'activities',
+					open : true,
+					id : 'activities',
+					inWnd : true,
+					// el : el,
+				})
 			})
 
 			if (self.app.platform.sdk.newmaterials.clbks)
