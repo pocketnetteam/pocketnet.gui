@@ -274,7 +274,7 @@ html[theme="black"]{
         display: flex;
         justify-content: flex-start;
         width: 100%;
-        height: 120px;
+        height: 115px;
         margin-bottom: 16px;
         padding-bottom: 16px;
         border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
@@ -283,9 +283,9 @@ html[theme="black"]{
           display: flex;
           align-items: center;
           justify-content: center;
-          max-height: 120px;
-          min-width: 150px;
-          max-width: 150px;
+          max-height: 115px;
+          min-width: 140px;
+          max-width: 140px;
           overflow: hidden;
           border-radius: 12px;
           height: 100%;
@@ -335,7 +335,7 @@ html[theme="black"]{
             max-width: 100%;
             font-weight: bold;
           }
-          .second,.third {
+          .second,.third,.date {
             display: flex;
             color: rgb(var(--neutral-grad-2));
             align-items: center;
@@ -351,6 +351,9 @@ html[theme="black"]{
             i {
               margin-right: 8px;
             }
+          }
+          .date {
+            margin-bottom: 0;
           }
           .second {
             .author {
@@ -491,25 +494,10 @@ html[theme="black"]{
         display: flex;
         justify-content: flex-start;
         width: 100%;
-        height: 110px;
+        height: 115px;
         margin-bottom: 16px;
         padding-bottom: 16px;
         border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
-        .image {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          max-height: 110px;
-          min-width: 120px;
-          max-width: 120px;
-          overflow: hidden;
-          border-radius: 12px;
-          height: 100%;
-          img {
-            width: 100%;
-            min-height: 100%;
-          }
-        }
         .blocked {
           display: flex;
           justify-content: center;
@@ -552,7 +540,10 @@ html[theme="black"]{
             max-width: 100%;
             font-weight: bold;
           }
-          .second,.third {
+          .date {
+            margin-bottom: 0;
+          }
+          .second,.third,.date {
             display: flex;
             color: rgb(var(--neutral-grad-2));
             align-items: center;

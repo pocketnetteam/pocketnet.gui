@@ -299,6 +299,13 @@ _.each(videos, function(video, index){
 			}
 			%>
 		</div>
+		<%
+		if(video?.date) {
+		%>
+			<div class="date"><%- moment.unix((video.date)).format('llll') %></div>
+		<%
+		}
+		%>
 	</div>
 </div>
 <%
