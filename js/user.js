@@ -603,8 +603,9 @@ User = function(app, p) {
 		try {
 			localStorage['stay'] = v || 0;
 
-			if(!v)
-				localStorage['mnemonic'] || '';
+			if(!v) {
+				localStorage['mnemonic'] = '';
+			}
 		}
 		catch (e) { }
 
