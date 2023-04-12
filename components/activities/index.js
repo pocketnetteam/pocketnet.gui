@@ -89,7 +89,6 @@ var activities = (function () {
 
 		var actions = {
 			setloading: function (v) {
-				console.log('loadrind', v)
 				loading = v
 				if (loading) {
 					el.loader[0].style.display = 'block'
@@ -251,7 +250,13 @@ var activities = (function () {
 				if (currentFilter === 'video') {
 					actions.setloading(true)
 					let a = actions.getVideos()
-
+					if (!a.length)  {
+						el.c.find('.tab').removeClass('active')
+						el.c.find('[rid="' + currentFilter + '"]').addClass('active')
+						_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
+						actions.setloading(false)
+						return
+					}
 					let b = []
 
 					a.forEach(i => i.then((value) => {
@@ -267,6 +272,7 @@ var activities = (function () {
 						return c
 					}).then(readyVideo => {
 							videos.push(readyVideo)
+						console.log('ss',videos.length, a.length)
 						if (videos.length === a.length) {
 							console.log('all',videos, a)
 							actions.setloading(false)
