@@ -25,7 +25,9 @@ var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
-var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports']).init()
+var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports', 'logs290323']).init()
+
+logger.setlevel('debug');
 
 var testnodes = [
 	{

@@ -24,17 +24,8 @@ var authorization = (function(){
 
 		//var codeReader = new ZXing.BrowserQRCodeReader();
 
-		var stayH = function(){
-			try {
-				localStorage['stay'] = '0';
-				localStorage['mnemonic'] || '';
-			}
-			catch (e) { }
-
-			
-
-			self.app.user.stay = 0;
-
+		var stayH = function(v){
+			self.app.user.setstay(v);
 		}
 
 
@@ -47,6 +38,8 @@ var authorization = (function(){
 			name : self.app.localization.e('e13027'),
 
 			_onChange : function(v){
+
+				stayH(v)
 
 				if(v){
 
@@ -69,7 +62,7 @@ var authorization = (function(){
 				}
 				else
 				{
-					stayH()
+					
 				}
 			}
 		})
