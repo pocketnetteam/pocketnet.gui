@@ -246,7 +246,7 @@ html[theme="black"]{
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  height: 115px;
+  height: 120px;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
@@ -290,7 +290,7 @@ html[theme="black"]{
   margin: 0 1em;
   display: flex;
   flex-direction: column;
-  max-width: 50%;
+  width: 50%;
 }
 #activities .container .videos .video .info span {
   margin: 0 8px;
@@ -303,7 +303,7 @@ html[theme="black"]{
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 #activities .container .videos .video .info .name {
   max-width: 100%;
@@ -323,7 +323,7 @@ html[theme="black"]{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 50%;
+  max-width: 60%;
   font-weight: 400;
   font-size: 14px;
 }
@@ -355,6 +355,7 @@ html[theme="black"]{
   line-height: 20px;
   margin-right: 24px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 .wndactivities.wnd #activities .filters .tab.active {
   color: #2F80ED;
@@ -432,7 +433,7 @@ html[theme="black"]{
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  height: 115px;
+  height: 120px;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
@@ -460,7 +461,7 @@ html[theme="black"]{
   margin: 0 0.5em;
   display: flex;
   flex-direction: column;
-  max-width: 50%;
+  width: 60%;
 }
 .wndactivities.wnd #activities .videos .video .info span {
   margin: 0 8px;
@@ -473,7 +474,7 @@ html[theme="black"]{
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .wndactivities.wnd #activities .videos .video .info .name {
   max-width: 100%;
