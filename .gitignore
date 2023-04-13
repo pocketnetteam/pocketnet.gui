@@ -47,6 +47,7 @@ cordova/node_modules
 cordova/www
 cordova/config.xml
 cordova/build.json
+cordova/buildgfree.json
 cordova/package.json
 cordova/package-lock.json
 cordova/google-services.json
