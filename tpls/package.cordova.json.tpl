@@ -168,7 +168,7 @@
         },
       <% } %>
 
-      "cordova-plugin-audiotoggle": {},
+      "cordova-plugin-audiotoggle": {}
 
       
     },

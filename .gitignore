@@ -62,3 +62,4 @@ docs/
 posts/
 ./main.js
 cordova/cert.keystore
+package.cordova.json

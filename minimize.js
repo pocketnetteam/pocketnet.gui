@@ -76,7 +76,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, {name : 'package.cordova.json', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
 
 var tplspath = {
 
@@ -231,7 +231,10 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordovaconfig = {
 			path : './cordova',
-			copy : ['config.xml']
+			copy : ['config.xml', {
+				name : 'package.cordova.json',
+				rename : 'package.json'
+			}]
 		}
 
 		var cordovaiosfast = {
@@ -1124,12 +1127,17 @@ var copycontent = function(options, clbk, nac) {
 			sync : true,
 			array : options.copy,
 			action : function(p){
-				ncp(p.item, options.path + '/' + p.item, {
+
+				var filename = p.item
+
+				if (filename.name) filename = filename.name
+
+				ncp(filename, options.path + '/' + filename, {
 					filter : function(name){
 
 
 						if(options.filter){
-							return options.filter(p.item, name)
+							return options.filter(filename, name)
 						}
 						else
 						return name.indexOf('.map') == -1
@@ -1137,7 +1145,13 @@ var copycontent = function(options, clbk, nac) {
 					},
 				}, function (err) {
 					if (err) {
-					  console.error(err);
+					  	console.error(err);
+					}
+
+					else{
+						if (p.item.rename){
+							fs.renameSync(options.path + '/' + filename, options.path + '/' + p.item.rename);
+						}
 					}
 	
 					p.success();
