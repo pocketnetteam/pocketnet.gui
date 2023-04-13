@@ -1719,6 +1719,10 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   display: flex;
   padding-bottom: 0.5em;
 }
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelLeft span {
+  font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
   display: flex;
   align-items: center;
