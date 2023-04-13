@@ -60,7 +60,6 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
-    "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
     "cordova-plugin-media": "^6.1.0",
@@ -71,6 +70,12 @@
     "cordova-plugin-webview-checker": "^1.0.1",
     "cordova-plugin-x-socialsharing": "^6.0.4",
     "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+    <% if(!store) {%>
+        "cordova-plugin-apkupdater": "~4.0.0",
+    <% } %>
+    <% if(!gfree) {%>
+        "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
+    <% } %>
     "np": "^5.0.3",
     "sync-cordova-xml": "^0.4.0"
   },
@@ -106,32 +111,6 @@
       "cordova-plugin-insomnia": {},
       "cordova-plugin-taptic-engine": {},
       "cordova-plugin-background-download": {},
-      "cordova-plugin-firebasex": {
-        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
-        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
-        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-        "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
-        "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
-        "ANDROID_ICON_ACCENT": "#FF00FFFF",
-        "ANDROID_FIREBASE_PERFORMANCE_MONITORING": "false",
-        "ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION": "18.0.1",
-        "ANDROID_PLAY_SERVICES_AUTH_VERSION": "20.2.0",
-        "ANDROID_FIREBASE_ANALYTICS_VERSION": "21.0.0",
-        "ANDROID_FIREBASE_MESSAGING_VERSION": "23.0.5",
-        "ANDROID_FIREBASE_CONFIG_VERSION": "21.1.0",
-        "ANDROID_FIREBASE_PERF_VERSION": "20.0.6",
-        "ANDROID_FIREBASE_AUTH_VERSION": "21.0.4",
-        "ANDROID_FIREBASE_INAPPMESSAGING_VERSION": "20.1.2",
-        "ANDROID_FIREBASE_FIRESTORE_VERSION": "24.1.2",
-        "ANDROID_FIREBASE_FUNCTIONS_VERSION": "20.1.0",
-        "ANDROID_FIREBASE_IID_VERSION": "21.1.0",
-        "ANDROID_FIREBASE_INSTALLATIONS_VERSION": "17.0.1",
-        "ANDROID_FIREBASE_CRASHLYTICS_VERSION": "18.2.10",
-        "ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION": "18.2.10",
-        "ANDROID_GSON_VERSION": "2.9.0",
-        "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.4.1",
-        "ANDROID_GRPC_OKHTTP": "1.46.0"
-      },
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+",
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
@@ -159,7 +138,39 @@
         "CAMERA_USAGE_DESCRIPTION": "",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
       },
-      "cordova-plugin-audiotoggle": {}
+
+      <% if(!gfree) {%>
+        "cordova-plugin-firebasex": {
+            "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
+            "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
+            "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
+            "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
+            "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
+            "ANDROID_ICON_ACCENT": "#FF00FFFF",
+            "ANDROID_FIREBASE_PERFORMANCE_MONITORING": "false",
+            "ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION": "18.0.1",
+            "ANDROID_PLAY_SERVICES_AUTH_VERSION": "20.2.0",
+            "ANDROID_FIREBASE_ANALYTICS_VERSION": "21.0.0",
+            "ANDROID_FIREBASE_MESSAGING_VERSION": "23.0.5",
+            "ANDROID_FIREBASE_CONFIG_VERSION": "21.1.0",
+            "ANDROID_FIREBASE_PERF_VERSION": "21.1.0",
+            "ANDROID_FIREBASE_AUTH_VERSION": "21.0.4",
+            "ANDROID_FIREBASE_INAPPMESSAGING_VERSION": "20.1.2",
+            "ANDROID_FIREBASE_FIRESTORE_VERSION": "24.1.2",
+            "ANDROID_FIREBASE_FUNCTIONS_VERSION": "20.1.0",
+            "ANDROID_FIREBASE_IID_VERSION": "21.1.0",
+            "ANDROID_FIREBASE_INSTALLATIONS_VERSION": "17.0.1",
+            "ANDROID_FIREBASE_CRASHLYTICS_VERSION": "18.2.10",
+            "ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION": "18.2.10",
+            "ANDROID_GSON_VERSION": "2.9.0",
+            "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.4.1",
+            "ANDROID_GRPC_OKHTTP": "1.46.0"
+        },
+      <% } %>
+
+      "cordova-plugin-audiotoggle": {},
+
+      
     },
     "platforms": [
       "ios",

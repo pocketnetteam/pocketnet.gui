@@ -47,6 +47,8 @@ cordova/node_modules
 cordova/www
 cordova/config.xml
 cordova/build.json
+cordova/package.json
+cordova/package-lock.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
 indexcordova.html
