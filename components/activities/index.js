@@ -438,8 +438,32 @@ var activities = (function () {
 
 				p.clbk(null, p);
 			},
+			tooltip : {
+				options : {
+					theme : "lighttooltip activitiesTolltip",
+					position : 'left',
+					zIndex : 50,
+					distance : -47,
+					functionPosition: function(instance, helper, position){
+				        position.coord.top = 0;
+						position.coord.left = 0;
+
+				        return position;
+					},
+					arrow : false,
+
+					trigger : 'custom',
+					triggerOpen : {
+						click: true
+					},
+					triggerClose : {
+					}
+				},
+				//event : 'click'
+			},
+
 			wnd: {
-				class: 'wndactivities normalizedmobile maxheight',
+				class: 'wndactivities normalizedmobile maxheight withoutButtons',
 			}
 		}
 	};

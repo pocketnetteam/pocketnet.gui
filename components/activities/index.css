@@ -335,6 +335,10 @@ html[theme="black"]{
 #activities .container .videos .video .info .date {
   margin-bottom: 0;
 }
+.wndactivities.wnd .wndinner {
+  max-width: 600px;
+  max-height: 90vh;
+}
 .wndactivities.wnd #activities .container {
   border-radius: 6px;
   background: initial;
