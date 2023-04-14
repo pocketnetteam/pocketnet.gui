@@ -698,6 +698,10 @@ var menu = (function(){
 										return -Number(r.date)
 									})
 
+									r = _.filter(r, (a) => {
+										return a.type != 'video'
+									})
+
 									return r
 								}
 
@@ -756,6 +760,7 @@ var menu = (function(){
 								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
 
 									composeresult('user', r.data, r.count)
+
 
 									render(getresults(), value, clbk, {
 										counts : counts
