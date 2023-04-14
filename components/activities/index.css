@@ -223,9 +223,8 @@
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  height: 120px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
+  height: 80px;
+  margin-bottom: 0.5em;
   border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
   cursor: pointer;
 }
@@ -233,7 +232,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 90px;
+  max-height: 72px;
   min-width: 110px;
   max-width: 110px;
   overflow: hidden;
@@ -270,10 +269,6 @@
   flex-direction: column;
   width: 67%;
 }
-#activities .container .videos .video .info span {
-  margin: 0 8px;
-  font-size: 30px;
-}
 #activities .container .videos .video .info > div {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -300,7 +295,6 @@
   text-overflow: ellipsis;
   max-width: 60%;
   font-weight: 400;
-  font-size: 14px;
 }
 #activities .container .videos .video .info .second i,
 #activities .container .videos .video .info .third i,
@@ -308,13 +302,18 @@
   margin-right: 8px;
 }
 #activities .container .videos .video .info .date {
+  margin-top: 0.5em;
   margin-bottom: 0;
+}
+#activities .container .videos .video .info .third {
+  margin-top: 0.5em;
+  font-size: 0.8em;
 }
 .wndactivities.wnd .wndcontent {
   padding-top: 0;
 }
 .wndactivities.wnd .wndinner {
-  max-width: 600px;
+  max-width: 540px;
   max-height: 90vh;
 }
 .wndactivities.wnd #activities .container {

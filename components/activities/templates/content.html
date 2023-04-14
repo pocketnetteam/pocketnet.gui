@@ -279,33 +279,41 @@ if(videos.length) {
 			</div>
 			<div class="info">
 				<div class="name"><%- video?.name %></div>
-				<div class="second">
-					<%
-					if(video?.info?.name) {
-					%>
-					<div class="author"><%-video?.info?.name %></div>
-					<%
-					} if(video?.views) {
-					%>
-					<div class="views"><%-video?.views %> просмотров</div>
-				</div>
+				
 				<div class="third">
 					<%
-					} if(video?.comments !== undefined) {
+					if(video?.comments !== undefined) {
 					%>
 					<div class="comments"><i class="fa fa-comments"></i><%-video?.comments %></div>
+
 					<%
-					} if(video?.rating) {
+					}
+					%>
+
+					<%
+					if(video?.rating) {
 					%>
 					<div class="rating"><i class="fa fa-star"></i><%-video?.rating.toPrecision(2)%></div>
 					<%
 					}
 					%>
+					<%
+					if(video?.views) {
+						%>
+						<div class="views"><%-video?.views %> просмотров</div>
+
+						<%
+					}
+					%>
 				</div>
 				<%
 				if(video?.date) {
+
+					console.log('video.date', video.date)
+
 				%>
-					<div class="date"><%- moment.unix((video.date)).format('llll') %></div>
+					<div class="date">
+						<span><%- app.reltime(moment.unix((video.date))) %></span></div>
 				<%
 				}
 				%>

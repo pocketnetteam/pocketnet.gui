@@ -25472,51 +25472,95 @@ Platform = function (app, listofnodes) {
                     if (data.tap) {
 
                         platform.ws.destroyMessages();
-                        const body = JSON.parse(data?.json);
-                        body.url = body?.url.replace("/index", "");
-                        if(body.url) {
-                            if(body.url === "/userpage?id=wallet"){
-                                platform.app.nav.api.go({
-                                    open: true,
-                                    href: 'wallet',
-                                    history: true,
-                                    inWnd: true,
-                                    essenseData: {
-                                    },
-                                });
-                            }else {
 
-                                const params = new URLSearchParams(body.url);
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'post?s=' + params.get('s'),
-                                    inWnd: true,
-                                    history: true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['post'] = p
-                                    },
+                        var body = {}
 
-                                    essenseData: {
-                                        share: params.get('s'),
+                        try{
+                            body = JSON.parse(data?.json || "{}") || {};
+                        }catch(e){
 
-                                        reply: {
-                                            answerid: params.get('commentid') || "",
-                                            parentid: params.get('parentid') || "",
-                                            noaction: true
+                        }
+
+                        
+
+                        body.url = (body.url || "").replace("/index", "");
+
+                        if(!body.url) return
+
+                        app.user.isState(function (state) {
+
+                            if(body.url) {
+
+                                if(body.url === "/userpage?id=wallet"){
+
+                                    if(app.nav.wnds['wallet']) return
+
+                                    platform.app.nav.api.go({
+                                        open: true,
+                                        href: 'wallet',
+                                        history: true,
+                                        inWnd: true,
+
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['wallet'] = p
+                                        },
+
+                                        essenseData: {
+                                        },
+                                    });
+
+                                }else {
+
+                                    if(app.nav.wnds['post']) return
+
+                                    const params = new URLSearchParams(body.url);
+
+                                    var postid = params.get('s')
+
+                                    if(!postid) return
+
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + postid,
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+
+                                        essenseData: {
+                                            share: postid,
+
+                                            reply: {
+                                                answerid: params.get('commentid') || "",
+                                                parentid: params.get('parentid') || "",
+                                                noaction: true
+                                            }
                                         }
+                                    })
+                                }
+
+                            }else{
+
+                                if(app.nav.wnds['notifications']) return
+
+                                platform.app.nav.api.go({
+                                    open : true,
+                                    href : 'notifications',
+                                    inWnd : true,
+                                    history : true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['notifications'] = p
+                                    },
+                                    essenseData : {
                                     }
                                 })
+
                             }
-                        }else{
-                            platform.app.nav.api.go({
-                                open : true,
-                                href : 'notifications',
-                                inWnd : true,
-                                history : true,
-                                essenseData : {
-                                }
-                            })
-                        }
+
+                        })
+
+
                     } else {
 
                         if (typeof cordova != 'undefined') {
