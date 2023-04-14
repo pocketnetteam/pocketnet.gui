@@ -311,6 +311,8 @@ var menu = (function(){
 				}
 			},
 
+			
+
 			notifications : {
 				init : function(el){
 
@@ -378,6 +380,42 @@ var menu = (function(){
 						})
 
 					}
+
+				}
+			},
+
+			activities : {
+				init : function(el){
+
+					/*setTimeout(function(){
+
+						if(!isTablet()){
+							self.nav.api.load({
+								eid : 'menu',
+								open : true,
+								id : 'activities',
+								el : el,
+								inTooltip : true
+							})
+						}
+						
+					},2000)*/
+
+				},
+
+				click : function(el){
+					self.app.mobile.vibration.small(true)
+
+
+					self.nav.api.go({
+						open : true,
+						href : 'activities',
+						inWnd : true,
+						history : true,
+						essenseData : {
+						}
+					})
+
 
 				}
 			},
@@ -1118,16 +1156,6 @@ var menu = (function(){
 				
 			})
 
-			el.c.find('.activities').on('click', function () {
-				console.log('activities')
-				self.nav.api.load({
-					eid : 'activities',
-					open : true,
-					id : 'activities',
-					inWnd : true,
-					// el : el,
-				})
-			})
 
 			if (self.app.platform.sdk.newmaterials.clbks)
 				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew

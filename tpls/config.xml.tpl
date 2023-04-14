@@ -118,15 +118,7 @@
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
-    <plugin name="cordova-plugin-device" spec="~1.1.1" />
     
-
-    <% if(!store) {%>
-
-        <plugin name="cordova-plugin-apkupdater" spec="~4.0.0" />
-
-    <% } %>
-
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

@@ -140,12 +140,12 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 								</div>
 
 
-								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
+								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper">
 									<div class="item  right onlyicon activities" events="activities">
 
 										<div class="icon">
 											<div class="icn">
-												<i class="fa fa-history"></i>
+												<i class="far fa-heart"></i>
 											</div>
 										</div>
 

@@ -757,7 +757,6 @@ var donations = (function(){
 							return w.id == id
 						})
 
-						console.log('curobj', curobj)
 						if (curobj.id === 'other'){
 							$(this).toggleClass('active');
 					
