@@ -428,6 +428,7 @@
   
   ImagesLoadedPN.prototype.complete = function() {
 
+
     if(this.isComplete) return
 
     var eventName = this.hasAnyBroken ? 'fail' : 'done';

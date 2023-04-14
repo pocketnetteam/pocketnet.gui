@@ -1958,6 +1958,8 @@
 				image.src = src
 				image.onload = () => {
 
+					console.log("HERE")
+
 					window.requestAnimationFrame(() => {
 						
 						el.setAttribute('image', '*')

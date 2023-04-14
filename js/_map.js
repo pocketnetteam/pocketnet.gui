@@ -834,8 +834,7 @@ __map =  {
 			uri : "imagegallery",
 			href : "imagegallery",
 			add : insertingfunc,
-			anonimus : true,
-			relationsSunc : true,
+			anonimus : true
 		},
 
 		aboutus : {
