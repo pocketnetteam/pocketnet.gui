@@ -103,7 +103,7 @@ var activities = (function () {
 				_.find(activitiesByGroup, (a) => {
 					if(_.find(a, (a) => {
 
-						if(a.hash == tid) {
+						if(a.hash == tid || a.txid == tid) {
 							activity = a
 
 							return true
@@ -112,7 +112,7 @@ var activities = (function () {
 					})) return true
 				})
 
-
+				console.log('tid', tid, activity, activitiesByGroup)
 
 				return activity
 			}
@@ -163,6 +163,7 @@ var activities = (function () {
 					el.loader[0].style.display = 'none'
 					//renders.content()
 				}
+
 			},
 
 			getdata: function () {
@@ -206,16 +207,16 @@ var activities = (function () {
 
 				return Promise.all(_.map(a, (i) => {
 					return i.then((value) => {
-						let c = new Promise((res) => {
+						/*let c = new Promise((res) => {
 							return self.sdk.users.get([value?.original?.account?.name], (info) => {
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								res(value)
 							})
-						})
+						})*/
 
 						
-						return c
+						return value
 
 					}).then(readyVideo => {
 
@@ -245,6 +246,8 @@ var activities = (function () {
 
 				_.each(vid, (video) => {
 
+					console.log('video', video)
+
 					let a = new Promise((resolve, reject) => {
 						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
 
@@ -252,7 +255,9 @@ var activities = (function () {
 
 								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
 
-								if (!p) reject('np')
+								if (!p) return reject('np')
+
+								console.log("P", p)
 
 									resolve({ ...p.data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
 
@@ -262,7 +267,7 @@ var activities = (function () {
 							resolve({ ...r[0][0].data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
 
 						}).catch(e => {
-							console.log(e)
+							console.error(e)
 
 							return Promise.resolve()
 						})
@@ -290,7 +295,7 @@ var activities = (function () {
 
 				answer = data.type === "answer" ? data.hash : ''
 
-				parent = data.txType === 301 ? data.relatedContent.hash : data.type === "answer" ? data.relatedContent.hash : data.hash
+				parent = data.txType === 301 ? data.relatedContent.hash : data.type === "answer" ? data.relatedContent.hash : ''
 
 				self.app.platform.app.nav.api.load({
 					open: true,
@@ -302,13 +307,12 @@ var activities = (function () {
 					},
 
 					essenseData: {
-						share: '',
 
-						reply: {
+						reply: answer || parent ? {
 							answerid: answer,
 							parentid: parent,
 							noaction: true
-						}
+						} : null
 					}
 				})
 			},
@@ -358,6 +362,8 @@ var activities = (function () {
 				if (this.classList.contains('active')) {
 					return
 				}
+
+				el.content.html('')
 
 				actions.applyFilter($(this).attr('rid'))
 
