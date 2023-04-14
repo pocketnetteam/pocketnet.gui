@@ -598,8 +598,6 @@ var imagegallery = (function(){
 
 		var destroyHammers = function(){
 
-			console.log('destroyHammers')
-
 			if (hammers.f){
 				hammers.f.on('pan', hammerEvents.pan);
 				hammers.f.on('panend', hammerEvents.panend);

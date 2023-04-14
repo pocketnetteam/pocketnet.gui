@@ -113,7 +113,6 @@ var activities = (function () {
 				})
 
 
-				console.log('activity', activity)
 
 				return activity
 			}
@@ -152,59 +151,7 @@ var activities = (function () {
 					
 				})
 
-				return
-
-				//renders.content()
-				if (currentFilter === 'video') {
-					actions.setloading(true)
-					let a = actions.getVideos()
-
-					if (!a.length) {
-						actions.setloading(false)
-						return
-					}
-					let b = []
-
-					a.forEach(
-						i => i.then((value) => {
-							let c = new Promise((res) => {
-								return self.sdk.users.get([value?.original?.account?.name], (info) => {
-									info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
-									info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
-									res(value)
-									console.log('res', value)
-								})
-							})
-
-							b.push(c)
-							return c
-
-						}).then(readyVideo => {
-							videos.push(readyVideo)
-							if (videos.length === a.length) {
-								console.log('all', videos, a)
-								actions.setloading(false)
-							}
-							videos.sort((a, b) => b.date - a.date);
-							renders.content()
-
-						}).catch(e => {
-							actions.setloading(false)
-							console.log('err', e)
-						})
-					)
-					renders.showcurrentFilter()
-					return
-				} else {
-					videos = []
-				}
-
-				actions.getdata().then((e) => {
-					if (e) return sitemessage(e.error.message || e.error?.error || e.error)
-
-					renders.showcurrentFilter()
-
-				})
+				
 			},
 
 			setloading: function (v) {
@@ -264,7 +211,6 @@ var activities = (function () {
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
 								res(value)
-								console.log('res', value)
 							})
 						})
 
@@ -328,8 +274,6 @@ var activities = (function () {
 			},
 
 			openPost(data) {
-
-				console.log("OPENPOST", data)
 
 				let href, answer, parent
 

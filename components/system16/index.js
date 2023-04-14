@@ -4008,7 +4008,6 @@ var system16 = (function(){
 				return $(this).hasClass('expanded')
 			})
 			
-			console.log('expanded', expanded)
 
 			if (proxy) {
 

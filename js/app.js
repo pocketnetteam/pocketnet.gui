@@ -1268,7 +1268,6 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
-            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -2055,7 +2054,7 @@ Application = function(p)
     memory : function(){
 
       document.addEventListener('memorywarning', function () {
-        console.log("MOMORY WARNING1")
+        console.log("MEMORY WARNING")
       });
 
     },

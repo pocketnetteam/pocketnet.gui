@@ -1156,17 +1156,6 @@ var menu = (function(){
 				
 			})
 
-			/*el.c.find('.activities').on('click', function () {
-				console.log('activities')
-				
-				self.nav.api.load({
-					eid : 'activities',
-					open : true,
-					id : 'activities',
-					inWnd : true,
-					// el : el,
-				})
-			})*/
 
 			if (self.app.platform.sdk.newmaterials.clbks)
 				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew

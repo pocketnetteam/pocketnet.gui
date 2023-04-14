@@ -3378,6 +3378,7 @@ var lenta = (function(){
 
 					return
 				}
+				
 
 				var _shares = _.filter(shares, function(s){
 					if(typeof s.myVal == 'undefined'){
@@ -5623,7 +5624,6 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
-					console.log("HERE")
 				}
 				
 

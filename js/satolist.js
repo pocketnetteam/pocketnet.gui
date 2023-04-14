@@ -7873,7 +7873,6 @@ Platform = function (app, listofnodes) {
                                                     resolve(entry.toURL());
                                                 },
                                                 function (error) {
-                                                    console.log("download thumbnail error: ", error);
                                                     reject('download thumbnail error');
                                                 },
                                                 null, {}
@@ -14330,7 +14329,7 @@ Platform = function (app, listofnodes) {
     
                     task.status = 'processing'
     
-                    self.app.platform.sdk.node.shares.gettopfeed(p, (shares, error) => {
+                    self.app.platform.sdk.node.shares.gettopfeedNotLiked(p, (shares, error) => {
     
                         task.status = 'completed'
     
@@ -14466,7 +14465,6 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-
               
 
                     var p = {};
@@ -17034,6 +17032,8 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.likes.storage
 
+                console.log("shares S", s)
+
                 _.each(ids, function (txid) {
                     var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
 
@@ -17043,8 +17043,6 @@ Platform = function (app, listofnodes) {
                         if (typeof share.myVal == 'undefined') {
                             share.myVal = Number(s[txid])
                         }
-
-
 
                     }
 
@@ -18755,11 +18753,15 @@ Platform = function (app, listofnodes) {
 
                         var s = new pShare();
 
+                        delete share.myVal
+
                         s._import(share);
 
                         s.txid = share.txid;
 
                         s.time = new Date();
+
+                        
 
                         s.address = share.address
 
@@ -18895,6 +18897,8 @@ Platform = function (app, listofnodes) {
                             var clear = d.contents
 
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
+
+
 
                             self.sdk.node.shares.takeusers(_.filter(clear, (c => {
                                 return c && c.txid && c.address
@@ -19278,6 +19282,34 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                gettopfeedNotLiked : function(p, clbk, cache){
+                    self.app.platform.sdk.node.shares.gettopfeed(p, function(shares) {
+
+                        shares = _.filter(shares, function(s){
+                            if(typeof s.myVal == 'undefined'){
+                                return true;
+                            }
+                        })
+        
+                        var ids = _.map(shares, function(s){
+                            return s.txid
+                        })
+        
+                        self.app.platform.sdk.likes.get(ids, function(){
+
+                            shares = _.filter(shares, function(s){
+                                if (!s.myVal){
+                                    return true;
+                                }
+                            })
+        
+                            if(clbk) clbk(shares)
+        
+                        })
+
+                    }, cache)
+                },
+
                 gettopfeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
@@ -19602,6 +19634,8 @@ Platform = function (app, listofnodes) {
                                     if (s.info){
                                         s.info.BLOCK = blocknumber
                                     }
+
+                                    
                                 })
 
                                 p.blocknumber = blocknumber

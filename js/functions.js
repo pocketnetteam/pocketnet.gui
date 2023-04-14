@@ -695,9 +695,6 @@
 
 		var destroySwipable = function(){
 
-			console.log('destroySwipable parallax', parallax ? true : false)
-
-
 			if (parallax){
 				parallax.clear()
 				parallax.destroy()
@@ -764,9 +761,6 @@
 				else{
 					directions.down = down
 				}
-
-				console.log("PENABLE")
-
 
 				parallax = new SwipeParallaxNew({
 
@@ -1957,8 +1951,6 @@
 
 				image.src = src
 				image.onload = () => {
-
-					console.log("HERE")
 
 					window.requestAnimationFrame(() => {
 						
@@ -7171,7 +7163,6 @@
 
 
 				if(!direction || !p.directions[direction]) {
-					console.log("HERE???")
 					return true
 				}
 
@@ -11467,7 +11458,6 @@ edjsHTML = function() {
 					return '<div class="js-player-ini" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
-					//console.log(t)
 					//return '<iframe src="'+t.embed+'"></iframe>'
 					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
             }
