@@ -906,6 +906,10 @@ fs.exists(mapJsPath, function (exists) {
 							if(VARS.store){
 								JSENV += '<script>window.pocketnetstore = ' + VARS.store + ';</script>\n';
 							}
+
+							if(VARS.gfree){
+								JSENV += '<script>window.pocketnetgfree = ' + VARS.gfree + ';</script>\n';
+							}
 							
 							if(VARS.sha){
 								const isHex = /^[0-9A-Fa-f]+$/;
