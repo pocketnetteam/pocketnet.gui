@@ -308,7 +308,7 @@ jobs:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
-  build-app-android-gfree:
+  build-app-android-gf:
     needs: merge
     runs-on: ubuntu-20.04
     steps:
@@ -358,15 +358,15 @@ jobs:
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
           ls -lh
-          mv app-release.apk BastyonGFree.apk
+          mv app-release.apk BastyonGF.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-gfree
-          path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGFree.apk
-        
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
+
   deploy-app-binaries:
-    needs: [ build-app-macos, build-app-unix, build-app-windows, build-app-android, build-app-android-gfree ]
+    needs: [ build-app-macos, build-app-unix, build-app-windows, build-app-android, build-app-android-gf ]
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
