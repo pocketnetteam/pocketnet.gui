@@ -2763,7 +2763,7 @@ Application = function(p)
               var assets = deep(d, 'assets') || [];
 
               var l = _.find(assets, function(a){
-                return a.name == os.github.name
+                return window.pocketnetgfree ? (a.name == os.github.gfname) : a.name == os.github.name
               })
 
               if(l){
