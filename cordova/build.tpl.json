@@ -1,14 +1,14 @@
 {
     "android": {
         "debug": {
-            "keystore": "pocketnet.keystore",
+            "keystore": "cert.keystore",
             "storePassword": "",
             "alias": "pocketnet",
             "password": "",
             "keystoreType": ""
         },
         "release": {
-            "keystore": "pocketnet.keystore",
+            "keystore": "cert.keystore",
             "storePassword": "",
             "alias": "pocketnet",
             "password": "",

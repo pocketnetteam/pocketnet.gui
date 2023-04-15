@@ -339,6 +339,7 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
           echo "${{ secrets.ANDROID_BUILD_GFREE_CONF }}" | base64 -d > buildgfree.json
       - name: Fixing Android Build Tool Issue
         run: |
