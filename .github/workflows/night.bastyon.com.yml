@@ -222,7 +222,7 @@ jobs:
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
   build-android-gf:
-    needs: merge
+    needs: prepare
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
