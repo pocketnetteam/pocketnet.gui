@@ -30435,6 +30435,10 @@ Platform = function (app, listofnodes) {
                                 path = window.pocketnetpublicpath
                             }
 
+                            if(window.cordova && isios()){
+                                path = ''
+                            }
+
                             if(typeof _Electron != 'undefined') path = './'
 
                             
