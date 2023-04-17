@@ -286,12 +286,14 @@ var activities = (function () {
 					if (data?.txid) {
 						href = data.txid
 					} else {
-						href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : data.relatedContent.hash
+						href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : (data.relatedContent.rootTxHash || data.relatedContent.hash)
 					}
 
 				} else {
 					return
 				}
+
+				console.log('openPost', data, href)
 
 				answer = data.type === "answer" ? data.hash : ''
 
