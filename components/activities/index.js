@@ -202,7 +202,8 @@ var activities = (function () {
 				let a = actions.getVideos()
 
 				if (!a.length) {
-					return Promise.resolve(videos)
+					actions.setloading(false)
+					return Promise.resolve([])
 				}
 
 				return Promise.all(_.map(a, (i) => {
