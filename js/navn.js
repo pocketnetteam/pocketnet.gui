@@ -1449,6 +1449,8 @@ Nav = function(app)
 				backManager.clearAll()	
 			}
 
+			console.log("LOADDEFAULT", p)
+
 			backManager.add(p.href)
 
 			historyManager.add(p.href, { replaceState : true })

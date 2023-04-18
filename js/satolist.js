@@ -25488,78 +25488,87 @@ Platform = function (app, listofnodes) {
 
                         if(!body.url) return
 
-                        app.user.isState(function (state) {
+                        console.log('body', body, data)
 
-                            if(body.url) {
+                        app.waitinited().then(() => {
 
-                                if(body.url === "/userpage?id=wallet"){
+                            console.log("HERE")
 
-                                    if(app.nav.wnds['wallet']) return
+                            app.user.isState(function (state) {
 
-                                    platform.app.nav.api.go({
-                                        open: true,
-                                        href: 'wallet',
-                                        history: true,
-                                        inWnd: true,
-
-                                        clbk: function (d, p) {
-                                            app.nav.wnds['wallet'] = p
-                                        },
-
-                                        essenseData: {
-                                        },
-                                    });
-
-                                }else {
-
-                                    if(app.nav.wnds['post']) return
-
-                                    const params = new URLSearchParams(body.url);
-
-                                    var postid = params.get('s')
-
-                                    if(!postid) return
-
-                                    platform.app.nav.api.load({
-                                        open: true,
-                                        href: 'post?s=' + postid,
-                                        inWnd: true,
-                                        history: true,
-                                        clbk: function (d, p) {
-                                            app.nav.wnds['post'] = p
-                                        },
-
-                                        essenseData: {
-                                            share: postid,
-
-                                            reply: {
-                                                answerid: params.get('commentid') || "",
-                                                parentid: params.get('parentid') || "",
-                                                noaction: true
+                                if(body.url) {
+    
+                                    if(body.url === "/userpage?id=wallet"){
+    
+                                        if(app.nav.wnds['wallet']) return
+    
+                                        platform.app.nav.api.go({
+                                            open: true,
+                                            href: 'wallet',
+                                            inWnd: true,
+    
+                                            clbk: function (d, p) {
+                                                app.nav.wnds['wallet'] = p
+                                            },
+    
+                                            essenseData: {
+                                            },
+                                        });
+    
+                                    }else {
+    
+                                        if(app.nav.wnds['post']) return
+    
+                                        const params = new URLSearchParams(body.url);
+    
+                                        var postid = params.get('s')
+    
+                                        if(!postid) return
+    
+                                        console.log('postid', postid, params)
+    
+                                        platform.app.nav.api.go({
+                                            open: true,
+                                            href: 'post?s=' + postid,
+                                            inWnd: true,
+                                            clbk: function (d, p) {
+                                                app.nav.wnds['post'] = p
+                                            },
+    
+                                            essenseData: {
+                                                share: postid,
+    
+                                                reply: {
+                                                    answerid: params.get('commentid') || "",
+                                                    parentid: params.get('parentid') || "",
+                                                    noaction: true
+                                                }
                                             }
+                                        })
+                                    }
+    
+                                }else{
+    
+                                    if(app.nav.wnds['notifications']) return
+    
+                                    platform.app.nav.api.go({
+                                        open : true,
+                                        href : 'notifications',
+                                        inWnd : true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['notifications'] = p
+                                        },
+                                        essenseData : {
                                         }
                                     })
+    
                                 }
-
-                            }else{
-
-                                if(app.nav.wnds['notifications']) return
-
-                                platform.app.nav.api.go({
-                                    open : true,
-                                    href : 'notifications',
-                                    inWnd : true,
-                                    history : true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['notifications'] = p
-                                    },
-                                    essenseData : {
-                                    }
-                                })
-
-                            }
+    
+                            })
 
                         })
+
+                        
 
 
                     } else {
@@ -31565,6 +31574,8 @@ Platform = function (app, listofnodes) {
         if (window.cordova && typeof universalLinks != 'undefined'){
 
             universalLinks.subscribe('nav-message', function (eventData) {
+
+                console.log("NAV_MESSAGE", eventData)
 
                 routing(eventData.url)
 

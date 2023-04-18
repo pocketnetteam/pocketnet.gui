@@ -1091,7 +1091,7 @@ Application = function(p)
           $('#splashScreen').remove()
         }
 
-
+        self.inited = true
 
         self.mobile.update.needmanagecheck().then(r => {
           if (r){
@@ -1117,6 +1117,12 @@ Application = function(p)
      * conditional checking in appear method of instance
      */
     if (typeof initShadowPopups === 'function' && !window.testpocketnet) initShadowPopups()
+  }
+
+  self.waitinited = function(){
+    return  pretry(function(){
+      return self.inited
+    })
   }
 
   self.reload = function(p){
