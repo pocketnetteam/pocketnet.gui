@@ -786,8 +786,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				],
 
 				13: [
-				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
-				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
+				  { 
+					host: '01rus.nohost.me',
+					ip: '178.217.159.227',
+					offline: true,
+				  },
+				  { 
+					host: '02rus.pocketnet.app',
+					ip: '31.184.215.67',
+					offline: true,
+				  },
+				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				14: [
