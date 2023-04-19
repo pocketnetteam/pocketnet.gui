@@ -35,7 +35,7 @@
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                         </div>
-                        <% if (window.testpocketnet) { %>
+                        <% if (app.platform.real[app.user.address.value] || app.platform.testaddresses[app.user.address.value]) {%>
                             <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
                                 <i class="fas fa-dot-circle"></i> <span><%- e('peertubeAddStream') %></span>
                             </div>
