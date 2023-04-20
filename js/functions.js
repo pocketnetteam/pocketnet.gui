@@ -11221,6 +11221,19 @@ clearStringXss = function(nm){
 	})
 }
 
+checkIfAllowedImage = function(src){
+	const url = new URL(src);
+
+	const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
+
+	const isImgur = url.hostname.includes('imgur.com');
+	const isBastyon = url.hostname.includes('bastyon.com');
+	const isPocketnet = url.hostname.includes('pocketnet.app');
+	const isPeertube = ptRegex.test(url.pathname);
+
+	return isImgur || isBastyon || isPocketnet || isPeertube;
+}
+
 getBase64 = function (file) {
 	return new Promise((resolve, reject) => {
 	  const reader = new FileReader();

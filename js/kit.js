@@ -2027,6 +2027,12 @@ pUserInfo = function(){
 		self.language = clearStringXss(v.l || v.language);
 		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
 
+		const isImageAllowed = checkIfAllowedImage(self.image);
+
+		if (!isImageAllowed) {
+			self.image = '';
+		}
+
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
@@ -2392,6 +2398,8 @@ pShare = function(){
 		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
+		self.images = self.images.filter(image => checkIfAllowedImage(image));
+
 		if (v.deleted) self.deleted = true
 
 		if (v.txid)
@@ -2730,6 +2738,8 @@ pComment = function(){
 
 					return clearStringXss(decodeURIComponent(i))
 				});
+
+				self.images = self.images.filter(image => checkIfAllowedImage(image));
 			}
 
 			catch(e){
