@@ -24809,7 +24809,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 peertube : function(links){
-
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
                     }).then(linksInfo => {
