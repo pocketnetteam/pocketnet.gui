@@ -48,7 +48,7 @@
 #pkoin .content .playVideo {
   display: flex;
   align-items: center;
-  margin-top: 0.5em;
+  margin-top: 1em;
   padding: 0.5em 1em;
   color: #00a4ff;
   cursor: pointer;
@@ -465,7 +465,7 @@ html.mobileview .wnd.pkoinwindow #pkoin .sendButtonWrapper {
 }
 html.mobileview .wnd.pkoinwindow #pkoin .abswrappcontent {
   position: static;
-  padding-bottom: 3.5em;
+  padding-bottom: 3em;
 }
 html.mobileview .wnd.pkoinwindow #pkoin .boostinfodata .text span {
   font-size: 0.8em;
