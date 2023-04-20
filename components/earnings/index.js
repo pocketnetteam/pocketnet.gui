@@ -88,17 +88,17 @@ var earnings = (function () {
 
         self.shell({
 
-					name :  'total',
-					el :   el.content,
+          name :  'total',
+          el :   el.content,
           inner : append,
-					data : {
-						item : item
-					},
+          data : {
+            item : item
+          },
 
-				}, function(_p){
+        }, function(_p){
 
 
-				})
+        })
 
       }
     }
@@ -167,8 +167,8 @@ var earnings = (function () {
     _.each(essenses, function (essense) {
 
       window.requestAnimationFrame(() => {
-				essense.destroy();
-			})
+        essense.destroy();
+      })
 
     })
 
