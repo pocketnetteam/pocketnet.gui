@@ -1073,10 +1073,16 @@ __map =  {
 		
 	},
 
-	statistic : {
-		uri : "statistic",
-		href : "statistic",
+	earnings : {
+		uri : "earnings",
+		href : "earnings",
 		add : insertingfunc,
+
+		relations : [
+			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
+				Chart = require('./js/vendor/chart.min.js')
+			}},	
+		]
 	},
 
 	videoCabinet : {

@@ -138,6 +138,14 @@ var userpage = (function(){
 			})
 
 			reports.push({
+				name : self.app.localization.e('earnings2'),
+				id : 'earnings',
+				report : 'earnings',
+				//openReportPageMobile : true,
+				mobile : false
+			})
+
+			reports.push({
 
 				name : self.app.localization.e('followers'),
 				id : 'followers',
@@ -281,13 +289,7 @@ var userpage = (function(){
 			}
 
 			
-			reports.push({
-				name : self.app.localization.e('captionUserStats'),
-				id : 'statistics',
-				report : 'statistic',
-				//openReportPageMobile : true,
-				mobile : false
-			})
+
 			
 				
 		}
