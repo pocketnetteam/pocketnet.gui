@@ -8,6 +8,15 @@
   font-size: 1.5em;
   text-align: center;
 }
+#boost .work.minimal .top,
+#boost .work.minimal .header__title,
+#boost .work.minimal .learn-more,
+#boost .work.minimal .formula {
+  display: none;
+}
+#boost .work.minimal .header {
+  margin-top: 0;
+}
 #boost .header {
   margin-top: 40px;
   text-align: center;
