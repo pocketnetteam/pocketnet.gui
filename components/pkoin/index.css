@@ -24,15 +24,6 @@
   align-items: center;
   font-weight: 700;
 }
-#pkoin .content .top .playVideo {
-  display: flex;
-  align-items: center;
-  color: #00a4ff;
-  cursor: pointer;
-}
-#pkoin .content .top .playVideo i {
-  margin-left: 0.5em;
-}
 #pkoin .content .top .buyButtonWrapper {
   display: flex;
   align-items: center;
@@ -53,6 +44,17 @@
 #pkoin .content .top .buyButtonWrapper .buyButton img {
   width: 20px;
   height: 20px;
+}
+#pkoin .content .playVideo {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  color: #00a4ff;
+  cursor: pointer;
+}
+#pkoin .content .playVideo i {
+  margin-left: 0.5em;
 }
 #pkoin .content .abswrappcontent {
   position: absolute;
@@ -463,6 +465,7 @@ html.mobileview .wnd.pkoinwindow #pkoin .sendButtonWrapper {
 }
 html.mobileview .wnd.pkoinwindow #pkoin .abswrappcontent {
   position: static;
+  padding-bottom: 3.5em;
 }
 html.mobileview .wnd.pkoinwindow #pkoin .boostinfodata .text span {
   font-size: 0.8em;

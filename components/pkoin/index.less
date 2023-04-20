@@ -35,16 +35,6 @@
 				font-weight: 700;
 			}
 
-			.playVideo{
-				display: flex;
-				align-items: center;
-				color: @color-main;
-				cursor: pointer;
-
-				i{
-					margin-left: @rhythm;
-				}
-			}
 
 			.buyButtonWrapper{
 				display: flex;
@@ -73,6 +63,19 @@
 			}
 
 
+		}
+
+		.playVideo{
+			display: flex;
+			align-items: center;
+			margin-top: @rhythm;
+			padding: @rhythm @rhythm * 2;
+			color: @color-main;
+			cursor: pointer;
+
+			i{
+				margin-left: @rhythm;
+			}
 		}
 
 		.abswrappcontent{
@@ -572,6 +575,7 @@ html.mobileview{
 
 			.abswrappcontent{
 				position: static;
+				padding-bottom: @rhythm * 7;
 			}
 
 			.boostinfodata{

@@ -531,7 +531,7 @@ _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
 _l.preview = "Preview"
 _l.autoplayVideo = "Autoplay Video"
-_l.playVideo = "Play Video"
+_l.learnMoreBoost = "Learn more about Boost"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
