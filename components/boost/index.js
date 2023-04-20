@@ -8,7 +8,7 @@ var boost = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, ext = null;
+		var el, ed, ext = null, autoplay;
 
 		var actions = {
 
@@ -112,11 +112,15 @@ var boost = (function(){
 
 			getdata : function(clbk, p){
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {};
 
 				var data = {
-					ed
+					minimal : ed.minimal ? 'minimal' : '',
+					autoplay : ed.autoplay
 				};
+
+				console.log('datat', data);
+
 
 				clbk(data);
 

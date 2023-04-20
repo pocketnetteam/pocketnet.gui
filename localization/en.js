@@ -531,6 +531,7 @@ _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
 _l.preview = "Preview"
 _l.autoplayVideo = "Autoplay Video"
+_l.learnMoreBoost = "Learn more about Boost"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
@@ -2595,3 +2596,5 @@ _l.torusing_stats = "Networking statistics"
 _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 
 _l.listeners = "Listeners";
+
+_l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";

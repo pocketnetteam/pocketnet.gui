@@ -45,6 +45,17 @@
   width: 20px;
   height: 20px;
 }
+#pkoin .content .playVideo {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  color: #00a4ff;
+  cursor: pointer;
+}
+#pkoin .content .playVideo i {
+  margin-left: 0.5em;
+}
 #pkoin .content .abswrappcontent {
   position: absolute;
   left: 0;
@@ -78,6 +89,184 @@
 }
 #pkoin .content .fieldsWrapper {
   padding-bottom: 0;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component {
+  display: none;
+  position: absolute;
+  top: 55px;
+  background-color: rgb(var(--color-bg-ac-bright));
+  color: #fff;
+  padding: 5px 0;
+  border-radius: 6px;
+  text-align: left;
+  max-width: 300px;
+  min-width: 200px;
+  min-height: 50px;
+  padding: 10px;
+  z-index: 99999;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.hide {
+  display: none;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.show {
+  display: block;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component > div {
+  margin-right: 4px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu {
+  margin-top: 10px;
+  height: 30px;
+  border-top: 1px solid white;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu > .default-btn {
+  background-color: white;
+  border: none;
+  padding: 0;
+  color: rgb(var(--color-bg-ac-bright));
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu > .done-btn,
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu > .next-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 4px;
+  cursor: pointer;
+  width: 50px;
+  height: 21px;
+  font-family: inherit;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu > .skip-btn {
+  position: absolute;
+  right: 133px;
+  bottom: 4px;
+  cursor: pointer;
+  width: 50px;
+  height: 21px;
+  font-family: inherit;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component .action-menu > .previous-btn {
+  position: absolute;
+  left: 8px;
+  bottom: 4px;
+  cursor: pointer;
+  width: 58px;
+  height: 21px;
+  font-family: inherit;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.left {
+  /* Stroke */
+  /* Fill */
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.left:before,
+#pkoin .content .fieldsWrapper .fields .tutorial-component.left:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-left: 0;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.left:before {
+  bottom: 35%;
+  left: -12px;
+  /* If 1px darken stroke slightly */
+  border-right-color: white;
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.left:after {
+  bottom: 35%;
+  left: -11px;
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.right {
+  /* Required for Triangle */
+  /* Stroke */
+  /* Fill */
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.right:before,
+#pkoin .content .fieldsWrapper .fields .tutorial-component.right:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-right: 0;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.right:before {
+  right: -12px;
+  bottom: 35%;
+  /* If 1px darken stroke slightly */
+  border-left-color: white;
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.right:after {
+  right: -11px;
+  bottom: 35%;
+  border-left-color: white;
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.up {
+  /* Required for Triangle */
+  /* Stroke */
+  /* Fill */
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.up:before,
+#pkoin .content .fieldsWrapper .fields .tutorial-component.up:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top: 0;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.up:before {
+  left: 10%;
+  bottom: 100%;
+  /* If 1px darken stroke slightly */
+  border-bottom-color: rgb(var(--color-bg-ac-bright));
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.up:after {
+  left: 10%;
+  bottom: 100%;
+  border-bottom-color: rgb(var(--color-bg-ac-bright));
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.down {
+  /* Required for Triangle */
+  /* Stroke */
+  /* Fill */
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.down:before,
+#pkoin .content .fieldsWrapper .fields .tutorial-component.down:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom: 0;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.down:before {
+  left: 80%;
+  top: 100%;
+  /* If 1px darken stroke slightly */
+  border-top-color: white;
+  border-width: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .tutorial-component.down:after {
+  left: 80%;
+  top: 100%;
+  border-top-color: white;
+  border-width: 12px;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper {
   margin-bottom: 2em;
@@ -276,6 +465,7 @@ html.mobileview .wnd.pkoinwindow #pkoin .sendButtonWrapper {
 }
 html.mobileview .wnd.pkoinwindow #pkoin .abswrappcontent {
   position: static;
+  padding-bottom: 3em;
 }
 html.mobileview .wnd.pkoinwindow #pkoin .boostinfodata .text span {
   font-size: 0.8em;
