@@ -11222,16 +11222,26 @@ clearStringXss = function(nm){
 }
 
 checkIfAllowedImage = function(src){
-	const url = new URL(src);
 
-	const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
+	if(!src) return false
 
-	const isImgur = url.hostname.includes('imgur.com');
-	const isBastyon = url.hostname.includes('bastyon.com');
-	const isPocketnet = url.hostname.includes('pocketnet.app');
-	const isPeertube = ptRegex.test(url.pathname);
+	try{
 
-	return isImgur || isBastyon || isPocketnet || isPeertube;
+		const url = new URL(src);
+		const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
+
+		const isImgur = url.hostname.includes('imgur.com');
+		const isBastyon = url.hostname.includes('bastyon.com');
+		const isPocketnet = url.hostname.includes('pocketnet.app');
+		const isPeertube = ptRegex.test(url.pathname);
+
+		return isImgur || isBastyon || isPocketnet || isPeertube;
+
+	}
+
+	catch(e){
+		return false
+	}
 }
 
 getBase64 = function (file) {
