@@ -1076,7 +1076,7 @@ _l.importFromExternal = "или импортируйте видео из YouTube
 
 _l.peertubeAddVideo = "Загрузить Видео"
 _l.peertubeAddAudio = "Загрузить Аудио"
-
+_l.peertubeAddStream = "Прямая трансляция"
 
 
 _l.shareviagroupemail = "Электронная почта"
