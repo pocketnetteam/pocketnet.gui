@@ -11232,7 +11232,7 @@ checkIfAllowedImage = function(src){
 
 	const isImgur = url.hostname.includes('imgur.com');
 	const isBastyon = url.hostname.includes('bastyon.com');
-	const isPocketnet = url.hostname.includes('pocketnet.app');$
+	const isPocketnet = url.hostname.includes('pocketnet.app');
 	const isPeertube = ptRegex.test(url.pathname);
 
 	return isImgur || isBastyon || isPocketnet || isPeertube;
