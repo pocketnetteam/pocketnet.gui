@@ -11242,7 +11242,7 @@ checkIfAllowedImage = function(src){
 	}
 
 	catch(e){
-		return false
+		return true
 	}
 }
 
