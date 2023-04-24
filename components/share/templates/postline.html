@@ -29,13 +29,13 @@
                     if (!share.repost.v && !share.itisvideo() && !share.itisaudio() && !share.aliasid && !app.pkoindisable && !share.images.v.length) { %>
 
                         <div elementsid="peertubeAddAudio" class="item peertube tooltip nowidth" embeding="addAudio" title="<%=e('peertubeAddAudio')%>">
-                            <i class="fas fa-volume-up"></i>
+                            <i class="fas fa-volume-up"></i> <span class="mobiledevice"><%- e('peertubeAddAudio') %></span>
                         </div>
 
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                         </div>
-                        <% if (app.platform.real[app.user.address.value] || app.platform.istest(app.user.address.value)) {%>
+                        <% if (app.platform.real[app.user.address.value] || app.platform.istest(app.user.address.value) && !isTablet()) {%>
                             <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
                                 <i class="fas fa-dot-circle"></i> <span><%- e('peertubeAddStream') %></span>
                             </div>
