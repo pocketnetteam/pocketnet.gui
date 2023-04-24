@@ -682,6 +682,7 @@
   border-radius: 50%;
   line-height: 32px;
   color: rgb(var(--color-txt-gray-dark));
+  white-space: nowrap;
   float: left;
   text-align: center;
   font-size: 0.8em;

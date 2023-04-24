@@ -11225,6 +11225,8 @@ checkIfAllowedImage = function(src){
 
 	if(!src) return false
 
+	if(src && src.indexOf && src.indexOf('data:') == 0) return true
+
 	try{
 
 		const url = new URL(src);
