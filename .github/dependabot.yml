@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    versioning-strategy: increase
+  - package-ecosystem: "npm"
+    directory: "/proxy16"
+    schedule:
+      interval: "monthly"
+    versioning-strategy: increase
