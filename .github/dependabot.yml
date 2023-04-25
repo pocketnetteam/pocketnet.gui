@@ -3,10 +3,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     versioning-strategy: increase
   - package-ecosystem: "npm"
     directory: "/proxy16"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     versioning-strategy: increase
