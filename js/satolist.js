@@ -24833,15 +24833,18 @@ Platform = function (app, listofnodes) {
                
                 peertubeStream : function(links) {
                     const promisesStack = links.map((link) =>
-                      self.app.peertubeHandler.api.videos
-                        .getDirectVideoInfo(
-                          { id: link.meta.id },
-                          { host: link.meta.host_name },
-                        )
-                        .then((res) => ({
-                          ...res,
-                          linkFull: link.link,
-                        })),
+                        self.app.peertubeHandler.api.videos
+                            .getDirectVideoInfo(
+                                { id: link.meta.id },
+                                { host: link.meta.host_name },
+                            )
+                            .then((res) => {
+                                return {
+                                    ...res,
+                                    aspectRatio: res.aspectRatio || 1.77,
+                                    linkFull: link.link,
+                                };
+                            }),
                     );
 
                     return Promise.all(promisesStack).then((res) => {
