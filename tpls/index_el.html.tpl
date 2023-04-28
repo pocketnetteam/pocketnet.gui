@@ -44,7 +44,7 @@
 
         <script src="js/vendor/device.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-        <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
+        <script src="js/widgets.js?v=136"></script>
 
         <style type="text/css">
             :root {
@@ -178,6 +178,7 @@
         </script>
 
         <script src="js/vendor/underscore-min.js?v=136"></script> 
+        <script src="js/vendor/wallet-address-validator.min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
         <script  join src="js/vendor/moment.min.js?v=89"></script>

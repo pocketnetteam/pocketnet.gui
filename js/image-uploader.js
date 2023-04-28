@@ -12,7 +12,7 @@ ImageUploader = function(app) {
             // If we are in test environment, try to upload images to Peertube
             // (fallback to Imgur if failure)
 
-            if (window.testpocketnet) {
+            if (1 == 1) {
                 
                 return self.uploadImage({ base64 }, 'peertube').catch(err => {
                     return self.uploadImage({ base64 }, 'imgur')
@@ -74,9 +74,8 @@ ImageUploader = function(app) {
             // If we need to use the IP address instead of the domain name
 
             if (p.peertubeImage){
-
                 // Fetch Peertube server if needed
-                app.platform.preparePeertubeServer().finally(() => {
+                app.peertubeHandler.api.proxy.bestIfNeed().finally(() => {
 
                     if(!app.options.peertubeServer){
                         reject()

@@ -186,6 +186,9 @@ _l.uwebsite = "Site web";
 _l.uaddresesd = "Adresses pour les dons";
 _l.usavechanges = "Voulez-vous enregistrer vos modifications?";
 
+_l.settings_save = "Sauver les modifications";
+_l.settings_discard = "Annuler les modifications";
+
 //ustate
 
 _l.sreps = "Réputation et limites";
@@ -493,7 +496,7 @@ _l.e13082 = "Ce que vous obtiendrez pour votre don en plus de savoir que vous av
 _l.e13083 = "En signe de gratitude pour le don, vous recevez un cadeau d'une certaine quantité de Pocketcoin"
 _l.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe spécial de donateurs qui ont un accès direct à l'équipe "+appname+", même si la plate-forme se développe."
 _l.e13085 = "Le lien vers votre profil "+appname+" sera répertorié ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
-_l.e13086 = "Soutenez maintenant le Webm décentralisé"
+_l.e13086 = "Soutenez maintenant Bastyon"
 _l.e13087 = "Bitcoin, Litecoin, Monero"
 
 _l.e13088 = "Membres "+appname+" qui ont fait un don pour soutenir "+appname+""
@@ -623,7 +626,7 @@ _l.e13176 = "Type d'adresse"
 _l.e13177 = "Envoyer la photo"
 
 _l.requiredfields = "Champs obligatoires"
-_l.e13178 = "Non lié à votre profil"
+_l.e13178 = "Facultatif"
 _l.e13179 = "Liste non dépensée"
 _l.e13180 = "Votre facture a été créée avec succès"
 _l.e13181 = "Une erreur s'est produite lors du processus de crèation de l'offre"
@@ -1381,6 +1384,8 @@ _l.desktopPopupDisagree = "Pas maintenant"
 
 _l.profanity_tag = 'impiété'
 
+_l.copybuiltfrom = "Numéro d'assemblage copié"
+
 _l.saved = "Sauvegardé"
 _l.savePost = "Sauvegarder le post"
 _l.postsaved = "Post sauvegardé"
@@ -1389,3 +1394,28 @@ _l.doYouDownloadVideo = "Voulez-vous télécharger la vidéo sur votre appareil 
 _l.gotosaved2 = "Afficher les posts"
 _l.yes = "Oui"
 _l.no = "Non"
+
+_l.torusing_neveruse = "Jamais";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Toujours";
+
+_l.torusing_directProxy = "Proxy intégré";
+_l.torusing_notdirectProxy = "Proxy externe";
+
+_l.torusing_changedirectProxy = "Passer à un proxy externe";
+_l.torusing_changenotdirectProxy = "Passer à un proxy intégré";
+
+_l.torusing_disclaimer = "Cette fonction ne fonctionne que lors de l'utilisation d'un proxy intégré.";
+
+_l.torusing_Networking = "Réseau";
+_l.torusing_proxyCaption = "Sélection d'un serveur proxy";
+_l.torusing_useTor = "Utiliser TOR";
+_l.torusing_useSnowflakeBridge = "Utiliser Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Maintenant, les requêtes directs"
+_l.torusing_stat_torbytesLength = "Maintenant, TOR requêtes"
+_l.torusing_stat_directBytes = "Total, appels directs"
+_l.torusing_stat_totalTorBytes = "Total, TOR requêtes"
+_l.torusing_settings = "Paramètres TOR"
+_l.torusing_stats = "Statistiques sur les requêtes"
+_l.torusing_proxychangequestion = "Êtes-vous sûr de vouloir changer de proxy?"

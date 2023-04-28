@@ -694,6 +694,7 @@
 		}
 
 		var destroySwipable = function(){
+
 			if (parallax){
 				parallax.clear()
 				parallax.destroy()
@@ -760,7 +761,6 @@
 				else{
 					directions.down = down
 				}
-
 
 				parallax = new SwipeParallaxNew({
 
@@ -891,6 +891,8 @@
 				delete app.events.scroll[id]
 
 				window.requestAnimationFrame(() => {
+
+
 					destroySwipable()
 
 					wnd.addClass('asette')
@@ -1623,7 +1625,7 @@
 
 			$el.fadeIn(200);
 
-			bgImages($el)
+			bgImagesCl($el)
 
 
 		}
@@ -1900,6 +1902,8 @@
 
 	bgImagesCl = function(el, p){
 
+
+
 		if(!p) p = {};
 
 		var els = el.find('[image]')
@@ -1911,6 +1915,7 @@
 			return
 		}
 
+
 		return Promise.all(els.map((i, el) => {
 
 			return new Promise((resolve) => {
@@ -1918,8 +1923,18 @@
 				var src = el.getAttribute('image')
 
 				if(!src || src == '*') {
-					el.setAttribute('imageloaded', 'true')
-					return Promise.resolve()
+
+					window.requestAnimationFrame(() => {
+						el.setAttribute('imageloaded', 'true')
+						resolve()
+					})
+
+					return 
+				}
+
+				var c = function(){
+					resolve()
+					image = null
 				}
 
 				el.setAttribute('data-image', src)
@@ -1928,6 +1943,12 @@
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 				
+				if (src.includes('www.youtube.com')) {
+					const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+					src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+				}
+
 				image.src = src
 				image.onload = () => {
 
@@ -1940,24 +1961,31 @@
 						el.style['background-position'] = 'center center';
 						el.style['background-repeat'] = 'no-repeat';
 
+						c()
 					})
 
-					resolve()
+					
 				}
 
 				image.onerror = () => {
 
 					window.requestAnimationFrame(() => {
 						el.setAttribute('image', '*')
+
+						c()
 					})
 
-					resolve()
+					
 				}
 
 			})
 
 		})).then(() => {
-			if(typeof p.clbk === 'function') p.clbk(image);
+
+			els = null
+			el = null
+
+			if(typeof p.clbk === 'function') p.clbk();
 		})
 
 	}
@@ -4052,7 +4080,7 @@
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
 						{
-							_el.find('.vc_textInput').on(clickAction(), function(){
+							_el.find('.vc_textInput').on('click', function(){
 
 								if(window.cordova && window.plugins.actionsheet){
 
@@ -6987,6 +7015,7 @@
 
 
 		let ticking = false;
+		
 
 		var directiontoprop = function(direction, value){
 
@@ -7134,7 +7163,6 @@
 
 
 				if(!direction || !p.directions[direction]) {
-					console.log("HERE???")
 					return true
 				}
 
@@ -8543,12 +8571,11 @@
 		sel.removeAllRanges();
 		sel.addRange(range);
 	}
-
-
+	
 
 	fastars = function(el){
 
-		el.find('i').on('mouseenter', function(){
+		/*el.find('i').on('mouseenter', function(){
 
 			var _el = $(this).closest('.stars')
 
@@ -8562,7 +8589,7 @@
 		el.find('i').on('mouseleave', function(){
 			var _el = $(this).closest('.stars')
 			_el.removeAttr('tempValue')
-		})
+		})*/
 
 	}
 
@@ -10074,9 +10101,16 @@
 					update_elem: function(event){
 						if( event.target == dragout.current_elem ) return
 						if( dragout.current_elem ) {
-							$(dragout.current_elem).parents().andSelf().each(function(){
-								if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
-							})
+
+							var pr = $(dragout.current_elem).parents()
+
+							if (pr && pr.andSelf){
+								pr.andSelf().each(function(){
+									if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
+								})
+							}
+
+							
 						}
 						dragout.current_elem = event.target
 						event.stopPropagation()
@@ -10214,7 +10248,7 @@
 		}
 
 		if(v.type == 'vimeo'){
-			return 'https://i.vimeocdn.com/video/'+v.id+'_320.jpg'
+			return 'https://vumbnail.com/'+v.id+'.jpg'
 		}
 
 		if(v.type == 'peertube'){
@@ -10250,62 +10284,92 @@
 	}
 
 	parseVideo = function(url) {
-		var _url = url;
-
-	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com|brighteon\.com|stream\.brighteon\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
-	    var type = null
-		var id = null
-		var host_name = null
-
-		if(_url && _url.indexOf('peertube://') > -1){
-			var ch = _url.replace('peertube://', '').split('/');
-			id = ch[1]
-			type = 'peertube'
-			host_name = ch[0]
-
+		if (!url) {
+			return {};
 		}
-		else{
-			if(test && test[2]){
 
-				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
-					type = 'youtube'
-			        id = test[9]
-					url = 'https://youtu.be/' + id
-			    }
-				if (test.indexOf('vimeo.com') > -1) {
-					type = 'vimeo'
-                    id = test[9]
-			    }
-				if (test.indexOf('bitchute.com') > -1) {
-					type = 'bitchute'
-					id = test[9]
-			    }
-				if (test.indexOf('brighteon.com') > -1) {
-					type = 'brighteon'
-					id = test[9]
-				}
-				if (test.indexOf('stream.brighteon.com') > -1) {
-					type = 'stream.brighteon'
-					let tempUrl = url;
-					if (tempUrl.indexOf('/live/') != -1)
-						tempUrl = tempUrl.replace('/live/', '/embed/');
-					id = url.substring(url.lastIndexOf('/') + 1);
-				}
+		let id = null;
+		let type = null;
+		let host_name = null;
+		let subType = null;
 
+		if (url.startsWith('peertube:')) {
+			type = 'peertube';
+			url = url.replace('peertube:', 'http:');
+		}
+
+		let hostname, pathname, searchParams;
+
+		try {
+			const urlParts = new URL(url);
+
+			hostname = urlParts.hostname;
+			pathname = urlParts.pathname;
+			searchParams = urlParts.searchParams;
+		} catch (err) {
+			return {};
+		}
+
+		const path = pathname.slice(1);
+		const pathParts = path.split('/');
+
+		if (type === 'peertube') {
+			host_name = hostname;
+
+			if (path.includes('stream')) {
+				subType = 'peertubeStream';
+				id = pathParts[0];
+			} else {
+				subType = 'common';
+				id = path;
 			}
+		} else if (hostname.includes('youtube.com')) {
+			type = 'youtube';
+			url = `https://youtu.be/${id}`;
+
+			if (path.includes('watch')) {
+				id = searchParams.get('v');
+			} else if (path.includes('shorts')) {
+				id = pathParts[1];
+			}
+		} else if (hostname.includes('youtu.be')) {
+			type = 'youtube';
+			id = path;
+		} else if (hostname.includes('player.vimeo.com')) {
+			type = 'vimeo';
+			id = pathParts[1];
+		} else if (hostname.includes('vimeo.com')) {
+			if (!isNaN(path)) {
+				type = 'vimeo';
+				id = path;
+			}
+		} else if (hostname.includes('bitchute.com')) {
+			type = 'bitchute';
+			id = pathParts[1];
+		} else if (hostname.includes('brighteon.com')) {
+			type = 'brighteon';
+			id = path;
+		} else if (pathname.includes('/ipfs/')) {
+			const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+			const ipfsId = path.match(ipfsIdRegex)[1];
+			const isVideo = (searchParams.get('type') === 'video');
+
+			if (!ipfsId || !isVideo) {
+				return {};
+			}
+
+			type = 'ipfs';
+			id = ipfsId;
 		}
 
-	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
+		/* else if (hostname.includes('stream.brighteon.com')) {
+			type = 'brighteon';
+			id = pathname.slice(1);
+		}*/
 
-
-
-	    return {
-	        type: type,
-	        url : url,
-	        id : id,
-			host_name : host_name
-	    };
+		return { type, url, id, host_name, subType };
 	}
+
 	nl2br = function(str){
 		return str.replace(/\n/g, '<br/>');
 	}
@@ -11157,6 +11221,31 @@ clearStringXss = function(nm){
 	})
 }
 
+checkIfAllowedImage = function(src){
+
+	if(!src) return false
+
+	if(src && src.indexOf && src.indexOf('data:') == 0) return true
+
+	try{
+
+		const url = new URL(src);
+		const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
+
+		const isImgur = url.hostname.includes('imgur.com');
+		const isBastyon = url.hostname.includes('bastyon.com');
+		const isPocketnet = url.hostname.includes('pocketnet.app');
+		const isPeertube = ptRegex.test(url.pathname);
+
+		return isImgur || isBastyon || isPocketnet || isPeertube;
+
+	}
+
+	catch(e){
+		return true
+	}
+}
+
 getBase64 = function (file) {
 	return new Promise((resolve, reject) => {
 	  const reader = new FileReader();
@@ -11385,17 +11474,15 @@ edjsHTML = function() {
         embed: function(e) {
             var t = e.data;
 
-
             switch (t.service) {
 
 				case "vimeo":
-                    return '<div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
+                    return '<div class="js-player-ini" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				case "youtube":
-					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
+					return '<div class="js-player-ini" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
-					//console.log(t)
 					//return '<iframe src="'+t.embed+'"></iframe>'
 					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
             }
@@ -12327,3 +12414,103 @@ var connectionSpeed = function()
     }
     return defaultSpeed;
 };
+
+/*test*/
+/*
+if(typeof Window != 'undefined'){
+
+	Window.prototype._addEventListener = Window.prototype.addEventListener;
+
+	Window.prototype.addEventListener = function(a, b, c) {
+	if (c==undefined) c=false;
+	this._addEventListener(a,b,c);
+	if (! this.eventListenerList) this.eventListenerList = {};
+	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
+	this.eventListenerList[a].push({listener:b,options:c});
+	};
+
+	EventTarget.prototype._addEventListener = EventTarget.prototype.addEventListener;
+
+	EventTarget.prototype.addEventListener = function(a, b, c) {
+	if (c==undefined) c=false;
+	this._addEventListener(a,b,c);
+	if (! this.eventListenerList) this.eventListenerList = {};
+	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
+	this.eventListenerList[a].push({listener:b,options:c});
+	};
+
+	EventTarget.prototype._getEventListeners = function(a) {
+		if (! this.eventListenerList) this.eventListenerList = {};
+		if (a==undefined)  { return this.eventListenerList; }
+		return this.eventListenerList[a];
+	};
+
+	EventTarget.prototype._removeEventListener = EventTarget.prototype.removeEventListener;
+	EventTarget.prototype.removeEventListener = function(a, b ,c) {
+	if (c==undefined) c=false;
+	this._removeEventListener(a,b,c);
+	if (! this.eventListenerList) this.eventListenerList = {};
+	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
+
+	for(let i=0; i < this.eventListenerList[a].length; i++){
+		if(this.eventListenerList[a][i].listener==b, this.eventListenerList[a][i].options==c){
+			this.eventListenerList[a].splice(i, 1);
+			break;
+		}
+	}
+	if(this.eventListenerList[a].length==0) delete this.eventListenerList[a];
+	};
+
+
+	function listAllEventListeners() {
+		const allElements = Array.prototype.slice.call(document.querySelectorAll('*'));
+		allElements.push(document);
+		allElements.push(window);
+	
+		const types = [];
+	
+		for (let ev in window) {
+		if (/^on/.test(ev)) types[types.length] = ev;
+		}
+	
+		let elements = [];
+		for (let i = 0; i < allElements.length; i++) {
+		const currentElement = allElements[i];
+	
+		// Events defined in attributes
+		for (let j = 0; j < types.length; j++) {
+	
+			if (typeof currentElement[types[j]] === 'function' ) {
+			elements.push({
+				"node": currentElement,
+				"type": types[j],
+				"func": currentElement[types[j]].toString(),
+			});
+			}
+		}
+	
+		// Events defined with addEventListener
+		if (typeof currentElement._getEventListeners === 'function') {
+			evts = currentElement._getEventListeners();
+			if (Object.keys(evts).length >0) {
+			for (let evt of Object.keys(evts)) {
+				for (k=0; k < evts[evt].length; k++) {
+
+					if(evts[evt][k].listener){
+						elements.push({
+							"node": currentElement,
+							"type": evt,
+							"func": evts[evt][k].listener.toString()
+						});
+					}
+				
+				}
+			}
+			}
+		}
+		}
+	
+		return elements.sort();
+	}
+
+}*/

@@ -1,67 +1,40 @@
-/*
-html[theme="black"]{
-  #activities {
-    .container {
-      background: rgb(var(--background-secondary-theme));
-
-      .period {
-        background: rgb(var(--background-total-theme));
-      }
-
-      .empty {
-        background: rgb(var(--background-hidden-layer));
-      }
-
-      .comment, .filters {
-        border-bottom: 1px solid rgb(var(--background-total-theme));
-      }
-      .comment {
-        @media (pointer: fine) {
-          &:hover {
-            background: rgb(var(--background-total-theme));
-          }
-
-        }
-      }
-    }
-  }
-}*/
 #activities .container {
   min-height: 70vh;
-  border-radius: 6px;
   background: rgb(var(--background-main));
-  padding: 0em 4em 2em;
-  margin-bottom: 2em;
+  padding: 0.5em;
+  padding-top: 0;
 }
 #activities .container .subcaption {
   display: block;
-  padding-top: 1em;
-  margin-bottom: 1em;
   font-size: 2em;
   font-weight: 100;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgb(var(--background-total-theme));
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  z-index: 1;
 }
 #activities .container .filters {
+  margin-top: 1em;
   display: flex;
   margin: 0 0;
   padding: 0 0 1em;
-  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
-  touch-action: manipulation;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  scroll-behavior: smooth;
-  flex-wrap: nowrap;
-}
-#activities .container .filters::-webkit-scrollbar {
-  display: none !important;
+  flex-wrap: wrap;
 }
 #activities .container .filters .tab {
   font-weight: 500;
   cursor: pointer;
   font-size: 1em;
-  line-height: 20px;
-  margin-right: 24px;
-  transition: all 0.3s ease;
+  margin-right: 1.5em;
+  margin-bottom: 1em;
+  white-space: nowrap;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 #activities .container .filters .tab.active {
   color: #2F80ED;
@@ -70,7 +43,7 @@ html[theme="black"]{
 #activities .container .filters .tab.active::after {
   position: absolute;
   content: ' ';
-  bottom: -12px;
+  bottom: -0.5em;
   left: 0;
   width: 100%;
   height: 2px;
@@ -88,10 +61,10 @@ html[theme="black"]{
   border-radius: 12px;
 }
 #activities .container .period {
-  margin: 36px 0;
+  margin: 1em 0;
   background: rgb(var(--neutral-grad-1));
-  min-height: 36px;
-  border-radius: 8px;
+  padding: 1em 0.5em;
+  border-radius: 6px;
   display: flex;
   align-items: center;
 }
@@ -102,7 +75,7 @@ html[theme="black"]{
   font-weight: 700;
 }
 #activities .container .comment {
-  padding: 0.5em;
+  padding: 0.5em 0;
   margin-bottom: 0.125em;
   border-bottom: 1px solid rgb(var(--neutral-grad-1));
   display: flex;
@@ -111,6 +84,11 @@ html[theme="black"]{
   transition: 0.3s ease all;
   align-items: flex-start;
   cursor: pointer;
+}
+#activities .container .comment .img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
 }
 @media (pointer: fine) {
   #activities .container .comment:hover {
@@ -133,7 +111,6 @@ html[theme="black"]{
   flex-grow: 1;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  padding-top: 0.5em;
 }
 #activities .container .comment .icon i.fa-thumbs-up {
   color: rgb(var(--color-bg-ac-bright));
@@ -236,90 +213,147 @@ html[theme="black"]{
   color: rgb(var(--color-star-yellow));
   margin-right: 7px;
 }
-.wndactivities.wnd #activities .container {
-  border-radius: 6px;
-  background: initial;
-  padding: 1em;
-  margin-bottom: 2em;
-}
-.wndactivities.wnd #activities .filters {
-  display: flex;
-  margin: 0 0;
-  padding: 0 0 12px;
-  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
-  overflow: auto;
-}
-.wndactivities.wnd #activities .filters .tab {
-  font-weight: 400;
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 20px;
-  margin-right: 24px;
-  transition: all 0.3s ease;
-}
-.wndactivities.wnd #activities .filters .tab.active {
-  color: #2F80ED;
-  position: relative;
-}
-.wndactivities.wnd #activities .filters .tab.active::after {
-  position: absolute;
-  content: ' ';
-  bottom: -12px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #2F80ED;
-}
-.wndactivities.wnd #activities .content {
-  margin-top: 25px;
-}
-.wndactivities.wnd #activities .comment {
-  padding-bottom: 0.5em;
-  padding-left: 0;
-  padding-right: 0;
-  border-bottom: 1px solid rgb(var(--neutral-grad-1));
-  border-radius: 0;
-  display: flex;
-  flex-wrap: nowrap;
-}
-.wndactivities.wnd #activities .comment .description {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-.wndactivities.wnd #activities .comment .description div:not(:first-child) {
-  margin-top: 0.5em;
-}
-.wndactivities.wnd #activities .comment .avatar {
+#activities .container .videos {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1em;
-  background: rgb(var(--neutral-grad-0));
-  color: rgb(var(--color-txt-gray-dark));
-  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
-  border-radius: 50%;
-  height: 48px;
-  width: 48px;
-  line-height: 3em;
-  font-size: 1em;
-  position: relative;
+  flex-direction: column;
 }
-.wndactivities.wnd #activities .comment .avatar img {
-  height: 100%;
-  width: 100%;
-}
-.wndactivities.wnd #activities .comment .message {
-  color: rgb(var(--neutral-grad-3));
-}
-.wndactivities.wnd #activities .comment .date {
-  color: rgb(var(--neutral-grad-2));
-}
-.wndactivities.wnd #activities .comment .stars {
+#activities .container .videos .video {
   display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 80px;
+  margin-bottom: 0.5em;
+  border-bottom: solid rgb(var(--neutral-grad-1)) 1px;
+  cursor: pointer;
 }
-.wndactivities.wnd #activities .comment .stars i {
-  width: 20px;
-  color: rgb(var(--color-star-yellow));
-  margin-right: 7px;
+#activities .container .videos .video .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 72px;
+  min-width: 110px;
+  max-width: 110px;
+  overflow: hidden;
+  border-radius: 6px;
+  height: 100%;
+  background: #000;
+}
+#activities .container .videos .video .image .img {
+  width: 110px;
+  height: 62px;
+}
+#activities .container .videos .video .blocked {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  background: rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-1));
+}
+#activities .container .videos .video .blocked i {
+  font-size: 32px;
+  color: rgb(var(--neutral-grad-1));
+  margin-bottom: 5px;
+}
+#activities .container .videos .video .blocked span {
+  font-size: 12px;
+}
+#activities .container .videos .video .info {
+  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  width: 67%;
+}
+#activities .container .videos .video .info > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+}
+#activities .container .videos .video .info .name {
+  max-width: 100%;
+  font-weight: bold;
+  white-space: nowrap;
+}
+#activities .container .videos .video .info .second,
+#activities .container .videos .video .info .third,
+#activities .container .videos .video .info .date {
+  display: flex;
+  color: rgb(var(--neutral-grad-2));
+  align-items: center;
+}
+#activities .container .videos .video .info .second > div,
+#activities .container .videos .video .info .third > div,
+#activities .container .videos .video .info .date > div {
+  margin-right: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 60%;
+  font-weight: 400;
+}
+#activities .container .videos .video .info .second i,
+#activities .container .videos .video .info .third i,
+#activities .container .videos .video .info .date i {
+  margin-right: 8px;
+}
+#activities .container .videos .video .info .date {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+#activities .container .videos .video .info .third {
+  margin-top: 0.5em;
+  font-size: 0.8em;
+}
+.wndactivities.wnd .wndcontent {
+  padding-top: 0;
+}
+.wndactivities.wnd .wndinner {
+  max-width: 540px;
+  max-height: 90vh;
+}
+.wndactivities.wnd #activities .container {
+  border-radius: 12px;
+  background: initial;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+.wndactivities.wnd #activities .content {
+  margin-top: 1em;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #activities .container {
+    /*.filters {
+				display: flex;
+				touch-action: manipulation;
+				overflow-x: auto;
+				scrollbar-width: none;
+				-ms-overflow-style: none;
+				scroll-behavior: smooth;
+				flex-wrap: nowrap;
+	
+				&::-webkit-scrollbar {
+					display: none !important;
+				}
+	
+				.tab {
+					font-weight: 500;
+					cursor: pointer;
+					margin-right: 2 * @rhythm;
+					transition: all .3s ease;
+	
+					&.active {
+						color: #2F80ED;
+						position: relative;
+	
+					}
+	
+				}
+			}*/
+  }
 }

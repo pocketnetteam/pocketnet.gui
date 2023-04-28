@@ -25,7 +25,9 @@ var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
-var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube']).init()
+var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports', 'logs290323']).init()
+
+logger.setlevel('debug');
 
 var testnodes = [
 	{
@@ -75,8 +77,8 @@ var testnodes = [
 
 
 var activenodes = [
-	{
-		host : '178.217.159.221', /*  */
+	/*{
+		host : '178.217.159.221',
 		port: 38381,
 		ws: 8387,
 		name : 'test3.v.pocketnet.app',
@@ -84,10 +86,10 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 
-	{
-		host : '65.21.252.135', /*  */
+	/*{
+		host : '65.21.252.135', 
 		port: 38081,
 		ws: 8087,
 		name : 'test4.v.pocketnet.app',
@@ -95,7 +97,7 @@ var activenodes = [
 		single : true,
 		allowRpc : false,
 		alwaysrun : true
-	},
+	},*/
 	//////////////
 	{
 		host : '135.181.196.243',
@@ -104,21 +106,71 @@ var activenodes = [
 		name : '135.181.196.243',
 		stable : true
 	},
+	
+
 	{
-		host : '65.21.56.203',
+		host : '136.243.145.143',
 		port : 38081,
 		ws : 8087,
-		name : '65.21.56.203',
+		name : '136.243.145.143',
+		stable : true
+	},
+
+	{
+		host : '140.99.153.138',
+		port : 38081,
+		ws : 8087,
+		name : '140.99.153.138',
+		stable : true
+	},
+
+	
+	{
+		host : '172.83.108.41',
+		port : 38081,
+		ws : 8087,
+		name : '172.83.108.41',
+		stable : true
+	},
+
+	{
+		host : '188.18.52.142',
+		port : 38081,
+		ws : 8087,
+		name : '188.18.52.142',
+		stable : true
+	},
+	
+
+	{
+		host : '142.116.40.18',
+		port : 38081,
+		ws : 8087,
+		name : '142.116.40.18',
 		stable : true
 	},
 	{
+		host : '162.246.52.155',
+		port : 38081,
+		ws : 8087,
+		name : '162.246.52.155',
+		stable : true
+	},
+	{
+		host : '172.83.108.40',
+		port : 38081,
+		ws : 8087,
+		name : '172.83.108.40',
+		stable : true
+	},
+	/*{
 		host : '178.217.159.227',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.159.227',
 		stable : true
-	},
-	{
+	},*/
+	/*{
 		host : '178.217.159.221',
 		port : 38081,
 		ws : 8087,
@@ -152,7 +204,7 @@ var activenodes = [
 		ws : 8087,
 		name : '178.217.155.170',
 		stable : true
-	},
+	},*/
 	{
 		host : '93.100.117.108',
 		port : 38081,
@@ -177,8 +229,11 @@ var defaultSettings = {
 	},
 
 	tor : {
-		dbpath : 'data/tor',
-		enabled: true,
+		dbpath2 : 'data/tordb',
+		path : 'data/tor',
+		enabled2: 'neveruse',
+		useSnowFlake : false,
+		customObfs4 : false,
 	},
 
 	server : {
@@ -300,7 +355,9 @@ var state = {
 			},
 			tor : {
 				dbpath : settings.tor.dbpath,
-				enabled: settings.tor.enabled,
+				enabled2: settings.tor.enabled2,
+				useSnowFlake : settings.tor.useSnowFlake,
+				customObfs4 : settings.tor.customObfs4,
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -410,33 +467,99 @@ var state = {
 }
 
 
+const kit = {
 
-var kit = {
+	manage: {
+		set: {
 
-	manage : {
-		set : {
+			tor : {
 
-			server : {
-				
-				settings : function({
+				changeSettings: function (data) {
+					return kit.proxy().then((proxy) => {
+
+
+						if (typeof data.useSnowFlake != 'undefined')
+							settings.tor.useSnowFlake = data.useSnowFlake
+
+						if (typeof data.customObfs4 != 'undefined') {
+							settings.tor.customObfs4 = data.customObfs4
+						}
+
+						if (typeof data.enabled2 != 'undefined')
+							settings.tor.enabled2 = data.enabled2
+
+						return proxy.torapplications.settingChanged(settings.tor)
+
+					}).then(() => {
+						return state.save()
+					})
+				},
+
+				useSnowFlake: function (data) {
+
+					return kit.proxy().then((proxy) => {
+
+						settings.tor.useSnowFlake = data.useSnowFlake || false
+
+						return proxy.torapplications.settingChanged(settings.tor)
+
+					}).then(() => {
+						return state.save()
+					})
+				},
+
+				customObfs4: function (data) {
+
+					return kit.proxy().then((proxy) => {
+
+						settings.tor.customObfs4 = data.customObfs4 || false
+
+						return proxy.torapplications.settingChanged(settings.tor)
+
+					}).then(() => {
+						return state.save()
+					})
+				},
+
+				enabled2: function (data) {
+
+					return kit.proxy().then((proxy) => {
+
+						settings.tor.enabled2 = data.enabled2 || false
+
+						return proxy.torapplications.settingChanged(settings.tor)
+
+					}).then(() => {
+						return state.save()
+					})
+				},
+			},
+
+			server: {
+
+				settings: function ({
 					settings = {}
-				}){
+				}) {
 
 					var ctx = kit.manage.set.server
+					var tctx = kit.manage.set.tor
 					var notification = {}
 
-					if(typeof settings.domain != 'undefined') notification.domain = settings.domain
-					if(settings.ports) notification.ports = settings.ports
-					if(typeof settings.enabled) notification.enabled = settings.enabled
-					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
-                    if(settings.ssl) notification.ssl = true
-                
+					if (typeof settings.domain != 'undefined') notification.domain = settings.domain
+					if (settings.ports) notification.ports = settings.ports
+					if (typeof settings.enabled) notification.enabled = settings.enabled
+					if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
+					if (settings.ssl) notification.ssl = true
+					if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
+					if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
+					if (settings.customObfs4) notification.customObfs4 = settings.customObfs4
 
+					console.log('settings', settings)
 					return kit.proxy().then(proxy => {
 
 						return proxy.wss.sendtoall({
-							type : 'proxy-settings-changed',
-							data : notification
+							type: 'proxy-settings-changed',
+							data: notification
 						}).catch(e => {
 							return Promise.resolve()
 						})
@@ -444,114 +567,140 @@ var kit = {
 					}).then(() => {
 						var promises = []
 
+						const hasPropTorEnabled2 = ('torenabled2' in settings);
+						const hasPropUseSnowFlake = ('useSnowFlake' in settings);
+						const hasPropCustomObfs4 = ('customObfs4' in settings);
 
-						if (settings.firebase && settings.firebase.id) 
+						if(hasPropTorEnabled2 || hasPropUseSnowFlake || hasPropCustomObfs4){
+							const newSettings = {};
+
+							if ('torenabled2' in settings) {
+								newSettings.enabled2 = settings.torenabled2;
+							}
+
+							if ('useSnowFlake' in settings) {
+								newSettings.useSnowFlake = settings.useSnowFlake;
+							}
+
+							if ('customObfs4' in settings) {
+								newSettings.customObfs4 = settings.customObfs4;
+							}
+
+							promises.push(tctx.changeSettings(newSettings).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('change settings error')
+							}))
+						}
+
+
+						if (settings.firebase && settings.firebase.id)
 							promises.push(ctx.firebase.id(settings.firebase.id).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('firebase.id error')
 							}))
 
-						if (settings.firebase && settings.firebase.key) 
+						if (settings.firebase && settings.firebase.key)
 							promises.push(ctx.firebase.key(settings.firebase.key).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('firebase.key error')
 							}))
 
-						if (settings.ssl) 
+						if (settings.ssl)
 							promises.push(ctx.ssl(settings.ssl).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('ssl error')
 							}))
 
-						if (settings.ports) 
+						if (settings.ports)
 							promises.push(ctx.ports(settings.ports).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('ports error')
 							}))
 
-						if (typeof settings.domain != 'undefined') 
+						if (typeof settings.domain != 'undefined')
 							promises.push(ctx.domain(settings.domain).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('domain error')
 							}))
 
-						if (typeof settings.enabled != 'undefined')  
+						if (typeof settings.enabled != 'undefined')
 							promises.push(ctx.enabled(settings.enabled).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('enabled error')
 							}))
 
-						if(!promises.length) 
+						if (!promises.length)
 							return Promise.reject('nothingchanged')
 
 						return Promise.all(promises)
 					})
 
-					
 
 				},
-				domain : function(domain){
-					if (settings.server.domain != 'domain'){
+				domain: function (domain) {
+					if (settings.server.domain != 'domain') {
 						settings.server.domain = domain
 
 						var prx = null
 
 						return state.saverp().then(proxy => {
-							
+
 							prx = proxy
 							return proxy.server.rews()
 
 						}).then(r => {
 
-							prx.nodeManager.reservice().catch(e => {})
+							prx.nodeManager.reservice().catch(e => {
+							})
 
 							return Promise.resolve(r)
 						})
 					}
 
-					return Promise.reject('nothingchanged') 
+					return Promise.reject('nothingchanged')
 				},
-				ports : function(httpsws){
-	
+				ports: function (httpsws) {
+
 					var ch = {
-						https : false,
-						wss : false
+						https: false,
+						wss: false
 					}
 
 
-					if(!httpsws.https) httpsws.https = settings.server.ports.https
-					if(!httpsws.wss) httpsws.wss = settings.server.ports.wss
-		
-					return tcpPortUsed.check(Number(httpsws.https), '127.0.0.1').then(function(inUse) {
-		
+					if (!httpsws.https) httpsws.https = settings.server.ports.https
+					if (!httpsws.wss) httpsws.wss = settings.server.ports.wss
+
+					return tcpPortUsed.check(Number(httpsws.https), '127.0.0.1').then(function (inUse) {
+
 						ch.https = inUse
-		
+
 						return tcpPortUsed.check(Number(httpsws.wss), '127.0.0.1')
-		
-					}).then(function(inUse) {
-		
+
+					}).then(function (inUse) {
+
 						ch.wss = inUse
-		
+
 						return Promise.resolve()
-		
-					}).then(function(){
-						if(!ch.https && !ch.wss){
-		
-							if(settings.server.ports.https == httpsws.https && settings.server.ports.wss == httpsws.wss){
-								return Promise.reject('nothingchanged') 
+
+					}).then(function () {
+						if (!ch.https && !ch.wss) {
+
+							if (settings.server.ports.https == httpsws.https && settings.server.ports.wss == httpsws.wss) {
+								return Promise.reject('nothingchanged')
 							}
-		
+
 							settings.server.ports = {
-								https : httpsws.https,
-								wss  : httpsws.wss
+								https: httpsws.https,
+								wss: httpsws.wss
 							}
-		
+
 							var prx = null
 
 							return state.saverp().then(proxy => {
@@ -561,63 +710,64 @@ var kit = {
 								return proxy.server.rews()
 							}).then(r => {
 
-								prx.nodeManager.reservice().catch(e => {})
+								prx.nodeManager.reservice().catch(e => {
+								})
 
 								return Promise.resolve(r)
 							})
 						}
-						
+
 						return Promise.reject('portsused')
-		
+
 					})
 				},
-	
-				iplimiter : function(v){
-	
+
+				iplimiter: function (v) {
+
 					var st = settings.server.iplimiter
-	
+
 					if (v.interval) st.interval = interval
 					if (v.count) st.count = count
 					if (v.blacklistcount) st.blacklistcount = blacklistcount
-		
-				
-					return kit.save()
-					
-				},
-	
-				captcha : function(v){
 
-					if(typeof v == 'undefined') return Promise.reject('emptyargs')
-	
+
+					return kit.save()
+
+				},
+
+				captcha: function (v) {
+
+					if (typeof v == 'undefined') return Promise.reject('emptyargs')
+
 					if (settings.server.captcha == v) return Promise.resolve()
-						settings.server.captcha = v
-		
+					settings.server.captcha = v
+
 					return kit.save()
-					
-				},
-	
-				enabled : function(v){
 
-					if(typeof v == 'undefined') return Promise.reject('emptyargs')
-	
-					if (settings.server.enabled == v) return Promise.resolve() 
-						settings.server.enabled = v
-		
-						return state.saverp().then(proxy => {
-							return proxy.server.rews()
-						})
-					
 				},
 
-				defaultssl : function(){
+				enabled: function (v) {
+
+					if (typeof v == 'undefined') return Promise.reject('emptyargs')
+
+					if (settings.server.enabled == v) return Promise.resolve()
+					settings.server.enabled = v
+
+					return state.saverp().then(proxy => {
+						return proxy.server.rews()
+					})
+
+				},
+
+				defaultssl: function () {
 					settings.server.ssl = defaultSettings.server.ssl
 
 					return kit.proxy().then(proxy => {
 
 						return proxy.wss.sendtoall({
-							type : 'proxy-settings-changed',
-							data : {
-								ssl : true
+							type: 'proxy-settings-changed',
+							data: {
+								ssl: true
 							}
 						})
 
@@ -627,55 +777,52 @@ var kit = {
 						return proxy.server.rews()
 					})
 
-					
 
 				},
-	
-				ssl : function(sslobj){
-	
-					if(sslobj.key && sslobj.cert && typeof sslobj.passphrase != 'undefined'){
-		
+
+				ssl: function (sslobj) {
+
+					if (sslobj.key && sslobj.cert && typeof sslobj.passphrase != 'undefined') {
+
 						var d = {
-							passphrase : sslobj.passphrase || '',
-							name : sslobj.name || 'Default'
+							passphrase: sslobj.passphrase || '',
+							name: sslobj.name || 'Default'
 						}
-	
+
 						var keypath = 'cert/keyl.pem'
 						var certpath = 'cert/certl.pem'
 
 						sslobj.key = sslobj.key.split(',')[1]
 						sslobj.cert = sslobj.cert.split(',')[1]
-		
+
 						return f.saveFile(keypath, Buffer.from(base64decode(sslobj.key), 'utf8')).then(() => {
 							d.keypath = keypath
-		
+
 							return f.saveFile(certpath, Buffer.from(base64decode(sslobj.cert), 'utf8'))
 
 						}).then(() => {
 							d.certpath = certpath
-		
+
 							return Promise.resolve(d)
 						}).then(() => {
-		
+
 							settings.server.ssl = d
-		
+
 							return state.saverp()
-	
+
 						}).then(proxy => {
 							return proxy.server.rews()
 						})
-					}
-		
-					else{
-		
+					} else {
+
 						return Promise.reject('bad format')
-		
+
 					}
-					
+
 				},
-	
-				firebase : {
-					clear : function(){
+
+				firebase: {
+					clear: function () {
 						settings.firebase.id = ''
 						settings.firebase.key = ''
 
@@ -683,42 +830,42 @@ var kit = {
 							return proxy.firebase.re()
 						})
 					},
-					id : function(id){
-	
+					id: function (id) {
+
 						settings.firebase.id = id
 
 						return state.saverp().then(proxy => {
 							return proxy.firebase.re()
 						})
-						
+
 					},
 
-					key : function(fbkjsonfile){
+					key: function (fbkjsonfile) {
 
-						if(!fbkjsonfile) return Promise.reject('empty')
-	
+						if (!fbkjsonfile) return Promise.reject('empty')
+
 						var path = 'data/pocketnet-firebase-adminsdk.json'
 
 						fbkjsonfile = fbkjsonfile.split(',')[1]
-			
+
 						return f.saveFile(path, Buffer.from(base64decode(fbkjsonfile), 'utf8')).then(() => {
-			
+
 							settings.firebase.key = path
-			
+
 							return state.saverp()
-		
+
 						}).then(proxy => {
 							return proxy.firebase.re()
 						})
-						
+
 					}
 				}
 			},
-	
-			wallet : {
-				removeKey: function({key, privatekey}){
 
-					if(!settings.wallet.addresses[key]) return Promise.reject('key')
+			wallet: {
+				removeKey: function ({key, privatekey}) {
+
+					if (!settings.wallet.addresses[key]) return Promise.reject('key')
 
 					settings.wallet.addresses[key].privatekey = ''
 					return state.saverp().then(proxy => {
@@ -726,11 +873,11 @@ var kit = {
 					})
 
 				},
-				setkey : function({key, privatekey}){
+				setkey: function ({key, privatekey}) {
 
-					if(!settings.wallet.addresses[key]) return Promise.reject('key')
+					if (!settings.wallet.addresses[key]) return Promise.reject('key')
 
-					if(settings.wallet.addresses[key].privatekey == privatekey) return Promise.resolve()
+					if (settings.wallet.addresses[key].privatekey == privatekey) return Promise.resolve()
 
 					settings.wallet.addresses[key].privatekey = privatekey
 
@@ -739,13 +886,13 @@ var kit = {
 					})
 
 				},
-				apply : function({key}){
+				apply: function ({key}) {
 					return proxy.wallet.apply(key)
 				}
 			},
-	
-			node : {
-				check : function(){
+
+			node: {
+				check: function () {
 					return kit.proxy().then(proxy => {
 
 						return proxy.nodeControl.check()
@@ -754,24 +901,24 @@ var kit = {
 						return Promise.resolve()
 					})
 				},
-				enabled : function({enabled}){
+				enabled: function ({enabled}) {
 
 
-					if(settings.node.enabled == enabled) return Promise.resolve()
+					if (settings.node.enabled == enabled) return Promise.resolve()
 
 					settings.node.enabled = enabled ? true : false
-	
+
 					return state.saverp().then(proxy => {
 
 						proxy.nodeControl.enable(settings.node.enabled)
 
 						return Promise.resolve(settings.node.enabled)
 
-						
+
 					})
-					
+
 				},
-				defaultPaths : function({}){
+				defaultPaths: function ({}) {
 					settings.node.binPath = ''
 					settings.node.ndataPath = ''
 					settings.node.enabled = false
@@ -780,33 +927,33 @@ var kit = {
 						return proxy.nodeControl.re()
 					})
 				},
-				binPath : function({binPath}){
+				binPath: function ({binPath}) {
 
-					if(settings.node.binPath == binPath) return Promise.resolve()
+					if (settings.node.binPath == binPath) return Promise.resolve()
 
 					settings.node.binPath = binPath
 					settings.node.enabled = false
-	
+
 					return state.saverp().then(proxy => {
-	
+
 						return proxy.nodeControl.re()
 					})
-					
+
 				},
-	    		ndataPath : function({ndataPath}){
-					if(settings.node.ndataPath == ndataPath) return Promise.resolve()
+				ndataPath: function ({ndataPath}) {
+					if (settings.node.ndataPath == ndataPath) return Promise.resolve()
 
 					settings.node.ndataPath = ndataPath
 					settings.node.enabled = false
-	
+
 					return state.saverp().then(proxy => {
 						return proxy.nodeControl.re()
 					})
-					
-				},
-				stacking : {
 
-					import : function({privatekey}){
+				},
+				stacking: {
+
+					import: function ({privatekey}) {
 
 						var r = null
 
@@ -827,7 +974,7 @@ var kit = {
 
 					},
 
-					stakinginfo : function(){
+					stakinginfo: function () {
 
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.getStakingInfo()
@@ -838,129 +985,129 @@ var kit = {
 					}
 
 				},
-                wallet : {
-                    listaddresses : function(){
+				wallet: {
+					listaddresses: function () {
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.listAddresses()
 						}).then(result => {
 							return Promise.resolve(result)
 						})
 					},
-                    getnewaddress : function(){
+					getnewaddress: function () {
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.getnewaddress()
 						}).then(result => {
 							return Promise.resolve(result)
 						})
 					},
-                    sendtoaddress : function(data) {
+					sendtoaddress: function (data) {
 						return kit.proxy().then(proxy => {
 							return proxy.nodeControl.request.sendtoaddress(data.address, data.amount)
 						}).then(result => {
 							return Promise.resolve(result)
 						})
 					},
-                },
-                dumpWallet : function({path}) {
-                    return kit.proxy().then(proxy => {
-                        return proxy.nodeControl.request.dumpwallet(path)
-                    }).then(result => {
-                        return Promise.resolve(result)
-                    })
-                },
-                importWallet : function({path}) {
-                    return kit.proxy().then(proxy => {
-                        return proxy.nodeControl.request.importwallet(path)
-                    }).then(result => {
-                        return Promise.resolve(result)
-                    })
-                },
+				},
+				dumpWallet: function ({path}) {
+					return kit.proxy().then(proxy => {
+						return proxy.nodeControl.request.dumpwallet(path)
+					}).then(result => {
+						return Promise.resolve(result)
+					})
+				},
+				importWallet: function ({path}) {
+					return kit.proxy().then(proxy => {
+						return proxy.nodeControl.request.importwallet(path)
+					}).then(result => {
+						return Promise.resolve(result)
+					})
+				},
 			},
 
-			testkeys : {
-				add : function({
-					key
-				}){
+			testkeys: {
+				add: function ({
+								   key
+							   }) {
 
-					if(!key) return Promise.reject("key")
+					if (!key) return Promise.reject("key")
 
 					var kp = pocketnet.kit.keyPair(key)
 
-					if(!kp) return Promise.reject("notvalidkey")
+					if (!kp) return Promise.reject("notvalidkey")
 
-					if(_.indexOf(settings.testkeys, key) > -1){
+					if (_.indexOf(settings.testkeys, key) > -1) {
 						return Promise.resolve()
 					}
-	
+
 					settings.testkeys.push(key)
-	
+
 					return state.save()
 				},
-	
-				remove : function({
-					index
-				}){
-	
+
+				remove: function ({
+									  index
+								  }) {
+
 					if (index < 0 || index > settings.testkeys.length - 1) return Promise.resolve()
-	
+
 					settings.testkeys.splice(index, 1)
-	
+
 					return state.save()
 				}
 			},
-	
-			admins : {
-				add : function({
-					address
-				}){
 
-					if(!address) return Promise.reject("address")
+			admins: {
+				add: function ({
+								   address
+							   }) {
 
-					if(!pocketnet.kit.address.validation(address)) return Promise.reject("notvalidaddress")
+					if (!address) return Promise.reject("address")
+
+					if (!pocketnet.kit.address.validation(address)) return Promise.reject("notvalidaddress")
 
 
-					if(_.indexOf(settings.admins, address) > -1){
+					if (_.indexOf(settings.admins, address) > -1) {
 						return Promise.resolve()
 					}
-	
+
 					settings.admins.push(address)
-	
+
 					return state.save()
 				},
-	
-				remove : function({
-					address
-				}){
-	
+
+				remove: function ({
+									  address
+								  }) {
+
 					var i = _.indexOf(settings.admins, address)
-	
+
 					if (i == -1) return Promise.resolve()
-	
+
 					settings.admins.splice(i, 1)
-	
+
 					return state.save()
 				}
 			}
 		},
-	
-		get : {
-			settings : function(){
+
+		get: {
+			settings: function () {
 				return Promise.resolve(state.export(true))
 			},
-			
-			state : function(compact){
+
+			state: function (compact) {
 				return kit.proxy().then(proxy => {
 					return proxy.kit.info(compact)
 				})
 			},
 
-			testkey : function(index){
+			testkey: function (index) {
 				return settings.testkeys[index]
 			}
 		},
 
-		node : {
-			install : function(message){
+		node: {
+			install: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.install()
 				}).then(r => {
@@ -969,29 +1116,29 @@ var kit = {
 					return Promise.resolve(r)
 				})
 			},
-			breakInstall : function(message){
+			breakInstall: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.breakInstall()
 				}).then(r => {
 					return Promise.resolve(r)
 				})
 			},
-			delete : function({all}){
+			delete: function ({all}) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.delete(all)
 				}).then(r => {
 					return Promise.resolve(r)
 				})
 			},
-            // TODO (brangr): проверить
-			update : function(message){
+			// TODO (brangr): проверить
+			update: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
 				}).then(r => {
 					return Promise.resolve(r)
 				})
 			},
-            // TODO (brangr): почему коммент?
+			// TODO (brangr): почему коммент?
 			/*checkupdate : function(message){
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.checkupdate().then(update => {
@@ -999,23 +1146,23 @@ var kit = {
 					})
 				})
 			},*/
-			request : function(message){
-				
+			request: function (message) {
+
 				return kit.proxy().then(proxy => {
 
-					if(!message.data[0]) return Promise.reject('methodname')
+					if (!message.data[0]) return Promise.reject('methodname')
 
-					if(!proxy.nodeControl.request[message.data[0]]){
+					if (!proxy.nodeControl.request[message.data[0]]) {
 						return proxy.nodeControl.kit.rpc(message.data[0], message.data[1])
 					}
 
 					return proxy.nodeControl.request[message.data[0]](message.data[1])
-					
+
 				}).then(data => {
 					send(message.id, null, data)
 				})
 			},
-			stop : function(message){
+			stop: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.safeStop()
 				}).then(r => {
@@ -1024,29 +1171,28 @@ var kit = {
 			},
 		},
 
-		proxy : {
-			detach : function(modules){
+		proxy: {
+			detach: function (modules) {
 				return kit.proxy().then(proxy => {
 					return proxy.kit.detach(modules)
 				})
 			}
 		},
 
-		help : {
-			commands : function(){
+		help: {
+			commands: function () {
 
 				var list = [];
 
-				var rec = function(obj, key){
+				var rec = function (obj, key) {
 
-					if (typeof obj == 'function'){
+					if (typeof obj == 'function') {
 
 						list.push(key)
 
-					}
-					else{
+					} else {
 						_.each(obj, (obj, i) => {
-							rec(obj, key ? key + '.' + i : i )
+							rec(obj, key ? key + '.' + i : i)
 						})
 					}
 
@@ -1058,25 +1204,25 @@ var kit = {
 			}
 		},
 
-		bots : {
-			get : function(){
+		bots: {
+			get: function () {
 				return kit.proxy().then(proxy => {
 					return Promise.resolve({
-						bots : proxy.bots.get()
+						bots: proxy.bots.get()
 					})
 				})
 			},
 
-			add: function({address}){
+			add: function ({address}) {
 				return kit.proxy().then(proxy => {
 					return proxy.bots.add(address)
 				})
 			},
 
-			addlist : function({addresses}){
+			addlist: function ({addresses}) {
 				return kit.proxy().then(proxy => {
 
-					var promises = _.map(addresses, function(address){
+					var promises = _.map(addresses, function (address) {
 						return proxy.bots.add(address)
 					})
 
@@ -1084,87 +1230,141 @@ var kit = {
 				})
 			},
 
-			remove: function({address}){
+			remove: function ({address}) {
 				return kit.proxy().then(proxy => {
 					return proxy.bots.remove(address)
 				})
 			}
 		},
-		
-		tor : {
-			start : function(){
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.start();
-					settings.tor.enabled = true
-					await state.save();
-				})
-			},
-			stop : function(){
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.stop();
-					settings.tor.enabled = false
-					await state.save()
-				})
-			},
-			info : function(){
-				return kit.proxy().then(async proxy => {
+
+		tor: {
+
+			info: function () {
+				return kit.proxy().then(proxy => {
 					return proxy.torapplications.info();
 				})
 			},
+
+			install : function(){
+				return kit.proxy().then(proxy => {
+					proxy.torapplications.install().catch(e => {
+						console.log(e)
+					})
+
+					return Promise.resolve(proxy.torapplications.info())
+				})
+			},
+
+			reinstall : function(){
+				return kit.proxy().then(proxy => {
+					proxy.torapplications.reinstall().catch(e => {
+						console.log(e)
+					})
+
+					return new Promise(resolve => {
+						setTimeout(() => {
+							return resolve(proxy.torapplications.info())
+						}, 1000)
+					})
+
+
+
+				})
+			}
+
+			/*remove: function () {
+				return kit.proxy().then(proxy => {
+					return proxy.torapplications.remove();
+				})
+			}*/
+			//settings.tor.useSnowFlake
+
+			/*start: function (data) {
+				const isPersistent = data?.persistence;
+
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.start();
+
+					if (isPersistent) {
+						settings.tor.enabled = true
+					}
+
+					await state.save();
+				})
+			},
+			stop: function (data) {
+				const isPersistent = data?.persistence;
+
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.stop();
+
+					if (isPersistent) {
+						settings.tor.enabled = false
+					}
+
+					await state.save()
+				})
+			},*/
+
 		},
 
 		notifications: {
-			info : function(){
+			info: function () {
 				return kit.proxy().then(async proxy => {
 					return proxy.notifications.info();
 				})
 			},
 		},
 
-		transports : {
-			axios : function(...args){
+		transports: {
+			axios: function (...args) {
 				return kit.proxy().then(async proxy => {
 					return proxy.transports.axios(...args);
 				})
 			},
-			fetch : function(...args){
+			fetch: function (...args) {
 				return kit.proxy().then(async proxy => {
 					return proxy.transports.fetch(...args);
 				})
 			},
-			request : function(option, callback){
+			request: function (option, callback) {
 				return kit.proxy().then(async proxy => {
 					return proxy.transports.request(option, callback);
+				})
+			},
+			isAltTransportSet: function (url) {
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.isAltTransportSet(url);
 				})
 			},
 		},
 
 		slide: {
-			add : function (...args) {
+			add: function (...args) {
 				return kit.proxy().then(async proxy => {
 					return proxy.api.add(...args);
 				})
 			}
 		},
 
-        quit : function() {
-            return kit.destroy().then(r => {
-                process.exit([0]);
-            });
-        },
+		quit: function () {
+			return kit.destroy().then(r => {
+				process.exit([0]);
+			});
+		},
 	},
 
-	gateway : function(message){
+	gateway: function (message) {
 		return this.proxy().then(proxy => {
 			var api = proxy.apibypath(message.path)
 
-			if(!api) return Promise.reject('api')
+			if (!api) return Promise.reject('api')
 
 			proxy.authorization[api.authorization || 'dummy'](message.data)
 
 			message.data.U = true //// IPC CONNECTION BACKDOOR
 
-			if(!message.data.A) message.data.A = 'ipcconnection'
+			if (!message.data.A) message.data.A = 'ipcconnection'
 
 			return api.action(message.data).then(r => {
 				return Promise.resolve(r.data)
@@ -1172,17 +1372,17 @@ var kit = {
 
 		})
 	},
-	
-	startproxy : function(hck){
 
-		if(!proxy){
-            
+	startproxy: function (hck) {
+
+		if (!proxy) {
+
 			proxy = new Proxy(settings, kit.manage, test, logger, reverseproxy)
 
-			if (hck.userDataPath){
+			if (hck.userDataPath) {
 				proxy.userDataPath = hck.userDataPath
 			}
-			
+
 			return proxy.kit.init()
 		}
 
@@ -1193,22 +1393,22 @@ var kit = {
 
 	},
 
-	proxy : function(){
-		if(proxy) return Promise.resolve(proxy)
+	proxy: function () {
+		if (proxy) return Promise.resolve(proxy)
 
 		return Promise.reject('proxynull')
 	},
 
-	init : function(environmentDefaultSettings, hck){
-	
+	init: function (environmentDefaultSettings, hck) {
+
 		state.prepare()
 
 		var settings = defaultSettings;
 
-		if(!environmentDefaultSettings) 
+		if (!environmentDefaultSettings)
 			environmentDefaultSettings = {}
 
-		if(!hck) hck = {}
+		if (!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
 
@@ -1216,17 +1416,17 @@ var kit = {
 
 		return new Promise((resolve, reject) => {
 
-			var start = function(){
+			var start = function () {
 
 				kit.startproxy(hck).then(r => {
 
 					logger.w('system', 'info', 'Proxy Started')
 
 					return kit.proxy()
-					
+
 				}).then(proxy => {
 
-					if (hck.wssdummy){
+					if (hck.wssdummy) {
 						proxy.wss.wssdummy(hck.wssdummy)
 					}
 
@@ -1240,23 +1440,21 @@ var kit = {
 				})
 			}
 
-			db.loadDatabase(function(err) {   
+			db.loadDatabase(function (err) {
 
-		
-				if(!err){
-					db.find({ nedbkey : nedbkey }).exec(function (err, docs) {
-			
-						var savedSettings = !err? docs[0] || {} : {}
-			
+
+				if (!err) {
+					db.find({nedbkey: nedbkey}).exec(function (err, docs) {
+
+						var savedSettings = !err ? docs[0] || {} : {}
+
 						state.apply(state.expand(savedSettings, settings))
 
 						state.save()
-			
+
 						start()
 					});
-				}
-			
-				else{
+				} else {
 					state.apply(state.expand({}, settings))
 
 					state.save()
@@ -1272,18 +1470,18 @@ var kit = {
 
 	/////
 
-	destroy : function(){
+	destroy: function () {
 
 		return kit.proxy().then(proxy => {
-	
+
 			return proxy.kit.safedestroy()
-	
+
 		}).catch(e => {
-	
-			if(e == 'detach') return Promise.reject(e)
-	
+
+			if (e == 'detach') return Promise.reject(e)
+
 			return Promise.resolve()
-	
+
 		}).then(r => {
 
 			return Promise.resolve()
@@ -1291,22 +1489,23 @@ var kit = {
 		})
 	},
 
-	destroyhard : function(){
+	destroyhard: function () {
 
 		return kit.destroy().then(r => {
-			return this.destroy()
+			return kit.proxy().then(proxy => {
+				return proxy.kit.destroy()
+			})
 		})
-		
+
 	},
 
-	candestroy : function(){
+	candestroy: function () {
 		return kit.proxy().then(proxy => {
 			return proxy.kit.candestroy()
 		})
 	},
-	
-}
 
+}
 
 
 

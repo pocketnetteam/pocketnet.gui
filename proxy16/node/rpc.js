@@ -138,6 +138,8 @@ const publics = {
     getalljury: true,
     getjuryassigned: true,
     getjurymoderators: true,
+    getaccountearning : true
+
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -187,7 +189,7 @@ function rpc(request, callback, obj) {
 
         return
     }
-    
+
     var signal = null
 
     ///need to test
@@ -491,7 +493,7 @@ RpcClient.callspec = {
     getrecommendedaccountbyaddress: 'str str obj str int',
 
     getcontentactions : 'str',  
-
+    getnotifications : 'int',
     
     getcompactblock: "str int",
     searchbyhash: "str",
@@ -509,6 +511,8 @@ RpcClient.callspec = {
     getalljury: '',
     getjuryassigned: 'str',
     getjurymoderators: 'str',
+    getaccountearning : 'str int int'
+
 };
 
 var slice = function(arr, start, end) {

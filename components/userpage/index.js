@@ -65,16 +65,16 @@ var userpage = (function(){
 			}
 
 
-			reports.push({
-				name : self.app.localization.e('ractivities'),
-				id : 'activities',
-				report : 'activities',
-				mobile : false,
-				openReportPageMobileInWindow : true,
-				if : function(){
-					return true
-				}
-			})
+			// reports.push({
+			// 	name : self.app.localization.e('ractivities'),
+			// 	id : 'activities',
+			// 	report : 'activities',
+			// 	mobile : false,
+			// 	openReportPageMobileInWindow : true,
+			// 	if : function(){
+			// 		return true
+			// 	}
+			// })
 			
 
 			reports.push({
@@ -135,6 +135,14 @@ var userpage = (function(){
 					}
 
 				}
+			})
+
+			reports.push({
+				name : self.app.localization.e('earnings2'),
+				id : 'earnings',
+				report : 'earnings',
+				//openReportPageMobile : true,
+				mobile : false
 			})
 
 			reports.push({
@@ -281,13 +289,7 @@ var userpage = (function(){
 			}
 
 			
-			reports.push({
-				name : self.app.localization.e('captionUserStats'),
-				id : 'statistics',
-				report : 'statistic',
-				//openReportPageMobile : true,
-				mobile : false
-			})
+
 			
 				
 		}
@@ -796,8 +798,11 @@ var userpage = (function(){
 							})
 						})
 
-	
-	
+						_p.el.find('.app-builtfrom').on('click', () => {
+							navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
+							sitemessage(self.app.localization.e('copybuiltfrom'));
+						});
+
 						if (clbk)
 							clbk();
 					})

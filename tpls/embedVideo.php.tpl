@@ -33,12 +33,13 @@
 
         const isVideEmbed = urlParams.get('embed');
 
-        const [host, id, s] = [urlParams.get('host'), urlParams.get('id'), urlParams.get('s')];
+        const [host, id, s, autoplay] = [urlParams.get('host'), urlParams.get('id'), urlParams.get('s'), urlParams.get('autoplay')];
 
         if (!isVideEmbed || !host || !id) return;
 
         PeerTubeEmbeding.main(elem, id, 'https://' + host, {
           videoEmbedded: true,
+          autoplay: autoplay && true,
           txid: s || ''
         });
       };

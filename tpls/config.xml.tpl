@@ -41,8 +41,13 @@
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
 
         <resource-file src="resources/android/colors.xml" target="app/src/main/res/values/colors.xml" />
-        
-        <!--<splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
+        <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable-mdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-hdpi/notification_icon.png" target="app/src/main/res/drawable-hdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xhdpi/notification_icon.png" target="app/src/main/res/drawable-xhdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xxhdpi/notification_icon.png" target="app/src/main/res/drawable-xxhdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xxxhdpi/notification_icon.png" target="app/src/main/res/drawable-xxxhdpi/notification_icon.png" />
+        <splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
         <splash density="land-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png" />
         <splash density="land-hdpi" src="resources/android/splash/drawable-land-hdpi-screen.png" />
         <splash density="land-xhdpi" src="resources/android/splash/drawable-land-xhdpi-screen.png" />
@@ -53,7 +58,7 @@
         <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />-->
+        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
       
     </platform>
     <platform name="ios">
@@ -113,15 +118,7 @@
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
-    <plugin name="cordova-plugin-device" spec="~1.1.1" />
     
-
-    <% if(!store) {%>
-
-        <plugin name="cordova-plugin-apkupdater" spec="~4.0.0" />
-
-    <% } %>
-
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -177,8 +174,12 @@
         </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/notification_icon" />
+        </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
@@ -186,12 +187,11 @@
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
             <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
+            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 

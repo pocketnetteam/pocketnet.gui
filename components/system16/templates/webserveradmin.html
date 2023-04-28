@@ -158,18 +158,91 @@
             <div class="setting togglebutton">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Enable Tor</span>
+                        <span>Use Tor</span>
                     </div>
 
-                    <div elementsid="torenabled" class="value" sys="torenabled" value="<%-(typeof changes.enabledtor != 'undefined' ? changes.enabledtor : system.tor.enabled)%>">
-                        <span><%- (typeof changes.enabledtor!= 'undefined' ? changes.enabledtor : system.tor.enabled) ? 'Yes' : 'No' %></span>
+                    <div elementsid="torenabled2" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
+                        <span><%- e('torusing_' + (typeof changes.torenabled2!= 'undefined' ? changes.torenabled2 : system.tor.enabled2)) %></span>
                     </div>
 
-                    <% if(typeof changes.enabledtor != 'undefined') {%>
-                    <div class="icon">
-                        <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled"></i>
-                    </div>
+                    <% if(typeof changes.torenabled2 != 'undefined') {%>
+                        <div class="icon">
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled2"></i>
+                        </div>
                     <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Use SnowFlake</span>
+                    </div>
+
+                    <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake)%>">
+                        <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? "Yes" : "No" %></span>
+                    </div>
+
+                    <% if(typeof changes.useSnowFlake != 'undefined') {%>
+                        <div class="icon">
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="useSnowFlake"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Custom OBFS4</span>
+                    </div>
+
+                    <div elementsid="customobfs4" class="value" sys="customObfs4">
+                        <span><%- (!!system.tor.customObfs4 || !!changes.server?.customObfs4) ? 'Loaded' : 'None' %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting togglebutton torinstallsetting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Tor installed</span>
+                    </div>
+
+                    <div class="value values">
+
+                        <% if(deep(info, 'tor.state.status') == 'install') { %>
+                            
+                            <div class="chunk status">
+                                <span>Installing</span>
+                            </div>
+
+                        <% } else { %> 
+
+                            <% if(info.tor.installed) { %>
+                                <div class="chunk status">
+                                    <span>Installed</span>
+                                </div>
+    
+                                <div class="chunk">
+                                    <button class="button ghost reinstalltor">Reinstall</button>
+                                </div>
+    
+                            <% } else { %> 
+                                <div class="chunk status">
+                                    <span>Not installed</span>
+                                </div>
+    
+                                <div class="chunk">
+                                    <button class="button ghost installtor">Install</button>
+                                </div>
+                            <% } %>
+                            
+                        <% } %>
+
+                        
+                        
+                    </div>
                 </div>
             </div>
             

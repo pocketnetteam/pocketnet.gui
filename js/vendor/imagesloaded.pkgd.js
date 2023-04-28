@@ -428,6 +428,7 @@
   
   ImagesLoadedPN.prototype.complete = function() {
 
+
     if(this.isComplete) return
 
     var eventName = this.hasAnyBroken ? 'fail' : 'done';
@@ -581,6 +582,7 @@
   Background.prototype = Object.create( LoadingImage.prototype );
   
   Background.prototype.check = function() {
+
     this.img.addEventListener( 'load', this );
     this.img.addEventListener( 'error', this );
     this.img.src = this.url;

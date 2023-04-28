@@ -76,6 +76,7 @@ __map =  {
 		
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
+		"js/vendor/wallet-address-validator.min.js",
 		{path : "js/functionsfirst.js", babelify : true},
 		"js/localization.js",
 		//"js/notifications.js",
@@ -85,7 +86,9 @@ __map =  {
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
 		{path : "js/videotransport.js", babelify : true},
+		{path : "js/media.js", babelify : true},
 		{path : "js/app.js", babelify : true},
+		
 		"js/main.js"
 	],
 
@@ -641,9 +644,14 @@ __map =  {
 		donations : {
 			uri : "donations",
 			href : "donations",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
+		howtobuy : {
+			uri : "howtobuy",
+			href : "howtobuy",
+			add : insertingfunc,
 			anonimus : true,
 		},
 
@@ -669,7 +677,11 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-
+		transportsmanagement : {
+			uri : "transportsmanagement",
+			href : "transportsmanagement",
+			add : insertingfunc
+		},
 
 		
 	
@@ -824,8 +836,7 @@ __map =  {
 			uri : "imagegallery",
 			href : "imagegallery",
 			add : insertingfunc,
-			anonimus : true,
-			relationsSunc : true,
+			anonimus : true
 		},
 
 		aboutus : {
@@ -1062,10 +1073,16 @@ __map =  {
 		
 	},
 
-	statistic : {
-		uri : "statistic",
-		href : "statistic",
+	earnings : {
+		uri : "earnings",
+		href : "earnings",
 		add : insertingfunc,
+
+		relations : [
+			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
+				Chart = require('./js/vendor/chart.min.js')
+			}},	
+		]
 	},
 
 	videoCabinet : {

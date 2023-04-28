@@ -4,9 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    
 
-    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
-    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
+
     fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
     peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
@@ -73,7 +74,21 @@ Platform = function (app, listofnodes) {
 
     self.lastblocktime = null
     self.lasttimecheck = null
+    
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
+
     self.real = {
+        'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
+        'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy' : true,
+        'PF4eMjha9MFs4F3CaiHG1CJjDJGS7w8tvF' : true,
+        'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK' : true,
+        'P9igzkJ57DYXyXMjCyTLvHmJJTjwDBB8Ug' : true,
+        'PHPrCVNBHMJCD2fVUFXLw92rZnAMJ1UFF6' : true,
+        'PEXsbgKmfxxMGhaqELM7FdhgexhhvtrirY' : true,
+        'PHLz9EhgvPDZx9Erer3romhcNSGRw2FUmu' : true,
+        'PXasvRAZmYYvX7bxCXoSD6xskKsXFAt3jg' : true,
+        'PUcbjUHfSTSYxLwqmndEzWVyxwTCiGjkTL' : true,
+        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC' : true,
         'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
@@ -284,7 +299,21 @@ Platform = function (app, listofnodes) {
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
         'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
-        'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true
+        'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true,
+        'PCxNa9zJ1pA6o6cb4Dqt8cr1GJtkvsRFnh': true,
+        'PHtxzCKFqNEfn8N8FDAUYhUhqSL2qJJZxY': true,
+        'PEuEe97X6xceWJQqQWFo8oQ4z1V2sEVZis': true,
+        'PGUPmTDchdynQRyEiaHx8K91TqLpm71L4b': true,
+        'PVe2vhDZiQryRVxmVuzF1wyFfww54ii4We': true,
+        'PVuLw21vLpcBvAfzeBi5PAM3L1CPB1GnYc': true,
+        'PVcMixqr6FkarzUjskvLL8MXuExAbEmRHT': true,
+        'PCf2FqtB4p6APE3c5Avkrg3yk8dBq9ijRN': true,
+        'PW5TQSyz3jWEx9k2S7icQXwKJLEBGRUtho': true,
+        'PRtyDsM3wL4Y7baAGRULkGmnpkmQYXcpkH': true,
+        'PHVjfPM6bxy84AmWqw7hjBWYk7KVjpdsD2': true,
+        'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
+        'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
+        'PXYhCbTwPaUHrP6spJM5NY84TBpLQJtZi5': true,
     }
 
     self.shark = {}
@@ -337,6 +366,9 @@ Platform = function (app, listofnodes) {
         'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
+		'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
+		'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
     ];
 
     self.whiteList = [
@@ -547,6 +579,7 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: 'Bastyon' + ".apk",
+                        gfname: 'BastyonGF' + ".apk",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -575,7 +608,7 @@ Platform = function (app, listofnodes) {
                     modile : true,
                     image : 'applications_ios.jpg',
 
-                    href: 'https://pocketnet.app/bastyon_iphone',
+                    href: 'https://apps.apple.com/app/id1537944200',
                     hreflabel : 'installpwa',
                 },
 
@@ -3741,6 +3774,56 @@ Platform = function (app, listofnodes) {
 
         wallet : {
 
+            donate : function(p){
+
+                return new Promise((resolve, reject) => {
+
+                    var receiver = p.receiver
+
+                    var sender = self.sdk.address.pnet().address;
+                
+                    if (sender === receiver){
+                        sitemessage(self.app.localization.e('donateself'));
+
+                        reject()
+                    }
+
+                    else{
+                        app.nav.api.load({
+                            open : true,
+                            id : 'donate',
+                            inWnd : true,
+                
+                            essenseData : {
+                                type : 'donate',
+                                sender: sender, 
+                                receiver: receiver,
+                                send : true,
+                                value : 1,
+                                min : 0.1,
+                                clbk  : function(value, txid){
+
+                                    if (p.roomid && txid){
+                                        self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
+                                    }
+
+                                    resolve({txid, value})
+                                }
+                            },
+                
+                            clbk : function(s, p){
+                            }
+                        })
+                    }
+                })
+
+                
+                
+
+                
+
+            },
+
             send : function(p, clbk, el){
 
                 if(!p) p = {}
@@ -5542,6 +5625,28 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        broadcaster : {
+            clbks : {},
+            history : [],
+            init : function(clbk){
+                if(typeof swBroadcaster != 'undefined')
+                    swBroadcaster.on('network-stats', (data) => {
+
+                        if (self.sdk.broadcaster.history.length > 600){
+                            self.sdk.broadcaster.history.splice(0, 100)
+                        }
+
+                        self.sdk.broadcaster.history.push(data)
+
+                        _.each(self.sdk.broadcaster.clbks, (c) => {
+                            c(data)
+                        })
+                    })
+
+                if(clbk) clbk()
+            }
+        },
 
         faqLangs : {
             get : function(){
@@ -7808,7 +7913,6 @@ Platform = function (app, listofnodes) {
                                                     resolve(entry.toURL());
                                                 },
                                                 function (error) {
-                                                    console.log("download thumbnail error: ", error);
                                                     reject('download thumbnail error');
                                                 },
                                                 null, {}
@@ -10726,7 +10830,14 @@ Platform = function (app, listofnodes) {
                 if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
                 }
+
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+
+                var bwf = _.find(self.bwdictionary, (bww) => {
+                    return name.indexOf(bww) > -1
+                })
+                
+                if(bwf) return true
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
@@ -10762,6 +10873,8 @@ Platform = function (app, listofnodes) {
 
             scamcriteria : function(address){
 
+                return false
+
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
                 var info = deep(self, 'sdk.users.storage.' + address);
@@ -10773,6 +10886,8 @@ Platform = function (app, listofnodes) {
             },
 
             upvotevalueblockcriteria : function(value, address){
+
+                return false
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
@@ -12608,11 +12723,11 @@ Platform = function (app, listofnodes) {
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
                 p.tagsfilter = _.map(p.tagsfilter, function(t){
-                    return encodeURIComponent(t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                    return encodeURIComponent(t)
+                    return encodeURIComponent(t.toLowerCase())
                 })
 
                 p.depth || (p.depth = 10000);
@@ -12781,9 +12896,9 @@ Platform = function (app, listofnodes) {
                 var counts = {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
+                    audio : deep(data, 'contentsLang.audio.' + self.app.localization.key)|| 0,
                     article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
                     common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
-
                     index_sub : data['sharesSubscr'] || 0
                 }
 
@@ -12925,6 +13040,8 @@ Platform = function (app, listofnodes) {
 
             info: {},
 
+            api: 'https://pkoin.net/Shifter',
+
             find: function (address) {
                 var ar = self.sdk.exchanges.get();
 
@@ -13037,65 +13154,40 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            address: function (p, clbk) {
-                var storage = self.sdk.exchanges.storage
+            address: function (cur, clbk) {
 
-                var t = this
+                var me = self.app.user.address.value || '';
+                
+                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
-                storage[p.currency] || (storage[p.currency] = {})
-                storage[p.currency][p.address] || (storage[p.currency][p.address] = {})
+					var text = d.text();
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETADDRESSFORPOC',
-                        Currency: p.currency,
-                        address: p.address
-                    },
-                    success: function (d) {
+					return text;
+				
+                }).then(function(address){
 
-                        if (d.Address) {
+					if (address){
 
-                            storage[p.currency][p.address][d.Address.Address] = {
-                                address: d.Address.Address,
+                        if (address.indexOf('is not available at the moment') > -1){
 
-                                amount: p.amount,
-                                currencyAmount: p.currencyAmount,
+                            clbk(null, self.app.localization.e('addrNotAvailable', cur));
 
-                                time: self.currentTime()
-                            };
+                        } else{
 
-                            t.save()
-
-                            self.sdk.exchanges.info[d.Address.Address] = d.Address
-
-
-
-
-                            if (clbk)
-                                clbk(null, {
-
-                                    pocaddress: p.address,
-                                    currency: p.currency,
-                                    info: storage[p.currency][p.address]
-
-                                }, d.Address)
+                            clbk(address);
+ 
                         }
+					}
+					else
+					{
+						clbk(null, self.app.localization.e('e13094'))
+					}
 
-                        else {
-                            if (clbk)
-                                clbk('error', null)
-                        }
+				}).catch(function(err){
+
+					clbk(null, err);
 
 
-
-
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
-                    }
                 })
 
 
@@ -13153,34 +13245,62 @@ Platform = function (app, listofnodes) {
                 })
 
             },
+            support: function (payload, clbk) {
+
+                var serialize = function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                      if (obj.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                    return str.join("&");
+                }
+
+                var query = serialize(payload);
+                
+                fetch(this.api + '/PocShifter/SupportTicket?' + query, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    }
+                  }).then(function(r){
+
+                    return r.text();
+                    
+                  }).then(function(r){
+
+                    clbk(r);
+
+                  }).catch(function(err){
+
+                    clbk(null, err);
+
+                  })
+
+            },
             status: function (currency, address, clbk) {
 
+                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
 
-                self.app.ajax.run({
-                    data: {
-                        Action: 'GETPOCDEALSTATUS',
-                        Currency: currency,
-                        Address: address
-                    },
-                    success: function (d) {
-
-
-                        if (d.Deal) {
-                            if (clbk)
-                                clbk(null, d.Deal)
-                        }
-                        else {
-                            if (clbk)
-                                clbk('empty', null)
-                        }
-                    },
-
-                    fail: function () {
-                        if (clbk) {
-                            clbk('server')
-                        }
+					return d.json();
+				
+                }).then(function(d){
+                    
+                    if (d[0]) {
+                        if (clbk)
+                            clbk(null, d[0])
                     }
+                    else {
+                        if (clbk)
+                            clbk('empty', null)
+                    }
+                }).catch(function(err){
+
+                    if (clbk) {
+                        clbk('server')
+                    }    
                 })
+                
 
             },
 
@@ -13254,6 +13374,13 @@ Platform = function (app, listofnodes) {
                                         })
 
                                         self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                        var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
+
+                                        if(address == self.app.user.address.value){
+                                            self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
+                                        }
+
 
                                         if (clbk)
                                             clbk(null, d, inputs, _outputs)
@@ -13473,7 +13600,7 @@ Platform = function (app, listofnodes) {
                     amount: amount
                 }]
 
-                var keyPair = self.api.keypair(mnemonic.replace(/\+/g, ' '))
+                var keyPair = mnemonic ? self.api.keypair(mnemonic.replace(/\+/g, ' ')) : self.app.user.keys()
 
                 if (!keyPair) {
                     if (clbk)
@@ -13482,7 +13609,8 @@ Platform = function (app, listofnodes) {
                 else {
                     var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
 
-                    this.embed(outputs, embdedtext)
+                    if (embdedtext)
+                        this.embed(outputs, embdedtext)
 
 
                     self.sdk.wallet.txBaseFeesWithCache(address, outputs, keyPair, feerate, function (err, d) {
@@ -14281,7 +14409,7 @@ Platform = function (app, listofnodes) {
     
                     task.status = 'processing'
     
-                    self.app.platform.sdk.node.shares.gettopfeed(p, (shares, error) => {
+                    self.app.platform.sdk.node.shares.gettopfeedNotLiked(p, (shares, error) => {
     
                         task.status = 'completed'
     
@@ -14417,7 +14545,6 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-
               
 
                     var p = {};
@@ -14632,7 +14759,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            adduser : function(key, address, value){
+            adduser : function(key, address, value, videoData){
 
                 if(!address) return
 
@@ -14652,7 +14779,10 @@ Platform = function (app, listofnodes) {
                             subscribes_count : user.subscribes_count,
                             value: Number(value || '0')
                         }
-
+                        if(videoData) {
+                            self.sdk.activity.add(key, 'video', info, videoData)
+                            return
+                        }
                         var error = self.sdk.activity.add(key, 'user', info)
 
                     }
@@ -14661,7 +14791,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            add : function(key, type, info){
+            add : function(key, type, info, videoData){
 
                 var l = self.sdk.activity.latest
 
@@ -14723,6 +14853,12 @@ Platform = function (app, listofnodes) {
 
                     obj.data = {
                         value : info.value
+                    }
+                }
+
+                if(type == 'video') {
+                    obj.data = {
+                        value : videoData
                     }
                 }
 
@@ -16976,6 +17112,8 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.likes.storage
 
+                console.log("shares S", s)
+
                 _.each(ids, function (txid) {
                     var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
 
@@ -16985,8 +17123,6 @@ Platform = function (app, listofnodes) {
                         if (typeof share.myVal == 'undefined') {
                             share.myVal = Number(s[txid])
                         }
-
-
 
                     }
 
@@ -18698,11 +18834,15 @@ Platform = function (app, listofnodes) {
 
                         var s = new pShare();
 
+                        delete share.myVal
+
                         s._import(share);
 
                         s.txid = share.txid;
 
                         s.time = new Date();
+
+                        
 
                         s.address = share.address
 
@@ -18840,6 +18980,8 @@ Platform = function (app, listofnodes) {
                             var clear = d.contents
 
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
+
+
 
                             self.sdk.node.shares.takeusers(_.filter(clear, (c => {
                                 return c && c.txid && c.address
@@ -19040,6 +19182,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
+
                                                 if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
@@ -19047,6 +19190,7 @@ Platform = function (app, listofnodes) {
                                                 }
                                             })
                                         }
+
 
                                         storage[key] = shares;
 
@@ -19286,6 +19430,34 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                gettopfeedNotLiked : function(p, clbk, cache){
+                    self.app.platform.sdk.node.shares.gettopfeed(p, function(shares) {
+
+                        shares = _.filter(shares, function(s){
+                            if(typeof s.myVal == 'undefined'){
+                                return true;
+                            }
+                        })
+        
+                        var ids = _.map(shares, function(s){
+                            return s.txid
+                        })
+        
+                        self.app.platform.sdk.likes.get(ids, function(){
+
+                            shares = _.filter(shares, function(s){
+                                if (!s.myVal){
+                                    return true;
+                                }
+                            })
+        
+                            if(clbk) clbk(shares)
+        
+                        })
+
+                    }, cache)
+                },
+
                 gettopfeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
@@ -19416,11 +19588,11 @@ Platform = function (app, listofnodes) {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
@@ -19550,12 +19722,12 @@ Platform = function (app, listofnodes) {
 
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return encodeURIComponent(t.toLowerCase())
                             })
 
                             /////temp
@@ -19610,6 +19782,8 @@ Platform = function (app, listofnodes) {
                                     if (s.info){
                                         s.info.BLOCK = blocknumber
                                     }
+
+                                    
                                 })
 
                                 p.blocknumber = blocknumber
@@ -20091,7 +20265,7 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.app.settings.set(self.sdk.address.pnet().address, 'temp3', JSON.stringify(self.sdk.node.transactions.temp))
+                        self.app.settings.set(self.sdk.address.pnet().address, 'temp4', JSON.stringify(self.sdk.node.transactions.temp))
                     }
 
                     if (clbk)
@@ -20104,15 +20278,24 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp3') || "{}")
+                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp4') || "{}")
 
                         _.each(self.sdk.node.transactions.temp, function(vs, t){
 
-                            self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
-                                return typeof alias.txid == 'string'
+                            var d = []
+
+                            _.each(vs, (alias) => {
+                                if(typeof alias.txid != 'string') d.push(alias.txid)
                             })
+
+                            _.each(d, (id) => {
+                                delete self.sdk.node.transactions.temp[t][id]
+                            })
+
+                            /*self.sdk.node.transactions.temp[t] = _.filter(vs, function(alias){
+                                return typeof alias.txid == 'string'
+                            })*/
                             
-                            console.log('self.sdk.node.transactions.temp[t]', self.sdk.node.transactions.temp[t])
                         })
                     }
                     else {
@@ -21721,7 +21904,6 @@ Platform = function (app, listofnodes) {
                                                         }
 
                                                         if(typeof alias.txid == "string") {
-                                                            console.log("ADDED TEMP")
                                                             temp[obj.type][d] = alias;
                                                         }
                                                         
@@ -24596,6 +24778,7 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
+                lasthistory.txid = txid
 
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
@@ -24629,7 +24812,6 @@ Platform = function (app, listofnodes) {
 
             },
             info : function(links){
-
                 var s = self.sdk.videos.storage
 
 
@@ -24641,7 +24823,7 @@ Platform = function (app, listofnodes) {
                         meta : meta,
                         link : l
                     }
-                })
+                });
 
                 lmap = _.filter(lmap, function(l){
 
@@ -24655,7 +24837,7 @@ Platform = function (app, listofnodes) {
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
-                    return l.meta.type
+                    return l.meta.subType || l.meta.type;
                 })
 
 
@@ -24671,7 +24853,7 @@ Platform = function (app, listofnodes) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
-                        return Promise.resolve()
+                        return Promise.resolve(r)
                     }).catch(e => {
                         return Promise.resolve()
                     })
@@ -24720,10 +24902,9 @@ Platform = function (app, listofnodes) {
                 links.forEach(link => {
 
                     const linkInfo = linksInfo[link.link];
-
                     if (linkInfo){
 
-                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive){
                             linkInfo.aspectRatio = 1.78
                         }
 
@@ -24766,6 +24947,16 @@ Platform = function (app, listofnodes) {
                 },
 
                 peertube : function(links){
+                    return self.app.api.fetch('peertube/videos', {
+                        urls: links.map(link => link.link),
+                    }).then(linksInfo => {
+                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
+                        return Promise.resolve(links);
+                    })
+
+                },
+
+                common : function(links){
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
@@ -24774,6 +24965,36 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve(links);
                     })
 
+                },
+
+               
+                peertubeStream : function(links) {
+                    const promisesStack = links.map((link) =>
+                        self.app.peertubeHandler.api.videos
+                            .getDirectVideoInfo(
+                                { id: link.meta.id },
+                                { host: link.meta.host_name },
+                            )
+                            .then((res) => {
+                                return {
+                                    ...res,
+                                    aspectRatio: res.aspectRatio || 1.77,
+                                    linkFull: link.link,
+                                };
+                            }),
+                    );
+
+                    return Promise.all(promisesStack).then((res) => {
+                      const linksInfoObject = res.reduce(
+                        (acc, curVal) => ({
+                          ...acc,
+                          [curVal.linkFull]: curVal,
+                        }),
+                        {},
+                      );
+                      self.sdk.videos.catchPeertubeLinks(linksInfoObject, links)
+                      return Promise.resolve(links);
+                    });
                 },
 
                 bitchute : function(links){
@@ -24819,7 +25040,20 @@ Platform = function (app, listofnodes) {
 
                     return Promise.all(promises)
 
-                }
+                },
+
+                ipfs : function(links) {
+                    const dataMap = links.map((l) => {
+                        l.data = {
+                            views : 0,
+                            image : null
+                        };
+
+                        return l;
+                    });
+
+                    return Promise.resolve(dataMap);
+                },
             },
 
             volume : 0,
@@ -25133,8 +25367,6 @@ Platform = function (app, listofnodes) {
             if(!using && !usingWeb) return
             if(!currenttoken) return
 
-            console.log('current', current)
-
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -25381,53 +25613,104 @@ Platform = function (app, listofnodes) {
                     if (data.tap) {
 
                         platform.ws.destroyMessages();
-                        const body = JSON.parse(data?.json);
-                        body.url = body?.url.replace("/index", "");
-                        if(body.url) {
-                            if(body.url === "/userpage?id=wallet"){
-                                platform.app.nav.api.go({
-                                    open: true,
-                                    href: 'wallet',
-                                    history: true,
-                                    inWnd: true,
-                                    essenseData: {
-                                    },
-                                });
-                            }else {
 
-                                console.log('body', body)
+                        var body = {}
 
-                                const params = new URLSearchParams(body.url);
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'post?s=' + params.get('s'),
-                                    inWnd: true,
-                                    history: true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['post'] = p
-                                    },
+                        try{
+                            body = JSON.parse(data?.json || "{}") || {};
+                        }catch(e){
 
-                                    essenseData: {
-                                        share: params.get('s'),
-
-                                        reply: {
-                                            answerid: params.get('commentid') || "",
-                                            parentid: params.get('parentid') || "",
-                                            noaction: true
-                                        }
-                                    }
-                                })
-                            }
-                        }else{
-                            platform.app.nav.api.go({
-                                open : true,
-                                href : 'notifications',
-                                inWnd : true,
-                                history : true,
-                                essenseData : {
-                                }
-                            })
                         }
+
+                        
+
+                        body.url = (body.url || "").replace("/index", "");
+
+                        if(!body.url) return
+
+                        console.log('body', body, data)
+
+                        app.waitinited().then(() => {
+
+                            console.log("HERE")
+
+                            app.user.isState(function (state) {
+
+                                if(body.url) {
+    
+                                    if(body.url === "/userpage?id=wallet"){
+    
+                                        if(app.nav.wnds['wallet']) return
+    
+                                        platform.app.nav.api.go({
+                                            open: true,
+                                            href: 'wallet',
+                                            inWnd: true,
+    
+                                            clbk: function (d, p) {
+                                                app.nav.wnds['wallet'] = p
+                                            },
+    
+                                            essenseData: {
+                                            },
+                                        });
+    
+                                    }else {
+    
+                                        if(app.nav.wnds['post']) return
+    
+                                        const params = new URLSearchParams(body.url);
+    
+                                        var postid = params.get('s')
+    
+                                        if(!postid) return
+    
+                                        console.log('postid', postid, params)
+    
+                                        platform.app.nav.api.go({
+                                            open: true,
+                                            href: 'post?s=' + postid,
+                                            inWnd: true,
+                                            clbk: function (d, p) {
+                                                app.nav.wnds['post'] = p
+                                            },
+    
+                                            essenseData: {
+                                                share: postid,
+    
+                                                reply: {
+                                                    answerid: params.get('commentid') || "",
+                                                    parentid: params.get('parentid') || "",
+                                                    noaction: true
+                                                }
+                                            }
+                                        })
+                                    }
+    
+                                }else{
+    
+                                    if(app.nav.wnds['notifications']) return
+    
+                                    platform.app.nav.api.go({
+                                        open : true,
+                                        href : 'notifications',
+                                        inWnd : true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['notifications'] = p
+                                        },
+                                        essenseData : {
+                                        }
+                                    })
+    
+                                }
+    
+                            })
+
+                        })
+
+                        
+
+
                     } else {
 
                         if (typeof cordova != 'undefined') {
@@ -28020,7 +28303,7 @@ Platform = function (app, listofnodes) {
                 destroyclbk: destroyclbk
             }
 
-            bgImages(el)
+            bgImagesCl(el)
 
 
             self.fastMessages.push(message);
@@ -29700,7 +29983,6 @@ Platform = function (app, listofnodes) {
 
                 success: function () {
                     self.app.api.set.current(proxy.id).then(r => {
-
                         resolve()
                     }).catch(resolve)
                 },
@@ -29842,7 +30124,6 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -29860,23 +30141,6 @@ Platform = function (app, listofnodes) {
                 clbk();
             });
 
-            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
-
-                bastyonhelperOpened = true
-
-                setTimeout(function(){
-
-                    app.nav.api.load({
-                        open : true,
-                        id : 'bastyonhelper',
-                        inWnd : true,
-                    })
-
-                }, 1000)
-
-            }*/
-
-
 
         }).catch(e => {
             console.log("ERROR", e)
@@ -29889,8 +30153,6 @@ Platform = function (app, listofnodes) {
         return new Promise((resolve, reject) => {
             if (self.app.options.peertubeServer)
                 return resolve();
-
-            console.log("PeerTubePocketnet", PeerTubePocketnet)
 
             if (typeof PeerTubePocketnet != 'undefined'){
                 
@@ -30041,7 +30303,7 @@ Platform = function (app, listofnodes) {
             if (state) {
 
                 lazyActions([
-
+                    self.sdk.broadcaster.init,
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
@@ -30050,6 +30312,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    
                     /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,
@@ -30316,8 +30579,21 @@ Platform = function (app, listofnodes) {
 
                             var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
                             
-                            var iscallsenabled = self.app.platform.istest() ? true : false
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
+                            var path = '/'
+
+                            if(!window.cordova && typeof _Electron == 'undefined'){
+                                path = window.pocketnetpublicpath
+                            }
+
+                            if(window.cordova && isios()){
+                                path = ''
+                            }
+
+                            if(typeof _Electron != 'undefined') path = './'
+
+                            
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -30332,6 +30608,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+                                    cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
                             </div>`
@@ -31440,6 +31717,8 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
+                console.log("NAV_MESSAGE", eventData)
+
                 routing(eventData.url)
 
             });
@@ -31469,10 +31748,10 @@ Platform = function (app, listofnodes) {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
 				getUserInfo: async (address) => {
+
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
-							console.log('stor',this.sdk.users.storage)
 							resolve(this.sdk.users.storage[address])
 						})
 					})
@@ -31491,9 +31770,12 @@ Platform = function (app, listofnodes) {
 
 				},
 				onEnded:(call) => {
+
                     self.app.mobile.unsleep(false)
 				},
 				onConnected:(call)=> {
+
+                    self.app.mobile.audiotoggle()
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()

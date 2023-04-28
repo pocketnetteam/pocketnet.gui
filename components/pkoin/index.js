@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = false;
 
 		var renders = {
 
@@ -81,7 +81,14 @@ var pkoin = (function(){
 						}, function(_p){
 	
 							ParametersLive([options], _p.el);
-	
+
+							el.tutorial = el.c.find('.tutorial-component');
+							el.tutorialNext = el.tutorial.find('.next-btn');
+
+							el.tutorialNext.on('click', function(){
+								el.tutorial.removeClass('show');
+							})
+								
 							el.inputSum = _p.el.find('#inputSum');
 		
 							var errorWrapper = _p.el.find('#errorWrapper');
@@ -95,9 +102,9 @@ var pkoin = (function(){
 									disabled = true;
 									el.send.addClass('disabled');
 	
-								} else if (valSum < 0.5){
+								} else if (valSum < 0.1){
 	
-									errorWrapper.text(self.app.localization.e('minPkoin', 0.5));
+									errorWrapper.text(self.app.localization.e('minPkoin', 0.1));
 									disabled = true;
 									el.send.addClass('disabled');
 	
@@ -178,6 +185,8 @@ var pkoin = (function(){
 
 					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
+					el.tutorial.removeClass('show');
+
 					self.shell({
 
 						name :  'boostinfo',
@@ -185,10 +194,24 @@ var pkoin = (function(){
 						data : {
 							probability,
 							share,
-							language : share.language
+							language : share.language,
+							hiddenBlocks: hiddenBlocks
 						},
 
 					}, function(_p){
+
+						_p.el.find('.showMore').on('click', function(){
+
+							var boostinfoblocks = _p.el.find('.boostinfoblocks');
+
+							if (boostinfoblocks.hasClass('hiddenBlocks')){
+								hiddenBlocks = false;
+							} else {
+								hiddenBlocks = true;
+							}
+
+							boostinfoblocks.toggleClass('hiddenBlocks')
+						})
 						
 					})
 					
@@ -323,6 +346,23 @@ var pkoin = (function(){
 					closeContainer()
 				}, 200)
 
+				
+			})
+
+			
+			el.playVideo.on('click', function(){
+
+				
+				self.nav.api.load({
+					open: true,
+					id: 'boost',
+					inWnd: true,
+
+					essenseData: {
+						autoplay: true,
+						minimal: true
+					}
+				})
 				
 			})
 
@@ -477,7 +517,7 @@ var pkoin = (function(){
 				el.fields = el.c.find("#fieldsWrapper");
 				el.send = el.c.find('.sendButton');
 				el.buy = el.c.find('#buyButton');
-
+				el.playVideo = el.c.find('#playVideo');
 
 				initEvents(p);
 			

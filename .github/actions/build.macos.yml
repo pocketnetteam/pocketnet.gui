@@ -12,7 +12,7 @@ runs:
     - name: Prepare building
       run: |
         npm i
-        npm run dev:bastyon
+        npm run dev:bastyon -- --sha=${{ steps.vars.outputs.sha_short }}
     - name: Prepare for app notarization
       run: |
         mkdir -p ~/private_keys/

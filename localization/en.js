@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -106,6 +106,8 @@ _l.rblocking = "Blocking";
 _l.rblockinglist = "List of blocked users";
 _l.rcomment = "Comments";
 _l.rsubscriber = "Subscriptions";
+_l.a_unabledvideo = "The video is not available at the moment";
+_l.rvideo = "Videos";
 _l.contentscore = "You have left a rating of the publication";
 _l.commentscorelike = "You liked the comment.";
 _l.commentscoredislike = "You don't like the comment";
@@ -229,6 +231,9 @@ _l.uabout = "About myself";
 _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
+
+_l.settings_save = "Save changes";
+_l.settings_discard = "Discard changes";
 
 //statistic
 
@@ -526,6 +531,7 @@ _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
 _l.preview = "Preview"
 _l.autoplayVideo = "Autoplay Video"
+_l.learnMoreBoost = "Learn more about Boost"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
@@ -610,15 +616,22 @@ _l.e13076 = "Scan this code to send"
 _l.back = "Back"
 _l.e13077 = "Add your profile to Donors List"
 _l.e13078 = "Why are we asking for donations?"
-_l.e13079 = "We have spent 14+ months in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
+_l.e13079 = "We have spent 6+ years in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
 _l.e13080 = "How will the funds be used?"
 _l.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
 _l.e13082 = "What you will get for your donation besides knowing you supported freedom:"
 _l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-_l.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to "+appname+" team, even as the platform grows"
+_l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in Bastyon"
 _l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-_l.e13086 = "Support Decentralized Web Now"
+_l.e13086 = "Support Bastyon Now"
 _l.e13087 = "Bitcoin, Litecoin"
+
+_l.supportFormTitle = "Do you want to donate in another way or have other questions? Contact us"
+_l.addrNotAvailable = function(cur){
+    return "address address for " + cur + " is not available at the moment";
+} 
+_l.subject = "Subject";
+
 
 _l.e13088 = ""+appname+" members who donated to support "+appname+""
 _l.thankyou = "Thank you!"
@@ -631,7 +644,7 @@ _l.e13093 = "Please choose donation way"
 _l.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 _l.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
 _l.e13096 = "Please fill amount of donation"
-_l.e130961 = "How much do you want to donate?"
+_l.e130961 = "How much PKOIN do you want to send?"
 _l.e130962 = "Available balance"
 
 _l.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
@@ -771,7 +784,7 @@ _l.e13176 = "Address type"
 _l.e13177 = "Upload photo"
 
 _l.requiredfields = "required fields"
-_l.e13178 = "Not linked to your profile"
+_l.e13178 = "Optional"
 _l.e13179 = "Unspent List"
 _l.e13180 = "Your Invoice has Been Successfully Created"
 _l.e13181 = "An Error has Occurred During the offer creating process"
@@ -1181,14 +1194,14 @@ _l.shareBareLink = "Share Video Link";
 _l.videoCopied = "Video link successfully copied to clipboard";
 
 _l.editWallpaper = "Change Preview Image";
-_l.removeVideo = "Remove Video";
+_l.removeVideo = "Remove Media";
 
 _l.removeVideoDialog = "Are you sure you want to delete this video?"
 
 _l.pterror_meta = "Peertube: Undefined request"
 _l.pterror_host = "Peertube: Peertube server not found"
 _l.pterror_link = "Peertube: Unknown Peertube link"
-_l.pterror_removeerror = "Peertube: Unable to remove video. Pleasy try again"
+_l.pterror_removeerror = "Peertube: Unable to remove media. Pleasy try again"
 _l.pterror_updateempty = "Peertube: No changes found to update"
 _l.pterror_uploaderror = "Peertube: Video has not been uploaded"
 _l.pterror_dailyquotalimit = "Peertube: You have reached your video upload limit"
@@ -1337,7 +1350,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to Bastyon yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2276,6 +2289,7 @@ _l.probabilitytext = function(lang){
 };
 
 _l.probabilitytexterror = "Unable to calculate promotion probability";
+_l.reachtexterror = "Unable to calculate reach";
 
 _l.image = "Image";
 _l.file = "File";
@@ -2297,7 +2311,7 @@ _l.welcomecaption3 = "Chat privately with friends - no SIM card";
 
 
 _l.shareexternal = "Another window is open";
-_l.shareexternaluploadpeertube = "Video upload window open";
+_l.shareexternaluploadpeertube = "Media upload window open";
 
 _l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
@@ -2312,6 +2326,9 @@ _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After t
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
+_l.torHintStateEnabled = "Tor network state - enabled"
+_l.torHintStateDisabled = "Tor network state - disabled"
+_l.torHintStateLoading = "Tor network state - loading"
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
@@ -2416,8 +2433,9 @@ _l.boost_c17 = 'Censorship resistant'
 _l.boost_c18 = 'Buying PKOIN peer-to-peer'
 _l.boost_c19 = 'To buy a Pocketcoin "from hand to hand", you need to sort the news feed by category "PKOIN/peer-to-peer"'
 
-_l.boost_c20 = 'Find Your Audience'
-_l.boost_c21 = 'Profitable Advertising on the Fast-Growing Blockchain Social Network'
+// _l.boost_c20 = 'Find Your Audience'
+_l.boost_c20 = 'Incredibly Low CPM:'
+_l.boost_c21 = ' Cost per Thousand Impressions is 28 cents!'
 _l.boost_c22 = 'Advertising for Pocketcoin - Cost-Effective Coverage'
 _l.boost_c23 = 'Are you trying to be heard on the internet?'
 _l.boost_c24 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
@@ -2431,7 +2449,7 @@ _l.boost_c31 = 'Where to buy PKOIN?'
 _l.boost_c32 = 'PKOIN can be purchased on the following sites.'
 _l.boost_c33 = '- here you can buy PKOIN for other cryptocurrencies.'
 _l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
-_l.boost_c34 = 'Buying PKOIN from hand to hand on Bastyon'
+_l.boost_c34 = 'Buying PKOIN peer-to-peer on Bastyon'
 _l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
 _l.boost_c36 = 'How do I start advertising?'
 _l.boost_c37 = 'Launching ads on Bastion is very simple. To do this, you need:'
@@ -2445,7 +2463,63 @@ _l.boost_c44 = 'Learn more about ads on Bastyon'
 _l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on Bastyon.';
 
 _l.reach = 'Reach'
-_l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
+_l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com' 
+
+_l.reachDescription = 'Average cost of thousand impressions (CPM) is 28 cents'
+_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+_l.boost_c45 = 'Incredibly Low CPM'
+_l.boost_c46 = 'Cost per Thousand Impressions is 28 cents!'
+_l.boost_c47 = '(average CPM for large networks is over $1)'
+_l.boost_c48 = '(How is this derived?)'
+_l.boost_c49 = 'Bastyon has about 1.68 MILLION unique visitors a month. Average visitor visits 5 times per month, and English language feed is 10% of Bastyon, so TOTAL NUMBER OF MONTHLY VISITS = 	840,000'
+_l.boost_c50 = 'STEPS TO CALCULATE CPM ON BASTYON'
+_l.boost_c51 = '*There are TOTAL 1.68 MILLION unique visitors per month (1.4M on bastyon.com, 130k on Android, 100k on Desktop app)'
+_l.boost_c52 = 'STEP 1.'
+_l.boost_c53 = '1.4M is on Bastyon.com (SEMRUSH data)'
+_l.boost_c54 = 'STEP 2.'
+_l.boost_c55 = 'Number of active android users is 130,000+'
+_l.boost_c56 = 'STEP 3.'
+_l.boost_c57 = 'Number of desktop app users is 150,000+'
+_l.boost_c58 = '(After every app update users gradually update desktop app, approx. Half of users updates one week after update)'
+_l.boost_c59 = '*this screen shows that 76 thousand users updated their apps immediately on day one, only half of the people update so quickly, so the real number is 150k users approximately'
+_l.boost_c60 = 'STEP 4.'
+_l.boost_c61 = 'Calculate CPM'
+_l.boost_c62 = 'Every boost ad runs for 3 hours. So, we divide total monthly visits by 30 days and by 8 to get 3 hour intervals'
+_l.boost_c63 = 'Total monthly visits = 8.4 million'
+_l.boost_c64 = 'Total daily visits = 28,000'
+_l.boost_c65 = 'English feed has 10% of all visitors'
+_l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
+_l.boost_c67 = 'Average cost of ad is $1 '
+_l.boost_c68 = 'CPM = $. 28'
+_l.boost_c69 = '28 cents on average is a very low CPM'
+_l.boost_c70 = 'Bastyon is a new, fast-growing decentralized social network with millions of users and super-profitable advertising'
+_l.boost_c71 = 'Distribution by Country'
+_l.boost_c72 = 'Employment Status'
+_l.boost_c73 = 'Audience'
+
+
+
+_l.howtobuy_c1 = 'How To Buy'
+_l.howtobuy_c2 = 'PKOIN'
+_l.howtobuy_c3 = 'Cryptocurrency Exchanges'
+_l.howtobuy_c4 = 'Buying For A Visa/Mastercard'
+_l.howtobuy_c5 = 'Buying PKOIN with cryptocurrency'
+_l.howtobuy_c6 = 'Buying PKOIN peer-to-peer on Bastyon'
+_l.howtobuy_c7 = 'Buying with cards in Russia/Ukraine/Belarus'
+_l.howtobuy_c8 = 'Next, select the appropriate profile offering the purchase/sale of PKOIN. Be careful when buying with your hands. Look at the reviews and do not take large amounts.'
+_l.howtobuy_c9 = 'Next, go to the chat and discuss the terms of the exchange'
+_l.howtobuy_c10 = 'Find peer-to-peer Sellers'
+_l.howtobuy_c11 = '(except Russian Federation cards)'
+_l.howtobuy_c12 = ''
+_l.howtobuy_c13 = ''
+_l.howtobuy_c14 = ''
+_l.howtobuy_c15 = ''
+_l.howtobuy_c16 = ''
+_l.howtobuy_c17 = ''
+_l.howtobuy_c18 = ''
+_l.howtobuy_c19 = ''
+_l.howtobuy_c20 = ''
+
 
 
 _l.gotopage = 'Go to page'
@@ -2479,10 +2553,16 @@ _l.videoServerVideo = "Video Info";
 _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
+_l.earnings2 = "Total earnings";
+
+_l.amountLottery = "Lottery";
+_l.amountDonation = "Donations";
+_l.amountTransfer = "Transfers";
 
 
+_l.copybuiltfrom = "Application build version copied"
 
-_l.endedCall = "Call ended",
+_l.endedCall = "Call ended"
 _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";
@@ -2493,8 +2573,40 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
+_l.txtNotLinked = "Transaction will not be linked to your profile";
+_l.torusing_neveruse = "Never";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Always";
+
+_l.anotherSupport = "Support Bastyon in another way";
+_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
+
+_l.torusing_directProxy = "Built-in proxy";
+_l.torusing_notdirectProxy = "External proxy";
+
+_l.torusing_changedirectProxy = "Change to External proxy";
+_l.torusing_changenotdirectProxy = "Change to Built-in proxy";
+
+
+_l.torusing_disclaimer = "This function only works when using the built-in proxy.";
+_l.torusing_Networking = "Networking";
+_l.torusing_proxyCaption = "Choosing a proxy server";
+_l.torusing_useTor = "Use Tor";
+_l.torusing_useSnowflakeBridge = "Use SnowFlake";
+
+_l.torusing_stat_currentbytesLength = "Current, direct"
+_l.torusing_stat_torbytesLength = "Current, TOR"
+_l.torusing_stat_directBytes = "Total, current"
+_l.torusing_stat_totalTorBytes = "Total, TOR"
+_l.torusing_settings = "TOR settings"
+_l.torusing_stats = "Networking statistics"
+_l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
+
+_l.listeners = "Listeners";
 
 _l.jury = "Jury"
 _l.juryquestion = "Can you confirm this post does not belong on Bastyon for the following reason"
 _l.juryvote_success =  "Your vote has been successfully submitted"
 _l.juryconfirm = "Do you confirm your decision?"
+
+_l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";

@@ -36,7 +36,7 @@
 		bottom: 0;
 		padding :  3 * @rhythm 2 * @rhythm;
 		background: rgba(var(--background-secondary-theme), 0.9);
-		z-index: 150;
+		z-index: 6;
 	}
 
 	&.loading{
@@ -849,7 +849,7 @@
 			vertical-align: middle;
 
 			&.postWrapper{
-				width: 280px;
+				width: 250px;
 				padding-right : 0;
 				text-align: right;
 
@@ -892,14 +892,14 @@
 				border-radius: 50%;
 				line-height: 32px;
 				color : rgb(var(--color-txt-gray-dark));
-			
+				white-space: nowrap;
 				float: left;
 				text-align: center;
 				font-size: 0.8em;
 				margin-right : 1 * @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
-	
+
 				&.nowidth{
 					width: auto;
 					i{

@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-audiotoggle",
+  "version": "1.0.3",
+  "description": "Cordova plugin for switching between speaker and earpiece when playing audio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielflippance/audiotoggle.git"
+  },
+"keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "ionic",
+    "audio",
+    "toggle"
+  ],
+  "author": "alongubkin",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/danielflippance/audiotoggle/issues"
+  },
+  "homepage": "https://github.com/danielflippance/audiotoggle#readme"
+}

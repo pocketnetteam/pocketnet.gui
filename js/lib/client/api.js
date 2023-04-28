@@ -1,11 +1,6 @@
-var electron = null
 
-let apiFetch = (...args) => fetch(...args);
 
-if (typeof _Electron != 'undefined') {
-    electron = require('electron');
-    apiFetch = (...args) => proxyFetch(...args);
-}
+
 
 var rand = function(min, max){
     min = parseInt(min);
@@ -150,10 +145,10 @@ var ProxyRequest = function(app = {}, proxy){
         }
 
 
-        return apiFetch(url, {
+        return fetch(url, {
 
             method: p.method || 'POST',
-            mode: 'cors', 
+            mode: 'cors',
             headers: headers,
             signal : signal,
             body: JSON.stringify(data)
@@ -549,21 +544,12 @@ var Proxy16 = function(meta, app, api){
 
     var wait = {}
 
-    self.fetch = function(path, data, p){
-
-        var promise = null
-
-        if (self.direct){
-            promise = self.system.fetch(path, data, p)
+    self.fetch = async function(path, data, p) {
+        if (self.direct) {
+            return self.system.fetch(path, data, p);
+        } else {
+            return request.fetch(self.url.https(), path, data, p);
         }
-        else{
-            promise = request.fetch(self.url.https(), path, data, p)
-        }
-
-        return promise.then(r => {
-            return Promise.resolve(r)
-        })
-       
     }
 
     self.fetchauth = function(path, data, p){
@@ -1342,8 +1328,6 @@ var Api = function(app){
         var pr = getproxyas()
         var promise = null
 
-
-
         if (pr){
             promise = pr.api.actualping().catch(e => {
                 return Promise.resolve(false)
@@ -1369,7 +1353,34 @@ var Api = function(app){
                 })
             }
         })
-    },
+    }
+
+    self.changeProxyRandom = function(){
+
+        return internal.proxy.api.ping(proxies).then(() => {
+            return self.get.working()
+        })
+
+       .then(wproxies => {
+            if (wproxies.length){ 
+                self.set.currentwithnode(wproxies[rand(wproxies.length - 1, 0)].id, true)
+            }
+
+            return Promise.resolve(wproxies.length)
+        })
+    }
+
+    self.changeProxyRandomWithoutPing = function(){
+
+        self.set.currentwithnode(proxies[rand(proxies.length - 1, 0)].id, true)
+
+        var current = self.get.current()
+
+        return current.api.ping().then(() => {
+            return Promise.resolve(true)
+        })
+
+    }
 
     self.init = function(){
 

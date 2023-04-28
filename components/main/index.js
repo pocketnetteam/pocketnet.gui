@@ -511,7 +511,6 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							console.log('hasshares', shares.length)
 
 							if (shares.length <= 2 && el.topvideos){
 								el.topvideos.addClass('hidden')
@@ -519,7 +518,6 @@ var main = (function(){
 								if(external){
 									external.destroy()
 									external = null
-									console.log("D")
 								}
 								
 							}
@@ -730,7 +728,7 @@ var main = (function(){
 
 							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [

@@ -397,7 +397,7 @@ var share = (function(){
 
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo' || type === 'addAudio') {
+				if (type === 'addVideo' || type === 'addAudio' || type === 'addStream') {
 
 					if(currentShare.images.v.length){
 						new dialog({
@@ -746,11 +746,26 @@ var share = (function(){
 				}
 			},
 
+			isIpfsVideo : async function(url) {
+				return fetch(url, { method: 'HEAD' })
+					.then((res) => {
+						const contentType = res.headers.get('content-type');
+
+						const isMp4 = (contentType === 'video/mp4');
+						const isOgg = (contentType === 'video/ogg');
+						const isWebm = (contentType === 'video/webm');
+
+						return isMp4 || isOgg || isWebm;
+					}).catch(() => {
+						return false;
+					})
+			},
+
 			linksFromText : function(text){
 
 
 				if(!currentShare.url.v){
-					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi; 
+					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
 					
 
 					var matches = text.match(r);
@@ -758,7 +773,7 @@ var share = (function(){
 
 					if(matches && matches.length > 0){
 
-						_.each(matches, function(url){
+						_.each(matches, async function(url){
 							if(actions.checkUrlForImage(url)){
 
 								/*if (currentShare.images.v.indexOf(url) == -1){
@@ -773,6 +788,18 @@ var share = (function(){
 							else
 							{
 								if(currentShare.url.v) return;
+
+								const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+								const ipfsId = url.match(ipfsIdRegex)?.[1];
+
+								if (ipfsId) {
+									const ipfsUrl = `https://ipfs.io/ipfs/${ipfsId}`;
+									const isVideo = await actions.isIpfsVideo(ipfsUrl);
+
+									if (isVideo) {
+										url += '?type=video'
+									}
+								}
 
 								currentShare.url.set(url)
 
@@ -846,7 +873,7 @@ var share = (function(){
 			},
 
 			checktranscoding : function(clbk){
-				if(currentShare.itisvideo() && !currentShare.aliasid){
+				if((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid){
 
 					currentShare.canSend(self.app, (result) => {
 						clbk(result)
@@ -959,7 +986,7 @@ var share = (function(){
 		
 											self.app.platform.sdk.node.shares.add(alias);
 
-											if (alias.itisvideo()) {
+											if (alias.itisvideo() || alias.itisaudio()) {
 												var unpostedVideos;
 
 												try {
@@ -1084,7 +1111,7 @@ var share = (function(){
 						return
 					}
 
-					if (currentShare.itisvideo()) {
+					if (currentShare.itisvideo() || currentShare.itisaudio()) {
 
 						const options = {};
 	
@@ -1357,7 +1384,7 @@ var share = (function(){
 
 					icon.attr('image', src);
 
-					bgImages(el.c.find('.icon'))
+					bgImagesCl(el.c.find('.icon'))
 				}
 				else
 				{
@@ -1692,6 +1719,8 @@ var share = (function(){
 								actions.addimage(images)
 
 								tstorage = []
+
+								renders.postline();
 							
 							}
 						})
@@ -1893,7 +1922,7 @@ var share = (function(){
 
 			caption : function(){
 
-				if(currentShare.caption.v || currentShare.itisvideo()){
+				if(currentShare.caption.v || currentShare.itisvideo() || currentShare.itisaudio()){
 
 					if(!el.cpt.hasClass('active'))
 						el.cpt.addClass('active');
@@ -1940,7 +1969,6 @@ var share = (function(){
 					},
 
 					clbk : function(p, element){
-
 						external = element;
 
 						external.addclbk('share' + key, actions.videoadded)
@@ -1984,7 +2012,7 @@ var share = (function(){
 
 					if(currentShare.url.v && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
 
 							destroyPlayer()
 
@@ -2128,6 +2156,8 @@ var share = (function(){
 						var r = $(this).closest('.imageContainer').attr('value');
 
 						actions.removeImage(r)
+
+						renders.postline();
 					})
 
 					p.el.find('.edit').on('click', function(){
@@ -2546,7 +2576,7 @@ var share = (function(){
 
 					if (lastvideo && !lastvideo.wasclbk){
 
-						if(!currentShare.itisvideo())
+						if(!currentShare.itisvideo() && !currentShare.itisaudio())
 							actions._videoadded(lastvideo.link, lastvideo.name)
 							
 						self.app.settings.delete('common', 'lastuploadedvideo');
@@ -2665,6 +2695,9 @@ var share = (function(){
 					currentShare.repost.set(essenseData.repost || parameters().repost)
 
 				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+
+
+				console.log('currentShare', currentShare)
 
 				var data = {
 					essenseData : essenseData,

@@ -681,7 +681,7 @@ var test = (function(){
 
 			email : new Parameter({
 				name : 'Email',
-				placeholder : 'Email',
+				placeholder : 'Email (' + self.app.localization.e('e13178') + ')',
 				id : 'email',
 				type : "STRINGANY",
 				onType : true,
@@ -759,7 +759,19 @@ var test = (function(){
 
 					var validate = function(cur, address){
 
-						if(address.length > 0){
+						var valid;
+
+						if (cur === 'usdt|trc20'){
+
+							valid = /T[A-Za-z1-9]{33}/.test(address);
+
+						} else {
+
+							valid = WAValidator.validate(address, cur === 'usdt|erc20' ? 'eth' : cur);
+						}
+
+						if(address.length > 0 && valid){
+							
 							return true
 						}
 						else
@@ -779,14 +791,13 @@ var test = (function(){
 
 							success : function(d){
 
-								var currency = d.el.find('.currency').val();
+								var c = d.el.find('.currency').val();
 								var address = d.el.find('.address').val();
 
-								if(validate(currency, address)){
-
+								if(validate(c, address)){
 
 									_self.add({
-										currency : currency,
+										currency : c,
 										address : address
 									})
 
@@ -804,6 +815,7 @@ var test = (function(){
 
 								var vl = function(){
 									var c = currency.val();
+
 									var a = address.val();
 
 									if(validate(c, a)){

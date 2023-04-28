@@ -1081,25 +1081,24 @@ var lenta = (function(){
 							duration
 						}){
 
-							if (duration > 0 && playbackState == 'playing')
+							if (duration > 0 && playbackState == 'playing'){
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+							}
 
+							if (playbackState == 'playing' && ((position > 10 && duration > 120) || startTime)){
 
-							if (playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
-								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration)* 100).toFixed(0),
 								})
 
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
 								return
 							}
 
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration,  share)
 							}
-
 
 						},
 
@@ -2418,7 +2417,8 @@ var lenta = (function(){
 					_.each(players, function(player){
 
 						if (player.error) return
-							player.p.muted = true;
+
+						//	player.p.muted = true;
 
 						if (player.p.playing){
 							player.p.stop()
@@ -3475,6 +3475,7 @@ var lenta = (function(){
 
 					return
 				}
+				
 
 				var _shares = _.filter(shares, function(s){
 					if(typeof s.myVal == 'undefined'){
@@ -3891,25 +3892,6 @@ var lenta = (function(){
 
 								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
 							})
-
-							/*var aspectRatio = 0
-							
-							_.each(image.images, function(img){
-								var _img = img.img;
-
-								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-							})
-
-							if (aspectRatio){
-
-								if(aspectRatio > 1.66) aspectRatio = 1.66
-
-								ch = Math.min(400, cwidth ) * aspectRatio
-
-								sel.find('.imagesWrapper').height(ch)
-							}*/
 							
 						}
 						else{
@@ -3922,9 +3904,6 @@ var lenta = (function(){
 								var el = $(image.elements[n]).closest('.imagesWrapper');
 
 								var ac = '';
-
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
 
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
@@ -4158,7 +4137,7 @@ var lenta = (function(){
 					if(
 						url && !og && 
 
-						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
+						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') &&
 
 						!self.app.platform.sdk.usersettings.meta.preview.value
 					){
@@ -4971,45 +4950,7 @@ var lenta = (function(){
 
 			})
 
-			if (isMobile()){
-
-				var onlongtouch; 
-				var touchduration = 1000, timer, event; 
-				
-				function touchstart(e) {
-					event = e;
-					e.preventDefault();
-					if (!timer) {
-						timer = setTimeout(onlongtouch, touchduration);
-					}
-				}
-				
-				function touchend(e) {
-					if (timer) {
-						clearTimeout(timer);
-						timer = null;
-						events.opensvi(e);
-					}
-				}
-	
-				onlongtouch = function() { 
-
-					var _el = $(event.target);
-					var shareEl = $(event.target).closest('.share')
-					var id = shareEl.attr('id');
-	
-					self.app.platform.api.metmenu(_el, id, actions, true);
-
-
-					event = null;
-					timer = null;
-				};
-	
-				el.c.on('touchstart', '.anothercntswrk .cntswrk', touchstart)
-				el.c.on('touchend', '.anothercntswrk .cntswrk', touchend)
-
-				
-			} 
+			
 
 			el.c.on('click', '.opensviurl', events.opensvi)
 
@@ -5786,7 +5727,6 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
-					console.log("HERE")
 				}
 				
 

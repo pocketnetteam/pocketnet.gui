@@ -250,8 +250,8 @@ var comments = (function(){
 		
 								var result = Boolean(value);
 
-								if (value < 0.5){
-									sitemessage(self.app.localization.e('minPkoin', 0.5))
+								if (value < 0.1){
+									sitemessage(self.app.localization.e('minPkoin', 0.1))
 									return;
 								}
 					
@@ -1551,6 +1551,8 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 				var localParent = _el.closest('.commentBody')
 
+				var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
@@ -1559,6 +1561,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
+					paddress: post.address,
 					txid : id
 				};
 
@@ -1642,7 +1645,7 @@ var comments = (function(){
 											var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
-											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()
@@ -2063,7 +2066,7 @@ var comments = (function(){
 						})
 					})
 
-					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+					bgImagesCl(_p.el).then(() => {
 
 						if(!el.c) return
 

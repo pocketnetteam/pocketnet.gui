@@ -33,6 +33,56 @@ if (typeof _Electron != 'undefined' && _Electron){
   EmojioneArea = require('./js/vendor/emojionearea.js')
   filterXss = require('./js/vendor/xss.min.js')
 
+  Broadcaster = require('./js/broadcaster.js');
+
+  swBroadcaster = new Broadcaster('ServiceWorker');
+
+  swBroadcaster.handle('AltTransportActive', async (url) => {
+    function isWhitelisted(url) {
+      const { hostname } = new URL(url);
+
+      const whitelistHosts = [
+        /.*\.?youtube\.com/,
+        /.*\.?vimeocdn\.com/,
+        /.*\.?vimeo\.com/,
+        /.*\.?bitchute\.com/,
+        /photos\.brighteon\.com/,
+      ];
+
+      for (let i = 0; i < whitelistHosts.length; i++) {
+        if (whitelistHosts[i].test(hostname)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (isWhitelisted(url)) {
+      return false;
+    }
+
+    const wait = (seconds, returnValue) => new Promise(r => (
+      setTimeout(() => r(returnValue), seconds * 1000)
+    ));
+
+    const proxy = self.app.api.get.current();
+
+    if (!proxy.direct) {
+      return false;
+    }
+
+    const proxyInfo = await proxy.get.info();
+
+    if (proxyInfo.info?.tor?.enabled === 'always') {
+      return true;
+    }
+
+    const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+
+    return await Promise.race([ transportCheck, wait(1, false) ]);
+  });
+
 }
 
 if(typeof _Node == 'undefined') _Node = false;
@@ -288,6 +338,7 @@ Application = function(p)
   }
 
   var checkTouchStyle = function(){
+    
     var mobileview = istouchstylecalculate()
 
     if(self.mobileview != mobileview){
@@ -1040,7 +1091,7 @@ Application = function(p)
           $('#splashScreen').remove()
         }
 
-
+        self.inited = true
 
         self.mobile.update.needmanagecheck().then(r => {
           if (r){
@@ -1066,6 +1117,12 @@ Application = function(p)
      * conditional checking in appear method of instance
      */
     if (typeof initShadowPopups === 'function' && !window.testpocketnet) initShadowPopups()
+  }
+
+  self.waitinited = function(){
+    return  pretry(function(){
+      return self.inited
+    })
   }
 
   self.reload = function(p){
@@ -1217,7 +1274,6 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
-            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -1283,7 +1339,7 @@ Application = function(p)
     self
   );
 
-  if (Math.random() <= 0.05) {
+  /*if (Math.random() <= 0.05) {
     window.onerror = function (errorMsg, url) {
       self.Logger.error({
         err: errorMsg,
@@ -1292,7 +1348,7 @@ Application = function(p)
       });
       return false;
     };
-  }
+  }*/
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
@@ -1689,8 +1745,8 @@ Application = function(p)
     }, 100)
 
     var t = false
-
-    window.addEventListener('touchstart', function(e){
+    
+    /*window.addEventListener('touchstart', function(e){
       t = true
     })
 
@@ -1700,7 +1756,7 @@ Application = function(p)
 
     window.addEventListener('touchcancel', function(e){
       t = false
-    })
+    })*/
 
     window.addEventListener('scroll', function(){
       scrolling()
@@ -1981,6 +2037,14 @@ Application = function(p)
 
   self.mobile = {
 
+    audiotoggle : function(mode = 'SPEAKER'){
+      
+      if(typeof window.AudioToggle != 'undefined'){
+        window.AudioToggle.setAudioMode(window.AudioToggle[mode]);
+      }
+    
+    },
+
     webviewchecker : function(){
 
       if(window.plugins && window.plugins.webViewChecker){
@@ -1996,7 +2060,7 @@ Application = function(p)
     memory : function(){
 
       document.addEventListener('memorywarning', function () {
-        console.log("MOMORY WARNING1")
+        console.log("MEMORY WARNING")
       });
 
     },
@@ -2422,7 +2486,7 @@ Application = function(p)
     fullscreenmode : function(v){
 
       var cl = function(){
-        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+        v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
         v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
       }
       
@@ -2705,7 +2769,7 @@ Application = function(p)
               var assets = deep(d, 'assets') || [];
 
               var l = _.find(assets, function(a){
-                return a.name == os.github.name
+                return window.pocketnetgfree ? (a.name == os.github.gfname) : a.name == os.github.name
               })
 
               if(l){

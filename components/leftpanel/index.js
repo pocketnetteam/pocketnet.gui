@@ -190,6 +190,32 @@ var leftpanel = (function(){
 					el : el.footer
 
 				}, function(_p){
+
+					_p.el.find(".downloadapplication button").on('click', function(){
+						var wnd = isMobile() || isTablet()
+
+						self.nav.api.go({
+							open : true,
+							href : 'applications',
+							inWnd : wnd,
+							history : !wnd
+						})
+					})
+
+					_p.el.find(".donations button").on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'donations',
+							history : true
+						})
+					})
+
+					_p.el.find('.app-builtfrom').on('click', () => {
+						navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
+						sitemessage(self.app.localization.e('copybuiltfrom'));
+					});
+
 					if(clbk) clbk()
 				})
 			},

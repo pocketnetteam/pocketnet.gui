@@ -5,6 +5,21 @@
 
     .work {
         max-width: 850px;
+        .top{
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        &.minimal{
+            .top, .header__title, .learn-more, .formula{
+                display: none;
+
+            }
+
+            .header{
+                margin-top: 0;
+            }
+        }
     }
     .header {
         margin-top: 40px;
@@ -24,13 +39,85 @@
             font-weight: normal;    
         }
         }
+    .learn-more{
+        .learn-more-title{
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+        span{
+            font-size: 1.5em;
+            font-weight: 700;
+            color:white;
+            cursor: pointer;
+            // border: #f0b811 1px;
+            padding: 10px 20px;
+            border-radius: 7px;
+            background: #f0b811;
+            margin: 15px 0;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        
+    }
+    .formula{
+        margin-top: 30px;
+        &.hidden{
+            display: none
+        }
+        
+        p{           
+            text-align: left;
+            font-size: 1.2em;
+            font-weight: 200; 
+            a{
+                color: blue;
+                font-weight: 600;
+            }
+            
+                
+        }
+        ol{
+            li{
+                text-align: left !important;
+            }
+
+        }
+        img{
+            width: 820px;
+        }
+        h4{
+            font-style: italic;
+        }
+        h3{
+            margin: 10px 0;
+        }
+        .center{
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 200; 
+        }
+        i{
+            font-size: 3em;
+            transition: all .5s;
+            &:hover{
+                font-size: 4em;
+            }
+        }
+    }
+    .display{
+        display: block;
+    }
+    .hide{
+        display: none;
+    }
     .tips-list{
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
             // width: 70%;
-        }
+    }
     .ul-tips{
             // width: 70%;
         font-size: 2rem;
@@ -56,6 +143,7 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        margin-top: 30px;
         h2{
             font-size: 1.5em;
             font-weight: 700;
@@ -131,6 +219,9 @@
         img{
             max-width: 500px;
         }
+        .img{
+            max-width: 850px;
+        }
         .cta{
             font-size: 1.2em;
             font-weight: 700;
@@ -167,6 +258,11 @@
             .cta{
                 font-size: 0.8em;
                 padding: 15px;
+            }
+        }
+        .formula{
+            img{
+                width: 100%;
             }
         }
         

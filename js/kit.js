@@ -1173,6 +1173,11 @@ Share = function(lang){
 			return 'video'
 		}
 
+		if(self.itisaudio()){
+			return 'audio'
+		}
+
+
 		if(self.itisarticle()){
 			return 'article'
 		}
@@ -1456,11 +1461,11 @@ Share = function(lang){
 			return 'language'
 		}
 
-		if(self.itisvideo() && !self.caption.v) return 'videocaption'
+		if((self.itisvideo() || self.itisaudio()) && !self.caption.v) return 'videocaption'
 
-		if(self.url.v && self.url.v.length && !self.itisvideo()){
+		if(self.url.v && self.url.v.length && !self.itisvideo() && !self.itisaudio()){
 
-			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
+			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v, '')).length
 
 			if (l < 30 && !self.images.v.length){
 				return 'url'
@@ -1478,6 +1483,7 @@ Share = function(lang){
 			self.tags.v.length > 1 || 
 			self.repost.v || 
 			self.itisvideo() || 
+			self.itisaudio() ||
 			(self.url.v && self.url.v.length) 
 			
 			)){
@@ -1539,6 +1545,18 @@ Share = function(lang){
 		var ch = self.url.v.replace('peertube://', '').split('/')
 
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
+	}
+
+	self.itisstream = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url.v) return 
+
+		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
 	}
 
 	self.canSend = function(app, clbk) {
@@ -1985,6 +2003,7 @@ UserInfo = function(){
 	}
 
 	self.import = function(v){
+
 		self.name.set(v.c || v.name)
 		self.language.set(v.l || v.language)
 		self.about.set(v.a || v.about)	
@@ -2063,6 +2082,12 @@ pUserInfo = function(){
 		self.language = clearStringXss(v.l || v.language);
 		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
 
+		const isImageAllowed = checkIfAllowedImage(self.image);
+
+		if (!isImageAllowed) {
+			self.image = '';
+		}
+
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
@@ -2093,12 +2118,38 @@ pUserInfo = function(){
 		if (v.txid)
 			self.txid = v.txid;
 
-			
+
 		try{
-			self.addresses = JSON.parse(v.b || v.addresses || "[]")
+			// self.addresses = JSON.parse(v.b || v.addresses || "[]")
+
+		
+			self.addresses = [];
+
+			var extractDeep = str => {
+
+				var parsed = JSON.parse(str);
+
+				if (parsed.length){
+
+					parsed.forEach(obj => {
+
+						if (typeof obj === 'string'){
+							extractDeep(obj);
+							
+						} else if (typeof obj === 'object'){
+							self.addresses.push(obj);
+							
+						}
+					})
+				}
+			}
+
+			extractDeep(v.b || v.addresses || '[]');
+
 		}
 		catch (e){
-			
+			self.addresses = []
+			//console.log('err addresses', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial
@@ -2313,6 +2364,18 @@ pShare = function(){
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
+	self.itisstream = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url.v) return 
+
+		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
+	}
+
 	self.hasexchangetag = function(){
 		return self.tags.indexOf('pkoin_commerce') > -1
 	}
@@ -2389,6 +2452,8 @@ pShare = function(){
 		self.language = v.l || v.language || 'en'
 		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
 		self.repost = v.r || v.repost || v.txidRepost || ''
+
+		self.images = self.images.filter(image => checkIfAllowedImage(image));
 
 		if (v.deleted) self.deleted = true
 
@@ -2736,6 +2801,8 @@ pComment = function(){
 
 					return clearStringXss(decodeURIComponent(i))
 				});
+
+				self.images = self.images.filter(image => checkIfAllowedImage(image));
 			}
 
 			catch(e){

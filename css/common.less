@@ -459,9 +459,7 @@
 
                 cursor: pointer;
 
-                &:hover{
-                    color: rgb(var(--color-txt-ac)); 
-                }
+               
             }
 
             .notificationturn {
@@ -579,12 +577,6 @@
             border-radius: 18px;
             overflow: hidden;
 
-            @media (pointer:fine) {
-
-                &:hover{
-                    opacity: 0.9;
-                }
-            }
         }
 
 
@@ -1211,10 +1203,7 @@
                         color : rgb(var(--color-txt-orange));	
                     }
                     .icon{
-                        border-radius : 0;
-                        box-shadow: none;
                         color : rgb(var(--color-txt-orange));
-                        background: transparent;
                     }
                 }
             }
@@ -2349,6 +2338,11 @@ html.mobileview.ios{
 					.panelLeft{
 						display: flex;
 						padding-bottom: @rhythm;
+
+						span {
+							font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, 'Helvetica Neue', Helvetica,Arial, sans-serif;
+							font-size: 0.9em;
+						}
 					}
 
 					.panelRight{
@@ -2567,8 +2561,6 @@ html.mobileview.ios{
     @size: 21px;
     @lineSize: 3px;
 
-    --barColor: #eeeeee;
-    --lineColor: #0075ff;
     --completeRadius: 360deg;
     --percent: 0;
     --gradientRadius: calc(var(--completeRadius) / 100 * var(--percent));
@@ -2576,8 +2568,8 @@ html.mobileview.ios{
     width: @size;
     height: @size;
     border-radius: 10000px;
-    background-color: var(--lineColor);
-    background-image: conic-gradient(var(--lineColor) var(--gradientRadius), var(--barColor) var(--gradientRadius));
+    background-color: rgb(var(--color-bg-ac-bright));
+    background-image: conic-gradient(rgb(var(--color-bg-ac-bright)) var(--gradientRadius), rgb(var(--background-total-theme)) var(--gradientRadius));
     transition: --percent 5s;
     cursor: pointer;
 
@@ -2601,8 +2593,19 @@ html.mobileview.ios{
     }
 
     &::after {
+
+    }
+
+    &::after {
+        content: '';
+        position: relative;
+        font-size: @size * 0.4;
+        text-align: center;
+        transition: color 0.1s ease-in-out;
+        border-radius: 10000px;
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
+        color: rgb(var(--color-bg-ac-bright));
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
         display: inline-block;
@@ -2612,19 +2615,6 @@ html.mobileview.ios{
         line-height: 1;
     }
 
-    &::after {
-        content: '';
-        position: relative;
-        font-size: @size * 0.4;
-        text-align: center;
-        color: transparent;
-        transition: color 0.1s ease-in-out;
-        border-radius: 10000px;
-    }
-
-    &:hover::after {
-        color: var(--lineColor);
-    }
 
     &[data-loading=false]::after {
         content: '\f04b';

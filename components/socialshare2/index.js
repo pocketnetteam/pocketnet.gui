@@ -228,7 +228,7 @@ var socialshare2 = (function(){
 						if(share.url){
 							var meta = app.platform.parseUrl(share.url);
 
-							if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+							if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs'){
 								s.push('fullscreenvideo')
 							}
 

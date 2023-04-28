@@ -129,6 +129,12 @@ if(!_Node)
 		}
 	  }
 
+	if(!_OpenApi){
+		if (window.parent.frames.length > 0) {
+			window.stop();
+		}
+	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,
@@ -190,6 +196,10 @@ if(!_Node)
 						}, embeddingSettigns)
 					}
 
+				}
+
+				else{
+					
 				}
 			}
 		});

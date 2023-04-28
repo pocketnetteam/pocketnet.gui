@@ -33,7 +33,7 @@
   bottom: 0;
   padding: 1.5em 1em;
   background: rgba(var(--background-secondary-theme), 0.9);
-  z-index: 150;
+  z-index: 6;
 }
 #share.loading .sLoader {
   display: block;
@@ -647,7 +647,7 @@
   vertical-align: middle;
 }
 #share .postpanel > div.postWrapper {
-  width: 280px;
+  width: 250px;
   padding-right: 0;
   text-align: right;
 }
@@ -682,6 +682,7 @@
   border-radius: 50%;
   line-height: 32px;
   color: rgb(var(--color-txt-gray-dark));
+  white-space: nowrap;
   float: left;
   text-align: center;
   font-size: 0.8em;

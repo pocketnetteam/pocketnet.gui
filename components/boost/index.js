@@ -8,7 +8,7 @@ var boost = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, ext = null;
+		var el, ed, ext = null, autoplay;
 
 		var actions = {
 
@@ -90,6 +90,8 @@ var boost = (function(){
 
 		var initEvents = function(){
 			
+		
+			
 
 		}
 
@@ -110,11 +112,15 @@ var boost = (function(){
 
 			getdata : function(clbk, p){
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {};
 
 				var data = {
-					ed
+					minimal : ed.minimal ? 'minimal' : '',
+					autoplay : ed.autoplay
 				};
+
+				console.log('datat', data);
+
 
 				clbk(data);
 
@@ -139,6 +145,9 @@ var boost = (function(){
 
 				el.faqWrapper = el.c.find('.faqWrapper')
 				el.lenta = el.c.find('.lentaWrapper')
+				el.c.find('.click').on('click', function(){ 
+					el.c.find('.formula').toggleClass("hidden")
+				})
 
 				initEvents();
 
@@ -185,3 +194,4 @@ else{
 	app.modules.boost.module = boost;
 
 }
+

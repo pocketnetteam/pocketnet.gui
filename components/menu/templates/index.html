@@ -87,6 +87,9 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							<div class="control-app-refresh" >
 								<i class="fas fa-redo-alt"></i>
 							</div>
+							<div class="control-tor-state off">
+								<i class="fas fa-shield-alt"></i>
+							</div>
 							<div class="control-app-dummy">
 							</div>
 						</div>
@@ -98,7 +101,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 						<% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
 
-							<div class="items">
+							<!--<div class="items">
 								<div class="item table right application" events="application">
 			
 									<div class="icon ">
@@ -106,13 +109,13 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 										<div class="icn">
 											<i class="fas fa-download"></i>
 											
-											<!--<i class="fab fa-windows changing-app-icon"></i>-->
+											<i class="fab fa-windows changing-app-icon"></i
 										</div>
 			
 									</div>
 			
 								</div>
-							</div>
+							</div>>-->
 			
 						<% } %>
 
@@ -136,7 +139,18 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 									</div>
 								</div>
 
-								
+
+								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper">
+									<div class="item  right onlyicon activities" events="activities">
+
+										<div class="icon">
+											<div class="icn">
+												<i class="far fa-heart"></i>
+											</div>
+										</div>
+
+									</div>
+								</div>
 
 								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
 									<div class="item  right onlyicon notifications" events="notifications">

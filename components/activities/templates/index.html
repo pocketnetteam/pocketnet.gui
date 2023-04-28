@@ -1,8 +1,15 @@
  <div id="<%-module.map.id%>">
     <div class="container noswipepnt">
         <div class="subcaption"><%=e('ractivities')%></div>
-        <div class="filters "></div>
+        <div class="filters">
+            <% _.each(filters, function(filter, id){ %>
+
+                <div class="tab" rid="<%-filter%>" > <%=e(`r${filter}`) %> </div>
+
+            <% })%>
+        </div>
         <div class="content"></div>
+        
         <div class="preloaderWrapper">
             <div class="preloader5"><img src="./img/three-dots.svg"/></div>
         </div>

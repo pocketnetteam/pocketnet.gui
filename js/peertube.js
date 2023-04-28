@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return (typeof proxyFetch == 'undefined' ? fetch : proxyFetch)(url, ps)
+		return fetch(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -148,9 +148,13 @@ PeerTubePocketnet = function (app) {
 		};
 	};
 
-	self.composeLink = function (host, videoid, isAudio = false) {
+	self.composeLink = function (host, videoid, isAudio = false, isLive = false) {
 		let url = PEERTUBE_ID + host + '/' + videoid;
-		return (isAudio == true) ? url + '/audio' : url;
+
+		if (isAudio === true) url = `${url}/audio`;
+		if (isLive === true) url = `${url}/stream`;
+		
+		return url;
 	};
 
 	self.checkTranscoding = function(url) {
@@ -461,7 +465,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
+					return axios({ method, url, data, ...axiosoptions })
 						.then((r) => {
 
 
@@ -1005,11 +1009,14 @@ PeerTubePocketnet = function (app) {
 					})
 					.then((streamData) => request('startLive', streamData, options))
 					.then((result) => {
+
 						if (!result.video) return Promise.reject(error('uploaderror'));
+
+						const isLive = true;
 
 						return Promise.resolve({
 							...result.video,
-							formattedLink: self.composeLink(options.host, result.video.uuid, result.video.isAudio),
+							formattedLink: self.composeLink(options.host, result.video.uuid, result.video.isAudio, isLive),
 							host: options.host,
 						});
 					})
@@ -1028,6 +1035,8 @@ PeerTubePocketnet = function (app) {
 								filter: 'local',
 							})
 							.then((result = {}) => {
+								const isLive = true;
+
 								const existingStream = (result.data || [])[0];
 
 								if (!existingStream) {
@@ -1041,6 +1050,8 @@ PeerTubePocketnet = function (app) {
 									formattedLink: self.composeLink(
 										options.host,
 										existingStream.uuid,
+										false,
+										isLive,
 									),
 								});
 							});
