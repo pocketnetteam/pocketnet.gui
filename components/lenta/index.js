@@ -2903,20 +2903,49 @@ var lenta = (function(){
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 				let s = actions.getJuryShare(id)
 				var shareDiv = $(this).closest('.share')
-				actions.sendJuryVote(s, 1, function() {
-					// Vote sent successfully, remove share from view
-					shareDiv.remove()
-				});
+
+				new dialog({
+					class : 'zindex',
+					html : self.app.localization.e('juryconfirm'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+
+						console.log('EE!E', s);
+
+						actions.sendJuryVote(s, 1, function() {
+							// Vote sent successfully, remove share from view
+							shareDiv.remove()
+						});
+
+					}
+				})
+
 			},
 			modVoteNo : function(){
 				var id = $(this).closest('.share').attr('id');
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 				let s = actions.getJuryShare(id)
 				var shareDiv = $(this).closest('.share')
-				actions.sendJuryVote(s, 0, function() {
-					// Vote sent successfully, remove share from view
-					shareDiv.remove()
-				});
+				
+
+				new dialog({
+					class : 'zindex',
+					html : self.app.localization.e('juryconfirm'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+
+						console.log('EE!E', s);
+
+						actions.sendJuryVote(s, 0, function() {
+							// Vote sent successfully, remove share from view
+							shareDiv.remove()
+						});
+
+					}
+				})
+
 			},
 		}
 
