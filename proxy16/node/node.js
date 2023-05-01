@@ -200,7 +200,8 @@ var Node = function(options, manager){
 
     self.notification = function(block){
         var chaininfo = manager.currentChainCommon2()
-        if(chaininfo.commonHeight - block.height < 10)
+        
+        if (chaininfo && chaininfo.commonHeight - block.height < 10)
             manager.notifications.addblock(block, self)
     }
 
