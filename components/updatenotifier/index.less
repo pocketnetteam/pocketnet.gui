@@ -1,3 +1,16 @@
+#updatenotifier {
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px) brightness(0.3);
+}
+
 #update-found {
   width: 360px;
   font-family: 'Segoe UI';
@@ -29,7 +42,7 @@
 }
 
 #update-found .decoration .waves::after {
-  background-image: url('https://gist.githubusercontent.com/shpingalet007/daff43651508073527ed7f323ac62578/raw/3e9c4225723b0e99172a8279ba5b358fc5e321df/waves.svg');
+  background-image: url('../img/waves.svg');
   background-repeat: no-repeat;
   background-size: 150%;
   background-position: 50%;
@@ -47,7 +60,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position-y: 100.1%;
-  background-image: url('https://gist.githubusercontent.com/shpingalet007/daff43651508073527ed7f323ac62578/raw/3e9c4225723b0e99172a8279ba5b358fc5e321df/clouds.svg');
+  background-image: url('../img/clouds.svg');
 }
 
 #update-found .decoration .clouds::before {
@@ -71,7 +84,7 @@
   position: absolute;
   width: 50px;
   height: 50px;
-  background-image: url('https://raw.githubusercontent.com/gist/shpingalet007/daff43651508073527ed7f323ac62578/raw/845ec4123804631409186c4be9f4ce3f1bbb1b79/logo.svg');
+  background-image: url('../img/white_logo.svg');
   background-repeat: no-repeat;
   background-size: contain;
   filter: brightness(0);
@@ -85,7 +98,7 @@
   position: absolute;
   width: 50px;
   height: 50px;
-  background-image: url('https://raw.githubusercontent.com/gist/shpingalet007/daff43651508073527ed7f323ac62578/raw/845ec4123804631409186c4be9f4ce3f1bbb1b79/logo.svg');
+  background-image: url('../img/white_logo.svg');
   background-repeat: no-repeat;
   background-size: contain;
 }

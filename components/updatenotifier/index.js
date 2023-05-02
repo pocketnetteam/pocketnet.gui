@@ -7,27 +7,21 @@ let updatenotifier = (function(){
         let el, ed;
 
         let actions = {
-
+            updateApplication: () => app.mobile.update.downloadAndInstall(),
+            closeWindow: () => self.stop(),
         }
 
         let events = {
-
+            onInstallClick: () => {
+                actions.updateApplication();
+            },
+            onLaterClick: () => {
+                actions.closeWindow();
+            },
         }
 
         let renders = {
-            createWindow: () => {
-                self.fastTemplate('updatenotifier', function(rendered){
-                    let d = new dialog({
-                        html : rendered,
-                        class : "updateNotifier",
-                        btn1text : self.app.localization.e('close'),
 
-                        clbk : function(el, d){
-                            alert(100);
-                        }
-                    })
-                }, {});
-            }
         }
 
         let state = {
@@ -40,7 +34,10 @@ let updatenotifier = (function(){
         }
 
         let initEvents = function(){
+            console.log('upd events');
 
+            el.c.on('click', '.install-now', events.onInstallClick);
+            el.c.on('click', '.install-later', events.onLaterClick);
         }
 
         return {
