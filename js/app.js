@@ -2713,7 +2713,7 @@ Application = function(p)
 
       playstore : window.pocketnetstore || false,  ///// TODO
 
-      downloadAndInstall : function(){
+      downloadAndInstall : function(customPreloader){
 
         if(!self.mobile.update.hasupdate){
           return Promise.reject({text : 'hasnotupdates'})
@@ -2725,7 +2725,7 @@ Application = function(p)
 
         self.mobile.update.updating = true
 
-        return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
+        return self.mobile.update.download(self.mobile.update.hasupdate, customPreloader).then(r => {
 
           return window.ApkUpdater.install()
 
@@ -2742,18 +2742,19 @@ Application = function(p)
 
       },
 
-      download : function(l){
+      download : function(l, customPreloader){
+        const preloader = customPreloader || topPreloader2;
 
         return window.ApkUpdater.download(l, {
           onDownloadProgress: function(e){
-            topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
+            preloader(e.progress, self.localization.e('downloadingUpdate'))
           }
         }).then(r => {
-          topPreloader2(100)
+          preloader(100)
 
           return Promise.resolve()
         }).catch(e => {
-          topPreloader2(100)
+          preloader(100)
 
           try{
             e = JSON.stringify(e)
