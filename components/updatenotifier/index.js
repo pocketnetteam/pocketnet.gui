@@ -19,7 +19,10 @@ let updatenotifier = (function(){
 
                 renders.updatePercent(`Downloaded ${Math.floor(percent)}%`);
             }),
-            closeWindow: () => self.stop(),
+            closeWindow: () => {
+                el.c.empty();
+                self.stop();
+            },
         }
 
         let events = {
@@ -28,7 +31,7 @@ let updatenotifier = (function(){
                 actions.updateApplication();
             },
             onLaterClick: () => {
-                actions.closeWindow();
+                el.c.parents('.wnd').find('._close').click();
             },
         }
 
@@ -82,6 +85,10 @@ let updatenotifier = (function(){
                 initEvents();
 
                 p.clbk(null, p);
+            },
+
+            wnd : {
+                class : 'allscreen black withoutButtons imageGallery fullscreenActive nobfilter',
             }
         }
     };

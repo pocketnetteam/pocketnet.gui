@@ -1,5 +1,4 @@
 #updatenotifier {
-  z-index: 10000;
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +7,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(5px) brightness(0.3);
 }
 #update-found {
   width: 360px;
