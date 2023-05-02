@@ -2773,10 +2773,13 @@ Application = function(p)
               })
 
               if(l){
-                self.mobile.update.hasupdate = l.browser_download_url
+                self.mobile.update.hasupdate = l.browser_download_url;
+                resolve(true);
+                return;
               }
             }
 
+            resolve(false);
           })
 
         })
