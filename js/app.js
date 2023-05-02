@@ -1268,6 +1268,17 @@ Application = function(p)
         self.mobile.webviewchecker()
         self.mobile.safearea()
 
+        self.mobile.update.hasupdatecheck()
+          .then(() => {
+            app.nav.api.load({
+              open: true,
+              id: 'updatenotifier',
+              essenseData: {},
+              clbk : (e, p) => {},
+            });
+          })
+          .catch((err) => console.error(err))
+
         if (window.Keyboard && window.Keyboard.disableScroll){
           window.Keyboard.disableScroll(false)
         }
