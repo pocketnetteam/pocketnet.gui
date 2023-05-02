@@ -7,7 +7,14 @@ let updatenotifier = (function(){
         let el, ed;
 
         let actions = {
-            updateApplication: () => app.mobile.update.downloadAndInstall(),
+            updateApplication: () => app.mobile.update.downloadAndInstall((percent, text) => {
+                if (percent === 100) {
+                    renders.updatePercent('Downloaded');
+                    return;
+                }
+
+                renders.updatePercent(percent);
+            }),
             closeWindow: () => self.stop(),
         }
 
@@ -21,7 +28,10 @@ let updatenotifier = (function(){
         }
 
         let renders = {
-
+            updatePercent: (text) => {
+                const elem = el.c.find('.install-now');
+                elem.text(text)
+            }
         }
 
         let state = {
