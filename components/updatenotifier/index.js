@@ -8,18 +8,23 @@ let updatenotifier = (function(){
 
         let actions = {
             updateApplication: () => app.mobile.update.downloadAndInstall((percent, text) => {
+                if (percent < 1) {
+                    return;
+                }
+
                 if (percent === 100) {
                     renders.updatePercent('Downloaded');
                     return;
                 }
 
-                renders.updatePercent(percent);
+                renders.updatePercent(`Downloaded ${Math.floor(percent)}`);
             }),
             closeWindow: () => self.stop(),
         }
 
         let events = {
             onInstallClick: () => {
+                renders.updatePercent('Starting...');
                 actions.updateApplication();
             },
             onLaterClick: () => {
