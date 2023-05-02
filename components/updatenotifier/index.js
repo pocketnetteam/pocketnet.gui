@@ -17,7 +17,7 @@ let updatenotifier = (function(){
                     return;
                 }
 
-                renders.updatePercent(`Downloaded ${Math.floor(percent)}`);
+                renders.updatePercent(`Downloaded ${Math.floor(percent)}%`);
             }),
             closeWindow: () => self.stop(),
         }
