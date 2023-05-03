@@ -23,7 +23,7 @@ __map =  {
 
 	__vendor : [
 		"js/vendor/device.js", //
-		"js/vendor/modernizr-2.8.3.min.js",//
+		"js/vendor/modernizr-3.11.2.min.js",//
 		"js/vendor/jquery.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//

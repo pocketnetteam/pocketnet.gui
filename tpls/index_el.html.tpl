@@ -43,7 +43,7 @@
         <link rel="stylesheet" href="peertube/video-embed.css">
 
         <script src="js/vendor/device.js?v=136"></script>
-        <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
+        <script src="js/vendor/modernizr-3.11.2.min.js?v=136"></script>
         <script src="js/widgets.js?v=136"></script>
 
         <style type="text/css">
