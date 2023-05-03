@@ -178,6 +178,9 @@
 #categories .cat .cattable > div.checked {
   display: none;
 }
+#categories .cat .cattable:hover .minus {
+  opacity: 0.5;
+}
 #categories .tg {
   border-radius: 12px;
   margin-top: 1px;

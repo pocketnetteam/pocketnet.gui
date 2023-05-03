@@ -2393,5 +2393,8 @@ _l.listeners = "Прослушали";
 
 _l.enterTheAmount = "Введите сумму в Покеткойнах, чтобы увидеть охват и запустить рекламу";
 
+_l.boost = "Продвижение";
+_l.howToBuy = "Как купить PKOIN";
+
 _l.clearLocal = 'Очистить Local storage';
 _l.clearLocalQuestion = 'Вы действительно хотите очистить Local storage?';
