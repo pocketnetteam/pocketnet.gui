@@ -5,6 +5,7 @@ let updatenotifier = (function(){
     let Essense = function(p){
         let primary = deep(p, 'history');
         let el, ed;
+        let isUpdating;
 
         let actions = {
             updateApplication: () => app.mobile.update.downloadAndInstall((percent, text) => {
@@ -14,24 +15,36 @@ let updatenotifier = (function(){
 
                 if (percent === 100) {
                     renders.updatePercent('Downloaded');
+
+                    setTimeout(actions.closeWindow, 5000);
+
                     return;
                 }
 
                 renders.updatePercent(`Downloaded ${Math.floor(percent)}%`);
             }),
             closeWindow: () => {
-                el.c.empty();
+                el.c.parents('.wnd').find('._close').click();
                 self.stop();
             },
         }
 
         let events = {
             onInstallClick: () => {
+                if (isUpdating) {
+                    return;
+                }
+
+                isUpdating = true;
+                el.c.find('.install-later').hide();
                 renders.updatePercent('Starting...');
-                actions.updateApplication();
+                actions.updateApplication().catch(() => {
+                    renders.updatePercent('Error occurred, stopping');
+                    setTimeout(actions.closeWindow, 5000);
+                });
             },
             onLaterClick: () => {
-                el.c.parents('.wnd').find('._close').click();
+                actions.closeWindow();
             },
         }
 
@@ -74,6 +87,7 @@ let updatenotifier = (function(){
             destroy : function(){
                 ed = {}
                 el = {};
+                isUpdating = false;
             },
 
             init : function(p){

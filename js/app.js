@@ -1274,6 +1274,7 @@ Application = function(p)
               open: true,
               id: 'updatenotifier',
               essenseData: {},
+              inWnd : true,
               clbk : (e, p) => {},
             });
           })
