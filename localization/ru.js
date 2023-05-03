@@ -2392,3 +2392,6 @@ _l.torusing_proxychangequestion = "Вы уверены, что хотите из
 _l.listeners = "Прослушали";
 
 _l.enterTheAmount = "Введите сумму в Покеткойнах, чтобы увидеть охват и запустить рекламу";
+
+_l.boost = "Продвижение";
+_l.howToBuy = "Как купить PKOIN";
