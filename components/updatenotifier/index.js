@@ -5,7 +5,7 @@ let updatenotifier = (function(){
     let Essense = function(p){
         let primary = deep(p, 'history');
         let el, ed;
-        let isUpdating;
+        let isUpdating, updateInfo;
 
         let actions = {
             updateApplication: () => app.mobile.update.downloadAndInstall((percent, text) => {
@@ -44,6 +44,11 @@ let updatenotifier = (function(){
                 });
             },
             onLaterClick: () => {
+                localStorage.updateNotifier = JSON.stringify({
+                    notified: Date.now(),
+                    version: updateInfo.version,
+                });
+
                 actions.closeWindow();
             },
         }
@@ -75,11 +80,9 @@ let updatenotifier = (function(){
             primary : primary,
 
             getdata : function(clbk, p){
-                ed = p.settings.essenseData
+                updateInfo = p.settings.essenseData.updateInfo;
 
-                let data = {
-                    ed
-                };
+                const data = { updateInfo };
 
                 clbk(data);
             },

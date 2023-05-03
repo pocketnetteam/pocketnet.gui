@@ -1269,11 +1269,26 @@ Application = function(p)
         self.mobile.safearea()
 
         self.mobile.update.hasupdatecheck()
-          .then(() => {
+          .then((updateInfo) => {
+            const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
+
+            if ('version' in skippedUpdate) {
+              const skippedVersion = numfromreleasestring(skippedUpdate.version);
+              const showAfterTime = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+              const nextNotifyReached = (skippedUpdate.notified + showAfterTime > Date.now());
+              const updateVersion = numfromreleasestring(updateInfo.version);
+
+              if (skippedVersion >= updateVersion || nextNotifyReached) {
+                return;
+              }
+
+              delete localStorage.updateNotifier;
+            }
+
             app.nav.api.load({
               open: true,
               id: 'updatenotifier',
-              essenseData: {},
+              essenseData: { updateInfo },
               inWnd : true,
               clbk : (e, p) => {},
             });
@@ -2787,7 +2802,9 @@ Application = function(p)
 
               if(l){
                 self.mobile.update.hasupdate = l.browser_download_url;
-                resolve(true);
+                resolve({
+                  version: d.tag_name.slice(1),
+                });
                 return;
               }
             }
