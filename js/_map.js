@@ -13,13 +13,13 @@ var insertingfunc = function(settings, p){
 			insert : 'tooltip'
 		}
 	}
-
+	
 	return {
 		el : 'content'
 	}
 }
 
-__map =  {
+__map =  { 
 
 	__vendor : [
 		"js/vendor/device.js", //
@@ -29,7 +29,7 @@ __map =  {
         "js/vendor/tooltipster.bundle.js",//
         "js/vendor/imagesloaded.pkgd.js",///
         "js/vendor/timer.js",//
-
+        
 		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
@@ -40,9 +40,9 @@ __map =  {
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
 		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
 		{path : "js/lib/pocketnet/buffer.js", babelify : true}, //
-
+		
 		//
-
+		
         "js/vendor/pbkdf2.js", //
         "js/vendor/sha1.js", //
         "js/vendor/paste.js", //
@@ -67,15 +67,15 @@ __map =  {
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
 		"js/vendor/owl/owl.carousel.js",
-
+		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 		{path : "js/popups/index.js", babelify : true}
 	],
 
 	__sourcesfirst : [
-
+		
 		"js/vendor/axios.js",
-		"js/vendor/underscore-min.js",
+		"js/vendor/underscore-min.js",  
 		"js/vendor/wallet-address-validator.min.js",
 		{path : "js/functionsfirst.js", babelify : true},
 		"js/localization.js",
@@ -98,7 +98,7 @@ __map =  {
 
 
 	__sources : [
-
+		
 		{path : "js/functions.js", babelify : true},
 		{path : "js/user.js", babelify : true},
 		{path : "js/module.js", babelify : true},
@@ -112,7 +112,7 @@ __map =  {
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}
-
+		
 	],
 
 	__css : [
@@ -136,11 +136,11 @@ __map =  {
 		"js/vendor/owl/assets/owl.carousel.min.css" : true,
 		"js/vendor/owl/assets/owl.theme.default.min.css" : true
 	},
-
+	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-
+		
 		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -199,10 +199,10 @@ __map =  {
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
 			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qrcode.min.js')
-			}},
+			}},	
 
 		],*/
-	},
+	},      
 
 	bastyon_iphone: {
 		uri : "bastyon_iphone",
@@ -239,7 +239,7 @@ __map =  {
 			auth : 'authorization',
 			//validate : 'filluser'
 		},*/
-
+	
 	},
 
 	aboutYoutube : {
@@ -253,7 +253,7 @@ __map =  {
 			auth : 'authorization',
 			//validate : 'filluser'
 		},*/
-
+	
 	},
 
 	aboutFacebook : {
@@ -267,7 +267,7 @@ __map =  {
 			auth : 'authorization',
 			//validate : 'filluser'
 		},*/
-
+	
 	},
 
 	aboutContentCreators : {
@@ -278,7 +278,7 @@ __map =  {
 		},
 		anonimus : true,
 
-
+	
 	},
 
 	aboutHIW : {
@@ -289,7 +289,7 @@ __map =  {
 		},
 		anonimus : true,
 
-
+	
 	},
 
 	aboutTwitter : {
@@ -342,7 +342,7 @@ __map =  {
 		electronDontOpen : true
 	},
 
-
+	
 	page404 : {
 		uri : "page404",
 		href : "page404",
@@ -380,7 +380,7 @@ __map =  {
 			}
 
 		},
-
+		
 		anonimus : true
 	},
 
@@ -392,7 +392,7 @@ __map =  {
 
 		relations : [
 			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
-			{src : 'js/validation.js',			   f : 'js'},
+			{src : 'js/validation.js',			   f : 'js'},		
 			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qr/qrcode.min.js')
 			}},	*/
@@ -409,8 +409,8 @@ __map =  {
 		relationsSunc : true,
 
 		relations : [
-
-
+				
+			
 		],
 	},
 
@@ -441,7 +441,7 @@ __map =  {
 			electronDontOpen : true,
 			relations : [
 
-				{src : 'js/vendor/exif.js', f : 'js',
+				{src : 'js/vendor/exif.js', f : 'js', 
 
 					require : function(){
 
@@ -450,7 +450,7 @@ __map =  {
 				}}
 			],
 
-
+			
 		},
 
 		accounts : {
@@ -479,10 +479,10 @@ __map =  {
 			add : insertingfunc,
 
 			/*relations : [
-				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},
+				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},	
 			],*/
 
-
+			
 		},
 
 		streampeertube : {
@@ -490,45 +490,45 @@ __map =  {
 			href : "streampeertube",
 			add : insertingfunc,
 		},
-
+		
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",
 			add : insertingfunc,
 			anonimus : true,
 		},
-
+		
 		taginput : {
 			uri : "taginput",
 			href : "taginput",
 			add : insertingfunc,
 			anonimus : true,
 		},
-
+		
 		categories : {
 			uri : "categories",
 			href : "categories",
 			add : insertingfunc,
 			anonimus : true,
-		},
+		},	
 
 		staking : {
 			uri : "staking",
 			href : "staking",
 			relations : [
-
+		
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
 				}},
 			],
 			add : insertingfunc,
 			anonimus : true,
-		},
+		},	
 
 		recommendations : {
 			uri : "recommendations",
 			href : "recommendations",
-
+		
 			add : insertingfunc,
 			anonimus : true,
 		},
@@ -536,7 +536,7 @@ __map =  {
 		recommendedusers : {
 			uri : "recommendedusers",
 			href : "recommendedusers",
-
+		
 			add : insertingfunc,
 			anonimus : true,
 		},
@@ -545,7 +545,7 @@ __map =  {
 		// usermodal : {
 		// 	uri : "usermodal",
 		// 	href : "usermodal",
-
+		
 		// 	anonimus : true,
 		// },
 
@@ -553,7 +553,7 @@ __map =  {
 		bestposts : {
 			uri : "bestposts",
 			href : "bestposts",
-
+			
 			add : insertingfunc,
 			anonimus : true,
 		},
@@ -578,13 +578,13 @@ __map =  {
 			add : insertingfunc,
 
 			electronDontOpen : true
-		},
-
+		},	
+		
 		articlev : {
 			uri : "articlev",
 			href : "articlev",
 			add : insertingfunc,
-
+			
 			relations : [
 				{src : 'js/vendor/editor/editor.js',			   f : 'js', require : "EditorJS"},
 				{src : 'js/vendor/editor/embed.js',			   f : 'js', require : "Embed"},
@@ -628,7 +628,7 @@ __map =  {
 			],
 
 			relationsSunc : true,
-
+			
 		},
 
 		help : {
@@ -640,7 +640,7 @@ __map =  {
 			anonimus : true,
 		},
 
-
+	
 
 		donations : {
 			uri : "donations",
@@ -648,7 +648,7 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-
+		
 		howtobuy : {
 			uri : "howtobuy",
 			href : "howtobuy",
@@ -684,8 +684,8 @@ __map =  {
 			add : insertingfunc
 		},
 
-
-
+		
+	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
@@ -729,9 +729,9 @@ __map =  {
 				auth : 'welcome'
 			},
 			electronDontOpen : true
-
+			
 		},
-
+	
 
 		wallet : {
 			uri : "wallet",
@@ -755,7 +755,7 @@ __map =  {
 			add : insertingfunc,
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js',
+				{src : 'js/vendor/exif.js', f : 'js', 
 
 					require : function(){
 
@@ -763,18 +763,18 @@ __map =  {
 
 				}},
 
-				{src : 'js/vendor/Sortable.min.js', f : 'js',
+				{src : 'js/vendor/Sortable.min.js', f : 'js', 
 
 					require : function(){
 
 						Sortable = require('sortablejs')
 
 				}},
+			
+				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
+				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
-				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},
-
-
+		
 			],
 			electronDontOpen : true
 		},
@@ -787,24 +787,24 @@ __map =  {
 			},
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js',
+				{src : 'js/vendor/exif.js', f : 'js', 
 
 					require : function(){
 
 						EXIF = require('./js/vendor/exif.js')
 
 				}},
+		
+				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
+				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
-				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},
-
-
+		
 			],
 			exportcss : true,
 			anonimus : true,
 		},
 
-
+	
 		lenta : {
 			uri : "lenta",
 			href : "lenta",
@@ -813,7 +813,7 @@ __map =  {
 			},
 			exportcss : true,
 			anonimus : true,
-		},
+		},	
 
 		transactionview : {
 			uri : "transactionview",
@@ -823,9 +823,9 @@ __map =  {
 			},
 			exportcss : true,
 			anonimus : true,
-		},
+		},	
 
-
+	
 		imageGalleryEdit : {
 			uri : "imageGalleryEdit",
 			href : "imagesEdit",
@@ -865,10 +865,10 @@ __map =  {
 		viewchangereload : true
 	},
 
-
-
+	
+	
 	// electronnav
-
+	
 	/*electronnav : {
 		uri : "electronnav",
 		href : "electronnav",
@@ -921,7 +921,7 @@ __map =  {
 		href : "notifications",
 		add : insertingfunc,
 
-
+		
 	},
 
 	downloadMedia : {
@@ -948,7 +948,7 @@ __map =  {
 		uri : "nodecontrol",
 		href : "nodecontrol",
 		add : insertingfunc,
-
+		
 		anonimus : true,
 	},
 
@@ -958,10 +958,10 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-
+			
 			{src : 'js/validation.js',			   f : 'js'},
-			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},
-
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},				
+			
 		],
 		anonimus : true,
 		electronDontOpen : true
@@ -973,10 +973,10 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-
-			{src : 'js/validation.js',			   f : 'js'},
-			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},
-
+		
+			{src : 'js/validation.js',			   f : 'js'},				
+			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
+			
 		]
 	},
 
@@ -1027,7 +1027,7 @@ __map =  {
 		anonimus : true,
 		preshell : true,
 		exportcss : true,
-
+		
 	},
 
 	channel : {
@@ -1037,7 +1037,7 @@ __map =  {
 		anonimus : true,
 		exportcss : true,
 	},
-
+	
 	post : {
 		uri : "post",
 		href : "post",
@@ -1068,10 +1068,10 @@ __map =  {
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
 				Chart = require('./js/vendor/chart.min.js')
-			}},
+			}},	
 		]
 
-
+		
 	},
 
 	earnings : {
@@ -1082,7 +1082,7 @@ __map =  {
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
 				Chart = require('./js/vendor/chart.min.js')
-			}},
+			}},	
 		]
 	},
 
@@ -1111,7 +1111,7 @@ __map =  {
 		add : insertingfunc,
 
 		relations : [
-			{src : 'js/validation.js',			   f : 'js'},
+			{src : 'js/validation.js',			   f : 'js'},	
 		]
 	},
 
@@ -1121,7 +1121,7 @@ __map =  {
 		add : insertingfunc,
 
 		relations : [
-			{src : 'js/validation.js',			   f : 'js'},
+			{src : 'js/validation.js',			   f : 'js'},	
 		]
 	},
 
