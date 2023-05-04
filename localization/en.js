@@ -2604,3 +2604,5 @@ _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 _l.listeners = "Listeners";
 
 _l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";
+
+_l.blocked = "You have been blocked by the author of the post";
