@@ -5,6 +5,7 @@ let updatenotifier = (function(){
     let Essense = function(p){
         let primary = deep(p, 'history');
         let el, ed;
+        let e = (l) => self.app.localization.e(`updateNotifier_${l}`);
         let isUpdating, updateInfo;
 
         let actions = {
@@ -14,14 +15,14 @@ let updatenotifier = (function(){
                 }
 
                 if (percent === 100) {
-                    renders.updatePercent('Downloaded');
+                    renders.updatePercent(e('stateDownload'));
 
                     setTimeout(actions.closeWindow, 5000);
 
                     return;
                 }
 
-                renders.updatePercent(`Downloaded ${Math.floor(percent)}%`);
+                renders.updatePercent(`${e('stateDownload')} ${Math.floor(percent)}%`);
             }),
             closeWindow: () => {
                 el.c.parents('.wnd').find('._close').click();
@@ -37,9 +38,9 @@ let updatenotifier = (function(){
 
                 isUpdating = true;
                 el.c.find('.install-later').hide();
-                renders.updatePercent('Starting...');
+                renders.updatePercent(e('stateStart'));
                 actions.updateApplication().catch(() => {
-                    renders.updatePercent('Error occurred, stopping');
+                    renders.updatePercent(e('stateError'));
                     setTimeout(actions.closeWindow, 5000);
                 });
             },
