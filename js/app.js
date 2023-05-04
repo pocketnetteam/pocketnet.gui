@@ -1260,32 +1260,34 @@ Application = function(p)
           self.appready = true
 
           if (!window.pocketnetstore && !isios()) {
-            self.mobile.update.hasupdatecheck()
-                .then((updateInfo) => {
-              const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
+            setTimeout(() => {
+              self.mobile.update.hasupdatecheck()
+                  .then((updateInfo) => {
+                    const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
 
-              if ('version' in skippedUpdate) {
-                const skippedVersion = numfromreleasestring(skippedUpdate.version);
-                const showAfterTime = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
-                const nextNotifyReached = (skippedUpdate.notified + showAfterTime > Date.now());
-                const updateVersion = numfromreleasestring(updateInfo.version);
+                    if ('version' in skippedUpdate) {
+                      const skippedVersion = numfromreleasestring(skippedUpdate.version);
+                      const showAfterTime = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+                      const nextNotifyReached = (skippedUpdate.notified + showAfterTime > Date.now());
+                      const updateVersion = numfromreleasestring(updateInfo.version);
 
-                if (skippedVersion >= updateVersion || nextNotifyReached) {
-                  return;
-                }
+                      if (skippedVersion >= updateVersion || nextNotifyReached) {
+                        return;
+                      }
 
-                delete localStorage.updateNotifier;
-              }
+                      delete localStorage.updateNotifier;
+                    }
 
-              app.nav.api.load({
-                open: true,
-                id: 'updatenotifier',
-                essenseData: { updateInfo },
-                inWnd : true,
-                clbk : (e, p) => {},
-              });
-                })
-                .catch((err) => console.error(err))
+                    app.nav.api.load({
+                      open: true,
+                      id: 'updatenotifier',
+                      essenseData: { updateInfo },
+                      inWnd : true,
+                      clbk : (e, p) => {},
+                    });
+                  })
+                  .catch((err) => console.error(err))
+            }, 10000);
           }
         }
 

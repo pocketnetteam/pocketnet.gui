@@ -105,7 +105,7 @@ let updatenotifier = (function(){
             },
 
             wnd : {
-                class : 'allscreen black withoutButtons imageGallery fullscreenActive nobfilter',
+                class : 'allscreen black withoutButtons fullscreenActive nobfilter',
             }
         }
     };
