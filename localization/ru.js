@@ -2395,3 +2395,6 @@ _l.enterTheAmount = "Введите сумму в Покеткойнах, что
 
 _l.boost = "Продвижение";
 _l.howToBuy = "Как купить PKOIN";
+
+_l.clearLocal = 'Очистить Local Storage';
+_l.clearLocalQuestion = 'Вы действительно хотите очистить Local Storage?';

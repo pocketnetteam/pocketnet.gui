@@ -2607,3 +2607,6 @@ _l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launc
 
 _l.boost = "Boost";
 _l.howToBuy = "How to buy PKOIN";
+
+_l.clearLocal = 'Clear Local Storage';
+_l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
