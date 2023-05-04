@@ -182,7 +182,7 @@
 #tagcloud .hidealltags {
   display: none;
 }
-@media (pointer: hover) {
+@media (pointer: fine) {
   #tagcloud .tcaptiontable > div.ticon:hover i {
     color: rgb(var(--color-txt-ac));
   }
