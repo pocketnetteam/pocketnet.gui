@@ -1259,18 +1259,9 @@ Application = function(p)
 
           self.appready = true
 
-          
-        }
-
-        self.mobile.pip.init()
-        self.mobile.keyboard.init()
-        self.mobile.memory()
-        self.mobile.webviewchecker()
-        self.mobile.safearea()
-
-        if (!window.pocketnetstore && !isios()) {
-          self.mobile.update.hasupdatecheck()
-            .then((updateInfo) => {
+          if (!window.pocketnetstore && !isios()) {
+            self.mobile.update.hasupdatecheck()
+                .then((updateInfo) => {
               const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
 
               if ('version' in skippedUpdate) {
@@ -1293,9 +1284,16 @@ Application = function(p)
                 inWnd : true,
                 clbk : (e, p) => {},
               });
-            })
-            .catch((err) => console.error(err))
+                })
+                .catch((err) => console.error(err))
+          }
         }
+
+        self.mobile.pip.init()
+        self.mobile.keyboard.init()
+        self.mobile.memory()
+        self.mobile.webviewchecker()
+        self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
           window.Keyboard.disableScroll(false)
