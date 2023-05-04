@@ -195,7 +195,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-@media (pointer: hover) {
+@media (pointer: fine) {
   #leftpanel .rightbottomnav a:hover {
     color: rgb(var(--color-txt-ac));
   }
@@ -280,7 +280,7 @@
   transition: 0.3s;
   font-size: 0.8em;
 }
-@media (pointer: hover) {
+@media (pointer: fine) {
   #leftpanel .vc_valuecustom .vc_selectInput .vc_value:hover {
     color: rgb(var(--color-txt-ac));
     background: transparent;

@@ -577,6 +577,7 @@ var Control = function(settings, proxy) {
 
                 // Calculate elapsed time
                 // (total - current) / avg(chunk) * (nodeAutorunInterval / 1000)
+                
                 state.sync.left = Math.round(
                     (self.proxy.nodeManager.chain().commonHeight - state.info.lastblock.height) /
                     (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length) *
