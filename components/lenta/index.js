@@ -2391,10 +2391,16 @@ var lenta = (function(){
 								setTimeout(function(){
 
 									videopaused = false;
+
+									if (player.p.embed.details && player.p.embed.details.duration >= 60 && startTime >= 20){
+
+										self.app.platform.ui.pipvideo(share.txid, null, {
+											startTime
+										})
+
+									}
 									
-									self.app.platform.ui.pipvideo(share.txid, null, {
-										startTime
-									})
+
 								}, 300)
 							}
 
