@@ -294,6 +294,7 @@ nModule = function(){
 				p.rendered = template(p.data);
 			}
 			catch(e){
+				console.log(p)
 				console.error(e)
 				p.rendered = ''
 			}

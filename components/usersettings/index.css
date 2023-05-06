@@ -62,7 +62,15 @@
   padding: 2em 0;
 }
 #usersettings .cacheContent .empty span {
-  font-size: 0.9em;
+  font-size: 0.8em;
+}
+#usersettings .cacheContent .clearLocalStorage {
+  padding-bottom: 2em;
+  color: rgb(var(--color-bg-ac-bright));
+  cursor: pointer;
+}
+#usersettings .cacheContent .clearLocalStorage span {
+  font-size: 0.8em;
 }
 #usersettings .cacheContent .tx {
   display: flex;
