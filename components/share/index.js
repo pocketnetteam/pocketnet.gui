@@ -793,7 +793,7 @@ var share = (function(){
 								const ipfsId = url.match(ipfsIdRegex)?.[1];
 
 								if (ipfsId) {
-									const ipfsUrl = `https://ipfs.io/ipfs/${ipfsId}`;
+									const ipfsUrl = `https://cloudflare-ipfs.com/ipfs/${ipfsId}`;
 									const isVideo = await actions.isIpfsVideo(ipfsUrl);
 
 									if (isVideo) {

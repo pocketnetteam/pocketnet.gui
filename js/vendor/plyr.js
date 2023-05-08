@@ -3773,7 +3773,7 @@ typeof navigator === "object" && (function (global, factory) {
 
       },
       ipfs: {
-        source: 'https://ipfs.io/ipfs/{0}'
+        source: 'https://cloudflare-ipfs.com/ipfs/{0}'
       },
       googleIMA: {
         sdk: 'https://imasdk.googleapis.com/js/sdkloader/ima3.js'
