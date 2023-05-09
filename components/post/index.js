@@ -496,7 +496,7 @@ var post = (function () {
 							self.closeContainer()
 
 							var startTime = player && player.getPosition ? player.getPosition() : 0
-							
+
 							setTimeout(function(){
 								self.app.platform.ui.pipvideo(share.txid, null, {
 									startTime
@@ -1922,7 +1922,10 @@ var post = (function () {
 
 						if (share.itisvideo()){
 							actions.changeSavingStatusLight(share);
-							document.title = share.caption;
+
+							if (share.caption){
+								document.title = share.caption;
+							}
 						}
 
 						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {

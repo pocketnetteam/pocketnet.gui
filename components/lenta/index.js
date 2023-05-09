@@ -1602,7 +1602,10 @@ var lenta = (function(){
 
 				actions.initVideo(share, function(res){
 
-					document.title = share.caption;
+					if (share.caption){
+						document.title = share.caption;
+					}
+
 
 					fullscreenvideoShowing = null
 
