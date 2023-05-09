@@ -936,6 +936,7 @@ var lenta = (function(){
 
 				if(!vel.length) return
 
+
 				if (shadow && !players[share.txid]){
 
 					players[share.txid] = {
@@ -1601,6 +1602,8 @@ var lenta = (function(){
 
 				actions.initVideo(share, function(res){
 
+					document.title = share.caption;
+
 					fullscreenvideoShowing = null
 
 					if(!res){
@@ -2138,6 +2141,8 @@ var lenta = (function(){
 
 			stopPlayer : function(id){
 
+				document.title = 'Bastyon';
+
 				var player = players[id]
 
 				if(!player || player.error) return
@@ -2369,6 +2374,8 @@ var lenta = (function(){
 				}, function(players){
 					
 					_.each(players, function(player){
+
+						document.title = 'Bastyon';
 
 						if (player.error) return
 
@@ -4925,6 +4932,9 @@ var lenta = (function(){
 				if(!essenseData.txids){
 
 					self.app.platform.matrixchat.clbks.SHOWING.lenta = function(v){
+
+						document.title = 'Bastyon';
+
 						if(v){
 							_.each(players, function(player){
 								if (player.error || !player.p) return
@@ -5492,6 +5502,9 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				document.title = "Bastyon";
+
 				initialized = null
 
 				delete self.app.events.delayedscroll['videos' + mid]
