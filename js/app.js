@@ -2657,11 +2657,11 @@ Application = function(p)
     screen : {
 
       lock : function(orientation){
-        if (window.cordova && (orientation || baseorientation))
+        if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
           window.screen.orientation.lock(orientation || baseorientation)
       },
       unlock : function(){
-        if (window.cordova){
+        if (window.cordova && window.screen.orientation.lock){
           window.screen.orientation.lock(baseorientation)
           window.screen.orientation.unlock()
         }
