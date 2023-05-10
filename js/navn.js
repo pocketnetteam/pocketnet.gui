@@ -393,7 +393,15 @@ Nav = function(app)
 						}, 'Bastyon', href);
 
 					}catch(e){
-						console.log("history.replaceState Catch", e)
+
+						history.pushState({
+
+							href : href,
+							lfox : true
+		
+						}, 'Bastyon', href);
+
+						//console.log("history.replaceState Catch", e)
 					}
 					
 					
