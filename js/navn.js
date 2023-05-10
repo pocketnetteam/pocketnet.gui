@@ -38,7 +38,12 @@ Nav = function(app)
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
 
-		if(window.cordova) protocol = 'file'
+		if(window.cordova) {
+			protocol = 'file'
+
+			if(isios()) protocol = 'bastyon'
+		}
+		
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -382,28 +387,13 @@ Nav = function(app)
 				}
 
 				if (p.replaceState){
-					
-					try{
 
-						history.replaceState({
+					history.replaceState({
 
-							href : href,
-							lfox : true
-		
-						}, 'Bastyon', href);
-
-					}catch(e){
-
-						history.pushState({
-
-							href : href,
-							lfox : true
-		
-						}, 'Bastyon', href);
-
-						//console.log("history.replaceState Catch", e)
-					}
-					
+						href : href,
+						lfox : true
+	
+					}, 'Bastyon', href);
 					
 				}
 				else{
