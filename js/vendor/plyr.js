@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
