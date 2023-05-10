@@ -383,12 +383,19 @@ Nav = function(app)
 
 				if (p.replaceState){
 					
-					history.replaceState({
+					try{
 
-						href : href,
-						lfox : true
-	
-					}, 'Bastyon', href);
+						history.replaceState({
+
+							href : href,
+							lfox : true
+		
+						}, 'Bastyon', href);
+
+					}catch(e){
+						console.log("history.replaceState Catch", e)
+					}
+					
 					
 				}
 				else{
