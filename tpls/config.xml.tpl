@@ -109,7 +109,9 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
-        <preference name="scheme" value="bastyon" />
+        <preference name="scheme" value="bstn" />
+        <preference name="hostname" value="bastyon" />
+        
     </platform>
     
 

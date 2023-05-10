@@ -41,7 +41,7 @@ Nav = function(app)
 		if(window.cordova) {
 			protocol = 'file'
 
-			if(isios()) protocol = 'bastyon'
+			if(isios()) protocol = 'bstn'
 		}
 		
 	}
