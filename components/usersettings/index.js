@@ -15,6 +15,26 @@ var usersettings = (function(){
 
 
 		var actions = {
+			clearLocalStorage : function(){
+				new dialog({
+					html :  self.app.localization.e('clearLocalQuestion'),
+					btn1text : self.app.localization.e('yes'),
+					btn2text : self.app.localization.e('no'),
+
+					class : 'zindex',
+
+					success : function(){
+
+						for (var key in localStorage){
+							
+							if (key !== 'mnemonic'){
+								localStorage.removeItem(key);
+							}
+						 }
+
+					}
+				})
+			},
 			removeAccount : function(){
 				new dialog({
 					html: self.app.localization.e('removeAccountQuestion'),
@@ -91,6 +111,9 @@ var usersettings = (function(){
 		}
 
 		var events = {
+			clearLocalStorage : function(){
+				actions.clearLocalStorage();
+			},
 			removeAccount : function(){
 				actions.removeAccount()
 			}
@@ -268,6 +291,10 @@ var usersettings = (function(){
 					}
 
 				}, function(p){
+
+					p.el.find('.clearLocalStorage').on('click', events.clearLocalStorage);
+
+
 					p.el.find('.check').on('click', function(){
 
 						if($(this).hasClass('disabled')) return

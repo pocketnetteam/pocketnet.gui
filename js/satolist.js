@@ -4376,7 +4376,7 @@ Platform = function (app, listofnodes) {
                /**window.addEventListener('scroll', events.scroll)
                 window.addEventListener('resize', events.resize)*/
 
-                up.on('click', events.click)
+                up.find('.full').on('click', events.click)
 
 
             }
