@@ -112,11 +112,10 @@ var donate = (function(){
 								type: 'NUMBER',
 								id: 'amount',
 								placeholder : '0',
-								value : ed.value || 0.5,
+								value : ed.value || 0,
 								format: {
 									Precision: 3,
-									max : balance,
-									min : 0.1
+		
 								}
 							})
 
