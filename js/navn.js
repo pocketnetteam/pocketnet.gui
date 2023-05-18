@@ -1344,6 +1344,28 @@ Nav = function(app)
 			}
 
 		},
+		bstn : {
+			prefix : function(){
+
+				options.navPrefix = '/'
+
+			},
+
+			pathnameSearch : function(){
+				var loc =  window.location; 
+
+				
+
+				return protocolActions.bstn.pathname() + loc.search
+			},
+
+			pathname : function(){
+				var loc =  window.location; 
+
+				return loc.pathname.replace("bstn://bastyon", "").replace(".html", "").replace(options.navPrefix, '').replace('indexcordova', "index")
+			}
+
+		},
 		web : {
 
 			pathnameSearch : function(){
