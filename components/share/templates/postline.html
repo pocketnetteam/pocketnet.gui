@@ -6,7 +6,16 @@
 
             <% if(!external) {%>
             
-                <% if(!share.itisvideo() && !share.itisaudio()) {%>
+                <%
+                const isIpfs = share.itisipfs()
+                const isEmbed = share.itisembed()
+                const isPlayer = share.itisvideo() || share.itisaudio()
+
+                const condition1 = (isIpfs && !isPlayer)
+                const condition2 = (!isPlayer && !isIpfs && !isEmbed)
+                %>
+
+                <% if(condition1 || condition2) {%>
 
                     <div elementsid="saddimages" class="item images tooltip" title="<%=e('saddimages')%>">
                         <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
