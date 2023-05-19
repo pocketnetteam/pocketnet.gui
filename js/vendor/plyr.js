@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
@@ -3773,7 +3773,7 @@ typeof navigator === "object" && (function (global, factory) {
 
       },
       ipfs: {
-        source: 'https://ipfs.io/ipfs/{0}'
+        source: 'https://cloudflare-ipfs.com/ipfs/{0}'
       },
       googleIMA: {
         sdk: 'https://imasdk.googleapis.com/js/sdkloader/ima3.js'

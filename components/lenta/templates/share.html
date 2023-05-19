@@ -250,7 +250,15 @@ var arranges = {
 
 	
 	i : function(){ %> 
-		<% if(share.images.length) {
+		<%
+		let isIpfs = false;
+
+		if (share.url) {
+			isIpfs = parseVideo(share.url).type === 'ipfs';
+		}
+		%>
+
+		<% if(share.images.length && !isIpfs) {
 
 				var icClass = '';
 				var additionall = 0;
@@ -316,7 +324,9 @@ var arranges = {
 
 			var h = ''
 			
-			if(parseVideo(share.url).type && share.images.length){
+			const isIpfs = parseVideo(share.url).type === 'ipfs';
+
+			if(!isIpfs && share.images.length){
 				h = 'hiddenurl'
 			}
 			
