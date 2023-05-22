@@ -1049,7 +1049,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						special: true,
 						cantuploading: true,
 					},
-				    { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				37: [
