@@ -1710,7 +1710,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							 * comments investigation.
 							 */
 							if (method === 'sendrawtransactionwithmessage') {
-								self.logger.w('logs290323', 'debug', `${cparameters[2]}, ${data}`)
+								self.logger.w('logs290323', 'debug', `${cparameters[2]}, ${data}, ${node.host}`)
 							}
 
 							return Promise.resolve({
