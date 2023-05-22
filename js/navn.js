@@ -38,7 +38,12 @@ Nav = function(app)
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
 
-		if(window.cordova) protocol = 'file'
+		if(window.cordova) {
+			protocol = 'file'
+
+			if(isios()) protocol = 'bstn'
+		}
+		
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -382,7 +387,7 @@ Nav = function(app)
 				}
 
 				if (p.replaceState){
-					
+
 					history.replaceState({
 
 						href : href,
@@ -1336,6 +1341,28 @@ Nav = function(app)
 				}
 
 				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
+			}
+
+		},
+		bstn : {
+			prefix : function(){
+
+				options.navPrefix = '/'
+
+			},
+
+			pathnameSearch : function(){
+				var loc =  window.location; 
+
+				
+
+				return protocolActions.bstn.pathname() + loc.search
+			},
+
+			pathname : function(){
+				var loc =  window.location; 
+
+				return loc.pathname.replace("bstn://bastyon", "").replace(".html", "").replace(options.navPrefix, '').replace('indexcordova', "index")
 			}
 
 		},
