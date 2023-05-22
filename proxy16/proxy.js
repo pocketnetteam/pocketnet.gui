@@ -1719,10 +1719,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							if (method === 'sendrawtransactionwithmessage') {
 								const type = cparameters[2];
 								const txid = data;
-								const node = node.host;
+								const nodeHost = node.host;
 								const block = node.height();
 
-								self.logger.w('logs290323', 'debug', [type, txid, node, block].toString());
+								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
 							}
 
 							return Promise.resolve({
