@@ -3306,160 +3306,272 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-				self.shell({
-					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
+				if (share.type === 'userInfo'){
+		
+					self.shell({
+						name : 'userjury',
+	
+						el : _el,
+						animation : false,
+						data : {
+							u: share,
+							recommended: recommended
+						}
+					}, function(p){
 
-					el : _el,
-					animation : false,
-					data : {
-						share : share,
-						ed : essenseData,
-						mestate : mestate,
-						all : all || false,
-						tplvideo : video ,
-						recommended : recommended,
-						openapi : essenseData.openapi,
-						sharesFromSub,
-						boosted : p.boosted,
-						shareRelayedFlag : false,
-						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
-					}
+						if(!p.repost) shareInitedMap[share.txid] = true;	
+						
+	
+						var c = function(){
+	
+							window.requestAnimationFrame(() => {
+	
+								if(!p.el.hasClass('rendered')){
+									p.el.addClass('rendered')
+	
+									if (p.el.hasClass('hashiddengroup')){
+										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+									}
+	
+								}
+	
+	
+								if (clbk)
+									clbk();
+									clbk = null
+	
+							})
+						}
+	
+						
+						if (video){
+							c()
+						}
+						else{
+							setTimeout(() => {
+								c()
+							}, 300)
+						}
+					})
 
-				}, function(p){
+				} else if (share.type === 'comment'){
 
-					if(!p.repost) shareInitedMap[share.txid] = true;	
+					self.shell({
+						name : 'commentjury',
+	
+						el : _el,
+						animation : false,
+						data : {
+							comment : share,
+							newcomments : '',
+							_class: '',
+							needtoshow : 0,
+							mestate : mestate,
+							recommended : recommended,
+							replaceName : function(name, p){
+								return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
+							},
 
-					var promises = []
+							replaceNameNoComment : function(name, p){
+								return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
+							},
+							ed : essenseData,
+						}
+					}, function(p){
+						console.log('p!!!!!!!!', p);
+						if(!p.repost) shareInitedMap[share.txid] = true;	
+						
+	
+						var c = function(){
+	
+							window.requestAnimationFrame(() => {
+	
+								if(!p.el.hasClass('rendered')){
+									p.el.addClass('rendered')
+	
+									if (p.el.hasClass('hashiddengroup')){
+										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+									}
+	
+								}
+	
+	
+								if (clbk)
+									clbk();
+									clbk = null
+	
+							})
+						}
+	
+						
+						if (video){
+							c()
+						}
+						else{
+							setTimeout(() => {
+								c()
+							}, 300)
+						}
+					})
 
-					promises.push(new Promise((resolve, reject) => {
+				} else {
 
-						renders.stars(share, () => {
-							resolve()
-						})
-					}))
-
-					if(!share.temp && !share.relay && recommended != 'jury'){
-
+					self.shell({
+						name : video ? 'sharevideolight' : (share.itisarticle && share.itisarticle()) ? 'sharearticle' : 'share',
+	
+						el : _el,
+						animation : false,
+						data : {
+							share : share,
+							ed : essenseData,
+							mestate : mestate,
+							all : all || false,
+							tplvideo : video ,
+							recommended : recommended,
+							openapi : essenseData.openapi,
+							sharesFromSub,
+							boosted : p.boosted,
+							shareRelayedFlag : false,
+							fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
+						}
+	
+					}, function(p){
+	
+						if(!p.repost) shareInitedMap[share.txid] = true;	
+	
+						var promises = []
+	
 						promises.push(new Promise((resolve, reject) => {
-
-							renders.comments(share.txid, false, false, true, () => {
+	
+							renders.stars(share, () => {
 								resolve()
 							})
 						}))
-						
-					}
-
-					promises.push(new Promise((resolve, reject) => {
-
-
-						renders.url(p.el.find('.url'), share.url, share, function(){
-
-							renders.urlContent(share, function(){
 	
-								if(essenseData.searchValue){
-									p.el.find('.canmark').mark(essenseData.searchValue);
-								}
-
-								if(essenseData.searchTags){
-									p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
-										return '#' + t
-									}).join(' '));
-								}
+						if(!share.temp && !share.relay && recommended != 'jury'){
 	
-								if(!video) actions.initVideoLight(share)
-	
-								if(isotopeinited) el.shares.isotope()
-	
-								shareInitingMap[share.txid] = false;	
-								
-								resolve()
-												
-								
-	
-							});
-	
-						})
-
-					}))
-			
-					
-
-					if (!video) {
-						promises.push(new Promise((resolve, reject) => {
-							renders.images(p.el.find('.postcontent'), share, () => {
-								resolve()
-							})
-						}))
-						
-						if (share.itisarticle()){
 							promises.push(new Promise((resolve, reject) => {
-								renders.articlespart(p.el.find('.sharearticle'), share, () => {
+	
+								renders.comments(share.txid, false, false, true, () => {
 									resolve()
 								})
 							}))
 							
 						}
-						else{
 	
-							// TO DO
-							if(!p.el.find('.showMore').length) {
+						promises.push(new Promise((resolve, reject) => {
+	
+	
+							renders.url(p.el.find('.url'), share.url, share, function(){
+	
+								renders.urlContent(share, function(){
+		
+									if(essenseData.searchValue){
+										p.el.find('.canmark').mark(essenseData.searchValue);
+									}
+	
+									if(essenseData.searchTags){
+										p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
+											return '#' + t
+										}).join(' '));
+									}
+		
+									if(!video) actions.initVideoLight(share)
+		
+									if(isotopeinited) el.shares.isotope()
+		
+									shareInitingMap[share.txid] = false;	
+									
+									resolve()
+													
+									
+		
+								});
+		
+							})
+	
+						}))
+				
+						
+						if (!video) {
+							promises.push(new Promise((resolve, reject) => {
+								renders.images(p.el.find('.postcontent'), share, () => {
+									resolve()
+								})
+							}))
+							
+							if (share.itisarticle()){
 								promises.push(new Promise((resolve, reject) => {
-
-									renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
-
+									renders.articlespart(p.el.find('.sharearticle'), share, () => {
+										resolve()
+									})
 								}))
-							}
 								
-						}
-					}
-
-					var c = function(){
-
-						window.requestAnimationFrame(() => {
-
-							if(!p.el.hasClass('rendered')){
-								p.el.addClass('rendered')
-
-								if (p.el.hasClass('hashiddengroup')){
-									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
-								}
-
 							}
-
-
-							if (clbk)
-								clbk();
-								clbk = null
-
+							else{
+		
+								// TO DO
+								if(!p.el.find('.showMore').length) {
+									promises.push(new Promise((resolve, reject) => {
+	
+										renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
+	
+									}))
+								}
+									
+							}
+						}
+	
+						var c = function(){
+	
+							window.requestAnimationFrame(() => {
+	
+								if(!p.el.hasClass('rendered')){
+									p.el.addClass('rendered')
+	
+									if (p.el.hasClass('hashiddengroup')){
+										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+									}
+	
+								}
+	
+	
+								if (clbk)
+									clbk();
+									clbk = null
+	
+							})
+						}
+	
+						
+						if (video){
+							c()
+						}
+						else{
+							setTimeout(() => {
+								c()
+							}, 300)
+						}
+						
+	
+	
+						/*Promise.all(promises).catch(e => {}).then(() => {
+							c()
 						})
-					}
-
-					
-					if (video){
-						c()
-					}
-					else{
-						setTimeout(() => {
-							c()
-						}, 300)
-					}
-					
-
-
-					/*Promise.all(promises).catch(e => {}).then(() => {
-						c()
+	
+						var time = 3000
+	
+						if(p.el.find(".shareImages .image").length > 1 || !index) c()
+						else
+	
+							setTimeout(() => {
+								c()
+							}, time)*/
+						
 					})
+	
+				}
 
-					var time = 3000
-
-					if(p.el.find(".shareImages .image").length > 1 || !index) c()
-					else
-
-						setTimeout(() => {
-							c()
-						}, time)*/
-					
-				})
 
 			},
 
@@ -4325,7 +4437,6 @@ var lenta = (function(){
 					emptyinarow = 0
 				}
 
-
 				var allshares = [].concat(shares, bshares)
 
 				if(includingsub) {
@@ -4440,7 +4551,7 @@ var lenta = (function(){
 
 							if(!essenseData.author){
 								shares = _.filter(shares, function(share){
-									var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+									var checkvisibility = share.visibility && self.app.platform.sdk.node.shares.checkvisibility(share)
 
 									return !checkvisibility
 								})
@@ -4614,7 +4725,6 @@ var lenta = (function(){
 			},
 
 			shares : function(clbk, cache){
-
 
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
 

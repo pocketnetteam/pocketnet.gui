@@ -19237,17 +19237,32 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        }
+                    }
                         else {
-
-                            self.app.platform.sdk.jury.getjuryassigned(address).then((shares) => {
-
+                            
+                            self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
 
                                 newShares = shares.map((share) => {
-                                    var s = new pShare();
-                                    s._import(share);
-                                    s.txid = share.txid;
+                                    
+                                    var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' ? new pShare() : new pComment();
+                                    
+                                    if (s.type === 'userInfo'){
+
+                                        s._import(share);
+                                        s.a = share.a;
+
+                                    } else if (s.type === 'share' || s.type === 'video'){
+
+                                        s._import(share);
+
+                                    } else if (s.type === 'comment'){
+
+                                        s.import(share);
+
+                                    }
+                                    
+                                    s.txid = share.txid || share.id;
                                     s.time = new Date();
                                     s.address = share.address;
                                     s.time.setTime(share.time * 1000);

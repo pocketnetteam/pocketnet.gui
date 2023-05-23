@@ -178,6 +178,110 @@
   height: 400px;
   padding: 0 2em;
 }
+#lenta .share .commentJury {
+  padding-bottom: 2em;
+}
+#lenta .share .commentJury .commentWrapper {
+  margin-top: 0.5em;
+}
+#lenta .share .commentJury .commentWrapper .commentBody {
+  padding-top: 0.5em;
+  padding-left: 4.5em;
+}
+#lenta .share .userJury .userWrapper {
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  border: 1px solid rgba(var(--color-medium-theme), 0.8);
+  width: 250px;
+  cursor: default;
+  z-index: 999;
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  padding: 1em 0.5em;
+}
+#lenta .share .userJury .userWrapper .topInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#lenta .share .userJury .userWrapper .topInfo .iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  float: none;
+}
+#lenta .share .userJury .userWrapper .topInfo .iconWrapper .usericon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  height: 85px;
+  width: 85px;
+  cursor: pointer;
+}
+#lenta .share .userJury .userWrapper .topInfo .iconWrapper .usericon .letter {
+  font-size: 2em;
+}
+#lenta .share .userJury .userWrapper .topInfo .label {
+  margin-top: 20px;
+  padding-left: 7px;
+}
+#lenta .share .userJury .userWrapper .topInfo .label .name {
+  cursor: pointer;
+  max-width: 300px!important;
+}
+#lenta .share .userJury .userWrapper .topInfo .label .reputation {
+  font-size: 0.8em;
+  color: #8E90A6;
+  text-align: center;
+}
+#lenta .share .userJury .userWrapper .topInfo .label .reputation .value {
+  color: rgb(var(--color-bg-ac-bright));
+  font-weight: 700;
+}
+#lenta .share .userJury .userWrapper .follow {
+  display: flex;
+  padding: 0.5em 3em;
+  text-align: center;
+}
+#lenta .share .userJury .userWrapper .follow .followers {
+  padding-right: 1.5em;
+}
+#lenta .share .userJury .userWrapper .follow .value {
+  font-weight: 700;
+}
+#lenta .share .userJury .userWrapper .aboutWrapper {
+  margin-top: 1em;
+  text-align: center;
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper {
+  padding: 0.5em;
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper button {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper .unsubscribe {
+  display: none;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper .unsubscribe:hover {
+  color: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+  background: #fff;
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper.following .unsubscribe {
+  display: block;
+}
+#lenta .share .userJury .userWrapper .subscribeWrapper.following .subscribe {
+  display: none;
+}
 #lenta .share .images {
   max-width: 590px;
 }

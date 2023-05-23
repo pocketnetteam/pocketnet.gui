@@ -2605,7 +2605,10 @@ _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 _l.listeners = "Listeners";
 
 _l.jury = "Jury"
-_l.juryquestion = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
+
 _l.juryvote_success =  "Your vote has been successfully submitted"
 _l.juryconfirm = "Do you confirm your decision?"
 

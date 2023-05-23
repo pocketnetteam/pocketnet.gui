@@ -2279,6 +2279,15 @@ pUserInfo = function(){
 		}
 
 	}
+
+	self.modVote = function(juryId, verdict){
+		var modVote = new ModVote();
+
+		modVote.s2.set(juryId);
+		modVote.i1.set(verdict);
+
+		return modVote;
+	}
 	
 
 	self.type = 'userInfo'
@@ -2932,6 +2941,16 @@ pComment = function(){
 
 		return s
 
+	}
+
+
+	self.modVote = function(juryId, verdict){
+		var modVote = new ModVote();
+
+		modVote.s2.set(juryId);
+		modVote.i1.set(verdict);
+
+		return modVote;
 	}
 
 	self.renders = {
