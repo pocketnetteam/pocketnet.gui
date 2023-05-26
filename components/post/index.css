@@ -333,9 +333,49 @@
   padding: 0 0.5em;
   overflow: hidden;
 }
-#post .recomandationsFromContent .streambgwrapper.chatready {
+#post .recomandationsFromContent .streambgwrapper .toggle-chat {
+  background: rgba(0, 0, 0, 0.04);
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle {
+  border-radius: 0 0 9px 9px;
+  color: #8E90A6;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  padding: 8px;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle:hover {
+  color: #000;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready {
   margin-bottom: 0.5em;
   height: 70vh;
+  transition: height 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready .toggle-chat {
+  display: block;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported {
+  padding-bottom: 35px;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden {
+  height: 35px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden .toggle {
+  border: 1px solid #c7c8d9;
+  border-radius: 9px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden #chatExported {
+  padding: 0;
+  height: 0;
 }
 #post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;
@@ -398,9 +438,6 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     margin-left: 1em !important;
-  }
-  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
-    width: 100%;
   }
 }
 #post .sharearticle {

@@ -1748,10 +1748,19 @@ var post = (function () {
 			},
 			
 			stream : function(clbk) {
+				const
+					parent = el.stream.parent(),
+					toggle = parent.find('.toggle');
+
 				self.app.platform.sdk.user.get(function(u){
 					if (u.hasOwnProperty('address') && share?.settings?.c) {
 						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
-							el.stream[0].parentNode.classList.add('chatready');
+							parent.addClass('chat-ready');
+
+							toggle.on('click', function (e) {
+								e.preventDefault();
+								parent.toggleClass('chat-hidden');
+							});
 
 							self.app.platform.matrixchat.core.renderChatToElement(
 								el.stream[0],
