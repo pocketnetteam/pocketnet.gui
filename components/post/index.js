@@ -1749,8 +1749,10 @@ var post = (function () {
 			
 			stream : function(clbk) {
 				self.app.platform.sdk.user.get(function(u){
-					if (u && share?.settings?.c) {
+					if (u.hasOwnProperty('address') && share?.settings?.c) {
 						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
+							el.stream[0].parentNode.classList.add('chatready');
+
 							self.app.platform.matrixchat.core.renderChatToElement(
 								el.stream[0],
 								share.settings.c, /*RoomID*/

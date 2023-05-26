@@ -329,10 +329,12 @@
   border-radius: 9px;
   box-sizing: border-box;
   position: relative;
-  margin-bottom: 0.5em;
   margin-left: 0.25em;
   padding: 0 0.5em;
   overflow: hidden;
+}
+#post .recomandationsFromContent .streambgwrapper.chatready {
+  margin-bottom: 0.5em;
   height: 70vh;
 }
 #post.videomainpost.recommendationsenabled .postWrapper {
