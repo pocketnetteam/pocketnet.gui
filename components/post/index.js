@@ -1750,16 +1750,28 @@ var post = (function () {
 			stream : function(clbk) {
 				const
 					parent = el.stream.parent(),
-					toggle = parent.find('.toggle');
+					toggle = parent.find('.toggle'),
+					setText = () => {
+						let state = self.app.localization.e('hide');
+
+						if (parent.hasClass('chat-hidden')) {
+							state = self.app.localization.e('showhiddenComment');
+						}
+
+						toggle.text(`${ state } ${ self.app.localization.e('startchat') }`);
+					};
 
 				self.app.platform.sdk.user.get(function(u){
 					if (u.hasOwnProperty('address') && share?.settings?.c) {
 						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
 							parent.addClass('chat-ready');
+							setText();
 
 							toggle.on('click', function (e) {
 								e.preventDefault();
+
 								parent.toggleClass('chat-hidden');
+								setText();
 							});
 
 							self.app.platform.matrixchat.core.renderChatToElement(
