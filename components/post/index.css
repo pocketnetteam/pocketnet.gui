@@ -366,6 +366,9 @@
   padding-bottom: 35px;
   transition: all 0.3s ease-in-out;
 }
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported #modal {
+  bottom: 33px;
+}
 #post .recomandationsFromContent .streambgwrapper.chat-hidden {
   height: 35px;
 }
