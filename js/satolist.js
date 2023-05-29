@@ -3103,7 +3103,12 @@ Platform = function (app, listofnodes) {
                 })
 
                 wr.find('.article_this_embed').each(function(){
-                    self.app.platform.ui.embeding($(this))
+                    try{
+                        self.app.platform.ui.embeding($(this))
+                    }catch(e){
+                        
+                    }
+                    
                 })
             }
 
