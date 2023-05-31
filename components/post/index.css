@@ -369,6 +369,9 @@
 #post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported #modal {
   bottom: 33px;
 }
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported .modal-backdrop {
+  border-radius: 8px 8px 0 0;
+}
 #post .recomandationsFromContent .streambgwrapper.chat-hidden {
   height: 35px;
 }
