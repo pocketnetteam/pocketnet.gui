@@ -35,6 +35,9 @@
 #lenta .shareinlenta.rendered .sharecnt {
   display: block;
 }
+#lenta .adsCheckbox {
+  padding-right: 1em;
+}
 #lenta .optimizationTip {
   height: 150px;
   display: flex;

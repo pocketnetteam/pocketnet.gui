@@ -20,6 +20,8 @@ var share = (function(){
 
 		var clickOnCreateHappened = false;
 
+		var defaultAds = "peertube://peertube4new.pocketnet.app/4d99f4f5-8466-4bce-8be7-97774c236931"
+
 		var loadedimages = {}
 		var loadingimages = {}
 		var player = null
@@ -1727,6 +1729,7 @@ var share = (function(){
 
 
 						p.el.find('.cancelediting').on('click', function(){
+
 							self.closeContainer();
 
 							if(external && external.cancel){
@@ -1779,19 +1782,20 @@ var share = (function(){
 
 						})
 
+						
+
 						self.shell({
 							name :  'settings',
 							el : el.settings,
 							data : {
 								share : currentShare,
 								essenseData : essenseData,
-								selector : selector
+								selector : selector,
 							},
 
 						}, function(p){
 
-							ParametersLive([selector], p.el)
-
+							ParametersLive([selector], p.el);
 
 							selector._onChange = function(){
 
@@ -1984,7 +1988,6 @@ var share = (function(){
 			},
 
 			url : function(clbk){
-
 
 				destroyPlayer()
 				
@@ -2383,13 +2386,23 @@ var share = (function(){
 				
 			},
 
-			body : function(clbk){				
+			body : function(clbk){		
+				
+				var checkbox = new Parameter({
+					type : "BOOLEAN",
+					name : "Ads",
+					id : 'adsCheckbox',
+					value: Boolean(currentShare.settings.ads)
+				})
+
+
 				self.shell({
 					name :  'body',
 					el : el.body,
 					data : {
 						share : currentShare,
-						ed : essenseData
+						ed : essenseData,
+						checkbox : checkbox
 					},
 
 
@@ -2406,6 +2419,27 @@ var share = (function(){
 					el.poll = el.c.find('.pollWrapper')
 					el.updateWallpaperInput = el.c.find('.wallpaperShareInput');
 					el.wallpaperStatusIcon = el.c.find('.wallpaperStatusIcon');
+
+					var og = self.app.platform.sdk.remote.storage[url];
+
+					var elAdsVideo = p.el.find('.adsVideo');
+
+					self.shell({
+						name :  'url',
+						inner : html,
+						el : elAdsVideo,
+						data : {
+							url : currentShare.url.v,
+							og : og,
+							remove : true,
+							fullplayer : true,
+							share : currentShare,
+							video : true,
+							ads : defaultAds,
+							adsPreview : true
+						},
+	
+					})
 
 					el.eMessage.emojioneArea({
 						pickerPosition : 'bottom',
@@ -2526,6 +2560,28 @@ var share = (function(){
 					});
 					
 					el.caption.on('keyup', events.caption)
+
+					ParametersLive([checkbox], p.el);
+							
+					checkbox._onChange = function(value){
+
+						var ads = '';
+						if (value) ads = defaultAds; 
+
+						currentShare.settings.ads = ads;
+
+						if (ads && !elAdsVideo.hasClass('active')){
+
+							elAdsVideo.addClass('active');
+
+						} else {
+
+							elAdsVideo.removeClass('active');
+
+						}
+
+						state.save()
+					}
 
 					renders.makesortable()
 					
@@ -2771,7 +2827,7 @@ var share = (function(){
 			},
 			
 			init : function(p){
-
+				
 				loadedimages = {}
 				loadingimages = {}
 
@@ -2843,8 +2899,7 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
-	
-					
+
 					if (essenseData.close){
 						essenseData.close()
 					}

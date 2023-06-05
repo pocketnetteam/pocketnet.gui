@@ -47,6 +47,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 var deletedaccount = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(share.address) : false
 
+if (typeof adv == undefined) var adv = '';
+
 
 var metadisplay = function(){ %>
 

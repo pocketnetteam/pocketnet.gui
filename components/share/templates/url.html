@@ -1,4 +1,10 @@
 <% if(url){ 
+
+	if (typeof ads == undefined) var ads = '';
+	if (typeof adsPreview == undefined) var adsPreview = false;
+
+	if (ads) url = ads;
+
 	var meta = app.platform.parseUrl(url);
 
 	if(typeof share == 'undefined') share = {};
@@ -61,7 +67,15 @@
 						</a>
 					</div>
 				<% } %>
-				
+
+				<% if (ads && !adsPreview) { %>
+
+					<div class="skip-ads">
+						<span><%- e('skip') %></span>
+					</div>
+				<% } %>
+
+
 				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
 					<% if(typeof preview != 'undefined' && preview) {  
@@ -128,7 +142,7 @@
 				
 				</div>	
 
-				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) { %> 
+				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true && !ads) { %> 
 					<div class="videoTips">
 						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>
@@ -136,7 +150,7 @@
 					</div>
 				<% } %>
 
-				<% if(typeof remove != 'undefined' && share && (share.itisvideo() || share.itisaudio())) { %>
+				<% if(typeof remove != 'undefined' && share && (share.itisvideo() || share.itisaudio()) && !adsPreview) { %>
 
 					<div class="peertubepanel">
 
@@ -168,7 +182,7 @@
 			
 		</div>
 
-		<% if(meta.type == 'peertube' && (fullplayer || app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type != 'youtube' && !window.cordova))) {%>
+		<% if(meta.type == 'peertube' && (fullplayer || app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type != 'youtube' && !window.cordova)) && !adsPreview) {%>
 
 			<% if((typeof preview == 'undefined' || !preview) && info.data) {%>
 

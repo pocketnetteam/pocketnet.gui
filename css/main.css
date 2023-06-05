@@ -6808,7 +6808,8 @@ html.pipmode #content,
 html.pipmode .matrixchatwrapper {
   display: none;
 }
-.peertube-server-hint {
+.peertube-server-hint,
+.skip-ads {
   z-index: 3;
   position: absolute;
   margin: 10px;
@@ -6819,15 +6820,21 @@ html.pipmode .matrixchatwrapper {
   background: #000000bb;
   color: #fff;
 }
-.peertube-server-hint i.fa {
+.peertube-server-hint i.fa,
+.skip-ads i.fa {
   font-size: 0.8em;
   margin-top: 1px;
   margin-right: 5px;
 }
-.peertube-server-hint a {
+.peertube-server-hint a,
+.skip-ads a {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.skip-ads {
+  right: 0;
+  cursor: pointer;
 }
 #application.default-scroll {
   overflow-x: visible;
