@@ -3553,7 +3553,6 @@ Platform = function (app, listofnodes) {
                                     self.app.nav.api.load({
                                         open : true,
                                         href : 'post?s=' + txid,
-                                        inWnd : true,
                                         history : true,
                                     })
 

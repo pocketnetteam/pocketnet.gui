@@ -45,6 +45,9 @@
   max-width: 400px;
   border-radius: 12px;
 }
+#post .messageRow .iconWrapper {
+  width: 33px;
+}
 #post .showmorelenta {
   display: none;
   background: rgb(var(--background-total-theme));
@@ -363,7 +366,7 @@
   display: block;
 }
 #post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported {
-  padding-bottom: 35px;
+  padding-bottom: 0.5em;
   transition: all 0.3s ease-in-out;
 }
 #post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported #modal {
