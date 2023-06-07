@@ -2616,7 +2616,7 @@ var comments = (function(){
 			showStreamLink : function(post){
 				el.c.prepend(`
 					<div class="streamLink">
-						<button>${ 'link to stream' }</button>
+						<button class="button">${ self.app.localization.e('watchstream') }</button>
 					</div>
 				`);
 

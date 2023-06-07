@@ -2398,3 +2398,5 @@ _l.howToBuy = "Как купить PKOIN";
 
 _l.clearLocal = 'Очистить Local Storage';
 _l.clearLocalQuestion = 'Вы действительно хотите очистить Local Storage?';
+
+_l.watchstream = "Смотреть трансляцию"

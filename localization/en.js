@@ -2610,3 +2610,6 @@ _l.howToBuy = "How to buy PKOIN";
 
 _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
+
+
+_l.watchstream = "Watch stream"
