@@ -45,7 +45,10 @@
   max-width: 400px;
   border-radius: 12px;
 }
-#post .messageRow .iconWrapper {
+#post #chatExported .caption {
+  font-size: 1em;
+}
+#post #chatExported .messageRow .iconWrapper {
   width: 33px;
 }
 #post .showmorelenta {
