@@ -141,7 +141,7 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
@@ -155,11 +155,11 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
-				
+
 
 				&.articleImages{
 					.imagesWrapper{
@@ -319,6 +319,17 @@
   background: rgb(var(--background-total-theme));
   border-radius: 9px;
   padding: 0.5em;
+}
+#post .recomandationsFromContent .streambgwrapper {
+  background: rgb(var(--background-total-theme));
+  border-radius: 9px;
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom: 0.5em;
+  margin-left: 0.25em;
+  padding: 0 0.5em;
+  overflow: hidden;
+  height: 70vh;
 }
 #post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;

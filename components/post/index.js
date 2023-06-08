@@ -1121,7 +1121,7 @@ var post = (function () {
 
 		var renders = {
 			comments: function (clbk) {
-				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+				if ((!ed.repost || ed.fromempty) && ed.comments != 'no' && !share.settings.c) {
 					
 					self.fastTemplate(
 						'commentspreview',
@@ -1745,21 +1745,36 @@ var post = (function () {
 			},
 			
 			stream : function(clbk) {
-				const parent = el.stream.parent();
-				
-				self.app.platform.matrixchat.core.renderChatToElement(
-					el.stream[0],
-					'!IdBmHKWdPNzILMFHaY:matrix.pocketnet.app',
-					{
-						style: 'stream'
+				self.app.platform.sdk.user.get(function(u){
+					if (u && share?.settings?.c) {
+						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
+							self.app.platform.matrixchat.core.renderChatToElement(
+								el.stream[0],
+								share.settings.c, /*RoomID*/
+								{
+									style: 'stream',
+									videoUrl: share.url,
+									authorId: share.address
+								}
+							)
+								.then((chat) => {
+									share.chat = chat;
+									console.log('stream', chat, share)
+									
+									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
+								})
+								.catch(e => {
+									if (e) console.error(e);
+								});
+							
+							if(clbk) clbk();
+						} else {
+							setTimeout(() => renders.stream(clbk), 1000);
+						}
+					} else {
+						// You can not see stream chat unlogged
 					}
-				)
-					.then(() => {
-						// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
-					})
-					.catch(e => console.error(e));
-				
-				if(clbk) clbk();
+				})
 			},
 
 			recommendations : function(clbk){
@@ -2053,7 +2068,10 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-
+				if (share.chat) {
+					share.chat.destroy();
+					el.stream.empty();
+				}
 				
 				if (external){
 					external.destroy()

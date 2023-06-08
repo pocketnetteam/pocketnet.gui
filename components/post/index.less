@@ -436,53 +436,6 @@
 			overflow: hidden;
 			//height: calc(100vh - var(--offset, 100px));
 			height: 70vh;
-
-			.stream {
-				position: absolute;
-				left: 0;
-				padding: 0;
-				overflow: hidden;
-				will-change: transform;
-				overscroll-behavior: contain;
-				height: 100%;
-				width: 100%;
-
-				#events {
-					padding: @rhythm @rhythm 50px;
-
-					.messageRow {
-						padding: 0;
-					}
-				}
-
-				.eventsflex {
-					overflow: hidden;
-				}
-
-				.userpic {
-					background: transparent;
-					box-shadow: none;
-					height: auto;
-				}
-
-				.chatInputWrapper {
-					.center {
-						position: static;
-					}
-
-					#chatInput {
-						padding-bottom: .6em;
-
-						.work {
-							padding: 0 @rhythm;
-						}
-
-						.input_component {
-							height: 35px;
-						}
-					}
-				}
-			}
 		}
 	}
 
