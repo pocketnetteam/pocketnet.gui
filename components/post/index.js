@@ -1121,81 +1121,84 @@ var post = (function () {
 
 		var renders = {
 			comments: function (clbk) {
-				if ((!ed.repost || ed.fromempty) && ed.comments != 'no' && !share.settings.c) {
-					
-					self.fastTemplate(
-						'commentspreview',
-						function (rendered) {
-							var _el = el.c.find('.commentsWrapper');
-
-							var rf = '';
-
-							if (self.app.platform.sdk.address.pnet()) {
-								rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
-							}
-
-							var url =
-								'https://' + self.app.options.url + '/' +
-								(ed.hr || 'index?') +
-								's=' +
-								share.txid +
-								'&mpost=true' +
-								rf;
-
-							if (parameters().address) {
-								url += '&address=' + (parameters().address || '');
-							}
-
-							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-
-							self.nav.api.load({
-								open: true,
-								id: 'comments',
-								el: _el,
-
-								eid: (ed.eid || '') + share.txid + 'post',
-
-								essenseData: {
-									hr: url,
-									totop: el.c,
-
-									caption: ed.nocommentcaption ? null : rendered,
-									send: function () {
-
-										var c = el.c.find('.commentsAction .count span');
-											c.html(Number(c.html() || '0') + 1);
-											
+				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+					if (!share.settings.c) {
+						self.fastTemplate(
+							'commentspreview',
+							function (rendered) {
+								var _el = el.c.find('.commentsWrapper');
+	
+								var rf = '';
+	
+								if (self.app.platform.sdk.address.pnet()) {
+									rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+								}
+	
+								var url =
+									'https://' + self.app.options.url + '/' +
+									(ed.hr || 'index?') +
+									's=' +
+									share.txid +
+									'&mpost=true' +
+									rf;
+	
+								if (parameters().address) {
+									url += '&address=' + (parameters().address || '');
+								}
+	
+								var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+	
+								self.nav.api.load({
+									open: true,
+									id: 'comments',
+									el: _el,
+	
+									eid: (ed.eid || '') + share.txid + 'post',
+	
+									essenseData: {
+										hr: url,
+										totop: el.c,
+	
+										caption: ed.nocommentcaption ? null : rendered,
+										send: function () {
+	
+											var c = el.c.find('.commentsAction .count span');
+												c.html(Number(c.html() || '0') + 1);
+												
+										},
+										txid: ed.commentsid || share.txid,
+	
+										reply: ed.reply,
+	
+										showall: !ed.fromempty,
+										init: ed.fromempty || false,
+										preview: true,
+										listpreview : false,
+										receiver: share.address,
+										fromtop: !ed.fromempty,
+										fromempty: ed.fromempty,
+										lastComment: ed.fromempty ? share.lastComment : null,
+										cantsend : checkvisibility,
+										additionalActions: function () {
+											self.closeContainer();
+										},
 									},
-									txid: ed.commentsid || share.txid,
-
-									reply: ed.reply,
-
-									showall: !ed.fromempty,
-									init: ed.fromempty || false,
-									preview: true,
-									listpreview : false,
-									receiver: share.address,
-									fromtop: !ed.fromempty,
-									fromempty: ed.fromempty,
-									lastComment: ed.fromempty ? share.lastComment : null,
-									cantsend : checkvisibility,
-									additionalActions: function () {
-										self.closeContainer();
+	
+									clbk: function (e, p) {
+										actions.position();
+										inicomments = p;
+	
+										if (clbk) clbk();
 									},
-								},
-
-								clbk: function (e, p) {
-									actions.position();
-									inicomments = p;
-
-									if (clbk) clbk();
-								},
-							});
-						},
-						{
-							share: share,
-						},
-					);
+								});
+							},
+							{
+								share: share,
+							},
+						);
+					} else {
+						el.c.find('.commentsWrapper').addClass('commentsEmpty');
+					}
 				} else {
 					if (clbk) clbk();
 				}
@@ -1759,22 +1762,19 @@ var post = (function () {
 							)
 								.then((chat) => {
 									share.chat = chat;
+									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
 									console.log('stream', chat, share)
 									
-									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
+									/* Add donate animations */
+									self.app.nav.api.load({
+										open : true,
+										id : 'donateAnimations',
+										el: el.wr.find('.animationWrapper')
+									});
 								})
 								.catch(e => {
 									if (e) console.error(e);
 								});
-
-							const
-								wrp = document.querySelector(".videoWrapper"),
-								animation = document.createElement("div");
-
-							animation.classList.add("animation");
-							animation.style.display = "none";
-
-							wrp.append(animation);
 							
 							if(clbk) clbk();
 						} else {
@@ -1959,8 +1959,7 @@ var post = (function () {
 				else{
 					renders.share(function () {
 
-						renders.comments(function () {
-						})
+						renders.comments()
 
 						if (share.itisvideo())
 							actions.changeSavingStatusLight(share);

@@ -1,3 +1,6 @@
+.share_common.fullScreenVideo #comments .streamLink {
+  margin: 0;
+}
 #comments .usericon {
   height: 38px;
   width: 38px;
@@ -77,6 +80,10 @@
 }
 #comments.listpreview .list .comment.firstcomment:nth-last-child(1) {
   display: block;
+}
+#comments .streamLink {
+  margin: 0 4em;
+  padding: 1.2em 1em;
 }
 #comments .captionfwrapper {
   overflow: hidden;

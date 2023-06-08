@@ -17,6 +17,10 @@
 #post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
   max-height: calc(var(--vh, 1vh) * 80);
+  /* .vjs-tech {
+			Fix 1px video height
+			position: static;
+		} */
 }
 #post .videoWrapper {
   max-width: 650px;

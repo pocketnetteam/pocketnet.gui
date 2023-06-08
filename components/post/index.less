@@ -28,6 +28,11 @@
 	.video-js:not(.vjs-fullscreen){
 		max-height: 80vh;
 		max-height: calc(var(--vh, 1vh) * 80);
+
+		/* .vjs-tech {
+			Fix 1px video height
+			position: static;
+		} */
 	}
 
 	.videoWrapper {
@@ -517,6 +522,7 @@
 			}
 			.recomandationsFromContent{
 				display: flex;
+				flex-direction: column;
 				max-width: 390px !important;
 				margin-top: 0 !important;
 				margin-bottom: 0 !important;
