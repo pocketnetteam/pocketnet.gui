@@ -82,7 +82,7 @@ You can download our mobile applications from the app stores below:
 
 [<img src="https://raw.githubusercontent.com/Volorf/Badges/master/App%20Store/App%20Store%20Badge.svg" height="40"/>](https://apps.apple.com/es/app/bastyon/id1537944200) [<img src="https://github.com/Volorf/Badges/blob/master/Google%20Play/Google%20Play%20Badge.svg" height="40"/>](https://play.google.com/store/apps/details?id=pocketnet.app)
 
-[Latest release](https://github.com/pocketnetteam/pocketnet.gui/releases/latest) of desktop and other app types can be downloaded via the links below:
+Latest release of desktop and other app types can be downloaded via the links below:
 
 - **App for Android (without Google services)** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonGF.apk)
 - **Desktop app for Windows** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.exe)
@@ -91,6 +91,8 @@ You can download our mobile applications from the app stores below:
   - [**Download in DEB format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.deb)
   - [**Download in RPM format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.rpm)
   - [**Download in AppImage format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/Bastyon.AppImage)
+
+[Latest release notes](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
 
 # Contacts
 If you need assistance, if you want to report a bug or if you are a content creator or influencer and are interested in posting your content on Bastyon to earn money, please contact us via email:
