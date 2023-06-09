@@ -88,11 +88,11 @@ Latest release of desktop and other app types can be downloaded via the links be
 - **Desktop app for Windows** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.exe)
 - **Desktop app for macOS** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.dmg)
 - **Desktop app for Linux**
-  - [**Download in DEB format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.deb)
-  - [**Download in RPM format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.rpm)
-  - [**Download in AppImage format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/Bastyon.AppImage)
+  - [Download in DEB format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.deb)
+  - [Download in RPM format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.rpm)
+  - [Download in AppImage format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/Bastyon.AppImage)
 
-[Latest release notes](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
+[**Latest release notes**](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
 
 # Contacts
 If you need assistance, if you want to report a bug or if you are a content creator or influencer and are interested in posting your content on Bastyon to earn money, please contact us via email:
