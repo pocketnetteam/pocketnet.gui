@@ -762,12 +762,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				  {
 					host: 'pocketnetpeertube10.nohost.me',
 					cantuploading: true,
+					offline: true,					
 					ip: '23.254.226.253',
 				  },
 				  {
 					host: 'pocketnetpeertube11.nohost.me',
 					cantuploading: true,
 					ip: '84.252.138.108',
+					offline: true,					
 				  },
 				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -777,12 +779,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					host: 'bastyonmma.pocketnet.app',
 					cantuploading: true,
 					ip: '88.99.34.74',
+					offline: true,					
 				  },
 				  {
 					host: 'bastyonmma.nohost.me',
 					cantuploading: true,
 					ip: '49.12.231.72',
+					offline: true,
 				  },
+				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				13: [
@@ -1042,7 +1047,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube31.pocketnet.app',
 						ip: '185.148.146.11',
 						special: true,
-					}
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				37: [
@@ -1091,7 +1098,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			if (test){
 				ins = {0 : [
 					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+					// { host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
 				]}
 			}
 
@@ -1710,7 +1717,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							 * comments investigation.
 							 */
 							if (method === 'sendrawtransactionwithmessage') {
-								self.logger.w('logs290323', 'debug', `${cparameters[2]}, ${data}`)
+								const type = cparameters[2];
+								const txid = data;
+								const nodeHost = node.host;
+								const block = node.height();
+
+								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
 							}
 
 							return Promise.resolve({
