@@ -77,7 +77,7 @@ It is instead an Open Source project that runs on distributed nodes. In addition
 - It gives freedom of speech to users without banning or limiting them for their political and religious ideas.
 - The control is in the hands of users: high reputation users (you earn "reputation points" with likes and comments to your posts/videos) are automatically ranked as "administrators". They are the only ones that can report posts. When several admins report the same post, it becomes hidden. This is similar to what happens on Wikipedia. There isn't a company controlling the contents but a board of admins (on Wikipedia they are elected by all users) that take decisions.
 
-# Download Bastyon on Your Device of Choice
+# Download Bastyon on your devices
 You can download our mobile applications from the app stores below:
 
 [<img src="https://raw.githubusercontent.com/Volorf/Badges/master/App%20Store/App%20Store%20Badge.svg" height="40"/>](https://apps.apple.com/es/app/bastyon/id1537944200) [<img src="https://github.com/Volorf/Badges/blob/master/Google%20Play/Google%20Play%20Badge.svg" height="40"/>](https://play.google.com/store/apps/details?id=pocketnet.app)
