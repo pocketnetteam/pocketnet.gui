@@ -77,9 +77,20 @@ It is instead an Open Source project that runs on distributed nodes. In addition
 - It gives freedom of speech to users without banning or limiting them for their political and religious ideas.
 - The control is in the hands of users: high reputation users (you earn "reputation points" with likes and comments to your posts/videos) are automatically ranked as "administrators". They are the only ones that can report posts. When several admins report the same post, it becomes hidden. This is similar to what happens on Wikipedia. There isn't a company controlling the contents but a board of admins (on Wikipedia they are elected by all users) that take decisions.
 
-# Download Links
-- Android app: https://play.google.com/store/apps/details?id=pocketnet.app
-- Desktop app: https://github.com/pocketnetteam/pocketnet.gui/releases Select the proper link for your operating system (.exe for Windows, .dmg for MacOS, .deb for Ubuntu/Debian Linux, .AppImage portable version for Linux)
+# Download Bastyon on Your Device of Choice
+You can download our mobile applications from the app stores below:
+
+[<img src="https://raw.githubusercontent.com/Volorf/Badges/master/App%20Store/App%20Store%20Badge.svg" height="40"/>](https://apps.apple.com/es/app/bastyon/id1537944200) [<img src="https://github.com/Volorf/Badges/blob/master/Google%20Play/Google%20Play%20Badge.svg" height="40"/>](https://play.google.com/store/apps/details?id=pocketnet.app)
+
+[Latest release](https://github.com/pocketnetteam/pocketnet.gui/releases/latest) of desktop and other app types can be downloaded via the links below:
+
+- **App for Android (without Google services)** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonGF.apk)
+- **Desktop app for Windows** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.exe)
+- **Desktop app for macOS** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.dmg)
+- **Desktop app for Linux**
+  - [**Download in DEB format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.deb)
+  - [**Download in RPM format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.rpm)
+  - [**Download in AppImage format**](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/Bastyon.AppImage)
 
 # Contacts
 If you need assistance, if you want to report a bug or if you are a content creator or influencer and are interested in posting your content on Bastyon to earn money, please contact us via email:
