@@ -562,6 +562,8 @@ Platform = function (app, listofnodes) {
 
 
     self.__applications = function(){
+        const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
+
         return {
 
             ui: {
@@ -578,7 +580,7 @@ Platform = function (app, listofnodes) {
                         name: 'Bastyon' + ".apk",
                         gfname: 'BastyonGF' + ".apk",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        page: readmeDownloadsLink,
                     },
 
                     icon: '<i class="fab fa-android"></i>',
@@ -624,7 +626,7 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: 'Bastyon' + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        page: readmeDownloadsLink,
                     },
                     image : 'applications_windows.png',
 
@@ -646,7 +648,7 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        page: readmeDownloadsLink,
                     },
                 },
 
@@ -665,7 +667,7 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        page: readmeDownloadsLink,
                     },
 
                     node : true
@@ -686,7 +688,7 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: "pocketnetcore_0.18.13_win_x64_setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        page: readmeDownloadsLink,
                     }
                 },
 
@@ -704,7 +706,7 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: "Pocketnet_linux_x64.AppImage",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        page: readmeDownloadsLink,
                     }
                 }
             }
