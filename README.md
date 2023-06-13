@@ -9,6 +9,7 @@
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui?label=Last+commit&logo=bastyon)
 ![release_date](https://img.shields.io/github/release-date/pocketnetteam/pocketnet.gui?label=Release+date&logo=bastyon)
 ![version](https://img.shields.io/github/v/release/pocketnetteam/pocketnet.gui?label=Actual+version&logo=bastyon)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpocketnetteam%2Fpocketnet.gui.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpocketnetteam%2Fpocketnet.gui?ref=badge_shield)
 <!--
 [![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
 -->
@@ -106,3 +107,7 @@ Daniel Satchkov, Open Source Developer <dsatchkov@gmail.com>
 
 --------
 This project is tested with BrowserStack.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpocketnetteam%2Fpocketnet.gui.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpocketnetteam%2Fpocketnet.gui?ref=badge_large)
