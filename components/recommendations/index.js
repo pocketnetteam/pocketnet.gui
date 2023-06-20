@@ -44,18 +44,13 @@ var recommendations = (function(){
 					const videoUrl = postInfo.url;
 					const videoData = {};
 
-					const localInfo = app.platform.sdk.videos.storage[videoUrl];
+					const isFromCache = !await app.platform.sdk.videos.info([videoUrl]);
+
+					const videoInfo = app.platform.sdk.videos.storage[videoUrl];
 
 					videoData.post = postInfo;
-
-					if (localInfo) {
-						videoData.info = localInfo;
-						videoData.isRemote = false;
-					} else {
-						const remoteInfo = await app.platform.sdk.videos.info([videoUrl]);
-						videoData.info = remoteInfo[0]?.[0];
-						videoData.isRemote = true;
-					}
+					videoData.info = videoInfo;
+					videoData.fromCache = isFromCache;
 
 					videoListData.push(videoData);
 				}
