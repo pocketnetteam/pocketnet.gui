@@ -39,12 +39,15 @@ var recommendations = (function(){
 
 				const videoListData = [];
 
+				const videoUrls = contents.map(c => c.url);
+				const videoInfoRequests = await app.platform.sdk.videos.info(videoUrls);
+
 				for (let i = 0; i < contents.length; i++) {
 					const postInfo = contents[i];
 					const videoUrl = postInfo.url;
 					const videoData = {};
 
-					const isFromCache = !await app.platform.sdk.videos.info([videoUrl]);
+					const isFromCache = !videoInfoRequests[i];
 
 					const videoInfo = app.platform.sdk.videos.storage[videoUrl];
 
