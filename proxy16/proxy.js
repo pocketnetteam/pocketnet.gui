@@ -909,7 +909,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
+						offline: true,
 					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				22: [
