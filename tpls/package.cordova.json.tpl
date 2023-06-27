@@ -40,6 +40,7 @@
         "xml2js": "^0.4.23"
     },
     "devDependencies": {
+        "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": "^1.0.1",
         "@cordova/eslint-config": "^4.0.0",
         "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
         "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
@@ -174,7 +175,8 @@
 			},
         <% } %>
 
-            "cordova-plugin-audiotoggle": {}
+            "cordova-plugin-audiotoggle": {},
+            "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": {}
 
             
         },

@@ -614,7 +614,8 @@
 					})
 				}
 
-				app.actions.playingvideo(null);
+				if (p.stopvideo)
+					app.actions.playingvideo(null);
 
 				if(p.class) wnd.addClass(p.class);
 

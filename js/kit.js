@@ -1547,6 +1547,32 @@ Share = function(lang){
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
+	self.itisembed = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		const isYoutube = (meta.type === 'youtube');
+		const isVimeo = (meta.type === 'vimeo');
+		const isBitchute = (meta.type === 'bitchute');
+		const isBrighteon = (meta.type === 'brighteon' || meta.type === 'stream.brighteon');
+		const isIpfs = (meta.type === 'ipfs');
+
+		return (isYoutube || isVimeo || isBitchute || isBrighteon || isIpfs);
+	}
+
+	self.itisipfs = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		return (meta.type === 'ipfs');
+	}
+
 	self.itisstream = function(){
 
 		if(self.settings.v == 'a') return
@@ -2371,6 +2397,32 @@ pShare = function(){
 		var ch = self.url.replace('peertube://', '').split('/')
 
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
+	}
+
+	self.itisembed = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		const isYoutube = (meta.type === 'youtube');
+		const isVimeo = (meta.type === 'vimeo');
+		const isBitchute = (meta.type === 'bitchute');
+		const isBrighteon = (meta.type === 'brighteon' || meta.type === 'stream.brighteon');
+		const isIpfs = (meta.type === 'ipfs');
+
+		return (isYoutube || isVimeo || isBitchute || isBrighteon || isIpfs);
+	}
+
+	self.itisipfs = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		return (meta.type === 'ipfs');
 	}
 
 	self.itisstream = function(){

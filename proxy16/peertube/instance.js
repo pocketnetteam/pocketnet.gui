@@ -20,7 +20,7 @@ var instance = function (host, ip, Roy) {
 
 	var info = []
 	var infointerval = null
-	var infotime = 240000
+	var infotime = 1800000
 	var maxinfoevents = 20
 
 	var methods = {

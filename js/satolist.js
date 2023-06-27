@@ -565,6 +565,10 @@ Platform = function (app, listofnodes) {
 
 
     self.__applications = function(){
+        const ghAppLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest';
+        const ghCoreLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest';
+        const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
+
         return {
 
             ui: {
@@ -580,8 +584,8 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: 'Bastyon' + ".apk",
                         gfname: 'BastyonGF' + ".apk",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
 
                     icon: '<i class="fab fa-android"></i>',
@@ -626,8 +630,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: 'Bastyon' + "Setup.exe",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
                     image : 'applications_windows.png',
 
@@ -648,8 +652,8 @@ Platform = function (app, listofnodes) {
                     image : 'applications_macos.png',
                     github: {
                         name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
                 },
 
@@ -667,8 +671,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
 
                     node : true
@@ -688,8 +692,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: "pocketnetcore_0.18.13_win_x64_setup.exe",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        url: ghCoreLatest,
+                        page: readmeDownloadsLink,
                     }
                 },
 
@@ -706,8 +710,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: "Pocketnet_linux_x64.AppImage",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        url: ghCoreLatest,
+                        page: readmeDownloadsLink,
                     }
                 }
             }
@@ -3106,7 +3110,12 @@ Platform = function (app, listofnodes) {
                 })
 
                 wr.find('.article_this_embed').each(function(){
-                    self.app.platform.ui.embeding($(this))
+                    try{
+                        self.app.platform.ui.embeding($(this))
+                    }catch(e){
+                        
+                    }
+                    
                 })
             }
 

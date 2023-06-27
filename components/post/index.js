@@ -2141,7 +2141,8 @@ var post = (function () {
 					})
 
 				},
-				onclose : p.onclose
+				onclose : p.onclose,
+				stopvideo : true
 			},
 
 			playerstatus : function(){
