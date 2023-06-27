@@ -1098,6 +1098,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						ip: '185.141.60.119',
 					}
 				],
+
+				43: [
+					{
+						host : 'peertube35.pocketnet.app',
+						ip: '185.148.146.11',
+						special: true,
+					},
+				],
       		};
 
 			if (test){
