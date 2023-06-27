@@ -14,7 +14,7 @@ var arranges = {
 			<div elementsid='emjcontainer' class="message" placeholder="<%=e(ed.repost ? 'whatsnewrepost' : (share.itisvideo() ? 'videodesc' : 'whatsnew'))%>" id='emjcontainer' spellcheck="true"></div>
 		</div>
 
-		<% if (share.itisvideo()){ %>
+		<% if (share.itisvideo() && app.localization.key == 'ru'){ %>
 
 			<div class="adsCheckboxWrapper">
 				<label class="adsCheckboxLabel" for="checkbox_adsCheckbox">

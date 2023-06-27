@@ -1915,7 +1915,10 @@ var share = (function(){
 
 					renders.repost();
 
-					renders.ads()
+					if (self.app.localization.key === 'ru'){
+						renders.ads();
+					}
+
 					
 
 				});
@@ -2160,11 +2163,9 @@ var share = (function(){
 						ads : defaultAds,
 						adsPreview : true
 						
-					},
+					}
 
 				}, function(p){
-
-					console.log('p!!!', p);
 
 					destroyPlayer()
 
