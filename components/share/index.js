@@ -20,7 +20,7 @@ var share = (function(){
 
 		var clickOnCreateHappened = false;
 
-		var defaultAds = "peertube://peertube4new.pocketnet.app/4d99f4f5-8466-4bce-8be7-97774c236931"
+		var defaultAds = "peertube://peertube33.pocketnet.app/0344af51-ed23-4de7-bb18-6d2794d74fb0"
 
 		var loadedimages = {}
 		var loadingimages = {}
@@ -1915,6 +1915,7 @@ var share = (function(){
 
 					renders.repost();
 
+					renders.ads()
 					
 
 				});
@@ -2012,7 +2013,6 @@ var share = (function(){
 				}, function(p){
 
 					
-
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
@@ -2135,6 +2135,42 @@ var share = (function(){
 					rndr();
 				}
 				
+			},
+
+			ads : function(clbk){
+
+				destroyPlayer();
+
+				var og = self.app.platform.sdk.remote.storage[defaultAds];
+
+				var videoWrapper = el.adsVideo.find('.videoWrapper');
+				console.log('videoWrapper!!!', videoWrapper, el.adsVideo, currentShare);
+
+				self.shell({
+					name :  'url',
+					inner : html,
+					el : el.adsVideo,
+					data : {
+						url : currentShare.url.v,
+						og : og,
+						remove : true,
+						fullplayer : true,
+						share : currentShare,
+						video : true,
+						ads : defaultAds,
+						adsPreview : true
+						
+					},
+
+				}, function(p){
+
+					console.log('p!!!', p);
+
+					destroyPlayer()
+
+					if (clbk)
+						clbk();
+				})
 			},
 
 			images : function(clbk){
@@ -2413,6 +2449,7 @@ var share = (function(){
 					el.message = el.c.find('.message');
 					el.eMessage = el.c.find('#emjcontainer');
 					el.urlWrapper = el.c.find('.urlWrapper')
+					el.adsVideo = el.c.find('.adsVideo');
 					el.caption = el.c.find('.captionshare');
 					el.cpt = el.c.find('.cpt')
 					el.images = el.c.find('.imagesWrapper')
@@ -2420,26 +2457,6 @@ var share = (function(){
 					el.updateWallpaperInput = el.c.find('.wallpaperShareInput');
 					el.wallpaperStatusIcon = el.c.find('.wallpaperStatusIcon');
 
-					var og = self.app.platform.sdk.remote.storage[url];
-
-					var elAdsVideo = p.el.find('.adsVideo');
-
-					self.shell({
-						name :  'url',
-						inner : html,
-						el : elAdsVideo,
-						data : {
-							url : currentShare.url.v,
-							og : og,
-							remove : true,
-							fullplayer : true,
-							share : currentShare,
-							video : true,
-							ads : defaultAds,
-							adsPreview : true
-						},
-	
-					})
 
 					el.eMessage.emojioneArea({
 						pickerPosition : 'bottom',
@@ -2570,13 +2587,13 @@ var share = (function(){
 
 						currentShare.settings.ads = ads;
 
-						if (ads && !elAdsVideo.hasClass('active')){
+						if (ads && !el.adsVideo.hasClass('active')){
 
-							elAdsVideo.addClass('active');
+							el.adsVideo.addClass('active');
 
 						} else {
 
-							elAdsVideo.removeClass('active');
+							el.adsVideo.removeClass('active');
 
 						}
 
