@@ -1392,7 +1392,8 @@ Share = function(lang){
 		v : '',
 		videos : [],
 		image : '',
-		f : '0'
+		f : '0',
+		ads: ''
 	}
 	
 
@@ -2361,7 +2362,8 @@ pShare = function(){
 		v : '',
 		videos : [],
 		image : '',
-		f : '0'
+		f : '0',
+		ads : ''
 	}
 
 	self.isEmpty = function(){
