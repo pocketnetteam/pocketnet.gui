@@ -1915,11 +1915,6 @@ var share = (function(){
 
 					renders.repost();
 
-					if (self.app.localization.key === 'ru'){
-						renders.ads();
-					}
-
-					
 
 				});
 
@@ -2126,6 +2121,10 @@ var share = (function(){
 
 					p.el.find('.removelink').on('click', events.removelink)
 
+					if (self.app.localization.key === 'ru'){
+						renders.ads();
+					}
+
 					if (clbk)
 						clbk();
 				})
@@ -2145,6 +2144,8 @@ var share = (function(){
 				destroyPlayer();
 
 				var og = self.app.platform.sdk.remote.storage[defaultAds];
+
+				var meta = self.app.platform.parseUrl(defaultAds);
 
 				var videoWrapper = el.adsVideo.find('.videoWrapper');
 				console.log('videoWrapper!!!', videoWrapper, el.adsVideo, currentShare);
@@ -2167,7 +2168,26 @@ var share = (function(){
 
 				}, function(p){
 
-					destroyPlayer()
+					
+					if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
+
+						destroyPlayer()
+
+						Plyr.setup('#' + self.map.id + ' .adsVideo .js-player', function(_player) {
+
+							player = _player
+
+							try{
+								player.muted = false
+							}catch(e){}
+							
+						}, {
+							denyPeertubeAutoPlay: true,
+							app : self.app
+						});
+
+
+					} 
 
 					if (clbk)
 						clbk();
@@ -2589,6 +2609,8 @@ var share = (function(){
 						currentShare.settings.ads = ads;
 
 						if (ads && !el.adsVideo.hasClass('active')){
+
+							// renders.ads();
 
 							el.adsVideo.addClass('active');
 
