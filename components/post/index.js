@@ -454,7 +454,6 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
-
 							//// interest score later
 
 							if (duration > 0 && playbackState == 'playing') 
@@ -464,17 +463,14 @@ var post = (function () {
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
-									percent : ((position/duration) * 100).toFixed(0)
+									percent : ((position/duration) * 100).toFixed(0),
 								})
 
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
 								return
 							}
-
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
 							}
 						},
 
@@ -1624,7 +1620,8 @@ var post = (function () {
 							meta.type == 'youtube' ||
 							meta.type == 'vimeo' ||
 							meta.type == 'bitchute' ||
-							meta.type == 'peertube'
+							meta.type == 'peertube' ||
+							meta.type == 'ipfs'
 						) {
 							if (clbk) clbk();
 						} else {

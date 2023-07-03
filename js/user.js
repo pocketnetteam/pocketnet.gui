@@ -639,6 +639,19 @@ User = function(app, p) {
 		return ckeys;
 	}
 
+	self.setstay = function(v){	
+		try {
+			localStorage['stay'] = v || 0;
+
+			if(!v) {
+				localStorage['mnemonic'] = '';
+			}
+		}
+		catch (e) { }
+
+		self.stay = v || 0;
+	}
+
 	try{
 		self.stay = Number(localStorage['stay'] || '1')
 	}catch(e){

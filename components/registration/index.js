@@ -600,6 +600,9 @@ var registration = (function(){
 			},
 
 			signin : function(clbk){
+
+				self.app.user.setstay(1);
+
 				self.user.signin(k.mnemonicKey, function(state){
 					if (clbk)
 						clbk()

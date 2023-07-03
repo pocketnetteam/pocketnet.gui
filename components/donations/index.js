@@ -4,7 +4,7 @@ var donations = (function(){
 
 	var essenses = {};
 
-	
+	var supportOptions, ways;
 
 	var Essense = function(p){
 
@@ -40,29 +40,8 @@ var donations = (function(){
 			}),
 		}
 
-		var currencies = [
-			// {name: 'Mastercard/Visa', code: 'MC/Visa'},
-			{name: 'Bitcoin (BTC)', code: 'BTC'},
-			{name: 'Ethereum (ETH)', code: 'ETH'},
-			{name: 'Tether (USDT) ERC-20', code: 'USDT'},
-			{name: 'Binance Coin (BNB) ERC-20', code: 'BNB'},
-			{name: 'Dogecoin (DOGE)', code: 'DOGE'},
-			{name: 'XPR (XRP)', code: 'XRP'},
-			{name: 'Uniswap (UNI) ERC-20', code: 'UNI'},
-			{name: 'Bitcoin Cash (BCH)', code: 'BCH'},
-			{name: 'Litecoin (LTC)', code: 'LTC'},
-			{name: 'Stellar (XLM)', code: 'XLM'},
-			{name: 'TRON (TRX)', code: 'TRX'},
-			{name: 'DAI (DAI) ERC-20', code: 'DAI'},
-			{name: 'NEO (NEO)', code: 'NEO'},
-			{name: 'Bitcoin SV (BSV)', code: 'BSV'},
-			{name: 'Dash (DASH)', code: 'DASH'},
-			{name: 'Zcash (ZEC)', code: 'ZEC'},
-			{name: 'Basic Attention Token (BAT) ERC-20', code: 'BAT'},
-			{name: 'New Economy Movement (XEM)', code: 'XEM'},
-		];
 
-		var supportOptions = {
+		supportOptions = {
 			subject : new Parameter({
 				name : self.app.localization.e('subject'),
 				placeholder : self.app.localization.e('subject'),
@@ -94,7 +73,7 @@ var donations = (function(){
 
 		}
 
-		var ways = [
+		ways = [
 			{
 				"id": "BTC",
 				"name": "Bitcoin (BTC)",
@@ -218,6 +197,18 @@ var donations = (function(){
 				"action": function(s){actions.ways.openAddress(s)}
 			},
 			{
+				"id": "XMR",
+				"name": "Monero (XMR)",
+				"qrname": "XMR",
+				"action": function(s){actions.ways.openAddressStatic(s, "48sfLqSiTZhhbfiUELdfTefrAZ2EDjaKSMnWvPiMc4kWMwCUbPFRJwxMPJVL72MGVqC1jzMbUeGXhRGS3abcnoYbUcKKPDD")}
+			},
+			{
+				"id": "PKOIN",
+				"name": "Pocketcoin (PKOIN)",
+				"qrname": "PKOIN",
+				"action": function(s){actions.ways.openAddressPkoin(s, "PMycE6uGqwAzwqhdajmj3pDgTcSeQNyiy4")}
+			},
+			{
 				"id": "other",
 				"name": self.app.localization.e('anotherSupport'),
 				"qrname": "XEM",
@@ -277,6 +268,27 @@ var donations = (function(){
 				})
 			},	
 			ways : {
+
+				openAddressPkoin : function(curobj, address){
+
+					self.nav.api.load({
+						open: true,
+						href: 'wallet',
+						history: true,
+						inWnd: true,
+	
+						essenseData: {
+							simple: true,
+							action: 'send',
+							address: address
+						},
+					});
+				},
+				openAddressStatic : function(curobj, address){
+
+					renders.addressStatic(curobj.id, address, curobj);
+				},
+
 				openAddress : function(curobj){
 					
 					var createNewAddress = function(cur){
@@ -600,6 +612,48 @@ var donations = (function(){
 						clbk(p.el)
 				})
 			},
+			addressStatic : function(currency, address, curobj, info, clbk){
+				self.shell({
+					name :  'addressStatic',
+					inner : html,
+					el : el.process.find('.step'),
+					data : {
+						curobj : curobj,
+						address : address,
+						currency : currency,
+						info : info
+					},
+
+				}, function(p){
+
+					p.el.find('.back').on('click', function(){
+						p.el.html('')
+
+						setTimeout(function(){
+							renders.ways()
+						}, 100)
+
+						if(autoupdate){
+
+							clearInterval(autoupdate)
+
+							autoupdate = null
+						}
+						
+					})
+
+					p.el.on('click', '.copyaddress', function(){
+
+						copyText(p.el.find('.aw'))
+
+						sitemessage(self.app.localization.e('waddresswascop'))
+
+					})
+
+					if (clbk)
+						clbk(p.el)
+				})
+			},	
 			address : function(currency, address, curobj, info, clbk){
 				self.shell({
 					name :  'address',
@@ -703,7 +757,6 @@ var donations = (function(){
 							return w.id == id
 						})
 
-						console.log('curobj', curobj)
 						if (curobj.id === 'other'){
 							$(this).toggleClass('active');
 					

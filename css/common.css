@@ -1719,6 +1719,10 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   display: flex;
   padding-bottom: 0.5em;
 }
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelLeft span {
+  font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
   display: flex;
   align-items: center;
@@ -1863,16 +1867,14 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   }
 }
 .loading-bar {
-  --barColor: #eeeeee;
-  --lineColor: #0075ff;
   --completeRadius: 360deg;
   --percent: 0;
   --gradientRadius: calc(var(--completeRadius) / 100 * var(--percent));
   width: 21px;
   height: 21px;
   border-radius: 10000px;
-  background-color: var(--lineColor);
-  background-image: conic-gradient(var(--lineColor) var(--gradientRadius), var(--barColor) var(--gradientRadius));
+  background-color: rgb(var(--color-bg-ac-bright));
+  background-image: conic-gradient(rgb(var(--color-bg-ac-bright)) var(--gradientRadius), rgb(var(--background-total-theme)) var(--gradientRadius));
   transition: --percent 5s;
   cursor: pointer;
   /* FontAwesome styles */
@@ -1894,8 +1896,15 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   background-color: white;
 }
 .loading-bar::after {
+  content: '';
+  position: relative;
+  font-size: 8.4px;
+  text-align: center;
+  transition: color 0.1s ease-in-out;
+  border-radius: 10000px;
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
+  color: rgb(var(--color-bg-ac-bright));
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   display: inline-block;
@@ -1903,15 +1912,6 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   font-variant: normal;
   text-rendering: auto;
   line-height: 1;
-}
-.loading-bar::after {
-  content: '';
-  position: relative;
-  font-size: 8.4px;
-  text-align: center;
-  color: transparent;
-  transition: color 0.1s ease-in-out;
-  border-radius: 10000px;
 }
 .loading-bar[data-loading=false]::after {
   content: '\f04b';

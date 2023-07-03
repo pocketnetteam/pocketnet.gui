@@ -1197,7 +1197,6 @@ l{
     bottom : 0;
     top : 65px;
     display: none;
-    cursor: pointer;
     .transition(0.3s);
     width: calc(50% - 640px);
     min-width: 4%;
@@ -1216,15 +1215,26 @@ l{
         border-radius: 50%;
         font-size: 0.7em;
         .shadowSmall();
+
+        &:hover{
+            color : rgb(var(--color-bg-ac));
+            border-color : rgb(var(--color-bg-ac));
+        }
     }
 
     .full{
         padding : 2 * @rhythm 0;
         padding-left : 0;
         color : rgba(var(--neutral-grad-2), 0.5);
-        height: 100%;
+        height: 50px;
         width : 100%;
+        cursor: pointer;
         .transition(0.3s);
+
+        &:hover{
+            background: rgba(var(--background-hidden-layer), 0.2);
+            color : rgba(var(--neutral-grad-2), 0.7);
+        }
 
         .fulltable{
             width : auto;
@@ -1247,18 +1257,7 @@ l{
                     width : 40px;
                 }
             }
-        }
-    }
 
-    &:hover{
-        .full{
-            background: rgba(var(--background-hidden-layer), 0.2);
-            color : rgba(var(--neutral-grad-2), 0.7);
-        }
-
-        .mini{
-            color : rgb(var(--color-bg-ac));
-            border-color : rgb(var(--color-bg-ac));
         }
     }
 
@@ -1270,34 +1269,39 @@ l{
 
         .full{
             color : rgba(var(--text-color), 0.5);
+
+            &:hover{
+                .full{
+                    background: rgba(var(--background-main-contrast), 0.1); 
+                    color : rgba(var(--background-main-contrast), 0.7); 
+                }
+        
+            }
             
         }
 
-        &:hover{
-            .full{
-                background: rgba(var(--background-main-contrast), 0.1); 
-                color : rgba(var(--background-main-contrast), 0.7); 
-            }
-    
-        }
+
     }
 
     &.bright{
 
         .full{
             color : rgb(var(--color-txt-ac));
-        }
-        &:hover{
-            .full{
+
+            &:hover{
                 background: transparent;
                 color : rgba(var(--neutral-grad-2), 0.7) ;
             }
-    
-            .mini{
+        }
+
+        .mini{
+            
+            &:hover{
                 color :  rgb(var(--color-txt-ac));
                 border-color :  rgb(var(--color-txt-ac));
             }
         }
+
     }
 }
 @media only screen and (max-width: 1640px) {
@@ -3711,6 +3715,10 @@ html.mobileview.android{
         padding: 4 * @rhythm;
         border-radius: 12px;
         .shadowSmall();
+
+        textarea {
+            width: 100%;
+        }
     }
 
     .poll {

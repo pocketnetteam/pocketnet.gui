@@ -511,7 +511,6 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							console.log('hasshares', shares.length)
 
 							if (shares.length <= 2 && el.topvideos){
 								el.topvideos.addClass('hidden')
@@ -519,7 +518,6 @@ var main = (function(){
 								if(external){
 									external.destroy()
 									external = null
-									console.log("D")
 								}
 								
 							}

@@ -297,8 +297,52 @@
 				&.control-right{
 					padding-left: @rhythm * 3;
 				}
+
+				.control-tor-state {
+					position: relative;
+					i::after {
+						position: absolute;
+					}
+
+					&.on {
+						color: rgb(var(--color-good));
+
+						&::before {
+							content: '';
+							position: absolute;
+							left: 15px;
+							top: 15px;
+							display: block;
+							width: 3px;
+							height: 3px;
+							border-radius: 3px;
+							overflow: hidden;
+						}
+
+						&.failed::before {
+							background: rgb(var(--color-bad));
+						}
+
+						&.success::before {
+							background: rgb(var(--color-good));
+						}
+					}
+
+					&.off {
+						color: rgb(var(--neutral-grad-1));
+					}
+
+					&.loading {
+						color: rgb(var(--neutral-grad-1));
+						animation: torPulse 2s linear infinite;
+
+						@keyframes torPulse {
+							50% { color: rgb(var(--color-txt-ac)) }
+						}
+					}
+				}
 			}
-			
+
 			&.notificationsWrapper{
 				margin-right : @rhythm;
 			}

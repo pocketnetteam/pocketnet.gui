@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
@@ -1376,6 +1376,10 @@ typeof navigator === "object" && (function (global, factory) {
       args[_key - 1] = arguments[_key];
     }
 
+    if (input.includes('/shorts/')) {
+      input.replace('/shorts/', '/embed/');
+    }
+
     if (is$1.empty(input)) {
       return input;
     }
@@ -1448,7 +1452,8 @@ typeof navigator === "object" && (function (global, factory) {
     airplay: 'AirPlay',
     html5: 'HTML5',
     vimeo: 'Vimeo',
-    youtube: 'YouTube'
+    youtube: 'YouTube',
+    ipfs: 'IPFS',
   };
   var i18n = {
     get: function get() {
@@ -3767,6 +3772,9 @@ typeof navigator === "object" && (function (global, factory) {
         api: 'https://noembed.com/embed?url=https://www.youtube.com/watch?v={0}' // 'https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}&fields=items(snippet(title),fileDetails)&part=snippet',
 
       },
+      ipfs: {
+        source: 'https://cloudflare-ipfs.com/ipfs/{0}'
+      },
       googleIMA: {
         sdk: 'https://imasdk.googleapis.com/js/sdkloader/ima3.js'
       }
@@ -3961,7 +3969,8 @@ typeof navigator === "object" && (function (global, factory) {
   var providers = {
     html5: 'html5',
     youtube: 'youtube',
-    vimeo: 'vimeo'
+    vimeo: 'vimeo',
+    ipfs: 'ipfs',
   };
   var types = {
     audio: 'audio',
@@ -4303,6 +4312,10 @@ typeof navigator === "object" && (function (global, factory) {
         delete image.onerror;
         (image.naturalWidth >= minWidth ? resolve : reject)(image);
       };
+
+      if (src?.includes?.('/shorts/')) {
+        src = src.replace('/shorts/', '/embed/');
+      }
 
       Object.assign(image, {
         onload: handler,
@@ -5950,6 +5963,31 @@ typeof navigator === "object" && (function (global, factory) {
     }
   };
 
+  var ipfs = {
+    setup: function setup() {
+      ipfs.ready.call(this);
+    },
+    ready: function ready() {
+      const config = this.config;
+
+      const clearIpfsId = this.media.getAttribute('data-plyr-video-id');
+      var src = format(this.config.urls.ipfs.source, clearIpfsId);
+
+      const embedVideo = createElement('video');
+      embedVideo.setAttribute('src', src);
+      embedVideo.setAttribute('controls', '');
+      embedVideo.setAttribute('autoplay', '');
+
+      embedVideo.controls = true;
+
+      const player = this;
+
+      player.media = replaceElement(embedVideo, player.media);
+
+      ui.build.call(player);
+    }
+  };
+
   // ==========================================================================
 
   function parseId$1(url) {
@@ -6019,6 +6057,10 @@ typeof navigator === "object" && (function (global, factory) {
     getTitle: function getTitle(videoId) {
       var _this2 = this;
 
+      if (videoId.includes('/shorts/')) {
+        videoId = videoId.replace('/shorts/', '/embed/');
+      }
+
       var url = format(this.config.urls.youtube.api, videoId);
       fetch(url).then(function (data) {
         if (is$1.object(data)) {
@@ -6055,6 +6097,9 @@ typeof navigator === "object" && (function (global, factory) {
         source = player.media.getAttribute(this.config.attributes.embed.id);
       } // Replace the <iframe> with a <div> due to YouTube API issues
 
+      if (source?.includes?.('/shorts/')) {
+        source = source.replace('/shorts/', '/embed/');
+      }
 
       var videoId = parseId$1(source);
       var id = generateId(player.provider); // Get poster, if already set
@@ -6393,6 +6438,8 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.setup.call(this);
       } else if (this.isVimeo) {
         vimeo.setup.call(this);
+      } else if (this.isIpfs) {
+        ipfs.setup.call(this);
       }
     }
   };
@@ -8491,7 +8538,7 @@ typeof navigator === "object" && (function (global, factory) {
     }, {
       key: "isEmbed",
       get: function get() {
-        return Boolean(this.isYouTube || this.isVimeo);
+        return Boolean(this.isYouTube || this.isVimeo || this.isIpfs);
       }
     }, {
       key: "isYouTube",
@@ -8502,6 +8549,11 @@ typeof navigator === "object" && (function (global, factory) {
       key: "isVimeo",
       get: function get() {
         return Boolean(this.provider === providers.vimeo);
+      }
+    }, {
+      key: "isIpfs",
+      get: function get() {
+        return Boolean(this.provider === providers.ipfs);
       }
     }, {
       key: "isVideo",

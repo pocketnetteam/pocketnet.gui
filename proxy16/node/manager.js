@@ -985,6 +985,8 @@ var Nodemanager = function(p){
             statscalculationInterval = null
         }
         
+        return Promise.resolve()
+        
     }
 
     self.initednodes = function(){

@@ -1462,7 +1462,7 @@ Share = function(lang){
 
 		if(self.url.v && self.url.v.length && !self.itisvideo() && !self.itisaudio()){
 
-			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
+			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v, '')).length
 
 			if (l < 30 && !self.images.v.length){
 				return 'url'
@@ -1542,6 +1542,32 @@ Share = function(lang){
 		var ch = self.url.v.replace('peertube://', '').split('/')
 
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
+	}
+
+	self.itisembed = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		const isYoutube = (meta.type === 'youtube');
+		const isVimeo = (meta.type === 'vimeo');
+		const isBitchute = (meta.type === 'bitchute');
+		const isBrighteon = (meta.type === 'brighteon' || meta.type === 'stream.brighteon');
+		const isIpfs = (meta.type === 'ipfs');
+
+		return (isYoutube || isVimeo || isBitchute || isBrighteon || isIpfs);
+	}
+
+	self.itisipfs = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		return (meta.type === 'ipfs');
 	}
 
 	self.itisstream = function(){
@@ -2170,6 +2196,12 @@ pUserInfo = function(){
 		self.language = v.l || v.language;
 		self.site = v.s || v.site || '';
 
+		const isImageAllowed = checkIfAllowedImage(self.image);
+
+		if (!isImageAllowed) {
+			self.image = '';
+		}
+
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
@@ -2472,6 +2504,32 @@ pShare = function(){
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
+	self.itisembed = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		const isYoutube = (meta.type === 'youtube');
+		const isVimeo = (meta.type === 'vimeo');
+		const isBitchute = (meta.type === 'bitchute');
+		const isBrighteon = (meta.type === 'brighteon' || meta.type === 'stream.brighteon');
+		const isIpfs = (meta.type === 'ipfs');
+
+		return (isYoutube || isVimeo || isBitchute || isBrighteon || isIpfs);
+	}
+
+	self.itisipfs = function(){
+		if (self.settings.v === 'a' || !self.url?.v) {
+			return;
+		}
+
+		const meta = parseVideo(self.url.v);
+
+		return (meta.type === 'ipfs');
+	}
+
 	self.itisstream = function(){
 
 		if(self.settings.v == 'a') return
@@ -2558,6 +2616,8 @@ pShare = function(){
 		self.language = v.l || v.language || 'en'
 		self.images = v.i || v.images || []
 		self.repost = v.r || v.repost || v.txidRepost || ''
+
+		self.images = self.images.filter(image => checkIfAllowedImage(image));
 
 		if (v.deleted) self.deleted = true
 

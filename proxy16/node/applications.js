@@ -8,16 +8,23 @@ var Datastore = require('nedb');
 var progress = require('request-progress');
 var targz = require('targz');
 const request = require("request");
+const axios = require('axios');
+const arch = require('arch');
 
-var Applications = function(settings, applications = {}, proxy) {
+var Applications = function(settings, applications = {}, proxy, useArch = false) {
     if(!settings) settings = {}
 
     var self = this;
 
-    var db = new Datastore(f.path(settings.dbpath));
+    var db = new Datastore(f.path(settings.dbpath2 || settings.dbpath));
     
     
     var platform = process.platform
+
+    if (useArch) {
+        platform += `_${arch()}`
+    }
+
     var meta = applications[platform]
 
     self.getMeta = function() {
@@ -27,8 +34,7 @@ var Applications = function(settings, applications = {}, proxy) {
     self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
-
-        return proxy.transports.axios.get(meta[key].url).then(function(response) {
+        return axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
@@ -169,7 +175,6 @@ var Applications = function(settings, applications = {}, proxy) {
 
         return self.getinfo(key).then(asset => {
             r.asset = asset
-
 
             return f.downloadgitrelease(r.asset.name, {
                 check : function(stats){

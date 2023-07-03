@@ -38,7 +38,12 @@ Nav = function(app)
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
 
-		if(window.cordova) protocol = 'file'
+		if(window.cordova) {
+			protocol = 'file'
+
+			if(isios()) protocol = 'bstn'
+		}
+		
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -383,7 +388,7 @@ Nav = function(app)
 				}
 
 				if (p.replaceState){
-					
+
 					history.replaceState({
 
 						href : href,
@@ -1330,6 +1335,28 @@ Nav = function(app)
 			}
 
 		},
+		bstn : {
+			prefix : function(){
+
+				options.navPrefix = '/'
+
+			},
+
+			pathnameSearch : function(){
+				var loc =  window.location; 
+
+				
+
+				return protocolActions.bstn.pathname() + loc.search
+			},
+
+			pathname : function(){
+				var loc =  window.location; 
+
+				return loc.pathname.replace("bstn://bastyon", "").replace(".html", "").replace(options.navPrefix, '').replace('indexcordova', "index")
+			}
+
+		},
 		web : {
 
 			pathnameSearch : function(){
@@ -1439,6 +1466,8 @@ Nav = function(app)
 			if (fpt == defaultpathname){
 				backManager.clearAll()	
 			}
+
+			console.log("LOADDEFAULT", p)
 
 			backManager.add(p.href)
 

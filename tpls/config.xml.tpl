@@ -109,6 +109,9 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
+        <preference name="scheme" value="bstn" />
+        <preference name="hostname" value="bastyon" />
+        
     </platform>
     
 
@@ -118,15 +121,7 @@
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
-    <plugin name="cordova-plugin-device" spec="~1.1.1" />
     
-
-    <% if(!store) {%>
-
-        <plugin name="cordova-plugin-apkupdater" spec="~4.0.0" />
-
-    <% } %>
-
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

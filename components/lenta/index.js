@@ -1071,25 +1071,24 @@ var lenta = (function(){
 							duration
 						}){
 
-							if (duration > 0 && playbackState == 'playing')
+							if (duration > 0 && playbackState == 'playing'){
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+							}
 
+							if (playbackState == 'playing' && ((position > 10 && duration > 120) || startTime)){
 
-							if (playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
-								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration)* 100).toFixed(0),
 								})
 
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
 								return
 							}
 
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
-								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration,  share)
 							}
-
 
 						},
 
@@ -3302,6 +3301,7 @@ var lenta = (function(){
 
 					return
 				}
+				
 
 				console.log('mystars shares', shares)
 
@@ -3968,7 +3968,7 @@ var lenta = (function(){
 					if(
 						url && !og && 
 
-						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') && 
+						!(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') &&
 
 						!self.app.platform.sdk.usersettings.meta.preview.value
 					){

@@ -45,20 +45,6 @@ if(!_Node)
 			port : 8899,
 			wss : 8099
 		},
-		
-		{
-			host : '4.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-
-		{
-			host : '5.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},*/
-		
 		/*{
 			host : '6.pocketnet.app',
 			port : 8899,
@@ -138,6 +124,12 @@ if(!_Node)
 		}
 	  }
 
+	if(!_OpenApi){
+		if (window.parent.frames.length > 0) {
+			window.stop();
+		}
+	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,
@@ -202,6 +194,10 @@ if(!_Node)
 						}, embeddingSettigns)
 					}
 
+				}
+
+				else{
+					
 				}
 			}
 		});

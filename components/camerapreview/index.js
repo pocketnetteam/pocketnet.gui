@@ -405,16 +405,13 @@ var camerapreview = (function(){
 			},
 			startcamera : function(){
 
-				console.log("STARTCAMERA", data)
 
 				if (data.cameraenabled && !data.gallery){
-					console.log("HERE")
 					CameraPreview.startCamera(getcameraoptions());
 				}
 			},
 			stopcamera : function(){
 
-				console.log("stopcamera", data)
 
 
 				if (data.cameraenabled){
@@ -445,7 +442,6 @@ var camerapreview = (function(){
 
 			takepicture : function(){
 
-				console.log('data', data)
 
 				if (!data.cameraenabled){
 					data.current = eximw
@@ -455,7 +451,6 @@ var camerapreview = (function(){
 				else{
 					CameraPreview.getSupportedPictureSizes((dimensions) => {
 
-						console.log('dimensions,', dimensions)
 
 						dimensions = _.filter(dimensions, function(d){
 							return d.width * d.height < 3 * 1000 * 1000
@@ -470,8 +465,6 @@ var camerapreview = (function(){
 							(base64PictureData) => {
 			
 								data.current = 'data:image/jpeg;base64,' + base64PictureData
-
-								console.log('data2', data)
 	
 								renders.state()
 		
@@ -723,11 +716,9 @@ var camerapreview = (function(){
 			})
 
 			self.app.platform.clbks._focus.camera = function(time){
-				console.log("HERE")
 				actions.startcamera()
 			}
 			self.app.platform.clbks._unfocus.camera = function(time){
-				console.log("HERE2")
 				actions.stopcamera()
 			}
 
@@ -756,8 +747,6 @@ var camerapreview = (function(){
 
 			getdata : function(clbk, p){
 				ed = p.settings.essenseData
-
-				console.log("ED", ed)
 
 				clbk({});
 

@@ -8,7 +8,10 @@ var menu = (function(){
 
 		var el = {},
 			authorForSearch = null,
-			menusearch = null;
+			menusearch = null,
+		    torIntervalId = null,
+			controlTorElem = null,
+			networkStatsListenerId = null;
 
 
 		var updateNew = function(){
@@ -87,7 +90,15 @@ var menu = (function(){
 				})
 			},
 
-			
+			receiveNetworkStats : function(stats) {
+				if (stats.torUsed && controlTorElem) {
+					controlTorElem.addClass(stats.status);
+
+					setTimeout(() => {
+						controlTorElem.removeClass(stats.status);
+					}, 300);
+				}
+			}
 		}
 
 		var searchlickaction = function(link){
@@ -277,6 +288,8 @@ var menu = (function(){
 				}
 			},
 
+			
+
 			notifications : {
 				init : function(el){
 
@@ -348,6 +361,44 @@ var menu = (function(){
 				}
 			},
 
+			activities : {
+				init : function(el){
+
+					/*setTimeout(function(){
+
+						if(!isTablet()){
+							self.nav.api.load({
+								eid : 'menu',
+								open : true,
+								id : 'activities',
+								el : el,
+								inTooltip : true
+							})
+						}
+						
+					},2000)*/
+
+				},
+
+				click : function(el){
+					self.app.mobile.vibration.small(true)
+
+
+					self.nav.api.go({
+						open : true,
+						href : 'activities',
+						inWnd : true,
+						history : true,
+						essenseData : {
+						}
+					})
+
+
+				}
+			},
+
+
+
 			search : {
 				fast : true,
 				click : function(){
@@ -390,7 +441,67 @@ var menu = (function(){
 						if (electron)
 							electron.ipcRenderer.send('electron-refresh');
 					})
-					
+
+					controlTorElem = _el.find('.control-tor-state');
+
+					self.sdk.broadcaster.clbks['menu'] = function(data){
+						actions.receiveNetworkStats(data)
+					}
+
+					let proxyData;
+
+					if (torIntervalId) {
+						clearInterval(torIntervalId);
+					}
+
+					torIntervalId = setInterval(async () => {
+						const currentProxy = app.api.get.current();
+
+						if (!currentProxy.direct) {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+
+							return;
+						}
+
+						proxyData = await currentProxy.get.info();
+
+						if (proxyData?.info.tor.state.status === 'started') {
+							controlTorElem.removeClass(['off', 'loading']);
+							controlTorElem.addClass('on');
+							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
+						} else if (proxyData?.info.tor.state.status === 'running') {
+							controlTorElem.removeClass(['on', 'off']);
+							controlTorElem.addClass('loading');
+							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
+						} else if (proxyData?.info.tor.state.status === 'stopped') {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						}
+					}, 2000);
+
+					controlTorElem.on('click', () => {
+
+						self.nav.api.go({
+							open : true,
+							href : 'transportsmanagement',
+							inWnd : true,
+						})
+							
+						/*const isTorEnabled = (
+							proxyData?.info.tor.state.status === 'started' ||
+							proxyData?.info.tor.state.status === 'loading'
+						);
+
+						const currentProxy = app.api.get.current();
+
+						currentProxy.fetchauth('manage', {
+							action: isTorEnabled ? 'tor.stop' : 'tor.start',
+							data: {}
+						});*/
+					});
 				},
 				fast : true,
 			},
@@ -528,6 +639,10 @@ var menu = (function(){
 										return -Number(r.date)
 									})
 
+									r = _.filter(r, (a) => {
+										return a.type != 'video'
+									})
+
 									return r
 								}
 
@@ -586,6 +701,7 @@ var menu = (function(){
 								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
 
 									composeresult('user', r.data, r.count)
+
 
 									render(getresults(), value, clbk, {
 										counts : counts
@@ -990,6 +1106,7 @@ var menu = (function(){
 				
 			})
 
+
 			if (self.app.platform.sdk.newmaterials.clbks)
 				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew
 
@@ -1147,6 +1264,12 @@ var menu = (function(){
 					if (e.destroy)
 						e.destroy()
 				})
+
+				clearInterval(torIntervalId);
+
+				torIntervalId = null;
+				controlTorElem = null;
+				networkStatsListenerId = null;
 
 				//if (el.c) el.c.empty()
 

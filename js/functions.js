@@ -8456,12 +8456,19 @@ if (typeof window != 'undefined') {
 						$('body').off('dragover.dragout')
 					},
 
-					update_elem: function (event) {
-						if (event.target == dragout.current_elem) return
-						if (dragout.current_elem) {
-							$(dragout.current_elem).parents().andSelf().each(function () {
-								if ($(this).find(event.target).size() == 0) $(this).triggerHandler('dragout')
-							})
+					update_elem: function(event){
+						if( event.target == dragout.current_elem ) return
+						if( dragout.current_elem ) {
+
+							var pr = $(dragout.current_elem).parents()
+
+							if (pr && pr.andSelf){
+								pr.andSelf().each(function(){
+									if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
+								})
+							}
+
+							
 						}
 						dragout.current_elem = event.target
 						event.stopPropagation()
@@ -9250,6 +9257,31 @@ toUrlEncoded = function (obj) {
 
 
 
+checkIfAllowedImage = function(src){
+
+	if(!src) return false
+
+	if(src && src.indexOf && src.indexOf('data:') == 0) return true
+
+	try{
+
+		const url = new URL(src);
+		const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
+
+		const isImgur = url.hostname.includes('imgur.com');
+		const isBastyon = url.hostname.includes('bastyon.com');
+		const isPocketnet = url.hostname.includes('pocketnet.app');
+		const isPeertube = ptRegex.test(url.pathname);
+
+		return isImgur || isBastyon || isPocketnet || isPeertube;
+
+	}
+
+	catch(e){
+		return true
+	}
+}
+
 getBase64 = function (file) {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -9487,7 +9519,6 @@ edjsHTML = function () {
 					return '<div class="js-player-ini" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
-					//console.log(t)
 					//return '<iframe src="'+t.embed+'"></iframe>'
 					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
 			}

@@ -91,7 +91,7 @@ var donate = (function(){
 
 				if(ed.min){
 					if (val < ed.min){
-						sitemessage(self.app.localization.e('minPkoin', 0.5))
+						sitemessage(self.app.localization.e('minPkoin', 0.1))
                         return;
 					}
 				}

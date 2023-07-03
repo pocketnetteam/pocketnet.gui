@@ -1,4 +1,4 @@
-﻿var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 console.log('window.projects_meta', window.projects_meta)
@@ -106,6 +106,8 @@ _l.rblocking = "Blocking";
 _l.rblockinglist = "List of blocked users";
 _l.rcomment = "Comments";
 _l.rsubscriber = "Subscriptions";
+_l.a_unabledvideo = "The video is not available at the moment";
+_l.rvideo = "Videos";
 _l.contentscore = "You have left a rating of the publication";
 _l.commentscorelike = "You liked the comment.";
 _l.commentscoredislike = "You don't like the comment";
@@ -229,6 +231,9 @@ _l.uabout = "About myself";
 _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
+
+_l.settings_save = "Save changes";
+_l.settings_discard = "Discard changes";
 
 //statistic
 
@@ -526,6 +531,7 @@ _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
 _l.preview = "Preview"
 _l.autoplayVideo = "Autoplay Video"
+_l.learnMoreBoost = "Learn more about Boost"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
@@ -2322,6 +2328,9 @@ _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After t
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
+_l.torHintStateEnabled = "Tor network state - enabled"
+_l.torHintStateDisabled = "Tor network state - disabled"
+_l.torHintStateLoading = "Tor network state - loading"
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
@@ -2485,6 +2494,10 @@ _l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
 _l.boost_c67 = 'Average cost of ad is $1 '
 _l.boost_c68 = 'CPM = $. 28'
 _l.boost_c69 = '28 cents on average is a very low CPM'
+_l.boost_c70 = 'Bastyon is a new, fast-growing decentralized social network with millions of users and super-profitable advertising'
+_l.boost_c71 = 'Distribution by Country'
+_l.boost_c72 = 'Employment Status'
+_l.boost_c73 = 'Audience'
 
 
 
@@ -2566,10 +2579,16 @@ _l.videoServerVideo = "Video Info";
 _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
+_l.earnings2 = "Total earnings";
+
+_l.amountLottery = "Lottery";
+_l.amountDonation = "Donations";
+_l.amountTransfer = "Transfers";
 
 
+_l.copybuiltfrom = "Application build version copied"
 
-_l.endedCall = "Call ended",
+_l.endedCall = "Call ended"
 _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";
@@ -2580,9 +2599,16 @@ _l.daccept = "Accept and continue";
 _l.sendToChat = "Send message to chat";
 _l.createPost = "Create and publish the post";
 
+_l.txtNotLinked = "Transaction will not be linked to your profile";
+_l.torusing_neveruse = "Never";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Always";
+
 _l.anotherSupport = "Support Bastyon in another way";
 _l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
 
+_l.torusing_directProxy = "Built-in proxy";
+_l.torusing_notdirectProxy = "External proxy";
 
 _l.commentBannedWarning = function(name){
 	return name + " blocked you. You won't be able to comment on it.";
@@ -2635,3 +2661,30 @@ _l.solutionbalance_2 = "or contact support"
 _l.solutionbalance_3 = "To continue interacting with Bastion, you can contact support"
 
 _l.commonRequest_submitted = "Thank you for contacting us, we will review your application"
+_l.torusing_changedirectProxy = "Change to External proxy";
+_l.torusing_changenotdirectProxy = "Change to Built-in proxy";
+
+
+_l.torusing_disclaimer = "This function only works when using the built-in proxy.";
+_l.torusing_Networking = "Networking";
+_l.torusing_proxyCaption = "Choosing a proxy server";
+_l.torusing_useTor = "Use Tor";
+_l.torusing_useSnowflakeBridge = "Use SnowFlake";
+
+_l.torusing_stat_currentbytesLength = "Current, direct"
+_l.torusing_stat_torbytesLength = "Current, TOR"
+_l.torusing_stat_directBytes = "Total, current"
+_l.torusing_stat_totalTorBytes = "Total, TOR"
+_l.torusing_settings = "TOR settings"
+_l.torusing_stats = "Networking statistics"
+_l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
+
+_l.listeners = "Listeners";
+
+_l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";
+
+_l.boost = "Boost";
+_l.howToBuy = "How to buy PKOIN";
+
+_l.clearLocal = 'Clear Local Storage';
+_l.clearLocalQuestion = 'Do you really want to clear Local Storage?';

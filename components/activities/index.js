@@ -10,22 +10,31 @@ var activities = (function () {
 
 		var el, loading, scnt, currentFilter = 'all', end = false, block;
 
-		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking']
+		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
 		var activities = []
+		var videos = []
+
+		var activitiesByGroup = {}
 
 		var getters = {
 			getFilters: function (filter) {
 				if (filter === 'all') return []
-				if (filter === 'interactions') return ['contentscore', 'boost','commentscore']
-				if (filter === 'comment') return [ 'comment']
+				if (filter === 'interactions') return ['contentscore', 'boost', 'commentscore']
+				if (filter === 'comment') return ['comment', 'answer']
 				if (filter === 'subscriber') return ['subscriber']
 				if (filter === 'blocking') return ['blocking']
-				if (!filter) return []
+				if (filter === 'video') return ['video']
+				if (!filter) return ['']
 				return [filter]
 			},
 
-			formatActivities: function () {
+			formatActivities: function (ids) {
+
+				activitiesByGroup[currentFilter] || (activitiesByGroup[currentFilter] = [])
+
+				var activities = activitiesByGroup[currentFilter]
+
 				let res = activities.map(i => {
 					if (i.description) {
 						try {
@@ -66,6 +75,10 @@ var activities = (function () {
 					return i
 				})
 
+				res = _.filter(res, (f) => {
+					return !ids || _.indexOf(ids, f.hash) > -1
+				})
+
 				res = group(res, function (n) {
 					var currentDate = new Date();
 
@@ -83,75 +96,209 @@ var activities = (function () {
 
 				return res
 			},
+
+			activity : function(tid){
+				var activity = null
+
+				_.find(activitiesByGroup, (a) => {
+					if(_.find(a, (a) => {
+
+						if(a.hash == tid || a.txid == tid) {
+							activity = a
+
+							return true
+						}
+
+					})) return true
+				})
+
+				console.log('tid', tid, activity, activitiesByGroup)
+
+				return activity
+			}
 		}
 
 		var actions = {
-			setloading: function (v) {
 
+			applyFilter : function(filter){
+				
+				activities = []
+
+				end = false
+
+				if(filter) {
+					currentFilter = filter;
+
+					try{
+						localStorage['activityFilter'] = currentFilter
+					}
+					catch (e){
+					}
+
+				}
+
+				renders.showcurrentFilter()
+
+				var promise = currentFilter === 'video' ? actions.getDataVideos : actions.getdata
+
+				promise().then(() => {
+
+					renders.content()
+					
+				}).catch(e => {
+					console.error(e)
+				}).finally(() => {
+					
+				})
+
+				
+			},
+
+			setloading: function (v) {
 				loading = v
 				if (loading) {
 					el.loader[0].style.display = 'block'
-					renders.content()
+					//renders.content()
 				} else {
 					el.loader[0].style.display = 'none'
-					renders.content()
+					//renders.content()
 				}
+
 			},
 
 			getdata: function () {
 				actions.setloading(true)
-				if (!activities.length) {
 
-					block = self.app.api.getCurrentBlock()
+				activitiesByGroup[currentFilter] || (activitiesByGroup[currentFilter] = [])
 
-					return self.app.api.rpc('getactivities', [self.user.address.value, block.height, , getters.getFilters(currentFilter)]).then(r => {
-						activities = r
-					}).finally(() => {
-						setTimeout(actions.setloading.bind(false), 300)
-					})
+				var activities = activitiesByGroup[currentFilter]
 
-					return self.app.api.fetch('ping', {}, { timeout: 4000 }).then(async (r) => {
-						block = r
-						try {
-							activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(currentFilter)])
-						} catch (e) {
-							return e
-						}
+				var blockNumber = activities.length ? activities[activities.length - 1].height : self.app.platform.currentBlock
 
-					}).finally(() => {
-						setTimeout(actions.setloading.bind(false), 300)
-					})
-				} else {
-					return new Promise(async (resolve, reject) => {
-						try {
-							let data = await self.app.api.rpc('getactivities', [self.user.address.value, activities[activities.length - 1].height, , getters.getFilters(currentFilter)])
-							if (!data.length) {
-								end = true
-							}
-							activities.push(...data)
-							resolve()
-						} catch (e) {
-							reject(e)
-						} finally {
-							setTimeout(() => actions.setloading(false), 300)
-						}
+				return self.app.api.rpc('getactivities', 
+					[self.user.address.value, blockNumber, null, getters.getFilters(currentFilter)]
+				).then((data) => {
 
-					})
-				}
+					if (!data.length) {
+						end = true
+					}
+
+					
+					activitiesByGroup[currentFilter].push(...data)
+
+					return Promise.resolve(data)
+
+				}).finally(() => {
+					actions.setloading(false)
+				})
 
 			},
 
+			getDataVideos: () => {
+
+				actions.setloading(true)
+				activitiesByGroup['video'] = []
+
+				let a = actions.getVideos()
+
+				if (!a.length) {
+					actions.setloading(false)
+					return Promise.resolve([])
+				}
+
+				return Promise.all(_.map(a, (i) => {
+					return i.then((value) => {
+						/*let c = new Promise((res) => {
+							return self.sdk.users.get([value?.original?.account?.name], (info) => {
+								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
+								info ? value.info = info[0] : value.info = self.sdk.users.storage[value?.original?.account?.name]
+								res(value)
+							})
+						})*/
+
+						
+						return value
+
+					}).then(readyVideo => {
+
+						
+
+						activitiesByGroup['video'].push(readyVideo)
+
+					}).catch(e => {
+						console.log('err', e)
+					})
+
+				})).then(() => {
+
+					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return v.date}) 
+					
+					actions.setloading(false)
+
+					return Promise.resolve(videos)
+				})
+
+			},
+
+			getVideos: () => {
+				
+				let vid = JSON.parse(localStorage.getItem('latestactivity'))?.activity?.video
+				let res = []
+
+				_.each(vid, (video) => {
+
+					console.log('video', video)
+
+					let a = new Promise((resolve, reject) => {
+						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
+
+							if (!r?.[0]?.[0]?.data) {
+
+								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
+
+								if (!p) return reject('np')
+
+								console.log("P", p)
+
+									resolve({ ...p.data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+
+
+								return
+							}
+							resolve({ ...r[0][0].data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+
+						}).catch(e => {
+							console.error(e)
+
+							return Promise.resolve()
+						})
+					})
+
+					res.push(a)
+				})
+				return res
+			},
+
 			openPost(data) {
-				console.log('open post')
 
 				let href, answer, parent
 
+				if (data) {
+					if (data?.txid) {
+						href = data.txid
+					} else {
+						href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : (data.relatedContent.rootTxHash || data.relatedContent.hash)
+					}
 
-				href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : data.relatedContent.hash
+				} else {
+					return
+				}
+
+				console.log('openPost', data, href)
 
 				answer = data.type === "answer" ? data.hash : ''
 
-				parent = data.txType === 301 ? data.relatedContent.hash : data.type === "answer" ? data.relatedContent.hash : data.hash
+				parent = data.txType === 301 ? data.relatedContent.hash : data.type === "answer" ? data.relatedContent.hash : ''
 
 				self.app.platform.app.nav.api.load({
 					open: true,
@@ -163,13 +310,12 @@ var activities = (function () {
 					},
 
 					essenseData: {
-						share: '',
 
-						reply: {
+						reply: answer || parent ? {
 							answerid: answer,
 							parentid: parent,
 							noaction: true
-						}
+						} : null
 					}
 				})
 			},
@@ -195,18 +341,18 @@ var activities = (function () {
 		}
 
 		var events = {
-			showprofile : function(address){
+			showprofile: function (address) {
 
-				if (self.app.mobileview){
+				if (self.app.mobileview) {
 					self.nav.api.load({
-						open : true,
-						id : 'channel',
-						inWnd : true,
-						history : true,
-	
-						essenseData : {
-							id : address,
-							openprofilebutton : true
+						open: true,
+						id: 'channel',
+						inWnd: true,
+						history: true,
+
+						essenseData: {
+							id: address,
+							openprofilebutton: true
 						}
 					})
 
@@ -215,94 +361,63 @@ var activities = (function () {
 
 
 			},
-			filter: function () {
+			filter: async function () {
 				if (this.classList.contains('active')) {
 					return
 				}
-				activities = []
-				renders.content()
-				end = false
-				currentFilter = $(this).attr('rid');
 
-				actions.getdata().then((e) => {
-					if (e) return sitemessage(e.error.message || e.error?.error || e.error)
+				el.content.html('')
 
-					el.c.find('.tab').removeClass('active')
-
-					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
-
-					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
-
-				})
+				actions.applyFilter($(this).attr('rid'))
 
 			},
 
 
 			loadmorescroll: function () {
 
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end) {
-					actions.getdata()
+				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video') {
+					actions.getdata().then(data => {
+
+						var ids = _.map(data, (v) => {
+							return v.hash
+						})
+
+						renders.content(null, ids)
+
+					})
 				}
 			},
 		}
 
 		var renders = {
-			filters: function (clbk) {
-				self.shell({
+			showcurrentFilter(){
 
-					name: 'filters',
-					el: el.filters,
-					data: {
-						filters: filtersList,
-					},
-				}, function (_p) {
-					_p.el.find('.tab').on('click', events.filter)
-					if (clbk) {
-						clbk()
-					}
-				})
+				el.c.find('.tab').removeClass('active')
+
+				if(currentFilter){
+				
+					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
+					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')	
+
+				}
 			},
+			
 
-			content: function (type) {
+			content: function (type, ids) {
+
 				self.shell({
 
 					name: 'content',
 					el: el.content,
+					inner : ids ? append : null,
 					data: {
 						loading: loading,
-						activities: getters.formatActivities(),
-						openPost: actions.openPost,
+						activities: currentFilter == 'video' ? {} : getters.formatActivities(ids),
+						videos: currentFilter == 'video' ? activitiesByGroup[currentFilter] : [],
 					},
-					// inner: (root, el) => {
-					// 	el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
-					// 	let v = el.replace(root[0].innerHTML, "")
-					// 	root.append(v)
-					//
-					// }
 
 				}, function (_p) {
-					let interactions = _p.el.find('.interactive')
-					let multiblocking = _p.el.find('.blocking')
-
-					_.each(interactions, function (i) {
-						i.addEventListener('click', (e) => {
-							actions.openPost(...activities.filter(ac => ac.hash === i.attributes.tid.value))
-						})
-					})
-
-					_.each(multiblocking, function (i) {
-						i.addEventListener('click', (e) => {
-							actions.openMultiBlocks(...activities.filter(ac => ac.hash === i.attributes.tid.value))
-						})
-					})
-
-					_p.el.find('[profile]').on('click', function(e) {
-						if(events.showprofile($(this).attr('profile'))){
-							return false
-						}
-
-						
-					})
+					
 				})
 			}
 		}
@@ -317,6 +432,39 @@ var activities = (function () {
 		}
 
 		var initEvents = function () {
+			el.c.find('.tab').on('click', events.filter)
+
+			if (scnt.hasClass('applicationhtml')) {
+				self.app.events.scroll['activities'] = events.loadmorescroll
+			}
+			else {
+				scnt.on('scroll', events.loadmorescroll)
+			}
+
+
+			el.c.on('click', '.interactive', function(){
+				var tid = $(this).attr('tid')
+				actions.openPost(getters.activity(tid))
+			})
+
+			el.c.on('click', '.video', function(){
+				var tid = $(this).attr('tid')
+				actions.openPost(getters.activity(tid))
+			})
+
+			el.c.on('click', '.blocking', function(){
+				var tid = $(this).attr('tid')
+				actions.openMultiBlocks(getters.activity(tid))
+
+			})
+
+			el.c.on('click', '[profile]', function(){
+
+				if (events.showprofile($(this).attr('profile'))) {
+					return false
+				}
+
+			})
 
 		}
 
@@ -325,7 +473,17 @@ var activities = (function () {
 
 			getdata: function (clbk) {
 
-				var data = {};
+				var data = {
+					filters: filtersList
+				};
+
+				currentFilter = 'all'
+
+				try{
+					currentFilter = localStorage['activityFilter'] || 'all'
+				}
+				catch (e){
+				}
 
 				clbk(data);
 
@@ -334,6 +492,7 @@ var activities = (function () {
 
 			destroy: function () {
 				activities = []
+				videos = []
 				currentFilter = 'all'
 				el = {};
 				scnt.off('scroll', events.loadmorescroll)
@@ -349,26 +508,43 @@ var activities = (function () {
 				el.content = el.c.find('.content');
 				el.loader = el.c.find('.preloaderWrapper');
 
-
 				scnt = el.c.closest('.customscroll:not(body)')
+				
 				if (!scnt.length) scnt = $(window);
 
-				if (scnt.hasClass('applicationhtml')) {
-					self.app.events.scroll['activities'] = events.loadmorescroll
-				}
-				else {
-					scnt.on('scroll', events.loadmorescroll)
-				}
-				renders.filters()
-				actions.getdata()
+				actions.applyFilter()
 
 				initEvents();
 
 
 				p.clbk(null, p);
 			},
+			tooltip: {
+				options: {
+					theme: "lighttooltip activitiesTolltip",
+					position: 'left',
+					zIndex: 50,
+					distance: -47,
+					functionPosition: function (instance, helper, position) {
+						position.coord.top = 0;
+						position.coord.left = 0;
+
+						return position;
+					},
+					arrow: false,
+
+					trigger: 'custom',
+					triggerOpen: {
+						click: true
+					},
+					triggerClose: {
+					}
+				},
+				//event : 'click'
+			},
+
 			wnd: {
-				class: 'wndactivities normalizedmobile maxheight',
+				class: 'wndactivities normalizedmobile maxheight withoutButtons',
 			}
 		}
 	};

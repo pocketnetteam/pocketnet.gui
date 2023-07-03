@@ -191,12 +191,15 @@ _l.uwaitb = "Aspetta la conferma per salvare le informazioni";
 _l.uchanges = "Non ci sono modifiche";
 _l.uchangesvalid = "È necessario creare il nome utente";
 _l.uname = "Nome";
-_l.unickname = "Nickname";
+_l.unickname = "Create a Nickname";
 _l.ulanguage = "Lingua";
 _l.uabout = "Su di me";
 _l.uwebsite = "Sito web";
 _l.uaddresesd = "Indirizzi per le donazioni";
 _l.usavechanges = "Vuoi salvare le tue modifiche?";
+
+_l.settings_save = "Salva le modifiche";
+_l.settings_discard = "Azzera le modifiche";
 
 //ustate
 
@@ -1221,6 +1224,8 @@ _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bast
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
 
+_l.copybuiltfrom = "Numero di montaggio copiato"
+
 _l.profanity_tag = 'volgarità'
 
 _l.saved = "Salvati"
@@ -1231,3 +1236,28 @@ _l.doYouDownloadVideo = "Vuoi scaricare il video sul tuo dispositivo?"
 _l.gotosaved2 = "Vai a salvare"
 _l.yes = "Sì"
 _l.no = "No"
+
+_l.torusing_neveruse = "Mai";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Sempre";
+
+_l.torusing_directProxy = "Proxy integrato";
+_l.torusing_notdirectProxy = "Proxy esterno";
+
+_l.torusing_changedirectProxy = "Passare a un proxy esterno";
+_l.torusing_changenotdirectProxy = "Passare a un proxy integrato";
+
+_l.torusing_disclaimer = "Questa funzione funziona solo quando si utilizza un proxy integrato.";
+
+_l.torusing_Networking = "Rete";
+_l.torusing_proxyCaption = "Selezione di un server proxy";
+_l.torusing_useTor = "Usare TOR";
+_l.torusing_useSnowflakeBridge = "Usare Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Ora, le richieste dirette"
+_l.torusing_stat_torbytesLength = "Ora, TOR richiama"
+_l.torusing_stat_directBytes = "Totale, richieste dirette"
+_l.torusing_stat_totalTorBytes = "Totale, TOR richiama"
+_l.torusing_settings = "Impostazioni TOR"
+_l.torusing_stats = "Statistiche della query"
+_l.torusing_proxychangequestion = "Sei sicuro di voler cambiare il proxy?"

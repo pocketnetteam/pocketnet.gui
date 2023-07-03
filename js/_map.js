@@ -96,8 +96,8 @@ __map =  {
 
 		{path : "js/logger.js", babelify : true},
 		{path : "js/videotransport.js", babelify : true},
+		{path : "js/media.js", babelify : true},
 		{path : "js/app.js", babelify : true},
-
 		"js/main.js"
 	],
 
@@ -736,7 +736,11 @@ __map =  {
 			ignoreMinimize : true
 
 		},
-
+		transportsmanagement : {
+			uri : "transportsmanagement",
+			href : "transportsmanagement",
+			add : insertingfunc
+		},
 
 		
 	
@@ -880,8 +884,7 @@ __map =  {
 			uri : "imagegallery",
 			href : "imagegallery",
 			add : insertingfunc,
-			anonimus : true,
-			relationsSunc : true,
+			anonimus : true
 		},
 
 		aboutus : {
@@ -1089,10 +1092,16 @@ __map =  {
 		
 	},
 
-	statistic : {
-		uri : "statistic",
-		href : "statistic",
+	earnings : {
+		uri : "earnings",
+		href : "earnings",
 		add : insertingfunc,
+
+		relations : [
+			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
+				Chart = require('./js/vendor/chart.min.js')
+			}},	
+		]
 	},
 
 	videoCabinet : {

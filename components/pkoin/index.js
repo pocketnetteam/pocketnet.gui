@@ -180,6 +180,8 @@ var pkoin = (function(){
 
 					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
+					el.tutorial.removeClass('show');
+
 					self.shell({
 
 						name :  'boostinfo',
@@ -356,6 +358,23 @@ var pkoin = (function(){
 				
 			})
 
+			
+			el.playVideo.on('click', function(){
+
+				
+				self.nav.api.load({
+					open: true,
+					id: 'boost',
+					inWnd: true,
+
+					essenseData: {
+						autoplay: true,
+						minimal: true
+					}
+				})
+				
+			})
+
 			el.send.on('click', function(){
 
 
@@ -506,7 +525,7 @@ var pkoin = (function(){
 				el.fields = el.c.find("#fieldsWrapper");
 				el.send = el.c.find('.sendButton');
 				el.buy = el.c.find('#buyButton');
-
+				el.playVideo = el.c.find('#playVideo');
 
 				initEvents(p);
 			

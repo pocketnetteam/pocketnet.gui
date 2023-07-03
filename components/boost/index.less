@@ -5,6 +5,21 @@
 
     .work {
         max-width: 850px;
+        .top{
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        &.minimal{
+            .top, .header__title, .learn-more, .formula{
+                display: none;
+
+            }
+
+            .header{
+                margin-top: 0;
+            }
+        }
     }
     .header {
         margin-top: 40px;
@@ -203,6 +218,9 @@
         }
         img{
             max-width: 500px;
+        }
+        .img{
+            max-width: 850px;
         }
         .cta{
             font-size: 1.2em;

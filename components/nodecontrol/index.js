@@ -432,6 +432,10 @@ var nodecontrol = (function(){
 			},
 			nodelanding : function(elc, clbk){
 
+				if(!info){
+					return
+				}
+
 				self.shell({
 					inner : html,
 					name : 'landing',

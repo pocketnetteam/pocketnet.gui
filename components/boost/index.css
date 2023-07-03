@@ -4,6 +4,19 @@
 #boost .work {
   max-width: 850px;
 }
+#boost .work .top {
+  font-size: 1.5em;
+  text-align: center;
+}
+#boost .work.minimal .top,
+#boost .work.minimal .header__title,
+#boost .work.minimal .learn-more,
+#boost .work.minimal .formula {
+  display: none;
+}
+#boost .work.minimal .header {
+  margin-top: 0;
+}
 #boost .header {
   margin-top: 40px;
   text-align: center;
@@ -181,6 +194,9 @@
 }
 #boost .buy-pkoin img {
   max-width: 500px;
+}
+#boost .buy-pkoin .img {
+  max-width: 850px;
 }
 #boost .buy-pkoin .cta {
   font-size: 1.2em;

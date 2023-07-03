@@ -228,6 +228,19 @@
 #system16 .settingTable .clearfirebase {
   cursor: pointer;
 }
+#system16 .settingTable .values {
+  display: flex;
+  align-items: center;
+}
+#system16 .settingTable .values > div {
+  margin-right: 1em;
+}
+#system16 .settingTable .values .status {
+  color: rgb(var(--color-txt-ac));
+}
+#system16 .settingTable .values button {
+  font-size: 0.8em;
+}
 #system16 .managepanel {
   padding: 1em 0;
   background: rgb(var(--background-secondary-theme));

@@ -10,6 +10,8 @@ import android.media.AudioManager;
 
 public class AudioTogglePlugin extends CordovaPlugin {
 	public static final String ACTION_SET_AUDIO_MODE = "setAudioMode";
+	public static final String ACTION_SET_CHECK_VIDEO_PERMISSION = "checkVideoPermission";
+	public static final String ACTION_SET_CHECK_AUDIO_PERMISSION = "checkAudioPermission";
 	
 	@Override
 	public boolean execute(String action, JSONArray args, 
@@ -25,6 +27,20 @@ public class AudioTogglePlugin extends CordovaPlugin {
 					setAudioMode(settings);
 				}
 			});
+
+			return true;
+		}
+
+		if (action.equals(ACTION_SET_CHECK_VIDEO_PERMISSION)) {
+
+			callbackContext.error("OnlyIOS");
+
+			return true;
+		}
+
+		if (action.equals(ACTION_SET_CHECK_AUDIO_PERMISSION)) {
+
+			callbackContext.error("OnlyIOS");
 
 			return true;
 		}

@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return (typeof proxyFetch == 'undefined' ? fetch : proxyFetch)(url, ps)
+		return fetch(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -465,7 +465,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
+					return axios({ method, url, data, ...axiosoptions })
 						.then((r) => {
 
 
@@ -1009,6 +1009,7 @@ PeerTubePocketnet = function (app) {
 					})
 					.then((streamData) => request('startLive', streamData, options))
 					.then((result) => {
+
 						if (!result.video) return Promise.reject(error('uploaderror'));
 
 						const isLive = true;
@@ -1034,6 +1035,8 @@ PeerTubePocketnet = function (app) {
 								filter: 'local',
 							})
 							.then((result = {}) => {
+								const isLive = true;
+
 								const existingStream = (result.data || [])[0];
 
 								if (!existingStream) {
@@ -1047,6 +1050,8 @@ PeerTubePocketnet = function (app) {
 									formattedLink: self.composeLink(
 										options.host,
 										existingStream.uuid,
+										false,
+										isLive,
 									),
 								});
 							});

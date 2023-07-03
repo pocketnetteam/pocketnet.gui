@@ -35,6 +35,7 @@
 				font-weight: 700;
 			}
 
+
 			.buyButtonWrapper{
 				display: flex;
 				align-items: center;
@@ -62,6 +63,19 @@
 			}
 
 
+		}
+
+		.playVideo{
+			display: flex;
+			align-items: center;
+			margin-top: @rhythm * 2;
+			padding: @rhythm @rhythm * 2;
+			color: @color-main;
+			cursor: pointer;
+
+			i{
+				margin-left: @rhythm;
+			}
 		}
 
 		.abswrappcontent{
@@ -103,6 +117,186 @@
 			padding-bottom: 0;
 
 			.fields{
+
+
+				.tutorial-component {
+					display: none;
+					position: absolute;
+					top: 55px;
+					background-color: rgb(var(--color-bg-ac-bright));
+					color: #fff;
+					padding: 5px 0;
+					border-radius: 6px;
+					text-align: left;
+					max-width: 300px;
+					min-width: 200px;
+					min-height: 50px;
+					padding: 10px;
+					z-index: 99999;
+					&.hide {
+						display: none;
+					}
+					&.show {
+						display: block;
+					}
+					> div {
+						margin-right: 4px;
+					}
+					.action-menu {
+						margin-top: 10px;
+						height: 30px;
+						border-top: 1px solid white;
+						> .default-btn {
+							background-color: white;
+							border: none;
+							padding: 0;
+							color: rgb(var(--color-bg-ac-bright));
+							text-align: center;
+							text-decoration: none;
+							font-size: 13px;
+							margin: 4px 2px;
+							cursor: pointer;
+							}
+							> .done-btn,
+							> .next-btn {
+								position: absolute;
+								right: 12px;
+								bottom: 4px;
+								cursor: pointer;
+								width: 50px;
+								height: 21px;
+								font-family: inherit;
+							}
+							> .skip-btn {
+								position: absolute;
+								right: 133px;
+								bottom: 4px;
+								cursor: pointer;
+								width: 50px;
+								height: 21px;
+								font-family: inherit;
+							}
+							> .previous-btn {
+								position: absolute;
+								left: 8px;
+								bottom: 4px;
+								cursor: pointer;
+								width: 58px;
+								height: 21px;
+								font-family: inherit;
+							}
+					}
+					&.left {
+						&:before,
+						&:after {
+						content: "";
+						position: absolute;
+						width: 0;
+						height: 0;
+						border-style: solid;
+						border-color: transparent;
+						border-left: 0;
+						}
+						/* Stroke */
+						&:before {
+						bottom: 35%;
+						left: -12px;
+						/* If 1px darken stroke slightly */
+						border-right-color: white;
+						border-width: 12px;
+						}
+						/* Fill */
+						&:after {
+						bottom: 35%;
+						left: -11px;
+						border-width: 12px;
+						}
+					}
+					&.right {
+						/* Required for Triangle */
+						&:before,
+						&:after {
+						content: "";
+						position: absolute;
+						width: 0;
+						height: 0;
+						border-style: solid;
+						border-color: transparent;
+						border-right: 0;
+						}
+						/* Stroke */
+						&:before {
+						right: -12px;
+						bottom: 35%;
+						/* If 1px darken stroke slightly */
+						border-left-color: white;
+						border-width: 12px;
+						}
+						/* Fill */
+						&:after {
+						right: -11px;
+						bottom: 35%;
+						border-left-color: white;
+						border-width: 12px;
+						}
+					}
+					&.up {
+						/* Required for Triangle */
+						&:before,
+						&:after {
+						content: "";
+							position: absolute;
+							width: 0;
+							height: 0;
+							border-style: solid;
+							border-color: transparent;
+							border-top: 0;
+						}
+						/* Stroke */
+						&:before {
+							left: 10%;
+							bottom: 100%;
+							/* If 1px darken stroke slightly */
+							border-bottom-color: rgb(var(--color-bg-ac-bright));
+							border-width: 12px;
+						}
+						/* Fill */
+						&:after {
+							left: 10%;
+							bottom: 100%;
+							border-bottom-color: rgb(var(--color-bg-ac-bright));
+							border-width: 12px;
+						}
+					}
+					&.down {
+						/* Required for Triangle */
+						&:before,
+						&:after {
+						content: "";
+						position: absolute;
+						width: 0;
+						height: 0;
+						border-style: solid;
+						border-color: transparent;
+						border-bottom: 0;
+						}
+						/* Stroke */
+						&:before {
+						left: 80%;
+						top: 100%;
+						/* If 1px darken stroke slightly */
+						border-top-color: white;
+						border-width: 12px;
+						}
+						/* Fill */
+						&:after {
+						left: 80%;
+						top: 100%;
+						border-top-color: white;
+						border-width: 12px;
+						}
+					}
+				}
 
 				.inputWrapper{
 					margin-bottom: @rhythm * 4;
@@ -298,7 +492,6 @@
 
 	.boostinfodata{
 		text-align: center;
-		margin-top : @rhythm * 3;
 		border-radius: 12px;
 		background: rgb(var(--background-secondary-theme));
 		border : 1px solid rgb(var(--neutral-grad-0));
@@ -332,16 +525,17 @@
 	.wndinner{
 		
 		&.pkoin, &.boost{
-            max-width: 370px;
 			box-shadow: none;
         }
 
-		&.pkoin{
+		&.pkoin{            
+			max-width: 370px;
 			max-height: 620px;
 		}
 
 		&.boost{
-			max-height: 500px;
+			max-width: 480px;
+			max-height: 640px;
 		}
 
 		.wndheader{
@@ -381,6 +575,7 @@ html.mobileview{
 
 			.abswrappcontent{
 				position: static;
+				padding-bottom: @rhythm * 6;
 			}
 
 			.boostinfodata{

@@ -51,7 +51,7 @@ jobs:
           tar xzf repo.tgz
           rm -rf repo.tgz
           npm i
-          npm run minimize:bastyon
+          npm run minimize:bastyon -- -sha=${{ github.sha }}
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
       - name: Reset nginx cache
@@ -77,7 +77,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -118,7 +118,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
@@ -149,7 +149,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
@@ -185,7 +185,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova
+          npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
       - name: Prepare configuration
@@ -221,8 +221,66 @@ jobs:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
+  build-android-gf:
+    needs: prepare
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Cordova
+        run: |
+          npm i -g cordova@10
+          cordova --version
+      - name: Prepare building
+        run: |
+          npm i
+          npm run minimize:cordova:gfree -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          cd ./cordova
+          npm i
+      - name: Prepare configuration
+        run: |
+          cd ./cordova
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_BUILD_GFREE_CONF }}" | base64 -d > buildgfree.json
+      - name: Fixing Android Build Tool Issue
+        run: |
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
+      - name: Configure Cordova Plugins
+        run: |
+          cd ./cordova
+          npm run android-add
+      - name: Building
+        run: |
+          cd ./cordova
+          npm run android-build-gfree
+      - name: Rename apk binary
+        run: |
+          cd ./cordova/platforms/android/app/build/outputs/apk/release
+          ls -lh
+          mv app-release.apk BastyonGF.apk
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-gfree
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
+        
   deploy-app-binaries:
-    needs: [ build-macos, build-unix, build-windows, build-android ]
+    needs: [ build-macos, build-unix, build-windows, build-android, build-android-gf ]
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact

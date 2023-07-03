@@ -1,5 +1,8 @@
 <div id="<%-module.map.id%>">
-	<div class="work adj">
+	<div class="work adj <%-minimal%>">
+		<div class="top">
+			<%-e('boost_c70')%>
+		</div>
 		<header class="header">
 			<h1 class="header__title yellow">
 				<span class="red"><%-e('boost_c45')%></span> <br> <%-e('boost_c46')%> 						
@@ -69,10 +72,10 @@
 			<div class="video">
 				<h2><%-e('boost_c22')%></h2>
 				<% if(app.localization.key === 'ru') {%>
-					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&host=peertube23.pocketnet.app&id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&autoplay=true&s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&host=peertube23.pocketnet.app&id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				<% } %>
 				<% if(app.localization.key === 'en') {%>
-					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&s=2cdab966cf0cce28b52597a42d9f4290489b120a2ec64a09e6a6650ffb090f66&host=peertube23.pocketnet.app&id=cf7b0d22-6d10-46bc-bb9b-de6d51482153" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&autoplay=true&s=2cdab966cf0cce28b52597a42d9f4290489b120a2ec64a09e6a6650ffb090f66&host=peertube23.pocketnet.app&id=cf7b0d22-6d10-46bc-bb9b-de6d51482153" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				<% } %>					
 				</iframe>
 			</div>
@@ -117,6 +120,12 @@
 
 
 			<div class="buy-pkoin">
+				<h2 class="yellow"><%-e('boost_c71')%></h2>
+				<img class="img" src="./img/download(6).png"/>
+				<h2 class="yellow"><%-e('boost_c72')%></h2>
+				<img class="img" src="./img/download(5).png"/>
+				<h2 class="yellow"><%-e('boost_c73')%></h2>
+				<img class="img" src="./img/download(4).png"/>
 				<h2 class="yellow"><%-e('reach')%></h2>
 				<p>					
 					<%-e('reachDescription')%>
