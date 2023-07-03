@@ -2196,11 +2196,6 @@ pUserInfo = function(){
 		self.language = v.l || v.language;
 		self.site = v.s || v.site || '';
 
-		const isImageAllowed = checkIfAllowedImage(self.image);
-
-		if (!isImageAllowed) {
-			self.image = '';
-		}
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;

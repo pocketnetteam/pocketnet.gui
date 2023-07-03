@@ -167,6 +167,9 @@
   padding-left: 1em;
   margin-left: 150px;
 }
+#userpage .maketsWrapper .contents .registrationProgressIcon {
+  margin-top: 1em;
+}
 #userpage .maketsWrapper .contents .added {
   text-align: right;
 }

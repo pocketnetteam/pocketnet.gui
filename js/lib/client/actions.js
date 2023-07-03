@@ -95,11 +95,11 @@ var ActionOptions = {
             change : function(action, account){
 
                 if (action.transaction){
-                    //account.willChange = true
+                    account.willChange = true
                 }
 
                 if (action.complete){
-                    //account.willChange = false
+                    account.willChange = false
                     account.status.value = true
 
                 }
@@ -598,7 +598,7 @@ var Action = function(account, object, priority, settings){
 
         trigger()
 
-        return new Promise((resolve, reject) => {
+        /*return new Promise((resolve, reject) => {
             setTimeout(() => {
                 delete self.inputs
                 delete self.outputs
@@ -610,7 +610,7 @@ var Action = function(account, object, priority, settings){
         
                 reject(self.rejected)
             }, 1300)
-        })
+        })*/
 
         
 
@@ -1043,7 +1043,7 @@ var Account = function(address, parent){
 
                 actions.push(action)
 
-                if(action.change) action.change(action, self)
+                if(action.options.change) action.options.change(action, self)
 
                 self.trigger(action)
             }
@@ -1163,10 +1163,12 @@ var Account = function(address, parent){
 
         //// use getActionById(in clbk)
 
-        if(action.checkInAnotherSession || self.checkRequestUnspentsInAnotherSession) return Promise.reject(error)
+        if(action.checkInAnotherSession) return Promise.reject(error)
 
 
         if(error == 'actions_noinputs'){
+
+            if(self.checkRequestUnspentsInAnotherSession) return Promise.reject(error)
 
             var parameters = {
                 reason : ""
@@ -1284,6 +1286,8 @@ var Account = function(address, parent){
         if(action.options.attentionIfReJectCodes && _.indexOf(action.options.attentionIfReJectCodes, error) > -1){
             
             if (action.type == 'userInfo' && error == 18){
+
+                action.rejected = 'actions_rejectedFromNodes'
                 //// ask change user name
 
                 return await self.userInteractive(action, error, 'changeUserName', {}).then(() => {
@@ -1385,10 +1389,12 @@ var Account = function(address, parent){
 
     self.willChangeUnspentsCallback = function(actionId, proxy){
 
+        console.log("willChangeUnspentsCallback", actionId, proxy)
+
         self.unspents.willChange = {
             transaction : null,
             id : actionId,
-            until : (new Date).addSeconds(willChangeTime),
+            until : (new Date()).addSeconds(willChangeTime),
             proxy
         }
 
@@ -1400,7 +1406,7 @@ var Account = function(address, parent){
         console.log('self.unspents.willChange', self.unspents.willChange)
 
         if (self.unspents.willChange){
-            if((new Date).addSeconds(willChangeTime) > self.unspents.willChange.until){
+            if((new Date()) > self.unspents.willChange.until){
                 self.unspents.willChange = null
 
                 self.trigger()
@@ -1443,6 +1449,8 @@ var Account = function(address, parent){
             //// TODO
         }).then((action) => {
 
+            console.log("willChangeUnspentsCallback")
+
             self.willChangeUnspentsCallback(action, proxyoptions.proxy)
 
             return Promise.resolve({
@@ -1451,6 +1459,8 @@ var Account = function(address, parent){
             })
 
         }).catch(e => {
+
+            console.error("E", e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
@@ -1531,6 +1541,7 @@ var Account = function(address, parent){
 
             if (self.unspents.willChange){
                 if (self.unspents.willChange.transaction == out.txid){
+                    console.log("willChange nul")
                     self.unspents.willChange = null
                 }
             }
@@ -1541,14 +1552,7 @@ var Account = function(address, parent){
         cleanOutputs()
     }
     
-    self.setWaitCoins = function(transaction){
-        self.unspents.willChange = {
-            transaction,
-            until : (new Date()).addSeconds(60)
-        }
 
-        self.unspents.value.push(transaction)
-    }
 
     self.isCurrentNetwork = function(){
         if(self.address.indexOf("T") == 0 &&  window.testpocketnet) return true
@@ -1604,7 +1608,7 @@ var Account = function(address, parent){
             //withcompleted
             if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || 
             
-            ( exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && ActionOptions.clearRejected))
+            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && ActionOptions.clearRejected))
             
             ){
 

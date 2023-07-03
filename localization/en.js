@@ -2688,3 +2688,10 @@ _l.howToBuy = "How to buy PKOIN";
 
 _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
+
+
+_l.registration_not_in_progress = "Your registration process has not started yet, you need to either solve the captcha or have PKOIN on your account address"
+_l.registration_undefined_status= "Registration information about your account is not available, you may not be connected to the Internet"
+_l.registration_in_progress_transaction= "Account registration transaction sent to the blockchain"
+_l.registration_in_progress_hasUnspents= "The account registration transaction will soon be sent to the blockchain"
+_l.registration_in_progress_wait_unspents= "The account registration transaction will soon be sent to the blockchain"

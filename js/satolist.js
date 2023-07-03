@@ -8299,7 +8299,12 @@ Platform = function (app, listofnodes) {
 
             get: function (clbk, update) {
 
+                console.log('app.user.address.value', app.user.address.value)
+
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
+
+                console.log('app.user.address.value, 2', app.user.address.value, self.psdk.userInfo.getmy())
+
 
                     if(clbk) clbk(self.psdk.userInfo.getmy())
                 }, null, update)
@@ -9725,8 +9730,11 @@ Platform = function (app, listofnodes) {
             
             get: function (addresses, clbk, light, reload) {
 
+                console.log('self.psdk.userInfo.load', addresses)
 
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
+
+                    console.log("LOADED", r)
 
                     if(clbk) clbk(r)
 
@@ -22578,6 +22586,19 @@ Platform = function (app, listofnodes) {
                             
                             var iscallsenabled = true///self.app.platform.istest() ? true : false
 
+                            var path = '/'
+
+                            if(!window.cordova && typeof _Electron == 'undefined'){
+                                path = window.pocketnetpublicpath
+                            }
+
+                            if(window.cordova && isios()){
+                                path = ''
+                            }
+
+                            if(typeof _Electron != 'undefined') path = './'
+
+                            
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${self.app.user.address.value}"
@@ -22592,6 +22613,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+                                    cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
                             </div>`

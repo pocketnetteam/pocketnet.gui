@@ -5964,6 +5964,9 @@ html.allcontent_application{
     display: flex;
     align-items: center;
     
+    span{
+        margin-left: 2 * @rhythm;
+    }
 
     i{
         color : rgb(var(--color-txt-gray-dark))!important;
@@ -5983,7 +5986,10 @@ html.allcontent_application{
 
     &.in_progress_transaction,
     &.in_progress_hasUnspents{
-        color : rgb(var(--color-bg-ac-bright))!important;
+        i{
+            color : rgb(var(--color-bg-ac-bright))!important;
+        }
+        
     }
     
 }

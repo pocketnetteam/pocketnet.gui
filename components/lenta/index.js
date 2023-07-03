@@ -2534,7 +2534,7 @@ var lenta = (function(){
 							setTimeout(function(){
 								if(!el.share[id]) return
 
-								initedcommentes[id].showBanner(initedcommentes[id]);
+								//initedcommentes[id].showBanner(initedcommentes[id]);
 								
 
 								self.app.platform.effects.templates.commentstars(el.share[id], value, function(){

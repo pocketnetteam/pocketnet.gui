@@ -276,6 +276,9 @@ var pSDK = function ({ app, api, actions }) {
         var loaded = {}
         var load = []
 
+
+        console.log('address', key, keys, p, temp)
+
         _.each(keys, (k) => {
 
             if (p.alternativeGetStorage) {
@@ -313,8 +316,11 @@ var pSDK = function ({ app, api, actions }) {
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
 
-
+            console.log('getfromdb', p.indexedDb, load)
             getfromdb(p.indexedDb, load).then(dbr => {
+
+            console.log('getfromdb2', p.indexedDb, load, dbr)
+
 
                 load = _.filter(load, (k) => {
 
@@ -380,6 +386,11 @@ var pSDK = function ({ app, api, actions }) {
             var filtered = []
 
 
+            console.log("result", result)
+
+            try{
+
+            
             _.each(result, (r) => {
 
                 if (r && r.key && r.data) {
@@ -399,6 +410,12 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
             })
+
+        }catch(e){
+            console.error(e)
+        }
+
+            console.log("result filtered", filtered)
 
 
             return filtered
@@ -420,6 +437,8 @@ var pSDK = function ({ app, api, actions }) {
             return null
         }).then((rpack) => {
 
+            console.log("loaded 0", rpack)
+
             _.each(rpack, (result) => {
                 if (result) {
                     _.each(result, (r) => {
@@ -429,6 +448,7 @@ var pSDK = function ({ app, api, actions }) {
             })
 
         }).then(() => {
+            console.log('loaded', loaded)
             return loaded
         })
     }
@@ -581,7 +601,7 @@ var pSDK = function ({ app, api, actions }) {
 
         load: function (addresses, light, update) {
 
-
+            console.log('addresses, light, update', addresses, light, update)
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
                 var parameters = [addresses];
@@ -589,7 +609,12 @@ var pSDK = function ({ app, api, actions }) {
                 if (light) { parameters.push('1') }
 
 
+                console.log('parameters', parameters)
+
+
                 return api.rpc('getuserprofile', parameters).then((data) => {
+
+                    console.log('parameters data', data)
 
                     data = this.cleanData(data)
 
@@ -698,6 +723,9 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (address) {
+
+            console.log("objects['userInfoFull']", objects['userInfoFull'], objects['userInfoLight'])
+
             return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address], address)
         },
 
@@ -808,7 +836,13 @@ var pSDK = function ({ app, api, actions }) {
 
         load: function (addresses, update) {
 
+
+            console.log('2 addresses, addresses, addresses', addresses)
+
+
             return loadList('userState', addresses, (addresses) => {
+
+                console.log('1 addresses, addresses, addresses', addresses)
 
                 return api.rpc('getuserstate', [(addresses).join(',')]).then((d) => {
                     if (d && !_.isArray(d)) d = [d] /// check responce

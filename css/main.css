@@ -4850,6 +4850,9 @@ html.allcontent_application #footerWrapper {
   display: flex;
   align-items: center;
 }
+.registrationProgressIcon span {
+  margin-left: 1em;
+}
 .registrationProgressIcon i {
   color: rgb(var(--color-txt-gray-dark)) !important;
 }
@@ -4859,8 +4862,8 @@ html.allcontent_application #footerWrapper {
 .registrationProgressIcon.in_progress_wait_unspents i {
   color: rgb(var(--color-good)) !important;
 }
-.registrationProgressIcon.in_progress_transaction,
-.registrationProgressIcon.in_progress_hasUnspents {
+.registrationProgressIcon.in_progress_transaction i,
+.registrationProgressIcon.in_progress_hasUnspents i {
   color: rgb(var(--color-bg-ac-bright)) !important;
 }
 .usericon {
