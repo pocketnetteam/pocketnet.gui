@@ -26,11 +26,11 @@ var captcha = (function(){
 			},
 
 			redo : function(){
-				console.log("AS22")
+
+				el.c.removeClass('cashowed')
 
 				ed.getcapcha().then(({captcha, proxyOptions}) => {
 
-					console.log("AS")
 
 					make(captcha, proxyOptions)
 
@@ -61,7 +61,15 @@ var captcha = (function(){
 					var hc = null
 
 					if (captcha.hex){
-						hc = actions.initHex(_p.el.find('.captchaImage')[0], captcha)
+						setTimeout(() => {
+							hc = actions.initHex(_p.el.find('.captchaImage')[0], captcha)
+
+							el.c.addClass('cashowed')
+						}, 300)
+						
+					}
+					else{
+						el.c.addClass('cashowed')
 					}
 
 					var input = _p.el.find('.ucaptchainput');
@@ -216,7 +224,7 @@ var captcha = (function(){
 			},
 
 			wnd : {
-				class : 'captchaWindow normalizedmobile maxheight withoutButtons',
+				class : 'captchaWindow normalizedmobile maxheight withoutButtons captchawindow',
 
 				closecross : function(){
 					if(ed.fail) ed.fail()

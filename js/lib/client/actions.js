@@ -50,10 +50,48 @@ var ActionOptions = {
 
             },
         },
+
+        subscribePrivate : {
+            collision : function(obj, obj2){
+
+                if ((obj2.object.type == 'unsubscribe' || obj2.object.type == 'subscribe') && obj2.object.address.v == obj.object.address.v){
+                    if(obj2.added < obj.added) return false
+                }
+
+                return true
+
+            },
+        },
+
+        subscribe : {
+            collision : function(obj, obj2){
+
+                if ((obj2.object.type == 'unsubscribe' || obj2.object.type == 'subscribePrivate') && obj2.object.address.v == obj.object.address.v){
+                    if(obj2.added < obj.added) return false
+                }
+
+                return true
+
+            },
+        },
+
+        unsubscribe : {
+            collision : function(obj, obj2){
+
+                if ((obj2.object.type == 'subscribe' || obj2.object.type == 'subscribePrivate') && obj2.object.address.v == obj.object.address.v){
+                    if(obj2.added < obj.added) return false
+                }
+
+                return true
+
+            },
+        },
+
+
         userInfo : {
             rejectedAsk : false, /// orfens
             sendAgain : true,   /// orfens
-            attentionIfRecectCodes : [18],
+            attentionIfReJectCodes : [18],
             change : function(action, account){
 
                 if (action.transaction){
@@ -840,7 +878,7 @@ var Action = function(account, object, priority, settings){
             if (
                 e == 'actions_rejectedFromNodes' || 
                 e == 'actions_noinputs' || 
-                (self.options.attentionIfRecectCodes && _.indexOf(self.options.attentionIfRecectCodes, e) > -1)
+                (self.options.attentionIfReJectCodes && _.indexOf(self.options.attentionIfReJectCodes, e) > -1)
                 ){
                     tryresolve = true
                 
@@ -850,10 +888,8 @@ var Action = function(account, object, priority, settings){
             
         }
 
-        if(error && tryresolve){
+        if (error && tryresolve){
             error = await account.actionRejectedWithTriggers(self, error)
-           
-            
         }
         else{
             trigger()
@@ -1245,7 +1281,7 @@ var Account = function(address, parent){
 
         }
 
-        if(action.options.attentionIfRecectCodes && _.indexOf(action.options.attentionIfRecectCodes, error) > -1){
+        if(action.options.attentionIfReJectCodes && _.indexOf(action.options.attentionIfReJectCodes, error) > -1){
             
             if (action.type == 'userInfo' && error == 18){
                 //// ask change user name
@@ -1281,8 +1317,6 @@ var Account = function(address, parent){
         if (self.waitUserAction) return Promise.reject('waitUserInteractive')
 
         setWaitUserAction({action : action.id, error})
-
-        console.log('requestUnspents', parameters)
 
         if(type == 'requestUnspents'){
             return self.requestUnspents(parameters).then(() => {
@@ -1386,8 +1420,6 @@ var Account = function(address, parent){
 
             parent.api.get.proxywithwalletls().then(proxy => {
 
-                console.log('proxywithwalletls', proxy)
-
                 proxyoptions = {
                     proxy : proxy.id
                 }
@@ -1420,8 +1452,6 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
-            console.error('e', e)
-
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
             }
@@ -1429,12 +1459,17 @@ var Account = function(address, parent){
             if(e == 'noproxywithwallet' || e == 'error' || e == 'iplimit' || e == 'uniq'){
                 //moneyfail to support
 
-                self.support(parameters, e, proxyOptions)
+                self.support(parameters, e, proxyoptions)
 
                 return Promise.reject(e)
             }
 
             return Promise.reject(e)
+        }).catch(e => {
+            console.error(e)
+
+            return Promise.reject(e)
+
         })
     }
 
@@ -1822,6 +1857,8 @@ var Account = function(address, parent){
 
         if(processing) return
 
+        console.log("PROCESSING")
+
         self.checkWillChangeUnspents()
 
         if(self.waitUserAction) {
@@ -1871,9 +1908,14 @@ var Account = function(address, parent){
 
             _.each(self.actions.value, (obj2) => {
 
-                if(!obj2.transaction && !obj2.sent && !obj2.completed){
+                if(!obj2.transaction && !obj2.sent && !obj2.completed && !obj2.rejected){
                     if(!action.options.collision(action, obj2)){
                         obj2.rejected = 'actions_collision'
+
+                        /*if(action.options.collisionRemove && action.options.collisionRemove(action, obj2)){
+                            action.rejected = 'actions_collision'
+                        }*/
+
                         self.trigger()
                     }
                 }
@@ -2145,14 +2187,9 @@ var Actions = function(app, api, storage = localStorage){
             if (namedEvents[key][name])
                 delete namedEvents[key][name]
         }
-
         
     }
 
-   
-
-    
-   
     self.on = function(key, f){
         if(!events[key]){
             events[key] = []

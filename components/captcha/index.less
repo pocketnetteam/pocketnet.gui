@@ -2,6 +2,20 @@
 
 #captcha{
     .captchaImageWrapper{
+        opacity: 0;
+        .transition(0.3s);
+    }
+
+    .wrpes{
+        opacity: 0;
+        .transition(0.3s);
+    }
+
+    &.cashowed{
+        .captchaImageWrapper,
+        .wrpes{
+            opacity: 1;
+        }
     }
 
     .reason{
@@ -64,9 +78,19 @@
     }
 }
 
-.wnd.captchaWindow{
+.wnd.captchawindow{
     .wndinner{
         max-width: 450px;
-        max-height: 550px;
+    }
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+    #captcha{
+        .addContainer{
+            button{
+                margin-bottom: 2 * @rhythm;
+                width: 100%;
+            }
+        }
     }
 }

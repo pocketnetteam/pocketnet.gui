@@ -1618,6 +1618,9 @@ var author = (function(){
 				}, function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
+
+						console.log("address", address)
+
 						preinit(address, clbk)
 					})
 

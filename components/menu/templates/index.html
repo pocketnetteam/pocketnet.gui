@@ -120,7 +120,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 							<% if(!deleted) {%>
 
-								<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
+								<!--<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
 									<div class="item  right onlyicon keyexport" events="keyexport">
 
 										<div class="icon">
@@ -134,7 +134,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 										</div>
 
 									</div>
-								</div>
+								</div>-->
 
 								
 
@@ -213,12 +213,9 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 											letter = ''
 										}
 
-
 									%>
-									
+
 									<div class="icon">
-
-
 										
 										<a elementsid="<%-app.platform.api.authorlink(user.address.value)%>" href="<%-app.platform.api.authorlink(user.address.value)%>">	
 											<div class="usericon" contain="none" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
@@ -240,6 +237,8 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 													<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
 				
 												<% } %>
+
+												<%=user.registrationProgressIcon()%>
 											
 											</div>
 										</a>

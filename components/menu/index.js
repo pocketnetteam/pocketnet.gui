@@ -1090,9 +1090,9 @@ var menu = (function(){
 
 					var addr = self.app.user.address.value
 
-					if (self.app.platform.sdk.registrations.showprivate()){
+					//if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true
-					}
+					//}
 
 					self.app.platform.sdk.users.getone(addr, function(){
 				

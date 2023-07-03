@@ -244,7 +244,7 @@ var registration = (function(){
 		var steps = {
 			settings : {
 				id : 'settings',
-				nextindex : 'captcha',
+				nextindex : 'bloggers',
 
 				prev : function(clbk){
 
@@ -261,210 +261,6 @@ var registration = (function(){
 
 				next : true				
 			},
-
-			captcha : {
-				id : 'captcha',
-				render : 'captcha',
-				nextindex : function(){
-					if(self.app.curation()){
-						return 'welcome'
-					}
-
-					return 'bloggers'
-				},  
-
-				prev : function(clbk){
-
-					var address = self.app.user.address.value;
-
-					var requested = self.app.settings.get(address, 'request') || "";
-
-					if (requested){
-
-						var regs = app.platform.sdk.registrations.storage[address];
-
-						if (regs && (regs == 2)) {
-							self.sdk.registrations.add(address, 3)
-						}
-						
-						actions.next()
-
-						return
-					}
-
-
-					balance.check(function(result){
-
-						if (result){
-
-							var regs = app.platform.sdk.registrations.storage[address];
-
-							if (regs && (regs == 2)) {
-								self.sdk.registrations.add(address, 3)
-							}
-							
-							actions.next()
-						}
-						else
-						{
-
-						
-							self.sdk.captcha[regproxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
-
-								if (error){
-
-									actions.to('network')
-
-									return
-								}
-
-								
-								if (captcha.done){
-
-									actions.preloader(true)
-
-									balance.request(function(r){
-
-										actions.preloader(false)
-
-										if(r){
-											actions.next()
-										}
-
-									})
-
-								}
-								else{
-
-									steps.captcha.current = captcha
-
-									clbk()
-								}
-
-							}, true, getproxyoptions())
-						}
-
-					}, true)
-
-				},
-
-				after : function(el, pel){
-					/*Create canvas*/
-
-					var hc = null
-
-					if (regproxy.hasHexCaptcha()) {
-						hc = new HexCaptcha({
-							styleSheet: [
-								'js/vendor/hex-captcha/css/captcha.css'
-							],
-							holder: '.captchaImage',
-							data: {
-								frames: steps.captcha.current?.frames,
-								overlay: steps.captcha.current?.overlay,
-								duration: 250
-							}
-						})
-					}
-					
-					var input = el.find('.ucaptchainput');
-					var redo = el.find('.redo')
-					var save = el.find('.addCaptcha')
-					var text = '';
-
-						input.focus()
-
-					var validate = function(v){
-
-						if(/^[a-zA-Z0-9]{4,}$/.test(v)){
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
-
-					input.on('keyup', function(){
-						text = $(this).val()
-
-						if(validate(text)){
-							save.removeClass('disabled')
-						}
-						else
-						{
-							save.addClass('disabled')
-						}
-					})
-
-					input.on('focus', function(){
-
-						if (self.app.mobileview) setTimeout(function(){
-							
-							if(el.c)
-								_scrollTo(input, el.c.closest('.customscroll')
-							
-						), 200})
-
-					})
-
-					save.on('click', function(){
-
-
-						var text = input.val()
-
-						if (validate(text)){
-							
-							self.sdk.captcha.make(text, hc ? hc.angles : null, function(error, captcha){
-
-								if (error == 'captchashots'){
-
-									sitemessage(self.app.localization.e('e13118'))
-
-									actions.redo()
-
-									return
-								}
-
-								if (error == 'captchanotequal_angles'){
-
-									sitemessage(self.app.localization.e('captchanotequal_angles'))
-
-									return
-								}
-
-								if (error){
-									sitemessage(self.app.localization.e('e13118'))
-
-									return
-								}
-							
-								if (captcha.done){
-									
-									actions.preloader(true)
-									
-									balance.request(function(r){
-
-										actions.preloader(false)
-
-										if(r){
-											actions.next()
-										}
-
-									})
-								}
-						
-							}, getproxyoptions())
-
-						}
-					})
-
-					redo.one('click', function(){
-
-						actions.redo()
-					})
-				}
-			},	
 
 			welcome : {
 
@@ -551,7 +347,6 @@ var registration = (function(){
 
 
 			},
-
 			
 			categories : {
 
@@ -650,7 +445,6 @@ var registration = (function(){
 
 
 			},
-
 						
 			bloggers : {
 
@@ -707,141 +501,7 @@ var registration = (function(){
 
 			},
 
-			network : {
-
-				id : 'network',
-
-				prev : function(clbk){
-
-					clbk()
-				},
-
-				render : 'network',
-
-				after : function(el){
-
-
-					self.app.errors.clbks.registration = function(){
-
-						if(app.errors.state.proxy || app.errors.state.proxymain)  return
-
-						if (current == 'network' && !self.app.platform.loadingWithErrors){
-							actions.to('captcha')
-						}
-
-						delete self.app.errors.clbks.registration
-					}
-				}
-
-
-			},
-
-			moneyfail : {
-
-				id : 'moneyfail',
 	
-				prev : function(clbk){
-	
-					clbk()
-				},
-	
-				render : 'moneyfail',
-	
-				after : function(el){
-
-					var address = self.app.user.address.value;
-
-					var b = function(){
-
-						var account = self.app.platform.actions.getCurrentAccount()
-
-						account.loadUnspents().catch(e => {}).then(() => {
-
-							var balance = account.actualBalance()
-
-							var amount = balance.actual
-
-							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " PKOIN")
-					
-							if(amount > 0){
-
-								var regs = app.platform.sdk.registrations.storage[address];
-
-								if (regs && (regs == 2)) {
-									self.sdk.registrations.add(address, 3)
-								}
-
-								if (current == 'moneyfail'){
-									setTimeout(function(){
-										actions.to('welcome');	
-									}, 100)
-									
-
-								}
-									
-
-								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
-							}
-						})
-
-						
-
-							
-						
-					}
-
-					var ch = function(){
-
-						globalpreloader(true)
-
-
-						var account = self.app.platform.actions.getCurrentAccount()
-
-						account.loadUnspents().catch(e => {}).then(() => {
-							
-							var balance = account.actualBalance()
-
-							var amount = balance.actual
-							
-							topPreloader(100);
-
-							setTimeout(() => {
-								globalpreloader(false)
-							}, 500)
-
-							
-	
-							b()
-							
-	
-						}, true)
-					}
-					
-					b()
-
-					el.find('.tryagain').on('click', function(){
-
-						globalpreloader(true)
-
-						balance.request(function(r){
-
-							globalpreloader(false)
-
-							if(r){
-								actions.next()
-							}
-
-						})
-					})
-	
-					el.find('.check').on('click', function(){
-						ch()
-					})
-
-					self.app.platform.sdk.node.transactions.clbks.moneyfail = b
-				}
-	
-			}
 
 		}
 
@@ -849,115 +509,6 @@ var registration = (function(){
 			return i;
 		})
 
-		var getindex = function(current){
-			return _.findIndex(arrange, function(s){
-				return s == current
-			})
-		}
-
-		var balance = {
-
-			request : function(clbk){
-
-
-				self.sdk.users.requestFreeMoney(function(res, err){
-
-
-					var address = self.sdk.address.pnet().address;
-
-					var requested = self.app.settings.get(address, 'request') || "";
-				
-
-					if(!res && !requested){
-
-						if (err == 'captcha'){
-
-							if (current == 'captcha'){
-								actions.to('captcha')
-							}
-
-						}
-
-
-						if (err == 'error' || err == 'iplimit'){
-
-							gliperror = true
-
-							if (current == 'captcha'){
-								actions.to('moneyfail')
-							}
-
-						}
-
-						if(_.isEmpty(err)){
-							actions.to('moneyfail')
-						}
-
-						if (clbk)
-							clbk(false, 'err')
-						
-					}	
-					
-					else{
-
-						self.app.settings.set(address, 'request', 'true')
-
-						self.sdk.registrations.add(address, 3)
-
-						//balance.follow()
-
-						if (clbk)
-							clbk(true)
-					}
-					
-				}, getproxyoptions())	
-			},
-
-			check : function(clbk, update){
-
-				var account = self.app.platform.actions.getCurrentAccount()
-
-				account.loadUnspents().catch(e => {}).then(() => {
-					
-					var balance = account.actualBalance()
-
-					var amount = balance.actual
-
-					if (clbk)
-						clbk(amount > 0)
-					
-				}, update)
-
-			},
-
-			follow : function(){
-				self.app.platform.sdk.node.transactions.clbks.filluser || (
-				self.app.platform.sdk.node.transactions.clbks.filluser = function(){
-
-					delete self.app.platform.sdk.node.transactions.clbks.filluser
-
-					balance.check(function(result){
-
-						if (result){							
-
-							if(current == 'money'){				
-								actions.next()
-							}
-
-						}	
-						
-						else{
-
-							balance.follow()
-
-						}
-
-					})
-					
-				})
-			}
-
-		}
 
 		var actions = {
 
@@ -1083,9 +634,9 @@ var registration = (function(){
 					var me = self.psdk.userInfo.getmy()
 					var account = self.app.platform.actions.getCurrentAccount()
 
-					if (me && me.relay && (account && !account.unspents.willChange && !account.unspents.value.length)){
+					if (me/* && me.relay && (account && !account.unspents.willChange && !account.unspents.value.length)*/){
 						
-						current = steps.captcha.id
+						current = steps.bloggers.id
 					}
 					else{
 						current = steps.settings.id
@@ -1304,41 +855,6 @@ var registration = (function(){
 
 			},
 
-			captcha : function(el, clbk){
-				self.shell({
-
-					name :  'captcha',
-					el :   el,
-					data : {
-						captcha : steps.captcha.current,
-						hexCaptcha: regproxy.hasHexCaptcha()
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
-
-			email : function(el, clbk){
-				self.shell({
-
-					name :  'email',
-					el :   el,
-					data : {
-						
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
-
 			welcome : function(el, clbk){
 				self.shell({
 
@@ -1414,62 +930,6 @@ var registration = (function(){
 
 				})
 			},
-
-			moneyfail : function(el, clbk){
-				self.shell({
-
-					name :  'moneyfail',
-					el :   el,
-					data : {
-						
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
-
-			network : function(el, clbk){
-
-				self.shell({
-
-					name :  'network',
-					el :   el,
-					data : {
-						
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
-
-			money : function(el, clbk){
-
-
-				self.shell({
-
-					name :  'money',
-					el :   el,
-					data : {
-						
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
-
-			
 
 			settings : function(_el, clbk){
 
@@ -1608,9 +1068,7 @@ var registration = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log("PP", p, self.user.validateVay())
-
-				if (p.state && !self.user.validateVay()){
+				/*if (p.state){
 					
 					self.app.nav.api.load({
 						open : true,
@@ -1619,7 +1077,7 @@ var registration = (function(){
 					})
 
 					return
-				}
+				}*/
 
 				gliperror = false;
 
@@ -1645,9 +1103,6 @@ var registration = (function(){
 
 
 				self.app.api.get.proxywithwallet().then(r => {
-					//const isHex = (p) => p?.info?.captcha?.hexCaptcha;
-
-					console.log('regproxy', r, regproxy)
 
 					if(r && !regproxy) {
 						regproxy = r
@@ -1660,10 +1115,6 @@ var registration = (function(){
 						catch (e) { }
 						
 					}
-
-					/*if (location.href.includes('pre.pocketnet.app')) {
-						self.sdk.captcha.hexCaptcha = isHex()
-					}*/
 
 					clbk(data);
 				})
@@ -1710,7 +1161,7 @@ var registration = (function(){
 				if(!scrollel.length) scrollel = null;
 
 				initEvents(p);
-
+				
 				make();
 
 				self.app.Logger.info({

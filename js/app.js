@@ -1014,7 +1014,7 @@ Application = function (p) {
 
 			self.platform.sdk.users.addressByName((p.href), function (r) {
 
-				console.log("R", r)
+				console.log("addressByName", r)
 
 				if (r) {
 					if (clbk)
@@ -1688,9 +1688,14 @@ Application = function (p) {
 
 			scrollmodechanging = true
 
-			window.requestAnimationFrame(() => {
-				self.el.html.css('overflow', 'hidden')
-			})
+			setTimeout(() => {
+				window.requestAnimationFrame(() => {
+					if (self.scrollRemoved) {
+						self.el.html.css('overflow', 'hidden')
+					}
+				})
+			}, 200)
+			
 
 			/*if (self.mobileview && window.bodyScrollLock && target){
 	  
@@ -1726,9 +1731,13 @@ Application = function (p) {
 
 				scrollmodechanging = true
 
-				window.requestAnimationFrame(() => {
-					self.el.html.css('overflow', '')
-				})
+				setTimeout(() => {
+					window.requestAnimationFrame(() => {
+						if (!self.scrollRemoved){
+							self.el.html.css('overflow', '')
+						}
+					})
+				}, 200)
 				
 
 				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){

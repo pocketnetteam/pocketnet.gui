@@ -101,6 +101,15 @@ var activities = (function () {
 			getdata: function () {
 				actions.setloading(true)
 				if (!activities.length) {
+
+					block = self.app.api.getCurrentBlock()
+
+					return self.app.api.rpc('getactivities', [self.user.address.value, block.height, , getters.getFilters(currentFilter)]).then(r => {
+						activities = r
+					}).finally(() => {
+						setTimeout(actions.setloading.bind(false), 300)
+					})
+
 					return self.app.api.fetch('ping', {}, { timeout: 4000 }).then(async (r) => {
 						block = r
 						try {

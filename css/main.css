@@ -4843,6 +4843,23 @@ html.allcontent_application #footerWrapper {
   border-left-color: rgb(var(--background-total-theme));
   left: 0px;
 }
+.registrationProgressIcon {
+  display: flex;
+  align-items: center;
+}
+.registrationProgressIcon i {
+  color: rgb(var(--color-txt-gray-dark)) !important;
+}
+.registrationProgressIcon.not_in_progress i {
+  color: rgb(var(--color-bad)) !important;
+}
+.registrationProgressIcon.in_progress_wait_unspents i {
+  color: rgb(var(--color-good)) !important;
+}
+.registrationProgressIcon.in_progress_transaction,
+.registrationProgressIcon.in_progress_hasUnspents {
+  color: rgb(var(--color-bg-ac-bright)) !important;
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -4882,6 +4899,18 @@ html.allcontent_application #footerWrapper {
 }
 .usericon:hover .realperson {
   opacity: 0.7;
+}
+.usericon .registrationProgressIcon {
+  position: absolute;
+  bottom: -4%;
+  left: -4%;
+}
+.usericon .registrationProgressIcon i {
+  font-size: 0.8em;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.usericon .registrationProgressIcon span {
+  display: none;
 }
 .userpic {
   width: 40px;

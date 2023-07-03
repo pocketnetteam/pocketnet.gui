@@ -2387,3 +2387,10 @@ _l.commonRequest_caption = "Запрос в поддержку"
 _l.commonRequest_er_info = "Требуется дополнительная информация"
 _l.commonRequest_er_email = "Оставьте email для обратной связи"
 _l.ok = "Хорошо"
+
+
+_l.registration_not_in_progress = "Процесс вашей регистрации еще не начался, вам нужно либо решить капчу, либо иметь PKOIN на адресе аккаунта"
+_l.registration_undefined_status= "Сведения о регистрации о вашем аккаунте недоступны, возможно вы не подключены к интернету"
+_l.registration_in_progress_transaction= "Транзакция с регистрацией аккаунта отправлена в блокчейн"
+_l.registration_in_progress_hasUnspents= "Транзакция с регистрацией аккаунта скоро будет отправлена в блокчейн"
+_l.registration_in_progress_wait_unspents= "Транзакция с регистрацией аккаунта скоро будет отправлена в блокчейн"

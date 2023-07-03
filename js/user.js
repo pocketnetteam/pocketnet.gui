@@ -385,13 +385,6 @@ User = function(app, p) {
 		if (me && me.relay && !me.extended){
 
 			return 'fuf'
-
-			/*var regs = app.platform.sdk.registrations.storage[self.address.value];
-
-			if (regs && (regs === true || regs < 3)){
-				return 'fuf'
-			}*/
-
 		}
 		
 
@@ -399,6 +392,8 @@ User = function(app, p) {
 	}
 
 	self.validate = function(){
+
+		return 'trw'
 
 		if(!self.address.value) return false;
 
@@ -418,6 +413,30 @@ User = function(app, p) {
 		}
 
 		return me.name
+
+	}
+
+	self.userRegistrationStatus = function(){
+
+		var account = app.platform.actions.getCurrentAccount()
+
+		if(!account){
+			return 'not_authorizated'
+		}
+
+		return account.getStatus()
+		
+	}
+
+	self.registrationProgressIcon = function(){
+		var r = self.userRegistrationStatus()
+
+		if (r == 'registered'){
+			return ''
+		}
+
+
+		return '<div class="registrationProgressIcon '+r+'" title="'+app.localization.e('registration_' + r)+'"><i class="fas fa-stopwatch"></i><span>'+app.localization.e('registration_' + r)+'</span></div>'
 
 	}
 

@@ -427,7 +427,7 @@ var test = (function(){
 					return
 				}
 
-				topPreloader2(20);
+				
 
 				var images = [{
 					original : file.base64,
@@ -454,6 +454,8 @@ var test = (function(){
 
 						success : function(i, editclbk){
 
+							topPreloader2(20);
+
 							resize(images[0].original, 150, 150, function(resized){
 								var r = resized.split(',');
 
@@ -471,10 +473,8 @@ var test = (function(){
 										clbk()
 
 								}
-								else
-								{
-									topPreloader2(100);
-								}
+								
+								topPreloader2(100);
 
 								
 							})

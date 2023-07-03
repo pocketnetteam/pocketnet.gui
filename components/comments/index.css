@@ -102,7 +102,7 @@
 #comments .list .comments-operations .operations-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 0.5em;
+  padding-top: 0.5em;
   /*>div {
 					
 				}*/

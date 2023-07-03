@@ -2503,10 +2503,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: self.test ? false : 'signature',
+				authorization: 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
-					if (settings.server.captcha && !self.test) {
+					if (settings.server.captcha/* && !self.test*/) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
@@ -2537,7 +2537,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
-					if (settings.server.captcha && !self.test) {
+					if (settings.server.captcha /*&& !self.test*/) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}

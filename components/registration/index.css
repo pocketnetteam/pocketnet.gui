@@ -41,7 +41,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 3000;
+  z-index: 1000;
   background: rgba(var(--background-total-theme));
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;

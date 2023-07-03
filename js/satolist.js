@@ -3060,6 +3060,7 @@ Platform = function (app, listofnodes) {
     self.ui = {
 
         support : function(template, parameters){
+ 
             app.nav.api.load({
                 open : true,
                 id : 'support',
@@ -5788,7 +5789,7 @@ Platform = function (app, listofnodes) {
 
                             close()
                         })
-                    }, false, longtouch)
+                    }, false)
 
                 }, d, 'components/lenta')
             })
@@ -6859,8 +6860,6 @@ Platform = function (app, listofnodes) {
                     actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
                     actionValue: bitcoin.crypto.sha256(Buffer.from(address, 'utf8')).toString('hex'),
                 });
-
-                /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
 
                 self.sdk.registrations.storage[address] = value || true;
                 self.sdk.registrations.save()
@@ -9846,6 +9845,17 @@ Platform = function (app, listofnodes) {
                     var lf = self.psdk.userInfo.findlocal((s) => {
                         return s && s.name && s.name.toLowerCase() == name.toLowerCase()
                     })
+
+                    var me = self.psdk.userInfo.getmy()
+
+                    if (me && me.name.toLowerCase() == name.toLowerCase()) {
+                        if (clbk) clbk(me.address)
+
+                        return 
+
+                    }
+
+                    
 
                     if (lf) {
                         if (clbk) clbk(lf.address)

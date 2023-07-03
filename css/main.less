@@ -218,6 +218,7 @@
 }
 
 .customscrollclass(){
+    
     overflow-y: overlay;
     overflow-x: hidden;
     scrollbar-width: 7px;
@@ -347,6 +348,7 @@
 body{
     overscroll-behavior: none;
     scroll-behavior: smooth;
+    
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -5950,6 +5952,33 @@ html.allcontent_application{
     }
 }
 
+.registrationProgressIcon{
+    display: flex;
+    align-items: center;
+    
+
+    i{
+        color : rgb(var(--color-txt-gray-dark))!important;
+    }
+
+    &.not_in_progress{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
+
+    &.in_progress_wait_unspents{
+        i{
+            color : rgb(var(--color-good))!important;
+        }
+    }
+
+    &.in_progress_transaction,
+    &.in_progress_hasUnspents{
+        color : rgb(var(--color-bg-ac-bright))!important;
+    }
+    
+}
 
 .usericon{
     background: rgb(var(--neutral-grad-0));
@@ -6006,6 +6035,20 @@ html.allcontent_application{
     &:hover{
         .realperson{
             opacity: 0.7;
+        }
+    }
+
+    .registrationProgressIcon{
+        position : absolute;
+        bottom : -4%;
+        left : -4%;
+
+        i{
+            font-size: 0.8em;
+            .shadowSmaller()
+        }
+        span{
+            display: none;
         }
     }
 
