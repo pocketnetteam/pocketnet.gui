@@ -654,9 +654,13 @@
 						color : rgb(var(--neutral-grad-2));
 						.transition(0.3s);
 
-						&:hover{
-							color : rgb(var(--color-bg-ac-bright));
+						@media (pointer:hover) {
+							&:hover{
+								color : rgb(var(--color-bg-ac-bright));
+							}
 						}
+
+						
 					}
 				}	
 			}
@@ -697,9 +701,15 @@
 					font-size: 0.8em;
 				}
 
-				&.ratedScore,
-				&:hover{
+
+				&.ratedScore{
 					color : rgb(var(--color-bg-ac-bright));
+				}
+
+				@media (pointer:hover) {
+					&:hover{
+						color : rgb(var(--color-bg-ac-bright));
+					}
 				}
 			}
 

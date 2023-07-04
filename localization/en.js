@@ -2546,28 +2546,7 @@ _l.sortByRating = "Number of ratings";
 _l.noPosted = "No posted Videos"
 _l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
 
-/// Insufficient funds for the transfer, taking into account the commission
-_l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into account the commission'
-_l.actions_noinputs = "You don't have enough coins to complete the operation"
-_l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
-_l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
-_l.actions_totalAmountZero = 'The total amount of the transaction is zero'
-_l.actions_rejected = 'The operation failed for unknown reason'
-_l.actions_rejectedFromNodes = 'The operation was rejected by the network'
-_l.actions_waitConfirmation = 'Operation pending confirmation'
-_l.actions_completed = 'Operation completed'
-_l.actions_alreadyCheckConfirmation = 'The operation has been sent to the blockchain'
-_l.actions_alreadySent = 'Operation already sent'
-_l.actions_alreadySending = 'The operation is already underway'
-_l.actions_waitUserStatus = 'The operation will be sent to the network after the user registration is completed'
-_l.actions_rejectedByTime = 'Operation canceled due to limitation period'
-_l.actions_resourses = 'Resources have not been loaded'
-_l.actions_alreadyCheck = 'Resource loading has already been checked'
-_l.actions_checkFail = 'Resources have not been loaded yet'
-_l.actions_collision = 'The operation was replaced by another'
-_l.actions_actionId = 'Unable to cancel operation, ID missing'
-_l.actions_address = 'Adress missing, user unregistered'
-_l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+
 
 
 _l.diagnosticsPage = "Diagnostics";
@@ -2695,3 +2674,52 @@ _l.registration_undefined_status= "Registration information about your account i
 _l.registration_in_progress_transaction= "Account registration transaction sent to the blockchain"
 _l.registration_in_progress_hasUnspents= "The account registration transaction will soon be sent to the blockchain"
 _l.registration_in_progress_wait_unspents= "The account registration transaction will soon be sent to the blockchain"
+
+_l.rpending = 'Pending'
+
+_l.object_comment = 'Comment'
+_l.object_userInfo = 'User Information'
+_l.object_upvoteShare = 'UpvoteShare'
+_l.object_cScore = 'Comment Score'
+_l.object_subscribePrivate = 'Subscribe with notifications'
+_l.object_subscribe = 'Subscribe'
+_l.object_unsubscribe = 'Unsubscribe'
+_l.object_blocking = 'Blocking'
+_l.object_complainShare = 'Complaint'
+_l.object_modFlag = 'Moderation'
+_l.object_contentBoost = 'Publication Boost'
+_l.object_share = 'Share'
+_l.object_accDel = 'Account Deletion'
+_l.object_transaction = 'Transaction'
+
+
+/// Insufficient funds for the transfer, taking into account the commission
+_l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into account the commission'
+_l.actions_noinputs = "You don't have enough coins to complete the operation"
+_l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
+_l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_totalAmountZero = 'The total amount of the transaction is zero'
+_l.actions_rejected = 'The operation failed for unknown reason'
+_l.actions_rejectedFromNodes = 'The operation was rejected by the network'
+_l.actions_waitConfirmation = 'Operation pending confirmation'
+_l.actions_completed = 'Operation completed'
+_l.actions_alreadyCheckConfirmation = 'The operation has been sent to the blockchain'
+_l.actions_alreadySent = 'Operation already sent'
+_l.actions_alreadySending = 'The operation is already underway'
+_l.actions_waitUserStatus = 'The operation will be sent to the network after the user registration is completed'
+_l.actions_rejectedByTime = 'Operation canceled due to limitation period'
+_l.actions_resourses = 'Resources have not been loaded'
+_l.actions_alreadyCheck = 'Resource loading has already been checked'
+_l.actions_checkFail = 'Resources have not been loaded yet'
+_l.actions_collision = 'The operation was replaced by another'
+_l.actions_actionId = 'Unable to cancel operation, ID missing'
+_l.actions_address = 'Adress missing, user unregistered'
+_l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+
+_l.actions_userInteractive = 'User action required'
+_l.actions_waitUserInteractive = 'Waiting for user action'
+_l.actions_rejectedByUser = 'Canceled by user'
+
+_l.actions_rejectedByUser_question = 'Do you want to cancel the operation?'
+_l.actions_no_pending_actions = 'No pending operations'
+

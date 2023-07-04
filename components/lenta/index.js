@@ -4853,6 +4853,8 @@ var lenta = (function(){
 
 						if(type == 'share'){
 
+							console.log('type, alias, status', type, alias, status)
+
 							var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
 							var replaceAll = true
 
@@ -4860,6 +4862,8 @@ var lenta = (function(){
 
 							if (!replace){
 								if(essenseData.author == alias.actor){
+
+									if(status == 'rejected') return
 
 									renders.shares([alias], function(){
 										renders.sharesInview([alias], function(){
@@ -4879,6 +4883,15 @@ var lenta = (function(){
 								if (replaceAll){
 
 									actions.destroyShare(replace)
+
+									if(status == 'rejected' && (!alias || !alias.editing)) {
+
+										if(el.share[replace.txid]) el.share[replace.txid].remove()
+
+										delete el.share[replace.txid]
+
+										return
+									}
 
 									renders.shares([alias], function(){
 										renders.sharesInview([alias], function(){
@@ -5390,7 +5403,7 @@ var lenta = (function(){
 					parallax = null
 				}
 			
-				delete self.app.platform.actionListeners.lenta
+				delete self.app.platform.actionListeners[mid]
 
 				app.actions.playingvideo(null);
 

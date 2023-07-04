@@ -13,7 +13,7 @@ var showAvatar = function(relatedContent){
 
 				
 			<div class="icon" profile="<%-relatedContent.address%>" >
-				<div class="usericon usericonsbsa another" image="<%-src || '*'%>" visibleimage="true" ban=".gif" contain="none">
+				<div class="usericon usericonsbsa another" <% if(src) {%> <%= bgImagesClApplyTemplate(src) %> <% } %> visibleimage="true" ban=".gif" contain="none">
 
 					<% if(!src && letter) { %>
 
@@ -32,9 +32,6 @@ var showAvatar = function(relatedContent){
 		<% if(!app.mobileview) {%></a><% } %>
 
 	<% } %>
-	
-	
-	
 
 <% }
 

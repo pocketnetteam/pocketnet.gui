@@ -53,6 +53,7 @@ var comments = (function(){
 					if(!value){
 
 						if(err != 40){
+
 							_el.removeClass('rated')
 							d_el.find('.scoreUp').removeClass('ratedScore')
 							d_el.find('.scoreDown').removeClass('ratedScore')
@@ -85,17 +86,15 @@ var comments = (function(){
 
 			post : function(comment, optype){
 
-
 				actions.showhideLabel()
 
 				var p = {
-					newcomments : 'newcomments'
+					//newcomments : 'newcomments'
 				}
 
 				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
 					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
-
 
 					if(!comment.parentid){
 						p.class = "firstcomment"
@@ -104,7 +103,6 @@ var comments = (function(){
 					if((!showedall && !comment.parentid) || optype == 'commentEdit' || optype == 'commentDelete' || _el.length){
 
 						p.comments = [comment]
-
 
 						if(_el.length){
 							p.replace = true
@@ -116,10 +114,17 @@ var comments = (function(){
 							}
 						}
 
+						/*if ((optype == 'commentEdit' || optype == 'commentDelete') && comment.rejected){
+							return
+						}*/
+
 						renders.list(p)
 
 					}
 					else{
+
+						console.log("HERER2!!!!!!!!!!!")
+
 
 						if (comment.parentid){
 
@@ -1224,6 +1229,8 @@ var comments = (function(){
 
 					self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
 
+						console.log('err', err, alias) 
+
 						
 						if (err){
 							self.app.platform.errorHandler(err, true)	
@@ -1527,13 +1534,14 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 				var localParent = _el.closest('.commentBody')
 
-				var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+				var post = self.psdk.share.get(txid);
 
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
 				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
 
+				console.log('post', post, id)
 
 				var d = {
 					address : self.app.user.address.value,
@@ -2639,7 +2647,7 @@ var comments = (function(){
 
 					if (comment){
 						if(comment.postid == txid){
-							clbks.upvote(null, self.psdk.comment.get(alias.comment.v), alias.value.v, alias.actor)
+							clbks.upvote(status == 'rejected' ? 'rejected' : null, self.psdk.comment.get(alias.comment.v), status == 'rejected' ? 0 : alias.value.v, alias.actor)
 						}
 					}
 

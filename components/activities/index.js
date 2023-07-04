@@ -12,6 +12,10 @@ var activities = (function () {
 
 		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
+		if (window.testpocketnet){
+			filtersList.push('pending')
+		}
+
 		var activities = []
 		var videos = []
 
@@ -138,11 +142,17 @@ var activities = (function () {
 
 				renders.showcurrentFilter()
 
-				var promise = currentFilter === 'video' ? actions.getDataVideos : actions.getdata
+				var promise = currentFilter === 'video' ? actions.getDataVideos : (currentFilter === 'pending' ? actions.getActions : actions.getdata)
 
-				promise().then(() => {
+				promise().then((data) => {
 
-					renders.content()
+					if(currentFilter === 'pending'){
+						renders.actions(data)
+					}
+					else{
+						renders.content()
+					}
+					
 					
 				}).catch(e => {
 					console.error(e)
@@ -191,6 +201,18 @@ var activities = (function () {
 					actions.setloading(false)
 				})
 
+			},
+
+			getActions : () => {
+				var account = self.app.platform.actions.getCurrentAccount()
+
+				if (account){
+					return Promise.resolve(_.sortBy(account.getTempActions(null, null, true), (a) => {
+						return -a.added
+					}))
+				}else{
+					return Promise.resolve([])
+				}
 			},
 
 			getDataVideos: () => {
@@ -312,6 +334,7 @@ var activities = (function () {
 					}
 				})
 			},
+
 			openMultiBlocks(data, clbk) {
 				self.app.nav.api.load({
 					open: true,
@@ -368,7 +391,7 @@ var activities = (function () {
 
 			loadmorescroll: function () {
 
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video') {
+				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 
 						var ids = _.map(data, (v) => {
@@ -394,7 +417,55 @@ var activities = (function () {
 
 				}
 			},
+
+			actionsCount: function (act) {
+				actions.getActions().then(a => {
+
+					var c = a.length
+					
+					el.c.find('.filters .tab[rid="pending"] .count').html(!c ? '' : c)
+				})
+			},
 			
+			actions: function (act) {
+
+				actions.setloading(false)
+
+				self.shell({
+
+					name: 'actions',
+					el: el.content,
+					data: {
+						actions : act
+					},
+
+				}, function (_p) {
+
+					_p.el.find('.cancel').on('click', function(){
+						var id = $(this).closest('.action').attr('aid')
+
+						new dialog({
+							html : self.app.localization.e('actions_rejectedByUser_question'),
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+	
+							success : function(){
+								try{
+									self.app.platform.actions.cancelAction(self.app.user.address.value, id).then(() => {
+										console.log("SUCCESS")
+									}).catch(e => {
+										console.error(e)
+									})
+								}catch(e){
+									console.error(e)
+								}
+								
+							}
+						})
+					})
+					
+				})
+			},
 
 			content: function (type, ids) {
 
@@ -459,6 +530,18 @@ var activities = (function () {
 
 			})
 
+
+			self.app.platform.actionListeners['activies'] = function({type, alias, status}){
+				renders.actionsCount()
+
+				if (currentFilter === 'pending'){
+					actions.getActions().then(a => {
+						renders.actions(a)
+					})
+					
+				}
+			}
+
 		}
 
 		return {
@@ -490,6 +573,8 @@ var activities = (function () {
 				el = {};
 				scnt.off('scroll', events.loadmorescroll)
 				delete self.app.events.scroll['activities']
+
+				delete self.app.platform.actionListeners['activies']
 			},
 
 			init: function (p) {
@@ -508,6 +593,8 @@ var activities = (function () {
 				actions.applyFilter()
 
 				initEvents();
+
+				renders.actionsCount()
 
 
 				p.clbk(null, p);

@@ -2453,3 +2453,51 @@ _l.registration_undefined_status= "Сведения о регистрации о
 _l.registration_in_progress_transaction= "Транзакция с регистрацией аккаунта отправлена в блокчейн"
 _l.registration_in_progress_hasUnspents= "Транзакция с регистрацией аккаунта скоро будет отправлена в блокчейн"
 _l.registration_in_progress_wait_unspents= "Транзакция с регистрацией аккаунта скоро будет отправлена в блокчейн"
+
+_l.rpending = 'В ожидании'
+
+
+_l.object_comment = 'Комментарий'
+_l.object_userInfo = 'Информация о пользователе'
+_l.object_upvoteShare = 'Оценка публикации'
+_l.object_cScore = 'Оценка комментария'
+_l.object_subscribePrivate = 'Подписка с уведомлениями'
+_l.object_subscribe = 'Подписка'
+_l.object_unsubscribe = 'Отписка'
+_l.object_blocking = 'Блокировка'
+_l.object_complainShare = 'Жалоба'
+_l.object_modFlag = 'Модерация'
+_l.object_contentBoost = 'Буст публикации'
+_l.object_share = 'Публикация'
+_l.object_accDel = 'Удаление аккаунта'
+_l.object_transaction = 'Транзакция'
+
+_l.actions_noinputs_wallet = 'Недостаточно средств для перевода с учетом комиссии'
+_l.actions_noinputs = "У вас недостаточно монет для завершения операции"
+_l.actions_noinputs_on_address = "У вас недостаточно монет на выбранных адресах для завершения операции"
+_l.actions_noinputs_wait = "У вас недостаточно монет для завершения операции. Пожалуйста, подождите"
+_l.actions_totalAmountZero = 'Общая сумма транзакции равна нулю'
+_l.actions_rejected = 'Операция не удалась по неизвестной причине'
+_l.actions_rejectedFromNodes = 'Операция отклонена сетью'
+_l.actions_waitConfirmation = 'Операция ожидает подтверждения'
+_l.actions_completed = 'Операция завершена'
+_l.actions_alreadyCheckConfirmation = 'Операция отправлена в блокчейн'
+_l.actions_alreadySent = 'Операция уже отправлена'
+_l.actions_alreadySending = 'Операция уже выполняется'
+_l.actions_waitUserStatus = 'Операция будет отправлена в сеть после завершения регистрации пользователя'
+_l.actions_rejectedByTime = 'Операция отменена из-за истечения срока давности'
+_l.actions_resourses = 'Ресурсы не загружены'
+_l.actions_alreadyCheck = 'Загрузка ресурсов уже проверена'
+_l.actions_checkFail = 'Ресурсы еще не загружены'
+_l.actions_collision = 'Операция заменена другой'
+_l.actions_actionId = 'Невозможно отменить операцию, идентификатор отсутствует'
+_l.actions_address = 'Адрес отсутствует, пользователь не зарегистрирован'
+_l.actions_noAddress = 'Невозможно отменить операцию, адрес отсутствует'
+
+_l.actions_userInteractive = 'Необходимо действие пользователя'
+_l.actions_waitUserInteractive = 'Ожидания действия пользователя'
+_l.actions_rejectedByUser = 'Отменено пользователем'
+
+_l.actions_rejectedByUser_question = 'Вы хотите отменить операцию?'
+_l.actions_no_pending_actions = 'Нет операций ожидающих исполнения'
+

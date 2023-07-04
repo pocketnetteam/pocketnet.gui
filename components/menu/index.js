@@ -364,19 +364,26 @@ var menu = (function(){
 			activities : {
 				init : function(el){
 
-					/*setTimeout(function(){
-
-						if(!isTablet()){
-							self.nav.api.load({
-								eid : 'menu',
-								open : true,
-								id : 'activities',
-								el : el,
-								inTooltip : true
-							})
+					if(window.testpocketnet){
+						var gca = function(){
+							var account = self.app.platform.actions.getCurrentAccount()
+							var c = 0
+	
+							if (account){
+								c = account.getTempActions().length
+							}
+	
+							actions.ah(el, c)
 						}
-						
-					},2000)*/
+	
+						self.app.platform.actionListeners['menu_activies'] = function({type, alias, status}){
+							gca()
+						}
+	
+						gca()
+					}
+
+					
 
 				},
 
@@ -1285,6 +1292,8 @@ var menu = (function(){
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
+
+				delete self.app.platform.actionListeners['menu_activies']
 
 
 				_.each(events, function(e){

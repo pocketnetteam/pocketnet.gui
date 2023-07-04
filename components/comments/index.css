@@ -488,8 +488,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#comments .list .commentpanel .items > div .cact:hover {
-  color: rgb(var(--color-bg-ac-bright));
+@media (pointer: hover) {
+  #comments .list .commentpanel .items > div .cact:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
 }
 #comments .list .commentpanel .iconlabelWrapper {
   display: flex;
@@ -526,9 +528,13 @@
 #comments .list .commentpanel .upvoteComment .commentScore {
   font-size: 0.8em;
 }
-#comments .list .commentpanel .upvoteComment.ratedScore,
-#comments .list .commentpanel .upvoteComment:hover {
+#comments .list .commentpanel .upvoteComment.ratedScore {
   color: rgb(var(--color-bg-ac-bright));
+}
+@media (pointer: hover) {
+  #comments .list .commentpanel .upvoteComment:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
 }
 #comments.showedall .showall {
   display: none;
