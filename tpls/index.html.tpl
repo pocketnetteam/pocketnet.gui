@@ -44,7 +44,7 @@
         </style>
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
-       
+        
        
     </head>
     <body id="application" class="menu-hide ">
@@ -117,13 +117,14 @@
 
         __JSENV__
         __JS__
+        __CSS__
         __VE__
 
         __JSPOST__
 
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
-        __CSS__
+        
 
         
 

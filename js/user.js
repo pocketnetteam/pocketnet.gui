@@ -40,6 +40,15 @@ User = function(app, p) {
 					
 			},
 			value : null
+		},
+		pair : {
+
+			set : function(l){
+				
+				this.value = l || null;
+					
+			},
+			value : null
 		}
 	}
 
@@ -249,6 +258,7 @@ User = function(app, p) {
 
 		keys.public.set();
 		keys.private.set();
+		keys.pair.set();
 
 		app.platform.clear();
 
@@ -528,7 +538,7 @@ User = function(app, p) {
 
 	    keys.private.set(keyPair.privateKey)
 	    keys.public.set(keyPair.publicKey)
-
+		keys.pair.set(keyPair)
 	  
 	    var address = app.platform.sdk.address.pnet()
 
@@ -618,7 +628,8 @@ User = function(app, p) {
 	self.private = keys.private;
 
 	self.keys = function(){
-		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
+		console.log('keys.pair', keys.pair)
+		return keys.pair.value
 	}
 
 	self.cryptoKeys = function(){

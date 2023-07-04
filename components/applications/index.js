@@ -127,8 +127,6 @@ var applications = (function(){
 				return os.id != __os
 			})
 
-			console.log('filtered', filtered)
-
 			if (filtered.length != fl){
 				renders.mainoss(oss[__os])
 

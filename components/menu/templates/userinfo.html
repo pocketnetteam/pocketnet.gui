@@ -1,0 +1,45 @@
+<% 
+    var deleted = app.platform.sdk.user.myaccauntdeleted();
+    var me = psdk.userInfo.getmy() || {}
+
+    var src = me.image  
+
+    var name = app.platform.api.clearname(me.name || user.address.value)
+    var letter = name ? name[0] : ''
+
+
+    if(deleted){
+        src = ''
+        letter = ''
+    }
+
+%>
+
+<div class="icon">
+    
+    <a elementsid="<%-app.platform.api.authorlink(user.address.value)%>" href="<%-app.platform.api.authorlink(user.address.value)%>">	
+        <div class="usericon" contain="none" <% if(src) {%> <%= bgImagesClApplyTemplate(src) %> <% } %>>
+
+            <% if(!src && letter) {%>
+
+                <span class="letter">
+                    <%-letter.toUpperCase()%>
+                </span>
+
+            <% } else if (!src) { %>
+
+                <i class="far fa-user"></i>
+
+            <% } %>
+
+            <% if(app.platform.ui.markUser && !deleted) {%>
+
+                <%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
+
+            <% } %>
+
+            <%=user.registrationProgressIcon()%>
+        
+        </div>
+    </a>
+</div>

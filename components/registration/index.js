@@ -624,8 +624,6 @@ var registration = (function(){
 
 			next : function(clbk){
 
-				console.log('current', current)
-
 				if (current) {
 					current = steps[current].nextindex
 

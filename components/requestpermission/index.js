@@ -55,8 +55,6 @@ var requestpermission = (function(){
 		var getdata = {
 			payment : function(data){
 
-				console.log("DATA", data)
-
 				return new Promise((resolve, reject) => {
 
 					var result = {}
@@ -93,8 +91,6 @@ var requestpermission = (function(){
 			getdata : function(clbk, p){
 
 				ed = {...p.settings.essenseData || {}}
-
-				console.log("ED", ed)
 
 				var pr = getdata[ed.permission] ? getdata[ed.permission](ed.data) : Promise.resolve({})
 

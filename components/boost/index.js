@@ -123,9 +123,6 @@ var boost = (function(){
 					autoplay : ed.autoplay
 				};
 
-				console.log('datat', data);
-
-
 				clbk(data);
 
 			},

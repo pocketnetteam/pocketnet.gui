@@ -70,7 +70,7 @@ __map =  {
 		//"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
-		{path : "js/popups/index.js", babelify : true}
+		{path : "js/popups/index.js", babelify : true},
 	],
 
 	__sourcesfirst : [
@@ -123,7 +123,7 @@ __map =  {
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true},
-		"js/vendor/wallet-address-validator.min.js",
+		
 	],
 
 	__css : [

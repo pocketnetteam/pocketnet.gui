@@ -72,8 +72,6 @@ var lastcomments = (function(){
 		var load = function(clbk){
 			self.app.platform.sdk.comments.last(function(c, error){
 
-				console.log("C", c)
-
 				var me = app.platform.sdk.user.me()
 
 				c = _.filter(c, (c) => {
@@ -120,8 +118,6 @@ var lastcomments = (function(){
 					var bytx = group(c, function(c){
 						return c.postid
 					})
-
-					console.log('bytx', bytx, c)
 
 					if (clbk)
 						clbk(bytx, error || error3)

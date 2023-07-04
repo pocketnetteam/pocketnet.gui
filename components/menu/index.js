@@ -1147,6 +1147,17 @@ var menu = (function(){
 
 			})
 
+			self.app.platform.actionListeners['menu'] = function({type, alias, status}){
+
+				console.log('type, alias, status', type, alias, status)
+
+				if (type == 'userInfo'){
+					console.log("RENDER")
+					renders.userinfo()
+				}
+				
+			}
+
 			//ParametersLive([loc], el.c);
 		}
 
@@ -1168,12 +1179,29 @@ var menu = (function(){
 					if (clbk)
 						clbk(_p.rendered);
 				})
-			}
+			},
+
+			userinfo: function(clbk){
+
+				self.shell({
+					name :  'userinfo',
+					data : {
+						
+					},
+
+					el : el.userinfoWrapper
+
+				}, function(_p){
+					if(clbk) clbk()
+				})
+			},
+
+			
 		}
 
 		var make = function(){
 
-			
+			renders.userinfo()
 
 		}
 
@@ -1240,6 +1268,8 @@ var menu = (function(){
 				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
+
+				delete self.app.platform.actionListeners['menu']
 
 				//delete self.app.platform.sdk.node.transactions.clbks.menu
 
@@ -1321,7 +1351,7 @@ var menu = (function(){
 
 
 				el.postssearch =  el.c.find('.postssearch')
-
+				el.userinfoWrapper = el.c.find('.userinfoWrapper')
 				actions.ahnotifyclear()
 
 				initEvents();

@@ -26,8 +26,6 @@ var donate = (function(){
 					transaction.feemode.set('include')
 					transaction.message.set('')
 
-				console.log('transaction', transaction, amount, ed)
-
 				return transaction
 
 			},
@@ -40,8 +38,6 @@ var donate = (function(){
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 					calculatedFee : 0
 				}).then((txdata) => {
-
-					console.log('txdata', txdata)
 
 					setTimeout(() => {
 

@@ -98,7 +98,7 @@ var ActionOptions = {
                     account.willChange = true
                 }
 
-                if (action.complete){
+                if (action.completed){
                     account.willChange = false
                     account.status.value = true
 
@@ -187,7 +187,8 @@ var errorCodesAndActions = {
     '31' : errorCodesAndActionsExecutors.limit,
     '49' : errorCodesAndActionsExecutors.limit,
     '61' : errorCodesAndActionsExecutors.limit,
-    '65' : errorCodesAndActionsExecutors.limit
+    '65' : errorCodesAndActionsExecutors.limit,
+    '18' : errorCodesAndActionsExecutors.wait
 }
 
 var Action = function(account, object, priority, settings){
@@ -421,8 +422,6 @@ var Action = function(account, object, priority, settings){
 
                     clearUnspents = filterUnspents(clearUnspents)
 
-                    console.log('clearUnspents', clearUnspents)
-
                     if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('actions_noinputs')
                     }
@@ -438,17 +437,6 @@ var Action = function(account, object, priority, settings){
             
         }
 
-        
-
-        //options.addresses ? options.addresses() : null
-
-        /*if(account.unspents.willChange){
-            return Promise.reject('actions_noinputs_wait')
-        }   
-        else{
-            return Promise.reject('actions_noinputs')
-        }*/
-        
 
         if(!unspents.length){
             return Promise.reject('actions_noinputs_wait')
@@ -511,7 +499,9 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            if(unspents.length < 50){
+            console.log('totalInputAmount', totalInputAmount)
+
+            if(unspents.length < 50 && totalInputAmount > 0.001){
 
                 var divi = totalInputAmount / 2
 
@@ -631,15 +621,25 @@ var Action = function(account, object, priority, settings){
 
         }).catch((e = {}) => {
 
+            var code = e.code
+
+            console.log('code', code)
+
+            if (code == -26){
+                console.log("MAKETRANSACTIONERROR", self)
+                debugger
+            }
+
             delete self.inputs
             delete self.outputs
             delete self.sending
 
             trigger()
 
-            var code = e.code
+            
 
             if(!retry && (code == -26 || code == -25 || code == 16 || code == 261)){
+                
                 return makeTransaction(true, calculatedFee, send)
             }
 
@@ -1208,7 +1208,6 @@ var Account = function(address, parent){
                 }
 
                 if (action.sent > (new Date()).addSeconds(- 60 * 20)){
-                    console.log("WAIT 20 min")
                     return
                 }
 
@@ -1324,10 +1323,8 @@ var Account = function(address, parent){
 
         if(type == 'requestUnspents'){
             return self.requestUnspents(parameters).then(() => {
-                console.log("HERE")
                 return Promise.resolve()
             }).finally(() => {
-                console.log("HERE2")
 
                 setWaitUserAction(null)
             })
@@ -1389,7 +1386,6 @@ var Account = function(address, parent){
 
     self.willChangeUnspentsCallback = function(actionId, proxy){
 
-        console.log("willChangeUnspentsCallback", actionId, proxy)
 
         self.unspents.willChange = {
             transaction : null,
@@ -1403,7 +1399,6 @@ var Account = function(address, parent){
 
     self.checkWillChangeUnspents = function(){
 
-        console.log('self.unspents.willChange', self.unspents.willChange)
 
         if (self.unspents.willChange){
             if((new Date()) > self.unspents.willChange.until){
@@ -1449,7 +1444,6 @@ var Account = function(address, parent){
             //// TODO
         }).then((action) => {
 
-            console.log("willChangeUnspentsCallback")
 
             self.willChangeUnspentsCallback(action, proxyoptions.proxy)
 
@@ -1541,7 +1535,6 @@ var Account = function(address, parent){
 
             if (self.unspents.willChange){
                 if (self.unspents.willChange.transaction == out.txid){
-                    console.log("willChange nul")
                     self.unspents.willChange = null
                 }
             }
@@ -1603,12 +1596,10 @@ var Account = function(address, parent){
             if (exported.until < new Date()) return
 
 
-            console.log('exported', exported)
-
             //withcompleted
             if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || 
             
-            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && ActionOptions.clearRejected))
+            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
             ){
 
@@ -1861,8 +1852,6 @@ var Account = function(address, parent){
 
         if(processing) return
 
-        console.log("PROCESSING")
-
         self.checkWillChangeUnspents()
 
         if(self.waitUserAction) {
@@ -1980,8 +1969,6 @@ var Account = function(address, parent){
     var emitFilteredAction = function(action){
         var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : 'relay'))
         var estatus = (status == 'relay' || status == 'sent') ? 'relayorsent' : status
-
-        console.log('estatus', estatus, action.rejected)
 
         if (status && action.id){
             

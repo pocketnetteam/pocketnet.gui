@@ -421,6 +421,7 @@ Platform = function (app, listofnodes) {
         blocking: function(alias, status){},
         unblocking: function(alias, status){},
         subscribePrivate: function(alias, status){},
+        userInfo: function(alias, status){},
     }
 
     self.actionListeners = {}
@@ -10858,7 +10859,6 @@ Platform = function (app, listofnodes) {
 
                 type || (type = 'p2pkh')
 
-
                 var pubkeyRefresh = false;
 
                 if (!pubkey) pubkey = self.app.user.key.value;
@@ -20625,15 +20625,10 @@ Platform = function (app, listofnodes) {
                 keyPair = platform.app.user.keys();
             }
 
-            var key = platform.sdk.address.pnet(keyPair.publicKey).address + 'addressesNum'
-
-            //var num = localStorage[key] || 1;
-
             var keyPairs = [{
                 kp: keyPair,
                 n: 0
             }];
-
 
             self.addAddresses(keyPairs, clbk, proxy)
 
@@ -20700,9 +20695,6 @@ Platform = function (app, listofnodes) {
 
         self.addAddress = function (keyPair, n, clbk, proxy) {
 
-            /*if(!keyPair){
-                keyPair = platform.app.user.keys();
-            }*/
 
             var address = '';
 

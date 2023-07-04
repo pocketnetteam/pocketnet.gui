@@ -23,7 +23,6 @@ var applicationmeta = (function(){
 
 				var pr = Promise.resolve()
 
-				console.log('status', status, meta, permission)
 
 				if((!status && !meta.auto) || (status && status.state == 'forbid')){
 					if(meta.auto || meta.level > 5){
@@ -171,7 +170,6 @@ var applicationmeta = (function(){
 					application = f.application
 					appdata = f.appdata
 
-					console.log('application', application)
 	
 					var data = {
 						application,

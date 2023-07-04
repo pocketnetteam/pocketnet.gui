@@ -408,7 +408,7 @@ var donations = (function(){
 							clbk(address)
 					}
 					else
-					{	console.log('err address', err)
+					{	
 						sitemessage(err || self.app.localization.e('e13094'));
 						clbk(null, err)
 					}

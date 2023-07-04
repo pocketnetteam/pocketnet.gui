@@ -88,12 +88,10 @@ var importManifest = function(application){
         if(manifest.develop != application.develop) return Promise.reject(appsError('discrepancy:develop'))
         
         if(manifest.version < application.version) {
-            console.log("APPLICATION UPDATING")
             return Promise.reject(appsError('version'))
         }
 
         if(manifest.version > application.version) {
-            console.log("APPLICATION UPDATING")
             return Promise.reject(appsError('version'))
         }
 
@@ -282,11 +280,7 @@ var BastyonApps = function(app){
 
             action : function({data, application}){
 
-                console.log('data', data)
-
                 var message = superXSS(data.message)
-
-                console.log('message', message)
 
                 if(!message){
                     return Promise.reject(appsError('message:empty'))
@@ -470,8 +464,6 @@ var BastyonApps = function(app){
 
         var key = application.manifest.id + '+' + application.manifest.version
 
-        console.log('application', application)
-
         if(!downloading[key]) {
             downloading[key] = importFile(application, 'output.html').then((html) => {
 
@@ -485,8 +477,6 @@ var BastyonApps = function(app){
         }
 
         return downloading[key].then(html => {
-
-            console.log('html.length', html.length)
 
             if(!application.develop){
                 //// check hash with manifest
@@ -1002,11 +992,9 @@ var BastyonApps = function(app){
 
         });
 
-        console.log("ININT")
 
         return Promise.all(promises).then(() => {
             
-            console.log("application:EVENT LISTENER")
             window.addEventListener("message", listener)
 
         }).catch(e => {

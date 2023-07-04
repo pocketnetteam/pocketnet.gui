@@ -161,7 +161,6 @@ var system16 = (function(){
 				renders.webserveradmin(el.c)
 			},
 			'hexCaptcha' : function(_el){
-				console.log("hexCaptcha", _el.attr('value'))
 				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
 				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
 
@@ -648,8 +647,6 @@ var system16 = (function(){
 				el.find('[sys]').on('click', function(){
 					var sys = $(this).attr('sys')
                     var path = $(this).attr('path')
-
-					console.log(sys, path)
 
 					if (sys){
 						var s = deep(systemsettings, sys)
@@ -4086,7 +4083,6 @@ var system16 = (function(){
 						.then((data) => (peertubePerformance = { ...data }))
 						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
-							console.log("R", r)
 						  system = r;
 							
 						  if(callbacks){

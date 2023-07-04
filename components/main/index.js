@@ -513,12 +513,15 @@ var main = (function(){
 
 
 							if (shares.length <= 2 && el.topvideos){
-								el.topvideos.addClass('hidden')
 
-								if(external){
-									external.destroy()
-									external = null
-								}
+								window.requestAnimationFrame(() => {
+									el.topvideos.addClass('hidden')
+
+									if(external){
+										external.destroy()
+										external = null
+									}
+								})
 								
 							}
 							

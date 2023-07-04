@@ -129,15 +129,13 @@
 
         __JSENV__
         __JS__
+        __CSS__
         __VE__
-
-        
-
         __JSPOST__
 
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
-        __CSS__
+        
 
         
         

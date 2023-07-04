@@ -752,7 +752,6 @@ wnd = function (p) {
 
 
 			if (cl) {
-				console.log("HERE")
 				if (p.closecross) p.closecross(wnd, self);
 			}
 
@@ -7570,15 +7569,11 @@ search = function (el, p) {
 
 		searchInput.on('keyup', function (e) {
 
-			console.log("KEYUP")
-
 			if ((e.keyCode || e.which) != 13) {
 
 				if (typeof p.time == 'undefined') {
 					p.time = 450;
 				}
-
-				console.log('p.time', p.time)
 
 				if (!p.time) {
 					events.fastsearch(searchInput, e)
@@ -9194,8 +9189,6 @@ fetchLocal = function (url, name = 'file') {
 
 			var type = xhr.getResponseHeader('content-type')
 
-			console.log("type", type)
-
 			name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
 
 			resolve({
@@ -9222,8 +9215,6 @@ fetchLocalAppCopy = function (url, name = 'file') {
 		xhr.onload = function () {
 
 			var type = xhr.getResponseHeader('content-type').replace(' charset=UTF-8', '')
-
-			console.log("type", type)
 
 			name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
 
@@ -9780,7 +9771,6 @@ edjsHTML = function () {
 			},
 
 			parse: function (e) {
-				console.log("E", e)
 				return '<div class="article_body">' + e.blocks.map((function (e) {
 					return i[e.type] ? i[e.type](e) : t(e.type)
 				})).join('') + '</div>'

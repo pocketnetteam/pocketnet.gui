@@ -60,7 +60,6 @@ var BastyonSdk = function(){
         try{
             if(key == 'action') actionHelper(data)
 
-            console.log('listeners', listeners, key)
 
             if (listeners[key]){
                 listeners[key].forEach(f => {
@@ -93,8 +92,6 @@ var BastyonSdk = function(){
             })
     
             clbks[id] = function({data = {}, error}){
-
-                console.log('application:', data, error)
 
                 //delete clbks[id]
 
@@ -201,7 +198,6 @@ var BastyonSdk = function(){
     return self
 }
 
-console.log("SDK_READY")
 
 
 if(typeof module != "undefined"){ module.exports = {BastyonSdk}; } 

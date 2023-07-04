@@ -729,7 +729,7 @@ var lenta = (function(){
 						return;
 					}
 					
-					if (el.c.hasClass('networkError'))
+					if (el.c && el.c.hasClass('networkError'))
 						el.c.removeClass('networkError')
 
 
@@ -3301,16 +3301,13 @@ var lenta = (function(){
 
 					return
 				}
-				
-
-				console.log('mystars shares', shares)
 
 				var _shares = _.filter(shares, function(s){
 					if(typeof s.myVal == 'undefined'){
 						return true;
 					}
 					else{
-						console.log("S", s)
+			
 					}
 				})
 
@@ -3324,7 +3321,6 @@ var lenta = (function(){
 
 						if (share.myVal){
 							renders.stars(share)
-
 						}
 
 					})
@@ -3390,23 +3386,26 @@ var lenta = (function(){
 
 				if (el.share && el.share[share.txid] ){
 
-					self.shell({
-						name :  'stars',
-						el : el.share[share.txid].find('.forstars'),
-						data : {
-							share : share,
-							hideCount : undefined
-						},
-						ignorelinksandimages : true,
-						animation : false,				
+					window.requestAnimationFrame(() => {
 
-					}, function(p){
+						self.shell({
+							name :  'stars',
+							el : el.share[share.txid].find('.forstars'),
+							data : {
+								share : share,
+								hideCount : undefined
+							},
+							ignorelinksandimages : true,
+							animation : false,				
 
-						fastars(p.el.find('.stars'))
+						}, function(p){
 
-						if (clbk)
-							clbk()
+							fastars(p.el.find('.stars'))
 
+							if (clbk)
+								clbk()
+
+						})
 					})
 
 				}
@@ -3505,10 +3504,6 @@ var lenta = (function(){
 						success : function(){
 				
 							renders.mystars(shares)
-
-							setTimeout(() => {
-								//events.loadmorescroll()
-							}, 500)
 
 							if (essenseData.includeboost){ actions.includeboost() }
 
@@ -4799,7 +4794,7 @@ var lenta = (function(){
 			}
 
 			self.app.errors.clbks[mid] = function(){
-				if (el.c.hasClass('networkError')){
+				if (el.c && el.c.hasClass('networkError')){
 					actions.loadprev()
 				}
 			}
@@ -5067,7 +5062,7 @@ var lenta = (function(){
 				}
 
 				window.requestAnimationFrame(() => {
-					if (el.c.hasClass('networkError'))
+					if (el.c && el.c.hasClass('networkError'))
 						el.c.removeClass('networkError')
 				})
 

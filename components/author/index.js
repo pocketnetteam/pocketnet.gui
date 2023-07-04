@@ -423,9 +423,28 @@ var author = (function(){
 
 			authorcaption : function(clbk){
 
-				el.menu = el.authorcaption.find('.usermenu')
-				el.caption = el.c.find('.bgCaption')
-				el.usericon = el.c.find('.usericon');
+				self.shell({
+					name :  'bgcaption',
+					el :   el.authorcaption,
+					data : {
+						author : author,
+					},
+				}, function(p){
+
+					el.menu = el.authorcaption.find('.usermenu')
+					el.caption = el.c.find('.bgCaption')
+					el.usericon = el.c.find('.usericon');
+
+					renders.panel()
+					renders.info(el.c.find('.mobileinfo'))
+					renders.menu()
+					if(!isTablet())
+						renders.info(el.info)
+					
+					if(clbk) clbk()
+				})
+
+				
 
 				//el.subscribe = el.c.find('.subscribebuttonstop');
 
@@ -435,7 +454,7 @@ var author = (function(){
 				
 
 				
-				if(clbk) clbk()
+				
 			},
 			
 			metmenu : function(_el){
@@ -1391,7 +1410,19 @@ var author = (function(){
 					relationsClbk(alias.address.v)
 				}
 
-				
+				console.log('type, alias, status', type, alias, status)
+
+
+				if(type == 'userInfo'){
+
+					console.log('RENDER', alias, author)
+
+					if(alias.address == author.address){
+
+						renders.authorcaption()
+
+					}
+				}
 				
 			}
 
@@ -1404,10 +1435,9 @@ var author = (function(){
 			if (reports[r])
 				reports[r].active = true;
 
-			renders.panel()
-			renders.info(el.c.find('.mobileinfo'))
+			
+
 			renders.report(reports[r], null, ini)
-			renders.menu()
 
 			self.app.user.isState(function(state){
 
@@ -1434,16 +1464,14 @@ var author = (function(){
 				})	
 			}
 			
-
-			if(!isTablet())
-				renders.info(el.info)
+			
 		}
 
 		var init = function(){
 
 			renders.authorcaption(function(){
+				console.log("?????????")
 				make(true);
-
 
 				self.sdk.activity.adduser('visited', author.address)
 
@@ -1590,9 +1618,6 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 
-				console.log("getdata")
-
-
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent')
 				})
@@ -1619,8 +1644,6 @@ var author = (function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
 
-						console.log("address", address)
-
 						preinit(address, clbk)
 					})
 
@@ -1629,8 +1652,6 @@ var author = (function(){
 			},
 
 			destroy : function(){
-
-				console.log("DESTROY")
 
 				if(el.c) el.c.empty()
 

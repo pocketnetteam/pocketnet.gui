@@ -80,7 +80,6 @@ var postscores = (function(){
 					}
 
 					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
-						console.log("ACTION", action)
 						if (clbk)
 							clbk(true)
 					}).catch(e => {

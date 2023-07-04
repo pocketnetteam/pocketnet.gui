@@ -2733,8 +2733,6 @@ var share = (function(){
 				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
 
 
-				console.log('currentShare', currentShare)
-
 				var data = {
 					essenseData : essenseData,
 					share : currentShare,

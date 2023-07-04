@@ -4976,9 +4976,6 @@
   
     if(secp256k1) return
 
-    console.log("initCurve")
-
-  
     secp256k1 = new EC('secp256k1')
   
     n = secp256k1.curve.n
@@ -26225,12 +26222,7 @@
       if (!a.signature) return;
       var secret = '';
       if (a.htlc && a.htlc.secret) secret = a.htlc.secret;
-      console.log(
-        'input',
-        a.signature.toString('hex'),
-        bcrypto.hash160(a.pubkey).toString('hex'),
-        bcrypto.sha256(Buffer.from(secret)).toString('hex'),
-      );
+     
       return bscript.compile([a.signature, a.pubkey, Buffer.from(secret)]);
     });
     lazy.prop(o, 'witness', () => {

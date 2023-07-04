@@ -1,0 +1,93 @@
+<%
+    var me = psdk.userInfo.getmy()
+
+    var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+%>
+
+    <div class="bgCaption">
+        <div class="infoWrapper">
+            <div class="rightchatspacer">
+                <div class="work">
+                    <% if(sUserInfo.deleted) {%>
+
+                        <div class="deletedAccount">
+                            <div class="deletedAccountText">
+                                <span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
+                            </div>
+
+                            <% if(sUserInfo.itisme) { %>
+
+                            <div class="deletedsettings">
+                                <button class="button black">
+                                    <span><%- app.localization.e('menu') %></span>
+                                </button>
+                            </div>
+
+                            <% } %>
+                        </div>
+
+                    <% } else { %> 
+
+                        <div class="cwrapper">
+
+                            <div class="cell cellforimage">
+                                <div class="icon">
+
+                                    <div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
+
+                                        <% if(!sUserInfo.image && sUserInfo.letter) {%>
+
+                                            <span class="letter">
+                                                <%-sUserInfo.letter.toUpperCase()%>
+                                            </span>
+
+                                        <% } else if (!sUserInfo.image) { %>
+
+                                            <i class="far fa-user"></i>
+
+                                        <% } %>
+
+                                        <%= app.platform.ui.markUser(author.address)%>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ccell">
+                                <div class="infomain">
+
+                                    <div class="nameWrapper">
+                                        <span><%-sUserInfo.name%></span>
+                                    </div>
+
+                                    <div class="mobileinfo">
+                                        
+                                    </div>
+
+                                    <div class="panelWrapper">
+
+                                    </div>
+
+                                    
+
+                                    <div class="tips">
+                                        <div class="telements">
+                                            <div class="telement">
+                                                <div class="usermenu">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>

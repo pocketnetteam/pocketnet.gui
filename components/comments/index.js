@@ -79,15 +79,12 @@ var comments = (function(){
 					scoreDown : (comment.scoreDown || 0)
 				}
 
-				console.log("UPVOTE COMMENT ", comment)
-
 				d_el.find('.scoreUp .commentScore').html(cs.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
 				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '')
 			},
 
 			post : function(comment, optype){
 
-				console.log("comment", comment, optype)
 
 				actions.showhideLabel()
 
@@ -118,8 +115,6 @@ var comments = (function(){
 								return
 							}
 						}
-
-						console.log("check", p)
 
 						renders.list(p)
 
@@ -320,15 +315,12 @@ var comments = (function(){
 					authors.push(c.address)
 				})
 
-				console.log('authors', authors)
 
 				return self.psdk.userInfo.load(authors).then(() => {
 
 					var block = _.find(authors, (address) => {
 
 						var user = self.psdk.userInfo.get(address)
-
-						console.log('user', user)
 
 						return user && user.relation(self.app.user.address.value, 'blocking')
 					})
@@ -674,8 +666,6 @@ var comments = (function(){
 						}
 
 						self.app.platform.sdk.comments.send(current, function(error, alias){
-
-							console.log('error, alias', error, alias)
 
 							if(!editid && ed.send){
 								ed.send(alias, alias)
@@ -1075,7 +1065,7 @@ var comments = (function(){
 				if (listpreview){
 
 					window.requestAnimationFrame(() => {
-						el.c.find('.loaderWrapper').removeClass('hidden')
+						el.preloader.removeClass('hidden')
 					})
 				
 					load.level(null, function(comments, e){
@@ -1084,7 +1074,7 @@ var comments = (function(){
 							self.app.platform.errorHandler(e, true)
 
 							window.requestAnimationFrame(() => {
-								el.c.find('.loaderWrapper').addClass('hidden')
+								el.preloader.addClass('hidden')
 
 							})
 
@@ -1113,7 +1103,7 @@ var comments = (function(){
 							window.requestAnimationFrame(() => {
 								el.c.addClass('showedall')	
 								el.c.removeClass('listpreview')
-								el.c.find('.loaderWrapper').addClass('hidden')
+								el.preloader.addClass('hidden')
 							})
 						})
 
@@ -1940,7 +1930,6 @@ var comments = (function(){
 			})
 
 			actions.checkBanned(p).then((user) => {
-				console.log('user', user)
 				if (user){
 
 					var info = self.psdk.userInfo.getShortForm(user.address)
@@ -2632,9 +2621,6 @@ var comments = (function(){
 
 					if (comment.postid == txid){
 
-						console.log('type, alias, status', type, alias, status)
-
-
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						/*
 						if(comment.optype != 'commentDelete'){
@@ -2754,8 +2740,10 @@ var comments = (function(){
 
 					if(!el.c) return
 
-					el.c.find('.loaderWrapper').addClass('hidden')
-
+					window.requestAnimationFrame(() => {
+						if(!el.preloader.hasClass('hidden'))
+							el.preloader.addClass('hidden')
+					})
 
 					renders.post(function(area){
 						
@@ -2919,9 +2907,20 @@ var comments = (function(){
 							if(!el.c) return
 
 							el.c.find('.leaveCommentPreview').css('opacity', '')
+
+							
+
 						}, 100)
 					}, 100)
 				}
+
+				setTimeout(function(){
+
+					if(!el.c) return
+
+					el.c.find('.post').removeClass('attention')
+					
+				}, 1300)
 			},
 
 			showBanner : function(c) {
@@ -3054,6 +3053,7 @@ var comments = (function(){
 				el.caption = el.c.find('.captionCnt')
 				el.showall = el.c.find('.showall')
 
+				el.preloader = el.c.find('.loaderWrapper')
 				_in = el.c.closest('.wndcontent');
 
 				if(!_in.length) {

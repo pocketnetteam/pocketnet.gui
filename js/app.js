@@ -925,13 +925,9 @@ Application = function (p) {
 
 	var acceleration = function () {
 
-		console.log("WAIT USE")
-
 		self.api.wait.ready('use', 1000).then(r => {
 
 			var canuse = self.api.ready.use()
-
-			console.log("CAN USE", canuse)
 
 			if (canuse) {
 
@@ -956,11 +952,8 @@ Application = function (p) {
 				stateAdresses = _.filter(stateAdresses, (s) => s)
 				infoAdresses = _.filter(infoAdresses, (s) => s)
 
-				console.log('stateAdresses', stateAdresses, infoAdresses, share)
-
 				if (share){
 					self.psdk.share.load([share]).then(() => {
-						console.log('shareGet')
 					}).catch(e => {
 						console.error(e)
 					})
@@ -969,7 +962,6 @@ Application = function (p) {
 				if (stateAdresses.length) {
 
 					self.psdk.userState.load(stateAdresses).then(() => {
-						console.log('userStateGet')
 					}).catch(e => {
 						console.error(e)
 					})
@@ -979,7 +971,6 @@ Application = function (p) {
 				if (infoAdresses.length) {
 
 					self.psdk.userInfo.load(infoAdresses).then(() => {
-						console.log('userInfoGet')
 					}).catch(e => {
 						console.error(e)
 					})
@@ -999,7 +990,6 @@ Application = function (p) {
 
 		self.api = new Api(self)
 		self.api.initIf(() => {
-			console.log('acceleration')
 			/// acceleration
 			acceleration()
 		}).then(() => {
@@ -1063,8 +1053,6 @@ Application = function (p) {
 
 
 			self.platform.sdk.users.addressByName((p.href), function (r) {
-
-				console.log("addressByName", r)
 
 				if (r) {
 					if (clbk)
@@ -1276,8 +1264,6 @@ Application = function (p) {
 				})
 
 				self.platform.actions.on('actionFiltered', ({action, address, status}) => {
-
-					console.log("actionFiltered apps", action)
 
 					if (action.settings && action.settings.application){
 						self.apps.emit('action', action.export(), action.settings.application)
@@ -1517,23 +1503,13 @@ Application = function (p) {
 	self.logger = function (Function, Message) { }
 
 	self.Logger = new FrontendLogger(
-    navigator.userAgent,
-    JSON.stringify(navigator.userAgentData),
-    location.href,
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-    self
-  );
-
-  /*if (Math.random() <= 0.05) {
-    window.onerror = function (errorMsg, url) {
-      self.Logger.error({
-        err: errorMsg,
-        uri: url,
-        code: -1,
-      });
-      return false;
-    };
-  }*/
+		navigator.userAgent,
+		JSON.stringify(navigator.userAgentData),
+		location.href,
+		'timezone/undefined',
+		//Intl.DateTimeFormat().resolvedOptions().timeZone,
+		self
+	);
 
 	self.scrollRemoved = 0;
 	self.scrollTop = 0

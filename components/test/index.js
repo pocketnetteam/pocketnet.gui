@@ -161,8 +161,6 @@ var test = (function(){
 
 			save : function(clbk){
 
-				console.log("HERE", saving)
-
 				if (saving) return
 
 					saving = true
@@ -736,69 +734,79 @@ var test = (function(){
 							
 						}
 
-						mdl.fastTemplate('addaddress', function(rendered){
+						self.nav.api.loadRelations({
 
-							new dialog({
-								html : rendered,
+							relations : [
+								{src : 'js/vendor/wallet-address-validator.min.js',	 f : 'js'},
+							],
+	
+						}, function(){
+							mdl.fastTemplate('addaddress', function(rendered){
 
-								wrap : true,
-
-								success : function(d){
-
-									var c = d.el.find('.currency').val();
-									var address = d.el.find('.address').val();
-
-									if(validate(c, address)){
-
-										_self.add({
-											currency : c,
-											address : address
-										})
-
-										return true;
-
-									}
-								},
-
-								clbk : function(_el){
-
-									var currency = _el.find('.currency');
-									var address = _el.find('.address');
-									var b = _el.find('.btn1');
-
-
-									var vl = function(){
-										var c = currency.val();
-
-										var a = address.val();
-
-										if(validate(c, a)){
-											b.removeClass('disabled')
-
+								new dialog({
+									html : rendered,
+	
+									wrap : true,
+	
+									success : function(d){
+	
+										var c = d.el.find('.currency').val();
+										var address = d.el.find('.address').val();
+	
+										if(validate(c, address)){
+	
+											_self.add({
+												currency : c,
+												address : address
+											})
+	
 											return true;
+	
 										}
-										else
-										{
-											b.addClass('disabled')
-											return false;
+									},
+	
+									clbk : function(_el){
+	
+										var currency = _el.find('.currency');
+										var address = _el.find('.address');
+										var b = _el.find('.btn1');
+	
+	
+										var vl = function(){
+											var c = currency.val();
+	
+											var a = address.val();
+	
+											if(validate(c, a)){
+												b.removeClass('disabled')
+	
+												return true;
+											}
+											else
+											{
+												b.addClass('disabled')
+												return false;
+											}
 										}
-									}
-
-									address.focus()
-									address.on('change', vl)
-									address.on('keyup', vl)
-
-									currency.on('change', vl)
-									currency.on('keyup', vl)
-
-									vl()
-								},
-
-								class : "one addaddressDialog zindex"
+	
+										address.focus()
+										address.on('change', vl)
+										address.on('keyup', vl)
+	
+										currency.on('change', vl)
+										currency.on('keyup', vl)
+	
+										vl()
+									},
+	
+									class : "one addaddressDialog zindex"
+								})
+	
+							}, {
 							})
-
-						}, {
 						})
+
+						
 					}
 
 					_self.removeEvent = function(){

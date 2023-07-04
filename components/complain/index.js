@@ -73,8 +73,6 @@ var complain = (function () {
 
 								var alias = action.object
 
-								console.log('action', action, alias)
-
 								successCheck()
 								sitemessage(self.app.localization.e('complain_success'))
 

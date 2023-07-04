@@ -112,7 +112,6 @@ var activities = (function () {
 					})) return true
 				})
 
-				console.log('tid', tid, activity, activitiesByGroup)
 
 				return activity
 			}
@@ -247,8 +246,6 @@ var activities = (function () {
 
 				_.each(vid, (video) => {
 
-					console.log('video', video)
-
 					let a = new Promise((resolve, reject) => {
 						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
 
@@ -257,8 +254,6 @@ var activities = (function () {
 								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
 
 								if (!p) return reject('np')
-
-								console.log("P", p)
 
 									resolve({ ...p.data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
 
@@ -293,8 +288,6 @@ var activities = (function () {
 				} else {
 					return
 				}
-
-				console.log('openPost', data, href)
 
 				answer = data.type === "answer" ? data.hash : ''
 
