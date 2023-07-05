@@ -2449,6 +2449,7 @@ _l.clearLocal = 'Очистить Local Storage';
 _l.clearLocalQuestion = 'Вы действительно хотите очистить Local Storage?';
 
 _l.registration_not_in_progress = "Процесс вашей регистрации еще не начался, вам нужно либо решить капчу, либо иметь PKOIN на адресе аккаунта"
+_l.registration_not_in_progress_no_processing = "Процесс вашей регистрации еще не начался"
 _l.registration_undefined_status= "Сведения о регистрации о вашем аккаунте недоступны, возможно вы не подключены к интернету"
 _l.registration_in_progress_transaction= "Транзакция с регистрацией аккаунта отправлена в блокчейн"
 _l.registration_in_progress_hasUnspents= "Транзакция с регистрацией аккаунта скоро будет отправлена в блокчейн"
@@ -2500,4 +2501,9 @@ _l.actions_rejectedByUser = 'Отменено пользователем'
 
 _l.actions_rejectedByUser_question = 'Вы хотите отменить операцию?'
 _l.actions_no_pending_actions = 'Нет операций ожидающих исполнения'
+
+
+_l.reason_changeUserName = 'К сожалению, выбранное вами имя аккаунта теперь занято, выберите другое имя'
+
+_l.info_actions_checkFail = 'Публикация будет отправлена, как только загруженные ресурсы будут обработаны. Оставайтесь в приложении некоторое время.'
 

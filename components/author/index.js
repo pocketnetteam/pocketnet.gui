@@ -414,6 +414,7 @@ var author = (function(){
 							author : author,
 							selected : selected
 						},
+						insertimmediately : true,
 					}
 
 					self.shell(pp, function(p){})
@@ -429,6 +430,7 @@ var author = (function(){
 					data : {
 						author : author,
 					},
+					insertimmediately : true,
 				}, function(p){
 
 					el.menu = el.authorcaption.find('.usermenu')
@@ -440,6 +442,11 @@ var author = (function(){
 					renders.menu()
 					if(!isTablet())
 						renders.info(el.info)
+
+
+					p.el.find('.donate').on('click', () => {
+						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+					})
 					
 					if(clbk) clbk()
 				})
@@ -598,7 +605,7 @@ var author = (function(){
 					data : {
 						reports : reports
 					},
-
+					insertimmediately : true,
 
 				}, function(p){
 
@@ -658,7 +665,7 @@ var author = (function(){
 					data : {
 						author : author
 					},
-
+					insertimmediately : true,
 					animation : false,
 
 				}, function(p){
@@ -722,15 +729,13 @@ var author = (function(){
 					},
 
 					animation : false,
+					insertimmediately : true,
 
 				}, function(p){
 
 					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
-					p.el.find('.todonate').on('click', () => {
-						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
-						
-					})
+					
 
 					p.el.find('.copyaddress').on('click', function(){
 						copyText($(this))
@@ -884,7 +889,7 @@ var author = (function(){
 						id : 'share',
 						el : _el.find('.newsharewrapper'),
 						animation : false,
-	
+						
 						mid : 'shareauthor',
 						
 						clbk : function(e, p){
@@ -923,7 +928,7 @@ var author = (function(){
 
 						name :  'lenta',
 						el :   _el,
-	
+						insertimmediately : true,
 						data : {
 						},
 	
@@ -1484,14 +1489,18 @@ var author = (function(){
 		}
 
 		var redir404 = function(){
-			self.app.el.html.removeClass('allcontent')
 
-			self.app.nav.api.load({
-				open : true,
-				href : 'page404',
-				history : true,
-				replaceState : true
-			})
+			setTimeout(() => {
+				self.app.el.html.removeClass('allcontent')
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'page404',
+					history : true,
+					replaceState : true
+				})
+			}, 400)
+			
 		}
 
 		var preinit = function(address, clbk){
@@ -1531,15 +1540,19 @@ var author = (function(){
 							reports.shares.name = self.app.localization.e('myuposts')
 	
 							if(!self.app.user.validate()){
+
+								setTimeout(() => {
 	
-								self.app.el.html.removeClass('allcontent')
-	
-								self.nav.api.load({
-									href : 'userpage?id=test',
-									history : true,
-									open : true,
-									replaceState : true
-								})
+									self.app.el.html.removeClass('allcontent')
+		
+									self.nav.api.load({
+										href : 'userpage?id=test',
+										history : true,
+										open : true,
+										replaceState : true
+									})
+
+								}, 400)
 	
 								return;
 							}
@@ -1550,13 +1563,39 @@ var author = (function(){
 						var data = {
 							author : author
 						};
+
 	
 						clbk(data);
+
 
 					}
 
 					else{
-						redir404()
+
+						if(self.app.user.isItMe(author.address)){
+							if(!self.app.user.validate()){
+
+								setTimeout(() => {
+	
+									self.app.el.html.removeClass('allcontent')
+		
+									self.nav.api.load({
+										href : 'userpage?id=test',
+										history : true,
+										open : true,
+										replaceState : true
+									})
+
+								}, 400)
+	
+								return;
+							}
+						}
+						else{
+							redir404()
+						}
+
+						
 					}
 	
 				})
@@ -1643,7 +1682,6 @@ var author = (function(){
 				}, function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
-
 						preinit(address, clbk)
 					})
 

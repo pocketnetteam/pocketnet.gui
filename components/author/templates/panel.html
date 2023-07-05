@@ -48,6 +48,12 @@
 
             <% } %>
 
+            <% if(!app.pkoindisable) {%>
+                <div class="buttonWrapper donate">
+                    <span class="label"><%=e('donate')%></span> <i class="fas fa-coins"></i>
+                </div>
+            <% } %>
+
             <div class="buttonWrapper startchat">
                 <span class="label"><%=e('startchat')%></span> <i class="fas fa-comments"></i>
             </div>

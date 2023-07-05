@@ -1680,14 +1680,18 @@ Application = function (p) {
 
 		scroll: function (to) {
 
-			blockScroll = true
+			window.requestAnimationFrame(() => {
+				blockScroll = true
 
-			self.el.window.scrollTop(to)
-			self.scrollTop = to
+				self.el.window.scrollTop(to)
+				self.scrollTop = to
+	
+				setTimeout(function () {
+					blockScroll = false
+				}, 100)
+			})
 
-			setTimeout(function () {
-				blockScroll = false
-			}, 100)
+			
 
 		},
 
@@ -2814,7 +2818,10 @@ Application = function (p) {
 
 													var account = self.platform.actions.getCurrentAccount()
 
-													if (account) account.updateUnspents()
+													if (account) {
+														account.updateUnspents()
+														account.releaseCheckInAnotherSession()
+													}
 
 													self.platform.sdk.notifications.getNotifications()
 												}

@@ -407,7 +407,7 @@ var Action = function(account, object, priority, settings){
 
     var makeTransaction = async function(retry, calculatedFee, send){
 
-        var unspents = filterUnspents(account.getActualUnspents(true))
+        var unspents = filterUnspents(account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true))
         var fee = calculatedFee || ((options.calculateFee && options.calculateFee(self)) ? 0 : ActionOptions.pcTxFee)
     
         var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
@@ -427,7 +427,7 @@ var Action = function(account, object, priority, settings){
                         return Promise.reject('actions_noinputs')
                     }
     
-                    unspents = account.getActualUnspents(true)
+                    unspents = account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true)
 
         
                 })
@@ -713,6 +713,19 @@ var Action = function(account, object, priority, settings){
         })
     }
 
+    self.controlReject = function(error){
+
+        if(!error) error = self.rejected
+
+        if(!error) return true
+
+        if (error && self.options.attentionIfReJectCodes){
+            if(_.indexOf(self.options.attentionIfReJectCodes, error) > -1) return true
+        }
+
+        return false
+    }
+
     self.checkTransactionWide = async function(){
 
         var rs = 0
@@ -794,17 +807,16 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySending')
         }
 
-        if (!account.status.value){
-            if(!options.sendWithNullStatus) {
-                return Promise.reject('actions_waitUserStatus')
-            }
-        }
-
         if (self.until < new Date()){
             self.rejected = 'actions_rejectedByTime'
 
             return Promise.reject(self.rejected)
+        }
 
+        if (!account.status.value){
+            if(!options.sendWithNullStatus) {
+                return Promise.reject('actions_waitUserStatus')
+            }
         }
 
         if (self.object.checkloaded && self.object.checkloaded()){
@@ -836,9 +848,12 @@ var Action = function(account, object, priority, settings){
             return new Promise((resolve, reject) => {
                 self.object.canSend(app, (r) => {
 
-                    self.checkedUntil = null
+                    
 
                     if(r){
+
+                        self.checkedUntil = null
+
                         makeTransaction(false, (self.settings || {}).calculateFee || null, true).then(resolve).catch(reject)
                     }
                     else{
@@ -869,7 +884,7 @@ var Action = function(account, object, priority, settings){
             if (
                 e == 'actions_rejectedFromNodes' || 
                 e == 'actions_noinputs' || 
-                (self.options.attentionIfReJectCodes && _.indexOf(self.options.attentionIfReJectCodes, e) > -1)
+                self.controlReject(e)
                 ){
                     tryresolve = true
                 
@@ -887,7 +902,7 @@ var Action = function(account, object, priority, settings){
         else{
 
             if(rejectIfError){
-                if(error == 'actions_noinputs_wait' || error == 'actions_userInteractive' || error == 'actions_waitUserInteractive' || error == 'actions_waitUserStatus'){
+                if(error == 'actions_noinputs_wait' || error == 'actions_userInteractive' || error == 'actions_waitUserInteractive' || error == 'actions_waitUserStatus' || error == 'actions_checkFail'){
 
                 }
                 else{
@@ -1128,6 +1143,14 @@ var Account = function(address, parent){
         })
     }
 
+    self.releaseCheckInAnotherSession = function(){
+        _.each(self.actions.value, (a) => {
+            delete a.checkInAnotherSession
+        })
+
+        self.checkRequestUnspentsInAnotherSession = false
+    }
+
     self.cancelAction = function(id){
         var action = getActionById(id)
 
@@ -1189,11 +1212,13 @@ var Account = function(address, parent){
                 reason : ""
             }
 
-            if (action.type == 'userInfo' && self.getStatus() != 'registered'){
+            if (action.object.type == 'userInfo' && self.getStatus() != 'registered'){
                 parameters.reason = 'registration'
             }else{
                 parameters.reason = 'balance'
             }
+
+            console.log('parameters', parameters, action, self.getStatus())
 
             return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
 
@@ -1297,11 +1322,11 @@ var Account = function(address, parent){
 
         }
 
-        if(action.options.attentionIfReJectCodes && _.indexOf(action.options.attentionIfReJectCodes, error) > -1){
+        if(action.controlReject(error)){
             
-            if (action.type == 'userInfo' && error == 18){
+            if (action.object.type == 'userInfo' && error == 18){
 
-                action.rejected = 'actions_rejectedFromNodes'
+                //action.rejected = 'actions_rejectedFromNodes'
                 //// ask change user name
 
                 return await self.userInteractive(action, error, 'changeUserName', {}).then(() => {
@@ -1357,17 +1382,20 @@ var Account = function(address, parent){
             })
         }
 
-        if(type == 'changeUserName'){
 
-            return self.ui.edituserinfo(type, (component) => {
+        if(type == 'changeUserName'){
+           
+            return parent.app.platform.ui.edituserinfo(type, (component) => {
 
                 waitUserActionComponent = component
 
             }).then(newaction => {
                 return Promise.resolve(newaction)
             }).catch(e => {
+
+                console.error('e', e)
                 
-                if (self.getStatus() != 'registered'){
+                if (self.getStatus() == 'registered'){
                     return Promise.reject('actions_rejectedByUser')
                 }
                 
@@ -1946,7 +1974,7 @@ var Account = function(address, parent){
 
             if(filter && !filter(action)) return false
             
-            return !action.completed && !action.rejected
+            return !action.completed && (!action.rejected || action.controlReject())
         }), (action) => {
 
             if(clear) return action
@@ -1956,7 +1984,7 @@ var Account = function(address, parent){
     }
 
     self.getTempUserInfo = function(){
-        var actions = self.getTempActions('userInfo')
+        var actions = self.getTempActions('userInfo', null, true)
 
         if(!actions.length) return null
 
@@ -2038,17 +2066,19 @@ var Account = function(address, parent){
             if (pr.transaction){
                 return 'in_progress_transaction'
             }
+
+            if (self.unspents.value.length){
+                return 'in_progress_hasUnspents'
+            }
+    
+            if (self.unspents.willChange){
+                return 'in_progress_wait_unspents'
+            }
+
+            return 'not_in_progress'
         }
 
-        if (self.unspents.value.length){
-            return 'in_progress_hasUnspents'
-        }
-
-        if (self.unspents.willChange){
-            return 'in_progress_wait_unspents'
-        }
-
-        return 'not_in_progress'
+        return 'not_in_progress_no_processing'
 
     }
 
@@ -2283,7 +2313,7 @@ var Actions = function(app, api, storage = localStorage){
                 return Promise.resolve(action)
             }).catch(e => {
 
-
+                if(e == 'actions_checkFail') return Promise.resolve(action)
 
                 return Promise.reject(e)
             })
@@ -2297,8 +2327,8 @@ var Actions = function(app, api, storage = localStorage){
         if(!address) return Promise.reject('actions_noAddress')
         if(!actionId) return Promise.reject('actions_actionId')
 
-        if(accounts[address]){
-            accounts[address].cancelAction(actionId)
+        if (accounts[address]){
+            return accounts[address].cancelAction(actionId)
         }
 
         else{

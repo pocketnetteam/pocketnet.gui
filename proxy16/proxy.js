@@ -1099,7 +1099,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			if (test){
 				ins = {0 : [
 					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
 				]}
 			}
 

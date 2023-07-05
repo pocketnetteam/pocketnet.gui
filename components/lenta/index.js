@@ -4858,7 +4858,9 @@ var lenta = (function(){
 							var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
 							var replaceAll = true
 
-							alias = self.psdk.share.get(alias.txid)
+							var trx = self.psdk.share.get(alias.txid)
+
+							alias = trx ? trx : alias
 
 							if (!replace){
 								if(essenseData.author == alias.actor){

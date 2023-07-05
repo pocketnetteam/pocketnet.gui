@@ -499,7 +499,7 @@ nModule = function(){
 				data : {},
 
 				animation: settings.animation,
-				fast : settings.fast
+				fast : settings.fast,
 
 			},
 
@@ -512,6 +512,8 @@ nModule = function(){
 				delete settings.animation
 
 				settings.fast = true
+				settings.waspreshell = true
+				settings.insertimmediately = true
 
 				if (clbk)
 					clbk()
@@ -560,68 +562,68 @@ nModule = function(){
 
 		beforegetdata(settings, function(){
 			self.user.isState(function(state){	
-				
-				window.requestAnimationFrame(() => {
 
-					settings.getdata(function(data, err){
+				settings.getdata(function(data, err){
 
-						if(err){
 
-							topPreloader(100);
+					if(err){
 
-							if(globalpreloaderTimer){
+						topPreloader(100);
 
-								globalpreloader(false)
+						if(globalpreloaderTimer){
 
-								clearTimeout(globalpreloaderTimer)
-							}
+							globalpreloader(false)
 
-							return
+							clearTimeout(globalpreloaderTimer)
 						}
 
-						topPreloader(45);
+						return
+					}
 
-						settings.data = data || {};
+					topPreloader(45);
 
-						if(p.preshell) p.preshell();
+					settings.data = data || {};
 
-						self.shell(settings, function(p){
+					if(p.preshell) p.preshell();
 
-							if(globalpreloaderTimer){
+					self.shell(settings, function(p){
 
-								globalpreloader(false)
+						if(globalpreloaderTimer){
 
-								clearTimeout(globalpreloaderTimer)
+							globalpreloader(false)
+
+							clearTimeout(globalpreloaderTimer)
+						}
+
+						topPreloader(100);	
+
+						p.clbk = addToFunction(p.clbk, function(){
+
+							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+								self.app.actions.scrollToTop()
 							}
 
-							topPreloader(100);	
+							if (settings.auto){
+								settings.auto(p)
+							}
 
-							p.clbk = addToFunction(p.clbk, function(){
+							//p = null
 
-								if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-									self.app.actions.scrollToTop()
-								}
-
-								if (settings.auto){
-									settings.auto(p)
-								}
-
-								//p = null
-
-							})				
+						})				
 
 
-							if (settings.init)
-								settings.init(p)
+						if (settings.init)
+							settings.init(p)
 
-						}, frommodule)
+					}, frommodule)
 
-					}, {
-						state : state,
-						settings : settings
-					});	
+					
 
-				})
+				}, {
+					state : state,
+					settings : settings
+				});	
+
 
 			})
 		})

@@ -149,12 +149,16 @@ var instance = function (host, ip, Roy) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
 
+		console.log("REQUEST", `http://${host}${url}`)
 
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
 				method: p.type || 'get',
 				timeout,
 			}).then(async (result) => {
+
+		console.log("REQUEST", `success`, `http://${host}${url}`)
+
 
 				const meta = {
 					code: 200,
@@ -179,6 +183,10 @@ var instance = function (host, ip, Roy) {
 				});
 			});
 		} catch(error) {
+
+		console.log("REQUEST", `fail`, `http://${host}${url}`)
+
+
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
 				difference: performance.now() - responseTime,
@@ -221,6 +229,8 @@ var instance = function (host, ip, Roy) {
 	self.init = function () {
 
 		inited = true;
+
+		console.log("INITED", `http://${host}`)
 
 		getinfo()
 

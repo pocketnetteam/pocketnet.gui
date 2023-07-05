@@ -323,6 +323,9 @@
   justify-content: center;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
+#author .bgCaption .panel > div.donate {
+  background: rgba(var(--color-good), 0.7);
+}
 #author .bgCaption .panel > div i {
   text-align: center;
   font-size: 0.8em;

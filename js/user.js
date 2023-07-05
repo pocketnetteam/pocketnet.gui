@@ -388,22 +388,30 @@ User = function(app, p) {
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
 
-		var me = app.platform.psdk.userInfo.getmy()
+		var account = app.platform.actions.getCurrentAccount()
 
-		console.log('me', me)
-		
-		if (me && me.relay && !me.extended){
+		if(!account) return 'fu'
 
-			return 'fuf'
+		var astatus = account.getStatus()
+
+		if (astatus == 'not_in_progress_no_processing'){
+			return 'fu'
 		}
-		
-
-		if(!me.name) return 'fu' 
 	}
 
 	self.validate = function(){
 
-		return 'trw'
+		var account = app.platform.actions.getCurrentAccount()
+
+		if(!account) return false
+
+		var astatus = account.getStatus()
+
+		if (astatus == 'not_in_progress_no_processing'){
+			return false
+		}
+
+		return true
 
 		if(!self.address.value) return false;
 

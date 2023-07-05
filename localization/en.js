@@ -2670,6 +2670,9 @@ _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
 
 
 _l.registration_not_in_progress = "Your registration process has not started yet, you need to either solve the captcha or have PKOIN on your account address"
+
+_l.registration_not_in_progress_no_processing = "Your registration process has not started yet"
+
 _l.registration_undefined_status= "Registration information about your account is not available, you may not be connected to the Internet"
 _l.registration_in_progress_transaction= "Account registration transaction sent to the blockchain"
 _l.registration_in_progress_hasUnspents= "The account registration transaction will soon be sent to the blockchain"
@@ -2723,3 +2726,5 @@ _l.actions_rejectedByUser = 'Canceled by user'
 _l.actions_rejectedByUser_question = 'Do you want to cancel the operation?'
 _l.actions_no_pending_actions = 'No pending operations'
 
+_l.reason_changeUserName = 'Sorry, the account name you chose is now taken, please choose another name'
+_l.info_actions_checkFail = 'The publication will be sent as soon as the uploaded resources are processed. Stay in the app for a while.'

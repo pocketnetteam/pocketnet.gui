@@ -913,6 +913,19 @@ var share = (function(){
 
 						self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
 
+							if (action.currentState == 'actions_checkFail'){
+
+								new dialog({
+									html: self.app.localization.e('info_actions_checkFail'),
+									btn1text: self.app.localization.e('ok'),
+									btn2text: "",
+									class: 'one zindex',
+									success: () => {
+									}
+								});
+								
+							}
+
 							var alias = action.object
 
 							if(!essenseData.notClear){

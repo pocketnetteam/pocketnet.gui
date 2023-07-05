@@ -150,7 +150,7 @@ class FrontendLogger {
     guid = '',
     userAgent = '',
     // userData = '',
-    // uri = '',
+     uri = '',
     // timezone = '',
   }) {
     const parametersOrder = [
@@ -161,7 +161,6 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
-      //userData,
       uri,
       timezone,
       guid,

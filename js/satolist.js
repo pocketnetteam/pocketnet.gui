@@ -3106,6 +3106,7 @@ Platform = function (app, listofnodes) {
         },
 
         edituserinfo : function(reason, clbk){
+            console.log('reason', reason)
             return new Promise ((resolve, reject) => {
                 app.nav.api.load({
                     open : true,
@@ -3133,8 +3134,6 @@ Platform = function (app, listofnodes) {
 
         captcha : function(reason, clbk, proxyOptions = {}){
 
-            console.log('reason', reason)
-
             if(!proxyOptions.proxy) return Promise.reject('noproxy')
 
             var proxy = self.app.api.get.byid(proxyOptions.proxy)
@@ -3156,8 +3155,6 @@ Platform = function (app, listofnodes) {
 
                             return
                         }
-
-                        console.log('captcha', captcha)
 
                         resolve({captcha})
 
@@ -8300,12 +8297,7 @@ Platform = function (app, listofnodes) {
 
             get: function (clbk, update) {
 
-                console.log('app.user.address.value', app.user.address.value)
-
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
-
-                console.log('app.user.address.value, 2', app.user.address.value, self.psdk.userInfo.getmy())
-
 
                     if(clbk) clbk(self.psdk.userInfo.getmy())
                 }, null, update)
@@ -8537,9 +8529,6 @@ Platform = function (app, listofnodes) {
                 if(isOverComplained) {
                     return true
                 }
-
-                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
-                //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 && ustate.likers_count < totalComplainsFirstFlags ) {
                     return true
@@ -9731,11 +9720,7 @@ Platform = function (app, listofnodes) {
             
             get: function (addresses, clbk, light, reload) {
 
-                console.log('self.psdk.userInfo.load', addresses)
-
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
-
-                    console.log("LOADED", r)
 
                     if(clbk) clbk(r)
 
@@ -18953,7 +18938,7 @@ Platform = function (app, listofnodes) {
 
                         ////////////
 
-                        console.error('TODO_REF_ACTIONS')
+                        //console.error('TODO_REF_ACTIONS')
 
                         var addr = platform.app.user.address.value
 
@@ -18965,7 +18950,9 @@ Platform = function (app, listofnodes) {
 
                             var forme = deep(v, 'scriptPubKey.addresses.0') == addr
 
-                            return m + forme ? v.value : 0
+                            console.log('amountall', addr,  deep(v, 'scriptPubKey.addresses.0'), v.value, forme)
+
+                            return m + (forme ? v.value : 0)
                         }, 0)
 
                         data.address = deep(data.txinfo, 'vin.0.address') || platform.sdk.node.transactions.addressFromScryptSig(deep(data.txinfo, 'vin.0.scriptSig.asm'))
@@ -18981,10 +18968,6 @@ Platform = function (app, listofnodes) {
                                 data.user = platform.psdk.userInfo.getShortForm(data.address)
                                 
                             }
-
-                            /*_.each(platform.sdk.node.transactions.clbks, function (c) {
-                                c(data.amountall)
-                            })*/
 
                             if (clbk)
                                 clbk(data)
@@ -19232,7 +19215,7 @@ Platform = function (app, listofnodes) {
 
                     clbk(dif)
 
-                    data.difference = platform.currentBlock - data.block
+                    data.difference = platform.currentBlock - (data.block || data.height)
 
                     platform.actions.ws.block(data)
 
@@ -19305,7 +19288,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
-                    data.difference = platform.currentBlock - data.block
+                    data.difference = platform.currentBlock - (data.block || data.height)
 
                     platform.actions.ws.block(data)
 
@@ -20405,6 +20388,7 @@ Platform = function (app, listofnodes) {
 
         self.messageHandler = function (data, clbk) {
 
+            console.log('data', data)
             data || (data = {})
 
             if (data.msg || data.mesType) {
@@ -20825,7 +20809,10 @@ Platform = function (app, listofnodes) {
                 txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
             })*/
 
-
+            
+            
+            /*self.messageHandler({"addr":"TXDVUUXnSMPuakN9kU1JyF1vsPLc5Le12F","msg":"transaction","txid":"426831ff4b7fe2b6c589f47a03c66e75db0065b6d39dfb4021c9e1157f3c8217","time":1688559470,"amount":"100000000","nout":"0","node":"157.90.228.34:39091:6067"})*/
+            
 
 
 
@@ -22326,18 +22313,22 @@ Platform = function (app, listofnodes) {
                     
                     var account = self.actions.addAccount(self.app.user.address.value)
 
-                    if(self.psdk.userState.getmy()) account.setStatus(true)
-
-                    /*if (self.sdk.ustate.storage[self.app.user.address.value]){
-                        account.setStatus(true)
-                    }*/
+                    if (self.psdk.userState.getmy()) account.setStatus(true)
 
                     account.setKeys(app.user.keys())
                     account.updateUnspents().catch(e => {
                         console.error(e)
                     })
-                    
 
+                    /*var astatus = account.getStatus()
+
+                    if (astatus == 'not_in_progress_no_processing'){
+                        setTimeout(() => {
+
+                            console.log("NEED TO REGISTER")
+
+                        }, 3000)
+                    }*/
 
                     self.preparingUser = false;
 
@@ -22388,7 +22379,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     }, 2000)
-
 
                 })
             }

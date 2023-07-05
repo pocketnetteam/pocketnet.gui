@@ -538,11 +538,15 @@ var wallet = (function(){
 
 				var addresses = actions.sendAddresses();
 
-				self.app.platform.sdk.node.transactions.get.balance(function(amount){
+				var account = self.app.platform.actions.getCurrentAccount()
+						
+				var balance = account.actualBalance(addresses)
 
-					if(htls.parameters.amount.value > amount) htls.parameters.amount.value = amount
+				var amount = balance.actual
+
+
+				if(htls.parameters.amount.value > amount) htls.parameters.amount.value = amount
 					
-				}, addresses, null, true)
 
 			},
 
@@ -1472,8 +1476,13 @@ var wallet = (function(){
 
 					self.app.platform.sdk.exchanges.rates(function(rates){
 
+						var account = self.app.platform.actions.getCurrentAccount()
+						
+						var balance = account.actualBalance(craddress)
 
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+						var amount = balance.actual
+
+
 
 							amount = Math.min(amount / 3, 1000);
 
@@ -1569,7 +1578,6 @@ var wallet = (function(){
 
 							})
 
-						}, craddress, true, true)
 
 					})
 					
@@ -1923,25 +1931,27 @@ var wallet = (function(){
 						
 						var addresses = actions.sendAddresses();
 
+						var account = self.app.platform.actions.getCurrentAccount()
+						
+						var balance = account.actualBalance(addresses)
 
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+						var amount = balance.actual
 
-							if (htls.parameters.amount.value < 0) htls.parameters.amount.value = 0;
+						if (htls.parameters.amount.value < 0) htls.parameters.amount.value = 0;
 
-							if (htls.parameters.amount.value > amount) 
-								htls.parameters.amount.value = amount
-
-
-							htls.parameters.amount.el.closest('.inputWrapper').html(htls.parameters.amount.input())
-
-							ParametersLive([htls.parameters.amount], _p.el)
+						if (htls.parameters.amount.value > amount) 
+							htls.parameters.amount.value = amount
 
 
-							if (mode == 1){
-								actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
-							}
-							
-						}, addresses, null, true)
+						htls.parameters.amount.el.closest('.inputWrapper').html(htls.parameters.amount.input())
+
+						ParametersLive([htls.parameters.amount], _p.el)
+
+
+						if (mode == 1){
+							actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
+						}
+						
 
 					}
 				
@@ -2094,26 +2104,28 @@ var wallet = (function(){
 							
 							var addresses = actions.sendAddresses();
 
+							var account = self.app.platform.actions.getCurrentAccount()
+						
+							var balance = account.actualBalance(addresses)
 
-							self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-
-								if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
-
-								if (send.parameters.amount.value > amount) 
-									send.parameters.amount.value = amount
+							var amount = balance.actual
 
 
-								send.parameters.amount.el.closest('.inputWrapper').html(send.parameters.amount.input())
+							if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
 
-								ParametersLive([send.parameters.amount], _p.el)
+							if (send.parameters.amount.value > amount) 
+								send.parameters.amount.value = amount
 
-								if (mode == 1){
-									actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
-								}
 
-								
-							}, addresses, null, true)
+							send.parameters.amount.el.closest('.inputWrapper').html(send.parameters.amount.input())
+
+							ParametersLive([send.parameters.amount], _p.el)
+
+							if (mode == 1){
+								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
+							}
+
+							
 
 						}
 

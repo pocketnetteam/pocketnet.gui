@@ -493,7 +493,7 @@ var test = (function(){
 
 				//TODO_REF_ACTIONS
 
-				if(account && account.getTempUserInfo()){
+				if(account && account.getTempUserInfo() && account.getTempUserInfo().transaction){
 
 					el.upanel.addClass('wait')
 
@@ -1134,6 +1134,10 @@ var test = (function(){
 
 						data.firstTime = firstTime;
 						data.caption = ed.caption
+
+					if(!data.caption && ed.reason){
+						data.caption = self.app.localization.e('reason_' + ed.reason)
+					}
 
 					if(ref){
 						self.sdk.users.get(ref, function(){

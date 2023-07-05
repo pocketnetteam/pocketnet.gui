@@ -31,28 +31,28 @@ var post = (function () {
 
 					self.app.platform.sdk.user.stateAction(() => {
 
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+	
 
 	
-							var userinfo = self.psdk.userInfo.getShortForm(share.address)
-							
-							
-		
-							self.nav.api.load({
-								open : true,
-								href : 'pkoin',
-								history : true,
-								inWnd : true,
-			
-								essenseData : {
-									userinfo: userinfo,
-									id : share.txid,
-									format : format,
-									type : type
-								}
-							})
+						var userinfo = self.psdk.userInfo.getShortForm(share.address)
+						
+						
 	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								id : share.txid,
+								format : format,
+								type : type
+							}
 						})
+
+		
 	
 					})
 

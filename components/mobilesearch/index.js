@@ -86,7 +86,7 @@ var mobilesearch = (function(){
 		var renders = {
 			last : function(){
 
-				var result = ed.last.get();
+				var result = ed.last ? ed.last.get() : [];
 
 				if (result.length){
 
