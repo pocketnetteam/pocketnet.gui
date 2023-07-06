@@ -5880,6 +5880,9 @@ html.allcontent_application #footerWrapper {
 html.mobileview .plyr__volume {
   max-width: 32px;
 }
+html.mobileview .plyr__volume input {
+  display: none;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;

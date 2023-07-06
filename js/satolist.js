@@ -417,10 +417,10 @@ Platform = function (app, listofnodes) {
 
         comment: function(alias, status){},
         subscribe: function(alias, status){},
+        subscribePrivate: function(alias, status){},
         unsubscribe: function(alias, status){},
         blocking: function(alias, status){},
         unblocking: function(alias, status){},
-        subscribePrivate: function(alias, status){},
         userInfo: function(alias, status){},
     }
 
@@ -1387,7 +1387,9 @@ Platform = function (app, listofnodes) {
 
         "28": {
             message: function () {
-                return "Wait a bit before taking action"
+                return self.app.localization.e('e28error')
+                
+                "Wait a bit before taking action"
             }
         },
 
@@ -5159,6 +5161,7 @@ Platform = function (app, listofnodes) {
                     if (clbk) clbk(action.get())
     
                 }).catch(e => {
+                    
 
                     console.error(e)
 

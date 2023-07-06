@@ -100,14 +100,6 @@ var boost = (function(){
 		}
 
 		var make = function(){
-			/*self.app.platform.papi.post(
-				"18399921cc5455b3283322a488f553d0169d00e3501246fc60d2e0c67c98bfc6",
-				el.lenta,
-				function (e, p) {
-					ext = p
-				},
-			);*/
-
 			renders.faq()
 		}
 
@@ -155,6 +147,10 @@ var boost = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'normalizedmobile maxheight',
 			}
 		}
 	};

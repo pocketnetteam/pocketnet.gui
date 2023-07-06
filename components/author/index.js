@@ -1227,47 +1227,7 @@ var author = (function(){
 		var relationsClbk = function(address){
 
 			if (address == author.address){
-
 				renders.panel()
-
-				/*var me = self.psdk.userInfo.getmy()
-
-				if (me){
-
-					var r = me.relation(address, 'subscribes') 
-					var blocking = me.relation(address, 'blocking')
-	
-					window.requestAnimationFrame(() => {
-	
-						if(!el.c) return
-						
-						if (r) {
-	
-							el.subscribe.addClass('following')
-		
-							if ((r.private == 'true' || r.private === true)){
-								el.c.find('.notificationturn').addClass('turnon')	
-							}
-							else{
-								el.c.find('.notificationturn').removeClass('turnon')	
-							}
-						}
-						else{
-							el.subscribe.removeClass('following')
-							el.c.find('.notificationturn').removeClass('turnon')	
-						}
-		
-						
-		
-						if (blocking){
-							el.caption.addClass('blocking');
-						}
-						else{
-							el.caption.removeClass('blocking');
-						}
-					})
-	
-				}*/
 			}
 
 			if(address == author.address || author.address == self.app.user.address.value){
@@ -1415,12 +1375,7 @@ var author = (function(){
 					relationsClbk(alias.address.v)
 				}
 
-				console.log('type, alias, status', type, alias, status)
-
-
 				if(type == 'userInfo'){
-
-					console.log('RENDER', alias, author)
 
 					if(alias.address == author.address){
 

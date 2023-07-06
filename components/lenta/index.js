@@ -287,6 +287,9 @@ var lenta = (function(){
 				if (me){
 					var r = me.relation(address, 'subscribes') 
 
+
+					console.log("Relation", r, address)
+
 					if (r) {
 
 						addressEl.addClass('subscribed');
@@ -3455,6 +3458,8 @@ var lenta = (function(){
 					return !$('#' + s.txid).hasClass('hidden')
 				})
 
+				console.log('shares', shares)
+
 				var rs = shares
 
 				if (recommended != 'saved'){
@@ -4912,6 +4917,32 @@ var lenta = (function(){
 
 							}
 
+						}
+
+						if(type == 'blocking' || type == 'unblocking'){
+
+							var address = alias.address.v
+
+							if(type == 'blocking' || (type == 'unblocking' && status == 'rejected')){
+
+								var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+									addressEl.addClass('blocking');
+									actions.stopPlayers()
+
+							}
+
+							if(type == 'unblocking' || (type == 'blocking' && status == 'rejected')){
+
+								var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+									addressEl.removeClass('blocking');
+									actions.stopPlayers()
+									
+							}
+							
+						}
+
+						if(type == 'unsubscribe' || type == 'subscribe' || type == 'subscribePrivate'){
+							actions.subscribeunsubscribeclbk(alias.address.v)
 						}
 						
 					}

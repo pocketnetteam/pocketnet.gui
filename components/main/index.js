@@ -777,6 +777,8 @@ var main = (function(){
 								lastscroll = self.app.lastScrollTop
 
 								el.c.addClass('opensvishowed')
+								
+								
 
 								if (upbutton) upbutton.destroy()
 								
@@ -805,18 +807,21 @@ var main = (function(){
 										upbackbutton.apply()
 									},300)
 								}
-
 								
 
-								renders.post(id)
-
-								self.nav.api.history.addParameters({
-									v : id
-								})
-
-								self.nav.api.changedclbks()
-
 								events.up()
+
+								setTimeout(() => {
+
+									renders.post(id)
+
+									self.nav.api.history.addParameters({
+										v : id
+									})
+
+									self.nav.api.changedclbks()
+									
+								}, 400)
 							},
 
 							renderClbk : function(){
@@ -892,16 +897,22 @@ var main = (function(){
 								openedpost.clearessense()
 								openedpost = null
 							}
+
+							events.up()
+
+							setTimeout(() => {
+								el.c.find('.renderposthere').html('')
+
+								renders.post(id)
+	
+								self.nav.api.history.addParameters({
+									v : id
+								})
+							}, 300)
 		
-							el.c.find('.renderposthere').html('')
+							
 
-							renders.post(id)
-
-							self.nav.api.history.addParameters({
-								v : id
-							})
-
-							self.app.actions.scroll(0)
+							
 							
 						}
 					})

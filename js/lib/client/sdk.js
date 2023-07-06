@@ -532,6 +532,8 @@ var pSDK = function ({ app, api, actions }) {
                         }
                     }
 
+                    console.log("APPLY ACTION", k, extendedObject, object)
+
                     if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
@@ -775,7 +777,9 @@ var pSDK = function ({ app, api, actions }) {
                 itisme: address == app.user.address.value,
                 addresses: userInfo.addresses || [],
                 dev: userInfo.dev || false,
-                real: app.platform.real[address]
+                real: app.platform.real[address],
+                about : userInfo.about,
+                regdate : userInfo.regdate
                 //markHtml : app.platform.ui.markUser(address)
             }
         },
@@ -1692,7 +1696,6 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
 
@@ -1701,6 +1704,8 @@ var pSDK = function ({ app, api, actions }) {
             }
         },
         applyAction: function (object, exp) {
+
+            console.log('object, exp', object, exp)
 
 
             if (object) {
@@ -1788,7 +1793,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (object.address == exp.address.v) {
                     object.removeRelation(exp.address.v, 'subscribers')
-
                 }
             }
 

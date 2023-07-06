@@ -263,10 +263,6 @@
 			max-width: 590px;
 		}
 
-		.verticalVideo {
-			max-width: 350px;
-		}
-
 		.squareVideo {
 			max-width: 450px;
 		}
@@ -493,15 +489,6 @@
 			margin-bottom: 0;
 			border-radius: 6px;
 
-			.sharecaption{
-				margin-top:0;
-				padding-top : 2 * @rhythm;
-				padding-bottom : @rhythm;
-				margin-bottom: 0;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-
-			}
 
 			.work{
 				overflow: inherit;
@@ -522,29 +509,7 @@
 				display: block!important;
 			}
 
-			.sharecaption{
-				white-space: inherit;
-				padding-right: 2 * @rhythm;
-				
-				div{
-					font-size: 1em;
-					font-weight: 500;
-					
-					
-				}
-
-				span{	
-					font-weight: 700;
-					font-size: 0.9em;
-					display: -webkit-box;
-					-webkit-line-clamp: 2;
-					line-clamp : 2;
-					-webkit-box-orient: vertical;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-			}
-
+			
 		
 
 			.meta{
@@ -588,12 +553,10 @@
 			.forurl{
 				height: 200px;
 				position: relative;
-				max-width: 350px;
 				margin : 0 auto;
 
 				&.verticalVideo{
 					height: 530px;
-					
 				}
 			}
 
@@ -633,10 +596,72 @@
 				}
 			}
 
+			.sharecaption{
+				padding : 0;
+				margin : 0;
+				margin-right: @rhythm;
+				margin-top: @rhythm;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				white-space: inherit;
+
+				img{
+					vertical-align: middle;
+				}
+				
+				div{
+					font-size: 1em;
+				}
+
+				span{	
+					font-size: 0.8em;
+					display: -webkit-box;
+					-webkit-line-clamp: 1;
+					line-clamp : 1;
+					-webkit-box-orient: vertical;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+
+
 			.shareTable{
 				padding-top : 0;
 				padding-bottom: 0;
+
+				.coverbg{
+					pointer-events: none;
+					position: absolute;
+					left : 0;
+					right: 0;
+					top : 0;
+					background: rgba(1, 1, 1, 1);
+					background: linear-gradient(180deg, rgba(1, 1, 1, 1), rgba(1, 1, 1, 0.0));
+					border-top-left-radius: 18px;
+					border-top-right-radius: 18px;
+					z-index: 0;
+					height: 63%;
+				}
+
+				.anothercntswrk{
+					position: absolute;
+					left : 0;
+					right: 0;
+					top : 0;
+					border-top-left-radius: 18px;
+					border-top-right-radius: 18px;
+					padding : @rhythm;
+					color : #fff;
+					padding-right: 0;
+					z-index: 1;
+				}
+
+				.author{
+					width: 100%;
+				}
+
 				.authorTable{
+					width: 100%;
 					align-items: center;
 					display: flex;
 					white-space: nowrap;
@@ -647,7 +672,6 @@
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
-							opacity: 0.7;
 						}
 
 						a{
@@ -656,18 +680,16 @@
 
 						&.datetime{
 							padding-left: @rhythm;
-							opacity: 0.7;
 							white-space: nowrap;
 							text-overflow: ellipsis;
 							font-weight: 400;
-							span{
-								color : rgb(var(--text-color));
-							}
+							opacity: 0.7;
 						}
 						
 						span{
 							font-size: 0.9em;
 							font-weight: 400;
+							vertical-align: middle;
 						}
 
 
@@ -675,19 +697,22 @@
 				}
 
 				.metatable{
-					>div{
 						
-						&.metapanel{
-							width: 40px;
-							color : rgb(var(--text-color));
+					.metapanel{
+						margin-left: auto;
+						width: 40px;
 
-							.metapanelitem{
-								opacity: 1;
+						.metapanelitem{
+							cursor: pointer;
+							text-align: center;
+							opacity: 1;
+
+							i{
+								font-size: 0.8em;
 							}
 						}
-
-						
 					}
+						
 				}
 			}
 
@@ -709,12 +734,9 @@
 				float: left;
 				width: 33.3333%;
 				.share{
-					padding : 15px;
+					padding : 5px;
 				}
 
-				.anothercntswrk{
-					height: 100px;
-				}
 				
 				&:nth-child(3n + 1){
 					clear: left;
@@ -824,24 +846,30 @@
 						}
 					}
 
+					.coverbg{
+						display: none;
+					}
+
 
 					.anothercntswrk{
 						position: absolute;
 						left: 0;
 						bottom : 0;
+						top : auto;
 						height: 40px;
 						display: flex;
 						flex-wrap: nowrap;
 						flex-direction: row;
 						align-items: center;
 						width: 100%;
+						color: rgb(var(--text-color));
 						.cntswrk{
 							order: 2;
 						}
 
 						.formeta{
-							width: 22px;
-							min-width: 22px;
+							display: flex;
+							align-items: center;
 							order: 1;
 							margin-right: @rhythm;
 						}
@@ -867,9 +895,11 @@
 							overflow: hidden;
 							flex-grow: 1;
 							max-width: 200px;
-							padding-top : 0.5 * @rhythm;
+							padding-top : 0;
 							padding-right: 2.5 * @rhythm;
+							padding-left: @rhythm;
 							font-size: 0.85em!important;
+							margin-top: 0;
 
 							span{
 								display: inline;
@@ -1141,10 +1171,9 @@
 
 					.authorgroup {
 						.share{
-							padding : 15px;
+							padding : 5px;
 						}
 						.anothercntswrk{
-							height: 100px;
 							overflow: hidden;
 						}
 					}

@@ -22,6 +22,31 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+			unblock : function(){
+
+				console.log("?????????")
+					
+				self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
+					if (!tx) {
+						self.app.platform.errorHandler(error, true)
+					}
+				})
+				
+			},
+
+			stopPlayer : function(){
+
+				if(!player || player.error) return
+
+				if (player.p){
+					player.p.muted = true;
+
+					if (player.p.playing){
+						player.p.stop()
+					}
+				}
+				
+			},
 
 			pkoin : function(format){
 
@@ -30,13 +55,8 @@ var post = (function () {
 				if (share){
 
 					self.app.platform.sdk.user.stateAction(() => {
-
-	
-
 	
 						var userinfo = self.psdk.userInfo.getShortForm(share.address)
-						
-						
 	
 						self.nav.api.load({
 							open : true,
@@ -1306,6 +1326,9 @@ var post = (function () {
 						_p.el.find('.boost').on('click', events.boost)
 						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
+						_p.el.find('.unblockbutton').on('click', function(){
+							actions.unblock()
+						})
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1321,6 +1344,8 @@ var post = (function () {
 						renders.stars(function () {
 
 							if(!el.share) return
+
+							console.log("??????????????????")
 
 
 							renders.mystars(function () { });
@@ -1479,9 +1504,13 @@ var post = (function () {
 			},
 			
 			mystars: function (clbk) {
+
+				console.log('share.myVal', share.myVal)
 				
 				if (typeof share.myVal == 'undefined' && !ed.preview && !ed.repost) {
 					var ids = [share.txid];
+
+					console.log("GET MY STARS")
 
 					self.app.platform.sdk.likes.get(ids, function () {
 						renders.stars(clbk);
@@ -1499,6 +1528,8 @@ var post = (function () {
 						data: {
 							share: share,
 						},
+						ignorelinksandimages : true,
+						animation : false,	
 					},
 					function (p) {
 
@@ -1691,7 +1722,7 @@ var post = (function () {
 				}
 			}
 
-			self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
+			/*self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
 				if (data.temp) {
 
@@ -1720,61 +1751,115 @@ var post = (function () {
 
 						})
 					}
-
-
-
 				}
 
-			}
+			}*/
 
-			self.app.platform.clbks.api.actions.subscribePrivate.post = function (address) {
 
-				if (address == share.address) {
+			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
 
-					var me = self.psdk.userInfo.getmy()
+				if(type == 'upvoteShare'){
 
-					if (me) {
-						var r = me.relation(address, 'subscribes')
+					console.log('share.txid == alias.share.v', share.txid, alias.share.v)
 
-						el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+					if (share.txid == alias.share.v){
+						renders.stars()
+					}
+				}
 
-						if (r && (r.private == 'true' || r.private === true)) {
-							el.c.find('.shareTable[address="' + address + '"] .notificationturn').addClass('turnon')
+				/*if(type == 'share'){
+
+					console.log('type, alias, status', type, alias, status)
+
+					var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
+					var replaceAll = true
+
+					var trx = self.psdk.share.get(alias.txid)
+
+					alias = trx ? trx : alias
+
+					if (!replace){
+						if(essenseData.author == alias.actor){
+
+							if(status == 'rejected') return
+
+							renders.shares([alias], function(){
+								renders.sharesInview([alias], function(){
+									
+								})
+							}, {
+								inner : prepend
+							})
+
 						}
-						else {
-							el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+						else{
+
 						}
 					}
+					else{
 
-					remake()
+						if (replaceAll){
+
+							actions.destroyShare(replace)
+
+							if(status == 'rejected' && (!alias || !alias.editing)) {
+
+								if(el.share[replace.txid]) el.share[replace.txid].remove()
+
+								delete el.share[replace.txid]
+
+								return
+							}
+
+							renders.shares([alias], function(){
+								renders.sharesInview([alias], function(){
+									
+								})
+							}, {
+								inner : replaceWith,
+								el : el.share[replace.txid],
+								ignoresw : true,
+							})
+						}
+
+						else{
+							/// only status
+						}
+
+					}
+
+				}*/
+
+				if(type == 'blocking' || type == 'unblocking'){
+
+					var address = alias.address.v
+
+					if (share.address == address){
+
+						if(type == 'blocking' || (type == 'unblocking' && status == 'rejected')){
+
+							var addressEl = el.c.find('.shareTable').closest('.share')
+								addressEl.addClass('blocking');
+								actions.stopPlayer()
+	
+						}
+	
+						if(type == 'unblocking' || (type == 'blocking' && status == 'rejected')){
+	
+							var addressEl = el.c.find('.shareTable').closest('.share')
+								addressEl.removeClass('blocking');
+								actions.stopPlayer()
+						}
+
+					}
+					
 				}
 
-			}
-
-			self.app.platform.clbks.api.actions.subscribe.post = function (address) {
-
-				if (address == share.address) {
-
-					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
-					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+				if(type == 'unsubscribe' || type == 'subscribe' || type == 'subscribePrivate'){
+					actions.subscribeLabel(alias.address.v)
+				}
 				
-					remake()
-				}
-
-
-			}
-
-			self.app.platform.clbks.api.actions.unsubscribe.post = function (address) {
-
-				if (address == share.address) {
-
-					el.c.find('.shareTable').removeClass('subscribed');
-					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
-				
-					remake()
-				}
 			}
 
 		}
@@ -1954,13 +2039,9 @@ var post = (function () {
 				if (inicomments)
 					inicomments.destroy()
 
-				delete self.app.platform.ws.messages.event.clbks.post
 
-				delete self.app.platform.ws.messages.transaction.clbks.temppost
-				delete self.app.platform.clbks.api.actions.subscribePrivate.post
-				delete self.app.platform.clbks.api.actions.unsubscribe.post
-				delete self.app.platform.clbks.api.actions.subscribe.post
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
+				delete self.app.platform.actionListeners[eid]
 
 				authblock = false;
 

@@ -188,9 +188,6 @@
 #lenta .share .message {
   max-width: 590px;
 }
-#lenta .share .verticalVideo {
-  max-width: 350px;
-}
 #lenta .share .squareVideo {
   max-width: 450px;
 }
@@ -358,14 +355,6 @@
   margin-bottom: 0;
   border-radius: 6px;
 }
-#lenta.mainvideo .share .sharecaption {
-  margin-top: 0;
-  padding-top: 1em;
-  padding-bottom: 0.5em;
-  margin-bottom: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 #lenta.mainvideo .share .work {
   overflow: inherit;
 }
@@ -381,24 +370,6 @@
 }
 #lenta.mainvideo .share.hidden {
   display: block!important;
-}
-#lenta.mainvideo .share .sharecaption {
-  white-space: inherit;
-  padding-right: 1em;
-}
-#lenta.mainvideo .share .sharecaption div {
-  font-size: 1em;
-  font-weight: 500;
-}
-#lenta.mainvideo .share .sharecaption span {
-  font-weight: 700;
-  font-size: 0.9em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 #lenta.mainvideo .share .meta {
   padding-top: 0.5em;
@@ -434,7 +405,6 @@
 #lenta.mainvideo .share .forurl {
   height: 200px;
   position: relative;
-  max-width: 350px;
   margin: 0 auto;
 }
 #lenta.mainvideo .share .forurl.verticalVideo {
@@ -464,11 +434,64 @@
   opacity: 0.7;
   text-decoration: none;
 }
+#lenta.mainvideo .share .sharecaption {
+  padding: 0;
+  margin: 0;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: inherit;
+}
+#lenta.mainvideo .share .sharecaption img {
+  vertical-align: middle;
+}
+#lenta.mainvideo .share .sharecaption div {
+  font-size: 1em;
+}
+#lenta.mainvideo .share .sharecaption span {
+  font-size: 0.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 #lenta.mainvideo .share .shareTable {
   padding-top: 0;
   padding-bottom: 0;
 }
+#lenta.mainvideo .share .shareTable .coverbg {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #010101;
+  background: linear-gradient(180deg, #010101, rgba(1, 1, 1, 0));
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  z-index: 0;
+  height: 63%;
+}
+#lenta.mainvideo .share .shareTable .anothercntswrk {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 0.5em;
+  color: #fff;
+  padding-right: 0;
+  z-index: 1;
+}
+#lenta.mainvideo .share .shareTable .author {
+  width: 100%;
+}
 #lenta.mainvideo .share .shareTable .authorTable {
+  width: 100%;
   align-items: center;
   display: flex;
   white-space: nowrap;
@@ -476,31 +499,33 @@
 #lenta.mainvideo .share .shareTable .authorTable > div.authorCell {
   padding-left: 0.5em;
   padding-right: 0;
-  opacity: 0.7;
 }
 #lenta.mainvideo .share .shareTable .authorTable > div a {
   font-size: 0.9em;
 }
 #lenta.mainvideo .share .shareTable .authorTable > div.datetime {
   padding-left: 0.5em;
-  opacity: 0.7;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-weight: 400;
-}
-#lenta.mainvideo .share .shareTable .authorTable > div.datetime span {
-  color: rgb(var(--text-color));
+  opacity: 0.7;
 }
 #lenta.mainvideo .share .shareTable .authorTable > div span {
   font-size: 0.9em;
   font-weight: 400;
+  vertical-align: middle;
 }
-#lenta.mainvideo .share .shareTable .metatable > div.metapanel {
+#lenta.mainvideo .share .shareTable .metatable .metapanel {
+  margin-left: auto;
   width: 40px;
-  color: rgb(var(--text-color));
 }
-#lenta.mainvideo .share .shareTable .metatable > div.metapanel .metapanelitem {
+#lenta.mainvideo .share .shareTable .metatable .metapanel .metapanelitem {
+  cursor: pointer;
+  text-align: center;
   opacity: 1;
+}
+#lenta.mainvideo .share .shareTable .metatable .metapanel .metapanelitem i {
+  font-size: 0.8em;
 }
 #lenta.mainvideo .share .cntswrk {
   margin-left: 0;
@@ -515,10 +540,7 @@
   width: 33.3333%;
 }
 #lenta.mainvideo .shares .authorgroup .share {
-  padding: 15px;
-}
-#lenta.mainvideo .shares .authorgroup .anothercntswrk {
-  height: 100px;
+  padding: 5px;
 }
 #lenta.mainvideo .shares .authorgroup:nth-child(3n + 1) {
   clear: left;
@@ -595,23 +617,28 @@
 #lenta.horizontal.compact .share .shareTable .authorTable > div.authorCell {
   display: none;
 }
+#lenta.horizontal.compact .share .shareTable .coverbg {
+  display: none;
+}
 #lenta.horizontal.compact .share .shareTable .anothercntswrk {
   position: absolute;
   left: 0;
   bottom: 0;
+  top: auto;
   height: 40px;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
   width: 100%;
+  color: rgb(var(--text-color));
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .cntswrk {
   order: 2;
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .formeta {
-  width: 22px;
-  min-width: 22px;
+  display: flex;
+  align-items: center;
   order: 1;
   margin-right: 0.5em;
 }
@@ -633,9 +660,11 @@
   overflow: hidden;
   flex-grow: 1;
   max-width: 200px;
-  padding-top: 0.25em;
+  padding-top: 0;
   padding-right: 1.25em;
+  padding-left: 0.5em;
   font-size: 0.85em !important;
+  margin-top: 0;
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption span {
   display: inline;
@@ -784,10 +813,9 @@
     width: 50%;
   }
   html.tablet #lenta.mainvideo .shares .authorgroup .share {
-    padding: 15px;
+    padding: 5px;
   }
   html.tablet #lenta.mainvideo .shares .authorgroup .anothercntswrk {
-    height: 100px;
     overflow: hidden;
   }
   html.tablet #lenta.mainvideo .share .paddingWrapper {

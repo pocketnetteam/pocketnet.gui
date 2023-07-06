@@ -5,6 +5,8 @@ var m = share.renders.message();
 var cc = share.renders.captionclear();
 var bigmessage = false
 
+console.log("HEHERERRE")
+
 if(typeof ed == 'undefined') ed = {}
 
 if(share.address){
@@ -45,7 +47,7 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+			cc = findAndReplaceLink(cc)
 
 
 		%>

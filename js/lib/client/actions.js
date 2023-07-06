@@ -173,7 +173,12 @@ var ActionOptions = {
 
 var errorCodesAndActionsExecutors = {
     wait : function(action){
+        action.rejectWait = (new Date()).addSeconds(60 * 2)
 
+        return Promise.resolve()
+    },
+
+    useraction : function(action){
     },
 
     limit : function(action){
@@ -193,7 +198,8 @@ var errorCodesAndActions = {
     '49' : errorCodesAndActionsExecutors.limit,
     '61' : errorCodesAndActionsExecutors.limit,
     '65' : errorCodesAndActionsExecutors.limit,
-    '18' : errorCodesAndActionsExecutors.wait
+    '18' : errorCodesAndActionsExecutors.useraction,
+    '28' : errorCodesAndActionsExecutors.wait
 }
 
 var Action = function(account, object, priority, settings){
@@ -207,6 +213,7 @@ var Action = function(account, object, priority, settings){
     self.added = new Date()
     self.until = (new Date()).addSeconds(60 * 60 * 12)
     self.settings = settings || {}
+    self.rejectWait = null
 
     self.sent = null
     self.checkedUntil = null
@@ -240,6 +247,7 @@ var Action = function(account, object, priority, settings){
         e.attempts = self.attempts
         e.transaction = self.transaction
         e.settings = self.settings
+        e.rejectWait = self.rejectWait
 
         e.rejected = self.rejected
         e.completed = self.completed
@@ -268,6 +276,9 @@ var Action = function(account, object, priority, settings){
 
         if (e.sending)
             self.sending = new Date(e.sending)
+
+        if (e.rejectWait) 
+            self.rejectWait = new Date(rejectWait)
 
         if (e.checkedUntil)
             self.checkedUntil = new Date(e.checkedUntil)
@@ -723,6 +734,10 @@ var Action = function(account, object, priority, settings){
             if(_.indexOf(self.options.attentionIfReJectCodes, error) > -1) return true
         }
 
+        if (error && errorCodesAndActions[error]){
+            return true
+        }
+
         return false
     }
 
@@ -783,7 +798,14 @@ var Action = function(account, object, priority, settings){
         }
 
         if (self.rejected){
-            return Promise.reject(self.rejected)
+
+            if (self.rejectWait && self.rejectWait > new Date()){
+                self.rejectWait = null
+                self.rejected = null
+            }
+
+            if (self.rejected)
+                return Promise.reject(self.rejected)
         }
 
         if (self.transaction){
@@ -902,7 +924,17 @@ var Action = function(account, object, priority, settings){
         else{
 
             if(rejectIfError){
-                if(error == 'actions_noinputs_wait' || error == 'actions_userInteractive' || error == 'actions_waitUserInteractive' || error == 'actions_waitUserStatus' || error == 'actions_checkFail'){
+                if(
+
+                    error == 'actions_noinputs_wait' || 
+                    error == 'actions_userInteractive' || 
+                    error == 'actions_waitUserInteractive' || 
+                    error == 'actions_waitUserStatus' || 
+                    error == 'actions_checkFail' 
+                    
+                    // || errorCodesAndActions[error]
+
+                ){
 
                 }
                 else{
@@ -1323,15 +1355,15 @@ var Account = function(address, parent){
         }
 
         if(action.controlReject(error)){
-            
+
             if (action.object.type == 'userInfo' && error == 18){
 
                 //action.rejected = 'actions_rejectedFromNodes'
                 //// ask change user name
 
                 return await self.userInteractive(action, error, 'changeUserName', {}).then(() => {
-                    //// new action instead
-                    action.rejectedByUser()
+                    //// new action instead (collisions)
+                    //action.rejectedByUser()
                 }).catch(e => {
 
                     if (e == 'actions_rejectedByUser'){
@@ -1341,10 +1373,20 @@ var Account = function(address, parent){
                     else{
                         action.checkInAnotherSession = true
                     }
-                    
 
                 })
 
+            }
+
+
+            if(errorCodesAndActions[error]){
+                return errorCodesAndActions[error](action).then(() => {
+
+                    return Promise.resolve()
+                    
+                }).catch(e => {
+                    action.rejectedByUser()
+                })
             }
         }
 
@@ -1639,8 +1681,9 @@ var Account = function(address, parent){
             if (exported.until < new Date()) return
 
 
+            console.log("HERE", flag)
             //withcompleted
-            if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || 
+            if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
             
             (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
@@ -2313,9 +2356,10 @@ var Actions = function(app, api, storage = localStorage){
                 return Promise.resolve(action)
             }).catch(e => {
 
-                if(e == 'actions_checkFail') return Promise.resolve(action)
+                if(e == 'actions_checkFail' /*|| errorCodesAndActions[e]*/) return Promise.resolve(action)
 
                 return Promise.reject(e)
+
             })
         }
         else{
