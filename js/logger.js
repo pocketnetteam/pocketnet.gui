@@ -150,8 +150,8 @@ class FrontendLogger {
     guid = '',
     userAgent = '',
     // userData = '',
-     uri = '',
-    // timezone = '',
+    uri = '',
+    timezone = '',
   }) {
     const parametersOrder = [
       level,
@@ -178,9 +178,9 @@ class FrontendLogger {
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '0.0.1',
     userAgent = '',
-    // userData = '',
-    // uri = '',
-    // timezone = '',
+    userData = '',
+    uri = '',
+    timezone = '',
     guid = '',
     language = 'no',
   }) {
@@ -191,9 +191,9 @@ class FrontendLogger {
       date,
       moduleVersion,
       userAgent,
-      // userData,
-      // uri,
-      // timezone,
+      userData,
+      uri,
+      timezone,
       guid,
       language,
     ].map((element) =>
@@ -234,9 +234,9 @@ class FrontendLogger {
       ...error,
       guid,
       userAgent,
-      // userData,
-      // uri,
-      // timezone,
+      userData,
+      uri,
+      timezone,
       payload: errorBody,
     };
 
@@ -351,7 +351,7 @@ class FrontendLogger {
     },
   };
 
-  info({ actionId = '', actionSubType = '', actionValue = '' }) {
+  info({ actionId = '', actionSubType = '', actionValue = '' , active = false}) {
     const {
       _logsCache,
       guid,
@@ -365,7 +365,9 @@ class FrontendLogger {
       app,
     } = this;
 
-    if (!loggerActive) return;
+    console.log("HERE")
+
+    if (!loggerActive && !active) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : actionId;
     const language = (app.localization || {}).key || 'no';
@@ -376,11 +378,13 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
-      // userData,
-      // uri,
-      // timezone,
+      userData,
+      uri,
+      timezone,
       language,
     };
+
+    console.log('info', info, infoType)
 
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);

@@ -1506,8 +1506,8 @@ Application = function (p) {
 		navigator.userAgent,
 		JSON.stringify(navigator.userAgentData),
 		location.href,
-		'timezone/undefined',
-		//Intl.DateTimeFormat().resolvedOptions().timeZone,
+		//'timezone/undefined',
+		Intl.DateTimeFormat().resolvedOptions().timeZone,
 		self
 	);
 

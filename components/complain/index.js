@@ -95,12 +95,15 @@ var complain = (function () {
 								self.app.Logger.info({
 									actionId: 'POST_COMPLAIN',
 									actionValue: i1,
-									actionSubType: sobj.txid
+									actionSubType: sobj.txid,
+
+									active : true
 								});
 
 								clbk(true)
 								sitemessage(self.app.localization.e('complain_success'))
 							} catch (error) {
+
 
 								self.app.platform.errorHandler(error, true)
 
@@ -154,7 +157,9 @@ var complain = (function () {
 								self.app.Logger.info({
 									actionId: 'USER_COMPLAIN',
 									actionValue: i1,
-									actionSubType: sobj.data.address
+									actionSubType: sobj.data.address,
+
+									active : true
 								});
 								clbk(true)
 								sitemessage(self.app.localization.e('complain_success'))
@@ -327,7 +332,7 @@ var complain = (function () {
 				p.clbk(null, p);
 			},
 			wnd: {
-				class: 'withoutButtons transparent small complain'
+				class: 'withoutButtons transparent small complain normalizedmobile maxheight'
 			}
 		}
 	};
