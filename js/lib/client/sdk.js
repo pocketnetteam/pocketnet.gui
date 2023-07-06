@@ -532,8 +532,6 @@ var pSDK = function ({ app, api, actions }) {
                         }
                     }
 
-                    console.log("APPLY ACTION", k, extendedObject, object)
-
                     if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
@@ -1704,8 +1702,6 @@ var pSDK = function ({ app, api, actions }) {
             }
         },
         applyAction: function (object, exp) {
-
-            console.log('object, exp', object, exp)
 
 
             if (object) {

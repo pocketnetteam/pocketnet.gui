@@ -2076,6 +2076,8 @@ var post = (function () {
 
 			init: function (p) {
 
+				console.log("INIT POST")
+
 				p.clbk(null, p);
 
 				if(!share) return

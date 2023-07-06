@@ -52,30 +52,7 @@ var recommendations = (function(){
 
 					if (!_p || !_p.el) return;
 
-					_p.el.find('.recoVideoDiv').click(function() {
-		
-						var txid = $(this).data('txid');
-
-						if (txid) {
-
-							self.app.Logger.info({
-								actionId: 'RECOMMENDATION_SELECTED',
-								actionValue: txid
-							});
-
-							if (ed.open){
-								ed.open(txid)
-							}
-							else{
-								self.nav.api.go({
-									href : 'index?video=1&v=' + txid,
-									history : true,
-									open : true
-								})
-							}
-						}
-
-					});
+					
 
 					if(clbk) clbk(_p)
 
@@ -297,6 +274,34 @@ var recommendations = (function(){
 			else{
 				self.app.events.scroll['recommendations'] = events.scrollapp
 			}
+
+
+			el.c.on('click', '.recoVideoDiv', function() {
+
+				console.log("recoVideoDiv")
+		
+				var txid = $(this).data('txid');
+
+				if (txid) {
+
+					self.app.Logger.info({
+						actionId: 'RECOMMENDATION_SELECTED',
+						actionValue: txid
+					});
+
+					if (ed.open){
+						ed.open(txid)
+					}
+					else{
+						self.nav.api.go({
+							href : 'index?video=1&v=' + txid,
+							history : true,
+							open : true
+						})
+					}
+				}
+
+			});
 		}
 
 		var removeEvents = function(){
