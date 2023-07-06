@@ -581,7 +581,7 @@ var videoCabinet = (function () {
 			},
 
 			getUnpostedVideos() {
-				const unpostedVideos =
+				let unpostedVideos =
 					unpostedVideosParsed[self.app.user.address.value] || [];
 
 				return new Promise((res) => {
@@ -596,6 +596,8 @@ var videoCabinet = (function () {
 							);
 
 							unpostedVideos.push(...latestVideos);
+							
+							unpostedVideos = [...new Set(unpostedVideos)];
 
 							return unpostedVideos;
 						})
@@ -628,6 +630,10 @@ var videoCabinet = (function () {
 								function () {
 									return res(
 										accountVideos
+										.filter(
+											(video) =>
+												deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect'),
+										)
 										.map(
 											(video) =>
 												self.app.platform.sdk.videos.storage[video.url],

@@ -24788,6 +24788,7 @@ Platform = function (app, listofnodes) {
                             aspectRatio : linkInfo.aspectRatio || 1,
                             isLive : linkInfo.isLive,
 
+                            isCorrect : linkInfo.uuid ? true : false,
                             original : linkInfo
                         } : '';
 
