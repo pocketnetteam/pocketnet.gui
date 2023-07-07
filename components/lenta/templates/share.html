@@ -508,7 +508,7 @@ var arranges = {
 						<% } %>
 						
 
-						<% if(!share.temp && (typeof repost == 'undefined' || !repost || fromempty)) {%>
+						<% if((!share.temp && !share.relay) && (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
@@ -576,11 +576,10 @@ var arranges = {
 								<% } %>
 								
 							</div>
-
 							
 						<% };
 
-						if (share.relay && share.checkSend) { %>
+						if (share.relay || share.temp) { %>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
 
@@ -588,39 +587,26 @@ var arranges = {
 										
 										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
+												<% if(share.relay) {%>
+													<% if(share.checkSend) {%>
+														<span><%=e('postInRelay')%></span>
+													<% } else { %> 
+														<span><%=e('postInRelay2')%></span>
+													<% } %> 
 
-												<span><%=e('postInRelay')%></span>
+												<% } else { %> 
+													<span><%=e('postWaitConf')%></span>
+												<% } %>
+												
 											</div>
 										</div>
 											
 									</div>
 								</div>
 							</div>
-						<% } else if(share.temp) {%>
-
-							<div class="panel sharepanel unselectablemobile">
-								<div class="item right">
-
-									<div class="itemwr table tempPreloader">
-										
-										<div elementsid="lenta_forstars_count" class="count">
-											<div class="label">
-
-												<span><%=e('postWaitConf')%></span>
-											</div>
-										</div>
-											
-									</div>
-								</div>
-							</div>
-
 						<% } %>
 
-
-						
-
 					</div>
-
 					
 				</div>
 

@@ -19,12 +19,11 @@
 
 				<% 
 
-					var info = psdk.userInfo.get(essenseData.daddress || user.address.value) || {}
+					var info = psdk.userInfo.getShortForm(essenseData.daddress || user.address.value) || {}
 				
-					var src = info.src || ''
-					var name = app.platform.api.clearname(info.name || user.address.value) || ''
+					var src = info.image || ''
 					
-					var letter = name ? name[0] : ''
+					var letter = info.letter
 
 				%>
 		
@@ -55,15 +54,14 @@
 
 								var selected = '';
 
-								var info = psdk.userInfo.get(address) || {}
+								var info = psdk.userInfo.getShortForm(address) || {}
 
 								if (address == (essenseData.daddress || user.address.value)) selected = 'selected'
 
-								var label = app.platform.api.clearname(info.name || user.address.value) || ''
 
 							%> 
 
-								<option value="<%-address%>" <%-selected%>><%-label%></option>
+								<option value="<%-address%>" <%-selected%>><%-info.name%></option>
 
 							<% }) %>
 						</select>

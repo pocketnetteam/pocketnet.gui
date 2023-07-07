@@ -3594,15 +3594,16 @@ var lenta = (function(){
 
 				}, function(_p){
 
+					console.log("_p", _p, _p.inner != replaceWith)
+
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
-
-						
 					}
 					else
 					{
 						if(_p.inner != replaceWith)
 						{
+							console.log('here!!!!')
 							sharesInview = shares.concat(sharesInview)	
 						}
 					}
@@ -3615,6 +3616,7 @@ var lenta = (function(){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
 
+					console.log('sharesInview', sharesInview)
 
 					renders.extras()
 
@@ -4853,10 +4855,16 @@ var lenta = (function(){
 
 						if(type == 'share'){
 
-							var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
+							var replace = _.find(sharesInview, (share) =>  share.txid == alias.txid || share.txid == alias.actionId /*|| share.txid == alias.txidEdit*/)
 							var replaceAll = true
 
 							var trx = self.psdk.share.get(alias.txid)
+
+							if (replace){
+								replace.txid = alias.txid
+							}
+
+							console.log('type, alias, status', sharesInview, type, alias, status, trx, replace)
 
 							alias = trx ? trx : alias
 
@@ -4899,7 +4907,7 @@ var lenta = (function(){
 										})
 									}, {
 										inner : replaceWith,
-										el : el.share[replace.txid],
+										el : (el.share[replace.txid] || el.share[alias.actionId]),
 										ignoresw : true,
 									})
 								}

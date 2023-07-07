@@ -930,9 +930,13 @@ var share = (function(){
 
 							if(!essenseData.notClear){
 								currentShare = new Share(self.app.localization.key, self.app)
-								self.app.nav.api.history.removeParameters(['repost'])
-
-								self.closeContainer()
+								
+								
+								setTimeout(() => {
+									self.app.nav.api.history.removeParameters(['repost'])
+									self.closeContainer()
+								}, 100)
+								
 
 								if(!essenseData.share){
 									state.save()
@@ -982,7 +986,8 @@ var share = (function(){
 
 
 						}).then(() => {
-							el.c.removeClass('loading')
+							if (el.c)
+								el.c.removeClass('loading')
 						})
 					})
 

@@ -2740,3 +2740,6 @@ _l.info_actions_checkFail = 'The publication will be sent as soon as the uploade
 
 _l.e28error = "Wait before taking action"
 
+
+
+_l.postInRelay2 = "This publication will soon be sent to the blockchain"
