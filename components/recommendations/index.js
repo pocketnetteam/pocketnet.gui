@@ -180,8 +180,6 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
-					console.log('recommendations', recommendations)
-
 					self.app.platform.sdk.node.shares.users(recommendations, function(){
 
 
@@ -283,8 +281,6 @@ var recommendations = (function(){
 
 
 			el.c.on('click', '.recoVideoDiv', function() {
-
-				console.log("recoVideoDiv")
 		
 				var txid = $(this).data('txid');
 

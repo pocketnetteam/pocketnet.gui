@@ -2682,7 +2682,7 @@ _l.rpending = 'Pending'
 
 _l.object_comment = 'Comment'
 _l.object_userInfo = 'User Information'
-_l.object_upvoteShare = 'UpvoteShare'
+_l.object_upvoteShare = 'Upvote publication'
 _l.object_cScore = 'Comment Score'
 _l.object_subscribePrivate = 'Subscribe with notifications'
 _l.object_subscribe = 'Subscribe'
@@ -2703,7 +2703,14 @@ _l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into a
 _l.actions_noinputs = "You don't have enough coins to complete the operation"
 _l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
 _l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
-_l.actions_totalAmountZero = 'The total amount of the transaction is zero'
+_l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
+
+_l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'
+_l.actions_totalAmountSmaller_amount_wait = "You have less money in your account than you want to send. Please wait."
+
+_l.actions_totalAmountSmaller_amount_fee = 'You have less money in your account than you want to send (including fees).'
+_l.actions_totalAmountSmaller_amount_fee_wait = "You have less money in your account than you want to send (including fees). Please wait."
+
 _l.actions_rejected = 'The operation failed for unknown reason'
 _l.actions_rejectedFromNodes = 'The operation was rejected by the network'
 _l.actions_waitConfirmation = 'Operation pending confirmation'

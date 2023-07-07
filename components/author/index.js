@@ -1430,7 +1430,6 @@ var author = (function(){
 		var init = function(){
 
 			renders.authorcaption(function(){
-				console.log("?????????")
 				make(true);
 
 				self.sdk.activity.adduser('visited', author.address)

@@ -452,7 +452,6 @@ var activities = (function () {
 							success : function(){
 								try{
 									self.app.platform.actions.cancelAction(self.app.user.address.value, id).then(() => {
-										console.log("SUCCESS")
 									}).catch(e => {
 										console.error(e)
 									})

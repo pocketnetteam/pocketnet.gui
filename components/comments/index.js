@@ -123,9 +123,6 @@ var comments = (function(){
 					}
 					else{
 
-						console.log("HERER2!!!!!!!!!!!")
-
-
 						if (comment.parentid){
 
 							var parent = el.c.find("#" + comment.parentid)
@@ -1229,9 +1226,6 @@ var comments = (function(){
 
 					self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
 
-						console.log('err', err, alias) 
-
-						
 						if (err){
 							self.app.platform.errorHandler(err, true)	
 						}
@@ -1540,8 +1534,6 @@ var comments = (function(){
 				var pid = parent.attr('pid')
 
 				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
-
-				console.log('post', post, id)
 
 				var d = {
 					address : self.app.user.address.value,

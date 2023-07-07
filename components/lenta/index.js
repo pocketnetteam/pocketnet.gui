@@ -287,9 +287,6 @@ var lenta = (function(){
 				if (me){
 					var r = me.relation(address, 'subscribes') 
 
-
-					console.log("Relation", r, address)
-
 					if (r) {
 
 						addressEl.addClass('subscribed');
@@ -3458,8 +3455,6 @@ var lenta = (function(){
 					return !$('#' + s.txid).hasClass('hidden')
 				})
 
-				console.log('shares', shares)
-
 				var rs = shares
 
 				if (recommended != 'saved'){
@@ -4857,8 +4852,6 @@ var lenta = (function(){
 						}
 
 						if(type == 'share'){
-
-							console.log('type, alias, status', type, alias, status)
 
 							var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
 							var replaceAll = true

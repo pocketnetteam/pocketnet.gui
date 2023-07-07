@@ -444,6 +444,10 @@ wnd = function (p) {
 
 		var hiddenState = el.find('.hiddenState')
 
+		if (!nooverflow) {
+			app.actions.offScroll(wnd);
+		}
+
 		window.requestAnimationFrame(() => {
 
 			if (hiddenState.length) {
@@ -499,6 +503,7 @@ wnd = function (p) {
 					wnd.addClass('sette')
 				})
 
+				
 			}, 20)
 
 			setTimeout(function () {
@@ -507,9 +512,7 @@ wnd = function (p) {
 				})
 
 
-				if (!nooverflow) {
-					app.actions.offScroll(wnd);
-				}
+				
 
 				if ((wnd.hasClass('normalizedmobile'))) {
 
@@ -766,9 +769,11 @@ wnd = function (p) {
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
-				if (!nooverflow)
-					app.actions.onScroll();
+				
 			})
+
+			if (!nooverflow)
+				app.actions.onScroll();
 
 
 			var cl = function () {
@@ -2877,6 +2882,10 @@ boolnum = function (n) {
 	if (n == 0 || n == '0' || !n) return false
 
 	return true
+}
+
+toFixed = function(n, d){
+	return Number(n.toFixed(d))
 }
 
 /* ______________________________ */

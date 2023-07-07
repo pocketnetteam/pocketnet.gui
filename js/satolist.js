@@ -1166,6 +1166,30 @@ Platform = function (app, listofnodes) {
                 return self.app.localization.e('actions_totalAmountZero')
             }
         },
+
+        "actions_totalAmountSmaller_amount" : {
+            message: function () {
+                return self.app.localization.e('actions_totalAmountSmaller_amount')
+            }
+        },
+
+        "actions_totalAmountSmaller_amount_wait" : {
+            message: function () {
+                return self.app.localization.e('actions_totalAmountSmaller_amount_wait')
+            }
+        },
+
+        "actions_totalAmountSmaller_amount_fee" : {
+            message: function () {
+                return self.app.localization.e('actions_totalAmountSmaller_amount_fee')
+            }
+        },
+
+        "actions_totalAmountSmaller_amount_fee_wait" : {
+            message: function () {
+                return self.app.localization.e('actions_totalAmountSmaller_amount_fee_wait')
+            }
+        },
         "actions_rejected" : {
             message: function () {
                 return self.app.localization.e('actions_rejected')
@@ -3108,7 +3132,6 @@ Platform = function (app, listofnodes) {
         },
 
         edituserinfo : function(reason, clbk){
-            console.log('reason', reason)
             return new Promise ((resolve, reject) => {
                 app.nav.api.load({
                     open : true,
@@ -6161,7 +6184,6 @@ Platform = function (app, listofnodes) {
                                                     resolve(entry.toURL());
                                                 },
                                                 function (error) {
-                                                    console.log("download thumbnail error: ", error);
                                                     reject('download thumbnail error');
                                                 },
                                                 null, {}
@@ -6218,7 +6240,6 @@ Platform = function (app, listofnodes) {
 
                                                         },
                                                         function (error) {
-                                                            console.log("download error: ", error);
                                                             reject(error);
                                                         },
                                                         null, {}
@@ -17547,7 +17568,6 @@ Platform = function (app, listofnodes) {
 
             }else if(usingWeb) {
 
-                // console.log("HERE")
                 //
                 // if (clbk)
                 //     clbk()
@@ -18904,8 +18924,6 @@ Platform = function (app, listofnodes) {
                         data.amountall = _.reduce(data.txinfo.vout, function (m, v) {
 
                             var forme = deep(v, 'scriptPubKey.addresses.0') == addr
-
-                            console.log('amountall', addr,  deep(v, 'scriptPubKey.addresses.0'), v.value, forme)
 
                             return m + (forme ? v.value : 0)
                         }, 0)
@@ -20343,7 +20361,6 @@ Platform = function (app, listofnodes) {
 
         self.messageHandler = function (data, clbk) {
 
-            console.log('data', data)
             data || (data = {})
 
             if (data.msg || data.mesType) {
@@ -22280,7 +22297,6 @@ Platform = function (app, listofnodes) {
                     if (astatus == 'not_in_progress_no_processing'){
                         setTimeout(() => {
 
-                            console.log("NEED TO REGISTER")
 
                         }, 3000)
                     }*/
@@ -23653,7 +23669,8 @@ Platform = function (app, listofnodes) {
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
-							resolve(this.sdk.users.storage[address])
+
+							resolve(self.psdk.userInfo.getShortForm(address))
 						})
 					})
 

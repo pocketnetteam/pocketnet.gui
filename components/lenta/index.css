@@ -188,6 +188,9 @@
 #lenta .share .message {
   max-width: 590px;
 }
+#lenta .share .verticalVideo {
+  max-width: 350px;
+}
 #lenta .share .squareVideo {
   max-width: 450px;
 }
@@ -355,6 +358,9 @@
   margin-bottom: 0;
   border-radius: 6px;
 }
+#lenta.mainvideo .share .verticalVideo {
+  max-width: none;
+}
 #lenta.mainvideo .share .work {
   overflow: inherit;
 }
@@ -403,12 +409,12 @@
   font-size: 1.2em;
 }
 #lenta.mainvideo .share .forurl {
-  height: 200px;
+  height: 210px;
   position: relative;
   margin: 0 auto;
 }
 #lenta.mainvideo .share .forurl.verticalVideo {
-  height: 530px;
+  height: 426px;
 }
 #lenta.mainvideo .share .url {
   margin-bottom: 0;
@@ -476,6 +482,9 @@
   z-index: 0;
   height: 63%;
 }
+#lenta.mainvideo .share .shareTable .boostedlabel {
+  display: none;
+}
 #lenta.mainvideo .share .shareTable .anothercntswrk {
   position: absolute;
   left: 0;
@@ -541,7 +550,7 @@
   width: 33.3333%;
 }
 #lenta.mainvideo .shares .authorgroup .share {
-  padding: 5px;
+  padding: 3px;
 }
 #lenta.mainvideo .shares .authorgroup:nth-child(3n + 1) {
   clear: left;

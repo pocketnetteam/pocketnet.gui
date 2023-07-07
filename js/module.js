@@ -429,7 +429,6 @@ nModule = function(){
 						}
 
 						catch(e){
-							console.log('url', url)
 							console.error(e)
 
 							if (p.fail){

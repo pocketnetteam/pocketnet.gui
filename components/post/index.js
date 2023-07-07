@@ -23,8 +23,6 @@ var post = (function () {
 
 		var actions = {
 			unblock : function(){
-
-				console.log("?????????")
 					
 				self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
 					if (!tx) {
@@ -1345,9 +1343,6 @@ var post = (function () {
 
 							if(!el.share) return
 
-							console.log("??????????????????")
-
-
 							renders.mystars(function () { });
 
 							renders.url(function () {
@@ -1504,13 +1499,9 @@ var post = (function () {
 			},
 			
 			mystars: function (clbk) {
-
-				console.log('share.myVal', share.myVal)
 				
 				if (typeof share.myVal == 'undefined' && !ed.preview && !ed.repost) {
 					var ids = [share.txid];
-
-					console.log("GET MY STARS")
 
 					self.app.platform.sdk.likes.get(ids, function () {
 						renders.stars(clbk);
@@ -1761,16 +1752,12 @@ var post = (function () {
 
 				if(type == 'upvoteShare'){
 
-					console.log('share.txid == alias.share.v', share.txid, alias.share.v)
-
 					if (share.txid == alias.share.v){
 						renders.stars()
 					}
 				}
 
 				/*if(type == 'share'){
-
-					console.log('type, alias, status', type, alias, status)
 
 					var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
 					var replaceAll = true
@@ -2075,8 +2062,6 @@ var post = (function () {
 			clearparameters: ['s', 'v', 'commentid', 'parentid'],
 
 			init: function (p) {
-
-				console.log("INIT POST")
 
 				p.clbk(null, p);
 

@@ -1156,10 +1156,7 @@ var menu = (function(){
 
 			self.app.platform.actionListeners['menu'] = function({type, alias, status}){
 
-				console.log('type, alias, status', type, alias, status)
-
 				if (type == 'userInfo'){
-					console.log("RENDER")
 					renders.userinfo()
 				}
 				

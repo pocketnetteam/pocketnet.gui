@@ -636,7 +636,6 @@ User = function(app, p) {
 	self.private = keys.private;
 
 	self.keys = function(){
-		console.log('keys.pair', keys.pair)
 		return keys.pair.value
 	}
 

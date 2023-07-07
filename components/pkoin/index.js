@@ -180,7 +180,7 @@ var pkoin = (function(){
 
 					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
-					el.tutorial.removeClass('show');
+					//el.tutorial.removeClass('show');
 
 					self.shell({
 

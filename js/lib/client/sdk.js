@@ -1424,7 +1424,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 try {
                     c.u = clearStringXss(decodeURIComponent(c.u || ''));
-                    c.c = clearStringXss(decodeURIComponent(c.c || '').replace(/\+/g, " "));
+                    c.c = clearStringXss(decodeURIComponent(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
 
                     if (c.s && c.s.v == 'a') {
 

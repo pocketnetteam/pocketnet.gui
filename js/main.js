@@ -146,8 +146,6 @@ if(!_Node)
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || (window.design && typeof window.Platform != 'undefined')
 	}, function(){
 
-		console.log("ALL LOADED", (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || (window.design && typeof window.Platform != 'undefined'))
-
 		app.deviceReadyInit({
 			clbk : function(){
 

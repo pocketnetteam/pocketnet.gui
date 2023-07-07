@@ -188,6 +188,7 @@ var errorCodesAndActionsExecutors = {
 
 var errorCodesAndActions = {
     '1'  : errorCodesAndActionsExecutors.wait,
+    '261'  : errorCodesAndActionsExecutors.wait,
     '2'  : errorCodesAndActionsExecutors.limit,
     '3'  : errorCodesAndActionsExecutors.limit,
     '15' : errorCodesAndActionsExecutors.limit,
@@ -425,8 +426,7 @@ var Action = function(account, object, priority, settings){
 
         if(!changeAddresses.length) changeAddresses = [account.address]
 
-        
-        
+        self.estimatedFee = fee
 
         if(!unspents.length || retry){
             try{
@@ -434,7 +434,7 @@ var Action = function(account, object, priority, settings){
 
                     clearUnspents = filterUnspents(clearUnspents)
 
-                    if(!clearUnspents.length && !account.unspents.willChange){
+                    if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
                         return Promise.reject('actions_noinputs')
                     }
     
@@ -455,19 +455,49 @@ var Action = function(account, object, priority, settings){
         }
 
         var amount = (options.amount ? options.amount(self) : 0) 
+        var feeIncludedinAmount = false
 
         if(!options.burn){
             amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
+            feeIncludedinAmount = true
         }
 
         var inputs = getBestInputs(unspents, amount)
 
-
-        var totalInputAmount = _.reduce(inputs, (m, u) => {
+        var totalInputAmountWithFee = toFixed(_.reduce(inputs, (m, u) => {
             return m + u.amount
-        }, 0) - fee
+        }, 0), 8)
+
+        var totalInputAmount = toFixed(totalInputAmountWithFee - fee, 8)
+
+        console.log('totalInputAmountWithFee1', totalInputAmountWithFee, amount)
+
+        if (amount && totalInputAmountWithFee < amount) {
+
+            console.log('totalInputAmountWithFee2', fee, totalInputAmountWithFee, amount, totalInputAmount, account.actualBalance().total)
+
+            if(!feeIncludedinAmount){
+                if (account.actualBalance().total < amount){
+                    return Promise.reject('actions_totalAmountSmaller_amount')
+                }
+    
+                return Promise.reject('actions_totalAmountSmaller_amount_wait')
+            }
+
+            else{
+                if (account.actualBalance().total < amount){
+                    return Promise.reject('actions_totalAmountSmaller_amount_fee')
+                }
+    
+                return Promise.reject('actions_totalAmountSmaller_amount_fee_wait')
+            }
+
+            
+        }
 
         if (totalInputAmount <= 0) {
+
+            console.log('inputs', inputs, unspents)
             
             return Promise.reject('actions_totalAmountZero')
         }
@@ -1250,7 +1280,6 @@ var Account = function(address, parent){
                 parameters.reason = 'balance'
             }
 
-            console.log('parameters', parameters, action, self.getStatus())
 
             return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
 
@@ -1681,7 +1710,6 @@ var Account = function(address, parent){
             if (exported.until < new Date()) return
 
 
-            console.log("HERE", flag)
             //withcompleted
             if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
             
@@ -1883,6 +1911,7 @@ var Account = function(address, parent){
             })
         }
     }
+    
 
     self.getActualUnspents = function(onlyReady, adresses){
 
@@ -2163,13 +2192,13 @@ var Account = function(address, parent){
         var totalUnspents = self.getActualUnspents(null, adresses)
         var unspents = self.getActualUnspents('withUnconfirmed', adresses)
 
-        balance.total = unspentsAmount(totalUnspents) + tempbalance
+        balance.total = Number((unspentsAmount(totalUnspents) + tempbalance).toFixed(8))
 
-        balance.actual = unspentsAmount(unspents) + tempbalance
+        balance.actual = Number((unspentsAmount(unspents) + tempbalance).toFixed(8))
         
-        balance.tempbalance = tempbalance + unspentsAmount(_.filter(unspents, (u) => {
+        balance.tempbalance = Number((tempbalance + unspentsAmount(_.filter(unspents, (u) => {
             return !checkUnspentReadyBlockChain(u)
-        } ))
+        } ))).toFixed(8))
 
       
         return balance

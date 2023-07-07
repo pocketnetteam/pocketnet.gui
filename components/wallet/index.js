@@ -885,7 +885,7 @@ var wallet = (function(){
 				return transaction
 			},
 
-			prepareTransactionCommon: function(amount, reciever, feemode, message, calculatedFee, clbk){
+			prepareTransactionCommon: function(amount, reciever, feemode, message, calculatedFee, clbk, onerror){
 
 				var transaction = actions.getTransaction(amount, reciever, feemode, message)
 
@@ -909,6 +909,8 @@ var wallet = (function(){
 						}
 
 						self.app.platform.errorHandler(e, true)
+
+						if(onerror) onerror(e, action)
 
 					})
 
@@ -939,7 +941,7 @@ var wallet = (function(){
 				})
 			},
 
-			prepareTransaction : function(calculatedFee, clbk){
+			prepareTransaction : function(calculatedFee, clbk, onerror){
 
 
 				var amount = send.parameters.amount.value;
@@ -948,10 +950,11 @@ var wallet = (function(){
 				var reciever = send.parameters.reciever.value;
 
 				try{
-					actions.prepareTransactionCommon(amount, reciever, feemode, message, calculatedFee,  clbk)
+					actions.prepareTransactionCommon(amount, reciever, feemode, message, calculatedFee,  clbk, onerror)
 
 				}catch(e){
 					console.error(e)
+
 				}
 
 				
@@ -1989,9 +1992,9 @@ var wallet = (function(){
 						return;
 					}
 
+					console.log("??????????")
 
-					actions.prepareTransaction(0, function(amount, reciever, feemode, message, calculatedFee){
-
+					var cl = function(calculatedFee){
 						self.shell({
 
 							name :  'sendfees',
@@ -2011,6 +2014,8 @@ var wallet = (function(){
 							send.parameters.fees._onChange = function(v){
 								self.app.settings.set(self.map.uri, 'feesMode', v)
 								feemode = v
+
+								act()
 							}
 
 							var sendpreloader = function(r){
@@ -2022,11 +2027,6 @@ var wallet = (function(){
 								}
 								
 							}
-
-							/*setTimeout(function(){
-								_scrollToTop(el.find('.sendtransaction'), w, 50)
-							},200)*/
-
 							_p.el.find('.sendtransaction').on('click', function(){
 
 								if($(this).hasClass('loading')) return
@@ -2037,6 +2037,8 @@ var wallet = (function(){
 
 
 									actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
+
+										console.error('e', err)
 
 										sendpreloader(false)
 
@@ -2058,14 +2060,32 @@ var wallet = (function(){
 										})
 
 									})
+								}, function(e){
+									sendpreloader(false)
 								})
 
 
 							})
 
 						})
+					}
 
-					})
+
+					var act = function(){
+						actions.prepareTransaction(0, function(amount, reciever, feemode, message, calculatedFee){
+
+							cl(calculatedFee)
+	
+						}, function(e, transaction){
+	
+							console.log('transaction', transaction)
+	
+							cl(transaction.estimatedFee)
+						})
+					}
+
+
+					act()
 
 				},
 				send : function(clbk, _el, nsp){
@@ -2110,6 +2130,7 @@ var wallet = (function(){
 
 							var amount = balance.actual
 
+							console.log('balance', balance)
 
 							if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
 
