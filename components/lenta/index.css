@@ -439,6 +439,7 @@
   margin: 0;
   margin-right: 0.5em;
   margin-top: 0.5em;
+  margin-left: 30px;
   white-space: nowrap;
   text-overflow: ellipsis;
   white-space: inherit;
@@ -665,6 +666,7 @@
   padding-left: 0.5em;
   font-size: 0.85em !important;
   margin-top: 0;
+  margin-left: 0;
 }
 #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption span {
   display: inline;

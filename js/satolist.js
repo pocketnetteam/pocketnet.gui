@@ -15221,54 +15221,6 @@ Platform = function (app, listofnodes) {
                                         }
                                     }
 
-                                    /*
-
-                                    if (state) {
-
-                                        var account = self.actions.getCurrentAccount()
-
-                                        if (account){
-
-                                            if (p.author  && p.author == me) {
-
-                                                if(!p.txid){
-                                                    self.psdk.share.tempAdd(shares, (action) => {
-                                                        return action.address == p.author
-                                                    })
-                                                }
-
-                                                _.each(account.getTempActions('share'), function (alias) {
-                                                    if(alias.txidEdit){
-    
-                                                        replaceEqual(shares, {
-                                                            txid: ps.txidEdit
-                                                        }, s)
-    
-                                                        var txidEdit = alias.txidEdit
-    
-                                                        alias.txidEdit = alias.txid
-                                                        alias.txid = txidEdit
-                                                        
-                                                    }
-                                                    else{
-                                                        shares.unshift(alias)
-                                                    }
-                                                })
-    
-                                                
-                                            }
-                                            _.each(account.getTempActions('blocking'), function (alias) {
-                                                _.each(shares, function (share) {
-                                                    if (share.address == alias.address) share.blocking = true;
-                                                })
-                                            })
-                                            
-                                        }
-
-                                        
-                                    }
-                                    */
-
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
 
                                         if(p.video){

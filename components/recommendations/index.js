@@ -180,29 +180,35 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+					console.log('recommendations', recommendations)
 
-					_.each(recommendations, function(r, i){
-						places[r.txid] = i + 1
-					})
+					self.app.platform.sdk.node.shares.users(recommendations, function(){
 
-					if (ed.sorting){
-						recommendations = ed.sorting(recommendations)
-					}
 
-					if (ed.filter){
-						recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
-					}
+						_.each(recommendations, function(r, i){
+							places[r.txid] = i + 1
+						})
 
-					recommendations = sorting(_.filter(recommendations, filter))
+						if (ed.sorting){
+							recommendations = ed.sorting(recommendations)
+						}
 
+						if (ed.filter){
+							recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
+						}
+
+						recommendations = sorting(_.filter(recommendations, filter))
+
+					
+						_.each(recommendations, function(recommendation){
+							rendered[recommendation.txid] = true
+						})
 				
-					_.each(recommendations, function(recommendation){
-						rendered[recommendation.txid] = true
-					})
-			
 
-					if (clbk)
-						clbk(recommendations);
+						if (clbk)
+							clbk(recommendations);
+
+					})
 
 				});
 			},

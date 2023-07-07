@@ -863,7 +863,6 @@
   font-size: 1em;
   color: rgb(var(--neutral-grad-3));
   cursor: pointer;
-  border-radius: 40%;
 }
 .share_common .sharepanel > div.right {
   margin-left: auto;
@@ -871,9 +870,6 @@
 .share_common .sharepanel > div.right .itemwr > div.iconwr {
   text-align: center;
   width: 40px;
-}
-.share_common .sharepanel > div:hover .icon {
-  opacity: 0.7;
 }
 .share_common .sharepanel > div.sharesocial .label,
 .share_common .sharepanel > div.sharesocial .icon {
