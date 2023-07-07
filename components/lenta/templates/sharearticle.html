@@ -456,7 +456,7 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
 
                                 <% makecaptionclear() %>
 
-                                <% if(!share.temp){
+                                <% if(!share.temp && !share.relay){
                                     
                                     var edjs = new edjsHTML(null, app)
                                     var message = edjs.apply(share.message, decodeURIComponent)
@@ -507,11 +507,10 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
 
                                 <%} %>
                                 
-
-                                <% maketags() %>  
+                                <% if(!share.temp && !share.relay){ %>
+                                    <% maketags() %>  
+                                <% } %>
         
-                                <% /* maketemp()*/%>
-
     
                             <% }  %> 
 
