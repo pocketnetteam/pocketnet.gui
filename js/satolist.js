@@ -365,9 +365,11 @@ Platform = function (app, listofnodes) {
             listener(alias, status)
 
             window.requestAnimationFrame(() => {
-                _.each(self.actionListeners, (c) => {
+                _.each(self.actionListeners, (c, i) => {
 
-                    c({type : action.object.type, alias, status})
+                    console.log("actionListeners", c, i)
+                    if (c)
+                        c({type : action.object.type, alias, status})
                 })
             })
 
@@ -422,6 +424,7 @@ Platform = function (app, listofnodes) {
         blocking: function(alias, status){},
         unblocking: function(alias, status){},
         userInfo: function(alias, status){},
+        contentDelete : function(alias, status){}
     }
 
     self.actionListeners = {}
@@ -5500,6 +5503,7 @@ Platform = function (app, listofnodes) {
                                         var ct = new Remove();
                                         ct.txidEdit = share.txid;*/
 
+                                        
 
                                         self.app.platform.sdk.node.shares.delete(share.txid, function(err, alias){
 
@@ -5538,7 +5542,7 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
-                                            authorgroup.addClass('deleted');
+                                            //authorgroup.addClass('deleted');
 
 
                                         }

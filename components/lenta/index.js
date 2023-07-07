@@ -4864,8 +4864,6 @@ var lenta = (function(){
 								replace.txid = alias.txid
 							}
 
-							console.log('type, alias, status', sharesInview, type, alias, status, trx, replace)
-
 							alias = trx ? trx : alias
 
 							if (!replace){
@@ -4918,6 +4916,32 @@ var lenta = (function(){
 
 							}
 
+						}
+
+						console.log(type, alias, status)
+
+						if(type == 'contentDelete'){
+
+							var replace = _.find(sharesInview, (share) =>  share.txid == alias.txidEdit)
+
+							if (replace){
+								actions.destroyShare(replace)
+
+								var trx = self.psdk.share.get(alias.txidEdit)
+
+								if (trx){
+									renders.shares([trx], function(){
+										renders.sharesInview([trx], function(){
+											
+										})
+									}, {
+										inner : replaceWith,
+										el : el.share[replace.txid],
+										ignoresw : true,
+									})
+								}
+							}
+							
 						}
 
 						if(type == 'blocking' || type == 'unblocking'){
