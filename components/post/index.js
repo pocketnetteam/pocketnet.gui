@@ -1749,6 +1749,7 @@ var post = (function () {
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
+				console.log('type, alias, status', type, alias, status)
 
 				if(type == 'upvoteShare'){
 
@@ -1757,66 +1758,20 @@ var post = (function () {
 					}
 				}
 
-				/*if(type == 'share'){
+				
 
-					var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
-					var replaceAll = true
+				if(type == 'contentDelete' || type == 'share'){
 
-					var trx = self.psdk.share.get(alias.txid)
+					console.log('alias', alias, share)
 
-					alias = trx ? trx : alias
+					if (alias.txidEdit == share.txid || share.txid == alias.txid){
 
-					if (!replace){
-						if(essenseData.author == alias.actor){
+						share = self.psdk.share.get(share.txid) 
 
-							if(status == 'rejected') return
-
-							renders.shares([alias], function(){
-								renders.sharesInview([alias], function(){
-									
-								})
-							}, {
-								inner : prepend
-							})
-
-						}
-						else{
-
-						}
+						remake()
 					}
-					else{
-
-						if (replaceAll){
-
-							actions.destroyShare(replace)
-
-							if(status == 'rejected' && (!alias || !alias.editing)) {
-
-								if(el.share[replace.txid]) el.share[replace.txid].remove()
-
-								delete el.share[replace.txid]
-
-								return
-							}
-
-							renders.shares([alias], function(){
-								renders.sharesInview([alias], function(){
-									
-								})
-							}, {
-								inner : replaceWith,
-								el : el.share[replace.txid],
-								ignoresw : true,
-							})
-						}
-
-						else{
-							/// only status
-						}
-
-					}
-
-				}*/
+					
+				}
 
 				if(type == 'blocking' || type == 'unblocking'){
 

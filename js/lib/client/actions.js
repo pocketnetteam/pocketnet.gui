@@ -192,7 +192,7 @@ var errorCodesAndActions = {
     '2'  : errorCodesAndActionsExecutors.limit,
     '3'  : errorCodesAndActionsExecutors.limit,
     '15' : errorCodesAndActionsExecutors.limit,
-    '26' : errorCodesAndActionsExecutors.limit,
+    //'26' : errorCodesAndActionsExecutors.limit,
     '29' : errorCodesAndActionsExecutors.limit,
     '30' : errorCodesAndActionsExecutors.limit,
     '31' : errorCodesAndActionsExecutors.limit,
@@ -755,6 +755,8 @@ var Action = function(account, object, priority, settings){
     }
 
     self.controlReject = function(error){
+
+        console.log('self.controlReject', error)
 
         if(!error) error = self.rejected
 
@@ -1419,7 +1421,7 @@ var Account = function(address, parent){
             }
         }
 
-        
+        return Promise.reject(error)
 
         //// actionRejected
     }

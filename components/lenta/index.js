@@ -4918,8 +4918,6 @@ var lenta = (function(){
 
 						}
 
-						console.log(type, alias, status)
-
 						if(type == 'contentDelete'){
 
 							var replace = _.find(sharesInview, (share) =>  share.txid == alias.txidEdit)
@@ -4929,7 +4927,7 @@ var lenta = (function(){
 
 								var trx = self.psdk.share.get(alias.txidEdit)
 
-								if (trx){
+								if (trx && el.share[replace.txid]){
 									renders.shares([trx], function(){
 										renders.sharesInview([trx], function(){
 											

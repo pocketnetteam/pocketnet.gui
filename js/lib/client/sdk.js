@@ -1801,6 +1801,8 @@ var pSDK = function ({ app, api, actions }) {
             if (status == 'completed') {
 
                 objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
+
+                clearallfromdb('shareRequest')
             }
         },
         applyAction: function (share, exp) {

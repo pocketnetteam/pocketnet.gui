@@ -1332,6 +1332,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "47": {
+            message: function(){
+                return self.app.localization.e('err47')
+            }
+        },
+
         "42": {
             message: function () {
                 return self.app.localization.e('e13233')
@@ -1415,8 +1421,6 @@ Platform = function (app, listofnodes) {
         "28": {
             message: function () {
                 return self.app.localization.e('e28error')
-                
-                "Wait a bit before taking action"
             }
         },
 
@@ -1586,102 +1590,6 @@ Platform = function (app, listofnodes) {
                 console.error("TODO_REF_ACTIONS")
 
 
-                /*self.app.platform.sdk.user.waitActions(function (r) {
-
-                    if (!r) {
-
-                        self.app.platform.sdk.relayTransactions.send(function(action){
-
-
-                            if(!action){
-
-                                var a = self.app.user.address.value
-
-                                self.sdk.users.getone(a, function(){
-
-                                    globalpreloader(false)
-
-                                    var exist = self.psdk.userInfo.get(a) 
-                                    
-                                    //self.sdk.users.storage[a]
-
-                                    if(!exist){
-                                        new dialog({
-                                            html: self.app.localization.e('checkScoreError'),
-                                            btn1text: self.app.localization.e('dyes'),
-                                            btn2text: self.app.localization.e('dno'),
-
-                                            success: function () {
-                                                self.app.nav.api.load({
-                                                    open: true,
-                                                    href: 'test',
-                                                    inWnd: true
-                                                })
-                                            },
-                                            fail: function () {
-
-                                            },
-
-                                            class : 'zindex'
-                                        })
-                                    }
-                                    else{
-
-                                        new dialog({
-                                            html: self.app.localization.e('waitConf'),
-                                            btn1text: self.app.localization.e('daccept'),
-
-                                            class: 'one'
-                                        })
-
-
-
-                                    }
-
-                                }, false, true)
-
-                            }
-                            else{
-                                globalpreloader(false)
-                            }
-
-                        })
-
-                    }
-                    else {
-
-                        self.sdk.ustate.meUpdate(function(mestate){
-
-                            globalpreloader(false)
-
-                            if(!mestate || _.isEmpty(mestate)){
-
-                                new dialog({
-                                    html: self.app.localization.e('accountnotfound'),
-                                    btn1text: self.app.localization.e('daccept'),
-
-                                    class: 'zindex one'
-                                })
-
-                            }
-                            else{
-
-                                new dialog({
-                                    html: self.app.localization.e('waitConf'),
-                                    btn1text: self.app.localization.e('daccept'),
-
-                                    class: 'zindex one'
-                                })
-
-                            }
-
-                        })
-
-
-
-                    }
-
-                })*/
 
 
             },

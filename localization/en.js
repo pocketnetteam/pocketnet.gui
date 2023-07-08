@@ -2743,3 +2743,6 @@ _l.e28error = "Wait before taking action"
 
 
 _l.postInRelay2 = "This publication will soon be sent to the blockchain"
+
+
+_l.err47 = "Undefined post deletion error"
