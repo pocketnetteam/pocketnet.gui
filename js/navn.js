@@ -1218,6 +1218,8 @@ Nav = function(app)
 
 						app.mobile.vibration.small()
 
+						console.log("settings here")
+
 						core.go({
 							action : action,
 							href : href,
@@ -1225,7 +1227,8 @@ Nav = function(app)
 							open : true,
 							handler : handler,
 							replaceState : replace,
-							force : force
+							force : force,
+							fade : app.el.content
 						})
 
 						

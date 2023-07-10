@@ -115,7 +115,7 @@ var metadisplay = function(){ %>
 						<div class="authorCell">
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-									<span class="adr"><%-(name || share.address) %></span><% if(userInfo.reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
+									<span class="adr"><%-(name || share.address) %></span><% if(userInfo.reputation > 1 || userInfo.reputation < -1) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
 								</a>
 
 								

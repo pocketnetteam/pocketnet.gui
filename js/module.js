@@ -559,69 +559,102 @@ nModule = function(){
 			
 		}*/
 
+		
+
+		console.log('settings', settings.fade)
+
 		beforegetdata(settings, function(){
+
+			if (settings.fade && !settings.waspreshell){
+				window.requestAnimationFrame(() => {
+					settings.fade.addClass('shell_fadefast')
+				})
+			}
+
+			
 			self.user.isState(function(state){	
+				window.requestAnimationFrame(() => {
+					settings.getdata(function(data, err){
 
-				settings.getdata(function(data, err){
 
+						if(err){
 
-					if(err){
+							topPreloader(100);
 
-						topPreloader(100);
+							if(globalpreloaderTimer){
 
-						if(globalpreloaderTimer){
+								globalpreloader(false)
 
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
-						return
-					}
-
-					topPreloader(45);
-
-					settings.data = data || {};
-
-					if(p.preshell) p.preshell();
-
-					self.shell(settings, function(p){
-
-						if(globalpreloaderTimer){
-
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
-						topPreloader(100);	
-
-						p.clbk = addToFunction(p.clbk, function(){
-
-							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-								self.app.actions.scrollToTop()
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							if (settings.auto){
-								settings.auto(p)
+							return
+						}
+
+						topPreloader(45);
+
+						settings.data = data || {};
+
+						if(p.preshell) p.preshell();
+
+						
+
+						self.shell(settings, function(p){
+
+							if(globalpreloaderTimer){
+
+								globalpreloader(false)
+
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							//p = null
+							topPreloader(100);	
 
-						})				
+							p.clbk = addToFunction(p.clbk, function(){
+
+								if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+									self.app.actions.scrollToTop()
+								}
+
+								if (settings.auto){
+									settings.auto(p)
+								}
+
+								//p = null
+
+							})				
 
 
-						if (settings.init)
-							settings.init(p)
+							if (settings.init)
+								settings.init(p)
 
-					}, frommodule)
+							if (settings.fade && !settings.waspreshell){
+								setTimeout(() => {
+									window.requestAnimationFrame(() => {
+										settings.fade.addClass('shell_fadein')
+									})
+								}, 100)
 
-					
+								setTimeout(() => {
+									window.requestAnimationFrame(() => {
+										settings.fade.removeClass('shell_fadefast')
+										settings.fade.removeClass('shell_fadein')
+									})
+								}, 400)
+							}
 
-				}, {
-					state : state,
-					settings : settings
-				});	
+						}, frommodule)
+
+						
+
+						
+
+					}, {
+						state : state,
+						settings : settings
+					});	
+
+				})
 
 
 			})

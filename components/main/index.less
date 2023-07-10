@@ -326,6 +326,19 @@
 	}
 
 	&.videomain{
+
+		.vdivcontainer{
+			display: flex;
+			width: 200%;
+			align-items: flex-start;
+			.transition(0.1s);
+
+			>div{
+				width: 50%;
+				flex-shrink: 0;
+				position: relative;
+			}
+		}
 		
 		.mainpanelsvicell,
 		.mainpanelcell{
@@ -377,7 +390,7 @@
 		}
 	}
 
-	.maincntwrapper{
+	.maincntwrapperOvf{
 		.transition(0.1s);
 	}
 
@@ -400,6 +413,11 @@
 		-o-transition-delay: 0.5s;
 		-moz-transition-delay: 0.5s;
 		transition-delay: 0.5s;
+
+		.upbutton{
+			position: absolute;
+			top : 0;
+		}
 	}
 
 	.upbuttonwrapper{
@@ -433,15 +451,34 @@
 			}
 		}
 
-		.maincntwrapper{
-			position: fixed;
-			transform: translateX(-100%);
+		.maincntwrapperOvf{
 			opacity: 0;
+		}
+
+		.vdivcontainer{
+			transform: translateX(-50%);
 		}
 
 		.upbuttonwrapper{
 			display: none;
 			opacity: 0;
+		}
+
+		&.opensvishowedend{
+			.maincntwrapperOvf{
+				height: 100px;
+			}
+			.maincntwrapper{
+				display: none;
+			}
+		}
+
+		
+	}
+
+	&.opensvishowedWillremoved{
+		.vdivcontainer{
+			.transition(0s);
 		}
 	}
 

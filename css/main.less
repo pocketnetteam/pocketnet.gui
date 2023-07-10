@@ -360,7 +360,7 @@ html {
     overflow-x: hidden;
     overflow-y: overlay;
     
-    
+    scroll-behavior: initial!important;
     /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -1226,7 +1226,7 @@ l{
         padding : 2 * @rhythm 0;
         padding-left : 0;
         color : rgba(var(--neutral-grad-2), 0.5);
-        height: 50px;
+        height: 100%;
         width : 100%;
         cursor: pointer;
         .transition(0.3s);
@@ -3427,6 +3427,8 @@ html.mobileview.android{
         width: 100%;        
         margin : 0 auto;
         padding : 0;
+
+        
        
         &.full{
             max-width: none;
@@ -3464,6 +3466,15 @@ html.mobileview.android{
                 }
             }
         }
+    }
+}
+
+.shell_fadefast{
+    opacity: 0;
+
+    &.shell_fadein{
+        .transition(0.3s, opacity);
+        opacity: 1;
     }
 }
 

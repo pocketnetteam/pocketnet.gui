@@ -220,7 +220,8 @@ var menu = (function(){
 									href : k,
 									history : true,
 									open : true,
-									handler : parameters().video && parameters().v
+									handler : parameters().video && parameters().v,
+									fade : self.app.el.content
 								})
 							}, 50)
 

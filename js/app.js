@@ -1663,6 +1663,9 @@ Application = function (p) {
 		},
 
 		up: function (scrollTop, el, time) {
+			console.log("SCROLL TO", scrollTop)
+
+
 			_scrollTop(scrollTop, el, time)
 		},
 
@@ -1679,6 +1682,8 @@ Application = function (p) {
 		},
 
 		scroll: function (to) {
+
+			console.log("SCROLL TO", to)
 
 			window.requestAnimationFrame(() => {
 				blockScroll = true

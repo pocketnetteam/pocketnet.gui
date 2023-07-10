@@ -2445,6 +2445,10 @@ var lenta = (function(){
 
 				if(!el.c) return
 
+				if (essenseData.canloadmorescroll){
+					if(!essenseData.canloadmorescroll()) return
+				}
+
 
 				if(!essenseData.horizontal){
 
@@ -5162,7 +5166,7 @@ var lenta = (function(){
 				}
 				else
 				{
-					if (clear) el.c.find('.shares').empty()
+					if (clear) el.shares.empty()
 
 					renders.shares(shares, function(){
 						renders.sharesInview(shares, function(){
@@ -5172,6 +5176,21 @@ var lenta = (function(){
 							setTimeout(function(){
 								events.videosInview()
 							}, 50)
+
+
+							window.requestAnimationFrame(function(){
+								if(!el.shares) return
+								el.shares.addClass('initing')
+							}, 200)
+
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									if(!el.shares) return
+									el.shares.removeClass('notinited')
+									el.shares.removeClass('initing')
+								})
+							}, 500)
+							
 							
 							_.each(shares, function(share) {
 								if (share && share.itisvideo && share.itisvideo())

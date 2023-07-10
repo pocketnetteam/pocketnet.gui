@@ -288,6 +288,15 @@
 		display: flex;
 		flex-direction: column;
 
+		&.notinited{
+			opacity: 0;
+
+			&.initing{
+				.transition(0.3s, opacity);
+				opacity: 1;
+			}
+		}
+
 		.authorgroup{
 			display: flex;
 			flex-direction: column;

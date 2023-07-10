@@ -212,7 +212,6 @@ var main = (function(){
 				actions.backtolentaClear()
 
 				self.app.actions.scroll(lastscroll || 0)
-				//_scrollTop(lastscroll, null, 5)
 				
 
 			},
@@ -223,17 +222,23 @@ var main = (function(){
 
 				if(!el.c) return
 
-				el.c.removeClass('opensvishowed')
 
+				el.c.removeClass('opensvishowedend')
+				el.c.addClass('opensvishowedWillremoved')
+				renders.upbutton()
+				actions.refreshSticky()
 				renders.post(null)
+				
+				setTimeout(() => {
+					el.c.removeClass('opensvishowed')
+				}, 300)
 
-				setTimeout(function(){
-
-					renders.upbutton()
-					
-					actions.refreshSticky()
-
+				setTimeout(() => {
+					el.c.removeClass('opensvishowedWillremoved')
 				}, 350)
+
+				
+
 
 				self.nav.api.changedclbks()
 
@@ -712,7 +717,7 @@ var main = (function(){
 						animation : false,
 
 						mid : 'main',
-
+						insertimmediately : true,
 						essenseData : {
 							hr : 'index?',
 							goback : p.goback,
@@ -771,47 +776,62 @@ var main = (function(){
 
 								ed.page++
 							},
+
+							canloadmorescroll : function(){
+
+								if(openedpost) return false
+
+								return true
+							},
 							
 							opensvi : function(id){
 
 								lastscroll = self.app.lastScrollTop
 
-								el.c.addClass('opensvishowed')
-								
-								
-
-								if (upbutton) upbutton.destroy()
-								
-								if (upbackbutton) upbackbutton.destroy()
-
-								if(typeof _Electron == 'undefined' || !_Electron){
-									setTimeout(function(){
-									
-										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-											top : function(){
-												return '65px'
-											},
-											rightEl : el.c.find('.lentacellsvi'),
-											scrollTop : 0,
-											click : function(a){
-												actions.backtolenta()
-											},
-	
-											icon : '<i class="fas fa-chevron-left"></i>',
-											class : 'bright',
-											text : 'Back'
-										})	
-									}, 50)
-										
-									setTimeout(function(){
-										upbackbutton.apply()
-									},300)
-								}
-								
-
 								events.up()
 
+								window.requestAnimationFrame(() => {
+								
+									el.c.addClass('opensvishowed')
+
+									setTimeout(() => {
+										el.c.addClass('opensvishowedend')
+									}, 300)
+
+								})
+
+
+								
+
 								setTimeout(() => {
+
+									if (upbutton) upbutton.destroy()
+								
+									if (upbackbutton) upbackbutton.destroy()
+
+									if(typeof _Electron == 'undefined' || !_Electron){
+										setTimeout(function(){
+										
+											upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+												top : function(){
+													return '65px'
+												},
+												rightEl : el.c.find('.lentacellsvi'),
+												scrollTop : 0,
+												click : function(a){
+													actions.backtolenta()
+												},
+		
+												icon : '<i class="fas fa-chevron-left"></i>',
+												class : 'bright',
+												text : 'Back'
+											})	
+										}, 50)
+											
+										setTimeout(function(){
+											upbackbutton.apply()
+										},300)
+									}
 
 									renders.post(id)
 
@@ -908,12 +928,8 @@ var main = (function(){
 								self.nav.api.history.addParameters({
 									v : id
 								})
-							}, 300)
+							}, 400)
 		
-							
-
-							
-							
 						}
 					})
 				}

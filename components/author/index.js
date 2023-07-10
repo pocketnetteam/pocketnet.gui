@@ -889,7 +889,7 @@ var author = (function(){
 						id : 'share',
 						el : _el.find('.newsharewrapper'),
 						animation : false,
-						
+						insertimmediately : true,
 						mid : 'shareauthor',
 						
 						clbk : function(e, p){
@@ -939,7 +939,7 @@ var author = (function(){
 						if(!self.app.curation()){
 							if(self.user.isItMe(author.address) && !params.searchValue && !params.searchTags) renders.share(_el)
 
-						
+							var el = _el.find('.authorlentawrapper')
 							self.nav.api.load({
 		
 								open : true,
@@ -948,8 +948,9 @@ var author = (function(){
 								animation : false,
 			
 								mid : author.address,
-			
+								insertimmediately : true,
 								essenseData : params,
+								fade : el,
 								
 								clbk : function(e, p){
 								
@@ -1611,6 +1612,8 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 
+				console.log("getdata")
+
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent')
 				})
@@ -1635,7 +1638,14 @@ var author = (function(){
 					name : 'info'
 				}, function(){
 
+					console.log("address", p.address)
+
+
 					self.sdk.users.addressByName(p.address, function(address){
+
+						console.log("address", address)
+
+
 						preinit(address, clbk)
 					})
 
