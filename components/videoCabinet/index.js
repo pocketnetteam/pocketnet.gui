@@ -1366,7 +1366,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-                  					app: self.app,
+									app: self.app,
 									multiple: false,
 
 									action: function (file, clbk) {
@@ -1542,7 +1542,7 @@ var videoCabinet = (function () {
 				);
 			},
 			//render tagline
-      		tags(element) {
+			tags(element) {
 				const tagActions = {
 					//tag-related funcitons
 					tagsFromText(text) {
@@ -1630,12 +1630,12 @@ var videoCabinet = (function () {
 
 						removeTag: function (tag) {
 							tagActions.removeTag(tag);
-              				renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 
 						removeTags: function (tag) {
 							tagActions.removeTags(tag);
-              				renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 
 						addTag: function (tag) {
@@ -1645,7 +1645,7 @@ var videoCabinet = (function () {
 
 						addTags: function (tags) {
 							tagActions.addTags(tags);
-              				renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 					},
 
