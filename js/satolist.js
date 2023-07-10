@@ -367,7 +367,6 @@ Platform = function (app, listofnodes) {
             window.requestAnimationFrame(() => {
                 _.each(self.actionListeners, (c, i) => {
 
-                    console.log("actionListeners", c, i)
                     if (c)
                         c({type : action.object.type, alias, status})
                 })

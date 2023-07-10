@@ -158,7 +158,7 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref']);
+				href = khref + collectParameters(np, ['back', 'ref', 'pc']);
 
 
 			var wb = false;
@@ -1217,8 +1217,6 @@ Nav = function(app)
 						}	
 
 						app.mobile.vibration.small()
-
-						console.log("settings here")
 
 						core.go({
 							action : action,

@@ -522,8 +522,11 @@ nModule = function(){
 		}
 		else{
 
-			if (clbk)
-				clbk()
+			window.requestAnimationFrame(() => {
+
+				if (clbk)
+					clbk()
+			})
 
 		}
 	}
@@ -558,10 +561,7 @@ nModule = function(){
 			}, 100)
 			
 		}*/
-
 		
-
-		console.log('settings', settings.fade)
 
 		beforegetdata(settings, function(){
 
@@ -573,7 +573,6 @@ nModule = function(){
 
 			
 			self.user.isState(function(state){	
-				window.requestAnimationFrame(() => {
 					settings.getdata(function(data, err){
 
 
@@ -654,7 +653,6 @@ nModule = function(){
 						settings : settings
 					});	
 
-				})
 
 
 			})

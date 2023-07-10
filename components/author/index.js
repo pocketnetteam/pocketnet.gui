@@ -1453,7 +1453,7 @@ var author = (function(){
 					href : 'page404',
 					history : true,
 					replaceState : true,
-					fade : true
+					fade : self.app.el.content
 
 				})
 			}, 400)
@@ -1507,7 +1507,7 @@ var author = (function(){
 										history : true,
 										open : true,
 										replaceState : true,
-										fade : true
+										fade : self.app.el.content
 									})
 
 								}, 400)
@@ -1542,7 +1542,7 @@ var author = (function(){
 										history : true,
 										open : true,
 										replaceState : true,
-										fade : true
+										fade : self.app.el.content
 									})
 
 								}, 400)
@@ -1616,8 +1616,6 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 
-				console.log("getdata")
-
 				window.requestAnimationFrame(() => {
 					self.app.el.html.addClass('allcontent')
 				})
@@ -1642,13 +1640,7 @@ var author = (function(){
 					name : 'info'
 				}, function(){
 
-					console.log("address", p.address)
-
-
 					self.sdk.users.addressByName(p.address, function(address){
-
-						console.log("address", address)
-
 
 						preinit(address, clbk)
 					})

@@ -1992,8 +1992,6 @@ var wallet = (function(){
 						return;
 					}
 
-					console.log("??????????")
-
 					var cl = function(calculatedFee){
 						self.shell({
 
@@ -2078,8 +2076,6 @@ var wallet = (function(){
 	
 						}, function(e, transaction){
 	
-							console.log('transaction', transaction)
-	
 							cl(transaction.estimatedFee)
 						})
 					}
@@ -2129,8 +2125,6 @@ var wallet = (function(){
 							var balance = account.actualBalance(addresses)
 
 							var amount = balance.actual
-
-							console.log('balance', balance)
 
 							if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
 

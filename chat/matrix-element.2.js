@@ -81,7 +81,7 @@ module.exports = exports;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"64985431-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=23ef1b9b&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"591f571a-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=23ef1b9b&scoped=true&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
@@ -253,7 +253,7 @@ module.exports = exports;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"64985431-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/list/index.vue?vue&type=template&id=430b7992&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"591f571a-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/list/index.vue?vue&type=template&id=430b7992&scoped=true&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c,
@@ -312,7 +312,7 @@ var es_error_cause = __webpack_require__("d9e2");
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"64985431-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/list/index.vue?vue&type=template&id=2066c94c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"591f571a-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/list/index.vue?vue&type=template&id=2066c94c&scoped=true&
 var listvue_type_template_id_2066c94c_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c,
@@ -441,7 +441,7 @@ var functions = __webpack_require__("3139");
     error: [Object, Error, String],
     selectedMessages: []
   },
-  inject: ["matches"],
+  inject: ["matches", "menuState"],
   components: {},
   data: function () {
     return {
@@ -529,7 +529,8 @@ var functions = __webpack_require__("3139");
     }
   },
   destroyed: function () {
-    this.core.menu(null);
+    /*this.core.menu(null);*/
+    this.menuState.set(null);
   },
   updated: function () {
     /*if(this.countshow === 0) {
@@ -590,6 +591,7 @@ var functions = __webpack_require__("3139");
         this.scrollCorrection();
         this.dupdated();
       });
+      new this.smoothScroll(this.$refs["container"], 120, 15);
     },
     scroll: function () {
       this.$emit("scroll", this.size());
@@ -646,8 +648,9 @@ var functions = __webpack_require__("3139");
       //this.scrollToNew(this.c * this.ls)
     },
     scrollToNew(s) {
-      if (this.$refs["container"]) {
-        this.$refs["container"].scrollTop = this.c * s;
+      const container = this.$refs["container"];
+      if (container.scrolling) {
+        container.scrolling(-1, -container.scrollHeight);
       }
     },
     scrollToEvent(e) {
@@ -670,10 +673,65 @@ var functions = __webpack_require__("3139");
       if (this.scrollType === "custom") {
         return;
       } else {
+        /*if(this.$refs["container"].scrollTop >= this.$refs["container"].scrollHeight - this.$refs["container"].clientHeight - 1 && e.deltaY < 0) {
+        	return
+        }
+        		if(this.$refs["container"].scrollTop == 0 && e.deltaY > 0) {
+        	return
+        }*/
+
         e.preventDefault();
-        this.$refs["container"].scrollTop += -e.deltaY;
+
+        /* this.$refs["container"].scrollTop += -e.deltaY; */
+        const container = this.$refs["container"];
+        if (container.scrolling) {
+          container.scrolling(e);
+        }
         return false;
       }
+    },
+    smoothScroll: function (target, speed, smooth) {
+      let moving = false,
+        pos = target.scrollTop,
+        frame = target === document.body && document.documentElement ? document.documentElement : target; // safari is the new IE
+
+      target.scrolling = function (e, dest) {
+        let delta = normalizeWheelDelta(e);
+        pos += delta * speed;
+        pos = Math.max(0, Math.min(pos, dest || target.scrollHeight - frame.clientHeight)); // limit scrolling
+
+        if (!moving) update();
+        console.log(delta, pos);
+      };
+      function normalizeWheelDelta(e) {
+        if (e.detail) {
+          if (e.wheelDelta) {
+            return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1); // Opera
+          } else {
+            return -e.detail / 3; // Firefox
+          }
+        } else if (e.wheelDelta) {
+          return e.wheelDelta / 120; // IE,Safari,Chrome
+        } else {
+          return e;
+        }
+      }
+      function update() {
+        moving = true;
+        let delta = (pos - target.scrollTop) / smooth;
+        target.scrollTop += delta;
+        if (Math.abs(delta) > 0.5) {
+          requestFrame(update);
+        } else {
+          moving = false;
+        }
+      }
+      let requestFrame = function () {
+        // requestAnimationFrame cross browser
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
+          window.setTimeout(func, 1000 / 50);
+        };
+      }();
     },
     showMultiSelect() {
       this.multiSelect = true;
@@ -747,6 +805,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   components: {
     events: list
   },
+  inject: ['streamMode'],
   data: function () {
     return {
       encryptedEvents: [],
@@ -783,6 +842,9 @@ var component = Object(componentNormalizer["a" /* default */])(
       // if(this.minimized && this.active){
       //   this.readAll();
       // }
+    },
+    filterType: function (value) {
+      this.init();
     }
   },
   computed: Object(vuex_esm["c" /* mapState */])({
@@ -972,21 +1034,24 @@ var component = Object(componentNormalizer["a" /* default */])(
         }
       });
     },
-    mediaTimelineSet: function () {
-      var _ref3 = Object(asyncToGenerator["a" /* default */])(function* () {
+    customTimelineSet: function () {
+      var _ref3 = Object(asyncToGenerator["a" /* default */])(function* (name, set) {
+        if (!name) return;
         var filter = new this.core.mtrx.sdk.Filter(client.getUserId());
-        filter.setDefinition({
-          room: {
-            timeline: {
-              contains_url: true,
-              types: ["m.room.message"]
+        if (typeof set === 'function') set(filter);else {
+          filter.setDefinition({
+            room: {
+              timeline: {
+                contains_url: this.filterType === "images",
+                types: ["m.room.message"]
+              }
             }
-          }
-        });
-        filter.filterId = yield this.core.mtrx.client.getOrCreateFilter("FILTER_FILES_" + this.core.mtrx.client.credentials.userId, filter);
+          });
+        }
+        filter.filterId = yield this.core.mtrx.client.getOrCreateFilter(`FILTER_${name}_` + this.core.mtrx.client.credentials.userId, filter);
         return this.chat.getOrCreateFilteredTimelineSet(filter);
       });
-      return function mediaTimelineSet() {
+      return function customTimelineSet(_x, _x2) {
         return _ref3.apply(this, arguments);
       };
     }(),
@@ -1002,12 +1067,45 @@ var component = Object(componentNormalizer["a" /* default */])(
         //this.chat.getLiveTimeline();
 
         var ts;
-        if (this.filterType === "images") {
-          this.scrollType = "custom";
-          ts = yield this.mediaTimelineSet();
-        } else {
-          var timeline = this.chat.getLiveTimeline();
-          ts = timeline.getTimelineSet();
+        switch (this.filterType) {
+          case "images":
+            {
+              this.scrollType = "custom";
+              ts = yield this.customTimelineSet('FILES');
+              break;
+            }
+          case "text":
+            {
+              ts = yield this.customTimelineSet('TEXT', filter => {
+                filter.setDefinition({
+                  room: {
+                    timeline: {
+                      types: ["m.room.message"]
+                    }
+                  }
+                });
+              });
+              break;
+            }
+          case "donate":
+            {
+              ts = yield this.customTimelineSet('TEXT', filter => {
+                filter.setDefinition({
+                  room: {
+                    timeline: {
+                      contains_url: true,
+                      types: ["m.room.message"]
+                    }
+                  }
+                });
+              });
+              break;
+            }
+          default:
+            {
+              var timeline = this.chat.getLiveTimeline();
+              ts = timeline.getTimelineSet();
+            }
         }
         this.timeline = new this.core.mtrx.sdk.TimelineWindow(this.core.mtrx.client, ts);
         setTimeout(() => {
@@ -1110,6 +1208,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       return r;
     },
     readEvent: function (event) {
+      if (this.streamMode) return;
       var byme = this.core.mtrx.me(event.event.sender);
       if (byme) {
         return;
@@ -1117,25 +1216,29 @@ var component = Object(componentNormalizer["a" /* default */])(
       this.core.mtrx.client.sendReadReceipt(event);
     },
     readFirst: function () {
+      if (this.streamMode) return;
       var events = this.timeline.getEvents();
       this.readEvent(events[0]);
     },
     readLast: function () {
+      if (this.streamMode) return;
       var events = this.timeline.getEvents();
       this.readEvent(events[events.length - 1]);
     },
     readEvents: function (events) {
+      if (this.streamMode) return;
       _.each(events, e => {
         this.readEvent(e);
       });
     },
     readOne() {
+      if (this.streamMode) return;
       this.core.mtrx.client(this.chat.timeline[this.chat.timeline.length - 1]).then(r => {
         return r;
       });
     },
     debouncedReadAll: _.debounce(function () {
-      if (!this.chat) return;
+      if (!this.chat || this.streamMode) return;
       if (this.readPromise) return;
       var i = this.chat.timeline.length - 1;
       var event = null;
@@ -1157,7 +1260,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       		
       	}
       	else{
-      		
+      	
       	}
       			i--;
       }*/
@@ -1167,14 +1270,13 @@ var component = Object(componentNormalizer["a" /* default */])(
           return;
         }
         var eid = event.event.event_id;
-        this.readPromise = this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, eid, event /*, {
-                                                                                                              hidden: !this.settings_read ? true : false,
-                                                                                                              }*/).then(r => {
+        this.readPromise = this.streamMode || this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, eid, event /*, {
+                                                                                                                                 hidden: !this.settings_read ? true : false,
+                                                                                                                                 }*/).then(r => {
           event.readed = true;
           return r;
         }).catch(e => {
           console.error(e);
-          console.log(event);
           event.readError = e;
         }).finally(() => {
           this.readPromise = null;
@@ -1328,7 +1430,7 @@ module.exports.__inject__ = function (shadowRoot) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"64985431-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=69b19ff9&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"591f571a-vue-loader-template"}!./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=69b19ff9&scoped=true&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;

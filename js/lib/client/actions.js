@@ -470,11 +470,9 @@ var Action = function(account, object, priority, settings){
 
         var totalInputAmount = toFixed(totalInputAmountWithFee - fee, 8)
 
-        console.log('totalInputAmountWithFee1', totalInputAmountWithFee, amount)
 
         if (amount && totalInputAmountWithFee < amount) {
 
-            console.log('totalInputAmountWithFee2', fee, totalInputAmountWithFee, amount, totalInputAmount, account.actualBalance().total)
 
             if(!feeIncludedinAmount){
                 if (account.actualBalance().total < amount){
@@ -497,8 +495,6 @@ var Action = function(account, object, priority, settings){
 
         if (totalInputAmount <= 0) {
 
-            console.log('inputs', inputs, unspents)
-            
             return Promise.reject('actions_totalAmountZero')
         }
 
@@ -755,8 +751,6 @@ var Action = function(account, object, priority, settings){
     }
 
     self.controlReject = function(error){
-
-        console.log('self.controlReject', error)
 
         if(!error) error = self.rejected
 

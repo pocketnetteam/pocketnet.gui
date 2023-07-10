@@ -3621,8 +3621,6 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					console.log("_p", _p, _p.inner != replaceWith)
-
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
 					}
@@ -3630,7 +3628,6 @@ var lenta = (function(){
 					{
 						if(_p.inner != replaceWith)
 						{
-							console.log('here!!!!')
 							sharesInview = shares.concat(sharesInview)	
 						}
 					}
@@ -3642,8 +3639,6 @@ var lenta = (function(){
 					_.each(shares, function(s){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
-
-					console.log('sharesInview', sharesInview)
 
 					renders.extras()
 
@@ -4411,7 +4406,6 @@ var lenta = (function(){
 
 						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
-							console.log('self.psdk.accSet')
 							self.psdk.accSet.load(author).then(setting => {
 
 								authorsettings = self.psdk.accSet.get(author)

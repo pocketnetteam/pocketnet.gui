@@ -1749,8 +1749,6 @@ var post = (function () {
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-				console.log('type, alias, status', type, alias, status)
-
 				if(type == 'upvoteShare'){
 
 					if (share.txid == alias.share.v){
@@ -1761,8 +1759,6 @@ var post = (function () {
 				
 
 				if(type == 'contentDelete' || type == 'share'){
-
-					console.log('alias', alias, share)
 
 					if (alias.txidEdit == share.txid || share.txid == alias.txid){
 
