@@ -3393,7 +3393,6 @@ Settings = function(){
 		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
 	}
 
-
 	self.export = function(){
 
 		return {
@@ -3404,20 +3403,25 @@ Settings = function(){
 
 	}
 
-	self.import = function(v){
+	self.import = function(v = "{}"){
 
-		self.pin.set(v.pin || ""); 
+		if(!_.isObject(v)){
+			try{
+				v = JSON.parse(v)
+			}catch(e){
+				v = {}
+			}
+		}
 
+		if(!v.d) v.d = {}
+
+		self.pin.set(v.d.pin || ""); 
 
 	}
-
 
 	self.optstype = function(){
-
 		return self.type	
 	}
-
-
 
 	self.typeop = function(){
 
@@ -3429,6 +3433,56 @@ Settings = function(){
 
 	return self;
 }
+
+pSettings = function(){
+
+	var self = this;
+
+	self.pin = '';
+	self.address = ''
+
+	self._import = function(v = {}){
+
+		self.pin = (v || {}).pin || ""
+		self.address = (v || {}).address || ""
+	}
+
+	self.export = function(){
+
+		var v = {
+			d : {
+				pin : self.pin
+			}
+		}
+
+		return v
+	}
+
+	self.import = function(v){
+
+		v = JSON.parse(v)
+
+		self._import(v)
+	}
+
+	self.alias = function(){
+		var s = new Settings();
+
+		s.import({
+			d : {
+				pin : self.pin
+			}
+		})
+
+		
+		return s;
+	}
+
+	self.type = 'accSet'
+
+	return self;
+}
+
 
 
 
@@ -3451,7 +3505,8 @@ kits = {
 		deleteAccount : DeleteAccount,
 		accDel : DeleteAccount,
 		transaction : Transaction,
-		contentDelete : Remove
+		contentDelete : Remove,
+		accSet : Settings
 	},
 
 	ini : {
@@ -3461,6 +3516,7 @@ kits = {
 		userInfo : pUserInfo,
 		share : pShare,
 		comment : pComment,
-		contentDelete : pRemove
+		contentDelete : pRemove,
+		settings : pSettings
 	}
 }

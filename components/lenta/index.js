@@ -101,6 +101,29 @@ var lenta = (function(){
 
 
 		var actions = {
+
+			replaceShare : function(txid){
+				var replace = _.find(sharesInview, (share) =>  txid)
+
+				if (replace){
+					actions.destroyShare(replace)
+
+					var trx = self.psdk.share.get(txid)
+
+					if (trx && el.share[replace.txid]){
+						renders.shares([trx], function(){
+							renders.sharesInview([trx], function(){
+								
+							})
+						}, {
+							inner : replaceWith,
+							el : el.share[replace.txid],
+							ignoresw : true,
+						})
+					}
+				}
+			},
+
 			recommendationinfo : function(share){
 				if(!share || !self.app.platform.sdk.recommendations.sharesinfo[share.txid]) return
 
@@ -4348,7 +4371,7 @@ var lenta = (function(){
 
 								var pinnedShare = shares.splice(pinnedId, 1);
 								
-								pinnedShare[0].pin = true; //// wrong
+								//pinnedShare[0].pin = true; //// wrong
 								shares.unshift(pinnedShare[0]);		
 
 								if (clbk)
@@ -4365,7 +4388,7 @@ var lenta = (function(){
 
 										if (pinnedShare && !pinnedShare.deleted){
 
-											pinnedShare.pin = true;
+											//pinnedShare.pin = true;
 											shares.unshift(pinnedShare);
 					
 										}
@@ -4384,6 +4407,7 @@ var lenta = (function(){
 
 						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
+							console.log('self.psdk.accSet')
 							self.psdk.accSet.load(author).then(setting => {
 
 								authorsettings = self.psdk.accSet.get(author)
@@ -4920,25 +4944,7 @@ var lenta = (function(){
 
 						if(type == 'contentDelete'){
 
-							var replace = _.find(sharesInview, (share) =>  share.txid == alias.txidEdit)
-
-							if (replace){
-								actions.destroyShare(replace)
-
-								var trx = self.psdk.share.get(alias.txidEdit)
-
-								if (trx && el.share[replace.txid]){
-									renders.shares([trx], function(){
-										renders.sharesInview([trx], function(){
-											
-										})
-									}, {
-										inner : replaceWith,
-										el : el.share[replace.txid],
-										ignoresw : true,
-									})
-								}
-							}
+							actions.replaceShare(alias.txidEdit)
 							
 						}
 
@@ -4966,6 +4972,21 @@ var lenta = (function(){
 
 						if(type == 'unsubscribe' || type == 'subscribe' || type == 'subscribePrivate'){
 							actions.subscribeunsubscribeclbk(alias.address.v)
+						}
+
+						if (type == 'accSet'){
+							if(essenseData.author == alias.actor){
+
+								authorsettings = self.psdk.accSet.get(alias.actor)
+
+								el.c.find('.pinnedLabel').remove()
+
+								if(authorsettings.pin){
+
+									actions.replaceShare(authorsettings.pin)
+
+								}
+							}
 						}
 						
 					}

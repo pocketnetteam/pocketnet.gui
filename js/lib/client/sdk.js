@@ -883,6 +883,8 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['accSet'],
         load: function (address, update) {
 
+            console.log('self.psdk.accSet', address)
+
             return loadone('accSet', address, (ids) => {
                 return api.rpc('getaccountsetting', [ids[0]]).then(d => {
 
@@ -904,13 +906,35 @@ var pSDK = function ({ app, api, actions }) {
             }, {
                 update,
                 indexedDb: 'accSet',
+                transform: (r) => this.transform(r),
             })
 
         },
 
+        transform: function ({ key, data }) {
+            console.log("TRANSFORM", data)
+            var setting = new pSettings();
+                setting._import(data)
+                setting.address = key
+
+            console.log('setting', setting)
+
+            return setting
+        },
+
+        tempExtend: function (object, address) {
+
+            return extendFromActions('accSet', 
+                ['accSet'],
+                object,
+                address
+            )
+
+        },
 
         get: function (address) {
-            return storage.accSet[address] || {}
+
+            return this.tempExtend(storage.accSet[address] || null, address)
         }
 
     }

@@ -5206,7 +5206,7 @@ Platform = function (app, listofnodes) {
                             var ct = new Settings();
                             ct.pin.set(unpin ? '' : share.txid);
 
-                            if (!self.sdk.accountsettings.storage[share.address]){
+                            /*if (!self.sdk.accountsettings.storage[share.address]){
 
                                 self.sdk.accountsettings.storage[share.address] = {};
                             }
@@ -5218,7 +5218,7 @@ Platform = function (app, listofnodes) {
                             } else {
 
                                 self.sdk.accountsettings.storage[share.address].pin = share.txid;
-                            }
+                            }*/
 
 
                             self.app.platform.sdk.user.accSet(ct, function(err, alias){
@@ -5255,7 +5255,7 @@ Platform = function (app, listofnodes) {
 
                                     pinPost(d.share, function(err, result){
 
-										if(!err)
+										/*if(!err)
 										{
 
                                             var alreadyPinned = self.psdk.share.get(share.pin)
@@ -5271,13 +5271,13 @@ Platform = function (app, listofnodes) {
 
                                             }
 
-                                            d.share.pin = true;
+                                            //d.share.pin = true;
                                             var metatable = _el.closest('.metatable');
                                             var sys = metatable.find('.sys');
 
                                             sys.prepend('<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> ' + self.app.localization.e('pinned').toLowerCase() + ', ' + '</span>');
 
-                                        }
+                                        }*/
 
                                     }, false)
 
