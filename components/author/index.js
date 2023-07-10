@@ -1452,7 +1452,9 @@ var author = (function(){
 					open : true,
 					href : 'page404',
 					history : true,
-					replaceState : true
+					replaceState : true,
+					fade : true
+
 				})
 			}, 400)
 			
@@ -1504,7 +1506,8 @@ var author = (function(){
 										href : 'userpage?id=test',
 										history : true,
 										open : true,
-										replaceState : true
+										replaceState : true,
+										fade : true
 									})
 
 								}, 400)
@@ -1538,7 +1541,8 @@ var author = (function(){
 										href : 'userpage?id=test',
 										history : true,
 										open : true,
-										replaceState : true
+										replaceState : true,
+										fade : true
 									})
 
 								}, 400)
