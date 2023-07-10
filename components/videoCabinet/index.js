@@ -645,7 +645,7 @@ var videoCabinet = (function () {
 												deep(videoInfo, 'data.original.description') || '',
 											),
 											server: deep(videoInfo, 'meta.host_name'),
-											url: deep(videoInfo, 'meta.url'),
+											url: deep(videoInfo, 'link'),
 											createdAt: deep(videoInfo, 'data.original.createdAt'),
 											state: deep(videoInfo, 'data.original.state') || {},
 											editable: !videosInPosting.includes(
@@ -820,6 +820,7 @@ var videoCabinet = (function () {
 					? 'attachVideoLenta'
 					: 'attachVideoToPost';
 
+
 				self.shell(
 					{
 						name: 'videoList',
@@ -948,7 +949,7 @@ var videoCabinet = (function () {
 									const videoUrl = avatarWrapper.attr('video');
 									const uuid = sectionElement.attr('uuid');
 									const videoInfo =
-										self.app.platform.sdk.videos.storage[videoUrl];
+										self.app.platform.sdk.videos.storage[videoUrl] || self.app.platform.sdk.videos.storage[uuid];
 
 									if (!videoInfo) return;
 
@@ -1365,7 +1366,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-                  app: self.app,
+                  					app: self.app,
 									multiple: false,
 
 									action: function (file, clbk) {
@@ -1541,7 +1542,7 @@ var videoCabinet = (function () {
 				);
 			},
 			//render tagline
-      tags(element) {
+      		tags(element) {
 				const tagActions = {
 					//tag-related funcitons
 					tagsFromText(text) {
@@ -1629,12 +1630,12 @@ var videoCabinet = (function () {
 
 						removeTag: function (tag) {
 							tagActions.removeTag(tag);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 
 						removeTags: function (tag) {
 							tagActions.removeTags(tag);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 
 						addTag: function (tag) {
@@ -1644,7 +1645,7 @@ var videoCabinet = (function () {
 
 						addTags: function (tags) {
 							tagActions.addTags(tags);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 					},
 
@@ -1652,21 +1653,21 @@ var videoCabinet = (function () {
 				});
 			},
 
-      unPostedVideos(videos = [], element) {
-        self.shell(
-          {
-            name: 'unpostedVideos',
-            el: element,
-            data: {},
-            },
-          (p) => {
-            const containerWrapper = p.el.find('.unpostedVideosBody');
+			unPostedVideos(videos = [], element) {
+				self.shell(
+					{
+						name: "unpostedVideos",
+						el: element,
+						data: {},
+					},
+					(p) => {
+						const containerWrapper = p.el.find(".unpostedVideosBody");
 
-            if (!videos.length) return;
+						if (!videos.length) return;
 
-            renders.videos(videos, containerWrapper, false);
-            },
-        );
+						renders.videos(videos, containerWrapper, false);
+					}
+				);
             },
     };
 
