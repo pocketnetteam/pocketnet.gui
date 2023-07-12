@@ -125,7 +125,6 @@ class Notifications{
             node = this.nodeManager.selectbest();
         }
 
-
         const notifications = await node.rpcs("getnotifications", [data.height])
         const block = new NotificationBlock()
 
