@@ -1259,7 +1259,36 @@ Application = function(p)
 
           self.appready = true
 
-          
+          if (!window.pocketnetstore && !isios()) {
+            setTimeout(() => {
+              self.mobile.update.hasupdatecheck()
+                  .then((updateInfo) => {
+                    const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
+
+                    if ('version' in skippedUpdate) {
+                      const skippedVersion = numfromreleasestring(skippedUpdate.version);
+                      const showAfterTime = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+                      const nextNotifyReached = (skippedUpdate.notified + showAfterTime > Date.now());
+                      const updateVersion = numfromreleasestring(updateInfo.version);
+
+                      if (skippedVersion >= updateVersion || nextNotifyReached) {
+                        return;
+                      }
+
+                      delete localStorage.updateNotifier;
+                    }
+
+                    app.nav.api.load({
+                      open: true,
+                      id: 'updatenotifier',
+                      essenseData: { updateInfo },
+                      inWnd : true,
+                      clbk : (e, p) => {},
+                    });
+                  })
+                  .catch((err) => console.error(err))
+            }, 10000);
+          }
         }
 
         self.mobile.pip.init()
@@ -2702,7 +2731,7 @@ Application = function(p)
 
       playstore : window.pocketnetstore || false,  ///// TODO
 
-      downloadAndInstall : function(){
+      downloadAndInstall : function(customPreloader){
 
         if(!self.mobile.update.hasupdate){
           return Promise.reject({text : 'hasnotupdates'})
@@ -2714,7 +2743,7 @@ Application = function(p)
 
         self.mobile.update.updating = true
 
-        return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
+        return self.mobile.update.download(self.mobile.update.hasupdate, customPreloader).then(r => {
 
           return window.ApkUpdater.install()
 
@@ -2731,18 +2760,19 @@ Application = function(p)
 
       },
 
-      download : function(l){
+      download : function(l, customPreloader){
+        const preloader = customPreloader || topPreloader2;
 
         return window.ApkUpdater.download(l, {
           onDownloadProgress: function(e){
-            topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
+            preloader(e.progress, self.localization.e('downloadingUpdate'))
           }
         }).then(r => {
-          topPreloader2(100)
+          preloader(100)
 
           return Promise.resolve()
         }).catch(e => {
-          topPreloader2(100)
+          preloader(100)
 
           try{
             e = JSON.stringify(e)
@@ -2773,10 +2803,15 @@ Application = function(p)
               })
 
               if(l){
-                self.mobile.update.hasupdate = l.browser_download_url
+                self.mobile.update.hasupdate = l.browser_download_url;
+                resolve({
+                  version: d.tag_name.slice(1),
+                });
+                return;
               }
             }
 
+            resolve(false);
           })
 
         })
