@@ -886,6 +886,20 @@ var comments = (function(){
 			},
 			reply : function(id, aid){
 
+				var r = deep(self.app, 'platform.sdk.users.storage.' + (receiver || ''));
+				var blocked;
+
+				if (r){
+
+					blocked = Boolean(r.relation(self.app.user.address.value, 'blocking'));
+
+					if (blocked){
+						sitemessage(self.app.localization.e('e13242'));
+						return blocked;
+					} 
+
+				}
+
 				actions.stateAction(function(){
 
 					var _el = el.c.find('#' + id);
@@ -1689,7 +1703,6 @@ var comments = (function(){
 
 			actions.process(p.id || '0')
 
-
 			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
 				
@@ -2247,22 +2260,32 @@ var comments = (function(){
 
 					var _preview = preview && !p.answer && !p.editid
 
+					var r = deep(self.app, 'platform.sdk.users.storage.' + (receiver || ''));
+					var blocked;
+
+					if (r){
+
+						blocked = Boolean(r.relation(self.app.user.address.value, 'blocking'));
+		
+					}
+
 					self.shell({
 						name :  'post',
 						el : p.el,
 
 						data : {
-							placeholder : p.placeholder || '',
+							placeholder : blocked ? self.app.localization.e('blocked') : (p.placeholder || ''),
 							answer : p.answer || '',
 							edit : p.edit || '',
 							preview : _preview,
 							mestate : mestate,
 							sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
-							receiver: receiver
+							receiver: receiver,
+							blocked : blocked
 						},
 
-					}, function(_p){				
-
+					}, function(_p){	
+						
 						var ini = function(_clbk, unfocus){
 
 							if(!preview) return
@@ -2270,6 +2293,7 @@ var comments = (function(){
 							preview = false;
 								
 							p.init = true;
+
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
@@ -2288,8 +2312,6 @@ var comments = (function(){
 
 							postEvents(p, _p, __clbk)
 						}
-
-						
 
 						_p.el.find('.embedimages').off('click').on('click', function(){
 

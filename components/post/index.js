@@ -1994,22 +1994,28 @@ var post = (function () {
 
 					if (!share) {
 						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-					}
+					}					
 
 					if (share) {
-						self.app.platform.sdk.node.shares.users([share], function (l, error2) {
 
-							var data = {
-								ed: deep(p, 'settings.essenseData') || {},
-								share: share,
-								recommendationsenabled
-							};
+						self.sdk.users.get(share.address, function(){
 
-							self.app.platform.sdk.videos.info([share.url]).then(r => {
-								clbk(data);
+							self.app.platform.sdk.node.shares.users([share], function (l, error2) {
+
+								var data = {
+									ed: deep(p, 'settings.essenseData') || {},
+									share: share,
+									recommendationsenabled
+								};
+	
+								self.app.platform.sdk.videos.info([share.url]).then(r => {
+									clbk(data);
+								})
+	
 							})
-
 						})
+
+
 					}
 
 					else{
