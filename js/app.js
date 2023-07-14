@@ -1263,6 +1263,10 @@ Application = function(p)
             setTimeout(() => {
               self.mobile.update.hasupdatecheck()
                   .then((updateInfo) => {
+                    if (!updateInfo) {
+                      return;
+                    }
+
                     const skippedUpdate = JSON.parse(localStorage.updateNotifier || '{}');
 
                     if ('version' in skippedUpdate) {
