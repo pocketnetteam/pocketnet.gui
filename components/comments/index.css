@@ -36,8 +36,7 @@
   contain: none;
 }
 #comments .donateEmbWr .donatecntWrapper {
-  padding-top: 1em;
-  padding-bottom: 1em;
+  margin-top: 0.25em;
 }
 #comments .donateEmbWr .donatecntWrapper .removedonate {
   border-radius: 50%;
@@ -53,15 +52,24 @@
   color: rgb(var(--color-bad));
 }
 #comments .donateEmbWr .donatecntWrapper .removedonate:hover {
-  background: rgb(var(--neutral-grad-2));
+  background: rgb(var(--neutral-grad-1));
 }
-#comments .donateEmbWr .donatecntWrapper .donatecnt .value,
-#comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper {
-  display: inline-block;
+#comments .donateEmbWr .donatecntWrapper .donatecnt {
+  display: flex;
+  align-items: center;
 }
-#comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper {
-  position: relative;
-  top: -10px;
+#comments .donateEmbWr .donatecntWrapper .donatecnt .donateSum {
+  display: inline;
+  border-radius: 25px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: rgb(var(--text-on-bg-ac-color));
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
 }
 #comments.preview .post .txt textarea {
   display: block;
@@ -1013,10 +1021,8 @@
   position: absolute;
   right: 7px;
   top: 1px;
-  padding: 6px;
   cursor: pointer;
   color: rgb(var(--neutral-grad-3));
-  filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -1033,7 +1039,10 @@
 #comments .edit .embeddonate img,
 #comments .answer .embeddonate img,
 #comments .post .embeddonate img {
+  margin-top: 10px;
+  margin-right: 6px;
   height: 15px;
+  filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 }
 #comments .edit .embeddonate .donate-hover,
 #comments .answer .embeddonate .donate-hover,
@@ -1288,14 +1297,14 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .comments-operations .operations-wrapper .refresh-comments {
     position: absolute;
     left: 0.5em;
-    top: 0;
+    top: 0.5em;
     bottom: 0;
     z-index: 1;
   }
   #comments .list .comments-operations .operations-wrapper .close-comments {
     position: absolute;
     left: 38px;
-    top: 0;
+    top: 0.5em;
     bottom: 0;
     z-index: 1;
   }

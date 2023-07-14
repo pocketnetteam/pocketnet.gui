@@ -4443,21 +4443,21 @@ html.mobileview .tooltipMobileDialog {
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
-  transform: translateY(100%);
-  -moz-transition: 0.15s;
-  -o-transition: 0.15s;
-  -webkit-transition: 0.15s;
-  transition: 0.15s;
+  transform: translateY(100%) scale(0.5);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 html.mobileview .tooltipMobileDialog.animend .mobiledialogcontent {
   -webkit-transform: translateY(0);
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 html.mobileview .tooltipMobileDialog .thwrapper {
   padding: 0;
   max-width: 450px;
   background: transparent;
-  width: 93%;
+  width: 85%;
   margin: 0 auto;
   border: 0;
   margin-bottom: 0;
@@ -4468,7 +4468,7 @@ html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
-  max-height: calc(var(--vh, 1vh) * 60);
+  max-height: calc(var(--vh, 1vh) * 90);
 }
 html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;

@@ -4062,7 +4062,7 @@ ParametersLive = function (parameters, el, p) {
 			}
 
 			if (parameter.type == 'number') {
-				_el.on('keyup', function (e) {
+				_el.on('change', function (e) {
 
 					if (e.originalEvent.key == '.' || e.originalEvent.key == ',' || e.originalEvent.key == 'Backspace') {
 						return false
@@ -4092,8 +4092,6 @@ ParametersLive = function (parameters, el, p) {
 
 
 					if (!isNaN(Number(value))) {
-
-
 
 						var max = deep(parameter, 'format.max')
 						var min = deep(parameter, 'format.min')

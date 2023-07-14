@@ -262,7 +262,8 @@ var pSDK = function ({ app, api, actions }) {
         fallbackIndexedDB: null,
         indexedDb: null,
         alternativeGetStorage: null,
-        transform: null
+        transform: null,
+        maxcount: 0
     }) {
 
         if (!key) return Promise.reject('missing:key')
@@ -355,7 +356,28 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 else {
 
-                    executor(load).then(c).catch(reject)
+                    var batches = []
+
+                    if (p.maxcount){
+
+                        for (let i = 0; i < load.length; i += p.maxcount) {
+                            batches.push(load.slice(i, i + p.maxcount))
+                        }
+
+                    }
+                    else{
+                        batches.push(load)
+                    }
+
+                    Promise.all(_.map(batches, (batch) => {
+                        return executor(batch)
+                    })).then((r) => {
+
+                        c(_.flatten(r, true))
+
+                    }).catch(reject)
+
+                    //executor(load).then(c).catch(reject)
                 }
 
                 /**/
@@ -610,7 +632,8 @@ var pSDK = function ({ app, api, actions }) {
                 indexedDb: light ? 'userInfoLight' : 'userInfoFull',
                 fallbackIndexedDB: !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage: light ? 'userInfoFull' : null,
-                transform: (r) => this.transform(r)
+                transform: (r) => this.transform(r),
+                maxcount : 70
             })
         },
 

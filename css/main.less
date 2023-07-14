@@ -359,7 +359,6 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-    
     scroll-behavior: initial!important;
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -5397,14 +5396,14 @@ html.mobileview{
 
         .mobiledialogcontent{
             -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-            .transition(0.15s);
+            transform: translateY(100%) scale(0.5);
+            .transition(0.3s);
         }
 
         &.animend{
             .mobiledialogcontent{
                 -webkit-transform: translateY(0);
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -5413,7 +5412,7 @@ html.mobileview{
             padding : 0;
             max-width: 450px;
             background: transparent;
-            width: 93%;
+            width: 85%;
             margin : 0 auto;
             border : 0;
             margin-bottom: 0;
@@ -5426,7 +5425,7 @@ html.mobileview{
         }
 
         .mobiledialogcontent{
-            max-height: calc(var(--vh, 1vh) * 60);
+            max-height: calc(var(--vh, 1vh) * 90);
         }
 
         .secondwrapper{

@@ -5640,7 +5640,14 @@ Platform = function (app, listofnodes) {
                                 return;
                             }
 
-                            share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
+                            var user = self.psdk.userInfo.get(share.address)
+
+                            if (user){
+                                share.user = user.export()
+                            }
+
+                            
+                            //share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
 
                             // If we are on mobile/electron and post has a downloadable media video
                             // Do not download video on iOS

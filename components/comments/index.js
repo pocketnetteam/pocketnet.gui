@@ -188,6 +188,10 @@ var comments = (function(){
 			
 				} else {
 
+					console.log('storage', storage)
+
+					var prevdonatevalue = deep(storage, 'donate.0.amount') || 0
+
 					self.nav.api.load({
 						open : true,
 						id : 'donate',
@@ -197,21 +201,25 @@ var comments = (function(){
 							type : 'donate',
 							sender: sender, 
 							receiver: receiver,
-							value : storage.donate,
+							value : prevdonatevalue,
 							storage,
 							clbk  : function(value){
 
 								value = Number(value);
-		
-								var result = Boolean(value);
+	
+								if(!value){
+									currents[id].donate.remove();
+									renders.donate(id, p)
+									return
+								}
 
 								if (value < 0.1){
 									sitemessage(self.app.localization.e('minPkoin', 0.1))
 									return;
 								}
-					
 	
-								if(!_.isArray(value)) value = [value]
+								if(!_.isArray(value)) 
+									value = [value]
 	
 								currents[id].donate.remove();
 	
@@ -220,22 +228,18 @@ var comments = (function(){
 									amount: Number(value)
 								})
 	
-								if(!result && errors[type]){
+								/*if(!result && errors[type]){
 	
 									sitemessage(errors[type])
 	
-								}
-	
-	
-								if (result){
+								}*/
 
-									if(!window.cordova){
-										new Audio('sounds/donate.mp3').play();
-									}
-	
-									renders.donate(id, p)
-	
-								}	
+								if(!window.cordova){
+									new Audio('sounds/donate.mp3').play();
+								}
+
+								renders.donate(id, p)
+
 								
 							}
 						},
@@ -890,16 +894,16 @@ var comments = (function(){
 					else
 					{
 						show = true;
-						window.requestAnimationFrame(() => {
-
-							c.addClass('showedreplies')
-							c.find('.repliesloaderWrapper').removeClass('hidden')
-
-						})
+						
 					}
 				}
 
 				if (show){
+
+					window.requestAnimationFrame(() => {
+						c.addClass('showedreplies')
+						c.find('.repliesloaderWrapper').removeClass('hidden')
+					})
 
 					load.level(id, function(comments){
 
@@ -931,12 +935,16 @@ var comments = (function(){
 
 					delete currentstate.levels[id]
 
-
-					c.removeClass('showedreplies')
-
 					actions.removeForm(id)
 
-					p.el.html('')
+					window.requestAnimationFrame(() => {
+						c.removeClass('showedreplies')
+						p.el.html('')
+					})
+
+					
+
+					
 				}
 
 			
@@ -1100,13 +1108,14 @@ var comments = (function(){
 
 						actions.showhideLabel()	
 
+						window.requestAnimationFrame(() => {
+							el.c.addClass('showedall')	
+							el.c.removeClass('listpreview')
+							el.preloader.addClass('hidden')
+						})
 					
 						renders.list(p, function(){
-							window.requestAnimationFrame(() => {
-								el.c.addClass('showedall')	
-								el.c.removeClass('listpreview')
-								el.preloader.addClass('hidden')
-							})
+							
 						})
 
 					})
@@ -1950,27 +1959,31 @@ var comments = (function(){
 
 				var comment = currents[id];
 				var donate = comment.donate.v[0];
+				var __el = p.el.find('.embeddonate')
 
-				self.shell({
-					name :  'donate',
-					turi : 'embeding',
-					inner : html,
-					el : p.el.find('.newcommentdonate'),
-					data : {
-						donate : donate && donate.amount
-					},
-
-				}, function(_p){
-
-					_p.el.find('.removedonate').on('click', function(){
-
-						actions.removeDonate(id, p)
+				if (donate && donate.amount){
+					self.shell({
+						name :  'donate',
+						inner : html,
+						el : __el,//p.el.find('.newcommentdonate'),
+						data : {
+							donate : donate && donate.amount
+						},
+	
+					}, function(_p){
+	
+						_p.el.find('.removedonate').on('click', function(){
+							actions.removeDonate(id, p)
+						})
+	
+	
 					})
+				}
+				else{
+					__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
+				}
 
-
-				})
-
-
+				
 
 			},
 
@@ -2110,54 +2123,7 @@ var comments = (function(){
 
 				var cl = el.c.find('.comment').length
 				
-				//deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
-
-				/*if(ed.caption && cl > 5){
-					self.shell({
-						name :  'caption',
-						el : el.caption,
-						data : {
-							ed : ed
-						},
-
-					}, function(p){
-
-						renders.cpreview()
-
-						caption = new Caption({
-							container: el.c,
-							caption: el.c.find('.captionfwrapper'),
-							offset: [top, -100],
-							removeSpacer : true,
-							zIndex : 105,
-							iniHeight : true,
-							_in : _in
-						}).init();
-
-						p.el.find('.close .cact').on('click', function(){
-							if (ed.close)
-								ed.close()
-						})
-
-						p.el.find('.top .cact').on('click', function(){
-
-							_scrollToTop(el.c.find('.list'), _in, undefined, -150)
-						
-						})
-
-						p.el.find('.bottom .cact').on('click', function(){
-
-							_scrollToBottom(el.c.find('.list'), _in, undefined, -150)
-
-						})
-
-
-						if (clbk)
-							clbk();
-						
-					})
-				}*/
-
+				
 			},
 
 			edit : function(el, comment){
@@ -2219,7 +2185,7 @@ var comments = (function(){
 					self.shell({
 						name :  'post',
 						el : p.el,
-
+						insertimmediately : true,
 						data : {
 							placeholder : p.placeholder || '',
 							answer : p.answer || '',
@@ -2279,9 +2245,6 @@ var comments = (function(){
 						})
 
 						_p.el.find('.embeddonate').off('click').on('click', function(){
-
-									
-							
 
 							if(state){
 
@@ -2423,6 +2386,9 @@ var comments = (function(){
 				var comments = p.comments
 				var sort = null
 
+
+				console.log("PID", pid)
+
 				
 				if(!preview || showedall)
 					sort = new sortParameter()
@@ -2478,8 +2444,10 @@ var comments = (function(){
 
 				p.el || (p.el = el.list)
 				
-				if(!preview && p.el)
-					p.el.addClass('listloading')
+				/*if(!preview && p.el)
+					p.el.addClass('listloading')*/
+
+				console.log("RENDER LEVELT", comments, p)
 
 				self.sdk.comments.users(comments, function (i, e) {
 
@@ -2489,6 +2457,7 @@ var comments = (function(){
 
 						inner : p.replace ? replaceWith : html,
 						fast : p.fast,
+						insertimmediately : true,
 						//inner : p.inner || _in, /// html
 						
 						data : {
@@ -2521,13 +2490,13 @@ var comments = (function(){
 
 						if(!_p.el) return
 
-						if(!preview)
-							p.el.removeClass('listloading')
+						/*if(!preview)
+							p.el.removeClass('listloading')*/
 
 						if(!p.replace){
 						
 							if(!pid){
-								makeCurrentLevels()
+								
 
 								_p.el.find('.refresh-comments').on('click', (e) => {
 									window.requestAnimationFrame(() => {
@@ -2556,6 +2525,8 @@ var comments = (function(){
 
 									ParametersLive([sort], _p.el)
 								}
+
+								makeCurrentLevels()
 									
 							}
 
@@ -2661,6 +2632,9 @@ var comments = (function(){
 		}
 
 		var makeCurrentLevels = function(clbk){
+
+			console.log('makeCurrentLevels', currentstate)
+
 			var lvls = _.map(currentstate.levels, function(lv){
 				return lv.id
 			})
@@ -2672,6 +2646,8 @@ var comments = (function(){
 					action : function(p){
 
 						var id = p.item;
+
+						console.log("MAKE ID", id)
 
 						actions.replies(id, true, p.success, {
 							in : html

@@ -48,9 +48,9 @@
 	.donateEmbWr{
 
 		.donatecntWrapper{
-			padding-top: @rhythm * 2;
-			padding-bottom: @rhythm * 2;
 
+			margin-top: 0.5 * @rhythm;
+			
 			.removedonate{
 				border-radius: 50%;
 				height: 30px;
@@ -62,18 +62,27 @@
 				color : rgb(var(--color-bad));
 
 				&:hover{
-					background : rgb(var(--neutral-grad-2));
+					background : rgb(var(--neutral-grad-1));
 				}
 			}
 
 			.donatecnt{
-				.value, .removeWrapper{
-					display: inline-block;
-				}
 
-				.removeWrapper{
-					position: relative; 
-					top: -10px
+				display: flex;
+				align-items:center;
+
+				.donateSum{
+					display: inline;
+					border-radius: 25px;
+					padding: @rhythm;
+					padding-left: @rhythm * 2;
+					padding-right: @rhythm * 2;
+					color:  rgb(var(--text-on-bg-ac-color));
+					font-size: .8em;
+					font-weight: 500;
+					white-space: nowrap;
+					background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+					background-size: 400% 400%;
 				}
 			}
 
@@ -1190,10 +1199,9 @@
 			position: absolute;
 			right : 7px;
 			top: 1px;
-			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-3));
-			filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
+			
 			.transition(0.3s);
 
 			/*&.right{
@@ -1205,7 +1213,10 @@
 			}
 
 			img{
+				margin-top: 10px;
+				margin-right: 6px;
 				height: 15px;
+				filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 			}
 
 			.donate-hover{
@@ -1502,7 +1513,7 @@ html.mobileview{
 					.refresh-comments{
 						position: absolute;
 						left : @rhythm;
-						top : 0;
+						top : @rhythm;
 						bottom: 0;
 						z-index: 1;
 					}
@@ -1510,7 +1521,7 @@ html.mobileview{
 					.close-comments{
 						position: absolute;
 						left : 38px;
-						top : 0;
+						top : @rhythm;
 						bottom: 0;
 						z-index: 1;
 					}

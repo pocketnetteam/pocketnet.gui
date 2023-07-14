@@ -98,11 +98,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 					<% if(hasdonate) { %> 
 
 						<div elementsid="comments_embeddonate" class="embeddonate <%- embedimage ? 'right' : '' %>">
-							<img 
-								class="donateIcon"
-								src="img/logo20.svg" 
-								alt=""
-							>
+							<img class="donateIcon" src="img/logo20.svg" alt="" />
 						</div>
 
 					<% } %>
@@ -112,17 +108,20 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 						</div>
 					<% } %>
 
-				</div>
+					
 
-				<div class="limits"></div>
-				<div class="errormessage hidden"></div>
+				</div>
 
 				<% if(hasdonate) { %> 
 					<div class="newcommentdonate"></div>
 				<% } %>
+
 				<% if(embedimage) {%>
 					<div class="newcommentimages"></div>
 				<% } %>
+
+				<div class="limits"></div>
+				<div class="errormessage hidden"></div>
 				
 				
 			</div>

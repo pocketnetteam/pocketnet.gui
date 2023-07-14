@@ -444,9 +444,7 @@ var author = (function(){
 						renders.info(el.info)
 
 
-					p.el.find('.donate').on('click', () => {
-						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
-					})
+					
 					
 					if(clbk) clbk()
 				})
@@ -615,6 +613,8 @@ var author = (function(){
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 					})
+
+					
 					
 					_.each(reports, function(r, j){
 						if(r.events){
@@ -669,6 +669,10 @@ var author = (function(){
 					animation : false,
 
 				}, function(p){
+
+					p.el.find('.donate').on('click', () => {
+						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+					})
 
 					p.el.find('.subscribe').on('click', events.subscribe)
 					p.el.find('.unsubscribe').on('click', events.unsubscribe)

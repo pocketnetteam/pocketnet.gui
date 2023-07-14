@@ -85,31 +85,47 @@ var donate = (function(){
 
 				var val = Number(input.get() || '0');
 
-				if(ed.min){
+				if (ed.min){
 					if (val < ed.min){
-						sitemessage(self.app.localization.e('minPkoin', 0.1))
+						sitemessage(self.app.localization.e('minPkoin', 0.5))
                         return;
 					}
 				}
 
-				if (ed.send){
-					actions.send(val, (txid) => {
 
-						if (ed.clbk){
-							ed.clbk(val, txid)
-						}
+				var account = self.app.platform.actions.getCurrentAccount()
 
-						self.closeContainer()
-					})
-				}
-				else{
+				if (account){
+					var b = account.actualBalance()
+					var total = b.actual
 
-					if (ed.clbk){
-						ed.clbk(val)
+					if (val > total){
+						val = Number(total.toFixed(3))
 					}
 
-					self.closeContainer()
+					
+						if (ed.send){
+							actions.send(val, (txid) => {
+		
+								if (ed.clbk){
+									ed.clbk(val, txid)
+								}
+		
+								self.closeContainer()
+							})
+						}
+						else{
+		
+							if (ed.clbk){
+								ed.clbk(val)
+							}
+		
+							self.closeContainer()
+						}
+					
 				}
+
+				
 
 			})
 		}
@@ -135,10 +151,10 @@ var donate = (function(){
 							type: 'NUMBER',
 							id: 'amount',
 							placeholder : '0',
-							value : ed.value || 0.5,
+							value : Number((ed.value || 0.5).toFixed(3)),
 							format: {
 								Precision: 3,
-								max : balance,
+								max : total,
 								min : 0.5
 							}
 						})

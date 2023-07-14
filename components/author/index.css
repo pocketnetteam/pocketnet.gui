@@ -693,7 +693,7 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
   }
   #author .bgCaption .infoWrapper,
   #author .lentacell .cnt {
-    max-width: 640px;
+    max-width: 768px;
     margin: 0 auto;
   }
   #author .mobileinfo {

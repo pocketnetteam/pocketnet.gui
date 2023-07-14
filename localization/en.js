@@ -2746,3 +2746,4 @@ _l.postInRelay2 = "This publication will soon be sent to the blockchain"
 
 
 _l.err47 = "Undefined post deletion error"
+_l.donatebalancenotenouth = "You do not have enough funds to make a donation"
