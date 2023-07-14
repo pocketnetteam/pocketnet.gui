@@ -100,6 +100,8 @@ var comments = (function(){
 						p.class = "firstcomment"
 					}
 
+					console.log('_el.length', _el.length)
+
 					if((!showedall && !comment.parentid) || optype == 'commentEdit' || optype == 'commentDelete' || _el.length){
 
 						p.comments = [comment]
@@ -107,6 +109,10 @@ var comments = (function(){
 						if(_el.length){
 							p.replace = true
 							p.el = _el
+
+							if (comment.parentid){
+								actions.repliesCount(comment.parentid)
+							}
 						}
 						else{
 							if (optype == 'commentEdit' || optype == 'commentDelete'){
@@ -125,25 +131,20 @@ var comments = (function(){
 
 						if (comment.parentid){
 
-							var parent = el.c.find("#" + comment.parentid)
-							var panel = parent.find('.commentpanel[comment="'+comment.parentid+'"]')
+							actions.repliesCount(comment.parentid)
 
-							var parentcomment = self.psdk.comment.get(comment.parentid) || {}
+							var parent = el.c.find("#" + comment.parentid)
 
 							p.el = parent.find('.answers')
 
-							panel.find('.repliescount').html(parentcomment.children || 0)
-							panel.find('.replies').removeClass('hidden')
 						}
 							
+						console.log("IM HERE")
 
 						load.level(comment.parentid, function(comments){
 
-							console.log("LOAD LEVEL", comment.parentid, comments)
-
 							p.comments = comments
 							p.add = comment.id
-
 	
 							renders.list(p, null, comment.parentid)
 	
@@ -162,6 +163,26 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			repliesCount: function(parentid){
+				var parent = el.c.find("#" + parentid)
+				var panel = parent.find('.commentpanel[comment="'+parentid+'"]')
+
+				var parentcomment = self.psdk.comment.get(parentid) || {}
+
+				//p.el = parent.find('.answers')
+
+				panel.find('.repliescount').html(parentcomment.children || 0)
+
+				if (parentcomment.children){
+					panel.find('.replies').removeClass('hidden')
+				}
+				else{
+					panel.find('.replies').addClass('hidden')
+
+					//actions.replies(id, false);
+				}
+			},
 
 			removeDonate : function(id, p){
 
@@ -907,24 +928,36 @@ var comments = (function(){
 
 							p.comments = comments
 
-							renders.list(p, function(){
+							if(!comments.length){
+								c.removeClass('showedreplies')
+								delete currentstate.levels[id]
+							}
+							else{
 
-								window.requestAnimationFrame(() => {
-									c.find('.repliesloaderWrapper').addClass('hidden')
-								})
+								renders.list(p, function(){
 
-								if(!caption)
-									renders.caption()
+									window.requestAnimationFrame(() => {
+										c.find('.repliesloaderWrapper').addClass('hidden')
+									})
+	
+									if(!caption)
+										renders.caption()
+	
+									if (clbk)
+										clbk()
+									
+	
+								}, id)
 
-								if (clbk)
-									clbk()
-								
+							}
 
-							}, id)
+							
 
 						
 
-						}, currentstate.levels[id] ? currentstate.levels[id].comments : null)
+						}, currentstate.levels[id] ? _.filter(_.map(currentstate.levels[id].comments, (commentid) => {
+							return self.psdk.comment.get(commentid)
+						}), (c) => {return c}) : null)
 
 					}, 300)
 
@@ -1472,6 +1505,8 @@ var comments = (function(){
 				var comment = self.psdk.comment.get(id)
 
 				if (comment && !comment.children){
+
+					
 					actions.reply(_id, _aid)
 				}
 				else{
@@ -2393,7 +2428,9 @@ var comments = (function(){
 					if (pid){
 						currentstate.levels[pid] = {
 							id : pid,
-							comments
+							comments : _.map(comments, (c) => {
+								return c.id
+							})
 						}
 					}
 	
@@ -2432,7 +2469,7 @@ var comments = (function(){
 				if(!preview && p.el)
 					p.el.addClass('listloading')
 
-				console.log("RENDEREING", comments)
+				console.log("RENDEREING", comments, p)
 
 				self.sdk.comments.users(comments, function (i, e) {
 

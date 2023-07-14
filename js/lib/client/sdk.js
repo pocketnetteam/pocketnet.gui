@@ -1663,6 +1663,7 @@ var pSDK = function ({ app, api, actions }) {
                     //object.txidEdit = exp.txid
                     object.temp = exp.temp
                     object.relay = exp.relay
+                    object.rejected = exp.rejected
 
                 }
 

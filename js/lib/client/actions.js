@@ -1036,6 +1036,7 @@ var Action = function(account, object, priority, settings){
 
         if(self.rejected) alias.rejected = self.rejected
 
+        alias.__action = self
 
         return alias
     }
