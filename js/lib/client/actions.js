@@ -2380,6 +2380,12 @@ var Actions = function(app, api, storage = localStorage){
             return action.processingWithIteractions(true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
+                
+                if (action.rejected){
+                    return Promise.reject(e)
+                }
+
+                return Promise.resolve(action)
 
                 if(e == 'actions_checkFail' /*|| errorCodesAndActions[e]*/) return Promise.resolve(action)
 

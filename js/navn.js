@@ -583,7 +583,7 @@ Nav = function(app)
 
 						try{
 
-							var stop = current.module.stop(p.href);
+							var stop = current.module.stop(p.href, p);
 
 							if (stop && _.isObject(stop)){
 

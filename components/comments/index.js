@@ -128,20 +128,24 @@ var comments = (function(){
 							var parent = el.c.find("#" + comment.parentid)
 							var panel = parent.find('.commentpanel[comment="'+comment.parentid+'"]')
 
+							var parentcomment = self.psdk.comment.get(comment.parentid) || {}
+
 							p.el = parent.find('.answers')
 
-							panel.find('.repliescount').html(Number(panel.find('.repliescount').html() || "0") + 1)
+							panel.find('.repliescount').html(parentcomment.children || 0)
 							panel.find('.replies').removeClass('hidden')
 						}
 							
 
 						load.level(comment.parentid, function(comments){
 
+							console.log("LOAD LEVEL", comment.parentid, comments)
+
 							p.comments = comments
 							p.add = comment.id
 
 	
-							renders.list(p)
+							renders.list(p, null, comment.parentid)
 	
 						})
 					}
@@ -620,7 +624,7 @@ var comments = (function(){
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
 			},
-			post : function(id, pid, aid, editid){
+			post : function(id, pid, aid, editid, wrapper){
 
 				id || (id = '0')
 
@@ -631,7 +635,7 @@ var comments = (function(){
 
 					if (e){
 
-						el.c.find('.sending').removeClass('sending')
+						wrapper.removeClass('sending')
 						sitemessage(errors[e])
 
 					}
@@ -643,7 +647,7 @@ var comments = (function(){
 
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
-							el.c.find('.sending').removeClass('sending')
+							wrapper.removeClass('sending')
 	
 							new dialog({
 								html : self.app.localization.e('ratings123'),
@@ -687,35 +691,27 @@ var comments = (function(){
 								self.app.platform.errorHandler(error, true)
 							}
 
-							if (el.c) {
+							state.save()
 
-								state.save()
+							window.requestAnimationFrame(() => {
+								wrapper.find('.emojionearea-editor').blur();
+								wrapper.removeClass('sending')
 
-								window.requestAnimationFrame(() => {
-									el.c.find('.emojionearea-editor').blur();
-									el.c.find('.sending').removeClass('sending')
+								if(!error){
 	
-									if(!error){
-										if (areas[id]) areas[id].setText('');
-		
-										el.c.find('.post .newcommentimages').html('');
-										el.c.find('.post .newcommentdonate').html('');
-		
-										if (current.parentid)
-											el.c.find('.answer[for="'+current.parentid+'"]').html('');
-									}
-								})
+									wrapper.find('.newcommentimages').html('');
+									wrapper.find('.newcommentdonate').html('');
 
-							}
+									if (areas[id]) areas[id].setText('');
+								}
+							})
 
-
-						
 						}, pid, aid, editid, id)
 							
 					}
 				}
 				else{
-					el.c.find('.sending').removeClass('sending')
+					wrapper.removeClass('sending')
 
 					sitemessage(errors['content'])
 				}
@@ -905,29 +901,32 @@ var comments = (function(){
 						c.find('.repliesloaderWrapper').removeClass('hidden')
 					})
 
-					load.level(id, function(comments){
+					setTimeout(() => {
 
-						p.comments = comments
+						load.level(id, function(comments){
 
-						window.requestAnimationFrame(() => {
-							c.find('.repliesloaderWrapper').addClass('hidden')
-						})
+							p.comments = comments
+
+							renders.list(p, function(){
+
+								window.requestAnimationFrame(() => {
+									c.find('.repliesloaderWrapper').addClass('hidden')
+								})
+
+								if(!caption)
+									renders.caption()
+
+								if (clbk)
+									clbk()
+								
+
+							}, id)
+
 						
 
-						renders.list(p, function(){
+						}, currentstate.levels[id] ? currentstate.levels[id].comments : null)
 
-							if(!caption)
-								renders.caption()
-
-							if (clbk)
-								clbk()
-							
-
-						}, id)
-
-					
-
-					}, currentstate.levels[id] ? currentstate.levels[id].comments : null)
+					}, 300)
 
 				}
 				else
@@ -1104,18 +1103,14 @@ var comments = (function(){
 						p.comments = comments
 						p.class = "firstcomment"
 						p.inner = html
-						
 
-						actions.showhideLabel()	
-
-						window.requestAnimationFrame(() => {
-							el.c.addClass('showedall')	
-							el.c.removeClass('listpreview')
-							el.preloader.addClass('hidden')
-						})
-					
 						renders.list(p, function(){
-							
+							window.requestAnimationFrame(() => {
+								actions.showhideLabel()	
+								el.c.addClass('showedall')	
+								el.c.removeClass('listpreview')
+								el.preloader.addClass('hidden')
+							})
 						})
 
 					})
@@ -1150,14 +1145,17 @@ var comments = (function(){
 
 				window.requestAnimationFrame(() => {
 					if (showedall){
-						el.showall.addClass('hidden')
+						if(!el.showall.hasClass('hidden'))
+							el.showall.addClass('hidden')
 					}
 					else{
 						if (needtoshow){
-							el.showall.removeClass('hidden')
+							if (el.showall.hasClass('hidden'))
+								el.showall.removeClass('hidden')
 						}
 						else{
-							el.showall.addClass('hidden')
+							if(!el.showall.hasClass('hidden'))
+								el.showall.addClass('hidden')
 						}
 					}
 				})
@@ -1730,20 +1728,7 @@ var comments = (function(){
 					'emojibtn.click' : events.emessage,
 					change : events.emessage,
 					click : events.emessage,
-					keydown : function(editor, e){
-						/*if (e.ctrlKey && e.keyCode == 13) {
-
-							if (c.hasClass('sending')) return
-
-								c.addClass('sending')
-
-							actions.post(p.id || '0', p.pid, p.aid, p.editid)
-
-							e.preventDefault()
-
-							return false;
-						}*/
-					},
+					
 					keydown : function(editor, e){
 						if(e.keyCode == 13){
 							if (isMobile() || e.ctrlKey){
@@ -1754,7 +1739,7 @@ var comments = (function(){
 
 									_p.el.removeClass('active')
 
-									actions.post(p.id || '0', p.pid, p.aid, p.editid)
+									actions.post(p.id || '0', p.pid, p.aid, p.editid, c)
 								}, 100)
 								
 								e.preventDefault()
@@ -1880,7 +1865,7 @@ var comments = (function(){
 				if (c.hasClass('sending')) return
 					c.addClass('sending')
 
-				actions.post(p.id || '0', p.pid, p.aid, p.editid)
+				actions.post(p.id || '0', p.pid, p.aid, p.editid, c)
 
 			})
 
@@ -2419,7 +2404,7 @@ var comments = (function(){
 
 					if(!ed.commentPs && !ed.reply){
 
-						comments = _.filter(comments , function(c, i){
+						comments = _.filter(comments, function(c, i){
 							if(i < pg * paginationcount && c.id != p.add){
 								return true
 							}
@@ -2444,10 +2429,10 @@ var comments = (function(){
 
 				p.el || (p.el = el.list)
 				
-				/*if(!preview && p.el)
-					p.el.addClass('listloading')*/
+				if(!preview && p.el)
+					p.el.addClass('listloading')
 
-				console.log("RENDER LEVELT", comments, p)
+				console.log("RENDEREING", comments)
 
 				self.sdk.comments.users(comments, function (i, e) {
 
@@ -2490,8 +2475,8 @@ var comments = (function(){
 
 						if(!_p.el) return
 
-						/*if(!preview)
-							p.el.removeClass('listloading')*/
+						if(!preview)
+							p.el.removeClass('listloading')
 
 						if(!p.replace){
 						
@@ -2586,19 +2571,17 @@ var comments = (function(){
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
+				
+
 			
 				if(type == 'comment'){
 					var comment = alias
 
 					if (comment.postid == txid){
 
+						console.log('type, alias, status', type, alias, status)
+
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
-						/*
-						if(comment.optype != 'commentDelete'){
-							clbks.post(comment)
-						}else{
-							clbks.commentDelete(comment)
-						}*/
 						
 					}
 				}

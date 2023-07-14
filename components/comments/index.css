@@ -14,13 +14,13 @@
 }
 #comments .repliesloaderWrapper,
 #comments .loaderWrapper {
-  padding: 1.5em;
+  padding: 2em;
   text-align: center;
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
-  height: 44px;
+  height: 66px;
   z-index: 2;
 }
 #comments .adr {
@@ -240,11 +240,10 @@
 #comments .list .comment .answersWrapper {
   position: relative;
   display: none;
+  min-height: 66px;
   padding-top: 1em;
   padding-bottom: 1em;
   padding-left: 1em;
-  margin-left: 0.5em;
-  border-top: 1px solid rgb(var(--neutral-grad-0));
 }
 #comments .list .comment.showedreplies .answersWrapper {
   display: block;
@@ -322,16 +321,16 @@
   border-top: 1px solid rgb(var(--neutral-grad-0));
   padding-left: 1.5em;
   padding-right: 2.5em;
+  /*.embedimages{
+						right: 40px;
+					}
+
+					.embedEmojiPrivew, .emojionearea-button{
+						right: 12px;
+					}*/
 }
 #comments .list .comment .answer .postbody .embeddonate {
   display: none;
-}
-#comments .list .comment .answer .postbody .embedimages {
-  right: 40px;
-}
-#comments .list .comment .answer .postbody .embedEmojiPrivew,
-#comments .list .comment .answer .postbody .emojionearea-button {
-  right: 12px;
 }
 #comments .list .comment .answers .comment:nth-last-child(1) {
   padding-top: 0;
@@ -418,7 +417,7 @@
   font-size: 0.8em;
 }
 #comments .list .metatable {
-  padding-top: 0.75em;
+  padding-top: 1em;
 }
 #comments .list .metatable > div {
   padding: 0;

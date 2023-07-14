@@ -14048,7 +14048,7 @@ Platform = function (app, listofnodes) {
                     }))
 
                     comments = self.psdk.comment.tempAdd(comments, (action) => {
-                        return txid == action.postid && (pid || '') == (action.parentid || '')
+                        return (txid == action.postid) && ((pid || '') == (action.parentid || ''))
                     })
                     
                     if(clbk) clbk(comments)

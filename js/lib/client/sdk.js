@@ -1139,10 +1139,21 @@ var pSDK = function ({ app, api, actions }) {
                             object.comments++
 
                             var last = object.lastComment ? self.comment.get(object.lastComment) : null
-
-                            if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
-                                object.lastComment = exp.id
+                            
+                            if(exp.parentid){
+                                if (last){
+                                    if (exp.parentid == last.id){
+                                        last.children++
+                                    }
+                                }
                             }
+                            else{
+                                if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
+                                    object.lastComment = exp.id
+                                }
+                            }
+
+                            
                         }
 
                         if (exp.optype == 'commentEdit') {
@@ -1153,6 +1164,16 @@ var pSDK = function ({ app, api, actions }) {
 
                             if (object.comments > 0)
                                 object.comments--
+
+                            if (exp.parentid){
+                                var last = object.lastComment ? self.comment.get(object.lastComment) : null
+
+                                if (last){
+                                    if (exp.parentid == last.id){
+                                        last.children--
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1162,6 +1183,8 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (exp.optype == 'comment') {
                         if (object.id == exp.id) return exp
+
+                        if (object.id == exp.parentid) object.children++
                     }
 
                     if (exp.optype == 'commentEdit') {
@@ -1175,6 +1198,8 @@ var pSDK = function ({ app, api, actions }) {
                         if (object.id == exp.id) {
                             object.deleted = true
                         }
+
+                        if (object.id == exp.parentid) object.children--
                     }
                 }
             }

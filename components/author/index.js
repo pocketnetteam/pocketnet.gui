@@ -948,7 +948,7 @@ var author = (function(){
 		
 								open : true,
 								id : 'lenta',
-								el : _el.find('.authorlentawrapper'),
+								el : el,
 								animation : false,
 			
 								mid : author.address,
@@ -1653,7 +1653,7 @@ var author = (function(){
 				
 			},
 
-			destroy : function(){
+			destroy : function(href, p){
 
 				if(el.c) el.c.empty()
 
@@ -1687,7 +1687,9 @@ var author = (function(){
 				author = null
 
 				el = {};
-				self.app.el.html.removeClass('allcontent')
+
+				if(href != 'author')
+					self.app.el.html.removeClass('allcontent')
 
 			},
 			
@@ -1729,12 +1731,12 @@ var author = (function(){
 
 	};
 
-	self.stop = function(){
+	self.stop = function(href, p){
 
 		_.each(essenses, function(essense){
 
 			window.requestAnimationFrame(() => {
-				essense.destroy();
+				essense.destroy(href, p);
 			})
 
 		})

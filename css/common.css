@@ -497,7 +497,7 @@
   color: rgba(var(--neutral-grad-3), 0.8);
 }
 .share_common .meta {
-  padding-top: 0.75em;
+  padding-top: 0.375em;
   margin-bottom: 0.5em;
 }
 .share_common .meta .authorCell {
