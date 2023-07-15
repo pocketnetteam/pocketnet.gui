@@ -898,3 +898,15 @@ _l.torusing_stat_totalTorBytes = "합계, TOR 통화"
 _l.torusing_settings = "TOR 설정"
 _l.torusing_stats = "쿼리 통계"
 _l.torusing_proxychangequestion = "정말 프록시를 변경하시겠습니까?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '업데이트';
+_l.updateNotifier_topHeading2 = '사용 가능';
+_l.updateNotifier_mainHeading = '업데이트가 있습니다';
+_l.updateNotifier_mainText = '애플리케이션을 계속 업데이트하는 것이 좋습니다. 새로운 기능과 더 나은 성능이 여러분을 기다리고 있습니다!';
+_l.updateNotifier_button1 = '설치';
+_l.updateNotifier_button2 = '나중에...';
+_l.updateNotifier_stateStart = '시작...';
+_l.updateNotifier_stateDownload = '다운로드됨';
+_l.updateNotifier_stateError = '오류 발생';
+/** ↑ Component UpdateNotifier ↑ */

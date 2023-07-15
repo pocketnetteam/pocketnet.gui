@@ -898,3 +898,15 @@ _l.torusing_stat_totalTorBytes = "Gesamt, TOR anrufe"
 _l.torusing_settings = "TOR einstellungen"
 _l.torusing_stats = "Statistik abfragen"
 _l.torusing_proxychangequestion = "Sind Sie sicher, dass Sie den proxy ändern wollen?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Aktualisieren';
+_l.updateNotifier_topHeading2 = 'Verfügbar';
+_l.updateNotifier_mainHeading = 'Wir haben aktualisiert';
+_l.updateNotifier_mainText = 'Wir empfehlen, die Anwendung zu aktualisieren. Neue Funktionen und bessere Leistung warten auf Sie!';
+_l.updateNotifier_button1 = 'Installieren';
+_l.updateNotifier_button2 = 'Später...';
+_l.updateNotifier_stateStart = 'Starten...';
+_l.updateNotifier_stateDownload = 'Heruntergeladen';
+_l.updateNotifier_stateError = 'Fehler aufgetreten';
+/** ↑ Component UpdateNotifier ↑ */

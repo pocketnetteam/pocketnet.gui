@@ -47,6 +47,15 @@
 #recommendations .recoVideoDiv .videoThumbnail[data-image] {
   filter: brightness(85%);
 }
+#recommendations .recoVideoDiv .videoThumbnail .durationWrapper {
+  float: right;
+  margin: 6px;
+  border-radius: 12px;
+  background: rgba(var(--color-shadow-base), 0.8);
+  color: rgb(var(--text-on-bg-shadow-color));
+  padding: 0.25em 0.5em;
+  font-size: 0.8em;
+}
 #recommendations .recoVideoDiv .videoInfos {
   text-overflow: ellipsis;
   overflow: hidden;

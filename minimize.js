@@ -9,6 +9,7 @@ var uglifyJS = require("uglify-js");
 var uglifycss = require('uglifycss');
 var ncp = require('ncp').ncp;
 const _path = require('path');
+const { execSync } = require('child_process');
 ncp.limit = 16;
 
 var minifyHtml = require('html-minifier').minify;
@@ -100,6 +101,21 @@ var _meta = {
 		turl : "test.pocketnet.app",
 		name : 'Bastyon'
 	},
+}
+
+/**
+ * If no commit SHA provided, trying
+ * to get it using git command
+ */
+if (!args.sha) {
+	try {
+		args.sha = execSync('git rev-parse HEAD', {
+			encoding: "utf8",
+			windowsHide: true,
+		}).trim();
+	} catch (e) {
+		console.log('It is not a git project, omitting commit SHA');
+	}
 }
 
 var vars = {

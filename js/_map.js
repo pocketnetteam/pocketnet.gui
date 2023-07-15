@@ -123,6 +123,8 @@ __map =  {
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true},
+		{path : "js/widgets.js", babelify : true}
+
 		
 	],
 
@@ -190,6 +192,7 @@ __map =  {
 		{ c : 'author', n : 'preshell'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
+		{ c : 'updatenotifier', n : 'index' },
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
@@ -1141,6 +1144,14 @@ __map =  {
 	commentBanner : {
 		uri : "commentBanner",
 		href : "commentBanner",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	},
+
+	updatenotifier : {
+		uri : "updatenotifier",
+		href : "updatenotifier",
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
