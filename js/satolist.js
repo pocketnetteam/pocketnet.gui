@@ -10755,15 +10755,19 @@ Platform = function (app, listofnodes) {
 
                             var address = p.item;
 
-                            self.sdk.node.transactions.get.unspent(function (u) {
 
+                            self.app.api.rpc('txunspent', [[address], 1, 9999999]).then(u => {
                                 if (!u.length) {
                                     finded = address;
                                 }
 
                                 p.success()
+                            }).catch(() => {
+                                finded = address;
 
-                            }, address)
+                                p.success()
+                            })
+                         
                         },
 
                         all: {

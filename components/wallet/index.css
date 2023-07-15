@@ -994,6 +994,12 @@
 .walletwindow #wallet .slide {
   margin-top: 1em;
   padding-top: 1em;
+  /*._stepclose{
+				display: none;
+			}*/
+  /*._stepback{
+				display: none;
+			}*/
 }
 .walletwindow #wallet .slide .subcaptionWrapperTable {
   width: auto;
@@ -1067,12 +1073,6 @@
 }
 .walletwindow #wallet .slide .linksubcaption.res {
   color: rgb(var(--color-txt-gray));
-}
-.walletwindow #wallet .slide ._stepclose {
-  display: none;
-}
-.walletwindow #wallet .slide ._stepback {
-  display: none;
 }
 .walletwindow #wallet .slide ._subcaptionlevel {
   padding-left: 0.5em;

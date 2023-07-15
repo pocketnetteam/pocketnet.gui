@@ -107,16 +107,21 @@ var wallet = (function(){
 					defaultValueTemplate : function(d, f, g, firstdef){
 						if(_.isObject(d)){
 
+							var img = d.image ? d.image.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet') : null
+
 							var h = ''
 
 								h+='<div class="table walletuservalue" firstdef="'+firstdef+'">'
 
 								h+='<div class="iconcell">'
-								h+='<img src="'+d.image+'">'
+
+								if(img)
+									h+='<img src="'+img+'">'
+
 								h+='</div>'
 
 								h+='<div class="namecell">'
-								h+=d.name
+								h+= d.name
 								h+='</div>'
 
 								h+='</div>'
@@ -655,6 +660,8 @@ var wallet = (function(){
 			showDepositInStep : function(action, step, name){
 				renders.step(function(el){
 					renders.deposit(function(_el){
+
+						console.log("?????")
 
 						actions[action](_el)
 
