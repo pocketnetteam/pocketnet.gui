@@ -906,8 +906,12 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['accSet'],
         load: function (address, update) {
 
+            console.log('accSet load')
+
             return loadone('accSet', address, (ids) => {
                 return api.rpc('getaccountsetting', [ids[0]]).then(d => {
+
+                    console.log("accSet HERE")
 
                     var setting = {}
 
@@ -918,9 +922,13 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
 
+                    console.log('accSet ini', setting)
+
                     return [{
                         key: ids[0],
-                        data: setting
+                        data: {
+                            d : setting
+                        }
                     }]
 
                 })
@@ -932,13 +940,53 @@ var pSDK = function ({ app, api, actions }) {
 
         },
 
+        applyAction: function (object, exp) {
+            
+            console.log('accset applyAction', object, exp)
+            if (!object) {
+
+                if (exp.actor == app.user.address.value) {
+                    return exp
+                }
+            }
+
+            if (object.address == exp.actor) {
+                object.pin = exp.pin
+                object.temp = exp.temp
+                object.relay = exp.relay
+                object.extended = true
+            }
+
+            return object
+        },
+
+
         transform: function ({ key, data }) {
+
+            console.log("accset transform", key, data)
+
             var setting = new pSettings();
                 setting._import(data)
                 setting.address = key
 
 
+            console.log('accset setting', setting)
+
+
             return setting
+        },
+
+        cleardb : function(address){
+            clearfromdb('accSet', [address])
+        },
+
+        listener: function (exp, address, status) {
+
+            if (status == 'completed') {
+
+                this.cleardb(address)
+
+            }
         },
 
         tempExtend: function (object, address) {
@@ -952,8 +1000,8 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (address) {
-
-            return this.tempExtend(storage.accSet[address] || null, address)
+            console.log('objects.accSet', objects.accSet)
+            return this.tempExtend(objects.accSet[address] || null, address)
         }
 
     }

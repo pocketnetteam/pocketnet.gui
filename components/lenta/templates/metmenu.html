@@ -159,7 +159,15 @@ if(share){
 
 		if (my){
 
-			if (share.pin){
+			var pinned = false
+
+			if(typeof authorsettings != 'undefined'){
+				if(authorsettings.pin == share.txid){
+					pinned = true
+				}
+			}
+
+			if (pinned){
 
 				m.push('unpin')
 

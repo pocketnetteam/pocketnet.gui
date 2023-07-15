@@ -990,6 +990,8 @@ var Action = function(account, object, priority, settings){
         else{
             if (exported.expObject){
 
+                console.log('exported', exported)
+
                 alias = new kits.c[exported.expObject.type]()
                 alias.import(exported.expObject)
     

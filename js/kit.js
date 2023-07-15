@@ -3393,7 +3393,16 @@ Settings = function(){
 		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
 	}
 
-	self.export = function(){
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				type : self.type,
+				d: JSON.stringify({
+					pin: self.pin.v || "",
+				})
+			} 
+		}
 
 		return {
 			d: JSON.stringify({
@@ -3403,19 +3412,24 @@ Settings = function(){
 
 	}
 
-	self.import = function(v = "{}"){
+	self.import = function(v = {}){
 
-		if(!_.isObject(v)){
+		if(!v.d) v.d = "{}"
+
+		var parsed = {}
+		
+		if(!_.isObject(v.d)){
 			try{
-				v = JSON.parse(v)
+				parsed = JSON.parse(v.d)
 			}catch(e){
-				v = {}
+				parsed = {}
 			}
 		}
+		else{
+			parsed = v.d
+		}
 
-		if(!v.d) v.d = {}
-
-		self.pin.set(v.d.pin || ""); 
+		self.pin.set(parsed.pin || ""); 
 
 	}
 
@@ -3427,6 +3441,13 @@ Settings = function(){
 
         return self.type;
 
+	}
+
+	self.alias = function(){
+		var settings = new pSettings();
+			settings.import(self.export(true))
+
+		return settings;
 	}
 
 	self.type = 'accSet'
@@ -3441,7 +3462,11 @@ pSettings = function(){
 	self.pin = '';
 	self.address = ''
 
-	self._import = function(v = {}){
+	self._import = function(dv = {}){
+
+		console.log("accset import", dv)
+
+		var v = dv.d
 
 		self.pin = (v || {}).pin || ""
 		self.address = (v || {}).address || ""
@@ -3458,11 +3483,28 @@ pSettings = function(){
 		return v
 	}
 
-	self.import = function(v){
+	self.import = function(v = {}){
 
-		v = JSON.parse(v)
+		
+		if(!v.d) v.d = "{}"
 
-		self._import(v)
+		var parsed = {}
+		
+		if(!_.isObject(v.d)){
+			try{
+				parsed = JSON.parse(v.d)
+			}catch(e){
+				parsed = {}
+			}
+		}
+		else{
+			parsed = v.d
+		}
+
+
+		self._import({
+			d : parsed
+		})
 	}
 
 	self.alias = function(){
@@ -3476,6 +3518,18 @@ pSettings = function(){
 
 		
 		return s;
+	}
+
+	self.clone = function(){
+		var ui = new pSettings()
+
+			ui._import(self.export())
+
+			ui.address = self.address
+
+		console.log("apply", self.export(), ui)
+
+		return ui
 	}
 
 	self.type = 'accSet'

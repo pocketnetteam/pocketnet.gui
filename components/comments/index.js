@@ -100,8 +100,6 @@ var comments = (function(){
 						p.class = "firstcomment"
 					}
 
-					console.log('_el.length', _el.length)
-
 					if((!showedall && !comment.parentid) || optype == 'commentEdit' || optype == 'commentDelete' || _el.length){
 
 						p.comments = [comment]
@@ -139,8 +137,6 @@ var comments = (function(){
 
 						}
 							
-						console.log("IM HERE")
-
 						load.level(comment.parentid, function(comments){
 
 							p.comments = comments
@@ -212,8 +208,6 @@ var comments = (function(){
 					sitemessage(self.app.localization.e('donateself'));
 			
 				} else {
-
-					console.log('storage', storage)
 
 					var prevdonatevalue = deep(storage, 'donate.0.amount') || 0
 
@@ -2406,10 +2400,6 @@ var comments = (function(){
 				var comments = p.comments
 				var sort = null
 
-
-				console.log("PID", pid)
-
-				
 				if(!preview || showedall)
 					sort = new sortParameter()
 
@@ -2468,8 +2458,6 @@ var comments = (function(){
 				
 				if(!preview && p.el)
 					p.el.addClass('listloading')
-
-				console.log("RENDEREING", comments, p)
 
 				self.sdk.comments.users(comments, function (i, e) {
 
@@ -2616,8 +2604,6 @@ var comments = (function(){
 
 					if (comment.postid == txid){
 
-						console.log('type, alias, status', type, alias, status)
-
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						
 					}
@@ -2653,8 +2639,6 @@ var comments = (function(){
 
 		var makeCurrentLevels = function(clbk){
 
-			console.log('makeCurrentLevels', currentstate)
-
 			var lvls = _.map(currentstate.levels, function(lv){
 				return lv.id
 			})
@@ -2666,8 +2650,6 @@ var comments = (function(){
 					action : function(p){
 
 						var id = p.item;
-
-						console.log("MAKE ID", id)
 
 						actions.replies(id, true, p.success, {
 							in : html

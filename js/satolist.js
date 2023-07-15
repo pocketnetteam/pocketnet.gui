@@ -423,7 +423,8 @@ Platform = function (app, listofnodes) {
         blocking: function(alias, status){},
         unblocking: function(alias, status){},
         userInfo: function(alias, status){},
-        contentDelete : function(alias, status){}
+        contentDelete : function(alias, status){},
+        accSet : function(){}
     }
 
     self.actionListeners = {}
@@ -5122,6 +5123,9 @@ Platform = function (app, listofnodes) {
             var d = {};
 
             d.share = share
+            d.authorsettings = self.psdk.accSet.get(address) || {}
+
+            console.log("D", d)
 
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
@@ -5221,6 +5225,8 @@ Platform = function (app, listofnodes) {
 
 
                             self.app.platform.sdk.user.accSet(ct, function(err, alias){
+
+                                console.log('err, alias', err, alias)
 
 
                                 if(!err){
@@ -8254,12 +8260,12 @@ Platform = function (app, listofnodes) {
                 
                     successCheck()
 
-                    if (clbk) clbk(alias)
+                    if (clbk) clbk(null, alias)
     
                 }).catch(e => {
 
                     if (clbk)
-                        clbk(null, e)
+                        clbk(e)
 
                 })
 
