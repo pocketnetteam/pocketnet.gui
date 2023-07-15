@@ -639,7 +639,7 @@ wnd = function (p) {
 
 				el: wnd.find(p.parallaxselector || '.wndinner'),
 				transformel: wnd.find('.wndinner'),
-				allowPageScroll: 'vertical',
+				allowPageScroll: 'auto',
 				directions: directions
 
 

@@ -51,7 +51,9 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
             <% _.each(bycategories.categories, function(category){ %>
 
                 <div class="category">
-                    <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                    <a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
+                        <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                    </a>
                 </div>
 
             <% }) %>
@@ -63,7 +65,9 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
                 %>
 
                 <div class="tag">
-                    <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                    <a elementsid="tagslink2" href="index?sst=<%-tag%>">
+                        <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                    </a>
                 </div>
 
             <% }) %>

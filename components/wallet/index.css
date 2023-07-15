@@ -992,7 +992,7 @@
   display: block;
 }
 .walletwindow #wallet .slide {
-  margin-top: 1em;
+  margin-top: 0;
   padding-top: 1em;
   /*._stepclose{
 				display: none;
@@ -1082,15 +1082,31 @@
   padding-top: 0;
   margin-top: 0;
 }
+.walletwindow #wallet .slide:nth-last-child(1) {
+  padding-bottom: 0;
+}
 .walletwindow #wallet .total {
   padding: 0;
   overflow: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.walletwindow #wallet .total::-webkit-scrollbar {
+  display: none!important;
+}
+.walletwindow #wallet .total .tttl {
+  display: flex;
+  align-items: center;
+  width: 300%;
 }
 .walletwindow #wallet .total .totalItem {
+  scroll-snap-align: center;
   padding: 0 1em;
   padding-bottom: 0.5em;
-  float: left;
-  width: 100%;
+  float: none;
+  width: 33%;
 }
 .walletwindow #wallet .total .totalItem .canvasWrapper {
   width: 100%;
@@ -1192,6 +1208,7 @@
 }
 .walletwindow #wallet .buypkoin {
   padding: 0.5em;
+  border-top: 0;
 }
 .walletwindow #wallet .buypkoin .ways {
   display: flex;

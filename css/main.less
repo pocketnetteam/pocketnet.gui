@@ -788,9 +788,21 @@ input[type="number"]
     background:  rgb(var(--background-hidden-layer));
     color: rgb(var(--text-color));
     border-radius: 6px;
-    padding: @rhythm;
+    padding: 0 @rhythm;
     border: 1px solid rgb(var(--neutral-grad-2));
+    
     // border-right: 0;
+}
+
+button{
+    padding : @rhythm;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"]{
+    min-height: 44px;
 }
 
 textarea{
@@ -5024,7 +5036,7 @@ html.mobileview.android{
         border-top-right-radius: 0;
 
         .vc_value{
-            padding :  0.5 * @rhythm @rhythm;
+            padding : 2 * @rhythm @rhythm;
             
             cursor: pointer;
 

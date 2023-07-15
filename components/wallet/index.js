@@ -43,6 +43,15 @@ var wallet = (function(){
 
 		addressesGroup = {
 
+			total : {
+				label : self.app.localization.e('tTotal'),
+				id : 'total',
+
+				addresses : function(){
+					return [self.app.user.address.value].concat(self.app.platform.sdk.addresses.storage.addresses || [])
+				}
+			},
+
 			pnetwallet : {
 				label : self.app.localization.e('tacaddress'),
 				alabel : self.app.localization.e('tacaddress'),
@@ -64,14 +73,7 @@ var wallet = (function(){
 				caption : self.app.localization.e('twalletaddresses')
 			},
 
-			total : {
-				label : self.app.localization.e('tTotal'),
-				id : 'total',
-
-				addresses : function(){
-					return [self.app.user.address.value].concat(self.app.platform.sdk.addresses.storage.addresses || [])
-				}
-			},
+			
 
 		}
 
@@ -2321,7 +2323,7 @@ var wallet = (function(){
 					el :   el.addresses,
 					data : {
 						addressesGroup : _addressesGroup,
-						total : account.actualBalance()
+						total : account.actualBalance().actual
 					},
 
 				}, function(_p){
