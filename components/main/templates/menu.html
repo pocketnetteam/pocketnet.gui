@@ -7,7 +7,7 @@
 
         <div class="panelitem nfl modes">
             <% _.each(modes, (mode) => { %>
-                <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" link="<%-mode.link%>"><%- mode.label() %></div>
+                <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" savesearch="<%-mode.savesearch%>" link="<%-mode.link%>"><%- mode.label() %></div>
             <% }) %>
         </div>
        

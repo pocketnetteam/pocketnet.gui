@@ -2293,6 +2293,7 @@ input[type=radio].radio:checked + label {
 #windowsContainer .rightchatspacer {
   margin-right: 0;
 }
+#windowsContainer .wnd:nth-last-child(2) .wndback,
 #windowsContainer .wnd:nth-last-child(1) .wndback {
   background: rgba(var(--color-shadow-base), 0.75);
   backdrop-filter: blur(14px);

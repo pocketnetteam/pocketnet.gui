@@ -906,8 +906,25 @@ Nav = function(app)
 			if(p.href){
 
 				p.completeHref || (p.completeHref = p.href)
-
 				p.href = p.href.split("?")[0];
+
+				if (p.saveparameters){
+
+					var currentParameters = parameters(),
+						hrefParameters = parameters(p.completeHref, true);
+					var filteredParameters = {}
+
+					_.each(p.saveparameters, (i) => {
+						if(currentParameters[i]) filteredParameters[i] = currentParameters[i]
+					})
+
+					currentParameters = _.extend(filteredParameters, hrefParameters);
+
+					console.log('currentParameters', currentParameters, p)
+
+					p.completeHref = p.href + collectParameters(currentParameters);
+
+				}
 
 				p.map = module.find(p.href);
 

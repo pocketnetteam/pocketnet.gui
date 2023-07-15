@@ -1349,6 +1349,9 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .comment {
     margin-bottom: 0.5em;
   }
+  #comments .list .comment:nth-last-child(1) {
+    margin-bottom: 0;
+  }
   #comments .list .metatable > div span {
     font-size: 1em;
   }

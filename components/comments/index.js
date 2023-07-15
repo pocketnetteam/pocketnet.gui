@@ -791,12 +791,16 @@ var comments = (function(){
 			},
 			fastreply : function(reply){
 
+				console.log('fastreply', reply)
+
 				if(reply){
 					actions.replies(reply.parentid || reply.answerid, true, function(){
 
-						if(!reply.noaction)
+						console.log('here')
 
+						if(!reply.noaction){
 							actions.reply(reply.parentid || reply.answerid, reply.answerid)
+						}
 
 						else
 						{
@@ -824,6 +828,8 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + id);
 					var answer = _el.find('.answer');
+
+					console.log("REPLY _EL", _el)
 				
 					renders.post(function(area, el){
 
@@ -925,6 +931,9 @@ var comments = (function(){
 							if(!comments.length){
 								c.removeClass('showedreplies')
 								delete currentstate.levels[id]
+
+								if (clbk)
+									clbk()
 							}
 							else{
 
@@ -968,7 +977,8 @@ var comments = (function(){
 						p.el.html('')
 					})
 
-					
+					if (clbk)
+						clbk()
 
 					
 				}
@@ -2725,6 +2735,7 @@ var comments = (function(){
 
 					renders.post(function(area){
 						
+						console.log('ed', ed)
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)

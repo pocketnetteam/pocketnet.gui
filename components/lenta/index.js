@@ -2557,26 +2557,26 @@ var lenta = (function(){
 							return
 						}
 
-						if (value == 5){
-							setTimeout(function(){
-								if(!el.share[id]) return
-
-								//initedcommentes[id].showBanner(initedcommentes[id]);
-								
-
-								self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
-									if (initedcommentes[id]){
-										initedcommentes[id].attention(self.app.localization.e('starssendcomments'))
-									}
-								})
-							}, 300)
-						}
+						
 
 						p.attr('value', value)
 						p.addClass('liked')
 
 						actions.like(s, value, function(r){
-							
+							if(r){
+								if (value == 5){
+									if(!el.share[id]) return
+	
+									//initedcommentes[id].showBanner(initedcommentes[id]);
+									
+	
+									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
+										if (initedcommentes[id]){
+											initedcommentes[id].attention(self.app.localization.e('starssendcomments'))
+										}
+									})
+								}
+							}
 						})
 
 					})

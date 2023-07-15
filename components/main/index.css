@@ -20,6 +20,12 @@
 #main .menuwrapper[fmode="filters"] [fmode="filters"] {
   display: block;
 }
+#main .menuwrapper[fmode="search"] .mode {
+  display: none;
+}
+#main .menuwrapper[fmode="search"] .mode[savesearch="true"] {
+  display: block;
+}
 #main .menuwrapper .panelitems {
   height: 100%;
   padding-right: 0.5em;

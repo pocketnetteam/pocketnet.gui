@@ -33,7 +33,8 @@ var main = (function(){
 			{
 				link : 'index',
 				label : () => self.app.localization.e('e13136'),
-				value : 'index'
+				value : 'index',
+				savesearch : true
 			},
 
 			{
@@ -48,17 +49,20 @@ var main = (function(){
 			{
 				link : "index?video=1",
 				label : () => self.app.localization.e('video'),
-				value : 'video'
+				value : 'video',
+				savesearch : true
 			},
 			{
 				link : "index?read=1",
 				label : () => self.app.localization.e('longreads'),
-				value : 'read'
+				value : 'read',
+				savesearch : true
 			},
 			{
 				link : "index?audio=1",
 				label : () => self.app.localization.e('audio'),
-				value : 'audio'
+				value : 'audio',
+				savesearch : true
 			},
 
 			{
@@ -344,7 +348,7 @@ var main = (function(){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					
+					console.log('rendermenu')
 
 					self.shell({
 
@@ -356,7 +360,9 @@ var main = (function(){
 							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
-							value, modes
+							value, modes,
+
+							searchenabled : searchvalue || searchtags
 						},
 
 					}, function(_p){
@@ -370,20 +376,26 @@ var main = (function(){
 
 						el.menu.find('.mode').on('click', function(){
 							var link = $(this).attr('link')
+							var savesearch = $(this).attr('savesearch')
 
 							self.nav.api.load({
 								open : true,
 								href : link,
 								history : true,
-								handler : true
+								handler : true,
+								saveparameters : savesearch ? ['sst', 'st'] : null
 							})
 						})
 
 						el.menu.find('.selectwrapper').on('click', function(){
 
 							var items = []
+							var searchenabled = searchvalue || searchtags
 
 							_.each(modes, function(a){
+
+								if(searchenabled && !a.savesearch) return
+
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
@@ -394,7 +406,8 @@ var main = (function(){
 											href : a.link,
 											history : true,
 											handler : true,
-											replace : true
+											replace : true,
+											saveparameters : a.savesearch ? ['sst', 'st'] : null
 										})
 
 										d.destroy()

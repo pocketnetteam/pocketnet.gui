@@ -737,7 +737,7 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
     display: none;
   }
   html.allcontent #author .bgCaption {
-    padding-top: 52px;
+    padding-top: 36px;
   }
   #author {
     /*.bgCaption .cwrapper>div {

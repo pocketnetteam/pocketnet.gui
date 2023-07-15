@@ -35,6 +35,16 @@
 			}
 		}
 
+		&[fmode="search"]{
+			.mode{
+				display: none;
+
+				&[savesearch="true"]{
+					display: block;
+				}
+			}
+		}
+
 		.panelitems{
 			height: 100%;
 			padding-right: @rhythm;
