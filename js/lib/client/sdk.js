@@ -1824,6 +1824,10 @@ var pSDK = function ({ app, api, actions }) {
             if (object) {
                 if (object.address == exp.actor) { 
                     
+                    object.removeRelation({
+                        adddress: exp.address.v,
+                    })
+
                     /// for me
                     object.addRelation({
                         adddress: exp.address.v
@@ -1831,6 +1835,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
+                    console.log("HERE", object,  exp)
                     object.addRelation(exp.address.v, 'subscribers')
                 }
             }
@@ -1868,6 +1873,11 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object) {
                 if (object.address == exp.actor) { /// for me
+
+                    object.removeRelation({
+                        adddress: exp.address.v,
+                    })
+
                     object.addRelation({
                         adddress: exp.address.v,
                         private: true
@@ -1875,6 +1885,9 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
+
+                    console.log("HERE", object,  exp)
+                    
                     object.addRelation(exp.address.v, 'subscribers')
                 }
             }
