@@ -1244,6 +1244,11 @@
         .blockCell{
             text-align: center;
             width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
             .label{
                 margin-bottom : 3 * @rhythm;
@@ -1253,6 +1258,10 @@
                 width : 180px;
                 border-radius: 30px;
                 font-size: 0.8em;
+            }
+
+            .showblockedpost{
+                margin-top: 2 * @rhythm;
             }
         }
 

@@ -1437,6 +1437,7 @@ _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a us
 _l.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
 
 _l.showhiddenComment = "Show"
+_l.showhiddenPost = "Show post"
 
 _l.visibletoeveryone = 'Visible for everyone'
 _l.visibleonlytosubscribers = 'Visible only for subscribers'

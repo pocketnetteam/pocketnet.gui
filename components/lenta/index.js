@@ -2785,6 +2785,11 @@ var lenta = (function(){
 
 			},
 
+			showblockedpost : function(){
+				console.log('showblockedpost')
+				$(this).closest('.blockAuthor').remove()
+			},
+
 			donate : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -4324,16 +4329,20 @@ var lenta = (function(){
 
 								var me = self.psdk.userInfo.getmy()
 
-								shares = _.filter(shares, function(share){
+								if(!essenseData.allowblocked){
+									shares = _.filter(shares, function(share){
 
-									if(!me) return true 
+										if(!me) return true 
+	
+										var r = me.relation(share.address, 'blocking') 
+	
+										if (r) return false
+	
+										return true
+									})
+								}
 
-									var r = me.relation(share.address, 'blocking') 
-
-									if (r) return false
-
-									return true
-								})
+								
 							}
 
 
@@ -4694,6 +4703,7 @@ var lenta = (function(){
 			el.c.on('click', '.panel .pkoin', events.pkoin)
 			el.c.on('click', '.panel .boost', events.boost)
 			el.c.on('click', '.unblockbutton', events.unblock)
+			el.c.on('click', '.showblockedpost', events.showblockedpost)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)

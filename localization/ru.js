@@ -1220,6 +1220,7 @@ _l.blockedbymeHiddenCommentLabel = "Комментарий скрыт из-за 
 _l.hiddenCommentsLabel = "Комментарий скрыт из-за низких оценок комментариев автора"
 
 _l.showhiddenComment = "Показать"
+_l.showhiddenPost = "Показать публикацию"
 
 
 _l.visibletoeveryone = 'Видно всем'

@@ -2718,6 +2718,9 @@ Platform = function (app, listofnodes) {
             if(!_.isArray(ids)) ids = [ids]
 
 
+            console.log("PAPI linta", ids, p)
+
+
             app.nav.api.load({
 
                 open : true,
@@ -2735,7 +2738,8 @@ Platform = function (app, listofnodes) {
                     openapi : p.openapi,
                     renderclbk : p.renderclbk,
                     ready : p.ready,
-                    second : true
+                    second : true,
+                    allowblocked : true
                 },
 
                 clbk : clbk
@@ -4897,35 +4901,7 @@ Platform = function (app, listofnodes) {
 
 				})
 
-                return
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    blocking,
-
-                    function (tx, error) {
-
-
-                        if (tx) {
-                            var me = self.psdk.userInfo.getmy() 
-                            
-                            //deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            if (me) me.addRelation(address, 'blocking')
-
-                            var clbks = deep(self.clbks, 'api.actions.blocking') || {}
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
+                
             },
 
             unblocking: function (address, clbk) {
@@ -5480,6 +5456,20 @@ Platform = function (app, listofnodes) {
                             close()
 
                         })
+
+                        el.find('.unblock').on('click', function () {
+                            self.app.mobile.vibration.small()
+                            self.api.actions.unblocking(address, function (tx, error) {
+                                if (!tx) {
+                                    self.errorHandler(error, true)
+                                }
+                            })
+
+                            close()
+
+                        })
+
+                        
 
                         el.find('.edit').on('click', function () {
 

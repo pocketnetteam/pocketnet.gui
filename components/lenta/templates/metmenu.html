@@ -90,6 +90,12 @@ var all = {
 		class : 'block'
 	},
 
+	unblock : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : e('unblock'),
+		class : 'unblock'
+	},
+
 	startchat : {
 		icon : '<i class="far fa-comment"></i>',
 		text : e('startchat'),
@@ -215,7 +221,14 @@ if(share){
 				m.unshift('complain')
 			}
 
-			m.unshift('block')
+
+			if (me.relation(share.address, 'blocking')){
+				m.unshift('unblock')
+			}
+			else
+			{
+				m.unshift('block')
+			}
 
 		}
 	}
