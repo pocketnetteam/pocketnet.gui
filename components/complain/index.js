@@ -63,6 +63,8 @@ var complain = (function () {
 
 			complain: function (clbk) {
 				self.app.platform.sdk.ustate.me(function (mestate) {
+
+
 					if (ess == 'post') {
 
 						if ((typeof mestate != 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))) {

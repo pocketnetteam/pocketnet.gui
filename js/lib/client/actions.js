@@ -2383,6 +2383,11 @@ var Actions = function(app, api, storage = localStorage){
             return action.processingWithIteractions(true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
+
+                if (p.rejectIfError){
+                    action.rejected = 'cantsendnow'
+                    return Promise.reject(e)
+                }
                 
                 if (action.rejected){
                     return Promise.reject(e)

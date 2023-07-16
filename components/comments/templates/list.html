@@ -149,7 +149,7 @@ var commentf = function(comment){
 							<% } %>
 
 
-							<% if(comment.message && !comment.deleted && !lockedaccount && !blockedbyme) {
+							<% if(comment.message && !comment.deleted && !lockedaccount) {
 
 								var l = findAndReplaceLink(comment.message, true)
 

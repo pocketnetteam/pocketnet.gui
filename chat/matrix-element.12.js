@@ -2011,7 +2011,9 @@ var CancelablePromise = __webpack_require__("0bb9");
         send: !this.streamMode,
         share: !this.streamMode
       }).then(transaction => {
-        this.donate = transaction;
+        if (this.streamMode) {
+          this.donate = transaction;
+        }
       });
     },
     removetransaction: function () {

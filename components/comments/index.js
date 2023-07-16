@@ -1467,6 +1467,9 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 
 				parent.removeClass('hiddenComment')
+				parent.removeClass('hiddenBlockedUserComment')
+				
+				
 			},
 
 			showBlockedUserComment: function(){
@@ -1634,7 +1637,8 @@ var comments = (function(){
 								}
 
                             })
-								close()
+
+							close()
 
 							
 						})
@@ -3055,8 +3059,8 @@ var comments = (function(){
 				el.list.on('click', '.panel', events.metmenu);
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
-				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
-				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
+				el.list.on('click', '.hiddenCommentLabel button', events.showHiddenComment)
+				//el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {

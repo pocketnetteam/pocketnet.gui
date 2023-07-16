@@ -36,8 +36,9 @@ var donate = (function(){
 				var transaction = actions.getTransaction(amount, ed.receiver)
 
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
-					calculatedFee : 0
-				}).then((txdata) => {
+					calculatedFee : 0,
+					rejectIfError : true
+				}).then((action) => {
 
 					setTimeout(() => {
 
@@ -45,7 +46,7 @@ var donate = (function(){
 		
 						successCheck()
 		
-						if(clbk) clbk(txdata)
+						if(clbk) clbk(action, action.transaction)
 
 					}, 300)
 
@@ -105,10 +106,10 @@ var donate = (function(){
 
 					
 						if (ed.send){
-							actions.send(val, (txid) => {
+							actions.send(val, (action, txid) => {
 		
 								if (ed.clbk){
-									ed.clbk(val, txid)
+									ed.clbk(val, action, txid)
 								}
 		
 								self.closeContainer()

@@ -1313,6 +1313,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "408" : {
+            message: function () {
+                return self.app.localization.e('error408')
+            }
+        },
+
         ///// NODE
         "66": {
             message: function () {
@@ -4003,7 +4009,9 @@ Platform = function (app, listofnodes) {
                                 send : true,
                                 value : 1,
                                 min : 0.5,
-                                clbk  : function(value, txid){
+                                clbk  : function(value, action, txid){
+
+                                    console.log('value, txid', value, txid)
 
                                     if (p.roomid && txid){
                                         self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
