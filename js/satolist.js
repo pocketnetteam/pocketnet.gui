@@ -314,6 +314,18 @@ Platform = function (app, listofnodes) {
         'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
         'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
         'PXYhCbTwPaUHrP6spJM5NY84TBpLQJtZi5': true,
+        'PGPhDGiUY6p78aRFAuPNK621jt21LEg1P8': true,
+        'PRFJ8aSwj2xD9t3b4Fxk87hihn5CJXQshp': true,
+        'PD7K7Q9S8ruYQ4MRjufwuMF1oMFS2MnJ2L': true,
+        'PBcY2VspKfH74aB7SfZbEXd2ZK5Hke2evZ': true,
+        'PC5vmVN43qcxWgsmWnCxZK2ARf8uTSyGmX': true,
+        'PAwRaCFVQojmJbZoXVikc2DjRHUPCPxya7': true,
+        'P9urQoouv7PjfbLdsjU2WNd5a3ARcqmoWq': true,
+        'PFaeJhU5V4Jvww6Uu7sXshveTJK9E5Ba1y': true,
+        'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
+        'PQDfbq9MetJYpVkTRzRmDcLgm5ZkDnDEwt': true,
+        'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
+        'PSs2u1WfWjmbUW6hF3sj3unHya4Ke4rF9Z': true,
     }
 
     self.bch = {
@@ -562,6 +574,10 @@ Platform = function (app, listofnodes) {
 
 
     self.__applications = function(){
+        const ghAppLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest';
+        const ghCoreLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest';
+        const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
+
         return {
 
             ui: {
@@ -577,8 +593,8 @@ Platform = function (app, listofnodes) {
                     github: {
                         name: 'Bastyon' + ".apk",
                         gfname: 'BastyonGF' + ".apk",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
 
                     icon: '<i class="fab fa-android"></i>',
@@ -623,8 +639,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: 'Bastyon' + "Setup.exe",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
                     image : 'applications_windows.png',
 
@@ -645,8 +661,8 @@ Platform = function (app, listofnodes) {
                     image : 'applications_macos.png',
                     github: {
                         name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
                 },
 
@@ -664,8 +680,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                        url: ghAppLatest,
+                        page: readmeDownloadsLink,
                     },
 
                     node : true
@@ -685,8 +701,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: "pocketnetcore_0.18.13_win_x64_setup.exe",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        url: ghCoreLatest,
+                        page: readmeDownloadsLink,
                     }
                 },
 
@@ -703,8 +719,8 @@ Platform = function (app, listofnodes) {
 
                     github: {
                         name: "Pocketnet_linux_x64.AppImage",
-                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                        url: ghCoreLatest,
+                        page: readmeDownloadsLink,
                     }
                 }
             }
@@ -24803,6 +24819,7 @@ Platform = function (app, listofnodes) {
                             aspectRatio : linkInfo.aspectRatio || 1,
                             isLive : linkInfo.isLive,
 
+                            isCorrect : linkInfo.uuid ? true : false,
                             original : linkInfo
                         } : '';
 

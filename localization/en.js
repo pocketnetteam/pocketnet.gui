@@ -2611,5 +2611,16 @@ _l.howToBuy = "How to buy PKOIN";
 _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
 
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Update';
+_l.updateNotifier_topHeading2 = 'Available';
+_l.updateNotifier_mainHeading = 'We have update';
+_l.updateNotifier_mainText = 'We recommend to keep the application updated. New features and better performance are waiting you!';
+_l.updateNotifier_button1 = 'Install now';
+_l.updateNotifier_button2 = 'Maybe later...';
+_l.updateNotifier_stateStart = 'Starting...';
+_l.updateNotifier_stateDownload = 'Downloaded';
+_l.updateNotifier_stateError = 'Error occurred, stopping';
+/** ↑ Component UpdateNotifier ↑ */
 
-_l.watchstream = "Watch stream"
+_l.watchstream = "Watch stream";

@@ -1066,3 +1066,15 @@ _l.torusing_stat_totalTorBytes = "总计，TOR电话"
 _l.torusing_settings = "TOR设置"
 _l.torusing_stats = "查询统计"
 _l.torusing_proxychangequestion = "你确定你要改变代理服务器吗？"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '更新';
+_l.updateNotifier_topHeading2 = '可用';
+_l.updateNotifier_mainHeading = '我们有一个更新';
+_l.updateNotifier_mainText = '我们建议保持应用程序的更新。新的功能和更好的性能正在等待你！';
+_l.updateNotifier_button1 = '安装';
+_l.updateNotifier_button2 = '稍后...';
+_l.updateNotifier_stateStart = '开始...';
+_l.updateNotifier_stateDownload = '已下载';
+_l.updateNotifier_stateError = '发生错误';
+/** ↑ Component UpdateNotifier ↑ */

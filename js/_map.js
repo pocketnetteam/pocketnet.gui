@@ -179,6 +179,7 @@ __map =  {
 		{ c : 'author', n : 'preshell'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
+		{ c : 'updatenotifier', n : 'index' },
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
@@ -1135,6 +1136,14 @@ __map =  {
 	commentBanner : {
 		uri : "commentBanner",
 		href : "commentBanner",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	},
+
+	updatenotifier : {
+		uri : "updatenotifier",
+		href : "updatenotifier",
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
