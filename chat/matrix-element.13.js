@@ -722,7 +722,6 @@ var contacts_preview = __webpack_require__("92a6");
       immediate: true,
       handler: function () {
         this.loadNewUsers();
-        console.log('?????');
         if (!this.share) this.initSearchProcess();
       }
     }
@@ -998,8 +997,8 @@ var functions = __webpack_require__("3139");
 
       /*_.each(chats, (chat) => {
       	var chatevents = state.events[chat.roomId] || {}
-      			console.log('chatevents', chatevents)
-      			this.getEventsAndDecrypt(this.core.mtrx.client.getRoom(chat.roomId), chatevents.timeline)
+      
+      	this.getEventsAndDecrypt(this.core.mtrx.client.getRoom(chat.roomId), chatevents.timeline)
       })*/
 
       return chats;
@@ -1019,11 +1018,9 @@ var functions = __webpack_require__("3139");
   }),
   methods: {
     getEventsAndDecrypt(chat, events) {
-      console.log('chat', chat);
       return this.core.mtrx.kit.prepareChat(chat).then(() => {
         return Promise.all(_.map(events, _e => {
           var e = _e.get();
-          console.log("E", e);
           if (e.decrypted) return Promise.resolve();
           if (functions["a" /* default */].deep(e, "event.content.msgtype") !== "m.encrypted") return Promise.resolve();
           return chat.pcrypto.decryptEvent(e).then(d => {

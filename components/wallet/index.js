@@ -663,8 +663,6 @@ var wallet = (function(){
 				renders.step(function(el){
 					renders.deposit(function(_el){
 
-						console.log("?????")
-
 						actions[action](_el)
 
 						renders.stepB(_el, name)

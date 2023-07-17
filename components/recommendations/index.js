@@ -230,7 +230,6 @@ var recommendations = (function(){
 			load.contents(loader, function(recommendations){
 				renders.list(recommendations, function(_p){
 					load.info(recommendations, function(){
-						console.log('renders.lazyinfo')
 						renders.lazyinfo(recommendations, _p)
 					})
 

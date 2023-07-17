@@ -2755,10 +2755,6 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
-
-            console.log("PAPI linta", ids, p)
-
-
             app.nav.api.load({
 
                 open : true,
@@ -4011,7 +4007,6 @@ Platform = function (app, listofnodes) {
                                 min : 0.5,
                                 clbk  : function(value, action, txid){
 
-                                    console.log('value, txid', value, txid)
 
                                     if ((p.share ?? true) && p.roomid && txid){
                                         self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
@@ -5165,7 +5160,6 @@ Platform = function (app, listofnodes) {
             d.share = share
             d.authorsettings = self.psdk.accSet.get(address) || {}
 
-            console.log("D", d)
 
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
@@ -5265,9 +5259,6 @@ Platform = function (app, listofnodes) {
 
 
                             self.app.platform.sdk.user.accSet(ct, function(err, alias){
-
-                                console.log('err, alias', err, alias)
-
 
                                 if(!err){
 
@@ -8707,26 +8698,15 @@ Platform = function (app, listofnodes) {
 
             deleteaccount : function(progress){
 
-                console.log('deleteaccount')
-
                 if(!progress) progress = () => {}
 
                 var prepare = function(){
 
-                    console.log('prepare12')
-
                     return new Promise((resolve, reject) => {
-
-                        console.log('prepare2')
 
                         self.sdk.ustate.me((info) => {
 
-                            console.log("INFOCLBK")
-
                             var address = self.app.user.address.value
-
-
-                            console.log('info', info, address)
     
                             if(!info || _.isEmpty(info)){
                                 return reject('notprepared')
@@ -8984,8 +8964,6 @@ Platform = function (app, listofnodes) {
                     if (state){
                         self.sdk.ustate.get(app.user.address.value, (r) => {
 
-                            console.log("USTATE ME CLBK")
-
                             if (clbk) 
                                 clbk(r[app.user.address.value] || {})
 
@@ -9004,8 +8982,6 @@ Platform = function (app, listofnodes) {
 
                 return self.psdk.userState.load(addresses, update).then(r => {
                     
-                    console.log('userState.load clbk', addresses)
-
                     if (clbk) clbk(r)
                 }).catch((e) => {
                     if (clbk) clbk({})
@@ -16920,6 +16896,8 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
+                console.log('lmap', lmap)
+
                 lmap = _.filter(lmap, function(l){
 
                     if(!l.meta.type) return false
@@ -16932,7 +16910,7 @@ Platform = function (app, listofnodes) {
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
-                    return l.meta.subType || l.meta.type;
+                    return /*l.meta.subType || */l.meta.type;
                 })
 
 
@@ -18368,7 +18346,7 @@ Platform = function (app, listofnodes) {
                 electronSettings : {
                     size : 'medium'
                 },
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     message.el.find('.commentprev').on('click', function () {
 
@@ -18379,6 +18357,8 @@ Platform = function (app, listofnodes) {
                             history: true,
                             clbk: function (d, p) {
                                 app.nav.wnds['post'] = p
+
+                                if(close) close()
                             },
 
                             essenseData: {
@@ -18579,7 +18559,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
@@ -18591,6 +18571,8 @@ Platform = function (app, listofnodes) {
                                 history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
+
+                                    if(close) close()
                                 },
 
                                 essenseData: {
@@ -18697,7 +18679,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
@@ -18709,6 +18691,8 @@ Platform = function (app, listofnodes) {
                                 history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
+
+                                    if(close) close()
                                 },
 
                                 essenseData: {
@@ -18804,7 +18788,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
@@ -18816,6 +18800,8 @@ Platform = function (app, listofnodes) {
                                 history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
+
+                                    if(close) close()
                                 },
 
                                 essenseData: {
@@ -19321,7 +19307,7 @@ Platform = function (app, listofnodes) {
                 electronSettings : {
                     size : 'medium'
                 },
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     message.el.find('.commentprev').on('click', function () {
 
@@ -19333,6 +19319,8 @@ Platform = function (app, listofnodes) {
                                 history: true,
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
+
+                                    if(close) close()
                                 },
 
                                 essenseData: {
@@ -19695,7 +19683,7 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                fastMessageEvents: function (data, message) {
+                fastMessageEvents: function (data, message, close) {
 
                     if (data.mesType == 'subscribe' && data.user) {
 
@@ -19733,6 +19721,8 @@ Platform = function (app, listofnodes) {
                                     history: true,
                                     clbk: function (d, p) {
                                         app.nav.wnds['post'] = p
+
+                                        if(close) close()
                                     },
 
                                     essenseData: {

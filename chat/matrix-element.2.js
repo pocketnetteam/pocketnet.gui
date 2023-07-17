@@ -701,7 +701,6 @@ var functions = __webpack_require__("3139");
         pos = Math.max(0, Math.min(pos, dest || target.scrollHeight - frame.clientHeight)); // limit scrolling
 
         if (!moving) update();
-        console.log(delta, pos);
       };
       function normalizeWheelDelta(e) {
         if (e.detail) {
@@ -1021,7 +1020,6 @@ var component = Object(componentNormalizer["a" /* default */])(
           if (rt) {
             var last = rt.getLastReplacement();
             if (last) {
-              console.log("last", last);
               e.event.content.body = last.event.content.body;
               e.event.content.edited = last.event.event_id;
               e.event.content.block = last.event.content.block;

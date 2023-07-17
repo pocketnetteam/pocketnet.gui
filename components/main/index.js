@@ -348,7 +348,6 @@ var main = (function(){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					console.log('rendermenu')
 
 					self.shell({
 

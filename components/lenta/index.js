@@ -2800,7 +2800,6 @@ var lenta = (function(){
 			},
 
 			showblockedpost : function(){
-				console.log('showblockedpost')
 				$(this).closest('.blockAuthor').remove()
 			},
 
@@ -4435,8 +4434,6 @@ var lenta = (function(){
 
 								authorsettings = self.psdk.accSet.get(author)
 
-								console.log('accset authorsettings', authorsettings)
-
 								getPin(authorsettings)
 							})
 
@@ -4892,9 +4889,6 @@ var lenta = (function(){
 
 
 					self.app.platform.actionListeners[mid] = function({type, alias, status}){
-
-						console.log('type, alias, status', type, alias, status)
-
 
 						if(type == 'upvoteShare'){
 

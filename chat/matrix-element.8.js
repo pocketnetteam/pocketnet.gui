@@ -1986,7 +1986,6 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
       this.m_chat.pcrypto.userschanded();
     },
     getuserinfo: function () {
-      console.log('userinfo', this.u);
       if (this.u) {
         this.core.user.usersInfo(this.u).then(info => {
           this.usersinfo = info;

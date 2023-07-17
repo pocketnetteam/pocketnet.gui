@@ -2,8 +2,6 @@
 
     <% 
     
-    console.log('contents', contents)
-    
     
     if(contents && contents.length > 0) {
         _.each(contents, function(content) {
@@ -12,7 +10,6 @@
             var userinfo = psdk.userInfo.getShortForm(content.address) 
             var h = app.platform.sdk.videos.historyget(content.txid)
 
-            console.log('video', video)
 
             %>
             <div class="recoVideoDiv">

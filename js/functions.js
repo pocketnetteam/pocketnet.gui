@@ -1826,7 +1826,6 @@ bgImagesCl = function (el, p) {
 
 
 			image.onerror = (e) => {
-				console.log('src', src)
 				console.error(e)
 
 				window.requestAnimationFrame(() => {

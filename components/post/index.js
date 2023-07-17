@@ -1722,7 +1722,6 @@ var post = (function () {
 								.then((chat) => {
 									share.chat = chat;
 									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
-									console.log('stream', chat, share)
 									
 									/* Add donate animations */
 									/*self.app.nav.api.load({

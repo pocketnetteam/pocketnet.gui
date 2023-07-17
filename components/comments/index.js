@@ -796,12 +796,8 @@ var comments = (function(){
 			},
 			fastreply : function(reply){
 
-				console.log('fastreply', reply)
-
 				if(reply){
 					actions.replies(reply.parentid || reply.answerid, true, function(){
-
-						console.log('here')
 
 						if(!reply.noaction){
 							actions.reply(reply.parentid || reply.answerid, reply.answerid)
@@ -833,8 +829,6 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + id);
 					var answer = _el.find('.answer');
-
-					console.log("REPLY _EL", _el)
 				
 					renders.post(function(area, el){
 
@@ -2606,7 +2600,6 @@ var comments = (function(){
 				`);
 
 				el.c.find('.streamLink button').click(function() {
-					console.log('url', `index?video=1&v=${ post.txid }`)
 					self.nav.api.go({
 						href : `index?video=1&v=${ post.txid }`,
 						history : true,
@@ -2767,8 +2760,6 @@ var comments = (function(){
 					})
 
 					renders.post(function(area){
-						
-						console.log('ed', ed)
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)

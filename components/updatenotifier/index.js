@@ -71,7 +71,6 @@ let updatenotifier = (function(){
         }
 
         let initEvents = function(){
-            console.log('upd events');
 
             el.c.on('click', '.install-now', events.onInstallClick);
             el.c.on('click', '.install-later', events.onLaterClick);

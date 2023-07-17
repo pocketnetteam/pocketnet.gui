@@ -920,8 +920,6 @@ Nav = function(app)
 
 					currentParameters = _.extend(filteredParameters, hrefParameters);
 
-					console.log('currentParameters', currentParameters, p)
-
 					p.completeHref = p.href + collectParameters(currentParameters);
 
 				}

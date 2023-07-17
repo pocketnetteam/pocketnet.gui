@@ -208,6 +208,8 @@ var notifications = (function(){
 
 							e.fastMessageEvents(n, {
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
+							}, function(){
+								self.closeContainer()
 							})
 						}
 					})

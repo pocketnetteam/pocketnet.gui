@@ -23,8 +23,6 @@ var telements = function(address){ %>
 				
 				var r = me.relation(address, 'subscribes') 
 
-				console.log('rrrr', r)
-				
 			%>
 
 				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>

@@ -906,12 +906,8 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['accSet'],
         load: function (address, update) {
 
-            console.log('accSet load')
-
             return loadone('accSet', address, (ids) => {
                 return api.rpc('getaccountsetting', [ids[0]]).then(d => {
-
-                    console.log("accSet HERE")
 
                     var setting = {}
 
@@ -921,8 +917,6 @@ var pSDK = function ({ app, api, actions }) {
                     catch (e) {
 
                     }
-
-                    console.log('accSet ini', setting)
 
                     return [{
                         key: ids[0],
@@ -942,7 +936,6 @@ var pSDK = function ({ app, api, actions }) {
 
         applyAction: function (object, exp) {
             
-            console.log('accset applyAction', object, exp)
             if (!object) {
 
                 if (exp.actor == app.user.address.value) {
@@ -963,14 +956,10 @@ var pSDK = function ({ app, api, actions }) {
 
         transform: function ({ key, data }) {
 
-            console.log("accset transform", key, data)
-
             var setting = new pSettings();
                 setting._import(data)
                 setting.address = key
 
-
-            console.log('accset setting', setting)
 
 
             return setting
@@ -1000,7 +989,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (address) {
-            console.log('objects.accSet', objects.accSet)
             return this.tempExtend(objects.accSet[address] || null, address)
         }
 
@@ -1835,7 +1823,6 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
-                    console.log("HERE", object,  exp)
                     object.addRelation(exp.address.v, 'subscribers')
                 }
             }
@@ -1905,8 +1892,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (object.address == exp.address.v) {
 
-                    console.log("HERE", object,  exp)
-                    
                     object.addRelation(exp.address.v, 'subscribers')
                 }
             }

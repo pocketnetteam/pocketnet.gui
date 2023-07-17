@@ -939,6 +939,40 @@ var share = (function(){
 
 								var alias = action.object
 
+
+								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
+									var unpostedVideos;
+
+									try {
+										unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+									} catch (error) {
+										unpostedVideos = {};
+
+										self.app.Logger.error({
+											err: 'DAMAGED_LOCAL_STORAGE',
+											code: 801,
+											payload: error,
+										  });
+									};
+
+									if (unpostedVideos[self.app.user.address.value]) {
+										unpostedVideos[self.app.user.address.value] =
+											unpostedVideos[self.app.user.address.value].filter(
+												(video) => video !== alias.url,
+											);
+
+											try {
+												localStorage.setItem(
+													'unpostedVideos',
+													JSON.stringify(unpostedVideos),
+												);
+											}
+											catch (e) { }
+
+										
+									}
+								}
+
 								if(!essenseData.notClear){
 									currentShare = new Share(self.app.localization.key, self.app)
 									
@@ -1004,159 +1038,6 @@ var share = (function(){
 					})
 
 					return
-
-					actions.checktranscoding(function(result){
-						if (currentShare.settings.c) {
-							console.log('stream', currentShare.settings.c);
-						}
-						
-						currentShare.uploadImages(self.app, function(){
-
-							self.sdk.node.transactions.create.commonFromUnspent(
-		
-								currentShare,
-		
-								function(_alias, error){
-
-
-		
-									el.c.removeClass('loading')
-		
-									if(!_alias){
-										
-		
-										if (clbk){
-											clbk(false, errors[error])
-										}
-										else{
-											el.postWrapper.addClass('showError');
-		
-											var t = self.app.platform.errorHandler(error, true);
-		
-											if (t) actions.errortext(t)
-		
-										}
-									}
-									else
-									{
-										//sitemessage("Success")
-		
-										try{
-
-											var alias = new pShare();
-												alias._import(_alias, true)
-
-
-
-												alias.temp = _alias.temp;
-												alias.relay = _alias.relay;
-												alias.checkSend = _alias.checkSend
-												alias.address = _alias.address
-		
-											if(currentShare.aliasid) alias.edit = "true"	
-											if(currentShare.time) alias.time = currentShare.time
-		
-											self.app.platform.sdk.node.shares.add(alias);
-
-											if (alias.itisvideo() || alias.itisaudio()) {
-												var unpostedVideos;
-
-												try {
-													unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
-												} catch (error) {
-													unpostedVideos = {};
-
-													self.app.Logger.error({
-														err: 'DAMAGED_LOCAL_STORAGE',
-														code: 801,
-														payload: error,
-													  });
-												};
-
-												if (unpostedVideos[self.app.user.address.value]) {
-													unpostedVideos[self.app.user.address.value] =
-														unpostedVideos[self.app.user.address.value].filter(
-															(video) => video !== alias.url,
-														);
-
-														try {
-															localStorage.setItem(
-																'unpostedVideos',
-																JSON.stringify(unpostedVideos),
-															);
-														}
-														catch (e) { }
-
-													
-												}
-											}
-
-											if(!essenseData.notClear){
-												currentShare = new Share(self.app.localization.key, self.app)
-												self.app.nav.api.history.removeParameters(['repost'])
-		
-												self.closeContainer()
-		
-												if(!essenseData.share){
-													state.save()
-												}
-		
-												make();	
-											}
-		
-										}
-		
-										catch (e){
-											console.log(e)
-										}
-		
-										/*self.app.platform.sdk.user.get(function(u){
-											u.postcnt++
-										})
-		
-										intro = false*/
-
-										if (essenseData.post){
-											essenseData.post(alias)
-										}
-										else{
-		
-											if(isMobile()){
-
-												self.app.nav.api.load({
-													open : true,
-													href : 'author?address=' + self.app.user.address.value,
-													history : true
-												})
-
-											}
-											else{
-												self.app.actions.scroll(0)
-											}
-		
-											
-		
-										}
-		
-										if (clbk)
-											clbk(true)
-		
-		
-										actions.unfocus();
-										
-										successCheck()
-										
-										
-									}
-		
-								},
-		
-								p
-							)
-		
-						})
-					})
-
 
 					
 				}
