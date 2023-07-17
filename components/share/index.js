@@ -901,103 +901,105 @@ var share = (function(){
 				var SAVE = function(){
 
 					currentShare.language.set(self.app.localization.key)
-					currentShare.uploadImages(self.app, function(){
+					actions.checktranscoding(function(result){
+						currentShare.uploadImages(self.app, function(){
 
-						if (currentShare.hasexchangetag()){
-							currentShare.repost.v = ''
-							currentShare.settings.f = '0'
-							currentShare.url.set()
-						}
-
-						if (currentShare.repost.v){
-							currentShare.settings.f = '0'
-						}
-
-						if (currentShare.checkloaded()){
-		
-							el.c.removeClass('loading')
-							sitemessage(self.app.platform.errorHandler('imageerror', true))
-							
-							return
-						}
-
-						self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
-
-							if (action.currentState == 'actions_checkFail'){
-
-								new dialog({
-									html: self.app.localization.e('info_actions_checkFail'),
-									btn1text: self.app.localization.e('ok'),
-									btn2text: "",
-									class: 'one zindex',
-									success: () => {
-									}
-								});
-								
+							if (currentShare.hasexchangetag()){
+								currentShare.repost.v = ''
+								currentShare.settings.f = '0'
+								currentShare.url.set()
 							}
 
-							var alias = action.object
+							if (currentShare.repost.v){
+								currentShare.settings.f = '0'
+							}
 
-							if(!essenseData.notClear){
-								currentShare = new Share(self.app.localization.key, self.app)
+							if (currentShare.checkloaded()){
+			
+								el.c.removeClass('loading')
+								sitemessage(self.app.platform.errorHandler('imageerror', true))
 								
-								
-								setTimeout(() => {
-									self.app.nav.api.history.removeParameters(['repost'])
-									self.closeContainer()
-								}, 100)
-								
+								return
+							}
 
-								if(!essenseData.share){
-									state.save()
+							self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
+
+								if (action.currentState == 'actions_checkFail'){
+
+									new dialog({
+										html: self.app.localization.e('info_actions_checkFail'),
+										btn1text: self.app.localization.e('ok'),
+										btn2text: "",
+										class: 'one zindex',
+										success: () => {
+										}
+									});
+									
 								}
 
-								make();	
-							}
-							
-							if (essenseData.post){
-								essenseData.post(alias)
-							}
-							else{
+								var alias = action.object
 
-								if(isMobile()){
+								if(!essenseData.notClear){
+									currentShare = new Share(self.app.localization.key, self.app)
+									
+									
+									setTimeout(() => {
+										self.app.nav.api.history.removeParameters(['repost'])
+										self.closeContainer()
+									}, 100)
+									
 
-									self.app.nav.api.load({
-										open : true,
-										href : 'author?address=' + self.app.user.address.value,
-										history : true
-									})
+									if(!essenseData.share){
+										state.save()
+									}
 
+									make();	
+								}
+								
+								if (essenseData.post){
+									essenseData.post(alias)
 								}
 								else{
-									self.app.actions.scroll(0)
+
+									if(isMobile()){
+
+										self.app.nav.api.load({
+											open : true,
+											href : 'author?address=' + self.app.user.address.value,
+											history : true
+										})
+
+									}
+									else{
+										self.app.actions.scroll(0)
+									}
+
 								}
 
-							}
 
-
-							actions.unfocus();
-							
-							successCheck()
-
-							if (clbk)
-								clbk(true)
+								actions.unfocus();
 								
-						}).catch(e => {
+								successCheck()
 
-							if (clbk){
-								clbk(false, errors[e])
-							}
-								
-							var t = self.app.platform.errorHandler(e, true);
+								if (clbk)
+									clbk(true)
+									
+							}).catch(e => {
 
-							if (t) actions.errortext(t)
+								if (clbk){
+									clbk(false, errors[e])
+								}
+									
+								var t = self.app.platform.errorHandler(e, true);
+
+								if (t) actions.errortext(t)
 
 
 
-						}).then(() => {
-							if (el.c)
-								el.c.removeClass('loading')
+							}).then(() => {
+								if (el.c)
+									el.c.removeClass('loading')
+							})
 						})
 					})
 
