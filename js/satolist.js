@@ -16896,8 +16896,6 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
-                console.log('lmap', lmap)
-
                 lmap = _.filter(lmap, function(l){
 
                     if(!l.meta.type) return false
