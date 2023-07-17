@@ -775,6 +775,12 @@ __map =  {
 
 		},
 
+		donateAnimations : {
+			uri : "donateAnimations",
+			href : "donateAnimations",
+			add : insertingfunc
+		},
+
 		recommendationinfo: {
 			uri : "recommendationinfo",
 			href : "recommendationinfo",

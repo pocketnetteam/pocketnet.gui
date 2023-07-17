@@ -2540,3 +2540,5 @@ _l.updateNotifier_stateDownload = 'Загружено';
 _l.updateNotifier_stateError = 'Произошла ошибка';
 /** ↑ Component UpdateNotifier ↑ */
 _l.error408 = 'Ошибка, проблема с соединением'
+
+_l.watchstream = "Смотреть трансляцию";

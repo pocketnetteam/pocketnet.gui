@@ -1,5 +1,13 @@
 @import "../../css/__cssvar";
 
+.share_common.fullScreenVideo {
+	#comments {
+		.streamLink {
+			margin: 0;
+		}
+	}
+}
+
 #comments{
 
 	position: relative;
@@ -138,6 +146,27 @@
 		}
 	}
 
+	.streamLink {
+		margin: 0 8 * @rhythm;
+		padding: 2.4 * @rhythm 2 * @rhythm;
+		padding-right: 0;
+		margin-right: 3.5 * @rhythm;
+		
+		button{
+			width: 100%;
+		}
+	}
+
+	.captionfwrapper{
+		overflow : hidden;
+		height: 0px;
+		.caption{
+			padding-top: var(--app-margin-top);
+		}
+		.csharetable{
+			display: none;
+		}
+	}
 
 	&.fromtop{
 		.list{
@@ -1454,7 +1483,43 @@ html.mobileview{
 /*t*/ @media only screen and (max-width: 768px){
 	#comments{
 
-		
+		.repliesloaderWrapper,
+		.loaderWrapper{
+			padding : @rhythm;
+		}
+
+		.caption{
+			padding-left:  @rhythm;
+			padding-right: 2 * @rhythm;
+
+			.csharetable{
+				>div{
+	
+					&.csharecnt{
+						padding-left: 0;
+					}
+				}
+	
+				.shareprwrapper{
+					>div{
+						&.fortext{
+							padding-left: 0;
+						}
+						
+						&.forimage{
+							width: 42px;
+						}
+					}
+	
+				}
+			}
+		}
+		.streamLink {
+			margin-right: @rhythm;
+			margin-left: @rhythm;
+			padding-left: 0;
+			padding-right: 0;
+		}
 
 		.list{
 			.comment{

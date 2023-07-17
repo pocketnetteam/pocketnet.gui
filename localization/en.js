@@ -2763,3 +2763,4 @@ _l.updateNotifier_stateError = 'Error occurred, stopping';
 /** ↑ Component UpdateNotifier ↑ */
 
 _l.error408 = 'Error, connection problem'
+_l.watchstream = "Watch stream";

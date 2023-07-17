@@ -2596,6 +2596,23 @@ var comments = (function(){
 					})
 
 				})
+			},
+
+			showStreamLink : function(post){
+				el.c.prepend(`
+					<div class="streamLink">
+						<button class="button">${ self.app.localization.e('watchstream') }</button>
+					</div>
+				`);
+
+				el.c.find('.streamLink button').click(function() {
+					console.log('url', `index?video=1&v=${ post.txid }`)
+					self.nav.api.go({
+						href : `index?video=1&v=${ post.txid }`,
+						history : true,
+						open : true
+					})
+				});
 			}
 		}
 
@@ -3090,24 +3107,32 @@ var comments = (function(){
 					top = 0
 				}
 
+				var post = share;
 
-				if (listpreview){
-					makePreview(() => {
-						if(ed.previewClbk) ed.previewClbk()
-					})
-				}
-				else{
-					make();
+				/* !Post with stream */
+				if (!post.settings.c) {
+					if (listpreview){
+						makePreview(() => {
+							if(ed.previewClbk) ed.previewClbk()
+						})
+					} else{
+						make();
+						
+						if (ed.showall){
+							actions.showall()
+						}
+					}
 
-					
-					if (ed.showall){
-						actions.showall()
+					initEvents();
+				} else {
+					const holder = el.c.parents('.commentsWrapperHb');
+					if (listpreview) {
+						renders.showStreamLink(post);
+						holder.show();
+					} else {
+						holder.hide();
 					}
 				}
-
-				
-
-				initEvents();
 
 				p.clbk(null, p);
 			},

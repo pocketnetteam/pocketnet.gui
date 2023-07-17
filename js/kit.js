@@ -430,7 +430,7 @@ Comment = function(txid){
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
-	}	
+	}
 
 	self.validation = function(){
 
@@ -1180,7 +1180,7 @@ Share = function(lang){
 		}
 
 		return 'post'
-	} 
+	}
 
 	self.tags = {
 		have : function(tag){
@@ -1284,7 +1284,7 @@ Share = function(lang){
 			})
 		},
 		v : []
-	}	
+	}
 
 	self.images = {
 		
@@ -1381,7 +1381,8 @@ Share = function(lang){
 		v : 'p',
 		videos : [],
 		image : 'a',
-		f : '0'
+		f : '0',
+		c : ''
 	}
 
 	self.settings = {
@@ -1389,7 +1390,8 @@ Share = function(lang){
 		v : '',
 		videos : [],
 		image : '',
-		f : '0'
+		f : '0',
+		c : ''
 	}
 	
 
@@ -1475,13 +1477,13 @@ Share = function(lang){
 		}
 
 
-		if(self.hasexchangetag() && 
+		if(self.hasexchangetag() &&
 		(
-			self.tags.v.length > 1 || 
-			self.repost.v || 
-			self.itisvideo() || 
+			self.tags.v.length > 1 ||
+			self.repost.v ||
+			self.itisvideo() ||
 			self.itisaudio() ||
-			(self.url.v && self.url.v.length) 
+			(self.url.v && self.url.v.length)
 			
 			)){
 
@@ -1511,7 +1513,7 @@ Share = function(lang){
 		+ self.images.v.join(',')
 
 		+ (self.aliasid || "")
-		+ (self.repost.v || "")		
+		+ (self.repost.v || "")
 	}
 
 	self.shash = function(){
@@ -1536,7 +1538,7 @@ Share = function(lang){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url.v) return 
+		if(!self.url.v) return
 
 		var meta = parseVideo(self.url.v)
 		var ch = self.url.v.replace('peertube://', '').split('/')
@@ -1622,7 +1624,7 @@ Share = function(lang){
 				txidEdit : self.aliasid || "",
 				txidRepost : self.repost.v || "",
 				poll : self.poll.v || {}
-			} 
+			}
 		}
 
 		return {
@@ -1647,7 +1649,7 @@ Share = function(lang){
 				self.settings = v.s
 			}
 			catch(e){
-				
+			
 			}
 		}
 		else
@@ -1691,7 +1693,7 @@ Share = function(lang){
 		if(self.itisaudio()) return 'audio'
 		if(self.itisarticle()) return 'article'
 
-		return self.type	
+		return self.type
 	}
 
 	self.typeop = function(){
@@ -2006,12 +2008,12 @@ UserInfo = function(){
 				name : self.name.v,
 				about : self.about.v,
 				site : self.site.v,
-				language : self.language.v,				
+				language : self.language.v,
 				image : self.image.v,
 				addresses : JSON.stringify(self.addresses.v || []),
 				ref : self.ref.v,
 				keys : self.keys.v.join(',')
-			} 
+			}
 		}
 
 		return {
@@ -2030,8 +2032,8 @@ UserInfo = function(){
 
 		self.name.set(v.c || v.name)
 		self.language.set(v.l || v.language)
-		self.about.set(v.a || v.about)	
-		self.site.set(v.s || v.site)	
+		self.about.set(v.a || v.about)
+		self.site.set(v.s || v.site)
 		self.image.set(v.i || v.image)
 		self.addresses.set( JSON.parse(v.b || v.addresses || "[]"))
 		self.ref.set(v.r || v.ref)
@@ -2350,7 +2352,7 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		return _.find(self[key], function(o){
-			return (o.adddress || o.address || o) == address 
+			return (o.adddress || o.address || o) == address
 		})
 	}
 
@@ -2361,7 +2363,7 @@ pUserInfo = function(){
 		self[key] || (self[key] = [])
 
 		try{
-			self[key].push(obj)	
+			self[key].push(obj)
 
 			if (key === 'subscribers'){
 
@@ -2453,7 +2455,8 @@ pShare = function(){
 		v : 'p',
 		videos : [],
 		image : 'a',
-		f : '0'
+		f : '0',
+		c : ''
 	}
 
 	self.settings = {
@@ -2461,7 +2464,8 @@ pShare = function(){
 		v : '',
 		videos : [],
 		image : '',
-		f : '0'
+		f : '0',
+		c : ''
 	}
 
 	self.isEmpty = function(){
@@ -2479,7 +2483,7 @@ pShare = function(){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url) return 
+		if(!self.url) return
 
 		var meta = parseVideo(self.url)
 		var ch = self.url.replace('peertube://', '').split('/')
@@ -2491,7 +2495,7 @@ pShare = function(){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url) return 
+		if(!self.url) return
 
 		var meta = parseVideo(self.url)
 		var ch = self.url.replace('peertube://', '').split('/')
@@ -2550,7 +2554,7 @@ pShare = function(){
 		/*if (v.s){
 
 			try{
-				self.settings = v.s 
+				self.settings = v.s
 			}
 			catch(e){
 
@@ -2806,12 +2810,12 @@ pShare = function(){
 		},
 
 		text : function(nm){
-			if(!nm) nm = self.renders.messagec() 
+			if(!nm) nm = self.renders.messagec()
 
 			nm = (trimrn(filterXSS(nm, {
 				whiteList: [],
 				stripIgnoreTag: true,
-			})));	
+			})));
 
 			return nm
 		},
@@ -3103,7 +3107,7 @@ pComment = function(){
 			}))
 
 			return l
-		},	
+		},
 		
 		preview : function(){
 			var l = filterXSS(self.message, {
@@ -3144,7 +3148,7 @@ Img = function(p){
 		self.app = p.app;
 		self.refId = p.refId;
 
-	return self;	
+	return self;
 }
 
 
@@ -3169,7 +3173,7 @@ Remove = function(){
 	self.ustate = function(){
 
 		return self.type;
-	} 
+	}
 
 	self.on = {
 		change : {}
@@ -3230,7 +3234,7 @@ Remove = function(){
 
 	self.optstype = function(){
 
-		return self.type	
+		return self.type
 	}
 
 
@@ -3267,11 +3271,11 @@ pRemove = function(){
 	self._import = function(v, notdecode){
 
 		if (v.txidEdit)
-			self.txidEdit = v.txidEdit;	
+			self.txidEdit = v.txidEdit;
 
 		
 		if (v.s)
-			self.s = v.s;	
+			self.s = v.s;
 
 	}
 
@@ -3362,7 +3366,7 @@ Settings = function(){
 	self.ustate = function(){
 
 		return self.type;
-	} 
+	}
 
 	self.on = {
 		change : {}
@@ -3408,7 +3412,7 @@ Settings = function(){
 			d: JSON.stringify({
 				pin: self.pin.v || "",
 			})
-		} 
+		}
 
 	}
 

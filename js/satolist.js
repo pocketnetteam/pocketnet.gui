@@ -3781,7 +3781,6 @@ Platform = function (app, listofnodes) {
                                     self.app.nav.api.load({
                                         open : true,
                                         href : 'post?s=' + txid,
-                                        inWnd : true,
                                         history : true,
                                     })
 
@@ -4007,31 +4006,51 @@ Platform = function (app, listofnodes) {
                                 type : 'donate',
                                 sender: sender, 
                                 receiver: receiver,
-                                send : true,
+                                send : p.send ?? true,
                                 value : 1,
                                 min : 0.5,
                                 clbk  : function(value, action, txid){
 
                                     console.log('value, txid', value, txid)
 
-                                    if (p.roomid && txid){
+                                    if ((p.share ?? true) && p.roomid && txid){
                                         self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
                                     }
 
-                                    resolve({txid, value})
+                                    p.value = value;
+                                    p.send = (clbk) => {
+                                        globalpreloader(true)
+
+                                        return new Promise((resolve, reject) => {
+                                            self.app.platform.sdk.wallet.send(p.receiver, null, p.value, (err, d) => {
+                                                setTimeout(() => {
+                                                    globalpreloader(false)
+                                                    
+                                                    if(err){
+                                                        sitemessage(err.text || err)
+                                                        reject(err.text || err)
+                                                    } else {
+                                                        const txid = app.meta.protocol + '://i?stx=' + d
+                                                        sitemessage(self.app.localization.e('wssuccessfully'))
+                                                        successCheck()
+                                                        if(clbk) clbk(txid)
+                                                        resolve(txid)
+                                                    }
+                                                }, 300)
+                                            })
+                                        });
+                                    }
+
+                                    resolve(p)
                                 }
                             },
                 
-                            clbk : function(s, p){
+                            clbk : function(s, p) {
+                                
                             }
                         })
                     }
                 })
-
-                
-                
-
-                
 
             },
 
@@ -4054,7 +4073,7 @@ Platform = function (app, listofnodes) {
 
                     p.sendclbk = function(d){
 
-                        if (p.roomid && d.txid){
+                        if ((p.share ?? true) && p.roomid && d.txid){
                             self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 

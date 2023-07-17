@@ -858,14 +858,24 @@ var share = (function(){
 			},
 
 			checktranscoding : function(clbk){
-				if((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid){
-
+				const proceed = () => {
 					currentShare.canSend(self.app, (result) => {
 						clbk(result)
 					});
-
-				}
-				else{
+				};
+				
+				if ((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid) {
+					if (currentShare.itisstream() && !currentShare.settings.c) {
+						/*Stream*/
+						self.app.platform.matrixchat.core.createStreamRoom(makeid(currentShare.message.v)).then(id => {
+							currentShare.settings.c = id;
+							proceed();
+						});
+					} else {
+						/*Not a stream or stream already created*/
+						proceed();
+					}
+				} else {
 					clbk(true)
 				}
 			},
@@ -994,6 +1004,10 @@ var share = (function(){
 					return
 
 					actions.checktranscoding(function(result){
+						if (currentShare.settings.c) {
+							console.log('stream', currentShare.settings.c);
+						}
+						
 						currentShare.uploadImages(self.app, function(){
 
 							self.sdk.node.transactions.create.commonFromUnspent(

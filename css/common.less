@@ -60,10 +60,16 @@
         .shadowSmaller();
     }
 
-    .commentsWrapper{			
+    .commentsWrapper{
         background: rgb(var(--background-secondary-theme));
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
+
+        &.commentsEmpty {
+            background: rgb(var(--background-total-theme));
+            padding: 0;
+            min-height: 2 * @rhythm;
+        }
     }
     .commentRegisterDiv .commentRegister {
         border-bottom-left-radius: 12px;
