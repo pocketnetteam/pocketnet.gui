@@ -2622,3 +2622,5 @@ _l.updateNotifier_stateStart = 'Starting...';
 _l.updateNotifier_stateDownload = 'Downloaded';
 _l.updateNotifier_stateError = 'Error occurred, stopping';
 /** ↑ Component UpdateNotifier ↑ */
+
+_l.watchstream = "Watch stream";
