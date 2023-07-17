@@ -450,7 +450,8 @@ Platform = function (app, listofnodes) {
         unblocking: function(alias, status){},
         userInfo: function(alias, status){},
         contentDelete : function(alias, status){},
-        accSet : function(){}
+        accSet : function(){},
+        accDel : function(){}
     }
 
     self.actionListeners = {}
@@ -8678,30 +8679,35 @@ Platform = function (app, listofnodes) {
 
             deletedaccount : function(address){
 
-                ///TODO_REF_ACTIONS
-                /*var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
-                    return txa.address == address
-                })
-
-                if (temp){
-                    return 'temp'
-                }*/
-
+        
                 var info = self.psdk.userInfo.getShortForm(address)
 
-                if (info.deleted) return 'deleted'
+                if (info && info.deleted) return 'deleted'
             },
 
+
             deleteaccount : function(progress){
+
+                console.log('deleteaccount')
 
                 if(!progress) progress = () => {}
 
                 var prepare = function(){
+
+                    console.log('prepare12')
+
                     return new Promise((resolve, reject) => {
 
+                        console.log('prepare2')
+
                         self.sdk.ustate.me((info) => {
-    
+
+                            console.log("INFOCLBK")
+
                             var address = self.app.user.address.value
+
+
+                            console.log('info', info, address)
     
                             if(!info || _.isEmpty(info)){
                                 return reject('notprepared')
@@ -8711,18 +8717,33 @@ Platform = function (app, listofnodes) {
                                 return reject('notprepared')
                             }
 
-                            ////TODO_REF_ACTIONS
-    
-                            self.sdk.node.transactions.get.balance(function (total, us) {
-    
-                                if(!us.length){
+                            var account = self.app.platform.actions.getCurrentAccount()
+
+                            if (account) {
+
+
+                                account.updateUnspents().then(() => {
+
+                                    var b = account.actualBalance()
+                                    var total = b.actual
+
+                                    if (total){
+                                        resolve()
+                                    }
+
+                                    else{
+                                        return reject('balance')
+                                    }
+
+                                }).catch(e => {
                                     return reject('balance')
-                                }
-    
-    
-                                resolve()
+                                })    
                                 
-                            }, address.address, true)
+                            }
+
+                            else{
+                                return reject('notprepared')
+                            }
     
                         }, true)
         
@@ -8943,7 +8964,12 @@ Platform = function (app, listofnodes) {
 
                     if (state){
                         self.sdk.ustate.get(app.user.address.value, (r) => {
-                            if(clbk) clbk(r[app.user.address.value] || {})
+
+                            console.log("USTATE ME CLBK")
+
+                            if (clbk) 
+                                clbk(r[app.user.address.value] || {})
+
                         }, update)
                     }
                     else{
@@ -8958,11 +8984,12 @@ Platform = function (app, listofnodes) {
             get: function (addresses, clbk, update) {
 
                 return self.psdk.userState.load(addresses, update).then(r => {
+                    
+                    console.log('userState.load clbk', addresses)
 
                     if (clbk) clbk(r)
-                }).catch(() => {
+                }).catch((e) => {
                     if (clbk) clbk({})
-
                 })
              
             },

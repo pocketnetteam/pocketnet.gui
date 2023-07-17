@@ -444,7 +444,18 @@ var author = (function(){
 						renders.info(el.info)
 
 
-					
+					p.el.find('.deletedsettings').on('click', () => {
+						self.nav.api.go({
+							open : true,
+							href : 'userpage',
+							inWnd : isTablet(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
+					})
 					
 					if(clbk) clbk()
 				})
@@ -1253,18 +1264,7 @@ var author = (function(){
 
 			el.up.on('click', events.up)
 
-			el.c.find('.deletedsettings').on('click', () => {
-				self.nav.api.go({
-					open : true,
-					href : 'userpage',
-					inWnd : isTablet(),
-					history : true,
-					
-					essenseData : {
-						rmhistory : true
-					}
-				})
-			})
+			
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -1387,6 +1387,17 @@ var author = (function(){
 						renders.authorcaption()
 
 					}
+					
+				}
+
+				if (type == 'accDel'){
+
+					if(alias.address == author.address){
+
+						renders.authorcaption()
+
+					}
+
 				}
 				
 			}

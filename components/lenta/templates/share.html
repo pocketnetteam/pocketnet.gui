@@ -50,6 +50,7 @@ var userInfo = psdk.userInfo.get(share.address) || {}
 
 var name = app.platform.api.clearname(userInfo.name || share.address)
 
+var medeleted = app.platform.sdk.user.myaccauntdeleted()
 
 var metadisplay = function(){ %>
 
@@ -66,11 +67,15 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%- name %></span></b><% if(userInfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
 							</a>
 
-							<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount) { %> 
+							<% if(!medeleted) {%>
 
-								<span elementsid="sbtnxs-follow" class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
-								</span>
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount) { %> 
+
+									<span elementsid="sbtnxs-follow" class="sbtnxs">
+										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
+									</span>
+
+								<% } %>
 
 							<% } %>
 

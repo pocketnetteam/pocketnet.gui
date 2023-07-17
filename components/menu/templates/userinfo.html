@@ -28,7 +28,11 @@
 
             <% } else if (!src) { %>
 
-                <i class="far fa-user"></i>
+                <% if(!deleted) {%>
+                    <i class="far fa-user"></i>
+                <% } else { %> 
+                    <i class="fas fa-user-times"></i>
+                <% } %>
 
             <% } %>
 

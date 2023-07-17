@@ -952,6 +952,8 @@ var test = (function(){
 						userOptions : userOptions
 					},
 
+					insertimmediately : true
+
 				}, function(_p){
 
 					ParametersLive(_.toArray(userOptions), _p.el)
@@ -972,6 +974,8 @@ var test = (function(){
 						tempInfo : tempInfo,
 						ed : ed
 					},
+
+					insertimmediately : true
 
 				}, function(_p){
 

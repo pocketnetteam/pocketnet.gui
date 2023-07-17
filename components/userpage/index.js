@@ -64,19 +64,6 @@ var userpage = (function(){
 				}
 			}
 
-
-			// reports.push({
-			// 	name : self.app.localization.e('ractivities'),
-			// 	id : 'activities',
-			// 	report : 'activities',
-			// 	mobile : false,
-			// 	openReportPageMobileInWindow : true,
-			// 	if : function(){
-			// 		return true
-			// 	}
-			// })
-			
-
 			reports.push({
 				name : self.app.localization.e('notifications'),
 				id : 'notifications',
@@ -142,7 +129,10 @@ var userpage = (function(){
 				id : 'earnings',
 				report : 'earnings',
 				//openReportPageMobile : true,
-				mobile : false
+				mobile : false,
+				if : function(){
+					return !self.app.platform.sdk.user.myaccauntdeleted()
+				}
 			})
 
 			reports.push({

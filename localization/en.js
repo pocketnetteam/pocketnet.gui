@@ -2380,6 +2380,7 @@ _l.removeAccount_undefinedError = 'An unexpected error occurred while deleting y
 
 _l.deletedAccount_temp = "Account is in the process of being deleted"
 _l.deletedAccount_deleted = "Account deleted"
+_l.deletedAccount_true = "Account deleted"
 
 _l.utipdeleted = "Your Account Deleted. You can use only wallet"
 _l.applydonate = "Apply"

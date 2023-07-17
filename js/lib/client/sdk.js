@@ -775,7 +775,7 @@ var pSDK = function ({ app, api, actions }) {
         tempExtend: function (object, address) {
 
             return extendFromActions('userInfo', 
-                ['userInfo', 'blocking', 'unblocking', 'subscribe', 'subscribePrivate', 'unsubscribe'],
+                ['userInfo', 'blocking', 'unblocking', 'subscribe', 'subscribePrivate', 'unsubscribe', 'accDel'],
                 object,
                 address
             )
@@ -1855,6 +1855,25 @@ var pSDK = function ({ app, api, actions }) {
 
             return objects
 
+        }
+    }
+
+    self.accDel = {
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                self.userInfo.cleardb(exp.actor)
+            }
+        },
+        applyAction: function (object, exp) {
+
+            if (object) {
+                if (object.address == exp.actor) { 
+                    object.deleted = true
+                }
+            }
+
+            return object
         }
     }
 

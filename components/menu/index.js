@@ -1160,6 +1160,10 @@ var menu = (function(){
 				if (type == 'userInfo'){
 					renders.userinfo()
 				}
+
+				if (type == 'accDel'){
+					renders.userinfo()
+				}
 				
 			}
 

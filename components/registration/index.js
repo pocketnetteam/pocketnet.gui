@@ -667,17 +667,19 @@ var registration = (function(){
 	
 								return
 							}
+							window.requestAnimationFrame(() => {
+								
+							})
 	
-							el.c.attr('step', step.id)
-	
-							renders.step(step, function(el){
+							renders.step(step, function(_el){
 
-								actions.preloader(false)
+								window.requestAnimationFrame(() => {
+									_scrollTop(_el, scrollel)
+									actions.preloader(false)
+									el.c.attr('step', step.id)
+									step.after(_el)
+								})
 
-								_scrollTop(el, scrollel)
-
-								step.after(el)
-	
 							})
 	
 						})
@@ -941,6 +943,8 @@ var registration = (function(){
 					data : {
 					},
 
+					insertimmediately : true
+
 				}, function(_p){
 
 					self.nav.api.load({
@@ -1007,13 +1011,26 @@ var registration = (function(){
 						clbk : function(e, p){
 	
 							ext = p
+
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									_p.el.find('.elpanel').removeClass('hidden')
+
+									if (clbk)
+										clbk(_el);
+
+								})
+								
+							}, 300);
 	
-							if (clbk)
-								clbk(_el);
+							
 	
 						}
 	
 					})
+
+
+					
 
 				})
 				
