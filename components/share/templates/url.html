@@ -128,10 +128,17 @@
 				
 				</div>	
 
-				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) { %> 
-					<div class="videoTips">
+				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) {
+					
+					%> 
+					<div class="videoTips <%- share.itisstream() ? 'tipsforstream' : '' %>">
 						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
-							<span><%=e('expandvideo')%></span>
+							<% if(share.itisstream()) {%>
+								<span><%=e('watchstream')%></span>
+							<% } else { %>
+								<span><%=e('expandvideo')%></span>
+							<% } %>
+							
 						</div>
 					</div>
 				<% } %>

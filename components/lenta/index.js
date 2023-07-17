@@ -103,7 +103,7 @@ var lenta = (function(){
 		var actions = {
 
 			replaceShare : function(txid){
-				var replace = _.find(sharesInview, (share) =>  txid)
+				var replace = _.find(sharesInview, (share) => share.txid == txid)
 
 				if (replace){
 					actions.destroyShare(replace)
@@ -1594,6 +1594,21 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
+				var share = self.psdk.share.get(id) 
+
+				if(!share) return
+
+				if (share.itisstream()){
+
+					self.nav.api.load({
+						open : true,
+						href : 'index?video=1&v=' + id,
+						history : true
+					})
+
+					return
+				}
+
 				if (fullscreenvideoShowing) { return }
 				if (fullscreenvideoShowed) { return }
 				if (essenseData.openapi){ return }
@@ -1601,9 +1616,7 @@ var lenta = (function(){
 				fullscreenvideoShowing = id
 
 				var _el = el.share[id]
-				var share = self.psdk.share.get(id) 
 				
-		
 
 				actions.initVideo(share, function(res){
 
@@ -2333,6 +2346,7 @@ var lenta = (function(){
 
 						var share = self.psdk.share.get(_el.attr('id')) 
 						
+						if (share.itisstream()) return
 
 						actions.initVideo(share, function(){
 
@@ -2709,19 +2723,19 @@ var lenta = (function(){
 					return;
 				}
 
-				const shareId = $(this).closest('.share').attr('id');
+				const shareId = $(this).closest('.shareTable').attr('stxid');
 				actions.exitFullScreenVideo(shareId);
 			},
 
 			exitFullScreenVideo : function(){
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.shareTable').attr('stxid');
 
 					actions.exitFullScreenVideo(shareId)
 			},
 
 			fullScreenVideo : function(){
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.shareTable').attr('stxid');
 
 					self.app.mobile.vibration.small()
 
@@ -2730,7 +2744,7 @@ var lenta = (function(){
 
 			opensvi : function(e){
 
-				var shareId = $(e.target).closest('.share').attr('id');
+				var shareId = $(e.target).closest('.shareTable').attr('stxid');
 
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
@@ -2743,7 +2757,7 @@ var lenta = (function(){
 			},
 
 			fullScreenVideoMobile : function(){
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.shareTable').attr('stxid');
 
 					actions.fullScreenVideoMobile(shareId)
 			},
@@ -3020,6 +3034,8 @@ var lenta = (function(){
 			},
 			comments : function(txid, init, showall, preview, clbk){
 
+
+
 				if(essenseData.comments == 'no') {
 
 					if(clbk) clbk()
@@ -3054,7 +3070,7 @@ var lenta = (function(){
 
 				var share = self.psdk.share.get(txid)
 
-				if(!share){
+				if(!share || share.itisstream()){
 					if(clbk) clbk()
 
 					return

@@ -1574,14 +1574,17 @@ Share = function(lang){
 
 	self.itisstream = function(){
 
+		
+
 		if(self.settings.v == 'a') return
 
 		if(!self.url.v) return 
 
 		var meta = parseVideo(self.url.v)
-		var ch = self.url.v.replace('peertube://', '').split('/')
 
-		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
+		
+
+		if(meta.type == 'peertube' && self.url.v.indexOf('stream') > -1) return true
 	}
 
 	self.canSend = function(app, clbk) {
@@ -2533,12 +2536,11 @@ pShare = function(){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url.v) return 
+		if(!self.url) return 
 
-		var meta = parseVideo(self.url.v)
-		var ch = self.url.v.replace('peertube://', '').split('/')
+		var meta = parseVideo(self.url)
 
-		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
+		if(meta.type == 'peertube' && self.url.indexOf('stream') > -1) return true
 	}
 
 	self.hasexchangetag = function(){

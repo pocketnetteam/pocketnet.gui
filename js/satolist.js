@@ -17017,6 +17017,7 @@ Platform = function (app, listofnodes) {
                 links.forEach(link => {
 
                     const linkInfo = linksInfo[link.link];
+                    
                     if (linkInfo){
 
                         if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive){

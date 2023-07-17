@@ -229,7 +229,17 @@
             margin-bottom: 0!important;
 
             .videoTips{
-                display: none!important;
+                &:not(.tipsforstream){
+                    display: none!important;
+                }
+                
+            }
+
+            .videoTips{
+                &.tipsforstream{
+                    display: block!important;
+                }
+                
             }
         }
     }
@@ -383,6 +393,10 @@
             color : rgb(var(--text-on-bg-shadow-color));
             opacity: 0;
             .transition(0.3s);
+
+            &.tipsforstream{
+                bottom: 0;
+            }
 
             .videoTip{
                 position : absolute;

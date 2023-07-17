@@ -218,6 +218,8 @@ var Peertube = function (settings) {
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
 							fr.aspectRatio = 1.78;
+
+						fr.aspectRatio = Number(fr.aspectRatio)
 					}
 
 					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);

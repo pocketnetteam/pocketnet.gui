@@ -2041,11 +2041,13 @@ var request_component = Object(componentNormalizer["a" /* default */])(
 
           /* Play donate animation */
           if (((_this$event3 = this.event) === null || _this$event3 === void 0 ? void 0 : (_this$event3$event = _this$event3.event) === null || _this$event3$event === void 0 ? void 0 : (_this$event3$event$un = _this$event3$event.unsigned) === null || _this$event3$event$un === void 0 ? void 0 : _this$event3$event$un.age) < 5000) {
-            window.app.platform.donateAnimation.inqueue({
-              senderName: this.sender.name,
-              senderMessage: this.body,
-              value: value.toFixed(2)
-            });
+            if (window.app.platform.donateAnimation) {
+              window.app.platform.donateAnimation.inqueue({
+                senderName: this.sender.name,
+                senderMessage: this.body,
+                value: value.toFixed(2)
+              });
+            }
           }
         }
       });

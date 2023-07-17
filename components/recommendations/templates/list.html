@@ -7,22 +7,23 @@
     
     if(contents && contents.length > 0) {
         _.each(contents, function(content) {
-            const postInfo = content.post;
-            const videoInfo = content.info?.data || {};
             
-            var h = app.platform.sdk.videos.historyget(postInfo.txid);
-            var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
+            var video = (app.platform.sdk.videos.storage[content.url] || {}).data || {}
             var userinfo = psdk.userInfo.getShortForm(content.address) 
             var h = app.platform.sdk.videos.historyget(content.txid)
 
-            console.log('videoInfo', videoInfo)
+            console.log('video', video)
 
             %>
             <div class="recoVideoDiv">
-                <div class="videoThumbnail <% if(!videoInfo.thumbnail) {%>dummy<% } %>" image="<%- videoInfo.thumbnail || '' %>">
-                    <div class="durationWrapper">
-                        <span><%- secInTime(videoInfo.duration) %></span>
-                    </div>
+                <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>">
+                    
+                        <div class="durationWrapper dummy">
+                            <% if(video.duration) {%>
+                                <span><%- secInTime(video.duration) %></span>
+                            <% } %>
+                        </div>
+                    
                     <% if(h.percent && h.percent > 3) {%>
                         <div class="videoprogressbar">
                             <div class="videoprogress" style="width:<%-h.percent%>%"></div>
@@ -32,7 +33,7 @@
 
                 <div class="videoInfos">
 
-                    <div class="title"><span><%= postInfo.renders.caption() %></span></div>
+                    <div class="title"><span><%= content.renders.caption() %></span></div>
 
                     <div>
                         <div class="user">
@@ -45,14 +46,14 @@
 
                         <div class="infos">
 
-                            <% if(typeof videoInfo.views != 'undefined') {%>
-                                <span class="views"><%= videoInfo.views %> <%- pluralform(videoInfo.views,[e('countview'), e('countviews')]) %></span>
+                            <% if(typeof video.views != 'undefined') {%>
+                                <span class="views"><%= video.views %> <%- pluralform(video.views,[e('countview'), e('countviews')]) %></span>
                             <% } else { %>
                                 <span class="views dummy"></span>
                             <% } %>
 
                             <i class="fas fa-circle viewDateSep"></i>
-                            <span class="date"><%- app.reltime(postInfo.time) %></span>
+                            <span class="date"><%- app.reltime(content.time) %></span>
 
                         </div>
                     </div>

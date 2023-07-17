@@ -84,12 +84,18 @@ var post = (function () {
 
 				self.closeContainer()
 
-				self.nav.api.load({
-					open : true,
-					href : 'post?s=' + id,
-					inWnd : true,
-					history : true
-				})
+				
+				var share = self.psdk.share.get(id) 
+
+				setTimeout(() => {
+					self.nav.api.load({
+						open : true,
+						href : share.itisstream() ? 'index?video=1&v=' + id : 'post?s=' + id,
+						inWnd : share.itisstream() ? false : true,
+						history : true
+					})
+				}, 200)
+				
 
 			},
 
@@ -1625,6 +1631,18 @@ var post = (function () {
 						
 					}, self.app);
 
+					_p.el.find('.tipsforstream').on('click', function(){
+						var shareId = $(this).closest('.shareTable').attr('stxid');
+
+						var share = self.psdk.share.get(shareId) 
+
+						if(!share) return
+
+						if(share.itisstream()){
+							actions.openPost(shareId)
+						}
+					})
+
 					if (clbk) clbk();
 					
 				})
@@ -1707,11 +1725,11 @@ var post = (function () {
 									console.log('stream', chat, share)
 									
 									/* Add donate animations */
-									self.app.nav.api.load({
+									/*self.app.nav.api.load({
 										open : true,
 										id : 'donateAnimations',
 										el: el.wr.find('.animationWrapper')
-									});
+									});*/
 								})
 								.catch(e => {
 									if (e) console.error(e);
