@@ -13,7 +13,13 @@
   
     <div class="captchaImageWrapper">
         <div class="captchaImage">
-            <%=captcha.img ? captcha.img : ''%>
+            <% if(captcha.img) {%>
+                <div class="captchaSvgImage">
+
+                    <%=captcha.img ? captcha.img : ''%>
+
+                </div>
+            <% } %>
         </div>
     </div>
     

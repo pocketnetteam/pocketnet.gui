@@ -5,6 +5,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+#captcha .captchaImageWrapper .captchaSvgImage {
+  margin: 1.5em 0;
+  text-align: center;
+}
 #captcha .wrpes {
   opacity: 0;
   -moz-transition: 0.3s;

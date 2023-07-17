@@ -67,11 +67,18 @@ if(!_Node)
 	var matrix = 'matrix.pocketnet.app'
 
 	if (window.testpocketnet){
-		_listofproxies = [{
+		_listofproxies = [
+			
+			{
+				host : 'pocketnet.app',
+				port : 8887,
+				wss : 8087
+			}
+			/*{
 			host : '127.0.0.1',
 			port : 8887,
 			wss : 8087
-		}, /*{
+		},*/ /*{
 			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
