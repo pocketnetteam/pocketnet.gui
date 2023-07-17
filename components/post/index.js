@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, adsShowed = false;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
 		var progressInterval;
 
@@ -1434,25 +1434,26 @@ var post = (function () {
 
 							renders.mystars(function () { });
 
-							var adsCount = localStorage.getItem('adsCount') || 0;
+							var adsDate = Number(localStorage.getItem('adsDate') || 0);
 
-							var ads
+							var ads;
 
-							if (share.settings.ads && !adsShowed && adsCount < 3){
+							if (self.app.localization.key === 'ru' && share.settings.ads && adsDate < new Date().getTime()){
 
-								adsCount++;
-
-								localStorage.setItem('adsCount', adsCount);
+								const numWeeks = 3;
+								let weeks = new Date();
+								weeks.setDate(weeks.getDate() + numWeeks * 7);
+								weeks = weeks.getTime();
+		
+								localStorage.setItem('adsDate', weeks);
 								
-								adsShowed = true;
-
 								ads = share.settings.ads;
 
 							}
 
 							player = null;
 				
-							var initVideoClbk = function(showAds){
+							var initVideoClbk = function(ads){
 								
 								renders.url(function () {
 
@@ -1567,15 +1568,11 @@ var post = (function () {
 
 									});
 
-								}, showAds);
+								}, ads);
 
 							}
 
 							initVideoClbk(ads);
-
-
-							
-			
 
 
 						});

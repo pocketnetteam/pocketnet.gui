@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, adsShowed = false;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0;
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -1715,14 +1715,18 @@ var lenta = (function(){
 
 				}
 
-				var adsCount = localStorage.getItem('adsCount') || 0;
+				var adsDate = Number(localStorage.getItem('adsDate') || 0);
 
-				if (share.settings.ads && !adsShowed && adsCount < 3){
 
-					adsCount++;
+				if (self.app.localization.key === 'ru' && share.settings.ads && adsDate < new Date().getTime()){
+
+					const numWeeks = 3;
+					let weeks = new Date();
+					weeks.setDate(weeks.getDate() + numWeeks * 7);
+					weeks = weeks.getTime();
 					
-					adsShowed = true;
-
+					localStorage.setItem('adsDate', weeks);
+					
 					players[share.txid] = null;
 
 					var ads = share.settings.ads;
