@@ -8,7 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
-var hexCaptcha = require('hex-captcha');
+
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -2513,6 +2513,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							},
 						});
 					}
+
+					var hexCaptcha = null
+
+					try{
+						hexCaptcha = require('hex-captcha');
+					}catch(e){
+						return Promise.reject('hex-captcha not setup')
+					}
+
 					
 					captchaip[ip] || (captchaip[ip] = 0);
 					captchaip[ip]++;
