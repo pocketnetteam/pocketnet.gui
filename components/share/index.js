@@ -2464,6 +2464,7 @@ var share = (function(){
 						ed : essenseData
 					},
 
+					insertimmediately : true
 
 				}, function(p){
 
