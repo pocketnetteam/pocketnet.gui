@@ -5580,7 +5580,7 @@ var lenta = (function(){
 				app.actions.playingvideo(null);
 
 				_.each(initedcommentes, function(c){
-					c.clearessense()
+					c?.clearessense()
 				})
 
 				initedcommentes = {}
