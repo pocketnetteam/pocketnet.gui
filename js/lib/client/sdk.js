@@ -1869,7 +1869,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object) {
                 if (object.address == exp.actor) { 
-                    object.deleted = true
+                    object.deleted = (exp.temp || exp.relay) ? 'temp' : true
                 }
             }
 

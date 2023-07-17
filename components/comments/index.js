@@ -717,6 +717,11 @@ var comments = (function(){
 									wrapper.find('.newcommentimages').html('');
 									wrapper.find('.newcommentdonate').html('');
 
+									renders.donate(id, {
+										el : wrapper
+									})
+
+
 									if (areas[id]) areas[id].setText('');
 								}
 							})
@@ -1986,30 +1991,37 @@ var comments = (function(){
 			donate : function(id, p){
 
 				var comment = currents[id];
-				var donate = comment.donate.v[0];
 				var __el = p.el.find('.embeddonate')
 
-				if (donate && donate.amount){
-					self.shell({
-						name :  'donate',
-						inner : html,
-						el : __el,//p.el.find('.newcommentdonate'),
-						data : {
-							donate : donate && donate.amount
-						},
-	
-					}, function(_p){
-	
-						_p.el.find('.removedonate').on('click', function(){
-							actions.removeDonate(id, p)
+				if(comment){
+					var donate = comment.donate.v[0];
+
+					if (donate && donate.amount){
+						self.shell({
+							name :  'donate',
+							inner : html,
+							el : __el,//p.el.find('.newcommentdonate'),
+							data : {
+								donate : donate && donate.amount
+							},
+		
+						}, function(_p){
+		
+							_p.el.find('.removedonate').on('click', function(){
+								actions.removeDonate(id, p)
+							})
+		
+		
 						})
-	
-	
-					})
+
+
+						return
+					}
+
 				}
-				else{
+
+
 					__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
-				}
 
 				
 
