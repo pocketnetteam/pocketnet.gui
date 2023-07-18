@@ -29,13 +29,34 @@ var recommendations = (function(){
 		}
 
 		var renders = {
-			list : function(contents, clbk){
+			list : async function(contents, clbk){
 				if(!el.c) return;
 
 				self.app.Logger.info({
 					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
 					actionValue: globalParams.v,
 				});
+
+				const videoListData = [];
+
+				const videoUrls = contents.map(c => c.url);
+				const videoInfoRequests = await app.platform.sdk.videos.info(videoUrls);
+
+				for (let i = 0; i < contents.length; i++) {
+					const postInfo = contents[i];
+					const videoUrl = postInfo.url;
+					const videoData = {};
+
+					const isFromCache = !videoInfoRequests[i];
+
+					const videoInfo = app.platform.sdk.videos.storage[videoUrl];
+
+					videoData.post = postInfo;
+					videoData.info = videoInfo;
+					videoData.fromCache = isFromCache;
+
+					videoListData.push(videoData);
+				}
 
 				self.shell({
 
@@ -44,7 +65,7 @@ var recommendations = (function(){
 					el : el.c.find('.listWrapper'),
 					inner : append,
 					data : {
-						contents,
+						contents: videoListData,
 						empty : _.isEmpty(rendered)
 					}
 

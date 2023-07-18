@@ -314,6 +314,18 @@ Platform = function (app, listofnodes) {
         'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
         'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
         'PXYhCbTwPaUHrP6spJM5NY84TBpLQJtZi5': true,
+        'PGPhDGiUY6p78aRFAuPNK621jt21LEg1P8': true,
+        'PRFJ8aSwj2xD9t3b4Fxk87hihn5CJXQshp': true,
+        'PD7K7Q9S8ruYQ4MRjufwuMF1oMFS2MnJ2L': true,
+        'PBcY2VspKfH74aB7SfZbEXd2ZK5Hke2evZ': true,
+        'PC5vmVN43qcxWgsmWnCxZK2ARf8uTSyGmX': true,
+        'PAwRaCFVQojmJbZoXVikc2DjRHUPCPxya7': true,
+        'P9urQoouv7PjfbLdsjU2WNd5a3ARcqmoWq': true,
+        'PFaeJhU5V4Jvww6Uu7sXshveTJK9E5Ba1y': true,
+        'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
+        'PQDfbq9MetJYpVkTRzRmDcLgm5ZkDnDEwt': true,
+        'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
+        'PSs2u1WfWjmbUW6hF3sj3unHya4Ke4rF9Z': true,
     }
 
     self.bch = {
@@ -3557,7 +3569,6 @@ Platform = function (app, listofnodes) {
                                     self.app.nav.api.load({
                                         open : true,
                                         href : 'post?s=' + txid,
-                                        inWnd : true,
                                         history : true,
                                     })
 
@@ -3783,29 +3794,49 @@ Platform = function (app, listofnodes) {
                                 type : 'donate',
                                 sender: sender, 
                                 receiver: receiver,
-                                send : true,
+                                send : p.send ?? true,
                                 value : 1,
                                 min : 0.1,
                                 clbk  : function(value, txid){
 
-                                    if (p.roomid && txid){
+                                    if ((p.share ?? true) && p.roomid && txid){
                                         self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
                                     }
 
-                                    resolve({txid, value})
+                                    p.value = value;
+                                    p.send = (clbk) => {
+                                        globalpreloader(true)
+
+                                        return new Promise((resolve, reject) => {
+                                            self.app.platform.sdk.wallet.send(p.receiver, null, p.value, (err, d) => {
+                                                setTimeout(() => {
+                                                    globalpreloader(false)
+                                                    
+                                                    if(err){
+                                                        sitemessage(err.text || err)
+                                                        reject(err.text || err)
+                                                    } else {
+                                                        const txid = app.meta.protocol + '://i?stx=' + d
+                                                        sitemessage(self.app.localization.e('wssuccessfully'))
+                                                        successCheck()
+                                                        if(clbk) clbk(txid)
+                                                        resolve(txid)
+                                                    }
+                                                }, 300)
+                                            })
+                                        });
+                                    }
+
+                                    resolve(p)
                                 }
                             },
                 
-                            clbk : function(s, p){
+                            clbk : function(s, p) {
+                                
                             }
                         })
                     }
                 })
-
-                
-                
-
-                
 
             },
 
@@ -3828,7 +3859,7 @@ Platform = function (app, listofnodes) {
 
                     p.sendclbk = function(d){
 
-                        if (p.roomid && d.txid){
+                        if ((p.share ?? true) && p.roomid && d.txid){
                             self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 
@@ -24788,6 +24819,7 @@ Platform = function (app, listofnodes) {
                             aspectRatio : linkInfo.aspectRatio || 1,
                             isLive : linkInfo.isLive,
 
+                            isCorrect : linkInfo.uuid ? true : false,
                             original : linkInfo
                         } : '';
 

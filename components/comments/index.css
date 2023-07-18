@@ -1,3 +1,6 @@
+.share_common.fullScreenVideo #comments .streamLink {
+  margin: 0;
+}
 #comments .usericon {
   height: 38px;
   width: 38px;
@@ -77,6 +80,15 @@
 }
 #comments.listpreview .list .comment.firstcomment:nth-last-child(1) {
   display: block;
+}
+#comments .streamLink {
+  margin: 0 4em;
+  padding: 1.2em 1em;
+  padding-right: 0;
+  margin-right: 1.75em;
+}
+#comments .streamLink button {
+  width: 100%;
 }
 #comments .captionfwrapper {
   overflow: hidden;
@@ -1306,6 +1318,12 @@ html.mobileview #comments .emojionearea-editor {
   }
   #comments .caption .csharetable .shareprwrapper > div.forimage {
     width: 42px;
+  }
+  #comments .streamLink {
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    padding-left: 0;
+    padding-right: 0;
   }
   #comments .list .comment .commentPaddingWrapper {
     padding-left: 0.5em;

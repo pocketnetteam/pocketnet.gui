@@ -17,6 +17,10 @@
 #post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
   max-height: calc(var(--vh, 1vh) * 80);
+  /* .vjs-tech {
+			Fix 1px video height
+			position: static;
+		} */
 }
 #post .videoWrapper {
   max-width: 650px;
@@ -40,6 +44,12 @@
   margin-top: 5em;
   max-width: 400px;
   border-radius: 12px;
+}
+#post #chatExported .caption {
+  font-size: 1em;
+}
+#post #chatExported .messageRow .iconWrapper {
+  width: 33px;
 }
 #post .showmorelenta {
   display: none;
@@ -141,7 +151,7 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
@@ -155,11 +165,11 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
-				
+
 
 				&.articleImages{
 					.imagesWrapper{
@@ -320,6 +330,65 @@
   border-radius: 9px;
   padding: 0.5em;
 }
+#post .recomandationsFromContent .streambgwrapper {
+  background: rgb(var(--background-total-theme));
+  border-radius: 9px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 0.25em;
+  padding: 0 0.5em;
+  overflow: hidden;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat {
+  background: rgba(0, 0, 0, 0.04);
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle {
+  border-radius: 0 0 9px 9px;
+  color: #8E90A6;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  padding: 8px;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle:hover {
+  color: #000;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready {
+  margin-bottom: 0.5em;
+  height: 70vh;
+  transition: height 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready .toggle-chat {
+  display: block;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported {
+  padding-bottom: 0.5em;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported #modal {
+  bottom: 33px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported .modal-backdrop {
+  border-radius: 8px 8px 0 0;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden {
+  height: 35px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden .toggle {
+  border: 1px solid #c7c8d9;
+  border-radius: 9px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden #chatExported {
+  padding: 0;
+  height: 0;
+}
 #post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;
 }
@@ -376,13 +445,11 @@
   }
   #post.videomainpost.recommendationsenabled .recomandationsFromContent {
     display: flex;
+    flex-direction: column;
     max-width: 390px !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     margin-left: 1em !important;
-  }
-  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
-    width: 100%;
   }
 }
 #post .sharearticle {

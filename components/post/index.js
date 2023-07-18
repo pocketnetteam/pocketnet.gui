@@ -86,7 +86,7 @@ var post = (function () {
 				if(self.app.playingvideo && !deleted) return
 		
 				renders.share()
-			},	
+			},
 
 			changeSavingStatusLight : function(share){
 
@@ -414,7 +414,7 @@ var post = (function () {
 					button.one('click', function(){
 
 
-						$(this).closest('.jsPlayerLoading').addClass('loading') 
+						$(this).closest('.jsPlayerLoading').addClass('loading')
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
 
@@ -434,7 +434,7 @@ var post = (function () {
 				}
 
 				button = null
-			},	
+			},
 
 			initVideo: function (clbk, ads) {
 
@@ -475,7 +475,7 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
-							self.sdk.videos.volume = videosVolume 
+							self.sdk.videos.volume = videosVolume
 
 							self.sdk.videos.save()
 						},
@@ -503,10 +503,10 @@ var post = (function () {
 								})
 							}, 300)
 							
-						},	
+						},
 
 						pause : function(){
-							if(!p.pip)	
+							if(!p.pip)
 								self.app.actions.playingvideo(null)
 						},
 
@@ -517,7 +517,7 @@ var post = (function () {
 						}){
 							//// interest score later
 
-							if (duration > 0 && playbackState == 'playing') 
+							if (duration > 0 && playbackState == 'playing')
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
 
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
@@ -901,7 +901,7 @@ var post = (function () {
 		var events = {
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
-				var address = $(this).attr('address') 
+				var address = $(this).attr('address')
 
 				self.nav.api.load({
 					open : true,
@@ -930,7 +930,7 @@ var post = (function () {
 					href : 'authorization',
 					history : true,
 					open : true
-				})	
+				})
 			
 			},
 			
@@ -1127,80 +1127,83 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-					
-					self.fastTemplate(
-						'commentspreview',
-						function (rendered) {
-							var _el = el.c.find('.commentsWrapper');
-
-							var rf = '';
-
-							if (self.app.platform.sdk.address.pnet()) {
-								rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
-							}
-
-							var url =
-								'https://' + self.app.options.url + '/' +
-								(ed.hr || 'index?') +
-								's=' +
-								share.txid +
-								'&mpost=true' +
-								rf;
-
-							if (parameters().address) {
-								url += '&address=' + (parameters().address || '');
-							}
-
-							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-
-							self.nav.api.load({
-								open: true,
-								id: 'comments',
-								el: _el,
-
-								eid: (ed.eid || '') + share.txid + 'post',
-
-								essenseData: {
-									hr: url,
-									totop: el.c,
-
-									caption: ed.nocommentcaption ? null : rendered,
-									send: function () {
-
-										var c = el.c.find('.commentsAction .count span');
-											c.html(Number(c.html() || '0') + 1);
-											
+					if (!share.settings.c) {
+						self.fastTemplate(
+							'commentspreview',
+							function (rendered) {
+								var _el = el.c.find('.commentsWrapper');
+	
+								var rf = '';
+	
+								if (self.app.platform.sdk.address.pnet()) {
+									rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+								}
+	
+								var url =
+									'https://' + self.app.options.url + '/' +
+									(ed.hr || 'index?') +
+									's=' +
+									share.txid +
+									'&mpost=true' +
+									rf;
+	
+								if (parameters().address) {
+									url += '&address=' + (parameters().address || '');
+								}
+	
+								var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+	
+								self.nav.api.load({
+									open: true,
+									id: 'comments',
+									el: _el,
+	
+									eid: (ed.eid || '') + share.txid + 'post',
+	
+									essenseData: {
+										hr: url,
+										totop: el.c,
+	
+										caption: ed.nocommentcaption ? null : rendered,
+										send: function () {
+	
+											var c = el.c.find('.commentsAction .count span');
+												c.html(Number(c.html() || '0') + 1);
+												
+										},
+										txid: ed.commentsid || share.txid,
+	
+										reply: ed.reply,
+	
+										showall: !ed.fromempty,
+										init: ed.fromempty || false,
+										preview: true,
+										listpreview : false,
+										receiver: share.address,
+										fromtop: !ed.fromempty,
+										fromempty: ed.fromempty,
+										lastComment: ed.fromempty ? share.lastComment : null,
+										cantsend : checkvisibility,
+										additionalActions: function () {
+											self.closeContainer();
+										},
 									},
-									txid: ed.commentsid || share.txid,
-
-									reply: ed.reply,
-
-									showall: !ed.fromempty,
-									init: ed.fromempty || false,
-									preview: true,
-									listpreview : false,
-									receiver: share.address,
-									fromtop: !ed.fromempty,
-									fromempty: ed.fromempty,
-									lastComment: ed.fromempty ? share.lastComment : null,
-									cantsend : checkvisibility,
-									additionalActions: function () {
-										self.closeContainer();
+	
+									clbk: function (e, p) {
+										actions.position();
+										inicomments = p;
+	
+										if (clbk) clbk();
 									},
-								},
-
-								clbk: function (e, p) {
-									actions.position();
-									inicomments = p;
-
-									if (clbk) clbk();
-								},
-							});
-						},
-						{
-							share: share,
-						},
-					);
+								});
+							},
+							{
+								share: share,
+							},
+						);
+					} else {
+						el.c.find('.commentsWrapper').addClass('commentsEmpty');
+					}
 				} else {
 					if (clbk) clbk();
 				}
@@ -1287,7 +1290,7 @@ var post = (function () {
 											if (w > imageswidth){
 												w = imageswidth
 
-												h = w * ( _img.height / _img.width) 
+												h = w * ( _img.height / _img.width)
 
 												el.height(h);
 											}
@@ -1488,9 +1491,9 @@ var post = (function () {
 													initVideoClbk();
 												}
 
-
 											}, true);
 										}
+
 
 										renders.images(function () {
 
@@ -1795,6 +1798,68 @@ var post = (function () {
 					if (clbk) clbk();
 				}
 			},
+			
+			stream : function(clbk) {
+				const
+					parent = el.stream.parent(),
+					toggle = parent.find('.toggle'),
+					setText = () => {
+						let state = self.app.localization.e('hide');
+
+						if (parent.hasClass('chat-hidden')) {
+							state = self.app.localization.e('showhiddenComment');
+						}
+
+						toggle.text(`${ state } ${ self.app.localization.e('startchat') }`);
+					};
+
+				self.app.platform.sdk.user.get(function(u){
+					if (u.hasOwnProperty('address') && share?.settings?.c) {
+						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
+							parent.addClass('chat-ready');
+							setText();
+
+							toggle.on('click', function (e) {
+								e.preventDefault();
+
+								parent.toggleClass('chat-hidden');
+								setText();
+							});
+
+							self.app.platform.matrixchat.core.renderChatToElement(
+								el.stream[0],
+								share.settings.c, /*RoomID*/
+								{
+									style: 'stream',
+									videoUrl: share.url,
+									authorId: share.address
+								}
+							)
+								.then((chat) => {
+									share.chat = chat;
+									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
+									console.log('stream', chat, share)
+									
+									/* Add donate animations */
+									self.app.nav.api.load({
+										open : true,
+										id : 'donateAnimations',
+										el: el.wr.find('.animationWrapper')
+									});
+								})
+								.catch(e => {
+									if (e) console.error(e);
+								});
+							
+							if(clbk) clbk();
+						} else {
+							setTimeout(() => renders.stream(clbk), 1000);
+						}
+					} else {
+						// You can not see stream chat unlogged
+					}
+				})
+			},
 
 			recommendations : function(clbk){
 
@@ -1842,7 +1907,7 @@ var post = (function () {
 
 				}
 				else{
-					
+				
 				}
 			}
 
@@ -1968,14 +2033,14 @@ var post = (function () {
 				else{
 					renders.share(function () {
 
-						renders.comments(function () {
-						})
+						renders.comments()
 
 						if (share.itisvideo())
 							actions.changeSavingStatusLight(share);
 
 						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
-
+							
+							renders.stream();
 							renders.recommendations();
 
 						}
@@ -2044,7 +2109,7 @@ var post = (function () {
 
 
 					if (!share) {
-						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+						share = self.app.platform.sdk.node.shares.getWithTemp(id)
 					}
 
 					if (share) {
@@ -2085,7 +2150,10 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-
+				if (share.chat) {
+					share.chat.destroy();
+					el.stream.empty();
+				}
 				
 				if (external){
 					external.destroy()
@@ -2157,6 +2225,7 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
+				el.stream = el.c.find('.stream-placeholder');
 				el.reco = el.c.find('.recomandationsbgwrapper');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')

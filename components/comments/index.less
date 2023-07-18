@@ -1,5 +1,13 @@
 @import "../../css/__cssvar";
 
+.share_common.fullScreenVideo {
+	#comments {
+		.streamLink {
+			margin: 0;
+		}
+	}
+}
+
 #comments{
 
 	.usericon{
@@ -117,6 +125,17 @@
 
 				}
 			}
+		}
+	}
+
+	.streamLink {
+		margin: 0 8 * @rhythm;
+		padding: 2.4 * @rhythm 2 * @rhythm;
+		padding-right: 0;
+		margin-right: 3.5 * @rhythm;
+		
+		button{
+			width: 100%;
 		}
 	}
 
@@ -1536,7 +1555,12 @@ html.mobileview{
 				}
 			}
 		}
-		
+		.streamLink {
+			margin-right: @rhythm;
+			margin-left: @rhythm;
+			padding-left: 0;
+			padding-right: 0;
+		}
 
 		.list{
 			.comment{
