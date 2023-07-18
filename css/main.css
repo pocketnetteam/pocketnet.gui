@@ -5098,6 +5098,7 @@ html.allcontent_application #footerWrapper {
 .notification .sharedivide {
   color: rgb(var(--color-text-ac));
   padding: 0.25em 0;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
 }
 .fastMessage .sharepreview .shareprwrapper > div,
 .notification .sharepreview .shareprwrapper > div {

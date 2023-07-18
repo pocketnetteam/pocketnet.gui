@@ -9321,7 +9321,9 @@ Platform = function (app, listofnodes) {
 
                 return this.getNotifications().then(r => {
 
-                    _.each(n.clbks.inited, function (f) {
+                    console.log("Notifications INITED")
+
+                    _.each(this.clbks.inited, function (f) {
                         f()
                     })
 
@@ -18543,7 +18545,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if(data.share && data.shareReposted){
-                        text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
+                        text = self.tempates.share(data.share, null, true) + '<div class="sharedivide"></div>' + self.tempates.share(data.shareReposted, null, true)
                     }
 
 
