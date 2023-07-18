@@ -1729,8 +1729,9 @@ var lenta = (function(){
 
 				var adsDate = Number(localStorage.getItem('adsDate') || 0);
 
-
-				if (self.app.localization.key === 'ru' && share.settings.ads && adsDate < new Date().getTime()){
+				var status = app.platform.sdk.localshares.status(share.txid);
+				
+				if (self.app.localization.key === 'ru' && status !== 'saved' && status !== 'saving' && status !== 'paused' && share.settings.ads && adsDate < new Date().getTime()){
 
 					const numWeeks = 3;
 					let weeks = new Date();
