@@ -996,7 +996,7 @@ var menu = (function(){
 							set(0,0)
 						}
 						else{
-							var balance = account.actualBalance()
+							var balance = account.actualBalance(account.allAddresses())
 
 							var add = balance.actual - current;
 

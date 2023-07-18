@@ -10705,6 +10705,7 @@ Platform = function (app, listofnodes) {
                  */
                 const proxy = new Proxy(proxyData, {
                     get: (p, num) => {
+
                         const addressObj = p.getWalletData(p.walletNum);
 
                         /**
@@ -10714,7 +10715,7 @@ Platform = function (app, listofnodes) {
                          */
                         self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
-                        return self.sdk.addresses.storage.addressesobj[p.walletNum];
+                        return addressObj[num];
                     }
                 });
 
@@ -10902,9 +10903,16 @@ Platform = function (app, listofnodes) {
 
                 const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
 
+                console.log('pubkey', pubkey)
+
                 const a = bitcoin.payments['p2wpkh']({ pubkey });
 
+                console.log("ADR", a)
+
                 const p2sh = bitcoin.payments.p2sh({ redeem: a });
+
+                console.log("p2sh", p2sh)
+
 
                 return p2sh;
             },

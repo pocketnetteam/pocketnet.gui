@@ -12,9 +12,9 @@ var activities = (function () {
 
 		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
-		//if (window.testpocketnet){
+		if (window.testpocketnet){
 			filtersList.push('pending')
-		//}
+		}
 
 		var activities = []
 		var videos = []

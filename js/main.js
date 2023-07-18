@@ -5,28 +5,28 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 if(!_Node)
 {
 
-	var developapps = [{
+	var developapps = [/*{
 		"id" : 'demo.pocketnet.app',
     	"version": "0.0.1",
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
 		"name" : "Demo application"
-	}]
+	}*/]
 	
 	var _listofproxies =  [
 		
 
-		{
+		/*{
 			host : '127.0.0.1',
 			port : 8887,
 			wss : 8087
-		},
+		},*/
 			
-		/*{
+		{
 			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
-	    },*/
+	    },
 		
 		/*{
 			host : '1.pocketnet.app',

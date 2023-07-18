@@ -476,7 +476,7 @@ var Action = function(account, object, priority, settings){
 
 
             if(!feeIncludedinAmount){
-                if (account.actualBalance().total < amount){
+                if (account.actualBalance(changeAddresses).total < amount){
                     return Promise.reject('actions_totalAmountSmaller_amount')
                 }
     
@@ -484,7 +484,7 @@ var Action = function(account, object, priority, settings){
             }
 
             else{
-                if (account.actualBalance().total < amount){
+                if (account.actualBalance(changeAddresses).total < amount){
                     return Promise.reject('actions_totalAmountSmaller_amount_fee')
                 }
     
@@ -990,8 +990,6 @@ var Action = function(account, object, priority, settings){
         }
         else{
             if (exported.expObject){
-
-                console.log('exported', exported)
 
                 alias = new kits.c[exported.expObject.type]()
                 alias.import(exported.expObject)
@@ -1640,9 +1638,13 @@ var Account = function(address, parent){
                 txid : transaction.txid
             }
         })
+        
+
+        var alladdresses = (parent.app.platform.sdk.addresses.storage.addresses || []).concat(self.address)
 
         outs = _.filter(outs, (out) => {
-            return out.address && out.address == self.address
+            if(!out.address) return false
+            return _.find(alladdresses, (a) => {return a == out.address})
         })
 
         _.each(outs, (out) => {
@@ -1805,15 +1807,6 @@ var Account = function(address, parent){
                 var p2sh = parent.app.platform.sdk.addresses.storage.addressesobj[index];
                 var dumped = parent.app.platform.sdk.address.dumpKeys(index)
 
-
-                console.log('p2sh', input, {
-                    prevOutScriptType: 'p2sh-p2wpkh',
-                    redeemScript : p2sh.redeem.output,
-                    vin: indexOfInput,
-                    keyPair : dumped,
-                    witnessValue : Number((ActionOptions.amountC * input.amount).toFixed(0))
-                })
-
                 try{
                     txb.sign({
                         prevOutScriptType: 'p2sh-p2wpkh',
@@ -1832,7 +1825,6 @@ var Account = function(address, parent){
                 
             }
             else{
-                console.log('input.address', input)
                 throw 'unableSign:4'
             }
 
@@ -1899,7 +1891,9 @@ var Account = function(address, parent){
     self.ws = {
         transaction : function(transaction){
 
-            if(transaction.addr != self.address) return
+
+            //if(transaction.addr != self.address) return
+
 
             parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
 
@@ -2179,14 +2173,22 @@ var Account = function(address, parent){
         }, 0)
     }
 
+    self.allAddresses = function(){
+        var alladdresses = (parent.app.platform.sdk.addresses.storage.addresses || []).concat(self.address)
+
+        return alladdresses
+    }
+
     self.actualBalance = function(adresses){
 
+        if(!adresses) adresses = [self.address]
 
         var balance = {
             total : 0,
             actual : 0,
             tempbalance : 0
         }
+
 
         if(!self.unspents.value.length) return balance
 
@@ -2196,7 +2198,7 @@ var Account = function(address, parent){
 
             var toThisAddress = _.reduce(action.outputs, (m, output) => {
                 
-                if(output.address == self.address){
+                if(_.find(adresses, (a) => {return a == output.address})){
                     return m + output.amount
                 }
 
