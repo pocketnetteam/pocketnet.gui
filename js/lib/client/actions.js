@@ -419,12 +419,13 @@ var Action = function(account, object, priority, settings){
 
     var makeTransaction = async function(retry, calculatedFee, send){
 
-        var unspents = filterUnspents(account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true))
+        var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
+        if(!changeAddresses.length) changeAddresses = [account.address]
+
+        var unspents = filterUnspents(account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true, changeAddresses))
         var fee = calculatedFee || ((options.calculateFee && options.calculateFee(self)) ? 0 : ActionOptions.pcTxFee)
     
-        var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
-
-        if(!changeAddresses.length) changeAddresses = [account.address]
+        
 
         self.estimatedFee = fee
 
@@ -438,7 +439,7 @@ var Action = function(account, object, priority, settings){
                         return Promise.reject('actions_noinputs')
                     }
     
-                    unspents = account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true)
+                    unspents = account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true, changeAddresses)
 
         
                 })
@@ -1763,7 +1764,7 @@ var Account = function(address, parent){
             var keyPair = parent.app.user.address.value != input.address ? self.keyPair : parent.app.user.keys()
 
             if(!keyPair) {
-                throw 'unableSign'
+                throw 'unableSign:1'
             }
 
             txb.sign(indexOfInput, keyPair);
@@ -1776,7 +1777,7 @@ var Account = function(address, parent){
             var keyPair = parent.app.user.address.value != input.address ? self.keyPair : parent.app.user.keys()
 
             if(!keyPair) {
-                throw 'unableSign'
+                throw 'unableSign:2'
             }
 
             txb.sign({
@@ -1793,27 +1794,46 @@ var Account = function(address, parent){
         if (input.address.indexOf("Z") == 0 || input.address.indexOf("Y") == 0) {
 
             if (parent.app.user.address.value != self.address) {
-                throw 'unableSign'
+                throw 'unableSign:3'
             }
 
 
-            var index = _.indexOf(parent.app.platform.sdk.addresses.storage.addresses, i.address);
+            var index = _.indexOf(parent.app.platform.sdk.addresses.storage.addresses, input.address);
 
             if (index > -1) {
 
                 var p2sh = parent.app.platform.sdk.addresses.storage.addressesobj[index];
                 var dumped = parent.app.platform.sdk.address.dumpKeys(index)
 
-                txb.sign({
+
+                console.log('p2sh', input, {
                     prevOutScriptType: 'p2sh-p2wpkh',
                     redeemScript : p2sh.redeem.output,
                     vin: indexOfInput,
                     keyPair : dumped,
-                    witnessValue : Number((k * i.amount).toFixed(0))
-                });
+                    witnessValue : Number((ActionOptions.amountC * input.amount).toFixed(0))
+                })
+
+                try{
+                    txb.sign({
+                        prevOutScriptType: 'p2sh-p2wpkh',
+                        redeemScript : p2sh.redeem.output,
+                        vin: indexOfInput,
+                        keyPair : dumped,
+                        witnessValue : Number((ActionOptions.amountC * input.amount).toFixed(0))
+                    });
+                }
+
+                catch(e){
+                    console.error(e)
+                    throw 'unableSign:5'
+                }
+
+                
             }
             else{
-                throw 'unableSign'
+                console.log('input.address', input)
+                throw 'unableSign:4'
             }
 
             return

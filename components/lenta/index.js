@@ -1001,6 +1001,8 @@ var lenta = (function(){
 							players[share.txid].id = players[share.txid].el.attr('pid')
 							players[share.txid].shadow = false
 
+							delete players[share.txid].error
+
 							delete players[share.txid].fulliniting
 
 							actions.setVolume(players[share.txid])
@@ -2022,7 +2024,7 @@ var lenta = (function(){
 
 			videosInview : function(players, action, nvaction){	
 
-				if(isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
+				//if(isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
 				
 				if(fullscreenvideoShowed) return
 
@@ -2032,14 +2034,18 @@ var lenta = (function(){
 
 				})
 
+				var playing = _.filter(players, function(p){
+
+					if(p.inited && p.playing && p.el && !p.preview && !p.error) return true
+
+				})
+
+				if(!playing.length && isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
+
 				if(ap.length){
 
 					ap = _.filter(ap, function(p){
 						return p.el
-					})
-
-					var vs = _.map(ap, function(p){
-						return p.el[0]
 					})
 					
 					var inv = inView(el.c.find('.videoWrapper'), {
@@ -2723,12 +2729,12 @@ var lenta = (function(){
 					return;
 				}
 
-				const shareId = $(this).closest('.shareTable').attr('stxid');
+				const shareId = $(this).closest('.share').attr('id');
 				actions.exitFullScreenVideo(shareId);
 			},
 
 			exitFullScreenVideo : function(){
-				var shareId = $(this).closest('.shareTable').attr('stxid');
+				var shareId = $(this).closest('.share').attr('id');
 
 					actions.exitFullScreenVideo(shareId)
 			},

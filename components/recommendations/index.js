@@ -64,7 +64,10 @@ var recommendations = (function(){
 
 					var video = (app.platform.sdk.videos.storage[content.url] || {}).data || {}
 
-					var el = p.el.find('.recoVideoDiv[data-txid="'+content.txid+'"]')
+					var el = p.el.find('.recoVideoDiv[txid="'+content.txid+'"]')
+
+
+					
 
 
 					if (el.length){
@@ -287,7 +290,7 @@ var recommendations = (function(){
 
 			el.c.on('click', '.recoVideoDiv', function() {
 		
-				var txid = $(this).data('txid');
+				var txid = $(this).attr('txid');
 
 				if (txid) {
 

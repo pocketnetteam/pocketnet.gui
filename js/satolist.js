@@ -10695,6 +10695,7 @@ Platform = function (app, listofnodes) {
                     walletAddress: address,
                 };
 
+
                 /**
                  * Proxy object is used here to
                  * give access to wallet credentials
@@ -10713,7 +10714,7 @@ Platform = function (app, listofnodes) {
                          */
                         self.sdk.addresses.storage.addressesobj[p.walletNum] = addressObj;
 
-                        return addressObj[p.walletNum];
+                        return self.sdk.addresses.storage.addressesobj[p.walletNum];
                     }
                 });
 
@@ -10896,6 +10897,9 @@ Platform = function (app, listofnodes) {
             },
 
             wallet: function (n, _private) {
+
+                console.log("NNN", n, _private)
+
                 const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
 
                 const a = bitcoin.payments['p2wpkh']({ pubkey });
@@ -10907,6 +10911,7 @@ Platform = function (app, listofnodes) {
 
             dumpKeys: function (n, _private = self.app.user.private.value) {
                 const addressPath = app.platform.sdk.address.path(n);
+                console.log('addressPath', addressPath, n)
                 const d = bitcoin.bip32.fromSeed(_private).derivePath(addressPath).toWIF();
 
                 const keyPair = bitcoin.ECPair.fromWIF(d);

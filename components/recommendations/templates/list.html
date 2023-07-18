@@ -12,10 +12,10 @@
 
 
             %>
-            <div class="recoVideoDiv">
+            <div class="recoVideoDiv" txid="<%-content.txid%>">
                 <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>">
                     
-                        <div class="durationWrapper dummy">
+                        <div class="durationWrapper <% if(!video.duration) {%> dummy <% } %>">
                             <% if(video.duration) {%>
                                 <span><%- secInTime(video.duration) %></span>
                             <% } %>
