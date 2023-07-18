@@ -1642,25 +1642,34 @@ var lenta = (function(){
 
 						fullscreenvideoShowing = null;
 
-						self.app.actions.closepip()
+						if (ads){
 
-						fullscreenvideoShowed = id;
+							videopaused = false;
 
-						self.app.mobile.reload.destroyparallax()
+						} else {
 
-						self.app.pseudofullscreenmode = true
+							self.app.actions.closepip()
 
-						_el.addClass('fullScreenVideo')
-					
-						actions.videoPosition(id)
+							fullscreenvideoShowed = id;
 
-						actions.fullScreenVideoParallax(_el, id)
+							self.app.mobile.reload.destroyparallax()
 
-						self.app.mobile.statusbar.gallerybackground()
+							self.app.pseudofullscreenmode = true
 
-						self.app.nav.api.history.addParameters({
-							v : id
-						})
+							_el.addClass('fullScreenVideo')
+						
+							actions.videoPosition(id)
+
+							actions.fullScreenVideoParallax(_el, id)
+
+							self.app.mobile.statusbar.gallerybackground()
+
+							self.app.nav.api.history.addParameters({
+								v : id
+							})
+
+						}
+						
 
 						var player = players[id]
 
@@ -1669,7 +1678,10 @@ var lenta = (function(){
 							if(!essenseData.openapi && !essenseData.second){
 
 								lastscroll = self.app.lastScrollTop
-								self.app.actions.offScroll()
+
+								if (!ads){
+									self.app.actions.offScroll();
+								}
 
 							
 								if(!player.p.playing && !auto){
