@@ -49,6 +49,9 @@
   background: rgb(var(--background-main));
   box-shadow: none;
 }
+#share .settingsWrapper .advCheckbox label {
+  padding-right: 1em;
+}
 #share .settingsWrapper .visibilityWrapper .vc_valuecustom {
   width: auto;
   /*font-size: 0.8em;
@@ -250,6 +253,28 @@
   border: 0;
   min-height: 78px;
   border-radius: 6px;
+}
+#share .adsCheckboxWrapper {
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+}
+#share .adsCheckboxWrapper .peertube-server-hint {
+  bottom: auto;
+}
+#share .adsCheckboxWrapper .adsCheckboxLabel {
+  font-weight: 600;
+  padding-right: 0.5em;
+}
+#share .adsVideo {
+  display: none;
+  position: relative;
+  margin-bottom: 3em;
+}
+#share .adsVideo.active {
+  display: block;
 }
 #share .wallpaperUpload {
   margin-bottom: 0.5em;
@@ -971,6 +996,9 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .iconWrapper {
     display: none;
+  }
+  #share .adsWrapper .adsCheckboxLabel {
+    padding-left: 0.5em;
   }
   #share .cntwrk {
     margin-left: 0;

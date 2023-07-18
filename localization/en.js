@@ -669,7 +669,7 @@ _l.refresh = "Refresh"
 _l.e13111 = "Add your email to get the latest "+appname+" updates"
 _l.e13112 = "Enter email"
 _l.e13113 = "Add email"
-_l.skip = "Skip"
+_l.skip = "Continue watch"
 _l.e13114 = "There is some problem with your registration due to strange activity."
 _l.e13115 = "Please email"
 _l.e13116 = "to receive coins and open your account."
@@ -2611,6 +2611,7 @@ _l.howToBuy = "How to buy PKOIN";
 _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
 
+_l.showAds = 'Show info about boost at the beginning of the video';
 /** ↓ Component UpdateNotifier ↓ */
 _l.updateNotifier_topHeading1 = 'Update';
 _l.updateNotifier_topHeading2 = 'Available';

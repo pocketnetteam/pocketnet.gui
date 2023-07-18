@@ -1339,6 +1339,7 @@ Share = function(lang){
 		videos : [],
 		image : '',
 		f : '0',
+		ads: '',
 		c : ''
 	}
 	
@@ -2301,6 +2302,7 @@ pShare = function(){
 		videos : [],
 		image : '',
 		f : '0',
+		ads : '',
 		c : ''
 	}
 

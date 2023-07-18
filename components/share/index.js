@@ -20,6 +20,8 @@ var share = (function(){
 
 		var clickOnCreateHappened = false;
 
+		var defaultAds = "peertube://peertube33.pocketnet.app/0344af51-ed23-4de7-bb18-6d2794d74fb0"
+
 		var loadedimages = {}
 		var loadingimages = {}
 		var player = null
@@ -1741,6 +1743,7 @@ var share = (function(){
 
 
 						p.el.find('.cancelediting').on('click', function(){
+
 							self.closeContainer();
 
 							if(external && external.cancel){
@@ -1793,19 +1796,20 @@ var share = (function(){
 
 						})
 
+						
+
 						self.shell({
 							name :  'settings',
 							el : el.settings,
 							data : {
 								share : currentShare,
 								essenseData : essenseData,
-								selector : selector
+								selector : selector,
 							},
 
 						}, function(p){
 
-							ParametersLive([selector], p.el)
-
+							ParametersLive([selector], p.el);
 
 							selector._onChange = function(){
 
@@ -1925,7 +1929,6 @@ var share = (function(){
 
 					renders.repost();
 
-					
 
 				});
 
@@ -1999,7 +2002,6 @@ var share = (function(){
 
 			url : function(clbk){
 
-
 				destroyPlayer()
 				
 				var url = currentShare.url.v;
@@ -2023,7 +2025,6 @@ var share = (function(){
 				}, function(p){
 
 					
-
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
@@ -2134,6 +2135,10 @@ var share = (function(){
 
 					p.el.find('.removelink').on('click', events.removelink)
 
+					if (self.app.localization.key === 'ru'){
+						renders.ads();
+					}
+
 					if (clbk)
 						clbk();
 				})
@@ -2146,6 +2151,61 @@ var share = (function(){
 					rndr();
 				}
 				
+			},
+
+			ads : function(clbk){
+
+				destroyPlayer();
+
+				var og = self.app.platform.sdk.remote.storage[defaultAds];
+
+				var meta = self.app.platform.parseUrl(defaultAds);
+
+				var videoWrapper = el.adsVideo.find('.videoWrapper');
+				console.log('videoWrapper!!!', videoWrapper, el.adsVideo, currentShare);
+
+				self.shell({
+					name :  'url',
+					inner : html,
+					el : el.adsVideo,
+					data : {
+						url : currentShare.url.v,
+						og : og,
+						remove : true,
+						fullplayer : true,
+						share : currentShare,
+						video : true,
+						ads : defaultAds,
+						adsPreview : true
+						
+					}
+
+				}, function(p){
+
+					
+					if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
+
+						destroyPlayer()
+
+						Plyr.setup('#' + self.map.id + ' .adsVideo .js-player', function(_player) {
+
+							player = _player
+
+							try{
+								player.muted = false
+							}catch(e){}
+							
+						}, {
+							denyPeertubeAutoPlay: true,
+							app : self.app
+						});
+
+
+					} 
+
+					if (clbk)
+						clbk();
+				})
 			},
 
 			images : function(clbk){
@@ -2397,13 +2457,23 @@ var share = (function(){
 				
 			},
 
-			body : function(clbk){				
+			body : function(clbk){		
+				
+				var checkbox = new Parameter({
+					type : "BOOLEAN",
+					name : "Ads",
+					id : 'adsCheckbox',
+					value: Boolean(currentShare.settings.ads)
+				})
+
+
 				self.shell({
 					name :  'body',
 					el : el.body,
 					data : {
 						share : currentShare,
-						ed : essenseData
+						ed : essenseData,
+						checkbox : checkbox
 					},
 
 
@@ -2414,12 +2484,14 @@ var share = (function(){
 					el.message = el.c.find('.message');
 					el.eMessage = el.c.find('#emjcontainer');
 					el.urlWrapper = el.c.find('.urlWrapper')
+					el.adsVideo = el.c.find('.adsVideo');
 					el.caption = el.c.find('.captionshare');
 					el.cpt = el.c.find('.cpt')
 					el.images = el.c.find('.imagesWrapper')
 					el.poll = el.c.find('.pollWrapper')
 					el.updateWallpaperInput = el.c.find('.wallpaperShareInput');
 					el.wallpaperStatusIcon = el.c.find('.wallpaperStatusIcon');
+
 
 					el.eMessage.emojioneArea({
 						pickerPosition : 'bottom',
@@ -2540,6 +2612,30 @@ var share = (function(){
 					});
 					
 					el.caption.on('keyup', events.caption)
+
+					ParametersLive([checkbox], p.el);
+							
+					checkbox._onChange = function(value){
+
+						var ads = '';
+						if (value) ads = defaultAds; 
+
+						currentShare.settings.ads = ads;
+
+						if (ads && !el.adsVideo.hasClass('active')){
+
+							// renders.ads();
+
+							el.adsVideo.addClass('active');
+
+						} else {
+
+							el.adsVideo.removeClass('active');
+
+						}
+
+						state.save()
+					}
 
 					renders.makesortable()
 					
@@ -2785,7 +2881,7 @@ var share = (function(){
 			},
 			
 			init : function(p){
-
+				
 				loadedimages = {}
 				loadingimages = {}
 
@@ -2857,8 +2953,7 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
-	
-					
+
 					if (essenseData.close){
 						essenseData.close()
 					}
