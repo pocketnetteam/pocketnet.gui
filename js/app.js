@@ -33,55 +33,55 @@ if (typeof _Electron != 'undefined' && _Electron) {
 	EmojioneArea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-  Broadcaster = require('./js/broadcaster.js');
+	Broadcaster = require('./js/broadcaster.js');
 
-  swBroadcaster = new Broadcaster('ServiceWorker');
+	swBroadcaster = new Broadcaster('ServiceWorker');
 
-  swBroadcaster.handle('AltTransportActive', async (url) => {
-    function isWhitelisted(url) {
-      const { hostname } = new URL(url);
+	swBroadcaster.handle('AltTransportActive', async (url) => {
+		function isWhitelisted(url) {
+			const { hostname } = new URL(url);
 
-      const whitelistHosts = [
-        /.*\.?youtube\.com/,
-        /.*\.?vimeocdn\.com/,
-        /.*\.?vimeo\.com/,
-        /.*\.?bitchute\.com/,
-        /photos\.brighteon\.com/,
-      ];
+			const whitelistHosts = [
+				/.*\.?youtube\.com/,
+				/.*\.?vimeocdn\.com/,
+				/.*\.?vimeo\.com/,
+				/.*\.?bitchute\.com/,
+				/photos\.brighteon\.com/,
+			];
 
-      for (let i = 0; i < whitelistHosts.length; i++) {
-        if (whitelistHosts[i].test(hostname)) {
-          return true;
-        }
-      }
+			for (let i = 0; i < whitelistHosts.length; i++) {
+				if (whitelistHosts[i].test(hostname)) {
+					return true;
+				}
+			}
 
-      return false;
-    }
+			return false;
+		}
 
-    if (isWhitelisted(url)) {
-      return false;
-    }
+		if (isWhitelisted(url)) {
+			return false;
+		}
 
-    const wait = (seconds, returnValue) => new Promise(r => (
-      setTimeout(() => r(returnValue), seconds * 1000)
-    ));
+		const wait = (seconds, returnValue) => new Promise(r => (
+			setTimeout(() => r(returnValue), seconds * 1000)
+		));
 
-    const proxy = self.app.api.get.current();
+		const proxy = self.app.api.get.current();
 
-    if (!proxy.direct) {
-      return false;
-    }
+		if (!proxy.direct) {
+			return false;
+		}
 
-    const proxyInfo = await proxy.get.info();
+		const proxyInfo = await proxy.get.info();
 
-    if (proxyInfo.info?.tor?.enabled === 'always') {
-      return true;
-    }
+		if (proxyInfo.info?.tor?.enabled === 'always') {
+			return true;
+		}
 
-    const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
+		const transportCheck = electron.ipcRenderer.invoke('AltTransportActive', url);
 
-    return await Promise.race([ transportCheck, wait(1, false) ]);
-  });
+		return await Promise.race([transportCheck, wait(1, false)]);
+	});
 
 }
 
@@ -92,8 +92,8 @@ if (typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
-if(window)
-  window.HELP_IMPROVE_VIDEOJS = false;
+if (window)
+	window.HELP_IMPROVE_VIDEOJS = false;
 
 Application = function (p) {
 
@@ -103,14 +103,14 @@ Application = function (p) {
 	var realtimeInterval = null;
 	var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
 	var electron = null
-	
+
 	self.developapps = p.developapps
 
 	if (typeof _Electron != 'undefined' && _Electron) {
 		electron = require('electron');
 	}
 
-  	self._meta = window.projects_meta
+	self._meta = window.projects_meta
 	self.meta = self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
@@ -156,7 +156,7 @@ Application = function (p) {
 
 		//////////////
 
-		peertubeServer : '',
+		peertubeServer: '',
 		peertubeCreds: {
 			username: 'test_bastyon',
 			password: 'test_bastyon'
@@ -383,7 +383,7 @@ Application = function (p) {
 		return isElectron || (window.cordova && !isios());
 	}
 
-	self.savesupportedForBrowser = function(){
+	self.savesupportedForBrowser = function () {
 		return !self.savesupported() && localStorage;
 	}
 
@@ -576,14 +576,14 @@ Application = function (p) {
 	}
 
 	self.letters = {
-		common : function({email, info, address}, clbk, data = {}){
+		common: function ({ email, info, address }, clbk, data = {}) {
 
 			var template = data.template || 'general'
 
 			var json = "{}"
-			try{
+			try {
 				json = JSON.stringify(data)
-			}catch(e){
+			} catch (e) {
 				console.error(e)
 			}
 
@@ -593,7 +593,7 @@ Application = function (p) {
 				address,
 				json,
 				template,
-				lang : localization.key
+				lang: localization.key
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -601,20 +601,20 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support ('+template+')</p>'
+			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
 
-			if (address){
+			if (address) {
 				body += '<p>Address: ' + (address) + '</p>'
 			}
 
-			if(info){
+			if (info) {
 				body += '<p>Info: ' + (info) + '</p>'
 			}
 
-			if (json){
+			if (json) {
 				body += '<p>JSON: ' + (json) + '</p>'
 			}
-			
+
 			body += '<p>Email: ' + email + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -952,7 +952,7 @@ Application = function (p) {
 				stateAdresses = _.filter(stateAdresses, (s) => s)
 				infoAdresses = _.filter(infoAdresses, (s) => s)
 
-				if (share){
+				if (share) {
 					self.psdk.share.load([share]).then(() => {
 					}).catch(e => {
 						console.error(e)
@@ -977,7 +977,7 @@ Application = function (p) {
 
 				}
 
-				
+
 
 			}
 		})
@@ -993,7 +993,7 @@ Application = function (p) {
 			/// acceleration
 			acceleration()
 		}).then(() => {
-			
+
 		})
 
 		self.localization = new Localization(self);
@@ -1010,7 +1010,7 @@ Application = function (p) {
 
 		self.Actions.psdk = self.psdk
 
-		
+
 
 
 
@@ -1210,7 +1210,7 @@ Application = function (p) {
 					}
 				}, 2000)
 
-				
+
 				/*self.platform.ui.support('balance', {
 					error : 'uniq',
 					additionalData : {}
@@ -1256,19 +1256,19 @@ Application = function (p) {
 				self.platform.actions.clbk('change', 'apps', () => {
 					var account = self.platform.actions.getCurrentAccount()
 
-					if (account){
+					if (account) {
 						var balance = account.actualBalance([account.address])
 
 						self.apps.emit('balance', balance)
 					}
 				})
 
-				self.platform.actions.on('actionFiltered', ({action, address, status}) => {
+				self.platform.actions.on('actionFiltered', ({ action, address, status }) => {
 
-					if (action.settings && action.settings.application){
+					if (action.settings && action.settings.application) {
 						self.apps.emit('action', action.export(), action.settings.application)
 					}
-			
+
 				})
 
 				/*setInterval(() => {
@@ -1454,8 +1454,8 @@ Application = function (p) {
 										open: true,
 										id: 'updatenotifier',
 										essenseData: { updateInfo },
-										inWnd : true,
-										clbk : (e, p) => {},
+										inWnd: true,
+										clbk: (e, p) => { },
 									});
 								})
 								.catch((err) => console.error(err))
@@ -1466,7 +1466,7 @@ Application = function (p) {
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
 				self.mobile.memory()
-        		self.mobile.webviewchecker()
+				self.mobile.webviewchecker()
 				self.mobile.safearea()
 
 				if (window.Keyboard && window.Keyboard.disableScroll) {
@@ -1502,11 +1502,11 @@ Application = function (p) {
 		_.each(self.modules, function (module) {
 			if (module.module.inited) {
 
-				if(!!module.module.closeContainer()){
+				if (!!module.module.closeContainer()) {
 					if (module.module.destroy)
 						module.module.destroy();
 				}
-				
+
 			}
 
 		})
@@ -1674,7 +1674,7 @@ Application = function (p) {
 							window.requestAnimationFrame(() => {
 								self.el.html.addClass('scrollmodedown')
 							})
-							
+
 						}
 
 					}
@@ -1682,15 +1682,15 @@ Application = function (p) {
 				}, 1000)
 			}
 
-			setTimeout(function(){
+			setTimeout(function () {
 
 				var duration = deep(self.playingvideo, 'embed.details.duration') || 0
 				var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
-		
+
 				self.mobile.unsleep(unsleep)
 				//self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
-		
-			  }, 1000)
+
+			}, 1000)
 
 
 		},
@@ -1717,13 +1717,13 @@ Application = function (p) {
 
 				self.el.window.scrollTop(to)
 				self.scrollTop = to
-	
+
 				setTimeout(function () {
 					blockScroll = false
 				}, 100)
 			})
 
-			
+
 
 		},
 
@@ -1750,12 +1750,12 @@ Application = function (p) {
 
 			scrollmodechanging = true
 
-				window.requestAnimationFrame(() => {
-					if (self.scrollRemoved) {
-						self.el.html.css('overflow', 'hidden')
-					}
-				})
-			
+			window.requestAnimationFrame(() => {
+				if (self.scrollRemoved) {
+					self.el.html.css('overflow', 'hidden')
+				}
+			})
+
 
 			/*if (self.mobileview && window.bodyScrollLock && target){
 	  
@@ -1791,12 +1791,12 @@ Application = function (p) {
 
 				scrollmodechanging = true
 
-					window.requestAnimationFrame(() => {
-						if (!self.scrollRemoved){
-							self.el.html.css('overflow', '')
-						}
-					})
-				
+				window.requestAnimationFrame(() => {
+					if (!self.scrollRemoved) {
+						self.el.html.css('overflow', '')
+					}
+				})
+
 
 				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
 				  window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
@@ -1827,7 +1827,7 @@ Application = function (p) {
 
 		window.requestAnimationFrame(() => {
 
-		
+
 			document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
 			document.documentElement.style.setProperty('--keyboardheight', `0px`);
 		})
@@ -1931,12 +1931,12 @@ Application = function (p) {
 					})
 				}
 
-				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown')){
+				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown')) {
 					window.requestAnimationFrame(() => {
 						self.el.html.removeClass('scrollmodedown')
 					})
 				}
-					
+
 
 				showPanel = '1'
 			}
@@ -2042,7 +2042,7 @@ Application = function (p) {
 
 		var value = time || new Date()
 		var today = moment()
-		
+
 
 		if ((today.diff(value, 'days')) === 0) {
 
@@ -2273,24 +2273,32 @@ Application = function (p) {
 
 	self.mobile = {
 
-		webviewchecker : function(){
+		audiotoggle: function (mode = 'SPEAKER') {
 
-			if(window.plugins && window.plugins.webViewChecker){
-			  plugins.webViewChecker.isAndroidWebViewEnabled().then(function(enabled) { console.log('isAndroidWebViewEnabled',enabled); })
-				.catch(function(error) { });
-	  
-			  plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function(packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
-				.catch(function(error) { });
+			if (typeof window.AudioToggle != 'undefined') {
+				window.AudioToggle.setAudioMode(window.AudioToggle[mode]);
 			}
-		   
-		  },
-	  
-		  memory : function(){
-	  
+
+		},
+
+		webviewchecker: function () {
+
+			if (window.plugins && window.plugins.webViewChecker) {
+				plugins.webViewChecker.isAndroidWebViewEnabled().then(function (enabled) { console.log('isAndroidWebViewEnabled', enabled); })
+					.catch(function (error) { });
+
+				plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function (packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
+					.catch(function (error) { });
+			}
+
+		},
+
+		memory: function () {
+
 			document.addEventListener('memorywarning', function () {
-			  console.log("MOMORY WARNING1")
+				console.log("MOMORY WARNING1")
 			});
-	  
+
 		},
 
 		menu: function (items) {
@@ -2937,7 +2945,7 @@ Application = function (p) {
 
 			playstore: window.pocketnetstore || false,  ///// TODO
 
-			downloadAndInstall : function(customPreloader){
+			downloadAndInstall: function (customPreloader) {
 
 				if (!self.mobile.update.hasupdate) {
 					return Promise.reject({ text: 'hasnotupdates' })
@@ -2966,7 +2974,7 @@ Application = function (p) {
 
 			},
 
-			download : function(l, customPreloader){
+			download: function (l, customPreloader) {
 				const preloader = customPreloader || topPreloader2;
 
 				return window.ApkUpdater.download(l, {
@@ -2980,9 +2988,9 @@ Application = function (p) {
 				}).catch(e => {
 					preloader(100)
 
-					try{
+					try {
 						e = JSON.stringify(e)
-					}catch (er){
+					} catch (er) {
 
 					}
 
@@ -3004,7 +3012,7 @@ Application = function (p) {
 						if (!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
 							var assets = deep(d, 'assets') || [];
 
-							var l = _.find(assets, function(a){
+							var l = _.find(assets, function (a) {
 								return window.pocketnetgfree ? (a.name == os.github.gfname) : a.name == os.github.name
 							})
 
