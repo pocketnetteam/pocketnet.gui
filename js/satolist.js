@@ -14797,16 +14797,6 @@ Platform = function (app, listofnodes) {
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
-                                        /*if (state) {
-                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
-                                                _.each(shares, function (s) {
-                                                    if (s.address == block.address) s.blocking = true;
-                                                })
-                                            })
-                                        }*/
-
-
-
                                         if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
 
@@ -14877,7 +14867,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.type)
                             }
 
-                            self.sdk.node.shares.get(parameters, function (d, error) {
+                            self.sdk.node.shares.getex(parameters, function (d, error) {
 
                                 var shares = d.contents
 
@@ -16969,10 +16959,12 @@ Platform = function (app, listofnodes) {
 
                             var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
-                            var width = loadingPlayer.width();
+                            var width = 100;
 
-                            loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}px`);
-                            loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}px`);
+                            console.log('width', width, info.aspectRatio)
+
+                            loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}%`);
+                            loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}%`);
                         }
 
                         if(clbk) clbk(p)

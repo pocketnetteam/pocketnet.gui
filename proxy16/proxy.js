@@ -1451,7 +1451,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
@@ -1522,7 +1522,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
-	self.rpcscenarios.gethistoricalstrip = self.rpcscenarios.gethistoricalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.getmostcommentedfeed
 	
 
 	self.checkSlideAdminHash = function(hash) {
@@ -1638,6 +1639,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
+							
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 

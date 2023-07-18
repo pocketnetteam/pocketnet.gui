@@ -422,7 +422,7 @@ RpcClient.callspec = {
     getrecommendedposts: 'str',
     gettime: '',
     getmissedinfo: 'str int',
-    gethotposts: 'str str str str',
+    gethotposts: 'str int int str',
     getmostcommentedfeed: 'int str int str obj obj obj obj obj str int',
     getuseraddress: 'str int',
     search: 'str str str',

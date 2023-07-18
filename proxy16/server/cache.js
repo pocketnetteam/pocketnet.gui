@@ -167,11 +167,6 @@ var Cache = function(p){
                 block : 0,
             }, 
 
-            gethierarchicalstrip: {
-                time : 460,
-                block : 0,
-            }, 
-
             getsubscribesfeed: {
                 time : 460,
                 block : 0,

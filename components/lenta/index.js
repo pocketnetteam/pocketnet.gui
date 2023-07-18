@@ -4264,6 +4264,7 @@ var lenta = (function(){
 
 						if(!error && !error2){
 
+
 							if(!shares || !shares.length || (shares.length < pr.count)){
 
 								if(!beginmaterial && !countshares && !includingsub){
@@ -4271,6 +4272,7 @@ var lenta = (function(){
 								}
 								else
 								{
+
 		
 									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.searchValue || essenseData.searchTags) ){
 
@@ -4291,8 +4293,8 @@ var lenta = (function(){
 										ended = essenseData.ended(shares)
 									}
 
-									//720 is a month depth
-									if (pr.page < 720) {
+									//30 is a month depth
+									if (pr.page < 30) {
 										ended = false
 									}
 
@@ -4595,8 +4597,7 @@ var lenta = (function(){
 							}
 
 
-							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
-							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
+							var period = 1440
 
 							self.app.platform.sdk.node.shares[loader]({
 
