@@ -1559,6 +1559,7 @@ Application = function (p) {
 	var blockScroll = false
 	var scrollmodechanging = false
 	var optimizeTimeout = null
+	var scrollrif = null
 
 	self.actions = {
 		closepip: function () {
@@ -1712,8 +1713,15 @@ Application = function (p) {
 		},
 
 		scroll: function (to) {
-			window.requestAnimationFrame(() => {
+
+			if (scrollrif){
+				cancelAnimationFrame(scrollrif)
+			}
+			
+			
+			scrollrif = window.requestAnimationFrame(() => {
 				blockScroll = true
+				scrollrif = null
 
 				self.el.window.scrollTop(to)
 				self.scrollTop = to

@@ -327,7 +327,9 @@ var postscores = (function(){
 
 						self.app.platform.sdk.postscores.get(shareid, function(){
 
-							scores = self.sdk.postscores.storage[shareid] || []
+							scores = self.psdk.postScores.get(shareid) 
+							
+							// self.sdk.postscores.storage[shareid] || []
 
 							var data = {
 								share : share

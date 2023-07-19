@@ -338,6 +338,7 @@
 }
 
 .wnd{
+    contain: strict;
     .wndcustomscroll{
         .customscrollclass()
     }
@@ -379,7 +380,7 @@ html {
 
 [image]{
     will-change : opacity, background;
-    /*contain: strict;*/
+    contain: strict;
     opacity: 0;
     .transition(0.3s, opacity);
 

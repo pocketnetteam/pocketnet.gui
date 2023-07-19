@@ -242,12 +242,13 @@ ResoursesDB = function(storageName, version, storages){
 
 
         initing = new Promise((resolve, reject) => {
+            console.log("INITING")
             var openRequest = indexedDB.open(storageName, version);
 
-            openRequest.onblocked = function (err) {
-            };
+           
 
             openRequest.onupgradeneeded = function (e) {
+                console.log("HERE")
                 let db = openRequest.result;
 
                 const isVersionChanged = (e.oldVersion !== e.newVersion);
@@ -270,21 +271,31 @@ ResoursesDB = function(storageName, version, storages){
             };
 
             openRequest.onblocked = function (err) {
+
+                console.error(err)
+
                 reject('PCryptoStorage error initiating IndexedDB');
             };
 
             openRequest.onerror = function (err) {
+
+                console.error(err)
+
                 debugLog('PCryptoStorage error occurred:', err);
                 reject('PCryptoStorage error initiating IndexedDB');
             };
 
             openRequest.onsuccess = function () {
 
+                console.log("INITED")
+
                 db = openRequest.result;
 
                 _.each(db.objectStoreNames, (key) => {
                     scheduleToClear(key, rand(15000, 40000))
                 })
+
+                
 
                 resolve(db)
                 

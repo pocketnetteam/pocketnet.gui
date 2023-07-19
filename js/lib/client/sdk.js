@@ -75,6 +75,10 @@ var pSDK = function ({ app, api, actions }) {
 
         searchRequest: {
             time: 240
+        },
+
+        postScores : {
+            time : 240
         }
     }
 
@@ -87,6 +91,8 @@ var pSDK = function ({ app, api, actions }) {
     var rt = performance.now()
 
     self.db.getdb().then(() => {
+    }).catch(e => {
+        console.error(e)
     })
 
     self.actions = actions
@@ -2085,6 +2091,42 @@ var pSDK = function ({ app, api, actions }) {
 
 
         }
+    }
+
+    self.postScores = {
+        keys: ['postScores'],
+        load: function (txids, update) {
+
+            return loadList('postScores', txids, (txids) => {
+
+                return api.rpc('getpostscores', txids).then((d) => {
+
+                    var g = group(d, (info) => {
+                        return info.posttxid
+                    })
+
+                    return _.map(g, (info, i) => {
+                        return {
+                            key : i,
+                            data : info
+                        }
+                    })
+
+                }).catch(e => {
+
+                    return Promise.reject(e)
+                })
+
+            }, {
+                update,
+                indexedDb: 'postScores'
+            })
+        },
+
+        get: function (txid) {
+            return storage['postScores'][txid] || []
+        },
+
     }
 
     self.nameAddress = {

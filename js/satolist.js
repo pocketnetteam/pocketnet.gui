@@ -13951,7 +13951,23 @@ Platform = function (app, listofnodes) {
             storage: {},
             get: function (id, clbk, update) {
 
-                var l = self.sdk.postscores
+                self.psdk.postScores.load([id]).then((scores) => {
+
+                    if (clbk)
+                        clbk(scores)
+
+                }).catch(e => {
+
+                    if (clbk) {
+                        clbk(e, null)
+                    }
+
+                })
+
+                return
+
+
+                var l = self.sdk.postscores.get()
 
                 if (!l.storage[id] || update) {
 
@@ -13959,6 +13975,8 @@ Platform = function (app, listofnodes) {
                     //// TODO_REF_ACTIONS maybe
 
                     self.app.api.rpc('getpostscores', [id]).then(d => {
+
+                        
 
                         _.each(d, function (d) {
 

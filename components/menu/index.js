@@ -203,6 +203,8 @@ var menu = (function(){
 
 							if(!state) k = 'index'
 
+							if(k == self.app.nav.current.completeHref) k = 'index'
+
 							if(self.app.curation()){
 								if(!state){
 									k = 'welcome'
