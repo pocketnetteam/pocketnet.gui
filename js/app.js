@@ -1463,12 +1463,7 @@ Application = function (p) {
 					}
 				}
 
-				/*if (window.NavigationBar) {
-					window.NavigationBar.hide()
-				}*/
-
-				//self.mobile.statusbar.background()
-				
+				self.mobile.statusbar.initial()
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
 				self.mobile.memory()
@@ -1986,7 +1981,10 @@ Application = function (p) {
 				})
 			})
 
-			self.blockScroll = false
+			setTimeout(() => {
+				self.blockScroll = false
+			}, 100)
+			
 
 			checkTouchStyle()
 
@@ -2650,16 +2648,7 @@ Application = function (p) {
 				if (window.NavigationBar)
 					window.NavigationBar.hide()
 
-				if(window.StatusBar){
-					setTimeout(() => {
-						window.StatusBar.overlaysWebView(true);
-					}, 500)
-	
-					setTimeout(() => {
-						window.StatusBar.styleDefault()
-					}, 1000)
-				}
-				
+			
 			},
 			background: function () {
 
@@ -2672,14 +2661,11 @@ Application = function (p) {
 				if (window.StatusBar) {
 					StatusBar.overlaysWebView(true);
 					window.StatusBar.backgroundColorByHexString('#00000000');
-
 					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-					
-
 				}
 
 				if (window.NavigationBar)
-					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", true);
 			},
 
 			gallerybackground: function () {
@@ -2703,9 +2689,9 @@ Application = function (p) {
 					//window.StatusBar.overlaysWebView(true);
 				}
 
-				if (window.NavigationBar) {
+				/*if (window.NavigationBar) {
 					window.NavigationBar.hide()
-				}
+				}*/
 			},
 			show: function () {
 				if (window.StatusBar) {
@@ -2713,9 +2699,9 @@ Application = function (p) {
 					//window.StatusBar.overlaysWebView(false);
 				}
 
-				if (window.NavigationBar) {
+				/*if (window.NavigationBar) {
 					window.NavigationBar.show()
-				}
+				}*/
 
 				self.mobile.statusbar.background()
 			},
