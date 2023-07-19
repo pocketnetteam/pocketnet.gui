@@ -23142,6 +23142,8 @@ Platform = function (app, listofnodes) {
 
         var unfocustime = null;
 
+        var haspip = false
+
         var fpauseel = function (e) {
             fpause(e)
         }
@@ -23190,8 +23192,24 @@ Platform = function (app, listofnodes) {
                 self.titleManager.clear();
             }
 
-            document.exitPictureInPicture()
-            self.app.mobile.backgroundMode(false)
+
+            if(window.cordova){
+
+                if(haspip){
+
+                    try{
+                        document.exitPictureInPicture()
+                    }catch(e){
+
+                    }
+                    
+                    haspip = false
+                }
+                    
+                
+                self.app.mobile.backgroundMode(false)
+
+            }
 
         }
 
@@ -23221,7 +23239,9 @@ Platform = function (app, listofnodes) {
     
                             var video = r.find('#remote')[0]
     
-                            video.requestPictureInPicture();
+                            video.requestPictureInPicture().then(() => {
+                                haspip = true
+                            })
     
                             self.app.mobile.backgroundMode(true)
                         }
