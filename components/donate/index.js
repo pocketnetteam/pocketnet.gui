@@ -12,31 +12,52 @@ var donate = (function(){
 
 		
 		var actions = {
+			getTransaction : function(amount, reciever){
+
+				var transaction = new Transaction()
+				
+					transaction.source.set([self.app.user.address.value])
+					transaction.reciever.set([
+						{
+							address : reciever,
+							amount : amount
+						}
+					])
+					transaction.feemode.set('include')
+					transaction.message.set('')
+
+				return transaction
+
+			},
 			send : function(amount, clbk){
 
 				globalpreloader(true)
 
-				self.app.platform.sdk.wallet.send(ed.receiver, null, amount, (err, d) => {
+				var transaction = actions.getTransaction(amount, ed.receiver)
+
+				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
+					calculatedFee : 0,
+					rejectIfError : true
+				}).then((action) => {
 
 					setTimeout(() => {
-						globalpreloader(false)
 
-						if(err){
-							sitemessage(err.text || err)
-						}
-	
-						else{
+						sitemessage(self.app.localization.e('wssuccessfully'))
+		
+						successCheck()
+		
+						if(clbk) clbk(action, action.transaction)
 
-							sitemessage(self.app.localization.e('wssuccessfully'))
-	
-							successCheck()
-	
-							if(clbk) clbk(d)
-						}
 					}, 300)
 
-					
+				}).catch(e => {
 
+					console.error('e', e)
+
+					sitemessage(e)
+
+				}).finally(() => {
+					globalpreloader(false)
 				})
 
 			}
@@ -65,31 +86,47 @@ var donate = (function(){
 
 				var val = Number(input.get() || '0');
 
-				if(ed.min){
+				if (ed.min){
 					if (val < ed.min){
-						sitemessage(self.app.localization.e('minPkoin', 0.1))
+						sitemessage(self.app.localization.e('minPkoin', 0.5))
                         return;
 					}
 				}
 
-				if (ed.send){
-					actions.send(val, (txid) => {
 
-						if (ed.clbk){
-							ed.clbk(val, txid)
-						}
+				var account = self.app.platform.actions.getCurrentAccount()
 
-						self.closeContainer()
-					})
-				}
-				else{
+				if (account){
+					var b = account.actualBalance()
+					var total = b.actual
 
-					if (ed.clbk){
-						ed.clbk(val)
+					if (val > total){
+						val = Number(total.toFixed(3))
 					}
 
-					self.closeContainer()
+					
+						if (ed.send){
+							actions.send(val, (action, txid) => {
+		
+								if (ed.clbk){
+									ed.clbk(val, action, txid)
+								}
+		
+								self.closeContainer()
+							})
+						}
+						else{
+		
+							if (ed.clbk){
+								ed.clbk(val)
+							}
+		
+							self.closeContainer()
+						}
+					
 				}
+
+				
 
 			})
 		}
@@ -103,37 +140,43 @@ var donate = (function(){
 
 				self.sdk.users.get(ed.receiver, function(){
 
-					self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
+					var account = self.app.platform.actions.getCurrentAccount()
 
-						self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (balance) {
+					if (account){
+						var b = account.actualBalance()
+						var total = b.actual
+						var balance = b.actual - b.tempbalance
 
-							input = new Parameter({
-								name: self.app.localization.e('wsamountof'),
-								type: 'NUMBER',
-								id: 'amount',
-								placeholder : '0',
-								value : ed.value || 0.5,
-								format: {
-									Precision: 3,
-									max : balance,
-									min : 0.1
-								}
-							})
-
-							var data = {
-								total, 
-								balance,
-								receiver : self.sdk.usersl.storage[ed.receiver],
-								sender : self.sdk.users.storage[self.sdk.address.pnet().address],
-								input
-							};
-
-							clbk(data);
-
-
+						input = new Parameter({
+							name: self.app.localization.e('wsamountof'),
+							type: 'NUMBER',
+							id: 'amount',
+							placeholder : '0',
+							value : Number((ed.value || 0.5).toFixed(3)),
+							format: {
+								Precision: 3,
+								max : total,
+								min : 0.5
+							}
 						})
 
-					})
+						var data = {
+							total, 
+							balance,
+							receiver : self.psdk.userInfo.get(ed.receiver),
+							sender : self.psdk.userInfo.getmy(),
+							input,
+							error : false
+						};
+
+						clbk(data);
+					}
+
+					else{
+						clbk({
+							error : true
+						});
+					}
 
 				}, true)
 

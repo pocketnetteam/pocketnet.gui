@@ -38,7 +38,7 @@
 				.transition(0.3s);
 
 				&.active {
-					color: #2F80ED;
+					color: rgb(var(--color-bg-ac-bright));
 					position: relative;
 
 					&::after {
@@ -48,8 +48,14 @@
 						left: 0;
 						width: 100%;
 						height: 2px;
-						background-color: #2F80ED;
+						background-color: rgb(var(--color-bg-ac-bright));
 					}
+				}
+
+
+				.count{
+					font-weight: 700;
+					color : rgb(var(--color-bg-ac-bright));
 				}
 
 			}
@@ -340,6 +346,46 @@
 
 				}
 			}
+		}
+	}
+
+	.action{
+		margin-bottom: 2 * @rhythm;
+
+		.statusRow{
+			align-items: center;
+			display: flex;
+
+			.status{
+				margin-right: @rhythm;
+			}
+		}
+
+		.typeRow{
+			align-items: center;
+			display: flex;
+
+			.type{
+				margin-right: @rhythm;
+
+				span{
+					font-weight: 700;
+				}
+			}
+		}
+
+		.previewRow{
+			.actioncomment{
+				margin-bottom: @rhythm;
+
+				span{
+					
+				}
+			}
+		}
+
+		.date{
+			opacity: 0.7;
 		}
 	}
 }

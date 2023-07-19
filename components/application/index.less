@@ -1,0 +1,84 @@
+@import "../../css/__cssvar";
+
+#application{
+    .captionRow{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding-top: var(--app-margin-top);
+        background: rgb(var(--background-hidden-layer));
+        height: calc(55px + var(--app-margin-top));
+        display: flex;
+        align-items: center;
+
+        .iconwrapper{
+            min-width: 55px;
+
+            .icon{
+                width: 55px;
+                height: 55px;
+                line-height: 55px;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+
+        .caption{
+            text-align: center;
+            flex-grow: 2;
+
+            span{
+                font-weight: 700;
+            }
+        }
+    }
+    .iframewrapper{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top : calc(55px + var(--app-margin-top));
+        bottom : 0;
+        z-index: 1;
+        background: rgb(var(--background-hidden-layer));
+        
+        iframe{
+            opacity: 0;
+            .transition(0.3s, opacity);
+        }
+
+        .loadingIcon{
+            position: absolute;
+            left : 0;
+            top : 0;
+            bottom : 0;
+            right : 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .appicon{
+                width: 96px;
+                height: 96px;
+                margin-bottom: 48px;
+            }
+        }
+        
+        &.loaded{
+            iframe{
+                opacity: 1;
+            }
+            
+            .loadingIcon{
+                display: none;
+            }
+        }
+    }
+    iframe{
+        width: 100%;
+        height: 100%;
+        border: 0;
+        outline: 0;
+    }
+
+}

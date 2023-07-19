@@ -29,34 +29,13 @@ var recommendations = (function(){
 		}
 
 		var renders = {
-			list : async function(contents, clbk){
+			list : function(contents, clbk){
 				if(!el.c) return;
 
 				self.app.Logger.info({
 					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
 					actionValue: globalParams.v,
 				});
-
-				const videoListData = [];
-
-				const videoUrls = contents.map(c => c.url);
-				const videoInfoRequests = await app.platform.sdk.videos.info(videoUrls);
-
-				for (let i = 0; i < contents.length; i++) {
-					const postInfo = contents[i];
-					const videoUrl = postInfo.url;
-					const videoData = {};
-
-					const isFromCache = !videoInfoRequests[i];
-
-					const videoInfo = app.platform.sdk.videos.storage[videoUrl];
-
-					videoData.post = postInfo;
-					videoData.info = videoInfo;
-					videoData.fromCache = isFromCache;
-
-					videoListData.push(videoData);
-				}
 
 				self.shell({
 
@@ -65,38 +44,13 @@ var recommendations = (function(){
 					el : el.c.find('.listWrapper'),
 					inner : append,
 					data : {
-						contents: videoListData,
+						contents: contents,
 						empty : _.isEmpty(rendered)
 					}
 
 				}, function(_p) {
 
 					if (!_p || !_p.el) return;
-
-					_p.el.find('.recoVideoDiv').click(function() {
-		
-						var txid = $(this).data('txid');
-
-						if (txid) {
-
-							self.app.Logger.info({
-								actionId: 'RECOMMENDATION_SELECTED',
-								actionValue: txid
-							});
-
-							if (ed.open){
-								ed.open(txid)
-							}
-							else{
-								self.nav.api.go({
-									href : 'index?video=1&v=' + txid,
-									history : true,
-									open : true
-								})
-							}
-						}
-
-					});
 
 					if(clbk) clbk(_p)
 
@@ -108,9 +62,12 @@ var recommendations = (function(){
 
 				_.each(contents, function(content) { 
 
-					var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
+					var video = (app.platform.sdk.videos.storage[content.url] || {}).data || {}
 
-					var el = p.el.find('.recoVideoDiv[data-txid="'+content.txid+'"]')
+					var el = p.el.find('.recoVideoDiv[txid="'+content.txid+'"]')
+
+
+					
 
 
 					if (el.length){
@@ -126,6 +83,13 @@ var recommendations = (function(){
 							var text = video.views + ' ' + pluralform(video.views,[self.app.localization.e('countview'), self.app.localization.e('countviews')])
 
 							el.find('.views').removeClass('dummy').html(text)
+						}
+
+						if (typeof video.duration != 'undefined'){
+
+							var text = secInTime(video.duration)
+
+							el.find('.durationWrapper').removeClass('dummy').html(text)
 						}
 
 						if(_.isEmpty(video)){
@@ -159,7 +123,7 @@ var recommendations = (function(){
 
 		var filter = function(recommendation){
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
+			var me = self.psdk.userInfo.getmy()
 
 
 			if (me && me.relation(recommendation.address, 'blocking') ){
@@ -224,29 +188,33 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+					self.app.platform.sdk.node.shares.users(recommendations, function(){
 
-					_.each(recommendations, function(r, i){
-						places[r.txid] = i + 1
-					})
 
-					if (ed.sorting){
-						recommendations = ed.sorting(recommendations)
-					}
+						_.each(recommendations, function(r, i){
+							places[r.txid] = i + 1
+						})
 
-					if (ed.filter){
-						recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
-					}
+						if (ed.sorting){
+							recommendations = ed.sorting(recommendations)
+						}
 
-					recommendations = sorting(_.filter(recommendations, filter))
+						if (ed.filter){
+							recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
+						}
 
+						recommendations = sorting(_.filter(recommendations, filter))
+
+					
+						_.each(recommendations, function(recommendation){
+							rendered[recommendation.txid] = true
+						})
 				
-					_.each(recommendations, function(recommendation){
-						rendered[recommendation.txid] = true
-					})
-			
 
-					if (clbk)
-						clbk(recommendations);
+						if (clbk)
+							clbk(recommendations);
+
+					})
 
 				});
 			},
@@ -318,6 +286,32 @@ var recommendations = (function(){
 			else{
 				self.app.events.scroll['recommendations'] = events.scrollapp
 			}
+
+
+			el.c.on('click', '.recoVideoDiv', function() {
+		
+				var txid = $(this).attr('txid');
+
+				if (txid) {
+
+					self.app.Logger.info({
+						actionId: 'RECOMMENDATION_SELECTED',
+						actionValue: txid
+					});
+
+					if (ed.open){
+						ed.open(txid)
+					}
+					else{
+						self.nav.api.go({
+							href : 'index?video=1&v=' + txid,
+							history : true,
+							open : true
+						})
+					}
+				}
+
+			});
 		}
 
 		var removeEvents = function(){

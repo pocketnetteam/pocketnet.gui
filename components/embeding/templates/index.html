@@ -47,12 +47,17 @@
 		</div>
 	<% } %>
 	<% if(type == 'donate') {
-		var senderImg = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image');
-		var senderName = deep(app, 'platform.sdk.usersl.storage.' + sender + '.name');
-		var senderLetter = senderName ? senderName[0] : '';
-		var receiverImg = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');	
-		var receiverName = deep(app, 'platform.sdk.usersl.storage.' + receiverName + '.image');	
-		var receiverLetter = receiverName ? receiverName[0] : '';
+
+		var senderUserInfo = psdk.userInfo.getShortForm(sender)
+		var recieverUserInfo = psdk.userInfo.getShortForm(receiver)
+
+		var senderImg = senderUserInfo.image;
+		var senderName = senderUserInfo.name;
+		var senderLetter = senderUserInfo.letter;
+
+		var receiverImg = recieverUserInfo.image;	
+		var receiverName = recieverUserInfo.name;	
+		var receiverLetter = recieverUserInfo.letter;
 
 	%>
 		<div class="donate pg">

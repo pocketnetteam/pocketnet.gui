@@ -1,5 +1,5 @@
 #wallet {
-  min-height: 600px;
+  min-height: 100vh;
   padding-bottom: 4em;
   position: relative;
 }
@@ -775,6 +775,9 @@
   color: rgb(var(--color-txt-gray-dark));
   font-weight: 700;
 }
+#wallet .deposit .depositaddress .adrwrapper .cell {
+  text-align: center;
+}
 #wallet .deposit .actionbody textarea {
   padding: 1em;
 }
@@ -989,8 +992,14 @@
   display: block;
 }
 .walletwindow #wallet .slide {
-  margin-top: 1em;
+  margin-top: 0;
   padding-top: 1em;
+  /*._stepclose{
+				display: none;
+			}*/
+  /*._stepback{
+				display: none;
+			}*/
 }
 .walletwindow #wallet .slide .subcaptionWrapperTable {
   width: auto;
@@ -1065,12 +1074,6 @@
 .walletwindow #wallet .slide .linksubcaption.res {
   color: rgb(var(--color-txt-gray));
 }
-.walletwindow #wallet .slide ._stepclose {
-  display: none;
-}
-.walletwindow #wallet .slide ._stepback {
-  display: none;
-}
 .walletwindow #wallet .slide ._subcaptionlevel {
   padding-left: 0.5em;
   color: rgb(var(--color-txt-ac));
@@ -1079,15 +1082,31 @@
   padding-top: 0;
   margin-top: 0;
 }
+.walletwindow #wallet .slide:nth-last-child(1) {
+  padding-bottom: 0;
+}
 .walletwindow #wallet .total {
   padding: 0;
   overflow: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.walletwindow #wallet .total::-webkit-scrollbar {
+  display: none!important;
+}
+.walletwindow #wallet .total .tttl {
+  display: flex;
+  align-items: center;
+  width: 300%;
 }
 .walletwindow #wallet .total .totalItem {
+  scroll-snap-align: center;
   padding: 0 1em;
   padding-bottom: 0.5em;
-  float: left;
-  width: 100%;
+  float: none;
+  width: 33%;
 }
 .walletwindow #wallet .total .totalItem .canvasWrapper {
   width: 100%;
@@ -1189,6 +1208,7 @@
 }
 .walletwindow #wallet .buypkoin {
   padding: 0.5em;
+  border-top: 0;
 }
 .walletwindow #wallet .buypkoin .ways {
   display: flex;

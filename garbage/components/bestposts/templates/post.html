@@ -1,17 +1,19 @@
 <% 
 
-var me = null;
-
-if(user.address.value)
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+var me = psdk.userInfo.getmy();
 
 	var _class='';
 	var address = u.address;
-	var src =  deep(app, 'platform.sdk.usersl.storage.'+address + '.image');
 
-	var name = deep(app, 'platform.sdk.usersl.storage.'+address + '.name');
+	var userInfo = psdk.userInfo.get(address)
+
+	var src =  userInfo.image;
+
+	var name = app.platform.api.clearname(userInfo.name || address) 
+	
 	var letter = name ? name[0] : ''; 
-	var r = deep(app, 'platform.sdk.usersl.storage.'+address + '.reputation');
+
+
 	var message = filterXSS(u.message, {
 		stripIgnoreTag : true,
 		whiteList: {
@@ -57,7 +59,7 @@ if(user.address.value)
 
 							<% if (r) {%>
 								<div class="reputation">
-									<%- Number(r).toFixed(0)  %>
+									<%- compressedNumber(userInfo.reputation, 1) %>
 								</div>
 							<% } %>
 

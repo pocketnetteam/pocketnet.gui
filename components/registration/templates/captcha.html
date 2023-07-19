@@ -1,5 +1,9 @@
 <div class="ucaptcha">
-    <div class="subcaption"><%= app.pkoindisable ? e('e13109lg') : e('e13109')%></div>
+  <% if(hexCaptcha) {%>
+    <div class="subcaption"><%=e('e13109h')%></div>
+  <% } else { %>
+    <div class="subcaption"><%=e('e13109')%></div>
+  <% } %>
 
 
 

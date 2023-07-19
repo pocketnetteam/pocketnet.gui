@@ -1,100 +1,104 @@
 <div id="<%-module.map.id%>" class="testpocketnetbg">
 
 
-	<div class="upbuttonwrapper">
-	</div>
+	
 
-	<div class="maincntwrapperOvf">
-		<div class="maincntwrapper" id="maincntwrapper">
+	<div class="vdivcontainer">
+		<div class="maincntwrapperOvf">
+			<div class="maincntwrapper" id="maincntwrapper">
+				<div class="rightchatspacer">
+					<div class="work adj">
+
+						<div class="leftpanelcell noswipepnt">
+							<div class="cnt fxd">
+								<div class="leftpanel">
+										
+								</div>
+							</div>
+						</div>
+
+						<div class="mainpanelcell">
+							<div class="cnt fxd">
+								<div class="panel">
+								</div>
+							</div>
+						</div>
+
+						<div class="lentacell">
+
+							<div class="cnt">
+
+								<% 
+
+									var h = 'hidden'
+
+									if(state && !parameters().r) {
+
+										h = ''
+										
+									} 
+
+								%>
+
+								<div class="menuwrapper">
+									
+								</div>
+
+								<div class="bgCaption sec <%-h%>">
+									<div class="share">
+									</div>
+								</div>
+
+								<div class="topvideosWrapper">
+									<div class="wrpcn"></div>
+								</div>
+
+								<div class="lentaWrapper">
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="opensvi">
+
+			<div class="upbackbuttonwrapper">
+			</div>
 			<div class="rightchatspacer">
 				<div class="work adj">
 
-					<div class="leftpanelcell noswipepnt">
+					<!--<div class="leftpanelsvicell">
 						<div class="cnt fxd">
-							<div class="leftpanel">
-									
+							<div class="leftpanelsvi">
+								<button elementsid="backtolenta" class="button small backtolenta"><i class="fas fa-caret-left"></i> <%=e('back')%></button>
 							</div>
 						</div>
-					</div>
-
-					<div class="mainpanelcell">
+					</div>-->
+					
+					<div class="mainpanelsvicell">
 						<div class="cnt fxd">
-							<div class="panel">
-							</div>
-						</div>
-					</div>
-
-					<div class="lentacell">
-
-						<div class="cnt">
-
-							<% 
-
-								var h = 'hidden'
-
-								if(state && !parameters().r) {
-
-									h = ''
-									
-								} 
-
-							%>
-
-							<div class="menuwrapper">
+							<div class="panelsvi">
 								
 							</div>
+						</div>
+					</div>
 
-							<div class="bgCaption sec <%-h%>">
-								<div class="share">
-								</div>
+					<div class="lentacellsvi">
+						<div class="cnt">
+							<div class="renderposthere">
 							</div>
-
-							<div class="topvideosWrapper">
-								<div class="wrpcn"></div>
-							</div>
-
-							<div class="lentaWrapper">
-							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
-	<div class="opensvi">
-
-		<div class="upbackbuttonwrapper">
-		</div>
-		<div class="rightchatspacer">
-			<div class="work adj">
-
-				<!--<div class="leftpanelsvicell">
-					<div class="cnt fxd">
-						<div class="leftpanelsvi">
-							<button elementsid="backtolenta" class="button small backtolenta"><i class="fas fa-caret-left"></i> <%=e('back')%></button>
-						</div>
-					</div>
-				</div>-->
-				
-				<div class="mainpanelsvicell">
-					<div class="cnt fxd">
-						<div class="panelsvi">
-							
-						</div>
-					</div>
-				</div>
-
-				<div class="lentacellsvi">
-					<div class="cnt">
-						<div class="renderposthere">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
+	<div class="upbuttonwrapper">
 	</div>
 	
 	<% if(state) {%>

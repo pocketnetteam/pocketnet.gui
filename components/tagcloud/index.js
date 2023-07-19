@@ -10,6 +10,8 @@ var tagcloud = (function(){
 
 		var actions = {
 			showhideclear : function(){
+				if(!el.cleartags) return
+				
 				var hasc = self.app.platform.sdk.categories.gettags(null, 'onlytags').length
 
 				if (hasc){

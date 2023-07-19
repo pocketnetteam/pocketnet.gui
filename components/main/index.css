@@ -20,6 +20,12 @@
 #main .menuwrapper[fmode="filters"] [fmode="filters"] {
   display: block;
 }
+#main .menuwrapper[fmode="search"] .mode {
+  display: none;
+}
+#main .menuwrapper[fmode="search"] .mode[savesearch="true"] {
+  display: block;
+}
 #main .menuwrapper .panelitems {
   height: 100%;
   padding-right: 0.5em;
@@ -241,6 +247,20 @@
   margin-right: 0;
   padding-top: 0.5em;
 }
+#main.videomain .vdivcontainer {
+  display: flex;
+  width: 200%;
+  align-items: flex-start;
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+#main.videomain .vdivcontainer > div {
+  width: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
 #main.videomain .mainpanelsvicell,
 #main.videomain .mainpanelcell {
   display: none;
@@ -277,11 +297,11 @@
 #main.videomain .leftpanelsvicell {
   width: 102px;
 }
-#main .maincntwrapper {
-  -moz-transition: transform 0.3s;
-  -o-transition: transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+#main .maincntwrapperOvf {
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 #main .opensvi {
   display: none;
@@ -302,6 +322,10 @@
   -o-transition-delay: 0.5s;
   -moz-transition-delay: 0.5s;
   transition-delay: 0.5s;
+}
+#main .upbackbuttonwrapper .upbutton {
+  position: absolute;
+  top: 0;
 }
 #main .upbuttonwrapper {
   opacity: 1;
@@ -331,13 +355,27 @@
 #main.opensvishowed .opensvi .backtolenta {
   opacity: 1;
 }
-#main.opensvishowed .maincntwrapper {
-  position: fixed;
-  transform: translateX(-100%);
+#main.opensvishowed .maincntwrapperOvf {
+  opacity: 0;
+}
+#main.opensvishowed .vdivcontainer {
+  transform: translateX(-50%);
 }
 #main.opensvishowed .upbuttonwrapper {
   display: none;
   opacity: 0;
+}
+#main.opensvishowed.opensvishowedend .maincntwrapperOvf {
+  height: 100px;
+}
+#main.opensvishowed.opensvishowedend .maincntwrapper {
+  display: none;
+}
+#main.opensvishowedWillremoved .vdivcontainer {
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  -webkit-transition: 0s;
+  transition: 0s;
 }
 #main .renderposthere #post {
   background: transparent;

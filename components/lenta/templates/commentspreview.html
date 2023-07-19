@@ -8,8 +8,11 @@
 	<div class="image">
 
 		<% 
-			var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
-			var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
+
+			var info = psdk.userInfo.get(share.address) || {}
+
+			var src = info.image;  
+			var name = app.platform.api.clearname(info.name || address); 
 			var letter = name ? name[0] : '';
 		%>
 

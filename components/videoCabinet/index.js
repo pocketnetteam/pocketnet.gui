@@ -232,8 +232,8 @@ var videoCabinet = (function () {
 			},
 
 			getTotalRatings() {
-				if (self.app.platform.sdk.address.pnet()) {
-					var address = self.app.platform.sdk.address.pnet().address;
+				if (self.app.user.address.value) {
+					var address = self.app.user.address.value;
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video'], {})
 						.then((r) => {
@@ -603,7 +603,7 @@ var videoCabinet = (function () {
 						})
 						.then((videos) =>
 							actions.getBlockchainPostByVideos(
-								videos.map((video = '') => encodeURIComponent(video)),
+								videos.map((video = '') => (video)),
 							),
 						)
 						.then(() => {
@@ -1320,12 +1320,11 @@ var videoCabinet = (function () {
 											const removePost = (share, clbk) => {
 												share.deleted = true;
 
-												const ct = new Remove();
-												ct.txidEdit = share.txid;
+												/*const ct = new Remove();
+												ct.txidEdit = share.txid;*/
 
 												self.app.platform.sdk.node.shares.delete(
 													share.txid,
-													ct,
 													function (err, alias) {
 														if (!err) {
 															if (clbk) {
@@ -1679,8 +1678,7 @@ var videoCabinet = (function () {
         );
             },
       load() {
-        const unpostedVideosByAddress =
-          localStorage.getItem('unpostedVideos') || '{}';
+        const unpostedVideosByAddress = localStorage.getItem('unpostedVideos') || '{}';
 
 				try {
 					unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
@@ -1694,39 +1692,7 @@ var videoCabinet = (function () {
 					unpostedVideosParsed = {};
 				}
 
-				// const postingShares = self.sdk.relayTransactions
-				//   .withtemp('share')
-				//   .map((ps) => {
-				//     const s = new pShare();
-				//     s._import(ps, true);
-				//     s.temp = true;
-
-				//     if (ps.relay) s.relay = true;
-				//     if (ps.checkSend) s.checkSend = true;
-
-				//     s.address = ps.address;
-
-				//     return s;
-				//   });
-
-				// const postingVideos = postingShares
-				//   .filter((share) => share.itisvideo())
-				//   .map((share) => {
-				//     videosInTemp[share.url] = true;
-
-				//     return share.url;
-				//   });
-				// if (unpostedVideosParsed[self.app.user.address.value]) {
-				//   unpostedVideosParsed[self.app.user.address.value].push(
-				//     ...postingVideos,
-				//   );
-				// } else {
-				//   unpostedVideosParsed[self.app.user.address.value] = [
-				//     ...postingVideos,
-				//   ];
-				// }
-
-        // videosInPosting = [...postingVideos];
+			
 			},
 			update() {},
 

@@ -1,0 +1,75 @@
+@import "../../css/__cssvar";
+
+#requestpermission{
+
+    .caption{
+        margin-top: 2 * @rhythm;
+
+        span{
+            font-size: 1.5em;
+        }
+    }
+    .permissionForm{
+        padding-top: 4 * @rhythm;
+        padding-bottom: 4 * @rhythm;
+    }
+
+    .permissionDescription{
+        span{
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+    }
+
+    .panel{
+        margin-top: 8 * @rhythm;
+    }
+
+    .applicationInfo{
+        display: flex;
+        align-items: center;
+        .appicon{
+            height: 22px;
+            width: 22px;
+        }
+
+        .appname{
+            margin-left: @rhythm;
+        }
+    }
+
+    .wrapper{
+        padding-left: @rhythm;
+        padding-right: @rhythm;
+    }
+
+    .paymentForm{
+        .reciever{
+            padding : @rhythm;
+            border-radius: 12px;
+            background: rgb(var(--background-secondary-theme));
+            margin-bottom: @rhythm;
+            display: flex;
+            align-items: center;
+
+            .userIcon{
+                min-width: 44px;
+            }
+
+            .userName{
+                flex-grow: 2;
+                margin-left: @rhythm;
+            }
+
+            .amount{
+                margin-left: auto;
+                padding-right: @rhythm;
+
+                span{
+                    font-weight: 700;
+                    color : rgb(var(--color-good));
+                }
+            }
+        }
+    }
+}

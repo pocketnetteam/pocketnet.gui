@@ -187,10 +187,10 @@ fs.exists(mapJsPath, function (exists) {
 			path : './js/joinfirst.min.js'
 		}
 
-		var joinlast = {
+		/*var joinlast = {
 			data : "",
 			path : './js/joinlast.min.js'
-		}
+		}*/
 
 		var vendor = {
 			data : "",
@@ -260,7 +260,7 @@ fs.exists(mapJsPath, function (exists) {
 
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss' && !_m.ignoreMinimize) return true;
 			
 		})
 
@@ -396,7 +396,7 @@ fs.exists(mapJsPath, function (exists) {
 	
 							var arf = _.clone(m.__sourcesfirst || []);
 	
-							var arl = _.clone(m.__sourceslast || []);
+							//var arl = _.clone(m.__sourceslast || []);
 	
 							var ar = _.clone(m.__sources || []);
 								ar.push(modules.path.replace('./', ''));
@@ -420,23 +420,25 @@ fs.exists(mapJsPath, function (exists) {
 										joinScripts(ar, join, function(){
 	
 											console.log("joinScripts DONE")
+
+											joinCss(function(){
 	
-											joinScripts(arl, joinlast, function(){
+												console.log("joinCss DONE")
+
+												createTemplates().catch(e => {
+													
+												}).then( r => {
+													if(_clbk) _clbk()
+												})
+											})
+	
+											/*joinScripts(arl, joinlast, function(){
 	
 												console.log("joinScriptsLast DONE")
 	
-												joinCss(function(){
+												
 	
-													console.log("joinCss DONE")
-	
-													createTemplates().catch(e => {
-														
-													}).then( r => {
-														if(_clbk) _clbk()
-													})
-												})
-	
-											})
+											})*/
 											
 										});
 	
@@ -483,7 +485,7 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var pre2 = data
+									var pre2 = data.toString().replace(/\.\.\/webfonts/g, 'fontawesome/webfonts')
 
 									try{
 										pre2 = uglifycss.processString(data, {
@@ -956,7 +958,8 @@ fs.exists(mapJsPath, function (exists) {
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
 								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
 								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
+								///remove peertube in clbk
+								//JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
@@ -992,7 +995,7 @@ fs.exists(mapJsPath, function (exists) {
 									CACHED_FILES += `'${filepath}',\n`;
 								})
 
-								_.each(m.__sourceslast, function(source){
+								/*_.each(m.__sourceslast, function(source){
 
 									var filepath = source;
 
@@ -1002,7 +1005,7 @@ fs.exists(mapJsPath, function (exists) {
 
 									JSPOST += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${filepath}',\n`;
-								})
+								})*/
 	
 								_.each(m.__css, function(source){
 									CSS += '<link rel="stylesheet" href="'+source+'?v='+rand(1, 999999999999)+'">\n';

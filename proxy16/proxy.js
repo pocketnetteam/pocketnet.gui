@@ -8,6 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
+
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -1192,6 +1193,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
+
 			return {
 				status: status,
 				test : self.test,
@@ -1204,11 +1206,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
 				admins: settings.admins,
+				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : settings.server.hexCaptcha || false,
 				},
 
 				memory: mem,
@@ -1416,8 +1420,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			console.log('method', method)
-
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
@@ -1449,12 +1451,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
-
-					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -1522,6 +1522,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.getmostcommentedfeed
+	
 
 	self.checkSlideAdminHash = function(hash) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
@@ -1583,7 +1586,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
 
-
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1637,6 +1639,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
+							
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
@@ -1696,6 +1699,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
+
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
 								return new Promise((resolve, reject) => {
@@ -1727,6 +1731,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						.then((data) => {
 
+							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
 								server.cache.set(method, cparameters, data, node.height());
 							}
@@ -2100,9 +2105,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			info: {
 				path: '/info',
 				action: function (message) {
+					const info = self.kit.info(true);
+
+					//info.captcha.hexCaptcha = true;
+					
 					return Promise.resolve({
 						data: {
-							info: self.kit.info(true),
+							info: info,
 						},
 					});
 				},
@@ -2485,20 +2494,87 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: self.test ? captcha.text : null, ///
+							result: null, //self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
 				},
 			},
+			
+			getHex: {
+				authorization: 'signature',
+				path: '/captchaHex',
+				
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha]?.done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+
+					var hexCaptcha = null
+
+					try{
+						hexCaptcha = require('hex-captcha');
+					}catch(e){
+						return Promise.reject('hex-captcha not setup')
+					}
+
+					
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+					
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 24px Monospace'
+						}
+					});
+
+					captcha.id = f.makeid();
+					
+					return new Promise((resolve, reject) => {
+						captcha.generate().then(({ frames, layers }) => {
+
+							console.log('captcha', captcha)
+
+							captchas[captcha.id] = {
+								text: captcha.text.toLowerCase(),
+								angles: captcha.angles,
+								id: captcha.id,
+								done: false,
+								time: f.now(),
+							};
+							
+							resolve({
+								data: {
+									id: captcha.id,
+									frames: frames,
+									overlay: layers,
+									angles : null, //self.test ? captcha.angles : null,
+									result: null, //self.test ? captcha.text : null, ///
+									done: false,
+									hex : true
+								}
+							});
+						});
+					});
+				},
+			},
 
 			make: {
-				authorization: 'signaturelight',
+				authorization: 'signature',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
+
+					console.log('captcha', captcha, captchas)
 
 					var captcha = captchas[captcha];
 
@@ -2515,7 +2591,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					}
 
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6] 
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
+					}
+
 					if (captcha.text == text.toLocaleLowerCase()) {
+
+						
+
 						captcha.done = true;
 
 						delete captchaip[ip];
@@ -2567,17 +2662,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: self.test ? false : 'signature',
+				authorization: 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
-					if (settings.server.captcha && !self.test) {
+					if (settings.server.captcha/* && !self.test*/) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
 					}
 
 					return self.wallet
-						.addqueue(key || 'registration', address, ip)
+						.addqueue('registration', address, ip)
 						.then((r) => {
 
 							if (settings.server.captcha) {
@@ -2596,7 +2691,36 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			freebalance: {
+				path: '/free/balance',
+				authorization: self.test ? false : 'signature',
+				action: function ({ captcha, key, address, ip }) {
 
+					if (settings.server.captcha /*&& !self.test*/) {
+						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+							return Promise.reject('captcha');
+						}
+					}
+
+					return self.wallet
+						.addqueue(key, address, ip)
+						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 
 			clearexecuting: {
 				path: '/wallet/clearexecuting',

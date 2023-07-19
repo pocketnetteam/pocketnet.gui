@@ -50,7 +50,7 @@
 	.tgsWrapperMain{
 
 		#taginput{
-			margin-top : @rhythm;
+			margin-top: @rhythm;
 
 			.mobsearch{
 				cursor: pointer;
@@ -151,6 +151,8 @@
 		}
 
 		.postpanel{
+			margin-left: auto;
+			width: auto;
 			>div{
 				&.postWrapper{
 					display: none;
@@ -170,7 +172,7 @@
 			bottom : 0;
 			opacity: 0.5;
 			padding : 0;
-			padding-top: @rhythm;
+			padding-top: 0;
 			left: 50%;
 
 			.panel>div{
@@ -600,7 +602,6 @@
 					}
 				}
 			}
-			
 
 		}
 
@@ -825,9 +826,15 @@
     
     .postlineWrapper{
 		margin-top : @rhythm;
+		display: flex;
+		align-items: center;
+
     }   
 
 	.postpanel{
+		display: flex;
+		align-items: center;
+		width: 100%;
 
 		.language{
 			font-weight: 700;
@@ -846,10 +853,11 @@
 		}
 		
 		>div{
-			vertical-align: middle;
+			align-items: center;
+			display: flex;
 
 			&.postWrapper{
-				width: 250px;
+				margin-left: auto;
 				padding-right : 0;
 				text-align: right;
 
@@ -880,7 +888,8 @@
 		}
 
 		.panel{
-			height: 35px;
+			align-items: center;
+			display: flex;
 	
 			.hide{
 				display: none;
@@ -891,9 +900,8 @@
 				height: 32px;
 				border-radius: 50%;
 				line-height: 32px;
-				color : rgb(var(--color-txt-gray-dark));
-				white-space: nowrap;
-				float: left;
+				color : rgb(var(--color-txt-gray));
+			
 				text-align: center;
 				font-size: 0.8em;
 				margin-right : 1 * @rhythm;
@@ -1105,6 +1113,8 @@
                 position: absolute;
 				padding-left: 2 * @rhythm;
 				bottom : @rhythm;
+				left : 0;
+				right : 0;
 				background: rgb(var(--background-secondary-theme));
 			}
 
@@ -1306,7 +1316,7 @@ html.mobileview{
 
 		.repostShareWrapperInns{
 			border-radius: 5px;
-			border : 1px solid rgba(var(--neutral-grad-2), 0.5);
+			/*border : 1px solid rgba(var(--neutral-grad-2), 0.5);*/
 			background: rgb(var(--background-total-theme));
 			margin-bottom: @rhythm;
 
@@ -1319,6 +1329,7 @@ html.mobileview{
 				top : 2 * @rhythm;
 			}
 
+			
 			
 		}	
 
@@ -1850,6 +1861,7 @@ html.mobileview{
 					
 
 					.panel{
+						display: block;
 						height: auto;
 						.fileUploader ,
 						.elContent{

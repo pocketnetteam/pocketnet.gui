@@ -976,9 +976,6 @@ html.mobileview.fullscreen #post #comments {
   margin: 0 auto;
   background: transparent;
 }
-.wnd.postwindow #post .postWrapper {
-  overflow: hidden;
-}
 .wnd.postwindow #post .nextpost {
   display: block;
 }

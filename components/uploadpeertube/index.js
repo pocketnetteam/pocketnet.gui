@@ -470,7 +470,7 @@ var uploadpeertube = (function () {
 					 *       future. Must be tested...
 					 */
 
-					if (window.cordova || isDeviceMobile()) {
+					if (window.cordova || isMobile()) {
 						/** Mobile slow 3G chunking */
 						return 256 * 1024;
 					}
@@ -493,7 +493,8 @@ var uploadpeertube = (function () {
 						//processing(false)
 
 						uploading = false
-
+						
+						
 						add(response.videoLink);
 
 						wndObj.close();

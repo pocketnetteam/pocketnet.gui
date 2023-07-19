@@ -168,7 +168,6 @@ var Wallet = function(p){
             }
             else{
 
-                
             }
 
         })

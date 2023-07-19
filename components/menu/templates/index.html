@@ -1,6 +1,6 @@
 <%
 
-var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && app.platform.sdk.user.myaccauntdeleted();
+var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 
 %>
@@ -123,7 +123,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 							<% if(!deleted) {%>
 
-								<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
+								<!--<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
 									<div class="item  right onlyicon keyexport" events="keyexport">
 
 										<div class="icon">
@@ -137,7 +137,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 										</div>
 
 									</div>
-								</div>
+								</div>-->
 
 
 								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper">
@@ -147,7 +147,10 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 											<div class="icn">
 												<i class="far fa-heart"></i>
 											</div>
+											<div class="amount">
+											</div>
 										</div>
+										
 
 									</div>
 								</div>
@@ -210,52 +213,9 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							</div>
 
 							<div class="items">
-								<div elementsid="menu_user" class="item  right user unselec">
+								<div elementsid="menu_user" class="item right user unselec userinfoWrapper">
 
-									<% 
 									
-										var src = deep(app, 'platform.sdk.user.storage.me.image')  
-
-										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-										var letter = name ? name[0] : ''
-
-
-										if(deleted){
-											src = ''
-											letter = ''
-										}
-
-
-									%>
-									
-									<div class="icon">
-
-
-										
-										<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-											<div class="usericon" contain="none" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
-
-												<% if(!src && letter) {%>
-
-													<span class="letter">
-														<%-letter.toUpperCase()%>
-													</span>
-
-												<% } else if (!src) { %>
-		
-													<i class="far fa-user"></i>
-
-												<% } %>
-
-												<% if(app.platform.ui.markUser && !deleted) {%>
-
-													<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
-				
-												<% } %>
-											
-											</div>
-										</a>
-									</div>
 
 								</div>
 								

@@ -315,7 +315,6 @@ var streampeertube = (function () {
         offScroll: true,
         noInnerScroll: true,
         class: 'streampeertube',
-        allowHide: true,
         noCloseButton: true,
         noButtons: true,
 

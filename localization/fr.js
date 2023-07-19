@@ -523,7 +523,10 @@ _l.e13106 = "Nœud "+appname+""
 _l.e13107 = "La gestion des nœuds peut ètre effectuèe avec Application"
 _l.e13108 = "Il n'y a pas de connexion avec l'interface proxy Electron"
 
+
 _l.e13109 = "Veuillez entrer les mots dans l'image pour recevoir Pocketcoin et continuer l'inscription"
+_l.e13109h = "Cliquez sur les hexagones pour assembler l'image, puis saisissez du texte sur l'image résultante"
+
 _l.e13110 = "Entrez les mots"
 _l.next = "Suivant"
 _l.refresh = "Rafraîchir"

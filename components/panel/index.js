@@ -56,7 +56,7 @@ var panel = (function(){
 				})
 			},
 
-			bestposts : function(){
+			/*bestposts : function(){
 				
 
 				self.nav.api.load({
@@ -76,7 +76,7 @@ var panel = (function(){
 					}
 
 				})
-			},
+			},*/
 	
 
 			lastcomments : function(clbk){

@@ -105,7 +105,15 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImagesCl(p.el, p.bgImages)
+
+				if(p.inner == replaceWith){
+					bgImagesCl(p.el.parent(), p.bgImages)
+				}
+				else{
+					bgImagesCl(p.el, p.bgImages)
+				}
+
+				
 			}
 
 			if (typeof clbk  === 'function'){
@@ -266,7 +274,11 @@ nModule = function(){
 
 		p.inner || (p.inner = html);	
 
-		p.inner(p.el, _html);
+		var nel = p.inner(p.el, _html);
+
+		if (nel) {
+			p.el = nel
+		}
 
 		if (p.display){
 			p.el.css("display", p.display)
@@ -289,6 +301,8 @@ nModule = function(){
 			p.data.module = self;	
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
+			p.data.psdk = self.app.platform.psdk
+
 
 			try{
 				p.rendered = template(p.data);
@@ -322,7 +336,18 @@ nModule = function(){
 
 		if(loading.templates[p.name]){
 
-			retry(
+			loading.templates[p.name].then(() => {
+				if (clbk)
+					clbk(self.storage.templates[p.name]);
+			}).catch(e => {
+				if (p.fail){
+					p.fail()
+				}
+			})
+
+			return
+
+			/*retry(
 				function(){
 					return !loading.templates[p.name];
 				},
@@ -331,7 +356,7 @@ nModule = function(){
 				}
 			)
 
-			return
+			return*/
 		}
 
 		if (self.storage.templates[p.name] || p.clear)
@@ -364,61 +389,79 @@ nModule = function(){
 				
 			}
 
-			loading.templates[p.name] = true;
+			loading.templates[p.name] = new Promise((resolve, reject) => {
 
-			var url;
-			var appPath = (self.map.pathtpl || self.map.path || "");	
+				var url;
+				var appPath = (self.map.pathtpl || self.map.path || "");	
 
-			if (_Node){
-				appPath = 'https://bastyon.com/'
-			}		
+				if (_Node){
+					appPath = 'https://bastyon.com/'
+				}		
 
-			if(p.common){
+				if(p.common){
 
-				url = appPath + 'common';
-
-			}
-			else
-			{
-				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
-			}
-
-			var vs = '131'
-
-			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
-			}
-
-			url += '/templates/' + p.name + '.html?v=' + vs;
-
-			
-			self.ajax.run({
-				url : url,
-				type : 'GET',
-				dataType : 'html',
-				success : function(tpl){
-
-					try{
-						self.storage.templates[p.name] = _.template(tpl);
-						loading.templates[p.name] = false;
-					}
-
-					catch(e){
-						console.error(e)
-					}
-
-					if (clbk) clbk(self.storage.templates[p.name]);
-					
-
-				},
-				fail : function(){
-
-					if (p.fail){
-						p.fail()
-					}
+					url = appPath + 'common';
 
 				}
-			});
+				else
+				{
+					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
+				}
+
+				var vs = '131'
+
+				if (typeof numfromreleasestring != 'undefined'){
+					vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+				}
+
+				url += '/templates/' + p.name + '.html?v=' + vs;
+
+				
+				self.ajax.run({
+					url : url,
+					type : 'GET',
+					dataType : 'html',
+					success : function(tpl){
+
+						try{
+							self.storage.templates[p.name] = _.template(tpl);
+							loading.templates[p.name] = null;
+						}
+
+						catch(e){
+							console.error(e)
+
+							if (p.fail){
+								p.fail()
+							}
+	
+							reject()
+
+							return
+						}
+
+						
+
+						if (clbk) clbk(self.storage.templates[p.name]);
+
+						resolve()
+						
+
+					},
+					fail : function(){
+
+						if (p.fail){
+							p.fail()
+						}
+
+						reject()
+
+					}
+				});
+
+			})
+
+			
 		}
 	}
 
@@ -455,7 +498,7 @@ nModule = function(){
 				data : {},
 
 				animation: settings.animation,
-				fast : settings.fast
+				fast : settings.fast,
 
 			},
 
@@ -468,6 +511,8 @@ nModule = function(){
 				delete settings.animation
 
 				settings.fast = true
+				settings.waspreshell = true
+				settings.insertimmediately = true
 
 				if (clbk)
 					clbk()
@@ -477,8 +522,11 @@ nModule = function(){
 		}
 		else{
 
-			if (clbk)
-				clbk()
+			window.requestAnimationFrame(() => {
+
+				if (clbk)
+					clbk()
+			})
 
 		}
 	}
@@ -513,68 +561,99 @@ nModule = function(){
 			}, 100)
 			
 		}*/
+		
 
 		beforegetdata(settings, function(){
+
+			if (settings.fade && !settings.waspreshell){
+				window.requestAnimationFrame(() => {
+					settings.fade.addClass('shell_fadefast')
+				})
+			}
+
+			
 			self.user.isState(function(state){	
-				
-				
-				settings.getdata(function(data, err){
+					settings.getdata(function(data, err){
 
-					if(err){
 
-						topPreloader(100);
+						if(err){
 
-						if(globalpreloaderTimer){
+							topPreloader(100);
 
-							globalpreloader(false)
+							if(globalpreloaderTimer){
 
-							clearTimeout(globalpreloaderTimer)
-						}
+								globalpreloader(false)
 
-						return
-					}
-
-					topPreloader(45);
-
-					settings.data = data || {};
-
-					if(p.preshell) p.preshell();
-
-					self.shell(settings, function(p){
-
-						if(globalpreloaderTimer){
-
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
-						topPreloader(100);	
-
-						p.clbk = addToFunction(p.clbk, function(){
-
-							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-								self.app.actions.scrollToTop()
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							if (settings.auto){
-								settings.auto(p)
+							return
+						}
+
+						topPreloader(45);
+
+						settings.data = data || {};
+
+						if(p.preshell) p.preshell();
+
+						
+
+						self.shell(settings, function(p){
+
+							if(globalpreloaderTimer){
+
+								globalpreloader(false)
+
+								clearTimeout(globalpreloaderTimer)
 							}
 
-							//p = null
+							topPreloader(100);	
 
-						})				
+							p.clbk = addToFunction(p.clbk, function(){
+
+								if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+									self.app.actions.scrollToTop()
+								}
+
+								if (settings.auto){
+									settings.auto(p)
+								}
+
+								//p = null
+
+							})				
 
 
-						if (settings.init)
-							settings.init(p)
+							if (settings.init)
+								settings.init(p)
 
-					}, frommodule)
+							if (settings.fade && !settings.waspreshell){
+								setTimeout(() => {
+									window.requestAnimationFrame(() => {
+										settings.fade.addClass('shell_fadein')
+									})
+								}, 100)
 
-				}, {
-					state : state,
-					settings : settings
-				});	
+								setTimeout(() => {
+									window.requestAnimationFrame(() => {
+										settings.fade.removeClass('shell_fadefast')
+										settings.fade.removeClass('shell_fadein')
+									})
+								}, 400)
+							}
+
+						}, frommodule)
+
+						
+
+						
+
+					}, {
+						state : state,
+						settings : settings
+					});	
+
+
 
 			})
 		})

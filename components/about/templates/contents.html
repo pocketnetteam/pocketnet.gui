@@ -5,13 +5,15 @@
 
 <% 
 
-var src = deep(app, 'platform.sdk.user.storage.me.image')  
+var me = psdk.userInfo.getmy() || {}
 
-var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+var src = me.image 
+
+var name = app.platform.api.clearname(me.name || user.address.value)
+
 var letter = name ? name[0] : ''
 
-
-if(typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()){
+if (app.platform.sdk.user.myaccauntdeleted()){
     src = ''
     letter = ''
 }

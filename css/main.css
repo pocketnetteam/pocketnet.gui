@@ -265,6 +265,9 @@
     background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
   }
 }
+.wnd {
+  contain: strict;
+}
 .wnd .wndcustomscroll {
   overflow-y: overlay;
   overflow-x: hidden;
@@ -296,6 +299,7 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: overlay;
+  scroll-behavior: initial!important;
   /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -310,7 +314,7 @@ html.testpocketnet .testpocketnetbg {
 }
 [image] {
   will-change: opacity, background;
-  /*contain: strict;*/
+  contain: strict;
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
@@ -514,12 +518,6 @@ input.ie[type="range"]::-ms-thumb {
 /* ==========================================================================
    Browser Upgrade Prompt
    ========================================================================== */
-.browserupgrade {
-  margin: 0.2em 0;
-  background: rgb(var(--neutral-grad-2));
-  color: rgb(var(--text-color));
-  padding: 0.2em 0;
-}
 #topsmallpreloader,
 #globalpreloader,
 .updatingFrontend {
@@ -665,8 +663,17 @@ input[type="number"] {
   background: rgb(var(--background-hidden-layer));
   color: rgb(var(--text-color));
   border-radius: 6px;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border: 1px solid rgb(var(--neutral-grad-2));
+}
+button {
+  padding: 0.5em;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  min-height: 44px;
 }
 textarea {
   background: rgb(var(--background-hidden-layer));
@@ -933,15 +940,6 @@ l {
 .radio label > input:checked + i {
   background: rgb(var(--color-bg-ac));
 }
-pie {
-  width: 5em;
-  height: 5em;
-  display: block;
-  border-radius: 50%;
-  background-color: rgb(var(--color-good));
-  border: 2px solid rgb(var(--color-good));
-  float: left;
-}
 .ten {
   background-image: linear-gradient(126deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%);
 }
@@ -979,19 +977,6 @@ pie {
 }
 .abbr {
   display: none;
-}
-.clearfix {
-  display: block;
-}
-.clearfix:after {
-  content: "";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
 }
 .upbutton {
   position: fixed;
@@ -1032,7 +1017,7 @@ pie {
   padding: 1em 0;
   padding-left: 0;
   color: rgba(var(--neutral-grad-2), 0.5);
-  height: 50px;
+  height: 100%;
   width: 100%;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -2246,19 +2231,21 @@ input[type=radio].radio:checked + label {
   right: 0;
   top: 0;
   bottom: 0;
-  display: none;
-  width: 78px;
-  height: 78px;
+  opacity: 0;
   margin: auto;
   z-index: 20000;
+  contain: strict;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 .successCheck .successCheckWrapper {
   width: 100%;
   height: 100%;
-}
-.successCheck .successCheckWrapper > div {
-  vertical-align: middle;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .successCheck .successCheckWrapper > div .chw {
   margin: 0 auto;
@@ -2269,6 +2256,9 @@ input[type=radio].radio:checked + label {
   -webkit-backdrop-filter: blur(14px);
   padding: 1em;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.successCheck.active {
+  opacity: 1;
 }
 .successCheck .text {
   margin-top: 0.5em;
@@ -2315,6 +2305,7 @@ input[type=radio].radio:checked + label {
 #windowsContainer .rightchatspacer {
   margin-right: 0;
 }
+#windowsContainer .wnd:nth-last-child(2) .wndback,
 #windowsContainer .wnd:nth-last-child(1) .wndback {
   background: rgba(var(--color-shadow-base), 0.75);
   backdrop-filter: blur(14px);
@@ -2953,6 +2944,16 @@ html.mobileview.android .wnd .wndback {
   height: 100%;
   vertical-align: middle;
 }
+.shell_fadefast {
+  opacity: 0;
+}
+.shell_fadefast.shell_fadein {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
 .bgCaption {
   height: 180px;
   background: rgb(var(--color-bg-ac-1));
@@ -3030,11 +3031,11 @@ html.mobileview.android .wnd .wndback {
   left: 0;
   right: 0;
   height: 360px;
-  z-index: 30;
-  -moz-transition: 0.6s;
-  -o-transition: 0.6s;
-  -webkit-transition: 0.6s;
-  transition: 0.6s;
+  z-index: 300;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   color: rgb(var(--text-on-bg-ac-color));
   background: rgb(var(--color-shadow-var));
 }
@@ -3088,15 +3089,20 @@ html.mobileview.android .wnd .wndback {
 .preloader6 img {
   width: 30px;
 }
+.preloader6,
 .preloader5 {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 7.5px;
 }
+.preloader6 img,
 .preloader5 img {
   height: 7.5px;
   width: 30px;
+}
+.preloader6 {
+  display: inline-block;
 }
 .preloader5 span {
   vertical-align: middle;
@@ -3147,7 +3153,7 @@ html.mobileview.android .wnd .wndback {
   bottom: 0;
   right: 0;
   background: rgba(var(--color-shadow-var), 0.9);
-  z-index: 150;
+  z-index: 1010;
 }
 .dialog.zindex {
   z-index: 5000;
@@ -4097,7 +4103,7 @@ html.mobileview.android .wnd .wndback {
 }
 .vc_valuecustom {
   width: 200px;
-  height: 38px;
+  height: 44px;
   position: relative;
   border-radius: 6px;
 }
@@ -4162,7 +4168,7 @@ html.mobileview.android .wnd .wndback {
   border-top-right-radius: 0;
 }
 .vc_valuecustom .vc_selectInput .vc_value {
-  padding: 0.25em 0.5em;
+  padding: 1em 0.5em;
   cursor: pointer;
 }
 .vc_valuecustom .vc_selectInput .vc_value:hover {
@@ -4450,21 +4456,21 @@ html.mobileview .tooltipMobileDialog {
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
-  transform: translateY(100%);
-  -moz-transition: 0.15s;
-  -o-transition: 0.15s;
-  -webkit-transition: 0.15s;
-  transition: 0.15s;
+  transform: translateY(100%) scale(0.5);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 html.mobileview .tooltipMobileDialog.animend .mobiledialogcontent {
   -webkit-transform: translateY(0);
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 html.mobileview .tooltipMobileDialog .thwrapper {
   padding: 0;
   max-width: 450px;
   background: transparent;
-  width: 93%;
+  width: 85%;
   margin: 0 auto;
   border: 0;
   margin-bottom: 0;
@@ -4475,7 +4481,7 @@ html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
-  max-height: calc(var(--vh, 1vh) * 60);
+  max-height: calc(var(--vh, 1vh) * 90);
 }
 html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;
@@ -4691,6 +4697,11 @@ html.mobileview.fullscreen #menuWrapper {
 html.mobileview.fullscreen #navigationWrapper {
   display: none!important;
 }
+html.allcontent_application #navigationWrapper,
+html.allcontent_application #menuWrapper,
+html.allcontent_application #footerWrapper {
+  display: none!important;
+}
 .windowsContainer {
   position: relative;
 }
@@ -4713,15 +4724,6 @@ html.mobileview.fullscreen #navigationWrapper {
     border-radius: 0px;
     margin-bottom: 10px;
   }
-}
-.thinput[value='1'] i:before {
-  content: "\f00c";
-}
-.thinput[value='-1'] i:before {
-  content: "";
-}
-.thinput[value='0'] i:before {
-  content: "\f00d";
 }
 .coinwithsmall {
   width: auto;
@@ -4868,6 +4870,26 @@ html.mobileview.fullscreen #navigationWrapper {
   border-left-color: rgb(var(--background-total-theme));
   left: 0px;
 }
+.registrationProgressIcon {
+  display: flex;
+  align-items: center;
+}
+.registrationProgressIcon span {
+  margin-left: 1em;
+}
+.registrationProgressIcon i {
+  color: rgb(var(--color-txt-gray-dark)) !important;
+}
+.registrationProgressIcon.not_in_progress i {
+  color: rgb(var(--color-bad)) !important;
+}
+.registrationProgressIcon.in_progress_wait_unspents i {
+  color: rgb(var(--color-good)) !important;
+}
+.registrationProgressIcon.in_progress_transaction i,
+.registrationProgressIcon.in_progress_hasUnspents i {
+  color: rgb(var(--color-bg-ac-bright)) !important;
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -4907,6 +4929,18 @@ html.mobileview.fullscreen #navigationWrapper {
 }
 .usericon:hover .realperson {
   opacity: 0.7;
+}
+.usericon .registrationProgressIcon {
+  position: absolute;
+  bottom: -4%;
+  left: -4%;
+}
+.usericon .registrationProgressIcon i {
+  font-size: 0.8em;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.usericon .registrationProgressIcon span {
+  display: none;
 }
 .userpic {
   width: 40px;
@@ -5067,6 +5101,7 @@ html.mobileview.fullscreen #navigationWrapper {
 .notification .sharedivide {
   color: rgb(var(--color-text-ac));
   padding: 0.25em 0;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
 }
 .fastMessage .sharepreview .shareprwrapper > div,
 .notification .sharepreview .shareprwrapper > div {
@@ -5870,6 +5905,9 @@ html.mobileview.fullscreen #navigationWrapper {
 html.mobileview .plyr__volume {
   max-width: 32px;
 }
+html.mobileview .plyr__volume input {
+  display: none;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
@@ -6490,11 +6528,14 @@ html.mobileview #content .work {
     font-size: 1.1em;
     font-weight: 100;
   }
+  html.allcontent {
+    /*body{
+            background: #051b48;
+        }*/
+  }
   html.allcontent .contentWrapper {
     padding-top: 0;
-  }
-  html.allcontent body {
-    background: #051b48;
+    margin-top: 0;
   }
   html.allcontent #footerWrapper {
     background: #051b28;
@@ -6622,6 +6663,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   max-height: none!important;
   top: auto!important;
   bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   height: auto!important;
   max-width: none!important;
   -webkit-transform: translateY(100%);
@@ -6963,7 +7006,7 @@ html.pipmode .matrixchatwrapper {
 #application .parameter textarea,
 #application .parameter input {
   width: 100%;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border-radius: 6px;
 }
 #application .parameter select.error,
@@ -6971,19 +7014,27 @@ html.pipmode .matrixchatwrapper {
 #application .parameter input.error {
   border: 1px solid rgb(var(--color-bad));
 }
+#application .parameter select,
+#application .parameter input {
+  line-height: 3em;
+}
+#application .parameter textarea {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+}
 #application .parameter .error select,
 #application .parameter .error textarea,
 #application .parameter .error input {
   border: 1px solid rgb(var(--color-bad));
 }
 #application .parameter select {
-  height: 38px;
+  height: 3em;
   padding-right: 25px;
   width: auto;
 }
 #application .parameter .vc_valuecustom {
   width: 100%;
-  font-size: 0.8em;
+  height: 3em;
 }
 #application .parameter .vc_valuecustom .vc_textInput,
 #application .parameter .vc_valuecustom_multibig .vc_textInput {
@@ -7480,4 +7531,15 @@ body.dg-open {
   .brighteonVideoIframe {
     aspect-ratio: 1.44;
   }
+}
+div#bc-root.pipped {
+  position: fixed;
+  left: 0!important;
+  top: 0!important;
+  bottom: 0!important;
+  right: 0!important;
+  border: 0!important;
+}
+div#bc-root.pipped .bc-video-container {
+  max-width: none!important;
 }

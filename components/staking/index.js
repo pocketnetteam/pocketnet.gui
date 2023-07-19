@@ -494,8 +494,8 @@ var staking = (function(){
 
 				var r = ''
 
-				if (self.app.platform.sdk.address.pnet()){
-					r = '?&ref=' + self.app.platform.sdk.address.pnet().address
+				if (self.app.user.value){
+					r = '?&ref=' + self.app.user.address.value
 					url = url + r
 				}
 				

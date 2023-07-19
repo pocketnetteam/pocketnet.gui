@@ -22,11 +22,13 @@ SubscribePrivate = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
 
 		return {
+			
 			address : self.address.v
 		}
 	}
@@ -70,6 +72,7 @@ Subscribe = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
@@ -118,11 +121,13 @@ Unsubscribe = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
 
 		return {
+			type : self.type,
 			address : self.address.v
 		}
 	}
@@ -166,6 +171,7 @@ Blocking = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
@@ -214,6 +220,7 @@ Unblocking = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
@@ -241,7 +248,7 @@ Unblocking = function(){
 Comment = function(txid){
 	var self = this;
 
-	self.txid = txid;
+	self.postid = txid;
 
 	self.id = ''
     self.parentid = ''
@@ -416,6 +423,8 @@ Comment = function(txid){
 		self.url.set()
 		self.donate.set()
 		self.fees.set()
+
+		self.delete = false
 	}
 
 	self.on = {}
@@ -497,16 +506,16 @@ Comment = function(txid){
 
 	self.serialize = function(){
 
-		var s = self.txid;
+		var s = self.postid;
 
 		if(!self.delete){
 
 			s += (JSON.stringify({
 				
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
+				message : (self.message.v),
+				url : (self.url.v),
 				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
+					return (i)
 				}),
 
 			}))
@@ -521,77 +530,95 @@ Comment = function(txid){
 
 	self.export = function(extend){
 		var r = {
-			postid : self.txid,
+			postid : self.postid,
 			answerid : self.answerid || "",
 			parentid : self.parentid || ""
 		}
 
 		if(!self.delete){
-			r.msg = JSON.stringify({
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
-				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
-				}),
-			})
+			if(extend){
+				r.msgparsed = {
+					message : self.message.v,
+					url : self.url.v,
+					images : self.images.v
+				}
+			}
+			else{
+				r.msg = JSON.stringify({
+					message : (self.message.v),
+					url : (self.url.v),
+					images : _.map(self.images.v, function(i){
+						return (i)
+					}),
+				})
+			}
+			
+		}
+		else{
+			r.delete = self.delete
 		}
 
 		if(self.id){
 			r.id = self.id
 		}
 
-		//included multi donates!!!
+		if (self.donate && self.donate.v.length){
+			r.donate = self.donate.v
+		}
 
- 		if (self.donate && self.donate.v.length){
-
-			r.donation = 'true';
-			r.amount = self.donate.v.reduce(function(prev, next){
-				return prev + next.amount;
-			}, 0)
-
-			r.amount *= 100000000;
-
-		} else if (self.amount.v){
-
-			r.donation = 'true';
-			r.amount = self.amount.v;
-
+ 	
+		if(extend){
+			r.type = self.type
 		}
 	
 		return r
-
-
-		
 
 	}
 
 	self.import = function(v){
 
-		self.txid = v.postid;
+		self.postid = v.postid;
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
 
-		v.msgparsed = JSON.parse(v.msg)
+		if (v.msg){
+			v.msgparsed = JSON.parse(v.msg)
 
-		self.url.set(decodeURIComponent(v.msgparsed.url))
-		self.message.set(decodeURIComponent(v.msgparsed.message))
-		self.images.set(_.map(v.msgparsed.images, function(i){
-			return decodeURIComponent(i)
-		}))
+			self.url.set(decodeURIComponent(v.msgparsed.url))
+			self.message.set(decodeURIComponent(v.msgparsed.message))
+			self.images.set(_.map(v.msgparsed.images, function(i){
+				return decodeURIComponent(i)
+			}))
+		}
+
+		if (v.msgparsed){
+			self.url.set(v.msgparsed.url)
+			self.message.set(v.msgparsed.message)
+			self.images.set(v.msgparsed.images)
+		}
+		
+		if (v.donate){
+			self.donate.set(v.donate)
+		}
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
+
+		if(v.delete) self.delete = v.delete
 	}
 
-	self.alias = function(id){
+	self.alias = function(){
 		var comment = new pComment();
-			comment.import(self.export())
+			comment.import(self.export(true))
 
+			///TODO_REF_ACTIONS remove alias args
 
-			comment.id = id
-			comment.txid = self.txid
+			comment.id = self.id
+			comment.postid = self.postid
 
-
+		if(self.delete){
+			comment.deleted = true
+		}
 
 		return comment;
 	}
@@ -613,9 +640,6 @@ Comment = function(txid){
 	}
 
 	self.ustate = 'comment'
-
-
-
 	self.type = 'comment'
 
 	return self;
@@ -672,6 +696,7 @@ Comment = function(txid){
 		}
 		else{
 			return {
+				type : self.type,
 				commentid : self.comment.v,
 				value : self.value.v.toString(),
 				vsaddress : self.address.v
@@ -750,6 +775,7 @@ UpvoteShare = function(){
 		}
 		else{
 			return {
+				type : self.type,
 				share : self.share.v,
 				value : self.value.v,
 				vsaddress : self.address.v
@@ -809,11 +835,24 @@ ComplainShare = function(){
 		return self.share.v + '_' + self.reason.v
 	}
 
-	self.export = function(){
-		return {
-			share : self.share.v,
-			reason : self.reason.v
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				type : self.type,
+				share : self.share.v,
+				reason : self.reason.v
+			}
+			
 		}
+		else{
+			return {
+				share : self.share.v,
+				reason : self.reason.v
+			}
+		}
+		
+		
 	}
 
 	self.import = function(p){
@@ -873,14 +912,26 @@ ModFlag = function(){
 		return self.s2.v + self.s3.v + self.i1.v
 	}
 
-	self.export = function(){
-		return {
-			// share : self.share.v,
-			// reason : self.reason.v
-			s2 : self.s2.v,
-			s3 : self.s3.v,
-			i1 : self.i1.v
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				s3 : self.s3.v,
+				i1 : self.i1.v
+			}
 		}
+		else{	
+			return {
+				s2 : self.s2.v,
+				s3 : self.s3.v,
+				i1 : self.i1.v
+			}
+		}
+
+
+		
 	}
 
 	self.import = function(p){
@@ -926,7 +977,7 @@ ContentBoost = function(txid){
 
 	self.serialize = function(){
 
-		return encodeURIComponent(self.txid)
+		return (self.txid)
 	}
 
 	self.export = function(alias){
@@ -938,6 +989,7 @@ ContentBoost = function(txid){
 		}
 		else{
 			return {
+				type : self.type,
 				content : self.txid
 			}
 		}
@@ -1452,12 +1504,12 @@ Share = function(lang){
 			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 		}
 		
-		return encodeURIComponent(self.url.v)
+		return (self.url.v) 
 		
-		+ encodeURIComponent(self.caption.v)
-		+ (articleversion2 ? textvalue : encodeURIComponent(textvalue))
+		+ (self.caption.v) 
+		+ (articleversion2 ? textvalue : (textvalue))
 
-		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
+		+ _.map(self.tags.v, function(t){ return (t) }).join(',')
 		+ self.images.v.join(',')
 
 		+ (self.aliasid || "")
@@ -1522,14 +1574,17 @@ Share = function(lang){
 
 	self.itisstream = function(){
 
+		
+
 		if(self.settings.v == 'a') return
 
 		if(!self.url.v) return 
 
 		var meta = parseVideo(self.url.v)
-		var ch = self.url.v.replace('peertube://', '').split('/')
 
-		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
+		
+
+		if(meta.type == 'peertube' && self.url.v.indexOf('stream') > -1) return true
 	}
 
 	self.canSend = function(app, clbk) {
@@ -1561,6 +1616,7 @@ Share = function(lang){
 		if (extend){
 
 			return {
+				type : self.type,
 				caption : self.caption.v,
 				message : textvalue,
 				url : self.url.v,
@@ -1575,11 +1631,11 @@ Share = function(lang){
 		}
 
 		return {
-			c : encodeURIComponent(self.caption.v),
-			m : articleversion2 ? textvalue : encodeURIComponent(textvalue),
-			u : encodeURIComponent(self.url.v),
+			c : (self.caption.v),
+			m : articleversion2 ? textvalue : (textvalue),
+			u : (self.url.v),
 			p : _.clone(self.poll.v),
-			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
+			t : _.map(self.tags.v, function(t){ return (t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
 			l : self.language.v,
@@ -1627,14 +1683,14 @@ Share = function(lang){
 
 			share.time = new Date();
 
-			share._import(self.export())
+			share._import(self.export(true))
 
 			share.txid = txid || self.aliasid
 
 		return share;
 	}
 
-	self.optstype = function(platform){
+	self.optstype = function(){
 
 		if(self.itisvideo()) return 'video'
 		if(self.itisaudio()) return 'audio'
@@ -1643,7 +1699,7 @@ Share = function(lang){
 		return self.type
 	}
 
-	self.typeop = function(platform){
+	self.typeop = function(){
 
 		if (self.itisvideo()) return 'video'
 
@@ -1698,7 +1754,6 @@ UserInfo = function(){
 	}
 
 	self.checkloaded = function(){
-		//console.log("self.image.v.indexOf('data:image')", self.image.v.indexOf('data:image'))
 		return self.image.v.indexOf('data:image') > -1
 	}
 
@@ -1917,7 +1972,7 @@ UserInfo = function(){
 
 		var hash = self.name.v.toLowerCase().replace(/[^a-z]/g,'')
 
-		if(!app.platform.whiteList.includes(app.platform.sdk.user.storage.me.address)) {
+		if(!app.platform.whiteList.includes(app.user.address.value)) {
 			if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
 			if (hash.indexOf('bastyon') > -1) return 'bastyon'
 		}
@@ -1928,11 +1983,11 @@ UserInfo = function(){
 
 	self.serialize = function(){
 
-		return encodeURIComponent(self.name.v)
-		 + encodeURIComponent(self.site.v)
+		return (self.name.v)
+		 + (self.site.v)
 		 + self.language.v
-		 + encodeURIComponent(self.about.v)
-		 + self.image.v + JSON.stringify(self.addresses.v)
+		 + (self.about.v)
+		 + self.image.v + JSON.stringify(self.addresses.v) 
 		 + self.ref.v
 		 + self.keys.v.join(',')
 	}
@@ -1952,6 +2007,7 @@ UserInfo = function(){
 
 		if(extend){
 			return {
+				type : self.type,
 				name : self.name.v,
 				about : self.about.v,
 				site : self.site.v,
@@ -1964,10 +2020,10 @@ UserInfo = function(){
 		}
 
 		return {
-			n : encodeURIComponent(self.name.v),
+			n : (self.name.v),
 			l : self.language.v,
-			a : encodeURIComponent(self.about.v),
-			s : encodeURIComponent(self.site.v),
+			a : (self.about.v),
+			s : (self.site.v),
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
 			r : self.ref.v,
@@ -2006,7 +2062,14 @@ DeleteAccount = function(){
 	}
 
 	self.export = function(alias){
-		return {}
+		if(alias){
+			return {type : self.type}
+		}
+		else{
+			return {}
+			
+		}
+		
 	}
 
 	self.import = function(p){
@@ -2018,6 +2081,82 @@ DeleteAccount = function(){
 	self.typeop = function(){
         return self.type;
 	}
+}
+
+Transaction = function(){
+	var self = this;
+
+	self.source = {
+		set : function(_v){
+
+			this.v = _v || []
+
+		},
+		v : []
+	}
+
+	self.reciever = {
+		set : function(_v){
+
+			/*{
+				address: receiver,
+				amount: Number(value)
+			}*/
+
+			this.v = _.filter(_v || [], (a) => {
+
+				return a.address && a.amount
+
+			})
+		},
+		v : []
+	};
+
+	self.feemode = {
+		set : function(_v){
+
+			this.v = 'exclude'
+
+			if (_v == 'exclude' || _v == 'include'){
+				this.v = _v
+			}
+
+			
+		},
+		v : 'exclude'
+	};
+
+	self.message = {
+		set : function(_v){
+			this.v = _v || ''
+		},
+		v : ''
+	};
+
+	
+	self.validation = function(){
+		return false;
+	}
+
+	self.export = function(extend){
+		return {
+			type : self.type,
+			reciever : self.reciever.v,
+			feemode : self.feemode.v,
+			message : self.message.v,
+			source : self.source.v,
+		}
+	}
+
+	self.import = function(p){
+		self.reciever.set(p.reciever)
+		self.feemode.set(p.feemode)
+		self.message.set(p.message)
+		self.source.set(p.source)
+	}
+
+	self.type = 'transaction'
+
 }
 
 pUserInfo = function(){
@@ -2041,25 +2180,27 @@ pUserInfo = function(){
 	self.subscribers = [];
 	self.recomendedSubscribes = [];
 	self.blocking = [];
+	self.regdate = new Date()
+
+	self.subscribers_count = 0
+	self.subscribes_count = 0
+	self.blockings_count = 0
+	self.likers_count = 0
+
+	self.flags = {}
+	self.firstFlags = {}
 
 	self.address = ''
 
 	self.rc = 0;
-	
-
 
 	self._import = function(v){
-		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
-		self.image = clearStringXss(v.i || v.image);
-		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
-		self.language = clearStringXss(v.l || v.language);
-		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
+		self.name = v.n || v.name || '';
+		self.image = v.i || v.image;
+		self.about = v.a || v.about || '';
+		self.language = v.l || v.language;
+		self.site = v.s || v.site || '';
 
-		const isImageAllowed = checkIfAllowedImage(self.image);
-
-		if (!isImageAllowed) {
-			self.image = '';
-		}
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
@@ -2135,6 +2276,9 @@ pUserInfo = function(){
 
 		self.dev = v.dev;
 
+		if (v.regdate)
+			self.regdate.setTime(v.regdate * 1000);
+
 
 	}
 
@@ -2142,17 +2286,30 @@ pUserInfo = function(){
 
 		var v = {};
 
-		v.n = encodeURIComponent(self.name)
+		v.n = (self.name)
 		v.image = self.image
-		v.a = encodeURIComponent(self.about)
+		v.a = (self.about)
 		v.l = self.language
-		v.s = encodeURIComponent(self.site)
+		v.s = (self.site)
 		v.r = self.ref;
 		v.rc = self.rc
 		v.b = JSON.stringify(self.addresses || [])
-
 		v.adr = self.address
 		v.k = self.keys.join(',')
+
+
+		v.reputation = self.reputation
+		v.subscribers = _.clone(self.subscribers)
+		v.subscribes = _.clone(self.subscribes)
+		v.recomendedSubscribes = _.clone(self.recomendedSubscribes)
+		v.blocking = _.clone(self.blocking)
+		v.flags = _.clone(self.flags)
+		v.firstFlags = _.clone(self.firstFlags)
+
+		v.subscribers_count = self.subscribers_count
+		v.subscribes_count = self.subscribes_count
+		v.blockings_count = self.blockings_count
+		v.likers_count = self.likers_count
 
 		return v
 	}
@@ -2253,6 +2410,13 @@ pUserInfo = function(){
 
 	}
 	
+	self.clone = function(){
+		var ui = new pUserInfo()
+
+			ui._import(self.export())
+
+		return ui
+	}
 
 	self.type = 'userInfo'
 
@@ -2270,14 +2434,17 @@ pShare = function(){
 	self.caption = ''
 	self.images = [];
 	self.txid = '';
-	self.time = null;
 	self.repost = '';
 	self.language = '';
 	self.poll = {};
+	self.time = new Date()
 
 	self.comments = 0;
 	self.lastComment = null;
 	self.reposted = 0;
+	self.score = 0
+	self.scnt = 0
+	self.address = ''
 
 	self.deleted = false;
 
@@ -2369,12 +2536,11 @@ pShare = function(){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url.v) return 
+		if(!self.url) return 
 
-		var meta = parseVideo(self.url.v)
-		var ch = self.url.v.replace('peertube://', '').split('/')
+		var meta = parseVideo(self.url)
 
-		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'stream') return true
+		if(meta.type == 'peertube' && self.url.indexOf('stream') > -1) return true
 	}
 
 	self.hasexchangetag = function(){
@@ -2385,9 +2551,9 @@ pShare = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
 
-	self._import = function(v, notdecode){
+	self._import = function(v){
 
-		if (v.s){
+		/*if (v.s){
 
 			try{
 				self.settings = v.s
@@ -2401,13 +2567,15 @@ pShare = function(){
 			if(v.settings){
 				self.settings = v.settings
 			}
-		}
+		}*/
+
+		self.settings = v.s || v.settings || {}
 
 		
 		if(v.i && !_.isArray(v.i)) v.i = [v.i]
 		if(v.t && !_.isArray(v.t)) v.t = [v.t]
 		
-		var textvalue = v.m || v.message || ""
+		/*var textvalue = v.m || v.message || ""
 
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
@@ -2419,39 +2587,35 @@ pShare = function(){
 			catch(e){
 				textvalue = textvalue
 			}
-		}
+		}*/
 
 
-		if (notdecode){
-			self.message = textvalue
+		//if (notdecode){
+			self.message = v.m || v.message || ""
 			self.caption = v.c || v.caption || ""
 			self.tags = v.t || v.tags || []
 			self.url = v.u || v.url || '';
 			self.poll = v.p || v.poll || {}
 			
-		}
+		/*}
 		else
-		{
-			self.url = clearStringXss(decodeURIComponent(v.u || v.url || ''));
-			self.message = articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
-			self.caption = (decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
-
-			self.tags = _.map(v.t || v.tags || [], function(t){
-				return clearStringXss(clearTagString(decodeURIComponent(t)))
-			})
-			
+		{	
+			self.url = v.u || v.url || ''
+			self.message = v.m || v.message || "" ///articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
+			self.caption = (v.c || v.caption || "")
+			self.tags = v.t || v.tags || []
 			self.poll = v.p || v.poll || {}
 
-		}
+		}*/
 
-		if (!articleversion2 && self.message){
+		/*if (!articleversion2 && self.message){
 			self.message = self.message.replace(/\n{2,}/g, '\n\n');
-		}
+		}*/
 
 		if(v.myVal) self.myVal = Number(v.myVal)
 
 		self.language = v.l || v.language || 'en'
-		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
+		self.images = v.i || v.images || []
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
 		self.images = self.images.filter(image => checkIfAllowedImage(image));
@@ -2464,41 +2628,91 @@ pShare = function(){
 		if (v.id)
 			self.id = v.id;
 
-		if (v.txidEdit)
-			self.txidEdit = v.txidEdit;
+		if (v.txidEdit){
+			self.txidEdit = v.txidEdit;	
+			self.edit = true
+		}
+
+		if (v.edit){
+			self.edit = true
+		}
+
+		if(v.scoreSum){
+			self.score = Number(v.scoreSum)
+		}
+
+		if(v.scoreCnt){
+			self.scnt = Number(v.scoreCnt)
+		}
+
 
 		self.temp = v.temp || null;
 
-		if(v._time)
+		if (v._time)
 			self._time = v._time
 
-		if(v.comments)
+		if (v.comments)
 			self.comments = v.comments
 
-		if(v.reposted)
+		if (v.reposted)
 			self.reposted = v.reposted
 
 		
-		if(v.lastComment)
-			self.lastComment = v.lastComment
+		if (v.lastComment)
+			self.lastComment = v.lastComment.id || v.lastComment
 
+		if(v.address){
+			self.address = v.address
+		}
 
+		if (v.time)
+			self.time.setTime(v.time * 1000);
+	}
+
+	self.clone = function(){
+		var ui = new pShare()
+
+			ui._import(self.export())
+
+			//ui.lastComment = self.lastComment
+
+		return ui
 	}
 
 	self.export = function(){
 
 		var v = {}
 		
-		v.m = encodeURIComponent(self.message)
-		v.c = encodeURIComponent(self.caption)
-		v.u = encodeURIComponent(self.url)
-		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
+		v.m = (self.message)
+		v.c = (self.caption)
+		v.u = (self.url)
+		v.t = _.map(self.tags || [], function(t){ return (t) })
 		v.i = _.clone(self.images)
-		v._time = self._time;
+		v._time = self._time || self.time;
+		v.time = self.time.getTime() / 1000;
 		v.s = _.clone(self.settings)
 		v.l = self.language
 		v.p = self.poll
 		v.deleted = self.deleted
+
+		v.scoreCnt = self.scnt
+		v.scoreSum = self.score
+		v.address = self.address
+		v.txid = self.txid
+		v.deleted = self.deleted
+		v.comments = self.comments
+		v.repost = self.repost
+		v.txidEdit = self.txidEdit
+		v.edit = self.edit
+
+		if(self.lastComment){
+			/*if(self.lastComment.export){
+				v.lastComment = self.lastComment.export()
+			}
+			else{*/
+				v.lastComment = self.lastComment
+			//}
+		}
 
 		return v
 	}
@@ -2533,8 +2747,8 @@ pShare = function(){
 			files : self.images || [],
 			title : app.localization.e('postby') + " " + name,
 			html : {
-				body : self.renders.xssmessagec(),
-				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+				body : self.renders.messagec(),
+				preview : trimHtml(self.renders.messagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
 			},
 
 			text : {
@@ -2608,79 +2822,9 @@ pShare = function(){
 			return nm
 		},
 
-		xssmessagec : function(){
-			var nm = self.renders.messagec()
+	
 
-			return self.renders.xssmessage(nm)
-		},
-
-		xssmessage : function(nm){
-
-			if(!nm) nm = self.renders.message()
-
-			if(self.settings.v != 'a'){
-
-				nm = nl2br(trimrn(findAndReplaceLink(filterXSS(nm, {
-					whiteList: [],
-					stripIgnoreTag: true,
-				}))));
-
-			}
-			else
-			{
-
-				var whiteclass = {'js-player' : true, 'plyr' : true, 'medium-insert-images' : true, 'medium-insert-images-grid' : true, 'medium-insert-embeds' : true}
-
-				nm = filterXSS(nm, {
-					stripIgnoreTag : true,
-					whiteList: {
-						a: ["href", "title", "target", 'cordovalink'],
-						br : ["style"],
-						b : ["style"],
-						span : ["style"],
-						figure : ["style"],
-						figcaption : ["style"/*, "class"*/],
-						i : ["style"],
-						img : ["src"/*, "width", "height"*/],
-						div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
-						p : [],
-						ul : [],
-						ol : [],
-						li : [],
-						h2 : [],
-						h1 : [],
-						h3 : [],
-						h4 : [],
-						h5 : [],
-						em : [],
-						u : [],
-						blockquote : [],
-						strong : [],
-						picture : ['img-type'],
-						source : ['srcset', 'type'],
-						strike : []
-
-					},
-
-					onIgnoreTagAttr: function(tag, name, value, isWhiteAttr) {
-						if (name === "class") {
-						  var v = value.split(' ');
-
-							v = _.filter(v, function(v){
-								return whiteclass[v]
-							})
-
-						  return name + '="' + v.join(' ') + '"';
-						}
-					}
-
-				})
-
-				nm = nm.replace(/http:\/\//g, 'https://')
-			}
-
-			return trimrn(nm)
-		}
+		
 	}
 
 	self.upvote = function(value){
@@ -2693,7 +2837,7 @@ pShare = function(){
 		upvoteShare.value.set(value);
 		upvoteShare.address.set(self.address || '')
 
-		self.myVal = Number(value);
+		//self.myVal = Number(value);		
 
 		return upvoteShare;
 	}
@@ -2752,13 +2896,12 @@ pComment = function(){
 	self.message = ''
 	self.images = [];
 
-	self.txid = '';
+	self.postid = '';
 	self.id = '';
-	self.time = 0;
-	self.timeUpd = 0;
+	self.time = new Date();
+	self.timeUpd = new Date();
 	self.children = 0;
 
-	self.donation = '';
 	self.amount = 0;
 
 
@@ -2770,14 +2913,13 @@ pComment = function(){
 	self.scoreUp = 0;
 	self.myScore = 0;
 	self.deleted = false;
+	self.address = ''
 
 	self.reputation = 0;
 
 	self.my = function(app){
 
-		var ao = app.platform.sdk.address.pnet();
-
-		if(self.address && ao && self.address == ao.address) return true
+		if(self.address && self.address == app.user.address.value) return true
 
 		return false
 	}
@@ -2786,33 +2928,41 @@ pComment = function(){
 	self._import = function(v){
 
 		if (v.msgparsed){
-
-			try {
-				self.url = clearStringXss(decodeURIComponent(v.msgparsed.url || ""));
-				self.message = clearStringXss(decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n'))
-				self.images = _.map(v.msgparsed.images || [], function(i){
-
-					return clearStringXss(decodeURIComponent(i))
-				});
-
-				self.images = self.images.filter(image => checkIfAllowedImage(image));
-			}
-
-			catch(e){
-			}
-
-			
-		}
+			self.url = v.msgparsed.url;
+			self.message = v.msgparsed.message
+			self.images = v.msgparsed.images
+		}			
 		
-		self.txid = v.postid;
+		self.postid = v.postid;
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
+
+
+		
+
 
 		self.scoreDown = Number(v.scoreDown || '0');
 		self.scoreUp = Number(v.scoreUp || '0');
 
-		self.donation = v.donation;
+		//self.donation = v.donation;
 		self.amount = Number(v.amount || '0');
+		self.children = Number(v.children || '0');
+
+		if(v.donate){
+			self.amount = _.reduce(v.donate, (m, n) => {
+				return m + n.amount
+			}, 0) * 100000000
+		}
+
+		self.address = v.address
+		self.commentTo = null
+
+		if(v.addressCommentAnswer && v.addressCommentAnswer != self.address) self.commentTo = v.addressCommentAnswer
+		if(!self.commentTo && v.addressCommentParent && v.addressCommentParent != self.address) self.commentTo = v.addressCommentAnswer
+		if(!self.commentTo && v.addressContent && v.addressContent != self.address) self.commentTo = v.addressContent
+
+		if (v.rating)
+			self.rating = v.rating
 
 		if (v.myScore) self.myScore = v.myScore
 
@@ -2820,21 +2970,25 @@ pComment = function(){
 
 		if (v.id || v.txid)
 			self.id = v.id || v.txid;
+
+		self.setTime(v.time, v.timeUpd)
+
 	}
 
 	self.import = function(v){
-		
-		if (v.msg)
-			v.msgparsed = JSON.parse(v.msg)
+			
+		/*if (v.msg)
+			v.msgparsed = JSON.parse(v.msg)*/
 
 		self._import(v)
 	}
 
 	self.export = function(){
 
+
 		var r = {
 			id : self.id,
-			postid : self.txid || "",
+			postid : self.postid || "",
 			answerid : self.answerid || "",
 			parentid : self.parentid || "",
 			msgparsed : {
@@ -2847,10 +3001,22 @@ pComment = function(){
 			myScore : self.myScore,
 			deleted : self.deleted,
 			donation: self.donation,
-			amount: self.amount
+			amount: self.amount,
+			address : self.address,
+			children : self.children,
+			time : self.time.getTime() / 1000,
+			timeUpd: self.timeUpd.getTime() / 1000
 		}
 
 		return r
+	}
+
+	self.clone = function(){
+		var ui = new pComment()
+
+			ui._import(self.export())
+
+		return ui
 	}
 
 	self.upvote = function(value){
@@ -2879,12 +3045,11 @@ pComment = function(){
 	}
 
 	self.delete = function(){
-		var c = new Comment();
+		var c = new Comment(self.postid);
 
 		c.id = self.id
 		c.parentid = self.parentid
 		c.answerid = self.answerid
-
 		c.delete = true
 		
 
@@ -2893,12 +3058,19 @@ pComment = function(){
 	}
 
 	self.setTime = function(t, tu){
-		self.time = new Date()
-		self.time.setTime(t * 1000);
 
-		self.timeUpd = new Date()
-		self.timeUpd.setTime(tu * 1000);
-	}
+		if(t){
+			self.time = new Date()
+			self.time.setTime(t * 1000);
+		}
+		
+		if(tu){
+			self.timeUpd = new Date()
+			self.timeUpd.setTime(tu * 1000);
+		}
+
+		
+	}	
 
 	self.social = function(app){
 
@@ -2921,7 +3093,8 @@ pComment = function(){
 		}
 
 		if(!s.image) s.image = self.images[0]
-		if(!s.image) s.image = deep(app, 'platform.sdk.usersl.storage.'+self.address+'.image')
+		if(!s.image) s.image = app.platform.psdk.userInfo.getShortForm(self.address).image
+		
 
 		return s
 
@@ -2980,36 +3153,8 @@ Img = function(p){
 	return self;
 }
 
-kits = {
-	c : {
-		userInfo : UserInfo,
-		share : Share,
-		complainShare : ComplainShare,
-		modFlag : ModFlag,
-		upvoteShare : UpvoteShare,
-		cScore : СScore,
-		comment : Comment,
-		unblocking : Unblocking,
-		blocking : Blocking,
-		unsubscribe : Unsubscribe,
-		subscribe : Subscribe,
-		subscribePrivate : SubscribePrivate,
-		contentBoost : ContentBoost,
-		deleteAccount : DeleteAccount,
-		accDel : DeleteAccount
-	},
 
-	ini : {
-
-	},
-	alias : {
-		userInfo : pUserInfo,
-		share : pShare,
-		comment : pComment,
-	}
-}
-
-Remove = function(lang){
+Remove = function(){
 
 	var self = this;
 
@@ -3019,6 +3164,13 @@ Remove = function(lang){
 		self.s.set()
 
 	}
+
+	self.txidEdit = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
 
 	self.ustate = function(){
 
@@ -3044,7 +3196,7 @@ Remove = function(lang){
 
 	self.serialize = function(){
 
-        return encodeURIComponent(self.txid)
+        return (self.txidEdit.v)
 
 	}
 
@@ -3053,29 +3205,31 @@ Remove = function(lang){
 	}
 	
 
-	self.export = function(){
+	self.export = function(extend){
 
-		return {
-			txidEdit: self.txidEdit || "",
+		var r = {
+			txidEdit: self.txidEdit.v || "",
 		}
+
+		if(extend){
+			r.type = self.type
+		}
+	
+		return r
 
 	}
 
 	self.import = function(v){
-
-		self.txidEdit.set(v.txidEdit || "");
-
-		
+		self.txidEdit.set(v.txidEdit || ""); 
 	}
 
-	self.alias = function(txid){
+	self.alias = function(){
 		var remove = new pRemove();
 
-            remove.time = new Date();
+            //remove.time = new Date();
 
 			remove._import(self.export())
 
-			remove.txid = txid || self.txidEdit
 
 		return remove;
 	}
@@ -3148,7 +3302,7 @@ pRemove = function(){
 	}
 
 
-	self.delete = function(){
+	/*self.delete = function(){
 		var c = new Remove();
 
 		c.txidEdit = self.txidEdit;
@@ -3157,7 +3311,7 @@ pRemove = function(){
 
 		return c
 
-	}
+	}*/
 
 
 	self.alias = function(){
@@ -3245,8 +3399,16 @@ Settings = function(){
 		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
 	}
 
+	self.export = function(alias){
 
-	self.export = function(){
+		if(alias){
+			return {
+				type : self.type,
+				d: JSON.stringify({
+					pin: self.pin.v || "",
+				})
+			} 
+		}
 
 		return {
 			d: JSON.stringify({
@@ -3256,20 +3418,30 @@ Settings = function(){
 
 	}
 
-	self.import = function(v){
+	self.import = function(v = {}){
 
-		self.pin.set(v.pin || "");
+		if(!v.d) v.d = "{}"
 
+		var parsed = {}
+		
+		if(!_.isObject(v.d)){
+			try{
+				parsed = JSON.parse(v.d)
+			}catch(e){
+				parsed = {}
+			}
+		}
+		else{
+			parsed = v.d
+		}
+
+		self.pin.set(parsed.pin || ""); 
 
 	}
-
 
 	self.optstype = function(){
-
-		return self.type
+		return self.type	
 	}
-
-
 
 	self.typeop = function(){
 
@@ -3277,8 +3449,134 @@ Settings = function(){
 
 	}
 
+	self.alias = function(){
+		var settings = new pSettings();
+			settings.import(self.export(true))
+
+		return settings;
+	}
+
 	self.type = 'accSet'
 
 	return self;
 }
 
+pSettings = function(){
+
+	var self = this;
+
+	self.pin = '';
+	self.address = ''
+
+	self._import = function(dv = {}){
+
+		console.log("accset import", dv)
+
+		var v = dv.d
+
+		self.pin = (v || {}).pin || ""
+		self.address = (v || {}).address || ""
+	}
+
+	self.export = function(){
+
+		var v = {
+			d : {
+				pin : self.pin
+			}
+		}
+
+		return v
+	}
+
+	self.import = function(v = {}){
+
+		
+		if(!v.d) v.d = "{}"
+
+		var parsed = {}
+		
+		if(!_.isObject(v.d)){
+			try{
+				parsed = JSON.parse(v.d)
+			}catch(e){
+				parsed = {}
+			}
+		}
+		else{
+			parsed = v.d
+		}
+
+
+		self._import({
+			d : parsed
+		})
+	}
+
+	self.alias = function(){
+		var s = new Settings();
+
+		s.import({
+			d : {
+				pin : self.pin
+			}
+		})
+
+		
+		return s;
+	}
+
+	self.clone = function(){
+		var ui = new pSettings()
+
+			ui._import(self.export())
+
+			ui.address = self.address
+
+		console.log("apply", self.export(), ui)
+
+		return ui
+	}
+
+	self.type = 'accSet'
+
+	return self;
+}
+
+
+
+
+
+kits = {
+	c : {
+		userInfo : UserInfo,
+		share : Share,
+		complainShare : ComplainShare,
+		modFlag : ModFlag,
+		upvoteShare : UpvoteShare,
+		cScore : СScore,
+		comment : Comment,
+		unblocking : Unblocking,
+		blocking : Blocking,
+		unsubscribe : Unsubscribe,
+		subscribe : Subscribe,
+		subscribePrivate : SubscribePrivate,
+		contentBoost : ContentBoost,
+		deleteAccount : DeleteAccount,
+		accDel : DeleteAccount,
+		transaction : Transaction,
+		contentDelete : Remove,
+		accSet : Settings
+	},
+
+	ini : {
+
+	},
+	alias : {
+		userInfo : pUserInfo,
+		share : pShare,
+		comment : pComment,
+		contentDelete : pRemove,
+		settings : pSettings
+	}
+}

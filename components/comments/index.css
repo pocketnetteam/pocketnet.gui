@@ -1,6 +1,9 @@
 .share_common.fullScreenVideo #comments .streamLink {
   margin: 0;
 }
+#comments {
+  position: relative;
+}
 #comments .usericon {
   height: 38px;
   width: 38px;
@@ -14,8 +17,14 @@
 }
 #comments .repliesloaderWrapper,
 #comments .loaderWrapper {
-  padding: 1.5em;
+  padding: 2em;
   text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 66px;
+  z-index: 2;
 }
 #comments .adr {
   max-width: 190px;
@@ -30,8 +39,7 @@
   contain: none;
 }
 #comments .donateEmbWr .donatecntWrapper {
-  padding-top: 1em;
-  padding-bottom: 1em;
+  margin-top: 0.25em;
 }
 #comments .donateEmbWr .donatecntWrapper .removedonate {
   border-radius: 50%;
@@ -47,15 +55,24 @@
   color: rgb(var(--color-bad));
 }
 #comments .donateEmbWr .donatecntWrapper .removedonate:hover {
-  background: rgb(var(--neutral-grad-2));
+  background: rgb(var(--neutral-grad-1));
 }
-#comments .donateEmbWr .donatecntWrapper .donatecnt .value,
-#comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper {
-  display: inline-block;
+#comments .donateEmbWr .donatecntWrapper .donatecnt {
+  display: flex;
+  align-items: center;
 }
-#comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper {
-  position: relative;
-  top: -10px;
+#comments .donateEmbWr .donatecntWrapper .donatecnt .donateSum {
+  display: inline;
+  border-radius: 25px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: rgb(var(--text-on-bg-ac-color));
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
 }
 #comments.preview .post .txt textarea {
   display: block;
@@ -100,111 +117,6 @@
 #comments .captionfwrapper .csharetable {
   display: none;
 }
-#comments .captionfwrapper.cf_caption {
-  height: auto;
-}
-#comments .captionfwrapper.cf_caption .csharetable {
-  display: table;
-}
-#comments .caption {
-  padding-left: 1.25em;
-  padding-right: 3em;
-  background: rgb(var(--background-total-theme));
-}
-#comments .caption .captionTable > div {
-  vertical-align: middle;
-}
-#comments .caption .captionTable > div.captionPanel {
-  width: 160px;
-}
-#comments .caption .captionTable > div.captionPanel .items {
-  margin-left: auto;
-  width: auto;
-}
-#comments .caption .captionTable > div.captionPanel .items > div {
-  vertical-align: middle;
-  padding: 0.5em;
-}
-#comments .caption .captionTable > div.captionPanel .items > div .cact {
-  padding: 0 0.5em;
-  cursor: pointer;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#comments .caption .captionTable > div.captionPanel .items > div .cact:hover {
-  color: rgb(var(--color-bg-ac));
-}
-#comments .caption .captionTable > div.captionPanel .items > div.close {
-  padding-right: 0;
-}
-#comments .caption .captionTable > div.captionPanel .items > div.close .cact {
-  padding-right: 0;
-}
-#comments .caption .captionTable > div.captionPanel span {
-  font-weight: 700;
-  font-size: 0.8em;
-}
-#comments .caption .csharetable > div {
-  padding: 0.5em 0;
-  vertical-align: middle;
-}
-#comments .caption .csharetable > div.image {
-  width: 45px;
-}
-#comments .caption .csharetable > div.image .icon {
-  height: 45px;
-  width: 100%;
-  padding-top: 3px;
-}
-#comments .caption .csharetable > div.image .icon .usericon {
-  margin: 0 auto;
-}
-#comments .caption .csharetable > div.csharecnt {
-  padding-left: 0.5em;
-}
-#comments .caption .csharetable .shareprwrapper {
-  display: none;
-}
-#comments .caption .csharetable .shareprwrapper > div {
-  vertical-align: middle;
-  padding: 0.25em;
-}
-#comments .caption .csharetable .shareprwrapper > div.forimage {
-  width: 25px;
-  padding-left: 0;
-  padding-right: 0;
-}
-#comments .caption .csharetable .shareprwrapper > div.fortext {
-  padding-left: 0.25em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#comments .caption .csharetable .shareprwrapper > div.fortext span {
-  font-size: 0.8em;
-}
-#comments .caption .csharetable .shareprwrapper > div.extra div {
-  font-size: 0.9em;
-  float: right;
-}
-#comments .caption .csharetable .shareprwrapper .additionalcontent {
-  font-size: 0.8em;
-}
-#comments .caption .csharetable .shareprwrapper .img {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  position: relative;
-}
-#comments .caption .csharetable .shareprwrapper .img .vstyle {
-  position: absolute;
-  left: 20px;
-  top: 14px;
-  font-size: 0.6em;
-  color: rgb(var(--neutral-grad-1));
-}
 #comments.fromtop .list {
   border-bottom: 0;
 }
@@ -220,10 +132,37 @@
 #comments .list .comments-operations .operations-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 0.5em;
+  padding-top: 0.5em;
+  /*>div {
+					
+				}*/
 }
-#comments .list .comments-operations .operations-wrapper > div {
+#comments .list .comments-operations .operations-wrapper .vc_valuecustom {
   margin: 0 0.5em;
+}
+#comments .list .comments-operations .operations-wrapper .close-comments {
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  background: rgb(var(--background-total-theme));
+  border-radius: 30px;
+  overflow: hidden;
+}
+#comments .list .comments-operations .operations-wrapper .close-comments .icon-wrapper {
+  text-align: center;
+  vertical-align: middle;
+  color: rgb(var(--neutral-grad-3));
+  line-height: 36px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#comments .list .comments-operations .operations-wrapper .close-comments .icon-wrapper:hover {
+  color: rgb(var(--neutral-grad-4));
+}
+#comments .list .comments-operations .operations-wrapper .close-comments i {
+  font-size: 0.8em;
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments {
   cursor: pointer;
@@ -241,15 +180,13 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  line-height: 36px;
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper:hover {
   color: rgb(var(--neutral-grad-4));
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments.refreshing i {
   animation: 0.6s rotate linear;
-}
-#comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper {
-  line-height: 36px;
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments i {
   font-size: 0.8em;
@@ -317,9 +254,21 @@
   -webkit-transition: color 0.9s;
   transition: color 0.9s;
   position: relative;
+  padding-top: 0.5em;
 }
 #comments .list .comment:nth-child(1) {
   border-top: 0;
+}
+#comments .list .comment .answersWrapper {
+  position: relative;
+  display: none;
+  min-height: 66px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+}
+#comments .list .comment.showedreplies .answersWrapper {
+  display: block;
 }
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment {
@@ -337,20 +286,28 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
-#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage,
-#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .commentimages,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .commentimages,
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .commentmessage,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .hiddenCommentLabel,
-#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .hiddenCommentLabel {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .hiddenCommentLabel,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .hiddenCommentLabel {
   display: block;
   color: rgb(var(--neutral-grad-2));
 }
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .showBlockedUserCommentWrapper,
-#comments .list .comment.hiddenComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .showBlockedUserCommentWrapper {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .showBlockedUserCommentWrapper,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .showBlockedUserCommentWrapper {
   display: block;
+}
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .usericon,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .usericon {
+  background: rgb(var(--neutral-grad-1)) !important;
+}
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .donatedbefore,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .donatedbefore {
+  display: none;
 }
 #comments .list .comment .hiddenCommentLabel .ghost {
   padding-left: 0;
@@ -386,16 +343,16 @@
   border-top: 1px solid rgb(var(--neutral-grad-0));
   padding-left: 1.5em;
   padding-right: 2.5em;
+  /*.embedimages{
+						right: 40px;
+					}
+
+					.embedEmojiPrivew, .emojionearea-button{
+						right: 12px;
+					}*/
 }
 #comments .list .comment .answer .postbody .embeddonate {
   display: none;
-}
-#comments .list .comment .answer .postbody .embedimages {
-  right: 40px;
-}
-#comments .list .comment .answer .postbody .embedEmojiPrivew,
-#comments .list .comment .answer .postbody .emojionearea-button {
-  right: 12px;
 }
 #comments .list .comment .answers .comment:nth-last-child(1) {
   padding-top: 0;
@@ -406,10 +363,6 @@
 }
 #comments .list .comment:hover .metatable > div.panelWrapper .panel {
   opacity: 1;
-}
-#comments .list .comment .metatable .temppanel {
-  display: none;
-  text-align: right;
 }
 #comments .list .comment .metatable .adr {
   font-weight: 700;
@@ -486,7 +439,7 @@
   font-size: 0.8em;
 }
 #comments .list .metatable {
-  padding-top: 0.75em;
+  padding-top: 1em;
 }
 #comments .list .metatable > div {
   padding: 0;
@@ -513,6 +466,12 @@
 }
 #comments .list .metatable > div .date {
   color: rgb(var(--neutral-grad-3));
+}
+#comments .list .metatable > div .tempicon {
+  color: rgba(var(--neutral-grad-2), 0.3);
+}
+#comments .list .metatable > div .templabel {
+  color: rgba(var(--neutral-grad-2), 1);
 }
 #comments .list .metatable > div .edited {
   color: rgb(var(--neutral-grad-3));
@@ -558,8 +517,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#comments .list .commentpanel .items > div .cact:hover {
-  color: rgb(var(--color-bg-ac-bright));
+@media (pointer: hover) {
+  #comments .list .commentpanel .items > div .cact:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
 }
 #comments .list .commentpanel .iconlabelWrapper {
   display: flex;
@@ -581,24 +542,28 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-#comments .list .commentpanel .upvoteComment.ratedScore,
-#comments .list .commentpanel .upvoteComment:hover {
-  color: rgb(var(--color-bg-ac-bright));
-}
-#comments .list .commentpanel .upvoteCommentTable {
   width: auto;
   display: flex;
   align-items: center;
 }
-#comments .list .commentpanel .upvoteCommentTable > div {
+#comments .list .commentpanel .upvoteComment > i,
+#comments .list .commentpanel .upvoteComment span {
   padding: 0 0.5em;
 }
-#comments .list .commentpanel .upvoteCommentTable > div:nth-child(1) {
+#comments .list .commentpanel .upvoteComment > i:nth-child(1),
+#comments .list .commentpanel .upvoteComment span:nth-child(1) {
   padding-left: 0;
 }
-#comments .list .commentpanel .upvoteCommentTable .commentScore {
+#comments .list .commentpanel .upvoteComment .commentScore {
   font-size: 0.8em;
+}
+#comments .list .commentpanel .upvoteComment.ratedScore {
+  color: rgb(var(--color-bg-ac-bright));
+}
+@media (pointer: hover) {
+  #comments .list .commentpanel .upvoteComment:hover {
+    color: rgb(var(--color-bg-ac-bright));
+  }
 }
 #comments.showedall .showall {
   display: none;
@@ -799,6 +764,14 @@
 #comments .answer .postbody .closeAnswer:hover,
 #comments .post .postbody .closeAnswer:hover {
   color: rgba(var(--color-txt-ac));
+}
+#comments .edit .errormessage,
+#comments .answer .errormessage,
+#comments .post .errormessage {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  text-align: center;
+  color: rgba(var(--neutral-grad-2));
 }
 #comments .edit .posttable > div,
 #comments .answer .posttable > div,
@@ -1069,10 +1042,8 @@
   position: absolute;
   right: 7px;
   top: 1px;
-  padding: 6px;
   cursor: pointer;
   color: rgb(var(--neutral-grad-3));
-  filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -1089,7 +1060,10 @@
 #comments .edit .embeddonate img,
 #comments .answer .embeddonate img,
 #comments .post .embeddonate img {
+  margin-top: 10px;
+  margin-right: 6px;
   height: 15px;
+  filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 }
 #comments .edit .embeddonate .donate-hover,
 #comments .answer .embeddonate .donate-hover,
@@ -1227,12 +1201,14 @@
 #comments .edit .posttable > div.postCellWrapper {
   padding-right: 0;
 }
+#comments .answers .comment {
+  /*&:nth-child(1){
+				border-top : 1px solid rgb(var(--neutral-grad-0));
+			}*/
+}
 #comments .answers .comment .commentPaddingWrapper {
   padding-left: 0;
   padding-right: 0;
-}
-#comments .answers .comment:nth-child(1) {
-  border-top: 1px solid rgb(var(--neutral-grad-0));
 }
 #comments.inited .post .commentPanel {
   display: table;
@@ -1331,7 +1307,11 @@ html.mobileview #comments .emojionearea-editor {
   }
   #comments .list .comment .answer .postbody {
     padding-left: 0.5em;
-    padding-right: 0.3em;
+    padding-right: 0.5em;
+  }
+  #comments .list .comment .answers .commentPaddingWrapper {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   #comments .list .commentWrapper > div {
     vertical-align: top;
@@ -1344,19 +1324,31 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .commentWrapper > div.iconWrapper .usericon {
     margin: 0;
   }
-  #comments .list .comments-operations .operations-wrapper {
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-    position: relative;
+  #comments .list .comments-operations {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
   }
-  #comments .list .comments-operations .operations-wrapper > div {
+  #comments .list .comments-operations .operations-wrapper {
+    position: relative;
+    /*>div {
+						
+					}*/
+  }
+  #comments .list .comments-operations .operations-wrapper .vc_valuecustom {
     margin: 0 0.75em;
     margin-left: 0.5em;
   }
   #comments .list .comments-operations .operations-wrapper .refresh-comments {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 0.5em;
+    top: 0.5em;
+    bottom: 0;
+    z-index: 1;
+  }
+  #comments .list .comments-operations .operations-wrapper .close-comments {
+    position: absolute;
+    left: 38px;
+    top: 0.5em;
     bottom: 0;
     z-index: 1;
   }
@@ -1402,6 +1394,9 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .comment {
     margin-bottom: 0.5em;
   }
+  #comments .list .comment:nth-last-child(1) {
+    margin-bottom: 0;
+  }
   #comments .list .metatable > div span {
     font-size: 1em;
   }
@@ -1431,7 +1426,7 @@ html.mobileview #comments .emojionearea-editor {
   #comments .answer,
   #comments .post {
     padding-left: 0.5em;
-    padding-right: 0.3em;
+    padding-right: 0.5em;
   }
   #comments .answer .postbody,
   #comments .post .postbody {

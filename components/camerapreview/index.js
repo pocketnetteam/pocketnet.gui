@@ -621,6 +621,9 @@ var camerapreview = (function(){
 		var initEvents = function(){
 			
 			el.c.find('.back').on('click', function(){
+
+				if(ed.onCancel) ed.onCancel()
+
 				self.stop()
 			})
 
@@ -649,6 +652,7 @@ var camerapreview = (function(){
 						restrict : true,
 						trueshold : 30,
 						clbk : function(){
+							if(ed.onCancel) ed.onCancel()
 
 							self.stop()
 
@@ -874,8 +878,7 @@ var camerapreview = (function(){
 
 		_.each(essenses, function(essense){
 
-				essense.destroy();
-	
+			essense.destroy();
 
 		})
 

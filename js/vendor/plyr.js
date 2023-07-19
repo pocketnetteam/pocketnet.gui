@@ -9254,10 +9254,18 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
+      }
+
+      else{
+
+        importScripts([{src : 'peertube/video-embed.bundle.js'}], plyrrelations, function(){
+
+					clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9413,3 +9421,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

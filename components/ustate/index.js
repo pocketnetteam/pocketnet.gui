@@ -15,90 +15,9 @@ var ustate = (function(){
 
 		var renders = {
 
-			gifts : function(_el){
-
-				return
-
-
-				self.app.platform.sdk.processes.get(function(levels){
-
-					self.app.platform.sdk.processes.gifts(function(gifts){
-
-						
-
-						var level = self.app.platform.sdk.processes.level(mestate.reputation)
-
-						if(!level) return
-
-						_.each(levels, function(lvl){                 
-							if(!lvl.level) return	
-	
-							var lel = _el.find('.level[level="'+lvl.level+'"]')
-
-							if (lvl.level < level.level) {
-								
-								var gift = _.find(gifts, function(gift){
-									return gift.amount == lvl.bonus * 100000000
-								})
-
-
-								if(!gift){
-									lel.addClass('waitgift')
-								}
-								else{
-									lel.removeClass('waitgift')
-								}
-
-							}
-						})
-
-					})
-
-				})
-			},
-
-			currentLevel : function(_el){
-				self.app.platform.sdk.processes.get(function(levels){
-					
-					var level = self.app.platform.sdk.processes.level(mestate.reputation)
-
-					if(!level) return
-
-					_.each(levels, function(lvl){ 
-                
-						if(!lvl.level) return
-
-						var lel = _el.find('.level[level="'+lvl.level+'"]')
-						var state = 'next'
-						var chartline = lel.find('.line')
-
-						if (lvl.level < level.level) {
-							state = 'completed'
-							chartline.removeAttr('width')
-						} 
-
-						if (lvl.level == level.level) {
-							state = 'current'
-
-							chartline.width((level.perc * 100) + "%")
-
-						}
-
-						if (lvl.level > level.level) {
-							next = 'next'
-							chartline.removeAttr('width')
-						}
-						
-						lel.attr('state', state)
-					})
-
-				})
-			},
 
 			reputationsteps : function(clbk){
-				self.app.platform.sdk.processes.get(function(levels){
 					
-					var level = self.app.platform.sdk.processes.level(mestate.reputation)
 				
 					self.shell({
 
@@ -106,15 +25,13 @@ var ustate = (function(){
 						el :   el.c.find('.ustatecontentrep'),
 						data : {
 							reputation : mestate.reputation,
-							level : level,
-							levels : levels,
 							mestate : mestate,
 							address : mestate.address
 						},
 	
 					}, function(_p){
 
-						renders.currentLevel(_p.el)
+						//renders.currentLevel(_p.el)
 						//renders.gifts(_p.el)
 
 						_p.el.find('.tooltip').tooltipster({
@@ -128,7 +45,6 @@ var ustate = (function(){
 
 					})
 
-				})
 			},
 
 			reputationBlockedMe: function(clbk){
@@ -266,22 +182,25 @@ var ustate = (function(){
 
 		var initEvents = function(){
 			
-			self.app.platform.ws.messages["new block"].clbks.ustate = function(data){
+			/*self.app.platform.ws.messages["new block"].clbks.ustate = function(data){
 				self.app.platform.sdk.user.waitActions(function(r){
 					waitActions = r;
 
 					renders.ustatecontent()
 				})
-			}
+			}*/
 		}
 
 		var make = function(clbk){
+
+			waitActions = 0;
 			
-			self.app.platform.sdk.user.waitActions(function(r){
+			//self.app.platform.sdk.user.waitActions(function(r){
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					waitActions = r;
+					//waitActions = r;
 					mestate = _mestate;	
+
 
 					if(self.app.platform.sdk.user.reputationBlockedMe()){
 
@@ -307,7 +226,7 @@ var ustate = (function(){
 					}
 
 				}, true)
-			})
+			//})
 		}
 
 		return {

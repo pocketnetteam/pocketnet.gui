@@ -1,7 +1,7 @@
 @import "../../css/__cssvar";
 
 #wallet{
-	min-height: 600px;
+	min-height: 100vh;
 	padding-bottom: 8 * @rhythm;
 	position: relative;
 
@@ -905,6 +905,10 @@
 					color : rgb(var(--color-txt-gray-dark));
 					font-weight : 700;
 				}
+
+				.cell{
+					text-align: center;
+				}
 			}
 		}
 
@@ -1207,7 +1211,7 @@
 	
 		
 		.slide{
-			margin-top: 2 * @rhythm;
+			margin-top: 0;
 			padding-top : 2 * @rhythm;
 
 			.subcaptionWrapperTable{
@@ -1294,13 +1298,13 @@
 				
 			}
 	
-			._stepclose{
+			/*._stepclose{
 				display: none;
-			}
+			}*/
 	
-			._stepback{
+			/*._stepback{
 				display: none;
-			}
+			}*/
 	
 			._subcaptionlevel{
 				padding-left : @rhythm;
@@ -1311,18 +1315,36 @@
 				padding-top : 0;
 				margin-top : 0;
 			}
+
+			&:nth-last-child(1){
+				padding-bottom : 0;
+			}
 		}
 	
 	
 		.total{
 			padding : 0;
 			overflow : hidden;
+			overflow-x: scroll;
+			scroll-behavior: smooth;
+			scrollbar-width: none;
+			scroll-snap-type: x mandatory;
+			&::-webkit-scrollbar{
+				display: none!important;
+			}
+
+			.tttl{
+				display: flex;
+				align-items: center;
+				width: 300%;
+			}
 	
 			.totalItem{
+				scroll-snap-align: center;
 				padding : 0 2 * @rhythm;
 				padding-bottom: @rhythm;
-				float: left;
-				width: 100%;
+				float: none;
+				width: 33%;
 	
 				.canvasWrapper{
 					width: 100%;
@@ -1416,6 +1438,7 @@
 
 		.buypkoin{
 			padding : @rhythm;
+			border-top: 0;
 	
 			.ways{
 				display : flex;

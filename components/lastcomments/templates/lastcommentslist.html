@@ -7,66 +7,16 @@
 
         <div class="lastcommentslistwrapper">
             <div class="lastcommentslist">        
-
             
-
-                <% _.each(comments, function(group, postid){ 
-                    
-                    var share = app.platform.sdk.node.shares.storage.trx[postid]
-                    
-                    if(!share) return
-
-                    if(share.address == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') return
-
-
-                    var me = app.platform.sdk.user.me()
-                    if (me && me.relation(share.address, 'blocking')) {
-                        return
-                    }
-                    
-                    var h = '';
-
-                    var m = '';
-
-                    if(share.caption) m = m + '' + share.caption + ' '
-
-                    if(share.message) m = m + '' + share.message + ''
-
-                    var nm = filterXSS(trimHtml(m, 80), {
-                        stripIgnoreTag : true,
-                        whiteList: {
-                            b : ["style"]
-                        }
-                    });
-
-                    if(!nm) return
-
-                    var image = share.images[0] || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
-                    var video = null;
-
-                    var vstyle = false;
-
-                    var cmts = _.filter(group, function(c){
-                        return c.message
-                    })
-
-                    if(!cmts.length) return
-
-                    if (share.url){
-                        video = videoImage(share.url)
-                        vstyle = true;
-                    } %>
+                <% _.each(comments, function(group, postid){ %>
 
                     <div class="commentgroup" share="<%-postid%>">
 
                         <div class="comments">
                             <% _.each(group, function(comment){ 
-                                
-                                if(comment.deleted || !comment.message) return
 
-                                if (me && me.relation(comment.address, 'blocking')) {
-                                    return
-                                }
+                                var commentUserInfo = psdk.userInfo.getShortForm(comment.address)
+                                var commentToUserInfo = psdk.userInfo.getShortForm(comment.commentTo)
                                 
                                 %> 
 
@@ -78,9 +28,9 @@
 
                                             <div class="iconWrapper">
                                                 <% 
-                                                    var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
-                                                    var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
-                                                    var letter = name ? name[0] : '';
+                                                    var src = commentUserInfo.image;
+                                                    var name = commentUserInfo.name;
+                                                    var letter = commentUserInfo.letter;
                                                 %>
                         
                                                 <div class="icon">
@@ -109,9 +59,9 @@
 
                                             <div class="iconWrapper">
                                                 <% 
-                                                    var src2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')
-                                                    var name2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-                                                    var letter2 = name ? name[0] : '';    
+                                                    var src2 = commentToUserInfo.image
+                                                    var name2 = commentToUserInfo.name;
+                                                    var letter2 = commentToUserInfo.letter;    
                                                 %>
                         
                                                 <div class="icon">
@@ -158,7 +108,7 @@
                                             %>
 
                                                 <div class="commentmessage">
-                                                    <div><b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
+                                                    <div><b><%-name %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-name2 %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
                                                 </div>
 
                                             <% } %>

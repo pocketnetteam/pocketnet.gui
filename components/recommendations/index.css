@@ -56,6 +56,11 @@
   padding: 0.25em 0.5em;
   font-size: 0.8em;
 }
+#recommendations .recoVideoDiv .videoThumbnail .durationWrapper.dummy {
+  width: 40px;
+  height: 20px;
+  background: rgb(var(--neutral-grad-1));
+}
 #recommendations .recoVideoDiv .videoInfos {
   text-overflow: ellipsis;
   overflow: hidden;

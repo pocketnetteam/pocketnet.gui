@@ -4,7 +4,9 @@
         <div class="filters">
             <% _.each(filters, function(filter, id){ %>
 
-                <div class="tab" rid="<%-filter%>" > <%=e(`r${filter}`) %> </div>
+                <div class="tab" rid="<%-filter%>">
+                    <span><%=e(`r${filter}`) %></span> <span class="count"></span>
+                </div>
 
             <% })%>
         </div>
