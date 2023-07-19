@@ -23209,22 +23209,26 @@ Platform = function (app, listofnodes) {
 
             if (self.activecall){
 
-                self.app.mobile.pip.supported((r) => {
-                    if(r){
-                        self.activecall.ui.toMini()
-                        self.app.mobile.pip.enable($(self.activecall.ui.root))
-                    }
+                if(window.cordova){
+                    self.app.mobile.pip.supported((r) => {
+                        if(r){
+                            self.activecall.ui.toMini()
+                            self.app.mobile.pip.enable($(self.activecall.ui.root))
+                        }
+    
+                        else{
+                            var r = $(self.activecall.ui.root)
+    
+                            var video = r.find('#remote')[0]
+    
+                            video.requestPictureInPicture();
+    
+                            self.app.mobile.backgroundMode(true)
+                        }
+                    })
+                }
 
-                    else{
-                        var r = $(self.activecall.ui.root)
-
-                        var video = r.find('#remote')[0]
-
-                        video.requestPictureInPicture();
-
-                        self.app.mobile.backgroundMode(true)
-                    }
-                })
+                
                 
                 
                 
