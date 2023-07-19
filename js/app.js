@@ -2429,6 +2429,24 @@ Application = function (p) {
 			element: null,
 			enabled: false,
 			loading: false,
+			supported : function(clbk){
+				if (window.PictureInPicture) {
+					window.PictureInPicture.isPipModeSupported(function (res) {
+
+						if (res == 'true') {
+							if(clbk) clbk(true)
+						}else{
+							if(clbk) clbk(false)
+						}
+					}, (e) => {
+
+					})
+				}
+
+				else{
+					if(clbk) clbk(false)
+				}
+			},
 			checkIfHere: function () {
 				if (window.PictureInPicture && window.PictureInPicture.leavePip) {
 					window.PictureInPicture.isPip(function (res) {

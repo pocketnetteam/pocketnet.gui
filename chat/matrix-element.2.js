@@ -650,7 +650,9 @@ var functions = __webpack_require__("3139");
     scrollToNew(s) {
       const container = this.$refs["container"];
       if (container.scrolling) {
-        container.scrolling(-1, -container.scrollHeight);
+        container.scrolling(-1, this.c * s);
+      } else {
+        container.scrollTop = this.c * s;
       }
     },
     scrollToEvent(e) {

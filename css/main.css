@@ -7532,3 +7532,14 @@ body.dg-open {
     aspect-ratio: 1.44;
   }
 }
+div#bc-root.pipped {
+  position: fixed;
+  left: 0!important;
+  top: 0!important;
+  bottom: 0!important;
+  right: 0!important;
+  border: 0!important;
+}
+div#bc-root.pipped .bc-video-container {
+  max-width: none!important;
+}

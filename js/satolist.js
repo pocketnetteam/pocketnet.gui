@@ -23190,6 +23190,9 @@ Platform = function (app, listofnodes) {
                 self.titleManager.clear();
             }
 
+            document.exitPictureInPicture()
+            self.app.mobile.backgroundMode(false)
+
         }
 
         var ufel = function () {
@@ -23204,25 +23207,42 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
-            //setTimeout(function(){
+            if (self.activecall){
 
-                //if (self.focus) return
+                self.app.mobile.pip.supported((r) => {
+                    if(r){
+                        self.activecall.ui.toMini()
+                        self.app.mobile.pip.enable($(self.activecall.ui.root))
+                    }
 
+                    else{
+                        var r = $(self.activecall.ui.root)
+
+                        var video = r.find('#remote')[0]
+
+                        video.requestPictureInPicture();
+
+                        self.app.mobile.backgroundMode(true)
+                    }
+                })
+                
+                
+                
+            }
+
+            else{
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
                 else{
-
+    
                 }
+            }
 
 
-                ///// TODO CALLs
-
-            //}, 200)
+            
 
 
-            //if (self.app.playingvideo)
-            //    self.app.mobile.pip.enable(self.app.playingvideo.el ? self.app.playingvideo.el.find('.video-js') : '');
         }
 
 
@@ -23688,7 +23708,8 @@ Platform = function (app, listofnodes) {
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
 
-	  self.getCallsOptions = function(){
+    self.activecall = null
+	self.getCallsOptions = function(){
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
@@ -23715,11 +23736,13 @@ Platform = function (app, listofnodes) {
 				onInitCall:(call) => {
 
 				},
-				onEnded:(call) => {
+				onEnded:(call, ui) => {
+
+                    self.activecall = null
 
                     self.app.mobile.unsleep(false)
 				},
-				onConnected:(call)=> {
+				onConnected:(call, ui)=> {
 
                     self.app.mobile.audiotoggle()
 
@@ -23729,11 +23752,15 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.unsleep(true)
 
+                    self.activecall = {
+                        call, ui
+                    }
+
 				}
 			}
 
 		}
-	  }
+    }
 
     return self;
 
