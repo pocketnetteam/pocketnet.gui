@@ -64,7 +64,7 @@
 }
 .share_common .sbtnxs,
 .share_common .adr {
-  max-width: 40vw;
+  max-width: 25vw;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;

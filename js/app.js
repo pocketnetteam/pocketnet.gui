@@ -1463,11 +1463,18 @@ Application = function (p) {
 					}
 				}
 
+				/*if (window.NavigationBar) {
+					window.NavigationBar.hide()
+				}*/
+
+				//self.mobile.statusbar.background()
+				
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
 				self.mobile.memory()
 				self.mobile.webviewchecker()
 				self.mobile.safearea()
+
 
 				if (window.Keyboard && window.Keyboard.disableScroll) {
 					window.Keyboard.disableScroll(false)
@@ -2639,6 +2646,21 @@ Application = function (p) {
 			}
 		},
 		statusbar: {
+			initial : function(){
+				if (window.NavigationBar)
+					window.NavigationBar.hide()
+
+				if(window.StatusBar){
+					setTimeout(() => {
+						window.StatusBar.overlaysWebView(true);
+					}, 500)
+	
+					setTimeout(() => {
+						window.StatusBar.styleDefault()
+					}, 1000)
+				}
+				
+			},
 			background: function () {
 
 				var colors = {
@@ -2650,7 +2672,9 @@ Application = function (p) {
 				if (window.StatusBar) {
 					StatusBar.overlaysWebView(true);
 					window.StatusBar.backgroundColorByHexString('#00000000');
+
 					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
+					
 
 				}
 

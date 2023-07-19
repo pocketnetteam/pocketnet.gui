@@ -23161,7 +23161,12 @@ Platform = function (app, listofnodes) {
             if (time > 120 && (window.cordova || electron || isInStandaloneMode())) {
                 self.clearStorageLight()
 
-                self.sdk.node.transactions.get.allBalance(null, true)
+                var account = self.app.platform.actions.getCurrentAccount()
+
+                if (account) {
+                    account.updateUnspents()
+                }
+               
                 self.sdk.notifications.getNotifications().catch(e => {})
             }
 
