@@ -5243,21 +5243,6 @@ Platform = function (app, listofnodes) {
                             var ct = new Settings();
                             ct.pin.set(unpin ? '' : share.txid);
 
-                            /*if (!self.sdk.accountsettings.storage[share.address]){
-
-                                self.sdk.accountsettings.storage[share.address] = {};
-                            }
-
-                            if (unpin){
-
-                                self.sdk.accountsettings.storage[share.address].pin = null;
-
-                            } else {
-
-                                self.sdk.accountsettings.storage[share.address].pin = share.txid;
-                            }*/
-
-
                             self.app.platform.sdk.user.accSet(ct, function(err, alias){
 
                                 if(!err){
@@ -5290,30 +5275,6 @@ Platform = function (app, listofnodes) {
                                 success : function(){
 
                                     pinPost(d.share, function(err, result){
-
-										/*if(!err)
-										{
-
-                                            var alreadyPinned = self.psdk.share.get(share.pin)
-                                            
-                                            if (alreadyPinned && alreadyPinned.txid){
-
-                                                alreadyPinned.pin = false;
-                                                var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
-                                                var pinnedIcon = shareslist.find('.pinnedIcon');
-                                                var pinnedLabel = shareslist.find('.pinnedLabel')
-                                                pinnedIcon.children().remove();
-                                                pinnedLabel.empty()
-
-                                            }
-
-                                            //d.share.pin = true;
-                                            var metatable = _el.closest('.metatable');
-                                            var sys = metatable.find('.sys');
-
-                                            sys.prepend('<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> ' + self.app.localization.e('pinned').toLowerCase() + ', ' + '</span>');
-
-                                        }*/
 
                                     }, false)
 
@@ -5501,26 +5462,53 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.block').on('click', function () {
+                            
                             self.app.mobile.vibration.small()
-                            self.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                            new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('blockUserQ'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.api.actions.blocking(address, function (tx, error) {
+                                        if (!tx) {
+                                            self.errorHandler(error, true)
+                                        }
+                                    })
+        
+                                    close()
+
                                 }
                             })
 
-                            close()
+                            
 
                         })
 
                         el.find('.unblock').on('click', function () {
                             self.app.mobile.vibration.small()
-                            self.api.actions.unblocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                            new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('e13023'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.api.actions.unblocking(address, function (tx, error) {
+                                        if (!tx) {
+                                            self.errorHandler(error, true)
+                                        }
+                                    })
+        
+                                    close()
+
                                 }
                             })
 
-                            close()
+                            
 
                         })
 
