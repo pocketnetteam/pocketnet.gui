@@ -23258,12 +23258,17 @@ Platform = function (app, listofnodes) {
                             var r = $(self.activecall.ui.root)
     
                             var video = r.find('#remote')[0]
+
+                            self.app.mobile.backgroundMode(true)
     
                             video.requestPictureInPicture().then(() => {
+                                console.log("PIPMODE")
                                 haspip = true
+                            }).catch(e => {
+                                console.error(e)
                             })
     
-                            self.app.mobile.backgroundMode(true)
+                            
                         }
                     })
                 }
@@ -23800,7 +23805,27 @@ Platform = function (app, listofnodes) {
                         call, ui
                     }
 
-				}
+				},
+
+                onIncomingCall : function(){
+                    if (self.app.playingvideo){
+                        self.app.playingvideo.exitFullScreen()
+                        self.app.playingvideo.pause()
+                    }
+                },
+
+                onCancelMini : function(call){
+                    if(call){
+                        self.app.mobile.statusbar.gallerybackground()
+                    }
+                    else{
+                        self.app.mobile.statusbar.background()
+                    }
+                },
+
+                onToMini : function(call){
+                    self.app.mobile.statusbar.background()
+                }
 			}
 
 		}
