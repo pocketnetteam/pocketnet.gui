@@ -23174,6 +23174,7 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
+            console.log("FOCUS")
 
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
@@ -23239,6 +23240,10 @@ Platform = function (app, listofnodes) {
         }
 
         var uf = function () {
+
+            console.log("UNFOCUS")
+
+
             self.focus = false;
 
             unfocustime = platform.currentTime()
@@ -23272,11 +23277,6 @@ Platform = function (app, listofnodes) {
                         }
                     })
                 }
-
-                
-                
-                
-                
             }
 
             else{
@@ -23308,12 +23308,14 @@ Platform = function (app, listofnodes) {
 
             if (window.cordova) {
 
-                document.addEventListener("pause", uf, false);
-                document.addEventListener("resume", f, false);
+                if(!isios()){
+                    document.addEventListener("pause", uf, false);
+                    document.addEventListener("resume", f, false);
 
-                return
+                    return
+                }
+                
             }
-
 
             if (electron) {
 
@@ -23759,6 +23761,20 @@ Platform = function (app, listofnodes) {
 
     self.activecall = null
 	self.getCallsOptions = function(){
+
+        var clbks = {
+            view : function(call, ui){
+
+                if(!self.activecall || self.activecall.ui.view != 'full'){
+                    self.app.mobile.statusbar.background()
+                }
+                else{
+                    self.app.mobile.statusbar.gallerybackground()
+                }
+            }
+        }
+
+
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
@@ -23790,6 +23806,8 @@ Platform = function (app, listofnodes) {
                     self.activecall = null
 
                     self.app.mobile.unsleep(false)
+
+                    clbks.view()
 				},
 				onConnected:(call, ui)=> {
 
@@ -23805,6 +23823,8 @@ Platform = function (app, listofnodes) {
                         call, ui
                     }
 
+                    clbks.view()
+
 				},
 
                 onIncomingCall : function(){
@@ -23814,17 +23834,8 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                onCancelMini : function(call){
-                    if(call){
-                        self.app.mobile.statusbar.gallerybackground()
-                    }
-                    else{
-                        self.app.mobile.statusbar.background()
-                    }
-                },
-
-                onToMini : function(call){
-                    self.app.mobile.statusbar.background()
+                changeView : function(call, ui){
+                    clbks.view()
                 }
 			}
 
