@@ -23250,10 +23250,15 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
+            console.log('here')
+
             if (self.activecall){
 
                 if(window.cordova){
                     self.app.mobile.pip.supported((r) => {
+
+                        console.log('here2', r)
+
                         if(r){
                             self.activecall.ui.toMini()
                             self.app.mobile.pip.enable($(self.activecall.ui.root))
@@ -23265,6 +23270,8 @@ Platform = function (app, listofnodes) {
                             var video = r.find('#remote')[0]
 
                             self.app.mobile.backgroundMode(true)
+
+                            console.log('here3', video)
     
                             video.requestPictureInPicture().then(() => {
                                 console.log("PIPMODE")
@@ -23765,12 +23772,16 @@ Platform = function (app, listofnodes) {
         var clbks = {
             view : function(call, ui){
 
-                if(!self.activecall || self.activecall.ui.view != 'full'){
-                    self.app.mobile.statusbar.background()
-                }
-                else{
-                    self.app.mobile.statusbar.gallerybackground()
-                }
+                setTimeout(() => {
+
+                    if(!self.activecall || self.activecall.ui.view == 'mini'){
+                        self.app.mobile.statusbar.show()
+                    }
+                    else{
+                        self.app.mobile.statusbar.hide()
+                    }
+
+                }, 100)
             }
         }
 
@@ -23803,6 +23814,9 @@ Platform = function (app, listofnodes) {
 				},
 				onEnded:(call, ui) => {
 
+                    console.log('onEnded', call, ui)
+
+
                     self.activecall = null
 
                     self.app.mobile.unsleep(false)
@@ -23810,6 +23824,8 @@ Platform = function (app, listofnodes) {
                     clbks.view()
 				},
 				onConnected:(call, ui)=> {
+
+                    console.log('onConnected', call, ui)
 
                     self.app.mobile.audiotoggle()
 
@@ -23835,7 +23851,12 @@ Platform = function (app, listofnodes) {
                 },
 
                 changeView : function(call, ui){
-                    clbks.view()
+                    console.log('change')
+
+                    
+                        clbks.view()
+            
+                    
                 }
 			}
 
