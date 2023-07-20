@@ -943,6 +943,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
 						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -970,6 +971,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube22.pocketnet.app',
 						ip: '104.168.136.179',
 						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -979,6 +981,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube23.pocketnet.app',
 						ip: '23.254.201.237',
 						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -988,6 +991,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube24.pocketnet.app',
 						ip: '23.254.224.63',
 						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -1044,6 +1048,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube29.pocketnet.app',
 						ip: '157.90.171.8',
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -1052,16 +1057,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube30.pocketnet.app',
 						ip: '95.217.165.102',
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				36: [
-					{
-						host : 'peertube31.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -1114,6 +1110,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						ip: '185.148.146.11',
 						special: true,
 					},
+				],
+
+				44: [
+					{
+						host : 'peertube31.pocketnet.app',
+						ip: '185.148.146.11',
+						special: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
       		};
 
