@@ -363,6 +363,7 @@ Platform = function (app, listofnodes) {
     self.sm.app = app;
     self.sm.user = app.user;
     self.sm.map.id = 'platformmodule'
+    self.sm.componentsPath = 'components/'
 
     self.released = {
         vidgets : {
@@ -5161,20 +5162,11 @@ Platform = function (app, listofnodes) {
             d.share = share
             d.authorsettings = self.psdk.accSet.get(address) || {}
 
-            console.log("GEGEG")
-
             self.app.platform.sdk.ustate.me(function (_mestate) {
-
-            console.log("GEGEG2")
-
 
                 self.sm.fastTemplate('metmenu', function (rendered, template) {
 
-                    console.log("GEGEG3")
-
                     var t = self.api.tooltip(_el, function () {
-
-                        console.log("GEGEG6")
 
                         d.share = self.psdk.share.get(id)
                         
@@ -5189,8 +5181,6 @@ Platform = function (app, listofnodes) {
                         return template(d);
 
                     }, function (el, f, close) {
-
-                        console.log("GEGEG4")
 
                         el.find('.recommendationinfo').on('click', function(){
 
@@ -9346,8 +9336,6 @@ Platform = function (app, listofnodes) {
 
                 return this.getNotifications().then(r => {
 
-                    console.log("Notifications INITED")
-
                     _.each(this.clbks.inited, function (f) {
                         f()
                     })
@@ -10924,27 +10912,17 @@ Platform = function (app, listofnodes) {
 
             wallet: function (n, _private) {
 
-                console.log("NNN", n, _private)
-
                 const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
-
-                console.log('pubkey', pubkey)
 
                 const a = bitcoin.payments['p2wpkh']({ pubkey });
 
-                console.log("ADR", a)
-
                 const p2sh = bitcoin.payments.p2sh({ redeem: a });
-
-                console.log("p2sh", p2sh)
-
 
                 return p2sh;
             },
 
             dumpKeys: function (n, _private = self.app.user.private.value) {
                 const addressPath = app.platform.sdk.address.path(n);
-                console.log('addressPath', addressPath, n)
                 const d = bitcoin.bip32.fromSeed(_private).derivePath(addressPath).toWIF();
 
                 const keyPair = bitcoin.ECPair.fromWIF(d);
@@ -17003,8 +16981,6 @@ Platform = function (app, listofnodes) {
                             var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
 
                             var width = 100;
-
-                            console.log('width', width, info.aspectRatio)
 
                             loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}%`);
                             loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}%`);
@@ -23179,8 +23155,6 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-            console.log("FOCUS")
-
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -23246,23 +23220,16 @@ Platform = function (app, listofnodes) {
 
         var uf = function () {
 
-            console.log("UNFOCUS")
-
-
             self.focus = false;
 
             unfocustime = platform.currentTime()
 
             self.clbks.unfocus();
 
-            console.log('here')
-
             if (self.activecall){
 
                 if(window.cordova){
                     self.app.mobile.pip.supported((r) => {
-
-                        console.log('here2', r)
 
                         if(r){
                             self.activecall.ui.toMini()
@@ -23275,11 +23242,8 @@ Platform = function (app, listofnodes) {
                             var video = r.find('#remote')[0]
 
                             self.app.mobile.backgroundMode(true)
-
-                            console.log('here3', video)
     
                             video.requestPictureInPicture().then(() => {
-                                console.log("PIPMODE")
                                 haspip = true
                             }).catch(e => {
                                 console.error(e)
@@ -23819,9 +23783,6 @@ Platform = function (app, listofnodes) {
 				},
 				onEnded:(call, ui) => {
 
-                    console.log('onEnded', call, ui)
-
-
                     self.activecall = null
 
                     self.app.mobile.unsleep(false)
@@ -23829,8 +23790,6 @@ Platform = function (app, listofnodes) {
                     clbks.view()
 				},
 				onConnected:(call, ui)=> {
-
-                    console.log('onConnected', call, ui)
 
                     self.app.mobile.audiotoggle()
 
@@ -23856,12 +23815,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 changeView : function(call, ui){
-                    console.log('change')
-
-                    
-                        clbks.view()
-            
-                    
+                    clbks.view()
                 }
 			}
 

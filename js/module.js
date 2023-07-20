@@ -303,8 +303,6 @@ nModule = function(){
 			p.data.essenseData = p.essenseData || {};
 			p.data.psdk = self.app.platform.psdk
 
-			console.log('p.data', p.data)
-
 			try{
 				p.rendered = template(p.data);
 			}
@@ -408,6 +406,8 @@ nModule = function(){
 				{
 					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 				}
+
+				console.log('url', url)
 
 				var vs = '131'
 

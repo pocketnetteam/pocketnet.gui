@@ -1446,8 +1446,10 @@ dialog = function (p) {
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
 
-		$el.on('click', clickOutsideOfWindow)
-
+		setTimeout(() => {
+			$el.on('click', clickOutsideOfWindow)
+		}, 500)
+		
 
 		var title = $el.find('.poll .title');
 
@@ -8730,7 +8732,7 @@ trimHtml = function (str, num) {
 	}
 
 	if (str.length > tr) {
-		result = str.substr(0, tr) + "&hellip;";
+		result = str.substr(0, tr) + "...";
 
 		_.each(openedTags, function (tag) {
 

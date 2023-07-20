@@ -242,13 +242,11 @@ ResoursesDB = function(storageName, version, storages){
 
 
         initing = new Promise((resolve, reject) => {
-            console.log("INITING")
             var openRequest = indexedDB.open(storageName, version);
 
            
 
             openRequest.onupgradeneeded = function (e) {
-                console.log("HERE")
                 let db = openRequest.result;
 
                 const isVersionChanged = (e.oldVersion !== e.newVersion);
@@ -286,8 +284,6 @@ ResoursesDB = function(storageName, version, storages){
             };
 
             openRequest.onsuccess = function () {
-
-                console.log("INITED")
 
                 db = openRequest.result;
 
