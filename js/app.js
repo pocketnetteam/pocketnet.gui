@@ -2430,7 +2430,7 @@ Application = function (p) {
 			enabled: false,
 			loading: false,
 			supported : function(clbk){
-				if (window.PictureInPicture) {
+				if (window.PictureInPicture && !isios()) {
 					window.PictureInPicture.isPipModeSupported(function (res) {
 
 						if (res == 'true') {
