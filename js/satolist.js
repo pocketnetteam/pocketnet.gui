@@ -358,10 +358,11 @@ Platform = function (app, listofnodes) {
 
     var smulti = 100000000
 
-    var sm = new nModule();
-        sm.ajax = app.ajax;
-        sm.app = app;
-        sm.user = app.user;
+    self.sm = new nModule();
+    self.sm.ajax = app.ajax;
+    self.sm.app = app;
+    self.sm.user = app.user;
+    self.sm.map.id = 'platformmodule'
 
     self.released = {
         vidgets : {
@@ -5160,20 +5161,36 @@ Platform = function (app, listofnodes) {
             d.share = share
             d.authorsettings = self.psdk.accSet.get(address) || {}
 
+            console.log("GEGEG")
 
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
-                sm.fastTemplate('metmenu', function (rendered, template) {
+            console.log("GEGEG2")
+
+
+                self.sm.fastTemplate('metmenu', function (rendered, template) {
+
+                    console.log("GEGEG3")
 
                     var t = self.api.tooltip(_el, function () {
+
+                        console.log("GEGEG6")
 
                         d.share = self.psdk.share.get(id)
                         
                         d.mestate = _mestate
 
+                        try{
+                            template(d)
+                        }catch(e){
+                            console.error
+                        }
+
                         return template(d);
 
                     }, function (el, f, close) {
+
+                        console.log("GEGEG4")
 
                         el.find('.recommendationinfo').on('click', function(){
 
@@ -5772,7 +5789,7 @@ Platform = function (app, listofnodes) {
                         })
                     }, false)
 
-                }, d, 'components/lenta')
+                }, d, 'lenta')
             })
         }
     }

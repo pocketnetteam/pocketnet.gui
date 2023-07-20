@@ -303,6 +303,7 @@ nModule = function(){
 			p.data.essenseData = p.essenseData || {};
 			p.data.psdk = self.app.platform.psdk
 
+			console.log('p.data', p.data)
 
 			try{
 				p.rendered = template(p.data);
@@ -466,10 +467,14 @@ nModule = function(){
 	}
 
 	self.fastTemplate = function(name, clbk, data, turi){
+
+		console.log('fastTemplate', name, turi)
 		self.loadTemplate({
 			name : name,
 			turi : turi || "",
 		}, function(template){
+
+			console.log('loaded')
 
 			self.renderTemplate(template, function(html){
 
