@@ -124,16 +124,22 @@ var userpage = (function(){
 				}
 			})
 
-			reports.push({
-				name : self.app.localization.e('earnings2'),
-				id : 'earnings',
-				report : 'earnings',
-				//openReportPageMobile : true,
-				mobile : false,
-				if : function(){
-					return !self.app.platform.sdk.user.myaccauntdeleted()
-				}
-			})
+			if(!self.app.pkoindisable){
+				reports.push({
+					name : self.app.localization.e('earnings2'),
+					id : 'earnings',
+					report : 'earnings',
+					//openReportPageMobile : true,
+					mobile : false,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+						
+					}
+				})
+			}
+
+			
+			
 
 			reports.push({
 
