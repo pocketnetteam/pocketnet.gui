@@ -170,6 +170,7 @@ __map =  {
 		{ c : 'categories', n : 'categories' },
 		{ c : 'lenta', n : 'share' },
 		{ c : 'lenta', n : 'shares' },
+		{ c : 'lenta', n : 'metmenu' },
 		{ c : 'lenta', n : 'wholike' },
 		{ c : 'lenta', n : 'index' },
 		{ c : 'lenta', n : 'sharevideo' },

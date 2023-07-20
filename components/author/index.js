@@ -1631,9 +1631,7 @@ var author = (function(){
 
 			getdata : function(clbk, settings){
 
-				window.requestAnimationFrame(() => {
-					self.app.el.html.addClass('allcontent')
-				})
+				self.app.el.html.addClass('allcontent')
 
 				self.app.platform.sdk.search.clear()
 

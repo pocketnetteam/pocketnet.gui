@@ -1086,7 +1086,7 @@ var registration = (function(){
 
 			getdata : function(clbk, p){
 
-				/*if (p.state){
+				if (p.state && self.app.platform.psdk.userState.getmy()){
 					
 					self.app.nav.api.load({
 						open : true,
@@ -1095,7 +1095,7 @@ var registration = (function(){
 					})
 
 					return
-				}*/
+				}
 
 				gliperror = false;
 

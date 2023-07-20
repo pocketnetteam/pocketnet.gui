@@ -303,7 +303,6 @@ nModule = function(){
 			p.data.essenseData = p.essenseData || {};
 			p.data.psdk = self.app.platform.psdk
 
-
 			try{
 				p.rendered = template(p.data);
 			}
@@ -408,6 +407,8 @@ nModule = function(){
 					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 				}
 
+				console.log('url', url)
+
 				var vs = '131'
 
 				if (typeof numfromreleasestring != 'undefined'){
@@ -466,10 +467,14 @@ nModule = function(){
 	}
 
 	self.fastTemplate = function(name, clbk, data, turi){
+
+		console.log('fastTemplate', name, turi)
 		self.loadTemplate({
 			name : name,
 			turi : turi || "",
 		}, function(template){
+
+			console.log('loaded')
 
 			self.renderTemplate(template, function(html){
 

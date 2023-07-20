@@ -1385,7 +1385,8 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
     margin-right: 0;
   }
   .share_common .meta .metatable > div.metapanel {
-    width: 47px;
+    padding: 1em;
+    margin-right: 0.5em;
   }
   .share_common .meta .metatable > div.metapanel .metapanelitem {
     opacity: 1;

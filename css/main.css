@@ -4504,7 +4504,7 @@ html.mobileview .tooltipMobileDialog .header .text {
 }
 html.mobileview .tooltipMobileDialog .closeButton,
 html.mobileview .tooltipMobileDialog .menuitem {
-  padding: 2em 1em;
+  padding: 1.5em 1em;
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;

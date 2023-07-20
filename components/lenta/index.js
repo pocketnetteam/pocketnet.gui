@@ -3757,8 +3757,11 @@ var lenta = (function(){
 				}
 
 				var ch = 0
-
+				
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+
+					console.log('essenseData.openapi', essenseData.openapi)
+					
 
 					if(s.settings.v != "a"){
 
@@ -3790,11 +3793,15 @@ var lenta = (function(){
 
 								var ac = '';
 
-								var _w = isMobile() ? self.app.width : el.width();
+								var _w = isMobile() ? self.app.width : el.width() || el.closest('.share').width();
 								var _h = el.height()
 
+								console.log("_W", _w, el, el.width(), self.app.width)
 
-								if(_img.width >= _img.height && (!essenseData.openapi || image.images.length == 1)){
+						
+								
+
+								if(_img.width >= _img.height && (essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);

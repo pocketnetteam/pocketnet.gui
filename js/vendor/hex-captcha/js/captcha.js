@@ -141,7 +141,6 @@ class HexCaptcha {
             
             this.angles = Array.from(e.target.parentNode.parentNode.children).map(img => img.children[0].angle);
 
-            console.log('this.angles', this.angles)
           });
         
           holder.append(image);

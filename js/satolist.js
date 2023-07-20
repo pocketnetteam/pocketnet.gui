@@ -5,8 +5,8 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
-    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
+
     fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
     peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
@@ -358,10 +358,12 @@ Platform = function (app, listofnodes) {
 
     var smulti = 100000000
 
-    var sm = new nModule();
-        sm.ajax = app.ajax;
-        sm.app = app;
-        sm.user = app.user;
+    self.sm = new nModule();
+    self.sm.ajax = app.ajax;
+    self.sm.app = app;
+    self.sm.user = app.user;
+    self.sm.map.id = 'platformmodule'
+    self.sm.componentsPath = 'components/'
 
     self.released = {
         vidgets : {
@@ -5160,16 +5162,21 @@ Platform = function (app, listofnodes) {
             d.share = share
             d.authorsettings = self.psdk.accSet.get(address) || {}
 
-
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
-                sm.fastTemplate('metmenu', function (rendered, template) {
+                self.sm.fastTemplate('metmenu', function (rendered, template) {
 
                     var t = self.api.tooltip(_el, function () {
 
                         d.share = self.psdk.share.get(id)
                         
                         d.mestate = _mestate
+
+                        try{
+                            template(d)
+                        }catch(e){
+                            console.error
+                        }
 
                         return template(d);
 
@@ -5243,21 +5250,6 @@ Platform = function (app, listofnodes) {
                             var ct = new Settings();
                             ct.pin.set(unpin ? '' : share.txid);
 
-                            /*if (!self.sdk.accountsettings.storage[share.address]){
-
-                                self.sdk.accountsettings.storage[share.address] = {};
-                            }
-
-                            if (unpin){
-
-                                self.sdk.accountsettings.storage[share.address].pin = null;
-
-                            } else {
-
-                                self.sdk.accountsettings.storage[share.address].pin = share.txid;
-                            }*/
-
-
                             self.app.platform.sdk.user.accSet(ct, function(err, alias){
 
                                 if(!err){
@@ -5290,30 +5282,6 @@ Platform = function (app, listofnodes) {
                                 success : function(){
 
                                     pinPost(d.share, function(err, result){
-
-										/*if(!err)
-										{
-
-                                            var alreadyPinned = self.psdk.share.get(share.pin)
-                                            
-                                            if (alreadyPinned && alreadyPinned.txid){
-
-                                                alreadyPinned.pin = false;
-                                                var shareslist = $(`[stxid='${alreadyPinned.txid}']`);
-                                                var pinnedIcon = shareslist.find('.pinnedIcon');
-                                                var pinnedLabel = shareslist.find('.pinnedLabel')
-                                                pinnedIcon.children().remove();
-                                                pinnedLabel.empty()
-
-                                            }
-
-                                            //d.share.pin = true;
-                                            var metatable = _el.closest('.metatable');
-                                            var sys = metatable.find('.sys');
-
-                                            sys.prepend('<span class="pinnedLabel"><i class="fas fa-thumbtack"></i> ' + self.app.localization.e('pinned').toLowerCase() + ', ' + '</span>');
-
-                                        }*/
 
                                     }, false)
 
@@ -5501,26 +5469,53 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.block').on('click', function () {
+                            
                             self.app.mobile.vibration.small()
-                            self.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                            new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('blockUserQ'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.api.actions.blocking(address, function (tx, error) {
+                                        if (!tx) {
+                                            self.errorHandler(error, true)
+                                        }
+                                    })
+        
+                                    close()
+
                                 }
                             })
 
-                            close()
+                            
 
                         })
 
                         el.find('.unblock').on('click', function () {
                             self.app.mobile.vibration.small()
-                            self.api.actions.unblocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                            new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('e13023'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.api.actions.unblocking(address, function (tx, error) {
+                                        if (!tx) {
+                                            self.errorHandler(error, true)
+                                        }
+                                    })
+        
+                                    close()
+
                                 }
                             })
 
-                            close()
+                            
 
                         })
 
@@ -5784,13 +5779,33 @@ Platform = function (app, listofnodes) {
                         })
                     }, false)
 
-                }, d, 'components/lenta')
+                }, d, 'lenta')
             })
         }
     }
 
     self.sdk = {
+        broadcaster : {
+            clbks : {},
+            history : [],
+            init : function(clbk){
+                if(typeof swBroadcaster != 'undefined')
+                    swBroadcaster.on('network-stats', (data) => {
 
+                        if (self.sdk.broadcaster.history.length > 600){
+                            self.sdk.broadcaster.history.splice(0, 100)
+                        }
+
+                        self.sdk.broadcaster.history.push(data)
+
+                        _.each(self.sdk.broadcaster.clbks, (c) => {
+                            c(data)
+                        })
+                    })
+
+                if(clbk) clbk()
+            }
+        },
         faqLangs : {
             get : function(clbk){
 
@@ -9321,8 +9336,6 @@ Platform = function (app, listofnodes) {
 
                 return this.getNotifications().then(r => {
 
-                    console.log("Notifications INITED")
-
                     _.each(this.clbks.inited, function (f) {
                         f()
                     })
@@ -10899,27 +10912,17 @@ Platform = function (app, listofnodes) {
 
             wallet: function (n, _private) {
 
-                console.log("NNN", n, _private)
-
                 const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
-
-                console.log('pubkey', pubkey)
 
                 const a = bitcoin.payments['p2wpkh']({ pubkey });
 
-                console.log("ADR", a)
-
                 const p2sh = bitcoin.payments.p2sh({ redeem: a });
-
-                console.log("p2sh", p2sh)
-
 
                 return p2sh;
             },
 
             dumpKeys: function (n, _private = self.app.user.private.value) {
                 const addressPath = app.platform.sdk.address.path(n);
-                console.log('addressPath', addressPath, n)
                 const d = bitcoin.bip32.fromSeed(_private).derivePath(addressPath).toWIF();
 
                 const keyPair = bitcoin.ECPair.fromWIF(d);
@@ -16979,8 +16982,6 @@ Platform = function (app, listofnodes) {
 
                             var width = 100;
 
-                            console.log('width', width, info.aspectRatio)
-
                             loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}%`);
                             loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}%`);
                         }
@@ -22172,7 +22173,7 @@ Platform = function (app, listofnodes) {
 
 
         lazyActions([
-
+            self.sdk.broadcaster.init,
             self.actions.prepare,
             self.sdk.node.transactions.loadTemp,
             self.sdk.ustate.meUpdate,
@@ -23154,7 +23155,6 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -23219,6 +23219,7 @@ Platform = function (app, listofnodes) {
         }
 
         var uf = function () {
+
             self.focus = false;
 
             unfocustime = platform.currentTime()
@@ -23229,6 +23230,7 @@ Platform = function (app, listofnodes) {
 
                 if(window.cordova){
                     self.app.mobile.pip.supported((r) => {
+
                         if(r){
                             self.activecall.ui.toMini()
                             self.app.mobile.pip.enable($(self.activecall.ui.root))
@@ -23238,20 +23240,19 @@ Platform = function (app, listofnodes) {
                             var r = $(self.activecall.ui.root)
     
                             var video = r.find('#remote')[0]
+
+                            self.app.mobile.backgroundMode(true)
     
                             video.requestPictureInPicture().then(() => {
                                 haspip = true
+                            }).catch(e => {
+                                console.error(e)
                             })
     
-                            self.app.mobile.backgroundMode(true)
+                            
                         }
                     })
                 }
-
-                
-                
-                
-                
             }
 
             else{
@@ -23283,12 +23284,14 @@ Platform = function (app, listofnodes) {
 
             if (window.cordova) {
 
-                document.addEventListener("pause", uf, false);
-                document.addEventListener("resume", f, false);
+                if(!isios()){
+                    document.addEventListener("pause", uf, false);
+                    document.addEventListener("resume", f, false);
 
-                return
+                    return
+                }
+                
             }
-
 
             if (electron) {
 
@@ -23734,6 +23737,24 @@ Platform = function (app, listofnodes) {
 
     self.activecall = null
 	self.getCallsOptions = function(){
+
+        var clbks = {
+            view : function(call, ui){
+
+                setTimeout(() => {
+
+                    if(!self.activecall || self.activecall.ui.view == 'mini'){
+                        self.app.mobile.statusbar.show()
+                    }
+                    else{
+                        self.app.mobile.statusbar.hide()
+                    }
+
+                }, 100)
+            }
+        }
+
+
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
@@ -23765,6 +23786,8 @@ Platform = function (app, listofnodes) {
                     self.activecall = null
 
                     self.app.mobile.unsleep(false)
+
+                    clbks.view()
 				},
 				onConnected:(call, ui)=> {
 
@@ -23780,7 +23803,20 @@ Platform = function (app, listofnodes) {
                         call, ui
                     }
 
-				}
+                    clbks.view()
+
+				},
+
+                onIncomingCall : function(){
+                    if (self.app.playingvideo){
+                        self.app.playingvideo.exitFullScreen()
+                        self.app.playingvideo.pause()
+                    }
+                },
+
+                changeView : function(call, ui){
+                    clbks.view()
+                }
 			}
 
 		}
