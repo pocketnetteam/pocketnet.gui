@@ -51,7 +51,6 @@
                         
                                             </div>
 
-                                            <% if(comment.address != share.address) {%>
 
                                             <div class="iconbetweenWrapper">
                                                 <i class="fas fa-long-arrow-alt-right"></i>
@@ -80,7 +79,6 @@
                         
                                             </div>
 
-                                            <% } %>
 
                                             <% if(comment.donation === 'true' && comment.amount) {%>
 
@@ -108,7 +106,7 @@
                                             %>
 
                                                 <div class="commentmessage">
-                                                    <div><b><%-name %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-name2 %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
+                                                    <div><b><%-name %></b> <i class="fas fa-long-arrow-alt-right"></i> <b><%-name2 %></b>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
                                                 </div>
 
                                             <% } %>
