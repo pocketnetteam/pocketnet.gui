@@ -4,6 +4,12 @@
     margin-top: 20vh;
     padding : 2 * @rhythm @rhythm;
     padding-top: 4 * @rhythm;
+
+    .work{
+        margin : 0 auto;
+        max-width: 768px;
+    }
+
     .chapter{
         margin-bottom: 5 * @rhythm;
     }
@@ -22,8 +28,8 @@
     }
 
     .applicationSearch{
-        background: rgb(var(--neutral-grad-0));
-        border-radius: 18px;
+        background: rgb(var(--background-main));
+        border-radius: 24px;
 
         .searchIconLabel{
         }
@@ -55,6 +61,7 @@
         .application{
             position: relative;
             padding: @rhythm 0;
+            cursor: pointer;
 
             .icon{
                 margin : 0 auto;

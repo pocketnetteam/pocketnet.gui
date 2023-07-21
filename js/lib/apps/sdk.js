@@ -119,11 +119,11 @@ var BastyonSdk = function(){
     
             clbks[id] = function({data = {}, error}){
 
-                if(error){
+                /*if(error){
                     return reject(error)
                 }
 
-                return resolve(data)
+                return resolve(data)*/
             }
 
         })
@@ -144,8 +144,6 @@ var BastyonSdk = function(){
     }
 
     self.emit = function(type, data){
-
-        
         send({
             event : type,
             data
