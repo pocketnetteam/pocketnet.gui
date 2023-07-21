@@ -3760,9 +3760,6 @@ var lenta = (function(){
 				
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-					console.log('essenseData.openapi', essenseData.openapi)
-					
-
 					if(s.settings.v != "a"){
 
 						if((isMobile() || essenseData.openapi) && image.images.length > 1 ){
@@ -3795,10 +3792,6 @@ var lenta = (function(){
 
 								var _w = isMobile() ? self.app.width : el.width() || el.closest('.share').width();
 								var _h = el.height()
-
-								console.log("_W", _w, el, el.width(), self.app.width)
-
-						
 								
 
 								if(_img.width >= _img.height && (essenseData.openapi || image.images.length == 1)){

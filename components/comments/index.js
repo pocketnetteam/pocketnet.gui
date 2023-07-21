@@ -703,6 +703,9 @@ var comments = (function(){
 								successCheck()
 							}
 							else{
+
+								console.log('error', error)
+
 								self.app.platform.errorHandler(error, true)
 							}
 
@@ -1065,7 +1068,7 @@ var comments = (function(){
 				}
 
 				load.level(pid, function(comments){
-					_el.html('')
+					//_el.html('')
 
 					p.comments = comments;
 
@@ -1281,12 +1284,16 @@ var comments = (function(){
 			},
 			scrollToComment : function(el) {
 
+				console.log("EL", el)
+
 				if (ed.openapi) return
 
 
-				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
+				if (el && el.length > 0 && isMobile()) {
 
 					//if(el.closest('.fullScreenVideo').length > 0) return
+
+					console.log('el, _in, 0', el, _in, 0)
 
 					_scrollTo(el, _in, 0)
 				}
@@ -1817,15 +1824,17 @@ var comments = (function(){
 					focus : function() {
 						// Scroll comment section to top of the screen
 
-						if(!isios())
-							actions.scrollToComment(_p.el);
-						else{
+						console.log("HERE")
+
+						
 							if(window.cordova){
 								setTimeout(() => {
 									actions.scrollToComment(_p.el);
 								}, 300)
 							}
-						}
+							else{
+								actions.scrollToComment(_p.el);
+							}
 					},
 
 					blur : function(){

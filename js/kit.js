@@ -2553,64 +2553,19 @@ pShare = function(){
 
 	self._import = function(v){
 
-		/*if (v.s){
-
-			try{
-				self.settings = v.s
-			}
-			catch(e){
-
-			}
-		}
-		else
-		{
-			if(v.settings){
-				self.settings = v.settings
-			}
-		}*/
-
 		self.settings = v.s || v.settings || {}
 
 		
 		if(v.i && !_.isArray(v.i)) v.i = [v.i]
 		if(v.t && !_.isArray(v.t)) v.t = [v.t]
 		
-		/*var textvalue = v.m || v.message || ""
-
-		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
-
-
-		if(articleversion2){
-			try{
-				textvalue = JSON.parse(textvalue)
-			}
-			catch(e){
-				textvalue = textvalue
-			}
-		}*/
-
-
-		//if (notdecode){
-			self.message = v.m || v.message || ""
-			self.caption = v.c || v.caption || ""
-			self.tags = v.t || v.tags || []
-			self.url = v.u || v.url || '';
-			self.poll = v.p || v.poll || {}
-			
-		/*}
-		else
-		{	
-			self.url = v.u || v.url || ''
-			self.message = v.m || v.message || "" ///articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
-			self.caption = (v.c || v.caption || "")
-			self.tags = v.t || v.tags || []
-			self.poll = v.p || v.poll || {}
-
-		}*/
-
-		/*if (!articleversion2 && self.message){
-			self.message = self.message.replace(/\n{2,}/g, '\n\n');
-		}*/
+	
+		self.message = v.m || v.message || ""
+		self.caption = v.c || v.caption || ""
+		self.tags = v.t || v.tags || []
+		self.url = v.u || v.url || '';
+		self.poll = v.p || v.poll || {}
+	
 
 		if(v.myVal) self.myVal = Number(v.myVal)
 
@@ -3470,8 +3425,6 @@ pSettings = function(){
 
 	self._import = function(dv = {}){
 
-		console.log("accset import", dv)
-
 		var v = dv.d
 
 		self.pin = (v || {}).pin || ""
@@ -3532,8 +3485,6 @@ pSettings = function(){
 			ui._import(self.export())
 
 			ui.address = self.address
-
-		console.log("apply", self.export(), ui)
 
 		return ui
 	}
