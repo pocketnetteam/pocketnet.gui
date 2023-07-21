@@ -1127,7 +1127,12 @@ var author = (function(){
 						params.loader = function(clbk){
 
 							var _clbk = function(data){
-								var shares = self.app.platform.sdk.node.shares.transform(data) 
+
+								self.app.psdk.share.insertFromResponseSmall(data)
+
+								var shares = self.app.psdk.share.gets(_.map(data, (s) => {
+									return s.txid
+								}))
 
 								if (clbk)
 									clbk(shares, null, {

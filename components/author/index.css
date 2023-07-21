@@ -332,7 +332,6 @@
 }
 #author .bgCaption .panel > div .label {
   margin-right: 0.5em;
-  display: none;
 }
 #author .bgCaption .panel > div:nth-child(1) {
   padding-left: 2em;

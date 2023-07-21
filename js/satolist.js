@@ -13869,6 +13869,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+
             get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
                 if (!address) address = 'pocketnet'
 
@@ -13897,7 +13898,7 @@ Platform = function (app, listofnodes) {
 
                 var np = [(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
-                //if (address != 'pocketnet') np.push(address)
+                if (address != 'pocketnet') np.push(address)
 
                 if (value.length) {
 
@@ -13925,6 +13926,8 @@ Platform = function (app, listofnodes) {
                         return;
 
                     }
+
+                    console.log("NP", np)
 
                     self.psdk.search.request(() => {
                         return self.app.api.rpc('search', np)
@@ -14456,6 +14459,7 @@ Platform = function (app, listofnodes) {
                 ////TODO_REF_ACTIONS
 
                 checkvisibility : function(share){
+                    console.log('share', share)
                     var v = share.visibility()
 
                     var a = self.sdk.address.pnet()

@@ -173,7 +173,7 @@ var BastyonSdk = function(){
 
     self.request = {
         permissions : function(permissions){
-            return action('account', {permissions})
+            return action('requestPermissions', {permissions})
         }
     }
 

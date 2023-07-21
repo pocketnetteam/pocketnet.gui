@@ -724,8 +724,22 @@ var comments = (function(){
 										el : wrapper
 									})
 
+									window.requestAnimationFrame(() => {
 
-									if (areas[id]) areas[id].setText('');
+										if (areas[id]) {
+											areas[id].setText('');
+
+											if (areas[id].editor.closest('.answer').length){
+
+												
+												areas[id].editor.closest('.answer').html('')
+												areas[id].destroy()
+												
+												delete areas[id]
+												
+											}
+										}
+									})
 								}
 							})
 
