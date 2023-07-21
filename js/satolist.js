@@ -4184,8 +4184,6 @@ Platform = function (app, listofnodes) {
 
                 p = _.extend(p, _p)
 
-                console.log("SAVE")
-
                 self.sdk.localshares.saveShare(share, p).then(r => {
 
                     sitemessage(self.app.localization.e('successdownloaded'), null, 5000, {
@@ -5867,7 +5865,6 @@ Platform = function (app, listofnodes) {
                 delete self.sdk.localshares.storage[shareId]
             },
             addtostorage : function(share){
-                console.log("addtostorage", share)
                 self.sdk.localshares.storage[share.id || share.share.txid] = share
             },
 
@@ -5957,8 +5954,6 @@ Platform = function (app, listofnodes) {
 
             saveShare : function(share, p){
 
-                console.log("??????", share, p)
-
                 if(!p) p = {}
 
                 if(self.sdk.localshares.saving[share.txid]) return Promise.reject('saving')
@@ -5973,11 +5968,8 @@ Platform = function (app, listofnodes) {
 
                 var exported = share.export()
 
-                console.log('exported', exported)
                 if (exported.lastComment){
                     var c = self.psdk.comment.get(exported.lastComment)
-
-                    console.log("LAST COMMENT", c)
 
                     if (c){
                         exported.lastComment = c.export()
@@ -6000,8 +5992,6 @@ Platform = function (app, listofnodes) {
                 if (share.itisvideo())
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
-
-                console.log('shareInfo', shareInfo)
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
 
@@ -6766,8 +6756,6 @@ Platform = function (app, listofnodes) {
 
                             try {
                                 let share = await self.sdk.localshares.get.localstorage(matches[1]);
-
-                                console.log("shareshareshare", share)
 
                                 shares[share.id] = share;
                             } catch(err) {
@@ -13929,8 +13917,6 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    console.log("NP", np)
-
                     self.psdk.search.request(() => {
                         return self.app.api.rpc('search', np)
                     }, np).then(d => {
@@ -14461,7 +14447,6 @@ Platform = function (app, listofnodes) {
                 ////TODO_REF_ACTIONS
 
                 checkvisibility : function(share){
-                    console.log('share', share)
                     var v = share.visibility()
 
                     var a = self.sdk.address.pnet()
@@ -14599,7 +14584,6 @@ Platform = function (app, listofnodes) {
                 
                 getsavedbyids: function (p, clbk) {
 
-                    console.log('getsavedbyids', p)
                     if (!p.txids.length) {
                         if (clbk)
                             clbk([], null, p);
@@ -14616,7 +14600,6 @@ Platform = function (app, listofnodes) {
 
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
-                            console.log('curShare', curShare)
 
                             self.psdk.share.insertFromResponseSmall([_.clone(curShare.share.share)], true)
                             //self.psdk.share.userInfo([curShare.share.share])
@@ -14645,8 +14628,6 @@ Platform = function (app, listofnodes) {
 
                         return -s1.downloadedDate.getTime()
                     })
-
-                    console.log('loadedShares', loadedShares)
 
 
                     if (clbk) {
