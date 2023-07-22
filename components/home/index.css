@@ -1,6 +1,11 @@
 #home {
+  margin-top: 20vh;
   padding: 1em 0.5em;
   padding-top: 2em;
+}
+#home .work {
+  margin: 0 auto;
+  max-width: 768px;
 }
 #home .chapter {
   margin-bottom: 2.5em;
@@ -18,8 +23,8 @@
   margin-top: 1em;
 }
 #home .applicationSearch {
-  background: rgb(var(--neutral-grad-0));
-  border-radius: 18px;
+  background: rgb(var(--background-main));
+  border-radius: 24px;
 }
 #home .applicationSearch input {
   background: transparent;
@@ -43,6 +48,7 @@
 #home .applicationsList .application {
   position: relative;
   padding: 0.5em 0;
+  cursor: pointer;
 }
 #home .applicationsList .application .icon {
   margin: 0 auto;

@@ -214,7 +214,10 @@ var BastyonApps = function(app){
         account : {
             permissions : ['account'],
             action : function({data, application}){
-                return Promise.resolve(app.user.address.value)
+                return Promise.resolve({
+                    address : app.user.address.value,
+                    signature : app.user.signature(application.manifest.id, 1280)
+                })
             }
         },
 
@@ -355,6 +358,20 @@ var BastyonApps = function(app){
                     
                 }
             }
+        },
+
+        appinfo : {
+            parameters : [],
+            action : function({data, application}){
+                return Promise.resolve({
+                    pkoin : !app.pkoindisable,
+                    device : typeof _Electron != 'undefined' ? 'application_electron' : (window.cordova ? (isios() ? 'application_ios' : 'application_android') : 'browser'),
+                    version : window.packageversion,
+                    production : !window.testpocketnet,
+                    locale : app.localization.key,
+                    theme : app.platform.sdk.theme.all[app.platform.sdk.theme.current]
+                })
+            }
         }
 
     }
@@ -376,22 +393,20 @@ var BastyonApps = function(app){
     var emitters = {
         block : {
         },
-
         state : {
 
         },
-
         action : {
 
         },
-
         balance : {
             permissions : ['account']
         },
-
         test : {
 
-        }
+        },
+        locale : {},
+        theme : {}
     }
 
     var events = {
@@ -916,6 +931,8 @@ var BastyonApps = function(app){
         if(!application) return
 
         if(!windows[application.manifest.id]) return
+
+        if(!windows[application.manifest.id].window) return
 
         windows[application.manifest.id].window.postMessage(
             message, 

@@ -2388,6 +2388,11 @@ Application = function (p) {
 
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
 
+
+						self.apps.emit('keyboard', {
+							height : event.keyboardHeight
+						})
+
 					});
 
 					window.addEventListener('keyboardDidShow', (event) => {
@@ -2398,6 +2403,10 @@ Application = function (p) {
 						document.documentElement.style.setProperty('--keyboardheight', `0px`);
 
 						self.mobile.keyboard.height = 0
+
+						self.apps.emit('keyboard', {
+							height : self.mobile.keyboard.height
+						})
 					});
 				}
 				else {
@@ -2407,6 +2416,11 @@ Application = function (p) {
 
 						navigator.virtualKeyboard.addEventListener('geometrychange', (event) => {
 							document.documentElement.style.setProperty('--keyboardheight', `${event.target.boundingRect.height}px`);
+
+
+							self.apps.emit('keyboard', {
+								height : event.target.boundingRect.height
+							})
 						});
 					}
 

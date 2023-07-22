@@ -44,9 +44,7 @@ var ActionOptions = {
             collision : function(obj, obj2){
 
                 if (obj.object.type == obj2.object.type && obj2.object.share.v == obj.object.share.v){
-                    if(!obj2.sent){
-                        if(obj2.added < obj.added) return false
-                    }
+                    if(obj2.added < obj.added) return false
                 }
 
                 return true
@@ -166,7 +164,20 @@ var ActionOptions = {
 
             calculateFee : function(action){
                 return action.object.donate.v > 0
-            }
+            },
+
+            collision : function(obj, obj2){
+
+                if (obj.object.typeop() == obj2.object.typeop() && obj.object.typeop() == 'commentEdit' && obj2.object.id == obj.object.id){
+
+                    if(obj2.added < obj.added) {
+                        return false
+                    }
+                }
+
+                return true
+
+            },
         },
     }
 }
@@ -181,8 +192,9 @@ var errorCodesAndActionsExecutors = {
     useraction : function(action){
     },
 
-    limit : function(action){
-
+    limit : function(action, error){
+        ///TODO LIMIT (example question: send in 1 h)
+        return Promise.reject(error)
     }
 }
 
@@ -194,13 +206,13 @@ var errorCodesAndActions = {
     '15' : errorCodesAndActionsExecutors.limit,
     //'26' : errorCodesAndActionsExecutors.limit,
     '29' : errorCodesAndActionsExecutors.limit,
-    '30' : errorCodesAndActionsExecutors.limit,
     '31' : errorCodesAndActionsExecutors.limit,
     '49' : errorCodesAndActionsExecutors.limit,
     '61' : errorCodesAndActionsExecutors.limit,
     '65' : errorCodesAndActionsExecutors.limit,
     '18' : errorCodesAndActionsExecutors.useraction,
-    '28' : errorCodesAndActionsExecutors.wait
+    '28' : errorCodesAndActionsExecutors.wait,
+    '37' : errorCodesAndActionsExecutors.wait
 }
 
 var Action = function(account, object, priority, settings){
@@ -1407,13 +1419,15 @@ var Account = function(address, parent){
 
 
             if(errorCodesAndActions[error]){
-                return errorCodesAndActions[error](action).then(() => {
+                return errorCodesAndActions[error](action, error).then(() => {
 
                     return Promise.resolve()
                     
-                }).catch(e => {
-                    action.rejectedByUser()
                 })
+                
+                /*.catch(e => {
+                    action.rejectedByUser()
+                })*/
             }
         }
 
@@ -2018,7 +2032,7 @@ var Account = function(address, parent){
 
             _.each(self.actions.value, (obj2) => {
 
-                if(!obj2.transaction && !obj2.sent && !obj2.completed && !obj2.rejected){
+                if(!obj2.transaction && !obj2.sent && !obj2.completed && (!obj2.rejected && !obj2.rejectWait)){
                     if(!action.options.collision(action, obj2)){
                         obj2.rejected = 'actions_collision'
 

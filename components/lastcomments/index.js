@@ -50,6 +50,8 @@ var lastcomments = (function(){
 		var renders = {
 			comments : function(comments){
 
+				console.log('comments', comments)
+
 				self.shell({
 					name :  'lastcommentslist',
 					el : el.c,

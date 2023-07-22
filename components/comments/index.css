@@ -1206,10 +1206,6 @@
 				border-top : 1px solid rgb(var(--neutral-grad-0));
 			}*/
 }
-#comments .answers .comment .commentPaddingWrapper {
-  padding-left: 0;
-  padding-right: 0;
-}
 #comments.inited .post .commentPanel {
   display: table;
 }

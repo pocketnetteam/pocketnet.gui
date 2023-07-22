@@ -687,7 +687,7 @@ var pSDK = function ({ app, api, actions }) {
 
             var result = _.map(data, (r) => {
                 return {
-                    key: r.address,
+                    key: (r.address || r.adr),
                     data: r
                 }
             })
@@ -1020,20 +1020,29 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         cleanData: function (rawcomments) {
+
             return _.filter(_.map(rawcomments, (c) => {
 
                 try {
 
                     c.msgparsed = c.msgparsed || JSON.parse(c.msg)
 
-                    c.msgparsed.url = clearStringXss(decodeURIComponent(c.msgparsed.url || ""));
+                    if(_.isObject(c.msgparsed)){
+                        c.msgparsed.url = clearStringXss(decodeURIComponent(c.msgparsed.url || ""));
 
-                    c.msgparsed.message = clearStringXss(decodeURIComponent(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+                        c.msgparsed.message = clearStringXss(decodeURIComponent(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+    
+                        c.msgparsed.images = _.map(c.msgparsed.images || [], function (i) {
+    
+                            return clearStringXss(decodeURIComponent(i))
+                        });
+                    }
 
-                    c.msgparsed.images = _.map(c.msgparsed.images || [], function (i) {
+                    else{
+                        return null
+                    }
 
-                        return clearStringXss(decodeURIComponent(i))
-                    });
+                    
 
                 }
                 catch (e) {
@@ -1231,7 +1240,7 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (exp.optype == 'commentEdit') {
                         if (object.id == exp.id) {
-                            object.msg = exp.msg
+                            object.message = exp.message
                             object.timeUpd = exp.timeUpd
                         }
                     }
@@ -1432,10 +1441,10 @@ var pSDK = function ({ app, api, actions }) {
 
         },
 
-        insertFromResponseSmall: function (data) {
+        insertFromResponseSmall: function (data, ncn) {
 
-
-            data = this.cleanData(data)
+            if(!ncn)
+                data = this.cleanData(data)
 
 
             var result = _.map(data, (r) => {
@@ -1469,8 +1478,8 @@ var pSDK = function ({ app, api, actions }) {
 
         transform: function ({ key, data: share }, small) {
 
-            if (share.userprofile) {
-                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile]), true)
+            if (share.userprofile || share.user) {
+                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile || share.user]), true)
             }
 
             if (share.lastComment) {
@@ -1478,6 +1487,7 @@ var pSDK = function ({ app, api, actions }) {
             }
 
             var s = new pShare();
+
             s._import(share);
 
             if (share.ranks) {

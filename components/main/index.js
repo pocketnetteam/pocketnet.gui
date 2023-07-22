@@ -692,7 +692,13 @@ var main = (function(){
 				if(searchvalue){
 					loader = function(clbk){
 						var _clbk = function(shares){
-							//var shares = self.app.platform.sdk.node.shares.transform(data) 
+
+							self.app.psdk.share.insertFromResponseSmall(shares)
+
+							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
+								return s.txid
+							}))
+							
 
 							if (clbk)
 								clbk(shares, null, {

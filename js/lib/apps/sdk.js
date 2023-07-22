@@ -119,11 +119,11 @@ var BastyonSdk = function(){
     
             clbks[id] = function({data = {}, error}){
 
-                if(error){
+                /*if(error){
                     return reject(error)
                 }
 
-                return resolve(data)
+                return resolve(data)*/
             }
 
         })
@@ -144,8 +144,6 @@ var BastyonSdk = function(){
     }
 
     self.emit = function(type, data){
-
-        
         send({
             event : type,
             data
@@ -168,12 +166,16 @@ var BastyonSdk = function(){
 
         imageFromMobileCamera : function(){
             return action('mobile.camera', {})
+        },
+
+        appinfo : function(){
+            return action('appinfo', {})
         }
     }
 
     self.request = {
         permissions : function(permissions){
-            return action('account', {permissions})
+            return action('requestPermissions', {permissions})
         }
     }
 
@@ -191,6 +193,24 @@ var BastyonSdk = function(){
         opensettings: function(){
             return action('opensettings', {})
         },
+    }
+
+    self.init = function(){
+        self.get.appinfo().then(({theme}) => {
+
+            console.log('theme', theme)
+
+            if (document.documentElement.hasAttribute('theme')){
+                document.documentElement.removeAttribute('theme');
+            }
+
+            document.documentElement.setAttribute('theme', theme.rootid);
+
+        })
+
+        self.on('keyboard', ({height}) => {
+            document.documentElement.style.setProperty('--keyboardheight', `${height}px`);
+		})
     }
 
     listen()

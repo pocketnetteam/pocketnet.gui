@@ -4242,83 +4242,65 @@ Platform = function (app, listofnodes) {
                 return
             }
 
-            /*
-            menuDialog({
-                items: [{
-                    text: self.app.localization.e('saveshare'),
-                    action: function (_clbk) {
+          
 
-                        if (share.itisvideo()){
-                            */
-
-                            var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+            var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
 
-                            if (info){
+            if (info){
 
-                                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
-                                    return {
-                                        text: file.resolution.label,
-                                        action: function (clbk) {
+                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
+                    return {
+                        text: file.resolution.label,
+                        action: function (clbk) {
 
-                                            save({resolutionId : file.resolution.id})
+                            save({resolutionId : file.resolution.id})
 
-                                            clbk()
+                            clbk()
 
-                                        }
-                                    }
-                                })
-
-                                if(info && info.original && info.original.isLive){
-
-                                    new dialog({
-                                        html: "Please wait, you will be able to download the video when the broadcast recording appears",
-                                        btn1text: self.app.localization.e('daccept'),
-                                        class : 'one',
-                                        success: function () {
-
-                                        }
-                                    })
-
-                                    return
-                                }
-
-                                if(!items.length){
-
-                                    new dialog({
-                                        html: "Please wait, the video hasn't been transcoded yet",
-                                        btn1text: self.app.localization.e('daccept'),
-                                        class : 'one',
-                                        success: function () {
-
-                                        }
-                                    })
-
-                                    return
-
-                                }
-
-                                menuDialog({
-                                    header : self.app.localization.e('selectQuality'),
-                                    items: items
-                                })
-
-                            }
-                            else{
-                                error('Error, cannot find data for this video')
-                            }
-                        /*
                         }
-                        else{
-                            error('todo')
-                        }
-
-                        _clbk()
-
                     }
-                }]
-            })*/
+                })
 
+                if(info && info.original && info.original.isLive){
+
+                    new dialog({
+                        html: "Please wait, you will be able to download the video when the broadcast recording appears",
+                        btn1text: self.app.localization.e('daccept'),
+                        class : 'one',
+                        success: function () {
+
+                        }
+                    })
+
+                    return
+                }
+
+                if(!items.length){
+
+                    new dialog({
+                        html: "Please wait, the video hasn't been transcoded yet",
+                        btn1text: self.app.localization.e('daccept'),
+                        class : 'one',
+                        success: function () {
+
+                        }
+                    })
+
+                    return
+
+                }
+
+                menuDialog({
+                    header : self.app.localization.e('selectQuality'),
+                    items: items
+                })
+
+            }
+            else{
+                error('Error, cannot find data for this video')
+            }
+        
 
 
         }
@@ -5633,6 +5615,7 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.downloadVideo').on('click', function(){
+                            
 
                             self.app.mobile.vibration.small()
 
@@ -5692,7 +5675,6 @@ Platform = function (app, listofnodes) {
                                 share.user = user.export()
                             }
 
-                            
                             //share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
 
                             // If we are on mobile/electron and post has a downloadable media video
@@ -5746,12 +5728,19 @@ Platform = function (app, listofnodes) {
                                     
                                 });
 
+
                             } else {
 
-                                // Here, we have access to the localstorage (browser)
-                                self.app.platform.sdk.localshares.write.share.localstorage(share);
 
-                                sendSiteMessage();
+                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+
+                                    sendSiteMessage();
+                                    
+                                });
+                                // Here, we have access to the localstorage (browser)
+                                //self.app.platform.sdk.localshares.write.share.localstorage(share);
+
+                                //sendSiteMessage();
 
                             }
 
@@ -5911,14 +5900,22 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    var fm = _.filter(r, function(u){
+                    var fm = _.map(_.filter(r, function(u){
                         return u.share && u.share.user
+                    }), u => {
+                        return u.share.user
                     })
 
+                    self.psdk.userInfo.insertFromResponseSmall(self.psdk.userInfo.cleanData(fm), true)
 
-                    self.sdk.node.shares.takeusers(_.map(fm, function(u){
+                    /*_.each(fm, (u) => {
+                        self.psdk.userInfo.insertFromResponseSmall([_.clone(curShare.share.share)], true)
+                    })*/
+                    
+
+                    /*self.sdk.node.shares.takeusers(_.map(fm, function(u){
                         return {userprofile : u.share.user}
-                    }), false)
+                    }), false)*/
 
 
                 }).catch(error => {
@@ -5994,6 +5991,7 @@ Platform = function (app, listofnodes) {
 
                 if (share.itisvideo())
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
+
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
 
@@ -6388,12 +6386,16 @@ Platform = function (app, listofnodes) {
                         if (localStorage && localStorage.setItem) {
 
                             share.timestamp = new Date();
-                            delete share.share;
+                            //delete share.share;
 
-                            localStorage.setItem('saved_share_' + share.txid, JSON.stringify(share));
+                            localStorage.setItem('saved2_share_' + share.id, JSON.stringify(share));
 
-                            share.share = share;
-                            self.sdk.localshares.addtostorage({ id: share.txid, share: share});
+                            //share.share = share;
+                            self.sdk.localshares.addtostorage({
+                                id : share.id,
+                                share
+                            });
+
                             return Promise.resolve();
 
                         }
@@ -6450,7 +6452,7 @@ Platform = function (app, listofnodes) {
                         var share;
 
                         if (localStorage && localStorage.getItem) {
-                            let shareStr = localStorage.getItem('saved_share_' + shareId);
+                            let shareStr = localStorage.getItem('saved2_share_' + shareId);
                             if (shareStr) {
                                 try {
                                     share = JSON.parse(shareStr);
@@ -6458,6 +6460,8 @@ Platform = function (app, listofnodes) {
                                 } catch(err) {}
                             }
                         }
+
+                        
 
                         return share;
                     }
@@ -6658,10 +6662,12 @@ Platform = function (app, listofnodes) {
                 // Get a share from localstorage
                 localstorage : async function(shareId){
 
-                    const share = await self.sdk.localshares.read.share.localstorage(shareId);
-                    share.share = share;
+                    var share = await self.sdk.localshares.read.share.localstorage(shareId);
 
-                    return share;
+                    return {
+                        id : shareId,
+                        share : share
+                    };
                 }
             },
 
@@ -6744,14 +6750,17 @@ Platform = function (app, listofnodes) {
 
                     for (i in localStorage) {
 
-                        var matches = /^saved_share_([a-zA-Z\d]+)$/.exec(i);
+                        var matches = /^saved2_share_([a-zA-Z\d]+)$/.exec(i);
 
                         if (matches && matches.length >= 2) {
 
                             try {
                                 let share = await self.sdk.localshares.get.localstorage(matches[1]);
-                                shares[share.txid] = { id: share.txid, share: share };
-                            } catch(err) {}
+
+                                shares[share.id] = share;
+                            } catch(err) {
+                                console.error(err)
+                            }
 
                         }
                     }
@@ -6777,7 +6786,7 @@ Platform = function (app, listofnodes) {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
                     if (localStorage && localStorage.removeItem)
-                        localStorage.removeItem('saved_share_' + shareId);
+                        localStorage.removeItem('saved2_share_' + shareId);
 
                     return Promise.resolve();
                 },
@@ -7249,7 +7258,9 @@ Platform = function (app, listofnodes) {
 
                         return Promise.resolve()
                     })
-                }
+                },
+
+                
             },
 
             uploadresources : function(art){
@@ -7583,6 +7594,9 @@ Platform = function (app, listofnodes) {
                     $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
+
+                    if (self.app.apps)
+                        self.app.apps.emit('theme', t.all[value])
                 }
 
                 app.mobile.statusbar.background()
@@ -13848,6 +13862,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+
             get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
                 if (!address) address = 'pocketnet'
 
@@ -13876,7 +13891,7 @@ Platform = function (app, listofnodes) {
 
                 var np = [(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
-                //if (address != 'pocketnet') np.push(address)
+                if (address != 'pocketnet') np.push(address)
 
                 if (value.length) {
 
@@ -14571,12 +14586,14 @@ Platform = function (app, listofnodes) {
                 },
                 
                 getsavedbyids: function (p, clbk) {
+
                     if (!p.txids.length) {
                         if (clbk)
                             clbk([], null, p);
                         return;
                     }
                     var loadedShares = [];
+
 
                     _.each(p.txids, function (txid) {
 
@@ -14586,39 +14603,20 @@ Platform = function (app, listofnodes) {
 
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
-                            self.psdk.share.insertFromResponseSmall([curShare.share])
+
+                            self.psdk.share.insertFromResponseSmall([_.clone(curShare.share.share)], true)
+                            //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)
-                            // Prepare user
 
-                            ///TODO_REF_ACTIONS -check
-                            /*var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
-                            self.sdk.usersl.storage[newUser.address] = newUser;
-
-                            // Prepare share
-                            var newShare = new pShare();
-                            newShare._import(curShare.share.share);
-                            newShare.txid = txid;
-
-                            newShare.address = newUser.address;
-
-                            if (curShare.share.timestamp)
-                                newShare.downloadedDate = new Date(curShare.share.timestamp);
+                            if (newShare){
+                                if (curShare.share.timestamp)
+                                    newShare.downloadedDate = new Date(curShare.share.timestamp);
 
 
-                            newShare.time = new Date();
-                            newShare.time.setTime(curShare.share.share.time * 1000);*/
-
-                            if (newShare)
                                 loadedShares.push(newShare);
+                            }
 
-                            //// TODO_REF_ACTIONS -check
-
-                            /*if(!self.sdk.node.shares.storage.trx)
-                                self.sdk.node.shares.storage.trx = {};
-
-                            if(!self.sdk.node.shares.storage.trx[txid])
-                                self.sdk.node.shares.storage.trx[txid] = newShare;*/
 
                         }
                     });
@@ -17157,7 +17155,19 @@ Platform = function (app, listofnodes) {
 
                     return Promise.all(promises)
 
-                }
+                },
+                ipfs : function(links) {
+                    const dataMap = links.map((l) => {
+                        l.data = {
+                            views : 0,
+                            image : null
+                        };
+
+                        return l;
+                    });
+
+                    return Promise.resolve(dataMap);
+                },
             },
 
             volume : 0,

@@ -16,6 +16,10 @@
 
         <%if(!sUserInfo.itisme) {%>
 
+            <div class="buttonWrapper startchat">
+                <span class="label"><%=e('startchat')%></span> <i class="fas fa-comments"></i>
+            </div>
+
             <% if(!app.curation()) {%> 
 
                 <% if(r) { %>
@@ -30,6 +34,10 @@
                             <i class="far fa-bell-slash"></i>
                         </div>
 
+                    <% } else { %> 
+                        <div class="buttonWrapper notifications">
+                            <i class="far fa-bell"></i>
+                        </div>
                     <% } %>
 
                 <% } else { %> 
@@ -54,9 +62,7 @@
                 </div>
             <% } %>
 
-            <div class="buttonWrapper startchat">
-                <span class="label"><%=e('startchat')%></span> <i class="fas fa-comments"></i>
-            </div>
+            
 
             <!--<div class="buttonWrapper startcall">
                 <span class="label"><%=e('call')%></span> <i class="fas fa-phone"></i>
