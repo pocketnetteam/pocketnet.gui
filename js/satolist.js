@@ -7594,6 +7594,9 @@ Platform = function (app, listofnodes) {
                     $('meta[name="theme-color"]').attr('content', t.all[value].color)
                     $('meta[name="msapplication-navbutton-color"]').attr('content', t.all[value].color)
                     $('meta[name="apple-mobile-web-app-status-bar-style"]').attr('content', t.all[value].color)
+
+                    if (self.app.apps)
+                        self.app.apps.emit('theme', t.all[value])
                 }
 
                 app.mobile.statusbar.background()

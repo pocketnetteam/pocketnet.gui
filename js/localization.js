@@ -133,6 +133,9 @@ Localization = function(app){
 
 			self.locSave();
 
+
+			app.apps.emit('locale', self.key)
+
 			self.import(function(){
 
 				if(app)

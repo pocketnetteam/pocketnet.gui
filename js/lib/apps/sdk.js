@@ -166,6 +166,10 @@ var BastyonSdk = function(){
 
         imageFromMobileCamera : function(){
             return action('mobile.camera', {})
+        },
+
+        appinfo : function(){
+            return action('appinfo', {})
         }
     }
 
@@ -189,6 +193,24 @@ var BastyonSdk = function(){
         opensettings: function(){
             return action('opensettings', {})
         },
+    }
+
+    self.init = function(){
+        self.get.appinfo().then(({theme}) => {
+
+            console.log('theme', theme)
+
+            if (document.documentElement.hasAttribute('theme')){
+                document.documentElement.removeAttribute('theme');
+            }
+
+            document.documentElement.setAttribute('theme', theme.rootid);
+
+        })
+
+        self.on('keyboard', ({height}) => {
+            document.documentElement.style.setProperty('--keyboardheight', `${height}px`);
+		})
     }
 
     listen()
