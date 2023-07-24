@@ -243,7 +243,7 @@ var uploadpeertube = (function () {
 					return;
 				}
 
-				let videoFile = el.videoInput.files[0];
+				let videoFile = evt.target.files[0];
 
 				if (!videoFile) {
 					showerror('videoSelectError')
@@ -253,7 +253,7 @@ var uploadpeertube = (function () {
 				let isMimeVideo = videoFile.type.includes('video')
 
 				/** Matroska is still not in IANA */
-				let isMkv = isVideoFormatMatroska(videoFile)
+				let isMkv = await isVideoFormatMatroska(videoFile)
 
 				let isAudio = videoFile.type.includes('audio')
 				let isVideo = isMimeVideo || isMkv
