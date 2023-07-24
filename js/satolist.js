@@ -5766,6 +5766,28 @@ Platform = function (app, listofnodes) {
 
                             close()
                         })
+
+                        el.find('.openOriginal').on('click', function () {
+                            self.app.mobile.vibration.small()
+
+                            self.app.nav.api.load({
+                                open: true,
+                                href: 'post?s=' + share.txid,
+                                inWnd: true,
+                                history: true,
+                                clbk: function (d, p) {
+                                    app.nav.wnds['post'] = p
+
+                                    if(close) close()
+                                },
+
+                                essenseData: {
+                                    share: share.txid
+                                }
+                            })
+
+                            close()
+                        })
                     }, false)
 
                 }, d, 'lenta')
@@ -14604,7 +14626,7 @@ Platform = function (app, listofnodes) {
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
 
-                            self.psdk.share.insertFromResponseSmall([_.clone(curShare.share.share)], true)
+                            self.psdk.share.insertFromResponseSmall([{ ...curShare.share.share, ...{ ___temp : true }}], true)
                             //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)

@@ -1955,7 +1955,6 @@ var post = (function () {
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
 					var share = self.psdk.share.get(id) 
-					
 
 					clbk(share)
 
