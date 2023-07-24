@@ -258,6 +258,18 @@ var uploadpeertube = (function () {
 				let isAudio = videoFile.type.includes('audio')
 				let isVideo = isMimeVideo || isMkv
 
+				/**
+				 * When Matroska is uploaded, it's type may be empty.
+				 * In this case, wrapping original File into... yeah,
+				 * another File with overridden type property
+				 */
+				if (!videoFile.type && isMkv) {
+					videoFile = new File([videoFile], videoFile.name, {
+						type: 'video/x-matroska',
+						lastModified: videoFile.lastModified,
+					})
+				}
+
 				if (!isVideo && !isAudio) {
 					showerror('videoFormatError')
 					return;
