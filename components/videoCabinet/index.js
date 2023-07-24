@@ -632,7 +632,10 @@ var videoCabinet = (function () {
 										accountVideos
 										.filter(
 											(video) =>
-												deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect'),
+												{
+													const daysPassed = deep(self.app.platform.sdk.videos.storage[video.url], 'data.original.publishedAt');
+													return deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect') && moment(daysPassed).diff(moment.now(), 'days') > -21;
+												}
 										)
 										.map(
 											(video) =>
