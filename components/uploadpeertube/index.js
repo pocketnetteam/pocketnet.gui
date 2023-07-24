@@ -263,7 +263,7 @@ var uploadpeertube = (function () {
 				 * In this case, wrapping original File into... yeah,
 				 * another File with overridden type property
 				 */
-				if (!videoFile.type && isMkv) {
+				if (!videoFile.type === '' && isMkv) {
 					videoFile = new File([videoFile], videoFile.name, {
 						type: 'video/x-matroska',
 						lastModified: videoFile.lastModified,
