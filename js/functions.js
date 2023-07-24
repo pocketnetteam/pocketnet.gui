@@ -10382,6 +10382,44 @@ class LoadingBar {
 	}
 }
 
+/**
+ * Converts a buffer to its hexadecimal representation.
+ *
+ * @param {ArrayBuffer} buffer - The buffer to convert.
+ * @returns {string} The hexadecimal representation of the buffer.
+ */
+bufferToHex = (buffer) => {
+	return [...new Uint8Array (buffer)]
+		.map(b => b.toString(16).padStart(2, '0'))
+		.join('');
+};
+
+/**
+ * Checks if the first bytes of a file match a given magic number
+ *
+ * @param {Blob | File} file - The file to check
+ * @param {number[]} magic - An array of hexadecimal values representing the magic bytes to match
+ * @returns {Promise<boolean>} A promise that resolves to true if the magic bytes match, false otherwise
+ */
+checkMagicBytes = async (file, magic) => {
+	const fileBytes = await file.arrayBuffer();
+	const firstBytes = new Uint8Array(fileBytes.slice(0, magic.length));
+	const firstBytesHex = bufferToHex(firstBytes);
+	const magicBytesHex = bufferToHex(magic);
+
+	return firstBytesHex === magicBytesHex;
+};
+
+/**
+ * Checks if a video file is in the Matroska format based on its magic bytes.
+ *
+ * @param {Blob | File} videoFile - The video file to check.
+ * @returns {Promise<boolean>} A promise that resolves to true if the video file is in Matroska format, false otherwise.
+ */
+isVideoFormatMatroska = (videoFile) => {
+	const magicBytes = [0x1A, 0x45, 0xDF, 0xA3];
+	return checkMagicBytes(videoFile, magicBytes);
+}
 
 var connectionSpeed = function() 
 {
