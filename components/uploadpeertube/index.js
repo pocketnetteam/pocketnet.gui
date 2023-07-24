@@ -251,9 +251,17 @@ var uploadpeertube = (function () {
 				}
 
 				let isMimeVideo = videoFile.type.includes('video')
+				let isMimeEmpty = (videoFile.type === '');
 
-				/** Matroska is still not in IANA */
-				let isMkv = await isVideoFormatMatroska(videoFile)
+				let isMkv = false;
+
+				/**
+				 * Matroska is still not in IANA, so it can
+				 * be empty in some browsers
+				 */
+				if (isMimeEmpty) {
+					isMkv = await isVideoFormatMatroska(videoFile)
+				}
 
 				let isAudio = videoFile.type.includes('audio')
 				let isVideo = isMimeVideo || isMkv
@@ -263,7 +271,7 @@ var uploadpeertube = (function () {
 				 * In this case, wrapping original File into... yeah,
 				 * another File with overridden type property
 				 */
-				if (!videoFile.type === '' && isMkv) {
+				if (isMkv) {
 					videoFile = new File([videoFile], videoFile.name, {
 						type: 'video/x-matroska',
 						lastModified: videoFile.lastModified,
