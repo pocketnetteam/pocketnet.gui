@@ -1308,8 +1308,13 @@ var comments = (function(){
 					//if(el.closest('.fullScreenVideo').length > 0) return
 
 					console.log('el, _in, 0', el, _in, 0)
-
+					self.app.blockScroll = true
 					_scrollTo(el, _in, 0)
+
+					setTimeout(() => {
+						self.app.blockScroll = false
+					}, 200)
+					
 				}
 			}
 		}
