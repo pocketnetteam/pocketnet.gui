@@ -369,7 +369,8 @@ var BastyonApps = function(app){
                     version : window.packageversion,
                     production : !window.testpocketnet,
                     locale : app.localization.key,
-                    theme : app.platform.sdk.theme.all[app.platform.sdk.theme.current]
+                    theme : app.platform.sdk.theme.all[app.platform.sdk.theme.current],
+                    margintop : document.documentElement.style.getPropertyValue('--app-margin-top') || '0px'
                 })
             }
         }
