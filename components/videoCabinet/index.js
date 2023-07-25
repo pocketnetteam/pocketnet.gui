@@ -632,7 +632,10 @@ var videoCabinet = (function () {
 										accountVideos
 										.filter(
 											(video) =>
-												deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect'),
+												{
+													const daysPassed = deep(self.app.platform.sdk.videos.storage[video.url], 'data.original.publishedAt');
+													return deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect') && moment(daysPassed).diff(moment.now(), 'days') > -21;
+												}
 										)
 										.map(
 											(video) =>
@@ -855,6 +858,17 @@ var videoCabinet = (function () {
 
               self.app.peertubeHandler.api.videos
                 .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                .then((dataWithoutDescription) => {
+                  return self.app.peertubeHandler.api.videos.getDirectVideoDescription(
+                    { id: meta.id },
+                    { host: meta.host }
+                  ).then(descriptionRes => {
+                    return {
+                      ...dataWithoutDescription,
+                      description: descriptionRes.description,
+                    };
+                  });
+                })
                 .then((info) => {
                   const { name, description, tags } = info;
                   renders.addButton({
@@ -1397,6 +1411,17 @@ var videoCabinet = (function () {
 								element.find('.editText').on('click', function () {
 									self.app.peertubeHandler.api.videos
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+										.then((dataWithoutDescription) => {
+											return self.app.peertubeHandler.api.videos.getDirectVideoDescription(
+												{ id: meta.id },
+												{ host: meta.host }
+											).then(descriptionRes => {
+												return {
+													...dataWithoutDescription,
+													description: descriptionRes.description,
+												};
+											});
+										})
 										.then((videoData) => {
 											if (isVideoPosted) {
 												const currentShare = sharesDict[videoLink];

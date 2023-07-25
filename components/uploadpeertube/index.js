@@ -252,7 +252,7 @@ var uploadpeertube = (function () {
 
 				var isAudio = videoInputFile[0].type.includes('audio')
 
-				if (!videoInputFile[0].type.includes('video') && !isAudio) {
+				if (!videoInputFile[0].type.includes('video') && !isAudio && !videoInputFile[0].name.includes('.mkv')) {
 					showerror('videoFormatError')
 					return;
 				}
