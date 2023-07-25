@@ -272,7 +272,10 @@ var uploadpeertube = (function () {
 				 * another File with overridden type property
 				 */
 				if (isMkv) {
-					videoFile = new File([videoFile], videoFile.name, {
+					/** Cordova has library for File class support */
+					const file = window.wFile || window.File;
+
+					videoFile = new file([videoFile], videoFile.name, {
 						type: 'video/x-matroska',
 						lastModified: videoFile.lastModified,
 					})
