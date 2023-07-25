@@ -940,6 +940,9 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     margin-top: 1em;
     border: 0;
   }
+  #post .recomandationsFromContent .streambgwrapper {
+    margin-left: 0;
+  }
 }
 html.mobileview.fullscreen #post #comments {
   display: none;
