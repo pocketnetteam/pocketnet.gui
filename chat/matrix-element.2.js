@@ -591,8 +591,11 @@ var functions = __webpack_require__("3139");
         this.scrollCorrection();
         this.dupdated();
       });
-      if (!this.mobile) new this.smoothScroll(this.$refs["container"], 120, 15);
+
+      /*if(!this.mobile)
+      	new this.smoothScroll(this.$refs["container"], 120, 15);*/
     },
+
     scroll: function () {
       this.$emit("scroll", this.size());
     },
@@ -683,12 +686,13 @@ var functions = __webpack_require__("3139");
         }*/
 
         e.preventDefault();
+        this.$refs["container"].scrollTop += -e.deltaY;
 
-        /* this.$refs["container"].scrollTop += -e.deltaY; */
-        const container = this.$refs["container"];
+        /*const container = this.$refs["container"];
         if (container.scrolling) {
-          container.scrolling(e);
-        }
+        	container.scrolling(e);
+        }*/
+
         return false;
       }
     },
@@ -1101,20 +1105,21 @@ var component = Object(componentNormalizer["a" /* default */])(
               });
               break;
             }
-          case "pkoindisabled":
-            {
-              ts = yield this.customTimelineSet('TEXT', filter => {
-                filter.setDefinition({
-                  room: {
-                    timeline: {
-                      contains_url: false,
-                      types: ["m.room.message"]
-                    }
-                  }
-                });
-              });
-              break;
-            }
+
+          /*case "pkoindisabled": {
+          	ts = await this.customTimelineSet('TEXT', (filter) => {
+          		filter.setDefinition({
+          			room: {
+          				timeline: {
+          					contains_url: false,
+          					types: ["m.room.message"]
+          				},
+          			},
+          		});
+          	});
+          	break;
+          }*/
+
           default:
             {
               var timeline = this.chat.getLiveTimeline();

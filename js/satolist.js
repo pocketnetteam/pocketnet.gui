@@ -22606,6 +22606,7 @@ Platform = function (app, listofnodes) {
                                 >
                                 </matrix-element>
                             </div>`
+
                             window.requestAnimationFrame(() => {
                                 $('#matrix').html(matrix);
 
@@ -23249,6 +23250,11 @@ Platform = function (app, listofnodes) {
                         }
     
                         else{
+
+
+                            self.app.mobile.backgroundMode(true)
+
+                            /*
                             var r = $(self.activecall.ui.root)
     
                             var video = r.find('#remote')[0]
@@ -23259,7 +23265,7 @@ Platform = function (app, listofnodes) {
                                 haspip = true
                             }).catch(e => {
                                 console.error(e)
-                            })
+                            })*/
     
                             
                         }
@@ -23296,12 +23302,10 @@ Platform = function (app, listofnodes) {
 
             if (window.cordova) {
 
-                if(!isios()){
-                    document.addEventListener("pause", uf, false);
-                    document.addEventListener("resume", f, false);
+                document.addEventListener("pause", uf, false);
+                document.addEventListener("resume", f, false);
 
-                    return
-                }
+                return
                 
             }
 
