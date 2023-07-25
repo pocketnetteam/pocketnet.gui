@@ -4007,7 +4007,7 @@ Platform = function (app, listofnodes) {
                                 send : p.send ?? true,
                                 value : 1,
                                 min : 0.5,
-                                clbk  : function(value, action, txid){
+                                clbk  : function(value, action, txid, _p = {}){
 
 
                                     if ((p.share ?? true) && p.roomid && txid){
@@ -4015,28 +4015,8 @@ Platform = function (app, listofnodes) {
                                     }
 
                                     p.value = value;
-                                    p.send = (clbk) => {
-                                        globalpreloader(true)
-
-                                        return new Promise((resolve, reject) => {
-                                            self.app.platform.sdk.wallet.send(p.receiver, null, p.value, (err, d) => {
-                                                setTimeout(() => {
-                                                    globalpreloader(false)
-                                                    
-                                                    if(err){
-                                                        sitemessage(err.text || err)
-                                                        reject(err.text || err)
-                                                    } else {
-                                                        const txid = app.meta.protocol + '://i?stx=' + d
-                                                        sitemessage(self.app.localization.e('wssuccessfully'))
-                                                        successCheck()
-                                                        if(clbk) clbk(txid)
-                                                        resolve(txid)
-                                                    }
-                                                }, 300)
-                                            })
-                                        });
-                                    }
+                                    p.send = _p.send
+                                    
 
                                     resolve(p)
                                 }
@@ -5763,6 +5743,28 @@ Platform = function (app, listofnodes) {
                         el.find('.videoshare').on('click', function () {
                             self.app.mobile.vibration.small()
                             actions.videoShare(share)
+
+                            close()
+                        })
+
+                        el.find('.openOriginal').on('click', function () {
+                            self.app.mobile.vibration.small()
+
+                            self.app.nav.api.load({
+                                open: true,
+                                href: 'post?s=' + share.txid,
+                                inWnd: true,
+                                history: true,
+                                clbk: function (d, p) {
+                                    app.nav.wnds['post'] = p
+
+                                    if(close) close()
+                                },
+
+                                essenseData: {
+                                    share: share.txid
+                                }
+                            })
 
                             close()
                         })
@@ -14604,7 +14606,7 @@ Platform = function (app, listofnodes) {
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
 
-                            self.psdk.share.insertFromResponseSmall([_.clone(curShare.share.share)], true)
+                            self.psdk.share.insertFromResponseSmall([{ ...curShare.share.share, ...{ ___temp : true }}], true)
                             //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)
@@ -22604,6 +22606,7 @@ Platform = function (app, listofnodes) {
                                 >
                                 </matrix-element>
                             </div>`
+
                             window.requestAnimationFrame(() => {
                                 $('#matrix').html(matrix);
 
@@ -23247,6 +23250,11 @@ Platform = function (app, listofnodes) {
                         }
     
                         else{
+
+
+                            self.app.mobile.backgroundMode(true)
+
+                            /*
                             var r = $(self.activecall.ui.root)
     
                             var video = r.find('#remote')[0]
@@ -23257,7 +23265,7 @@ Platform = function (app, listofnodes) {
                                 haspip = true
                             }).catch(e => {
                                 console.error(e)
-                            })
+                            })*/
     
                             
                         }
@@ -23294,12 +23302,10 @@ Platform = function (app, listofnodes) {
 
             if (window.cordova) {
 
-                if(!isios()){
-                    document.addEventListener("pause", uf, false);
-                    document.addEventListener("resume", f, false);
+                document.addEventListener("pause", uf, false);
+                document.addEventListener("resume", f, false);
 
-                    return
-                }
+                return
                 
             }
 

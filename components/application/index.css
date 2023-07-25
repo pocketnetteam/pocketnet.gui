@@ -8,6 +8,11 @@
   height: calc(55px + var(--app-margin-top));
   display: flex;
   align-items: center;
+  z-index: 2;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 #application .captionRow .iconwrapper {
   min-width: 55px;
@@ -26,11 +31,49 @@
 #application .captionRow .caption span {
   font-weight: 700;
 }
+#application .captionRow .abssettings {
+  position: absolute;
+  right: 100%;
+  top: 5px;
+  bottom: 5px;
+  margin-left: 5px;
+}
+#application .captionRow .abssettings .icon {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  opacity: 0;
+  border-radius: 12px;
+  background: rgba(var(--background-hidden-layer), 0.15);
+  backdrop-filter: blur(4px);
+  color: #AAAAAA;
+  -webkit-backdrop-filter: blur(4px);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#application .captionRow.notactive {
+  transform: translateX(100%);
+  transition-delay: 1s;
+}
+#application .captionRow.notactive .abssettings .icon {
+  transition-delay: 1s;
+  opacity: 1;
+}
+#application .captionRow.notactive:hover {
+  transform: translateX(0);
+  transition-delay: 0s;
+}
+#application .captionRow.notactive:hover .abssettings .icon {
+  transition-delay: 0s;
+  opacity: 0;
+}
 #application .iframewrapper {
   position: fixed;
   left: 0;
   right: 0;
-  top: calc(55px + var(--app-margin-top));
+  top: 0;
   bottom: 0;
   z-index: 1;
   background: rgb(var(--background-hidden-layer));

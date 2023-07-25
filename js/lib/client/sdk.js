@@ -293,7 +293,7 @@ var pSDK = function ({ app, api, actions }) {
                     return
                 }
 
-                if (!p.update && storage[p.alternativeGetStorage][k]) {
+                if (!p.update && storage[p.alternativeGetStorage][k] && !storage[p.alternativeGetStorage][k].___temp) {
                     loaded[k] = storage[p.alternativeGetStorage][k]
 
                     return
@@ -308,7 +308,11 @@ var pSDK = function ({ app, api, actions }) {
             }
 
 
-            if (!p.update && storage[key][k]) {
+            if(storage[key][k] && storage[key][k].___temp){
+                clearIdCache(key, k)
+            }
+
+            if (!p.update && storage[key][k] && !storage[key][k].___temp) {
                 loaded[k] = storage[key][k]
 
                 return
@@ -516,6 +520,8 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var extendCache = {}
+
+    self.extendCache = extendCache
 
     var clearIdCache = function(type, helpId){
 
@@ -1446,7 +1452,6 @@ var pSDK = function ({ app, api, actions }) {
             if(!ncn)
                 data = this.cleanData(data)
 
-
             var result = _.map(data, (r) => {
 
                 if (!r) return null
@@ -1458,6 +1463,7 @@ var pSDK = function ({ app, api, actions }) {
             })
 
             var key = 'share'
+
 
             _.each(result, (r) => {
 

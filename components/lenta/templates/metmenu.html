@@ -120,6 +120,12 @@ var all = {
 		class : 'deleteSavedPost'
 	},
 
+	openOriginal : {
+		icon : '<i class="fas fa-rss"></i>',
+		text : e('openOriginal'),
+		class : 'openOriginal'
+	},
+
 	recommendationinfo : {
 		icon : '<i class="fas fa-info-circle"></i>',
 		text : e('recommendations_menu_caption'),
@@ -145,6 +151,9 @@ if(share){
 	if (app.savesupported() || app.savesupportedForBrowser()) {
 
 		if (app.platform.sdk.localshares.getShare(share.txid)){
+
+			
+			m.unshift('openOriginal');
 			m.unshift('deleteSavedPost');
 		}
 		else{

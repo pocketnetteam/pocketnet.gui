@@ -29,11 +29,11 @@ var donate = (function(){
 				return transaction
 
 			},
-			send : function(amount, clbk){
+			send : function(amount, receiver, clbk, onerror){
 
 				globalpreloader(true)
 
-				var transaction = actions.getTransaction(amount, ed.receiver)
+				var transaction = actions.getTransaction(amount, receiver)
 
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 					calculatedFee : 0,
@@ -52,9 +52,9 @@ var donate = (function(){
 
 				}).catch(e => {
 
-					console.error('e', e)
-
 					sitemessage(e)
+
+					if(onerror) onerror(e)
 
 				}).finally(() => {
 					globalpreloader(false)
@@ -106,7 +106,7 @@ var donate = (function(){
 
 					
 						if (ed.send){
-							actions.send(val, (action, txid) => {
+							actions.send(val, ed.receiver, (action, txid) => {
 		
 								if (ed.clbk){
 									ed.clbk(val, action, txid)
@@ -118,7 +118,27 @@ var donate = (function(){
 						else{
 		
 							if (ed.clbk){
-								ed.clbk(val)
+
+								var reciever = ed.receiver
+
+								ed.clbk(val, null, null, {
+									send : function(){
+
+										return new Promise((resolve, reject) => {
+
+											actions.send(val, reciever, (action, txid) => {
+
+												console.log('txid', txid)
+			
+												resolve(app.meta.protocol + '://i?stx=' + txid)
+						
+											}, (e) => {
+												reject(e)
+											})
+
+										})
+									}
+								})
 							}
 		
 							self.closeContainer()

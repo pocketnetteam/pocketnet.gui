@@ -2764,6 +2764,5 @@ _l.updateNotifier_stateError = 'Error occurred, stopping';
 
 _l.error408 = 'Error, connection problem'
 _l.watchstream = "Watch stream";
-
-
 _l.anotherSiteHeader = "Another site"
+_l.openOriginal = "Open original"
