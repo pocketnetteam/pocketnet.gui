@@ -4007,7 +4007,7 @@ Platform = function (app, listofnodes) {
                                 send : p.send ?? true,
                                 value : 1,
                                 min : 0.5,
-                                clbk  : function(value, action, txid){
+                                clbk  : function(value, action, txid, _p = {}){
 
 
                                     if ((p.share ?? true) && p.roomid && txid){
@@ -4015,28 +4015,8 @@ Platform = function (app, listofnodes) {
                                     }
 
                                     p.value = value;
-                                    p.send = (clbk) => {
-                                        globalpreloader(true)
-
-                                        return new Promise((resolve, reject) => {
-                                            self.app.platform.sdk.wallet.send(p.receiver, null, p.value, (err, d) => {
-                                                setTimeout(() => {
-                                                    globalpreloader(false)
-                                                    
-                                                    if(err){
-                                                        sitemessage(err.text || err)
-                                                        reject(err.text || err)
-                                                    } else {
-                                                        const txid = app.meta.protocol + '://i?stx=' + d
-                                                        sitemessage(self.app.localization.e('wssuccessfully'))
-                                                        successCheck()
-                                                        if(clbk) clbk(txid)
-                                                        resolve(txid)
-                                                    }
-                                                }, 300)
-                                            })
-                                        });
-                                    }
+                                    p.send = _p.send
+                                    
 
                                     resolve(p)
                                 }

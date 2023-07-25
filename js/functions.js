@@ -8628,7 +8628,8 @@ parseVideo = function(url) {
 
 		if (path.includes('stream')) {
 			subType = 'peertubeStream';
-			id = pathParts[1];
+
+			id = pathParts[0];
 		} else {
 			subType = 'common';
 			id = path;
