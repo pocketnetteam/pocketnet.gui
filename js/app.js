@@ -2677,8 +2677,8 @@ Application = function (p) {
 		},
 		statusbar: {
 			initial : function(){
-				if (window.NavigationBar)
-					window.NavigationBar.hide()
+				/*if (window.NavigationBar)
+					window.NavigationBar.hide()*/
 
 			
 			},
@@ -2721,9 +2721,9 @@ Application = function (p) {
 					//window.StatusBar.overlaysWebView(true);
 				}
 
-				/*if (window.NavigationBar) {
+				if (window.NavigationBar) {
 					window.NavigationBar.hide()
-				}*/
+				}
 			},
 			show: function () {
 				if (window.StatusBar) {
@@ -2731,9 +2731,9 @@ Application = function (p) {
 					//window.StatusBar.overlaysWebView(false);
 				}
 
-				/*if (window.NavigationBar) {
+				if (window.NavigationBar) {
 					window.NavigationBar.show()
-				}*/
+				}
 
 				self.mobile.statusbar.background()
 			},

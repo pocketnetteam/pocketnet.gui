@@ -243,21 +243,50 @@ var uploadpeertube = (function () {
 					return;
 				}
 
-				var videoInputFile = el.videoInput.prop('files');
+				let videoFile = evt.target.files[0];
 
-				if (!videoInputFile[0]) {
+				if (!videoFile) {
 					showerror('videoSelectError')
 					return;
 				}
 
-				var isAudio = videoInputFile[0].type.includes('audio')
+				let isMimeVideo = videoFile.type.includes('video')
+				let isMimeEmpty = (videoFile.type === '');
 
-				if (!videoInputFile[0].type.includes('video') && !isAudio && !videoInputFile[0].name.includes('.mkv')) {
+				let isMkv = false;
+
+				/**
+				 * Matroska is still not in IANA, so it can
+				 * be empty in some browsers
+				 */
+				if (isMimeEmpty) {
+					isMkv = await isVideoFormatMatroska(videoFile)
+				}
+
+				let isAudio = videoFile.type.includes('audio')
+				let isVideo = isMimeVideo || isMkv
+
+				/**
+				 * When Matroska is uploaded, it's type may be empty.
+				 * In this case, wrapping original File into... yeah,
+				 * another File with overridden type property
+				 */
+				if (isMkv) {
+					/** Cordova has library for File class support */
+					const file = window.wFile || window.File;
+
+					videoFile = new file([videoFile], videoFile.name, {
+						type: 'video/x-matroska',
+						lastModified: videoFile.lastModified,
+					})
+				}
+
+				if (!isVideo && !isAudio) {
 					showerror('videoFormatError')
 					return;
 				}
 
-				if (videoInputFile[0].size > 4 * 1024 * 1024 * 1024) {
+				if (videoFile.size > 4 * 1024 * 1024 * 1024) {
 
 					showerror('videoSizeError')
 
@@ -270,7 +299,7 @@ var uploadpeertube = (function () {
 					uploading = false
 				}
 
-				var fileName = videoInputFile[0].name;
+				var fileName = videoFile.name;
 				//var hfname = fileName.slice(0, 20) + (fileName.length > 20 ? '...' : '')
 
 
@@ -278,7 +307,7 @@ var uploadpeertube = (function () {
 				//el.uploadButton.prop('disabled', true);
 
 				var data = {
-					video: videoInputFile[0],
+					video: videoFile,
 					title : fileName
 				};
 
@@ -653,7 +682,7 @@ var uploadpeertube = (function () {
 				var data = {
 					hasAccess: false,
 					increase: {},
-					isAudio: (ed.isAudio != undefined) ? ed.isAudio : false
+					isAudio: (typeof ed.isAudio != 'undefined' && ed.isAudio) ? true : false
 				};
 
 				error = false;

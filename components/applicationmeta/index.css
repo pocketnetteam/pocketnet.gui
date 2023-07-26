@@ -58,3 +58,6 @@
 #applicationmeta.permissionsRendered .panel {
   opacity: 1;
 }
+.applicationmetaWindow .wndinner {
+  max-width: 768px;
+}

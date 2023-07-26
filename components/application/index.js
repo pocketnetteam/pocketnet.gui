@@ -38,6 +38,9 @@ var application = (function(){
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
+
+				if (el.c)
+					el.c.find('.captionRow').addClass('notactive')
 			}
 		}
 

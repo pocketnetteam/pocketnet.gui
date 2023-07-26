@@ -196,7 +196,7 @@ var BastyonSdk = function(){
     }
 
     self.init = function(){
-        self.get.appinfo().then(({theme}) => {
+        self.get.appinfo().then(({margintop, theme}) => {
 
             console.log('theme', theme)
 
@@ -205,6 +205,9 @@ var BastyonSdk = function(){
             }
 
             document.documentElement.setAttribute('theme', theme.rootid);
+
+            document.documentElement.style.setProperty('--app-margin-top', `${margintop}`);
+            
 
         })
 
