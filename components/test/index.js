@@ -1127,7 +1127,7 @@ var test = (function(){
 
 						var _r = self.app.ref;
 
-						if (_r && _r != self.app.user.value)
+						if (_r && _r != self.app.user.address.value)
 
 							ref = _r;
 					}
