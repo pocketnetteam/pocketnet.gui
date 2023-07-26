@@ -865,7 +865,7 @@ var videoCabinet = (function () {
                   ).then(descriptionRes => {
                     return {
                       ...dataWithoutDescription,
-                      description: descriptionRes.description,
+                      description: (descriptionRes.description || '').trim(),
                     };
                   });
                 })
@@ -1489,7 +1489,7 @@ var videoCabinet = (function () {
 
 														if (name) parameters.name = name;
 														if (description)
-															parameters.description = description;
+															parameters.description = description.trim();
 
 														parameters.tags = tagArray;
 
