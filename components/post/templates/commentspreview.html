@@ -2,15 +2,17 @@
 
 	var tpl = app.platform.ws.tempates.share(share)
 
+	var sUserInfo = psdk.userInfo.getShortForm(share.address)
+
 %>
 
 <div class="csharetable table">
 	<div class="image">
 
 		<% 
-			var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');  
-			var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-			var letter = name ? name[0] : '';	
+			var src = sUserInfo.image;  
+			var name = sUserInfo.name;
+			var letter = sUserInfo.letter;	
 		%>
 
 		<div class="icon">

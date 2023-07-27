@@ -40,6 +40,15 @@ User = function(app, p) {
 					
 			},
 			value : null
+		},
+		pair : {
+
+			set : function(l){
+				
+				this.value = l || null;
+					
+			},
+			value : null
 		}
 	}
 
@@ -161,11 +170,14 @@ User = function(app, p) {
 					try{
 						localStorage['waslogged'] = true
 						localStorage['popupsignup'] = 'showed'
+
+
+						localStorage['useraddress'] = self.address.value
 					}catch(e){
 					}
 
 					
-
+					app.apps.emit('state', 1)
 
 					self.prepare(clbk)
 				}
@@ -234,21 +246,27 @@ User = function(app, p) {
 		try{
 			localStorage['mnemonic'] = ''
 			sessionStorage['mnemonic'] = ''
+			localStorage['useraddress'] = ''
 		}catch(e){
 		}
 
 		
-
-		self.mncache.clear()
+		var cache = self.smcache('mncache' + (window.testpocketnet ? 'test' : 'production'), true)
+			cache.clear()
 
 		settings.clear();
 
 		keys.public.set();
 		keys.private.set();
+		keys.pair.set();
 
 		app.platform.clear();
 
 		app.platform.matrixchat.destroy();
+
+		if (app.apps){
+			app.apps.emit('state', 0)
+		}
 
 		self.address.set()
 
@@ -278,6 +296,7 @@ User = function(app, p) {
 	}
 
 	self.isState = function(clbk){
+
 
 		if(!p) p = {};
 
@@ -346,7 +365,7 @@ User = function(app, p) {
 							
 						}
 							
-
+						
 						state = 0;	
 						clbk(state);
 					}
@@ -369,105 +388,141 @@ User = function(app, p) {
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
 
-		var me = deep(app, 'platform.sdk.user.storage.me');
+		var account = app.platform.actions.getCurrentAccount()
 
-		if (me && me.relay){
+		if(!account) return 'fu'
 
-			var regs = app.platform.sdk.registrations.storage[self.address.value];
+		var astatus = account.getStatus()
 
-			if (regs && (regs === true || regs < 3)){
-				return 'fuf'
-			}
-
+		if (astatus == 'not_in_progress_no_processing'){
+			return 'fu'
 		}
-
-		
-
-		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
 	}
 
 	self.validate = function(){
+
+		var account = app.platform.actions.getCurrentAccount()
+
+		if(!account) return false
+
+		var astatus = account.getStatus()
+
+		if (astatus == 'not_in_progress_no_processing'){
+			return false
+		}
+
+		return true
 
 		if(!self.address.value) return false;
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return false
 
-
-		var me = deep(app, 'platform.sdk.user.storage.me');
+		var me = app.platform.psdk.userInfo.getmy() || {}
 
 		if (me && me.relay){
 
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
 
 			if (regs && (regs === true || regs < 3)){
-
 				
 				return false
 			}
 
 		}
 
+		return me.name
+
+	}
+
+	self.userRegistrationStatus = function(){
+
+		var account = app.platform.actions.getCurrentAccount()
+
+		if(!account){
+			return 'not_authorizated'
+		}
+
+		return account.getStatus()
+		
+	}
+
+	self.registrationProgressIcon = function(){
+		var r = self.userRegistrationStatus()
+
+		if (r == 'registered'){
+			return ''
+		}
 
 
-		return (deep(app, 'platform.sdk.user.storage.me.name'))
+		return '<div class="registrationProgressIcon '+r+'" title="'+app.localization.e('registration_' + r)+'"><i class="fas fa-stopwatch"></i><span>'+app.localization.e('registration_' + r)+'</span></div>'
 
 	}
 
 	self.isItMe = function(address){
-		return self.address.value && self.address.value.toString('hex') == address
+		return self.address.value && self.address.value == address
 	}
 
-	self.mncache = {
-		clear : function(){
-			try{
-				localStorage['mncache'] = ''
-			}
-			catch(e){
+	self.smcache = function(name, bf){
+		return {
+			clear : function(){
+				try{
+					localStorage[name] = ''
+				}
+				catch(e){
+					
+				}
+			},
+			set : function(m, seed){
+				var ls = this.getall()
+	
+				ls[m] = seed
+	
+				try{
+					localStorage[name] = JSON.stringify(ls)
+				}
+				catch(e){
+					
+				}
 				
+			},
+			get : function(m){
+				var ls = this.getall()
+	
+				if(ls[m]){
+					if(bf){
+						return Buffer.from(ls[m])
+					}
+					else{
+						return ls[m]
+					}
+					
+					
+				}
+	
+				return 
+			},
+			getall : function(){
+				var ls = {}
+	
+				try{
+					ls = JSON.parse(localStorage[name] || "{}")
+				}catch(e){}
+	
+				return ls
 			}
-		},
-		set : function(m, seed){
-			var ls = self.mncache.getall()
-
-			ls[m] = seed
-
-			try{
-				localStorage['mncache'] = JSON.stringify(ls)
-			}
-			catch(e){
-				
-			}
-			
-		},
-		get : function(m){
-			var ls = self.mncache.getall()
-
-			if(ls[m]){
-				return Buffer.from(ls[m])
-			}
-
-			return 
-		},
-		getall : function(){
-			var ls = {}
-
-			try{
-				ls = JSON.parse(localStorage['mncache'] || "{}")
-			}catch(e){}
-
-			return ls
 		}
 	}
 
+
 	self.keysFromMnemo = function(mnemonic){
 
-		if(!mnemonic) mnemonic = ''
+		mnemonic = (mnemonic || '').toLowerCase()
 
-		mnemonic = mnemonic.toLowerCase()
+		var cache = self.smcache('mncache' + (window.testpocketnet ? 'test' : 'production'), true)
 
-		var seed = self.mncache.get(mnemonic) || bitcoin.bip39.mnemonicToSeedSync(mnemonic)
+		var seed = cache.get(mnemonic) || bitcoin.bip39.mnemonicToSeedSync(mnemonic)
 
-		self.mncache.set(mnemonic, seed)
+			cache.set(mnemonic, seed)
 
 		return self.keysFromSeed(seed)
 
@@ -475,11 +530,12 @@ User = function(app, p) {
 
 	self.keysFromSeed = function(seed){
 
-		//var hash = bitcoin.crypto.sha256(Buffer.from(seed))
-		
-		var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF() 
+		var cache = self.smcache('seedcache' + (window.testpocketnet ? 'test' : 'production'))
 
-		
+		var d = cache.get(seed.toString('hex')) || bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF() 
+
+			cache.set(seed.toString('hex'), d)
+
 	    var keyPair = bitcoin.ECPair.fromWIF(d)	    
 
 	    return keyPair
@@ -490,11 +546,13 @@ User = function(app, p) {
 
 	    keys.private.set(keyPair.privateKey)
 	    keys.public.set(keyPair.publicKey)
-
+		keys.pair.set(keyPair)
 	  
 	    var address = app.platform.sdk.address.pnet()
 
 	    self.address.set(address.address)
+
+		localStorage['useraddress'] = address.address
 
 	    topPreloader(20)
 
@@ -578,7 +636,7 @@ User = function(app, p) {
 	self.private = keys.private;
 
 	self.keys = function(){
-		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
+		return keys.pair.value
 	}
 
 	self.cryptoKeys = function(){

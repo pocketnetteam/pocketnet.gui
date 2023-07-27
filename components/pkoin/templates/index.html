@@ -23,8 +23,7 @@
 			<% 
 				var address = userinfo.address;
 				var src = userinfo.image;
-				var name = userinfo.name;
-				var about = filterXSS(clearScripts((findAndReplaceLink(userinfo.about, true))));
+				var about = findAndReplaceLink(userinfo.about, true);
 
 				var _d = userinfo.regdate
 				var  d = null;
@@ -34,7 +33,6 @@
 					d.setTime(_d * 1000);	
 				}
 
-				var letter = name ? name[0] : '';  
 				var dev = userinfo.dev;
 				var authorlink = app.platform.api.authorlink(address);
 			%>
@@ -45,12 +43,12 @@
 
 						<div class="usericon" image="<%-src || '*'%>">
 					
-							<% if(!src && letter) { %>
+							<% if(!src && userinfo.letter) { %>
 					
 								<span 
 									class="letter"
 								>
-									<%-letter.toUpperCase()%>
+									<%-userinfo.letter%>
 								</span>
 					
 							<% } else if (!src) { %>
@@ -64,7 +62,7 @@
 				
 				</div>
 				<div class="description">
-					<div class="name"><%- name %></div>
+					<div class="name"><%- userinfo.name %></div>
 					<% if(about) {%><div class="about"><%= about %></div>
 					<% } else { %> 
 						<% if(d) {%>

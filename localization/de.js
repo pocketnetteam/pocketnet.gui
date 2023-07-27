@@ -526,6 +526,7 @@ _l.e13107 = "Netzwerkknoten Management kann durch die Anwendung ausgeführt werd
 _l.e13108 = "Es gibt keine Verbindung mit dem Electron proxy Interface"
 
 _l.e13109 = "Bitte geben Sie die Wörter in dem Bild ein, um Pocketcoins zu empfangen und mit der Registrierung fortzufahren"
+_l.e13109h = "Klicken Sie auf die Sechsecke, um das Bild zusammenzusetzen, und geben Sie dann Text in das resultierende Bild ein."
 _l.e13110 = "Wörter eingeben"
 _l.next = "Weiter"
 _l.refresh = "Neu laden"
@@ -897,3 +898,15 @@ _l.torusing_stat_totalTorBytes = "Gesamt, TOR anrufe"
 _l.torusing_settings = "TOR einstellungen"
 _l.torusing_stats = "Statistik abfragen"
 _l.torusing_proxychangequestion = "Sind Sie sicher, dass Sie den proxy ändern wollen?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Aktualisieren';
+_l.updateNotifier_topHeading2 = 'Verfügbar';
+_l.updateNotifier_mainHeading = 'Wir haben aktualisiert';
+_l.updateNotifier_mainText = 'Wir empfehlen, die Anwendung zu aktualisieren. Neue Funktionen und bessere Leistung warten auf Sie!';
+_l.updateNotifier_button1 = 'Installieren';
+_l.updateNotifier_button2 = 'Später...';
+_l.updateNotifier_stateStart = 'Starten...';
+_l.updateNotifier_stateDownload = 'Heruntergeladen';
+_l.updateNotifier_stateError = 'Fehler aufgetreten';
+/** ↑ Component UpdateNotifier ↑ */

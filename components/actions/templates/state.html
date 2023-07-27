@@ -1,0 +1,116 @@
+<div class="state">
+    <div class="work">
+        <div class="statusRow">
+            <div class="status">
+                <span><%-account.getStatus()%></span>
+            </div>
+
+            <% if(account.keyPair) {%>
+                <div class="haskeys">
+                    <i class="fas fa-key"></i>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="balanceUnspents">
+
+            <div class="balance">
+                <% var balance = account.actualBalance() %>
+
+                <div class="label">
+                    <span>Balance:</span>
+                </div>
+
+                <div class="total">
+                    <span><%-app.platform.mp.coin(balance.total)%> POC</span>
+                </div>
+                <div class="actual">
+                    <span><%-app.platform.mp.coin(balance.actual)%> POC</span>
+                </div>
+                <div class="tempbalance">
+                    <span><%-app.platform.mp.coin(balance.tempbalance)%> POC</span>
+                </div>
+
+                <% if(account.unspents.willChange) {%>
+                    <div class="wait">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="unspents">
+
+                <div class="label">
+                    <span>Unspents:</span>
+                </div>
+
+                <div class="total">
+                    <span><%-account.unspents.value.length%></span>
+                </div>
+                <div class="date">
+                    <span class="realtime" time="<%-account.unspents.updated%>"><%=account.unspents.updated ? app.reltime(account.unspents.updated) : "&mdash;"%></span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <% _.each(account.getActions(), function(action){ 
+                
+                %> 
+                <div class="action">
+                    
+
+                    <div class="type">
+                        <span><%-action.object.type%></span>
+                    </div>
+
+                    <% if(action.transaction) {%>
+                        <div class="transaction">
+                            <span><%-action.transaction%></span>
+                        </div>
+                    <% } %>
+                    <div class="inputsOutputs">
+                        <div class="inputs">
+                            <%= action.inputs.length ? JSON.stringify(action.inputs, null, "\t") : "&mdash;"%>
+                        </div>
+
+                        <div class="outputs">
+                            <%=  action.outputs.length ? JSON.stringify(action.outputs, null, "\t") : "&mdash;" %>
+                        </div>
+                    </div>
+
+                    <div class="actionStatusRow">
+
+                        <div class="time">
+                            <span class="realtime" time="<%-action.sent || action.added%>"><%-app.reltime(action.sent || action.added)%></span>
+                        </div>
+
+                        <% if(action.completed) {%>
+                            <div class="completed">
+                                <span>Completed</span>
+                            </div>
+                        <% } %>
+
+                        <% if(action.rejected) {%>
+                            <div class="rejected">
+                                <span><%-action.rejected%></span>
+                            </div>
+                        <% } %>
+
+                        <% if(action.attempts) {%>
+                            <div class="attempts">
+                                <span><%-action.attempts%></span>
+                            </div>
+                        <% } %>
+
+                    </div>
+                    
+                </div>
+
+            
+            <% }) %>
+        </div>
+    </div>
+</div>

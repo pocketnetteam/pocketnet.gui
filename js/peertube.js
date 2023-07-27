@@ -196,6 +196,12 @@ PeerTubePocketnet = function (app) {
 			},
 		},
 
+		videoDescription: {
+			path: function ({ id }) {
+				return `api/v1/videos/${id}/description`;
+			},
+		},
+
 		oauthClientsLocal: {
 			path: 'api/v1/oauth-clients/local',
 		},
@@ -592,7 +598,7 @@ PeerTubePocketnet = function (app) {
 			},
 
 			best: function (type) {
-				const special = deep(app, 'platform.real')[app.user.address.value];
+				const special = deep(app, 'platform.real')[app.user.address.value] || deep(app, 'platform.testaddresses')[app.user.address.value];
 
 				return this.roys({ type, special, })
 					.then((data = {}) => {
@@ -1127,6 +1133,10 @@ PeerTubePocketnet = function (app) {
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
+			},
+
+			getDirectVideoDescription(parameters = {}, options = {}) {
+				return request('videoDescription', parameters, options);
 			},
 
 			totalViews: (parameters = {}, options = {}) =>

@@ -105,7 +105,48 @@ var userslist = (function(){
 					}
 
 				})
+			},
+
+			statusClass : function(address){
+				var element = el.c.find('.user[address="'+address+'"]')
+
+				if (element.length){
+					var me = self.psdk.userInfo.getmy() 
+
+					if(!me) return
+
+					var r = me.relation(address, 'subscribes')
+					var rb = me.relation(address, 'blocking')
+
+					
+
+					window.requestAnimationFrame(() => {
+						element.find('.notificationturn').removeClass('turnon')
+						element.find('.subscribebuttonstop').removeClass('following')
+						element.find('.subscribebuttonstop').removeClass('blocking')				
+						element.removeClass('userblocking')
+
+						if(r){
+
+							element.find('.subscribebuttonstop').addClass('following')
+
+							if (r.private == 'true' || r.private === true){
+								element.find('.notificationturn').addClass('turnon')
+							}
+						}
+
+						if (rb){
+							element.find('.subscribebuttonstop').addClass('blocking')				
+							element.addClass('userblocking')
+						}
+					})
+
+					
+
+					
+				}
 			}
+
 		}
 
 		var events = {
@@ -229,7 +270,7 @@ var userslist = (function(){
 
 		var initEvents = function(){
 			
-			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
+			/*self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
 				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
@@ -248,7 +289,8 @@ var userslist = (function(){
 			}
 
 			self.app.platform.clbks.api.actions.blocking.userlist = function(address){
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')	
+				el.c.find('.user[address="'+address+'"]').addClass('userblocking')	
 				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
 			}
 
@@ -256,6 +298,30 @@ var userslist = (function(){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
 				el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
+			}*/
+
+			self.app.platform.actionListeners.userslist = function({type, alias, status}){
+
+				if(type == 'unblocking'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'blocking'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'subscribe'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'unsubscribe'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'subscribePrivate'){
+					actions.statusClass(alias.address.v)
+				}
+				
 			}
 
 			el.c.on('click', '.subscribe', events.subscribe)
@@ -284,7 +350,7 @@ var userslist = (function(){
 
 			if (type == 'commonuserrelation'){
 
-				var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value)
+				var me = self.psdk.userInfo.getmy() 
 
 				return _.sortBy(addresses, function(address){
 
@@ -328,14 +394,13 @@ var userslist = (function(){
 
 				scnt.off('scroll', events.loadmorescroll)
 				delete self.app.events.scroll['userlist']
+				delete self.app.platform.actionListeners.userslist
 				//scnt.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.userlist
+				/*delete self.app.platform.clbks.api.actions.subscribe.userlist
 				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
-	
 				delete self.app.platform.clbks.api.actions.unsubscribe.userlist
-	
-				delete self.app.platform.clbks.api.actions.blocking.userlist
+				delete self.app.platform.clbks.api.actions.blocking.userlist*/
 
 				el = {};
 			},

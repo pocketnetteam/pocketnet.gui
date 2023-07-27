@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
@@ -9254,10 +9254,18 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
+      }
+
+      else{
+
+        importScripts([{src : 'peertube/video-embed.bundle.js'}], plyrrelations, function(){
+
+					clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9413,3 +9421,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

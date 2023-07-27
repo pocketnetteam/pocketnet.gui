@@ -268,11 +268,14 @@
 		}
 
 		.itemtable{
+			display: flex;
+			align-items: center;
+
 			>div{
 
 				&.icon{
+					min-width: 30px;
 					width : 30px;
-					padding-top: @rhythm;
 					text-align: center;
 					opacity: 0.6;
 					font-size: 0.8em;
@@ -317,7 +320,6 @@
 			
 			.label{
 				text-transform: capitalize;
-				text-decoration: underline;
 			}
 		}
 
@@ -335,6 +337,7 @@
 			display: none;
 			color : rgb(var(--color-txt-ac));
 			text-decoration: underline;
+			cursor: pointer;
 		}
 	}
 
@@ -365,9 +368,7 @@
 		padding-top : 10px;
 	}
 
-	.panel{
-		border-radius:3px;
-	}
+
 	.work{
 		&.mwork{
 			padding : 0!important;
@@ -382,15 +383,21 @@
 	.mworkwrapper{
 		background: rgb(var(--background-main));
 	}
-
 	
 	.bgCaption{
 		background: rgb(var(--color-shadow-var));
 		color : rgb(var(--text-on-bg-shadow-color));
-		height: 180px;
+		height: auto;
 		position: relative;
 		margin-bottom : 0;
 		padding-bottom: 0;
+
+		.cwrapper{
+			display: flex;
+			margin-top: 4 * @rhythm;
+			margin-bottom: 4 * @rhythm;
+		}
+		
 
 		.deletedAccount{
 			padding : 10 * @rhythm 6 * @rhythm;
@@ -402,42 +409,69 @@
 			}
 		}
 	
-		
-		.adr{
+		.nameWrapper{
 			max-width: 500px;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			vertical-align: bottom;
-			display: inline-block;
-		}
+			margin-bottom: @rhythm;
 
-		.changeaccount{
-			width: 30px;
-			text-align: center;
-			opacity: 0.7;
-			cursor: pointer;
-			font-size: 0.5em;
-			display: none;
-
-			&:hover{
-				opacity: 1;
+			span{
+				font-size: 1.9em;
+				font-weight: 700;
 			}
 		}
-		
+
+		.panel{
+			display: flex;
+			flex-wrap: wrap;
+
+			.changeAccount{
+				display: none;
+			}
+
+			>div{
+				margin-right: @rhythm;
+				margin-bottom: @rhythm;
+				display: flex;
+				align-items: center;
+				border-radius: 6px;
+				background: rgba(var(--color-bg-ac-bright), 0.3);
+				color : rgb(var(--text-on-bg-shadow-color));
+				padding : 1.25 * @rhythm 2 * @rhythm;
+				text-align: center;
+				justify-content: center;
+				cursor: pointer;
+				.shadowSmaller();
+
+				&.donate{
+					background: rgba(var(--color-good), 0.7);
+				}
+
+				i{
+					text-align: center;
+					font-size: 0.8em;
+				}
+
+				.label{
+					margin-right: @rhythm;
+				}
+
+				&:nth-child(1){
+					padding-left: 4 * @rhythm;
+					padding-right: 4 * @rhythm;
+					background: rgba(var(--color-bg-ac-bright), 0.7);
+					color : rgb(var(--text-on-bg-shadow-color));
+					.label{
+						display: block;
+					}
+				}
+			}
+		}
+
 		.create{
 			min-width: 250px;
 		}
 
-		.funf{
-			cursor : pointer;
-			opacity : 0.4;
-
-			.transition(0.3s);
-
-			&:hover{
-				opacity : 1;
-			}
-		}
 
 		.blockingWrapper{
 			display : none;
@@ -532,6 +566,7 @@
 				font-weight: 500;
 				padding : @rhythm;
 				border-bottom: 2px solid transparent;
+				white-space: nowrap;
 				cursor: pointer;
 				.transition(0.3s);
 
@@ -569,33 +604,16 @@
 		}
 
 
-		.infoWrapper{
+		/*.infoWrapper{
 			position: absolute;
 			left: 0;
 			right: 0;
 			top: 0;
 			bottom: 0;
 			z-index: 1;
-		}
+		}*/
 
-		.imagiconWrapper{
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			z-index: 0;
-
-			.imagejdenticon{
-				position: absolute;
-				left: -60px;
-				right: 0;
-				top: -100px;
-				bottom: 0;
-				z-index: 0;
-				opacity: 0.1;
-			}
-		}
+		
 
 		.work{
 			position: relative;
@@ -755,18 +773,7 @@ html.mobileview{
 			margin-left: 0;
 		}
 
-		.bgCaption{
-			.adr{
-				max-width: none;
-				display: block;
-			}
-
-			.middotwrapper{
-				display: none;
-			}
-
-			
-		}
+		
 
 		.leftpanelcell{
 			display: none;
@@ -812,38 +819,28 @@ html.mobileview{
 
 @media only screen and (max-width: 1024px) {
 	#author{
-		.bgCaption{
-			.caption{
-				justify-content: center;
-			}
-		}
 
-		.mobileinfo{
-			display: block;
+		.bgCaption{
+
+			min-height: 485px;
+			
+			.adr{
+				max-width: none;
+				display: block;
+			}
+
+			.middotwrapper{
+				display: none;
+			}
 
 			
-		}
-
-		
-		.lentacell{
-			margin-right: 44px;
-			margin-left: 0;
-		}
-		.newsharewrapper{
-			display: none;
-		}
-
-		.leftpanelcell{
-			display: none;
-		}
-
-		.lentacell{
-			margin-right: 44px;
-			margin-left: 0;
-		}
-
-		.work.mwork{
-			width: 90%;
+	
+			.panel{
+				margin-top: 3 * @rhythm;
+				margin-bottom: 3 * @rhythm;
+				margin-left: @rhythm;
+			}
+			
 		}
 
 		.bgCaption{
@@ -852,6 +849,8 @@ html.mobileview{
 			height: auto;
 			padding-bottom: 4 * @rhythm;
 			background: #051b48;
+			border-bottom-left-radius: 12px;
+			border-bottom-right-radius: 12px;
 
 			.usermenu{
 				min-height: 37px;
@@ -859,16 +858,30 @@ html.mobileview{
 			}
 			
 			.cwrapper{
-				display: block;
-
-				>div{
-					display: block;
-				}
-
+				margin : 0;
+				flex-direction: column;
 				.cellforimage{
-					margin : 0 auto;
+					margin: 0 auto;
 				}
 			}
+
+			.infomain{
+				display: flex;
+				flex-direction: column;
+			}
+
+
+			.nameWrapper{
+				margin : 0 auto;
+				margin-top: @rhythm;
+				margin-bottom: 4 * @rhythm;
+				text-align: center;
+
+				span{
+					font-size: 1.6em;
+				}
+			}
+			
 
 			.work{
 				padding-right: 0;
@@ -910,7 +923,6 @@ html.mobileview{
 			
 
 			}
-			
 
 			.usermenu{
 				width: 100%;
@@ -944,6 +956,8 @@ html.mobileview{
 					width: 100px;
 					height: 100px;
 					line-height: 98px;
+					border: 4px solid rgb(var(--text-on-bg-shadow-color));
+					.shadowSmaller();
 				}
 			}
 
@@ -959,18 +973,65 @@ html.mobileview{
 					padding :  0 @rhythm;
 				}
 			}
-
-			.infoWrapper{
-				
-				
-			}
-			
 			.work{
 				position: relative;
 				overflow: hidden;
 			}
 
 		}
+
+		.bgCaption{
+			padding-top : 0;
+
+			.caption{
+				text-align: left!important;
+				padding-left: @rhythm;
+			}
+
+			.panel{
+				.changeAccount{
+					display: flex;
+				}
+			}
+
+			
+		}
+
+		.bgCaption .infoWrapper,
+		.lentacell .cnt{
+			max-width: 768px;
+			margin : 0 auto;
+		}
+
+		.mobileinfo{
+			display: block;
+
+			
+		}
+
+		
+		.lentacell{
+			margin-right: 44px;
+			margin-left: 0;
+		}
+		.newsharewrapper{
+			display: none;
+		}
+
+		.leftpanelcell{
+			display: none;
+		}
+
+		.lentacell{
+			margin-right: 44px;
+			margin-left: 0;
+		}
+
+		.work.mwork{
+			width: 90%;
+		}
+
+		
 		.authorinfo{
 
 			.showmoreinabout{
@@ -997,23 +1058,12 @@ html.mobileview{
 @media only screen and (max-width: 768px){
 
 	#author{
-		.bgCaption{
-			padding-top : 0;
 
-			.caption{
-				text-align: left!important;
-				padding-left: @rhythm;
+		.authorlentawrappermain{
+			
+			.authorsearchwrapper{
+				padding-right: 0.5 * @rhythm!important;
 			}
-
-			.changeaccount{
-				display: block;
-			}
-		}
-
-		.bgCaption .infoWrapper,
-		.lentacell .cnt{
-			max-width: 640px;
-			margin : 0 auto;
 		}
 
 		.newsharewrapper{
@@ -1024,7 +1074,7 @@ html.mobileview{
 	html.allcontent{
 		#author{
 			.bgCaption{
-				padding-top : 52px;
+				padding-top : calc(36px + var(--app-margin-top));
 			}
 		}
 	}
@@ -1070,13 +1120,18 @@ html.mobileview{
 					opacity: 1;
 				}
 			}
+
+			.nameWrapper{
+				margin-left: @rhythm;
+				text-align: left;
+			}
 			
 		}
 
-		.bgCaption .cwrapper>div {
+		/*.bgCaption .cwrapper>div {
 			vertical-align: top;
 			padding-top : 2 * @rhythm;
-		}
+		}*/
 
 		.lentaWrapper{
 			min-height: 0;

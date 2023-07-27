@@ -559,20 +559,7 @@ var about = (function(){
 
 				self.app.user.isState(function (state) { 
 
-					if(isMobile() && state){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
-
-							allbalance = amount + temp
-							
-
-							r()
-						
-						})
-					}
-					else{
-						r()
-					}
+					r()
 
 				})
 					
@@ -716,10 +703,8 @@ var about = (function(){
 
 				var p = parameters();
 
-				data.p2pkh = self.app.platform.sdk.address.pnet()
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
-
 
 					mestate = _mestate
 

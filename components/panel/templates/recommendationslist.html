@@ -1,6 +1,6 @@
 <% _.each(users, function(address){ 
 
-    var user = deep(app, 'platform.sdk.users.storage.' + address);
+    var user = psdk.userInfo.get(address);
 
     var name = app.platform.api.clearname(decodeURIComponent(user.name));
     

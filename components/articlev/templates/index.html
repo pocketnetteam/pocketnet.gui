@@ -31,9 +31,12 @@
 
 									<% 
 														
-										var src = deep(app, 'platform.sdk.user.storage.me.image')  
+										var me = psdk.userInfo.getmy() || {}
 
-										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var src = me.image 
+										
+										var name = app.platform.api.clearname(me.name || user.address.value)
+										
 										var letter = name ? name[0] : ''
 
 									%>

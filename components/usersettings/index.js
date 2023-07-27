@@ -263,7 +263,7 @@ var usersettings = (function(){
 
 					var value = input.val();
 
-					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
+					//self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
 
 					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
@@ -383,10 +383,10 @@ var usersettings = (function(){
 
 			//if (self.app.user.features.telegram){
 
-			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+			/*controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
 			controller.abort();
-			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();*/
 
 
 			el.c.find('.removeAccount').on('click', events.removeAccount)
@@ -461,13 +461,13 @@ var usersettings = (function(){
 
 				delete self.app.platform.sdk.node.transactions.clbks.settings
 
-				if (self.app.user.features.telegram){
+				/*if (self.app.user.features.telegram){
 
 					controller.abort();
 					controller = new AbortController();
 					self.app.platform.sdk.system.get.telegramUpdates();
 
-				}
+				}*/
 			},
 
 			init : function(p){

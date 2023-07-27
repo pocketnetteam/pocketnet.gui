@@ -26,14 +26,12 @@ var test = (function(){
 
 		var saving = false
 
-		var namereg = /[a-zA-Z0-9_]{1,20}/
-
 		var getrefname = function(clbk){
 			if (self.app.ref){
 				self.sdk.users.get(self.app.ref, function(){
 
-					var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
-
+					var name = (self.psdk.userInfo.get(self.app.ref) || {}).name
+					
 					if (clbk)
 						clbk(name)
 				})
@@ -54,13 +52,9 @@ var test = (function(){
 
 					if(loading){
 						globalpreloader(true)
-						//el.c.find('.userPanel').addClass('loading')
-						//el.upanel.addClass('loading')
 					}
 					else{
 						globalpreloader(false)
-						//el.c.find('.userPanel').removeClass('loading')
-						//el.upanel.removeClass('loading')
 					}
 					
 				}
@@ -68,8 +62,6 @@ var test = (function(){
 			},
 
 			saveemail : function(email, clbk){
-			
-
 				var _p = {
 					Email : email,
 					Lang : self.app.localization.key || 'en'
@@ -117,7 +109,7 @@ var test = (function(){
 						},
 
 						error : function(){
-							topPreloader(100)
+							topPreloader2(100)
 		
 							if (clbk)
 								clbk();
@@ -150,7 +142,7 @@ var test = (function(){
 
 				renders.icon();
 
-				renders.options();
+				renders.icon(renders.options);
 			},
 			ref : function(){
 
@@ -158,7 +150,7 @@ var test = (function(){
 				if (ref && firstTime && !self.app.dsubref){
 
 					try {
-						localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address
+						localStorage[self.app.user.address.value + 'subscribeRef'] = ref.address
 					}
 					catch (e) { }
 
@@ -173,14 +165,11 @@ var test = (function(){
 
 					saving = true
 
-				var allclbk = function(){
+				var allclbk = function(action){
 
 					actions.loading(false)
 
-					//el.upanel.removeClass('loading')
-					//el.c.find('.userPanel').removeClass('loading')
-
-					topPreloader(100)
+					topPreloader2(100)
 
 					saving = false
 
@@ -197,12 +186,14 @@ var test = (function(){
 					else
 					{	
 						if (ed.success){							
-							ed.success()
+							ed.success(action)
 						}
 						else
 						{
-							if (clbk)
-								clbk()
+							self.app.reloadModules(function(){
+								if (clbk)
+									clbk()
+							})
 						}
 					}
 				}
@@ -214,13 +205,13 @@ var test = (function(){
 					return
 				}
 
-				if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+				if (actions.equal(tempInfo, self.psdk.userInfo.getmy() || {})){
 					sitemessage(self.app.localization.e('uchanges'))
 					saving = false
 					return
 				}
 
-				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+				if(!actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
 					sitemessage(self.app.localization.e('uchangesvalid'))
 
 					if(!trim(tempInfo.name)){	
@@ -244,11 +235,11 @@ var test = (function(){
 
 				var userInfo = new UserInfo();
 
-					userInfo.name.set(trim(tempInfo.name));
-					userInfo.language.set(tempInfo.language);
-					userInfo.about.set(trim(tempInfo.about));
-					userInfo.site.set(trim(tempInfo.site));
-					userInfo.image.set(tempInfo.image);
+					userInfo.name.set(trim(superXSS(tempInfo.name)));
+					userInfo.language.set(superXSS(tempInfo.language));
+					userInfo.about.set(trim(superXSS(tempInfo.about)));
+					userInfo.site.set(trim(superXSS(tempInfo.site)));
+					userInfo.image.set(superXSS(tempInfo.image));
 					userInfo.addresses.set(tempInfo.addresses);
 					userInfo.ref.set(deep(ref, 'address') || '');
 
@@ -291,7 +282,7 @@ var test = (function(){
 				renders.termsconditions(function(){
 					saving = true
 
-					topPreloader(30)
+					topPreloader2(30)
 
 				
 
@@ -302,9 +293,9 @@ var test = (function(){
 						//exist = false
 						
 
-						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+						if(!exist || (exist == self.app.user.address.value)){
 
-							topPreloader(50)
+							topPreloader2(50)
 
 							ed.presave(function(){
 
@@ -314,30 +305,18 @@ var test = (function(){
 							
 								el.c.find('.errorname').fadeOut();
 
-								topPreloader(70)
+								topPreloader2(70)
+
 								userInfo.uploadImage(self.app, function(err){
 
 									if (err){
-										topPreloader(100)
-
-
+										topPreloader2(100)
+										saving = false
 										actions.loading(false)
 
 										sitemessage("An error occurred while loading images")
-										saving = false
+										
 										return 
-									}
-
-									if (ed.makeuser){
-
-										topPreloader(100)
-
-										actions.loading(false)
-
-										ed.makeuser(userInfo)
-										saving = false
-										return
-
 									}
 
 									var email = tempInfo.email;
@@ -346,73 +325,46 @@ var test = (function(){
 										actions.saveemail(email);
 									}
 
+									self.app.platform.actions.addActionAndSendIfCan(userInfo).then(action => {
 
-									self.sdk.node.transactions.create.commonFromUnspent(
+										successCheck()
 
-										userInfo,
+										//self.psdk.userInfo.clearAll(self.user.address.value)
 
-										function(tx, error){
-
-
-											if(!tx){
-
-												saving = false;
-
-												self.app.platform.errorHandler(error, true)	
+										tempInfo = _.clone(self.psdk.userInfo.getmy() || {})
 												
-												actions.loading(false)
+										actions.upanel()
 
-												topPreloader(100)
+										actions.ref()
 
-											}
-											else
-											{
+										self.closeContainer()
 
-												successCheck()
-
-												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
-
-												self.app.platform.sdk.user.storage.me = tx
-												
-												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-												
-												actions.upanel()
-
-												actions.ref()
-
-												self.closeContainer()
-												
-
-												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-
-													self.app.reloadModules(function(){
-
-														if (ed.presuccess){
-															ed.presuccess(allclbk)
-														}
-														else{
-															allclbk()
-														}
-
-														
-				
-													})
-												})
-
-												
-
-												
-											}
-
-										},
-
-										{
-											relay : ed.relay? ed.relay() : false
+										if (ed.presuccess){
+											ed.presuccess(() => {
+												allclbk(action)
+											})
 										}
+										else{
+											allclbk(action)
+										}
+	
+
+									}).catch(e => {
+
+										console.error(e)
+
+										self.app.platform.errorHandler(e, true)	
+
+									}).finally(() => {
+
+										saving = false;
+										actions.loading(false)
+										topPreloader2(100)
+
+									})
+
+
 									
-									)
 								})
 
 							})
@@ -421,10 +373,8 @@ var test = (function(){
 						else
 						{
 							saving = false
-							
 							actions.loading(false)
-
-							topPreloader(100)
+							topPreloader2(100)
 
 							var txt = self.app.localization.e('nametaken')
 
@@ -475,7 +425,7 @@ var test = (function(){
 					return
 				}
 
-				topPreloader(20);
+				
 
 				var images = [{
 					original : file.base64,
@@ -502,6 +452,8 @@ var test = (function(){
 
 						success : function(i, editclbk){
 
+							topPreloader2(20);
+
 							resize(images[0].original, 150, 150, function(resized){
 								var r = resized.split(',');
 
@@ -519,10 +471,8 @@ var test = (function(){
 										clbk()
 
 								}
-								else
-								{
-									topPreloader(100);
-								}
+								
+								topPreloader2(100);
 
 								
 							})
@@ -538,9 +488,12 @@ var test = (function(){
 
 				if(!el.upanel) return
 
-				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
-				
-				(self.app.platform.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.app.platform.sdk.address.pnet().address + '.userInfo.length') > 0 ) && !ed.failedrelay){
+
+				var account = self.app.platform.actions.getCurrentAccount()
+
+				//TODO_REF_ACTIONS
+
+				if(account && account.getTempUserInfo() && account.getTempUserInfo().transaction){
 
 					el.upanel.addClass('wait')
 
@@ -550,7 +503,7 @@ var test = (function(){
 				else{
 					el.upanel.removeClass('wait')
 
-					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me) || !actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+					if(actions.equal(tempInfo, self.psdk.userInfo.getmy() || {}) || !actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
 						
 						el.upanel.removeClass('changes')
 					}
@@ -566,18 +519,17 @@ var test = (function(){
 
 			clear : function(){
 				actions.userOptions();
-				renders.caption();
 			},
 
 			userOptions : function(){
 
-				tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+				tempInfo = _.clone(self.psdk.userInfo.getmy() || {})
 
 				_.each(userOptions, function(parameter, id){
-					var value = self.app.platform.sdk.user.storage.me[parameter.id];
+					var value = tempInfo[parameter.id];
 
 					if(id == 'addresses'){
-						value = _.clone(self.app.platform.sdk.user.storage.me[parameter.id]);
+						value = _.clone(tempInfo[parameter.id]);
 					}
 					
 					parameter.value = value || parameter.defaultValue || ''
@@ -638,7 +590,7 @@ var test = (function(){
 
 										if(!el.c) return
 	
-										if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+										if(!exist || (exist == self.app.user.address.value)){
 											el.c.find('.errorname').fadeOut();
 										}
 										else
@@ -666,265 +618,273 @@ var test = (function(){
 			},
 		}
 
-		userOptions = {
-			name : new Parameter({
-				name : self.app.localization.e('unickname'),
-				placeholder : self.app.localization.e('unickname'),
-				id : 'name',
-				type : "NICKNAME",
-				onType : true,
-				require : true,
-				onFocus : function(pn){
-					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
-				}
-			}),
-
-			email : new Parameter({
-				name : 'Email',
-				placeholder : 'Email (' + self.app.localization.e('e13178') + ')',
-				id : 'email',
-				type : "STRINGANY",
-				onType : true,
-
-				onFocus : function(pn){
-					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
-				}
-			}),
-
-			language : new Parameter({
-				name : self.app.localization.e('ulanguage'),
-				placeholder : self.app.localization.e('ulanguage'),
-				id : 'language',
-				type : "VALUES",
-				defaultValue : self.app.localization.key || 'en',
+		var initUserOptions = function(){
+			userOptions = {
+				name : new Parameter({
+					name : self.app.localization.e('unickname'),
+					placeholder : self.app.localization.e('unickname'),
+					id : 'name',
+					type : "NICKNAME",
+					onType : true,
+					require : true,
+					onFocus : function(pn){
+						if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					}
+				}),
+	
+				email : new Parameter({
+					name : 'Email',
+					placeholder : 'Email',
+					id : 'email',
+					type : "STRINGANY",
+					onType : true,
+	
+					onFocus : function(pn){
+						if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					}
+				}),
+	
+				language : new Parameter({
+					name : self.app.localization.e('ulanguage'),
+					placeholder : self.app.localization.e('ulanguage'),
+					id : 'language',
+					type : "VALUES",
+					defaultValue : self.app.localization.key || 'en',
 				
-				
-				possibleValues : ['en', 'ru'],
-				possibleValuesLabels : ['English', 'Русский'],
-			}),
+					possibleValues : ['en', 'ru'],
+					possibleValuesLabels : ['English', 'Русский'],
+				}),
 
-			about : new Parameter({
-				name : self.app.localization.e('uabout'),
-				id : 'about',
-				type : "TEXT",
-				onType : true,
-				
-				placeholder : self.app.localization.e('e133512')
-			}),
+				about : new Parameter({
+					name : self.app.localization.e('uabout'),
+					id : 'about',
+					type : "TEXT",
+					onType : true,
+					
+					placeholder : self.app.localization.e('e133512')
+				}),
 
-			site : new Parameter({
-				name : self.app.localization.e('uwebsite'),
-				id : 'site',
-				type : "STRINGANY",
-				onType : true,
-				value : '',
-				name : self.app.localization.e('uwebsite')
-			}),
+				site : new Parameter({
+					name : self.app.localization.e('uwebsite'),
+					id : 'site',
+					type : "STRINGANY",
+					onType : true,
+					value : '',
+					name : self.app.localization.e('uwebsite')
+				}),
 
-			addresses : new function(){
+				addresses : new function(){
 
-				var _self = this;
+					var _self = this;
 
-				_self.id = 'addresses';
-				_self.name = self.app.localization.e('uaddresesd')
-				_self.value = [];
+					_self.id = 'addresses';
+					_self.name = self.app.localization.e('uaddresesd')
+					_self.value = [];
 
-				_self.defaultValue = [];
+					_self.defaultValue = [];
 
-				_self.remove = function(currency, address){
-					removeEqual(_self.value, {
-						currency : currency,
-						address : address
-					})
+					_self.remove = function(currency, address){
+						removeEqual(_self.value, {
+							currency : currency,
+							address : address
+						})
 
-					if (_self._onChange)
-						_self._onChange(_self.value)
+						if (_self._onChange)
+							_self._onChange(_self.value)
 
-					_self.addedAddresses();
-				}
+						_self.addedAddresses();
+					}
 
-				_self.add = function(v){
+					_self.add = function(v){
 
 
-					_self.value.push(v)
+						_self.value.push(v)
 
-					if (_self._onChange)
-						_self._onChange(_self.value)
+						if (_self._onChange)
+							_self._onChange(_self.value)
 
-					_self.addedAddresses();
+						_self.addedAddresses();
 
-				}
+					}
 
-				_self.addDialog = function(){
+					_self.addDialog = function(){
 
-					var validate = function(cur, address){
+						var validate = function(cur, address){
 
-						var valid;
+							var valid;
 
-						if (cur === 'usdt|trc20'){
+							if (cur === 'usdt|trc20'){
 
-							valid = /T[A-Za-z1-9]{33}/.test(address);
+								valid = /T[A-Za-z1-9]{33}/.test(address);
 
-						} else {
+							} else {
 
-							valid = WAValidator.validate(address, cur === 'usdt|erc20' ? 'eth' : cur);
-						}
+								valid = WAValidator.validate(address, cur === 'usdt|erc20' ? 'eth' : cur);
+							}
 
-						if(address.length > 0 && valid){
+							if(address.length > 0 && valid){
+								
+								return true
+							}
+							else
+							{
+								return false
+							}
+
 							
-							return true
 						}
-						else
-						{
-							return false
-						}
+
+						self.nav.api.loadRelations({
+
+							relations : [
+								{src : 'js/vendor/wallet-address-validator.min.js',	 f : 'js'},
+							],
+	
+						}, function(){
+							mdl.fastTemplate('addaddress', function(rendered){
+
+								new dialog({
+									html : rendered,
+	
+									wrap : true,
+	
+									success : function(d){
+	
+										var c = d.el.find('.currency').val();
+										var address = d.el.find('.address').val();
+	
+										if(validate(c, address)){
+	
+											_self.add({
+												currency : c,
+												address : address
+											})
+	
+											return true;
+	
+										}
+									},
+	
+									clbk : function(_el){
+	
+										var currency = _el.find('.currency');
+										var address = _el.find('.address');
+										var b = _el.find('.btn1');
+	
+	
+										var vl = function(){
+											var c = currency.val();
+	
+											var a = address.val();
+	
+											if(validate(c, a)){
+												b.removeClass('disabled')
+	
+												return true;
+											}
+											else
+											{
+												b.addClass('disabled')
+												return false;
+											}
+										}
+	
+										address.focus()
+										address.on('change', vl)
+										address.on('keyup', vl)
+	
+										currency.on('change', vl)
+										currency.on('keyup', vl)
+	
+										vl()
+									},
+	
+									class : "one addaddressDialog zindex"
+								})
+	
+							}, {
+							})
+						})
 
 						
 					}
 
-					mdl.fastTemplate('addaddress', function(rendered){
+					_self.removeEvent = function(){
+						var currency = $(this).closest('.addedAddress').attr('currency')
+						var address = $(this).closest('.addedAddress').attr('address')
 
-						new dialog({
-							html : rendered,
+						_self.remove(currency, address)
+					}
 
-							wrap : true,
-
-							success : function(d){
-
-								var c = d.el.find('.currency').val();
-								var address = d.el.find('.address').val();
-
-								if(validate(c, address)){
-
-									_self.add({
-										currency : c,
-										address : address
-									})
-
-									return true;
-
-								}
-							},
-
-							clbk : function(_el){
-
-								var currency = _el.find('.currency');
-								var address = _el.find('.address');
-								var b = _el.find('.btn1');
-
-
-								var vl = function(){
-									var c = currency.val();
-
-									var a = address.val();
-
-									if(validate(c, a)){
-										b.removeClass('disabled')
-
-										return true;
-									}
-									else
-									{
-										b.addClass('disabled')
-										return false;
-									}
-								}
-
-								address.focus()
-								address.on('change', vl)
-								address.on('keyup', vl)
-
-								currency.on('change', vl)
-								currency.on('keyup', vl)
-
-								vl()
-							},
-
-							class : "one addaddressDialog zindex"
-						})
-
-					}, {
-					})
-				}
-
-				_self.removeEvent = function(){
-					var currency = $(this).closest('.addedAddress').attr('currency')
-					var address = $(this).closest('.addedAddress').attr('address')
-
-					_self.remove(currency, address)
-				}
-
-				_self.addedAddresses = function(){
-
-					/* 1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX */
-
-					var h = '';
-
-					_.each(_self.value, function(v){
-					
-						if(!v || !v.currency) return
-
-						h += '<div class="addedAddressWrapper">'
-							h += '<div class="addedAddress table" currency="'+v.currency+'" address="'+v.address+'">'
-
-							h += 	'<div class="currencyWrapper">'	
-							h += 		v.currency.toUpperCase()
-							h += 	'</div>'
-
-							h += 	'<div class="addressWrapper">'	
-							h += 		v.address
-							h += 	'</div>'
-
-							h += 	'<div class="panelWrapper">'	
-							h += 		'<div class="item remove">'	
-							h += 			'<i class="far fa-times-circle"></i>'	
-							h += 		'</div>'
-							h += 	'</div>'
-
-							h += '</div>'
-						h += '</div>'
-					})
-					
-					_self.el.find('.addedAddressesWrapper').html(h)
-
-					_self.el.find('.addedAddressesWrapper .remove').on('click', _self.removeEvent)
-				}
-
-
-
-				_self.init = function(_el){
-
-					_self.defaultValue = [];
-
-					_self.el = _el.find('.adressesInput')
-
-					_self.addedAddresses();
-
-					_self.el.find('.addaddress').on('click', _self.addDialog)
-				}	
-
-				_self.input = function(){
-					var h = ''
-
-					h += '<div class="adressesInput">'
-					h += 	'<div class="addaddressWrapper">'
-					h += 		'<div class="addaddress">'
-					h += 			'<i class="fas fa-plus"></i>'
-					h += 		'</div>'
-					h += 	'</div>'
-					h += 	'<div class="addedAddressesWrapper">'
-					h += 	'</div>'
-					h += '</div>'
-
-					return h;
-				}
-
-				return _self
-			},
-
+					_self.addedAddresses = function(){
 		
-		}
+						/* 1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX */
 
+						var h = '';
+
+						_.each(_self.value, function(v){
+						
+							if(!v || !v.currency) return
+
+							h += '<div class="addedAddressWrapper">'
+								h += '<div class="addedAddress table" currency="'+v.currency+'" address="'+v.address+'">'
+
+								h += 	'<div class="currencyWrapper">'	
+								h += 		v.currency.toUpperCase()
+								h += 	'</div>'
+
+								h += 	'<div class="addressWrapper">'	
+								h += 		v.address
+								h += 	'</div>'
+
+								h += 	'<div class="panelWrapper">'	
+								h += 		'<div class="item remove">'	
+								h += 			'<i class="far fa-times-circle"></i>'	
+								h += 		'</div>'
+								h += 	'</div>'
+
+								h += '</div>'
+							h += '</div>'
+						})
+						
+						_self.el.find('.addedAddressesWrapper').html(h)
+
+						_self.el.find('.addedAddressesWrapper .remove').on('click', _self.removeEvent)
+					}
+
+
+
+					_self.init = function(_el){
+
+						_self.defaultValue = [];
+
+						_self.el = _el.find('.adressesInput')
+
+						_self.addedAddresses();
+
+						_self.el.find('.addaddress').on('click', _self.addDialog)
+					}	
+
+					_self.input = function(){
+						var h = ''
+
+						h += '<div class="adressesInput">'
+						h += 	'<div class="addaddressWrapper">'
+						h += 		'<div class="addaddress">'
+						h += 			'<i class="fas fa-plus"></i>'
+						h += 		'</div>'
+						h += 	'</div>'
+						h += 	'<div class="addedAddressesWrapper">'
+						h += 	'</div>'
+						h += '</div>'
+
+						return h;
+					}
+
+					return _self
+				}
+			}
+		}
 
 		var events = {
 			signout : function(){
@@ -940,24 +900,10 @@ var test = (function(){
 			cancel : function(){
 				actions.cancel()
 			},
-			importAddress : function(){
-
-				var address = self.app.platform.sdk.address.pnet()
-				
-				topPreloader(30);
-
-				self.app.platform.sdk.node.account.import(address.address, function(){
-
-					topPreloader(100);
-
-					sitemessage("Address " + address.address + " was successfully imported")
-
-				})
-			}
+			
 		}
 
-		var setNode = null;
-		var setAddressType = null;
+		
 
 		var renders = {
 			termsconditions : function(clbk){
@@ -1006,6 +952,8 @@ var test = (function(){
 						userOptions : userOptions
 					},
 
+					insertimmediately : true
+
 				}, function(_p){
 
 					ParametersLive(_.toArray(userOptions), _p.el)
@@ -1026,6 +974,8 @@ var test = (function(){
 						tempInfo : tempInfo,
 						ed : ed
 					},
+
+					insertimmediately : true
 
 				}, function(_p){
 
@@ -1085,12 +1035,6 @@ var test = (function(){
 				})
 			},
 
-			caption : function(unspent, clbk){
-
-				return
-
-			},
-
 			address : function(){
 				el.c.find('.adr').html(bitcoin.payments[self.app.platform.addressType]({ pubkey: self.app.user.key.value}))
 			}
@@ -1115,7 +1059,7 @@ var test = (function(){
 			el.upanel.find('.cancel').on('click', events.cancel)
 			el.upanel.find('.save').on('click', events.save)
 
-			ParametersLive([setNode, setAddressType], el.c)			
+			//ParametersLive([setNode, setAddressType], el.c)			
 
 			el.signout.on('click', events.signout)
 
@@ -1129,85 +1073,27 @@ var test = (function(){
 
 				el.c.find('.referalMaketWrapper').remove()
 			})
+
+			if(ed.events){
+				ed.events(events)
+			}
 			
 		}
 
 		var make = function(){
 
-			renders.caption()
+			renders.icon(() => {
+				renders.options(() => {
+					window.requestAnimationFrame(() => {
+						el.c.addClass('rendered')
+					})
+				})
+			});
 
-			renders.icon();
-
-			renders.options();
-
-			/*self.sdk.node.transactions.get.unspent(function(unspent){
-				renders.unspent(unspent)
-			})*/
-
-
-			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){
-				if(data.temp){
-					if(data.temp.type == 'userInfo'){
-						actions.upanel()
-					}
-				}
-			}
 		}
 
 		var prepare = function(){
-
-			var pv = _.map(self.app.platform.nodes, function(n, i){
-				return i.toString()
-			})
-
-			var pvl = _.map(self.app.platform.nodes, function(n, i){
-				return n.full
-			})
-
-			setNode = new Parameter({
-				type : "VALUES",
-				name : "setNode",
-				id : 'setNode',
-				possibleValues : pv,
-				possibleValuesLabels : pvl,
-				defaultValue : "1",
-			}),
-
-			setNode.value = self.app.platform.nodeid
-
-			setNode._onChange = function(value){
-				self.app.platform.nodeid = value;
-
-				self.app.platform.state.save()
-			}
-
-			setAddressType = new Parameter({
-				type : "VALUES",
-				name : "setAddressType",
-				id : 'setAddressType',
-				possibleValues : self.app.platform.addressTypes,
-				possibleValuesLabels : ['P2PKH', 'P2SH'/*, 'P2WPKH'*/],
-
-				defaultValue : "p2sh"
-			}),
-
-			setAddressType.value = self.app.platform.addressType
-			
-
-			setAddressType._onChange = function(value){
-
-				self.app.platform.addressType = value;
-
-				self.app.platform.state.save()
-
-				self.user.address.set(self.app.platform.sdk.address.pnet().address)
-
-				self.app.reload();
-
-			}
-
 			actions.userOptions()
-
 		}
 
 		
@@ -1218,6 +1104,8 @@ var test = (function(){
 			getdata : function(clbk, p){
 
 				//testletter()
+
+				initUserOptions()
 
 				ref = null
 				changedLoc = true;
@@ -1234,12 +1122,12 @@ var test = (function(){
 
 				self.app.platform.sdk.user.get(function(){
 
-					if(_.isEmpty(self.app.platform.sdk.user.storage.me)){
+					if(!self.psdk.userInfo.getmy()){
 						firstTime = true
 
 						var _r = self.app.ref;
 
-						if (_r && _r != self.app.platform.sdk.address.pnet())
+						if (_r && _r != self.app.user.value)
 
 							ref = _r;
 					}
@@ -1248,25 +1136,20 @@ var test = (function(){
 
 					var data = {};
 
-						data.p2pkh = self.app.platform.sdk.address.pnet()
-
-						data.setNode = setNode;
-						data.setAddressType = setAddressType;
-						data.userOptions = userOptions;
-						data.tempInfo = tempInfo;
 						data.firstTime = firstTime;
-						data.ref = ref;
 						data.caption = ed.caption
+
+					if(!data.caption && ed.reason){
+						data.caption = self.app.localization.e('reason_' + ed.reason)
+					}
 
 					if(ref){
 						self.sdk.users.get(ref, function(){
 
 							var address = ref;
 
-							ref = self.sdk.users.storage[address] || null;
+							ref = self.psdk.userInfo.get(address) 
 
-							if(ref) ref.address = address;
-							
 							data.ref = ref;
 
 
@@ -1337,7 +1220,10 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow normalizedmobile'
+				class : 'withoutButtons allscreen testwindow normalizedmobile',
+				closecross : function(){
+					if(ed.fail) ed.fail()
+				}
 			}
 		}
 	};

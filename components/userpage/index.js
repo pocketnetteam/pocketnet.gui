@@ -64,19 +64,6 @@ var userpage = (function(){
 				}
 			}
 
-
-			// reports.push({
-			// 	name : self.app.localization.e('ractivities'),
-			// 	id : 'activities',
-			// 	report : 'activities',
-			// 	mobile : false,
-			// 	openReportPageMobileInWindow : true,
-			// 	if : function(){
-			// 		return true
-			// 	}
-			// })
-			
-
 			reports.push({
 				name : self.app.localization.e('notifications'),
 				id : 'notifications',
@@ -137,13 +124,22 @@ var userpage = (function(){
 				}
 			})
 
-			reports.push({
-				name : self.app.localization.e('earnings2'),
-				id : 'earnings',
-				report : 'earnings',
-				//openReportPageMobile : true,
-				mobile : false
-			})
+			if(!self.app.pkoindisable){
+				reports.push({
+					name : self.app.localization.e('earnings2'),
+					id : 'earnings',
+					report : 'earnings',
+					//openReportPageMobile : true,
+					mobile : false,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+						
+					}
+				})
+			}
+
+			
+			
 
 			reports.push({
 
@@ -158,17 +154,13 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
-					}	
-
+					var s = deep(me, 'subscribers.length')
 					
+					if (self.app.mobileview && s){
+						return s
+					}
 
 				}
 			})
@@ -186,14 +178,12 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
+					var s = deep(me, 'subscribes.length')
+					
+					if (self.app.mobileview && s){
+						return s
 					}	
 
 				}
@@ -452,7 +442,7 @@ var userpage = (function(){
 		}
 
 		var actions = {
-			closeGroup : function(id){
+			/*closeGroup : function(id){
 
 				var group = helpers.findReport(id);
 
@@ -507,11 +497,13 @@ var userpage = (function(){
 						}
 					}
 				})
-			},
+			},*/
 
 			closeReport : function(){
-				el.report.html('')
-				el.c.removeClass('reportshowed')
+				window.requestAnimationFrame(() => {
+					el.report.html('')
+					el.c.removeClass('reportshowed')
+				})
 
 
 			},
@@ -556,9 +548,12 @@ var userpage = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				el.c.addClass('reportshowed')
+				window.requestAnimationFrame(() => {
+					el.c.addClass('reportshowed')
+				})
+				
 
-				actions.openTree(id);
+				//actions.openTree(id);
 				renders.report(id);
 
 				if (report && report.rh) return
@@ -596,7 +591,7 @@ var userpage = (function(){
 				}
 
 				var so2 = function(){
-					if (self.app.platform.sdk.address.pnet()){
+					if (self.app.user.address.value){
 
 						if (self.app.platform.sdk.registrations.showprivate()){
 							
@@ -668,11 +663,11 @@ var userpage = (function(){
 		}
 
 		var events = {
-			closeGroup : function(){
+			/*closeGroup : function(){
 				var id = $(this).closest('[levelid]').attr('levelid')
 
 				actions.closeGroup(id);
-			},
+			},*/
 			openReport : function(){
 				var id = $(this).attr('rid');
 
@@ -692,6 +687,8 @@ var userpage = (function(){
 			bgcaption : function(clbk){
 
 				if(!el || !el.bgcaption) return
+
+				if(!primary) return
 
 				if(!self.app.user.validate()) {
 					el.bgcaption.html('<div class="bgCaptionSpacer"></div>')
@@ -715,8 +712,6 @@ var userpage = (function(){
 
 					
 				}
-
-				
 		
 			},
 			contents : function(clbk, id){
@@ -738,7 +733,7 @@ var userpage = (function(){
 	
 					}, function(_p){
 	
-						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+						//_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 
 						_p.el.find('.changelang').on('click', function(){
@@ -811,15 +806,16 @@ var userpage = (function(){
 				self.app.user.isState(function (state) { 
 
 					if(self.app.mobileview && state){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-							allbalance = amount + temp
-							
+						var account = self.app.platform.actions.getCurrentAccount()
 
-							r()
+						if (account){
+							allbalance = account.actualBalance().actual
+						}
+
+						r()
+
 						
-						})
 					}
 					else{
 						r()
@@ -859,8 +855,8 @@ var userpage = (function(){
 
 				if (address){
 
-					var author = deep(self, 'sdk.users.storage.'+address)
-
+					var author = self.psdk.userInfo.get(address)
+					
 					var u = _.map(deep(author, 'subscribers') || [], function(a){
 						return a
 					})
@@ -887,8 +883,8 @@ var userpage = (function(){
 				var address = deep(self, 'app.user.address.value')
 
 				if (address){
-					var author = deep(self, 'sdk.users.storage.'+address)
-
+					var author = self.psdk.userInfo.get(address)
+					
 					var u = _.map(deep(author, 'subscribes') || [], function(a){
 						return a.adddress
 					})
@@ -1154,7 +1150,6 @@ var userpage = (function(){
 
 				var p = parameters();
 
-				data.p2pkh = self.app.platform.sdk.address.pnet()
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 

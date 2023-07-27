@@ -128,6 +128,8 @@ var Peertube = function (settings) {
 				return c;
 			});
 
+			console.log('keys', keys)
+
 			return keys[f.rand(0, keys.length - 1)];
 		},
 
@@ -136,6 +138,7 @@ var Peertube = function (settings) {
 				type = 'upload';
 				roy = null;
 			}
+			
 
 			if (!roy) roy = self.api.randroykey(type, special);
 
@@ -215,6 +218,8 @@ var Peertube = function (settings) {
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
 							fr.aspectRatio = 1.78;
+
+						fr.aspectRatio = Number(fr.aspectRatio)
 					}
 
 					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);

@@ -33,7 +33,8 @@ var main = (function(){
 			{
 				link : 'index',
 				label : () => self.app.localization.e('e13136'),
-				value : 'index'
+				value : 'index',
+				savesearch : true
 			},
 
 			{
@@ -48,17 +49,20 @@ var main = (function(){
 			{
 				link : "index?video=1",
 				label : () => self.app.localization.e('video'),
-				value : 'video'
+				value : 'video',
+				savesearch : true
 			},
 			{
 				link : "index?read=1",
 				label : () => self.app.localization.e('longreads'),
-				value : 'read'
+				value : 'read',
+				savesearch : true
 			},
 			{
 				link : "index?audio=1",
 				label : () => self.app.localization.e('audio'),
-				value : 'audio'
+				value : 'audio',
+				savesearch : true
 			},
 
 			{
@@ -212,7 +216,6 @@ var main = (function(){
 				actions.backtolentaClear()
 
 				self.app.actions.scroll(lastscroll || 0)
-				//_scrollTop(lastscroll, null, 5)
 				
 
 			},
@@ -223,17 +226,23 @@ var main = (function(){
 
 				if(!el.c) return
 
-				el.c.removeClass('opensvishowed')
 
+				el.c.removeClass('opensvishowedend')
+				el.c.addClass('opensvishowedWillremoved')
+				renders.upbutton()
+				actions.refreshSticky()
 				renders.post(null)
+				
+				setTimeout(() => {
+					el.c.removeClass('opensvishowed')
+				}, 300)
 
-				setTimeout(function(){
-
-					renders.upbutton()
-					
-					actions.refreshSticky()
-
+				setTimeout(() => {
+					el.c.removeClass('opensvishowedWillremoved')
 				}, 350)
+
+				
+
 
 				self.nav.api.changedclbks()
 
@@ -339,7 +348,6 @@ var main = (function(){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					
 
 					self.shell({
 
@@ -351,7 +359,9 @@ var main = (function(){
 							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
-							value, modes
+							value, modes,
+
+							searchenabled : searchvalue || searchtags
 						},
 
 					}, function(_p){
@@ -365,20 +375,26 @@ var main = (function(){
 
 						el.menu.find('.mode').on('click', function(){
 							var link = $(this).attr('link')
+							var savesearch = $(this).attr('savesearch')
 
 							self.nav.api.load({
 								open : true,
 								href : link,
 								history : true,
-								handler : true
+								handler : true,
+								saveparameters : savesearch ? ['sst', 'st'] : null
 							})
 						})
 
 						el.menu.find('.selectwrapper').on('click', function(){
 
 							var items = []
+							var searchenabled = searchvalue || searchtags
 
 							_.each(modes, function(a){
+
+								if(searchenabled && !a.savesearch) return
+
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
@@ -389,7 +405,8 @@ var main = (function(){
 											href : a.link,
 											history : true,
 											handler : true,
-											replace : true
+											replace : true,
+											saveparameters : a.savesearch ? ['sst', 'st'] : null
 										})
 
 										d.destroy()
@@ -513,12 +530,15 @@ var main = (function(){
 
 
 							if (shares.length <= 2 && el.topvideos){
-								el.topvideos.addClass('hidden')
 
-								if(external){
-									external.destroy()
-									external = null
-								}
+								window.requestAnimationFrame(() => {
+									el.topvideos.addClass('hidden')
+
+									if(external){
+										external.destroy()
+										external = null
+									}
+								})
 								
 							}
 							
@@ -671,8 +691,14 @@ var main = (function(){
 
 				if(searchvalue){
 					loader = function(clbk){
-						var _clbk = function(data){
-							var shares = self.app.platform.sdk.node.shares.transform(data) 
+						var _clbk = function(shares){
+
+							self.app.psdk.share.insertFromResponseSmall(shares)
+
+							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
+								return s.txid
+							}))
+							
 
 							if (clbk)
 								clbk(shares, null, {
@@ -709,7 +735,7 @@ var main = (function(){
 						animation : false,
 
 						mid : 'main',
-
+						insertimmediately : true,
 						essenseData : {
 							hr : 'index?',
 							goback : p.goback,
@@ -768,52 +794,72 @@ var main = (function(){
 
 								ed.page++
 							},
+
+							canloadmorescroll : function(){
+
+								if(openedpost) return false
+
+								return true
+							},
 							
 							opensvi : function(id){
 
 								lastscroll = self.app.lastScrollTop
 
-								el.c.addClass('opensvishowed')
+								events.up()
 
-								if (upbutton) upbutton.destroy()
+								window.requestAnimationFrame(() => {
 								
-								if (upbackbutton) upbackbutton.destroy()
+									el.c.addClass('opensvishowed')
 
-								if(typeof _Electron == 'undefined' || !_Electron){
-									setTimeout(function(){
-									
-										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-											top : function(){
-												return '65px'
-											},
-											rightEl : el.c.find('.lentacellsvi'),
-											scrollTop : 0,
-											click : function(a){
-												actions.backtolenta()
-											},
-	
-											icon : '<i class="fas fa-chevron-left"></i>',
-											class : 'bright',
-											text : 'Back'
-										})	
-									}, 50)
-										
-									setTimeout(function(){
-										upbackbutton.apply()
-									},300)
-								}
+									setTimeout(() => {
+										el.c.addClass('opensvishowedend')
+									}, 300)
 
-								
-
-								renders.post(id)
-
-								self.nav.api.history.addParameters({
-									v : id
 								})
 
-								self.nav.api.changedclbks()
 
-								events.up()
+								
+
+								setTimeout(() => {
+
+									if (upbutton) upbutton.destroy()
+								
+									if (upbackbutton) upbackbutton.destroy()
+
+									if(typeof _Electron == 'undefined' || !_Electron){
+										setTimeout(function(){
+										
+											upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+												top : function(){
+													return '65px'
+												},
+												rightEl : el.c.find('.lentacellsvi'),
+												scrollTop : 0,
+												click : function(a){
+													actions.backtolenta()
+												},
+		
+												icon : '<i class="fas fa-chevron-left"></i>',
+												class : 'bright',
+												text : 'Back'
+											})	
+										}, 50)
+											
+										setTimeout(function(){
+											upbackbutton.apply()
+										},300)
+									}
+
+									renders.post(id)
+
+									self.nav.api.history.addParameters({
+										v : id
+									})
+
+									self.nav.api.changedclbks()
+									
+								}, 400)
 							},
 
 							renderClbk : function(){
@@ -889,17 +935,19 @@ var main = (function(){
 								openedpost.clearessense()
 								openedpost = null
 							}
+
+							events.up()
+
+							setTimeout(() => {
+								el.c.find('.renderposthere').html('')
+
+								renders.post(id)
+	
+								self.nav.api.history.addParameters({
+									v : id
+								})
+							}, 400)
 		
-							el.c.find('.renderposthere').html('')
-
-							renders.post(id)
-
-							self.nav.api.history.addParameters({
-								v : id
-							})
-
-							self.app.actions.scroll(0)
-							
 						}
 					})
 				}
@@ -1048,6 +1096,7 @@ var main = (function(){
 
 			renders.menu()
 
+			
 
 			if (currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
 				renders.topvideos(true)

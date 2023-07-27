@@ -64,7 +64,26 @@
         }
     }
 
-  
+    &.active {
+        .searchWrapper{
+            background: linear-gradient(100deg, rgb(var(--background-secondary-theme)) 30%, rgb(var(--background-total-theme)) 50%, rgba(var(--neutral-grad-1), 0.2) 70%);
+            background-size: 400% 400%;
+            animation: gradient 1.2s ease infinite;
+        }
+        
+    }
+
+   
+     
+    @keyframes gradient {
+        0% {
+            background-position: 100% 50%;
+        }
+      
+        100% {
+            background-position: 0% 50%;
+        }
+    }
 
 }
 

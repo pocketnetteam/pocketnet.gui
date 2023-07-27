@@ -11,7 +11,7 @@
 
 			var aspectRatio = Number((info.data || deep(localdata, 'infos.videoDetails') || {}).aspectRatio || 0);
 
-			var image = (info.data || {}).image
+			var image = (info.data || {}).image || share.images[0];
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 			
@@ -128,10 +128,17 @@
 				
 				</div>	
 
-				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) { %> 
-					<div class="videoTips">
+				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) {
+					
+					%> 
+					<div class="videoTips <%- share.itisstream() ? 'tipsforstream' : '' %>">
 						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
-							<span><%=e('expandvideo')%></span>
+							<% if(share.itisstream()) {%>
+								<span><%=e('watchstream')%></span>
+							<% } else { %>
+								<span><%=e('expandvideo')%></span>
+							<% } %>
+							
 						</div>
 					</div>
 				<% } %>
@@ -164,7 +171,7 @@
 	
 			<% } %>
 
-
+			<div class="animationWrapper"></div>
 			
 		</div>
 

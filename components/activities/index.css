@@ -37,7 +37,7 @@
   transition: 0.3s;
 }
 #activities .container .filters .tab.active {
-  color: #2F80ED;
+  color: rgb(var(--color-bg-ac-bright));
   position: relative;
 }
 #activities .container .filters .tab.active::after {
@@ -47,7 +47,11 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #2F80ED;
+  background-color: rgb(var(--color-bg-ac-bright));
+}
+#activities .container .filters .tab .count {
+  font-weight: 700;
+  color: rgb(var(--color-bg-ac-bright));
 }
 #activities .container .content {
   margin-top: 25px;
@@ -308,6 +312,32 @@
 #activities .container .videos .video .info .third {
   margin-top: 0.5em;
   font-size: 0.8em;
+}
+#activities .action {
+  margin-bottom: 1em;
+}
+#activities .action .statusRow {
+  align-items: center;
+  display: flex;
+}
+#activities .action .statusRow .status {
+  margin-right: 0.5em;
+}
+#activities .action .typeRow {
+  align-items: center;
+  display: flex;
+}
+#activities .action .typeRow .type {
+  margin-right: 0.5em;
+}
+#activities .action .typeRow .type span {
+  font-weight: 700;
+}
+#activities .action .previewRow .actioncomment {
+  margin-bottom: 0.5em;
+}
+#activities .action .date {
+  opacity: 0.7;
 }
 .wndactivities.wnd .wndcontent {
   padding-top: 0;

@@ -232,8 +232,8 @@ var videoCabinet = (function () {
 			},
 
 			getTotalRatings() {
-				if (self.app.platform.sdk.address.pnet()) {
-					var address = self.app.platform.sdk.address.pnet().address;
+				if (self.app.user.address.value) {
+					var address = self.app.user.address.value;
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video'], {})
 						.then((r) => {
@@ -581,7 +581,7 @@ var videoCabinet = (function () {
 			},
 
 			getUnpostedVideos() {
-				const unpostedVideos =
+				let unpostedVideos =
 					unpostedVideosParsed[self.app.user.address.value] || [];
 
 				return new Promise((res) => {
@@ -596,12 +596,14 @@ var videoCabinet = (function () {
 							);
 
 							unpostedVideos.push(...latestVideos);
+							
+							unpostedVideos = [...new Set(unpostedVideos)];
 
 							return unpostedVideos;
 						})
 						.then((videos) =>
 							actions.getBlockchainPostByVideos(
-								videos.map((video = '') => encodeURIComponent(video)),
+								videos.map((video = '') => (video)),
 							),
 						)
 						.then(() => {
@@ -628,6 +630,13 @@ var videoCabinet = (function () {
 								function () {
 									return res(
 										accountVideos
+										.filter(
+											(video) =>
+												{
+													const daysPassed = deep(self.app.platform.sdk.videos.storage[video.url], 'data.original.publishedAt');
+													return deep(self.app.platform.sdk.videos.storage[video.url], 'data.isCorrect') && moment(daysPassed).diff(moment.now(), 'days') > -21;
+												}
+										)
 										.map(
 											(video) =>
 												self.app.platform.sdk.videos.storage[video.url],
@@ -639,7 +648,7 @@ var videoCabinet = (function () {
 												deep(videoInfo, 'data.original.description') || '',
 											),
 											server: deep(videoInfo, 'meta.host_name'),
-											url: deep(videoInfo, 'meta.url'),
+											url: deep(videoInfo, 'link'),
 											createdAt: deep(videoInfo, 'data.original.createdAt'),
 											state: deep(videoInfo, 'data.original.state') || {},
 											editable: !videosInPosting.includes(
@@ -814,6 +823,7 @@ var videoCabinet = (function () {
 					? 'attachVideoLenta'
 					: 'attachVideoToPost';
 
+
 				self.shell(
 					{
 						name: 'videoList',
@@ -848,6 +858,17 @@ var videoCabinet = (function () {
 
               self.app.peertubeHandler.api.videos
                 .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                .then((dataWithoutDescription) => {
+                  return self.app.peertubeHandler.api.videos.getDirectVideoDescription(
+                    { id: meta.id },
+                    { host: meta.host }
+                  ).then(descriptionRes => {
+                    return {
+                      ...dataWithoutDescription,
+                      description: descriptionRes.description,
+                    };
+                  });
+                })
                 .then((info) => {
                   const { name, description, tags } = info;
                   renders.addButton({
@@ -942,7 +963,7 @@ var videoCabinet = (function () {
 									const videoUrl = avatarWrapper.attr('video');
 									const uuid = sectionElement.attr('uuid');
 									const videoInfo =
-										self.app.platform.sdk.videos.storage[videoUrl];
+										self.app.platform.sdk.videos.storage[videoUrl] || self.app.platform.sdk.videos.storage[uuid];
 
 									if (!videoInfo) return;
 
@@ -1313,12 +1334,11 @@ var videoCabinet = (function () {
 											const removePost = (share, clbk) => {
 												share.deleted = true;
 
-												const ct = new Remove();
-												ct.txidEdit = share.txid;
+												/*const ct = new Remove();
+												ct.txidEdit = share.txid;*/
 
 												self.app.platform.sdk.node.shares.delete(
 													share.txid,
-													ct,
 													function (err, alias) {
 														if (!err) {
 															if (clbk) {
@@ -1359,7 +1379,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-                  app: self.app,
+									app: self.app,
 									multiple: false,
 
 									action: function (file, clbk) {
@@ -1391,6 +1411,17 @@ var videoCabinet = (function () {
 								element.find('.editText').on('click', function () {
 									self.app.peertubeHandler.api.videos
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+										.then((dataWithoutDescription) => {
+											return self.app.peertubeHandler.api.videos.getDirectVideoDescription(
+												{ id: meta.id },
+												{ host: meta.host }
+											).then(descriptionRes => {
+												return {
+													...dataWithoutDescription,
+													description: descriptionRes.description,
+												};
+											});
+										})
 										.then((videoData) => {
 											if (isVideoPosted) {
 												const currentShare = sharesDict[videoLink];
@@ -1535,7 +1566,7 @@ var videoCabinet = (function () {
 				);
 			},
 			//render tagline
-      tags(element) {
+			tags(element) {
 				const tagActions = {
 					//tag-related funcitons
 					tagsFromText(text) {
@@ -1623,12 +1654,12 @@ var videoCabinet = (function () {
 
 						removeTag: function (tag) {
 							tagActions.removeTag(tag);
-              renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 
 						removeTags: function (tag) {
 							tagActions.removeTags(tag);
-              renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 
 						addTag: function (tag) {
@@ -1638,7 +1669,7 @@ var videoCabinet = (function () {
 
 						addTags: function (tags) {
 							tagActions.addTags(tags);
-              renders.tags(tagElement);
+							renders.tags(tagElement);
 						},
 					},
 
@@ -1646,21 +1677,21 @@ var videoCabinet = (function () {
 				});
 			},
 
-      unPostedVideos(videos = [], element) {
-        self.shell(
-          {
-            name: 'unpostedVideos',
-            el: element,
-            data: {},
-            },
-          (p) => {
-            const containerWrapper = p.el.find('.unpostedVideosBody');
+			unPostedVideos(videos = [], element) {
+				self.shell(
+					{
+						name: "unpostedVideos",
+						el: element,
+						data: {},
+					},
+					(p) => {
+						const containerWrapper = p.el.find(".unpostedVideosBody");
 
-            if (!videos.length) return;
+						if (!videos.length) return;
 
-            renders.videos(videos, containerWrapper, false);
-            },
-        );
+						renders.videos(videos, containerWrapper, false);
+					}
+				);
             },
     };
 
@@ -1672,8 +1703,7 @@ var videoCabinet = (function () {
         );
             },
       load() {
-        const unpostedVideosByAddress =
-          localStorage.getItem('unpostedVideos') || '{}';
+        const unpostedVideosByAddress = localStorage.getItem('unpostedVideos') || '{}';
 
 				try {
 					unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
@@ -1687,39 +1717,7 @@ var videoCabinet = (function () {
 					unpostedVideosParsed = {};
 				}
 
-				// const postingShares = self.sdk.relayTransactions
-				//   .withtemp('share')
-				//   .map((ps) => {
-				//     const s = new pShare();
-				//     s._import(ps, true);
-				//     s.temp = true;
-
-				//     if (ps.relay) s.relay = true;
-				//     if (ps.checkSend) s.checkSend = true;
-
-				//     s.address = ps.address;
-
-				//     return s;
-				//   });
-
-				// const postingVideos = postingShares
-				//   .filter((share) => share.itisvideo())
-				//   .map((share) => {
-				//     videosInTemp[share.url] = true;
-
-				//     return share.url;
-				//   });
-				// if (unpostedVideosParsed[self.app.user.address.value]) {
-				//   unpostedVideosParsed[self.app.user.address.value].push(
-				//     ...postingVideos,
-				//   );
-				// } else {
-				//   unpostedVideosParsed[self.app.user.address.value] = [
-				//     ...postingVideos,
-				//   ];
-				// }
-
-        // videosInPosting = [...postingVideos];
+			
 			},
 			update() {},
 

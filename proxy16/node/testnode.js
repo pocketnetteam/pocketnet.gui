@@ -427,8 +427,6 @@ var Testnode = function(node, manager){
 
             if(!time) time = 0
 
-            console.log('time', time)
-
             if (time <= 0) {
                 return Promise.resolve()
             }
@@ -461,8 +459,6 @@ var Testnode = function(node, manager){
             for(var i = 0; i < count; i++){
                 promises.push(
                     f.processArrayWithDelay(actions, waittime, function(m){
-
-                        console.log("PROCESSPART", m)
 
                         return m().then(r => {
                             return Promise.resolve()

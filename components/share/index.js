@@ -72,7 +72,8 @@ var share = (function(){
 				if (repost){
 					self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[repost]
+						var share = self.psdk.share.get(repost) 
+						
 
 						if (clbk) clbk(share)
 	
@@ -260,22 +261,7 @@ var share = (function(){
 					el.c.addClass('unfocus').removeClass('focus')
 			},
 
-			waitActions : function(){
-				self.app.platform.sdk.user.waitActions(function(r){
-
-					if(!el.c) return
-
-					if(!r || r == 'inf'){
-
-						el.c.removeClass('waitActions')
-
-					}
-					else
-					{
-						el.c.addClass('waitActions')
-					}
-				})
-			},
+			
 
 			autoFilled : function(){
 
@@ -463,8 +449,7 @@ var share = (function(){
 								actions.removevideo(link)
 							}
 
-							currentShare.clear();
-							currentShare.language.set(self.app.localization.key)
+							currentShare = new Share(self.app.localization.key, self.app)
 
 							make();
 							
@@ -873,14 +858,24 @@ var share = (function(){
 			},
 
 			checktranscoding : function(clbk){
-				if((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid){
-
+				const proceed = () => {
 					currentShare.canSend(self.app, (result) => {
 						clbk(result)
 					});
-
-				}
-				else{
+				};
+				
+				if ((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid) {
+					if (currentShare.itisstream() && !currentShare.settings.c) {
+						/*Stream*/
+						self.app.platform.matrixchat.core.createStreamRoom(makeid(currentShare.message.v)).then(id => {
+							currentShare.settings.c = id;
+							proceed();
+						});
+					} else {
+						/*Not a stream or stream already created*/
+						proceed();
+					}
+				} else {
 					clbk(true)
 				}
 			},
@@ -902,15 +897,12 @@ var share = (function(){
 
 				el.c.addClass('loading')
 				
-				topPreloader(50)
 
 				var SAVE = function(){
 
 					currentShare.language.set(self.app.localization.key)
-
 					actions.checktranscoding(function(result){
 						currentShare.uploadImages(self.app, function(){
-
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -923,168 +915,129 @@ var share = (function(){
 							}
 
 							if (currentShare.checkloaded()){
-								
-		
-								var t = self.app.platform.errorHandler('imageerror', true);
-		
-								topPreloader(100)
-		
+			
 								el.c.removeClass('loading')
-		
-								if (t){
-									sitemessage(t)
-								}
-		
+								sitemessage(self.app.platform.errorHandler('imageerror', true))
 								
 								return
 							}
-		
-							self.sdk.node.transactions.create.commonFromUnspent(
-		
-								currentShare,
-		
-								function(_alias, error){
+
+							self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
+
+								if (action.currentState == 'actions_checkFail'){
+
+									new dialog({
+										html: self.app.localization.e('info_actions_checkFail'),
+										btn1text: self.app.localization.e('ok'),
+										btn2text: "",
+										class: 'one zindex',
+										success: () => {
+										}
+									});
+									
+								}
+
+								var alias = action.object
 
 
-									topPreloader(100)
-		
-									el.c.removeClass('loading')
-		
-									if(!_alias){
+								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
+									var unpostedVideos;
+
+									try {
+										unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+									} catch (error) {
+										unpostedVideos = {};
+
+										self.app.Logger.error({
+											err: 'DAMAGED_LOCAL_STORAGE',
+											code: 801,
+											payload: error,
+										  });
+									};
+
+									if (unpostedVideos[self.app.user.address.value]) {
+										unpostedVideos[self.app.user.address.value] =
+											unpostedVideos[self.app.user.address.value].filter(
+												(video) => video !== alias.url,
+											);
+
+											try {
+												localStorage.setItem(
+													'unpostedVideos',
+													JSON.stringify(unpostedVideos),
+												);
+											}
+											catch (e) { }
+
 										
-		
-										if (clbk){
-											clbk(false, errors[error])
-										}
-										else{
-											el.postWrapper.addClass('showError');
-		
-											var t = self.app.platform.errorHandler(error, true);
-		
-											if (t) actions.errortext(t)
-		
-										}
 									}
-									else
-									{
-										//sitemessage("Success")
-		
-										try{
+								}
 
-											var alias = new pShare();
-												alias._import(_alias, true)
+								if(!essenseData.notClear){
+									currentShare = new Share(self.app.localization.key, self.app)
+									
+									
+									setTimeout(() => {
+										self.app.nav.api.history.removeParameters(['repost'])
+										self.closeContainer()
+									}, 100)
+									
 
+									if(!essenseData.share){
+										state.save()
+									}
 
+									make();	
+								}
+								
+								if (essenseData.post){
+									essenseData.post(alias)
+								}
+								else{
 
-												alias.temp = _alias.temp;
-												alias.relay = _alias.relay;
-												alias.checkSend = _alias.checkSend
-												alias.address = _alias.address
-		
-											if(currentShare.aliasid) alias.edit = "true"	
-											if(currentShare.time) alias.time = currentShare.time
-		
-											self.app.platform.sdk.node.shares.add(alias);
+									if(isMobile()){
 
-											if (alias.itisvideo() || alias.itisaudio()) {
-												var unpostedVideos;
-
-												try {
-													unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
-												} catch (error) {
-													unpostedVideos = {};
-
-													self.app.Logger.error({
-														err: 'DAMAGED_LOCAL_STORAGE',
-														code: 801,
-														payload: error,
-													  });
-												};
-
-												if (unpostedVideos[self.app.user.address.value]) {
-													unpostedVideos[self.app.user.address.value] =
-														unpostedVideos[self.app.user.address.value].filter(
-															(video) => video !== alias.url,
-														);
-
-														try {
-															localStorage.setItem(
-																'unpostedVideos',
-																JSON.stringify(unpostedVideos),
-															);
-														}
-														catch (e) { }
-
-													
-												}
-											}
-
-											if(!essenseData.notClear){
-												currentShare.clear();
-												self.app.nav.api.history.removeParameters(['repost'])
-		
-												self.closeContainer()
-		
-												if(!essenseData.share){
-													state.save()
-												}
-		
-												make();	
-											}
-		
-										}
-		
-										catch (e){
-											console.log(e)
-										}
-		
-										self.app.platform.sdk.user.get(function(u){
-											u.postcnt++
+										self.app.nav.api.load({
+											open : true,
+											href : 'author?address=' + self.app.user.address.value,
+											history : true
 										})
-		
-										intro = false
 
-										if (essenseData.post){
-											essenseData.post(alias)
-										}
-										else{
-		
-											if(isMobile()){
-
-												self.app.nav.api.load({
-													open : true,
-													href : 'author?address=' + self.app.user.address.value,
-													history : true
-												})
-
-											}
-											else{
-												self.app.actions.scroll(0)
-											}
-		
-											
-		
-										}
-		
-										if (clbk)
-											clbk(true)
-		
-		
-										actions.unfocus();
-										
-										successCheck()
-										
-										
 									}
-		
-								},
-		
-								p
-							)
-		
+									else{
+										self.app.actions.scroll(0)
+									}
+
+								}
+
+
+								actions.unfocus();
+								
+								successCheck()
+
+								if (clbk)
+									clbk(true)
+									
+							}).catch(e => {
+
+								if (clbk){
+									clbk(false, errors[e])
+								}
+									
+								var t = self.app.platform.errorHandler(e, true);
+
+								if (t) actions.errortext(t)
+
+
+
+							}).then(() => {
+								if (el.c)
+									el.c.removeClass('loading')
+							})
 						})
 					})
 
+					return
 
 					
 				}
@@ -1096,7 +1049,6 @@ var share = (function(){
 
 					el.c.removeClass('loading')
 
-					topPreloader(100)
 				}
 
 				
@@ -1377,7 +1329,9 @@ var share = (function(){
 
 				var icon = el.c.find('.usericon')
 
-				var src = deep(app, 'platform.sdk.users.storage.'+address+'.image') || '';
+				var info = self.psdk.userInfo.get(address)
+
+				var src = info.image || ''
 
 				if(src){
 					icon.html('');
@@ -2246,7 +2200,8 @@ var share = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[repost] 
+					var share = self.psdk.share.get(repost) 
+					
 						
 					self.shell({
 						name :  'repost',
@@ -2392,6 +2347,7 @@ var share = (function(){
 						ed : essenseData
 					},
 
+					insertimmediately : true
 
 				}, function(p){
 
@@ -2477,8 +2433,6 @@ var share = (function(){
 		
 								el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 		
-									topPreloader(100)
-
 									resize(data.dataURL, 1920, 1080, function(resized){
 										var r = resized.split(',');
 						
@@ -2505,11 +2459,9 @@ var share = (function(){
 		
 								}).on('pasteImageStart', function(){
 		
-									topPreloader(30)
 		
 								}).on('pasteImageError', function(ev, data){
 		
-									 topPreloader(100)
 		
 								}).on('pasteText', function (ev, data){
 		
@@ -2611,7 +2563,7 @@ var share = (function(){
 			
 			currentShare.on.change.edit = events.change;
 
-			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
+			//self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
 				
@@ -2696,8 +2648,6 @@ var share = (function(){
 
 				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
 
-
-				console.log('currentShare', currentShare)
 
 				var data = {
 					essenseData : essenseData,
@@ -2832,7 +2782,7 @@ var share = (function(){
 
 				p.clbk(null, p);
 
-				actions.waitActions();
+				//actions.waitActions();
 
 				el.c.on('click', function(){
 					el.c.removeClass('minimized')

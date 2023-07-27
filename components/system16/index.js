@@ -160,6 +160,13 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
+			'hexCaptcha' : function(_el){
+				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
+				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
+
+				renders.webserveradmin(el.c)
+			},
+			
 			'torenabled2' : function(_el){
 
 				var values = ['neveruse', 'auto', 'always']
@@ -225,11 +232,14 @@ var system16 = (function(){
 		
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.address.value
+				
 
 				if(!address) return false
+
+
 				if (proxy && info){
-					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}
 			},
 
@@ -415,7 +425,7 @@ var system16 = (function(){
 						type : "STRING",
 						name : self.app.localization.e('e13065'),
 						id : 'nodename',
-						defaultValue : (_node.nodename || ((self.app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name')) || "New") + ' node')).replace(/\+/g, ' '),
+						defaultValue : (_node.nodename || ((self.app.platform.api.clearname((self.psdk.userInfo.getmy() || {}).name) || "New") + ' node')).replace(/\+/g, ' '),
 						placeholder : self.app.localization.e('e13066'),
 						require : true
 					
@@ -3166,7 +3176,7 @@ var system16 = (function(){
 
 								var t = 'Do you really want to remove selected admin from Proxy server admin list?'
 
-								if(address == self.app.platform.sdk.address.pnet().address){
+								if(address == self.app.user.address.value){
 									t = 'Do you really want to remove Your account from Proxy server admin list?'
 								}
 

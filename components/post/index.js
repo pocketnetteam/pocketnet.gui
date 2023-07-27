@@ -22,6 +22,29 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+			unblock : function(){
+					
+				self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
+					if (!tx) {
+						self.app.platform.errorHandler(error, true)
+					}
+				})
+				
+			},
+
+			stopPlayer : function(){
+
+				if(!player || player.error) return
+
+				if (player.p){
+					player.p.muted = true;
+
+					if (player.p.playing){
+						player.p.stop()
+					}
+				}
+				
+			},
 
 			pkoin : function(format){
 
@@ -29,38 +52,27 @@ var post = (function () {
 
 				if (share){
 
-					actions.stateAction(function(){
-
-						if(self.app.platform.sdk.user.myaccauntdeleted()){
-							return
-						}
-
-						self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
-							var balance = amount.toFixed(3);
+					self.app.platform.sdk.user.stateAction(() => {
 	
-							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-								address : share.address,
-								addresses : [],
-							}
+						var userinfo = self.psdk.userInfo.getShortForm(share.address)
+	
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
 		
-							self.nav.api.load({
-								open : true,
-								href : 'pkoin',
-								history : true,
-								inWnd : true,
-			
-								essenseData : {
-									userinfo: userinfo,
-									id : share.txid,
-									format : format,
-									type : type
-								}
-							})
-	
+							essenseData : {
+								userinfo: userinfo,
+								id : share.txid,
+								format : format,
+								type : type
+							}
 						})
+
+		
 	
-					}, share.txid)
+					})
 
 
 				}
@@ -72,12 +84,18 @@ var post = (function () {
 
 				self.closeContainer()
 
-				self.nav.api.load({
-					open : true,
-					href : 'post?s=' + id,
-					inWnd : true,
-					history : true
-				})
+				
+				var share = self.psdk.share.get(id) 
+
+				setTimeout(() => {
+					self.nav.api.load({
+						open : true,
+						href : share.itisstream() ? 'index?video=1&v=' + id : 'post?s=' + id,
+						inWnd : share.itisstream() ? false : true,
+						history : true
+					})
+				}, 200)
+				
 
 			},
 
@@ -86,7 +104,7 @@ var post = (function () {
 				if(self.app.playingvideo && !deleted) return
 		
 				renders.share()
-			},	
+			},
 
 			changeSavingStatusLight : function(share){
 
@@ -130,7 +148,8 @@ var post = (function () {
 
 				self.app.platform.sdk.node.shares.getbyid(id, function () {
 
-					share = self.app.platform.sdk.node.shares.storage.trx[id]
+					share = self.psdk.share.get(share.txid)
+					
 
 					delete share.myVal
 
@@ -155,7 +174,7 @@ var post = (function () {
 
 				if (!my && user.address.value) {
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
+					var me = self.psdk.userInfo.getmy()
 
 					if (me && me.relation(share.address, 'subscribes')) {
 						subscribed = true
@@ -179,63 +198,10 @@ var post = (function () {
 
 			},
 
-			stateAction: function (clbk, txid) {
-
-				if (_OpenApi) {
-
-					var phref = 'https://' + self.app.options.url + '/post?openapi=true&s=' + txid
-
-					if (self.app.ref) {
-						phref += '&ref=' + self.app.ref
-					}
-
-					window.open(phref, '_blank');
-
-					return
-				}
-
-				self.app.user.isState(function (state) {
-
-					if (state) {
-						clbk()
-					}
-
-					else {
-						self.nav.api.load({
-							open: true,
-							id: 'authorization',
-							inWnd: true,
-
-							essenseData: {
-
-								fast: true,
-								loginText: self.app.localization.e('llogin'),
-								successHref: '_this',
-
-								signInClbk: function () {
-
-									retry(function () {
-
-										return !authblock
-
-									}, function () {
-
-										if (clbk)
-											clbk()
-									})
-
-
-								}
-							}
-						})
-					}
-
-				})
-			},
-
+			
 			postscores: function (clbk) {
 
-				actions.stateAction(function(){
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.nav.api.load({
 						open: true,
@@ -260,19 +226,19 @@ var post = (function () {
 						}
 					})
 
-				}, share.txid)
+				})
 
 			},
 
 			repost: function (shareid) {
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.platform.ui.share({
 						repost : shareid
 					})
 
-				}, shareid)
+				})
 
 
 
@@ -327,10 +293,7 @@ var post = (function () {
 
 			donate: function (clbk) {
 
-				var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-					address: share.address,
-					addresses: []
-				}
+				var userinfo = self.psdk.userInfo.getShortForm(share.address)
 
 				var link = 'send?address=' + share.address + '&amount=1'
 					+ '&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
@@ -414,7 +377,7 @@ var post = (function () {
 					button.one('click', function(){
 
 
-						$(this).closest('.jsPlayerLoading').addClass('loading') 
+						$(this).closest('.jsPlayerLoading').addClass('loading')
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
 
@@ -434,7 +397,7 @@ var post = (function () {
 				}
 
 				button = null
-			},	
+			},
 
 			initVideo: function (clbk) {
 
@@ -475,7 +438,7 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
-							self.sdk.videos.volume = videosVolume 
+							self.sdk.videos.volume = videosVolume
 
 							self.sdk.videos.save()
 						},
@@ -503,10 +466,10 @@ var post = (function () {
 								})
 							}, 300)
 							
-						},	
+						},
 
 						pause : function(){
-							if(!p.pip)	
+							if(!p.pip)
 								self.app.actions.playingvideo(null)
 						},
 
@@ -517,7 +480,7 @@ var post = (function () {
 						}){
 							//// interest score later
 
-							if (duration > 0 && playbackState == 'playing') 
+							if (duration > 0 && playbackState == 'playing')
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
 
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
@@ -619,7 +582,7 @@ var post = (function () {
 
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+				var reputation = self.psdk.userInfo.getShortForm(share.address).reputation
 
 				if (checkvisibility && reputation >= 50) return
 
@@ -671,7 +634,7 @@ var post = (function () {
 					setTimeout(function(){
 						if(!el.c) return
 
-						inicomments.showBanner(inicomments);
+						//inicomments.showBanner(inicomments);
 					
 
 						self.app.platform.effects.templates.commentstars(el.c, value, function(){
@@ -693,37 +656,18 @@ var post = (function () {
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-					self.sdk.node.transactions.create.commonFromUnspent(
+					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
+						if (clbk)
+							clbk(true)
+					}).catch(e => {
 
-						upvoteShare,
+						self.app.platform.errorHandler(e, true)
 
-						function (tx, error) {
+						if (clbk)
+							clbk(false)
 
-
-							topPreloader(100)
-
-							if (!tx) {
-
-								share.myVal = null;
-
-								self.app.platform.errorHandler(error, true)
-
-								if (clbk)
-									clbk(false)
-
-							}
-							else {
-
-								if (clbk)
-									clbk(true)
-
-								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
-								self.app.platform.sdk.recommendations.successRecommendation(share)
-
-							}
-
-						}
-					)
+						
+					})
 
 				}, function(){
 					if (clbk)
@@ -896,7 +840,7 @@ var post = (function () {
 		var events = {
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
-				var address = $(this).attr('address') 
+				var address = $(this).attr('address')
 
 				self.nav.api.load({
 					open : true,
@@ -925,7 +869,7 @@ var post = (function () {
 					href : 'authorization',
 					history : true,
 					open : true
-				})	
+				})
 			
 			},
 			
@@ -994,7 +938,7 @@ var post = (function () {
 
 			subscribe: function (clbk) {
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.platform.api.actions.subscribeWithDialog(share.address, function (tx, error) {
 						if (tx) {
@@ -1006,7 +950,7 @@ var post = (function () {
 
 					})
 
-				}, share.txid)
+				})
 
 
 			},
@@ -1019,9 +963,9 @@ var post = (function () {
 
 				var value = $(this).attr('value')
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
-					if (!self.app.platform.sdk.address.pnet() || share.address == self.app.platform.sdk.address.pnet().address) return
+					if (share.address == self.app.user.address.value) return
 
 					var p = $(this).closest('.stars');
 
@@ -1063,7 +1007,7 @@ var post = (function () {
 							p.removeClass('liked')
 						}
 					})
-				}, share.txid)
+				})
 
 
 			},
@@ -1122,80 +1066,83 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-					
-					self.fastTemplate(
-						'commentspreview',
-						function (rendered) {
-							var _el = el.c.find('.commentsWrapper');
-
-							var rf = '';
-
-							if (self.app.platform.sdk.address.pnet()) {
-								rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
-							}
-
-							var url =
-								'https://' + self.app.options.url + '/' +
-								(ed.hr || 'index?') +
-								's=' +
-								share.txid +
-								'&mpost=true' +
-								rf;
-
-							if (parameters().address) {
-								url += '&address=' + (parameters().address || '');
-							}
-
-							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-
-							self.nav.api.load({
-								open: true,
-								id: 'comments',
-								el: _el,
-
-								eid: (ed.eid || '') + share.txid + 'post',
-
-								essenseData: {
-									hr: url,
-									totop: el.c,
-
-									caption: ed.nocommentcaption ? null : rendered,
-									send: function () {
-
-										var c = el.c.find('.commentsAction .count span');
-											c.html(Number(c.html() || '0') + 1);
-											
+					if (!share.settings.c) {
+						self.fastTemplate(
+							'commentspreview',
+							function (rendered) {
+								var _el = el.c.find('.commentsWrapper');
+	
+								var rf = '';
+	
+								if (self.app.platform.sdk.address.pnet()) {
+									rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+								}
+	
+								var url =
+									'https://' + self.app.options.url + '/' +
+									(ed.hr || 'index?') +
+									's=' +
+									share.txid +
+									'&mpost=true' +
+									rf;
+	
+								if (parameters().address) {
+									url += '&address=' + (parameters().address || '');
+								}
+	
+								var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+	
+								self.nav.api.load({
+									open: true,
+									id: 'comments',
+									el: _el,
+	
+									eid: (ed.eid || '') + share.txid + 'post',
+	
+									essenseData: {
+										hr: url,
+										totop: el.c,
+	
+										caption: ed.nocommentcaption ? null : rendered,
+										send: function () {
+	
+											var c = el.c.find('.commentsAction .count span');
+												c.html(Number(c.html() || '0') + 1);
+												
+										},
+										txid: ed.commentsid || share.txid,
+	
+										reply: ed.reply,
+	
+										showall: !ed.fromempty,
+										init: ed.fromempty || false,
+										preview: true,
+										listpreview : false,
+										receiver: share.address,
+										fromtop: !ed.fromempty,
+										fromempty: ed.fromempty,
+										lastComment: ed.fromempty ? share.lastComment : null,
+										cantsend : checkvisibility,
+										additionalActions: function () {
+											self.closeContainer();
+										},
 									},
-									txid: ed.commentsid || share.txid,
-
-									reply: ed.reply,
-
-									showall: !ed.fromempty,
-									init: ed.fromempty || false,
-									preview: true,
-									listpreview : false,
-									receiver: share.address,
-									fromtop: !ed.fromempty,
-									fromempty: ed.fromempty,
-									lastComment: ed.fromempty ? share.lastComment : null,
-									cantsend : checkvisibility,
-									additionalActions: function () {
-										self.closeContainer();
+	
+									clbk: function (e, p) {
+										actions.position();
+										inicomments = p;
+	
+										if (clbk) clbk();
 									},
-								},
-
-								clbk: function (e, p) {
-									actions.position();
-									inicomments = p;
-
-									if (clbk) clbk();
-								},
-							});
-						},
-						{
-							share: share,
-						},
-					);
+								});
+							},
+							{
+								share: share,
+							},
+						);
+					} else {
+						el.c.find('.commentsWrapper').addClass('commentsEmpty');
+					}
 				} else {
 					if (clbk) clbk();
 				}
@@ -1282,7 +1229,7 @@ var post = (function () {
 											if (w > imageswidth){
 												w = imageswidth
 
-												h = w * ( _img.height / _img.width) 
+												h = w * ( _img.height / _img.width)
 
 												el.height(h);
 											}
@@ -1328,38 +1275,13 @@ var post = (function () {
 
 									new carousel(images, '.imagesWrapper', '.imagesContainer')
 
-									/*images.find('.imagesContainer').owlCarousel({
-										items: 1,
-										dots: true,
-										nav: !isMobile(),
-										navText: [
-											'<i class="fas fa-chevron-left"></i> ',
-											'<i class="fas fa-chevron-right"></i>'
-											]
-									
-									});*/
-
 									isclbk()
 
 								}
 								else{
 									images.addClass('manyImagesView')
 									isclbk()
-									/*images.isotope({
-
-										layoutMode: 'packery',
-										itemSelector: '.imagesWrapper',
-										packery: {
-											gutter: gutter
-										},
-										initLayout: false
-									});
-		
-									images.on('arrangeComplete', function(){
-										isclbk()
-									});
-		
-									images.isotope()*/
+									
 								}
 
 								
@@ -1411,6 +1333,9 @@ var post = (function () {
 						_p.el.find('.boost').on('click', events.boost)
 						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
+						_p.el.find('.unblockbutton').on('click', function(){
+							actions.unblock()
+						})
 
 						if (ed.repost)
 							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
@@ -1426,7 +1351,6 @@ var post = (function () {
 						renders.stars(function () {
 
 							if(!el.share) return
-
 
 							renders.mystars(function () { });
 
@@ -1474,8 +1398,8 @@ var post = (function () {
 											el.share.find('.shareSave').on('click', events.shareSave);
 
 											el.share.find('.piptest').on('click', function(){
-												
-												
+											
+											
 											});
 
 											el.share.find('.toregistration').on('click', events.toregistration)
@@ -1584,7 +1508,8 @@ var post = (function () {
 			},
 			
 			mystars: function (clbk) {
-				if (typeof share.myVal == 'undefined' && !ed.preview) {
+				
+				if (typeof share.myVal == 'undefined' && !ed.preview && !ed.repost) {
 					var ids = [share.txid];
 
 					self.app.platform.sdk.likes.get(ids, function () {
@@ -1603,6 +1528,8 @@ var post = (function () {
 						data: {
 							share: share,
 						},
+						ignorelinksandimages : true,
+						animation : false,	
 					},
 					function (p) {
 
@@ -1704,6 +1631,18 @@ var post = (function () {
 						
 					}, self.app);
 
+					_p.el.find('.tipsforstream').on('click', function(){
+						var shareId = $(this).closest('.shareTable').attr('stxid');
+
+						var share = self.psdk.share.get(shareId) 
+
+						if(!share) return
+
+						if(share.itisstream()){
+							actions.openPost(shareId)
+						}
+					})
+
 					if (clbk) clbk();
 					
 				})
@@ -1742,6 +1681,67 @@ var post = (function () {
 				} else {
 					if (clbk) clbk();
 				}
+			},
+			
+			stream : function(clbk) {
+				const
+					parent = el.stream.parent(),
+					toggle = parent.find('.toggle'),
+					setText = () => {
+						let state = self.app.localization.e('hide');
+
+						if (parent.hasClass('chat-hidden')) {
+							state = self.app.localization.e('showhiddenComment');
+						}
+
+						toggle.text(`${ state } ${ self.app.localization.e('startchat') }`);
+					};
+
+				self.app.platform.sdk.user.get(function(u){
+					if (u.hasOwnProperty('address') && share?.settings?.c) {
+						if (typeof self?.app?.platform?.matrixchat?.core?.renderChatToElement === 'function') {
+							parent.addClass('chat-ready');
+							setText();
+
+							toggle.on('click', function (e) {
+								e.preventDefault();
+
+								parent.toggleClass('chat-hidden');
+								setText();
+							});
+
+							self.app.platform.matrixchat.core.renderChatToElement(
+								el.stream[0],
+								share.settings.c, /*RoomID*/
+								{
+									style: 'stream',
+									videoUrl: share.url,
+									authorId: share.address
+								}
+							)
+								.then((chat) => {
+									share.chat = chat;
+									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
+									
+									/* Add donate animations */
+									/*self.app.nav.api.load({
+										open : true,
+										id : 'donateAnimations',
+										el: el.wr.find('.animationWrapper')
+									});*/
+								})
+								.catch(e => {
+									if (e) console.error(e);
+								});
+							
+							if(clbk) clbk();
+						} else {
+							setTimeout(() => renders.stream(clbk), 1000);
+						}
+					} else {
+						// You can not see stream chat unlogged
+					}
+				})
 			},
 
 			recommendations : function(clbk){
@@ -1791,11 +1791,11 @@ var post = (function () {
 
 				}
 				else{
-					
+				
 				}
 			}
 
-			self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
+			/*self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
 				if (data.temp) {
 
@@ -1824,61 +1824,62 @@ var post = (function () {
 
 						})
 					}
-
-
-
 				}
 
-			}
+			}*/
 
-			self.app.platform.clbks.api.actions.subscribePrivate.post = function (address) {
 
-				if (address == share.address) {
+			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
+				if(type == 'upvoteShare'){
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-
-					if (me) {
-						var r = me.relation(address, 'subscribes')
-
-						el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
-
-						if (r && (r.private == 'true' || r.private === true)) {
-							el.c.find('.shareTable[address="' + address + '"] .notificationturn').addClass('turnon')
-						}
-						else {
-							el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
-						}
+					if (share.txid == alias.share.v){
+						renders.stars()
 					}
-
-					remake()
 				}
 
-			}
-
-			self.app.platform.clbks.api.actions.subscribe.post = function (address) {
-
-				if (address == share.address) {
-
-					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
-					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
 				
-					remake()
+
+				if(type == 'contentDelete' || type == 'share'){
+
+					if (alias.txidEdit == share.txid || share.txid == alias.txid){
+
+						share = self.psdk.share.get(share.txid) 
+
+						remake()
+					}
+					
 				}
 
+				if(type == 'blocking' || type == 'unblocking'){
 
-			}
+					var address = alias.address.v
 
-			self.app.platform.clbks.api.actions.unsubscribe.post = function (address) {
+					if (share.address == address){
 
-				if (address == share.address) {
+						if(type == 'blocking' || (type == 'unblocking' && status == 'rejected')){
 
-					el.c.find('.shareTable').removeClass('subscribed');
-					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
+							var addressEl = el.c.find('.shareTable').closest('.share')
+								addressEl.addClass('blocking');
+								actions.stopPlayer()
+	
+						}
+	
+						if(type == 'unblocking' || (type == 'blocking' && status == 'rejected')){
+	
+							var addressEl = el.c.find('.shareTable').closest('.share')
+								addressEl.removeClass('blocking');
+								actions.stopPlayer()
+						}
+
+					}
+					
+				}
+
+				if(type == 'unsubscribe' || type == 'subscribe' || type == 'subscribePrivate'){
+					actions.subscribeLabel(alias.address.v)
+				}
 				
-					remake()
-				}
 			}
 
 		}
@@ -1917,14 +1918,14 @@ var post = (function () {
 				else{
 					renders.share(function () {
 
-						renders.comments(function () {
-						})
+						renders.comments()
 
 						if (share.itisvideo())
 							actions.changeSavingStatusLight(share);
 
 						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
-
+							
+							renders.stream();
 							renders.recommendations();
 
 						}
@@ -1953,7 +1954,7 @@ var post = (function () {
 			else{
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[id]
+					var share = self.psdk.share.get(id) 
 
 					clbk(share)
 
@@ -1993,7 +1994,7 @@ var post = (function () {
 
 
 					if (!share) {
-						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+						share = self.psdk.share.get(id) 
 					}
 
 					if (share) {
@@ -2034,7 +2035,10 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-
+				if (share.chat) {
+					share.chat.destroy();
+					el.stream.empty();
+				}
 				
 				if (external){
 					external.destroy()
@@ -2057,13 +2061,9 @@ var post = (function () {
 				if (inicomments)
 					inicomments.destroy()
 
-				delete self.app.platform.ws.messages.event.clbks.post
 
-				delete self.app.platform.ws.messages.transaction.clbks.temppost
-				delete self.app.platform.clbks.api.actions.subscribePrivate.post
-				delete self.app.platform.clbks.api.actions.unsubscribe.post
-				delete self.app.platform.clbks.api.actions.subscribe.post
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
+				delete self.app.platform.actionListeners[eid]
 
 				authblock = false;
 
@@ -2106,6 +2106,7 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
+				el.stream = el.c.find('.stream-placeholder');
 				el.reco = el.c.find('.recomandationsbgwrapper');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
@@ -2141,7 +2142,8 @@ var post = (function () {
 					})
 
 				},
-				onclose : p.onclose
+				onclose : p.onclose,
+				stopvideo : true
 			},
 
 			playerstatus : function(){

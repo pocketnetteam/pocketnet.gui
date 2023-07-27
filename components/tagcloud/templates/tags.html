@@ -2,6 +2,7 @@
     <% _.each(tags, function(tag, i){
 
         if(!(tagsmap[tag.tag] && tagsmap[tag.tag].fixed)){
+
     %>
 
         <div tag="<%- decodeURIComponent(tag.tag) %>" class="tg <% if(tagsmap[tag.tag]) {%> selected  <% } %> <% if(i > 7) {%> hdn <% } %>">

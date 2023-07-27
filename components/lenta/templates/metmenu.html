@@ -90,6 +90,12 @@ var all = {
 		class : 'block'
 	},
 
+	unblock : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : e('unblock'),
+		class : 'unblock'
+	},
+
 	startchat : {
 		icon : '<i class="far fa-comment"></i>',
 		text : e('startchat'),
@@ -112,6 +118,12 @@ var all = {
 		icon : '<i class="fas fa-trash"></i>',
 		text : e('deleteSavedPost'),
 		class : 'deleteSavedPost'
+	},
+
+	openOriginal : {
+		icon : '<i class="fas fa-rss"></i>',
+		text : e('openOriginal'),
+		class : 'openOriginal'
 	},
 
 	recommendationinfo : {
@@ -139,6 +151,9 @@ if(share){
 	if (app.savesupported() || app.savesupportedForBrowser()) {
 
 		if (app.platform.sdk.localshares.getShare(share.txid)){
+
+			
+			m.unshift('openOriginal');
 			m.unshift('deleteSavedPost');
 		}
 		else{
@@ -155,11 +170,19 @@ if(share){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = psdk.userInfo.getmy()
 
 		if (my){
 
-			if (share.pin){
+			var pinned = false
+
+			if(typeof authorsettings != 'undefined'){
+				if(authorsettings.pin == share.txid){
+					pinned = true
+				}
+			}
+
+			if (pinned){
 
 				m.push('unpin')
 
@@ -189,10 +212,6 @@ if(share){
 				m.push('recommendationinfo')
 			}
 
-
-			/*m.push('donation')*/
-			/*m.push('htls')*/
-
 			if(isMobile()){
 				if (!me.relation(share.address, 'subscribes')){
 					m.push('subscribe')
@@ -207,7 +226,14 @@ if(share){
 				m.unshift('complain')
 			}
 
-			m.unshift('block')
+
+			if (me.relation(share.address, 'blocking')){
+				m.unshift('unblock')
+			}
+			else
+			{
+				m.unshift('block')
+			}
 
 		}
 	}

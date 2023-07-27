@@ -287,7 +287,7 @@ var embeding = (function(){
 					actions.slowUpload(file)
 
 				}
-
+				
 				initUpload({
 					el : el.upload,
 		

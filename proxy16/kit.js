@@ -7,6 +7,7 @@ var tcpPortUsed = require('tcp-port-used');
 _ = 	require("underscore");
 var fs = require('fs');
 
+
 var Pocketnet = require('./pocketnet.js');
 var Logger = require('./logger.js');
 const { base64encode, base64decode } = require('nodejs-base64');
@@ -60,10 +61,10 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '137.135.25.73',
+		host : 'pnettool.pocketnet.app',
 		port : 39091,
 		ws : 6067,
-		name : 'tawmaz',
+		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
@@ -241,6 +242,7 @@ var defaultSettings = {
 
         dontCache: false,
 		captcha : true,
+		hexCaptcha : false,
 		host : '',
 		iplimiter : {
 			interval : 30000,
@@ -275,6 +277,13 @@ var defaultSettings = {
 				amount : 0.0006,
 				outs : 30,
 				check : 'ipAndUniqAddress'
+			},
+
+			balance : {
+				privatekey : "",
+				amount : 0.0002,
+				outs : 10,
+				check : 'ipAndUniqAddress' //// ipAndUniqAddress4m 
 			}
 		}
 	},
@@ -384,6 +393,9 @@ var state = {
 
 			if (exporting.wallet.addresses.registration.privatekey)
 				exporting.wallet.addresses.registration.privatekey = "*"
+
+			if (exporting.wallet.addresses.balance.privatekey)
+				exporting.wallet.addresses.balance.privatekey = "*"
 		}
 
 		return exporting
@@ -636,7 +648,14 @@ const kit = {
 								return Promise.resolve('enabled error')
 							}))
 
-						if (!promises.length)
+						if (typeof settings.hexCaptcha != 'undefined')  
+							promises.push(ctx.hexCaptcha(settings.hexCaptcha).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('enabled error')
+							}))
+
+						if(!promises.length) 
 							return Promise.reject('nothingchanged')
 
 						return Promise.all(promises)
@@ -743,6 +762,21 @@ const kit = {
 					settings.server.captcha = v
 
 					return kit.save()
+					
+				},
+
+				hexCaptcha : function(v){
+
+					if(typeof v == 'undefined') return Promise.reject('emptyargs')
+	
+					if (settings.server.hexCaptcha == v) return Promise.resolve()
+						settings.server.hexCaptcha = v
+		
+					return kit.save()
+					
+				},
+	
+				enabled : function(v){
 
 				},
 
