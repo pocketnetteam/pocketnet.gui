@@ -227,6 +227,7 @@ var Action = function(account, object, priority, settings){
     self.until = (new Date()).addSeconds(60 * 60 * 12)
     self.settings = settings || {}
     self.rejectWait = null
+    self.updated = null
 
     self.sent = null
     self.checkedUntil = null
@@ -240,6 +241,7 @@ var Action = function(account, object, priority, settings){
 
     self.completed = false
     self.rejected = null
+    self.tryingsend = null
 
     self.id = makeid()
 
@@ -264,6 +266,8 @@ var Action = function(account, object, priority, settings){
 
         e.rejected = self.rejected
         e.completed = self.completed
+        e.tryingsend = self.tryingsend
+        e.updated = self.updated
 
         if (self.object.export){
             e.expObject = self.object.export(true)
@@ -276,6 +280,13 @@ var Action = function(account, object, priority, settings){
     }
 
     self.import = function(e){
+
+        if(e.updated){
+            var updated = new Date(e.updated)
+
+            if (updated < self.updated) return
+        }
+
         self.priority = e.priority
 
         if (e.added)
@@ -295,6 +306,12 @@ var Action = function(account, object, priority, settings){
 
         if (e.checkedUntil)
             self.checkedUntil = new Date(e.checkedUntil)
+
+        if (e.tryingsend)
+            self.tryingsend = new Date(e.tryingsend)
+
+        if (e.updated)
+            self.updated = new Date(e.updated)
 
         self.id = e.id || makeid()
 
@@ -402,7 +419,16 @@ var Action = function(account, object, priority, settings){
         return tx
     }
 
+    var save = function(){
+
+        self.updated = new Date()
+
+        account.save()
+    }
+
     var trigger = function(){
+
+        self.updated = new Date()
         
         //if(options.change) options.change(action, account)
 
@@ -636,25 +662,8 @@ var Action = function(account, object, priority, settings){
         self.sending = new Date()
         self.inputs = inputs
         self.outputs = outputs
-        ///sendrawtransaction
 
         trigger()
-
-        /*return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                delete self.inputs
-                delete self.outputs
-                delete self.sending
-                self.rejected = 'actions_rejected_disabled'
-        
-                trigger()
-        
-        
-                reject(self.rejected)
-            }, 1300)
-        })*/
-
-        
 
         return account.parent.api.rpc(method, parameters).then(transaction => {
 
@@ -679,10 +688,10 @@ var Action = function(account, object, priority, settings){
             delete self.outputs
             delete self.sending
 
-            trigger()
+            
 
             if(!retry && (code == -26 || code == -25 || code == 16 || code == 261)){
-                
+                save()
                 return makeTransaction(true, calculatedFee, send)
             }
 
@@ -830,6 +839,11 @@ var Action = function(account, object, priority, settings){
         trigger(self)
     }
 
+    self.trysend = function(a){
+        self.tryingsend = a ? (new Date()).addSeconds(45) : null
+        save()
+    }
+
     self.processing = async function(){
 
         if (self.completed){
@@ -860,12 +874,18 @@ var Action = function(account, object, priority, settings){
             return checkTransaction()
         }
 
+        
+
         if (self.sent){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending && (new Date()).addSeconds(-165) < self.sending){
+        if (self.sending && (new Date()).addSeconds(-365) < self.sending){
             return Promise.reject('actions_alreadySending')
+        }
+
+        if (self.tryingsend && self.tryingsend > new Date()){
+            return Promise.reject('actions_tryingsend')
         }
 
         if (self.until < new Date()){
@@ -898,6 +918,8 @@ var Action = function(account, object, priority, settings){
             return Promise.reject(self.rejected)
         }
 
+        self.trysend(true)
+
         if (self.object.canSend){
 
             if (self.checkedUntil && self.checkedUntil > new Date()){
@@ -908,8 +930,6 @@ var Action = function(account, object, priority, settings){
 
             return new Promise((resolve, reject) => {
                 self.object.canSend(app, (r) => {
-
-                    
 
                     if(r){
 
@@ -922,11 +942,24 @@ var Action = function(account, object, priority, settings){
                     }
     
                 })
+            }).then(() => {
+                self.trysend()
+            }).catch((e) => {
+                self.trysend()
+
+                return Promise.reject(e)
             })
 
         }
 
-        return makeTransaction(false, (self.settings || {}).calculateFee || null, true)
+        return makeTransaction(false, (self.settings || {}).calculateFee || null, true).then(() => {
+            self.trysend()
+
+        }).catch((e) => {
+            self.trysend()
+
+            return Promise.reject(e)
+        })
 
     }
 
@@ -934,6 +967,8 @@ var Action = function(account, object, priority, settings){
 
         var error = null
         var tryresolve = false
+
+        
 
         try{
             await self.processing()
@@ -957,7 +992,10 @@ var Action = function(account, object, priority, settings){
             
         }
 
+        
         if (error && tryresolve){
+
+
             error = await account.actionRejectedWithTriggers(self, error)
         }
         else{
@@ -969,6 +1007,7 @@ var Action = function(account, object, priority, settings){
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 
                     error == 'actions_waitUserStatus' || 
+                    error == 'actions_tryingsend' || 
                     error == 'actions_checkFail' 
                     
                     // || errorCodesAndActions[error]
@@ -1714,12 +1753,15 @@ var Account = function(address, parent){
         self.unspents.updated ? self.unspents.updated = new Date(self.unspents.updated) : null
         self.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
-        self.actions.value = []
+        
         self.waitUserAction = e.waitUserAction || null
 
         if (self.unspents.willChange){
             self.unspents.willChange.until = new Date(self.unspents.willChange.until)
         }
+
+
+        //self.actions.value = []
 
         _.each(e.actions.value, (exported) => {
 
@@ -1743,11 +1785,17 @@ var Account = function(address, parent){
             }
 
             try{
-                var action = new Action(self, {})
+
+                var prevaction = _.find(self.actions.value, (a) => {
+                    return a.id == exported.id
+                })
+
+                var action = (prevaction || new Action(self, {}))
                     action.import(exported)
 
 
-                self.actions.value.push(action)
+                if(!prevaction)
+                    self.actions.value.push(action)
             }
             catch(e){
                 //console.log('exported', exported)
@@ -2119,6 +2167,10 @@ var Account = function(address, parent){
                 return true
             }
         }
+    }
+
+    self.save = function(){
+        parent.save()
     }
 
     self.trigger = function(action){

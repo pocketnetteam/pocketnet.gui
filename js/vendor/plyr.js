@@ -9260,7 +9260,13 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       else{
 
-        importScripts([{src : 'peertube/video-embed.bundle.js'}], plyrrelations, function(){
+        var vs = '10'
+
+        if (typeof numfromreleasestring != 'undefined'){
+            vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+        }
+
+        importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
 
 					clbk();
 

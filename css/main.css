@@ -4474,7 +4474,7 @@ html.mobileview .tooltipMobileDialog .thwrapper {
   margin: 0 auto;
   border: 0;
   margin-bottom: 0;
-  padding-bottom: 1em;
+  padding-bottom: 60px;
   box-shadow: none;
 }
 html.mobileview .tooltipMobileDialog ._close {
