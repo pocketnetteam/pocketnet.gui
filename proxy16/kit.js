@@ -61,10 +61,10 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '137.135.25.73',
+		host : 'pnettool.pocketnet.app',
 		port : 39091,
 		ws : 6067,
-		name : 'tawmaz',
+		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
