@@ -128,7 +128,6 @@ var Peertube = function (settings) {
 				return c;
 			});
 
-			console.log('keys', keys)
 
 			return keys[f.rand(0, keys.length - 1)];
 		},
@@ -328,7 +327,6 @@ var Peertube = function (settings) {
 				if (Object.keys(output).length > 0) return Promise.resolve(output);
 			}
 
-			console.log('ROYS', Object.keys(_roys));
 			
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;

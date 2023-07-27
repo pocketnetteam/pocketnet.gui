@@ -152,7 +152,9 @@ var nodecontrol = (function(){
 			},
 			admin : function(){
 
-				var address = self.app.user.value
+				var address = self.app.user.address.value
+
+				console.log('address', address, info)
 
 				if(!address) return false
 
@@ -760,12 +762,16 @@ var nodecontrol = (function(){
 
 			info = null
 
+			console.log('proxy', proxy)
+
 			if (proxy) {
 
 				proxy.system.clbks.tick.components_nodecontrol = actions.ticksettings
 				proxy.clbks.tick.components_nodecontrol = actions.tick
 			
 				proxy.get.info().then(r => {
+
+					console.log("RR")
 
 					info = r.info
 
@@ -779,6 +785,8 @@ var nodecontrol = (function(){
 					}
 				}).then(() => {
 					renders.all()
+				}).catch(e => {
+					console.error(e)
 				})
 			}
 

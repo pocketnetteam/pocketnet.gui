@@ -198,10 +198,9 @@ function rpc(request, callback, obj) {
         return
     }
 
-    // console.log('request', request, options);
-
     
     var signal = null
+    var bytimeout = false
 
     ///need to test
     if (typeof AbortController != 'undefined'){
@@ -216,6 +215,8 @@ function rpc(request, callback, obj) {
             }
 
             ac = null
+
+            bytimeout = true
 
         }, timeout)
     }
@@ -317,11 +318,22 @@ function rpc(request, callback, obj) {
     })
     .catch(err => {
 
+        called = true;
+
         var error = err.response?.data?.error;
+
+        if(!error && err){
+            if(err.code == 'ECONNREFUSED'){
+                error = {
+                    code : 408,
+                    error : 'ECONNREFUSED'
+                }
+            }
+        }
         
         callback(error || {
             code : 408,
-            error : 'requesterror'
+            error : bytimeout ? 'timeout' : 'requesterror'
         });
     })
 }

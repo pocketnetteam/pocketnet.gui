@@ -291,6 +291,8 @@ var test = (function(){
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
 						//exist = false
+
+						console.log('exist', exist)
 						
 
 						if(!exist || (exist == self.app.user.address.value)){
@@ -1127,7 +1129,7 @@ var test = (function(){
 
 						var _r = self.app.ref;
 
-						if (_r && _r != self.app.user.value)
+						if (_r && _r != self.app.user.address.value)
 
 							ref = _r;
 					}

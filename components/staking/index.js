@@ -494,7 +494,7 @@ var staking = (function(){
 
 				var r = ''
 
-				if (self.app.user.value){
+				if (self.app.user.address.value){
 					r = '?&ref=' + self.app.user.address.value
 					url = url + r
 				}

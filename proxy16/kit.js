@@ -566,7 +566,6 @@ const kit = {
 					if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
 					if (settings.customObfs4) notification.customObfs4 = settings.customObfs4
 
-					console.log('settings', settings)
 					return kit.proxy().then(proxy => {
 
 						return proxy.wss.sendtoall({

@@ -1135,6 +1135,8 @@ var registration = (function(){
 					}
 
 					clbk(data);
+				}).catch(e => {
+					clbk(data);
 				})
 
 			},

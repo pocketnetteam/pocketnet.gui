@@ -119,7 +119,7 @@ var statistic = (function () {
 			},
 
 			getTotalRatings() {
-				if (self.app.user.value) {
+				if (self.app.user.address.value) {
 					var address = self.app.user.address.value;
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video', 738274, 738274], {})

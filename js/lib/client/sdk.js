@@ -18,7 +18,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         userInfoLight: {
-            time: 3000
+            time: 30000
         },
 
         userState: {
@@ -2000,6 +2000,8 @@ var pSDK = function ({ app, api, actions }) {
             if (share) {
                 if (share.txid == exp.share.v && exp.actor == app.user.address.value) { /// for me
                     share.myVal = Number(exp.value.v)
+                    share.scnt = (share.scnt || 0) + 1
+                    share.score = (share.score || 0) + Number(exp.value.v)
                 }
             }
 

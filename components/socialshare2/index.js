@@ -335,7 +335,7 @@ var socialshare2 = (function(){
 					emeta.extra(p)
 				}
 
-				if (self.app.user.value){
+				if (self.app.user.address.value){
 					p.ref = self.app.user.address.value
 				}
 				else{
@@ -733,7 +733,7 @@ var socialshare2 = (function(){
 		}
 
 		var includeRef = function(){
-			if (self.app.user.value){
+			if (self.app.user.address.value){
 				ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
 					ref : self.app.user.address.value
 				})

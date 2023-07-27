@@ -462,6 +462,14 @@ var activities = (function () {
 							}
 						})
 					})
+
+					_p.el.find('.typeRow').on('click', function(){
+						var id = $(this).closest('.action').attr('aid')
+
+						var a = self.app.platform.actions.getActionById(id)
+
+						console.log("A", a)
+					})
 					
 				})
 			},

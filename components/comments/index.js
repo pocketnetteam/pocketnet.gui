@@ -1180,6 +1180,8 @@ var comments = (function(){
 
 				if(!el.showall) return
 
+				if(!share) return
+
 				var counts = share.comments || 0
 
 				var lastComment = self.psdk.comment.get(share.lastComment) || {}
@@ -1647,21 +1649,34 @@ var comments = (function(){
 
 						__el.find('.block').on('click', function(){
 
-							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
-                                if (!tx) {
-                                    self.app.platform.errorHandler(error, true)
-                                }
-								else
-								{
-									parent.addClass('hiddenBlockedUserComment');
-									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
-									var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
-									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
-									commentContentTable.append(hiddenCommentLabel)
-									commentContentTable.append(ghostButton)
-								}
 
+							new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('blockUserQ'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
+										if (!tx) {
+											self.app.platform.errorHandler(error, true)
+										}
+										else
+										{
+											parent.addClass('hiddenBlockedUserComment');
+											var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
+											var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+											var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
+											commentContentTable.append(hiddenCommentLabel)
+											commentContentTable.append(ghostButton)
+										}
+		
+									})
+
+                                }
                             })
+
+							
 
 							close()
 
@@ -1681,6 +1696,7 @@ var comments = (function(){
 
 							close()
 						})
+
 
 						__el.find('.remove').on('click', function(){
 
@@ -1706,7 +1722,8 @@ var comments = (function(){
 
 								},
 								btn1text : self.app.localization.e('e13034'),
-								btn2text : self.app.localization.e('e13035')
+								btn2text : self.app.localization.e('e13035'),
+								class : 'zindex',
 							})
 
 							close()
@@ -3129,7 +3146,7 @@ var comments = (function(){
 				var post = share;
 
 				/* !Post with stream */
-				if (!post.settings.c) {
+				if (!post || !post.settings.c) {
 					if (listpreview){
 						makePreview(() => {
 							if(ed.previewClbk) ed.previewClbk()
