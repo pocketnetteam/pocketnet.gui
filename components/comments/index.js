@@ -853,7 +853,7 @@ var comments = (function(){
 
 						if (aid != id) pid = id
 
-						var comment = self.psdk.comment.get(id)
+						var comment = self.psdk.comment.get(aid || id)
 
 						var address = comment.address
 
