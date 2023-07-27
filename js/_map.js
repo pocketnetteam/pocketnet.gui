@@ -30,8 +30,8 @@ __map =  {
         "js/vendor/timer.js",//
         
 		"js/vendor/aesjs.js",//
-		{path : "js/vendor/linkify.min.js", babelify : true},,
-		{path : "js/vendor/linkify-html.min.js", babelify : true},,
+		{path : "js/vendor/linkify.js", babelify : true},
+		{path : "js/vendor/linkify-html.js", babelify : true},
 		"js/vendor/exif.js",
 		"js/vendor/firebase-app.js",
 		"js/vendor/firebase-messaging.js",

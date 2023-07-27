@@ -22043,6 +22043,7 @@ Platform = function (app, listofnodes) {
         //initOnlineListener() // /remove for test
 
 
+
         self.app.api.wait.ready('use', 6000).then(r => {
 
 
