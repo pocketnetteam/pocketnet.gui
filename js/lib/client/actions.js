@@ -864,7 +864,7 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending && (new Date()).addSeconds(-65) < self.sending){
+        if (self.sending && (new Date()).addSeconds(-165) < self.sending){
             return Promise.reject('actions_alreadySending')
         }
 

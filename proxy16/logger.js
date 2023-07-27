@@ -64,7 +64,7 @@ var Logger = function(_loggers){
     var transports = function(key){
 
         var tr = [
-            new winston.transports.Console({}),
+            //new winston.transports.Console({}),
             new wsstransport({ logger : self })
         ]
 

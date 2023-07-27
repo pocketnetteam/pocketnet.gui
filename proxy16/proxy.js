@@ -1332,7 +1332,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						}
 
 						return destroy.catch(catchError(i)).then(() => {
-							console.log('i', i)
 							return Promise.resolve()
 						}).then(resolve)
 
@@ -2542,8 +2541,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					return new Promise((resolve, reject) => {
 						captcha.generate().then(({ frames, layers }) => {
 
-							console.log('captcha', captcha)
-
 							captchas[captcha.id] = {
 								text: captcha.text.toLowerCase(),
 								angles: captcha.angles,
@@ -2575,8 +2572,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
-
-					console.log('captcha', captcha, captchas)
 
 					var captcha = captchas[captcha];
 

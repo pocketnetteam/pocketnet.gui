@@ -338,7 +338,11 @@
 }
 
 .wnd{
-    contain: strict;
+
+    &:not(.pipmini){
+        contain: strict;
+
+    }
     .wndcustomscroll{
         .customscrollclass()
     }

@@ -4897,9 +4897,13 @@ var lenta = (function(){
 
 					self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
+						console.log('type, alias, status', type, alias, status)
+
 						if(type == 'upvoteShare'){
 
 							var share = _.find(sharesInview, (share) => share.txid == alias.share.v) ? self.psdk.share.get(alias.share.v) : null
+
+							console.log('share', share)
 
 							if (share){
 								renders.stars(share)
@@ -5044,7 +5048,9 @@ var lenta = (function(){
 
 					self.app.platform.sdk.categories.clbks.excluded[mid] =
 					self.app.platform.sdk.categories.clbks.tags[mid] =
-					self.app.platform.sdk.categories.clbks.selected[mid] = function(data){
+					self.app.platform.sdk.categories.clbks.selected[mid] = function(){
+
+						console.log("HERE")
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
 							actions.rebuilddelay()
@@ -5152,6 +5158,15 @@ var lenta = (function(){
 
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
+
+
+				var tagsfilter = self.app.platform.sdk.categories.gettags()
+				var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+
+				if(tagsfilter.length || tagsexcluded.length){
+					subloaded = true
+				}
+
 			}
 
 			renders.loader(true)

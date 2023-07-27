@@ -358,6 +358,7 @@ var Comment = function(txid){
 			return 'messagelength'
 		}
 
+
 		return null;
 	}
 
@@ -2202,7 +2203,7 @@ var pComment = function(){
 			}
 
 			catch(e){
-				console.log("ERROR", e, v.msgparsed)
+				//console.log("ERROR", e, v.msgparsed)
 			}
 
 			

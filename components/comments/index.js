@@ -1180,6 +1180,8 @@ var comments = (function(){
 
 				if(!el.showall) return
 
+				if(!share) return
+
 				var counts = share.comments || 0
 
 				var lastComment = self.psdk.comment.get(share.lastComment) || {}
@@ -3129,7 +3131,7 @@ var comments = (function(){
 				var post = share;
 
 				/* !Post with stream */
-				if (!post.settings.c) {
+				if (!post || !post.settings.c) {
 					if (listpreview){
 						makePreview(() => {
 							if(ed.previewClbk) ed.previewClbk()

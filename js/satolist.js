@@ -3010,12 +3010,13 @@ Platform = function (app, listofnodes) {
 
             if(!additional) additional = {}
 
+            var ps = additional.commentPs || p.commentPs
 
             app.nav.api.load({
                 open : true,
                 id : 'comments',
                 el : el,
-                eid : id + 'post',
+                eid : id + 'post_' + (ps.commentid || ''),
 
                 essenseData : {
                     txid : id,
@@ -3023,7 +3024,7 @@ Platform = function (app, listofnodes) {
                     init : true,
                     preview : false,
                     fromtop : true,
-                    commentPs : additional.commentPs || p.commentPs,
+                    commentPs : ps,
                     openapi : p.openapi,
 
                 },
@@ -7446,6 +7447,8 @@ Platform = function (app, listofnodes) {
 
             set: function (value) {
 
+                console.log("VAL", value)
+
                 var t = self.sdk.lentaMethod
 
                 if (!value) {
@@ -7454,10 +7457,15 @@ Platform = function (app, listofnodes) {
 
                 if (value && t.all[value]) {
 
+
+
                     t.current = value;
 
-                    self.app.platform.sdk.categories.clbks.selected.lenta && self.app.platform.sdk.categories.clbks.selected.lenta();
+                    _.each(self.sdk.categories.clbks.selected, function(f){
+                        f()
+                    })
 
+                
 
                     t.save()
 
@@ -9929,9 +9937,10 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress.load((name)).then(() => {
+                self.psdk.nameAddress.load((name)).then((data) => {
+
                     if (clbk) {
-                        clbk(true)
+                        clbk(data)
                     }
                 }).catch(e => {
                     if (clbk) {

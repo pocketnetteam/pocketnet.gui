@@ -291,6 +291,8 @@ var test = (function(){
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
 						//exist = false
+
+						console.log('exist', exist)
 						
 
 						if(!exist || (exist == self.app.user.address.value)){

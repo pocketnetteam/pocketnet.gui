@@ -34,12 +34,10 @@ var Roy = function (parent) {
 
 		_.each(instances, function (instance) {
 
-			console.log('instance.cantuploading',instance.host, instance.cantuploading, instance.info().canuploading)
 
 			if (!instance.info().canuploading || instance.cantuploading) can = false;
 		});
 
-		console.log("CAN", can, instances.length)
 
 		return can && instances.length;
 	};
@@ -59,8 +57,6 @@ var Roy = function (parent) {
 		if (!options) options = {};
 
 		var instance = new Instance(url, options.ip, self);
-
-		console.log('options', options)
 
 		if (options.cantuploading) instance.cantuploading = true;
 		if (options.special) instance.special = true;
@@ -131,7 +127,6 @@ var Roy = function (parent) {
 			return instance.canuse() || self.useall;
 		});
 
-		console.log('instances', instances.length)
 
 		return _.sortBy(_instances, (instance) => {
 			return getBestByType[type]
@@ -143,7 +138,6 @@ var Roy = function (parent) {
 	self.best = function (type = 'view') {
 		var bestlist = self.bestlist(type);
 
-		console.log("BEST", bestlist, type)
 
 		if (bestlist.length) return [...bestlist].pop();
 
@@ -152,7 +146,6 @@ var Roy = function (parent) {
 
 	self.canuse = function(){
 		var _instances = _.filter(instances, function (instance) {
-			console.log('instance.canuse()', instance.canuse())
 			return instance.canuse();
 		});
 

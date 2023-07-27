@@ -75,6 +75,8 @@ var leftpanel = (function(){
 
 					_p.el.find('.toggle').on('click', function(){
 
+						console.log("SADASD")
+
 						var best = $(this).closest('.best');
 						var method = 'historical'
 		
@@ -85,6 +87,8 @@ var leftpanel = (function(){
 							method = 'hierarchical';
 		
 						}
+
+						console.log("ASD")
 		
 						self.sdk.lentaMethod.set(method)
 		
