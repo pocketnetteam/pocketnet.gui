@@ -4897,13 +4897,9 @@ var lenta = (function(){
 
 					self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
-						console.log('type, alias, status', type, alias, status)
-
 						if(type == 'upvoteShare'){
 
 							var share = _.find(sharesInview, (share) => share.txid == alias.share.v) ? self.psdk.share.get(alias.share.v) : null
-
-							console.log('share', share)
 
 							if (share){
 								renders.stars(share)

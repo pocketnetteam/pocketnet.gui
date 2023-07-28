@@ -4424,7 +4424,7 @@ Platform = function (app, listofnodes) {
 
         authorlink: function (address, namelink) {
 
-            var name = self.psdk.userInfo.getShortForm(address).name
+            var name = self.psdk.userInfo.getShortForm(address).clname
 
             if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
@@ -15484,7 +15484,7 @@ Platform = function (app, listofnodes) {
                         coinbase: coinbase || tx.coinstake,
                         amount: vout.value,
                         scriptPubKey: vout.scriptPubKey.hex,
-                        pockettx: tx.pockettx
+                        pockettx: deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
                     }
 
                     return t
@@ -15511,7 +15511,7 @@ Platform = function (app, listofnodes) {
                                 coinbase: coinbase || tx.coinstake,
                                 amount: vout.value,
                                 scriptPubKey: vout.scriptPubKey.hex,
-                                pockettx: tx.pockettx
+                                pockettx:  deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
                             }
 
                             outs.push(t)
@@ -18883,82 +18883,7 @@ Platform = function (app, listofnodes) {
                         data.txinfo = tx;
 
 
-                        /* platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
-
-                        var s = platform.sdk.node.transactions.unspent;
-                        s[address] || (s[address] = []);*/
-
-
-                        ////////////
-
-                        /*var temp = deep(platform.sdk.node.transactions.temp, 'share.' + data.txid)
-
-
-                        if (temp && !wa) {
-
-
-                            data.temp = temp;
-                            data.temp.temp = false;
-
-                            if (data.temp.type == 'share') {
-                                var share = new pShare();
-                                share._import(data.temp, true);
-                                share.address = platform.sdk.address.pnet().address
-
-                                share.scnt = '0'
-                                share.score = "0"
-                                share.myVal = 0
-
-
-                                if (!platform.sdk.node.shares.storage.trx)
-                                    platform.sdk.node.shares.storage.trx = {}
-
-                                    //TODONOW
-
-                                platform.sdk.node.shares.storage.trx[data.txid] = share
-
-                            }
-
-                            delete platform.sdk.node.transactions.temp.share[data.txid]
-                        }*/
-
-                        /////////
-
-
-                       /* var uitemp = deep(platform.sdk.node.transactions.temp, 'userInfo.0')
-
-                        if (uitemp && data.type == 'userInfo') {
-                            platform.sdk.node.transactions.temp.userInfo = {};
-                        }
-
-                        var outs = platform.sdk.node.transactions.toUTs(tx, address);
-
-
-                        _.each(outs, function (o) {
-
-                            //platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
-
-                            if (!wa) {
-
-                                removeEqual(s[address], {
-                                    txid: data.txid,
-                                    vout: o.vout
-                                })
-
-                                s[address].push(o)
-
-                            }
-
-
-                        })*/
-
-                        ////////////
-
-                        //console.error('TODO_REF_ACTIONS')
-
                         var addr = platform.app.user.address.value
-
-                        //////////////////////
 
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
@@ -19029,6 +18954,8 @@ Platform = function (app, listofnodes) {
 
 
                             if (data.address != user.address && data.user) {
+
+                                if(_.indexOf(platform.sdk.addresses.storage.addresses || [], data.address) > -1) return
 
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"

@@ -1298,7 +1298,8 @@ var main = (function(){
 						open : true,
 						href : 'userpage?pc=1',
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
 					return
@@ -1310,7 +1311,8 @@ var main = (function(){
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
 					return 
@@ -1322,7 +1324,8 @@ var main = (function(){
 						open : true,
 						href : 'userpage?id=test',
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
 					return

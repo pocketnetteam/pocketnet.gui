@@ -320,9 +320,13 @@ function rpc(request, callback, obj) {
 
         called = true;
 
+
         var error = err.response?.data?.error;
 
+
         if(!error && err){
+
+
             if(err.code == 'ECONNREFUSED'){
                 error = {
                     code : 408,

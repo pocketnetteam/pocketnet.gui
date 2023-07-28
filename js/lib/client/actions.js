@@ -1221,13 +1221,15 @@ var Account = function(address, parent){
     var checkUnspentReadyBlockChain = function(u){
         var wait = 0
 
+        
+
         if (u.confirmations <= 11 && u.pockettx) {
 
             wait = 11 - u.confirmations
 
         }
 
-        if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
+        if (u.confirmations == 0 && !u.coinbase && !u.coinstake && !u.pockettx) {
 
             wait = 1
 
@@ -1238,6 +1240,8 @@ var Account = function(address, parent){
             wait = 100 - u.confirmations
 
         }
+
+        console.log('unspent', wait, u.pockettx, u.coinbase, u.coinstake, u.confirmations)
 
         if(wait) return false
 
@@ -1679,7 +1683,7 @@ var Account = function(address, parent){
                 height : transaction.height,
                 scriptPubKey : deep(out, 'scriptPubKey.hex'),
                 confirmations : Math.max(transaction.confirmations || (transaction.height && parent.app.platform.currentBlock ? parent.app.platform.currentBlock - transaction.height : 0), 0),
-                pockettx : deep(transaction, 'vout.0.addresses.0') == "",
+                pockettx : deep(transaction, 'vout.0.scriptPubKey.addresses.0') == "",
                 coinbase : false,
                 txid : transaction.txid
             }

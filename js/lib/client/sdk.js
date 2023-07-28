@@ -812,7 +812,8 @@ var pSDK = function ({ app, api, actions }) {
                 dev: userInfo.dev || false,
                 real: app.platform.real[address],
                 about : userInfo.about,
-                regdate : userInfo.regdate
+                regdate : userInfo.regdate,
+                clname : app.platform.api.clearname(userInfo.name)
                 //markHtml : app.platform.ui.markUser(address)
             }
         },

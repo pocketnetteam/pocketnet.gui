@@ -3,6 +3,8 @@ var Node = require('./node');
 var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
+const fs = require('fs');
+
 const { performance } = require('perf_hooks');
 const queuemethods = {
     getcontent: true,
@@ -850,6 +852,24 @@ var Nodemanager = function(p){
        
     }
 
+    var dbcheck = function(loaderr, clbk){
+        if(loaderr){
+
+            fs.unlinkSync(f.path(p.dbpath))
+
+            db.loadDatabase(err => {
+
+                console.log("err", err)
+
+                clbk()
+
+            })
+        }
+        else{
+            clbk()
+        }
+    }
+
 
     self.init = function(){
 
@@ -858,83 +878,87 @@ var Nodemanager = function(p){
         return new Promise((resolve, reject) => {
             db.loadDatabase(err => {
 
-                db.ensureIndex({ fieldName: 'key', unique: true });
 
-                self.cleardatabase().catch(e => {}).then(() => {
+                dbcheck(err, function(){
 
-                    var bchain = 'main'
+                    db.ensureIndex({ fieldName: 'key', unique: true });
 
-                    if (self.proxy.test) bchain = 'test'
+                    self.cleardatabase().catch(e => {}).then(() => {
 
-                    db.find({bchain}).exec(function (err, docs) {
+                        var bchain = 'main'
 
-                        self.nodes = []
+                        if (self.proxy.test) bchain = 'test'
 
-                        var haslocal = self.nodeControl.kit.hasbin()
+                        db.find({bchain}).exec(function (err, docs) {
 
-                        var c = []
+                            self.nodes = []
 
-                        if (haslocal) c = [{
-                            host : '127.0.0.1',
-                            port : 38081,
-                            ws : 8087,
-                            name : 'Local Proxy Pocketnet Node',
-                            local : true
-                        }]
+                            var haslocal = self.nodeControl.kit.hasbin()
 
-                        docs = _.filter(_.shuffle(docs), function(d, i){
-                            if(i < 5) return true
-                        })
+                            var c = []
 
-                        if (usetrustnodesonly){
-                            docs = []
-                        }
+                            if (haslocal) c = [{
+                                host : '127.0.0.1',
+                                port : 38081,
+                                ws : 8087,
+                                name : 'Local Proxy Pocketnet Node',
+                                local : true
+                            }]
 
-                        var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
+                            docs = _.filter(_.shuffle(docs), function(d, i){
+                                if(i < 5) return true
+                            })
 
-                            var node = new Node(options, self)
+                            if (usetrustnodesonly){
+                                docs = []
+                            }
 
-                            self.add(node)
+                            var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
-                            return node
+                                var node = new Node(options, self)
+
+                                self.add(node)
+
+                                return node
+                                
+                            })
+
+                            self.api.connected(nodes, function(nodes){
+                                saveNodes(nodes)
+                            })
+
+                            setTimeout(function(){
+                                self.find()
+                            }, 2000)
                             
-                        })
+                            if(!findInterval)
+                                findInterval = setInterval(self.find, 30000)
 
-                        self.api.connected(nodes, function(nodes){
-                            saveNodes(nodes)
-                        })
+                            if(!commonnotinitedInterval)
+                                commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
 
-                        setTimeout(function(){
-                            self.find()
-                        }, 2000)
-                        
-                        if(!findInterval)
-                            findInterval = setInterval(self.find, 30000)
+                            if(!queueInterval)
+                                queueInterval =  setInterval(worker, 10) 
 
-                        if(!commonnotinitedInterval)
-                            commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
+                            if(!statscalculationInterval)
+                                statscalculationInterval = setInterval(function(){
+                                    self.bestapply()
+                                    self.bestnodesapply()
+                                }, statscalculationTime) 
 
-                        if(!queueInterval)
-                            queueInterval =  setInterval(worker, 10) 
-
-                        if(!statscalculationInterval)
-                            statscalculationInterval = setInterval(function(){
+                            setTimeout(function(){
                                 self.bestapply()
                                 self.bestnodesapply()
-                            }, statscalculationTime) 
+                            }, 2000)
 
-                        setTimeout(function(){
-                            self.bestapply()
-                            self.bestnodesapply()
-                        }, 2000)
+                            inited = true
 
-                        inited = true
+                            resolve()
 
-                        
-
-                        resolve()
-
+                        })
                     })
+
+
                 })
 
                 
