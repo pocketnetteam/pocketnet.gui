@@ -1872,6 +1872,15 @@ var lenta = (function(){
 
 				}
 
+				if (self.app.platform.sdk.user.reputationBlockedMe()){
+					sitemessage(self.app.localization.e('lockedaccount'))
+
+					if (clbk)
+						clbk(false)
+
+					return
+				}
+
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
 					var upvoteShare = obj.upvote(value);
@@ -5045,8 +5054,6 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.excluded[mid] =
 					self.app.platform.sdk.categories.clbks.tags[mid] =
 					self.app.platform.sdk.categories.clbks.selected[mid] = function(){
-
-						console.log("HERE")
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
 							actions.rebuilddelay()

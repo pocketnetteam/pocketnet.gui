@@ -8404,7 +8404,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" ban=".gif" image="' + (src || '*') + '">'
+                                        h += '<div class="usericon" contain ban=".gif" image="' + (src || '*') + '">'
 
                                         if (!src && letter) {
 
@@ -18230,7 +18230,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
+                h += '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
                 if (!src && letter){
 
@@ -18347,7 +18347,7 @@ Platform = function (app, listofnodes) {
                             <div class="icon">'
 
 
-                h +=            '<div class="usericon" ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h +=            '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
                 h +=            '</div>'
 
                 h +=        '</div>\

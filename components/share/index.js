@@ -888,6 +888,11 @@ var share = (function(){
 
 				el.postWrapper.removeClass('showError');
 
+				if (self.app.platform.sdk.user.reputationBlockedMe()){
+					sitemessage(self.app.localization.e('lockedaccount'))
+					return
+				}
+
 				if(essenseData.hash == currentShare.shash()){
 
 
