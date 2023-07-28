@@ -1141,8 +1141,8 @@ Platform = function (app, listofnodes) {
             relay: true
         },
         'network': {
-            message: function () {
-                return self.app.localization.e('e13230')
+            message: function (a) {
+                return self.app.localization.e('e13230') + (a ? ': ' + a : "")
             },
 
             relay: true

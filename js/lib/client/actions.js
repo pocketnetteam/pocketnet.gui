@@ -632,7 +632,6 @@ var Action = function(account, object, priority, settings){
             tx = buildTransaction({inputs, outputs, opreturnData})
         }
         catch(e){
-            //console.error(e)
             return Promise.reject(e)
         }
 
@@ -699,7 +698,6 @@ var Action = function(account, object, priority, settings){
 
             }*/
 
-            console.error(e)
 
             self.rejected = code || (e.toString ? e.toString() : 'actions_rejected')
 
@@ -975,7 +973,6 @@ var Action = function(account, object, priority, settings){
         }
         catch(e){
 
-            console.error(e)
 
             if (
                 e == 'actions_rejectedFromNodes' || 
@@ -1353,7 +1350,7 @@ var Account = function(address, parent){
                 /// and maybe wait 10 minutes
 
                 if(!action.sent || !action.transaction){
-                    console.error("!action.sent || !action.transaction", action)
+                  
                     return
                 }
 
@@ -1383,7 +1380,6 @@ var Account = function(address, parent){
                         }
                     }
                     catch(e){
-                        console.error(e)
                         action.checkInAnotherSession = true
 
                         /// undefined
@@ -1515,7 +1511,6 @@ var Account = function(address, parent){
                 return Promise.resolve(newaction)
             }).catch(e => {
 
-                console.error('e', e)
                 
                 if (self.getStatus() == 'registered'){
                     return Promise.reject('actions_rejectedByUser')
@@ -1619,7 +1614,6 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
-            console.error("E", e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
@@ -1635,7 +1629,6 @@ var Account = function(address, parent){
 
             return Promise.reject(e)
         }).catch(e => {
-            console.error(e)
 
             return Promise.reject(e)
 
@@ -1799,7 +1792,6 @@ var Account = function(address, parent){
             }
             catch(e){
                 //console.log('exported', exported)
-                //console.error(e)
             }
 
             
@@ -1880,7 +1872,6 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
-                    console.error(e)
                     throw 'unableSign:5'
                 }
 
@@ -2571,7 +2562,6 @@ var Actions = function(app, api, storage = localStorage){
                     update(JSON.parse(e.newValue || "{}"))
                 }
                 catch(e){
-                    //console.error(e)
                 }
 
             });
