@@ -7159,7 +7159,7 @@ Platform = function (app, listofnodes) {
                 var local = "[]" 
                 
                 try{
-                    localStorage[self.app.user.address.value + 'articles'] || "[]";
+                    local = localStorage[self.app.user.address.value + 'articles'] || "[]";
                 }catch(e){
                     
                 }

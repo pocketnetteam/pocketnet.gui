@@ -6636,6 +6636,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   height: auto!important;
   border-radius: 0!important;
   padding-right: 0!important;
+  max-width: 768px;
+  margin: 0 auto;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons .close {
   display: none!important;
