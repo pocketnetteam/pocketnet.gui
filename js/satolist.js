@@ -1141,8 +1141,8 @@ Platform = function (app, listofnodes) {
             relay: true
         },
         'network': {
-            message: function () {
-                return self.app.localization.e('e13230')
+            message: function (a) {
+                return self.app.localization.e('e13230') + (a ? ': ' + a : "")
             },
 
             relay: true
@@ -4424,7 +4424,7 @@ Platform = function (app, listofnodes) {
 
         authorlink: function (address, namelink) {
 
-            var name = self.psdk.userInfo.getShortForm(address).name
+            var name = self.psdk.userInfo.getShortForm(address).clname
 
             if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
@@ -6620,8 +6620,14 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
-                    const videoId = shareDataList.share.share.u
-                        .split('%2F').pop();
+                    console.log('shareDataList', shareDataList)
+
+                    var u = shareDataList.share.share.u.split(/(\%2F|\/)/g)
+
+                    const videoId = u[u.length - 1]
+                    
+
+                    console.log('videoId', videoId, u)
 
                     if (videoId)
                         shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
@@ -7153,7 +7159,7 @@ Platform = function (app, listofnodes) {
                 var local = "[]" 
                 
                 try{
-                    localStorage[self.app.user.address.value + 'articles'] || "[]";
+                    local = localStorage[self.app.user.address.value + 'articles'] || "[]";
                 }catch(e){
                     
                 }
@@ -8398,7 +8404,7 @@ Platform = function (app, listofnodes) {
                                         h += '<div class="refaddTable table">'
                                         h += '<div class="imageCell">'
 
-                                        h += '<div class="usericon" ban=".gif" image="' + (src || '*') + '">'
+                                        h += '<div class="usericon" contain ban=".gif" image="' + (src || '*') + '">'
 
                                         if (!src && letter) {
 
@@ -14605,6 +14611,8 @@ Platform = function (app, listofnodes) {
                     }
                     var loadedShares = [];
 
+                    console.log("P", p)
+
 
                     _.each(p.txids, function (txid) {
 
@@ -14619,6 +14627,8 @@ Platform = function (app, listofnodes) {
                             //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)
+
+                            console.log('newShare', newShare, curShare)
 
                             if (newShare){
                                 if (curShare.share.timestamp)
@@ -15484,7 +15494,7 @@ Platform = function (app, listofnodes) {
                         coinbase: coinbase || tx.coinstake,
                         amount: vout.value,
                         scriptPubKey: vout.scriptPubKey.hex,
-                        pockettx: tx.pockettx
+                        pockettx: deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
                     }
 
                     return t
@@ -15511,7 +15521,7 @@ Platform = function (app, listofnodes) {
                                 coinbase: coinbase || tx.coinstake,
                                 amount: vout.value,
                                 scriptPubKey: vout.scriptPubKey.hex,
-                                pockettx: tx.pockettx
+                                pockettx:  deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
                             }
 
                             outs.push(t)
@@ -18220,7 +18230,7 @@ Platform = function (app, listofnodes) {
 
                 if (gotoprofile) h += link
 
-                h += '<div class="usericon" ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
+                h += '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
                 if (!src && letter){
 
@@ -18337,7 +18347,7 @@ Platform = function (app, listofnodes) {
                             <div class="icon">'
 
 
-                h +=            '<div class="usericon" ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h +=            '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
                 h +=            '</div>'
 
                 h +=        '</div>\
@@ -18883,82 +18893,7 @@ Platform = function (app, listofnodes) {
                         data.txinfo = tx;
 
 
-                        /* platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
-
-                        var s = platform.sdk.node.transactions.unspent;
-                        s[address] || (s[address] = []);*/
-
-
-                        ////////////
-
-                        /*var temp = deep(platform.sdk.node.transactions.temp, 'share.' + data.txid)
-
-
-                        if (temp && !wa) {
-
-
-                            data.temp = temp;
-                            data.temp.temp = false;
-
-                            if (data.temp.type == 'share') {
-                                var share = new pShare();
-                                share._import(data.temp, true);
-                                share.address = platform.sdk.address.pnet().address
-
-                                share.scnt = '0'
-                                share.score = "0"
-                                share.myVal = 0
-
-
-                                if (!platform.sdk.node.shares.storage.trx)
-                                    platform.sdk.node.shares.storage.trx = {}
-
-                                    //TODONOW
-
-                                platform.sdk.node.shares.storage.trx[data.txid] = share
-
-                            }
-
-                            delete platform.sdk.node.transactions.temp.share[data.txid]
-                        }*/
-
-                        /////////
-
-
-                       /* var uitemp = deep(platform.sdk.node.transactions.temp, 'userInfo.0')
-
-                        if (uitemp && data.type == 'userInfo') {
-                            platform.sdk.node.transactions.temp.userInfo = {};
-                        }
-
-                        var outs = platform.sdk.node.transactions.toUTs(tx, address);
-
-
-                        _.each(outs, function (o) {
-
-                            //platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
-
-                            if (!wa) {
-
-                                removeEqual(s[address], {
-                                    txid: data.txid,
-                                    vout: o.vout
-                                })
-
-                                s[address].push(o)
-
-                            }
-
-
-                        })*/
-
-                        ////////////
-
-                        //console.error('TODO_REF_ACTIONS')
-
                         var addr = platform.app.user.address.value
-
-                        //////////////////////
 
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
@@ -19029,6 +18964,8 @@ Platform = function (app, listofnodes) {
 
 
                             if (data.address != user.address && data.user) {
+
+                                if(_.indexOf(platform.sdk.addresses.storage.addresses || [], data.address) > -1) return
 
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"

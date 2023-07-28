@@ -12,13 +12,13 @@
 		var me = psdk.userInfo.getmy()
 	
 		_.each(addresses, function(u){ 
-	
+
 			var _class='';
 			var address = u.address;		
 			var followers = u.subscribers_count;
 			var following  = u.subscribes_count;
-			var about = u.a || '';
-			var src = u.i;
+			var about = u.about || '';
+			var src = u.image;
 			var name = u.name
 			var letter = name ? name[0] : ''; 
 			var r = u.reputation;

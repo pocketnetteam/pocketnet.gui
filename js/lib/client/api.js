@@ -105,7 +105,9 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 1.5
             }
 
-            if(data && data.method == 'sendrawtransactionwithmessage') time = time * 4
+            if(data && data.method == 'sendrawtransactionwithmessage') {
+                time = time * 4
+            }
 
             //if(!isonline()) time = 3000
     
@@ -209,8 +211,10 @@ var ProxyRequest = function(app = {}, proxy){
                 
             }
 
-            if (options)
+            if (options){
                 data.options = options
+            }
+                
 
         var route = 'rpc'
 

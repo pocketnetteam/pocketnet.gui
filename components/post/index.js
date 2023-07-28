@@ -617,7 +617,13 @@ var post = (function () {
 					}
 				}
 
-				
+				if (self.app.platform.sdk.user.reputationBlockedMe()){
+					sitemessage(self.app.localization.e('lockedaccount'))
+					if (clbk)
+							clbk(false)
+
+					return
+				}
 
 				var upvoteShare = share.upvote(value);
 

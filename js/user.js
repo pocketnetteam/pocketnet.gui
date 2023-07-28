@@ -448,11 +448,16 @@ User = function(app, p) {
 
 	self.registrationProgressIcon = function(){
 		var r = self.userRegistrationStatus()
+		
+		if(app.platform.sdk.user.reputationBlockedMe()){
+
+			return '<div class="registrationProgressIcon blocked" title="'+app.localization.e('lockedaccount')+'"><i class="fas fa-times-circle"></i></i><span>'+app.localization.e('lockedaccount')+'</span></div>'
+		}
+
 
 		if (r == 'registered'){
 			return ''
 		}
-
 
 		return '<div class="registrationProgressIcon '+r+'" title="'+app.localization.e('registration_' + r)+'"><i class="fas fa-stopwatch"></i><span>'+app.localization.e('registration_' + r)+'</span></div>'
 

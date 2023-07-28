@@ -245,7 +245,6 @@ function rpc(request, callback, obj) {
 
     const config = {
         headers: {
-            'Content-Length': request.length,
             'Content-Type': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
         }
@@ -320,9 +319,13 @@ function rpc(request, callback, obj) {
 
         called = true;
 
+
         var error = err.response?.data?.error;
 
+
         if(!error && err){
+
+
             if(err.code == 'ECONNREFUSED'){
                 error = {
                     code : 408,
