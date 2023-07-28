@@ -10422,6 +10422,16 @@ isVideoFormatMatroska = (videoFile) => {
 	return checkMagicBytes(videoFile, magicBytes);
 }
 
+downloadUsingAnchorElement = (url, filename) => {
+	const anchor = document.createElement('a');
+	anchor.href = url;
+	anchor.download = filename;
+
+	document.body.appendChild(anchor);
+	anchor.click();
+	document.body.removeChild(anchor);
+}
+
 var connectionSpeed = function() 
 {
     // Deal with vendor prefixes

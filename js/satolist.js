@@ -5956,6 +5956,15 @@ Platform = function (app, listofnodes) {
             },
 
             saveShare : function(share, p){
+                const rawUrlParts = share.url.split('/');
+                const videoId = rawUrlParts.pop();
+                const videoHost = rawUrlParts.pop();
+
+                const videoDownloadUrl = `https://${videoHost}/download/streaming-playlists/hls/videos/${videoId}-${p.resolutionId}-fragmented.mp4`;
+
+                console.log('DOWNLOAD LINK:', videoDownloadUrl);
+
+                downloadUsingAnchorElement(videoDownloadUrl);
 
                 if(!p) p = {}
 
