@@ -190,8 +190,8 @@
         <script src="js/vendor/autosize.min.js"></script>
         <script src="js/vendor/ion.sound/ion.sound.js"></script>   
 
-        <script src="js/vendor/linkify.min.js"></script>
-        <script src="js/vendor/linkify-html.min.js"></script>
+        <script src="js/vendor/linkify.js"></script>
+        <script src="js/vendor/linkify-html.js"></script>
         <script src="js/vendor/jquery.inputmask.bundle.js"></script>
 
         __VAR__.test
