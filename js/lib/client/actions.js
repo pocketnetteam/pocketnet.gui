@@ -1241,8 +1241,6 @@ var Account = function(address, parent){
 
         }
 
-        console.log('unspent', wait, u.pockettx, u.coinbase, u.coinstake, u.confirmations)
-
         if(wait) return false
 
 

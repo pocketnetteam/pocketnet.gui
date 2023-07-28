@@ -6620,8 +6620,14 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
-                    const videoId = shareDataList.share.share.u
-                        .split('%2F').pop();
+                    console.log('shareDataList', shareDataList)
+
+                    var u = shareDataList.share.share.u.split(/(\%2F|\/)/g)
+
+                    const videoId = u[u.length - 1]
+                    
+
+                    console.log('videoId', videoId, u)
 
                     if (videoId)
                         shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
@@ -14605,6 +14611,8 @@ Platform = function (app, listofnodes) {
                     }
                     var loadedShares = [];
 
+                    console.log("P", p)
+
 
                     _.each(p.txids, function (txid) {
 
@@ -14619,6 +14627,8 @@ Platform = function (app, listofnodes) {
                             //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)
+
+                            console.log('newShare', newShare, curShare)
 
                             if (newShare){
                                 if (curShare.share.timestamp)

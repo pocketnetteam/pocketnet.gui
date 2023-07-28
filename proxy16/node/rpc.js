@@ -245,7 +245,6 @@ function rpc(request, callback, obj) {
 
     const config = {
         headers: {
-            'Content-Length': request.length,
             'Content-Type': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
         }

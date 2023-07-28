@@ -858,3 +858,15 @@ Date.prototype.yyyymmdd = function(d) {
           (dd > 9 ? '' : '0') + dd
     ].join(d || '');
 };
+
+
+trydecode = function(s = ''){
+    var r = s
+    try{
+        r = decodeURIComponent(s)
+    }catch(e){
+
+    }
+
+    return r
+}

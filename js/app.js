@@ -2771,20 +2771,16 @@ Application = function (p) {
 
 		fullscreenmode: function (v) {
 
-			var cl = function () {
-				v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
-				v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
-			}
-
 
 			if (isios()) {
-				/*setTimeout(() => {
-				  cl()
-				}, 1000)*/
+				
 			}
 			else {
 				window.requestAnimationFrame(() => {
-					cl()
+
+					v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
+					v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+
 				})
 			}
 
@@ -2955,7 +2951,7 @@ Application = function (p) {
 			},
 			unlock: function () {
 				if (window.cordova) {
-					window.screen.orientation.lock(baseorientation)
+					//window.screen.orientation.lock(baseorientation)
 					window.screen.orientation.unlock()
 				}
 
