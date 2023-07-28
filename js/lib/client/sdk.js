@@ -600,10 +600,10 @@ var pSDK = function ({ app, api, actions }) {
                 try {
 
                     c.name = clearStringXss(decodeURIComponent(c.name || ''));
-                    c.i = clearStringXss(decodeURIComponent(c.i || ''));
-                    c.s = clearStringXss(decodeURIComponent(c.s || ''));
-                    c.l = clearStringXss(decodeURIComponent(c.l || ''));
-                    c.a = clearStringXss(decodeURIComponent(c.a || ''));
+                    c.i = clearStringXss(trydecode(c.i || ''));
+                    c.s = clearStringXss(trydecode(c.s || ''));
+                    c.l = clearStringXss(trydecode(c.l || ''));
+                    c.a = clearStringXss(trydecode(c.a || ''));
 
                 }
                 catch (e) {
@@ -812,7 +812,8 @@ var pSDK = function ({ app, api, actions }) {
                 dev: userInfo.dev || false,
                 real: app.platform.real[address],
                 about : userInfo.about,
-                regdate : userInfo.regdate
+                regdate : userInfo.regdate,
+                clname : app.platform.api.clearname(userInfo.name)
                 //markHtml : app.platform.ui.markUser(address)
             }
         },
@@ -1034,13 +1035,13 @@ var pSDK = function ({ app, api, actions }) {
                     c.msgparsed = c.msgparsed || JSON.parse(c.msg)
 
                     if(_.isObject(c.msgparsed)){
-                        c.msgparsed.url = clearStringXss(decodeURIComponent(c.msgparsed.url || ""));
+                        c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
 
-                        c.msgparsed.message = clearStringXss(decodeURIComponent(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
     
                         c.msgparsed.images = _.map(c.msgparsed.images || [], function (i) {
     
-                            return clearStringXss(decodeURIComponent(i))
+                            return clearStringXss(trydecode(i))
                         });
                     }
 
@@ -1545,19 +1546,23 @@ var pSDK = function ({ app, api, actions }) {
 
         cleanData: function (rawshares) {
 
+            
+
 
             return _.filter(_.map(rawshares, (c) => {
 
                 try {
-                    c.u = clearStringXss(decodeURIComponent(c.u || ''));
-                    c.c = clearStringXss(decodeURIComponent(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
+                    c.u = clearStringXss(trydecode(c.u || ''));
+                    c.c = clearStringXss(trydecode(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
 
                     if (c.s && c.s.v == 'a') {
 
                         if (c.s.version >= 2) {
 
-                            if(!_.isObject(c.m))
+                            if(!_.isObject(c.m)){
                                 c.m = JSON.parse(c.m)
+                            }
+                                
                         }
                         else {
                             var whiteclass = {
@@ -1568,7 +1573,7 @@ var pSDK = function ({ app, api, actions }) {
                                 'medium-insert-embeds': true
                             }
 
-                            c.m = superXSS(decodeURIComponent(c.m || ''), {
+                            c.m = superXSS(trydecode(c.m || ''), {
                                 stripIgnoreTag: true,
                                 whiteList: {
                                     a: ["href", "title", "target", 'cordovalink'],
@@ -1617,14 +1622,14 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
                     else {
-                        c.m = trimrn((superXSS(decodeURIComponent(c.m || ''), {
+                        c.m = trimrn((superXSS(trydecode(c.m || ''), {
                             whiteList: [],
                             stripIgnoreTag: true,
                         }))).replace(/\n{2,}/g, '\n\n')
                     }
 
                     c.t = _.map(c.t, function(t){ 
-                        return clearStringXss(clearTagString(decodeURIComponent(t)))
+                        return clearStringXss(clearTagString(trydecode(t)))
                     })
 
                     c.i = _.map(c.i || [], function(i){return clearStringXss(i)});

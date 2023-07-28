@@ -4890,6 +4890,9 @@ html.allcontent_application #footerWrapper {
 .registrationProgressIcon.in_progress_hasUnspents i {
   color: rgb(var(--color-bg-ac-bright)) !important;
 }
+.registrationProgressIcon.blocked i {
+  color: rgb(var(--color-bad)) !important;
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -6636,6 +6639,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   height: auto!important;
   border-radius: 0!important;
   padding-right: 0!important;
+  max-width: 768px;
+  margin: 0 auto;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons .close {
   display: none!important;

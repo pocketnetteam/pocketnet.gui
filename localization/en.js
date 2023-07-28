@@ -546,7 +546,7 @@ _l.e13028 = "You entered not valid private key"
 _l.e13029 = "Message is empty"
 _l.e13030 = "Comments have 1000 character limit per comment"
 _l.e13031 = "Share Comment"
-_l.e13032 = "Do you really want to delete your comment?"
+_l.e13032 = "Do you really want to delete comment?"
 _l.e13033 = "Comment has been removed"
 _l.postRemoved = "Post has been removed"
 _l.postNotFound = "Post not found"
@@ -2766,3 +2766,5 @@ _l.error408 = 'Error, connection problem'
 _l.watchstream = "Watch stream";
 _l.anotherSiteHeader = "Another site"
 _l.openOriginal = "Open original"
+
+_l.registration_blocked = _l.lockedaccount

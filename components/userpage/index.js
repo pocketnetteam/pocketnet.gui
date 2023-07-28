@@ -1151,11 +1151,9 @@ var userpage = (function(){
 				var p = parameters();
 
 
-				self.app.platform.sdk.ustate.me(function(_mestate){					
-
+				self.app.platform.sdk.ustate.me(function(_mestate){			
+					
 					mestate = _mestate
-
-
 
 					clbk(data);
 

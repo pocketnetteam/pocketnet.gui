@@ -1,9 +1,9 @@
 {
     "name": "pocketnet",
-    "version": "0.8.54",
+    "version": "0.8.55",
     "versionsuffix": "1",
-    "cordovaversion": "1.8.54",
-    "cordovaversioncode": "180541",
+    "cordovaversion": "1.8.55",
+    "cordovaversioncode": "180550",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -27,7 +27,6 @@
         "minimize:cordova": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:cordova:store": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true -store=true",
         "minimize:cordova:gfree": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true -gfree=true",
-
         "minimize:cordova:test": "node minimize.js -prodaction=true -test=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=Bastyon",
         "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=BastyonPapp",
@@ -140,6 +139,7 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
+        "utf8": "^3.0.0",
         "winston": "^3.3.3",
         "yuicompressor": "^2.4.8"
     },

@@ -6020,6 +6020,12 @@ html.allcontent_application{
         }
         
     }
+
+    &.blocked{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
     
 }
 
@@ -8206,6 +8212,8 @@ html.mobileview{
                 height: auto!important;
                 border-radius: 0!important;
                 padding-right: 0!important;
+                max-width: 768px;
+                margin : 0 auto;
 
                 .close{
                     display: none!important;

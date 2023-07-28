@@ -660,6 +660,15 @@ var comments = (function(){
 
 						var address = self.app.user.address.value
 
+						if (self.app.platform.sdk.user.reputationBlockedMe()){
+
+							sitemessage(self.app.localization.e('lockedaccount'))
+		
+							wrapper.removeClass('sending')
+		
+							return
+						}
+
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
 							wrapper.removeClass('sending')
@@ -1268,6 +1277,12 @@ var comments = (function(){
 						return
 					}
 
+					if (self.app.platform.sdk.user.reputationBlockedMe()){
+						sitemessage(self.app.localization.e('lockedaccount'))
+	
+						return
+					}
+
 					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
 
 						new dialog({
@@ -1299,8 +1314,6 @@ var comments = (function(){
 				
 			},
 			scrollToComment : function(el) {
-
-				console.log("EL", el)
 
 				if (ed.openapi) return
 
@@ -1860,17 +1873,15 @@ var comments = (function(){
 					focus : function() {
 						// Scroll comment section to top of the screen
 
-						console.log("HERE")
-
-						
-							if(window.cordova){
-								setTimeout(() => {
-									actions.scrollToComment(_p.el);
-								}, 300)
-							}
-							else{
+					
+						if(window.cordova){
+							setTimeout(() => {
 								actions.scrollToComment(_p.el);
-							}
+							}, 300)
+						}
+						else{
+							actions.scrollToComment(_p.el);
+						}
 					},
 
 					blur : function(){

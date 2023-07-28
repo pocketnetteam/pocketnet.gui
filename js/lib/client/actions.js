@@ -632,7 +632,6 @@ var Action = function(account, object, priority, settings){
             tx = buildTransaction({inputs, outputs, opreturnData})
         }
         catch(e){
-            //console.error(e)
             return Promise.reject(e)
         }
 
@@ -699,7 +698,6 @@ var Action = function(account, object, priority, settings){
 
             }*/
 
-            console.error(e)
 
             self.rejected = code || (e.toString ? e.toString() : 'actions_rejected')
 
@@ -975,7 +973,6 @@ var Action = function(account, object, priority, settings){
         }
         catch(e){
 
-            console.error(e)
 
             if (
                 e == 'actions_rejectedFromNodes' || 
@@ -1224,13 +1221,15 @@ var Account = function(address, parent){
     var checkUnspentReadyBlockChain = function(u){
         var wait = 0
 
+        
+
         if (u.confirmations <= 11 && u.pockettx) {
 
             wait = 11 - u.confirmations
 
         }
 
-        if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
+        if (u.confirmations == 0 && !u.coinbase && !u.coinstake && !u.pockettx) {
 
             wait = 1
 
@@ -1353,7 +1352,7 @@ var Account = function(address, parent){
                 /// and maybe wait 10 minutes
 
                 if(!action.sent || !action.transaction){
-                    console.error("!action.sent || !action.transaction", action)
+                  
                     return
                 }
 
@@ -1383,7 +1382,6 @@ var Account = function(address, parent){
                         }
                     }
                     catch(e){
-                        console.error(e)
                         action.checkInAnotherSession = true
 
                         /// undefined
@@ -1515,7 +1513,6 @@ var Account = function(address, parent){
                 return Promise.resolve(newaction)
             }).catch(e => {
 
-                console.error('e', e)
                 
                 if (self.getStatus() == 'registered'){
                     return Promise.reject('actions_rejectedByUser')
@@ -1619,7 +1616,6 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
-            console.error("E", e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
@@ -1635,7 +1631,6 @@ var Account = function(address, parent){
 
             return Promise.reject(e)
         }).catch(e => {
-            console.error(e)
 
             return Promise.reject(e)
 
@@ -1686,7 +1681,7 @@ var Account = function(address, parent){
                 height : transaction.height,
                 scriptPubKey : deep(out, 'scriptPubKey.hex'),
                 confirmations : Math.max(transaction.confirmations || (transaction.height && parent.app.platform.currentBlock ? parent.app.platform.currentBlock - transaction.height : 0), 0),
-                pockettx : deep(transaction, 'vout.0.addresses.0') == "",
+                pockettx : deep(transaction, 'vout.0.scriptPubKey.addresses.0') == "",
                 coinbase : false,
                 txid : transaction.txid
             }
@@ -1799,7 +1794,6 @@ var Account = function(address, parent){
             }
             catch(e){
                 //console.log('exported', exported)
-                //console.error(e)
             }
 
             
@@ -1880,7 +1874,6 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
-                    console.error(e)
                     throw 'unableSign:5'
                 }
 
@@ -2571,7 +2564,6 @@ var Actions = function(app, api, storage = localStorage){
                     update(JSON.parse(e.newValue || "{}"))
                 }
                 catch(e){
-                    //console.error(e)
                 }
 
             });

@@ -75,7 +75,8 @@ var mobilesearch = (function(){
 			},
 			
 			clear : function(){
-				el.input.val('')
+				if (el.input)
+					el.input.val('')
 			},
 
 			getvalue : function(){
