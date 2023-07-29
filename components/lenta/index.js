@@ -1243,9 +1243,11 @@ var lenta = (function(){
 				else
 				{
 
+					if(!el.share[id]) return
+
 					var share = self.psdk.share.get(id)
 
-					var _el = el.share[id] 
+					var _el = el.share[id].find('.shareTable[stxid="'+id+'"] >div.cntswrk.postcontent')
 
 					if(!share) return
 
@@ -1254,6 +1256,8 @@ var lenta = (function(){
 					window.requestAnimationFrame(() => {
 						_el.find('.message').html(nm)
 						_el.find('.showMore,.showMorePW').remove()
+
+						self.nav.api.links(null, _el.find('.message'));
 					})
 
 					//	actions.destroyShare(share)
@@ -3181,8 +3185,6 @@ var lenta = (function(){
 					return
 				}
 
-				var index = p.index
-
 				var _el = p.el || el.share[share.txid] 
 
 				if(!p.repost)
@@ -3210,6 +3212,7 @@ var lenta = (function(){
 
 				}, function(p){
 
+
 					if(!p.repost) shareInitedMap[share.txid] = true;	
 
 					var promises = []
@@ -3233,6 +3236,7 @@ var lenta = (function(){
 					}
 
 					promises.push(new Promise((resolve, reject) => {
+
 
 						renders.url(p.el.find('.url'), share.url, share, function(){
 

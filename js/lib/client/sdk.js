@@ -143,6 +143,7 @@ var pSDK = function ({ app, api, actions }) {
         })
 
         return self.db.clearMany(dbname, ids).catch(e => {
+            console.log('dbname, ids' , dbname, ids)
             console.error(e)
             return Promise.resolve()
         })
@@ -1777,8 +1778,9 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
 
+
                 self.userInfo.cleardb(exp.actor)
-                self.userInfo.cleardb(exp.address)
+                self.userInfo.cleardb(exp.address.v)
             }
         },
         applyAction: function (object, exp) {
