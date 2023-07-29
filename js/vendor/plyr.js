@@ -9246,8 +9246,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       if (localVideo)
         localVideo.infos = localVideo.infos || {};
 
-        console.log('localVideo', localVideo)
-
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
 

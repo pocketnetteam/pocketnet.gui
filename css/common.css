@@ -170,8 +170,8 @@
 .share_common .repostShare {
   border-radius: 12px;
   border: 1px solid rgba(var(--neutral-grad-1), 0.5);
-  border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
-  border-right: 1px solid rgba(var(--background-total-theme), 0.75);
+  border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.35);
+  border-right: 1px solid rgba(var(--neutral-grad-1), 0.35);
   min-height: 120px box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);;
   margin-left: 0.5em;
   margin-right: 0.5em;

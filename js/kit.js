@@ -2310,6 +2310,13 @@ pUserInfo = function(){
 		v.subscribes_count = self.subscribes_count
 		v.blockings_count = self.blockings_count
 		v.likers_count = self.likers_count
+		v.postcnt = self.postcnt
+
+
+		if (self.regdate && self.regdate.getTime){
+			v.regdate = self.regdate.getTime() / 1000
+		}
+			
 
 		return v
 	}
@@ -2910,7 +2917,7 @@ pComment = function(){
 		}
 
 		self.address = v.address
-		self.commentTo = null
+		self.commentTo = v.commentTo || null
 
 		if(v.addressCommentAnswer && v.addressCommentAnswer != self.address) self.commentTo = v.addressCommentAnswer
 		if(!self.commentTo && v.addressCommentParent && v.addressCommentParent != self.address) self.commentTo = v.addressCommentAnswer
@@ -2960,7 +2967,8 @@ pComment = function(){
 			address : self.address,
 			children : self.children,
 			time : self.time.getTime() / 1000,
-			timeUpd: self.timeUpd.getTime() / 1000
+			timeUpd: self.timeUpd.getTime() / 1000,
+			commentTo : self.commentTo
 		}
 
 		return r

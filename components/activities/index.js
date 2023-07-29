@@ -242,8 +242,6 @@ var activities = (function () {
 
 					}).then(readyVideo => {
 
-						
-
 						activitiesByGroup['video'].push(readyVideo)
 
 					}).catch(e => {
@@ -252,7 +250,9 @@ var activities = (function () {
 
 				})).then(() => {
 
-					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return v.date}) 
+					console.log("activitiesByGroup['video']", activitiesByGroup['video'])
+
+					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
 					
 					actions.setloading(false)
 

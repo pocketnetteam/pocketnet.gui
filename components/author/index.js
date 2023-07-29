@@ -668,10 +668,11 @@ var author = (function(){
 			},
 
 			panel : function(){
+				
 				self.shell({
 
 					name :  'panel',
-					el :   el.c.find('.panelWrapper'),
+					el :   el.authorcaption.find('.panelWrapper'),
 
 					data : {
 						author : author

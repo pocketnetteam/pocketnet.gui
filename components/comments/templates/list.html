@@ -6,7 +6,7 @@ var commentf = function(comment){
 
 	var hiddenComment = !comment.my(app) && app.platform.sdk.user.hiddenComment(comment) && !(comment.deleted || lockedaccount)
 
-	var hiddenComments = app.platform.sdk.comments.blocked[comment.address]
+	var hiddenComments = false
 
 	var blockedbyme = me && me.relation(comment.address, 'blocking')
 

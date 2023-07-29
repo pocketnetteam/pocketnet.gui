@@ -3284,13 +3284,11 @@ var lenta = (function(){
 						else{
 	
 							// TO DO
-							if(!p.el.find('.showMore').length) {
-								promises.push(new Promise((resolve, reject) => {
+							promises.push(new Promise((resolve, reject) => {
 
-									renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
+								renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
 
-								}))
-							}
+							}))
 								
 						}
 					}
