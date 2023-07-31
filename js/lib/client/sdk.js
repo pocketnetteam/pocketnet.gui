@@ -120,7 +120,9 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var settodb = function (dbname, result) {
-        if (!dbname || !dbmeta[dbname]) return Promise.resolve()
+        if (!dbname || !dbmeta[dbname]) {
+            return Promise.resolve()
+        }
 
         return Promise.all(_.map(result, ({ key, data }) => {
 
@@ -346,8 +348,9 @@ var pSDK = function ({ app, api, actions }) {
                         result = p.transformResult(result)
                     }
 
-                    settodb(p.indexedDb, result)
-                    settodb(p.fallbackIndexedDB, result)
+                    settodb(p.indexedDb, result).then(() => {
+                        settodb(p.fallbackIndexedDB, result)
+                    })
 
                     return resolve(result.concat(dbr))
 
@@ -662,8 +665,8 @@ var pSDK = function ({ app, api, actions }) {
             var fallbackIndexedDB = !light ? 'userInfoFullFB' : null
             var key = light ? 'userInfoLight' : 'userInfoFull'
 
-
             return settodb(indexedDb, result).then(() => {
+
                 return settodb(fallbackIndexedDB, result)
             }).then(() => {
 
@@ -1228,6 +1231,7 @@ var pSDK = function ({ app, api, actions }) {
 
                                 if (last){
                                     if (exp.parentid == last.id){
+
                                         last.children--
                                     }
                                 }
@@ -1242,7 +1246,9 @@ var pSDK = function ({ app, api, actions }) {
                     if (exp.optype == 'comment') {
                         if (object.id == exp.id) return exp
 
-                        if (object.id == exp.parentid) object.children++
+                        if (object.id == exp.parentid) {
+                            object.children++
+                        }
                     }
 
                     if (exp.optype == 'commentEdit') {
@@ -1777,8 +1783,9 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
 
+
                 self.userInfo.cleardb(exp.actor)
-                self.userInfo.cleardb(exp.address)
+                self.userInfo.cleardb(exp.address.v)
             }
         },
         applyAction: function (object, exp) {

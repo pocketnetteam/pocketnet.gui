@@ -1137,17 +1137,17 @@ Nav = function(app)
 
 				var external = core.externalLink(link);
 
+
 				if(!external)
 				{
 					if(link.attr('donottrust'))
 					{
-						
-						link.off('click').on('click', function(){
+						link.off('click').on('click', function(e){
 							var href = $(this).attr('href');	
 
 							app.mobile.vibration.small()
 
-							if (href.indexOf('http') == -1) href = 'https://' + href						
+							if (href.indexOf('http') == -1) href = 'https://' + href
 
 							self.api.load({
 								open : true,
@@ -1158,6 +1158,7 @@ Nav = function(app)
 									link : href
 								}
 							})
+
 
 							return false;
 						})

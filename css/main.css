@@ -3044,7 +3044,7 @@ html.mobileview.android .wnd .wndback {
   height: 2px;
   left: 0;
   right: 0;
-  top: 0;
+  top: var(--app-margin-top);
   width: 100%;
   z-index: 10000000;
   display: none;
