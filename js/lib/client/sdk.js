@@ -1229,6 +1229,7 @@ var pSDK = function ({ app, api, actions }) {
 
                                 if (last){
                                     if (exp.parentid == last.id){
+
                                         last.children--
                                     }
                                 }
@@ -1243,7 +1244,9 @@ var pSDK = function ({ app, api, actions }) {
                     if (exp.optype == 'comment') {
                         if (object.id == exp.id) return exp
 
-                        if (object.id == exp.parentid) object.children++
+                        if (object.id == exp.parentid) {
+                            object.children++
+                        }
                     }
 
                     if (exp.optype == 'commentEdit') {

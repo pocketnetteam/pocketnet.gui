@@ -6260,8 +6260,30 @@ Platform = function (app, listofnodes) {
                         const videoResolution = p.resolutionId;
                         const videoDetails = shareInfo.video.original;
 
+
+                        var progressInterval = setInterval(async function() {
+
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(shareInfo.share.id);
+
+							if (progress != undefined && progress.progress >= 1){
+                                clearInterval(progressInterval);
+                            }
+								
+							if (progress != undefined && !isNaN(progress.progress)){
+
+                                if (p.progress)
+                                    p.progress('video', progress.progress * 100);
+
+                            }
+						}, 500);
+
+
+                        
+
                         const videoData = await electron.ipcRenderer
                             .invoke('saveShareVideo', folder, videoDetails, videoResolution);
+
+                        clearInterval(progressInterval);
 
                         return videoData;
                     },
