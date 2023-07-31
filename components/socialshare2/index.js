@@ -32,8 +32,10 @@ var socialshare2 = (function(){
 
 				self.app.platform.sdk.user.stateAction(() => {
 
+					var share = self.psdk.share.get(shareid) 
+
 					self.app.platform.ui.share({
-						repost : shareid
+						repost : share.repost || shareid
 					})
 
 					setTimeout(function(){

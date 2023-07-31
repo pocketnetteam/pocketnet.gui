@@ -474,7 +474,15 @@ var Action = function(account, object, priority, settings){
                     clearUnspents = filterUnspents(clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
-                        return Promise.reject('actions_noinputs')
+
+                        if (temps.unspents){
+                            return Promise.reject('actions_noinputs_wait')
+                        }
+                        else{
+                            return Promise.reject('actions_noinputs')
+                        }
+                        
+                        
                     }
     
                     unspents = account.getActualUnspents(self.object.type == 'userInfo' ? 'withUnconfirmed' : true, changeAddresses)

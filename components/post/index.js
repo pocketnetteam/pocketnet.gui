@@ -1343,10 +1343,27 @@ var post = (function () {
 							actions.unblock()
 						})
 
-						if (ed.repost)
-							_p.el.find('.showMoreArticle, .openoriginal').on('click', function(){
-								actions.openPost(share.txid)
+						if (ed.repost){
+							_p.el.find('.showMore').on('click', function(e){
+								var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(share.renders.message(), true)))
+
+								var _el = _p.el.find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
+
+								window.requestAnimationFrame(() => {
+									_el.find('.message').html(nm)
+									_el.find('.showMore,.showMorePW').remove()
+
+									self.nav.api.links(null, _el.find('.message'));
+								})
+
+
+								e.preventDefault()
+								return false
 							})
+
+						
+						}
+							
 
 						actions.position();
 

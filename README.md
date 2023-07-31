@@ -84,13 +84,13 @@ You can download our mobile applications from the app stores below:
 
 Latest release of desktop and other app types can be downloaded via the links below:
 
-- **App for Android (without Google services)** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonGF.apk)
-- **Desktop app for Windows** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.exe)
-- **Desktop app for macOS** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.dmg)
+- **App for Android (without Google services)** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonGF.apk)
+- **Desktop app for Windows** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonSetup.exe)
+- **Desktop app for macOS** - [Download](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonSetup.dmg)
 - **Desktop app for Linux**
-  - [Download in DEB format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.deb)
-  - [Download in RPM format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/BastyonSetup.rpm)
-  - [Download in AppImage format](https://github.com/pocketnetteam/pocketnet.gui/releases/download/latest/Bastyon.AppImage)
+  - [Download in DEB format](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonSetup.deb)
+  - [Download in RPM format](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonSetup.rpm)
+  - [Download in AppImage format](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/Bastyon.AppImage)
 
 [**Latest release notes**](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
 

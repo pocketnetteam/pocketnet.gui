@@ -6260,8 +6260,30 @@ Platform = function (app, listofnodes) {
                         const videoResolution = p.resolutionId;
                         const videoDetails = shareInfo.video.original;
 
+
+                        var progressInterval = setInterval(async function() {
+
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(shareInfo.share.id);
+
+							if (progress != undefined && progress.progress >= 1){
+                                clearInterval(progressInterval);
+                            }
+								
+							if (progress != undefined && !isNaN(progress.progress)){
+
+                                if (p.progress)
+                                    p.progress('video', progress.progress * 100);
+
+                            }
+						}, 500);
+
+
+                        
+
                         const videoData = await electron.ipcRenderer
                             .invoke('saveShareVideo', folder, videoDetails, videoResolution);
+
+                        clearInterval(progressInterval);
 
                         return videoData;
                     },
@@ -8537,15 +8559,17 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
+
+                if(!address) return false
+
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
                 
-                if(!ustate) return false
+                if(!ustate || _.isEmpty(ustate)) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? _.reduce(ustate.flags, (mem, a, b) => {
                     return mem + (b == 2 ? a * 3 : a)
                 }, 0) : 0
                 
-
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
@@ -8586,6 +8610,7 @@ Platform = function (app, listofnodes) {
             },
 
             isNotAllowedName : function (user = {}) {
+
                 let name, address
                 if (user.name) {
                     name = user.name
@@ -8595,6 +8620,8 @@ Platform = function (app, listofnodes) {
                     name = user.data.name
                     address = user.data.address
                 }
+
+                if(!name) return false
 
                 /*if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
@@ -8641,13 +8668,10 @@ Platform = function (app, listofnodes) {
             },
 
             scamcriteria : function(address){
-                return false
 
                 if(!address) address = self.app.user.address.value
 
                 var info = self.psdk.userInfo.get(address); 
-                
-                //deep(self, 'sdk.users.storage.' + address);
 
                 if (info.reputation > 100 && info.postcnt < 10) return true
 
@@ -8656,13 +8680,10 @@ Platform = function (app, listofnodes) {
             },
 
             upvotevalueblockcriteria : function(value, address){
-                return false
                 if(!address) address = self.app.user.address.value
 
                 var info = self.psdk.userInfo.get(address); 
                 
-                //deep(self, 'sdk.users.storage.' + address);
-
                 if (value <= 3 && info.reputation < 100) return true
 
                 return false
@@ -14104,9 +14125,9 @@ Platform = function (app, listofnodes) {
             loadblocked : function(clbk){
                 var a = self.sdk.address.pnet();
 
-                if (a) {
+                /*if (a) {
                     self.sdk.comments.blocked = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'blockedcomments') || "{}")
-                }
+                }*/
 
                 if(clbk) clbk()
             },
@@ -14611,9 +14632,6 @@ Platform = function (app, listofnodes) {
                     }
                     var loadedShares = [];
 
-                    console.log("P", p)
-
-
                     _.each(p.txids, function (txid) {
 
                         var curShare = self.sdk.localshares.getShare(txid);
@@ -14627,8 +14645,6 @@ Platform = function (app, listofnodes) {
                             //self.psdk.share.userInfo([curShare.share.share])
                             
                             var newShare = self.psdk.share.get(txid)
-
-                            console.log('newShare', newShare, curShare)
 
                             if (newShare){
                                 if (curShare.share.timestamp)
@@ -17836,6 +17852,8 @@ Platform = function (app, listofnodes) {
             
                 if(state){
                     self.prepare(function(token){
+
+                        console.log('token', token)
 
                         prepareclbk(token)
     
