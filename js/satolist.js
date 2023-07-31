@@ -6715,7 +6715,13 @@ Platform = function (app, listofnodes) {
                     for(const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
 
-                        shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                        try{
+                            shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                        }catch(e){
+                            
+                        }
+
+                       
                     }
 
                     for(const shareIndex in pausedShareList) {
@@ -17750,6 +17756,7 @@ Platform = function (app, listofnodes) {
                         platform.ws.destroyMessages();
                         const body = JSON.parse(data?.json);
                         body.url = body?.url.replace("/index", "");
+
                         if(body.url) {
                             if(body.url === "/userpage?id=wallet"){
                                 platform.app.nav.api.go({
