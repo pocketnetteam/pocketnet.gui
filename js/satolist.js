@@ -8668,13 +8668,10 @@ Platform = function (app, listofnodes) {
             },
 
             scamcriteria : function(address){
-                return false
 
                 if(!address) address = self.app.user.address.value
 
                 var info = self.psdk.userInfo.get(address); 
-                
-                //deep(self, 'sdk.users.storage.' + address);
 
                 if (info.reputation > 100 && info.postcnt < 10) return true
 
@@ -8683,13 +8680,10 @@ Platform = function (app, listofnodes) {
             },
 
             upvotevalueblockcriteria : function(value, address){
-                return false
                 if(!address) address = self.app.user.address.value
 
                 var info = self.psdk.userInfo.get(address); 
                 
-                //deep(self, 'sdk.users.storage.' + address);
-
                 if (value <= 3 && info.reputation < 100) return true
 
                 return false
