@@ -2263,7 +2263,6 @@ pUserInfo = function(){
 		}
 		catch (e){
 			self.addresses = []
-			//console.log('err addresses', e);
 		}
 
 		if(typeof v.trial != 'undefined') self.trial = v.trial
@@ -2889,8 +2888,6 @@ pComment = function(){
 
 	self._import = function(v){
 
-		console.log('import comment', v)
-
 		if (v.msgparsed){
 			self.url = v.msgparsed.url;
 			self.message = v.msgparsed.message
@@ -2936,8 +2933,6 @@ pComment = function(){
 			self.id = v.id || v.txid;
 
 		self.setTime(v.time, v.timeUpd)
-
-		console.log('comment sekf', self, self.children)
 
 	}
 
