@@ -120,7 +120,9 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var settodb = function (dbname, result) {
-        if (!dbname || !dbmeta[dbname]) return Promise.resolve()
+        if (!dbname || !dbmeta[dbname]) {
+            return Promise.resolve()
+        }
 
         return Promise.all(_.map(result, ({ key, data }) => {
 
@@ -143,7 +145,6 @@ var pSDK = function ({ app, api, actions }) {
         })
 
         return self.db.clearMany(dbname, ids).catch(e => {
-            console.log('dbname, ids' , dbname, ids)
             console.error(e)
             return Promise.resolve()
         })
@@ -347,8 +348,9 @@ var pSDK = function ({ app, api, actions }) {
                         result = p.transformResult(result)
                     }
 
-                    settodb(p.indexedDb, result)
-                    settodb(p.fallbackIndexedDB, result)
+                    settodb(p.indexedDb, result).then(() => {
+                        settodb(p.fallbackIndexedDB, result)
+                    })
 
                     return resolve(result.concat(dbr))
 
@@ -663,8 +665,8 @@ var pSDK = function ({ app, api, actions }) {
             var fallbackIndexedDB = !light ? 'userInfoFullFB' : null
             var key = light ? 'userInfoLight' : 'userInfoFull'
 
-
             return settodb(indexedDb, result).then(() => {
+
                 return settodb(fallbackIndexedDB, result)
             }).then(() => {
 
