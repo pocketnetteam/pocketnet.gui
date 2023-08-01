@@ -6623,8 +6623,8 @@ Platform = function (app, listofnodes) {
                             .invoke('getVideoData', shareId, videoId);
 
 
-
-                        videosDataList[videoId] = videoData;
+                        if(videoData)
+                            videosDataList[videoId] = videoData;
 
                         return videosDataList;
                     },
