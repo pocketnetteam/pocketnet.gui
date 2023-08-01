@@ -5835,6 +5835,7 @@ Platform = function (app, listofnodes) {
                             c(data)
                         })
                     })
+                }
 
                 if(clbk) clbk()
             }
