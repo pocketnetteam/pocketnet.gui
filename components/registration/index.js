@@ -315,11 +315,9 @@ var registration = (function(){
 						}
 						catch (e) { }
 
-						
-
 						self.app.platform.sdk.registrations.redirect = null
 
-						if (isMobile()){
+						/*if (isMobile()){
 							self.app.platform.ui.showmykey({
 								afterregistration : true
 							})
@@ -328,7 +326,7 @@ var registration = (function(){
 							self.app.platform.ui.showmykeyfast({
 								showsavelabel : true
 							})
-						}
+						}*/
 						
 					}
 
@@ -982,6 +980,8 @@ var registration = (function(){
 	
 										}
 										else{
+
+											
 	
 											if(clbk) clbk()
 										}
@@ -1004,6 +1004,12 @@ var registration = (function(){
 								state.save()
 	
 								actions.next()
+
+								try{
+									localStorage['needshowkey_' + self.app.user.address.value] = true
+								}catch(e){
+
+								}
 	
 							}
 						},
@@ -1164,6 +1170,9 @@ var registration = (function(){
 				el = {};
 
 				essenseData = {}
+
+				self.app.platform.ui.showkeyafterregistration()
+
 			},
 			
 			init : function(p){

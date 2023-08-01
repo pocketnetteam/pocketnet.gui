@@ -18,7 +18,7 @@
 			var followers = u.subscribers_count;
 			var following  = u.subscribes_count;
 			var about = u.about || '';
-			var src = u.image;
+			var src = (u.image || '').replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet');
 			var name = u.name
 			var letter = name ? name[0] : ''; 
 			var r = u.reputation;

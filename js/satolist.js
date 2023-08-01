@@ -3979,6 +3979,45 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showkeyafterregistration : function(clbk){
+
+            console.log("?????????????")
+
+            self.app.user.isState(function (state) {
+                if(state){
+                    
+                    var needshowkey = false
+
+                    try{
+                        needshowkey = JSON.parse(localStorage['needshowkey_' + self.app.user.address.value] || 'false')
+
+                        //localStorage['needshowkey_' + self.app.user.address.value] = false
+
+                    }catch(e){}
+
+
+                    if (needshowkey){
+                        if (isMobile()){
+                            self.ui.showmykey({
+                                //afterregistration : true,
+                                showsavelabel : true
+                            })
+                        }
+                        else{
+                            self.ui.showmykeyfast({
+                                showsavelabel : true
+                            })
+                        }
+                    }
+
+                    
+                }
+            })
+
+            if(clbk) clbk()
+            
+        },
+
         wallet : {
 
             donate : function(p){
@@ -6433,9 +6472,15 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
+                        let shareData = {};
 
-                        const shareData = await electron.ipcRenderer
-                            .invoke('getShareData', shareId);
+                        try {
+                            shareData = await electron.ipcRenderer
+                                .invoke('getShareData', shareId);
+                        } catch (e) {
+                            console.log(e);
+                            return shareData;
+                        }
 
                         return shareData;
                     },
@@ -6623,8 +6668,8 @@ Platform = function (app, listofnodes) {
                             .invoke('getVideoData', shareId, videoId);
 
 
-
-                        videosDataList[videoId] = videoData;
+                        if(videoData)
+                            videosDataList[videoId] = videoData;
 
                         return videosDataList;
                     },
@@ -6715,7 +6760,13 @@ Platform = function (app, listofnodes) {
                     for(const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
 
-                        shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                        try{
+                            shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                        }catch(e){
+                            
+                        }
+
+                       
                     }
 
                     for(const shareIndex in pausedShareList) {
@@ -6938,6 +6989,12 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.save()
 
                 _.each(this.clbks, function (c) { c(address) })
+
+                try{
+                    localStorage['needshowkey_' + self.app.user.address.value] = false
+                }catch(e){
+
+                }
             },
 
             load: function () {
@@ -17750,6 +17807,7 @@ Platform = function (app, listofnodes) {
                         platform.ws.destroyMessages();
                         const body = JSON.parse(data?.json);
                         body.url = body?.url.replace("/index", "");
+
                         if(body.url) {
                             if(body.url === "/userpage?id=wallet"){
                                 platform.app.nav.api.go({
@@ -22278,7 +22336,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.memtags.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.init,
-                    self.sdk.comments.loadblocked
+                    self.sdk.comments.loadblocked,
+                    self.ui.showkeyafterregistration
 
                 ], function () {
 
