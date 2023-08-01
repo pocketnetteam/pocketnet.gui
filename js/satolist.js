@@ -3979,6 +3979,45 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showkeyafterregistration : function(clbk){
+
+            console.log("?????????????")
+
+            self.app.user.isState(function (state) {
+                if(state){
+                    
+                    var needshowkey = false
+
+                    try{
+                        needshowkey = JSON.parse(localStorage['needshowkey_' + self.app.user.address.value] || 'false')
+
+                        //localStorage['needshowkey_' + self.app.user.address.value] = false
+
+                    }catch(e){}
+
+
+                    if (needshowkey){
+                        if (isMobile()){
+                            self.ui.showmykey({
+                                //afterregistration : true,
+                                showsavelabel : true
+                            })
+                        }
+                        else{
+                            self.ui.showmykeyfast({
+                                showsavelabel : true
+                            })
+                        }
+                    }
+
+                    
+                }
+            })
+
+            if(clbk) clbk()
+            
+        },
+
         wallet : {
 
             donate : function(p){
@@ -6944,6 +6983,12 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.save()
 
                 _.each(this.clbks, function (c) { c(address) })
+
+                try{
+                    localStorage['needshowkey_' + self.app.user.address.value] = false
+                }catch(e){
+
+                }
             },
 
             load: function () {
@@ -22285,7 +22330,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.memtags.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.init,
-                    self.sdk.comments.loadblocked
+                    self.sdk.comments.loadblocked,
+                    self.ui.showkeyafterregistration
 
                 ], function () {
 

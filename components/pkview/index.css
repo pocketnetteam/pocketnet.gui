@@ -149,12 +149,16 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  .wnd.pkviewwnd #pkview .work {
+    width: 100%!important;
+  }
   .wnd.pkviewwnd #pkview .keywrapper {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
   .wnd.pkviewwnd #pkview .key {
     padding: 0.5em;
+    padding-bottom: 5em;
   }
   .wnd.pkviewwnd #pkview .mnemonicKey {
     height: 90px;
@@ -166,5 +170,22 @@
   }
   .wnd.pkviewwnd #pkview .mnemonicKeyTable > div.iconWrapper img {
     margin: 0 auto;
+  }
+  .wnd.pkviewwnd #pkview .dontshowagain {
+    position: fixed;
+    bottom: -10%;
+    left: 5%;
+    width: 90%;
+    margin-left: 0;
+  }
+  .wnd.pkviewwnd #pkview .dontshowagain.active {
+    bottom: 10%;
+  }
+}
+/*t*/
+@media only screen and (max-height: 480px) {
+  .wnd.pkviewwnd #pkview .key {
+    padding: 0.5em;
+    padding-bottom: 5em;
   }
 }
