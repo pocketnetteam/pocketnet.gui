@@ -6472,9 +6472,15 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
+                        let shareData = {};
 
-                        const shareData = await electron.ipcRenderer
-                            .invoke('getShareData', shareId);
+                        try {
+                            shareData = await electron.ipcRenderer
+                                .invoke('getShareData', shareId);
+                        } catch (e) {
+                            console.log(e);
+                            return shareData;
+                        }
 
                         return shareData;
                     },
