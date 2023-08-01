@@ -85,6 +85,10 @@ class Broadcaster {
         });
     }
 
+    removeAllNamed(name) {
+        delete this.listeners[name];
+    }
+
     removeAllListeners() {
         this.listeners = {};
     }

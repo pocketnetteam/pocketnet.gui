@@ -5820,12 +5820,12 @@ Platform = function (app, listofnodes) {
             clbks : {},
             history : [],
             init : function(clbk){
-                if(typeof swBroadcaster != 'undefined')
-                    swBroadcaster.removeAllListeners();
+                if(typeof swBroadcaster != 'undefined') {
+                    swBroadcaster.removeAllNamed('network-stats');
 
                     swBroadcaster.on('network-stats', (data) => {
 
-                        if (self.sdk.broadcaster.history.length > 600){
+                        if (self.sdk.broadcaster.history.length > 600) {
                             self.sdk.broadcaster.history.splice(0, 100)
                         }
 
