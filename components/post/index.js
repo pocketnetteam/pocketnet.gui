@@ -1543,6 +1543,9 @@ var post = (function () {
 				}
 			},
 			stars: function (clbk) {
+
+				console.log('share', share)
+
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1856,7 +1859,12 @@ var post = (function () {
 
 				if(type == 'upvoteShare'){
 
+					console.log('share.txid == alias.share.v', share.txid, alias.share.v)
+
 					if (share.txid == alias.share.v){
+
+						share = self.psdk.share.get(share.txid) 
+						
 						renders.stars()
 					}
 				}
