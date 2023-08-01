@@ -84,6 +84,10 @@ class Broadcaster {
             this.send(name, { id, data });
         });
     }
+
+    removeAllListeners() {
+        this.listeners = {};
+    }
 }
 
 self.Broadcaster = Broadcaster;

@@ -5821,6 +5821,8 @@ Platform = function (app, listofnodes) {
             history : [],
             init : function(clbk){
                 if(typeof swBroadcaster != 'undefined')
+                    swBroadcaster.removeAllListeners();
+
                     swBroadcaster.on('network-stats', (data) => {
 
                         if (self.sdk.broadcaster.history.length > 600){
@@ -22040,6 +22042,7 @@ Platform = function (app, listofnodes) {
         self.sdk.uiScale.listenScalingEvents();
 
         self.sdk.system16.init()
+        self.sdk.broadcaster.init();
 
         //self.app.platform.sdk.node.sys.load()
 
