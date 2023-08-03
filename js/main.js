@@ -14,9 +14,12 @@ if(!_Node)
 	}*/]
 
 	var translateApiProxy = {
-		host : '127.0.0.1',
+		host : '2.pocketnet.app',
+		port : 8899,
+		wss : 8099
+		/*host : '127.0.0.1',
 		port : 8887,
-		wss : 8087
+		wss : 8087*/
 	} 
 	
 	var _listofproxies =  [
