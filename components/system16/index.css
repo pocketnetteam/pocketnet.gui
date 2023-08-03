@@ -339,6 +339,20 @@
   margin-right: 0.5em;
   margin-bottom: 0.5em;
 }
+#system16 .translateapicontent .info {
+  margin-top: 2em;
+  padding: 2 0.5em 0;
+}
+#system16 .translateapicontent .info .row {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+#system16 .translateapicontent .info .row > div {
+  margin-right: 1em;
+}
+#system16 .translateapicontent .info .row .value {
+  font-weight: 700;
+}
 #system16 .webdistributioncontent .walletWrapper {
   border-top: 1px solid rgb(var(--neutral-grad-1));
 }

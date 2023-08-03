@@ -1634,7 +1634,7 @@ var pSDK = function ({ app, api, actions }) {
                         }))).replace(/\n{2,}/g, '\n\n')
                     }
 
-                    c.t = _.map(c.t, function(t){ 
+                    c.t = _.map(c.t || [], function(t){ 
                         return clearStringXss(clearTagString(trydecode(t)))
                     })
 

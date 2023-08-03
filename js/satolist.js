@@ -5840,6 +5840,108 @@ Platform = function (app, listofnodes) {
                 if(clbk) clbk()
             }
         },
+        translate : {
+            storage : {},
+            state : {share : {}, comment : {}},
+            share : {
+                needtranslate : function(txid){
+
+                    var share = self.psdk.share.get(txid)
+
+                    var user = self.psdk.userInfo.getmy()
+
+                    if(!share || !user) return []
+
+                    if(share.language == user.language) return []
+
+                    return [share.language, user.language]
+
+                },
+                lang : function(txid){
+                    self.sdk.translate.storage.share || (self.sdk.translate.storage.share = {})
+
+                    if (self.sdk.translate.state.share[txid] && self.sdk.translate.storage.share[txid][self.sdk.translate.state.share[txid]]){
+                        return self.sdk.translate.state.share[txid]
+                    }
+
+                    else{
+                        var share = self.psdk.share.get(txid)
+
+                        return share.language
+                    }
+                },
+
+                get : function(txid){
+                    var lang = self.sdk.translate.share.lang(txid)
+
+                    if(self.sdk.translate.storage.share[txid] && self.sdk.translate.storage.share[txid][lang]){
+                        return self.sdk.translate.storage.share[txid][lang]
+                    }
+                },
+
+                set : function(txid, dl){
+                    self.sdk.translate.state.share[txid] = dl
+                },
+                request : function(txid, dl){
+
+                    var share = self.psdk.share.get(txid)
+
+                    if (share.language == dl) return Promise.resolve()
+
+                    self.sdk.translate.storage.share || (self.sdk.translate.storage.share = {})
+                    self.sdk.translate.storage.share[txid] || (self.sdk.translate.storage.share[txid] = {})
+
+                    if(self.sdk.translate.storage.share[txid][dl]) return Promise.resolve(self.sdk.translate.storage.share[txid][dl])
+
+                    return self.app.api.translate.share(txid, dl).then((result) => {
+
+                        var cleaned = self.psdk.share.cleanData([result])
+
+                        if(!cleaned.length){
+                            return Promise.reject('translate.clean')
+                        }
+
+                        self.sdk.translate.storage.share[txid][dl] = cleaned[0]
+
+                        return Promise.resolve(self.sdk.translate.storage.share[txid][dl])
+
+                    })
+                    
+                }
+            },
+            comment : {
+                needtranslate : function(txid){
+                },
+                lang : function(txid){
+
+                },
+                set : function(txid, dl){
+                    self.sdk.translate.state.comment || (self.sdk.translate.state.comment = {})
+                    self.sdk.translate.state.comment[txid] = dl
+                },
+                request : function(txid, dl){
+                    self.sdk.translate.storage.comment || (self.sdk.translate.storage.comment = {})
+                    self.sdk.translate.storage.comment[txid] || (self.sdk.translate.storage.comment[txid] = {})
+
+                    if(self.sdk.translate.storage.comment[txid][dl]) return Promise.resolve(self.sdk.translate.storage.comment[txid][dl])
+
+                    return self.app.api.translate.comment(txid, dl).then((result) => {
+
+                        var cleaned = self.psdk.comment.cleanData([result])
+
+                        if(!cleaned.length){
+                            return Promise.reject('translate.clean')
+                        }
+
+                        self.sdk.translate.storage.comment[txid][dl] = cleaned[0]
+
+                        return Promise.resolve(self.sdk.translate.storage.comment[txid][dl])
+
+                    })
+                    
+                }
+            }
+        },
         faqLangs : {
             get : function(clbk){
 
@@ -17769,103 +17871,111 @@ Platform = function (app, listofnodes) {
             if(using) {
                 FirebasePlugin.onMessageReceived((data) => {
 
-                    if (!data) data = {}
+                    pretry(function(){
 
-                    if (data.data)
-                        platform.ws.messageHandler(data.data)
+                        return app.appready
+        
+                    }).then(r => {
+                        if (!data) data = {}
 
-
-
-                    if (data.room_id) {
-
-                        if (data.tap) {
-                            // Wait until we can navigate Matrix
-                            retry(function () {
-
-                                return platform && platform.matrixchat && platform.matrixchat.core;
-
-                            }, function () {
-
-                                setTimeout(function () {
-
-                                    platform.matrixchat.core.goto(data.room_id);
-
-                                if (platform.matrixchat.core.apptochat)
-                                    platform.matrixchat.core.apptochat();
-
-                                }, 50)
-
-
-
-                            });
-                        }
-
-
-
-                        return;
-                    }
-
-                    if (data.tap) {
-
-                        platform.ws.destroyMessages();
-                        const body = JSON.parse(data?.json);
-                        body.url = body?.url.replace("/index", "");
-
-                        if(body.url) {
-                            if(body.url === "/userpage?id=wallet"){
-                                platform.app.nav.api.go({
-                                    open: true,
-                                    href: 'wallet',
-                                    history: true,
-                                    inWnd: true,
-                                    essenseData: {
-                                    },
+                        if (data.data)
+                            platform.ws.messageHandler(data.data)
+    
+    
+    
+                        if (data.room_id) {
+    
+                            if (data.tap) {
+                                // Wait until we can navigate Matrix
+                                retry(function () {
+    
+                                    return platform && platform.matrixchat && platform.matrixchat.core;
+    
+                                }, function () {
+    
+                                    setTimeout(function () {
+    
+                                        platform.matrixchat.core.goto(data.room_id);
+    
+                                    if (platform.matrixchat.core.apptochat)
+                                        platform.matrixchat.core.apptochat();
+    
+                                    }, 50)
+    
+    
+    
                                 });
-                            }else {
-
-                                const params = new URLSearchParams(body.url);
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'post?s=' + params.get('s'),
-                                    inWnd: true,
-                                    history: true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['post'] = p
-                                    },
-
-                                    essenseData: {
-                                        share: params.get('s'),
-
-                                        reply: {
-                                            answerid: params.get('commentid') || "",
-                                            parentid: params.get('parentid') || "",
-                                            noaction: true
+                            }
+    
+    
+    
+                            return;
+                        }
+    
+                        if (data.tap) {
+    
+                            platform.ws.destroyMessages();
+                            const body = JSON.parse(data?.json);
+                            body.url = body?.url.replace("/index", "");
+    
+                            if(body.url) {
+                                if(body.url === "/userpage?id=wallet"){
+                                    platform.app.nav.api.go({
+                                        open: true,
+                                        href: 'wallet',
+                                        history: true,
+                                        inWnd: true,
+                                        essenseData: {
+                                        },
+                                    });
+                                }else {
+    
+                                    const params = new URLSearchParams(body.url);
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + params.get('s'),
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+    
+                                        essenseData: {
+                                            share: params.get('s'),
+    
+                                            reply: {
+                                                answerid: params.get('commentid') || "",
+                                                parentid: params.get('parentid') || "",
+                                                noaction: true
+                                            }
                                         }
+                                    })
+                                }
+                            }else{
+                                platform.app.nav.api.go({
+                                    open : true,
+                                    href : 'notifications',
+                                    inWnd : true,
+                                    history : true,
+                                    essenseData : {
                                     }
                                 })
                             }
-                        }else{
-                            platform.app.nav.api.go({
-                                open : true,
-                                href : 'notifications',
-                                inWnd : true,
-                                history : true,
-                                essenseData : {
-                                }
-                            })
+                        } else {
+    
+                            if (typeof cordova != 'undefined') {
+    
+                                var cordovabadge = deep(cordova, 'plugins.notification.badge')
+    
+                                if (cordovabadge)
+                                    cordovabadge.increase(1, function (badge) {
+                                    });
+                            }
+    
                         }
-                    } else {
+                    })
 
-                        if (typeof cordova != 'undefined') {
-
-                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                            if (cordovabadge)
-                                cordovabadge.increase(1, function (badge) {
-                                });
-                        }
-
-                    }
+                    
 
 
             });
