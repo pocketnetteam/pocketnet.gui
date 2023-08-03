@@ -2734,33 +2734,31 @@ pShare = function(){
 	}
 
 	self.renders = {
-		captionclear : function(){
-			return self.caption || ''
+		captionclear : function(c){
+			return c || self.caption || ''
 		},
-		caption : function(){
-			if(!self.caption){
+		caption : function(c, m){
+			if(!c && !self.caption){
 
-				if(self.message.length < 100) {
-					return trimrn(self.message)
+				if((self.message).length < 100) {
+					return trimrn(m || self.message)
 				}
 
 				return ''
 
 			}
 
-			var m = trimrn(self.caption);
+			var m = trimrn(c || self.caption);
 
 			return m;
 		},
 
-		message : function(){
-			if(!self.caption && self.message.length < 100){
+		message : function(c, m){
+			if((!c && !self.caption) && (self.message).length < 100){
 				return ''
 			}
 
-			var m = trimrn(self.message)
-
-			//if(self.url) m = m.replace(self.url, '')
+			var m = trimrn(m || self.message)
 
 			return m
 		},

@@ -41,6 +41,7 @@ var lenta = (function(){
 		var shareInitedMap = {},
 			shareInitingMap = {},
 			sharesFromSub = {},
+			showMoreStatus = {},
 			fullScreenVideoParallax = null,
 			loading = false,
 			ended = false,
@@ -102,6 +103,25 @@ var lenta = (function(){
 
 		var actions = {
 
+			translate : function(txid, dl){
+				return self.app.platform.sdk.translate.share.request(txid, dl).then((r) => {
+					console.log("R", r)
+					self.app.platform.sdk.translate.share.set(txid, dl)
+
+					var share = self.psdk.share.get(txid);
+
+					actions.actualText(share)
+					
+				}).catch(e => {
+
+					console.error(e)
+
+					sitemessage(self.app.localization.e('unabletotranslate'))
+
+					return Promise.resolve()
+				})
+			},
+
 			replaceShare : function(txid){
 				var replace = _.find(sharesInview, (share) => share.txid == txid)
 
@@ -114,11 +134,14 @@ var lenta = (function(){
 						renders.shares([trx], function(){
 							renders.sharesInview([trx], function(){
 								
+							}, {
+								insertimmediately : true
 							})
 						}, {
 							inner : replaceWith,
 							el : el.share[replace.txid],
 							ignoresw : true,
+							insertimmediately : true
 						})
 					}
 				}
@@ -432,7 +455,7 @@ var lenta = (function(){
 						events.resize();
 					}, 200);
 
-				}, true);
+				}, showMoreStatus[share.txid]);
 			},	
 
 			newmaterials : function(data){
@@ -616,6 +639,7 @@ var lenta = (function(){
 				loadertimeout = null
 				sharesFromRecommendations = {}
 				authorsettings = {}
+				showMoreStatus = {}
 
 				/*_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -1166,6 +1190,32 @@ var lenta = (function(){
 
 			},
 
+			actualText : function(share){
+				var _el = el.share[share.txid].find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
+
+				var translated = self.app.platform.sdk.translate.share.get(share.txid) || {}
+
+				var c = findAndReplaceLink(share.renders.caption(translated.c, translated.m), true)
+
+				var m = share.renders.message(translated.c, translated.m);
+				if(!showMoreStatus[share.txid]) m = trimHtml(m, 750);
+				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
+
+				window.requestAnimationFrame(() => {
+
+					_el.find('.sharecaption span').html(c)
+
+					_el.find('.message').html(nm)
+
+					self.nav.api.links(null, _el.find('.message'));
+					self.nav.api.links(null, _el.find('.sharecaption'));
+					
+					if (showMoreStatus[share.txid]){
+						_el.find('.showMore,.showMorePW').remove()
+					}
+				})
+			},
+
 			openPost : function(id, clbk, video, _share, openWnd){
 				var share = self.psdk.share.get(id) || _share; 
 				
@@ -1247,25 +1297,11 @@ var lenta = (function(){
 
 					var share = self.psdk.share.get(id)
 
-					var _el = el.share[id].find('.shareTable[stxid="'+id+'"] >div.cntswrk.postcontent')
-
 					if(!share) return
 
-					var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(share.renders.message(), true)))
+					showMoreStatus[share.txid] = true
 
-					window.requestAnimationFrame(() => {
-						_el.find('.message').html(nm)
-						_el.find('.showMore,.showMorePW').remove()
-
-						self.nav.api.links(null, _el.find('.message'));
-					})
-
-					//	actions.destroyShare(share)
-
-						
-					/*renders.share(share, function(){
-						if(clbk) clbk()
-					}, true)*/
+					actions.actualText(share)
 
 				}
 
@@ -2295,6 +2331,31 @@ var lenta = (function(){
 
 			},
 
+			translateto: function(){
+
+				var _el = $(this)
+
+				var shareId = _el.closest('.share').attr('id');
+				var dl = _el.attr('dl')
+
+				var active = _el.hasClass('active')
+
+				if(active) return
+
+				var l = _el.closest('.translateApi').find('.loading')
+
+				if (l.length) return
+
+				_el.closest('.translateApi').find('.translateto').removeClass('active')
+				_el.addClass('loading')
+
+				actions.translate(shareId, dl).then(() => {
+					_el.removeClass('loading')
+					_el.addClass('active')
+				})
+				
+			},
+
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
 				var address = $(this).attr('address') 
@@ -3208,7 +3269,8 @@ var lenta = (function(){
 						shareRelayedFlag : false,
 						authorsettings,
 						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
-					}
+					},
+					insertimmediately : p.insertimmediately
 
 				}, function(p){
 
@@ -3553,9 +3615,10 @@ var lenta = (function(){
 							shareInitedMap[share.txid] = true
 
 
-							renders.share(share, _p.success, null, {
+							renders.share(share, _p.success, showMoreStatus[share.txid] || false, {
 								boosted : p.boosted,
-								index : index
+								index : index,
+								insertimmediately : p.insertimmediately
 							})
 
 						}
@@ -3655,6 +3718,7 @@ var lenta = (function(){
 					},
 					animation : false,
 					delayRender : isotopeinited,
+					insertimmediately : p.insertimmediately || false
 
 				}, function(_p){
 
@@ -4755,6 +4819,8 @@ var lenta = (function(){
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
 
+			el.c.on('click', '.translateto', events.translateto)
+
 			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
@@ -5584,6 +5650,7 @@ var lenta = (function(){
 				})
 
 				players = {}
+				showMoreStatus = {}
 
 				video = false					
 

@@ -1,6 +1,5 @@
 <%
-var c = share.renders.caption();
-var cc = share.renders.captionclear();
+
 
 if(typeof ed == 'undefined') ed = {}
 
@@ -49,6 +48,14 @@ var userInfo = psdk.userInfo.get(share.address) || {}
 var name = app.platform.api.clearname(userInfo.name || share.address)
 
 var medeleted = app.platform.sdk.user.myaccauntdeleted()
+
+var translates = app.platform.sdk.translate.share.needtranslate(share.txid)
+var lang = app.platform.sdk.translate.share.lang(share.txid)
+var translated = app.platform.sdk.translate.share.get(share.txid) || {}
+
+var c = share.renders.caption(translated.c, translated.m);
+var cc = share.renders.captionclear(translated.c);
+
 
 var metadisplay = function(){ %>
 
@@ -181,7 +188,7 @@ var makearticle = function(){
 	%> 
 
 	<div class="article">
-		<%=edjs.parse(share.message)%>
+		<%=edjs.parse(translated.m || share.message)%>
 	</div>
 
 	<%
@@ -190,8 +197,6 @@ var makearticle = function(){
 var arranges = {
 	
 	cm : function(){ 
-
-		
 		
 		makecaption()
 
@@ -199,7 +204,22 @@ var arranges = {
 			return makearticle()
 		}
 
-		var m = share.renders.message();
+		var m = share.renders.message(translated.c, translated.m);
+
+		if(translates.length && (m || c)) {%>
+
+			<div class="paddingWrapper translateApi">
+				<% _.each(translates, function(t){ %>
+					<div class="translateto <% if(lang == t) {%> active <% } %>" dl="<%-t%>">
+						<span><%-flb(t)%></span> <i class="fas fa-spinner fa-spin"></i>
+					</div>
+				<% }) %>
+				
+			</div>
+
+		<% }
+
+		
 
 		if (m) {
 
@@ -218,7 +238,10 @@ var arranges = {
 			nm = findAndReplaceLink(nm, true)
 
 		%>
-			<div class="paddingWrapper ">
+
+			
+
+			<div class="paddingWrapper">
 				<div class="message canmark cancopy hyhpensenable">
 					<%=app.actions.emoji(nl2br(nm))%>
 				</div>
@@ -390,11 +413,11 @@ var arranges = {
 			
 			<% if(!checkvisibility && !lockedaccount) {%>
 
+				
+
 				<div class="cntswrk cntscontent postcontent">
 
-
 					<% var a = share.settings.a || share.default.a %>
-
 
 					<% _.each(a, function(key, i){ %> 
 
@@ -405,6 +428,7 @@ var arranges = {
 				</div>
 
 			<% } else { %> 
+				
 				<div class="cntswrk cntscontent postcontent">
 
 					<div class="hiddenpost">

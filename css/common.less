@@ -1083,6 +1083,46 @@
         }
     }
 
+    .translateApi{
+        margin-bottom: @rhythm;
+        display: flex;
+        
+
+        .translateto{
+            margin-right: @rhythm;
+            border-radius: 8px;
+            padding: 4px 10px;
+            background: rgb(var(--background-secondary-theme));
+            display: flex;
+            align-items: center;
+
+            i{
+                color : rgb(var(--color-bg-ac-bright));
+                margin-left: 0.5 * @rhythm;
+                display: none;
+            }
+
+            cursor: pointer;
+            span{
+                font-weight: 500;
+                font-size: 0.9em;
+                color : rgb(var(--neutral-grad-4));
+            }
+
+            &.active{
+                span{
+                    color : rgb(var(--color-bg-ac-bright))
+                }
+            }
+
+            &.loading{
+                i{
+                    display: block;
+                }
+            }
+        }
+    }
+
     .tags{
         margin-bottom: 2 * @rhythm;
         max-width: 650px;

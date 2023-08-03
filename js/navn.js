@@ -64,6 +64,7 @@ Nav = function(app)
 	var relations = {}
 
 	self.wnds = {};
+	self.prepared = false
 
 	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
 
@@ -623,8 +624,11 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 
-							core.removeWindows(p.completeHref)
-							core.removeChat(p.completeHref)
+							if(!p.loadDefault){
+								core.removeWindows(p.completeHref)
+								core.removeChat(p.completeHref)
+							}
+							
 
 							if (p.goback){
 								app.actions.scroll(p.goback.scroll)
@@ -1557,7 +1561,7 @@ Nav = function(app)
 			protocolAction('seoRedirect');
 
 			if (window.cordova && backManager.chain.length){
-				var href = backManager.chain[0].href	
+				var href = backManager.chain[0].href || ''
 
 				history.replaceState({
 
@@ -1591,7 +1595,6 @@ Nav = function(app)
 				p.open = true;
 				p.history = true;
 				p.loadDefault = true;
-
 
 				var path = parameters().path
 

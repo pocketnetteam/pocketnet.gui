@@ -17,6 +17,7 @@ var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
+var TranslateApi = require('./server/translateapi.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
 var TorControl = require('./node/torcontrol.js');
@@ -51,6 +52,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
 	var nodeControl = new NodeControl(settings.node, self);
+	var translateapi = new TranslateApi(settings.translateapi, self)
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
@@ -82,6 +84,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		proxies, exchanges, peertube, bots,
 		systemnotify, notifications,
 		logger,
+		translateapi,
 		proxy: self
 	})
 
@@ -549,12 +552,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
-	self.transports = {
-		isAltTransportSet: (url) => {
-			return transports.isTorNeeded(url)
-		},
-	}
-
 	self.torapplications = {
 		init: function () {
 			return torapplications.init()
@@ -683,6 +680,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		get kit() {
 			return exchanges.kit
 		},
+	}
+
+	self.translateapi = {
+		settingChanged : function(settings){
+			translateapi.settingChanged(settings)
+		}
 	}
 
 	var trustpeertube = []
@@ -1226,7 +1229,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					'1' : loads[0],
 					'5' : loads[1],
 					'15' : loads[2]
-				}
+				},
+
+				translateapi : translateapi.info(compact)
 			}
 		},
 
@@ -2330,8 +2335,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
-		
-
 		firebase: {
 			set: {
 				authorization: 'signature',
@@ -2457,6 +2460,35 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		peertube: {
 
+		},
+
+		translate : {
+			share : {
+				authorization: 'signature',
+				path : '/translate/share',
+				action : function({txid, dl, txidEdit}){
+					return translateapi.translate.share(txid, dl, txidEdit).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			},
+			comment : {
+				authorization: 'signature',
+				path : '/translate/comment',
+				action : function({id, dl}){
+					return translateapi.translate.comment(id, dl).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			}
 		},
 
 		captcha: {

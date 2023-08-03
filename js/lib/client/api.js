@@ -673,6 +673,7 @@ var Api = function(app){
     var useproxy = true;
     var inited = false;
     var fixednode = null;
+    var translateApiProxy = null
 
     var getproxyas = function(key){
 
@@ -812,6 +813,10 @@ var Api = function(app){
 
                         this.addlist(initialProxies)
 
+                        if (deep(app, 'options.translateApiProxy')){
+                            this.addTranslateProxy(deep(app, 'options.translateApiProxy'))
+                        }
+
 
                         try{ this.addlist(JSON.parse(localStorage['listofproxies'] || "[]")) }
                         catch(e){}
@@ -892,6 +897,18 @@ var Api = function(app){
                         return proxy
                     }
                     
+                },
+
+                addTranslateProxy : function(meta){
+
+                    if(translateApiProxy) return
+                    ///translateApiProxy
+                    translateApiProxy = new Proxy16(meta, app, self) 
+
+                    if (translateApiProxy.valid() || translateApiProxy.direct){
+                        translateApiProxy.init()
+                        return translateApiProxy
+                    }
                 },
 
                 find : function(id){
@@ -1505,6 +1522,23 @@ var Api = function(app){
     self.destroy = function(){
         proxies = []
         inited = false
+
+        if(translateApiProxy) translateApiProxy = null
+    }
+
+    self.translate = {
+        share : function(txid, dl, options = {}){
+            if(!translateApiProxy) return Promise.reject('translate:ApiProxy')
+
+            return translateApiProxy.fetchauth('translate/share', {txid, dl}, options)
+
+        },
+
+        comment : function(id, dl, options = {}){
+            if(!translateApiProxy) return Promise.reject('translate:ApiProxy')
+
+            return translateApiProxy.fetchauth('translate/comment', {id, dl}, options)
+        }
     }
 
     return self

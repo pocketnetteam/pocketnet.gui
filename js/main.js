@@ -12,6 +12,15 @@ if(!_Node)
 		"cantdelete" : true,
 		"name" : "Demo application"
 	}*/]
+
+	var translateApiProxy = {
+		host : '2.pocketnet.app',
+		port : 8899,
+		wss : 8099
+		/*host : '127.0.0.1',
+		port : 8887,
+		wss : 8087*/
+	} 
 	
 	var _listofproxies =  [
 		
@@ -142,7 +151,8 @@ if(!_Node)
 	app = new Application({
 		listofproxies : _listofproxies,
 		matrix : matrix,
-		developapps
+		developapps,
+		translateApiProxy
 	});
 
 	app.preapi()

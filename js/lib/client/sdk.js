@@ -1557,6 +1557,8 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawshares, (c) => {
 
+                if(!c) return false
+
                 try {
                     c.u = clearStringXss(trydecode(c.u || ''));
                     c.c = clearStringXss(trydecode(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
@@ -1634,7 +1636,7 @@ var pSDK = function ({ app, api, actions }) {
                         }))).replace(/\n{2,}/g, '\n\n')
                     }
 
-                    c.t = _.map(c.t, function(t){ 
+                    c.t = _.map(c.t || [], function(t){ 
                         return clearStringXss(clearTagString(trydecode(t)))
                     })
 
