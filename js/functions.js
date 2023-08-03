@@ -9733,7 +9733,7 @@ edjsHTML = function () {
 	}
 
 	function t(e) {
-		return new Error('[31m The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: [34mhttps://github.com/pavittarx/editorjs-html#extend-for-custom-blocks [0m')
+		return new Error('The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: https://github.com/pavittarx/editorjs-html#extend-for-custom-blocks')
 	}
 
 	var r = function (n, app) {

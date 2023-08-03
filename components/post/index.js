@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false;
 
 		var progressInterval;
 
@@ -22,6 +22,49 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			translate : function(dl){
+				return self.app.platform.sdk.translate.share.request(share.txid, dl).then((r) => {
+					self.app.platform.sdk.translate.share.set(share.txid, dl)
+
+					actions.actualText()
+					
+				}).catch(e => {
+
+					console.error(e)
+
+					sitemessage(self.app.localization.e('unabletotranslate'))
+
+					return Promise.resolve()
+				})
+			},
+
+			actualText : function(){
+
+				var _el = el.c.find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
+
+				var translated = self.app.platform.sdk.translate.share.get(share.txid) || {}
+
+				var c = findAndReplaceLink(share.renders.caption(translated.c, translated.m), true)
+				var m = share.renders.message(translated.c, translated.m);
+				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750);
+				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
+
+				window.requestAnimationFrame(() => {
+
+					_el.find('.sharecaption span').html(c)
+
+					_el.find('.message').html(nm)
+
+					self.nav.api.links(null, _el.find('.message'));
+					self.nav.api.links(null, _el.find('.sharecaption'));
+
+					if (showMoreStatus && ed.repost){
+						_el.find('.showMore,.showMorePW').remove()
+					}
+				
+				})
+			},
 			unblock : function(){
 					
 				self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
@@ -240,11 +283,7 @@ var post = (function () {
 
 				})
 
-
-
 			},
-
-			
 
 			sharesocial: function (clbk) {
 				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
@@ -844,6 +883,35 @@ var post = (function () {
 		}
 
 		var events = {
+
+			translateto: function(e){
+
+				var _el = $(this)
+
+				var dl = _el.attr('dl')
+
+				var active = _el.hasClass('active')
+
+				var l = _el.closest('.translateApi').find('.loading')
+
+				if (l.length) return
+
+				_el.closest('.translateApi').find('.translateto').removeClass('active')
+
+				if(!active){
+					_el.addClass('loading')
+
+					actions.translate(dl).then(() => {
+						_el.removeClass('loading')
+						_el.addClass('active')
+					})
+				}
+
+				e.preventDefault()
+				return false
+				
+			},
+
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
 				var address = $(this).attr('address')
@@ -1343,22 +1411,22 @@ var post = (function () {
 							actions.unblock()
 						})
 
+						_p.el.find('.translateto').on('click', events.translateto)
+
+
 						if (ed.repost){
 							_p.el.find('.showMore').on('click', function(e){
-								var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(share.renders.message(), true)))
 
-								var _el = _p.el.find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
-
-								window.requestAnimationFrame(() => {
-									_el.find('.message').html(nm)
-									_el.find('.showMore,.showMorePW').remove()
-
-									self.nav.api.links(null, _el.find('.message'));
-								})
-
+								showMoreStatus = true
+								actions.actualText()
 
 								e.preventDefault()
 								return false
+
+							})
+
+							_p.el.find('.openoriginal').on('click', function(){
+								actions.openPost(share.txid)
 							})
 
 						
@@ -2093,6 +2161,7 @@ var post = (function () {
 				delete self.app.platform.actionListeners[eid]
 
 				authblock = false;
+				showMoreStatus = false;
 
 				if (player) {
 

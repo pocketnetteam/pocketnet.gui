@@ -176,6 +176,7 @@ Application = function (p) {
 
 		listofnodes: p.listofnodes || null,
 		listofproxies: p.listofproxies || null,
+		translateApiProxy : p.translateApiProxy,
 
 		unathorizated: function (ignoreDialog) {
 
@@ -1171,6 +1172,7 @@ Application = function (p) {
 
 	}
 
+
 	self.init = function (p) {
 
 		self.boost = !(window.cordova && isios());
@@ -1190,8 +1192,6 @@ Application = function (p) {
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 
 		self.initvideodb()
-
-
 
 		self.localization.init(function () {
 
@@ -1492,8 +1492,6 @@ Application = function (p) {
 
 			setTimeout(function () {
 				self.appready = true
-
-
 			}, 2000)
 		}
 

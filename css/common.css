@@ -799,6 +799,35 @@
   font-size: 0.8em;
   opacity: 0.8;
 }
+.share_common .translateApi {
+  margin-bottom: 0.5em;
+  display: flex;
+}
+.share_common .translateApi .translateto {
+  margin-right: 0.5em;
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.share_common .translateApi .translateto i {
+  color: rgb(var(--color-bg-ac-bright));
+  margin-left: 0.25em;
+  display: none;
+}
+.share_common .translateApi .translateto span {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: rgb(var(--neutral-grad-4));
+}
+.share_common .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.share_common .translateApi .translateto.loading i {
+  display: block;
+}
 .share_common .tags {
   margin-bottom: 1em;
   max-width: 650px;

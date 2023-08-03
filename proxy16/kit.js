@@ -246,6 +246,11 @@ var defaultSettings = {
 		}
 	},
 
+	translateapi : {
+		api : 'yandex',
+		key : ''
+	},
+
     node: {
 		dbpath : 'data/node',
         enabled: false,
@@ -327,7 +332,11 @@ var state = {
 				customObfs4 : settings.tor.customObfs4,
 			},
 			testkeys : state.exportkeys(),
-			systemnotify : settings.systemnotify
+			systemnotify : settings.systemnotify,
+			translateapi : {
+				api : settings.translateapi.api,
+				key : settings.translateapi.key
+			}
 			//rsa : settings.rsa
 		}
 
@@ -354,6 +363,9 @@ var state = {
 
 			if (exporting.wallet.addresses.balance.privatekey)
 				exporting.wallet.addresses.balance.privatekey = "*"
+
+			if (exporting.translateapi.key)
+				exporting.translateapi.key = "*"
 		}
 
 		return exporting
@@ -1078,6 +1090,26 @@ const kit = {
 
 					return state.save()
 				}
+			},
+
+			translateapi : {
+				settings: function (data) {
+					return kit.proxy().then((proxy) => {
+
+						if (typeof data.api != 'undefined')
+							settings.translateapi.api = data.api
+
+						if (typeof data.key != 'undefined') {
+							settings.translateapi.key = data.key
+						}
+						
+						return proxy.translateapi.settingChanged(settings.translateapi)
+
+					}).then(() => {
+						console.log('settings.translateapi', settings.translateapi)
+						return state.save()
+					})
+				},
 			}
 		},
 
@@ -1262,40 +1294,6 @@ const kit = {
 
 				})
 			}
-
-			/*remove: function () {
-				return kit.proxy().then(proxy => {
-					return proxy.torapplications.remove();
-				})
-			}*/
-			//settings.tor.useSnowFlake
-
-			/*start: function (data) {
-				const isPersistent = data?.persistence;
-
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.start();
-
-					if (isPersistent) {
-						settings.tor.enabled = true
-					}
-
-					await state.save();
-				})
-			},
-			stop: function (data) {
-				const isPersistent = data?.persistence;
-
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.stop();
-
-					if (isPersistent) {
-						settings.tor.enabled = false
-					}
-
-					await state.save()
-				})
-			},*/
 
 		},
 
