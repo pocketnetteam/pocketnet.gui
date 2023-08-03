@@ -1557,6 +1557,8 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawshares, (c) => {
 
+                if(!c) return false
+
                 try {
                     c.u = clearStringXss(trydecode(c.u || ''));
                     c.c = clearStringXss(trydecode(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
