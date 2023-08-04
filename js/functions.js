@@ -9497,7 +9497,7 @@ edjsHTML = function () {
 			if (t.withBorder) cl.push('withBorder')
 			if (t.stretched) cl.push('stretched')
 
-			var src = t.file && t.file.url ? t.file.url : t.file
+			var src = (t.file && t.file.url ? t.file.url : t.file).replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 
 			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + _.escape(src) + '" alt="' + (r) + '" />' +
 

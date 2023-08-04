@@ -1,6 +1,5 @@
 <%
 
-var cc = share.renders.captionclear();
 
 if(typeof ed == 'undefined') ed = {}
 
@@ -34,6 +33,13 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 var userInfo = psdk.userInfo.get(share.address) || {}
 
 var name = app.platform.api.clearname(userInfo.name || share.address)
+
+var translates = app.platform.sdk.translate.share.needtranslate(share.txid)
+var lang = app.platform.sdk.translate.share.lang(share.txid)
+var translated = app.platform.sdk.translate.share.get(share.txid) || {}
+
+var cc = share.renders.captionclear(translated.c);
+
 
 %> 
 
@@ -220,6 +226,15 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
                 <div class="iconwrapper">
                     <span><%-compressedNumber(share.comments || 0)%></span> <i class="fas fa-comments"></i>
                 </div>
+
+                <div class="translateApi">
+                    <% _.each(translates, function(t){ %>
+                        <div class="translateto <% if(lang == t) {%> active <% } %>" dl="<%-t%>">
+                            <span><%-flb(t)%></span> <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    <% }) %>
+                    
+                </div>
         
 	
             </div>
@@ -375,7 +390,7 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
     var txt = null
 
     try{
-        var message = edjs.apply(share.message, decodeURIComponent)
+        var message = edjs.apply(translated.m || share.message, trydecode)
         txt = edjs.parse(message)
     } catch(e){
         console.error(e)
@@ -463,7 +478,7 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
                                 <% if(!share.temp && !share.relay){
                                     
                                     var edjs = new edjsHTML(null, app)
-                                    var message = edjs.apply(share.message, decodeURIComponent)
+                                    var message = edjs.apply(translated.m || share.message, decodeURIComponent)
 				                    var words = edjs.words(message)
 
                                     var textPreview = '';

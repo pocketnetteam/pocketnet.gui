@@ -477,6 +477,19 @@
 #post .sharearticle .sharepanel {
   padding-right: 0.5em;
 }
+#post .sharearticle .translateApi {
+  margin-bottom: 0;
+}
+#post .sharearticle .translateApi .translateto {
+  margin-right: 0;
+  background: transparent;
+}
+#post .sharearticle .translateApi .translateto span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+#post .sharearticle .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
 #post .sharearticle .shareBgCaption .author,
 #post .sharearticle .articleend .author {
   margin-top: 1em;

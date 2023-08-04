@@ -632,6 +632,24 @@
 			padding-right: @rhythm;
 		}
 
+		.translateApi{
+			margin-bottom: 0;
+
+			.translateto{
+				margin-right: 0;
+				background: transparent;
+				span{
+					color : rgb(var(--text-on-bg-shadow-color));
+				}
+
+				&.active{
+					span{
+						color : rgb(var(--color-bg-ac-bright))
+					}
+				}
+			}
+		}
+
 		.shareBgCaption,
 		.articleend{
 
