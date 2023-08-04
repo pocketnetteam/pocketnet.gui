@@ -288,6 +288,7 @@ var TranslateApi = function(p = {}){
 
                                 return Promise.all([
                                     translateChunks(chunks, c.l, dl, id + '_a_caption', sys),
+
                                     self.translate.article(id, article, c.l, dl)
                                 ]).then((results) => {
 
@@ -320,6 +321,7 @@ var TranslateApi = function(p = {}){
                     }
 
                     return translateChunks(chunks, c.l, dl, id, sys).then((result) => {
+
                         result.s = c.s
 
                         return Promise.resolve(result)
