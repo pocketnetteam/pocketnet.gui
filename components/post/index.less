@@ -879,19 +879,16 @@
 			&.verticalcover{
 				height: 720px;
 
-				.shareBgCaption{
-					.translateApi{
-            
-						.translateto{
-							
+				.translateApi{
+					.translateto{
+						
+						span{
+							color : rgb(var(--text-color));
+						}
+	
+						&.active{
 							span{
-								color : rgb(var(--text-color));
-							}
-		
-							&.active{
-								span{
-									color : rgb(var(--color-bg-ac-bright))
-								}
+								color : rgb(var(--color-bg-ac-bright))
 							}
 						}
 					}
@@ -1266,20 +1263,18 @@ html.mobileview{
 						backdrop-filter: brightness(85%);
 					}
 
-					.shareBgCaption{
 
-						.translateApi{
-				
-							.translateto{
-								height: 7 * @rhythm;
-								span{
-									color : rgb(var(--text-on-bg-ac-color));
-								}
+					.translateApi{
 			
-								&.active{
-									span{
-										color : rgb(var(--color-bg-ac-bright))
-									}
+						.translateto{
+							height: 7 * @rhythm;
+							span{
+								color : rgb(var(--text-on-bg-ac-color));
+							}
+		
+							&.active{
+								span{
+									color : rgb(var(--color-bg-ac-bright))
 								}
 							}
 						}

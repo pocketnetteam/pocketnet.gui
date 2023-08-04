@@ -675,10 +675,10 @@
 #post .sharearticle .shareBgCaption.verticalcover {
   height: 720px;
 }
-#post .sharearticle .shareBgCaption.verticalcover .shareBgCaption .translateApi .translateto span {
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
   color: rgb(var(--text-color));
 }
-#post .sharearticle .shareBgCaption.verticalcover .shareBgCaption .translateApi .translateto.active span {
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
   color: rgb(var(--color-bg-ac-bright));
 }
 #post .sharearticle .shareBgCaption.verticalcover.showtext {
@@ -923,13 +923,13 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     display: block;
     backdrop-filter: brightness(85%);
   }
-  #post .sharearticle .shareBgCaption.verticalcover .shareBgCaption .translateApi .translateto {
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto {
     height: 3.5em;
   }
-  #post .sharearticle .shareBgCaption.verticalcover .shareBgCaption .translateApi .translateto span {
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
     color: rgb(var(--text-on-bg-ac-color));
   }
-  #post .sharearticle .shareBgCaption.verticalcover .shareBgCaption .translateApi .translateto.active span {
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
     color: rgb(var(--color-bg-ac-bright));
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
