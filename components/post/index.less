@@ -632,19 +632,23 @@
 			padding-right: @rhythm;
 		}
 
-		.translateApi{
-			margin-bottom: 0;
+		.shareBgCaption{
 
-			.translateto{
-				margin-right: 0;
-				background: transparent;
-				span{
-					color : rgb(var(--text-on-bg-shadow-color));
-				}
+			.translateApi{
+				margin-bottom: 0;
 
-				&.active{
+				.translateto{
+					height: 7 * @rhythm;
+					margin-right: 0;
+					background: transparent;
 					span{
-						color : rgb(var(--color-bg-ac-bright))
+						color : rgb(var(--text-on-bg-shadow-color));
+					}
+
+					&.active{
+						span{
+							color : rgb(var(--color-bg-ac-bright))
+						}
 					}
 				}
 			}
@@ -875,20 +879,25 @@
 			&.verticalcover{
 				height: 720px;
 
-				.translateApi{
+				.shareBgCaption{
+					.translateApi{
             
-					.translateto{
-						span{
-							color : rgb(var(--text-color));
-						}
-	
-						&.active{
+						.translateto{
+							
 							span{
-								color : rgb(var(--color-bg-ac-bright))
+								color : rgb(var(--text-color));
+							}
+		
+							&.active{
+								span{
+									color : rgb(var(--color-bg-ac-bright))
+								}
 							}
 						}
 					}
 				}
+
+				
 
 				&.showtext{
 					border-bottom : 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -1160,8 +1169,24 @@ html.mobileview{
 				&:not(.verticalcover){
 					height: auto;
 
+					.translateApi{
+			
+						.translateto{
+							
+							span{
+								color : rgb(var(--text-color));
+							}
+		
+							&.active{
+								span{
+									color : rgb(var(--color-bg-ac-bright))
+								}
+							}
+						}
+					}
+
 					.captioncnt{
-						padding-bottom: 4 * @rhythm;
+						padding-bottom: 6 * @rhythm;
 						padding-left: 2 * @rhythm;
 						padding-right: 2 * @rhythm;
 						display: flex;
@@ -1241,17 +1266,20 @@ html.mobileview{
 						backdrop-filter: brightness(85%);
 					}
 
-					.translateApi{
-            
-						.translateto{
-							height: 7 * @rhythm;
-							span{
-								color : rgb(var(--text-on-bg-ac-color));
-							}
-		
-							&.active{
+					.shareBgCaption{
+
+						.translateApi{
+				
+							.translateto{
+								height: 7 * @rhythm;
 								span{
-									color : rgb(var(--color-bg-ac-bright))
+									color : rgb(var(--text-on-bg-ac-color));
+								}
+			
+								&.active{
+									span{
+										color : rgb(var(--color-bg-ac-bright))
+									}
 								}
 							}
 						}
