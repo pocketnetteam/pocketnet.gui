@@ -574,8 +574,6 @@ var TranslateApi = function(p = {}){
                     }
                 }).then(response => {
 
-                    console.log('response.data', response.data)
-
                     if(!response.data || !response.data.translatedText || !response.data.translatedText.length){
                         return Promise.reject({
                             status : 500,
@@ -598,8 +596,6 @@ var TranslateApi = function(p = {}){
 
                     return Promise.resolve(result)
                 }).catch(response => {
-
-                    console.log('response.statusText || response.data', response.statusText, response.data)
 
                     return Promise.reject({
                         code : response.status || 500,

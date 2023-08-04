@@ -458,6 +458,8 @@ var Nodemanager = function(p){
                         }
     
                     })
+                }).catch(e => {
+                    self.logger.w('system', 'error', `Can't save node ${node.key}`)
                 })
 
             else
@@ -558,6 +560,8 @@ var Nodemanager = function(p){
         if(!self.nodesmap[node.key]){
             self.nodes.push(node);
             self.remap()
+
+            return node
         }
     }
     
@@ -733,7 +737,6 @@ var Nodemanager = function(p){
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
-                
                 users : node.wss.count(),
 
                 probability : probability,
@@ -859,8 +862,6 @@ var Nodemanager = function(p){
 
             db.loadDatabase(err => {
 
-                console.log("err", err)
-
                 clbk()
 
             })
@@ -913,22 +914,24 @@ var Nodemanager = function(p){
                                 docs = []
                             }
 
-                            var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
+                            var nodes = _.filter(_.map(c.concat(p.stable, docs || []) , function(options){
 
                                 var node = new Node(options, self)
 
-                                self.add(node)
-
-                                return node
+                                return self.add(node)
                                 
-                            })
+                            }), (n) => {return n})
 
                             self.api.connected(nodes, function(nodes){
-                                saveNodes(nodes)
+                                saveNodes(nodes).catch(e => {
+
+                                })
                             })
 
                             setTimeout(function(){
                                 self.find()
+                                self.bestapply()
+                                self.bestnodesapply()
                             }, 2000)
                             
                             if(!findInterval)
@@ -945,11 +948,6 @@ var Nodemanager = function(p){
                                     self.bestapply()
                                     self.bestnodesapply()
                                 }, statscalculationTime) 
-
-                            setTimeout(function(){
-                                self.bestapply()
-                                self.bestnodesapply()
-                            }, 2000)
 
                             inited = true
 
@@ -1194,32 +1192,27 @@ var Nodemanager = function(p){
         connected : function(nodes){
             var connected = []
 
+            var bchain = self.proxy.test ? 'test' : 'main'
+
             var promises = _.map(nodes, function(node){
 
                 return node.info().then(r => {
 
-                    var bchain = 'main'
-
-                    if (self.proxy.test) bchain = 'test'
-
-                    if(node.bchain != bchain){
+                    if (node.bchain != bchain){
                         return Promise.reject('bchain')
                     }
 
                     connected.push(node)
 
+                    return Promise.resolve()
+
                 }).catch(e => {
 
-                    return Promise.reject({
-                        e : e,
-                        node : node
-                    })
+                    return Promise.resolve()
                 })
             })
 
-            return Promise.all(promises).catch(en => {
-                return Promise.resolve(connected)
-            }).then(r => {
+            return Promise.all(promises).then(r => {
                 return Promise.resolve(connected)
             })
 
@@ -1306,7 +1299,9 @@ var Nodemanager = function(p){
                     self.add(node)
                 })
 
-                saveNodes(connected)
+                saveNodes(connected).catch(e => {
+                    
+                })
 
                 self.remap()
 

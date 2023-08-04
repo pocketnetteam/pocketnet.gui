@@ -1066,7 +1066,9 @@ var Node = function(options, manager){
             version : self.version,
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false,
-            allowRpc : self.allowRpc
+            allowRpc : self.allowRpc,
+            single : self.single
+
         }
     }
 
