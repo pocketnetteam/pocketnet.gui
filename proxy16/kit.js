@@ -216,7 +216,7 @@ var defaultSettings = {
 	},
 
 	translateapi : {
-		api : 'yandex',
+		api : '',
 		key : ''
 	},
 

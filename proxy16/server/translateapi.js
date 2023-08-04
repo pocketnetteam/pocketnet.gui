@@ -172,8 +172,7 @@ var TranslateApi = function(p = {}){
     var success = 0
     var error = 0
 
-    var settings = _.clone(p)
-
+    
     var errorTime = 60
     var edjs = new Edjs()
 
@@ -185,7 +184,11 @@ var TranslateApi = function(p = {}){
             storages : {},
             enabled : self.enabled(),
             texts : _.toArray(self.texts).length,
-            api : settings.api,
+
+            api : _.map(settings.apis, (v, i) => {
+                return i
+            }).join(','),
+
             symbols : self.symbols,
             lasterror : errors.length ? errors[errors.length - 1] : null,
             successCount : success,
@@ -208,7 +211,7 @@ var TranslateApi = function(p = {}){
     }
 
     self.enabled = function(){
-        return settings.api && settings.key && apis[settings.api] ? true : false
+        return settings.apis.libre && settings.apis.libre.key && (!settings.apis.yandex || settings.apis.yandex.key) ? true : false
     }
 
     self.translate = {
@@ -223,7 +226,7 @@ var TranslateApi = function(p = {}){
                 })
             })
 
-            return translateChunks(chunks, l, dl, id + '_a_body').then((result) => {
+            return translateChunks(chunks, l, dl, id + '_a_body', 'libre').then((result) => {
 
                 var i = -1
 
@@ -259,7 +262,9 @@ var TranslateApi = function(p = {}){
 
                     var chunks = []
 
-                    //f.trydecode
+                    var sys = 'libre'
+
+                    if(c.scoreCnt > 10) sys = 'yandex'
 
                     if (c.c){
                         chunks.push({
@@ -282,7 +287,7 @@ var TranslateApi = function(p = {}){
                                 }
 
                                 return Promise.all([
-                                    translateChunks(chunks, c.l, dl, id + '_a_caption'),
+                                    translateChunks(chunks, c.l, dl, id + '_a_caption', sys),
                                     self.translate.article(id, article, c.l, dl)
                                 ]).then((results) => {
 
@@ -314,7 +319,7 @@ var TranslateApi = function(p = {}){
                         })
                     }
 
-                    return translateChunks(chunks, c.l, dl, id).then((result) => {
+                    return translateChunks(chunks, c.l, dl, id, sys).then((result) => {
                         result.s = c.s
 
                         return Promise.resolve(result)
@@ -416,7 +421,7 @@ var TranslateApi = function(p = {}){
     }
    
 
-    var translateChunks = function(chunks, sl, dl, cacheid){
+    var translateChunks = function(chunks, sl, dl, cacheid, api){
 
         if(!chunks || !chunks.length) return Promise.resolve({})
 
@@ -425,7 +430,7 @@ var TranslateApi = function(p = {}){
         })
         var result = {}
 
-        return translate(texts, sl, dl, cacheid).then(r => {
+        return translateCached(texts, sl, dl, cacheid, api).then(r => {
             _.each(r, (v, i) => {
 
                 result[chunks[i].i] = v.text
@@ -436,7 +441,7 @@ var TranslateApi = function(p = {}){
         })
     }
 
-    var translate = function(text, sl, dl, cacheid){
+    var translateCached = function(text, sl, dl, cacheid, api){
         //if(!sl) return Promise.reject('translate:!sourselanguage')
         if(!dl) return Promise.reject('translate:!direction')
         if(!text) return Promise.reject('translate:!text')
@@ -475,7 +480,7 @@ var TranslateApi = function(p = {}){
 
             }
 
-            translate(text, sl, dl).then(text => {
+            translate(text, sl, dl, api).then(text => {
 
                 tobject.l[dl].text = text
 
@@ -533,11 +538,18 @@ var TranslateApi = function(p = {}){
         return detectedLanguageCode
     }
 
-    var translate = function(text, sl, dl){
-        if(!self.enabled()) return Promise.reject('translate:apikeymissed')
+    var translate = function(text, sl, dl, api){
+        if(!self.enabled()) return Promise.reject('translate:notenabled')
+
+        var ak = api && apis[api] ? api : 'libre'
+
+        if(!apis[ak]){
+            return Promise.reject('translate:settings')
+        }
 
         try{
-            return apis[settings.api].translate(text, sl, dl)
+
+            return apis[ak].translate(text, sl, dl)
         }catch(e){
             return Promise.reject(e)
         }
@@ -547,6 +559,9 @@ var TranslateApi = function(p = {}){
     var apis = {
         libre : {
             translate : function(text, sl, dl){
+
+                if(!settings.apis.libre || !settings.apis.libre.key) return Promise.reject('translate:libre:missingkey')
+
 
                 if(!_.isArray(text)) text = [text]
 
@@ -561,7 +576,7 @@ var TranslateApi = function(p = {}){
                     source: sl || 'auto',
                     target: dl,
                     format: "html",
-                    api_key: settings.key
+                    api_key: settings.apis.libre.key
                 }
 
                 if(sl) data.sourceLanguageCode = sl
@@ -607,6 +622,10 @@ var TranslateApi = function(p = {}){
         yandex : {
             translate : function(text, sl, dl){
 
+                console.log("TRANSLATE YANDEX")
+
+                if(!settings.apis.yandex || !settings.apis.yandex.key) return Promise.reject('translate:yandex:missingkey')
+
                 if(!_.isArray(text)) text = [text]
 
                 if(!self.symbols['yandex']) self.symbols['yandex'] = { c : 0 }
@@ -623,11 +642,11 @@ var TranslateApi = function(p = {}){
 
                 if(sl) data.sourceLanguageCode = sl
                 //self.proxy.transports.
-                return axios('https://translate.bastyon.com/translate/v2/translate', {
+                return axios('https://translate.api.cloud.yandex.net/translate/v2/translate', {
                     method: 'post',
                     data : data,
                     headers : {
-                        'Authorization': `Api-Key ${settings.key}`
+                        'Authorization': `Api-Key ${settings.apis.yandex.key}`
                     }
                 }).then(response => {
 
@@ -663,20 +682,35 @@ var TranslateApi = function(p = {}){
     }
 
     self.settingChanged = function(p){
-        settings = _.clone(p)
+        settings = {
+            apis : {}
+        }
+
+        var keys = (p.key || '').split(',') || []
+        var apis = (p.api || '').split(',') || []
+
+        _.each(apis, (a, i) => {
+            settings.apis[a] = {
+                sys : a,
+                key : keys[i] || ''
+            }
+        })
+
+        settings.api = p.api
+        
     }
 
     self.test = function(){
 
         
 
-        /*try{
+        try{
             translate(['this is a test', 'test two'], null, 'ru').catch(e => {
                 console.error(e)
             })
         }catch(e){
             console.error(e)
-        }*/
+        }
 
         /*self.translate.share('76381037151a6f07ae78700c0c64d27a91d19fb78545acdf0d7959a329ecba14', 'ru').then(r => {
             console.log("R", r)
@@ -684,6 +718,13 @@ var TranslateApi = function(p = {}){
             console.log("Translate api error")
             console.log(e)
         })*/
+
+        self.translate.share('691ccc5dabf3e33383fa8f8fe6701925da17f71fa2a5d5be563160fa34427ad5', 'ru').then(r => {
+            console.log("R", r)
+        }).catch(e => {
+            console.log("Translate api error")
+            console.log(e)
+        })
 
         /*self.translate.comment('8dd39a1c9a04f251fc41cd60252e8c29ff39e5a39ac6e078329858e341dc283d', 'ru').then(r => {
             console.log("R", r)
@@ -693,15 +734,15 @@ var TranslateApi = function(p = {}){
         })*/
     }
 
-    /*setTimeout(() => {
+    setTimeout(() => {
 
         self.test()
        
         
-    }, 3000)*/
+    }, 3000)
+
+    self.settingChanged(p)
     
-
-
     return self
 }
 

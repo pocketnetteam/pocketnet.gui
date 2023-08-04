@@ -478,7 +478,7 @@ var cc = share.renders.captionclear(translated.c);
                                 <% if(!share.temp && !share.relay){
                                     
                                     var edjs = new edjsHTML(null, app)
-                                    var message = edjs.apply(translated.m || share.message, decodeURIComponent)
+                                    var message = edjs.apply(translated.m || share.message, trydecode)
 				                    var words = edjs.words(message)
 
                                     var textPreview = '';

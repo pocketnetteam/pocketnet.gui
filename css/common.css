@@ -1865,6 +1865,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover {
     height: 520px;
   }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+    color: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
+  }
   .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .articleCover {
     left: 0;
     top: 0;
