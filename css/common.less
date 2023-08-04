@@ -2212,6 +2212,24 @@ html.mobileview.ios{
 			.author{
 				white-space: nowrap;
 			}
+
+            .translateApi{
+                margin-bottom: 0;
+
+                .translateto{
+				    margin-right: 0;
+                    background: transparent;
+                    span{
+                        color : rgb(var(--text-on-bg-shadow-color));
+                    }
+
+                    &.active{
+                        span{
+                            color : rgb(var(--color-bg-ac-bright))
+                        }
+                    }
+                }
+            }
 	
 			.shareBgCaption{
 				height: 425px;
@@ -2531,6 +2549,21 @@ html.mobileview.ios{
 				.shareBgCaption{
 					&.verticalcover{
 						height: 520px;
+
+                        .translateApi{
+            
+                            .translateto{
+                                span{
+                                    color : rgb(var(--text-color));
+                                }
+            
+                                &.active{
+                                    span{
+                                        color : rgb(var(--color-bg-ac-bright))
+                                    }
+                                }
+                            }
+                        }
 	
 						.articleCover{
 							left : 0;

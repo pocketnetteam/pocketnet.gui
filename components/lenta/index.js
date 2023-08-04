@@ -122,7 +122,7 @@ var lenta = (function(){
 				})
 			},
 
-			replaceShare : function(txid){
+			replaceShare : function(txid, fast){
 				var replace = _.find(sharesInview, (share) => share.txid == txid)
 
 				if (replace){
@@ -131,18 +131,31 @@ var lenta = (function(){
 					var trx = self.psdk.share.get(txid)
 
 					if (trx && el.share[replace.txid]){
-						renders.shares([trx], function(){
+
+						if(fast){ /// to do check
 							renders.sharesInview([trx], function(){
 								
 							}, {
 								insertimmediately : true
 							})
-						}, {
-							inner : replaceWith,
-							el : el.share[replace.txid],
-							ignoresw : true,
-							insertimmediately : true
-						})
+						
+						}
+						else{
+							renders.shares([trx], function(){
+								renders.sharesInview([trx], function(){
+									
+								}, {
+									insertimmediately : true
+								})
+							}, {
+								inner : replaceWith,
+								el : el.share[replace.txid],
+								ignoresw : true,
+								insertimmediately : true
+							})
+						}
+
+						
 					}
 				}
 			},
@@ -1191,6 +1204,14 @@ var lenta = (function(){
 			},
 
 			actualText : function(share){
+
+				if(share.itisarticle()){
+
+					actions.replaceShare(share.txid, true)
+
+					return
+				}
+
 				var _el = el.share[share.txid].find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
 
 				var translated = self.app.platform.sdk.translate.share.get(share.txid) || {}

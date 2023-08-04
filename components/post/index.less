@@ -632,6 +632,28 @@
 			padding-right: @rhythm;
 		}
 
+		.shareBgCaption{
+
+			.translateApi{
+				margin-bottom: 0;
+
+				.translateto{
+					height: 7 * @rhythm;
+					margin-right: 0;
+					background: transparent;
+					span{
+						color : rgb(var(--text-on-bg-shadow-color));
+					}
+
+					&.active{
+						span{
+							color : rgb(var(--color-bg-ac-bright))
+						}
+					}
+				}
+			}
+		}
+
 		.shareBgCaption,
 		.articleend{
 
@@ -856,6 +878,23 @@
 
 			&.verticalcover{
 				height: 720px;
+
+				.translateApi{
+					.translateto{
+						
+						span{
+							color : rgb(var(--text-color));
+						}
+	
+						&.active{
+							span{
+								color : rgb(var(--color-bg-ac-bright))
+							}
+						}
+					}
+				}
+
+				
 
 				&.showtext{
 					border-bottom : 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -1127,8 +1166,24 @@ html.mobileview{
 				&:not(.verticalcover){
 					height: auto;
 
+					.translateApi{
+			
+						.translateto{
+							
+							span{
+								color : rgb(var(--text-color));
+							}
+		
+							&.active{
+								span{
+									color : rgb(var(--color-bg-ac-bright))
+								}
+							}
+						}
+					}
+
 					.captioncnt{
-						padding-bottom: 4 * @rhythm;
+						padding-bottom: 6 * @rhythm;
 						padding-left: 2 * @rhythm;
 						padding-right: 2 * @rhythm;
 						display: flex;
@@ -1208,6 +1263,23 @@ html.mobileview{
 						backdrop-filter: brightness(85%);
 					}
 
+
+					.translateApi{
+			
+						.translateto{
+							height: 7 * @rhythm;
+							span{
+								color : rgb(var(--text-on-bg-ac-color));
+							}
+		
+							&.active{
+								span{
+									color : rgb(var(--color-bg-ac-bright))
+								}
+							}
+						}
+					}
+
 					.icon{
 					}
 
@@ -1242,12 +1314,16 @@ html.mobileview{
 
 			}
 
-			.starstoppanel, .socialsharewrapper{
-				bottom: -0.25em!important;
+			
+			.panel{
+				contain: none;
+			}
 
-				.panelLeft{
+			.starstoppanel, .socialsharewrapper{
+
+				/*.panelLeft{
 					flex-direction: column;
-				}
+				}*/
 			}
 
 			.articlecontent{

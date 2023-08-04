@@ -41,6 +41,11 @@ var post = (function () {
 
 			actualText : function(){
 
+				if(share.itisarticle()){
+					make()
+					return
+				}
+
 				var _el = el.c.find('.shareTable[stxid="'+share.txid+'"] >div.cntswrk.postcontent')
 
 				var translated = self.app.platform.sdk.translate.share.get(share.txid) || {}

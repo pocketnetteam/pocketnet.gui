@@ -78,28 +78,7 @@ var testnodes = [
 
 
 var activenodes = [
-	/*{
-		host : '178.217.159.221',
-		port: 38381,
-		ws: 8387,
-		name : 'test3.v.pocketnet.app',
-		stable : true,
-		single : true,
-		allowRpc : false,
-		alwaysrun : true
-	},*/
-
-	/*{
-		host : '65.21.252.135', 
-		port: 38081,
-		ws: 8087,
-		name : 'test4.v.pocketnet.app',
-		stable : true,
-		single : true,
-		allowRpc : false,
-		alwaysrun : true
-	},*/
-	//////////////
+	
 	{
 		host : '135.181.196.243',
 		port : 38081,
@@ -107,7 +86,6 @@ var activenodes = [
 		name : '135.181.196.243',
 		stable : true
 	},
-	
 
 	{
 		host : '202.61.253.55', //
@@ -125,7 +103,6 @@ var activenodes = [
 		stable : true
 	},
 
-	
 	{
 		host : '172.83.108.41',
 		port : 38081,
@@ -141,7 +118,6 @@ var activenodes = [
 		name : '207.180.201.246',
 		stable : true
 	},
-	
 
 	{
 		host : '5.189.141.204', ///
@@ -163,14 +139,7 @@ var activenodes = [
 		ws : 8087,
 		name : '172.83.108.40',
 		stable : true
-	},
-	{
-		host : '193.160.205.120', ///
-		port : 38081,
-		ws : 8087,
-		name : '193.160.205.120',
-		stable : true
-	},
+	}
 ]
 
 var nodes = activenodes
@@ -247,7 +216,7 @@ var defaultSettings = {
 	},
 
 	translateapi : {
-		api : 'yandex',
+		api : '',
 		key : ''
 	},
 

@@ -114,6 +114,12 @@ var Server = function(settings, admins, manage){
             }
         }));
 
+        app.use('/proxydb/nodes', express.static('data/nodes', {
+            setHeaders : function(res){
+                res.setHeader('Access-Control-Allow-Origin', '*');
+            }
+        }));
+
         if(!printstatsInterval)
             printstatsInterval = setInterval(function(){
                 middle.printstats()

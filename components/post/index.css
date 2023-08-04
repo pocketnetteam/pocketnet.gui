@@ -477,6 +477,20 @@
 #post .sharearticle .sharepanel {
   padding-right: 0.5em;
 }
+#post .sharearticle .shareBgCaption .translateApi {
+  margin-bottom: 0;
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto {
+  height: 3.5em;
+  margin-right: 0;
+  background: transparent;
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
 #post .sharearticle .shareBgCaption .author,
 #post .sharearticle .articleend .author {
   margin-top: 1em;
@@ -661,6 +675,12 @@
 #post .sharearticle .shareBgCaption.verticalcover {
   height: 720px;
 }
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
 #post .sharearticle .shareBgCaption.verticalcover.showtext {
   border-bottom: 1px dashed rgba(var(--neutral-grad-4), 0.5);
 }
@@ -834,8 +854,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .translateApi .translateto span {
+    color: rgb(var(--text-color));
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
-    padding-bottom: 2em;
+    padding-bottom: 3em;
     padding-left: 1em;
     padding-right: 1em;
     display: flex;
@@ -897,6 +923,15 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     display: block;
     backdrop-filter: brightness(85%);
   }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto {
+    height: 3.5em;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
+  }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
     color: rgb(var(--text-on-bg-ac-color));
@@ -914,13 +949,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
     color: rgb(var(--text-on-bg-ac-color));
   }
+  #post .sharearticle .panel {
+    contain: none;
+  }
   #post .sharearticle .starstoppanel,
   #post .sharearticle .socialsharewrapper {
-    bottom: -0.25em !important;
-  }
-  #post .sharearticle .starstoppanel .panelLeft,
-  #post .sharearticle .socialsharewrapper .panelLeft {
-    flex-direction: column;
+    /*.panelLeft{
+					flex-direction: column;
+				}*/
   }
   #post .sharearticle .articlecontent {
     padding-left: 0.5em;

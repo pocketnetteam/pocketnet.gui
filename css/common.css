@@ -1612,6 +1612,19 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
 .common_share_article_wrapper .share .sharearticle .author {
   white-space: nowrap;
 }
+.common_share_article_wrapper .share .sharearticle .translateApi {
+  margin-bottom: 0;
+}
+.common_share_article_wrapper .share .sharearticle .translateApi .translateto {
+  margin-right: 0;
+  background: transparent;
+}
+.common_share_article_wrapper .share .sharearticle .translateApi .translateto span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+.common_share_article_wrapper .share .sharearticle .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption {
   height: 425px;
   position: relative;
@@ -1851,6 +1864,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
 @media only screen and (min-width: 768px) {
   .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover {
     height: 520px;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+    color: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
   }
   .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .articleCover {
     left: 0;
