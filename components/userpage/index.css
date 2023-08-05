@@ -211,6 +211,11 @@
   opacity: 0.5;
   font-weight: 500;
 }
+#userpage .maketsWrapper .contents .reportCaption .hasupdate {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
 #userpage .maketsWrapper .contents .addmenu .reportCaption {
   font-weight: 400;
 }
