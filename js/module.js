@@ -213,8 +213,6 @@ nModule = function(){
 
 						self.container.essenseDestroy = options.destroy
 						
-					
-
 						if (insert.after) 
 						{
 							topPreloader(100);
@@ -345,17 +343,6 @@ nModule = function(){
 			})
 
 			return
-
-			/*retry(
-				function(){
-					return !loading.templates[p.name];
-				},
-				function(){
-					self.loadTemplate(p, clbk)
-				}
-			)
-
-			return*/
 		}
 
 		if (self.storage.templates[p.name] || p.clear)
@@ -541,6 +528,15 @@ nModule = function(){
 		var frommodule = true;
 		var globalpreloaderTimer = p.globalpreloaderTimer || null
 
+		var rmpreloader = function(){
+			if(globalpreloaderTimer){
+
+				globalpreloader(false)
+
+				clearTimeout(globalpreloaderTimer)
+			}
+		}
+
 
 		if (p.restartModule) {
 			frommodule = false
@@ -554,14 +550,6 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
-		/*if(p.inWnd){
-
-			globalpreloaderTimer = setTimeout(function(){
-				globalpreloader(true)
-			}, 100)
-			
-		}*/
-		
 
 		beforegetdata(settings, function(){
 
@@ -573,85 +561,68 @@ nModule = function(){
 
 			
 			self.user.isState(function(state){	
-					settings.getdata(function(data, err){
+				settings.getdata(function(data, err){
+
+					topPreloader(100);
+
+					rmpreloader()
+
+					if(err){
+						return
+					}
+
+					settings.data = data || {};
+
+					if(p.preshell) p.preshell();
+
+					self.shell(settings, function(p){
+
+						rmpreloader()
 
 
-						if(err){
+						p.clbk = addToFunction(p.clbk, function(){
 
-							topPreloader(100);
-
-							if(globalpreloaderTimer){
-
-								globalpreloader(false)
-
-								clearTimeout(globalpreloaderTimer)
+							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+								self.app.actions.scrollToTop()
 							}
 
-							return
+							if (settings.auto){
+								settings.auto(p)
+							}
+
+							//p = null
+
+						})				
+
+
+						if (settings.init)
+							settings.init(p)
+
+						if (settings.fade && !settings.waspreshell){
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									settings.fade.addClass('shell_fadein')
+								})
+							}, 100)
+
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									settings.fade.removeClass('shell_fadefast')
+									settings.fade.removeClass('shell_fadein')
+								})
+							}, 400)
 						}
 
-						topPreloader(45);
+					}, frommodule)
 
-						settings.data = data || {};
+					
 
-						if(p.preshell) p.preshell();
+					
 
-						
-
-						self.shell(settings, function(p){
-
-							if(globalpreloaderTimer){
-
-								globalpreloader(false)
-
-								clearTimeout(globalpreloaderTimer)
-							}
-
-							topPreloader(100);	
-
-							p.clbk = addToFunction(p.clbk, function(){
-
-								if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-									self.app.actions.scrollToTop()
-								}
-
-								if (settings.auto){
-									settings.auto(p)
-								}
-
-								//p = null
-
-							})				
-
-
-							if (settings.init)
-								settings.init(p)
-
-							if (settings.fade && !settings.waspreshell){
-								setTimeout(() => {
-									window.requestAnimationFrame(() => {
-										settings.fade.addClass('shell_fadein')
-									})
-								}, 100)
-
-								setTimeout(() => {
-									window.requestAnimationFrame(() => {
-										settings.fade.removeClass('shell_fadefast')
-										settings.fade.removeClass('shell_fadein')
-									})
-								}, 400)
-							}
-
-						}, frommodule)
-
-						
-
-						
-
-					}, {
-						state : state,
-						settings : settings
-					});	
+				}, {
+					state : state,
+					settings : settings
+				});	
 
 
 
