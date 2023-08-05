@@ -2682,7 +2682,7 @@ var lenta = (function(){
 								if (value == 5){
 									if(!el.share[id]) return
 	
-									//initedcommentes[id].showBanner(initedcommentes[id]);
+									initedcommentes[id].showBanner(initedcommentes[id]);
 									
 	
 									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
