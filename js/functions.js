@@ -508,13 +508,12 @@ wnd = function (p) {
 
 			setTimeout(function () {
 				window.requestAnimationFrame(() => {
-					wnd.removeClass('asette')
+					if (wnd)
+						wnd.removeClass('asette')
 				})
 
 
-				
-
-				if ((wnd.hasClass('normalizedmobile'))) {
+				if (wnd && (wnd.hasClass('normalizedmobile'))) {
 
 					setTimeout(function () {
 						if (clbk && !p.fastClbk) clbk()
@@ -8216,7 +8215,7 @@ initUpload = function (p) {
 					if (globalpreloaderid == thisid){
 						globalpreloader(false)
 					}
-				}, 15000)
+				}, 7000)
 			}
 			else{
 				el.removeClass('show')

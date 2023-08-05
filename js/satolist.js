@@ -3981,8 +3981,6 @@ Platform = function (app, listofnodes) {
 
         showkeyafterregistration : function(clbk){
 
-            console.log("?????????????")
-
             self.app.user.isState(function (state) {
                 if(state){
                     
@@ -22451,11 +22449,15 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.init,
                     self.sdk.comments.loadblocked,
-                    self.ui.showkeyafterregistration
+                    
 
                 ], function () {
 
                     //self.ui.showmykey()
+
+                    setTimeout(() => {
+                        self.ui.showkeyafterregistration()
+                    },3000)
                     
                     var account = self.actions.addAccount(self.app.user.address.value)
 
