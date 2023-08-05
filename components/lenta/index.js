@@ -2681,8 +2681,9 @@ var lenta = (function(){
 							if(r){
 								if (value == 5){
 									if(!el.share[id]) return
-	
-									initedcommentes[id].showBanner(initedcommentes[id]);
+									
+									if (initedcommentes[id])
+										initedcommentes[id].showBanner(initedcommentes[id]);
 									
 	
 									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
