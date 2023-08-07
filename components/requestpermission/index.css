@@ -53,3 +53,7 @@
   font-weight: 700;
   color: rgb(var(--color-good));
 }
+.wnd.requestpermissionWindow .wndinner {
+  width: 480px;
+  height: 80%;
+}
