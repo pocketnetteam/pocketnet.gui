@@ -1030,6 +1030,8 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
+						if(!el.share) return
+
 						if (player){
 							players[share.txid] || (players[share.txid] = {})
 							players[share.txid].p = player

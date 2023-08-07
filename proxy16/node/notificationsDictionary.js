@@ -132,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} оцененил Вашу публикацию`,
+                title: `Пользователь ${data.user} оценил Вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -142,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} оцененил Ваш комментарий`,
+                title: `Пользователь ${data.user} оценил Ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {

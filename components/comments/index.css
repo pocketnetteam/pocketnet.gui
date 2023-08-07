@@ -1306,7 +1306,7 @@ html.mobileview #comments .emojionearea-editor {
     padding-right: 0.5em;
   }
   #comments .list .comment .answers .commentPaddingWrapper {
-    padding-left: 0.5em;
+    padding-left: 1em;
     padding-right: 0.5em;
   }
   #comments .list .comment .answersWrapper {

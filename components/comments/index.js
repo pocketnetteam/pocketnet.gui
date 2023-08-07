@@ -86,6 +86,12 @@ var comments = (function(){
 
 			post : function(comment, optype){
 
+				if(txid){
+					share = self.psdk.share.get(txid)
+					console.log("REPLACE TXID SHARE")
+				}
+				
+
 				actions.showhideLabel()
 
 				var p = {

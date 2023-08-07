@@ -2607,7 +2607,7 @@ Application = function (p) {
 											successCheck()
 										}
 										else {
-											sitemessage(self.localization.e('e13230'))
+											sitemessage(self.localization.e('e13230') + (err && err.code ? (': ' + err.code) : '' ))
 										}
 
 										clbk()
