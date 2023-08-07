@@ -6945,27 +6945,37 @@ AJAX = function(p) {
 					grant_type: 'password',
 					...app.peertubeCreds
 				}));
-				var res = JSON.parse(xmlHttp.responseText), auth;
-				// Set auth header
-				if (res && res.access_token) auth = 'Bearer ' + res.access_token;
 
-					ap.headers = {
-						Authorization: auth
-					}
+				xmlHttp.onload = function() {
 
-				// Prepare image data for request
-				const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
+					var res = JSON.parse(xmlHttp.responseText), auth;
+					// Set auth header
+					if (res && res.access_token) auth = 'Bearer ' + res.access_token;
 
-				const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
+						ap.headers = {
+							Authorization: auth
+						}
 
-				var formData = new FormData();
-					formData.append("imagefile", blob);
+					// Prepare image data for request
+					const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
 
-				ap.data = formData;
-				ap.processData = false;
-				ap.contentType = false;
+					const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
 
-				$.ajax(ap);
+					var formData = new FormData();
+						formData.append("imagefile", blob);
+
+					ap.data = formData;
+					ap.processData = false;
+					ap.contentType = false;
+
+					$.ajax(ap);
+
+				}
+
+				xhr.onerror = function() {
+					if (p.fail)
+						p.fail({}, 'network');
+				};
 
 				return;
 
