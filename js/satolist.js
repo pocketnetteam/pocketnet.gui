@@ -2653,6 +2653,76 @@ Platform = function (app, listofnodes) {
     
 
     self.papi = {
+
+        horizontalSearchUsers: function(el, clbk, p){
+
+            if(!p) p = {}
+
+            p.horizontal = true
+
+            var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
+            </div>`
+
+            window.requestAnimationFrame(() => {
+
+                el.html(tpl)
+
+                p.hcnt = el.find('.horizontalSearchUsersWrapper')
+
+                p.window = el.find('.showmorebywrapper')
+
+                var _el = el.find('.showmoreby')
+
+                var id = p.id || makeid()
+
+                app.nav.api.load({
+
+                    open : true,
+                    id : 'searchusers',
+                    el : _el,
+                    eid : id,
+                    mid : id,
+                    animation : false,
+                    essenseData : {
+                        
+                        window : p.window,
+                        horizontal : p.horizontal,
+                        value : p.value,
+                        loaded : function(shares){
+
+                            if (p.hcnt){
+                                setTimeout(function(){
+                                    p.hcnt.addClass('hasitems')
+                                }, 300)
+
+                            }
+
+                            if(p.loaded) p.loaded(shares)
+                        },
+                        count : p.count
+                    },
+
+                    clbk : clbk
+                })
+
+                el.find('.controlhor').on('click', function(){
+                    var dir = $(this).attr('dir') || 'right'
+
+                    var curscroll = p.window.scrollLeft()
+                    var width = p.window.width()
+
+                    var to = width * 0.9
+
+                    if(dir == 'left') to = -to
+
+                    to = curscroll + to
+
+                    p.window.animate({ scrollLeft: to }, 100);
+                })
+
+            })
+        },
+
         horizontalLenta : function(el, clbk, p){
 
             if(!p) p = {}
@@ -2697,7 +2767,6 @@ Platform = function (app, listofnodes) {
             if(!p) p = {}
 
             var id = p.id || makeid()
-
 
             app.nav.api.load({
 
@@ -14087,7 +14156,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                var np = [(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
+                var np = [(value), type, fixedBlock, (start || 0), (count || 10)]
 
                 if (address != 'pocketnet') np.push(address)
 
@@ -14099,6 +14168,10 @@ Platform = function (app, listofnodes) {
                             return self.app.api.rpc('searchusers', np)
                         }, np).then(d => {
 
+                            d = _.filter(_.map(d, (a) => {
+                                return self.psdk.userInfo.get(a.address)
+                            }), (v) => {return v})
+
                             d = {
                                 data: [...d]
                             }
@@ -14109,6 +14182,7 @@ Platform = function (app, listofnodes) {
                                 clbk(d, fixedBlock)
 
                         }).catch(e => {
+                            console.error(e)
                             if (clbk) {
                                 clbk({})
                             }
@@ -14117,6 +14191,8 @@ Platform = function (app, listofnodes) {
                         return;
 
                     }
+
+                    console.log('np', np)
 
                     self.psdk.search.request(() => {
                         return self.app.api.rpc('search', np)

@@ -712,6 +712,14 @@ __map =  {
 			anonimus : true,
 		},
 
+		searchusers : {
+			uri : "searchusers",
+			href : "searchusers",
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
+
 		faq : {
 			uri : "faq",
 			href : "faq",

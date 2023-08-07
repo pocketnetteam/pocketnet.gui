@@ -19,7 +19,7 @@ var main = (function(){
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
-		var currentMode = 'common', hsready = false, fixeddirection = null, external = null;
+		var currentMode = 'common', hsready = false, fixeddirection = null, external = null, externalsearchusers = null;
 
 		var lastscroll = 0
 
@@ -382,7 +382,7 @@ var main = (function(){
 								href : link,
 								history : true,
 								handler : true,
-								saveparameters : savesearch ? ['sst', 'st'] : null
+								saveparameters : savesearch ? ['sst', 'st', 'ss'] : null
 							})
 						})
 
@@ -406,7 +406,7 @@ var main = (function(){
 											history : true,
 											handler : true,
 											replace : true,
-											saveparameters : a.savesearch ? ['sst', 'st'] : null
+											saveparameters : a.savesearch ? ['sst', 'st', 'ss'] : null
 										})
 
 										d.destroy()
@@ -483,6 +483,67 @@ var main = (function(){
 				}else{
 					//el.c.addClass('wshar')
 				}
+			},
+
+			searchusers: function (show) {
+
+				if(!el.searchusers) return
+				
+				if (show){
+					window.requestAnimationFrame(() => {
+						el.searchusers.removeClass('hidden')
+					})
+
+					if (externalsearchusers) {
+						externalsearchusers.clearessense()
+					}
+					
+					self.app.platform.papi.horizontalSearchUsers(el.searchusers.find('.wrpcn'), function (e,p) {
+
+						externalsearchusers = p
+						actions.refreshSticky()
+
+					}, {
+						caption : self.app.localization.e("horizontalSearchUsers"),
+						count : 20,
+						value : searchvalue,
+						loaded : function(users = []){
+
+							if (!users.length && el.searchusers){
+
+								window.requestAnimationFrame(() => {
+									el.searchusers.addClass('hidden')
+
+									if (externalsearchusers){
+										externalsearchusers.destroy()
+										externalsearchusers = null
+									}
+								})
+								
+							}
+							
+						}
+	
+					})
+				}
+
+				else{
+
+					if (externalsearchusers){
+						externalsearchusers.destroy()
+						externalsearchusers = null
+					}
+
+					if(el.searchusers){
+						window.requestAnimationFrame(() => {
+							el.searchusers.find('.wrpcn').html('')
+							el.searchusers.addClass('hidden')
+						})
+					}
+					
+				}
+
+				
 			},
 
 			topvideos: function (show) {
@@ -1095,17 +1156,8 @@ var main = (function(){
 			makePanel()
 
 			renders.menu()
-
-			
-
-			if (currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
-				renders.topvideos(true)
-			else{
-				renders.topvideos(false)
-			}
-
-			
-				
+			renders.topvideos(currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
+			renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 		}
 
 		var showCategories = function(t){
@@ -1223,7 +1275,14 @@ var main = (function(){
 						external = null
 					}
 
+					if (externalsearchusers) {
+						externalsearchusers.clearessense()
+						externalsearchusers = null
+					}
+
 					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
+
+					renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 
 					if (lenta) {
 						lenta.clearessense()
@@ -1399,6 +1458,13 @@ var main = (function(){
 					external = null
 				}
 
+				if (externalsearchusers){
+					externalsearchusers.clearessense()
+					externalsearchusers = null
+				}
+
+				
+
 				if (leftpanel){
 					leftpanel.destroy()
 					leftpanel = null
@@ -1458,6 +1524,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.searchusers = el.c.find('.searchusersWrapper')
 				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')
