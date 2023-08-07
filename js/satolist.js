@@ -5938,6 +5938,8 @@ Platform = function (app, listofnodes) {
                     else{
                         var share = self.psdk.share.get(txid)
 
+                        if(!share) return null
+
                         return share.language
                     }
                 },
