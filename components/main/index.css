@@ -128,6 +128,35 @@
 #main .menuwrapper .filtersbuttonwrapper button {
   width: 100%;
 }
+#main .searchusersWrapper {
+  display: block;
+  background: rgb(var(--background-total-theme));
+  margin-bottom: 0.5em;
+  height: 252px;
+  position: relative;
+  border-radius: 12px;
+}
+#main .searchusersWrapper.hasshares {
+  display: block;
+  min-height: 160px;
+}
+#main .searchusersWrapper .wrpcn {
+  position: relative;
+  height: 100%;
+}
+#main .searchusersWrapper .horizontalSearchUsersWrapper {
+  padding: 1em;
+  padding-bottom: 0.5em;
+  padding-top: 0;
+}
+#main .searchusersWrapper .horizontalSearchUserscaption {
+  padding: 1em 0;
+  padding-bottom: 0.5em;
+}
+#main .searchusersWrapper .horizontalSearchUserscaption span {
+  font-weight: 700;
+  font-size: 0.8em;
+}
 #main .topvideosWrapper {
   display: block;
   background: rgb(var(--background-total-theme));
@@ -678,6 +707,34 @@ html.mobileview #main .bgCaption {
   }
   #main .addbutton.active {
     display: none!important;
+  }
+  #main .searchusersWrapper {
+    margin-bottom: 0.5em;
+    height: 195px;
+    content-visibility: auto;
+    contain-intrinsic-size: 195px;
+    contain: strict;
+  }
+  #main .searchusersWrapper.hasshares {
+    display: block;
+  }
+  #main .searchusersWrapper .horizontalSearchUsersWrapper {
+    padding: 0.5em 0;
+    padding-bottom: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  #main .searchusersWrapper .horizontalSearchUserscaption {
+    display: none;
+    padding: 1em;
+  }
+  #main .searchusersWrapper .horizontalSearchUserscaption span {
+    font-size: 1em;
   }
   #main .topvideosWrapper {
     margin-bottom: 0.5em;

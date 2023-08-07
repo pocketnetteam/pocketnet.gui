@@ -2768,3 +2768,5 @@ _l.anotherSiteHeader = "Another site"
 _l.openOriginal = "Open original"
 
 _l.registration_blocked = _l.lockedaccount
+
+_l.horizontalSearchUsers = "Accounts"

@@ -181,6 +181,44 @@
 	
 	}
 
+	.searchusersWrapper{
+		display: block;
+		background: rgb(var(--background-total-theme));
+		margin-bottom : @rhythm;
+		height: 252px;
+		position: relative;
+		border-radius: 12px;
+
+		&.hasshares{
+			display: block;
+			min-height: 160px;
+		}
+
+		.wrpcn{
+			position: relative;
+			height: 100%;
+		}
+
+		.horizontalSearchUsersWrapper{
+			padding : 2*  @rhythm;
+			padding-bottom: @rhythm;
+			padding-top : 0;
+			
+		}
+
+		.horizontalSearchUserscaption{
+			padding : 2 * @rhythm 0;
+			padding-bottom: @rhythm;
+
+			span{
+				font-weight: 700;
+				font-size: 0.8em;
+			}
+		}
+
+		
+	}
+
 	.topvideosWrapper{
 		display: block;
 		background: rgb(var(--background-total-theme));
@@ -896,6 +934,39 @@ html.mobileview{
 	
 		}
 
+
+		.searchusersWrapper{
+			margin-bottom : @rhythm;
+			height: 195px;
+			content-visibility: auto;
+			contain-intrinsic-size: 195px;
+			contain: strict;
+	
+			&.hasshares{
+				display: block;
+			}
+
+			.horizontalSearchUsersWrapper{
+				padding : @rhythm 0;
+				padding-bottom: 0;
+				position: absolute;
+				left : 0;
+				top : 0;
+				right : 0;
+				bottom : 0;
+				padding-left: @rhythm;
+				padding-right: @rhythm;
+			}
+	
+			.horizontalSearchUserscaption{
+				display: none;
+				padding : 2 * @rhythm;
+	
+				span{
+					font-size: 1em;
+				}
+			}
+		}
 		.topvideosWrapper{
 			margin-bottom : @rhythm;
 			height: 195px;
@@ -906,7 +977,8 @@ html.mobileview{
 			&.hasshares{
 				display: block;
 			}
-	
+
+			
 			.horizontalLentaWrapper{
 				padding : @rhythm 0;
 				padding-bottom: 0;

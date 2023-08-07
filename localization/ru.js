@@ -2550,3 +2550,5 @@ _l.anotherSiteDisc = "Мы не несем ответственности за �
 _l.openOriginal = "Открыть оригинал"
 
 _l.registration_blocked = _l.lockedaccount
+
+_l.horizontalSearchUsers = "Пользователи"

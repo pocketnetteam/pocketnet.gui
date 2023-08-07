@@ -2207,8 +2207,19 @@ var pSDK = function ({ app, api, actions }) {
         request: function (executor, hash) {
             return request('searchUsers', hash, executor, {
                 requestIndexedDb: 'searchUsersRequest',
+                insertFromResponse: (r) => this.insertFromResponseEx(r)
             })
         },
+
+        insertFromResponseEx : function(data){
+
+            data = self.userInfo.cleanData(data)
+
+            return self.userInfo.insertFromResponse(data, true).then(() => {
+                return Promise.resolve(data)
+            })
+
+        }
     }
 
     self.tag = {

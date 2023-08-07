@@ -4228,9 +4228,13 @@ html.mobileview.android .wnd .wndback {
 .vc_valuecustom .currencies .vc_value .obscure {
   font-size: 0.9em;
 }
+.horizontalSearchUsersWrapper,
 .horizontalLentaWrapper {
   position: relative;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption,
+.horizontalLentaWrapper .horizontalSearchUserscaption,
+.horizontalSearchUsersWrapper .horizontalLentacaption,
 .horizontalLentaWrapper .horizontalLentacaption {
   display: flex;
   justify-content: space-between;
@@ -4239,15 +4243,22 @@ html.mobileview.android .wnd .wndback {
   padding-bottom: 0.5em;
   font-size: 18px;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption .controlhors,
+.horizontalLentaWrapper .horizontalSearchUserscaption .controlhors,
+.horizontalSearchUsersWrapper .horizontalLentacaption .controlhors,
 .horizontalLentaWrapper .horizontalLentacaption .controlhors {
   display: flex;
   width: 75px;
   justify-content: space-between;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption span,
+.horizontalLentaWrapper .horizontalSearchUserscaption span,
+.horizontalSearchUsersWrapper .horizontalLentacaption span,
 .horizontalLentaWrapper .horizontalLentacaption span {
   font-weight: 700;
   font-size: 0.8em;
 }
+.horizontalSearchUsersWrapper .controlhor,
 .horizontalLentaWrapper .controlhor {
   display: none;
   border-radius: 8px;
@@ -4267,15 +4278,19 @@ html.mobileview.android .wnd .wndback {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+.horizontalSearchUsersWrapper .controlhor.controlleft,
 .horizontalLentaWrapper .controlhor.controlleft {
   left: 0.5em;
 }
+.horizontalSearchUsersWrapper .controlhor.controlright,
 .horizontalLentaWrapper .controlhor.controlright {
   right: 0.5em;
 }
+.horizontalSearchUsersWrapper.hasitems .controlhor,
 .horizontalLentaWrapper.hasitems .controlhor {
   display: flex;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper,
 .horizontalLentaWrapper .showmorebywrapper {
   overflow: hidden;
   overflow-x: scroll;
@@ -4283,22 +4298,27 @@ html.mobileview.android .wnd .wndback {
   scrollbar-width: none;
   border-radius: 6px;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
   height: 4px;
   width: 4px;
   background: rgba(var(--neutral-grad-0), 0.3);
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar-thumb:horizontal,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar-thumb:horizontal {
   background: rgb(var(--color-shadow-base));
   border-radius: 10px;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
   display: none!important;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper .anothercntswrk,
 .horizontalLentaWrapper .showmorebywrapper .anothercntswrk {
   padding-left: 0!important;
   padding-right: 0!important;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper .showmorebywrapper,
 .horizontalLentaWrapper .showmorebywrapper .showmorebywrapper {
   display: none;
 }
@@ -6045,7 +6065,7 @@ html.mobileview #navigation .fakem {
     display: none!important;
   }
   .menudialog .secondwrapper {
-    padding-bottom: 1.5em;
+    padding-bottom: 4em;
     vertical-align: bottom;
   }
 }
