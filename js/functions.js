@@ -5867,9 +5867,12 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 	if (todownloads) {
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
-
 			onsuccess(fileSystem.root)
-		}, onerror)
+		}, function(){
+
+			p_saveAsWithCordova(file, name, clbk)
+			
+		})
 	}
 	else {
 		window.resolveLocalFileSystemURL(storageLocation, onsuccess, onerror)

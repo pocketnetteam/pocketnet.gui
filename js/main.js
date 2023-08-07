@@ -5,13 +5,13 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 if(!_Node)
 {
 
-	var developapps = [/*{
+	var developapps = [{
 		"id" : 'demo.pocketnet.app',
     	"version": "0.0.1",
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
 		"name" : "Demo application"
-	}*/]
+	}]
 
 	var translateApiProxy = {
 		host : '2.pocketnet.app',
