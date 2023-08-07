@@ -624,7 +624,6 @@ var TranslateApi = function(p = {}){
         yandex : {
             translate : function(text, sl, dl){
 
-                console.log("TRANSLATE YANDEX")
 
                 if(!settings.apis.yandex || !settings.apis.yandex.key) return Promise.reject('translate:yandex:missingkey')
 
@@ -702,7 +701,7 @@ var TranslateApi = function(p = {}){
         
     }
 
-    self.test = function(){
+    /*self.test = function(){
 
         
 
@@ -714,12 +713,12 @@ var TranslateApi = function(p = {}){
             console.error(e)
         }
 
-        /*self.translate.share('76381037151a6f07ae78700c0c64d27a91d19fb78545acdf0d7959a329ecba14', 'ru').then(r => {
+        self.translate.share('76381037151a6f07ae78700c0c64d27a91d19fb78545acdf0d7959a329ecba14', 'ru').then(r => {
             console.log("R", r)
         }).catch(e => {
             console.log("Translate api error")
             console.log(e)
-        })*/
+        })
 
         self.translate.share('691ccc5dabf3e33383fa8f8fe6701925da17f71fa2a5d5be563160fa34427ad5', 'ru').then(r => {
             console.log("R", r)
@@ -728,12 +727,12 @@ var TranslateApi = function(p = {}){
             console.log(e)
         })
 
-        /*self.translate.comment('8dd39a1c9a04f251fc41cd60252e8c29ff39e5a39ac6e078329858e341dc283d', 'ru').then(r => {
+        self.translate.comment('8dd39a1c9a04f251fc41cd60252e8c29ff39e5a39ac6e078329858e341dc283d', 'ru').then(r => {
             console.log("R", r)
         }).catch(e => {
             console.log("Translate api error")
             console.log(e)
-        })*/
+        })
     }
 
     setTimeout(() => {
@@ -741,7 +740,7 @@ var TranslateApi = function(p = {}){
         self.test()
        
         
-    }, 3000)
+    }, 3000)*/
 
     self.settingChanged(p)
     

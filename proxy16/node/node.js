@@ -671,12 +671,12 @@ var Node = function(options, manager){
 
             var lastblock = self.lastblock() || {}
             var result = 0;
+            var notcache = false
 
             if(
-                (!lastblock.height) || (self.testing)
-                || (!self.inited)
+                (!lastblock.height) || (self.testing) || (!self.inited)
             ){
-
+                notcache = true
             }
             else{
 
@@ -684,8 +684,12 @@ var Node = function(options, manager){
 
                 var difference = status.difference || 0
 
-                if (difference > 0) difference = 0
-                    difference = -difference
+                if (difference > 0) {
+                    difference = 0
+                }
+
+                difference = -difference
+
                 if (
                     (status.fork && difference > 5 || difference > 50)
                 ){
@@ -700,8 +704,7 @@ var Node = function(options, manager){
                     var availabilityAllTime = self.statistic.calcAvailability(s) || 0
                     var availability5Minutes = self.statistic.calcAvailability(slice) || 0
                     ///
-        
-        
+                    
                     var usersl = _.toArray(wss.users).length + 1
                     var userski = 1
         
@@ -724,11 +727,14 @@ var Node = function(options, manager){
             }
 
             ///
-    
-            cachedrating = {
-                result : result,
-                time : new Date()
+            
+            if(!notcache){
+                cachedrating = {
+                    result : result,
+                    time : new Date()
+                }
             }
+            
 
             return  result
         },

@@ -68,6 +68,7 @@ var Nodemanager = function(p){
 
     var minnodescount = global.MIN_NODES_COUNT || 1
     var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
+    var iniNodeCount = global.INI_NODE_COUNT || 10
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -179,8 +180,9 @@ var Nodemanager = function(p){
 
         _.each(_.shuffle(notinitednodes), function(node, i){
 
-            if (i < 10) // not more 10 for time
+            if (i < iniNodeCount){
                 self.initIfNeed(node)
+            }
 
         })
 
@@ -514,10 +516,11 @@ var Nodemanager = function(p){
         if(!node.eventsCount) return
 
         var workingNodes = getWorkingNodes()
+        var inited = 0
 
-        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || node.alwaysrun){
-
+        if (workingNodes.length + inited < minnodescount || !usersfornode || (self.proxy.users() / usersfornode >= workingNodes.length + inited) || node.alwaysrun){
             node.init()
+            inited++
         }
         
     }
@@ -525,33 +528,35 @@ var Nodemanager = function(p){
     var forgetIfNotUsing = function(){
 
         var workingNodes = getWorkingNodes()
+        var forgotten = 0
 
+        _.each(self.nodes, function(n){
 
-        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+            if ((workingNodes.length - forgotten < minnodescount) || !usersfornode || (self.proxy.users() / usersfornode >= workingNodes.length - forgotten) || (workingNodes.length - forgotten) <= 1){
 
-        }else{
-
-            _.each(self.nodes, function(n){
-
+            }else{
+    
                 if(n.inited && !n.alwaysrun){
 
                     if(!n.wss.count()){
-
+    
                         if(f.date.addseconds(n.initedTime, 60) > new Date()){
                         }
                         else{
                             n.forget()
+                            forgotten++
                         }
                         
-
+    
                     }
                     else{
                     }
                 }
+               
+            }
 
-            })
-           
-        }
+        })
+        
     }
 
     /// add to main

@@ -5541,6 +5541,8 @@ Platform = function (app, listofnodes) {
                             
                             self.app.mobile.vibration.small()
 
+                            close()
+
                             new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('blockUserQ'),
@@ -5554,7 +5556,7 @@ Platform = function (app, listofnodes) {
                                         }
                                     })
         
-                                    close()
+                                    
 
                                 }
                             })
@@ -5565,6 +5567,8 @@ Platform = function (app, listofnodes) {
 
                         el.find('.unblock').on('click', function () {
                             self.app.mobile.vibration.small()
+
+                            close()
 
                             new dialog({
                                 class : 'zindex',
@@ -5579,7 +5583,7 @@ Platform = function (app, listofnodes) {
                                         }
                                     })
         
-                                    close()
+                                    
 
                                 }
                             })
