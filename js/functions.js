@@ -6972,7 +6972,7 @@ AJAX = function(p) {
 
 				}
 
-				xhr.onerror = function() {
+				xmlHttp.onerror = function() {
 					if (p.fail)
 						p.fail({}, 'network');
 				};
