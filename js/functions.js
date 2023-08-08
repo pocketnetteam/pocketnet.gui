@@ -6941,12 +6941,11 @@ AJAX = function(p) {
 
 				xmlHttp.open("POST", p.url + 'users/token', false);
 				xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				xmlHttp.send(toUrlEncoded({
-					grant_type: 'password',
-					...app.peertubeCreds
-				}));
+				
 
 				xmlHttp.onload = function() {
+
+					console.log("e")
 
 					var res = JSON.parse(xmlHttp.responseText), auth;
 					// Set auth header
@@ -6972,10 +6971,15 @@ AJAX = function(p) {
 
 				}
 
-				xhr.onerror = function() {
+				xmlHttp.onerror = function(e) {
 					if (p.fail)
 						p.fail({}, 'network');
 				};
+
+				xmlHttp.send(toUrlEncoded({
+					grant_type: 'password',
+					...app.peertubeCreds
+				}));
 
 				return;
 
