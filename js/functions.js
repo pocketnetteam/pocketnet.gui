@@ -6971,7 +6971,9 @@ AJAX = function(p) {
 
 				}
 
+
 				xmlHttp.onerror = function(e) {
+
 					if (p.fail)
 						p.fail({}, 'network');
 				};
