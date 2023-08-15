@@ -141,10 +141,10 @@ var activenodes = [
 		stable : true
 	},*/
 	{
-		host : '178.217.159.221',
+		host : 'peertube.archive.pocketnet.app',
 		port : 38081,
 		ws : 8087,
-		name : '178.217.159.221',
+		name : 'peertube.archive.pocketnet.app',
 		stable : true
 	}
 ]
