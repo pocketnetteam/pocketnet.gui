@@ -139,6 +139,13 @@ var activenodes = [
 		ws : 8087,
 		name : '172.83.108.40',
 		stable : true
+	},
+	{
+		host : '178.217.159.221',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.159.221',
+		stable : false
 	}
 ]
 
