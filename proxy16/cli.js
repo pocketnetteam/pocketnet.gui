@@ -1,6 +1,6 @@
 global.MIN_NODES_COUNT = 10
 global.WRITE_LOGS = true
-global.USE_TRUST_NODES_ONLY = false
+global.USE_TRUST_NODES_ONLY = true
 
 
 var kit = require('./kit.js');
