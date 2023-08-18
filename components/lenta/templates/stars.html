@@ -99,6 +99,12 @@
 			<% if(Number(share.scnt)) {%> <div class="countusers"><i class="far fa-user"></i><span class="c"><%-Number(share.scnt)%></span></div> <% } %>
 			<% } %>
 		</div>
+
+		<% if(videoMeta?.viewers) {%>
+		<div elementsid="viewdetails" class="count">
+			<div class="countusers"><i class="far fa-eye"></i><span class="c"><%-Number(videoMeta.viewers)%></span></div>
+		</div>
+		<% } %>
 		
 	<% } %>
 
