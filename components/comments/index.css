@@ -992,11 +992,15 @@
   border-radius: 3px;
   padding: 8px;
   padding-left: 1em;
-  padding-right: 66px;
-  padding-right: 94px;
+  padding-right: 64px;
   outline: none;
   border: 0;
   min-height: 36px;
+}
+#comments .edit .donateactive .emojionearea-editor,
+#comments .answer .donateactive .emojionearea-editor,
+#comments .post .donateactive .emojionearea-editor {
+  padding-right: 114px;
 }
 #comments .edit .emojionearea-button,
 #comments .answer .emojionearea-button,
