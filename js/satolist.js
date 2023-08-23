@@ -18714,9 +18714,11 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.comments.getbyid(data.commentid, function (t) {
 
-                            data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
+                            data.comment = t[0]
 
-                            if (t) {
+                            //data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
+
+                            if (data.comment) {
                                 if (data.upvoteVal > 0) data.comment.scoreUp++
                                 else data.comment.scoreDown++
                             }
