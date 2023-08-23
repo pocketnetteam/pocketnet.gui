@@ -2684,7 +2684,7 @@ Application = function (p) {
 
 				var colors = {
 					white: "#FFF",
-					black: "#030F1B",
+					black: "#121621",
 					gray: '#1e1d1a'
 				}
 
@@ -2700,7 +2700,7 @@ Application = function (p) {
 
 					if(!colors[c]) c = 'white'
 
-					window.NavigationBar.backgroundColorByHexString(colors[c], c != 'white');
+					window.NavigationBar.backgroundColorByHexString(colors[c], c == 'white');
 				}
 					
 			},

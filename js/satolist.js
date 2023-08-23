@@ -3365,6 +3365,7 @@ Platform = function (app, listofnodes) {
         },
 
         articledecoration : function(wr, share, extend, clbk){
+            console.log('articledecoration')
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
@@ -3415,6 +3416,7 @@ Platform = function (app, listofnodes) {
 
             var cover = share.images[0]
 
+
             if(!cover){
 
                 caption.addClass('withoutimage')
@@ -3428,7 +3430,28 @@ Platform = function (app, listofnodes) {
 
             }
             else{
+
+                var rea = false
+
+                setTimeout(function(){
+                    if(rea) return
+
+                    rea = true
+
+                    caption.addClass('withoutimage')
+
+                    setTimeout(function(){
+                        wr.addClass('ready')
+                        if(clbk) clbk()
+                    }, 150)
+
+                }, 3500)
+
                 wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+                    if(rea) return
+
+                    rea = true
 
                     var aspectRatio = 0.6
                     var small = false
@@ -6865,14 +6888,10 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
-                    console.log('shareDataList', shareDataList)
-
                     var u = shareDataList.share.share.u.split(/(\%2F|\/)/g)
 
                     const videoId = u[u.length - 1]
                     
-
-                    console.log('videoId', videoId, u)
 
                     if (videoId)
                         shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
@@ -7709,8 +7728,6 @@ Platform = function (app, listofnodes) {
             },
 
             set: function (value) {
-
-                console.log("VAL", value)
 
                 var t = self.sdk.lentaMethod
 
@@ -14197,8 +14214,6 @@ Platform = function (app, listofnodes) {
                         return;
 
                     }
-
-                    console.log('np', np)
 
                     self.psdk.search.request(() => {
                         return self.app.api.rpc('search', np)

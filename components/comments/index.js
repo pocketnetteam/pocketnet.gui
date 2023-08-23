@@ -88,7 +88,6 @@ var comments = (function(){
 
 				if(txid){
 					share = self.psdk.share.get(txid)
-					console.log("REPLACE TXID SHARE")
 				}
 				
 
@@ -718,8 +717,6 @@ var comments = (function(){
 								successCheck()
 							}
 							else{
-
-								console.log('error', error)
 
 								self.app.platform.errorHandler(error, true)
 							}
@@ -2066,6 +2063,9 @@ var comments = (function(){
 							_p.el.find('.removedonate').on('click', function(){
 								actions.removeDonate(id, p)
 							})
+
+
+							p.el.find('.lcpp').addClass('donateactive')
 		
 		
 						})
@@ -2076,8 +2076,9 @@ var comments = (function(){
 
 				}
 
+				p.el.find('.lcpp').removeClass('donateactive')
 
-					__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
+				__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
 
 				
 
