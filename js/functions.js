@@ -6945,8 +6945,6 @@ AJAX = function(p) {
 
 				xmlHttp.onload = function() {
 
-					console.log("e")
-
 					var res = JSON.parse(xmlHttp.responseText), auth;
 					// Set auth header
 					if (res && res.access_token) auth = 'Bearer ' + res.access_token;
@@ -9517,7 +9515,7 @@ edjsHTML = function () {
 
 			var src = (t.file && t.file.url ? t.file.url : t.file).replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 
-			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + _.escape(src) + '" alt="' + (r) + '" />' +
+			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + (r) + '" />' +
 
 				(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
 

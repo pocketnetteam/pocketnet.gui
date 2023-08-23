@@ -603,7 +603,7 @@ var pSDK = function ({ app, api, actions }) {
                 try {
 
                     c.name = clearStringXss(decodeURIComponent(c.name || ''));
-                    c.i = clearStringXss(trydecode(c.i || ''));
+                    c.i = checkIfAllowedImageApply(clearStringXss(trydecode(c.i || '')));
                     c.s = clearStringXss(trydecode(c.s || ''));
                     c.l = clearStringXss(trydecode(c.l || ''));
                     c.a = clearStringXss(trydecode(c.a || ''));
@@ -1042,10 +1042,10 @@ var pSDK = function ({ app, api, actions }) {
 
                         c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
     
-                        c.msgparsed.images = _.map(c.msgparsed.images || [], function (i) {
+                        c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
     
-                            return clearStringXss(trydecode(i))
-                        });
+                            return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
+                        }), function(i){return i});
                     }
 
                     else{
@@ -1640,7 +1640,7 @@ var pSDK = function ({ app, api, actions }) {
                         return clearStringXss(clearTagString(trydecode(t)))
                     })
 
-                    c.i = _.map(c.i || [], function(i){return clearStringXss(i)});
+                    c.i = _.filter(_.map(c.i || [], function(i){return checkIfAllowedImageApply(clearStringXss(i))}), function(i){return i});
                 }
                 catch (e) {
                     console.error(e)

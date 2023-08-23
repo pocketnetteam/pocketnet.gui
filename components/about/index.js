@@ -539,7 +539,8 @@ var about = (function(){
 											href : k,
 											history : true,
 											open : true,
-											handler : true
+											handler : true,
+											fade : self.app.el.content,
 										})
 									//}
 				

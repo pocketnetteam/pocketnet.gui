@@ -403,6 +403,8 @@ checkIfAllowedImage = function(src){
 		const url = new URL(src);
 		const ptRegex = /images\/[a-f0-9]{32}\/[a-f0-9]{32}-original\.jpg/;
 
+        
+
 		const isImgur = url.hostname.includes('imgur.com');
 		const isBastyon = url.hostname.includes('bastyon.com');
 		const isPocketnet = url.hostname.includes('pocketnet.app');
@@ -415,6 +417,13 @@ checkIfAllowedImage = function(src){
 	catch(e){
 		return true
 	}
+}
+
+checkIfAllowedImageApply = function(src){
+
+    if(checkIfAllowedImage(src)) return src
+
+    return ''
 }
 
 rand = function (min, max) {
