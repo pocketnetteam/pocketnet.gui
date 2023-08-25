@@ -3365,7 +3365,6 @@ Platform = function (app, listofnodes) {
         },
 
         articledecoration : function(wr, share, extend, clbk){
-            console.log('articledecoration')
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
@@ -17322,6 +17321,7 @@ Platform = function (app, listofnodes) {
                             image : 'https://' + linkInfo.from + linkInfo.previewPath,
                             thumbnail : 'https://' + linkInfo.from + linkInfo.thumbnailPath,
                             views : linkInfo.views,
+                            viewers : linkInfo.viewers,
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
                             isLive : linkInfo.isLive,
@@ -18118,8 +18118,6 @@ Platform = function (app, listofnodes) {
             
                 if(state){
                     self.prepare(function(token){
-
-                        console.log('token', token)
 
                         prepareclbk(token)
     

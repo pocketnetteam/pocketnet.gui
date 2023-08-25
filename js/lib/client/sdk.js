@@ -573,7 +573,7 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (self[k] && self[k].applyAction) {
 
-
+                        console.log("applyAction " + (!extendedObject ? 'clone' : 'extend'))
 
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
@@ -1204,7 +1204,7 @@ var pSDK = function ({ app, api, actions }) {
                             if(exp.parentid){
                                 if (last){
                                     if (exp.parentid == last.id){
-                                        last.children++
+                                        //last.children++
                                     }
                                 }
                             }
@@ -1232,7 +1232,7 @@ var pSDK = function ({ app, api, actions }) {
                                 if (last){
                                     if (exp.parentid == last.id){
 
-                                        last.children--
+                                        //last.children--
                                     }
                                 }
                             }

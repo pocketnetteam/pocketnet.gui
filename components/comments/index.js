@@ -834,9 +834,10 @@ var comments = (function(){
 
 						else
 						{
-							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
+							actions.tocomment(reply.answerid || reply.parentid)
+
+							var cel = el.c.find("#" + (reply.answerid || reply.parentid))
 
 							cel.addClass('newcommentsn')
 
@@ -2825,6 +2826,7 @@ var comments = (function(){
 					renders.post(function(area){
 
 						if (ed.reply){
+							console.log("!!!", ed.reply)
 							actions.fastreply(ed.reply)
 						}
 						else
@@ -2838,6 +2840,9 @@ var comments = (function(){
 								reply.noaction = true
 
 								actions.fastreply(reply)
+
+
+								console.log("HERE")
 							}
 
 						}
