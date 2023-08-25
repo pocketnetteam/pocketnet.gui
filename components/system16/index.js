@@ -227,6 +227,8 @@ var system16 = (function(){
 			},
 		}
 
+		var rif = null
+
 		var actions = {
 			convertTime : function(stats){
 				_.each(stats, function(s){
@@ -354,21 +356,29 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
-
-					if (el.c){
-						renders.nodescontenttable(el.c)
-						renders.notificationcontenttable(el.c)
-						//renders.notificationuserstable(el.c)
-						renders.peertubeinstancestable(el.c)
-						renders.webadminscontent(el.c)
-						renders.webdistributionwallets(el.c)
-						renders.webserverstatus(el.c)
-						renders.translateapicontent(el.c)
+					if (rif){
+						cancelAnimationFrame(rif)
 					}
 	
-					setTimeout(function(){
-						makers.stats(true)
-					}, 200)
+					rif = window.requestAnimationFrame(() => {
+						rif = null
+						
+						if (el.c){
+							renders.nodescontenttable(el.c)
+							renders.notificationcontenttable(el.c)
+							//renders.notificationuserstable(el.c)
+							renders.peertubeinstancestable(el.c)
+							renders.webadminscontent(el.c)
+							renders.webdistributionwallets(el.c)
+							renders.webserverstatus(el.c)
+							renders.translateapicontent(el.c)
+						}
+		
+						setTimeout(function(){
+							makers.stats(true)
+						}, 200)
+					})
+
 				}
 
 				

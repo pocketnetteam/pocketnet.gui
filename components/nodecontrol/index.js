@@ -110,6 +110,8 @@ var nodecontrol = (function(){
 			},
 		}
 
+		var rif = null
+
 		var actions = {
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
@@ -132,15 +134,7 @@ var nodecontrol = (function(){
 				renders.all()
 			},
 			tick : function(state){
-
-				//var laststate = info
-
-					info = state
-
-				//if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
-				
-				//}
-				
+				info = state
 			},
 			ticksettings : function(settings, s, changed){
 
@@ -148,7 +142,15 @@ var nodecontrol = (function(){
 					system = settings
 				}
 
-				renders.all()
+				if (rif){
+                    cancelAnimationFrame(rif)
+                }
+
+				rif = window.requestAnimationFrame(() => {
+					rif = null
+					renders.all()
+				})
+				
 			},
 			admin : function(){
 
