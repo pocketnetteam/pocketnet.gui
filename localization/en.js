@@ -1410,7 +1410,7 @@ _l.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 _l.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
 _l.views = "Views";
-
+_l.viewers = "Viewers";
 
 _l.saveshare = "Download video";
 _l.gotosaved = "Go to downloaded";
