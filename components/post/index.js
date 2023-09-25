@@ -1145,11 +1145,15 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-					if (!share.settings.c) {
+					const
+						meta = window.parseVideo(share.url),
+						state = _.clone(window.peertubeglobalcache[meta?.id]);
+
+					if (!state?.isLive || !share.settings.c) {
 						self.fastTemplate(
 							'commentspreview',
 							function (rendered) {
-								var _el = el.c.find('.commentsWrapper');
+								var _el = el.c.find('.commentsWrapper').addClass('commentsVisible');
 	
 								var rf = '';
 	
@@ -1616,6 +1620,9 @@ var post = (function () {
 				}
 			},
 			stars: function (clbk) {
+				const
+					meta = window.parseVideo(share.url),
+					state = _.clone(window.peertubeglobalcache[meta?.id]);
 
 				self.shell(
 					{
@@ -1624,6 +1631,7 @@ var post = (function () {
 						el: el.stars,
 						data: {
 							share: share,
+							videoMeta: state
 						},
 						ignorelinksandimages : true,
 						animation : false,	
