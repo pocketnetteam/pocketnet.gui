@@ -34,7 +34,7 @@
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
         "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/",
-        "preinstall": "node preinstall.js",
+        "preinstall": "node build/preinstall.js",
         "prepare": "husky install"
     },
     "devDependencies": {
