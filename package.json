@@ -34,7 +34,8 @@
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
         "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/",
-        "preinstall": "node preinstall.js"
+        "preinstall": "node preinstall.js",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.6",
@@ -47,7 +48,8 @@
         "electron-notarize": "",
         "electron-reload": "",
         "electron-reloader": "",
-        "humanize": "0.0.9"
+        "humanize": "0.0.9",
+        "husky": "^8.0.3"
     },
     "dependencies": {
         "aes-js": "^3.1.2",
