@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm install
+# Gathering version from package.json
+VERSION=$(npx node-jq -r .version package.json)
+
+# Updating version in package-lock.json
+npx node-jq --indent 4 --arg version "$VERSION" '.version = $version | .packages[""]["version"] = $version' package-lock.json > package-lock-tmp.json && mv package-lock-tmp.json package-lock.json
+
+# Add package files in commit if updated
+git add package.json
 git add package-lock.json
