@@ -15,4 +15,4 @@ RUN apt-get -y autoremove g++ make python3 pkg-config libpixman-1-dev libcairo2-
 COPY . .
 
 WORKDIR /usr/src/app
-CMD [ "/usr/local/bin/node", "cli.js", "--cli" ]
+ENTRYPOINT [ "/usr/local/bin/node", "cli.js", "--cli" ]
