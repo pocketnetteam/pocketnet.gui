@@ -216,18 +216,9 @@ var author = (function(){
 							return !self.app.curation()
 						},
 						count : function(){
+
+							return deep(author, 'data.subscribers_count') || 0
 		
-							var u = _.map(deep(author, 'data.subscribers') || [], function(a){
-								return a
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-							
-							return u.length
 						
 						}
 					},
@@ -254,6 +245,9 @@ var author = (function(){
 							return !self.app.curation()
 						},
 						count : function(){
+
+
+							return deep(author, 'data.subscribes_count') || 0
 		
 							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
 								return a.adddress
@@ -279,6 +273,10 @@ var author = (function(){
 							if(self.user.isItMe(author.address)) return true
 						},
 						count : function(){
+
+							console.log('author', author)
+
+							return deep(author, 'data.blockings_count') || 0
 		
 							var blocked = deep(author, 'data.blocking') || []
 		
@@ -775,64 +773,78 @@ var author = (function(){
 
 			followers : function(_el, report){
 
-				var u = _.map(deep(author, 'data.subscribers') || [], function(a){
-					return a
+				author.data.loadRelations(['subscribes', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
+
+					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
+						return a
+					})
+	
+					var blocked = deep(author, 'data.blocking') || []
+	
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
+	
+					var e = self.app.localization.e('anofollowers');
+	
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowers')
+					}
+	
+					renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
+						report.module = p;
+					})
+
 				})
 
-				var blocked = deep(author, 'data.blocking') || []
-
-				u = _.filter(u, function(a){
-					return _.indexOf(blocked, a) == -1
-				})
-
-				var e = self.app.localization.e('anofollowers');
-
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynofollowers')
-				}
-
-				renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
-					report.module = p;
-				})
+				
 			},
 
 			following : function(_el, report){
 
-				var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-					return a.adddress
-				})
+				author.data.loadRelations(['subscribes', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
 
-				var blocked = deep(author, 'data.blocking') || []
+					var u = _.map(deep(author, 'data.subscribes') || [], function(a){
+						return a.adddress
+					})
 
-				u = _.filter(u, function(a){
-					return _.indexOf(blocked, a) == -1
-				})
+					var blocked = deep(author, 'data.blocking') || []
 
-				var e = self.app.localization.e('anofollowing');
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
 
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynofollowing')
-				}
+					var e = self.app.localization.e('anofollowing');
 
-				renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
-					report.module = p;
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowing')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
+						report.module = p;
+					})
+
 				})
 			},
 
 			blocking : function(_el, report){
 
-				var u = _.map(deep(author, 'data.blocking') || [], function(a){
-					return a
-				})
+				author.data.loadRelations(['blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
 
-				var e = self.app.localization.e('anoblocked');
+					var u = _.map(deep(author, 'data.blocking') || [], function(a){
+						return a
+					})
 
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynoblocked')
-				}
+					var e = self.app.localization.e('anoblocked');
 
-				renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), function(e, p){
-					report.module = p;
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynoblocked')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), function(e, p){
+						report.module = p;
+					})
+
 				})
 			},
 
@@ -1578,7 +1590,7 @@ var author = (function(){
 						
 					}
 	
-				})
+				}, true)
 	
 	
 				return

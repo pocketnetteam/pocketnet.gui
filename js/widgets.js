@@ -30,6 +30,8 @@ var PNWIDGETS = function(){
 
     self.make = function(seed, action, id, p, fast, __el, resized, additional){
 
+        console.log("MAKE", additional, id, action)
+
         if(!additional) additional = {}
 
         var elem = document.getElementById('pocketnet_' + seed);
@@ -119,7 +121,9 @@ var PNWIDGETS = function(){
             commentPs : {
                 commentid : parsed_url.searchParams.get('commentid'),
                 parentid : parsed_url.searchParams.get('parentid'),
-            }
+            },
+
+            node : parsed_url.searchParams.get('node') || null
         }
 
         if (connect) {
@@ -137,13 +141,12 @@ var PNWIDGETS = function(){
         var txid = parsed_url.searchParams.get('stx')
 
         if (txid) {
-
             ///pocketnet://i?stx=txid
 
             id = txid
             action = 'transaction'
         }
-        
+
 
         return {
             action : action,
@@ -155,7 +158,6 @@ var PNWIDGETS = function(){
     }
 
     self.makefromurl = function(el, url, resized, additional){
-
 
         var seed = Math.floor(Math.random() * 100000)
 

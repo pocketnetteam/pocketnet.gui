@@ -31,11 +31,11 @@ if(!_Node)
 			wss : 8087
 		},*/
 			
-		{
+		/*{
 			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
-	    },
+	    },*/
 		
 		{
 			host : '1.pocketnet.app',

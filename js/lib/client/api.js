@@ -33,13 +33,14 @@ var isonline = function(){
         return true
     }
 
-    if(typeof window.navigator != 'undefined' && window.navigator.onLine === false){
+    if (typeof window.navigator != 'undefined' && window.navigator.onLine === false){
         return window.navigator.onLine
     }
 
     return true
 }
 
+txidnodestorage = {}
 
 var ProxyRequest = function(app = {}, proxy){
     var self = this
@@ -181,7 +182,27 @@ var ProxyRequest = function(app = {}, proxy){
                 return Promise.reject(result.error)
             }
 
+            /*if(p.withnode){
+                return Promise.resolve({
+                    data : result.data || {},
+                    node : result.node
+                })
+            }
+
+            else{*/
+
+
+            if (url.indexOf('sendrawtransaction') > -1 && result.data){
+                txidnodestorage[result.data] = result.node
+            }
+
+
             return Promise.resolve(result.data || {})
+
+
+            //}
+
+            
 
         }).catch(e => {
 

@@ -280,6 +280,7 @@ Platform = function (app, listofnodes) {
         'PQDfbq9MetJYpVkTRzRmDcLgm5ZkDnDEwt': true,
         'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
         'PSs2u1WfWjmbUW6hF3sj3unHya4Ke4rF9Z': true,
+        'P9sathm4yQJEH6SMvgC2CCLEXSqVWxSHtj': true
     }
 
     self.bch = {
@@ -3061,7 +3062,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        transaction : function(txid, el, clbk, p){
+        transaction : function(txid, el, clbk, p, additional = {}){
             app.nav.api.load({
                 open: true,
                 href: 'transactionview',
@@ -3070,7 +3071,8 @@ Platform = function (app, listofnodes) {
                 clbk: clbk,
 
                 essenseData: {
-                    txid : txid
+                    txid : txid,
+                    node : additional.node
                 }
             })
         },
@@ -4140,7 +4142,16 @@ Platform = function (app, listofnodes) {
 
 
                                     if ((p.share ?? true) && p.roomid && txid){
-                                        self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' +txid) /// change protocol
+
+                                        var node = typeof txidnodestorage != 'undefined' ? txidnodestorage[txid] || null : null
+
+                                        var link = app.meta.protocol + '://i?stx=' +txid
+
+                                        if (node) link += '&node=' + node
+
+                                        console.log("send link", link)
+
+                                        self.matrixchat.shareInChat.url(p.roomid, link) /// change protocol
                                     }
 
                                     p.value = value;
@@ -4542,7 +4553,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n) {
-            return (n || "").replace(/[^a-zA-Z0-9_. ]/g, "")
+            return (n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. ]/g, "") : n
         },
 
         name: function (address) {
@@ -8395,112 +8406,8 @@ Platform = function (app, listofnodes) {
             },
 
             init : function(){
-
                 return Promise.resolve()
 
-                return self.sdk.keys.need().then(me => {
-
-                    if(self.loadingWithErrors){
-                        return Promise.reject('loadingWithErrors')
-                    }
-
-                    var userInfo = new UserInfo();
-
-						userInfo.name.set(me.name);
-						userInfo.language.set(me.language);
-						userInfo.about.set(me.about);
-						userInfo.site.set(me.site);
-						userInfo.image.set(me.image);
-						userInfo.addresses.set(me.addresses);
-						//userInfo.ref.set(me.ref);
-
-                        userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-                            return k.public
-                        }))
-
-                    var err = userInfo.validation()
-
-                    if (self.nvadr[self.app.user.address.value]){
-                        err = null
-                    }
-
-
-                    if (err){
-
-                        var errtext = 'Undefined Error'
-
-						if(err == 'namelength'){
-							errtext = "The name length can't be more than 20 symbols"
-						}
-
-						if(err == 'pocketnet'){
-							errtext = 'To avoid user confusion using '+app.meta.fullname+' in name is reserved'
-						}
-
-                        if(err == 'bastyon'){
-							errtext = 'To avoid user confusion using Bastyon in name is reserved'
-						}
-
-                        self.sdk.keys.error(errtext)
-
-                        return Promise.reject(err)
-                    }
-
-                    return new Promise((resolve, reject) => {
-
-                        /*dialog({
-                            html: app.meta.fullname + " chat ask you to generate encryption keys. Do you want to proceed?",
-                            btn1text: 'Generate Encryption Keys',
-                            btn2text: self.app.localization.e('dno'),
-
-                            success: function () {*/
-
-                                self.sdk.node.transactions.create.commonFromUnspent(
-
-                                    userInfo,
-
-                                    function(tx, error){
-
-                                        if(!tx){
-
-                                            self.sdk.keys.error(self.errorHandler(error).text())
-
-                                            reject(error)
-
-                                        }
-                                        else
-                                        {
-                                            self.sdk.users.getone(self.app.user.address.value, function(){
-                                                resolve('processing')
-                                            })
-                                        }
-
-
-                                    }
-                                )
-
-                            /*},
-
-                            fail: function () {
-                                reject('no')
-                            },
-
-                            close: function () {
-                                reject('close')
-                            }
-                        })*/
-
-                    })
-
-                    ///return Promise.resolve('processing')
-
-
-
-                }).catch(r => {
-
-                    return Promise.resolve(r)
-
-                })
             },
             need : function(){
 
@@ -8510,14 +8417,6 @@ Platform = function (app, listofnodes) {
                         if (state) {
 
                             var processing = false
-
-                            console.error("TODO_REF_ACTIONS")
-
-                            
-                            
-                            //_.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 ||
-
-                            /*(self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )*/
 
                             if (processing) {
                                 return reject('processing')
@@ -8606,12 +8505,60 @@ Platform = function (app, listofnodes) {
                 self.sdk.user.get(clbk, true)
             },
 
+            loadRelation : function(address, key, reload){
+
+                if(!self.psdk[key]) return Promise.resolve([])
+
+                return self.psdk[key].load(address, reload).then(r => {
+                    return r
+                })
+
+            },
+
             get: function (clbk, update) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
 
-                    if(clbk) clbk(self.psdk.userInfo.getmy())
-                }, null, update)
+                    var userInfo = self.psdk.userInfo.getmy()
+
+                    if (userInfo){
+
+                        if(userInfo.subscribers_count + userInfo.subscribes_count + userInfo.blockings_count < 2000){
+                            self.sdk.user.getfullfb(clbk, update)
+                        }
+                        else{
+                            userInfo.loadRelations(['subscribes', 'blocking'], self.sdk.user.loadRelation, update).then(() => {
+                                if(clbk) clbk(userInfo)
+                            }).catch(e => {
+                                console.error(e)
+
+                                self.sdk.user.getfullfb(clbk, update)
+                            })
+                        }
+
+                        
+                    }
+                    else{
+                        if(clbk) clbk(userInfo)
+                    }
+
+                    //self.sdk.user.loadRelations(['subscribes', 'blocking'], () => {
+
+                    
+
+                }, true, update)
+
+            },
+
+            getfullfb: function (clbk, update) {
+
+                self.sdk.users.getone(app.user.address.value, (user, error) => {
+
+                    var userInfo = self.psdk.userInfo.getmy()
+
+                    if(clbk) clbk(userInfo)
+
+                }, false, update)
 
             },
 
@@ -8924,7 +8871,7 @@ Platform = function (app, listofnodes) {
 
                 var info = self.psdk.userInfo.get(address); 
 
-                if (info.reputation > 100 && info.postcnt < 10) return true
+                if (/*info.reputation > 100 && */info.postcnt > 10) return true
 
                 return false
 
@@ -9011,7 +8958,6 @@ Platform = function (app, listofnodes) {
 
                 if (info && info.deleted) return 'deleted'
             },
-
 
             deleteaccount : function(progress){
 
@@ -15862,9 +15808,9 @@ Platform = function (app, listofnodes) {
 
                 get: {
 
-                    tx: function (id, clbk) {
+                    tx: function (id, clbk, p) {
 
-                        self.psdk.transaction.load(id).then(tx => {
+                        self.psdk.transaction.load(id, false, p).then(tx => {
 
                             if (clbk) {
                                 clbk(tx)
@@ -17199,7 +17145,7 @@ Platform = function (app, listofnodes) {
 
 
             },
-            info : function(links){
+            info : function(links, update){
                 var s = self.sdk.videos.storage
 
 
@@ -17217,7 +17163,7 @@ Platform = function (app, listofnodes) {
 
                     if(!l.meta.type) return false
 
-                    if(s[l.link] && !s[l.link].waitTranscoding) return false
+                    if(s[l.link] && !s[l.link].waitTranscoding && !update) return false
 
                     return true
                 })
@@ -22565,14 +22511,7 @@ Platform = function (app, listofnodes) {
                         console.error(e)
                     })
 
-                    /*var astatus = account.getStatus()
-
-                    if (astatus == 'not_in_progress_no_processing'){
-                        setTimeout(() => {
-
-
-                        }, 3000)
-                    }*/
+                    
 
                     self.preparingUser = false;
 
@@ -22623,6 +22562,8 @@ Platform = function (app, listofnodes) {
                         }
 
                     }, 2000)
+
+            
 
                 })
             }

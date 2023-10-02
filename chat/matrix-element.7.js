@@ -1181,7 +1181,8 @@ var PNWIDGETS = function () {
       commentPs: {
         commentid: parsed_url.searchParams.get("commentid"),
         parentid: parsed_url.searchParams.get("parentid")
-      }
+      },
+      node: parsed_url.searchParams.get('node') || null
     };
     if (connect) {
       action = "connect";
