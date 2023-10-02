@@ -215,8 +215,6 @@ class Notifications{
 
     run () {
 
-        this.logger.w('system', 'info', `Notification: run`)
-        
         this.destroyed = false
 
         if(!this.checkInterval)
@@ -456,7 +454,6 @@ class Notifications{
             this.checkInterval = null
         }
 
-        this.logger.w('system', 'info', `Notification: destroy`)
     }
 
     info(){
