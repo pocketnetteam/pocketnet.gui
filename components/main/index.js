@@ -754,7 +754,11 @@ var main = (function(){
 					loader = function(clbk){
 						var _clbk = function(shares){
 
+							shares = _.filter(shares, (s) => {return s})
+
 							self.app.psdk.share.insertFromResponseSmall(shares)
+
+							console.log('shares', shares)
 
 							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
 								return s.txid

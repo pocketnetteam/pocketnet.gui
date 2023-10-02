@@ -8,7 +8,7 @@ var transactionview = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, tx = {};
+		var el, txid, tx = {}, node = null;
 
 		var types = {
 			'7570766f74655368617265': 'Score to Post',
@@ -198,6 +198,8 @@ var transactionview = (function(){
 
 		var make = function(){
 
+			console.log("MAKE TRX", node, txid)
+
 			self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
 
 				if(_.isArray(_tx) && _tx.length) _tx = _tx[0]
@@ -218,6 +220,9 @@ var transactionview = (function(){
 
 				
 
+			}, {
+				node : node,
+				auto : node ? true : false
 			})
 		}
 
@@ -237,6 +242,8 @@ var transactionview = (function(){
 			getdata : function(clbk, p){
 
 				txid = (p.settings.essenseData || {}).txid || parameters().txid
+
+				node = (p.settings.essenseData || {}).node || null
 
 				if(!txid){
 

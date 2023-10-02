@@ -151,6 +151,7 @@ var userslist = (function(){
 
 		var events = {
 			loadmorescroll : function(){
+
 				if (
 
 					(el.c.height() - scnt.scrollTop() < 1000) 
@@ -236,13 +237,18 @@ var userslist = (function(){
 
 		var makepage = function(clbk){
 
+			console.log('addresses', addresses)
+
 			var newadresses = _.filter(addresses, function(a, i){
 				if(i >= (page * cnt) && i < ((page + 1) * cnt)){
 					return true;
 				}
 			})	
 
-			if(newadresses.length){
+			console.log('newadresses', newadresses)
+
+
+			if (newadresses.length){
 
 				load.info(newadresses, function(){
 					renders.page(newadresses, clbk)
@@ -334,6 +340,7 @@ var userslist = (function(){
 		var make = function(){
 			makepage(function(){
 
+
 				if(scnt.hasClass('applicationhtml')){
 					self.app.events.scroll['userlist'] = events.loadmorescroll
 				}
@@ -376,6 +383,8 @@ var userslist = (function(){
 				sort = deep(p.settings, 'essenseData.sort') || null;
 
 				addresses = sorting(deep(p.settings, 'essenseData.addresses') || [], sort)
+
+				console.log('addresses', addresses)
 
 				data.addresses = addresses
 

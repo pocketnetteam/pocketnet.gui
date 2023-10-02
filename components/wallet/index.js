@@ -726,8 +726,8 @@ var wallet = (function(){
 				}
 
 				if(v == 'wallet'){
-
-					self.app.platform.sdk.addresses.addNewWalletAddress(function(_a){
+					///
+					self.app.platform.sdk.addresses.getFirstRandomAddress(function(_a){
 
 						self.app.platform.sdk.addresses.save();
 

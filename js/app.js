@@ -971,7 +971,7 @@ Application = function (p) {
 
 				if (infoAdresses.length) {
 
-					self.psdk.userInfo.load(infoAdresses).then(() => {
+					self.psdk.userInfo.load(infoAdresses, true).then(() => {
 					}).catch(e => {
 						console.error(e)
 					})

@@ -26,6 +26,8 @@ var donate = (function(){
 					transaction.feemode.set('include')
 					transaction.message.set('')
 
+					
+
 				return transaction
 
 			},

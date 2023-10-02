@@ -1995,8 +1995,11 @@ UserInfo = function(){
 	self.alias = function(txid){
 		var userInfo = new pUserInfo();
 		
-
 			userInfo._import(self.export())
+
+			userInfo.subscribers_loaded = true
+			userInfo.subscribes_loaded = true
+			userInfo.blocking_loaded = true
 
 			userInfo.txid = txid
 
@@ -2178,6 +2181,12 @@ pUserInfo = function(){
 
 	self.subscribes = [];
 	self.subscribers = [];
+
+	self.subscribes_loaded = false
+	self.subscribers_loaded = false
+	self.blocking_loaded = false;
+
+
 	self.recomendedSubscribes = [];
 	self.blocking = [];
 	self.regdate = new Date()
@@ -2208,15 +2217,30 @@ pUserInfo = function(){
 		self.reputation = v.reputation || 0;
 		self.deleted = v.deleted || false
 
-		if (v.subscribes) self.subscribes = v.subscribes;
-		if (v.subscribers) self.subscribers = v.subscribers;
+		if (v.subscribes) {
+			self.subscribes = v.subscribes;
+		}
+		
+		if (v.subscribers) {
+			self.subscribers = v.subscribers;
+		}
 
 		if (v.subscribes_count) self.subscribes_count = v.subscribes_count;
 		if (v.subscribers_count) self.subscribers_count = v.subscribers_count;
+		
 
 		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
-		if (v.blocking) self.blocking = v.blocking;
+		if (v.blocking) {
+			self.blocking = v.blocking
+		}
+
+		if(v.blockings_count) self.blockings_count = v.blockings_count;
+
+		if(v.subscribes_loaded) self.subscribes_loaded = true
+		if(v.blockings_loaded) self.blockings_loaded = true
+		if(v.subscribers_loaded) self.subscribers_loaded = true
+		
 		if (v.flags) self.flags = v.flags;
 		if (v.hash) self.hash = v.hash;
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
@@ -2305,6 +2329,10 @@ pUserInfo = function(){
 		v.flags = _.clone(self.flags)
 		v.firstFlags = _.clone(self.firstFlags)
 
+		v.subscribes_loaded = self.subscribes_loaded
+		v.blockings_loaded = self.blockings_loaded
+		v.subscribers_loaded = self.subscribers_loaded
+
 		v.subscribers_count = self.subscribers_count
 		v.subscribes_count = self.subscribes_count
 		v.blockings_count = self.blockings_count
@@ -2357,6 +2385,33 @@ pUserInfo = function(){
 		return modFlag;
 	}
 
+	self.loadRelations = function(keys, loadFunction){
+		return Promise.all(_.map(keys, (k) => {
+			return self.loadRelation(k, loadFunction)
+		}))
+	}
+
+	self.loadRelation = function(key, loadFunction){
+		if (self[key + '_loaded']){
+			return Promise.resolve()
+		}
+
+		return loadFunction(self.address, key).then(v => {
+
+			console.log("loadRelation", v, key)
+
+			self[key] = v
+
+			self[key + '_loaded'] = true
+
+			return Promise.resolve()
+		}).catch(e => {
+
+			console.error(e)
+			return Promise.resolve()
+		})
+	}
+
 	self.relation = function(address, key){
 		if(!key) key = 'subscribes'
 
@@ -2369,50 +2424,54 @@ pUserInfo = function(){
 
 		if(!key) key = 'subscribes'
 
-		self[key] || (self[key] = [])
+		if (key === 'subscribers'){
 
-		try{
+			self['subscribers_count'] || (self['subscribers_count'] = 0);
+			self['subscribers_count']++;
+
+		}
+
+		if (key === 'subscribes'){
+
+			self['subscribes_count'] || (self['subscribes_count'] = 0);
+			self['subscribes_count']++;
+			
+		}
+
+		if (key === 'blocking'){
+
+			self['blockings_count'] || (self['blockings_count'] = 0);
+			self['blockings_count']++;
+			
+		}
+	
+		if (self[key]){
+			removeEqual(self[key], obj)
 			self[key].push(obj)
-
-			if (key === 'subscribers'){
-
-				self['subscribers_count'] || (self['subscribers_count'] = 0);
-				self['subscribers_count']++;
-
-			}
-
-			if (key === 'subscribes'){
-
-				self['subscribes_count'] || (self['subscribes_count'] = 0);
-				self['subscribes_count']++;
-				
-			}
 		}
-		catch(e){
-			console.error(e)
-		}
-
 	}
 
 	self.removeRelation = function(obj, key){
 
 		if(!key) key = 'subscribes'
 
-		removeEqual(self[key], obj)
-
 		if (key === 'subscribers'){
-
 			self['subscribers_count'] || (self['subscribers_count'] = 1);
 			self['subscribers_count']--;
-
 		}
 
 		if (key === 'subscribes'){
-
 			self['subscribes_count'] || (self['subscribes_count'] = 1);
 			self['subscribes_count']--;
-			
 		}
+
+		if (key === 'blocking'){
+			self['blockings_count'] || (self['blockings_count'] = 1);
+			self['blockings_count']--;
+		}
+
+		if (self[key])
+			removeEqual(self[key], obj)
 
 	}
 	

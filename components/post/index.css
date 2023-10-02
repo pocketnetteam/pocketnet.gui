@@ -309,9 +309,6 @@
   border-radius: 12px;
   background: #000;
 }
-#post.videomainpost .statswrapperExtended {
-  display: none;
-}
 #post.videomainpost .share {
   margin: 0 auto;
   /*max-width: 960px;*/

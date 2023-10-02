@@ -17,6 +17,8 @@ var post = (function () {
 
 		var progressInterval;
 
+		var videoinfoupdateInterval = null
+
 		var player = null
 
 		var authblock = false;
@@ -1145,83 +1147,96 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-					if (!share.settings.c) {
-						self.fastTemplate(
-							'commentspreview',
-							function (rendered) {
-								var _el = el.c.find('.commentsWrapper');
-	
-								var rf = '';
-	
-								if (self.app.platform.sdk.address.pnet()) {
-									rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
-								}
-	
-								var url =
-									'https://' + self.app.options.url + '/' +
-									(ed.hr || 'index?') +
-									's=' +
-									share.txid +
-									'&mpost=true' +
-									rf;
-	
-								if (parameters().address) {
-									url += '&address=' + (parameters().address || '');
-								}
-	
-								var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-	
-								self.nav.api.load({
-									open: true,
-									id: 'comments',
-									el: _el,
-	
-									eid: (ed.eid || '') + share.txid + 'post',
-	
-									essenseData: {
-										hr: url,
-										totop: el.c,
-	
-										caption: ed.nocommentcaption ? null : rendered,
-										send: function () {
-	
-											var c = el.c.find('.commentsAction .count span');
-												c.html(Number(c.html() || '0') + 1);
-												
-										},
-										txid: ed.commentsid || share.txid,
-	
-										reply: ed.reply,
-	
-										showall: !ed.fromempty,
-										init: ed.fromempty || false,
-										preview: true,
-										listpreview : false,
-										receiver: share.address,
-										fromtop: !ed.fromempty,
-										fromempty: ed.fromempty,
-										lastComment: ed.fromempty ? share.lastComment : null,
-										cantsend : checkvisibility,
-										additionalActions: function () {
-											self.closeContainer();
-										},
-									},
-	
-									clbk: function (e, p) {
-										actions.position();
-										inicomments = p;
-	
-										if (clbk) clbk();
-									},
-								});
-							},
-							{
-								share: share,
-							},
-						);
-					} else {
-						el.c.find('.commentsWrapper').addClass('commentsEmpty');
+					
+					if(share.settings.c && share.url){
+						var meta = window.parseVideo(share.url)
+						if (meta){
+							var state = window.peertubeglobalcache[meta.id]
+
+							if (state && state.isLive){
+								el.c.find('.commentsWrapper').addClass('commentsEmpty');
+								if (clbk) clbk();
+								return
+							}
+						}
 					}
+				
+					console.log("state HERE")
+					
+					self.fastTemplate(
+						'commentspreview',
+						function (rendered) {
+							var _el = el.c.find('.commentsWrapper');
+
+							var rf = '';
+
+							if (self.app.platform.sdk.address.pnet()) {
+								rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+							}
+
+							var url =
+								'https://' + self.app.options.url + '/' +
+								(ed.hr || 'index?') +
+								's=' +
+								share.txid +
+								'&mpost=true' +
+								rf;
+
+							if (parameters().address) {
+								url += '&address=' + (parameters().address || '');
+							}
+
+							var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+
+							self.nav.api.load({
+								open: true,
+								id: 'comments',
+								el: _el,
+
+								eid: (ed.eid || '') + share.txid + 'post',
+
+								essenseData: {
+									hr: url,
+									totop: el.c,
+
+									caption: ed.nocommentcaption ? null : rendered,
+									send: function () {
+
+										var c = el.c.find('.commentsAction .count span');
+											c.html(Number(c.html() || '0') + 1);
+											
+									},
+									txid: ed.commentsid || share.txid,
+
+									reply: ed.reply,
+
+									showall: !ed.fromempty,
+									init: ed.fromempty || false,
+									preview: true,
+									listpreview : false,
+									receiver: share.address,
+									fromtop: !ed.fromempty,
+									fromempty: ed.fromempty,
+									lastComment: ed.fromempty ? share.lastComment : null,
+									cantsend : checkvisibility,
+									additionalActions: function () {
+										self.closeContainer();
+									},
+								},
+
+								clbk: function (e, p) {
+									actions.position();
+									inicomments = p;
+
+									if (clbk) clbk();
+								},
+							});
+						},
+						{
+							share: share,
+						},
+					);
+					
 				} else {
 					if (clbk) clbk();
 				}
@@ -1740,6 +1755,46 @@ var post = (function () {
 						}
 					})
 
+
+					if (share.itisstream()){
+
+						
+
+						videoinfoupdateInterval = setInterval(() => {
+
+							self.app.platform.sdk.videos.info([share.url], true).then(r => {
+								checkmedia()
+							})
+
+						}, 60 * 1000)
+
+
+						var checkmedia = function(){
+
+							var info = app.platform.sdk.videos.storage[share.url]
+
+							if (info){
+								if (info.data.isLive){
+									_p.el.find('.statswrapperExtended .number').html(info.data.viewers || 0)
+
+									return
+								}
+								else{
+
+								}
+							}
+
+							if(videoinfoupdateInterval){
+								clearInterval(videoinfoupdateInterval)
+								videoinfoupdateInterval = null
+							}
+						}
+
+						checkmedia()
+
+					}
+
+
 					if (clbk) clbk();
 					
 				})
@@ -2151,6 +2206,9 @@ var post = (function () {
 				}
 
 				if (progressInterval) clearInterval(progressInterval);
+				if (videoinfoupdateInterval) clearInterval(videoinfoupdateInterval) 
+
+				videoinfoupdateInterval = null
 
 				self.app.actions.playingvideo(null)
 				
