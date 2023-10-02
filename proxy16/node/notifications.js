@@ -66,7 +66,7 @@ class Notifications{
         try{
             this.run()
         }catch(e){
-            console.log(e)
+            console.log('run', e)
         }
         
 
@@ -227,7 +227,12 @@ class Notifications{
 
         if(!this.checkInterval)
             this.checkInterval = setInterval(() => {
-                this.autocheck()
+                try{
+                    this.autocheck()
+                }catch(e){
+                    console.log('autocheck', e)
+                }
+                
             }, 30 * 60 * 1000)
     }
 
@@ -318,11 +323,19 @@ class Notifications{
     autocheck(){
         if(!this.checkHeight()){
 
+            console.log('autocheck')
+
             this.logger.w('system', 'info', `Notification: Firebase autocheck fail`)
 
             destroy()
 
-            this.run()
+            try{
+                this.run()
+            }catch(e){
+                console.log('run2', e)
+            }
+
+            
         }
     }
 
@@ -465,7 +478,7 @@ class Notifications{
     
             this.logger.w('system', 'info', `Notification: destroy`)
         }catch(e){
-            console.log(e)
+            console.log('destroy', e)
         }
         
     }
