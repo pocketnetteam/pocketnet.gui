@@ -71,7 +71,11 @@ const publics = {
     getuserstate: true,
     getaccountsetting: true,
     getaddressregistration: true,
-    
+
+    getusersubscribes: true,
+    getusersubscribers: true,
+    getuserblockings: true,
+
     signrawtransactionwithkey: true,
     getrecommendedposts: true,
     gettime: true,
@@ -474,6 +478,10 @@ RpcClient.callspec = {
     getstatistic: 'int int',
     getuserstatistic : 'str int int int int',
 
+    getusersubscribes: 'str str str str int',
+    getusersubscribers: 'str str str str int',
+    getuserblockings: 'str int str str str int',
+
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
@@ -496,7 +504,10 @@ RpcClient.callspec = {
     dumpwallet: 'str',
     importwallet: 'str',
 
-    getaccountearning : 'str int int'
+    getaccountearning : 'str int int',
+
+
+    
 
 };
 

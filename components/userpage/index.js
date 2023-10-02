@@ -156,7 +156,7 @@ var userpage = (function(){
 
 					var me = self.psdk.userInfo.getmy() || {}
 
-					var s = deep(me, 'subscribers.length')
+					var s = deep(me, 'subscribers_count')
 					
 					if (self.app.mobileview && s){
 						return s
@@ -180,7 +180,7 @@ var userpage = (function(){
 
 					var me = self.psdk.userInfo.getmy() || {}
 
-					var s = deep(me, 'subscribes.length')
+					var s = deep(me, 'subscribes_count')
 					
 					if (self.app.mobileview && s){
 						return s
@@ -853,27 +853,33 @@ var userpage = (function(){
 
 				var address = deep(self, 'app.user.address.value')
 
+				///
+
 				if (address){
 
 					var author = self.psdk.userInfo.get(address)
-					
-					var u = _.map(deep(author, 'subscribers') || [], function(a){
-						return a
+					 
+						author.loadRelations(['subscribers'], self.app.platform.sdk.user.loadRelation).then(() => {
+						
+						var u = _.map(deep(author, 'subscribers') || [], function(a){
+							return a
+						})
+
+						var blocked = deep(author, 'blocking') || []
+
+						u = _.filter(u, function(a){
+							return _.indexOf(blocked, a) == -1
+						})
+
+						var e = self.app.localization.e('anofollowers');
+
+						if(self.user.isItMe(author.address)){
+							e = self.app.localization.e('aynofollowers')
+						}
+
+						renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
+
 					})
-
-					var blocked = deep(author, 'blocking') || []
-
-					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
-					})
-
-					var e = self.app.localization.e('anofollowers');
-
-					if(self.user.isItMe(author.address)){
-						e = self.app.localization.e('aynofollowers')
-					}
-
-					renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
 				}
 				
 			},

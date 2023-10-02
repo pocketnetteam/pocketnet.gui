@@ -31,8 +31,7 @@ var searchusers = (function(){
 				history : true,
 				
 				count : function(author){
-					console.log('author', author)
-					return deep(author, 'subscribers.length') || deep(author, 'subscribers_count') || 0
+					return deep(author, 'subscribers_count') || 0
 				}
 			}
 		}

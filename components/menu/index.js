@@ -1254,7 +1254,7 @@ var menu = (function(){
 				
 						clbk(data)
 
-					})
+					}, true)
 					
 
 				}

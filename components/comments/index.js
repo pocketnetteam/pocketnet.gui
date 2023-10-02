@@ -3168,8 +3168,22 @@ var comments = (function(){
 
 				var post = share;
 
+				if (listpreview){
+					makePreview(() => {
+						if(ed.previewClbk) ed.previewClbk()
+					})
+				} else{
+					make();
+					
+					if (ed.showall){
+						actions.showall()
+					}
+				}
+
+				initEvents();
+
 				/* !Post with stream */
-				if (!post || !post.settings.c) {
+				/*if (!post || !post.settings.c) {
 					if (listpreview){
 						makePreview(() => {
 							if(ed.previewClbk) ed.previewClbk()
@@ -3191,7 +3205,7 @@ var comments = (function(){
 					} else {
 						holder.hide();
 					}
-				}
+				}*/
 
 				p.clbk(null, p);
 			},

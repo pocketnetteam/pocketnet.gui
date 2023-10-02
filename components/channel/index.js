@@ -45,7 +45,7 @@ var channel = (function(){
 				history : true,
 				
 				count : function(){
-					return deep(author, 'data.subscribers.length') || 0 
+					return deep(author, 'data.subscribers_count') || 0 
 				}
 			},
 
@@ -58,7 +58,7 @@ var channel = (function(){
 				history : true,
 				
 				count : function(){
-					return deep(author, 'data.subscribes.length') || 0 
+					return deep(author, 'data.subscribes_count') || 0 
 				}
 			}
 		}

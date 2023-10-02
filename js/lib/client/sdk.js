@@ -13,6 +13,18 @@ var pSDK = function ({ app, api, actions }) {
             time: 600
         },
 
+        subscribes: {
+            time: 600
+        },
+
+        subscribers: {
+            time: 600
+        },
+
+        blocking: {
+            time: 600
+        },
+
         userInfoFullFB: {
             time: 0
         },
@@ -726,6 +738,10 @@ var pSDK = function ({ app, api, actions }) {
             if (data) {
                 u = new pUserInfo()
                 u._import(data)
+
+                if (data.subscribers) u.subscribers_loaded = true
+                if (data.subscribes) u.subscribes_loaded = true
+                if (data.blocking) u.blocking_loaded = true
 
                 clearIdCache('userInfo', u.address)
             }
@@ -2084,10 +2100,13 @@ var pSDK = function ({ app, api, actions }) {
 
     self.transaction = {
         keys: ['transaction'],
-        load: function (id, update) {
+        load: function (id, update, p) {
 
             return loadone('transaction', id, (ids) => {
-                return api.rpc('getrawtransaction', [ids[0], 1]).then(d => {
+
+                console.log("MAKE ", id, update, p)
+
+                return api.rpc('getrawtransaction', [ids[0], 1], {rpc : p}).then(d => {
 
                     if(_.isEmpty(d)) {
                         return []
@@ -2187,6 +2206,120 @@ var pSDK = function ({ app, api, actions }) {
                 if (!r[name]) return Promise.reject('404')
 
                 return r[name]
+
+            })
+
+        },
+    }
+
+    self.blocking = {
+        keys: ['blocking'],
+        load: function (address, update) {
+
+            return loadone('blocking', address, (ids) => {
+                return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
+                    rpc : {
+                        node : '178.217.159.221:38081'
+                    }
+                }).then(r => {
+
+                    /*r = _.map(r, (v) => {
+                        return v.address
+                    })*/
+
+                    if (r) {
+                        return [{
+                            key: address,
+                            data: r
+                        }]
+                    }
+
+                    return Promise.reject('404')
+
+                })
+            }, {
+                update,
+                indexedDb: 'blocking',
+
+            }).then(r => {
+
+                return r[address]
+
+            })
+
+        },
+    }
+
+    self.subscribers = {
+        keys: ['subscribers'],
+        load: function (address, update) {
+
+            return loadone('subscribers', address, (ids) => {
+                return api.rpc('getusersubscribers', [ids[0], '', '', '', '5000']).then(r => {
+
+                    console.log("R", r)
+
+                    r = _.map(r, (v) => {
+                        return v.address
+                    })
+
+                    if (r) {
+                        return [{
+                            key: address,
+                            data: r
+                        }]
+                    }
+
+                    return Promise.reject('404')
+
+                })
+            }, {
+                update,
+                indexedDb: 'subscribers',
+
+            }).then(r => {
+
+                return r[address]
+
+            })
+
+        },
+    }
+
+    self.subscribes = {
+        keys: ['subscribes'],
+        load: function (address, update) {
+
+            return loadone('subscribes', address, (ids) => {
+                return api.rpc('getusersubscribes', [ids[0], '', '', '', '5000']).then(r => {
+
+
+                    console.log("RESULT getusersubscribes", r)
+
+                    r = _.map(r, (v) => {
+                        return {
+                            adddress : v.adddress,
+                            private : v.private
+                        }
+                    })
+
+                    if (r) {
+                        return [{
+                            key: address,
+                            data: r
+                        }]
+                    }
+
+                    return Promise.reject('404')
+
+                })
+            }, {
+                update,
+                indexedDb: 'subscribes',
+
+            }).then(r => {
+
+                return r[address]
 
             })
 
