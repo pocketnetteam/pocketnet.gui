@@ -61,8 +61,14 @@ class Notifications{
         firebase.useNotifications = true
 
         this.checkInterval = null
+
+
+        try{
+            this.run()
+        }catch(e){
+            console.log(e)
+        }
         
-        this.run()
 
         return this;
     }
@@ -443,20 +449,25 @@ class Notifications{
     }
 
     destroy(){
-        this.queue = [];
-        this.height = 0
-        this.workerEnable = false
-
-        this.stats = new NotificationStats()
-        this.statsShort = new NotificationStatsShort()
-        this.destroyed = true
-
-        if(this.checkInterval){
-            clearInterval(this.checkInterval)
-            this.checkInterval = null
+        try{
+            this.queue = [];
+            this.height = 0
+            this.workerEnable = false
+    
+            this.stats = new NotificationStats()
+            this.statsShort = new NotificationStatsShort()
+            this.destroyed = true
+    
+            if(this.checkInterval){
+                clearInterval(this.checkInterval)
+                this.checkInterval = null
+            }
+    
+            this.logger.w('system', 'info', `Notification: destroy`)
+        }catch(e){
+            console.log(e)
         }
-
-        this.logger.w('system', 'info', `Notification: destroy`)
+        
     }
 
     info(){
