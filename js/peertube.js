@@ -598,7 +598,7 @@ PeerTubePocketnet = function (app) {
 			},
 
 			best: function (type) {
-				const special = deep(app, 'platform.real')[app.user.address.value] || deep(app, 'platform.testaddresses')[app.user.address.value];
+				const special = deep(app, 'platform.real')[app.user.address.value] || deep(app, 'platform.testaddresses').includes(app.user.address.value);
 
 				return this.roys({ type, special, })
 					.then((data = {}) => {
