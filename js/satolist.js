@@ -280,7 +280,17 @@ Platform = function (app, listofnodes) {
         'PQDfbq9MetJYpVkTRzRmDcLgm5ZkDnDEwt': true,
         'PNoBxRYhNuAzs5jtwaWhcgETwFkw7dagq5': true,
         'PSs2u1WfWjmbUW6hF3sj3unHya4Ke4rF9Z': true,
-        'P9sathm4yQJEH6SMvgC2CCLEXSqVWxSHtj': true
+        'P9sathm4yQJEH6SMvgC2CCLEXSqVWxSHtj': true,
+        'PMH5ohh5bGXiYX7Z37TPyDP5dtCe5Domp4': true,
+        'PWXqxFeZdmYT4CoFq6bQr9yiwvRYRdFC2w': true,
+        'PTv5T49uhB4VGtwDUT2iwCCBWyGrErRGQJ': true,
+        'PK2ETYEuDHiWf2ncGuq3TjGfpXEUdGxuYE': true,
+        'PDVFC7FgKSFvcZcEpAVNQsUEGZ4ngcovoU': true,
+        'PB9vK57cbgMjqmkrKQqqMyBkky3kzhQCAT': true,
+        'PXVp4QeaaomcREBJXuzH34GWiiinNby6HA': true,
+        'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1': true,
+        'PLm44qx3ArWbd46dKybCc43dwr2WFn8dT6': true,
+        'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true
     }
 
     self.bch = {
