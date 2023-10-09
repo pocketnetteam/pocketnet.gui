@@ -61,8 +61,14 @@ class Notifications{
         firebase.useNotifications = true
 
         this.checkInterval = null
+
+
+        try{
+            this.run()
+        }catch(e){
+            console.log('run', e)
+        }
         
-        this.run()
 
         return this;
     }
@@ -221,7 +227,12 @@ class Notifications{
 
         if(!this.checkInterval)
             this.checkInterval = setInterval(() => {
-                this.autocheck()
+                try{
+                    this.autocheck()
+                }catch(e){
+                    console.log('autocheck', e)
+                }
+                
             }, 30 * 60 * 1000)
     }
 
@@ -312,11 +323,19 @@ class Notifications{
     autocheck(){
         if(!this.checkHeight()){
 
+            console.log('autocheck')
+
             this.logger.w('system', 'info', `Notification: Firebase autocheck fail`)
 
             destroy()
 
-            this.run()
+            try{
+                this.run()
+            }catch(e){
+                console.log('run2', e)
+            }
+
+            
         }
     }
 
@@ -443,20 +462,25 @@ class Notifications{
     }
 
     destroy(){
-        this.queue = [];
-        this.height = 0
-        this.workerEnable = false
-
-        this.stats = new NotificationStats()
-        this.statsShort = new NotificationStatsShort()
-        this.destroyed = true
-
-        if(this.checkInterval){
-            clearInterval(this.checkInterval)
-            this.checkInterval = null
+        try{
+            this.queue = [];
+            this.height = 0
+            this.workerEnable = false
+    
+            this.stats = new NotificationStats()
+            this.statsShort = new NotificationStatsShort()
+            this.destroyed = true
+    
+            if(this.checkInterval){
+                clearInterval(this.checkInterval)
+                this.checkInterval = null
+            }
+    
+            this.logger.w('system', 'info', `Notification: destroy`)
+        }catch(e){
+            console.log('destroy', e)
         }
-
-        this.logger.w('system', 'info', `Notification: destroy`)
+        
     }
 
     info(){
