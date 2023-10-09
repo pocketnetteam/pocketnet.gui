@@ -3173,91 +3173,101 @@ var lenta = (function(){
 
 				var share = self.psdk.share.get(txid)
 
-				if(!share || share.itisstream()){
+				if(!share){
+
 					if(clbk) clbk()
 
 					return
 				}
-				
+
+				if(share.itisstream()){
+
+					var meta = window.parseVideo(share.url)
+					if (meta){
+						var state = window.peertubeglobalcache[meta.id]
+
+						if (state && state.isLive){
+							if(clbk) clbk()
+							return
+						}
+					}
+					
+				}
 
 				var checkvisibility = share ? app.platform.sdk.node.shares.checkvisibility(share) : false;
 
-				//self.fastTemplate('commentspreview', function(rendered){
+				if(!el.c) return
+
+				var e = el.c.find('#' + txid);
+
+				var rf = ''
+
+				if (self.app.user.address.value){
+					rf = '&ref=' + self.app.user.address.value
+				}
+
+				var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
+
+				if (parameters().address) hr += '&address=' + (parameters().address || '')
+
+				self.nav.api.load({
+					open : true,
+					id : 'comments',
+					el : _el,
+
+					eid : txid + 'lenta',
 					
-					if(!el.c) return
 
-					var e = el.c.find('#' + txid);
+					essenseData : {
+						close : true,
+						totop : el.c.find('#' + txid),
+						//caption : rendered,
+						/*send : function(comment, last){
 
-					var rf = ''
+							var c = el.c.find('#' + txid + " .commentsAction .count span");
 
-					if (self.app.user.address.value){
-						rf = '&ref=' + self.app.user.address.value
-					}
+							c.html(Number(c.html() || "0") + 1)
 
-					var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
+							share.lastComment = last
+						},*/
 
-					if (parameters().address) hr += '&address=' + (parameters().address || '')
-
-					self.nav.api.load({
-						open : true,
-						id : 'comments',
-						el : _el,
-
-						eid : txid + 'lenta',
+						txid : txid,
+						showall : essenseData.comments == 'all' || showall,	
+						fromtop: essenseData.comments == 'all' || e.hasClass('fullScreenVideo') || false,
+						preview : true, // essenseData.comments == 'all' ? false : preview,
+						listpreview : essenseData.comments == 'all' ? false : preview,
+						//lastComment : essenseData.comments != 'all' ? share.lastComment : null,
 						
-
-						essenseData : {
-							close : true,
-							totop : el.c.find('#' + txid),
-							//caption : rendered,
-							/*send : function(comment, last){
-
-								var c = el.c.find('#' + txid + " .commentsAction .count span");
-
-								c.html(Number(c.html() || "0") + 1)
-
-								share.lastComment = last
-							},*/
-
-							txid : txid,
-							showall : essenseData.comments == 'all' || showall,	
-							fromtop: essenseData.comments == 'all' || e.hasClass('fullScreenVideo') || false,
-							preview : true, // essenseData.comments == 'all' ? false : preview,
-							listpreview : essenseData.comments == 'all' ? false : preview,
-							//lastComment : essenseData.comments != 'all' ? share.lastComment : null,
-							
-							init : essenseData.comments == 'all' ? false : init,
-							hr : hr,
-							receiver: share.address,
-							cantsend : checkvisibility,
-							renderClbk : function(){
-
-								essenserenderclbk()
-							},
-
-							previewClbk : function(){
-								if(clbk) clbk()
-							}
-						},
-
-						clbk : function(e, p){
-
-							
-
-							if(!el.c) return
-
-							if (p)
-								initedcommentes[txid] = p
+						init : essenseData.comments == 'all' ? false : init,
+						hr : hr,
+						receiver: share.address,
+						cantsend : checkvisibility,
+						renderClbk : function(){
 
 							essenserenderclbk()
+						},
 
-							
+						previewClbk : function(){
+							if(clbk) clbk()
 						}
-					})
+					},
 
-				/*}, {
-					share : share
-				})*/
+					clbk : function(e, p){
+
+						
+
+						if(!el.c) return
+
+						if (p)
+							initedcommentes[txid] = p
+
+						essenserenderclbk()
+
+						
+					}
+				})
+
+	
 				
 			},
 			
