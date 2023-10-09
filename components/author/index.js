@@ -773,7 +773,7 @@ var author = (function(){
 
 			followers : function(_el, report){
 
-				author.data.loadRelations(['subscribes', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
+				author.data.loadRelations(['subscribers', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
 
 					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
 						return a
