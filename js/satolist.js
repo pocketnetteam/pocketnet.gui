@@ -8881,7 +8881,7 @@ Platform = function (app, listofnodes) {
 
                 var info = self.psdk.userInfo.get(address); 
 
-                return true
+                return false
 
                 if (/*info.reputation > 100 && */info.postcnt > 10) return true
 
