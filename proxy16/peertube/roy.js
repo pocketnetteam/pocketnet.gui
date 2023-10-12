@@ -213,6 +213,10 @@ var Roy = function (parent) {
 			return instance
 				.request(method, data, p)
 				.then((r) => {
+					if (r.data && r.data.status === 404) {
+						error = r.data;
+						return Promise.reject(r);
+					}
 					if (r.data) {
 						r.data.from = instance.host;
 					}
