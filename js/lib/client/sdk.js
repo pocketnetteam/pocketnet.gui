@@ -1794,33 +1794,7 @@ var pSDK = function ({ app, api, actions }) {
 
     /// actions
 
-    self.blocking = {
-        listener: function (exp, address, status) {
-            if (status == 'completed') {
-
-                this.applyAction(objects['userInfoFull'][exp.actor], exp)
-                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
-
-
-                self.userInfo.cleardb(exp.actor)
-                self.userInfo.cleardb(exp.address.v)
-            }
-        },
-        applyAction: function (object, exp) {
-
-            if (object) {
-                if (object.address == exp.actor) { /// for me
-                    object.addRelation(exp.address.v, 'blocking')
-                }
-
-                if (object.address == exp.address.v) { 
-                }
-            }
-
-            return object
-        }
-    }
-
+ 
     self.unblocking = {
         listener: function (exp, address, status) {
             if (status == 'completed') {
@@ -1830,6 +1804,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 self.userInfo.cleardb(exp.actor)
                 self.userInfo.cleardb(exp.address.v)
+
+                clearfromdb('blocking', [exp.actor])
             }
         },
         applyAction: function (object, exp) {
@@ -1856,6 +1832,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 self.userInfo.cleardb(exp.actor)
                 self.userInfo.cleardb(exp.address.v)
+
+                clearfromdb('subscribes', [exp.actor])
             }
         },
         applyAction: function (object, exp) {
@@ -1925,6 +1903,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 self.userInfo.cleardb(exp.actor)
                 self.userInfo.cleardb(exp.address.v)
+
+                clearfromdb('subscribes', [exp.actor])
             }
         },
         applyAction: function (object, exp) {
@@ -1962,6 +1942,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 self.userInfo.cleardb(exp.actor)
                 self.userInfo.cleardb(exp.address.v)
+
+                clearfromdb('subscribes', [exp.actor])
             }
         },
         applyAction: function (object, exp) {
@@ -2214,6 +2196,37 @@ var pSDK = function ({ app, api, actions }) {
 
     self.blocking = {
         keys: ['blocking'],
+
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
+
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
+
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+
+
+                self.userInfo.cleardb(exp.actor)
+                self.userInfo.cleardb(exp.address.v)
+
+
+                clearfromdb('blocking', [exp.actor])
+            }
+        },
+        applyAction: function (object, exp) {
+
+            if (object) {
+                if (object.address == exp.actor) { /// for me
+                    object.addRelation(exp.address.v, 'blocking')
+                }
+
+                if (object.address == exp.address.v) { 
+                }
+            }
+
+            return object
+        },
+
         load: function (address, update) {
 
             return loadone('blocking', address, (ids) => {
