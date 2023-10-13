@@ -911,12 +911,26 @@ PeerTubePocketnet = function (app) {
 				return request('proceedResumableUploadVideo', data, optionsPrepared)
 					.then((r) => {
 
+						// Fix for the situations when original server was archived, and url info is invalid
+						let trueHost;
+						if (r.status === 200) {
+							trueHost = self.parselink(
+                                (deep(r, 'data.video.videoCreated.url') || '').replace(
+                                    'https://',
+                                    PEERTUBE_ID
+                                )
+                            ).host;
+						} else {
+							trueHost = '';
+						}
+
+
 						const handleResume = () => Promise.resolve({
 							responseType: 'resume_upload',
 						});
 						const handleLastChunk = () => Promise.resolve({
 							responseType: 'upload_end',
-							videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid, r.data.video.isAudio),
+							videoLink: self.composeLink(trueHost || optionsPrepared.host, r.data.video.uuid, r.data.video.isAudio),
 						});
 						const handleNotFound = () => Promise.resolve({
 							responseType: 'not_found',
