@@ -572,6 +572,8 @@ var Action = function(account, object, priority, settings){
             }
         }
 
+        console.log('options.destination', options)
+
         if (options.destination){
             _.each(options.destination(self, account), (d) => {
                 outputs.push(_.clone(d))
@@ -579,9 +581,44 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            if(unspents.length < 50 && totalInputAmount > 0.001){
+            console.log('unspents.length', unspents.length, totalInputAmount)
 
-                var divi = totalInputAmount / 2
+            if(unspents.length < 50 && totalInputAmount > 0.1){
+
+                var spcount = 10
+
+                var divii = (totalInputAmount / spcount).toFixed(8)
+                var added = 0
+
+                for(var i = 0; i < spcount; i++){
+                    if(i == spcount - 1){
+
+                        console.log("HERE")
+
+                        outputs.push({
+                            address : changeAddresses[0],
+                            amount : Number((totalInputAmount - added).toFixed(8))
+                        })
+
+
+                        added += Number((totalInputAmount - added).toFixed(8))
+                    }
+                    else{
+                        added += Number(divii)
+
+                        outputs.push({
+                            address : changeAddresses[0],
+                            amount : Number(divii)
+                        })
+                    }
+                    
+                }
+
+                console.log('outputs', outputs)
+
+                console.log('totalInputAmount', totalInputAmount, added)
+
+                /*var divi = totalInputAmount / 2
 
                 outputs.push({
                     address : changeAddresses[0],
@@ -591,7 +628,8 @@ var Action = function(account, object, priority, settings){
                 outputs.push({
                     address : changeAddresses[0],
                     amount : totalInputAmount - divi
-                })
+                })*/
+
             }
             else{
                 outputs.push({
