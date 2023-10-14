@@ -3283,7 +3283,6 @@ Platform = function (app, listofnodes) {
                 open : true,
                 id : 'mobilesearch',
                 inWnd : true,
-
                 essenseData : p,
 
                 clbk : function(s, p){
