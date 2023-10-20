@@ -478,7 +478,6 @@ _l.ntyesterday = "Yesterday"
 _l.ntmounth = "This month"
 _l.ntearlier = "Earlier"
 
-
 _l.nodeWalletAdd = "Adding an address may take some time. Continue?"
 _l.nodeEnableNoteHeader = "Note"
 _l.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. Make sure you have enough. Happy staking!"
@@ -2770,3 +2769,5 @@ _l.openOriginal = "Open original"
 _l.registration_blocked = _l.lockedaccount
 
 _l.horizontalSearchUsers = "Accounts"
+_l.information = "Information"
+_l.sendcoins = "Send pocketcoin"

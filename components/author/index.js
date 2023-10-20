@@ -248,18 +248,6 @@ var author = (function(){
 
 
 							return deep(author, 'data.subscribes_count') || 0
-		
-							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-								return a.adddress
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-		
-							return u.length
 						}
 					},
 		
@@ -274,13 +262,7 @@ var author = (function(){
 						},
 						count : function(){
 
-							console.log('author', author)
-
 							return deep(author, 'data.blockings_count') || 0
-		
-							var blocked = deep(author, 'data.blocking') || []
-		
-							return blocked.length
 						}
 					},
 			

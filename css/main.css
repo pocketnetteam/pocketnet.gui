@@ -6397,6 +6397,21 @@ html.mobileview #content .work {
     page-break-after: avoid;
   }
 }
+html.allcontent {
+  /*body{
+        background: #051b48;
+    }*/
+}
+html.allcontent .contentWrapper {
+  padding-top: 0;
+  margin-top: 0;
+}
+html.allcontent #panelWrapper {
+  display: none;
+}
+html.allcontent #footerWrapper {
+  background: #051b28;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   button.medium {

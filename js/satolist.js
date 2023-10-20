@@ -4576,7 +4576,7 @@ Platform = function (app, listofnodes) {
 
             if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
 
-            else return 'author?address=' + address
+            else return 'authorn?address=' + address
         },
 
         authororexplorerlink: function (address) {
@@ -10094,6 +10094,14 @@ Platform = function (app, listofnodes) {
             //////////////// ANOTHER
 
             addressByName: function (name, clbk) {
+
+                if(!name){
+                    if (clbk){
+                        clbk(null)
+                    }
+
+                    return
+                }
 
 
                 var valid = true;

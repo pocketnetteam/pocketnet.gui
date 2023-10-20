@@ -1446,6 +1446,8 @@ Nav = function(app)
 		load : function(p){
 			var clbk = p.clbk;
 
+			console.log("HERE2", p)
+
 			p.clbk = function(error, r){
 
 				var e = false;

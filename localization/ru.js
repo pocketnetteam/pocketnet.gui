@@ -2554,3 +2554,5 @@ _l.openOriginal = "Открыть оригинал"
 _l.registration_blocked = _l.lockedaccount
 
 _l.horizontalSearchUsers = "Пользователи"
+_l.information = "Информация"
+_l.sendcoins = "Отправить pocketcoin"

@@ -887,22 +887,27 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+		},
+
+		authorn: {
+			href: 'authorn',
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
 		}
 
 	}
@@ -1052,14 +1057,17 @@ Application = function (p) {
 
 		self.nav.dynamic = function (p, clbk) {
 
+			console.log("HERE22")
 
 			self.platform.sdk.users.addressByName((p.href), function (r) {
+
+				console.log("HERE", r, p)
 
 				if (r) {
 					if (clbk)
 						clbk(null, {
 
-							id: 'author',
+							id: 'authorn',
 							extra: {
 								address: r
 							}

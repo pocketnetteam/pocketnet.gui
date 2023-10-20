@@ -1067,6 +1067,16 @@ __map =  {
 		
 	},
 
+	authorn : {
+		uri : "authorn",
+		href : "authorn",
+		add : insertingfunc,
+		anonimus : true,
+		//preshell : true,
+		exportcss : true,
+		
+	},
+
 	channel : {
 		uri : "channel",
 		href : "channel",

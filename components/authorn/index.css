@@ -1,0 +1,195 @@
+#authorn {
+  background: rgb(var(--background-main));
+  min-height: 1200px;
+}
+#authorn .work {
+  max-width: 1024px;
+}
+#authorn .bgwallpaper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #07e1ff;
+  background: linear-gradient(90deg, #07e1ff 0%, #001588 100%);
+  aspect-ratio: 3;
+  z-index: 0;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+#authorn .bgwallpaper .grad {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #010101;
+  background: linear-gradient(180deg, rgba(30, 141, 236, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+  z-index: 0;
+  height: 100%;
+}
+#authorn .acontentps {
+  aspect-ratio: 3;
+}
+#authorn .uinfoWr,
+#authorn .fbuttonsrow {
+  margin-top: 0.5em;
+}
+#authorn .acontent {
+  height: 2000px;
+  z-index: 1;
+  position: relative;
+}
+#authorn .acontent .work {
+  display: flex;
+}
+#authorn .acontent .lcolumn {
+  min-width: 300px;
+  position: relative;
+  top: -6em;
+}
+#authorn .acontent .rcolumn {
+  margin-left: 0.5em;
+  flex-grow: 2;
+  padding-top: 0.5em;
+}
+#authorn .uinfo {
+  border-radius: 16px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
+}
+#authorn .uinfo .ucaption {
+  margin-bottom: 0.5em;
+}
+#authorn .uinfo .ucaption span {
+  font-weight: 700;
+}
+#authorn .uinfo .itemtable {
+  display: flex;
+  align-items: center;
+}
+#authorn .uinfo .item .icon {
+  margin-right: 0.5em;
+}
+#authorn .uinfo .item .icon i {
+  width: 22px;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+#authorn .uinfo .item .label span {
+  font-size: 0.9em;
+}
+#authorn .uinfo .item .value {
+  margin-left: auto;
+}
+#authorn .uinfo .item .value span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#authorn .uinfo .about {
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+#authorn .uinfo .foraddress .label span {
+  font-size: 0.8em;
+}
+#authorn .buttonsrow {
+  display: flex;
+}
+#authorn .buttonsrow button {
+  flex-grow: 2;
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--text-color));
+  border-color: rgb(var(--background-total-theme));
+  margin-right: 0.5em;
+}
+#authorn .buttonsrow button:nth-last-child(1) {
+  margin-right: 0;
+}
+#authorn .buttonsrow button:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+#authorn .aucaption {
+  position: relative;
+}
+#authorn .aucaption .usericon {
+  top: -1.5em;
+  left: 50%;
+  margin-left: -1.5em;
+  position: absolute;
+  font-size: 2.5em;
+  border: 1px solid rgb(var(--background-total-theme));
+  z-index: 2;
+}
+#authorn .aucaption .contentinfo {
+  border-radius: 16px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
+  padding-top: 4.5em;
+}
+#authorn .aucaption .contentinfo .namewrapper {
+  text-align: center;
+}
+#authorn .aucaption .contentinfo .namewrapper span {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+#authorn .aucaption .contentinfo .sminfo {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+#authorn .aucaption .contentinfo .sminfo .row {
+  flex-basis: 33%;
+  display: flex;
+  flex-flow: column;
+  margin-right: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+  border-right: 1px solid rgb(var(--neutral-grad-0));
+}
+#authorn .aucaption .contentinfo .sminfo .row:nth-last-child(1) {
+  margin-right: 0;
+  padding-right: 0;
+  border-right: 0;
+}
+#authorn .aucaption .contentinfo .sminfo span {
+  font-size: 0.9em;
+}
+#authorn .aucaption .contentinfo .sminfo span.label {
+  opacity: 0.7;
+}
+#authorn .aucaption .contentinfo .sminfo span.value {
+  font-weight: 700;
+}
+#authorn .whatsnew {
+  border-radius: 16px;
+  background: rgba(var(--background-total-theme), 1);
+}
+@media only screen and (max-width: 768px) {
+  #authorn .aucaption {
+    position: relative;
+  }
+  #authorn .aucaption .usericon {
+    font-size: 2em;
+  }
+  #authorn .aucaption .contentinfo {
+    padding-top: 3em;
+  }
+  #authorn .acontent .work {
+    display: flex;
+    flex-flow: column;
+  }
+  #authorn .acontent .lcolumn {
+    min-width: 100%;
+    top: 0.5em;
+  }
+  #authorn .acontent .rcolumn {
+    margin-left: 0;
+  }
+}

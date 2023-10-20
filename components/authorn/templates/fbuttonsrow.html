@@ -1,0 +1,19 @@
+<%
+
+var me = psdk.userInfo.getmy()
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+%>
+
+<div class="buttonsrow">
+    <% if(author.me) {%>
+        <button class="button"><%= e('rwallet') %></button>
+        <button class="button"><%= e('videoCabinet') %></button>
+    <% } %>
+
+    <% if(!author.me) {%>
+        <button class="button"><%= e('startchat') %></button>
+        <button class="button"><%= e('sendcoins') %></button>
+    <% } %>
+</div>
