@@ -1074,12 +1074,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host: 'peertube5new.pocketnet.app',
 						ip: '95.217.209.217',
 						offline: true,
+						cantuploading: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 					{
 						host: 'peertube51.pocketnet.app',
 						ip: '95.217.209.217',
 						cantuploading: true,
+						archiveDouble: true,
 					},
 				],
 
