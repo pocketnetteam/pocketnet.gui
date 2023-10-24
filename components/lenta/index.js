@@ -1144,6 +1144,7 @@ var lenta = (function(){
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration)* 100).toFixed(0),
+									data : share.export(true)
 								})
 
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)

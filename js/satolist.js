@@ -17100,6 +17100,47 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            historygetall : function(){
+
+                var data = {}
+
+                for (var i = 0; i < localStorage.length; i++){
+
+                    var key = localStorage.key(i)
+
+                    if (key.indexOf(this.historykey) > -1){
+                        try{
+                            data[key.replace(this.historykey, '')] = JSON.parse(localStorage.getItem(key))
+
+                        }
+                        catch(e){
+
+                        }
+                    }
+                    
+                }
+
+                return _.map(_.sortBy(_.toArray(data),(v) => {
+                    return -(new Date(v.date)).getTime()
+                }), (v) => {
+                    if(v.data && v.data.data){
+
+                        var s = new pShare();
+
+                        var cleaned = self.psdk.share.cleanData([v.data.data])
+
+                        if (cleaned && cleaned.length){
+                            s._import(cleaned[0]);
+
+                            v.data.share = s
+                        }
+                        
+                    }
+
+                    return v
+                })
+            },
+
             historyget : function(txid){
 
                 var h = {
@@ -17132,6 +17173,8 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
+                lasthistory.txid = txid
+                lasthistory.data = data
 
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
@@ -17206,7 +17249,7 @@ Platform = function (app, listofnodes) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
-                        return Promise.resolve()
+                        return Promise.resolve(r)
                     }).catch(e => {
                         return Promise.resolve()
                     })

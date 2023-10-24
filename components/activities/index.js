@@ -262,27 +262,39 @@ var activities = (function () {
 			},
 
 			getVideos: () => {
-				
-				let vid = JSON.parse(localStorage.getItem('latestactivity'))?.activity?.video
-				let res = []
 
-				_.each(vid, (video) => {
+				
+				
+				let vid = self.app.platform.sdk.videos.historygetall()
+				let res = []
+				
+
+				_.each(vid, (d) => {
+
+
+
+					var video = (d.data || {}).share
+
+					if(!video) return
+
+					console.log("DDD", video)
+
 
 					let a = new Promise((resolve, reject) => {
-						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
+						self.app.platform.sdk.videos.info([video.url]).then(r => {
 
 							if (!r?.[0]?.[0]?.data) {
 
-								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
+								let p = self.app.platform.sdk.videos.storage[video.url]
 
 								if (!p) return reject('np')
 
-									resolve({ ...p.data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+									resolve({ ...p.data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 
 								return
 							}
-							resolve({ ...r[0][0].data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+							resolve({ ...r[0][0].data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 						}).catch(e => {
 							console.error(e)
@@ -293,6 +305,7 @@ var activities = (function () {
 
 					res.push(a)
 				})
+
 				return res
 			},
 

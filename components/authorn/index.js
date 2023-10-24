@@ -36,7 +36,7 @@ var authorn = (function(){
 
 				})
 			},
-			aucaption : function(){
+			aucaption : function(clbk){
 
 				self.shell({
 					name :  'aucaption',
@@ -52,7 +52,7 @@ var authorn = (function(){
 				})
 			},
 
-			fbuttonsrow: function(){
+			fbuttonsrow: function(clbk){
 
 				self.shell({
 					name :  'fbuttonsrow',
@@ -68,7 +68,7 @@ var authorn = (function(){
 				})
 			},
 
-			whatsnew : function(){
+			whatsnew : function(clbk){
 
 				console.log("HERE 3!")
 
@@ -85,6 +85,8 @@ var authorn = (function(){
 						clbk : function(e, p){
 	
 							modules.share = p
+
+							if(clbk) clbk()
 						},
 						essenseData : {
 							minimized : true,
