@@ -88,7 +88,8 @@ var authorn = (function(){
 			text : 'e14105',
 			parameter : 'video',
 			extend : function(params){
-				params.videomobile = true
+				params.video = !isMobile()
+				params.videomobile = isMobile()
 
 				return params
 			}

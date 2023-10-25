@@ -3721,7 +3721,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
+				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
 					tpl = 'shares'
 				}
 

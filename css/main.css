@@ -6576,6 +6576,7 @@ html.allcontent #footerWrapper {
     margin-top: 0;
   }
   html.allcontent #footerWrapper {
+    display: none;
     background: #051b28;
   }
   html.allcontent.cameraenabled body {
