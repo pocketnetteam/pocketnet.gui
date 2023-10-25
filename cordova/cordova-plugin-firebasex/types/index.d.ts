@@ -158,11 +158,55 @@ export interface FirebasePlugin {
         error?: (err: string) => void
     ): void
     verifyPhoneNumber(
-        success: (value: object) => void,
+        success: (value: object | boolean) => void,
         error: (err: string) => void,
         phoneNumber: string,
-        timeOutDuration: number,
-        fakeVerificationCode?: string
+        opts?: {
+            timeOutDuration: number,
+            fakeVerificationCode: string,
+            requireSmsValidation: boolean
+        },
+    ): void
+    enrollSecondAuthFactor(
+        success: (value: object | boolean) => void,
+        error: (err: string) => void,
+        phoneNumber: string,
+        opts?: {
+            displayName: string,
+            credential: {
+                verificationId: string,
+                code: string
+            },
+            timeOutDuration: number,
+            fakeVerificationCode: string,
+            requireSmsValidation: boolean
+        },
+    ): void
+    verifySecondAuthFactor(
+        success: (value: object | boolean) => void,
+        error: (err: string) => void,
+        params: {
+            selectedIndex?: number,
+            credential?: {
+                verificationId: string,
+                code: string
+            },
+        },
+        opts?: {
+            timeOutDuration: number,
+            fakeVerificationCode: string,
+            phoneNumber: string,
+            requireSmsValidation: boolean
+        },
+    ): void
+    unenrollSecondAuthFactor(
+        success: () => void,
+        error: (err: string) => void,
+        selectedIndex: number
+    ): void
+    listEnrolledSecondAuthFactors(
+        success: (secondFactors: [object]) => void,
+        error: (err: string) => void
     ): void
     setLanguageCode(
         lang: string,
@@ -198,13 +242,23 @@ export interface FirebasePlugin {
     ): void
     authenticateUserWithGoogle(
         clientId: string,
-        success?: () => void,
+        success?: (credential:object) => void,
         error?: (err: string) => void
     ): void
     authenticateUserWithApple(
-        success?: () => void,
+        success?: (credential:object) => void,
         error?: (err: string) => void,
         locale?: string,
+    ): void
+    authenticateUserWithMicrosoft(
+        success?: (credential:object) => void,
+        error?: (err: string) => void,
+        locale?: string,
+    ): void
+    authenticateUserWithFacebook(
+        accessToken: string,
+        success?: (credential:object) => void,
+        error?: (err: string) => void,
     ): void
     signInWithCredential(
         credential: object,
@@ -250,6 +304,11 @@ export interface FirebasePlugin {
         success?: () => void,
         error?: (err: string) => void
     ): void
+    verifyBeforeUpdateEmail(
+        email: string,
+        success?: () => void,
+        error?: (err: string) => void
+    ): void
     sendUserEmailVerification(
         actionCodeSettings?: {
             handleCodeInApp?: boolean,
@@ -284,6 +343,10 @@ export interface FirebasePlugin {
         host: string,
         port: number,
         success?: () => void,
+        error?: (err: string) => void
+    ): void
+    getClaims(
+        success: (claims: object) => void,
         error?: (err: string) => void
     ): void
     fetch(
@@ -350,6 +413,7 @@ export interface FirebasePlugin {
     addDocumentToFirestoreCollection(
         document: object,
         collection: string,
+        timestamp: boolean,
         success: () => void,
         error: (err: string) => void
     ): void
@@ -357,6 +421,7 @@ export interface FirebasePlugin {
         documentId: string,
         document: object,
         collection: string,
+        timestamp: boolean,
         success: () => void,
         error: (err: string) => void
     ): void
@@ -364,6 +429,7 @@ export interface FirebasePlugin {
         documentId: string,
         document: object,
         collection: string,
+        timestamp: boolean,
         success: () => void,
         error: (err: string) => void
     ): void
@@ -403,6 +469,12 @@ export interface FirebasePlugin {
         success: () => void,
         error: (err: string) => void,
         listenerId: string
+    ): void
+    registerApplicationDidBecomeActiveListener(
+        fn: () => void,
+    ): void
+    registerApplicationDidEnterBackgroundListener(
+        fn: () => void,
     ): void
 }
 

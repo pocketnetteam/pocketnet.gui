@@ -334,7 +334,7 @@
 }
 #comments .list .comment .commentPaddingWrapper {
   padding-left: 1.5em;
-  padding-right: 2.5em;
+  padding-right: 1.5em;
 }
 #comments .list .comment .answer {
   background: rgb(var(--background-total-theme));
@@ -342,7 +342,7 @@
 #comments .list .comment .answer .postbody {
   border-top: 1px solid rgb(var(--neutral-grad-0));
   padding-left: 1.5em;
-  padding-right: 2.5em;
+  padding-right: 1.5em;
   /*.embedimages{
 						right: 40px;
 					}
@@ -737,7 +737,7 @@
 #comments .answer,
 #comments .post {
   padding-left: 1.5em;
-  padding-right: 2.25em;
+  padding-right: 1.5em;
   /**/
   /**/
 }

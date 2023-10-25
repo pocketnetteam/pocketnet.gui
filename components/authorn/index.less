@@ -1,24 +1,55 @@
 @import "../../css/__cssvar";
 
+@rad: 12px;
+
 #authorn{
     background: rgb(var(--background-main));
     min-height: 1200px;
+    
 
     .work{
-        max-width: 1024px;
+        max-width: 1076px;
     }
 
-    .bgwallpaper{
+    .work{
+		&.mwork{
+			padding : 0!important;
+			overflow: hidden;
+		}
+
+		.work{
+			width: 100%!important;
+		}
+	}
+
+    .bgwallpaperWrapper{
+        overflow: hidden;
         position: absolute;
         left:0;
         right: 0;
         top: 0;
-        background: rgb(7,225,255);
-        background: linear-gradient(90deg, rgba(7,225,255,1) 0%, rgba(0,21,136,1) 100%);
         aspect-ratio: 3;
         z-index: 0;
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
+        
+        border-bottom-left-radius: @rad;
+        border-bottom-right-radius: @rad;
+
+        .bgwallpaper{
+            position: absolute;
+            left : 0;
+            right: 0;
+            top : 0;
+            background: #051b48;
+            bottom: 0;
+
+            >div{
+                opacity: 0.4;
+
+                &.grad{
+                    opacity: 1;
+                }
+            }
+        }
 
         .grad{
             pointer-events: none;
@@ -37,23 +68,30 @@
         aspect-ratio: 3;
     }
 
+    .subscribes,
+    .subscribers,
     .uinfoWr,
     .fbuttonsrow{
         margin-top: @rhythm;
     }
 
+    .upbuttonwrapper{
+        position: relative;
+        z-index: 2;
+    }
+
     .acontent{
-        height: 2000px;
         z-index: 1;
         position: relative;
 
-        .work{
+        .columns{
             display: flex;
         }
         
 
         .lcolumn{
-            min-width: 300px;
+            flex-grow: 2;
+            max-width: 280px;
             position: relative;
             top : -6em; 
         }
@@ -61,12 +99,19 @@
         .rcolumn{
             margin-left: @rhythm;
             flex-grow: 2;
-            padding-top: @rhythm;
+            
         }
     }
 
+    .subscribes,
+    .subscribers{
+        border-radius: @rad;
+        background: rgba(var(--background-total-theme), 1);
+        padding : 2 * @rhythm;
+    }
+
     .uinfo{
-        border-radius: 16px;
+        border-radius: @rad;
         background: rgba(var(--background-total-theme), 1);
         padding : 2 * @rhythm;
 
@@ -104,7 +149,7 @@
 
             .value{
                 margin-left: auto;
-
+                
                 span{
                     font-weight: 700;
                     font-size: 0.9em;
@@ -161,7 +206,7 @@
         }
 
         .contentinfo{
-            border-radius: 16px;
+            border-radius: @rad;
             background: rgba(var(--background-total-theme), 1);
             padding : 2 * @rhythm;
             padding-top: 9 * @rhythm;
@@ -202,6 +247,7 @@
 
                 span{
                     font-size: 0.9em;
+                    white-space: nowrap;
 
                     &.label{
                         opacity: 0.7;
@@ -212,6 +258,10 @@
                     }
                 }
 
+                .fa-star{
+                    color : rgb(var(--color-txt-ac));
+                }
+
             }
 
             
@@ -219,8 +269,69 @@
     }
 
     .whatsnew{
-        border-radius: 16px;
+        margin-top: @rhythm;
+        border-radius: @rad;
         background: rgba(var(--background-total-theme), 1);
+    }
+
+    .lentawrapper{
+        margin-top: @rhythm;
+    }
+
+    .alentanavigation{
+        margin-top: @rhythm;
+        border-radius: @rad;
+        padding-right: 2 * @rhythm;
+        background: rgba(var(--background-total-theme), 1);
+
+        .navi{
+            display: flex;
+
+            >div{
+                padding : 2 * @rhythm 2 * @rhythm;
+
+                span{
+                    color : rgb(var(--neutral-grad-2));
+                    font-weight: 500;
+                    position: relative;
+                    .transition(0.3s, color);
+
+                    &:after{
+                        content: "";
+                        position: absolute;
+                        bottom : -5px;
+                        left : 0;
+                        right: 0;
+                        border-bottom: 2px solid transparent;
+                        .transition(0.3s);
+                    }
+                }
+            }
+
+            .navitem{
+                cursor: pointer;
+                &:hover,
+                &.active{
+                    span{
+                        color : rgb(var(--color-txt-ac));
+
+                        &:after{
+                            border-bottom: 2px solid rgb(var(--color-txt-ac));
+                        }
+                    }
+                }
+            }
+
+            .searchIcon{
+                margin-left: auto;
+                cursor: pointer;
+
+                i{
+                    font-size: 0.8em;
+                    color : rgb(var(--neutral-grad-2))
+                }
+            }
+        }
     }
 }
 

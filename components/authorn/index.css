@@ -3,21 +3,41 @@
   min-height: 1200px;
 }
 #authorn .work {
-  max-width: 1024px;
+  max-width: 1076px;
 }
-#authorn .bgwallpaper {
+#authorn .work.mwork {
+  padding: 0!important;
+  overflow: hidden;
+}
+#authorn .work .work {
+  width: 100%!important;
+}
+#authorn .bgwallpaperWrapper {
+  overflow: hidden;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  background: #07e1ff;
-  background: linear-gradient(90deg, #07e1ff 0%, #001588 100%);
   aspect-ratio: 3;
   z-index: 0;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
-#authorn .bgwallpaper .grad {
+#authorn .bgwallpaperWrapper .bgwallpaper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #051b48;
+  bottom: 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper > div {
+  opacity: 0.4;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper > div.grad {
+  opacity: 1;
+}
+#authorn .bgwallpaperWrapper .grad {
   pointer-events: none;
   position: absolute;
   left: 0;
@@ -31,30 +51,41 @@
 #authorn .acontentps {
   aspect-ratio: 3;
 }
+#authorn .subscribes,
+#authorn .subscribers,
 #authorn .uinfoWr,
 #authorn .fbuttonsrow {
   margin-top: 0.5em;
 }
+#authorn .upbuttonwrapper {
+  position: relative;
+  z-index: 2;
+}
 #authorn .acontent {
-  height: 2000px;
   z-index: 1;
   position: relative;
 }
-#authorn .acontent .work {
+#authorn .acontent .columns {
   display: flex;
 }
 #authorn .acontent .lcolumn {
-  min-width: 300px;
+  flex-grow: 2;
+  max-width: 280px;
   position: relative;
   top: -6em;
 }
 #authorn .acontent .rcolumn {
   margin-left: 0.5em;
   flex-grow: 2;
-  padding-top: 0.5em;
+}
+#authorn .subscribes,
+#authorn .subscribers {
+  border-radius: 12px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
 }
 #authorn .uinfo {
-  border-radius: 16px;
+  border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
   padding: 1em;
 }
@@ -124,7 +155,7 @@
   z-index: 2;
 }
 #authorn .aucaption .contentinfo {
-  border-radius: 16px;
+  border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
   padding: 1em;
   padding-top: 4.5em;
@@ -160,6 +191,7 @@
 }
 #authorn .aucaption .contentinfo .sminfo span {
   font-size: 0.9em;
+  white-space: nowrap;
 }
 #authorn .aucaption .contentinfo .sminfo span.label {
   opacity: 0.7;
@@ -167,9 +199,68 @@
 #authorn .aucaption .contentinfo .sminfo span.value {
   font-weight: 700;
 }
+#authorn .aucaption .contentinfo .sminfo .fa-star {
+  color: rgb(var(--color-txt-ac));
+}
 #authorn .whatsnew {
-  border-radius: 16px;
+  margin-top: 0.5em;
+  border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
+}
+#authorn .lentawrapper {
+  margin-top: 0.5em;
+}
+#authorn .alentanavigation {
+  margin-top: 0.5em;
+  border-radius: 12px;
+  padding-right: 1em;
+  background: rgba(var(--background-total-theme), 1);
+}
+#authorn .alentanavigation .navi {
+  display: flex;
+}
+#authorn .alentanavigation .navi > div {
+  padding: 1em 1em;
+}
+#authorn .alentanavigation .navi > div span {
+  color: rgb(var(--neutral-grad-2));
+  font-weight: 500;
+  position: relative;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+#authorn .alentanavigation .navi > div span:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  border-bottom: 2px solid transparent;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#authorn .alentanavigation .navi .navitem {
+  cursor: pointer;
+}
+#authorn .alentanavigation .navi .navitem:hover span,
+#authorn .alentanavigation .navi .navitem.active span {
+  color: rgb(var(--color-txt-ac));
+}
+#authorn .alentanavigation .navi .navitem:hover span:after,
+#authorn .alentanavigation .navi .navitem.active span:after {
+  border-bottom: 2px solid rgb(var(--color-txt-ac));
+}
+#authorn .alentanavigation .navi .searchIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+#authorn .alentanavigation .navi .searchIcon i {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-2));
 }
 @media only screen and (max-width: 768px) {
   #authorn .aucaption {

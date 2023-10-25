@@ -1432,7 +1432,6 @@ var author = (function(){
 			if(!isMobile()){
 				upbutton = self.app.platform.api.upbutton(el.up, {
 					top : function(){
-	
 						return '65px'
 					},
 					class : 'light',
