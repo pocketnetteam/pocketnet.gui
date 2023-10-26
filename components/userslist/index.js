@@ -363,6 +363,14 @@ var userslist = (function(){
 
 			}	
 
+			if (type == 'random'){
+
+				return _.sortBy(addresses, (a) => {
+					return rand(0, 1000)
+				})
+
+			}	
+
 			return addresses
 		}
 

@@ -117,7 +117,11 @@ var authorn = (function(){
 		var lentameta = [{
 			id : 'common',
 			text : 'shares',
-			default : true
+			default : true,
+			extend : function(params){
+				params.getpin = true
+				return params
+			}
 		},{
 			id : 'video',
 			text : 'e14105',
@@ -301,7 +305,96 @@ var authorn = (function(){
 		var events = {
 			up : function(){
 				self.app.actions.scroll(0)
-			}
+			},
+
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+			},
+
+			openwallet : function(){
+				self.nav.api.go({
+					open : true,
+					href : self.app.mobileview ? 'wallet' : 'userpage?id=wallet',
+					history : true,
+					inWnd : self.app.mobileview
+				})
+			},
+
+			videoCabinet : function(){
+				self.nav.api.go({
+					open : true,
+					href : self.app.mobileview ? 'videoCabinet' : 'userpage?id=videoCabinet',
+					history : true,
+					inWnd : self.app.mobileview
+				})
+			},
+
+			sendcoins : function(){
+				self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+			},
+
+			settings : function(){
+
+				self.nav.api.go({
+					open : true,
+					href :'userpage?id=ustate',
+					history : true,
+				})
+				
+			},
+
+			editprofile : function(){
+				self.nav.api.go({
+					open : true,
+					href : self.app.mobileview ? 'test' : 'userpage?id=test',
+					history : true,
+					inWnd : self.app.mobileview
+				})
+			},
+
+			showsubscribes : function(clbk){
+				load.subscribes().then(addresses => {
+
+					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
+					var ctext = self.app.localization.e('following')
+
+					events.showuserslist(el.subscribes, addresses, etext, ctext, clbk)
+				})
+			},
+
+			showsubscribers : function(clbk){
+				load.subscribers().then(addresses => {
+
+					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
+					var ctext = self.app.localization.e('followers')
+
+					events.showuserslist(el.subscribers, addresses, etext, ctext, clbk)
+				})
+			},
+
+			showuserslist : function(_el, addresses, empty, caption, clbk){
+				self.nav.api.load({
+
+					open : true,
+					id : 'userslist',
+					animation : false,
+					inWnd : true,
+					essenseData : {
+						addresses : addresses,
+						empty : empty,
+						caption : caption,
+						sort : 'commonuserrelation'
+					},
+					
+					clbk : function(e, p){
+						if (clbk)
+							clbk(e, p)
+					}
+
+				})
+			},
 		}
 
 		var renders = {
@@ -415,6 +508,14 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
+
+					p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+					
+
 					if(clbk) clbk()
 
 				})
@@ -429,6 +530,10 @@ var authorn = (function(){
 					},
 					insertimmediately : true,
 				}, function(p){
+
+					p.el.find('.editprofile').on('click', events.editprofile)
+					p.el.find('.showsubscribes').on('click', events.showsubscribes)
+					p.el.find('.showsubscribers').on('click', events.showsubscribers)
 
 					if(clbk) clbk()
 
@@ -446,6 +551,12 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
+					p.el.find('.startchat').on('click', events.startchat)
+					p.el.find('.openwallet').on('click', events.openwallet)
+					p.el.find('.videoCabinet').on('click', events.videoCabinet)
+					p.el.find('.sendcoins').on('click', events.sendcoins)
+					p.el.find('.settings').on('click', events.settings)
+
 					if(clbk) clbk()
 
 				})
@@ -453,7 +564,6 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
-				console.log('currentLenta()', currentLenta())
 
 				self.shell({
 					name :  'alentanavigation',
@@ -482,6 +592,8 @@ var authorn = (function(){
 						var link = self.app.platform.api.authorlink(author.address)
 
 						if(meta.parameter) link = link + "?" + meta.parameter + "=1"
+
+						console.log('link', link)
 
 						self.nav.api.load({
 							open : true,
@@ -612,7 +724,7 @@ var authorn = (function(){
 						addresses : addresses,
 						empty : empty,
 						caption : caption,
-						sort : 'commonuserrelation',
+						sort : 'random',
 						preview : true
 					},
 					

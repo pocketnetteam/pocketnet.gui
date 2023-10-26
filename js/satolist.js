@@ -4574,7 +4574,7 @@ Platform = function (app, listofnodes) {
 
             var name = self.psdk.userInfo.getShortForm(address).clname
 
-            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name) return encodeURIComponent(name.toLowerCase());
 
             else return 'authorn?address=' + address
         },

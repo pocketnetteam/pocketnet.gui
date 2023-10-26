@@ -4548,7 +4548,7 @@ var lenta = (function(){
 
 						}
 
-						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
+						if (essenseData.getpin && author && !sharesInview.length){
 
 							self.psdk.accSet.load(author).then(setting => {
 

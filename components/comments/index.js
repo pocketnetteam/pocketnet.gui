@@ -2826,7 +2826,6 @@ var comments = (function(){
 					renders.post(function(area){
 
 						if (ed.reply){
-							console.log("!!!", ed.reply)
 							actions.fastreply(ed.reply)
 						}
 						else
@@ -2840,9 +2839,6 @@ var comments = (function(){
 								reply.noaction = true
 
 								actions.fastreply(reply)
-
-
-								console.log("HERE")
 							}
 
 						}
