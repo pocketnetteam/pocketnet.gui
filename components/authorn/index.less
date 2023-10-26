@@ -6,11 +6,13 @@
     background: rgb(var(--background-main));
     min-height: 1200px;
     
-
-    .work{
-        max-width: 1076px;
+    .maincntwrapperOvf{
+        .work{
+            max-width: 1076px;
+        }
+    
     }
-
+    
     .work{
 		&.mwork{
 			padding : 0!important;
@@ -333,6 +335,139 @@
             }
         }
     }
+
+
+    .vdivcontainer{
+        display: flex;
+        width: 200%;
+        align-items: flex-start;
+        .transition(0.1s);
+
+        >div{
+            width: 50%;
+            flex-shrink: 0;
+            position: relative;
+        }
+    }
+    
+    .mainpanelsvicell,
+    .mainpanelcell{
+        display: none;
+    }
+
+    .maincntwrapperOvf{
+		.transition(0.1s);
+	}
+
+    .lentacellsvi{
+		margin-right : 0;
+		padding-top : @rhythm;
+	}
+
+	.opensvi{
+		display: none;
+
+		.backtolenta{
+			opacity: 0;
+		}
+
+		.leftpanelsvicell{
+			display: none;
+		}
+	}
+
+	.upbackbuttonwrapper{
+		opacity: 0;
+		.transition(0.3s, opacity);
+		-webkit-transition-delay: 0.5s;
+		-o-transition-delay: 0.5s;
+		-moz-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+
+		.upbutton{
+			position: absolute;
+			top : 0;
+		}
+	}
+
+	.upbuttonwrapper{
+		opacity: 1;
+		-webkit-transition-delay: 0.5s;
+		-o-transition-delay: 0.5s;
+		-moz-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+	}
+
+	.upbuttonwrapper{
+		.transition(0.3s, opacity);
+	}
+
+	&.opensvishowed{
+
+		min-height: 990px;
+		.upbackbuttonwrapper{
+			opacity: 1;
+		}
+
+		.leftpanelcell{
+			opacity: 0;
+		}
+
+		.opensvi{
+			display: block;
+
+			.backtolenta{
+				opacity: 1;
+			}
+		}
+
+		.maincntwrapperOvf{
+			opacity: 0;
+		}
+
+		.vdivcontainer{
+			transform: translateX(-50%);
+		}
+
+		.upbuttonwrapper{
+			display: none;
+			opacity: 0;
+		}
+
+		&.opensvishowedend{
+			.maincntwrapperOvf{
+				height: 100px;
+			}
+			.maincntwrapper{
+				display: none;
+			}
+		}
+
+		
+	}
+
+	&.opensvishowedWillremoved{
+		.vdivcontainer{
+			.transition(0s);
+		}
+	}
+
+	.renderposthere{
+		#post{
+			background: transparent;
+
+			.postWrapper{
+				// margin: 0;
+			}
+		}
+	}
+	.fxd{
+		padding-top : 10px;
+	}
+
+	.fxdsmall{
+		top : 75px;
+	}
 }
 
 @media only screen and (max-width: 768px){

@@ -2,7 +2,7 @@
   background: rgb(var(--background-main));
   min-height: 1200px;
 }
-#authorn .work {
+#authorn .maincntwrapperOvf .work {
   max-width: 1076px;
 }
 #authorn .work.mwork {
@@ -261,6 +261,117 @@
 #authorn .alentanavigation .navi .searchIcon i {
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-2));
+}
+#authorn .vdivcontainer {
+  display: flex;
+  width: 200%;
+  align-items: flex-start;
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+#authorn .vdivcontainer > div {
+  width: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+#authorn .mainpanelsvicell,
+#authorn .mainpanelcell {
+  display: none;
+}
+#authorn .maincntwrapperOvf {
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+#authorn .lentacellsvi {
+  margin-right: 0;
+  padding-top: 0.5em;
+}
+#authorn .opensvi {
+  display: none;
+}
+#authorn .opensvi .backtolenta {
+  opacity: 0;
+}
+#authorn .opensvi .leftpanelsvicell {
+  display: none;
+}
+#authorn .upbackbuttonwrapper {
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  -webkit-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  -moz-transition-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+#authorn .upbackbuttonwrapper .upbutton {
+  position: absolute;
+  top: 0;
+}
+#authorn .upbuttonwrapper {
+  opacity: 1;
+  -webkit-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  -moz-transition-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+#authorn .upbuttonwrapper {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#authorn.opensvishowed {
+  min-height: 990px;
+}
+#authorn.opensvishowed .upbackbuttonwrapper {
+  opacity: 1;
+}
+#authorn.opensvishowed .leftpanelcell {
+  opacity: 0;
+}
+#authorn.opensvishowed .opensvi {
+  display: block;
+}
+#authorn.opensvishowed .opensvi .backtolenta {
+  opacity: 1;
+}
+#authorn.opensvishowed .maincntwrapperOvf {
+  opacity: 0;
+}
+#authorn.opensvishowed .vdivcontainer {
+  transform: translateX(-50%);
+}
+#authorn.opensvishowed .upbuttonwrapper {
+  display: none;
+  opacity: 0;
+}
+#authorn.opensvishowed.opensvishowedend .maincntwrapperOvf {
+  height: 100px;
+}
+#authorn.opensvishowed.opensvishowedend .maincntwrapper {
+  display: none;
+}
+#authorn.opensvishowedWillremoved .vdivcontainer {
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  -webkit-transition: 0s;
+  transition: 0s;
+}
+#authorn .renderposthere #post {
+  background: transparent;
+}
+#authorn .fxd {
+  padding-top: 10px;
+}
+#authorn .fxdsmall {
+  top: 75px;
 }
 @media only screen and (max-width: 768px) {
   #authorn .aucaption {

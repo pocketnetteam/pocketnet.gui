@@ -12,6 +12,9 @@ var authorn = (function(){
 		var modules = {}
 		var cstate = {}
 		var upbutton;
+		var upbackbutton;
+		var lastscroll = 0;
+		var openedpost = null
 
 		var actions = {
 			clearSearch : function(){
@@ -51,6 +54,38 @@ var authorn = (function(){
 	
 				}, start, count)	
 	
+			},
+
+			backtolenta : function(){
+				actions.backtolentaClear()
+
+				self.app.actions.scroll(lastscroll || 0)
+			},
+
+			backtolentaClear : function(){
+
+				self.nav.api.history.removeParameters(['v'])
+
+				if(!el.c) return
+
+				el.c.removeClass('opensvishowedend')
+				el.c.addClass('opensvishowedWillremoved')
+
+				renders.upbutton()
+				renders.post(null)
+				
+				setTimeout(() => {
+					el.c.removeClass('opensvishowed')
+				}, 300)
+
+				setTimeout(() => {
+					el.c.removeClass('opensvishowedWillremoved')
+				}, 350)
+
+				self.nav.api.changedclbks()
+
+				if (lenta && lenta.update) 
+					lenta.update()
 			}
 		}
 
@@ -90,6 +125,63 @@ var authorn = (function(){
 			extend : function(params){
 				params.video = !isMobile()
 				params.videomobile = isMobile()
+
+				params.opensvi = function(id){
+
+					lastscroll = self.app.lastScrollTop
+
+					events.up()
+
+					window.requestAnimationFrame(() => {
+					
+						el.c.addClass('opensvishowed')
+
+						setTimeout(() => {
+							el.c.addClass('opensvishowedend')
+						}, 300)
+
+					})
+
+					setTimeout(() => {
+
+						if (upbutton) upbutton.destroy()
+					
+						if (upbackbutton) upbackbutton.destroy()
+
+						if(typeof _Electron == 'undefined' || !_Electron){
+							setTimeout(function(){
+							
+								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+									top : function(){
+										return '65px'
+									},
+									rightEl : el.c.find('.lentacellsvi'),
+									scrollTop : 0,
+									click : function(a){
+										actions.backtolenta()
+									},
+
+									icon : '<i class="fas fa-chevron-left"></i>',
+									class : 'bright',
+									text : 'Back'
+								})	
+							}, 50)
+								
+							setTimeout(function(){
+								upbackbutton.apply()
+							},300)
+						}
+
+						renders.post(id)
+
+						self.nav.api.history.addParameters({
+							v : id
+						})
+
+						self.nav.api.changedclbks()
+						
+					}, 400)
+				}
 
 				return params
 			}
@@ -207,10 +299,63 @@ var authorn = (function(){
 		}
 
 		var events = {
-			
+			up : function(){
+				self.app.actions.scroll(0)
+			}
 		}
 
 		var renders = {
+
+			post : function(id){
+				if(!el || !el.c) return
+
+				if (!id){
+
+					if (openedpost){
+						
+						openedpost.clearessense()
+						openedpost = null
+					}
+
+					el.c.find('.renderposthere').html('')
+
+				}
+
+				else{
+
+					
+					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
+						openedpost = p
+					}, {
+						video : true,
+						showrecommendations : true,
+						autoplay : true,
+						nocommentcaption : true,
+						r : 'recommended',
+						openapi : false,
+						opensvi : function(id){
+
+							if (openedpost){
+								openedpost.clearessense()
+								openedpost = null
+							}
+
+							events.up()
+
+							setTimeout(() => {
+								el.c.find('.renderposthere').html('')
+
+								renders.post(id)
+	
+								self.nav.api.history.addParameters({
+									v : id
+								})
+							}, 400)
+		
+						}
+					})
+				}
+			},
 
 			randombg : function(clbk){
 
@@ -478,6 +623,22 @@ var authorn = (function(){
 
 				})
 			},
+
+			upbutton : function(){
+				if(upbutton) upbutton.destroy()
+
+				if(isMobile()) return
+
+				if (el.c)
+					upbutton = self.app.platform.api.upbutton(el.up, {
+						top : function(){
+		
+							return '65px'
+						},
+						class : 'light',
+						rightEl : el.c.find('.leftpanelcell')
+					})
+			},
 		}
 
 		var state = {
@@ -491,16 +652,7 @@ var authorn = (function(){
 
 		var initEvents = function(){
 			
-			if(!isMobile()){
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
-	
-						return '65px'
-					},
-					class : 'light',
-					rightEl : el.c.find('.leftpanelcell')
-				})	
-			}
+			
 		}
 
 		var redir = function(page){
@@ -565,6 +717,7 @@ var authorn = (function(){
 			renders.randombg()
 			renders.subscribes()
 			renders.subscribers()
+			renders.upbutton()
 		}
 		
 		var destroy = function(){
@@ -641,7 +794,11 @@ var authorn = (function(){
 					upbutton.destroy()
 					upbutton = null
 				}
-					
+
+				if (upbackbutton){
+					upbackbutton.destroy()
+					upbackbutton = null
+				}
 
 				if (href != 'author') 
 					self.app.el.html.removeClass('allcontent')
@@ -664,6 +821,7 @@ var authorn = (function(){
 				el.bg = el.c.find('.bgwallpaperWrapper')
 				el.subscribes = el.c.find('.subscribes')
 				el.subscribers = el.c.find('.subscribers')
+				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 
 				initEvents();
 				init()

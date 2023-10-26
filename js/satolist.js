@@ -18034,6 +18034,7 @@ Platform = function (app, listofnodes) {
                                 }else {
     
                                     const params = new URLSearchParams(body.url);
+
                                     platform.app.nav.api.load({
                                         open: true,
                                         href: 'post?s=' + params.get('s'),
@@ -18053,6 +18054,7 @@ Platform = function (app, listofnodes) {
                                             }
                                         }
                                     })
+
                                 }
                             }else{
                                 platform.app.nav.api.go({
@@ -18089,7 +18091,7 @@ Platform = function (app, listofnodes) {
 
                     platform.fcmtoken = token
                     currenttoken = token
-                platform.matrixchat.changeFcm()
+                    platform.matrixchat.changeFcm()
 
                     //prepareclbk(token)
 
@@ -19030,22 +19032,40 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
+                        self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                            var share = self.psdk.share.get(data.txid) 
 
-                                    if(close) close()
-                                },
+                            if (share && share.itisstream()){
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                                self.nav.api.load({
+                                    open : true,
+                                    href : 'index?video=1&v=' + data.txid,
+                                    history : true
+                                })
+
+                                if(close) close()
+                                
+                            }
+                            else{
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + data.txid,
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+
+                                        if(close) close()
+                                    },
+
+                                    essenseData: {
+                                        share: data.txid
+                                    }
+                                })
+                            }
+
+                        })
 
 
                     })

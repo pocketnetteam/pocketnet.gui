@@ -1668,7 +1668,7 @@ var lenta = (function(){
 
 					self.nav.api.load({
 						open : true,
-						href : 'index?video=1&v=' + id,
+						href : (essenseData.urlprefix || 'index') + '?video=1&v=' + id,
 						history : true
 					})
 
