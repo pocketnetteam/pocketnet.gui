@@ -32,10 +32,10 @@ logger.setlevel('debug');
 
 var testnodes = [
 	{
-		host : '78.37.233.202',
+		host : '65.21.252.135',
 		port : 39091,
 		ws : 6067,
-		name : 'test.v.pocketnet.app',
+		name : 'pnettool.pocketnet.app',
 		stable : true
 	},
 

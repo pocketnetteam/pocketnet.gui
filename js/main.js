@@ -5,13 +5,13 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 if(!_Node)
 {
 
-	var developapps = [/*{
-		"id" : 'demo.pocketnet.app',
-    	"version": "0.0.1",
-		"scope" : "localhost:8081",
+	var developapps = [{
+		"id" : 'barteron.pocketnet.app',
+		"version": "1.0.0",
+		"scope" : "localhost:8080",
 		"cantdelete" : true,
-		"name" : "Demo application"
-	}*/]
+		"name" : "Barteron"
+	}]
 
 	var translateApiProxy = {
 		host : '2.pocketnet.app',
@@ -25,11 +25,11 @@ if(!_Node)
 	var _listofproxies =  [
 		
 
-		/*{
+		{
 			host : '127.0.0.1',
-			port : 8887,
-			wss : 8087
-		},*/
+			port : 8899,
+			wss : 8099
+		},
 			
 		/*{
 			host : 'pocketnet.app',

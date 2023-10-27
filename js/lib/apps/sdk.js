@@ -164,12 +164,44 @@ var BastyonSdk = function(){
             return action('account', {})
         },
 
+        balance : function() {
+            return action('balance', {})
+        },
+
         imageFromMobileCamera : function(){
             return action('mobile.camera', {})
         },
 
         appinfo : function(){
             return action('appinfo', {})
+        },
+
+        location : function(){
+            return action('location', {})
+        },
+        
+        currency : function(){
+            return action('currency', {})
+        }
+    }
+
+    self.set = {
+        imagesToImgur : function(images) {
+            return action('imagesToImgur', images)
+        },
+
+        barteron : {
+            account : function(data){
+                return action('barteron.account', data)
+            },
+
+            offer : function(data){
+                return action('barteron.offer', data)
+            },
+
+            comment : function(data){
+                return action('barteron.comment', data)
+            }
         }
     }
 

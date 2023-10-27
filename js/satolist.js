@@ -3117,6 +3117,10 @@ Platform = function (app, listofnodes) {
 
     }
 
+    self.location = function(options){
+        return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);;
+    }
+
     self.ui = {
 
         support : function(template, parameters){
@@ -3291,6 +3295,7 @@ Platform = function (app, listofnodes) {
             })
 
         },
+
 
         uploadImage : function(p){
 

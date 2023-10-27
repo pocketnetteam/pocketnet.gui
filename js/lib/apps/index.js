@@ -180,6 +180,13 @@ var BastyonApps = function(app){
             description : 'permissions_descriptions_payment',
             level : 2,
             uniq : true
+        },
+
+        'location' : {
+            name : 'permissions_name_location',
+            description : 'permissions_descriptions_location',
+            level : 2,
+            uniq : false
         }
     }
 
@@ -224,8 +231,8 @@ var BastyonApps = function(app){
         balance : {
             permissions : ['account'],
             action : function(){
-                var account = self.platform.actions.getCurrentAccount()
-
+                var account = app.platform.actions.getCurrentAccount()
+                
                 if (account){
                     var balance = account.actualBalance([account.address])
                     return Promise.resolve(balance)
@@ -251,16 +258,51 @@ var BastyonApps = function(app){
                 var source = [app.user.address.value];
 
                 var transaction = new Transaction()
-				
-					transaction.source.set(source)
-					transaction.reciever.set(data.recievers)
-					transaction.feemode.set(data.feemode)
+                
+                    transaction.source.set(source)
+                    transaction.reciever.set(data.recievers)
+                    transaction.feemode.set(data.feemode)
 
                 if (data.message)
-					transaction.message.set(data.message)
+                    transaction.message.set(data.message)
 
                 return makeAction(transaction, application)
 
+            }
+        },
+
+        barteron : {
+            account : {
+                permissions : ['account'],
+                action : function({data, application}){
+                    var account = new brtAccount();
+
+                        account.import(data);
+                    
+                        return makeAction(account, application);
+                }
+            },
+
+            offer : {
+                permissions : ['account'],
+                action : function({data, application}){
+                    var offer = new brtOffer();
+
+                        offer.import(data);
+                    
+                        return makeAction(offer, application, true);
+                }
+            },
+
+            comment : {
+                permissions : ['account'],
+                action : function({data, application}){
+                    var comment = new brtComment();
+
+                        comment.import(data);
+                    
+                        return makeAction(comment, application)/* .then(d => {console.log(d); return d}).catch(e => {console.error(e); return Promise.reject(e)}) */;
+                }
             }
         },
 
@@ -323,6 +365,51 @@ var BastyonApps = function(app){
             }
         },
 
+        location : {
+            permissions : ['location'],
+            parameters : [],
+            action : function({data, application}){
+                return new Promise((resolve, reject) => {
+                    app.platform.location({
+                        onSuccess : (pos) => {
+                            resolve({
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude
+                            });
+                        },
+                        onError : () => {
+                            reject(appsError('location:notavailable'))
+                        }
+                    });
+                })
+            }
+        },
+
+        currency : {
+            permissions : [],
+            parameters : [],
+            action : function({ data, application }) {
+                return app.api.fetch('exchanges/history').then(result => {
+                    return result.prices;
+                })
+            }
+        },
+
+        imagesToImgur : {
+            permissions : ['account'],
+            parameters : [],
+            action : function({data, application}){
+                return Promise.all(
+                    data.map(image => {
+                        return app.imageUploader.uploadImage({
+                            Action : "image",
+                            base64 : image
+                        }, 'imgur').then(data => data).catch(err => err)
+                    })
+                )
+            }
+        },
+
         mobile : {
             camera : {
                 permissions : ['mobilecamera'],
@@ -377,16 +464,17 @@ var BastyonApps = function(app){
 
     }
 
-    var makeAction = function(data, application){
+    var makeAction = function(data, application, rejectIfError){
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application : application.manifest.id
+            application : application.manifest.id,
+            rejectIfError : rejectIfError
         }).then(action => {
 
             return Promise.resolve(action.export())
 
         }).catch(e => {
 
-            Promise.reject(appsError(e))
+            return Promise.reject(appsError(e))
 
         })
     }
@@ -1065,7 +1153,7 @@ var BastyonApps = function(app){
                 [{
                     "id" : 'demo2.pocketnet.app',
                     "version": "0.0.1",
-                    "scope" : "localhost:8081",
+                    "scope" : "localhost:8080",
                     "cantdelete" : true
                 }]
 
