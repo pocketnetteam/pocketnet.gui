@@ -8,7 +8,7 @@ if(!_Node)
 	var developapps = [{
 		"id" : 'barteron.pocketnet.app',
 		"version": "1.0.0",
-		"scope" : "localhost:8080",
+		"scope" : "test.barter.pocketnet.app",
 		"cantdelete" : true,
 		"name" : "Barteron"
 	}]
