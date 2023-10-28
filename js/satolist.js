@@ -4158,8 +4158,6 @@ Platform = function (app, listofnodes) {
 
                                         if (node) link += '&node=' + node
 
-                                        console.log("send link", link)
-
                                         self.matrixchat.shareInChat.url(p.roomid, link) /// change protocol
                                     }
 
@@ -14519,7 +14517,9 @@ Platform = function (app, listofnodes) {
                         return
                     }
 
-                    self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
+                    self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
+                        rejectIfError : true
+                    }).then(action => {
 
                         var alias = action.get()
 

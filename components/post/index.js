@@ -1164,8 +1164,6 @@ var post = (function () {
 						}
 					}
 				
-					console.log("state HERE")
-					
 					self.fastTemplate(
 						'commentspreview',
 						function (rendered) {

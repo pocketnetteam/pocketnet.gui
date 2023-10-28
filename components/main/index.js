@@ -755,8 +755,6 @@ var main = (function(){
 
 							self.app.psdk.share.insertFromResponseSmall(shares)
 
-							console.log('shares', shares)
-
 							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
 								return s.txid
 							}))

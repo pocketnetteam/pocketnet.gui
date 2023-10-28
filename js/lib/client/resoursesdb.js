@@ -244,8 +244,6 @@ ResoursesDB = function(storageName, version, storages){
         initing = new Promise((resolve, reject) => {
             var openRequest = indexedDB.open(storageName, version);
 
-            console.log("db load")
-           
 
             openRequest.onupgradeneeded = function (e) {
                 let db = openRequest.result;
@@ -286,8 +284,6 @@ ResoursesDB = function(storageName, version, storages){
             };
 
             openRequest.onsuccess = function () {
-
-                console.log("db success")
 
                 db = openRequest.result;
 

@@ -105,7 +105,6 @@ var lenta = (function(){
 
 			translate : function(txid, dl){
 				return self.app.platform.sdk.translate.share.request(txid, dl).then((r) => {
-					console.log("R", r)
 					self.app.platform.sdk.translate.share.set(txid, dl)
 
 					var share = self.psdk.share.get(txid);
@@ -4358,8 +4357,6 @@ var lenta = (function(){
 
 				var author = essenseData.author;
 
-				console.log('allshares', allshares)
-
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
@@ -4711,8 +4708,6 @@ var lenta = (function(){
 
 							var period = 1440
 
-							console.log("HERE")
-
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -4741,8 +4736,6 @@ var lenta = (function(){
 								if (essenseData.shuffle) {
 									shares = _.shuffle(shares)
 								}
-
-								console.log('shares', shares)
 
 								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
 
@@ -5468,7 +5461,6 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log('getdata')
 				ovf = false
 
 				newmaterials = 0;

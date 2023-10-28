@@ -30,7 +30,8 @@
         left:0;
         right: 0;
         top: 0;
-        aspect-ratio: 4;
+        height: 200px;
+        /*aspect-ratio: 4;*/
         z-index: 0;
         
         border-bottom-left-radius: @rad;
@@ -43,6 +44,17 @@
             top : 0;
             background: #051b48;
             bottom: 0;
+
+            &.blocked{
+                background: #48052b;
+
+                .grad{
+                    
+                    background: rgba(1, 1, 1, 1);
+                    background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+                    
+                }
+            }
 
             >div{
                 opacity: 0.4;
@@ -67,9 +79,12 @@
     }
 
     .acontentps{
-        aspect-ratio: 4;
+
+        height: 200px;
+        /*aspect-ratio: 4;*/
     }
 
+    .blocking,
     .subscribes,
     .subscribers,
     .uinfoWr,
@@ -92,8 +107,10 @@
         
 
         .lcolumn{
-            flex-grow: 2;
+            flex-grow: 0;
+            flex-shrink: 0;
             max-width: 280px;
+            min-width: 280px;
             position: relative;
             top : -6em; 
         }
@@ -105,11 +122,19 @@
         }
     }
 
-    .subscribes,
-    .subscribers{
-        border-radius: @rad;
-        background: rgba(var(--background-total-theme), 1);
-        padding : 2 * @rhythm;
+    .lcolumn{
+        .blocking,
+        .subscribes,
+        .subscribers{
+            border-radius: @rad;
+            background: rgba(var(--background-total-theme), 1);
+            padding : 2 * @rhythm;
+            display: none;
+    
+            &.active{
+                display: block;
+            }
+        }
     }
 
     .uinfo{
@@ -198,6 +223,10 @@
 
             i{
                 opacity: 0.7;
+            }
+
+            &.icon{
+                min-width: 44px;
             }
         }
     }
@@ -290,6 +319,16 @@
 
             
         }
+
+        .deletedAccount{
+			text-align: center;
+
+			.deletedsettings{
+				margin-top: 2 * @rhythm;
+				cursor: pointer;
+			}
+		}
+
     }
 
     .whatsnew{
@@ -504,6 +543,15 @@
                 padding-top: 6 * @rhythm;
             }
         }
+
+        .bgwallpaperWrapper{
+            height: 130px;
+            
+        }
+    
+        .acontentps{
+            height: 130px;
+        }
         
 
         .acontent{
@@ -519,6 +567,7 @@
                 min-width: 100%;
                 top : @rhythm; 
 
+                .blocking,
                 .subscribers,
                 .subscribes{
                     display: none;

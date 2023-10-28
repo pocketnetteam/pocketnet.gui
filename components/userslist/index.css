@@ -145,4 +145,7 @@
   #userslist .users .addressTable > div.extra {
     width: 60px;
   }
+  .wnd.userlistwindow #userslist {
+    padding: 1em;
+  }
 }

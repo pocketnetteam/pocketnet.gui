@@ -250,8 +250,6 @@ var activities = (function () {
 
 				})).then(() => {
 
-					console.log("activitiesByGroup['video']", activitiesByGroup['video'])
-
 					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
 					
 					actions.setloading(false)
@@ -276,9 +274,6 @@ var activities = (function () {
 					var video = (d.data || {}).share
 
 					if(!video) return
-
-					console.log("DDD", video)
-
 
 					let a = new Promise((resolve, reject) => {
 						self.app.platform.sdk.videos.info([video.url]).then(r => {
@@ -480,8 +475,6 @@ var activities = (function () {
 						var id = $(this).closest('.action').attr('aid')
 
 						var a = self.app.platform.actions.getActionById(id)
-
-						console.log("A", a)
 					})
 					
 				})

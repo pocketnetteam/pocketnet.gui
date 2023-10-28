@@ -292,9 +292,6 @@ var test = (function(){
 
 						//exist = false
 
-						console.log('exist', exist)
-						
-
 						if(!exist || (exist == self.app.user.address.value)){
 
 							topPreloader2(50)

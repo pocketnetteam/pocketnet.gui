@@ -585,8 +585,6 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (self[k] && self[k].applyAction) {
 
-                        console.log("applyAction " + (!extendedObject ? 'clone' : 'extend'))
-
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
                         if (applied) extendedObject = applied
@@ -2086,8 +2084,6 @@ var pSDK = function ({ app, api, actions }) {
 
             return loadone('transaction', id, (ids) => {
 
-                console.log("MAKE ", id, update, p)
-
                 return api.rpc('getrawtransaction', [ids[0], 1], {rpc : p}).then(d => {
 
                     if(_.isEmpty(d)) {
@@ -2230,9 +2226,10 @@ var pSDK = function ({ app, api, actions }) {
         load: function (address, update) {
 
             return loadone('blocking', address, (ids) => {
+
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
                     rpc : {
-                        node : '178.217.159.221:38081'
+                        fnode : '178.217.159.221:38081'
                     }
                 }).then(r => {
 
@@ -2270,8 +2267,6 @@ var pSDK = function ({ app, api, actions }) {
             return loadone('subscribers', address, (ids) => {
                 return api.rpc('getusersubscribers', [ids[0], '', '', '', '5000']).then(r => {
 
-                    console.log("R", r)
-
                     r = _.map(r, (v) => {
                         return v.address
                     })
@@ -2305,9 +2300,6 @@ var pSDK = function ({ app, api, actions }) {
 
             return loadone('subscribes', address, (ids) => {
                 return api.rpc('getusersubscribes', [ids[0], '', '', '', '5000']).then(r => {
-
-
-                    console.log("RESULT getusersubscribes", r)
 
                     r = _.map(r, (v) => {
                         return {

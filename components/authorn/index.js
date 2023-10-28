@@ -99,8 +99,6 @@ var authorn = (function(){
 				}
 			})
 
-			console.log('method', method, params)
-
 			if(!method){
 				return lentameta[0]
 			}
@@ -265,6 +263,21 @@ var authorn = (function(){
 			relations : function(relations, clbk){
 				return author.data.loadRelations(relations, self.app.platform.sdk.user.loadRelation)
 			},
+
+			blocking: function(){
+				return this.relations(['blocking']).then(() => {
+
+					var u = _.map(deep(author, 'data.blocking') || [], function(a){
+						return a
+					})
+
+					return Promise.resolve(u)
+
+				}).catch((e) => {
+					console.error(e)
+					return []
+				})
+			},
 			
 			subscribers : function(){
 				return this.subscribersOrSubscribes('subscribers')
@@ -291,7 +304,6 @@ var authorn = (function(){
 						return _.indexOf(blocked, a) == -1
 					})
 
-					console.log("USERS", u)
 
 					return Promise.resolve(u)
 
@@ -354,23 +366,34 @@ var authorn = (function(){
 				})
 			},
 
-			showsubscribes : function(clbk){
+			showblocking : function(){
+				load.blocking().then(addresses => {
+
+					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynoblocked') : self.app.localization.e('anoblocked')
+
+					var ctext = self.app.localization.e('blockedusers')
+
+					events.showuserslist(el.subscribes, addresses, etext, ctext)
+				})
+			},
+
+			showsubscribes : function(){
 				load.subscribes().then(addresses => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
 					var ctext = self.app.localization.e('following')
 
-					events.showuserslist(el.subscribes, addresses, etext, ctext, clbk)
+					events.showuserslist(el.subscribes, addresses, etext, ctext)
 				})
 			},
 
-			showsubscribers : function(clbk){
+			showsubscribers : function(){
 				load.subscribers().then(addresses => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
 					var ctext = self.app.localization.e('followers')
 
-					events.showuserslist(el.subscribers, addresses, etext, ctext, clbk)
+					events.showuserslist(el.subscribers, addresses, etext, ctext)
 				})
 			},
 
@@ -593,8 +616,6 @@ var authorn = (function(){
 
 						if(meta.parameter) link = link + "?" + meta.parameter + "=1"
 
-						console.log('link', link)
-
 						self.nav.api.load({
 							open : true,
 							href : link,
@@ -685,10 +706,30 @@ var authorn = (function(){
 
 				
 
-
-				
 			
 			},
+
+			blocking : function(clbk){
+
+				if (!author.me){
+					el.blocking.html('')
+					el.blocking.removeClass('active')
+				}
+				else{
+					load.blocking().then(addresses => {
+
+						var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynoblocked') : self.app.localization.e('anoblocked')
+						
+						var ctext = self.app.localization.e('blockedusers')
+	
+						renders.userslist(el.blocking, addresses, etext, ctext, clbk, 'blocking')
+	
+					})
+				}
+
+				
+			},
+
 
 			subscribes : function(clbk){
 				load.subscribes().then(addresses => {
@@ -729,6 +770,9 @@ var authorn = (function(){
 					},
 					
 					clbk : function(e, p){
+
+						_el.addClass('active')
+
 						if (clbk)
 							clbk(e, p)
 					}
@@ -762,8 +806,58 @@ var authorn = (function(){
 			}
 		}
 
+		var relationsClbk = function(address){
+
+			if (address == author.address){
+				renders.subscribes()
+				renders.subscribers()
+				renders.blocking()
+				renders.fbuttonsrow()
+			}
+		}
+
 		var initEvents = function(){
 			
+			self.app.platform.actionListeners.authorn = function({type, alias, status}){
+
+				if(type == 'blocking' || type == 'unblocking'){
+					renders.randombg()
+				}
+
+				if(
+					type == 'unblocking' || 
+					type == 'blocking' || 
+					type == 'subscribe' || 
+					type == 'unsubscribe' || 
+					type == 'subscribePrivate'){
+
+					relationsClbk(alias.address.v)
+
+				}
+
+				if(type == 'userInfo'){
+
+					if(alias.address == author.address){
+
+						renders.aucaption()
+						renders.uinfo()
+
+					}
+					
+				}
+
+				if (type == 'accDel'){
+
+					if(alias.address == author.address){
+
+						renders.aucaption()
+						renders.uinfo()
+
+					}
+
+				}
+				
+			}
 			
 		}
 
@@ -813,7 +907,7 @@ var authorn = (function(){
 
 					clbk()
 					
-				})
+				}, true)
 			})
 
 			
@@ -830,6 +924,7 @@ var authorn = (function(){
 			renders.subscribes()
 			renders.subscribers()
 			renders.upbutton()
+			renders.blocking()
 		}
 		
 		var destroy = function(){
@@ -846,8 +941,6 @@ var authorn = (function(){
 			parametersHandler : function(){
 
 				var address = parameters().address
-
-				console.log('parametersHandler', address, author.address)
 
 				if (address && author.address != address){
 
@@ -882,13 +975,10 @@ var authorn = (function(){
 					ed
 				};
 
-				console.log("HERE1")
 
 				get(parameters().address || ed.address || self.app.user.address.value || '', () => {
 
-					data.author = data
-
-					console.log("HERE4")
+					data.author = author
 
 					clbk(data);
 				})
@@ -933,6 +1023,7 @@ var authorn = (function(){
 				el.bg = el.c.find('.bgwallpaperWrapper')
 				el.subscribes = el.c.find('.subscribes')
 				el.subscribers = el.c.find('.subscribers')
+				el.blocking = el.c.find('.blocking')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 
 				initEvents();

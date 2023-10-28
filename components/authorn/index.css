@@ -18,7 +18,8 @@
   left: 0;
   right: 0;
   top: 0;
-  aspect-ratio: 4;
+  height: 200px;
+  /*aspect-ratio: 4;*/
   z-index: 0;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -30,6 +31,13 @@
   top: 0;
   background: #051b48;
   bottom: 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.blocked {
+  background: #48052b;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.blocked .grad {
+  background: #010101;
+  background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
 }
 #authorn .bgwallpaperWrapper .bgwallpaper > div {
   opacity: 0.4;
@@ -49,8 +57,10 @@
   height: 100%;
 }
 #authorn .acontentps {
-  aspect-ratio: 4;
+  height: 200px;
+  /*aspect-ratio: 4;*/
 }
+#authorn .blocking,
 #authorn .subscribes,
 #authorn .subscribers,
 #authorn .uinfoWr,
@@ -69,8 +79,10 @@
   display: flex;
 }
 #authorn .acontent .lcolumn {
-  flex-grow: 2;
+  flex-grow: 0;
+  flex-shrink: 0;
   max-width: 280px;
+  min-width: 280px;
   position: relative;
   top: -6em;
 }
@@ -78,11 +90,18 @@
   margin-left: 0.5em;
   flex-grow: 2;
 }
-#authorn .subscribes,
-#authorn .subscribers {
+#authorn .lcolumn .blocking,
+#authorn .lcolumn .subscribes,
+#authorn .lcolumn .subscribers {
   border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
   padding: 1em;
+  display: none;
+}
+#authorn .lcolumn .blocking.active,
+#authorn .lcolumn .subscribes.active,
+#authorn .lcolumn .subscribers.active {
+  display: block;
 }
 #authorn .uinfo {
   border-radius: 12px;
@@ -149,6 +168,9 @@
 }
 #authorn .buttonsrow button i {
   opacity: 0.7;
+}
+#authorn .buttonsrow button.icon {
+  min-width: 44px;
 }
 #authorn .aucaption {
   position: relative;
@@ -222,6 +244,13 @@
 }
 #authorn .aucaption .contentinfo .showsubscribers,
 #authorn .aucaption .contentinfo .showsubscribes {
+  cursor: pointer;
+}
+#authorn .aucaption .deletedAccount {
+  text-align: center;
+}
+#authorn .aucaption .deletedAccount .deletedsettings {
+  margin-top: 1em;
   cursor: pointer;
 }
 #authorn .whatsnew {
@@ -405,6 +434,12 @@
   #authorn .aucaption .contentinfo {
     padding-top: 3em;
   }
+  #authorn .bgwallpaperWrapper {
+    height: 130px;
+  }
+  #authorn .acontentps {
+    height: 130px;
+  }
   #authorn .acontent .work {
     display: flex;
     flex-flow: column;
@@ -413,6 +448,7 @@
     min-width: 100%;
     top: 0.5em;
   }
+  #authorn .acontent .lcolumn .blocking,
   #authorn .acontent .lcolumn .subscribers,
   #authorn .acontent .lcolumn .subscribes {
     display: none;

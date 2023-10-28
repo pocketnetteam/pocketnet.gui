@@ -1,3 +1,25 @@
-<div class="bgwallpaper">
+<% 
+
+var me = psdk.userInfo.getmy()
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+var modclass = ''
+
+if(!author.me) {
+        
+
+    var r = me ? me.relation(author.address, 'subscribes') : null
+    var blocking = me ? me.relation(author.address, 'blocking') : null
+
+    if (blocking){
+        modclass = 'blocked'
+    }
+}
+
+%>
+
+
+<div class="bgwallpaper <%- modclass %>">
     <div class="grad"></div>
 </div>

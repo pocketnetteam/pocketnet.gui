@@ -199,7 +199,6 @@ var userslist = (function(){
 		var renders = {
 			page : function(addresses, clbk){
 
-				console.log('el.users', el.users, addresses)
 
 				self.shell({
 
@@ -390,8 +389,6 @@ var userslist = (function(){
 				sort = deep(p.settings, 'essenseData.sort') || null;
 
 				addresses = sorting(deep(p.settings, 'essenseData.addresses') || [], sort)
-
-				console.log("addresses", addresses)
 
 				data.addresses = addresses
 

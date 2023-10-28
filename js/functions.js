@@ -515,15 +515,24 @@ wnd = function (p) {
 
 				if (wnd && (wnd.hasClass('normalizedmobile'))) {
 
+
 					setTimeout(function () {
+
+		
 						if (clbk && !p.fastClbk) clbk()
+
 
 						setTimeout(function () {
 							window.requestAnimationFrame(() => {
+
+
 								if (wnd)
 									wnd.find('.wndcontent>div').css('opacity', 1)
 							})
 						}, 100)
+						
+
+					
 
 					}, 30)
 

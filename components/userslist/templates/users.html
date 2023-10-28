@@ -52,11 +52,7 @@ _.each(addresses, function(address){
 
 	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
 	
-	console.log('address', address)
-
 	var sUserInfo = psdk.userInfo.getShortForm(address) 
-
-	
 
 %>
 	<div class="wrk">

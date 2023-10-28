@@ -1057,11 +1057,7 @@ Application = function (p) {
 
 		self.nav.dynamic = function (p, clbk) {
 
-			console.log("HERE22")
-
 			self.platform.sdk.users.addressByName((p.href), function (r) {
-
-				console.log("HERE", r, p)
 
 				if (r) {
 					if (clbk)
