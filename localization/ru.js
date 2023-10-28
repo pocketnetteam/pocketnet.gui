@@ -2385,6 +2385,8 @@ _l.permissions_name_sign = "Цифровая подпись данных"
 _l.permissions_descriptions_sign = "Вы разрешаете подписать своей уникальной подписью данные"
 _l.permissions_name_payment = "Совершить платёж"
 _l.permissions_descriptions_payment = "Приложение запрашивает разрешения совершить платёж в PKOIN"
+_l.permissions_name_location = "Доступ к местоположению"
+_l.permissions_descriptions_location = "Приложение запрашивает разрешение к вашему местоположению"
 
 _l.permissions_name_messaging = "Отображение сообщений"
 _l.permissions_descriptions_messaging = "Дать приложению разрешения отображать информационное сообщение"
