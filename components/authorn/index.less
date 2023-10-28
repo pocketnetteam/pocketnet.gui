@@ -141,13 +141,22 @@
         border-radius: @rad;
         background: rgba(var(--background-total-theme), 1);
         padding : 2 * @rhythm;
+        padding-right: @rhythm;
 
         .ucaption{
 
             margin-bottom: @rhythm;
+            display: flex;
+            align-items: center;
 
             span{
                 font-weight: 700;
+            }
+
+            i{
+                margin-left: auto;
+                padding : @rhythm;
+                display: none;
             }
         }
 
@@ -577,6 +586,37 @@
             .rcolumn{
                 margin-left: 0;
                 margin-top: @rhythm;
+            }
+        }
+
+        .uinfo{
+           
+            .ucaption{
+                margin-bottom: 0;
+    
+                i{
+                    display: block;
+                }
+            }
+    
+            .item{
+                display: none;
+                
+            }
+
+            &.showall{
+                .ucaption{
+
+                    margin-bottom: @rhythm;
+    
+                    i{
+                        display: block;
+                    }
+                }
+
+                .item{
+                    display: block;
+                }
             }
         }
     }

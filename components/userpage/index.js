@@ -139,8 +139,6 @@ var userpage = (function(){
 			}
 
 			
-			
-
 			reports.push({
 
 				name : self.app.localization.e('followers'),
@@ -185,6 +183,30 @@ var userpage = (function(){
 					if (self.app.mobileview && s){
 						return s
 					}	
+
+				}
+			})
+
+			reports.push({
+
+				name : self.app.localization.e('blockedusers'),
+				id : 'blocking',
+				report : 'blocking',
+				mobile : true,
+
+				if : function(){
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
+				},
+
+				add : function(){
+
+					var me = self.psdk.userInfo.getmy() || {}
+
+					var s = deep(me, 'blockings_count')
+					
+					if (self.app.mobileview && s){
+						return s
+					}
 
 				}
 			})
@@ -882,6 +904,27 @@ var userpage = (function(){
 					})
 				}
 				
+			},
+
+			blocking : function(_el, clbk){
+
+				var address = deep(self, 'app.user.address.value')
+
+				if (address){
+					var author = self.psdk.userInfo.get(address)
+					
+					var u = _.map(deep(author, 'blocking') || [], function(a){
+						return a
+					})
+
+					var e = self.app.localization.e('anoblocked');
+
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynoblocked')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), clbk)
+				}
 			},
 
 			following : function(_el, clbk){

@@ -537,6 +537,10 @@ var authorn = (function(){
 
 						sitemessage(self.app.localization.e('successcopied'))
 					})
+
+					p.el.find('.ucaption').on('click', function(){
+						$(this).closest('.uinfo').toggleClass('showall')
+					})
 					
 
 					if(clbk) clbk()

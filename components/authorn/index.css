@@ -107,12 +107,20 @@
   border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
   padding: 1em;
+  padding-right: 0.5em;
 }
 #authorn .uinfo .ucaption {
   margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
 }
 #authorn .uinfo .ucaption span {
   font-weight: 700;
+}
+#authorn .uinfo .ucaption i {
+  margin-left: auto;
+  padding: 0.5em;
+  display: none;
 }
 #authorn .uinfo .itemtable {
   display: flex;
@@ -456,5 +464,23 @@
   #authorn .acontent .rcolumn {
     margin-left: 0;
     margin-top: 0.5em;
+  }
+  #authorn .uinfo .ucaption {
+    margin-bottom: 0;
+  }
+  #authorn .uinfo .ucaption i {
+    display: block;
+  }
+  #authorn .uinfo .item {
+    display: none;
+  }
+  #authorn .uinfo.showall .ucaption {
+    margin-bottom: 0.5em;
+  }
+  #authorn .uinfo.showall .ucaption i {
+    display: block;
+  }
+  #authorn .uinfo.showall .item {
+    display: block;
   }
 }
