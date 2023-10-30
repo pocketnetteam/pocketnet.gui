@@ -74,19 +74,17 @@
   position: relative;
   z-index: 2;
 }
-#authorn .acontent .columns {
-  display: flex;
-}
 #authorn .acontent .lcolumn {
   flex-grow: 0;
   flex-shrink: 0;
-  max-width: 280px;
-  min-width: 280px;
+  width: 280px;
   position: relative;
   top: -6em;
+  float: left;
 }
 #authorn .acontent .rcolumn {
-  margin-left: 0.5em;
+  margin-left: 280px;
+  padding-left: 0.5em;
   flex-grow: 2;
 }
 #authorn .lcolumn .blocking,
@@ -479,8 +477,9 @@
     flex-flow: column;
   }
   #authorn .acontent .lcolumn {
-    min-width: 100%;
+    width: 100%;
     top: 0.5em;
+    float: none;
   }
   #authorn .acontent .lcolumn .blocking,
   #authorn .acontent .lcolumn .subscribers,
@@ -490,6 +489,7 @@
   #authorn .acontent .rcolumn {
     margin-left: 0;
     margin-top: 0.5em;
+    padding-left: 0;
   }
   #authorn .uinfo {
     padding-top: 0.5em;

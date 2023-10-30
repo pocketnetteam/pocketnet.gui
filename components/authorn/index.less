@@ -106,21 +106,20 @@
     .acontent{
 
         .columns{
-            display: flex;
         }
-        
 
         .lcolumn{
             flex-grow: 0;
             flex-shrink: 0;
-            max-width: 280px;
-            min-width: 280px;
+            width: 280px;
             position: relative;
             top : -6em; 
+            float: left;
         }
 
         .rcolumn{
-            margin-left: @rhythm;
+            margin-left: 280px;
+            padding-left: @rhythm;
             flex-grow: 2;
             
         }
@@ -625,8 +624,9 @@
             
     
             .lcolumn{
-                min-width: 100%;
+                width: 100%;
                 top : @rhythm; 
+                float: none;
 
                 .blocking,
                 .subscribers,
@@ -638,6 +638,7 @@
             .rcolumn{
                 margin-left: 0;
                 margin-top: @rhythm;
+                padding-left: 0;
             }
         }
 
