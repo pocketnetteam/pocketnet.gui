@@ -1665,10 +1665,16 @@ var lenta = (function(){
 
 				if (share.itisstream()){
 
+					if(essenseData.opensvi && essenseData.opensviStream){
+						
+						actions.opensvi(id)
+						return
+					}
+
 					self.nav.api.load({
 						open : true,
 						href : (essenseData.urlprefix || 'index') + '?video=1&v=' + id,
-						history : true
+						history : true,
 					})
 
 					return
@@ -2097,6 +2103,10 @@ var lenta = (function(){
 			videosInview : function(players, action, nvaction){	
 
 				//if(isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
+
+				if (essenseData.canloadmorescroll){
+					if(!essenseData.canloadmorescroll()) return
+				}
 				
 				if(fullscreenvideoShowed) return
 

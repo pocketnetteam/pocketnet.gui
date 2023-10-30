@@ -1047,6 +1047,17 @@ var Node = function(options, manager){
         return options
     }
 
+    self.forbidUsage = function(){
+
+        if (global.EXPERIMENTALNODES) return false 
+
+        if (self.version){
+            if(f.numfromreleasestring(self.version) >= 0.22) return true
+        }
+
+        return false
+    }
+
     self.export = function(){
 
         var s = self.statistic.getst()
@@ -1064,7 +1075,7 @@ var Node = function(options, manager){
             key : self.key,
             testing : self.testing,
             stable : self.stable,
-            canuse : (s.success > 0 && lastblock.height) ? true : false,
+            canuse : (s.success > 0 && lastblock.height && !self.forbidUsage()) ? true : false,
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,

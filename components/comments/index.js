@@ -2879,6 +2879,8 @@ var comments = (function(){
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
 
+					console.log("Comments", comments)
+
 					if (clbk)
 						clbk(comments, e)
 

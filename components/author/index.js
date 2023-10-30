@@ -137,14 +137,6 @@ var author = (function(){
 				})
 			},
 
-			startchat: function(){
-				self.app.mobile.vibration.small()
-
-				self.app.platform.matrixchat.startchat(author.address)
-
-				
-			},
-
 			subscribePrivate : function(){
 
 				self.app.mobile.vibration.small()
@@ -170,6 +162,16 @@ var author = (function(){
 
 				})
 			},
+
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+
+				
+			},
+
+			
 
 		}
 

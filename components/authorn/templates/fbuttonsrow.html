@@ -53,6 +53,8 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
             
         <% } %>
 
-        <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
+        <% if(state) {%>
+            <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
+        <% } %>
     <% } %>
 </div>

@@ -74,10 +74,6 @@
   position: relative;
   z-index: 2;
 }
-#authorn .acontent {
-  z-index: 1;
-  position: relative;
-}
 #authorn .acontent .columns {
   display: flex;
 }
@@ -182,6 +178,7 @@
 }
 #authorn .buttonsrow button.icon {
   min-width: 44px;
+  max-width: 88px;
 }
 #authorn .aucaption {
   position: relative;
@@ -497,6 +494,7 @@
   #authorn .uinfo {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    padding-right: 1em;
   }
   #authorn .uinfo .ucaption {
     margin-bottom: 0;

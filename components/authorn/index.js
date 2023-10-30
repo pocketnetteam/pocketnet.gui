@@ -23,6 +23,62 @@ var authorn = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var actions = {
+			openvi : function(id){
+
+				lastscroll = self.app.lastScrollTop
+
+				events.up()
+
+				window.requestAnimationFrame(() => {
+				
+					el.c.addClass('opensvishowed')
+
+					setTimeout(() => {
+						el.c.addClass('opensvishowedend')
+					}, 300)
+
+				})
+
+				setTimeout(() => {
+
+					if (upbutton) upbutton.destroy()
+				
+					if (upbackbutton) upbackbutton.destroy()
+
+					if(typeof _Electron == 'undefined' || !_Electron){
+						setTimeout(function(){
+						
+							upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+								top : function(){
+									return '65px'
+								},
+								rightEl : el.c.find('.lentacellsvi'),
+								scrollTop : 0,
+								click : function(a){
+									actions.backtolenta()
+								},
+
+								icon : '<i class="fas fa-chevron-left"></i>',
+								class : 'bright',
+								text : 'Back'
+							})	
+						}, 50)
+							
+						setTimeout(function(){
+							upbackbutton.apply()
+						},300)
+					}
+
+					renders.post(id)
+
+					self.nav.api.history.addParameters({
+						v : id
+					})
+
+					self.nav.api.changedclbks()
+					
+				}, 400)
+			},
 			gonav : function(id){
 
 				if(!id) id = 'common'
@@ -162,6 +218,9 @@ var authorn = (function(){
 			default : true,
 			extend : function(params){
 				params.getpin = true
+				params.opensviStream = !isMobile() ? true : null
+				params.opensvi = !isMobile() ? actions.openvi : null
+				
 				return params
 			}
 		},{
@@ -172,62 +231,7 @@ var authorn = (function(){
 				params.video = !isMobile()
 				params.videomobile = isMobile()
 
-				params.opensvi = function(id){
-
-					lastscroll = self.app.lastScrollTop
-
-					events.up()
-
-					window.requestAnimationFrame(() => {
-					
-						el.c.addClass('opensvishowed')
-
-						setTimeout(() => {
-							el.c.addClass('opensvishowedend')
-						}, 300)
-
-					})
-
-					setTimeout(() => {
-
-						if (upbutton) upbutton.destroy()
-					
-						if (upbackbutton) upbackbutton.destroy()
-
-						if(typeof _Electron == 'undefined' || !_Electron){
-							setTimeout(function(){
-							
-								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-									top : function(){
-										return '65px'
-									},
-									rightEl : el.c.find('.lentacellsvi'),
-									scrollTop : 0,
-									click : function(a){
-										actions.backtolenta()
-									},
-
-									icon : '<i class="fas fa-chevron-left"></i>',
-									class : 'bright',
-									text : 'Back'
-								})	
-							}, 50)
-								
-							setTimeout(function(){
-								upbackbutton.apply()
-							},300)
-						}
-
-						renders.post(id)
-
-						self.nav.api.history.addParameters({
-							v : id
-						})
-
-						self.nav.api.changedclbks()
-						
-					}, 400)
-				}
+				params.opensvi = !isMobile() ? actions.openvi : null
 
 				return params
 			}
@@ -473,6 +477,121 @@ var authorn = (function(){
 
 				})
 			},
+
+			unsubscribe : function(){
+
+				self.app.mobile.vibration.small()
+
+				new dialog({
+					html : self.app.localization.e('e13022'),
+					btn1text :  self.app.localization.e('unfollow'),
+					btn2text : self.app.localization.e('ucancel') ,
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(author.address, function(tx, err){
+
+							if(tx){
+								
+							}
+							else
+							{
+								self.app.platform.errorHandler(err, true)	
+							}
+		
+						})
+
+					}
+				})
+
+				
+			},
+
+			subscribe : function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
+
+					if(tx){
+					}
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+					}
+
+				})
+			},
+
+			notifications : function(){
+
+				var me = self.app.platform.psdk.userInfo.getmy()
+
+				var r = me ? me.relation(author.address, 'subscribes') : null
+
+				self.app.mobile.vibration.small()
+
+				var f = 'notificationsTurnOn'
+
+				if(r.private == 'true' || r.private == '1' || r.private === true) {
+					f = 'notificationsTurnOff'
+				}
+
+				console.log("G", f)
+
+				self.app.platform.api.actions[f](author.address, function(tx, err){
+
+					if(tx){
+					}
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+					}
+
+				})
+			},
+
+			unblocking : function(){
+				self.app.mobile.vibration.small()
+				self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+					if(!tx){
+						self.app.platform.errorHandler(error, true)	
+					}
+				})
+			},
+
+			blocking : function(){
+				self.app.mobile.vibration.small()
+				self.app.platform.api.actions.blocking(author.address, function(tx, error){
+					if(!tx){
+						self.app.platform.errorHandler(error, true)	
+					}
+				})
+			},
+
+			complain : function(){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+
+					essenseData : {
+						item : 'user',
+						obj : author,
+
+						success : function(){
+							
+						}
+					},
+
+					clbk : function(){
+						
+					}
+				})
+			}
+
+			
 		}
 
 		var renders = {
@@ -641,6 +760,18 @@ var authorn = (function(){
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.settings').on('click', events.settings)
 
+					p.el.find('.follow').on('click', events.subscribe)
+					p.el.find('.unsubscribe').on('click', events.unsubscribe)
+					p.el.find('.notifications').on('click', events.notifications)
+					p.el.find('.unblocking').on('click', events.unblocking)
+					//metmenu
+
+					p.el.find('.metmenu').on('click', function() {
+						renders.metmenu($(this))
+					})
+					
+					
+
 					if(clbk) clbk()
 
 				})
@@ -777,6 +908,60 @@ var authorn = (function(){
 
 				})
 			},
+
+			metmenu : function(_el){
+
+				var d = {author};
+
+				console.log('metmenu', _el)
+
+				self.fastTemplate('metmenu', function(rendered, template){
+
+					self.app.platform.api.tooltip(_el, function(){
+
+						console.log("Data", d)
+					
+						return template(d);
+
+					}, function(el, n, close){
+
+						el.find('.complain').on('click', function(){
+							events.complain()
+							close()
+						})
+
+						el.find('.donate').on('click', function(){
+							events.sendcoins()
+							close()
+						})
+
+						el.find('.block').on('click', function(){
+							events.blocking()
+							close()
+						})
+
+						el.find('.startchat').on('click', function(){
+							events.startchat()
+							close()
+						})
+						
+						el.find('.unblock').on('click', function(){
+							events.unblocking()
+							close()
+
+						})
+
+						el.find('.unsubscribe').on('click', function(){
+							events.unsubscribe()
+							close()
+						})
+						
+
+					})
+
+				}, d)
+
+			},
 			
 			lenta : function(){
 
@@ -794,7 +979,14 @@ var authorn = (function(){
 					},
 					renderclbk : function(){
 
-					}
+					},
+
+					canloadmorescroll : function(){
+
+						if(openedpost) return false
+
+						return true
+					},
 				}
 
 				var method = currentLenta()
@@ -1103,8 +1295,12 @@ var authorn = (function(){
 
 				}
 				else{
+					
 					renders.lenta()
 					renders.alentanavigation()
+
+					if (openedpost)
+						actions.backtolenta()
 				}
 				
 
@@ -1157,6 +1353,8 @@ var authorn = (function(){
 
 				if (href != 'author') 
 					self.app.el.html.removeClass('allcontent')
+
+				delete self.app.platform.actionListeners.authorn
 
 				ed = {};
 				el = {};
