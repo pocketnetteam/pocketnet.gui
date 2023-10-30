@@ -15,15 +15,64 @@ var authorn = (function(){
 		var upbackbutton;
 		var lastscroll = 0;
 		var openedpost = null
+		var acsearch = null
+		var result = null
+		var fixedBlock = null
+		var lastnav = '' 
+
+		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var actions = {
-			clearSearch : function(){
+			gonav : function(id){
 
+				if(!id) id = 'common'
+
+				var meta = _.find(lentameta, (m) => {
+					return m.id == id
+				})
+
+				if(!meta) return
+
+				lastnav = id
+
+				self.app.nav.api.history.removeParameters(cleanParameters())
+
+				var link = self.app.platform.api.authorlink(author.address)
+
+				if (meta.parameter) link = link + "?" + meta.parameter + "=1"
+
+				self.nav.api.load({
+					open : true,
+					href : link,
+					history : true,
+					handler : true,
+					noscroll : true
+				})
+			},
+			clearSearch : function(light){
+
+				if (parameters().ssa || parameters().ssat){
+
+					self.app.platform.sdk.search.clear()
+	
+					result = null
+					fixedBlock = null
+	
+					if(!light){
+						actions.gonav(lastnav)
+					}
+				}
+				
 			},
 			makenext : function(type, start, count, clbk){
 
-				var l = result[type].data.length;
-				var L = result[type].count
+				var l = 0;
+				var L = 10;
+	
+				if (result){
+					l = result.data.length;
+					L = result.count;
+				}
 	
 				if(start + count <= l){
 					return
@@ -45,11 +94,6 @@ var authorn = (function(){
 					if(clbk)
 					{
 						clbk(data)
-					}
-	
-					else
-					{
-						renders[type](data)
 					}
 	
 				}, start, count)	
@@ -207,6 +251,7 @@ var authorn = (function(){
 			id : 'search',
 			parameter : 'ssa',
 			extend : function(params){
+				console.log("EXTEND PARAMS", params)
 				params.search = true
 				params.searchValue = parameters().ssa
 				params.loader = function(clbk){
@@ -255,9 +300,19 @@ var authorn = (function(){
 
 		var load = {
 			postssearch : function(clbk, start, count){
-				self.app.platform.sdk.search.get(searchvalue, 'posts', start, count, fixedBlock, function(r){
-					clbk(r.data);
-				})
+				console.log("Rblock", start, count)
+
+				self.app.platform.sdk.search.get(parameters().ssa, 'posts', start, count, fixedBlock, function(r, block){
+
+					console.log("Rblock", r, block)
+
+					fixedBlock = block
+					
+					result || (result = r);
+
+					clbk(result.data);
+
+				}, author.address)
 			},
 
 			relations : function(relations, clbk){
@@ -562,6 +617,8 @@ var authorn = (function(){
 					p.el.find('.showsubscribes').on('click', events.showsubscribes)
 					p.el.find('.showsubscribers').on('click', events.showsubscribers)
 
+					
+
 					if(clbk) clbk()
 
 				})
@@ -608,27 +665,113 @@ var authorn = (function(){
 
 						var id = $(this).attr('mid')
 
-						var meta = _.find(lentameta, (m) => {
-							return m.id == id
-						})
-
-						if(!meta) return
-
-						self.app.nav.api.history.removeParameters(cleanParameters())
-
-						var link = self.app.platform.api.authorlink(author.address)
-
-						if(meta.parameter) link = link + "?" + meta.parameter + "=1"
-
-						self.nav.api.load({
-							open : true,
-							href : link,
-							history : true,
-							handler : true,
-							noscroll : true
-						})
+						actions.gonav(id)
 
 					})
+
+					p.el.find('.searchIcon').on('click', function(){
+						$(this).closest('.navisearchWrapper').toggleClass('searchActive')
+
+						console.log('acsearch', acsearch)
+
+						if($(this).closest('.navisearchWrapper').hasClass('searchActive')){
+							acsearch.focus()
+						}
+					})
+
+					if (acsearch){
+						acsearch.destroy()
+						acsearch = null
+					}
+
+					acsearch = new search(p.el.find('.alSearchWrapper'), {
+						placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
+
+						clbk : function(_el){
+
+						},
+
+						last : {
+							get : function(){
+
+								return [];
+
+							},
+
+							tpl : function(result, clbk){
+								
+							}
+						},
+
+						right : isTablet(),
+
+						events : {							
+							search : function(value, clbk, e, helpers){
+
+								var href = '';
+
+								if (value.indexOf('#') > -1){
+
+									
+
+									var words = _.uniq(_.filter(value.replace(/#/g, '').split(wordsRegExp), function(r){
+										return r
+									}));
+
+									href = '?ssat=' + words.join(' ')
+								}
+								else{
+									href = '?ssa=' + value
+								}
+
+								console.log('value', value, href)
+
+								try{
+									actions.clearSearch(true)
+
+									self.app.nav.api.history.removeParameters(cleanParameters())
+	
+									var p = {
+										href : href,
+										history : true,
+										open : true,
+										handler : true
+									}	
+	
+									self.nav.api.go(p)
+	
+									if (clbk)
+										clbk(true)
+								}
+								catch(e){
+									console.error(e)
+								}
+								
+								
+							},
+
+							clear : function(fs){
+								console.log("CLEAR?")
+								p.el.find('.navisearchWrapper').removeClass('searchActive')
+
+								actions.clearSearch()
+
+							}
+						}
+						
+					})
+
+					console.log('acsearch', acsearch)
+
+					if (parameters().ssa){
+						acsearch.setvalue(parameters().ssa)
+					}
+
+					if (parameters().ssat){
+						acsearch.setvalue('#' + _.map(parameters().ssat.split(wordsRegExp), (v) => {
+							return '#' + v
+						}).join(' '))
+					}
 
 					if(clbk) clbk()
 
@@ -646,6 +789,7 @@ var authorn = (function(){
 					byauthor : true,
 					hr : hr,
 					cancelsearch : function(){
+						console.log('cancelsearch')
 						actions.clearSearch()
 					},
 					renderclbk : function(){
@@ -937,6 +1081,9 @@ var authorn = (function(){
 			})
 
 			modules = {}
+			lastscroll = 0;
+			result = null
+			fixedBlock = null
 		}
 
 		return {
@@ -993,8 +1140,10 @@ var authorn = (function(){
 
 				destroy()
 
-				ed = {}
-				el = {};
+				if (acsearch){
+					acsearch.destroy()
+					acsearch = null
+				}
 				
 				if (upbutton){
 					upbutton.destroy()
@@ -1008,6 +1157,9 @@ var authorn = (function(){
 
 				if (href != 'author') 
 					self.app.el.html.removeClass('allcontent')
+
+				ed = {};
+				el = {};
 			},
 			
 			init : function(p){

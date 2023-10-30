@@ -67,6 +67,9 @@
 #authorn .fbuttonsrow {
   margin-top: 0.5em;
 }
+#authorn .fbuttonsrow button {
+  border-radius: 12px;
+}
 #authorn .upbuttonwrapper {
   position: relative;
   z-index: 2;
@@ -275,6 +278,29 @@
   padding-right: 1em;
   background: rgba(var(--background-total-theme), 1);
 }
+#authorn .alentanavigation .navisearchWrapper.searchActive .navi {
+  display: none;
+}
+#authorn .alentanavigation .navisearchWrapper.searchActive .alSearchWrapper {
+  display: block;
+}
+#authorn .alentanavigation .alSearchWrapper {
+  display: none;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchPanel {
+  border: 0;
+  background: transparent;
+  display: table-cell;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
+  display: block;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchInput .searchInputIcon .sminput {
+  height: 51px;
+  background: transparent;
+  padding-left: 0.5em;
+  border: 0;
+}
 #authorn .alentanavigation .navi {
   display: flex;
 }
@@ -448,6 +474,9 @@
   #authorn .acontentps {
     height: 130px;
   }
+  #authorn .fbuttonsrow button {
+    height: 45px;
+  }
   #authorn .acontent .work {
     display: flex;
     flex-flow: column;
@@ -464,6 +493,10 @@
   #authorn .acontent .rcolumn {
     margin-left: 0;
     margin-top: 0.5em;
+  }
+  #authorn .uinfo {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   #authorn .uinfo .ucaption {
     margin-bottom: 0;

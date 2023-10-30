@@ -990,8 +990,6 @@ var author = (function(){
 								if (acsearch){
 									acsearch.destroy()
 								}
-								
-
 
 								acsearch = new search(p.el.find('.authorsearch'), {
 									placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
@@ -1059,7 +1057,7 @@ var author = (function(){
 									
 								})
 
-
+								
 
 								if(isTablet()){
 									c.addClass('searchactive')

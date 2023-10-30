@@ -606,6 +606,7 @@ input.ie[type="range"]::-ms-thumb {
 }
 .js-player .video-js.vjs-thumb {
   display: block;
+  background-color: transparent;
 }
 .js-player.player-ready .video-js {
   display: block;
@@ -737,8 +738,6 @@ button {
   color: rgb(var(--text-on-bg-ac-color));
   border: 1px solid rgb(var(--color-bg-ac-bright));
   text-align: center;
-  font-size: 0.9em;
-  font-weight: 600;
   border-radius: 8px;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -4250,6 +4249,13 @@ html.mobileview.android .wnd .wndback {
   display: flex;
   width: 75px;
   justify-content: space-between;
+}
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalLentaWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalSearchUsersWrapper .horizontalLentacaption .controlhors i,
+.horizontalLentaWrapper .horizontalLentacaption .controlhors i {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
 }
 .horizontalSearchUsersWrapper .horizontalSearchUserscaption span,
 .horizontalLentaWrapper .horizontalSearchUserscaption span,

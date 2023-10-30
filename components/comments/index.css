@@ -142,8 +142,8 @@
 }
 #comments .list .comments-operations .operations-wrapper .close-comments {
   cursor: pointer;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   background: rgb(var(--background-total-theme));
   border-radius: 30px;
   overflow: hidden;
@@ -152,7 +152,7 @@
   text-align: center;
   vertical-align: middle;
   color: rgb(var(--neutral-grad-3));
-  line-height: 36px;
+  line-height: 42px;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -166,8 +166,8 @@
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments {
   cursor: pointer;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   background: rgb(var(--background-total-theme));
   border-radius: 30px;
   overflow: hidden;
@@ -180,7 +180,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  line-height: 36px;
+  line-height: 42px;
 }
 #comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper:hover {
   color: rgb(var(--neutral-grad-4));
