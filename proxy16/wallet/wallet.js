@@ -1,6 +1,5 @@
 
 var Datastore = require('nedb');
-const { object } = require('underscore');
 var f = require('../functions');
 var _ = require('lodash');
 
@@ -168,7 +167,6 @@ var Wallet = function(p){
             }
             else{
 
-                
             }
 
         })

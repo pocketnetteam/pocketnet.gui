@@ -18,14 +18,12 @@
 			<div class="iconWrapper">
 
 				<% 
-				
-					var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || '' 
-					var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.name') || ''   
-					var letter = name ? name[0] : '';
 
-					if(!src && !essenseData.daddress){
-						src = deep(app, 'platform.sdk.user.storage.me.image') || ''
-					}
+					var info = psdk.userInfo.getShortForm(essenseData.daddress || user.address.value) || {}
+				
+					var src = info.image || ''
+					
+					var letter = info.letter
 
 				%>
 		
@@ -56,15 +54,14 @@
 
 								var selected = '';
 
+								var info = psdk.userInfo.getShortForm(address) || {}
 
+								if (address == (essenseData.daddress || user.address.value)) selected = 'selected'
 
-								if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
-
-								var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
 
 							%> 
 
-								<option value="<%-address%>" <%-selected%>><%-label%></option>
+								<option value="<%-address%>" <%-selected%>><%-info.name%></option>
 
 							<% }) %>
 						</select>
@@ -79,7 +76,7 @@
 				
 			</div>
 			
-			<div class="repostWrapper attachements"></div>	
+			<div class="repostWrapper "></div>	
 
 			<!-- ------------------------->
 

@@ -37,6 +37,11 @@ var system16 = (function(){
 					type : 'distribution'
 				},
 
+				translateapi : {
+					type : 'count',
+					showed : true
+				},
+
 				peertube : {
 					type : 'allcount'
 				},
@@ -160,6 +165,13 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
+			'hexCaptcha' : function(_el){
+				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
+				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
+
+				renders.webserveradmin(el.c)
+			},
+			
 			'torenabled2' : function(_el){
 
 				var values = ['neveruse', 'auto', 'always']
@@ -215,6 +227,8 @@ var system16 = (function(){
 			},
 		}
 
+		var rif = null
+
 		var actions = {
 			convertTime : function(stats){
 				_.each(stats, function(s){
@@ -225,11 +239,14 @@ var system16 = (function(){
 		
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.address.value
+				
 
 				if(!address) return false
+
+
 				if (proxy && info){
-					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}
 			},
 
@@ -339,20 +356,29 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
-
-					if (el.c){
-						renders.nodescontenttable(el.c)
-						renders.notificationcontenttable(el.c)
-						//renders.notificationuserstable(el.c)
-						renders.peertubeinstancestable(el.c)
-						renders.webadminscontent(el.c)
-						renders.webdistributionwallets(el.c)
-						renders.webserverstatus(el.c)
+					if (rif){
+						cancelAnimationFrame(rif)
 					}
 	
-					setTimeout(function(){
-						makers.stats(true)
-					}, 200)
+					rif = window.requestAnimationFrame(() => {
+						rif = null
+						
+						if (el.c){
+							renders.nodescontenttable(el.c)
+							renders.notificationcontenttable(el.c)
+							//renders.notificationuserstable(el.c)
+							renders.peertubeinstancestable(el.c)
+							renders.webadminscontent(el.c)
+							renders.webdistributionwallets(el.c)
+							renders.webserverstatus(el.c)
+							renders.translateapicontent(el.c)
+						}
+		
+						setTimeout(function(){
+							makers.stats(true)
+						}, 200)
+					})
+
 				}
 
 				
@@ -415,7 +441,7 @@ var system16 = (function(){
 						type : "STRING",
 						name : self.app.localization.e('e13065'),
 						id : 'nodename',
-						defaultValue : (_node.nodename || ((self.app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name')) || "New") + ' node')).replace(/\+/g, ' '),
+						defaultValue : (_node.nodename || ((self.app.platform.api.clearname((self.psdk.userInfo.getmy() || {}).name) || "New") + ' node')).replace(/\+/g, ' '),
 						placeholder : self.app.localization.e('e13066'),
 						require : true
 					
@@ -1331,6 +1357,32 @@ var system16 = (function(){
 						}
 					]
 				},
+			},
+
+			translateapi : {
+				count : {
+					caption : "Texts count",
+
+					series : [
+						{
+							path : 'translateapi.meta.texts',
+							name : "Texts count",
+							id : 'texts'
+						}
+					]
+				},
+
+				symbols : {
+					caption : "Symbols count",
+					objects : 'translateapi.meta.symbols',
+					series : [
+						{
+							path : 'c',
+							name : "Symbols count",
+							id : 'symbols'
+						}
+					]
+				},
 			}
 		}
 
@@ -1510,6 +1562,7 @@ var system16 = (function(){
 					objects = deep(info, meta.objects)
 				}
 
+
 				_.each(objects, function(object, key){
 
 					var ekey = key ? key + "." : ''
@@ -1518,7 +1571,6 @@ var system16 = (function(){
 
 					_.each(meta.series, function(smeta){
 
-						
 						series[smeta.id + key] = {
 
 							name : smeta.name + (key ? (": " + key) : ''),
@@ -1701,7 +1753,60 @@ var system16 = (function(){
 					meta : lmeta,
 					series : series
 				}
-			}
+			},
+
+			translateapi : function(data){
+
+				var subtype = settings.charts.translateapi.type
+
+				var meta = cpsub.translateapi[subtype]
+
+				var lmeta = {
+					type : 'spline',
+					xtype : 'datetime',
+					caption : meta.caption
+				}
+
+				var series = {}
+				var i = 0
+
+				var objects = [info]
+
+				if (meta.objects){
+					objects = deep(info, meta.objects)
+				}
+
+
+				_.each(objects, function(object, key){
+
+					var ekey = key ? key + "." : ''
+
+					if(meta.objects) ekey = meta.objects + '.' + ekey
+
+					_.each(meta.series, function(smeta){
+
+						series[smeta.id + key] = {
+
+							name : smeta.name + (key ? (": " + key) : ''),
+							path : ekey + smeta.path,
+							color : colors[ i % colors.length ],
+							type : smeta.type
+	
+						}
+	
+						i++
+					})
+
+					
+				})
+
+
+
+				return {
+					meta : lmeta,
+					series : series
+				}
+			},
 		}
 
 		var helpers = {
@@ -2546,10 +2651,12 @@ var system16 = (function(){
 						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
-						if(actions.admin())
-							renders.notificationcontent(p.el)
+
+						if(actions.admin()) renders.notificationcontent(p.el)
+
 						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
+						renders.translateapicontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 
@@ -3166,7 +3273,7 @@ var system16 = (function(){
 
 								var t = 'Do you really want to remove selected admin from Proxy server admin list?'
 
-								if(address == self.app.platform.sdk.address.pnet().address){
+								if(address == self.app.user.address.value){
 									t = 'Do you really want to remove Your account from Proxy server admin list?'
 								}
 
@@ -3434,6 +3541,89 @@ var system16 = (function(){
 
 
 					renders.peertubeinstancestable(elc)
+
+					if (clbk)
+						clbk()
+				})
+			},
+
+			translateapicontent : function(elc, clbk){
+
+				if(!info || !info.translateapi){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'translateapi',
+					data : {
+						info : info,
+						proxy : proxy,
+						admin : actions.admin(),
+						
+					},
+					insertimmediately : true,
+					el : elc.find('.translateapiWrapper')
+
+				},
+				function(p){
+
+					var meta = info.translateapi.meta
+
+					p.el.find('.settings').on('click', function(){
+					
+						var d = inputDialogNew({
+							caption : "Edit Translate Api settings",
+							class : 'addressdialog',
+							wrap : true,
+							values : [{
+								defValue : meta.api || '',
+								validate : 'empty',
+								placeholder : "",
+								label : "Api service"
+							},{
+								defValue : '',
+								validate : 'empty',
+								placeholder : "Enter Api key",
+								label : "Api key"
+							}],
+		
+							success : function(v){
+		
+								var s = {}
+
+								s.api = v[0]
+								s.key = v[1]
+		
+								topPreloader(30);
+		
+								proxy.fetchauth('manage', {
+									action : 'set.translateapi.settings',
+									data : s
+								}).then(r => {
+		
+									actions.refresh()
+		
+									d.destroy();
+		
+									topPreloader(100);
+		
+								}).catch(e => {
+		
+									sitemessage(self.app.localization.e('e13293'))
+		
+									topPreloader(100);
+		
+								})
+		
+							}
+						})
+					})
+
+					if(el.c)
+						chart.make('translateapi', stats, null, false)
 
 					if (clbk)
 						clbk()
@@ -3958,6 +4148,7 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 					chart.make('peertube', stats, null, update)
+					chart.make('translateapi', stats, null, update)
 				}
 
 				

@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="32" />
+    <preference name="android-targetSdkVersion" value="33" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -20,6 +20,8 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="NavigationBarBackgroundColor" value="#011621" />
+    <preference name="NavigationBarLight" value="true" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
     <preference name="BackgroundColor" value="#011621" />

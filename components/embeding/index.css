@@ -49,6 +49,11 @@
   font-weight: 700;
   font-size: 0.9em;
 }
+#embeding .pg .imagesWrapper .upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #embeding .pg .imagesWrapper .elContent {
   display: flex;
   align-items: center;

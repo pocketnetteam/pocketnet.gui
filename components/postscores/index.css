@@ -4,6 +4,9 @@
 #postscores .ratingrowWrapper {
   width: 100%;
 }
+#postscores .stars {
+  cursor: pointer;
+}
 #postscores .caption {
   text-align: left;
   color: rgb(var(--neutral-grad-3));
@@ -136,16 +139,24 @@
   padding: 2em;
   padding-bottom: 3em;
 }
+#postscores .fordetailsusers {
+  display: none;
+}
 #postscores .fordetailsusers .rating {
-  font-size: 64px;
+  margin-top: 0.5em;
+  font-size: 4em;
   font-weight: bold;
   text-align: center;
   font-family: Nunito Sans;
 }
 #postscores .fordetailsusers .totalLikes {
-  font-size: 14px;
+  margin-top: 1em;
+  font-size: 0.8em;
   text-align: center;
   color: rgb(var(--neutral-grad-4));
+}
+#postscores.rndr .fordetailsusers {
+  display: block;
 }
 .postscoreswnd.wnd {
   z-index: 2005;

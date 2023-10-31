@@ -53,6 +53,9 @@ const commentBanner = (function() {
 							if(!tx){
 								self.app.platform.errorHandler(err, true)	
 							}
+							else{
+								renders.closeBanner();
+							}
 
 							if (clbk){
 								clbk();
@@ -72,6 +75,8 @@ const commentBanner = (function() {
 					if(!tx){
 
 						self.app.platform.errorHandler(err, true)
+					}else{
+						renders.closeBanner();
 					}
 
 
@@ -87,6 +92,8 @@ const commentBanner = (function() {
 				self.app.platform.api.actions.blocking(address, function (tx, error) {
 					if (!tx) {
 						self.app.platform.errorHandler(error, true)
+					}else{
+						renders.closeBanner();
 					}
 
 					if (clbk){
@@ -119,6 +126,8 @@ const commentBanner = (function() {
 				el.c.addClass('show')
 			},
 			closeBanner(block) {
+
+				if(!el.c) return
 
 				if (block){
 					el.c.closest('.share').removeClass('ultrablurred');

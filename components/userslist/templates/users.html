@@ -1,9 +1,6 @@
 <%
 
-var me = null;
-
-if(user.address.value)
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+var me = psdk.userInfo.getmy() 
 
 var telements = function(address){ %>
 
@@ -20,12 +17,12 @@ var telements = function(address){ %>
 		
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span elementsid="unsubscribe" class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
+			<span elementsid="unsubscribe" class="unsubscribe funf"><%=e('youarefollowing')%> <i class="far fa-check-circle"></i></span>	
 
 			<% if (me){ 
 				
 				var r = me.relation(address, 'subscribes') 
-				
+
 			%>
 
 				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
@@ -54,6 +51,12 @@ _.each(addresses, function(address){
 	var _class=''
 
 	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
+	
+	console.log('address', address)
+
+	var sUserInfo = psdk.userInfo.getShortForm(address) 
+
+	
 
 %>
 	<div class="wrk">
@@ -67,9 +70,9 @@ _.each(addresses, function(address){
 
 							<% 
 
-								var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
-								var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
-								var letter = name ? name[0] : ''; 
+								var src = sUserInfo.image;  
+								var name = sUserInfo.name;
+								var letter = sUserInfo.letter; 
 
 							%>
 
@@ -95,15 +98,13 @@ _.each(addresses, function(address){
 					<a elementsid="userlistauthorlink" href="<%-app.platform.api.authorlink(address)%>">
 
 						<div class="name">						
-							<%- app.platform.api.name(address) || address %>							
+							<%- sUserInfo.name %>							
 						</div>
 
-						<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
-
-						<% if (r) {%>
+						<% if (sUserInfo.reputation) {%>
 
 							<div class="light">						
-								Reputation: <span class="reputation"> <%- Number(r).toFixed(0)  %> </span>						
+								Reputation: <span class="reputation"> <%- Number(sUserInfo.reputation).toFixed(0)  %> </span>						
 							</div>
 
 						<% } %>

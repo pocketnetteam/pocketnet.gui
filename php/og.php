@@ -27,6 +27,7 @@ class OG {
 
 	public function __construct ($get, $proxypath, $domain, $project)
 	{
+
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
 
@@ -40,6 +41,7 @@ class OG {
             'image' => 'img/logosmallpadding.png',
             'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
         );
+
         
         if (isset($get['address'])) $this->author = $this->clean($get['address']);
         if (isset($get['connect'])) {
@@ -47,12 +49,17 @@ class OG {
             $this->connect = TRUE;
         }
 
+
         if ($this->author == NULL) {
 
-            $a = $this->addressfromhref();
+            if($this->is_bot()){
 
-            if($a != false){
-                $this->author = $a;
+
+                $a = $this->addressfromhref();
+
+                if($a != false){
+                    $this->author = $a;
+                }
             }
 
         }
@@ -67,6 +74,7 @@ class OG {
         if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
+
 
 	}
 	public function __destruct ()
@@ -284,8 +292,8 @@ class OG {
             
 
         if($this->is_bot()){
-            
-            ///$this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
+
+            $this->currentOg['is_bot'] = 'true';
 
             if($this->author != NULL){
 
@@ -409,7 +417,11 @@ class OG {
             }
 
         }
-       
+
+        else{
+            $this->currentOg['is_bot'] = 'false';
+        }
+
 	}   
 
 	public function echotags(){
@@ -442,6 +454,7 @@ class OG {
            
             
         }
+
 
     }
 }

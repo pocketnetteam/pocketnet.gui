@@ -503,7 +503,7 @@ _l.e13017 = "Loading to Blockchain"
 _l.e13018 = "Do You really want to remove this article?"
 _l.e13019 = "New"
 _l.e13020 = "Write New Article"
-_l.youarefollowing = "You are Following"
+_l.youarefollowing = "Following"
 _l.follow = "Follow"
 _l.blocked = "Blocked"
 _l.e13021 = "Show more"
@@ -546,7 +546,7 @@ _l.e13028 = "You entered not valid private key"
 _l.e13029 = "Message is empty"
 _l.e13030 = "Comments have 1000 character limit per comment"
 _l.e13031 = "Share Comment"
-_l.e13032 = "Do you really want to delete your comment?"
+_l.e13032 = "Do you really want to delete comment?"
 _l.e13033 = "Comment has been removed"
 _l.postRemoved = "Post has been removed"
 _l.postNotFound = "Post not found"
@@ -660,8 +660,11 @@ _l.e13106 = ""+appname+" Node"
 _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
+
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
 _l.e13109lg = "Please enter the words in the picture to continue registration"
+_l.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
+
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -696,6 +699,7 @@ _l.opennewwindow = "Open Post in New Window"
 _l.opennew = "Open Post"
 _l.pin = "Pin Post"
 _l.pinned = "pinned"
+_l.pinning = "pinning"
 _l.pinPostDialog = "Do you realy want to pin this post?"
 _l.unpin = "Unpin Post"
 _l.unpinPostDialog = "Do you realy want to unpin this post?"
@@ -883,13 +887,13 @@ _l.e13234 = "Opreturn error/41"
 _l.e13235 = "You cannot rate comment twice"
 _l.e13236 = "This comment was removed"
 _l.e13237 = "You cannot rate yourself"
-_l.e13238 = "Comment sending error. Please wait and try again/ 37"
+_l.e13238 = "Comment editing error. Please wait one minute and try again/ 37"
 _l.e13239 = "Comment sending error. You are replying to a comment that was deleted"
 _l.e13240 = "The comment you are replying to has been deleted by the user"
 _l.e13241 = "This comment is too long, please break it up"
 _l.e13242 = "You have been blocked by this person, you will be unable to comment on their posts"
 _l.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
-_l.e13244 = "You have reached your limit of editing comments in a 24 hour period"
+_l.e13244 = "You can edit a comment only during the first day after its publication and only 4 times"
 _l.e13245 = "You have reached your limit of sending comments in a 24 hour period"
 
 _l.e13246 = "You are trying to edit someone else's post"
@@ -1406,7 +1410,7 @@ _l.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
 _l.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
 _l.views = "Views";
-
+_l.viewers = "Viewers";
 
 _l.saveshare = "Download video";
 _l.gotosaved = "Go to downloaded";
@@ -1433,6 +1437,7 @@ _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a us
 _l.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
 
 _l.showhiddenComment = "Show"
+_l.showhiddenPost = "Show post"
 
 _l.visibletoeveryone = 'Visible for everyone'
 _l.visibleonlytosubscribers = 'Visible only for subscribers'
@@ -2246,10 +2251,10 @@ _l.videobloggerRequest_pl_notes = "Notes: any additional information"
 _l.videobloggerRequest_pl_email = "Contact email"
 
 _l.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
-
 _l.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
 _l.videobloggerRequest_er_info = "Additional information required"
 _l.videobloggerRequest_er_email = "Leave an email for feedback"
+
 
 _l.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
@@ -2376,6 +2381,7 @@ _l.removeAccount_undefinedError = 'An unexpected error occurred while deleting y
 
 _l.deletedAccount_temp = "Account is in the process of being deleted"
 _l.deletedAccount_deleted = "Account deleted"
+_l.deletedAccount_true = "Account deleted"
 
 _l.utipdeleted = "Your Account Deleted. You can use only wallet"
 _l.applydonate = "Apply"
@@ -2544,6 +2550,9 @@ _l.sortByRating = "Number of ratings";
 _l.noPosted = "No posted Videos"
 _l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
 
+
+
+
 _l.diagnosticsPage = "Diagnostics";
 _l.startDiagnose = "Run Diagnostics";
 _l.videoServerName = "Server URL";
@@ -2584,6 +2593,57 @@ _l.supportTicketSuccess = "You messave has been sent and volunteers will contact
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";
 
+_l.commentBannedWarning = function(name){
+	return name + " blocked you. You won't be able to comment on it.";
+};
+_l.captchanotequal_angles = "Captcha segments must be rotated to the correct angle"
+
+
+_l.permissions_name_account = "Access to account information"
+_l.permissions_descriptions_account = "This permission gives the application information: your account address; publicly available data associated with your account; wallet balance"
+_l.permissions_name_sign = "Digital Signature of Data"
+_l.permissions_descriptions_sign = "You authorize the data to be signed with your unique signature"
+_l.permissions_name_payment = "Make a payment"
+_l.permissions_descriptions_payment = "The application asks for permission to make a payment in PKOIN"
+
+_l.permissions_name_messaging = "Message display"
+_l.permissions_descriptions_messaging = "Give the app permission to display an informational message"
+
+_l.permissions_name_mobilecamera = "Possibility to upload a photo"
+_l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
+
+
+
+_l.permissions_ask = "asks for permission"
+_l.permissions_allow = "Allow"
+_l.permissions_allow_once = "Allow once"
+_l.permissions_forbid = "Forbid"
+
+_l.deleteapplication = "Delete application"
+_l.complainapplication = "Complain application"
+
+_l.searchbyapplications = "Find an app"
+
+_l.actions_reason_registration = "In order to complete the registration you need to solve the captcha"
+_l.actions_reason_balance = "To perform actions on the Bastyon you need to solve the captcha"
+
+
+_l.commonsubmitapplicationVideoSmall = "Submit"
+_l.commonRequest_pl_notes = "Notes: any additional information"
+_l.commonRequest_pl_email = "Contact email"
+_l.commonRequest_caption = "Support Request"
+_l.commonRequest_er_info = "Additional information required"
+_l.commonRequest_er_email = "Leave an email for feedback"
+
+
+_l.registration_e13114 = "There is some problem with your registration due to strange activity."
+_l.balance_e13114 = "There is some problem with sending your actions due to strange activity."
+
+_l.solutionbalance_1 = "To continue interacting with Bastion, you can replenish the balance of your wallet yourself"
+_l.solutionbalance_2 = "or contact support"
+_l.solutionbalance_3 = "To continue interacting with Bastion, you can contact support"
+
+_l.commonRequest_submitted = "Thank you for contacting us, we will review your application"
 _l.torusing_changedirectProxy = "Change to External proxy";
 _l.torusing_changenotdirectProxy = "Change to Built-in proxy";
 
@@ -2621,3 +2681,103 @@ _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
 
 _l.showAds = 'Show info about boost at the beginning of the video';
+
+
+_l.registration_not_in_progress = "Your registration process has not started yet, you need to either solve the captcha or have PKOIN on your account address"
+
+_l.registration_not_in_progress_no_processing = "Your registration process has not started yet"
+
+_l.registration_undefined_status= "Registration information about your account is not available, you may not be connected to the Internet"
+_l.registration_in_progress_transaction= "Account registration transaction sent to the blockchain"
+_l.registration_in_progress_hasUnspents= "The account registration transaction will soon be sent to the blockchain"
+_l.registration_in_progress_wait_unspents= "The account registration transaction will soon be sent to the blockchain"
+
+_l.rpending = 'Pending'
+
+_l.object_comment = 'Comment'
+_l.object_userInfo = 'User Information'
+_l.object_upvoteShare = 'Upvote publication'
+_l.object_cScore = 'Comment Score'
+_l.object_subscribePrivate = 'Subscribe with notifications'
+_l.object_subscribe = 'Subscribe'
+_l.object_unsubscribe = 'Unsubscribe'
+_l.object_blocking = 'Blocking'
+_l.object_unblocking = 'Unblocking'
+
+_l.object_complainShare = 'Complaint'
+_l.object_modFlag = 'Moderation'
+_l.object_contentBoost = 'Publication Boost'
+_l.object_share = 'Share'
+_l.object_accDel = 'Account Deletion'
+_l.object_transaction = 'Transaction'
+
+
+/// Insufficient funds for the transfer, taking into account the commission
+_l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into account the commission'
+_l.actions_noinputs = "You don't have enough coins to complete the operation"
+_l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
+_l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
+
+_l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'
+_l.actions_totalAmountSmaller_amount_wait = "You have less money in your account than you want to send. Please wait."
+
+_l.actions_totalAmountSmaller_amount_fee = 'You have less money in your account than you want to send (including fees).'
+_l.actions_totalAmountSmaller_amount_fee_wait = "You have less money in your account than you want to send (including fees). Please wait."
+
+_l.actions_rejected = 'The operation failed for unknown reason'
+_l.actions_rejectedFromNodes = 'The operation was rejected by the network'
+_l.actions_waitConfirmation = 'Operation pending confirmation'
+_l.actions_completed = 'Operation completed'
+_l.actions_alreadyCheckConfirmation = 'The operation has been sent to the blockchain'
+_l.actions_alreadySent = 'Operation already sent'
+_l.actions_alreadySending = 'The operation is already underway'
+_l.actions_waitUserStatus = 'The operation will be sent to the network after the user registration is completed'
+_l.actions_rejectedByTime = 'Operation canceled due to limitation period'
+_l.actions_resourses = 'Resources have not been loaded'
+_l.actions_alreadyCheck = 'Resource loading has already been checked'
+_l.actions_checkFail = 'Resources have not been loaded yet'
+_l.actions_collision = 'The operation was replaced by another'
+_l.actions_actionId = 'Unable to cancel operation, ID missing'
+_l.actions_address = 'Adress missing, user unregistered'
+_l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+
+_l.actions_userInteractive = 'User action required'
+_l.actions_waitUserInteractive = 'Waiting for user action'
+_l.actions_rejectedByUser = 'Canceled by user'
+
+_l.actions_rejectedByUser_question = 'Do you want to cancel the operation?'
+_l.actions_no_pending_actions = 'No pending operations'
+
+_l.reason_changeUserName = 'Sorry, the account name you chose is now taken, please choose another name'
+_l.info_actions_checkFail = 'The publication will be sent as soon as the uploaded resources are processed. Stay in the app for a while.'
+
+_l.e28error = "Wait before taking action"
+
+
+
+_l.postInRelay2 = "This publication will soon be sent to the blockchain"
+
+
+_l.err47 = "Undefined post deletion error"
+_l.donatebalancenotenouth = "You do not have enough funds to make a donation"
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Update';
+_l.updateNotifier_topHeading2 = 'Available';
+_l.updateNotifier_mainHeading = 'We have update';
+_l.updateNotifier_mainText = 'We recommend to keep the application updated. New features and better performance are waiting you!';
+_l.updateNotifier_button1 = 'Install now';
+_l.updateNotifier_button2 = 'Maybe later...';
+_l.updateNotifier_stateStart = 'Starting...';
+_l.updateNotifier_stateDownload = 'Downloaded';
+_l.updateNotifier_stateError = 'Error occurred, stopping';
+/** ↑ Component UpdateNotifier ↑ */
+
+_l.error408 = 'Error, connection problem'
+_l.watchstream = "Watch stream";
+_l.anotherSiteHeader = "Another site"
+_l.openOriginal = "Open original"
+
+_l.registration_blocked = _l.lockedaccount
+
+_l.horizontalSearchUsers = "Accounts"

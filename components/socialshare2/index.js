@@ -30,18 +30,20 @@ var socialshare2 = (function(){
 
 			repost : function(shareid){
 
-				actions.stateAction('_this', function(){
+				self.app.platform.sdk.user.stateAction(() => {
+
+					var share = self.psdk.share.get(shareid) 
 
 					self.app.platform.ui.share({
-						repost : shareid
+						repost : share.repost || shareid
 					})
 
 					setTimeout(function(){
 						self.closeContainer()
 					}, 200)
-					
-					
-				}, shareid)
+
+				})
+				
 
 			},
 
@@ -72,63 +74,6 @@ var socialshare2 = (function(){
 
 				
 			},
-			
-			stateAction : function(link, clbk, txid){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-						clbk()
-					}
-
-					else
-					{
-
-
-						if (_OpenApi){
-
-							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
-		
-							if (self.app.ref){
-								phref += '&ref=' + self.app.ref
-							}
-		
-							window.open(phref, '_blank');
-		
-							return
-						}
-
-
-						self.nav.api.load({
-							open : true,
-							id : 'authorization',
-							inWnd : true,
-
-							essenseData : {
-
-								fast : true,
-								loginText : self.app.localization.e('llogin'),
-								successHref : link,
-								signInClbk : function(){
-
-									retry(function(){
-
-										return !authblock
-
-									}, function(){
-										if (clbk)
-											clbk()
-									})
-
-									
-								}
-							}
-						})
-					}
-
-				})
-			},
-
 			applyview : function(view){
 
 				if(!view){
@@ -222,7 +167,8 @@ var socialshare2 = (function(){
 
 					var s = ['black', 'comments']
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[id];
+					var share = self.psdk.share.get(id) 
+					
 
 					if (share){
 						if(share.url){
@@ -391,18 +337,19 @@ var socialshare2 = (function(){
 					emeta.extra(p)
 				}
 
-				if (self.app.platform.sdk.address.pnet()){
-					p.ref = self.app.platform.sdk.address.pnet().address
+				if (self.app.user.address.value){
+					p.ref = self.app.user.address.value
 				}
 				else{
 					if (self.app.ref){
-						p.ref = self.app.platform.sdk.address.pnet().address = self.app.ref
+						p.ref = self.app.user.address.value = self.app.ref
 					}
 				}
 
 				if(settings.onlyvideo){
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[actionid];
+					var share = self.psdk.share.get(actionid) 
+					
 
 					if (share && share.url && action && actionid){
 
@@ -657,8 +604,10 @@ var socialshare2 = (function(){
 
 						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
-						if (deep(app, 'platform.sdk.user.storage.me.name')){
-							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+						var info = self.psdk.userInfo.getmy()
+
+						if (info && info.name){
+							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + self.app.platform.api.clearname(info.name)
 						}
 
 						var m = '';
@@ -708,10 +657,12 @@ var socialshare2 = (function(){
 
 							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
-							
-							if (deep(app, 'platform.sdk.user.storage.me.name')){
-								text += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+							var info = self.psdk.userInfo.getmy()
+
+							if (info && info.name){
+								text += '\r\n\r\nBest,\r\n' + info.name
 							}
+							
 						}
 
 						_el.ShareLink({
@@ -784,9 +735,9 @@ var socialshare2 = (function(){
 		}
 
 		var includeRef = function(){
-			if (self.app.platform.sdk.address.pnet()){
+			if (self.app.user.address.value){
 				ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
-					ref : self.app.platform.sdk.address.pnet().address
+					ref : self.app.user.address.value
 				})
 			}
 			else{
@@ -877,7 +828,9 @@ var socialshare2 = (function(){
 					postId = ''
 				}
 
-				if (postId){share = self.app.platform.sdk.node.shares.storage.trx[postId];}
+				if (postId){
+					share = self.psdk.share.get(postId) 
+				}
 
 				changeRef()
 			

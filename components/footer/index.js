@@ -10,29 +10,6 @@ var footer = (function(){
 
 		var el;
 
-		var loc = new Parameter({
-
-			type : "VALUES",
-			name : "Localization",
-			id : 'localization',
-			defaultValue : app.localization.current().name,
-			possibleValues : app.localization.availableMap('name'),
-			possibleValuesLabels : app.localization.availableMap('name'),
-			format : {
-				right : true
-			},
-
-			_onChange : function(value){
-				var a = app.localization.findByName(value);
-
-				if (a && a.key != app.localization.key)
-				{
-					app.localization.set(a.key);
-				}
-			}
-
-		})
-
 		var actions = {
 
 		}
@@ -56,8 +33,6 @@ var footer = (function(){
 
 		var initEvents = function(){
 
-			ParametersLive([loc], el.c);
-
 			el.c.find('.localization').on('click', function(){
 
 				self.app.platform.ui.changeloc()
@@ -74,8 +49,8 @@ var footer = (function(){
 				var data = {};
 
 					data._SEO = _SEO;
-					data.loc = loc;
 					data.lkey = app.localization.current()
+					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
 				clbk(data);
 

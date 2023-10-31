@@ -1,0 +1,63 @@
+@import "../../css/__cssvar";
+
+#searchusers{
+    .usersWrapper{
+        display: flex;
+        align-items: center;
+        
+        .userinfo{
+            margin-top: @rhythm;
+            width: 180px;
+            min-width: 180px;
+            margin-left: @rhythm;
+            margin-right: @rhythm;
+            padding : @rhythm;
+            border-radius: 12px;
+            border : 1px solid rgb(var(--neutral-grad-0));
+            background : rgba(var(--neutral-grad-0), 0.1);
+            text-align: center;
+            .icon{
+                .usericon{
+                    margin: @rhythm auto;
+                }
+            }
+
+            .nameinfo{
+                margin-top: @rhythm;
+
+                .name{
+                    font-weight: 700;
+                    margin-bottom: @rhythm;
+                }
+
+                .additional{
+                    font-size: 0.9em;
+                }
+            }
+
+            .panel{
+                margin : 0 auto;
+                max-width: 600px;
+                display: flex;
+                flex-direction: column;
+    
+                .usermenuitem{
+                    padding : 0.5 * @rhythm 0;
+                    cursor: pointer;
+                    white-space: nowrap;
+                }
+    
+                >div{
+                    span{
+                        font-size: 0.9em;
+                    }
+                    i{
+                        text-align: center;
+                        width: 30px;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+}

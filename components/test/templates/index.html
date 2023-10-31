@@ -33,76 +33,27 @@ if (firstTime){
 		
 
 		<div class="userPanel">
+
+			<div class="subcaption">
+				<%=e('uuserinfo')%>
+			</div>
+			
 			<div class="pgroupIconWrapper">
 				
 
 			</div>
 			<div class="pgroup withoptions">
-				<div class="subcaption">
-					<%=e('uuserinfo')%>
-				</div>
+				
 
 				<div class="parameters optionsParameters">
 
-					
 				</div>
 
-				<!--
-
-				<% if(firstTime && ref) {%>
-
-					<div class="referalMaketWrapper table">
-						<div class="refLabel">
-							<span>Referrer</span>
-						</div>
-
-						<div class="refNameWrapper">
-
-							<div class="refNameTable table">
-								<div class="refAv">
-									
-									<% 
-										var src = deep(ref, 'image');
-										var name = deep(ref, 'name');
-										var letter = name ? name[0] : '';
-									%>
-
-									<div class="usericon" image="<%-src || '*'%>">
-
-										<% if(!src && letter) {%>
-
-											<span class="letter">
-												<%-letter.toUpperCase()%>
-											</span>
-					
-										<% } else if (!src) { %>
-					
-											<svg width="40" height="40" data-jdenticon-value="<%-ref.address%>"></svg>
-					
-										<% } %>
-									</div>
-
-
-								</div>
-								<div class="refName"><%- ref.name || ref.address %></div>
-
-								<div elementsid="refRemove" class="refRemove">
-									<i class="far fa-times-circle"></i>
-								</div>
-							</div>
-
-							
-						</div>
-					</div>
-
-				<% } %> -->
 			</div>
 			<% if(!essenseData.wizard) {%>
 
-				<div class="pgroup ">
+				<div class="pgroup">
 					<div class="upanel">
-
-						
 
 						<div class="item">
 							<button elementsid="usave" class="save"><%=e('usave')%></button>
@@ -131,14 +82,14 @@ if (firstTime){
 				<span class="require">*</span> - <%=e('requiredfields')%>
 			</div>
 
-			<div class="upanelloader">
+			<!--<div class="upanelloader">
 				<div class="t table">
 					<div class="t cell">
 						<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 					</div>
 				</div>
 				
-			</div>
+			</div>-->
 
 		</div>
 		

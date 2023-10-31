@@ -532,7 +532,10 @@ _l.e13106 = "口袋网节点"
 _l.e13107 = "节点管理可通过应用程序进行"
 _l.e13108 = "没有与Electron代理接口的连接"
 
+
 _l.e13109 = "请输入图片中的字以接收口袋币并继续注册"
+_l.e13109h = "点击六边形组合图片，然后在生成的图片上输入文字"
+
 _l.e13110 = "輸入單詞"
 _l.poll = "创建投票"
 _l.next = "下一步"
@@ -1066,3 +1069,15 @@ _l.torusing_stat_totalTorBytes = "总计，TOR电话"
 _l.torusing_settings = "TOR设置"
 _l.torusing_stats = "查询统计"
 _l.torusing_proxychangequestion = "你确定你要改变代理服务器吗？"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '更新';
+_l.updateNotifier_topHeading2 = '可用';
+_l.updateNotifier_mainHeading = '我们有一个更新';
+_l.updateNotifier_mainText = '我们建议保持应用程序的更新。新的功能和更好的性能正在等待你！';
+_l.updateNotifier_button1 = '安装';
+_l.updateNotifier_button2 = '稍后...';
+_l.updateNotifier_stateStart = '开始...';
+_l.updateNotifier_stateDownload = '已下载';
+_l.updateNotifier_stateError = '发生错误';
+/** ↑ Component UpdateNotifier ↑ */

@@ -119,7 +119,15 @@ var articlev = (function(){
 
 			trx : function(share){
 
+				return self.app.platform.actions.addActionAndSendIfCan(share).then(action => {
+					var alias = action.object
+
+					return Promise.resolve(alias)
+				})
+
 				return new Promise((resolve, reject) => {
+
+					
 				
 
 					self.sdk.node.transactions.create.commonFromUnspent(

@@ -12,7 +12,7 @@ var instance = function (host, ip, Roy) {
 	var inited = false;
 	var statistic = new Statistic()
 
-	const FREE_SPACE_PERC = 0.95;
+	const FREE_SPACE_PERC = 0.97;
 
 	var lastStat = null;
 
@@ -156,6 +156,8 @@ var instance = function (host, ip, Roy) {
 				timeout,
 			}).then(async (result) => {
 
+
+
 				const meta = {
 					code: 200,
 					difference: performance.now() - responseTime,
@@ -179,6 +181,8 @@ var instance = function (host, ip, Roy) {
 				});
 			});
 		} catch(error) {
+
+
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
 				difference: performance.now() - responseTime,

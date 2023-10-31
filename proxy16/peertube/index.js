@@ -128,6 +128,7 @@ var Peertube = function (settings) {
 				return c;
 			});
 
+
 			return keys[f.rand(0, keys.length - 1)];
 		},
 
@@ -136,6 +137,7 @@ var Peertube = function (settings) {
 				type = 'upload';
 				roy = null;
 			}
+			
 
 			if (!roy) roy = self.api.randroykey(type, special);
 
@@ -215,6 +217,8 @@ var Peertube = function (settings) {
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
 							fr.aspectRatio = 1.78;
+
+						fr.aspectRatio = Number(fr.aspectRatio)
 					}
 
 					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
@@ -323,7 +327,6 @@ var Peertube = function (settings) {
 				if (Object.keys(output).length > 0) return Promise.resolve(output);
 			}
 
-			console.log('ROYS', Object.keys(_roys));
 			
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;

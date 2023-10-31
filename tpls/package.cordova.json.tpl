@@ -54,7 +54,7 @@
         "cordova-plugin-audioinput": "^1.0.2",
         "cordova-plugin-audiotoggle": "file:cordova-plugin-audiotoggle",
         "cordova-plugin-background-download": "0.0.2",
-        "cordova-plugin-background-mode": "^0.7.3",
+        "cordova-plugin-background-mode": "file:cordova-plugin-run-in-background",
         "cordova-plugin-badge": "file:cordova-plugin-badge",
         "cordova-plugin-buildinfo": "^4.0.0",
         "cordova-plugin-camera-preview": "^0.12.3",

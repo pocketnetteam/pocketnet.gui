@@ -18,7 +18,7 @@
 	}
 
 	.errorname{
-		color : rgb(var(--color-bad));
+		color : rgb(var(--neutral-grad-4));
 		padding: 2 * @rhythm;
 		text-align: center;
 		display: none;
@@ -68,7 +68,7 @@
 		}
 		
 		.pgroupIconWrapper{
-			margin-bottom: 6 * @rhythm;
+			margin-bottom: 4 * @rhythm;
 			
 			.pgroup{
 				height: 100%;
@@ -83,17 +83,15 @@
 			margin-bottom: 6 * @rhythm;
 		}
 
-		.uploadPhoto{
-			height: 60px;
-		}
 
 		.uploadTable{
 
+			display: flex;
+			align-items: center;
+
 			>div{
-				vertical-align: middle;
 				&.iconWrapper{
 
-					width : 85px;
 					.usericon{
 						width : 60px;
 						height: 60px;
@@ -103,6 +101,7 @@
 				}
 
 				&.label{
+					margin-left: 2 * @rhythm;
 					font-weight: 700;
 					font-size: 0.9em;
 					color : rgb(var(--color-txt-ac));
@@ -110,87 +109,36 @@
 			}
 		}
 	
-		.referalMaketWrapper{
-			margin-top : @rhythm;
-			>div{
-				vertical-align: middle;
-
-				&.refLabel{
-					padding-top: @rhythm;
-					padding-right : @rhythm;
-					width: 190px;
-
-					.span{
-						color : rgb(var(--color-txt-ac));
-						font-weight: 700;
-					}
-				}
-
-				.refNameTable{
-
-					>div{
-						vertical-align: middle;
-
-						&.refAv{
-							width: 40px;
-
-							.usericon{
-								width: 40px;
-								height: 40px;
-							}
-						}
-						&.refName{
-							padding-left: 2 * @rhythm;
-							padding-right: 2 * @rhythm;
-						}
-
-						&.refRemove{
-							width: 30px;
-							text-align: center;
-							.transition(0.3s);
-							cursor: pointer;
-
-							&:hover{
-								color : rgb(var(--color-txt-ac));
-							}
-						}
-
-
-					}					
-				}
-			}
-		}
 
 		.parameter{
 			max-width: 600px;
 			width: 100%;
+			display: flex;
+			align-items: center;
+
+			input,
+			textarea{
+				width: 100%;
+			}
 
 			>div{
 				padding: @rhythm 0;
-				vertical-align: top;
 			}
 
 			.pName{
-				vertical-align: top;
-				padding-top: 2 * @rhythm;
-				padding-right : @rhythm;
-				width: 190px;
+				min-width: 190px;
 
 				.pNameW{
+					font-weight: 700;
 					padding-top : @rhythm  / 3;
 					font-size: 0.8em;
-					line-height: 1.4em;
 				}
 				
 			}
 
 			.pInput{
 				position: relative;
-				vertical-align: top;
-
-				.vm_valuesmulti{
-					padding-top: @rhythm / 2;
-				}
+				flex-grow: 2;
 			}
 
 		}
@@ -199,6 +147,12 @@
 			&[parameter="addresses"]{
 				.parameter{
 					max-width: 800px;
+				}
+			}
+
+			&[parameter="about"]{
+				.parameter{
+					align-items: flex-start;
 				}
 			}
 
@@ -220,8 +174,9 @@
 		.upanel{
 			margin-top: 2 * @rhythm;
 			overflow: hidden;
+			display: flex;
+			align-items: center;
 			>div{
-				float: left;
 				margin-right: 2 * @rhythm;
 
 				button{
@@ -297,6 +252,19 @@
 		
 		}
 
+	}
+
+	.upanel,
+	.reqsnoska{
+		opacity: 0;
+		.transition(0.3s);
+	}
+
+	&.rendered{
+		.upanel,
+		.reqsnoska{
+			opacity: 1;
+		}
 	}
 
 	&.firstTime{
@@ -541,10 +509,9 @@
 		.uploadTable{
 			width: auto;
 			margin : 0 auto;
+			
 			>div{
-				&.label{
-					display : none;
-				}
+			
 
 				&.iconWrapper{
 					width: 60px;
@@ -601,16 +568,12 @@
 			
 			.parameter{
 				max-width: none;
-				display: block;
-
-				>div{
-					padding: 0;
-					display: block;
-				}
+				flex-direction: column;
+				margin-top: 1.5 * @rhythm;
 
 				.pName{
 					width: 100%;
-					padding-bottom : @rhythm;
+					padding-bottom : 0.5 * @rhythm;
 				}
 				
 				.pInput{

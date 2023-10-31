@@ -3,6 +3,7 @@
 	<%= selector.input() %>
 </div>-->
 <div class="contentsInner">
+
     <div class=" contentmenu">
 
         <%
@@ -143,14 +144,6 @@
             </div>
         <% } %>
        
-        <% if(!window.cordova) {%>
-            <div class="reportCaption">
-                <div class="label">
-                    <a elementsid="hrefdonations" href="donations"><%=e('donate')%></a>
-                </div>
-            </div>
-
-        <% } %>
 
         <% if(isTablet()) {%>
 
@@ -185,17 +178,15 @@
                         </button>
 
                         
-                    <% } else { %> 
+                    <% } %>
 
-                        <span class="applicaitonversion">
-                            <%=e('applicationversion')%> &middot; <%- window.packageversion %>
-                        </span>
-                        
-                        <% if (window.builtfromsha) { %>
-                            &nbsp;&middot;&nbsp;
-                            <span class="app-builtfrom"><%- window.builtfromsha %></span>
-                        <% } %>
+                    <span class="applicaitonversion">
+                        <%=e('applicationversion')%> &middot; <%- window.packageversion %>
+                    </span>
 
+                    <% if (window.builtfromsha) { %>
+                        &nbsp;&middot;&nbsp;
+                        <span class="app-builtfrom"><%- window.builtfromsha %></span>
                     <% } %>
                     
                 </div>

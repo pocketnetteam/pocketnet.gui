@@ -4,6 +4,9 @@ const electron = require('electron')
 const kit = require('./kit.js');
 const { dialog } = require('electron');
 
+global.MIN_NODES_COUNT = 3
+
+
 var WssDummy = function(wc){
 	var self = this
 

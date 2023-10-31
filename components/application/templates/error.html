@@ -1,0 +1,22 @@
+<div class="captionRow">
+    <div class="back iconwrapper">
+        <a href="home">
+            <div class="icon">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </a>
+    </div>
+    <div class="caption">
+        <span><%-application && application.manifest ? application.manifest.name : ""%></span>
+    </div>
+    <% if(application) {%>
+        <div class="settings iconwrapper">
+            <div class="icon">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        </div>
+    <% } %>
+</div>
+<div class="errorwrapper">
+    <%- error || 'undefined error' %>
+</div>

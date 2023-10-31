@@ -892,7 +892,7 @@
 					&.right{
 						width : 100%;
 					}
-
+					
 					.items.searchWrapper{
 						width : 100%;
 
@@ -944,12 +944,6 @@
   html.allcontent #menu .mobsearch i {
     color: rgba(var(--color-bg-ac-bright), 0.9);
   }
-  html.allcontent #menu .application,
-  html.allcontent #menu .walletsWrapper,
-  html.allcontent #menu .keyexportWrapper,
-  html.allcontent #menu .notificationsWrapper {
-    display: none!important;
-  }
   html.allcontent #menu .usericon {
     box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   }
@@ -959,6 +953,9 @@
   html.allcontent #menu .sitenames {
     overflow: hidden;
     width: 24px!important;
+  }
+  html.allcontent #menu .sections .items .item.wallets {
+    color: rgba(var(--color-bg-ac-bright), 0.9);
   }
   html.allcontent #menu .sections .items .item .icon .icn svg {
     fill: rgba(var(--color-bg-ac-bright), 0.9);

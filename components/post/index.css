@@ -17,6 +17,10 @@
 #post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
   max-height: calc(var(--vh, 1vh) * 80);
+  /* .vjs-tech {
+			Fix 1px video height
+			position: static;
+		} */
 }
 #post .videoWrapper {
   max-width: 650px;
@@ -40,6 +44,12 @@
   margin-top: 5em;
   max-width: 400px;
   border-radius: 12px;
+}
+#post #chatExported .caption {
+  font-size: 1em;
+}
+#post #chatExported .messageRow .iconWrapper {
+  width: 33px;
 }
 #post .showmorelenta {
   display: none;
@@ -141,7 +151,7 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
@@ -155,11 +165,11 @@
 						}
 
 						&.h2{
-							width: 200px; 
+							width: 200px;
 						}
 					}
 				}
-				
+
 
 				&.articleImages{
 					.imagesWrapper{
@@ -299,9 +309,6 @@
   border-radius: 12px;
   background: #000;
 }
-#post.videomainpost .statswrapperExtended {
-  display: none;
-}
 #post.videomainpost .share {
   margin: 0 auto;
   /*max-width: 960px;*/
@@ -319,6 +326,65 @@
   background: rgb(var(--background-total-theme));
   border-radius: 9px;
   padding: 0.5em;
+}
+#post .recomandationsFromContent .streambgwrapper {
+  background: rgb(var(--background-total-theme));
+  border-radius: 9px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 0.25em;
+  padding: 0 0.5em;
+  overflow: hidden;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat {
+  background: rgba(0, 0, 0, 0.04);
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle {
+  border-radius: 0 0 9px 9px;
+  color: #8E90A6;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  padding: 8px;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper .toggle-chat .toggle:hover {
+  color: #000;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready {
+  margin-bottom: 0.5em;
+  height: 70vh;
+  transition: height 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready .toggle-chat {
+  display: block;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported {
+  padding-bottom: 0.5em;
+  transition: all 0.3s ease-in-out;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported #modal {
+  bottom: 33px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-ready #chatExported .modal-backdrop {
+  border-radius: 8px 8px 0 0;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden {
+  height: 35px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden .toggle {
+  border: 1px solid #c7c8d9;
+  border-radius: 9px;
+}
+#post .recomandationsFromContent .streambgwrapper.chat-hidden #chatExported {
+  padding: 0;
+  height: 0;
 }
 #post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;
@@ -376,13 +442,11 @@
   }
   #post.videomainpost.recommendationsenabled .recomandationsFromContent {
     display: flex;
+    flex-direction: column;
     max-width: 390px !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     margin-left: 1em !important;
-  }
-  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
-    width: 100%;
   }
 }
 #post .sharearticle {
@@ -409,6 +473,20 @@
 }
 #post .sharearticle .sharepanel {
   padding-right: 0.5em;
+}
+#post .sharearticle .shareBgCaption .translateApi {
+  margin-bottom: 0;
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto {
+  height: 3.5em;
+  margin-right: 0;
+  background: transparent;
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+#post .sharearticle .shareBgCaption .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
 }
 #post .sharearticle .shareBgCaption .author,
 #post .sharearticle .articleend .author {
@@ -594,6 +672,12 @@
 #post .sharearticle .shareBgCaption.verticalcover {
   height: 720px;
 }
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+  color: rgb(var(--color-bg-ac-bright));
+}
 #post .sharearticle .shareBgCaption.verticalcover.showtext {
   border-bottom: 1px dashed rgba(var(--neutral-grad-4), 0.5);
 }
@@ -767,8 +851,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .translateApi .translateto span {
+    color: rgb(var(--text-color));
+  }
+  #post .sharearticle .shareBgCaption:not(.verticalcover) .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
-    padding-bottom: 2em;
+    padding-bottom: 3em;
     padding-left: 1em;
     padding-right: 1em;
     display: flex;
@@ -830,6 +920,15 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     display: block;
     backdrop-filter: brightness(85%);
   }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto {
+    height: 3.5em;
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto span {
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .shareBgCaption.verticalcover .translateApi .translateto.active span {
+    color: rgb(var(--color-bg-ac-bright));
+  }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
     color: rgb(var(--text-on-bg-ac-color));
@@ -847,13 +946,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
     color: rgb(var(--text-on-bg-ac-color));
   }
+  #post .sharearticle .panel {
+    contain: none;
+  }
   #post .sharearticle .starstoppanel,
   #post .sharearticle .socialsharewrapper {
-    bottom: -0.25em !important;
-  }
-  #post .sharearticle .starstoppanel .panelLeft,
-  #post .sharearticle .socialsharewrapper .panelLeft {
-    flex-direction: column;
+    /*.panelLeft{
+					flex-direction: column;
+				}*/
   }
   #post .sharearticle .articlecontent {
     padding-left: 0.5em;
@@ -872,6 +972,9 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     padding: 0;
     margin-top: 1em;
     border: 0;
+  }
+  #post .recomandationsFromContent .streambgwrapper {
+    margin-left: 0;
   }
 }
 html.mobileview.fullscreen #post #comments {
@@ -908,9 +1011,6 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow #post {
   margin: 0 auto;
   background: transparent;
-}
-.wnd.postwindow #post .postWrapper {
-  overflow: hidden;
 }
 .wnd.postwindow #post .nextpost {
   display: block;

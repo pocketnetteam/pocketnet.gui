@@ -12,144 +12,139 @@ var pkoin = (function(){
 		var renders = {
 
 			fields: function(){
-				
-				self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
 
-					self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (balance) {
-	
-						var my = (share.address == self.app.user.address.value)
-	
-						var values = ['pkoinComment', 'sendToAuthor']
-						var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
-	
-						var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
-	
-						if (self.app.boost && my){
-							values = []
-							labels = []
-	
-							optionsValue = 'liftUpThePost'
-						}
-	
-						if (self.app.boost && !app.pkoindisable && !blocked && optionsValue === 'liftUpThePost'){
-							values.push('liftUpThePost')
-							labels.push(self.app.localization.e('liftUpThePost'))
-						}
-						
-						var options = new Parameter({
-	
-							type : "VALUES",
-							name : "Localization",
-							id : 'localization',
-							defaultValue : optionsValue,
-							possibleValues : values,
-							possibleValuesLabels : labels,
-	
-							_onChange : function(value){
-	
-								optionsValue = value;
-	
-								renders.fields();
-							},
-	
-							onFocus : function(el){
-								_scrollTo(el, el.c.closest('.customscroll'), 0)
-							}
-				
-						})
-	
-	
-						if (el.textareaComment){
-							valComment = el.textareaComment.val();
-						}
-	
-						self.shell({
-	
-							name :  'fields',
-							el :   el.fields,
-							data : {
-								options : options,
-								optionsValue: optionsValue,
-								valSum : valSum,
-								valComment : valComment,
-								total: total.toFixed(3),
-								balance : balance.toFixed(3),
-								userinfo: userinfo
-	
-							},
-	
-						}, function(_p){
-	
-							ParametersLive([options], _p.el);
+				var account = self.app.platform.actions.getCurrentAccount()
 
-							el.tutorial = el.c.find('.tutorial-component');
-							el.tutorialNext = el.tutorial.find('.next-btn');
+				if (account){
+					var b = account.actualBalance()
+					var total = b.actual
+					var balance = b.actual - b.tempbalance
 
-							el.tutorialNext.on('click', function(){
-								el.tutorial.removeClass('show');
-							})
-								
-							el.inputSum = _p.el.find('#inputSum');
-		
-							var errorWrapper = _p.el.find('#errorWrapper');
-							
-							el.inputSum.on('keyup', function(e){
-								valSum = Number(e.target.value);
-								
-								if (valSum > Number(balance)){
+					var my = (share.address == self.app.user.address.value)
 	
-									errorWrapper.text(self.app.localization.e('incoins'));
-									disabled = true;
-									el.send.addClass('disabled');
-	
-								} else if (valSum < 0.1){
-	
-									errorWrapper.text(self.app.localization.e('minPkoin', 0.1));
-									disabled = true;
-									el.send.addClass('disabled');
-	
-	
-								} else {
-	
-									errorWrapper.text('');
-									disabled = false;
-									el.send.removeClass('disabled');
-	
-								}
+					var values = ['pkoinComment', 'sendToAuthor']
+					var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
+
+					var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
+
+					if (self.app.boost && my){
+						values = []
+						labels = []
+
+						optionsValue = 'liftUpThePost'
+					}
+
+					if (self.app.boost && !app.pkoindisable && !blocked && optionsValue === 'liftUpThePost'){
+						values.push('liftUpThePost')
+						labels.push(self.app.localization.e('liftUpThePost'))
+					}
+					
+					var options = new Parameter({
+
+						type : "VALUES",
+						name : "Localization",
+						id : 'localization',
+						defaultValue : optionsValue,
+						possibleValues : values,
+						possibleValuesLabels : labels,
+
+						_onChange : function(value){
+
+							optionsValue = value;
+
+							renders.fields();
+						},
+
+						onFocus : function(el){
+							_scrollTo(el, el.c.closest('.customscroll'), 0)
+						}
 			
-								
-	
-								if(optionsValue === 'liftUpThePost') {
-									renders.boostinfo(boost)
-								}
-	
-							})
-	
-							if(optionsValue === 'liftUpThePost') {
-	
-								self.app.platform.sdk.node.shares.getboost({
-									lang: share.language,
-									count : 10,
-				
-								}, function(_boost ,err){
-	
-									boost = _boost
-	
-									renders.boostinfo(boost)
-	
-								}, boost ? 'cache' : null)
-							}
-	
-							el.textareaComment = _p.el.find('#textareaComment');
-	
-							el.textareaComment.on('focus', function(){
-								_scrollTo(el.textareaComment, el.c.closest('.customscroll'), 0)
-							})
-						})
-	
-					});
+					})
 
-				})
+
+					if (el.textareaComment){
+						valComment = el.textareaComment.val();
+					}
+
+					self.shell({
+
+						name :  'fields',
+						el :   el.fields,
+						data : {
+							options : options,
+							optionsValue: optionsValue,
+							valSum : valSum,
+							valComment : valComment,
+							total: total.toFixed(2),
+							balance : balance.toFixed(2),
+							userinfo: userinfo
+
+						},
+
+					}, function(_p){
+
+						ParametersLive([options], _p.el);
+
+						el.inputSum = _p.el.find('#inputSum');
+	
+						var errorWrapper = _p.el.find('#errorWrapper');
+						
+						el.inputSum.on('keyup', function(e){
+							valSum = Number(e.target.value);
+							
+							if (valSum > Number(balance)){
+
+								errorWrapper.text(self.app.localization.e('incoins'));
+								disabled = true;
+								el.send.addClass('disabled');
+
+							} else if (valSum < 0.5){
+
+								errorWrapper.text(self.app.localization.e('minPkoin', 0.5));
+								disabled = true;
+								el.send.addClass('disabled');
+
+
+							} else {
+
+								errorWrapper.text('');
+								disabled = false;
+								el.send.removeClass('disabled');
+
+							}
+		
+							
+
+							if(optionsValue === 'liftUpThePost') {
+								renders.boostinfo(boost)
+							}
+
+						})
+
+						if(optionsValue === 'liftUpThePost') {
+
+							self.app.platform.sdk.node.shares.getboost({
+								lang: share.language,
+								count : 10,
+			
+							}, function(_boost ,err){
+
+								boost = _boost
+
+								renders.boostinfo(boost)
+
+							}, boost ? 'cache' : null)
+						}
+
+						el.textareaComment = _p.el.find('#textareaComment');
+
+						el.textareaComment.on('focus', function(){
+							_scrollTo(el.textareaComment, el.c.closest('.customscroll'), 0)
+						})
+					})
+
+				}
+				
 
 			},
 
@@ -185,7 +180,7 @@ var pkoin = (function(){
 
 					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
-					el.tutorial.removeClass('show');
+					//el.tutorial.removeClass('show');
 
 					self.shell({
 
@@ -275,7 +270,21 @@ var pkoin = (function(){
 
 				globalpreloader(true);
 
-				self.sdk.node.transactions.create.commonFromUnspent(
+				self.app.platform.actions.addActionAndSendIfCan(booster).then(action => {
+                  
+					successCheck()
+
+					if (clbk) clbk()
+  
+				}).catch(e => {
+
+					self.app.platform.errorHandler(e, true)
+
+				}).finally(() => {
+					globalpreloader(false)
+				})
+
+				/*self.sdk.node.transactions.create.commonFromUnspent(
 
 					booster,
 
@@ -288,7 +297,7 @@ var pkoin = (function(){
 						clbk()
 
 					}
-				)
+				)*/
 			}
 
 		}
@@ -385,20 +394,21 @@ var pkoin = (function(){
 				}
 
 				if (!disabled){
-
 					
-					self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (amount) {
+					var account = self.app.platform.actions.getCurrentAccount()
 
+					if (account){
+						var b = account.actualBalance()
+						var total = b.actual
+						var balance = (b.actual - b.tempbalance).toFixed(2);
 
-						balance = amount.toFixed(3);
 						valSum = Number(el.inputSum.val());
 	
 						if (valSum){
 	
+							if (valSum && valSum < 0.5){
 	
-							if (valSum && valSum < 0.05){
-	
-								sitemessage(self.app.localization.e('minPkoin', 0.05))
+								sitemessage(self.app.localization.e('minPkoin', 0.5))
 	
 							} else if (valSum < Number(balance)){
 
@@ -451,9 +461,8 @@ var pkoin = (function(){
 							sitemessage(self.app.localization.e('e13057'))
 	
 						}
-						
-					
-					})
+
+					}
 
 				}
 
@@ -492,9 +501,8 @@ var pkoin = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([shareId], function () {
 
-					share = self.app.platform.sdk.node.shares.storage.trx[shareId]
-
-
+					share = self.psdk.share.get(shareId)
+					
 					clbk(data);
 
 				})

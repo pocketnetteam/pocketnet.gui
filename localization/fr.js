@@ -523,7 +523,10 @@ _l.e13106 = "Nœud "+appname+""
 _l.e13107 = "La gestion des nœuds peut ètre effectuèe avec Application"
 _l.e13108 = "Il n'y a pas de connexion avec l'interface proxy Electron"
 
+
 _l.e13109 = "Veuillez entrer les mots dans l'image pour recevoir Pocketcoin et continuer l'inscription"
+_l.e13109h = "Cliquez sur les hexagones pour assembler l'image, puis saisissez du texte sur l'image résultante"
+
 _l.e13110 = "Entrez les mots"
 _l.next = "Suivant"
 _l.refresh = "Rafraîchir"
@@ -1419,3 +1422,15 @@ _l.torusing_stat_totalTorBytes = "Total, TOR requêtes"
 _l.torusing_settings = "Paramètres TOR"
 _l.torusing_stats = "Statistiques sur les requêtes"
 _l.torusing_proxychangequestion = "Êtes-vous sûr de vouloir changer de proxy?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Version';
+_l.updateNotifier_topHeading2 = 'Disponible';
+_l.updateNotifier_mainHeading = 'Nous avons actualisé';
+_l.updateNotifier_mainText = 'Nous vous recommandons de maintenir l\'application à jour. De nouvelles fonctionnalités et de meilleures performances vous attendent!';
+_l.updateNotifier_button1 = 'Installer';
+_l.updateNotifier_button2 = 'Plus tard...';
+_l.updateNotifier_stateStart = 'Starting...';
+_l.updateNotifier_stateDownload = 'Téléchargé';
+_l.updateNotifier_stateError = 'Une erreur s\'est produite' ;
+/** ↑ Component UpdateNotifier ↑ */

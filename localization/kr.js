@@ -526,6 +526,8 @@ _l.e13107 = "노드 관리는 애플리케이션으로 수행할 수 있습니�
 _l.e13108 = "Electron 프록시 인터페이스와 연결되지 않았습니다."
 
 _l.e13109 = "Pocketcoin을 받고 등록을 계속하려면 그림에 있는 단어를 입력하십시오"
+_l.e13109h = "육각형을 클릭하여 그림을 조합한 다음 결과 이미지에 텍스트를 입력하세요."
+
 _l.e13110 = "단어 입력"
 _l.next = "다음"
 _l.refresh = "새로 고침"
@@ -896,3 +898,15 @@ _l.torusing_stat_totalTorBytes = "합계, TOR 통화"
 _l.torusing_settings = "TOR 설정"
 _l.torusing_stats = "쿼리 통계"
 _l.torusing_proxychangequestion = "정말 프록시를 변경하시겠습니까?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '업데이트';
+_l.updateNotifier_topHeading2 = '사용 가능';
+_l.updateNotifier_mainHeading = '업데이트가 있습니다';
+_l.updateNotifier_mainText = '애플리케이션을 계속 업데이트하는 것이 좋습니다. 새로운 기능과 더 나은 성능이 여러분을 기다리고 있습니다!';
+_l.updateNotifier_button1 = '설치';
+_l.updateNotifier_button2 = '나중에...';
+_l.updateNotifier_stateStart = '시작...';
+_l.updateNotifier_stateDownload = '다운로드됨';
+_l.updateNotifier_stateError = '오류 발생';
+/** ↑ Component UpdateNotifier ↑ */

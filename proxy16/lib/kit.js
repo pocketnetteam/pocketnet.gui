@@ -358,6 +358,7 @@ var Comment = function(txid){
 			return 'messagelength'
 		}
 
+
 		return null;
 	}
 
@@ -1957,8 +1958,8 @@ var pShare = function(){
 			images : self.images || [],
 			title : "Post by " + name,
 			html : {
-				body : self.renders.xssmessagec(),
-				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+				body : self.renders.messagec(),
+				preview : trimHtml(self.renders.messagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
 			},
 
 			text : {
@@ -2202,7 +2203,7 @@ var pComment = function(){
 			}
 
 			catch(e){
-				console.log("ERROR", e, v.msgparsed)
+				//console.log("ERROR", e, v.msgparsed)
 			}
 
 			
@@ -2310,7 +2311,7 @@ var pComment = function(){
 		}
 
 		if(!s.image) s.image = self.images[0]
-		if(!s.image) s.image = deep(app, 'platform.sdk.usersl.storage.'+self.address+'.image')
+		if(!s.image) s.image = app.platform.psdk.getShortForm(self.address).image
 
 		return s
 

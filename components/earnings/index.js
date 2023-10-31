@@ -67,8 +67,6 @@ var earnings = (function () {
 
                   renders.total(stat);
 
-                  console.log('stat', stat);
-
                 }
 
               }

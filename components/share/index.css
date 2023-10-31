@@ -115,6 +115,10 @@
 #share.minimized #sortableBody {
   padding-top: 0;
 }
+#share.minimized .postpanel {
+  margin-left: auto;
+  width: auto;
+}
 #share.minimized .postpanel > div.postWrapper {
   display: none;
 }
@@ -129,7 +133,7 @@
   bottom: 0;
   opacity: 0.5;
   padding: 0;
-  padding-top: 0.5em;
+  padding-top: 0;
   left: 50%;
 }
 #share.minimized .postlineWrapper .panel > div {
@@ -654,6 +658,13 @@
 }
 #share .postlineWrapper {
   margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+}
+#share .postpanel {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 #share .postpanel .language {
   font-weight: 700;
@@ -669,10 +680,11 @@
   opacity: 1;
 }
 #share .postpanel > div {
-  vertical-align: middle;
+  align-items: center;
+  display: flex;
 }
 #share .postpanel > div.postWrapper {
-  width: 250px;
+  margin-left: auto;
   padding-right: 0;
   text-align: right;
 }
@@ -696,7 +708,8 @@
   cursor: pointer;
 }
 #share .postpanel .panel {
-  height: 35px;
+  align-items: center;
+  display: flex;
 }
 #share .postpanel .panel .hide {
   display: none;
@@ -706,9 +719,7 @@
   height: 32px;
   border-radius: 50%;
   line-height: 32px;
-  color: rgb(var(--color-txt-gray-dark));
-  white-space: nowrap;
-  float: left;
+  color: rgb(var(--color-txt-gray));
   text-align: center;
   font-size: 0.8em;
   margin-right: 0.5em;
@@ -874,6 +885,8 @@
   position: absolute;
   padding-left: 1em;
   bottom: 0.5em;
+  left: 0;
+  right: 0;
   background: rgb(var(--background-secondary-theme));
 }
 .wnd.wndsharepost .wndcontent #share #taginput .tgs .search .searchFastResultWrapper {
@@ -1018,7 +1031,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .repostShareWrapperInns {
     border-radius: 5px;
-    border: 1px solid rgba(var(--neutral-grad-2), 0.5);
+    /*border : 1px solid rgba(var(--neutral-grad-2), 0.5);*/
     background: rgb(var(--background-total-theme));
     margin-bottom: 0.5em;
   }
@@ -1418,6 +1431,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     width: 100%;
   }
   #share .postpanel > div.panelWrapper .panel {
+    display: block;
     height: auto;
   }
   #share .postpanel > div.panelWrapper .panel .fileUploader,

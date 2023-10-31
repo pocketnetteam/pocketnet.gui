@@ -51,7 +51,7 @@
   color: rgb(var(--color-txt-ac));
 }
 #userslist .users .user .addressTable > div.extra {
-  width: 200px;
+  width: 170px;
   padding-left: 1em;
   text-align: right;
 }

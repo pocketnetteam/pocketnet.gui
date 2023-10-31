@@ -2,6 +2,8 @@
   padding: 2em 0;
 }
 #boost .work {
+  padding-left: 0;
+  padding-right: 0;
   max-width: 850px;
 }
 #boost .work .top {
@@ -21,8 +23,6 @@
   margin-top: 40px;
   text-align: center;
   padding: 10px 0;
-  border-top: 2px solid #c5c2c2;
-  border-bottom: 2px solid #c5c2c2;
 }
 #boost .header__title {
   font-size: 2rem;

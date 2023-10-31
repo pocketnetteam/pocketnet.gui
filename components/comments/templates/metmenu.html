@@ -46,10 +46,9 @@ var all = {
 }	
 	
 
-
 	if(address == caddress){
-		
-		if(!app.platform.sdk.node.transactions.findTemp(txid)){
+
+		if(!comment.temp && !comment.relay){
 			
 			if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 				m.push('edit')

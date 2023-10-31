@@ -9246,18 +9246,30 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       if (localVideo)
         localVideo.infos = localVideo.infos || {};
 
-        console.log('localVideo', localVideo)
-
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
 
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
+      }
+
+      else{
+
+        var vs = '10'
+
+        if (typeof numfromreleasestring != 'undefined'){
+            vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+        }
+
+        importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
+
+					clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9413,3 +9425,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

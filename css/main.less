@@ -218,6 +218,7 @@
 }
 
 .customscrollclass(){
+    
     overflow-y: overlay;
     overflow-x: hidden;
     scrollbar-width: 7px;
@@ -337,6 +338,11 @@
 }
 
 .wnd{
+
+    &:not(.pipmini){
+        contain: strict;
+
+    }
     .wndcustomscroll{
         .customscrollclass()
     }
@@ -347,6 +353,7 @@
 body{
     overscroll-behavior: none;
     scroll-behavior: smooth;
+    
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -357,8 +364,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-    
-    
+    scroll-behavior: initial!important;
     /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -378,7 +384,7 @@ html {
 
 [image]{
     will-change : opacity, background;
-    /*contain: strict;*/
+    contain: strict;
     opacity: 0;
     .transition(0.3s, opacity);
 
@@ -615,12 +621,7 @@ hr {
    Browser Upgrade Prompt
    ========================================================================== */
 
-.browserupgrade {
-    margin: 0.2em 0;
-    background: rgb(var(--neutral-grad-2));
-    color: rgb(var(--text-color));
-    padding: 0.2em 0;
-}
+
 
 #topsmallpreloader,
 #globalpreloader,
@@ -792,9 +793,21 @@ input[type="number"]
     background:  rgb(var(--background-hidden-layer));
     color: rgb(var(--text-color));
     border-radius: 6px;
-    padding: @rhythm;
+    padding: 0 @rhythm;
     border: 1px solid rgb(var(--neutral-grad-2));
+    
     // border-right: 0;
+}
+
+button{
+    padding : @rhythm;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"]{
+    min-height: 44px;
 }
 
 textarea{
@@ -802,7 +815,6 @@ textarea{
     color: rgb(var(--text-color));
     border: 1px solid rgb(var(--neutral-grad-2));
     border-radius: 6px;
-
     
 }
 
@@ -1140,15 +1152,7 @@ l{
 
 }
 
-pie {
-    width: 5em;
-    height: 5em;
-    display: block;
-    border-radius: 50%;
-    background-color: rgb(var(--color-good));
-    border: 2px solid rgb(var(--color-good));
-    float: left;
-}
+
 
 .ten {
     background-image:
@@ -1203,20 +1207,6 @@ pie {
 }
 
 
-.clearfix { 
-    display: block; 
-
-    &:after{
-        content: ""; 
-        display: block; 
-        clear: both; 
-        visibility: hidden; 
-        line-height: 0; 
-        height: 0; 
-        margin: 0; 
-        padding: 0; 
-    }
-}
 
 .upbutton{
     position: fixed;
@@ -1253,7 +1243,7 @@ pie {
         padding : 2 * @rhythm 0;
         padding-left : 0;
         color : rgba(var(--neutral-grad-2), 0.5);
-        height: 50px;
+        height: 100%;
         width : 100%;
         cursor: pointer;
         .transition(0.3s);
@@ -2597,19 +2587,22 @@ input[type=radio].radio:checked + label {
     right : 0;
     top : 0;
     bottom : 0;
-    display: none;
-    width : 78px;
-    height : 78px;
+    //display: none;
+    opacity: 0;
     margin : auto;
     z-index: 20000;
+    contain: strict;
+    .transition(0.3s, opacity);
 
     .successCheckWrapper{
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         >div{
-            vertical-align: middle;
-            text-align: center;
+            
 
             .chw{
                 margin : 0 auto;
@@ -2622,6 +2615,10 @@ input[type=radio].radio:checked + label {
                 .shadowSmaller();
             }
         }
+    }
+
+    &.active{
+        opacity: 1;
     }
 
     .text{
@@ -2682,6 +2679,7 @@ input[type=radio].radio:checked + label {
     }
     .wnd{
 
+        &:nth-last-child(2),
         &:nth-last-child(1){
             .wndback{
                 background: rgba(var(--color-shadow-base), 0.75);
@@ -3447,6 +3445,8 @@ html.mobileview.android{
         width: 100%;        
         margin : 0 auto;
         padding : 0;
+
+        
        
         &.full{
             max-width: none;
@@ -3484,6 +3484,15 @@ html.mobileview.android{
                 }
             }
         }
+    }
+}
+
+.shell_fadefast{
+    opacity: 0;
+
+    &.shell_fadein{
+        .transition(0.3s, opacity);
+        opacity: 1;
     }
 }
 
@@ -3578,8 +3587,8 @@ html.mobileview.android{
     left: 0;
     right: 0;   
     height: 360px;
-    z-index: 30;
-    .transition(0.6s);
+    z-index: 300;
+    .transition(0.3s);
     color: rgb(var(--text-on-bg-ac-color));
     background: rgb(var(--color-shadow-var));
 }
@@ -3589,7 +3598,7 @@ html.mobileview.android{
     height: 2px;
     left: 0;
     right: 0;
-    top: 0;
+    top: var(--app-margin-top);
     width: 100%;
     z-index: 10000000;
     display: none;
@@ -3646,6 +3655,7 @@ html.mobileview.android{
    }
 }
 
+.preloader6,
 .preloader5{
 
     display: flex;
@@ -3658,6 +3668,11 @@ html.mobileview.android{
         width: 30px;
     }
 }
+
+.preloader6{
+    display: inline-block;
+}
+
 .preloader5 span {
    vertical-align:middle;
    border-radius:50%;
@@ -3700,7 +3715,7 @@ html.mobileview.android{
     bottom: 0;
     right: 0;
     background: rgba(var(--color-shadow-var), 0.9);
-    z-index: 150;
+    z-index: 1010;
 
     &.zindex{
         z-index: 5000;
@@ -4955,7 +4970,7 @@ html.mobileview.android{
 
 .vc_valuecustom{
     width : 200px;
-    height: 38px;
+    height: 44px;
     position: relative;
     border-radius: 6px;
 
@@ -5025,7 +5040,7 @@ html.mobileview.android{
         border-top-right-radius: 0;
 
         .vc_value{
-            padding :  0.5 * @rhythm @rhythm;
+            padding : 2 * @rhythm @rhythm;
             
             cursor: pointer;
 
@@ -5110,10 +5125,12 @@ html.mobileview.android{
         }
     }
 }
+.horizontalSearchUsersWrapper,
 .horizontalLentaWrapper{
 
     position: relative;
 
+    .horizontalSearchUserscaption,
     .horizontalLentacaption{
         display: flex;
         justify-content: space-between;
@@ -5400,14 +5417,14 @@ html.mobileview{
 
         .mobiledialogcontent{
             -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-            .transition(0.15s);
+            transform: translateY(100%) scale(0.5);
+            .transition(0.3s);
         }
 
         &.animend{
             .mobiledialogcontent{
                 -webkit-transform: translateY(0);
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -5416,11 +5433,11 @@ html.mobileview{
             padding : 0;
             max-width: 450px;
             background: transparent;
-            width: 93%;
+            width: 85%;
             margin : 0 auto;
             border : 0;
             margin-bottom: 0;
-            padding-bottom: 2 * @rhythm;
+            padding-bottom: 60px;
             box-shadow: none;
         }
 
@@ -5429,7 +5446,7 @@ html.mobileview{
         }
 
         .mobiledialogcontent{
-            max-height: calc(var(--vh, 1vh) * 60);
+            max-height: calc(var(--vh, 1vh) * 90);
         }
 
         .secondwrapper{
@@ -5458,7 +5475,7 @@ html.mobileview{
         
         .closeButton,
         .menuitem{
-            padding : 4 * @rhythm 2 * @rhythm;
+            padding : 3 * @rhythm 2 * @rhythm;
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
@@ -5730,7 +5747,14 @@ html.mobileview.fullscreen{
     }
 }
 
+html.allcontent_application{
+    #navigationWrapper,
+    #menuWrapper,
+    #footerWrapper{
+        display: none!important;
+    }
 
+}
 
 .windowsContainer{
     position: relative;
@@ -5764,33 +5788,6 @@ html.mobileview.fullscreen{
         margin-bottom: 10px;
 	}
 
-}
-
-.thinput{
-
-    &[value='1']{
-        i{
-            &:before{
-                content : "\f00c";
-            }
-        }
-    }
-
-    &[value='-1']{
-        i{
-            &:before{
-                content : "";
-            }
-        }
-    }
-
-    &[value='0']{
-        i{
-            &:before{
-                content : "\f00d";
-            }
-        }
-    }
 }
 
 .coinwithsmall{
@@ -5994,6 +5991,45 @@ html.mobileview.fullscreen{
     }
 }
 
+.registrationProgressIcon{
+    display: flex;
+    align-items: center;
+    
+    span{
+        margin-left: 2 * @rhythm;
+    }
+
+    i{
+        color : rgb(var(--color-txt-gray-dark))!important;
+    }
+
+    &.not_in_progress{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
+
+    &.in_progress_wait_unspents{
+        i{
+            color : rgb(var(--color-good))!important;
+        }
+    }
+
+    &.in_progress_transaction,
+    &.in_progress_hasUnspents{
+        i{
+            color : rgb(var(--color-bg-ac-bright))!important;
+        }
+        
+    }
+
+    &.blocked{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
+    
+}
 
 .usericon{
     background: rgb(var(--neutral-grad-0));
@@ -6059,6 +6095,20 @@ html.mobileview.fullscreen{
     &:hover{
         .realperson{
             opacity: 0.7;
+        }
+    }
+
+    .registrationProgressIcon{
+        position : absolute;
+        bottom : -4%;
+        left : -4%;
+
+        i{
+            font-size: 0.8em;
+            .shadowSmaller()
+        }
+        span{
+            display: none;
         }
     }
 
@@ -6231,6 +6281,7 @@ html.mobileview.fullscreen{
     .sharedivide{
         color : rgb(var(--color-text-ac));
         padding : 0.5 * @rhythm 0;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
     }
     
     .sharepreview{
@@ -7220,6 +7271,10 @@ html{
 
         .plyr__volume{
             max-width: 32px;
+
+            input{
+                display: none;
+            }
         }
 
         #panelWrapper{
@@ -7293,7 +7348,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 90px;
+                    height: 100px;
                 }
             }
         }
@@ -7381,7 +7436,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 90px;
+                    height: 100px;
                 }
             }
         }
@@ -7416,7 +7471,7 @@ html{
     
     .menudialog{
         .secondwrapper{
-            padding-bottom: 3 * @rhythm;
+            padding-bottom: 8 * @rhythm;
             vertical-align: bottom;
         }
     }
@@ -8033,10 +8088,12 @@ html.mobileview{
     html.allcontent{
         .contentWrapper{
             padding-top: 0;
+            margin-top: 0;
         }
-        body{
+        
+        /*body{
             background: #051b48;
-        }
+        }*/
 
         #footerWrapper{
             background: #051b28;
@@ -8166,6 +8223,8 @@ html.mobileview{
                 height: auto!important;
                 border-radius: 0!important;
                 padding-right: 0!important;
+                max-width: 768px;
+                margin : 0 auto;
 
                 .close{
                     display: none!important;
@@ -8199,6 +8258,8 @@ html.mobileview{
                 max-height: none!important;
                 top : auto!important;
                 bottom : 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
                 height: auto!important;
                 max-width: none!important;
                 -webkit-transform: translateY(100%);
@@ -8345,6 +8406,8 @@ html.mobileview{
                     overflow: hidden;
                 }
             }
+
+            
 
             &:only-child{
 
@@ -8646,13 +8709,23 @@ html.pipmode{
 		textarea,
 		input{
 			width: 100%;
-			padding: @rhythm;
+			padding: 0 @rhythm;
 			border-radius: 6px;
 
 			&.error{
 				border : 1px solid rgb(var(--color-bad));
 			}
 		}
+
+        select,
+		input{
+            line-height: 3em;
+        }
+
+        textarea{
+            padding-top: 1.5 * @rhythm;
+            padding-bottom: 1.5 * @rhythm;
+        }
 
 		.error{
 			select,
@@ -8664,14 +8737,14 @@ html.pipmode{
 		}
 
 		select{
-			height: 38px;
+			height: 3em;
 			padding-right: 25px;
 			width: auto;
 		}
 
 		.vc_valuecustom{
 			width: 100%;
-			font-size: 0.8em;
+            height: 3em;
 		}
 
 		.vc_valuecustom,
@@ -8694,6 +8767,7 @@ html.pipmode{
 			}
 		}
 		
+       
 	}
 }
 
@@ -9205,3 +9279,21 @@ html.pipmode{
 		aspect-ratio: 1.44;
 	}
 }
+
+
+div#bc-root{
+    &.pipped{
+        position: fixed;
+        left : 0!important;
+        top : 0!important;
+        bottom : 0!important;
+        right : 0!important;
+        border: 0!important;
+
+        .bc-video-container{
+            max-width: none!important;
+        }
+    }
+    
+}
+  

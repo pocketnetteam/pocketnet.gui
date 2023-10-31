@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:16-slim
 
 RUN apt-get update && apt-get install -y g++ make python3 pkg-config libpixman-1-dev libcairo2-dev libpango1.0-dev libgif-dev
 

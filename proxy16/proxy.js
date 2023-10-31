@@ -8,6 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
+
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -16,6 +17,7 @@ var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
+var TranslateApi = require('./server/translateapi.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
 var TorControl = require('./node/torcontrol.js');
@@ -50,6 +52,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
 	var nodeControl = new NodeControl(settings.node, self);
+	var translateapi = new TranslateApi(settings.translateapi, self)
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
@@ -81,6 +84,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		proxies, exchanges, peertube, bots,
 		systemnotify, notifications,
 		logger,
+		translateapi,
 		proxy: self
 	})
 
@@ -548,12 +552,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
-	self.transports = {
-		isAltTransportSet: (url) => {
-			return transports.isTorNeeded(url)
-		},
-	}
-
 	self.torapplications = {
 		init: function () {
 			return torapplications.init()
@@ -682,6 +680,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		get kit() {
 			return exchanges.kit
 		},
+	}
+
+	self.translateapi = {
+		settingChanged : function(settings){
+			translateapi.settingChanged(settings)
+		}
 	}
 
 	var trustpeertube = []
@@ -926,7 +930,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube17mirror.pocketnet.app',
 						ip: '64.235.40.47',
 						cantuploading: true,
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				24: [
@@ -934,7 +940,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube18mirror.pocketnet.app',
 						ip: '64.235.42.75 ',
 						cantuploading: true,
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				25: [
@@ -942,21 +950,27 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
 						cantuploading: true,
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				26: [
 					{
 						host : 'peertube20.pocketnet.app',
 						ip: '157.90.240.231',
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				27: [
 					{
 						host : 'peertube21.pocketnet.app',
 						ip: '116.203.16.185',
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				28: [
@@ -964,12 +978,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube22.pocketnet.app',
 						ip: '104.168.136.179',
 						cantuploading: true,
+						offline: true,
 					},
-					{
-						host : 'peertube22mirror.pocketnet.app',
-						ip: '91.148.132.78',
-						cantuploading: true,
-					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				29: [
@@ -977,7 +988,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube23.pocketnet.app',
 						ip: '23.254.201.237',
 						cantuploading: true,
+						offline: true,
 					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				30: [
@@ -985,12 +998,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube24.pocketnet.app',
 						ip: '23.254.224.63',
 						cantuploading: true,
+						offline: true,
 					},
-					{
-						host : 'peertube24mirror.pocketnet.app',
-						ip: '82.118.230.172',
-						cantuploading: true,
-					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				31: [
@@ -998,12 +1008,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube25.pocketnet.app',
 						ip: '95.217.212.144',
 						cantuploading: true,
+						offline: true,
 					},
 					{
 						host : 'peertube25mirror.pocketnet.app',
 						ip: '94.72.140.118',
 						cantuploading: true,
+						offline: true,
 					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				32: [
@@ -1011,19 +1024,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube26.pocketnet.app',
 						ip: '49.12.106.120',
 						cantuploading: true,
+						offline: true,
 					},
 					{
 						host : 'peertube26mirror.pocketnet.app',
 						ip: '94.72.140.117',
 						cantuploading: true,
+						offline: true,
 					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 				
 				33: [
 					{
 						host : 'peertube27.pocketnet.app',
 						ip: '49.12.102.26',
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				34: [
@@ -1037,22 +1055,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube29.pocketnet.app',
 						ip: '157.90.171.8',
-					}
+						offline: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				36: [
 					{
 						host : 'peertube30.pocketnet.app',
 						ip: '95.217.165.102',
-					}
-				],
-
-				36: [
-					{
-						host : 'peertube31.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-						cantuploading: true,
+						offline: true,
 					},
 					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
@@ -1061,20 +1073,37 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host: 'peertube5new.pocketnet.app',
 						ip: '95.217.209.217',
-					}
+						offline: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
+					{
+						host: 'peertube51.pocketnet.app',
+						ip: '95.217.209.217',
+						cantuploading: true,
+						archiveDouble: true,
+					},
 				],
 
 				38: [
 					{
 						host: 'peertube4new.pocketnet.app',
 						ip: '135.181.108.193',
-					}
+					},
+					{
+						host: 'peertube41.pocketnet.app',
+						ip: '135.181.108.193',
+						cantuploading: true,
+						archiveDouble: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				39: [
 					{
 						host: 'peertube6new.pocketnet.app',
 						ip: '159.69.127.9',
+						cantuploading: true,
 					}
 				],
 
@@ -1104,6 +1133,30 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						host : 'peertube35.pocketnet.app',
 						ip: '185.148.146.11',
 						special: true,
+					},
+				],
+
+				44: [
+					{
+						host : 'peertube31.pocketnet.app',
+						ip: '185.148.146.11',
+						special: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
+				],
+
+				45: [
+					{
+						host: 'peertube51.pocketnet.app',
+						ip: '95.217.209.217',
+					},
+				],
+
+				45: [
+					{
+						host: 'peertube41.pocketnet.app',
+						ip: '135.181.108.193',
 					},
 				],
       		};
@@ -1180,6 +1233,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
+
 			return {
 				status: status,
 				test : self.test,
@@ -1192,11 +1246,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
 				admins: settings.admins,
+				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : settings.server.hexCaptcha || false,
 				},
 
 				memory: mem,
@@ -1204,7 +1260,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					'1' : loads[0],
 					'5' : loads[1],
 					'15' : loads[2]
-				}
+				},
+
+				translateapi : translateapi.info(compact)
 			}
 		},
 
@@ -1314,7 +1372,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						}
 
 						return destroy.catch(catchError(i)).then(() => {
-							console.log('i', i)
 							return Promise.resolve()
 						}).then(resolve)
 
@@ -1404,8 +1461,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			console.log('method', method)
-
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
@@ -1437,12 +1492,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
-
-					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -1510,6 +1563,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.getmostcommentedfeed
+	
 
 	self.checkSlideAdminHash = function(hash) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
@@ -1571,7 +1627,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
 
-
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1625,6 +1680,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
+							
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
@@ -1684,6 +1740,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
+
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
 								return new Promise((resolve, reject) => {
@@ -1715,6 +1772,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						.then((data) => {
 
+							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
 								server.cache.set(method, cparameters, data, node.height());
 							}
@@ -2088,9 +2146,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			info: {
 				path: '/info',
 				action: function (message) {
+					const info = self.kit.info(true);
+
+					//info.captcha.hexCaptcha = true;
+					
 					return Promise.resolve({
 						data: {
-							info: self.kit.info(true),
+							info: info,
 						},
 					});
 				},
@@ -2304,8 +2366,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
-		
-
 		firebase: {
 			set: {
 				authorization: 'signature',
@@ -2433,6 +2493,35 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		},
 
+		translate : {
+			share : {
+				authorization: 'signature',
+				path : '/translate/share',
+				action : function({txid, dl, txidEdit}){
+					return translateapi.translate.share(txid, dl, txidEdit).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			},
+			comment : {
+				authorization: 'signature',
+				path : '/translate/comment',
+				action : function({id, dl}){
+					return translateapi.translate.comment(id, dl).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			}
+		},
+
 		captcha: {
 			get: {
 				authorization: 'signaturelight',
@@ -2473,18 +2562,81 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: self.test ? captcha.text : null, ///
+							result: null, //self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
 				},
 			},
+			
+			getHex: {
+				authorization: 'signature',
+				path: '/captchaHex',
+				
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha]?.done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+
+					var hexCaptcha = null
+
+					try{
+						hexCaptcha = require('hex-captcha');
+					}catch(e){
+						return Promise.reject('hex-captcha not setup')
+					}
+
+					
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+					
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 24px Monospace'
+						}
+					});
+
+					captcha.id = f.makeid();
+					
+					return new Promise((resolve, reject) => {
+						captcha.generate().then(({ frames, layers }) => {
+
+							captchas[captcha.id] = {
+								text: captcha.text.toLowerCase(),
+								angles: captcha.angles,
+								id: captcha.id,
+								done: false,
+								time: f.now(),
+							};
+							
+							resolve({
+								data: {
+									id: captcha.id,
+									frames: frames,
+									overlay: layers,
+									angles : null, //self.test ? captcha.angles : null,
+									result: null, //self.test ? captcha.text : null, ///
+									done: false,
+									hex : true
+								}
+							});
+						});
+					});
+				},
+			},
 
 			make: {
-				authorization: 'signaturelight',
+				authorization: 'signature',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
 
@@ -2503,7 +2655,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					}
 
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6] 
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
+					}
+
 					if (captcha.text == text.toLocaleLowerCase()) {
+
+						
+
 						captcha.done = true;
 
 						delete captchaip[ip];
@@ -2555,17 +2726,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: self.test ? false : 'signature',
+				authorization: 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
-					if (settings.server.captcha && !self.test) {
+					if (settings.server.captcha/* && !self.test*/) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
 					}
 
 					return self.wallet
-						.addqueue(key || 'registration', address, ip)
+						.addqueue('registration', address, ip)
 						.then((r) => {
 
 							if (settings.server.captcha) {
@@ -2584,7 +2755,36 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			freebalance: {
+				path: '/free/balance',
+				authorization: self.test ? false : 'signature',
+				action: function ({ captcha, key, address, ip }) {
 
+					if (settings.server.captcha /*&& !self.test*/) {
+						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+							return Promise.reject('captcha');
+						}
+					}
+
+					return self.wallet
+						.addqueue(key, address, ip)
+						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 
 			clearexecuting: {
 				path: '/wallet/clearexecuting',

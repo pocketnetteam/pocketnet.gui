@@ -417,9 +417,18 @@ FX_Manager = function(app){
     var self = this
 
     var lib = [
-        {src : 'js/vendor/pixi.min.js', f : 'js'}, 
-        {src : 'js/vendor/bezier.js', f : 'js'}, 
-        {src : 'js/vendor/color.min.js', f : 'js'}
+        {
+            src : 'js/vendor/pixi.min.js', 
+            f : 'js'
+        }, 
+        {
+            src : 'js/vendor/bezier.js', 
+            f : 'js'
+        }, 
+        {
+            src : 'js/vendor/color.min.js', 
+            f : 'js'
+        }
     ]
     var relations = {}
 
