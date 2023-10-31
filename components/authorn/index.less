@@ -45,6 +45,42 @@
             background: #051b48;
             bottom: 0;
 
+            .bgpanel{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: 21;
+
+                .panel{
+                    display: flex;
+                    justify-content: flex-end;
+                    padding : @rhythm 0;
+
+                    .work{
+                        max-width: 1076px;
+                    }
+
+                    .item{
+                        cursor: pointer;
+                        border-radius: @rad;
+                        width: 44px;
+                        line-height: 42px;
+                        background: rgba(var(--background-main),0.3);
+                        border : 1px solid rgba(var(--background-main),0.5);
+                        color : rgba(var(--background-main),0.7);
+                        .transition(0.3s);
+                        text-align: center;
+
+                        &:hover{
+                            background: rgba(var(--background-main),0.3);
+                            border : 1px solid rgba(var(--background-main),0.7);
+                            color : rgba(var(--background-main),0.9);
+                        }
+                    }
+                }
+            }
+
             &.blocked{
                 background: #48052b;
 
@@ -618,6 +654,14 @@
 
         .bgwallpaperWrapper{
             height: 130px;
+
+            .bgwallpaper{
+                .bgpanel{
+                    .panel{
+                        padding : @rhythm;
+                    }
+                }
+            }
             
         }
     

@@ -32,6 +32,40 @@
   background: #051b48;
   bottom: 0;
 }
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 21;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .work {
+  max-width: 1076px;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
+  cursor: pointer;
+  border-radius: 12px;
+  width: 44px;
+  line-height: 42px;
+  background: rgba(var(--background-main), 0.3);
+  border: 1px solid rgba(var(--background-main), 0.5);
+  color: rgba(var(--background-main), 0.7);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  text-align: center;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item:hover {
+  background: rgba(var(--background-main), 0.3);
+  border: 1px solid rgba(var(--background-main), 0.7);
+  color: rgba(var(--background-main), 0.9);
+}
 #authorn .bgwallpaperWrapper .bgwallpaper.blocked {
   background: #48052b;
 }
@@ -480,6 +514,9 @@
   }
   #authorn .bgwallpaperWrapper {
     height: 130px;
+  }
+  #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
+    padding: 0.5em;
   }
   #authorn .acontentps {
     height: 130px;

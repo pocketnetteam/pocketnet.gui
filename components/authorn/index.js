@@ -374,6 +374,26 @@ var authorn = (function(){
 		}
 
 		var events = {
+
+			share : function(){
+				self.nav.api.load({
+					open : true,
+					href : 'socialshare2',
+					history : true,
+					inWnd : true,
+					uid : "authorshare",
+					essenseData : {
+						caption : "Share this author",
+						sharing : author.data.social(self.app),
+						embedding : {
+							type : 'channel',
+							id : author.address
+						},
+
+						url : 'https://'+self.app.options.url+'/' + self.app.platform.api.authorlink(author.address, true)
+					}
+				})
+			},
 			up : function(){
 				self.app.actions.scroll(0)
 			},
@@ -686,6 +706,8 @@ var authorn = (function(){
 							max: 0.8
 						}
 					})
+
+					p.el.find('.share').on('click', events.share)
 
 					if(clbk) clbk()
 

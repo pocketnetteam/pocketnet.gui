@@ -291,6 +291,7 @@ Platform = function (app, listofnodes) {
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1': true,
         'PLm44qx3ArWbd46dKybCc43dwr2WFn8dT6': true,
         'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true
         
     }
 
