@@ -3620,6 +3620,7 @@ var lenta = (function(){
 							mestate : mestate,
 							all : all || false,
 							tplvideo : video ,
+							recommended : recommended,
 							openapi : essenseData.openapi,
 							sharesFromSub,
 							boosted : p.boosted,
@@ -5048,6 +5049,8 @@ var lenta = (function(){
 							var period = 1440
 
 							console.log("HERE")
+
+							console.log('!!!!', self.app.platform.sdk.node.shares);
 
 							self.app.platform.sdk.node.shares[loader]({
 
