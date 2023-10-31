@@ -1048,8 +1048,7 @@ var Node = function(options, manager){
     }
 
     self.forbidUsage = function(){
-
-        if (global.EXPERIMENTALNODES) return false 
+        if (global.EXPERIMENTALNODES || f.deep(manager,'proxy.test')) return false 
 
         if (self.version){
             if(f.numfromreleasestring(self.version) >= 0.22) return true
