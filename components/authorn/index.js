@@ -779,6 +779,7 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
+				var current = currentLenta()
 
 				self.shell({
 					name :  'alentanavigation',
@@ -787,7 +788,7 @@ var authorn = (function(){
 						author : author,
 						cstate,
 						lentameta,
-						current : currentLenta()
+						current
 					},
 					insertimmediately : true,
 				}, function(p){
@@ -809,6 +810,14 @@ var authorn = (function(){
 							acsearch.focus()
 						}
 					})
+
+
+					var act = p.el.find('[mid="'+current.id+'"]')	
+
+
+
+					_scrollTo(act, p.el.find('.naviscrollwrapper'), 0, 0, 'Left') 
+			
 
 					if (acsearch){
 						acsearch.destroy()

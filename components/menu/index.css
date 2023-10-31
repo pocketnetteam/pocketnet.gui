@@ -800,6 +800,9 @@ html.allcontent #menu .far.fa-comment {
     text-align: right;
     padding-right: 1em;
   }
+  #menu .sections .items .item.wallets .pkoinlabel {
+    font-size: 0.7em;
+  }
   #menu .sections .items .item.signin {
     display: none;
   }
