@@ -156,8 +156,6 @@ var nodecontrol = (function(){
 
 				var address = self.app.user.address.value
 
-				console.log('address', address, info)
-
 				if(!address) return false
 
 				if (proxy && info){
@@ -764,7 +762,6 @@ var nodecontrol = (function(){
 
 			info = null
 
-			console.log('proxy', proxy)
 
 			if (proxy) {
 
@@ -773,7 +770,6 @@ var nodecontrol = (function(){
 			
 				proxy.get.info().then(r => {
 
-					console.log("RR")
 
 					info = r.info
 

@@ -2398,8 +2398,6 @@ pUserInfo = function(){
 
 		return loadFunction(self.address, key).then(v => {
 
-			console.log("loadRelation", v, key)
-
 			self[key] = v
 
 			self[key + '_loaded'] = true

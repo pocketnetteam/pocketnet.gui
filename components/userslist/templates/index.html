@@ -1,8 +1,8 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
 	<% if(addresses.length) {%>
 
 		<div class="caption">
-			<span><%=caption%></span>
+			<span><%=caption%></span> <span>(<%=addresses.length%>)</span>
 		</div>
 
 		<div class="users">
@@ -12,6 +12,12 @@
 				<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 			</div>
 		</div>
+
+		<% if(ed.preview) {%>
+			<div class="showmoreWrapper">
+				<button class="button ghost showmore"><%-e('e13021')%></button>
+			</div>
+		<% } %>
 
 	<% } else { %> 
 

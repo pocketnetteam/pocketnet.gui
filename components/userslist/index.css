@@ -2,6 +2,9 @@
   padding: 2.5em;
   background: rgb(var(--background-total-theme));
 }
+#userslist.preview {
+  padding: 0;
+}
 #userslist .caption {
   font-weight: 100;
   font-size: 2em;
@@ -97,12 +100,46 @@
 #userslist .users .user .subscribebuttonstop.following .subscribe {
   display: none;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #userslist {
-    padding: 1em;
-  }
-  #userslist .users .addressTable > div.extra {
-    width: 60px;
-  }
+#userslist.preview {
+  padding: 0;
+}
+#userslist.preview .caption {
+  font-weight: 700;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+#userslist.preview .users {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#userslist.preview .users .wrk {
+  display: flex;
+}
+#userslist.preview .users .user {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#userslist.preview .users .user .extra,
+#userslist.preview .users .user .label {
+  display: none;
+}
+#userslist.preview .users .user .addressTable {
+  display: flex;
+}
+#userslist.preview .showmoreWrapper button {
+  width: 100%;
+}
+.wnd.userlistwindow .wndinner {
+  max-width: 440px;
+  max-height: 650px;
+}
+.wnd.userlistwindow #userslist {
+  padding: 0;
+}
+.wnd.userlistwindow #userslist {
+  padding: 1em;
+}
+html.mobileview #userslist {
+  padding: 1em;
 }

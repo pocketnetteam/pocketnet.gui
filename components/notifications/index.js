@@ -131,8 +131,6 @@ var notifications = (function(){
 					return -Number(n.time || n.nTime)
 				})
 
-				console.log('_notifications', _notifications)
-
 				var currentDate = new Date();
 
 				_notifications = _.filter(_notifications, function(notification){
@@ -299,7 +297,6 @@ var notifications = (function(){
 		var addWSClbk = function(){
 			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications, now){
 
-				console.log("ADDED NOTIFICATIONS", notifications)
 
 				renders.notifications({
 					notifications : notifications,
@@ -309,8 +306,6 @@ var notifications = (function(){
 			}
 
 			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
-
-				console.log("INITED NOTIFICATIONS")
 
 
 				renders.notifications()

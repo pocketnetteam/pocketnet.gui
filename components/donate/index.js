@@ -130,8 +130,6 @@ var donate = (function(){
 
 											actions.send(val, reciever, (action, txid) => {
 
-												console.log('txid', txid)
-			
 												resolve(app.meta.protocol + '://i?stx=' + txid)
 						
 											}, (e) => {

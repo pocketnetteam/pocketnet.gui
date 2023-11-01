@@ -21,6 +21,8 @@ var post = (function () {
 
 		var player = null
 
+		var chat = null
+
 		var authblock = false;
 
 		var actions = {
@@ -534,6 +536,7 @@ var post = (function () {
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration) * 100).toFixed(0),
+									data: share.export(true)
 								})
 
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
@@ -1161,8 +1164,6 @@ var post = (function () {
 						}
 					}
 				
-					console.log("state HERE")
-					
 					self.fastTemplate(
 						'commentspreview',
 						function (rendered) {
@@ -1871,16 +1872,9 @@ var post = (function () {
 									authorId: share.address
 								}
 							)
-								.then((chat) => {
-									share.chat = chat;
-									// parent.css('--offset', `${ el.stream.offset().top + 70 }px`);
+								.then((_chat) => {
+									chat = _chat;
 									
-									/* Add donate animations */
-									/*self.app.nav.api.load({
-										open : true,
-										id : 'donateAnimations',
-										el: el.wr.find('.animationWrapper')
-									});*/
 								})
 								.catch(e => {
 									if (e) console.error(e);
@@ -2190,10 +2184,13 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-				if (share.chat) {
-					share.chat.destroy();
-					el.stream.empty();
+				if (chat) {
+					chat.destroy();
+					chat = null
 				}
+
+				if (el.stream)
+					el.stream.empty();
 				
 				if (external){
 					external.destroy()
@@ -2244,7 +2241,8 @@ var post = (function () {
 				}
 
 
-				if(el.c) el.c.empty()
+				if (el.c) 
+					el.c.empty()
 
 				el = {};
 				ed = {}

@@ -137,14 +137,6 @@ var author = (function(){
 				})
 			},
 
-			startchat: function(){
-				self.app.mobile.vibration.small()
-
-				self.app.platform.matrixchat.startchat(author.address)
-
-				
-			},
-
 			subscribePrivate : function(){
 
 				self.app.mobile.vibration.small()
@@ -170,6 +162,16 @@ var author = (function(){
 
 				})
 			},
+
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+
+				
+			},
+
+			
 
 		}
 
@@ -248,18 +250,6 @@ var author = (function(){
 
 
 							return deep(author, 'data.subscribes_count') || 0
-		
-							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-								return a.adddress
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-		
-							return u.length
 						}
 					},
 		
@@ -274,13 +264,7 @@ var author = (function(){
 						},
 						count : function(){
 
-							console.log('author', author)
-
 							return deep(author, 'data.blockings_count') || 0
-		
-							var blocked = deep(author, 'data.blocking') || []
-		
-							return blocked.length
 						}
 					},
 			
@@ -1008,8 +992,6 @@ var author = (function(){
 								if (acsearch){
 									acsearch.destroy()
 								}
-								
-
 
 								acsearch = new search(p.el.find('.authorsearch'), {
 									placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
@@ -1077,7 +1059,7 @@ var author = (function(){
 									
 								})
 
-
+								
 
 								if(isTablet()){
 									c.addClass('searchactive')
@@ -1450,7 +1432,6 @@ var author = (function(){
 			if(!isMobile()){
 				upbutton = self.app.platform.api.upbutton(el.up, {
 					top : function(){
-	
 						return '65px'
 					},
 					class : 'light',

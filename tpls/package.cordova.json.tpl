@@ -5,7 +5,7 @@
     "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
     "main": "index.js",
     "scripts": {
-        "android-add": "cordova platform add android@11.0.0",
+        "android-add": "cordova platform add android@12.0.1",
         "ios-add": "cordova platform add ios",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",

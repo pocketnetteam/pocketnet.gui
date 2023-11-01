@@ -316,11 +316,7 @@
   padding-right: 0.125em;
   padding-left: 0.125em;
   padding-bottom: 0.25em;
-  opacity: 0.6;
   cursor: pointer;
-}
-#menu .sections .items .item.changeaccount .icon:hover {
-  opacity: 1;
 }
 #menu .sections .items .item.application {
   color: rgb(var(--color-bg-orange));
@@ -513,7 +509,6 @@
 #menu .sections .items .item.wallets {
   font-size: 0.8em;
   font-weight: 700;
-  color: rgb(var(--color-txt-gray));
   margin-right: 1.5em;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -527,7 +522,6 @@
 #menu .sections .items .item.wallets .icon {
   width: 30px;
   opacity: 0;
-  color: rgb(var(--color-txt-gray));
 }
 #menu .sections .items .item.wallets.good .number {
   color: rgb(var(--color-good));
@@ -743,6 +737,19 @@
 #menu .signup {
   margin-left: 2em;
 }
+html.allcontent #menu .menuWrapper .postssearch .searchInput input {
+  background: transparent;
+}
+html.allcontent #menu .menuWrapper .postssearch .searchIconLabel,
+html.allcontent #menu .menuWrapper .postssearch .searchPanel {
+  background: transparent;
+}
+html.allcontent #menu .usericon {
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+html.allcontent #menu .far.fa-comment {
+  font-weight: 700;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #menu {
@@ -783,7 +790,7 @@
     width: auto;
   }
   #menu .sections .items.searchWrapper {
-    padding-right: 1.5em;
+    padding-right: 1em;
   }
   #menu .sections .items.searchWrapper .item {
     min-width: 0;
@@ -792,6 +799,12 @@
   #menu .sections .items .item.signin {
     text-align: right;
     padding-right: 1em;
+  }
+  #menu .sections .items .item.wallets {
+    margin-right: 0.5em;
+  }
+  #menu .sections .items .item.wallets .pkoinlabel {
+    font-size: 0.7em;
   }
   #menu .sections .items .item.signin {
     display: none;
@@ -878,87 +891,9 @@
   #menu .sections .items.navWrapper {
     display: none!important;
   }
-  #menu {
-    /*.postssearch{
-			font-size: 1.2em;
-		}*/
-    /*&.searchactive{
-
-			.sections{
-				padding : 0;
-
-				.section{
-					width : 100%;
-					&.right{
-						width : 100%;
-					}
-					
-					.items.searchWrapper{
-						width : 100%;
-
-						.item{
-							width : 100%;
-						}
-
-						.postssearch{
-							width : 100%;
-						}
-					}
-
-					&.leftpart{
-						display: none;
-					}
-
-					&.right{
-						display: none;
-					}
-				}
-
-
-				.items{
-					&.searchWrapper{
-						width: 100%;
-						max-width: none;
-						padding-right: 0;
-
-						.postssearchwrapper{
-							padding : 1.5 * @rhythm 1.5 * @rhythm;
-						}
-					}
-				}
-			}
-		}*/
-  }
-  html.allcontent #menu .menuWrapper {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    background: transparent;
-  }
-  html.allcontent #menu .menuWrapper .searchIconLabel i,
-  html.allcontent #menu .menuWrapper .icon i {
-    color: rgba(var(--color-bg-ac-bright), 0.9);
-  }
-  html.allcontent #menu .menuWrapper .sitename .label {
-    display: none;
-  }
-  html.allcontent #menu .mobsearch i {
-    color: rgba(var(--color-bg-ac-bright), 0.9);
-  }
-  html.allcontent #menu .usericon {
-    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  }
-  html.allcontent #menu .far.fa-comment {
-    font-weight: 700;
-  }
   html.allcontent #menu .sitenames {
     overflow: hidden;
     width: 24px!important;
-  }
-  html.allcontent #menu .sections .items .item.wallets {
-    color: rgba(var(--color-bg-ac-bright), 0.9);
-  }
-  html.allcontent #menu .sections .items .item .icon .icn svg {
-    fill: rgba(var(--color-bg-ac-bright), 0.9);
   }
 }
 html[theme="black"] #menu .sections .items .item .icn svg,

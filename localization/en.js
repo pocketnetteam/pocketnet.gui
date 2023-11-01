@@ -287,8 +287,8 @@ _l.sub = "Follow";
 _l.subi = "Following";
 _l.unsub = "Unfollow";
 _l.joined = "Joined";
-_l.shares = "SHARES";
-_l.uposts = "POSTS";
+_l.shares = "Shares";
+_l.uposts = "Posts";
 _l.myuposts = "MY POSTS";
 _l.followers = "FOLLOWERS";
 _l.followers2 = "Followers";
@@ -477,7 +477,6 @@ _l.ntyesterday = "Yesterday"
 
 _l.ntmounth = "This month"
 _l.ntearlier = "Earlier"
-
 
 _l.nodeWalletAdd = "Adding an address may take some time. Continue?"
 _l.nodeEnableNoteHeader = "Note"
@@ -891,7 +890,7 @@ _l.e13238 = "Comment editing error. Please wait one minute and try again/ 37"
 _l.e13239 = "Comment sending error. You are replying to a comment that was deleted"
 _l.e13240 = "The comment you are replying to has been deleted by the user"
 _l.e13241 = "This comment is too long, please break it up"
-_l.e13242 = "You have been blocked by this person, you will be unable to comment on their posts"
+_l.e13242 = "You have been blocked by this person"
 _l.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
 _l.e13244 = "You can edit a comment only during the first day after its publication and only 4 times"
 _l.e13245 = "You have reached your limit of sending comments in a 24 hour period"
@@ -2770,3 +2769,5 @@ _l.openOriginal = "Open original"
 _l.registration_blocked = _l.lockedaccount
 
 _l.horizontalSearchUsers = "Accounts"
+_l.information = "Information"
+_l.sendcoins = "Send pocketcoin"
