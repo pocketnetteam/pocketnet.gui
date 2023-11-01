@@ -12,7 +12,7 @@ var instance = function (host, ip, Roy) {
 	var inited = false;
 	var statistic = new Statistic()
 
-	const FREE_SPACE_PERC = 0.95;
+	const FREE_SPACE_PERC = 0.97;
 
 	var lastStat = null;
 
