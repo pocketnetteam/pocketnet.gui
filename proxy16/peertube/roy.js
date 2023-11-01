@@ -62,6 +62,7 @@ var Roy = function (parent) {
 		if (options.special) instance.special = true;
 		if (options.old) instance.old = true;
 		if (options.offline) instance.offline = true;
+		if (options.archiveDouble) instance.archiveDouble = true;
 
 		instance.init();
 
@@ -251,7 +252,7 @@ var Roy = function (parent) {
 
 	self.find = function (host) {
 		return _.find(instances, function (instance) {
-			return instance.host == host;
+			return instance.host == host && !instance.archiveDouble;
 		});
 	};
 
