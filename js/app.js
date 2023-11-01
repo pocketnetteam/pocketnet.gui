@@ -887,22 +887,27 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+		},
+
+		authorn: {
+			href: 'authorn',
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
 		}
 
 	}
@@ -1052,14 +1057,13 @@ Application = function (p) {
 
 		self.nav.dynamic = function (p, clbk) {
 
-
 			self.platform.sdk.users.addressByName((p.href), function (r) {
 
 				if (r) {
 					if (clbk)
 						clbk(null, {
 
-							id: 'author',
+							id: 'authorn',
 							extra: {
 								address: r
 							}
@@ -1833,12 +1837,18 @@ Application = function (p) {
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
-		window.requestAnimationFrame(() => {
 
 
 			document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
 			document.documentElement.style.setProperty('--keyboardheight', `0px`);
-		})
+
+
+		if(!window.cordova || isios()){
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `40px`);
+		}else{
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `0px`);
+		}
+			
 
 		istouchstyle()
 
@@ -2674,6 +2684,7 @@ Application = function (p) {
 			}
 		},
 		statusbar: {
+			status : 'background',
 			initial : function(){
 				/*if (window.NavigationBar)
 					window.NavigationBar.hide()*/
@@ -2702,11 +2713,12 @@ Application = function (p) {
 
 					window.NavigationBar.backgroundColorByHexString(colors[c], c == 'white');
 				}
+
+				self.mobile.statusbar.status = 'background'
 					
 			},
 
 			gallerybackground: function () {
-
 
 				if (window.StatusBar) {
 
@@ -2717,6 +2729,9 @@ Application = function (p) {
 
 				if (window.NavigationBar)
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+
+				self.mobile.statusbar.status = 'gallerybackground'
+				
 
 			},
 

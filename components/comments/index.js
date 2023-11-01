@@ -2826,7 +2826,6 @@ var comments = (function(){
 					renders.post(function(area){
 
 						if (ed.reply){
-							console.log("!!!", ed.reply)
 							actions.fastreply(ed.reply)
 						}
 						else
@@ -2840,9 +2839,6 @@ var comments = (function(){
 								reply.noaction = true
 
 								actions.fastreply(reply)
-
-
-								console.log("HERE")
 							}
 
 						}
@@ -2882,6 +2878,8 @@ var comments = (function(){
 				}
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
+
+					console.log("Comments", comments)
 
 					if (clbk)
 						clbk(comments, e)

@@ -1,0 +1,96 @@
+<%
+
+var m = [];
+
+var all = {
+
+	block : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : e('blockuser'),
+		class : 'block'
+	},
+
+    unblock : {
+		icon : '<i class="fas fa-user-check"></i>',
+		text : e('unblockuser'),
+		class : 'unblock'
+	},
+
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : e('reportuser'),
+		class : 'complain'
+	},
+
+	startchat : {
+		icon : '<i class="far fa-comment"></i>',
+		text : e('startchat'),
+		class : 'startchat'
+	},
+
+	unsubscribe : {
+		icon : '<i class="fas fa-user-times"></i>',
+		text : e('unsubscribe'),
+		class : 'unsubscribe'
+	},
+	
+
+}
+
+if(author){
+
+
+	if(author.address != user.address.value.toString('hex')){
+		var me = psdk.userInfo.getmy()
+		
+		if (me){
+
+			if (!me.relation(author.address, 'subscribes')){
+			}
+			else
+			{
+				m.push('unsubscribe')
+			}
+
+			if(app.platform.matrixchat.core){
+				m.push('startchat')
+			}
+
+			if(me.relation(author.address, 'blocking')){
+				m.push('unblock')
+			}
+			else
+			{
+				m.push('block')
+			}
+
+			if(true){
+				m.push('complain')
+			}
+		}
+
+		
+        
+
+	}
+}
+
+
+
+
+%>
+
+<div class="sharepostmenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div elementsid="author_menuitem_<%-mo.class||''%>" class="menuitem <%-mo.class||''%> table">
+		
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+
+	</div>
+		
+	<% }) %>
+
+</div>

@@ -572,16 +572,12 @@ var Action = function(account, object, priority, settings){
             }
         }
 
-        console.log('options.destination', options)
-
         if (options.destination){
             _.each(options.destination(self, account), (d) => {
                 outputs.push(_.clone(d))
             })
         }
         else{
-
-            console.log('unspents.length', unspents.length, totalInputAmount)
 
             if(unspents.length < 50 && totalInputAmount > 0.1){
 
@@ -592,8 +588,6 @@ var Action = function(account, object, priority, settings){
 
                 for(var i = 0; i < spcount; i++){
                     if(i == spcount - 1){
-
-                        console.log("HERE")
 
                         outputs.push({
                             address : changeAddresses[0],
@@ -613,10 +607,6 @@ var Action = function(account, object, priority, settings){
                     }
                     
                 }
-
-                console.log('outputs', outputs)
-
-                console.log('totalInputAmount', totalInputAmount, added)
 
                 /*var divi = totalInputAmount / 2
 
