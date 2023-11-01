@@ -103,6 +103,7 @@
 }
 #authorn .fbuttonsrow button {
   border-radius: 12px;
+  font-size: 1em;
 }
 #authorn .upbuttonwrapper {
   position: relative;
