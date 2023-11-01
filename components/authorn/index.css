@@ -66,12 +66,17 @@
   border: 1px solid rgba(var(--background-main), 0.7);
   color: rgba(var(--background-main), 0.9);
 }
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted,
 #authorn .bgwallpaperWrapper .bgwallpaper.blocked {
   background: #48052b;
 }
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted .grad,
 #authorn .bgwallpaperWrapper .bgwallpaper.blocked .grad {
   background: #010101;
   background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted .bgpanel {
+  display: none;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper > div {
   opacity: 0.4;
@@ -185,9 +190,6 @@
 #authorn .uinfo .foraddress .label {
   cursor: pointer;
 }
-#authorn .uinfo .foraddress .label span {
-  font-size: 0.7em;
-}
 #authorn .buttonsrow {
   display: flex;
   flex-wrap: wrap;
@@ -289,6 +291,7 @@
 }
 #authorn .aucaption .deletedAccount {
   text-align: center;
+  padding-bottom: 2em;
 }
 #authorn .aucaption .deletedAccount .deletedsettings {
   margin-top: 1em;
@@ -376,13 +379,19 @@
 #authorn .alentanavigation .navi .navitem {
   cursor: pointer;
 }
-#authorn .alentanavigation .navi .navitem:hover span,
 #authorn .alentanavigation .navi .navitem.active span {
   color: rgb(var(--color-txt-ac));
 }
-#authorn .alentanavigation .navi .navitem:hover span:after,
 #authorn .alentanavigation .navi .navitem.active span:after {
   border-bottom: 2px solid rgb(var(--color-txt-ac));
+}
+@media (pointer: hover) {
+  #authorn .alentanavigation .navi .navitem:hover span {
+    color: rgb(var(--color-txt-ac));
+  }
+  #authorn .alentanavigation .navi .navitem:hover span:after {
+    border-bottom: 2px solid rgb(var(--color-txt-ac));
+  }
 }
 #authorn .alentanavigation .navi .searchIcon {
   margin-left: auto;

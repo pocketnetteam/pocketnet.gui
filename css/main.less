@@ -182,6 +182,9 @@
 :root {
 	--app-margin-top-default: 0px;
 	--app-margin-top: 0px;
+    --app-margin-bottom-default: 0px;
+	--keyboardheight: 0px;
+	--app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
 }
 
 @supports (width: max(1px, 1px)) {
@@ -5441,7 +5444,6 @@ html.mobileview{
             margin : 0 auto;
             border : 0;
             margin-bottom: 0;
-            padding-bottom: 60px;
             box-shadow: none;
         }
 
@@ -7334,7 +7336,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
 
                 .fakem{
@@ -7343,7 +7345,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 100px;
+                    height: calc(var(--app-margin-bottom, 0) + 60px);
                 }
             }
         }
@@ -7422,7 +7424,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
     
                 .fakem{
@@ -7431,7 +7433,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 100px;
+                    height: 70px;
                 }
             }
         }
@@ -8123,7 +8125,7 @@ html.mobileview{
     &.keyboadrshown{
         .focusedinput{
             position: fixed!important;
-            bottom : calc(var(--keyboardheight, 0) - 1px)!important;
+            bottom : calc(var(--app-margin-bottom, 0) - 1px)!important;
             top : auto!important;
             left : 0!important;
             right: 0!important;
@@ -8132,7 +8134,7 @@ html.mobileview{
     }
 
     .dialog{
-        padding-bottom : calc(var(--keyboardheight, 0) - 1px);
+        padding-bottom : calc(var(--app-margin-bottom, 0) - 1px);
     }
 
     .sitemessage{    
@@ -8474,12 +8476,12 @@ html.mobileview{
 html.mobileview{
     .keyboardsafe{
         .transition(0.3s, padding-bottom);
-        padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
+        padding-bottom: calc(var(--app-margin-bottom, 0) - 1px)!important;
     }
 
     .keyboardsafetranslate{
         .transition(0.3s);
-        transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+        transform: translateY(calc(-1 * var(--app-margin-bottom, 0) + 1px));
     }
 }
 

@@ -9,12 +9,20 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 <div class="buttonsrow">
     <% if(author.me) {%>
 
-        
-        <!--<button class="button openwallet"><%= e('rwallet') %></button>-->
-        <button class="button videoCabinet"><%= e('videoCabinet') %></button>
+        <% if(!sUserInfo.deleted) {%>
 
-        <% if(!app.mobileview) {%>
-            <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
+            <% if(author.me) {%>
+                <button class="button editprofile"><%-e('e13186')%></button>
+            <% } %>
+            <!--<button class="button openwallet"><%= e('rwallet') %></button>-->
+            <!--<button class="button videoCabinet"><%= e('videoCabinet') %></button>-->
+
+            <% if(!app.mobileview) {%>
+                <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
+            <% } %>
+
+        <% } else {%> 
+            <button class="button openwallet"><%= e('rwallet') %></button>
         <% } %>
         
     <% } %>
@@ -25,36 +33,45 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         var blocking = me ? me.relation(author.address, 'blocking') : null
         
         %>
-        <button class="button startchat"><%= e('startchat') %></button>
+
+        <% if(!sUserInfo.deleted) {%>
+
+            <button class="button startchat"><%= e('startchat') %></button>
+
+        <% } %>
+
         <button class="button sendcoins"><%= e('sendcoins') %></button>
 
-        <% if(!blocking) {%>
+        <% if(!sUserInfo.deleted) {%>
+            <% if(!blocking) {%>
 
-            <% if(r) { %>
+                <% if(r) { %>
 
-                <button class="button unsubscribe"><%= e('youarefollowing') %> <i class="fas fa-user-check"></i></button>
-            
-                <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
+                    <button class="button unsubscribe"><%= e('youarefollowing') %> <i class="fas fa-user-check"></i></button>
+                
+                    <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
 
-                    <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+                        <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+
+                    <% } else { %> 
+                        <button class="button notifications icon"><i class="far fa-bell"></i></button>
+                    <% } %>
 
                 <% } else { %> 
-                    <button class="button notifications icon"><i class="far fa-bell"></i></button>
+
+                    <button class="button follow"><%= e('follow') %> <i class="fas fa-user-plus"></i></button>
+
                 <% } %>
 
             <% } else { %> 
-
-                <button class="button follow"><%= e('follow') %> <i class="fas fa-user-plus"></i></button>
-
+                <button class="button unblocking"><%= e('blocked') %> <i class="fas fa-user-alt-slash"></i></button>
+                
             <% } %>
 
-        <% } else { %> 
-            <button class="button unblocking"><%= e('blocked') %> <i class="fas fa-user-alt-slash"></i></button>
-            
-        <% } %>
+            <% if(state) {%>
+                <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
+            <% } %>
 
-        <% if(state) {%>
-            <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
         <% } %>
     <% } %>
 </div>

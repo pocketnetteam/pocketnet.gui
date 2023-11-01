@@ -57,16 +57,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
                 <div class="deletedAccountText">
                     <span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
                 </div>
-
-                <% if(sUserInfo.itisme) { %>
-
-                    <div class="deletedsettings">
-                        <button class="button black">
-                            <span><%- app.localization.e('menu') %></span>
-                        </button>
-                    </div>
-
-                <% } %>
+                
             </div>
         </div>
         

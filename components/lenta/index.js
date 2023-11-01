@@ -815,6 +815,8 @@ var lenta = (function(){
 			},
 			includeboost : function(clbk){
 
+				if(!el.c) return
+
 				var bsts = _.filter(boosted, function(b){
 					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
 				})

@@ -80,15 +80,22 @@
                     }
                 }
             }
-
+            &.deleted,
             &.blocked{
                 background: #48052b;
-
                 .grad{
                     
                     background: rgba(1, 1, 1, 1);
                     background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
                     
+                }
+
+                
+            }
+
+            &.deleted{
+                .bgpanel{
+                    display: none;
                 }
             }
 
@@ -244,7 +251,6 @@
             .label{
                 cursor: pointer;
                 span{
-                    font-size: 0.7em;
                 }
             }
         }
@@ -372,6 +378,7 @@
 
         .deletedAccount{
 			text-align: center;
+            padding-bottom: 4 * @rhythm;
 
 			.deletedsettings{
 				margin-top: 2 * @rhythm;
@@ -480,13 +487,25 @@
 
             .navitem{
                 cursor: pointer;
-                &:hover,
+
                 &.active{
                     span{
                         color : rgb(var(--color-txt-ac));
 
                         &:after{
                             border-bottom: 2px solid rgb(var(--color-txt-ac));
+                        }
+                    }
+                }
+
+                @media (pointer:hover) {
+                    &:hover{
+                        span{
+                            color : rgb(var(--color-txt-ac));
+
+                            &:after{
+                                border-bottom: 2px solid rgb(var(--color-txt-ac));
+                            }
                         }
                     }
                 }

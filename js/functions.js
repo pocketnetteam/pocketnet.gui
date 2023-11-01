@@ -931,6 +931,8 @@ tooltipMobileDialog = function (p) {
 
 	var c = p.clbk || function () { }
 
+	var statusbg = ''
+
 	p.clbk = function (el) {
 
 		el.find('.closeButton').on('click', function () {
@@ -941,9 +943,23 @@ tooltipMobileDialog = function (p) {
 			el.addClass('animend')
 		}, 20)
 
+		if (p.app){
+
+			statusbg = p.app.mobile.statusbar.status
+
+			p.app.mobile.statusbar.gallerybackground()
+		}
 
 		c(el)
 	}
+
+	p.onDestroy = function(){
+		if (p.app && statusbg && p.app.mobile.statusbar[statusbg]){
+			p.app.mobile.statusbar[statusbg]()
+		}
+	}
+
+	
 
 	var self = new dialog(p);
 
@@ -1525,6 +1541,8 @@ dialog = function (p) {
 		if (removescroll) {
 			app.actions.onScroll();
 		}
+
+		if(p.onDestroy) p.onDestroy()
 	}
 
 	var clickOutsideOfWindow = function (e) {
@@ -5621,9 +5639,11 @@ isTablet = function () {
 
 clickAction = function () {
 
-	if (isTablet()) return 'touchend'
-
 	return 'click'
+
+	/*if (isTablet()) return 'touchend'
+
+	return 'click'*/
 }
 
 

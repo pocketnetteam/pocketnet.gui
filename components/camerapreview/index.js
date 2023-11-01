@@ -767,7 +767,7 @@ var camerapreview = (function(){
 
 
 				window.requestAnimationFrame(() => {
-			
+					self.app.mobile.statusbar.background()
 					app.el.html.addClass('cameraenabledend')
 					app.el.html.removeClass('cameraenabled')
 					app.el.html.removeClass('cameraenabledrun')
@@ -812,7 +812,7 @@ var camerapreview = (function(){
 				window.requestAnimationFrame(() => {
 			
 					app.el.html.addClass('cameraenabledrun')
-
+					self.app.mobile.statusbar.gallerybackground()
 				})
 
 				setTimeout(() => {

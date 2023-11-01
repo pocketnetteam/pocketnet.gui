@@ -401,7 +401,11 @@ var authorn = (function(){
 			startchat: function(){
 				self.app.mobile.vibration.small()
 
-				self.app.platform.matrixchat.startchat(author.address)
+				self.app.platform.sdk.user.stateAction(() => {
+
+					self.app.platform.matrixchat.startchat(author.address)
+
+				})
 			},
 
 			openwallet : function(){
@@ -423,7 +427,9 @@ var authorn = (function(){
 			},
 
 			sendcoins : function(){
-				self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+				})
 			},
 
 			settings : function(){
@@ -441,7 +447,11 @@ var authorn = (function(){
 					open : true,
 					href : self.app.mobileview ? 'test' : 'userpage?id=test',
 					history : true,
-					inWnd : self.app.mobileview
+					inWnd : self.app.mobileview,
+
+					essenseData : {
+						reloadOnly : true
+					}
 				})
 			},
 
@@ -502,28 +512,32 @@ var authorn = (function(){
 
 				self.app.mobile.vibration.small()
 
-				new dialog({
-					html : self.app.localization.e('e13022'),
-					btn1text :  self.app.localization.e('unfollow'),
-					btn2text : self.app.localization.e('ucancel') ,
+				self.app.platform.sdk.user.stateAction(() => {
 
-					class : 'zindex',
+					new dialog({
+						html : self.app.localization.e('e13022'),
+						btn1text :  self.app.localization.e('unfollow'),
+						btn2text : self.app.localization.e('ucancel') ,
 
-					success : function(){
+						class : 'zindex',
 
-						self.app.platform.api.actions.unsubscribe(author.address, function(tx, err){
+						success : function(){
 
-							if(tx){
-								
-							}
-							else
-							{
-								self.app.platform.errorHandler(err, true)	
-							}
-		
-						})
+							self.app.platform.api.actions.unsubscribe(author.address, function(tx, err){
 
-					}
+								if(tx){
+									
+								}
+								else
+								{
+									self.app.platform.errorHandler(err, true)	
+								}
+			
+							})
+
+						}
+					})
+
 				})
 
 				
@@ -532,82 +546,100 @@ var authorn = (function(){
 			subscribe : function(){
 				self.app.mobile.vibration.small()
 
-				self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
+				self.app.platform.sdk.user.stateAction(() => {
 
-					if(tx){
-					}
-					else
-					{
-						self.app.platform.errorHandler(err, true)
-					}
+					self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
+
+						if(tx){
+						}
+						else
+						{
+							self.app.platform.errorHandler(err, true)
+						}
+
+					})
 
 				})
 			},
 
 			notifications : function(){
 
-				var me = self.app.platform.psdk.userInfo.getmy()
+				self.app.platform.sdk.user.stateAction(() => {
 
-				var r = me ? me.relation(author.address, 'subscribes') : null
+					var me = self.app.platform.psdk.userInfo.getmy()
 
-				self.app.mobile.vibration.small()
+					var r = me ? me.relation(author.address, 'subscribes') : null
 
-				var f = 'notificationsTurnOn'
+					self.app.mobile.vibration.small()
 
-				if(r.private == 'true' || r.private == '1' || r.private === true) {
-					f = 'notificationsTurnOff'
-				}
+					var f = 'notificationsTurnOn'
 
-				console.log("G", f)
-
-				self.app.platform.api.actions[f](author.address, function(tx, err){
-
-					if(tx){
+					if(r.private == 'true' || r.private == '1' || r.private === true) {
+						f = 'notificationsTurnOff'
 					}
-					else
-					{
-						self.app.platform.errorHandler(err, true)
-					}
+
+					console.log("G", f)
+
+					self.app.platform.api.actions[f](author.address, function(tx, err){
+
+						if(tx){
+						}
+						else
+						{
+							self.app.platform.errorHandler(err, true)
+						}
+
+					})
 
 				})
 			},
 
 			unblocking : function(){
 				self.app.mobile.vibration.small()
-				self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-					if(!tx){
-						self.app.platform.errorHandler(error, true)	
-					}
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+						if(!tx){
+							self.app.platform.errorHandler(error, true)	
+						}
+					})
 				})
 			},
 
 			blocking : function(){
 				self.app.mobile.vibration.small()
-				self.app.platform.api.actions.blocking(author.address, function(tx, error){
-					if(!tx){
-						self.app.platform.errorHandler(error, true)	
-					}
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.api.actions.blocking(author.address, function(tx, error){
+						if(!tx){
+							self.app.platform.errorHandler(error, true)	
+						}
+					})
 				})
 			},
 
 			complain : function(){
-				self.nav.api.load({
-					open : true,
-					id : 'complain',
-					inWnd : true,
 
-					essenseData : {
-						item : 'user',
-						obj : author,
+				self.app.platform.sdk.user.stateAction(() => {
+					self.nav.api.load({
+						open : true,
+						id : 'complain',
+						inWnd : true,
 
-						success : function(){
+						essenseData : {
+							item : 'user',
+							obj : author,
+
+							success : function(){
+								
+							}
+						},
+
+						clbk : function(){
 							
 						}
-					},
+					})
 
-					clbk : function(){
-						
-					}
 				})
 			}
 
@@ -775,7 +807,7 @@ var authorn = (function(){
 					},
 					insertimmediately : true,
 				}, function(p){
-
+					p.el.find('.editprofile').on('click', events.editprofile)
 					p.el.find('.startchat').on('click', events.startchat)
 					p.el.find('.openwallet').on('click', events.openwallet)
 					p.el.find('.videoCabinet').on('click', events.videoCabinet)
@@ -1269,7 +1301,6 @@ var authorn = (function(){
 
 	
 					if(
-						author.deleted || 
 						self.app.platform.sdk.user.reputationBlocked(address) || 
 						!author.data
 					){

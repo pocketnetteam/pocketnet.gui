@@ -1837,12 +1837,18 @@ Application = function (p) {
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
-		window.requestAnimationFrame(() => {
 
 
 			document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
 			document.documentElement.style.setProperty('--keyboardheight', `0px`);
-		})
+
+
+		if(!window.cordova || isios()){
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `40px`);
+		}else{
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `0px`);
+		}
+			
 
 		istouchstyle()
 
@@ -2678,6 +2684,7 @@ Application = function (p) {
 			}
 		},
 		statusbar: {
+			status : 'background',
 			initial : function(){
 				/*if (window.NavigationBar)
 					window.NavigationBar.hide()*/
@@ -2706,11 +2713,12 @@ Application = function (p) {
 
 					window.NavigationBar.backgroundColorByHexString(colors[c], c == 'white');
 				}
+
+				self.mobile.statusbar.status = 'background'
 					
 			},
 
 			gallerybackground: function () {
-
 
 				if (window.StatusBar) {
 
@@ -2721,6 +2729,9 @@ Application = function (p) {
 
 				if (window.NavigationBar)
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+
+				self.mobile.statusbar.status = 'gallerybackground'
+				
 
 			},
 

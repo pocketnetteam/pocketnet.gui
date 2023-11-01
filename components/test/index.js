@@ -173,7 +173,7 @@ var test = (function(){
 
 					saving = false
 
-					if (primary){
+					if (primary && !ed.reloadOnly){
 
 						self.nav.api.go({
 							href : 'index',
@@ -1219,7 +1219,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow normalizedmobile',
+				class : 'withoutButtons allscreen testwindow normalizedmobile maxheight',
 				closecross : function(){
 					if(ed.fail) ed.fail()
 				}

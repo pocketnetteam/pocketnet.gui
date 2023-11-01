@@ -1,3 +1,9 @@
+<% 
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+%>
+
 <div class="uinfo">
     <div class="ucaption">
         <span><%-e('information')%></span>
@@ -42,25 +48,28 @@
         </div>
     </div>
 
-    <% var _d = deep(author, 'data.regdate')
+    <% if(!sUserInfo.deleted) {%>
 
-        if(_d ) {
+        <% var _d = deep(author, 'data.regdate')
 
-            var d = new Date();
-                d.setTime(_d * 1000);	
+            if(_d ) {
 
-        %>
+                var d = new Date();
+                    d.setTime(_d * 1000);	
 
-        <div class="item date">
-            <div class="itemtable">
-                <div class="icon"><i class="far fa-calendar"></i></div>
-                <div class="label"><span><%=e('joined')%></span></div>
-                <div class="value">
-                    <span><%-_d.yyyymmdd('.')%></span>
+            %>
+
+            <div class="item date">
+                <div class="itemtable">
+                    <div class="icon"><i class="far fa-calendar"></i></div>
+                    <div class="label"><span><%=e('joined')%></span></div>
+                    <div class="value">
+                        <span><%-_d.yyyymmdd('.')%></span>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        <% } %>
     <% } %>
 
     
