@@ -139,6 +139,16 @@
         button{
             border-radius: @rad;
             font-size: 1em;
+
+            i{
+                font-size: 0.8em;
+            }
+
+            &.icon{
+                i{
+                    font-size: 1em;
+                }
+            }
         }
     }
 
@@ -157,7 +167,7 @@
             flex-shrink: 0;
             width: 280px;
             position: relative;
-            top : -6em; 
+            top : -70px; 
             float: left;
         }
 
@@ -177,6 +187,12 @@
             background: rgba(var(--background-total-theme), 1);
             padding : 2 * @rhythm;
             display: none;
+
+            .empty{
+                text-align: center;
+                color : rgb(var(--neutral-grad-3));
+                font-size: 0.9em;
+            }
     
             &.active{
                 display: block;
@@ -210,6 +226,10 @@
         .itemtable{
             display: flex;
             align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-right: @rhythm;
         }
 
         .item{
@@ -217,8 +237,8 @@
                 margin-right: @rhythm;
 
                 i{
-                    width: 22px;
-                    text-align: center;
+                    width: 14px;
+                    text-align: left;
                     opacity: 0.7;
                     font-size: 0.8em;
                 }
@@ -245,12 +265,15 @@
             margin-bottom: @rhythm;
             padding-bottom: @rhythm;
             border-bottom: 1px solid rgb(var(--neutral-grad-0));
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .foraddress{
             .label{
                 cursor: pointer;
                 span{
+                    font-size: 0.8em;
                 }
             }
         }

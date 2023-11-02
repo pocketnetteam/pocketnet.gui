@@ -12,7 +12,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         <% if(!sUserInfo.deleted) {%>
 
             <% if(author.me) {%>
-                <button class="button editprofile"><%-e('e13186')%></button>
+                <!--<button class="button editprofile"><%-e('e13186')%></button>-->
             <% } %>
             <!--<button class="button openwallet"><%= e('rwallet') %></button>-->
             <!--<button class="button videoCabinet"><%= e('videoCabinet') %></button>-->
@@ -36,7 +36,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
         <% if(!sUserInfo.deleted) {%>
 
-            <button class="button startchat"><%= e('startchat') %></button>
+            <button class="button startchat"><%= e('startchat') %> <i class="fas fa-comment"></i></button>
 
         <% } %>
 
