@@ -110,6 +110,12 @@
   border-radius: 12px;
   font-size: 1em;
 }
+#authorn .fbuttonsrow button i {
+  font-size: 0.8em;
+}
+#authorn .fbuttonsrow button.icon i {
+  font-size: 1em;
+}
 #authorn .upbuttonwrapper {
   position: relative;
   z-index: 2;
@@ -119,7 +125,7 @@
   flex-shrink: 0;
   width: 280px;
   position: relative;
-  top: -6em;
+  top: -70px;
   float: left;
 }
 #authorn .acontent .rcolumn {
@@ -134,6 +140,13 @@
   background: rgba(var(--background-total-theme), 1);
   padding: 1em;
   display: none;
+}
+#authorn .lcolumn .blocking .empty,
+#authorn .lcolumn .subscribes .empty,
+#authorn .lcolumn .subscribers .empty {
+  text-align: center;
+  color: rgb(var(--neutral-grad-3));
+  font-size: 0.9em;
 }
 #authorn .lcolumn .blocking.active,
 #authorn .lcolumn .subscribes.active,
@@ -162,13 +175,17 @@
 #authorn .uinfo .itemtable {
   display: flex;
   align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 0.5em;
 }
 #authorn .uinfo .item .icon {
   margin-right: 0.5em;
 }
 #authorn .uinfo .item .icon i {
-  width: 22px;
-  text-align: center;
+  width: 14px;
+  text-align: left;
   opacity: 0.7;
   font-size: 0.8em;
 }
@@ -186,9 +203,14 @@
   margin-bottom: 0.5em;
   padding-bottom: 0.5em;
   border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #authorn .uinfo .foraddress .label {
   cursor: pointer;
+}
+#authorn .uinfo .foraddress .label span {
+  font-size: 0.8em;
 }
 #authorn .buttonsrow {
   display: flex;

@@ -851,6 +851,8 @@ var authorn = (function(){
 
 						var id = $(this).attr('mid')
 
+						if (id == current.id) return
+
 						actions.gonav(id)
 
 					})
