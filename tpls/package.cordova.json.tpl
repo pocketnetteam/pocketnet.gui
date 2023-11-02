@@ -75,9 +75,7 @@
         <% if(!store) {%>
                 "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
-        <% if(!gfree) {%>
-                "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
-        <% } %>
+        "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
     },
