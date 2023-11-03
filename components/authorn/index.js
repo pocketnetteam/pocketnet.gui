@@ -790,7 +790,10 @@ var authorn = (function(){
 					p.el.find('.showsubscribes').on('click', events.showsubscribes)
 					p.el.find('.showsubscribers').on('click', events.showsubscribers)
 
-					
+					p.el.find('.copyname').on('click', function(){
+						copyText($(this))
+						sitemessage(self.app.localization.e('successcopied'))
+					})
 
 					if(clbk) clbk()
 
@@ -1443,6 +1446,8 @@ var authorn = (function(){
 				el.subscribers = el.c.find('.subscribers')
 				el.blocking = el.c.find('.blocking')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
+
+				self.sdk.activity.adduser('visited', author.address)
 
 				initEvents();
 				init()

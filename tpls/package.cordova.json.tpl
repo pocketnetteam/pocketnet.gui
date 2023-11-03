@@ -60,7 +60,7 @@
         "cordova-plugin-camera-preview": "^0.12.3",
         "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
         "cordova-plugin-device": "^1.1.7",
-        "cordova-plugin-file": "^8.0.0",
+        "cordova-plugin-file": "git+https://github.com/apache/cordova-plugin-file.git",
         "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
         "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
         "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",

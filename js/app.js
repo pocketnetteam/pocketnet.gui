@@ -2611,6 +2611,8 @@ Application = function (p) {
 
 									self.mobile.saveImages.save(base64, name, function (d, err) {
 
+										console.log(d, err)
+
 										globalpreloader(false)
 
 										if (d) {
