@@ -5829,11 +5829,12 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 			directory.getFile(name, { create: true, exclusive: false }, function (entry) {
 				// After you save the file, you can access it with this URL
 				var myFileUrl = entry.toURL();
-
+				var haserror = false
 
 				entry.createWriter(function (writer) {
 
 					writer.onwriteend = function (evt) {
+						if(haserror) return
 						//sitemessage("File " + name + " successfully downloaded");
 
 						if (window.galleryRefresh) {
@@ -5855,7 +5856,7 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 					};
 
 					writer.onerror = function (e) {
-
+						haserror = true
 						if (clbk)
 							clbk(null, e)
 
@@ -5891,6 +5892,7 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 	}
 
 	var onerror = function (evt) {
+		console.log('evt', evt)
 		if (clbk) clbk(null, evt)
 	}
 

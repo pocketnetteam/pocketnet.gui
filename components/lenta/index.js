@@ -4816,6 +4816,8 @@ var lenta = (function(){
 
 		var shownewmaterials = function(c = 0){
 
+			if(!el.c) return
+
 			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
 				if(c > 0){
