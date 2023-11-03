@@ -1,9 +1,10 @@
 <div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
+	
+	<div class="caption">
+		<span><%=caption%></span> <span>(<%=addresses.length%>)</span>
+	</div>
+	
 	<% if(addresses.length) {%>
-
-		<div class="caption">
-			<span><%=caption%></span> <span>(<%=addresses.length%>)</span>
-		</div>
 
 		<div class="users">
 		</div>

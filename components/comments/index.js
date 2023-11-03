@@ -1833,7 +1833,7 @@ var comments = (function(){
 					
 					keydown : function(editor, e){
 						if(e.keyCode == 13){
-							if (isMobile() || e.ctrlKey){
+							if (e.ctrlKey){
 
 								setTimeout(() => {
 									if (c.hasClass('sending')) return

@@ -790,7 +790,10 @@ var authorn = (function(){
 					p.el.find('.showsubscribes').on('click', events.showsubscribes)
 					p.el.find('.showsubscribers').on('click', events.showsubscribers)
 
-					
+					p.el.find('.copyname').on('click', function(){
+						copyText($(this))
+						sitemessage(self.app.localization.e('successcopied'))
+					})
 
 					if(clbk) clbk()
 
