@@ -569,10 +569,10 @@
   display: none;
 }
 #lenta.byauthor.mainvideo .shares .authorgroup {
-  width: 33.33%;
+  width: 50%;
   clear: none;
 }
-#lenta.byauthor.mainvideo .shares .authorgroup:nth-child(3n + 1) {
+#lenta.byauthor.mainvideo .shares .authorgroup:nth-child(2n + 1) {
   clear: left;
 }
 #lenta.horizontal {

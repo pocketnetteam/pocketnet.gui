@@ -140,6 +140,6 @@
 .wnd.userlistwindow #userslist {
   padding: 1em;
 }
-html.mobileview #userslist {
+html.mobileview .wnd #userslist {
   padding: 1em;
 }
