@@ -581,8 +581,6 @@ var pSDK = function ({ app, api, actions }) {
                         }
                     }
 
-                    console.log('extendedObject', extendedObject, object)
-
                     if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
@@ -1047,8 +1045,6 @@ var pSDK = function ({ app, api, actions }) {
 
         cleanData: function (rawcomments) {
 
-            console.log('rawcomments', rawcomments)
-
             return _.filter(_.map(rawcomments, (c) => {
 
                 try {
@@ -1089,8 +1085,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getcomments', ['', '', app.user.address.value || '', ids]).then(d => {
 
-                    console.log("COMMENTS", d)
-
                     d = this.cleanData(d)
 
                     checkObjectInActions(_.map(d, (c) => {
@@ -1115,8 +1109,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         transform: function ({ key, data }) {
-
-            console.log('comments key, data', key, data)
 
             var comment = new pComment();
             comment.import(data)
