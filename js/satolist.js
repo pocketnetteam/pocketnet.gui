@@ -17342,6 +17342,9 @@ Platform = function (app, listofnodes) {
                             original : linkInfo
                         } : '';
 
+                        if(link.meta.id.indexOf('/audio') > -1){
+                            window.peertubeglobalcache[link.meta.id.replace('/audio', '')] = linkInfo
+                        }
                         window.peertubeglobalcache[link.meta.id] = linkInfo
                     }
 

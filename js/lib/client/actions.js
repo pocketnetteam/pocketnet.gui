@@ -418,6 +418,7 @@ var Action = function(account, object, priority, settings){
         
         return tx
     }
+    
 
     var save = function(){
 
@@ -579,15 +580,22 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            if(unspents.length < 50 && totalInputAmount > 0.1){
 
-                var spcount = 10
+
+            if(unspents.length < 100 && totalInputAmount > 0.001){
+
+                var spcount = 2
+
+                if(totalInputAmount > 0.5){
+                    spcount = 10
+                }
 
                 var divii = (totalInputAmount / spcount).toFixed(8)
                 var added = 0
 
                 for(var i = 0; i < spcount; i++){
                     if(i == spcount - 1){
+
 
                         outputs.push({
                             address : changeAddresses[0],
@@ -607,6 +615,7 @@ var Action = function(account, object, priority, settings){
                     }
                     
                 }
+
 
                 /*var divi = totalInputAmount / 2
 
@@ -640,9 +649,9 @@ var Action = function(account, object, priority, settings){
 
         //(options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
 
-        var totalOutputAmount = _.reduce(outputs, (m, u) => {
+        var totalOutputAmount = toFixed(_.reduce(outputs, (m, u) => {
             return m + u.amount
-        }, 0)
+        }, 0), 8)
 
         if (totalOutputAmount < totalInputAmount){
 
