@@ -167,6 +167,9 @@
 .share_common .hiddenpost .captionpreview {
   font-weight: 700;
 }
+.share_common .hiddenpost .sharecaption {
+  max-width: none!important;
+}
 .share_common .repostShare {
   border-radius: 12px;
   border: 1px solid rgba(var(--neutral-grad-1), 0.5);
