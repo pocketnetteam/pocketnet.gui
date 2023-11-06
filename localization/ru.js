@@ -422,7 +422,7 @@ _l.scoreLimitLight = "Вы достигли лимита выставления 
 _l.doubleLimitLight = "Вы уже ставили оценку этой публикации";
 
 _l.SelfSubscribeError = "Невозможно подписаться на себя";
-_l.DoubleSubscribeError = "Вы уже подписаны на этот аккаунт. Обновите страницу";
+_l.DoubleSubscribeError = "Попробуйте выполнить действие позже";
 _l.InvalideSubscribeError = "Возникла ошибка при отписке от аккаунта. Обновите страницу";
 _l.ChangeInfoLimitError = "Вы достигли лимита на изменение информации о себе. Попробуйте позднее";
 _l.SelfScoreError = "Невозможно поставить оценку себе";
@@ -2556,3 +2556,4 @@ _l.registration_blocked = _l.lockedaccount
 _l.horizontalSearchUsers = "Пользователи"
 _l.information = "Информация"
 _l.sendcoins = "Отправить PKOIN"
+_l.notificationsTurnOffQ = 'Вы действительно хотите отключить уведомления от данного пользователя?'

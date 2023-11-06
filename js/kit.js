@@ -2203,13 +2203,17 @@ pUserInfo = function(){
 
 	self.rc = 0;
 
+	self.content = {}
+
+	self.objectid = makeid()
+
+
 	self._import = function(v){
 		self.name = v.n || v.name || '';
 		self.image = v.i || v.image;
 		self.about = v.a || v.about || '';
 		self.language = v.l || v.language;
 		self.site = v.s || v.site || '';
-
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
@@ -2246,6 +2250,8 @@ pUserInfo = function(){
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		if(v.likers_count) self.likers_count = v.likers_count
+
+		if(v.content) self.content = v.content
 
 		self.keys = (v.k || v.keys || '')
 
@@ -2338,12 +2344,13 @@ pUserInfo = function(){
 		v.blockings_count = self.blockings_count
 		v.likers_count = self.likers_count
 		v.postcnt = self.postcnt
+		v.content = _.clone(self.content)
 
 
 		if (self.regdate && self.regdate.getTime){
 			v.regdate = self.regdate.getTime() / 1000
 		}
-			
+
 
 		return v
 	}
@@ -2391,23 +2398,31 @@ pUserInfo = function(){
 		}))
 	}
 
+	var loadingRelations = {}
+
 	self.loadRelation = function(key, loadFunction){
 		if (self[key + '_loaded']){
 			return Promise.resolve()
 		}
 
-		return loadFunction(self.address, key).then(v => {
+		if(loadingRelations[key]) return loadingRelations[key]
+
+		loadingRelations[key] = loadFunction(self.address, key).then(v => {
 
 			self[key] = v
 
 			self[key + '_loaded'] = true
 
-			return Promise.resolve()
+			return Promise.resolve(self[key])
 		}).catch(e => {
 
 			console.error(e)
-			return Promise.resolve()
+			return Promise.resolve(null)
+		}).finally(() => {
+			delete loadingRelations[key]
 		})
+
+		return loadingRelations[key]
 	}
 
 	self.relation = function(address, key){
@@ -2478,7 +2493,30 @@ pUserInfo = function(){
 
 			ui._import(self.export())
 
+		_.each(loadingRelations, (relfu, key) => {
+			ui.setLoadingRelations(relfu, key)
+		})
+		
 		return ui
+	}
+
+	self.setLoadingRelations = function(relfu, key){
+		loadingRelations[key] = relfu
+
+
+		loadingRelations[key].then((result) => {
+
+
+			if (result){
+				self[key] = v
+				self[key + '_loaded'] = true
+			}
+
+			return Promise.resolve(result)
+		}).finally(() => {
+			delete loadingRelations[key]
+		})
+
 	}
 
 	self.type = 'userInfo'

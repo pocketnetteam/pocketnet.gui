@@ -8530,7 +8530,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
 
-                    var userInfo = self.psdk.userInfo.getmy()
+                    var userInfo = self.psdk.userInfo.getmyoriginal()
 
                     if (userInfo){
 
@@ -9999,8 +9999,8 @@ Platform = function (app, listofnodes) {
             },
             
             get: function (addresses, clbk, light, reload) {
-
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
+
 
                     if(clbk) clbk(r)
 
@@ -10009,6 +10009,8 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk(null, e)
                 })
+            
+                
 
             },
 
@@ -19041,11 +19043,11 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            var share = self.psdk.share.get(data.txid) 
+                            var share = self.app.platform.psdk.share.get(data.txid) 
 
                             if (share && share.itisstream()){
 
-                                self.nav.api.load({
+                                platform.app.nav.api.load({
                                     open : true,
                                     href : 'index?video=1&v=' + data.txid,
                                     history : true
@@ -22559,102 +22561,106 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                lazyActions([
-                    self.actions.prepare,
-                    //self.sdk.node.transactions.loadTemp,
-                    
-                    self.sdk.addresses.init,
-                    self.sdk.ustate.me,
-                    self.sdk.user.get,
-                    self.sdk.usersettings.init,
-                    self.matrixchat.importifneed,
-                    self.ws.init,
-                    self.firebase.init,
-                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
-
-                    //self.sdk.exchanges.load,
-                    self.sdk.articles.init,
-                    self.sdk.categories.load,
-                    self.sdk.activity.load,
-                    self.sdk.recommendations.load,
-                    self.sdk.memtags.load,
-                    self.sdk.node.shares.parameters.load,
-                    self.sdk.sharesObserver.init,
-                    self.sdk.comments.loadblocked,
-                    
-
-                ], function () {
-
-                    //self.ui.showmykey()
-
-                    setTimeout(() => {
-                        self.ui.showkeyafterregistration()
-                    },3000)
-                    
-                    var account = self.actions.addAccount(self.app.user.address.value)
-
-                    if (self.psdk.userState.getmy()) account.setStatus(true)
-
-                    account.setKeys(app.user.keys())
-                    account.updateUnspents().catch(e => {
-                        console.error(e)
-                    })
-
-                    
-
-                    self.preparingUser = false;
-
-                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                    self.app.Logger.info({
-                        actionId: 'SESSION_STARTED',
-                        actionSubType: 'AUTHORIZED_SESSION',
-                    });
-
-                    setTimeout(() => {
-                        self.matrixchat.init()
-                    }, 10)
-
-                    if (clbk)
-                        clbk()
-
-                    setTimeout(self.acceptterms, 5000)
-
-                    setTimeout(function(){
-
-                        self.app.peertubeHandler.init()
-
-                        lazyActions([
-                            self.cryptography.prepare,
-                            self.sdk.pool.init,
-                            self.sdk.user.subscribeRef
-                        ], function(){
-                            //app.notifications.subscribe()
+                self.actions.prepare(() => {
+                    lazyActions([
+                
+                        //self.sdk.node.transactions.loadTemp,
+                        self.sdk.addresses.init,
+                        self.sdk.ustate.me,
+                        self.sdk.user.get,
+                        self.sdk.usersettings.init,
+                        self.matrixchat.importifneed,
+                        self.ws.init,
+                        self.firebase.init,
+                        /*self.app.platform.sdk.node.transactions.get.allBalance,*/
+    
+                        //self.sdk.exchanges.load,
+                        self.sdk.articles.init,
+                        self.sdk.categories.load,
+                        self.sdk.activity.load,
+                        self.sdk.recommendations.load,
+                        self.sdk.memtags.load,
+                        self.sdk.node.shares.parameters.load,
+                        self.sdk.sharesObserver.init,
+                        self.sdk.comments.loadblocked,
+                        
+    
+                    ], function () {
+    
+                        //self.ui.showmykey()
+    
+                        setTimeout(() => {
+                            self.ui.showkeyafterregistration()
+                        },3000)
+                        
+                        var account = self.actions.addAccount(self.app.user.address.value)
+    
+                        if (self.psdk.userState.getmy()) account.setStatus(true)
+    
+                        account.setKeys(app.user.keys())
+                        account.updateUnspents().catch(e => {
+                            console.error(e)
                         })
-
-                        if (app.curation()){
-                            if(app.user.validate()){
-                                if(app.nav.get.href() == 'userpage?pc=1'){
-                                    self.matrixchat.core.apptochat()
+    
+                        
+    
+                        self.preparingUser = false;
+    
+                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+    
+                        self.app.Logger.info({
+                            actionId: 'SESSION_STARTED',
+                            actionSubType: 'AUTHORIZED_SESSION',
+                        });
+    
+                        setTimeout(() => {
+                            self.matrixchat.init()
+                        }, 10)
+    
+                        if (clbk)
+                            clbk()
+    
+                        setTimeout(self.acceptterms, 5000)
+    
+                        setTimeout(function(){
+    
+                            self.app.peertubeHandler.init()
+    
+                            lazyActions([
+                                self.cryptography.prepare,
+                                self.sdk.pool.init,
+                                self.sdk.user.subscribeRef
+                            ], function(){
+                                //app.notifications.subscribe()
+                            })
+    
+                            if (app.curation()){
+                                if(app.user.validate()){
+                                    if(app.nav.get.href() == 'userpage?pc=1'){
+                                        self.matrixchat.core.apptochat()
+                                    }
                                 }
                             }
-                        }
-
-                        self.sdk.notifications.init().catch(e => {})
-
-                        if(self.istest()){
-                            $('html').addClass('testaddress')
-                        }
-                        else{
-                            if ($('html').hasClass('testaddress'))
-                                $('html').removeClass('testaddress')
-                        }
-
-                    }, 2000)
-
-            
-
+    
+                            self.sdk.notifications.init().catch(e => {})
+    
+                            if(self.istest()){
+                                $('html').addClass('testaddress')
+                            }
+                            else{
+                                if ($('html').hasClass('testaddress'))
+                                    $('html').removeClass('testaddress')
+                            }
+    
+                        }, 2000)
+    
+                
+    
+                    })
                 })
+                
+
+                
             }
             else {
                 self.app.Logger.info({

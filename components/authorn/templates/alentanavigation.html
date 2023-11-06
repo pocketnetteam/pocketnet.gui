@@ -6,7 +6,7 @@
                 if(!meta.text) return
                 
                 %>
-                <div class="navitem <% if(meta.id == current.id) {%> active <% } %> truenav" mid="<%- meta.id %>"><span><%-e(meta.text)%></span></div>
+                <div class="navitem <% if(meta.id == current.id) {%> active <% } %> truenav" mid="<%- meta.id %>"><span class="label"><%-e(meta.text)%></span><% if(meta.count()) {%><span class="count"><%-meta.count()%></span><%}%></div>
             <% }) %>
         </div>
         <div class="navitem searchIcon"><i class="fas fa-search"></i></div>
