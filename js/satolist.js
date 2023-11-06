@@ -8534,7 +8534,7 @@ Platform = function (app, listofnodes) {
 
                     if (userInfo){
 
-                        if(userInfo.subscribers_count + userInfo.subscribes_count + userInfo.blockings_count < 20){
+                        if(userInfo.subscribers_count + userInfo.subscribes_count + userInfo.blockings_count < 2000){
                             self.sdk.user.getfullfb(clbk, update)
                         }
                         else{
