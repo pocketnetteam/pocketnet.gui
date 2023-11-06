@@ -1,0 +1,608 @@
+#authorn {
+  background: rgb(var(--background-main));
+  min-height: 1200px;
+}
+#authorn .maincntwrapperOvf .work {
+  max-width: 1076px;
+}
+#authorn .work.mwork {
+  padding: 0!important;
+  overflow: hidden;
+}
+#authorn .work .work {
+  width: 100%!important;
+}
+#authorn .bgwallpaperWrapper {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 200px;
+  /*aspect-ratio: 4;*/
+  z-index: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #051b48;
+  bottom: 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 21;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .work {
+  max-width: 1076px;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
+  cursor: pointer;
+  border-radius: 12px;
+  width: 44px;
+  line-height: 42px;
+  background: rgba(var(--background-main), 0.3);
+  border: 1px solid rgba(var(--background-main), 0.5);
+  color: rgba(var(--background-main), 0.7);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  text-align: center;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item:hover {
+  background: rgba(var(--background-main), 0.3);
+  border: 1px solid rgba(var(--background-main), 0.7);
+  color: rgba(var(--background-main), 0.9);
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted,
+#authorn .bgwallpaperWrapper .bgwallpaper.blocked {
+  background: #48052b;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted .grad,
+#authorn .bgwallpaperWrapper .bgwallpaper.blocked .grad {
+  background: #010101;
+  background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.deleted .bgpanel {
+  display: none;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper > div {
+  opacity: 0.4;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper > div.grad {
+  opacity: 1;
+}
+#authorn .bgwallpaperWrapper .grad {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #010101;
+  background: linear-gradient(180deg, rgba(30, 141, 236, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+  z-index: 0;
+  height: 100%;
+}
+#authorn .acontentps {
+  height: 200px;
+  /*aspect-ratio: 4;*/
+}
+#authorn .blocking,
+#authorn .subscribes,
+#authorn .subscribers,
+#authorn .uinfoWr,
+#authorn .fbuttonsrow {
+  margin-top: 0.5em;
+}
+#authorn .fbuttonsrow button {
+  border-radius: 12px;
+  font-size: 1em;
+}
+#authorn .fbuttonsrow button i {
+  font-size: 0.8em;
+}
+#authorn .fbuttonsrow button.icon i {
+  font-size: 1em;
+}
+#authorn .fbuttonsrow button.bright {
+  color: rgb(var(--color-txt-ac-1));
+}
+#authorn .upbuttonwrapper {
+  position: relative;
+  z-index: 2;
+}
+#authorn .acontent .lcolumn {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 280px;
+  position: relative;
+  top: -70px;
+  float: left;
+}
+#authorn .acontent .rcolumn {
+  margin-left: 280px;
+  padding-left: 0.5em;
+  flex-grow: 2;
+}
+#authorn .lcolumn .blocking,
+#authorn .lcolumn .subscribes,
+#authorn .lcolumn .subscribers {
+  border-radius: 12px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
+  display: none;
+}
+#authorn .lcolumn .blocking .empty,
+#authorn .lcolumn .subscribes .empty,
+#authorn .lcolumn .subscribers .empty {
+  text-align: center;
+  color: rgb(var(--neutral-grad-3));
+  font-size: 0.9em;
+}
+#authorn .lcolumn .blocking.active,
+#authorn .lcolumn .subscribes.active,
+#authorn .lcolumn .subscribers.active {
+  display: block;
+}
+#authorn .uinfo {
+  border-radius: 12px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
+  padding-right: 0.5em;
+}
+#authorn .uinfo .ucaption {
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+}
+#authorn .uinfo .ucaption span {
+  font-weight: 700;
+}
+#authorn .uinfo .ucaption i {
+  margin-left: auto;
+  padding: 0.5em;
+  display: none;
+}
+#authorn .uinfo .itemtable {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 0.5em;
+}
+#authorn .uinfo .item .icon {
+  margin-right: 0.5em;
+}
+#authorn .uinfo .item .icon i {
+  width: 14px;
+  text-align: left;
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+#authorn .uinfo .item .label span {
+  font-size: 0.9em;
+}
+#authorn .uinfo .item .value {
+  margin-left: auto;
+}
+#authorn .uinfo .item .value span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#authorn .uinfo .about {
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#authorn .uinfo .foraddress .label {
+  cursor: pointer;
+}
+#authorn .uinfo .foraddress .label span {
+  font-size: 0.8em;
+}
+#authorn .buttonsrow {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 0.5em;
+}
+#authorn .buttonsrow button {
+  flex-grow: 2;
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--text-color));
+  border-color: rgb(var(--background-total-theme));
+  min-width: 30%;
+}
+#authorn .buttonsrow button:nth-last-child(1) {
+  margin-right: 0;
+}
+#authorn .buttonsrow button:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+#authorn .buttonsrow button i {
+  opacity: 0.7;
+}
+#authorn .buttonsrow button.icon {
+  min-width: 44px;
+  max-width: 88px;
+}
+#authorn .aucaption {
+  position: relative;
+}
+#authorn .aucaption .usericon {
+  top: -1.5em;
+  left: 50%;
+  margin-left: -1.5em;
+  position: absolute;
+  font-size: 2.5em;
+  border: 1px solid rgb(var(--background-total-theme));
+  z-index: 2;
+}
+#authorn .aucaption .contentinfo {
+  border-radius: 12px;
+  background: rgba(var(--background-total-theme), 1);
+  padding: 1em;
+  padding-top: 4.5em;
+}
+#authorn .aucaption .contentinfo .namewrapper {
+  text-align: center;
+}
+#authorn .aucaption .contentinfo .namewrapper span {
+  font-size: 1.2em;
+  font-weight: 700;
+  cursor: pointer;
+}
+#authorn .aucaption .contentinfo .sminfo {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+#authorn .aucaption .contentinfo .sminfo .row {
+  flex-basis: 33%;
+  display: flex;
+  flex-flow: column;
+  margin-right: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+  border-right: 1px solid rgb(var(--neutral-grad-0));
+}
+#authorn .aucaption .contentinfo .sminfo .row:nth-last-child(1) {
+  margin-right: 0;
+  padding-right: 0;
+  border-right: 0;
+}
+#authorn .aucaption .contentinfo .sminfo span {
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+#authorn .aucaption .contentinfo .sminfo span.label {
+  opacity: 0.7;
+}
+#authorn .aucaption .contentinfo .sminfo span.value {
+  font-weight: 700;
+}
+#authorn .aucaption .contentinfo .sminfo .fa-star {
+  color: rgb(var(--color-txt-ac));
+}
+#authorn .aucaption .contentinfo .editprofileWrapper {
+  margin-top: 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+#authorn .aucaption .contentinfo .editprofileWrapper span {
+  font-size: 0.7em;
+  text-decoration: underline;
+  color: rgb(var(--color-txt-ac));
+}
+#authorn .aucaption .contentinfo .showsubscribers,
+#authorn .aucaption .contentinfo .showsubscribes {
+  cursor: pointer;
+}
+#authorn .aucaption .deletedAccount {
+  text-align: center;
+  padding-bottom: 2em;
+}
+#authorn .aucaption .deletedAccount .deletedsettings {
+  margin-top: 1em;
+  cursor: pointer;
+}
+#authorn .whatsnew {
+  margin-top: 0.5em;
+  border-radius: 12px;
+  background: rgba(var(--background-total-theme), 1);
+}
+#authorn .lentawrapper {
+  margin-top: 0.5em;
+}
+#authorn .alentanavigation {
+  margin-top: 0.5em;
+  border-radius: 12px;
+  padding-right: 1em;
+  background: rgba(var(--background-total-theme), 1);
+}
+#authorn .alentanavigation .navisearchWrapper.searchActive .navi {
+  display: none;
+}
+#authorn .alentanavigation .navisearchWrapper.searchActive .alSearchWrapper {
+  display: block;
+}
+#authorn .alentanavigation .alSearchWrapper {
+  display: none;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchPanel {
+  border: 0;
+  background: transparent;
+  display: table-cell;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchPanel .searchPanelWrapper > div[event=clear] {
+  display: block;
+}
+#authorn .alentanavigation .alSearchWrapper .search .searchInput .searchInputIcon .sminput {
+  height: 51px;
+  background: transparent;
+  padding-left: 0.5em;
+  border: 0;
+}
+#authorn .alentanavigation .navi {
+  display: flex;
+}
+#authorn .alentanavigation .navi .naviscrollwrapper {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  scrollbar-width: 0px;
+}
+#authorn .alentanavigation .navi .naviscrollwrapper::-webkit-scrollbar {
+  width: 0;
+}
+#authorn .alentanavigation .navi .naviscrollwrapper::-webkit-scrollbar {
+  display: none!important;
+}
+#authorn .alentanavigation .navi .navitem {
+  padding: 1em 1em;
+}
+#authorn .alentanavigation .navi .navitem span {
+  color: rgb(var(--neutral-grad-2));
+  font-weight: 500;
+  position: relative;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+#authorn .alentanavigation .navi .navitem span.label:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  border-bottom: 2px solid transparent;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#authorn .alentanavigation .navi .navitem {
+  cursor: pointer;
+}
+#authorn .alentanavigation .navi .navitem.active span {
+  color: rgb(var(--color-txt-ac));
+}
+#authorn .alentanavigation .navi .navitem.active span:after {
+  border-bottom: 2px solid rgb(var(--color-txt-ac));
+}
+@media (pointer: hover) {
+  #authorn .alentanavigation .navi .navitem:hover span {
+    color: rgb(var(--color-txt-ac));
+  }
+  #authorn .alentanavigation .navi .navitem:hover span:after {
+    border-bottom: 2px solid rgb(var(--color-txt-ac));
+  }
+}
+#authorn .alentanavigation .navi .searchIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+#authorn .alentanavigation .navi .searchIcon i {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-2));
+}
+#authorn .vdivcontainer {
+  display: flex;
+  width: 200%;
+  align-items: flex-start;
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+#authorn .vdivcontainer > div {
+  width: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+#authorn .mainpanelsvicell,
+#authorn .mainpanelcell {
+  display: none;
+}
+#authorn .maincntwrapperOvf {
+  -moz-transition: 0.1s;
+  -o-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+#authorn .lentacellsvi {
+  margin-right: 0;
+  padding-top: 0.5em;
+}
+#authorn .opensvi {
+  display: none;
+}
+#authorn .opensvi .backtolenta {
+  opacity: 0;
+}
+#authorn .opensvi .leftpanelsvicell {
+  display: none;
+}
+#authorn .upbackbuttonwrapper {
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  -webkit-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  -moz-transition-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+#authorn .upbackbuttonwrapper .upbutton {
+  position: absolute;
+  top: 0;
+}
+#authorn .upbuttonwrapper {
+  opacity: 1;
+  -webkit-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  -moz-transition-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+#authorn .upbuttonwrapper {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#authorn.opensvishowed {
+  min-height: 990px;
+}
+#authorn.opensvishowed .upbackbuttonwrapper {
+  opacity: 1;
+}
+#authorn.opensvishowed .leftpanelcell {
+  opacity: 0;
+}
+#authorn.opensvishowed .opensvi {
+  display: block;
+}
+#authorn.opensvishowed .opensvi .backtolenta {
+  opacity: 1;
+}
+#authorn.opensvishowed .maincntwrapperOvf {
+  opacity: 0;
+}
+#authorn.opensvishowed .vdivcontainer {
+  transform: translateX(-50%);
+}
+#authorn.opensvishowed .upbuttonwrapper {
+  display: none;
+  opacity: 0;
+}
+#authorn.opensvishowed.opensvishowedend .maincntwrapperOvf {
+  height: 100px;
+}
+#authorn.opensvishowed.opensvishowedend .maincntwrapper {
+  display: none;
+}
+#authorn.opensvishowedWillremoved .vdivcontainer {
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  -webkit-transition: 0s;
+  transition: 0s;
+}
+#authorn .renderposthere #post {
+  background: transparent;
+}
+#authorn .fxd {
+  padding-top: 10px;
+}
+#authorn .fxdsmall {
+  top: 75px;
+}
+@media only screen and (max-width: 768px) {
+  #authorn .aucaption {
+    position: relative;
+  }
+  #authorn .aucaption .usericon {
+    font-size: 2em;
+  }
+  #authorn .aucaption .contentinfo {
+    padding-top: 3em;
+  }
+  #authorn .bgwallpaperWrapper {
+    height: 130px;
+  }
+  #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
+    padding: 0.5em;
+  }
+  #authorn .acontentps {
+    height: 130px;
+  }
+  #authorn .fbuttonsrow button {
+    height: 45px;
+  }
+  #authorn .acontent .work {
+    display: flex;
+    flex-flow: column;
+  }
+  #authorn .acontent .lcolumn {
+    width: 100%;
+    top: 0.5em;
+    float: none;
+  }
+  #authorn .acontent .lcolumn .blocking,
+  #authorn .acontent .lcolumn .subscribers,
+  #authorn .acontent .lcolumn .subscribes {
+    display: none;
+  }
+  #authorn .acontent .rcolumn {
+    margin-left: 0;
+    margin-top: 0.5em;
+    padding-left: 0;
+  }
+  #authorn .alentanavigation {
+    padding-right: 0.5em;
+  }
+  #authorn .uinfo {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right: 1em;
+  }
+  #authorn .uinfo .ucaption {
+    margin-bottom: 0;
+  }
+  #authorn .uinfo .ucaption i {
+    display: block;
+  }
+  #authorn .uinfo .item {
+    display: none;
+  }
+  #authorn .uinfo.showall .ucaption {
+    margin-bottom: 0.5em;
+  }
+  #authorn .uinfo.showall .ucaption i {
+    display: block;
+  }
+  #authorn .uinfo.showall .item {
+    display: block;
+  }
+}

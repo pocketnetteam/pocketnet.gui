@@ -173,7 +173,7 @@ var test = (function(){
 
 					saving = false
 
-					if (primary){
+					if (primary && !ed.reloadOnly){
 
 						self.nav.api.go({
 							href : 'index',
@@ -291,9 +291,6 @@ var test = (function(){
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
 						//exist = false
-
-						console.log('exist', exist)
-						
 
 						if(!exist || (exist == self.app.user.address.value)){
 
@@ -1222,7 +1219,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow normalizedmobile',
+				class : 'withoutButtons allscreen testwindow normalizedmobile maxheight',
 				closecross : function(){
 					if(ed.fail) ed.fail()
 				}

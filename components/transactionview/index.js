@@ -198,8 +198,6 @@ var transactionview = (function(){
 
 		var make = function(){
 
-			console.log("MAKE TRX", node, txid)
-
 			self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
 
 				if(_.isArray(_tx) && _tx.length) _tx = _tx[0]

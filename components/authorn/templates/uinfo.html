@@ -1,0 +1,94 @@
+<% 
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+%>
+
+<div class="uinfo">
+    <div class="ucaption">
+        <span><%-e('information')%></span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+
+    <% if(deep(author, 'data.about')) {
+        var a = deep(author, 'data.about');
+    %>
+    
+        <div class="item about">
+            <%=findAndReplaceLink(a, true)%>
+        </div>
+    
+    <% } %>
+    
+   
+    
+
+    <% if(deep(author, 'data.site')) {%>
+
+        <div class="item site">
+            <div class="itemtable">
+                <div class="icon"><i class="fas fa-link"></i></div>
+                
+                <div class="label">
+                    <a elementsid="<%-deep(author, 'data.site')%>" donottrust="true" href="<%-deep(author, 'data.site')%>">
+                        <span><%-filterXSS(deep(author, 'data.site'))%></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    <% } %>
+
+    <div class="item foraddress">
+        <div class="itemtable">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="label">
+                <span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
+            </div>
+        </div>
+    </div>
+
+    <% if(!sUserInfo.deleted) {%>
+
+        <% if(deep(author, 'data.postcnt')) {%>
+
+            <div class="item site">
+                <div class="itemtable">
+                    <div class="icon"><i class="fas fa-rss"></i></div>
+    
+                    <div class="label"><span><%=e('shares')%></span></div>
+                    <div class="value">
+                        <span><%-deep(author, 'data.postcnt')%></span>
+                    </div>
+    
+                </div>
+            </div>
+    
+        <% } %>
+        
+
+        <% var _d = deep(author, 'data.regdate')
+
+            if(_d ) {
+
+                var d = new Date();
+                    d.setTime(_d * 1000);	
+
+            %>
+
+            <div class="item date">
+                <div class="itemtable">
+                    <div class="icon"><i class="far fa-calendar"></i></div>
+                    <div class="label"><span><%=e('joined')%></span></div>
+                    <div class="value">
+                        <span><%-_d.yyyymmdd('.')%></span>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
+    <% } %>
+
+    
+</div>

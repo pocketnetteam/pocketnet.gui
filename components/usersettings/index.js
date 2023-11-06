@@ -80,7 +80,7 @@ var usersettings = (function(){
 							})
 
 							self.app.reload({
-								href : 'author'
+								href : 'authorn'
 							});
 
 						}).catch(e => {

@@ -537,7 +537,7 @@ Nav = function(app)
 						current.completeHref = p.completeHref;
 						
 
-						if(!p.goback){
+						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
 						}
 							

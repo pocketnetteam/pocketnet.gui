@@ -120,7 +120,7 @@ if (!args.sha) {
 
 var vars = {
 	test : {
-		proxypath : '"https://test.pocketnet.app:8899/"',
+		proxypath : '"http://test.pocketnet.app:8898/"',
 		domain : _meta[args.project].turl,
 		packageVersion: package.version,
 		test : '<script>window.testpocketnet = true;</script>',
@@ -134,7 +134,7 @@ var vars = {
 		run : args.run || false,
 	},
 	prod : {
-		proxypath : '"https://pocketnet.app:8899/"',
+		proxypath : '"http://pocketnet.app:8898/"',
 		domain : _meta[args.project].url,
 		packageVersion: package.version,
 		test : '',

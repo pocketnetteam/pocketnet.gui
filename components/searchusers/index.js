@@ -50,7 +50,6 @@ var searchusers = (function(){
 						end = true
 					}*/
 
-					console.log('data', data)
 
 					if(ed.loaded) ed.loaded(data)
 

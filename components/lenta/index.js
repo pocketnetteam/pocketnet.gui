@@ -105,7 +105,6 @@ var lenta = (function(){
 
 			translate : function(txid, dl){
 				return self.app.platform.sdk.translate.share.request(txid, dl).then((r) => {
-					console.log("R", r)
 					self.app.platform.sdk.translate.share.set(txid, dl)
 
 					var share = self.psdk.share.get(txid);
@@ -816,6 +815,8 @@ var lenta = (function(){
 			},
 			includeboost : function(clbk){
 
+				if(!el.c) return
+
 				var bsts = _.filter(boosted, function(b){
 					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
 				})
@@ -1145,6 +1146,7 @@ var lenta = (function(){
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration)* 100).toFixed(0),
+									data : share.export(true)
 								})
 
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
@@ -1675,10 +1677,16 @@ var lenta = (function(){
 
 				if (share.itisstream()){
 
+					if(essenseData.opensvi && essenseData.opensviStream){
+						
+						actions.opensvi(id)
+						return
+					}
+
 					self.nav.api.load({
 						open : true,
-						href : 'index?video=1&v=' + id,
-						history : true
+						href : (essenseData.urlprefix || 'index') + '?video=1&v=' + id,
+						history : true,
 					})
 
 					return
@@ -2214,6 +2222,10 @@ var lenta = (function(){
 			videosInview : function(players, action, nvaction){	
 
 				//if(isMobile() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
+
+				if (essenseData.canloadmorescroll){
+					if(!essenseData.canloadmorescroll()) return
+				}
 				
 				if(fullscreenvideoShowed) return
 
@@ -4048,7 +4060,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
+				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
 					tpl = 'shares'
 				}
 
@@ -4691,8 +4703,6 @@ var lenta = (function(){
 
 				var author = essenseData.author;
 
-				console.log('allshares', allshares)
-
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
@@ -4881,7 +4891,7 @@ var lenta = (function(){
 
 						}
 
-						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
+						if (essenseData.getpin && author && !sharesInview.length){
 
 							self.psdk.accSet.load(author).then(setting => {
 
@@ -5048,10 +5058,6 @@ var lenta = (function(){
 
 							var period = 1440
 
-							console.log("HERE")
-
-							console.log('!!!!', self.app.platform.sdk.node.shares);
-
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -5080,8 +5086,6 @@ var lenta = (function(){
 								if (essenseData.shuffle) {
 									shares = _.shuffle(shares)
 								}
-
-								console.log('shares', shares)
 
 								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
 
@@ -5149,6 +5153,8 @@ var lenta = (function(){
 		}
 
 		var shownewmaterials = function(c = 0){
+
+			if(!el.c) return
 
 			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
@@ -5809,7 +5815,6 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log('getdata')
 				ovf = false
 
 				newmaterials = 0;

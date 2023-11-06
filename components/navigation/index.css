@@ -5,8 +5,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding-bottom: 40px;
-  height: 100px;
+  padding-bottom: calc(var(--app-margin-bottom));
+  height: calc(var(--app-margin-bottom, 0) + 60px + 0.5em);
   z-index: 200;
   contain: strict;
 }
@@ -55,7 +55,7 @@
   border-radius: 50%;
   height: 100%;
   width: 100%;
-  line-height: 60px;
+  line-height: calc(60px - 0.5em);
   margin: 0 auto;
   position: relative;
   color: rgb(var(--color-txt-gray-dark), 0.7);

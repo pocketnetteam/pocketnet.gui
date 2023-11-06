@@ -1034,7 +1034,7 @@ var Api = function(app){
 
         if(!options) 
             options = {}
-
+        
         return getproxy(options.proxy).then(proxy => {
             selectedProxy = proxy;
 

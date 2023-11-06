@@ -254,6 +254,7 @@ jobs:
           cd ./cordova
           echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
           echo "${{ secrets.ANDROID_BUILD_GFREE_CONF }}" | base64 -d > buildgfree.json
+          echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
         run: |
             cd $ANDROID_HOME/build-tools/33.0.0

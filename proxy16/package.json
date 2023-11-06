@@ -12,6 +12,7 @@
         "serve:test": "node --nouse-idle-notification --expose-gc --max-old-space-size=8192 cli.js --cli --test",
         "serveTest": "nodemon cli.js --cli --test",
         "serveProd": "nodemon cli.js --cli",
+        "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
         "uninstall-windows-service": "winser -r"
     },

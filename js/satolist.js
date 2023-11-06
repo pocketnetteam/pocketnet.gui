@@ -290,8 +290,12 @@ Platform = function (app, listofnodes) {
         'PXVp4QeaaomcREBJXuzH34GWiiinNby6HA': true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1': true,
         'PLm44qx3ArWbd46dKybCc43dwr2WFn8dT6': true,
-        'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true
-    }
+        'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
+        'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
+        'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
+    } 
 
     self.shark = {}
     self.moderator = {}
@@ -4182,8 +4186,6 @@ Platform = function (app, listofnodes) {
 
                                         if (node) link += '&node=' + node
 
-                                        console.log("send link", link)
-
                                         self.matrixchat.shareInChat.url(p.roomid, link) /// change protocol
                                     }
 
@@ -4598,9 +4600,9 @@ Platform = function (app, listofnodes) {
 
             var name = self.psdk.userInfo.getShortForm(address).clname
 
-            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name) return encodeURIComponent(name.toLowerCase());
 
-            else return 'author?address=' + address
+            else return 'authorn?address=' + address
         },
 
         authororexplorerlink: function (address) {
@@ -8576,7 +8578,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
 
-                    var userInfo = self.psdk.userInfo.getmy()
+                    var userInfo = self.psdk.userInfo.getmyoriginal()
 
                     if (userInfo){
 
@@ -10059,8 +10061,8 @@ Platform = function (app, listofnodes) {
             },
             
             get: function (addresses, clbk, light, reload) {
-
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
+
 
                     if(clbk) clbk(r)
 
@@ -10069,6 +10071,8 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk(null, e)
                 })
+            
+                
 
             },
 
@@ -10156,6 +10160,14 @@ Platform = function (app, listofnodes) {
             //////////////// ANOTHER
 
             addressByName: function (name, clbk) {
+
+                if(!name){
+                    if (clbk){
+                        clbk(null)
+                    }
+
+                    return
+                }
 
 
                 var valid = true;
@@ -14572,7 +14584,9 @@ Platform = function (app, listofnodes) {
                         return
                     }
 
-                    self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
+                    self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
+                        rejectIfError : true
+                    }).then(action => {
 
                         var alias = action.get()
 
@@ -17233,6 +17247,47 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            historygetall : function(){
+
+                var data = {}
+
+                for (var i = 0; i < localStorage.length; i++){
+
+                    var key = localStorage.key(i)
+
+                    if (key.indexOf(this.historykey) > -1){
+                        try{
+                            data[key.replace(this.historykey, '')] = JSON.parse(localStorage.getItem(key))
+
+                        }
+                        catch(e){
+
+                        }
+                    }
+                    
+                }
+
+                return _.map(_.sortBy(_.toArray(data),(v) => {
+                    return -(new Date(v.date)).getTime()
+                }), (v) => {
+                    if(v.data && v.data.data){
+
+                        var s = new pShare();
+
+                        var cleaned = self.psdk.share.cleanData([v.data.data])
+
+                        if (cleaned && cleaned.length){
+                            s._import(cleaned[0]);
+
+                            v.data.share = s
+                        }
+                        
+                    }
+
+                    return v
+                })
+            },
+
             historyget : function(txid){
 
                 var h = {
@@ -17265,6 +17320,8 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
+                lasthistory.txid = txid
+                lasthistory.data = data
 
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
@@ -17339,7 +17396,7 @@ Platform = function (app, listofnodes) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
-                        return Promise.resolve()
+                        return Promise.resolve(r)
                     }).catch(e => {
                         return Promise.resolve()
                     })
@@ -17428,6 +17485,9 @@ Platform = function (app, listofnodes) {
                             original : linkInfo
                         } : '';
 
+                        if(link.meta.id.indexOf('/audio') > -1){
+                            window.peertubeglobalcache[link.meta.id.replace('/audio', '')] = linkInfo
+                        }
                         window.peertubeglobalcache[link.meta.id] = linkInfo
                     }
 
@@ -18124,6 +18184,7 @@ Platform = function (app, listofnodes) {
                                 }else {
     
                                     const params = new URLSearchParams(body.url);
+
                                     platform.app.nav.api.load({
                                         open: true,
                                         href: 'post?s=' + params.get('s'),
@@ -18143,6 +18204,7 @@ Platform = function (app, listofnodes) {
                                             }
                                         }
                                     })
+
                                 }
                             }else{
                                 platform.app.nav.api.go({
@@ -18179,7 +18241,7 @@ Platform = function (app, listofnodes) {
 
                     platform.fcmtoken = token
                     currenttoken = token
-                platform.matrixchat.changeFcm()
+                    platform.matrixchat.changeFcm()
 
                     //prepareclbk(token)
 
@@ -19122,22 +19184,40 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
+                        self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                            var share = self.app.platform.psdk.share.get(data.txid) 
 
-                                    if(close) close()
-                                },
+                            if (share && share.itisstream()){
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                                platform.app.nav.api.load({
+                                    open : true,
+                                    href : 'index?video=1&v=' + data.txid,
+                                    history : true
+                                })
+
+                                if(close) close()
+                                
+                            }
+                            else{
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + data.txid,
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+
+                                        if(close) close()
+                                    },
+
+                                    essenseData: {
+                                        share: data.txid
+                                    }
+                                })
+                            }
+
+                        })
 
 
                     })
@@ -22624,102 +22704,106 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                lazyActions([
-                    self.actions.prepare,
-                    //self.sdk.node.transactions.loadTemp,
-                    
-                    self.sdk.addresses.init,
-                    self.sdk.ustate.me,
-                    self.sdk.user.get,
-                    self.sdk.usersettings.init,
-                    self.matrixchat.importifneed,
-                    self.ws.init,
-                    self.firebase.init,
-                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
-
-                    //self.sdk.exchanges.load,
-                    self.sdk.articles.init,
-                    self.sdk.categories.load,
-                    self.sdk.activity.load,
-                    self.sdk.recommendations.load,
-                    self.sdk.memtags.load,
-                    self.sdk.node.shares.parameters.load,
-                    self.sdk.sharesObserver.init,
-                    self.sdk.comments.loadblocked,
-                    
-
-                ], function () {
-
-                    //self.ui.showmykey()
-
-                    setTimeout(() => {
-                        self.ui.showkeyafterregistration()
-                    },3000)
-                    
-                    var account = self.actions.addAccount(self.app.user.address.value)
-
-                    if (self.psdk.userState.getmy()) account.setStatus(true)
-
-                    account.setKeys(app.user.keys())
-                    account.updateUnspents().catch(e => {
-                        console.error(e)
-                    })
-
-                    
-
-                    self.preparingUser = false;
-
-                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                    self.app.Logger.info({
-                        actionId: 'SESSION_STARTED',
-                        actionSubType: 'AUTHORIZED_SESSION',
-                    });
-
-                    setTimeout(() => {
-                        self.matrixchat.init()
-                    }, 10)
-
-                    if (clbk)
-                        clbk()
-
-                    setTimeout(self.acceptterms, 5000)
-
-                    setTimeout(function(){
-
-                        self.app.peertubeHandler.init()
-
-                        lazyActions([
-                            self.cryptography.prepare,
-                            self.sdk.pool.init,
-                            self.sdk.user.subscribeRef
-                        ], function(){
-                            //app.notifications.subscribe()
+                self.actions.prepare(() => {
+                    lazyActions([
+                
+                        //self.sdk.node.transactions.loadTemp,
+                        self.sdk.addresses.init,
+                        self.sdk.ustate.me,
+                        self.sdk.user.get,
+                        self.sdk.usersettings.init,
+                        self.matrixchat.importifneed,
+                        self.ws.init,
+                        self.firebase.init,
+                        /*self.app.platform.sdk.node.transactions.get.allBalance,*/
+    
+                        //self.sdk.exchanges.load,
+                        self.sdk.articles.init,
+                        self.sdk.categories.load,
+                        self.sdk.activity.load,
+                        self.sdk.recommendations.load,
+                        self.sdk.memtags.load,
+                        self.sdk.node.shares.parameters.load,
+                        self.sdk.sharesObserver.init,
+                        self.sdk.comments.loadblocked,
+                        
+    
+                    ], function () {
+    
+                        //self.ui.showmykey()
+    
+                        setTimeout(() => {
+                            self.ui.showkeyafterregistration()
+                        },3000)
+                        
+                        var account = self.actions.addAccount(self.app.user.address.value)
+    
+                        if (self.psdk.userState.getmy()) account.setStatus(true)
+    
+                        account.setKeys(app.user.keys())
+                        account.updateUnspents().catch(e => {
+                            console.error(e)
                         })
-
-                        if (app.curation()){
-                            if(app.user.validate()){
-                                if(app.nav.get.href() == 'userpage?pc=1'){
-                                    self.matrixchat.core.apptochat()
+    
+                        
+    
+                        self.preparingUser = false;
+    
+                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+    
+                        self.app.Logger.info({
+                            actionId: 'SESSION_STARTED',
+                            actionSubType: 'AUTHORIZED_SESSION',
+                        });
+    
+                        setTimeout(() => {
+                            self.matrixchat.init()
+                        }, 10)
+    
+                        if (clbk)
+                            clbk()
+    
+                        setTimeout(self.acceptterms, 5000)
+    
+                        setTimeout(function(){
+    
+                            self.app.peertubeHandler.init()
+    
+                            lazyActions([
+                                self.cryptography.prepare,
+                                self.sdk.pool.init,
+                                self.sdk.user.subscribeRef
+                            ], function(){
+                                //app.notifications.subscribe()
+                            })
+    
+                            if (app.curation()){
+                                if(app.user.validate()){
+                                    if(app.nav.get.href() == 'userpage?pc=1'){
+                                        self.matrixchat.core.apptochat()
+                                    }
                                 }
                             }
-                        }
-
-                        self.sdk.notifications.init().catch(e => {})
-
-                        if(self.istest()){
-                            $('html').addClass('testaddress')
-                        }
-                        else{
-                            if ($('html').hasClass('testaddress'))
-                                $('html').removeClass('testaddress')
-                        }
-
-                    }, 2000)
-
-            
-
+    
+                            self.sdk.notifications.init().catch(e => {})
+    
+                            if(self.istest()){
+                                $('html').addClass('testaddress')
+                            }
+                            else{
+                                if ($('html').hasClass('testaddress'))
+                                    $('html').removeClass('testaddress')
+                            }
+    
+                        }, 2000)
+    
+                
+    
+                    })
                 })
+                
+
+                
             }
             else {
                 self.app.Logger.info({
@@ -23668,7 +23752,8 @@ Platform = function (app, listofnodes) {
                     }, 200)
                 })
 
-
+                
+                
 
 
             }
