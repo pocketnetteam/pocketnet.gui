@@ -19041,11 +19041,11 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            var share = self.psdk.share.get(data.txid) 
+                            var share = self.app.platform.psdk.share.get(data.txid) 
 
                             if (share && share.itisstream()){
 
-                                self.nav.api.load({
+                                platform.app.nav.api.load({
                                     open : true,
                                     href : 'index?video=1&v=' + data.txid,
                                     history : true
