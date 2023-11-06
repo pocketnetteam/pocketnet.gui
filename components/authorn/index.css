@@ -116,6 +116,9 @@
 #authorn .fbuttonsrow button.icon i {
   font-size: 1em;
 }
+#authorn .fbuttonsrow button.bright {
+  color: rgb(var(--color-txt-ac-1));
+}
 #authorn .upbuttonwrapper {
   position: relative;
   z-index: 2;

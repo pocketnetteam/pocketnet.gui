@@ -638,7 +638,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (light) { parameters.push('1') }
 
-
                 return api.rpc('getuserprofile', parameters).then((data) => {
 
                     data = this.cleanData(data)
@@ -752,6 +751,13 @@ var pSDK = function ({ app, api, actions }) {
 
         getmy: function () {
             return app.user.address.value ? this.get(app.user.address.value) : null
+        },
+
+        getmyoriginal : function(){
+            if(!app.user.address.value) return null
+
+            return objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value]
+
         },
 
         get: function (address) {

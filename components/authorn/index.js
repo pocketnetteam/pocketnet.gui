@@ -605,6 +605,19 @@ var authorn = (function(){
 
 				self.app.platform.sdk.user.stateAction(() => {
 
+					var c = function(){
+						self.app.platform.api.actions[f](author.address, function(tx, err){
+
+							if(tx){
+							}
+							else
+							{
+								self.app.platform.errorHandler(err, true)
+							}
+	
+						})
+					}
+
 					var me = self.app.platform.psdk.userInfo.getmy()
 
 					var r = me ? me.relation(author.address, 'subscribes') : null
@@ -617,18 +630,29 @@ var authorn = (function(){
 						f = 'notificationsTurnOff'
 					}
 
-					console.log("G", f)
+					if (f == 'notificationsTurnOff'){
 
-					self.app.platform.api.actions[f](author.address, function(tx, err){
+						new dialog({
+							html : self.app.localization.e('notificationsTurnOffQ'),
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+	
+							class : 'zindex',
+	
+							success : function(){
+	
+								c()
+	
+							}
+						})
 
-						if(tx){
-						}
-						else
-						{
-							self.app.platform.errorHandler(err, true)
-						}
+					}
 
-					})
+					else{
+						c()
+					}
+
+					
 
 				})
 			},
@@ -1200,6 +1224,12 @@ var authorn = (function(){
 			},
 
 			userslist : function(_el, addresses, empty, caption, clbk, mid){
+
+				if (modules['userlist' + mid]){
+					modules['userlist' + mid].destroy()
+					modules['userlist' + mid] = null
+				}
+
 				self.nav.api.load({
 
 					open : true,
@@ -1217,6 +1247,8 @@ var authorn = (function(){
 					},
 					
 					clbk : function(e, p){
+
+						modules['userlist' + mid] = p
 
 						_el.addClass('active')
 
@@ -1342,6 +1374,10 @@ var authorn = (function(){
 	
 					author.data = self.psdk.userInfo.get(author.address)
 					author.me = self.app.user.isItMe(author.address)
+
+					//var me = self.app.platform.psdk.userInfo.getmy()
+
+				
 
 	
 					if(
