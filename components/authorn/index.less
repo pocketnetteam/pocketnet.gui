@@ -497,15 +497,19 @@
                     position: relative;
                     .transition(0.3s, color);
 
-                    &:after{
-                        content: "";
-                        position: absolute;
-                        bottom : -5px;
-                        left : 0;
-                        right: 0;
-                        border-bottom: 2px solid transparent;
-                        .transition(0.3s);
+                    &.label{
+                        &:after{
+                            content: "";
+                            position: absolute;
+                            bottom : -5px;
+                            left : 0;
+                            right: 0;
+                            border-bottom: 2px solid transparent;
+                            .transition(0.3s);
+                        }
                     }
+
+                    
                 }
             }
 

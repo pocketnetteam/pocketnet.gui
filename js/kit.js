@@ -2203,6 +2203,8 @@ pUserInfo = function(){
 
 	self.rc = 0;
 
+	self.content = {}
+
 	self._import = function(v){
 		self.name = v.n || v.name || '';
 		self.image = v.i || v.image;
@@ -2246,6 +2248,8 @@ pUserInfo = function(){
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		if(v.likers_count) self.likers_count = v.likers_count
+
+		if(v.content) self.content = v.content
 
 		self.keys = (v.k || v.keys || '')
 
@@ -2338,6 +2342,7 @@ pUserInfo = function(){
 		v.blockings_count = self.blockings_count
 		v.likers_count = self.likers_count
 		v.postcnt = self.postcnt
+		v.content = _.clone(self.content)
 
 
 		if (self.regdate && self.regdate.getTime){

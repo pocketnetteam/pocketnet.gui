@@ -21,7 +21,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
     
     <% } %>
     
-
+   
     
 
     <% if(deep(author, 'data.site')) {%>
@@ -29,6 +29,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         <div class="item site">
             <div class="itemtable">
                 <div class="icon"><i class="fas fa-link"></i></div>
+                
                 <div class="label">
                     <a elementsid="<%-deep(author, 'data.site')%>" donottrust="true" href="<%-deep(author, 'data.site')%>">
                         <span><%-filterXSS(deep(author, 'data.site'))%></span>
@@ -49,6 +50,23 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
     </div>
 
     <% if(!sUserInfo.deleted) {%>
+
+        <% if(deep(author, 'data.postcnt')) {%>
+
+            <div class="item site">
+                <div class="itemtable">
+                    <div class="icon"><i class="fas fa-rss"></i></div>
+    
+                    <div class="label"><span><%=e('shares')%></span></div>
+                    <div class="value">
+                        <span><%-deep(author, 'data.postcnt')%></span>
+                    </div>
+    
+                </div>
+            </div>
+    
+        <% } %>
+        
 
         <% var _d = deep(author, 'data.regdate')
 

@@ -222,6 +222,24 @@ var authorn = (function(){
 				params.opensvi = !isMobile() ? actions.openvi : null
 				
 				return params
+			},
+
+			/*
+			
+			CONTENT_POST = 200,
+			CONTENT_VIDEO = 201,
+			CONTENT_ARTICLE = 202,
+			CONTENT_STREAM = 209,
+			CONTENT_AUDIO = 210,
+			CONTENT_COLLECTION = 220,
+			
+			*/
+
+			count : function(){
+				return 0
+				var c = author.data.content || {}
+
+				return ((c[200] || 0) + (c[201] || 0) + (c[202] || 0) + (c[209] || 0) + (c[210] || 0)) || author.data.postcnt || 0
 			}
 		},{
 			id : 'video',
@@ -234,6 +252,13 @@ var authorn = (function(){
 				params.opensvi = !isMobile() ? actions.openvi : null
 
 				return params
+			},
+			count : function(){
+				return 0
+
+				var c = author.data.content || {}
+
+				return (c[201] || 0) + (c[209] || 0)
 			}
 		},{
 			id : 'articles',
@@ -242,6 +267,13 @@ var authorn = (function(){
 			extend : function(params){
 				params.read = true
 				return params
+			},
+			count : function(){
+				return 0
+
+				var c = author.data.content || {}
+
+				return (c[202] || 0)
 			}
 		},{
 			id : 'audio',
@@ -250,6 +282,13 @@ var authorn = (function(){
 			extend : function(params){
 				params.audio = true
 				return params
+			},
+			count : function(){
+				return 0
+				
+				var c = author.data.content || {}
+
+				return (c[210] || 0)
 			}
 		},{
 			id : 'search',

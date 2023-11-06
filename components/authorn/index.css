@@ -387,7 +387,7 @@
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-#authorn .alentanavigation .navi .navitem span:after {
+#authorn .alentanavigation .navi .navitem span.label:after {
   content: "";
   position: absolute;
   bottom: -5px;

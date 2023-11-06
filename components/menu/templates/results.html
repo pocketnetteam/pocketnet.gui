@@ -29,7 +29,7 @@
 
 				<% if(value.indexOf("#") == -1) {%>
 
-					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
+					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value.replace(/[,.!?;:()\n\r]/g, '')%>">
 						<div class="searchby searchbyvalue">
 					
 							<div class="swrp managebutton">
