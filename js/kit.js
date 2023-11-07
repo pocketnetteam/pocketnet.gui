@@ -2162,6 +2162,7 @@ Transaction = function(){
 
 }
 
+
 pUserInfo = function(){
 
 	var self = this;
@@ -2206,7 +2207,6 @@ pUserInfo = function(){
 	self.content = {}
 
 	self.objectid = makeid()
-
 
 	self._import = function(v){
 		self.name = v.n || v.name || '';
@@ -2400,6 +2400,8 @@ pUserInfo = function(){
 
 	var loadingRelations = {}
 
+	self.relclbks = {}
+
 	self.loadRelation = function(key, loadFunction){
 		if (self[key + '_loaded']){
 			return Promise.resolve()
@@ -2409,11 +2411,22 @@ pUserInfo = function(){
 
 		loadingRelations[key] = loadFunction(self.address, key).then(v => {
 
-			self[key] = v
+			if(v){
 
-			self[key + '_loaded'] = true
+				self[key] = v
 
-			return Promise.resolve(self[key])
+				self[key + '_loaded'] = true
+
+				_.each(self.relclbks || {}, (c) => {
+					c(key, v)
+				})
+	
+				return Promise.resolve(self[key])
+			}
+
+			return Promise.resolve(null)
+
+			
 		}).catch(e => {
 
 			console.error(e)
@@ -2496,20 +2509,32 @@ pUserInfo = function(){
 		_.each(loadingRelations, (relfu, key) => {
 			ui.setLoadingRelations(relfu, key)
 		})
-		
+
+		ui.relclbks[self.objectid] = (key, v) => {
+
+			self[key] = v
+			self[key + '_loaded'] = true
+
+			_.each(self.relclbks || {}, (c) => {
+				c(key, v)
+			})
+		}
+
+		ui.cloned = self.objectid
+
 		return ui
 	}
 
 	self.setLoadingRelations = function(relfu, key){
 		loadingRelations[key] = relfu
 
-
 		loadingRelations[key].then((result) => {
 
-
 			if (result){
+
 				self[key] = v
 				self[key + '_loaded'] = true
+
 			}
 
 			return Promise.resolve(result)
