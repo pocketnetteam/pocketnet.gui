@@ -222,6 +222,24 @@ var authorn = (function(){
 				params.opensvi = !isMobile() ? actions.openvi : null
 				
 				return params
+			},
+
+			/*
+			
+			CONTENT_POST = 200,
+			CONTENT_VIDEO = 201,
+			CONTENT_ARTICLE = 202,
+			CONTENT_STREAM = 209,
+			CONTENT_AUDIO = 210,
+			CONTENT_COLLECTION = 220,
+			
+			*/
+
+			count : function(){
+				return 0
+				var c = author.data.content || {}
+
+				return ((c[200] || 0) + (c[201] || 0) + (c[202] || 0) + (c[209] || 0) + (c[210] || 0)) || author.data.postcnt || 0
 			}
 		},{
 			id : 'video',
@@ -234,6 +252,13 @@ var authorn = (function(){
 				params.opensvi = !isMobile() ? actions.openvi : null
 
 				return params
+			},
+			count : function(){
+				return 0
+
+				var c = author.data.content || {}
+
+				return (c[201] || 0) + (c[209] || 0)
 			}
 		},{
 			id : 'articles',
@@ -242,6 +267,13 @@ var authorn = (function(){
 			extend : function(params){
 				params.read = true
 				return params
+			},
+			count : function(){
+				return 0
+
+				var c = author.data.content || {}
+
+				return (c[202] || 0)
 			}
 		},{
 			id : 'audio',
@@ -250,6 +282,13 @@ var authorn = (function(){
 			extend : function(params){
 				params.audio = true
 				return params
+			},
+			count : function(){
+				return 0
+				
+				var c = author.data.content || {}
+
+				return (c[210] || 0)
 			}
 		},{
 			id : 'search',
@@ -566,6 +605,19 @@ var authorn = (function(){
 
 				self.app.platform.sdk.user.stateAction(() => {
 
+					var c = function(){
+						self.app.platform.api.actions[f](author.address, function(tx, err){
+
+							if(tx){
+							}
+							else
+							{
+								self.app.platform.errorHandler(err, true)
+							}
+	
+						})
+					}
+
 					var me = self.app.platform.psdk.userInfo.getmy()
 
 					var r = me ? me.relation(author.address, 'subscribes') : null
@@ -578,18 +630,29 @@ var authorn = (function(){
 						f = 'notificationsTurnOff'
 					}
 
-					console.log("G", f)
+					if (f == 'notificationsTurnOff'){
 
-					self.app.platform.api.actions[f](author.address, function(tx, err){
+						new dialog({
+							html : self.app.localization.e('notificationsTurnOffQ'),
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+	
+							class : 'zindex',
+	
+							success : function(){
+	
+								c()
+	
+							}
+						})
 
-						if(tx){
-						}
-						else
-						{
-							self.app.platform.errorHandler(err, true)
-						}
+					}
 
-					})
+					else{
+						c()
+					}
+
+					
 
 				})
 			},
@@ -1161,6 +1224,12 @@ var authorn = (function(){
 			},
 
 			userslist : function(_el, addresses, empty, caption, clbk, mid){
+
+				if (modules['userlist' + mid]){
+					modules['userlist' + mid].destroy()
+					modules['userlist' + mid] = null
+				}
+
 				self.nav.api.load({
 
 					open : true,
@@ -1178,6 +1247,8 @@ var authorn = (function(){
 					},
 					
 					clbk : function(e, p){
+
+						modules['userlist' + mid] = p
 
 						_el.addClass('active')
 
@@ -1303,6 +1374,10 @@ var authorn = (function(){
 	
 					author.data = self.psdk.userInfo.get(author.address)
 					author.me = self.app.user.isItMe(author.address)
+
+					//var me = self.app.platform.psdk.userInfo.getmy()
+
+				
 
 	
 					if(

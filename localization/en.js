@@ -447,7 +447,7 @@ return "You have reached your limit of " + (v || 15) + " grading in a 24 hour pe
 _l.doubleLimitLight = "You have already rated this";
 
 _l.SelfSubscribeError = "Cannot subscribe to yourself";
-_l.DoubleSubscribeError = "You already follow this user";
+_l.DoubleSubscribeError = "Try the action later";
 _l.InvalideSubscribeError = "You are not subscribed to this user";
 _l.ChangeInfoLimitError = "You can only edit your profile once an hour. Please wait and try again. ";
 _l.SelfScoreError = "You cannot rate your own post";
@@ -2771,3 +2771,4 @@ _l.registration_blocked = _l.lockedaccount
 _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
+_l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'

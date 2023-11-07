@@ -287,6 +287,8 @@ ResoursesDB = function(storageName, version, storages){
 
                 db = openRequest.result;
 
+                debugLog('PCryptoStorage opened');
+
                 _.each(db.objectStoreNames, (key) => {
                     scheduleToClear(key, rand(15000, 40000))
                 })
