@@ -25,7 +25,7 @@ var telements = function(address){ %>
 
 			%>
 
-				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == 1 || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 			
 			<% } %>
 
