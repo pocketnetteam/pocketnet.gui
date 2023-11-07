@@ -585,6 +585,10 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (self[k] && self[k].applyAction) {
 
+                        if(!extendedObject){
+                            //console.log("RELA CLONE OBJECT", object, k, alias)
+                        }
+
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
                         if (applied) extendedObject = applied
@@ -688,10 +692,19 @@ var pSDK = function ({ app, api, actions }) {
                         filtered.push(r)
                     }
 
+
+
+                    if (objects[key][r.key]){
+                        return
+                    }
+
                     var object = this.transform(r)
 
-                    if (object)
+                    if (object && !objects[key][r.key]){
+                        
                         objects[key][r.key] = object
+                    }
+                        
 
                 })
 
@@ -755,6 +768,8 @@ var pSDK = function ({ app, api, actions }) {
 
         getmyoriginal : function(){
             if(!app.user.address.value) return null
+
+            console.log("userinfo original",  objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value])
 
             return objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value]
 
@@ -2236,7 +2251,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
                     rpc : {
-                        fnode : '178.217.159.221:38081'
+                        fnode : '65.21.56.203:38081'
                     }
                 }).then(r => {
 
@@ -2480,8 +2495,12 @@ var pSDK = function ({ app, api, actions }) {
         }
     })
 
+    self. storage = storage
+    self. objects = objects
+
     return self
 }
+
 
 if (typeof module != "undefined") { module.exports = { pSDK }; }
 else { window.pSDK = pSDK; }
