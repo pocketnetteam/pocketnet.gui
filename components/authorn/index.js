@@ -1288,6 +1288,9 @@ var authorn = (function(){
 		var relationsClbk = function(address){
 
 			if (address == author.address){
+
+				author.data = self.psdk.userInfo.get(author.address)
+
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
@@ -1300,6 +1303,9 @@ var authorn = (function(){
 			self.app.platform.actionListeners.authorn = function({type, alias, status}){
 
 				if(type == 'blocking' || type == 'unblocking'){
+
+					author.data = self.psdk.userInfo.get(author.address)
+					
 					renders.randombg()
 				}
 
@@ -1318,6 +1324,8 @@ var authorn = (function(){
 
 					if(alias.address == author.address){
 
+						author.data = self.psdk.userInfo.get(author.address)
+
 						renders.aucaption()
 						renders.uinfo()
 
@@ -1328,6 +1336,8 @@ var authorn = (function(){
 				if (type == 'accDel'){
 
 					if(alias.address == author.address){
+
+						author.data = self.psdk.userInfo.get(author.address)
 
 						renders.aucaption()
 						renders.uinfo()
