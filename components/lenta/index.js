@@ -1691,14 +1691,6 @@ var lenta = (function(){
 
 					return
 				}
-
-				if (fullscreenvideoShowing) { return }
-				if (fullscreenvideoShowed) { return }
-				if (essenseData.openapi){ return }
-
-				fullscreenvideoShowing = id
-
-				var _el = el.share[id]
 				
 				//self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -1718,9 +1710,11 @@ var lenta = (function(){
 					if (fullscreenvideoShowing) { return }
 					if (fullscreenvideoShowed) { return }
 					if (essenseData.openapi){ return }
-
+	
 					fullscreenvideoShowing = id
-						
+	
+					var _el = el.share[id]
+					
 					actions.initVideo(share, function(res, next){
 
 						if (next){
