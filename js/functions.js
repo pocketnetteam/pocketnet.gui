@@ -6967,57 +6967,78 @@ AJAX = function(p) {
 
 				delete data.type;
 
-				// Get or refresh access token
-				var xmlHttp = new XMLHttpRequest();
+				try{
 
-				xmlHttp.open("POST", p.url + 'users/token', false);
-				xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					// Get or refresh access token
+					var xmlHttp = new XMLHttpRequest();
+
 				
+					xmlHttp.open("POST", p.url + 'users/token', false);
+					xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					
+	
+					xmlHttp.onload = function() {
 
-				xmlHttp.onload = function() {
-
-					var res = JSON.parse(xmlHttp.responseText), auth;
-					// Set auth header
-					if (res && res.access_token) {
-						auth = 'Bearer ' + res.access_token;
+						try{
+							var res = JSON.parse(xmlHttp.responseText), auth;
+							// Set auth header
+							if (res && res.access_token) {
+								auth = 'Bearer ' + res.access_token;
+							}
+		
+							else{
+								if (p.fail)
+									p.fail({}, 'network');
+		
+								return
+							}
+		
+							ap.headers = {
+								Authorization: auth
+							}
+		
+							// Prepare image data for request
+							const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
+		
+							const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
+		
+							var formData = new FormData();
+								formData.append("imagefile", blob);
+		
+							ap.data = formData;
+							ap.processData = false;
+							ap.contentType = false;
+		
+							$.ajax(ap);
+						}
+						catch(e){
+							if (p.fail)
+								p.fail({}, 'network');
+		
+								return
+						}
+	
+						
+	
 					}
-
-					else{
+	
+					xmlHttp.onerror = function(e) {
 						if (p.fail)
 							p.fail({}, 'network');
-
-						return
-					}
-
-					ap.headers = {
-						Authorization: auth
-					}
-
-					// Prepare image data for request
-					const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
-
-					const blob = b64toBlob(ap.data.base64.split(',')[1], mimeType);
-
-					var formData = new FormData();
-						formData.append("imagefile", blob);
-
-					ap.data = formData;
-					ap.processData = false;
-					ap.contentType = false;
-
-					$.ajax(ap);
-
+					};
+	
+					xmlHttp.send(toUrlEncoded({
+						grant_type: 'password',
+						...app.peertubeCreds
+					}));
 				}
 
-				xmlHttp.onerror = function(e) {
+				catch(e){
 					if (p.fail)
 						p.fail({}, 'network');
-				};
+				}
 
-				xmlHttp.send(toUrlEncoded({
-					grant_type: 'password',
-					...app.peertubeCreds
-				}));
+				
 
 				return;
 
