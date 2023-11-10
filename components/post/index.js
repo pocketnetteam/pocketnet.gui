@@ -928,7 +928,7 @@ var post = (function () {
 
 				self.nav.api.load({
 					open : true,
-					href : name ? name : 'author?address=' + address,
+					href : name ? name : 'authorn?address=' + address,
 					history : true
 				})
 			},

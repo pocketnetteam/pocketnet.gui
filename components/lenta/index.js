@@ -2397,7 +2397,7 @@ var lenta = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : name ? name : 'author?address=' + address,
+					href : name ? name : 'authorn?address=' + address,
 					history : true
 				})
 			},
@@ -2420,7 +2420,7 @@ var lenta = (function(){
 					self.sdk.registrations.redirect = 'post?s=' + shareId
 				}
 				else{
-					self.sdk.registrations.redirect = 'author?address='+share.address+'&s=' + shareId
+					self.sdk.registrations.redirect = 'authorn?address='+share.address+'&s=' + shareId
 				}
 
 				self.nav.api.go({

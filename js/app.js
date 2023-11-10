@@ -602,7 +602,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
 
 			if (address) {
 				body += '<p>Address: ' + (address) + '</p>'
@@ -661,7 +661,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
 
 			if (link1)
 				body += '<p>Link: <a href="' + link1 + '">' + link1 + '</a></p>'
@@ -721,7 +721,7 @@ Application = function (p) {
 			_p.TemplateID = '2002'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + s3 + '" href="https://' + self.options.url + '/authorn?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
 			body += '<p>Reason: ' + i1 + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -769,7 +769,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/author?address=' + address2 + '">user(' + address2 + ')</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/authorn?address=' + address2 + '">user(' + address2 + ')</a></p>'
 			body += '<p>Reason: ' + reason + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -852,7 +852,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + address1 + '" href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + address1 + '" href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
 
 			body += '<p>Reason: ' + reason + '</p>'
 

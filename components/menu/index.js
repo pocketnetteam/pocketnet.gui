@@ -570,7 +570,7 @@ var menu = (function(){
 									var name = $(this).attr('name')
 
 									self.nav.api.go({
-										href : name ? name.toLowerCase() : 'author?address=' + r,
+										href : name ? name.toLowerCase() : 'authorn?address=' + r,
 										history : true,
 										open : true
 									})
