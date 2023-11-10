@@ -45,7 +45,7 @@ var accounts = (function(){
 								}
 
 								if (ed.toaccpage) {
-									h = 'author?address=' + address
+									h = 'authorn?address=' + address
 									history = true
 								}
 

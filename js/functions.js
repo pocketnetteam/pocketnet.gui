@@ -6978,11 +6978,20 @@ AJAX = function(p) {
 
 					var res = JSON.parse(xmlHttp.responseText), auth;
 					// Set auth header
-					if (res && res.access_token) auth = 'Bearer ' + res.access_token;
+					if (res && res.access_token) {
+						auth = 'Bearer ' + res.access_token;
+					}
 
-						ap.headers = {
-							Authorization: auth
-						}
+					else{
+						if (p.fail)
+							p.fail({}, 'network');
+
+						return
+					}
+
+					ap.headers = {
+						Authorization: auth
+					}
 
 					// Prepare image data for request
 					const mimeType = ap.data.base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
@@ -7000,9 +7009,7 @@ AJAX = function(p) {
 
 				}
 
-
 				xmlHttp.onerror = function(e) {
-
 					if (p.fail)
 						p.fail({}, 'network');
 				};

@@ -2772,3 +2772,4 @@ _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
+_l.showblockedusers = "Show blocked users";

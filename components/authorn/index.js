@@ -397,9 +397,14 @@ var authorn = (function(){
 					})
 	
 					var blocked = (deep(author, 'data.blocking') || []).concat()
-	
+
 					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
+
+						if(!a) return false
+
+						var address = a.adddress || a.address || a
+
+						return _.indexOf(blocked, address) == -1
 					})
 
 
@@ -532,6 +537,7 @@ var authorn = (function(){
 					id : 'userslist',
 					animation : false,
 					inWnd : true,
+					history : true,
 					essenseData : {
 						addresses : addresses,
 						empty : empty,
@@ -1096,7 +1102,7 @@ var authorn = (function(){
 			
 			lenta : function(){
 
-				var hr = 'author?address=' + author.address
+				var hr = 'authorn?address=' + author.address
 				var n =  app.platform.api.name(author.address)
 				if (n) hr = n.toLowerCase() + "?"
 
@@ -1187,7 +1193,25 @@ var authorn = (function(){
 					el.blocking.removeClass('active')
 				}
 				else{
-					load.blocking().then(addresses => {
+					
+
+					self.shell({
+						name :  'blockinglabel',
+						el :   el.blocking,
+						data : {
+							
+						},
+						insertimmediately : true,
+					}, function(p){
+
+						el.blocking.addClass('active')
+						
+						p.el.find('.showblocking').on('click', events.showblocking)
+
+					})
+
+
+					/*load.blocking().then(addresses => {
 
 						var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynoblocked') : self.app.localization.e('anoblocked')
 						
@@ -1195,9 +1219,8 @@ var authorn = (function(){
 	
 						renders.userslist(el.blocking, addresses, etext, ctext, clbk, 'blocking')
 	
-					})
+					})*/
 				}
-
 				
 			},
 

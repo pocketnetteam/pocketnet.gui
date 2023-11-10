@@ -1004,7 +1004,7 @@ var share = (function(){
 
 										self.app.nav.api.load({
 											open : true,
-											href : 'author?address=' + self.app.user.address.value,
+											href : 'authorn?address=' + self.app.user.address.value,
 											history : true
 										})
 

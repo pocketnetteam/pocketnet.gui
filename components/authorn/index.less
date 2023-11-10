@@ -184,7 +184,6 @@
     }
 
     .lcolumn{
-        .blocking,
         .subscribes,
         .subscribers{
             border-radius: @rad;
@@ -202,6 +201,24 @@
                 display: block;
             }
         }
+
+        .blocking{
+            text-align: center;
+            padding : 2 * @rhythm;
+
+            .showblocking{
+                font-size: 0.9em;
+                color : rgb(var(--neutral-grad-3));
+                cursor: pointer;
+                .transition(0.3s);
+
+                &:hover{
+                    color : rgb(var(--color-txt-ac));
+                }
+            }
+            
+        }
+
     }
 
     .uinfo{
