@@ -2731,6 +2731,12 @@ html.mobileview.android .wnd .wndback {
 .wnd.pipmini .recomandationsFromContent {
   display: none!important;
 }
+.wnd.pipmini .statswrapperExtended {
+  display: none!important;
+}
+.wnd.pipmini #post .forurl > .url {
+  position: static!important;
+}
 .wnd.pipmini .wndinner {
   box-shadow: none;
 }
