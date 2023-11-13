@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "android-add": "cordova platform add android@12.0.1",
-        "ios-add": "cordova platform add ios",
+        "ios-add": "cordova platform add ios@6.3.0",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",
         "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
@@ -45,7 +45,7 @@
         "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
         "cordova-android": "^11.0.0",
         "cordova-androidx-build": "^1.0.4",
-        "cordova-ios": "^6.2.0",
+        "cordova-ios": "^6.3.0",
         "cordova-plugin-actionsheet": "^2.3.3",
         "cordova-plugin-navigationbar-color": "file:cordova-plugin-navigationbar-color",
         "cordova-plugin-add-swift-support": "^2.0.2",
