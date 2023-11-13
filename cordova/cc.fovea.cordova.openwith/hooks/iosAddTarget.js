@@ -106,7 +106,7 @@ function getCordovaParameter(configXml, variableName) {
 function getBundleId(context, configXml) {
 
   return 'app.pocketnet'
-
+  
   var elementTree = require('elementtree');
   var etree = elementTree.parse(configXml);
   return etree.getroot().get('id');
@@ -380,7 +380,7 @@ module.exports = function (context) {
 
     // Write the modified project back to disc
     // console.log('    Writing the modified project back to disk...');
-    fs.writeFileSync(path.resolve(pbxProjectPath), pbxProject.writeSync());
+    fs.writeFileSync(pbxProjectPath, pbxProject.writeSync());
     console.log('Added ShareExtension to XCode project');
 
     deferral.resolve();
