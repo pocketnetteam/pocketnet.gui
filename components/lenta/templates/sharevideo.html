@@ -223,6 +223,8 @@ var metadisplay = function(){ %>
 
 			nm = share.renders.message(nm)
 
+			nm = findAndReplaceLink(nm, true)
+
 		%>
 			<div class="paddingWrapper hideOnFullVideo piphidden">
 				<div class="message canmark">
