@@ -1481,6 +1481,7 @@ Application = function (p) {
 
 				if (cordova.plugins && cordova.plugins.backgroundMode)
 					cordova.plugins.backgroundMode.on('activate', function () {
+						console.log("BACKGROUND ACTIVATED")
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
 
@@ -1693,7 +1694,7 @@ Application = function (p) {
 				var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
 				self.mobile.unsleep(unsleep)
-				//self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
+				self.mobile.backgroundMode(unsleep && self.platform.sdk.videos.volume && !self.mobile.pip.element)
 
 			}, 1000)
 

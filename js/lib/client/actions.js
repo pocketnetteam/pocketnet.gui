@@ -596,14 +596,14 @@ var Action = function(account, object, priority, settings){
                 for(var i = 0; i < spcount; i++){
                     if(i == spcount - 1){
 
+                        let v = Number((totalInputAmount - added).toFixed(8))
 
                         outputs.push({
                             address : changeAddresses[0],
-                            amount : Number((totalInputAmount - added).toFixed(8))
+                            amount : v
                         })
 
-
-                        added += Number((totalInputAmount - added).toFixed(8))
+                        added += v
                     }
                     else{
                         added += Number(divii)
@@ -653,14 +653,18 @@ var Action = function(account, object, priority, settings){
             return m + u.amount
         }, 0), 8)
 
+
         if (totalOutputAmount < totalInputAmount){
 
-            outputs.push({
-                address : changeAddresses[0],
-                amount : totalInputAmount - totalOutputAmount - (options.burn ? amount : 0)
-            })
+            var v =  Number(toFixed(totalInputAmount - totalOutputAmount - (options.burn ? amount : 0), 8))
 
-            
+
+            if (v > 0){
+                outputs.push({
+                    address : changeAddresses[0],
+                    amount : v
+                })
+            }
         }
 
         var tx = null
@@ -694,6 +698,8 @@ var Action = function(account, object, priority, settings){
         if (optstype){
             parameters.push(optstype)
         }
+
+        console.log('outputs', outputs)
 
         self.sending = new Date()
         self.inputs = inputs
