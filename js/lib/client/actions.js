@@ -737,10 +737,6 @@ var Action = function(account, object, priority, settings){
 
             trigger()
 
-            self.logerror({
-                method, parameters
-            })
-
             return Promise.resolve()
 
 
@@ -762,11 +758,9 @@ var Action = function(account, object, priority, settings){
                 }
 
                 else{
-
-                    
-                    /*self.logerror({
+                    self.logerror({
                         method, parameters, error : e
-                    })*/
+                    })
                 }
                 
             }
