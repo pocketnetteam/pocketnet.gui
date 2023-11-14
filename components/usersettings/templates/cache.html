@@ -4,7 +4,7 @@
 
         <div class="caption">
             <span>
-                Local storage Transactions Info
+                <%-e('captiontempactions')%> 
             </span>
         </div>
 
@@ -12,29 +12,19 @@
 
     <% if(temp.length) {%>
 
-        <div class="panel">
-            <div class="mwork">
-                <button elementsid="smallcheckupdate" class=" small <% if(checking){%> disabled <%} %> check">Update</button>
-                <button elementsid="smallghostclear" class=" small ghost clear">Clear</button>
-            </div>
-
-        </div>
-
         <div class="pending">
             <div class="mwork">
-                <span>Number of transactions pending block: <%- temp.length %></span> <% if(checking) {%><i class="fas fa-spinner fa-spin"></i><% } %>
+                <span><%-e('labeltempactions')%>: <%- temp.length %></span>
             </div>
             <div class="mwork">
-                <% _.each(temp, function(tx) { 
-                    
-                    var date = new Date(tx.time * 1000)
+                <% _.each(temp, function(action) { 
                     
                     %>
 
                     <div class="tx">
-                        <div class="txid copyvalue"><span><b><%-tx.type%></b>.<%-tx.txid%></span></div>
+                        <div class="txid copyvalue"><span><b><%-e('object_' + action.object.type)%></b>.<%-action.transaction ? action.transaction : 'pending'%></span></div>
                         <div class="date">
-                            <span class="realtime" time="<%-date%>"><%- app.reltime(date) %></span>
+                            <span class="realtime" time="<%-action.added%>"><%- app.reltime(action.added) %></span>
                         </div>
 
                     </div>
@@ -51,15 +41,23 @@
     
         <div class="empty">
             <div class="mwork">
-                <span>Storage is Empty</span>
+                <span><%=e('labeltempactionszero')%></span>
             </div>
         </div>
         
     <% } %>
+    <div class="mwork">
+        <div class="cachePanel">
+            <!--<div class="clearLocalStorage">
+                <span><%=e('clearLocal')%></span>
+            </div>-->
 
-    <div class="clearLocalStorage">
-        <div class="mwork">
-            <span><%=e('clearLocal')%></span>
+            <div class="clearLocalActions">
+                <span><%=e('clearLocalActions')%></span>
+                
+            </div>
+
+            
         </div>
     </div>
 

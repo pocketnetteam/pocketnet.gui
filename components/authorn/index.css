@@ -238,7 +238,7 @@
   background: rgb(var(--background-total-theme));
   color: rgb(var(--text-color));
   border-color: rgb(var(--background-total-theme));
-  min-width: 30%;
+  min-width: 35%;
 }
 #authorn .buttonsrow button:nth-last-child(1) {
   margin-right: 0;

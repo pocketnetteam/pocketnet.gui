@@ -2452,8 +2452,9 @@ _l.enterTheAmount = "Введите сумму в Покеткойнах, что
 _l.boost = "Продвижение";
 _l.howToBuy = "Как купить PKOIN";
 
-_l.clearLocal = 'Очистить Local Storage';
-_l.clearLocalQuestion = 'Вы действительно хотите очистить Local Storage?';
+_l.clearLocal = 'Очистить локальное хранилище';
+_l.clearLocalActions = 'Очистить информацию о транзакциях';
+_l.clearLocalQuestion = 'Вы действительно хотите очистить всё локальное хранилище?';
 
 _l.registration_not_in_progress = "Процесс вашей регистрации еще не начался, вам нужно либо решить капчу, либо иметь PKOIN на адресе аккаунта"
 _l.registration_not_in_progress_no_processing = "Процесс вашей регистрации еще не начался"
@@ -2558,3 +2559,8 @@ _l.horizontalSearchUsers = "Пользователи"
 _l.information = "Информация"
 _l.sendcoins = "Отправить PKOIN"
 _l.notificationsTurnOffQ = 'Вы действительно хотите отключить уведомления от данного пользователя?'
+
+_l.cleartempactions = "Вы действительно хотите очистить временную информацию приложения о ваших действиях?"
+_l.captiontempactions = "Информация о транзакциях в локальном хранилище"
+_l.labeltempactions = "Количество ожидающих транзакций"
+_l.labeltempactionszero = "Нет ожидающих транзакций"

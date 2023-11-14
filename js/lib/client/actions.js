@@ -346,6 +346,24 @@ var Action = function(account, object, priority, settings){
         self.options = options
     }
 
+    self.logerror = function(data){
+
+        console.log("ADD LOG", data)
+
+        try{
+            account.parent.app.Logger.error({
+                err: 'TRANSACTION_ERROR',
+                code: 802,
+                payload: data,
+            });
+        }
+
+        catch(e){
+            console.error('cant send error log')
+        }
+
+    }
+
     var getBestInputs = function(unspents, value){
 
         if(value == 0) value = 0.000000001
@@ -580,7 +598,7 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-
+            console.log('unspents', unspents.length , totalInputAmount)
 
             if(unspents.length < 100 && totalInputAmount > 0.001){
 
@@ -590,13 +608,13 @@ var Action = function(account, object, priority, settings){
                     spcount = 10
                 }
 
-                var divii = (totalInputAmount / spcount).toFixed(8)
+                var divii = toFixed(totalInputAmount / spcount, 8)
                 var added = 0
 
                 for(var i = 0; i < spcount; i++){
                     if(i == spcount - 1){
 
-                        let v = Number((totalInputAmount - added).toFixed(8))
+                        let v = toFixed(totalInputAmount - added, 8)
 
                         outputs.push({
                             address : changeAddresses[0],
@@ -606,11 +624,11 @@ var Action = function(account, object, priority, settings){
                         added += v
                     }
                     else{
-                        added += Number(divii)
+                        added += divii
 
                         outputs.push({
                             address : changeAddresses[0],
-                            amount : Number(divii)
+                            amount : divii
                         })
                     }
                     
@@ -643,7 +661,7 @@ var Action = function(account, object, priority, settings){
             var dfee = fee / outputs.length
 
             _.each(outputs, (out) => {
-                out.amount = out.amount - dfee
+                out.amount = toFixed(out.amount - dfee, 8)
             })
         }
 
@@ -656,10 +674,10 @@ var Action = function(account, object, priority, settings){
 
         if (totalOutputAmount < totalInputAmount){
 
-            var v =  Number(toFixed(totalInputAmount - totalOutputAmount - (options.burn ? amount : 0), 8))
+            var v =  toFixed(totalInputAmount - totalOutputAmount - (options.burn ? amount : 0), 8)
 
 
-            if (v > 0){
+            if (v > 1 / amountC){
                 outputs.push({
                     address : changeAddresses[0],
                     amount : v
@@ -699,7 +717,7 @@ var Action = function(account, object, priority, settings){
             parameters.push(optstype)
         }
 
-        console.log('outputs', outputs)
+        console.log('outputs inputs', outputs, inputs)
 
         self.sending = new Date()
         self.inputs = inputs
@@ -732,9 +750,19 @@ var Action = function(account, object, priority, settings){
 
             
 
-            if(!retry && (code == -26 || code == -25 || code == 16 || code == 261)){
-                save()
-                return makeTransaction(true, calculatedFee, send)
+            if((code == -26 || code == -25 || code == 16 || code == 261)){
+
+                if(!retry){
+                    save()
+                    return makeTransaction(true, calculatedFee, send)
+                }
+
+                else{
+                    self.logerror({
+                        method, parameters, error : e
+                    })
+                }
+                
             }
 
             /*if (options.rejectedAsk){
@@ -1761,6 +1789,22 @@ var Account = function(address, parent){
         if(self.address.indexOf("P") == 0 && !window.testpocketnet) return true
 
         return false
+    }
+
+    self.clear = function(){
+    
+        self.unspents = {
+            willChange : null, /// date, wait free coins
+            value : [],
+            updated : null
+        }
+    
+        self.actions = {
+            value : [],
+            updated : null
+        }
+
+        self.save()
     }
 
     self.export = function(){
