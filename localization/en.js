@@ -2668,6 +2668,8 @@ _l.boost = "Boost";
 _l.howToBuy = "How to buy PKOIN";
 
 _l.clearLocal = 'Clear Local Storage';
+_l.clearLocalActions = 'Clear transaction information';
+
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
 
 
@@ -2773,3 +2775,9 @@ _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
 _l.showblockedusers = "Show blocked users";
+
+_l.cleartempactions = "Do you really want to clear temporary application information about your actions?"
+_l.captiontempactions = "Local storage Transactions Info"
+_l.labeltempactions = "Number of pending transactions"
+_l.labeltempactionszero = "No pending transactions"
+

@@ -111,6 +111,7 @@
             "cordova-plugin-insomnia": {},
             "cordova-plugin-taptic-engine": {},
             "cordova-plugin-background-download": {},
+            "cordova-plugin-background-mode" : {},
             "cordova-plugin-camera": {
                 "ANDROIDX_CORE_VERSION": "1.6.+",
                 "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
