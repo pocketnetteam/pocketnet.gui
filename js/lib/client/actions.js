@@ -764,7 +764,9 @@ var Action = function(account, object, priority, settings){
                 else{
 
                     
-
+                    /*self.logerror({
+                        method, parameters, error : e
+                    })*/
                 }
                 
             }
