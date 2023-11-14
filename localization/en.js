@@ -671,7 +671,7 @@ _l.refresh = "Refresh"
 _l.e13111 = "Add your email to get the latest "+appname+" updates"
 _l.e13112 = "Enter email"
 _l.e13113 = "Add email"
-_l.skip = "Skip"
+_l.skip = "Continue watch"
 _l.e13114 = "There is some problem with your registration due to strange activity."
 _l.e13115 = "Please email"
 _l.e13116 = "to receive coins and open your account."
@@ -2325,6 +2325,7 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2662,6 +2663,14 @@ _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 
 _l.listeners = "Listeners";
 
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
+
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
+
 _l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";
 
 _l.boost = "Boost";
@@ -2669,6 +2678,8 @@ _l.howToBuy = "How to buy PKOIN";
 
 _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
+
+_l.showAds = 'Show info about boost at the beginning of the video';
 
 
 _l.registration_not_in_progress = "Your registration process has not started yet, you need to either solve the captcha or have PKOIN on your account address"

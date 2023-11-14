@@ -297,6 +297,9 @@ Platform = function (app, listofnodes) {
         'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
     } 
 
+    self.shark = {}
+    self.moderator = {}
+
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
     }
@@ -3745,6 +3748,8 @@ Platform = function (app, listofnodes) {
 
             var t = self.ui.usertype(address)
 
+            if (self.moderator[address]) return this.markModerator();
+            if (self.shark[address]) return this.markShark();
             if (t == 'dev') return this.markDev();
             if (t == 'real') return this.markReal();
 
@@ -3771,6 +3776,25 @@ Platform = function (app, listofnodes) {
                     </span>
                 </div>`
 
+        },
+
+        markShark : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
 
         recommendations : function(el, share, ed, clbk){
@@ -7702,6 +7726,30 @@ Platform = function (app, listofnodes) {
             },
         },
 
+        jury: {
+
+            // Fetch all the jurys
+            getalljury: function() {
+
+                return self.app.api.rpc('getalljury');
+
+            },
+
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function(address) {
+
+                return self.app.api.rpc('getjuryassigned', [address]);
+
+            },
+
+            getjurymoderators: function(juryId) {
+
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+
+            },
+
+        },
+
         lentaMethod: {
             all: {
                 hierarchical: 'hierarchical',
@@ -8718,6 +8766,13 @@ Platform = function (app, listofnodes) {
                 return self.psdk.userInfo.getmy()
             },
 
+            isjury : function() {
+                var address = self.app.platform.sdk.address.pnet()
+                if (address && self.moderator[address.address])
+                    return true
+                return false
+            },
+
             itisme : function(_address){
 
                 if(!self.app.user.address.value) return true
@@ -9240,8 +9295,15 @@ Platform = function (app, listofnodes) {
                     if (state){
                         self.sdk.ustate.get(app.user.address.value, (r) => {
 
+                            var info = r[app.user.address.value] || {}
+
+                            if (!_.isEmpty(info) && info.badges && info.badges.indexOf('shark') > -1)
+                                self.shark[info.address] = true;
+                            if (!_.isEmpty(info) && info.badges && info.badges.indexOf('moderator') > -1)
+                                self.moderator[info.address] = true;
+
                             if (clbk) 
-                                clbk(r[app.user.address.value] || {})
+                                clbk(info)
 
                         }, update)
                     }
@@ -14484,7 +14546,6 @@ Platform = function (app, listofnodes) {
                     if (clbk) {
                         clbk(e, null)
                     }
-
                 })
 
 
@@ -15203,6 +15264,86 @@ Platform = function (app, listofnodes) {
 
                         }
 
+                    })
+                },
+
+                jury: function (p, clbk, cache) {
+
+                    if (!p) p = {};
+
+                    var address = deep(app, 'user.address.value')
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'jury'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                    }
+                        else {
+
+                            self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
+                                console.log(shares);
+
+                                newShares = shares.map((share) => {
+
+                                    var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' ? new pShare() : new pComment();
+
+                                    if (s.type === 'userInfo'){
+
+                                        s._import(share);
+                                        s.a = share.a;
+
+                                    } else if (s.type === 'share' || s.type === 'video'){
+
+                                        s._import(share);
+
+                                    } else if (s.type === 'comment'){
+
+                                        s.import(share);
+
+                                    }
+
+                                    s.txid = share.txid || share.id;
+                                    s.time = new Date();
+                                    s.address = share.address;
+                                    s.time.setTime(share.time * 1000);
+                                    s.score = share.scoreSum;
+                                    s.scnt = share.scoreCnt;
+                                    s.edit = false;
+                                    s.info = null;
+                                    s.jury = share.jury;
+                                    return s;
+                                });
+
+                                storage[key] = newShares;
+
+                                if (clbk)
+                                    clbk(newShares, null, p);
+
+                            }, (err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            }).catch((err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            });
+
+                        }
                     })
                 },
 
@@ -18227,6 +18368,8 @@ Platform = function (app, listofnodes) {
             share: function (share, extra, extendedpreview) {
                 var h = '';
 
+                if (!share) return;
+                
                 var m = share.caption;
 
                 if(!m) m = share.renders.text()

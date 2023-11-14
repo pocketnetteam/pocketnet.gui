@@ -6089,6 +6089,15 @@ html.allcontent_application{
             }   
         }
 
+        .shark, .moderator {
+            .fa-certificate{
+                color : rgb(var(--color-bg-ac-bright));
+            }
+            .fa-crown, .fa-flag{
+                color : rgb(var(--text-on-bg-ac-color));
+                box-shadow: none;
+            }
+        }
 
 
     }
@@ -8533,7 +8542,7 @@ html.pipmode{
     }
 }
 
-.peertube-server-hint {
+.peertube-server-hint, .skip-ads {
     z-index: 3;
     position: absolute;
     margin: 10px;
@@ -8555,6 +8564,11 @@ html.pipmode{
         flex-direction: row;
         align-items: center;
     }
+}
+
+.skip-ads{
+    right: 0;
+    cursor: pointer;
 }
 
 ///////////

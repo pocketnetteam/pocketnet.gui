@@ -139,6 +139,10 @@ const publics = {
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
 
+    // Jury
+    getalljury: true,
+    getjuryassigned: true,
+    getjurymoderators: true,
     getaccountearning : true
 
 }
@@ -504,11 +508,11 @@ RpcClient.callspec = {
     dumpwallet: 'str',
     importwallet: 'str',
 
-    getaccountearning : 'str int int',
-
-
-    
-
+    // Jury
+    getalljury: '',
+    getjuryassigned: 'str',
+    getjurymoderators: 'str',
+    getaccountearning : 'str int int'
 };
 
 var slice = function(arr, start, end) {

@@ -65,6 +65,13 @@
 	}
 
 	.settingsWrapper{
+
+		.advCheckbox{
+			label{
+				padding-right: @rhythm * 2;
+			}
+		}
+
 		.visibilityWrapper{
 			.vc_valuecustom{
 				width: auto;
@@ -323,6 +330,33 @@
 			border : 0;
 			min-height: 78px;
 			border-radius: 6px;
+		}
+	}
+
+	.adsCheckboxWrapper{
+		margin-bottom: @rhythm;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: @rhythm;
+
+		.peertube-server-hint{
+			bottom: auto;
+		}
+
+		.adsCheckboxLabel{
+			font-weight: 600;
+			padding-right: @rhythm;
+		}
+	}
+
+	.adsVideo{
+		display: none;
+		position: relative;
+		margin-bottom: @rhythm * 6;
+
+		&.active{
+			display: block;
 		}
 	}
 
@@ -1282,6 +1316,10 @@ html.mobileview{
 
 		.iconWrapper{
 			display: none;
+		}
+
+		.adsWrapper .adsCheckboxLabel{
+			padding-left: @rhythm;
 		}
 
 		.cntwrk{
