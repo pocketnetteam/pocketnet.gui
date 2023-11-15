@@ -1,6 +1,7 @@
 var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
+    dustValue : 700 / 100000000,
     clearRejected : true,
     clearCompleted : true,
     objects : {
@@ -370,8 +371,19 @@ var Action = function(account, object, priority, settings){
 
         var added = 0
         var addedUnspents = {}
+        var dustValue = ActionOptions.dustValue
 
-        while (added < value && unspents.length){
+        if(_.reduce(unspents, (m, u) => {
+            return m + u.amount
+        }, 0) < dustValue){
+            console.error("DUST:Unable sent maybe")
+
+            dustValue = 0
+        }
+
+        console.log('dustValue', dustValue)
+
+        while (added < dustValue && added < value && unspents.length){
             var diff = value - added
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
@@ -389,7 +401,8 @@ var Action = function(account, object, priority, settings){
                 return !addedUnspents[unspent.txid + ':' + unspent.vout]
             })
         }
-
+        
+        console.log('addedUnspents', addedUnspents)
 
         return _.toArray(addedUnspents)
 
