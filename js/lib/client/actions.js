@@ -384,7 +384,7 @@ var Action = function(account, object, priority, settings){
         console.log('dustValue', dustValue)
 
         while (added < dustValue && added < value && unspents.length){
-            var diff = value - added
+            var diff = Math.max(value, dustValue) - added
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
 
