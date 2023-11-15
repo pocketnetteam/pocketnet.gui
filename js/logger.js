@@ -161,9 +161,9 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
-      userData,
-      uri,
-      timezone,
+      // userData,
+      // uri,
+      // timezone,
       guid,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,

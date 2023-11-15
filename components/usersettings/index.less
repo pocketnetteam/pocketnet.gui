@@ -61,6 +61,10 @@
 			padding : 4 * @rhythm 0;
 		}
 
+		.copyvalue{
+			cursor: pointer;
+		}
+
 
 		.pending{
 			padding : 2 * @rhythm 0;
@@ -84,15 +88,22 @@
 			}
 		}
 
-		.clearLocalStorage{
+		.cachePanel{
+			display: flex;
 			padding-bottom : 4 * @rhythm;
-			color: rgb(var(--color-bg-ac-bright));
-			cursor: pointer;
+			>div{
+				margin-right: 3 * @rhythm;
+				color: rgb(var(--color-bg-ac-bright));
+				cursor: pointer;
 
-			span{
-				font-size: 0.8em;
+				span{
+					font-size: 0.8em;
+				}
 			}
+
+			
 		}
+
 
 		.tx{
 			display: flex;

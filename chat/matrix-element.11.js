@@ -2080,6 +2080,7 @@ var request_component = Object(componentNormalizer["a" /* default */])(
       });
     },
     setmenu: function () {
+      if (document.activeElement) document.activeElement.blur();
       /*this.core.menu({
       	items: this.menu(),
       	item: {},
