@@ -8757,7 +8757,7 @@ parseVideo = function(url) {
 }
 
 
-trimHtml = function (str, num) {
+trimHtml = function (str, num, rowsNumber = 0) {
 
 	var remove = function (tag) {
 
@@ -8779,12 +8779,13 @@ trimHtml = function (str, num) {
 		fl = false, // в теге открытом
 		fr = false, // в теге закрытом
 
-		point40 = false,
-
+		cr = 0,
 		currentTag = "";
 
-	for (var i = 0; i < l && L < num; i++) {
+	for (var i = 0; i < l && L < num && (!rowsNumber || cr < rowsNumber); i++) {
 		var a = str[i];
+
+		if (a == '\n') cr++
 
 		if (a == "<") {
 			if (str[i + 1] && str[i + 1] == "/") {
