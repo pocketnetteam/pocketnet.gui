@@ -690,7 +690,7 @@ var Action = function(account, object, priority, settings){
             var v =  toFixed(totalInputAmount - totalOutputAmount - (options.burn ? amount : 0), 8)
 
 
-            if (v > 1 / amountC){
+            if (v > 1 / ActionOptions.amountC){
                 outputs.push({
                     address : changeAddresses[0],
                     amount : v

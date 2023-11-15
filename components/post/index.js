@@ -56,7 +56,7 @@ var post = (function () {
 
 				var c = findAndReplaceLink(share.renders.caption(translated.c, translated.m), true)
 				var m = share.renders.message(translated.c, translated.m);
-				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750);
+				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
 				window.requestAnimationFrame(() => {
