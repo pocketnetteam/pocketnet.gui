@@ -1,6 +1,7 @@
 var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
+    dustValue : 700 / 100000000,
     clearRejected : true,
     clearCompleted : true,
     objects : {
@@ -370,9 +371,19 @@ var Action = function(account, object, priority, settings){
 
         var added = 0
         var addedUnspents = {}
+        var dustValue = ActionOptions.dustValue
 
-        while (added < value && unspents.length){
-            var diff = value - added
+        if(_.reduce(unspents, (m, u) => {
+            return m + u.amount
+        }, 0) < dustValue){
+            console.error("DUST: Unable sent")
+
+            dustValue = 0
+        }
+
+
+        while ((added < dustValue || added < value) && unspents.length){
+            var diff = Math.max(value, dustValue) - added
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
 
@@ -385,26 +396,21 @@ var Action = function(account, object, priority, settings){
             addedUnspents[unspent.txid + ':' + unspent.vout] = unspent
             added += unspent.amount
 
+            if(dustValue > added){
+                console.log("ADDED DUST")
+            }
+
+
             unspents = _.filter(unspents, (unspent) => {
                 return !addedUnspents[unspent.txid + ':' + unspent.vout]
             })
-        }
 
+        }
+        
 
         return _.toArray(addedUnspents)
 
-        /*return _.filter(_.sortBy(unspents, (u) => {
-
-            return Math.abs(u.amount - value)
-
-        }), (u) => {
-            if (added < value){
-
-                added += u.amount
-                return true
-            }
-            
-        })*/
+        
     }
 
     var buildTransaction = function({inputs, outputs, opreturnData}){
@@ -519,6 +525,8 @@ var Action = function(account, object, priority, settings){
             amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
             feeIncludedinAmount = true
         }
+
+        console.log('amount', amount)
 
         var inputs = getBestInputs(unspents, amount)
 
