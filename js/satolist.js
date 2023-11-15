@@ -22602,7 +22602,7 @@ Platform = function (app, listofnodes) {
                             console.error(e)
                         })
     
-                       
+                        
     
                         self.preparingUser = false;
     

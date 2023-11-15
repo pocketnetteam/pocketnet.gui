@@ -376,14 +376,13 @@ var Action = function(account, object, priority, settings){
         if(_.reduce(unspents, (m, u) => {
             return m + u.amount
         }, 0) < dustValue){
-            console.error("DUST:Unable sent maybe")
+            console.error("DUST: Unable sent")
 
             dustValue = 0
         }
 
-        console.log('dustValue', dustValue)
 
-        while (added < dustValue && added < value && unspents.length){
+        while ((added < dustValue || added < value) && unspents.length){
             var diff = Math.max(value, dustValue) - added
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
@@ -397,27 +396,21 @@ var Action = function(account, object, priority, settings){
             addedUnspents[unspent.txid + ':' + unspent.vout] = unspent
             added += unspent.amount
 
+            if(dustValue > added){
+                console.log("ADDED DUST")
+            }
+
+
             unspents = _.filter(unspents, (unspent) => {
                 return !addedUnspents[unspent.txid + ':' + unspent.vout]
             })
+
         }
         
-        console.log('addedUnspents', addedUnspents)
 
         return _.toArray(addedUnspents)
 
-        /*return _.filter(_.sortBy(unspents, (u) => {
-
-            return Math.abs(u.amount - value)
-
-        }), (u) => {
-            if (added < value){
-
-                added += u.amount
-                return true
-            }
-            
-        })*/
+        
     }
 
     var buildTransaction = function({inputs, outputs, opreturnData}){
@@ -532,6 +525,8 @@ var Action = function(account, object, priority, settings){
             amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
             feeIncludedinAmount = true
         }
+
+        console.log('amount', amount)
 
         var inputs = getBestInputs(unspents, amount)
 
