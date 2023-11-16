@@ -2393,13 +2393,14 @@ Application = function (p) {
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
-						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+						var h = Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
 
-						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = h
 
+						document.documentElement.style.setProperty('--keyboardheight', `${h}px`);
 
 						self.apps.emit('keyboard', {
-							height : event.keyboardHeight
+							height : h
 						})
 
 					});
