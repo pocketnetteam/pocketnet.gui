@@ -1381,23 +1381,15 @@ var author = (function(){
 				}
 
 				if(type == 'userInfo'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-					
 				}
 
 				if (type == 'accDel'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-
 				}
 				
 			}

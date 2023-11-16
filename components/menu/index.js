@@ -990,7 +990,9 @@ var menu = (function(){
 
 					}
 
-					var setValue = function(){		
+					var setValue = function(){	
+						
+						
 						
 						var account = self.app.platform.actions.getCurrentAccount()
 
@@ -1006,6 +1008,9 @@ var menu = (function(){
 								add = 0;
 								current = balance.actual
 							}
+
+							if(!first && current == balance.actual) return
+
 
 							first = false;
 
