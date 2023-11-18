@@ -219,6 +219,7 @@ var errorCodesAndActions = {
 var Action = function(account, object, priority, settings){
 
     var options = ActionOptions.objects[object.type] || {}
+    var updatehash = ''
 
     var self = this
 
@@ -316,7 +317,9 @@ var Action = function(account, object, priority, settings){
 
         self.id = e.id || makeid()
 
-        self.checkConfirmationUntil = e.checkConfirmationUntil
+        if (e.checkConfirmationUntil)
+            self.checkConfirmationUntil = new Date(e.checkConfirmationUntil)
+
         self.inputs = _.clone(e.inputs)
         self.outputs = _.clone(e.outputs)
         self.attempts = e.attempts
@@ -345,11 +348,11 @@ var Action = function(account, object, priority, settings){
 
         options = ActionOptions.objects[self.object.type] || {}
         self.options = options
+
+        updatehash = getinternalhash()
     }
 
     self.logerror = function(data){
-
-        console.log("ADD LOG", data)
 
         try{
             account.parent.app.Logger.error({
@@ -446,19 +449,35 @@ var Action = function(account, object, priority, settings){
 
     var save = function(){
 
-        self.updated = new Date()
-
-        account.save()
+        if(setUpdated()) account.save()
     }
 
     var trigger = function(){
 
-        self.updated = new Date()
+        if(setUpdated()) account.trigger(self)
+
+    }
+
+    var getinternalhash = function(){
+        var e = self.export()
+
+        delete e.updated
+        //delete e.checkConfirmationUntil
+
+        return rot13(JSON.stringify(e))
+    }
+
+    var setUpdated = function(){
+
+        var hash = getinternalhash()
+
+        if (updatehash != hash){
+            self.updated = new Date()
+            updatehash = hash
+
+            return true
+        }
         
-        //if(options.change) options.change(action, account)
-
-        account.trigger(self)
-
     }
 
     var filterUnspents = function(unspents){
@@ -525,8 +544,6 @@ var Action = function(account, object, priority, settings){
             amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
             feeIncludedinAmount = true
         }
-
-        console.log('amount', amount)
 
         var inputs = getBestInputs(unspents, amount)
 
@@ -605,8 +622,6 @@ var Action = function(account, object, priority, settings){
             })
         }
         else{
-
-            console.log('unspents', unspents.length , totalInputAmount)
 
             if(unspents.length < 100 && totalInputAmount > 0.001){
 
@@ -724,8 +739,6 @@ var Action = function(account, object, priority, settings){
         if (optstype){
             parameters.push(optstype)
         }
-
-        console.log('outputs inputs', outputs, inputs)
 
         self.sending = new Date()
         self.inputs = inputs
@@ -1839,6 +1852,7 @@ var Account = function(address, parent){
     }
 
     self.import = function(e, flag){
+        
         self.status = e.status
         self.unspents = e.unspents
         
@@ -1857,7 +1871,11 @@ var Account = function(address, parent){
 
         _.each(e.actions.value, (exported) => {
 
-            if (exported.until < new Date()) return
+            if (new Date(exported.until) < new Date()) return
+
+            if (exported.completed && self.emitted.completed[exported.id]){
+                return
+            }
 
 
             //withcompleted
@@ -2132,6 +2150,7 @@ var Account = function(address, parent){
 
     self.processing = async function(){
 
+
         if(processing) return
 
         self.checkWillChangeUnspents()
@@ -2153,7 +2172,11 @@ var Account = function(address, parent){
             })
 
         }).finally(() => {
-            processing = null
+
+            setTimeout(() => {
+                processing = null
+            }, 1000)
+            
         })
 
         
@@ -2248,6 +2271,7 @@ var Account = function(address, parent){
             
 
             if(!emitted[estatus][action.id]){
+
                 parent.emit('actionFiltered', {
                     action,
                     address : self.address,
@@ -2446,10 +2470,13 @@ var Actions = function(app, api, storage = localStorage){
    
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
+            console.log("EMIT 1", key)
             e(data)
         })
 
         _.each(namedEvents[key] || {}, function(e){
+            console.log("EMIT 2", key)
+
             e(data)
         })
     }
@@ -2671,13 +2698,23 @@ var Actions = function(app, api, storage = localStorage){
 
             var rif = null
 
+            if(processInterval){
+                clearInterval(processInterval)
+            }
+    
             processInterval = setInterval(() => {
 
+                self.processing()
+
+                return
+
                 if (rif){
-                    cancelAnimationFrame(rif)
+                    window.cancelAnimationFrame(rif)
                 }
+                
 
                 rif = window.requestAnimationFrame(() => {
+
                     rif = null
 
                     self.processing()

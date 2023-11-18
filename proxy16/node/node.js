@@ -1063,6 +1063,8 @@ var Node = function(options, manager){
 
         var lastblock = self.lastblock() || {}
 
+        var chainStatus = self.chainStatus()
+
         return {
             host : self.host,
             port : self.port,
@@ -1083,7 +1085,8 @@ var Node = function(options, manager){
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false,
             allowRpc : self.allowRpc,
-            single : self.single
+            single : self.single,
+            backward : chainStatus.fork || chainStatus.difference > 20
 
         }
     }
