@@ -34,7 +34,7 @@
       "android"
     ]
   },
-  "dependencies": {
+  "devDependencies": {
     "mkpath": ">=1.0.0",
     "node-version-compare": ">=1.0.1",
     "plist": ">=1.2.0",
