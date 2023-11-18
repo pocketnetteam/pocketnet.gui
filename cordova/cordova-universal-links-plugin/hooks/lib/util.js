@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 
 /**
  * 读取 config.xml 中的配置
