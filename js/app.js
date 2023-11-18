@@ -2393,7 +2393,7 @@ Application = function (p) {
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
-						var h = Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
+						var h = isios() ? event.keyboardHeight : Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
 
 						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = h
 
