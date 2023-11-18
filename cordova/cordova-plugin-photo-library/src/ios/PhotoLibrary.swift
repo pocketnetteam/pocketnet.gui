@@ -1,29 +1,29 @@
 import Foundation
 import Photos
-import WebKit
 
 @objc(PhotoLibrary) class PhotoLibrary : CDVPlugin {
-    
-    var interceptor: PhotoLibraryInterceptor?
-    
-    lazy var concurrentQueue: DispatchQueue = DispatchQueue(label: "photo-library.queue.plugin", qos: DispatchQoS.utility, attributes: [.concurrent])
 
+    lazy var concurrentQueue: DispatchQueue = DispatchQueue(label: "photo-library.queue.plugin", qos: DispatchQoS.utility, attributes: [.concurrent])
+    
     override func pluginInitialize() {
+
         // Do not call PhotoLibraryService here, as it will cause permission prompt to appear on app start.
-        interceptor = PhotoLibraryInterceptor()
+
+        URLProtocol.registerClass(PhotoLibraryProtocol.self)
+        
+        let status = PHPhotoLibrary.authorizationStatus()
+
+        if (status == PHAuthorizationStatus.notDetermined) {
+            // Access has not been determined.
+            PHPhotoLibrary.requestAuthorization({ (newStatus) in
+            })
+        }
+
     }
 
     override func onMemoryWarning() {
         // self.service.stopCaching()
         NSLog("-- MEMORY WARNING --")
-    }
-    
-    @objc func overrideSchemeTask(_ urlSchemeTask: WKURLSchemeTask?) -> Bool {
-        guard let urlSchemeTask = urlSchemeTask else {
-            return false
-        }
-        
-        return interceptor?.handleSchemeTask(urlSchemeTask) ?? false
     }
 
 
@@ -40,8 +40,8 @@ import WebKit
             let service = PhotoLibraryService.instance
 
             let options = command.arguments[0] as! NSDictionary
-
-
+            
+            
             let thumbnailWidth = options["thumbnailWidth"] as! Int
             let thumbnailHeight = options["thumbnailHeight"] as! Int
             let itemsInChunk = options["itemsInChunk"] as! Int
@@ -52,7 +52,7 @@ import WebKit
             let includeVideos = options["includeVideos"] as! Bool
             let includeImages = options["includeImages"] as! Bool
             let maxItems = options["maxItems"] as! Int
-
+            
             func createResult (library: [NSDictionary], chunkNum: Int, isLastChunk: Bool) -> [String: AnyObject] {
                 let result: NSDictionary = [
                     "chunkNum": chunkNum,
@@ -84,62 +84,35 @@ import WebKit
             )
         }
     }
-
+    
     @objc func getAlbums(_ command: CDVInvokedUrlCommand) {
         concurrentQueue.async {
-
+            
             if PHPhotoLibrary.authorizationStatus() != .authorized {
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
                 self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
                 return
             }
-
+            
             let service = PhotoLibraryService.instance
-
+            
             let albums = service.getAlbums()
-
+            
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: albums)
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-
+            
         }
     }
-
-    @objc(getPhotosFromAlbum:) func getPhotosFromAlbum(_ command: CDVInvokedUrlCommand) {
-        print("C getPhotosFromAlbum 0");
-        concurrentQueue.async {
-
-            print("C getPhotosFromAlbum 1");
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                return
-            }
-
-            print("C getPhotosFromAlbum 2");
-
-            let service = PhotoLibraryService.instance
-
-            let albumTitle = command.arguments[0] as! String
-
-            let photos = service.getPhotosFromAlbum(albumTitle);
-
-            print("C getPhotosFromAlbum 3");
-
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: photos)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-
-        }
-    }
-
+    
+    
     @objc func isAuthorized(_ command: CDVInvokedUrlCommand) {
         concurrentQueue.async {
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: PHPhotoLibrary.authorizationStatus() != .authorized)
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
         }
     }
-
-
+    
+    
     @objc func getThumbnail(_ command: CDVInvokedUrlCommand) {
         concurrentQueue.async {
 
@@ -189,7 +162,7 @@ import WebKit
             let photoId = command.arguments[0] as! String
 
             service.getPhoto(photoId) { (imageData) in
-
+                
                 let pluginResult = imageData != nil ?
                     CDVPluginResult(
                         status: CDVCommandStatus_OK,
@@ -207,13 +180,13 @@ import WebKit
 
     @objc func getLibraryItem(_ command: CDVInvokedUrlCommand) {
         concurrentQueue.async {
-
+            
             if PHPhotoLibrary.authorizationStatus() != .authorized {
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
                 self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
                 return
             }
-
+            
             let service = PhotoLibraryService.instance
             let info = command.arguments[0] as! NSDictionary
             let mime_type = info["mimeType"] as! String
@@ -222,8 +195,8 @@ import WebKit
             })
         }
     }
-
-
+    
+    
     @objc func returnPictureData(callbackId : String, base64: String?, mimeType: String?) {
         let pluginResult = (base64 != nil) ?
             CDVPluginResult(
@@ -233,12 +206,12 @@ import WebKit
             CDVPluginResult(
                 status: CDVCommandStatus_ERROR,
                 messageAs: "Could not fetch the image")
-
+        
         self.commandDelegate!.send(pluginResult, callbackId: callbackId)
 
     }
-
-
+    
+    
     @objc func stopCaching(_ command: CDVInvokedUrlCommand) {
 
         let service = PhotoLibraryService.instance
@@ -276,7 +249,7 @@ import WebKit
 
             let url = command.arguments[0] as! String
             let album = command.arguments[1] as! String
-
+            
             NSLog("album: %@, %@", album, url);
 
             service.saveImage(url, album: album) { (libraryItem: NSDictionary?, error: String?) in
@@ -304,7 +277,7 @@ import WebKit
 
             let url = command.arguments[0] as! String
             let album = command.arguments[1] as! String
-
+            
 
             service.saveVideo(url, album: album) { (_ libraryItem: NSDictionary?, error: String?) in
                 if (error != nil) {
