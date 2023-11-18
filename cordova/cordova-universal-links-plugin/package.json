@@ -39,7 +39,8 @@
     "node-version-compare": ">=1.0.1",
     "plist": ">=1.2.0",
     "rimraf": ">=2.4",
-    "xml2js": ">=0.4"
+    "xml2js": ">=0.4",
+    "node-path" : ">=0.0.3"
   },
   "deprecated": false,
   "description": "Cordova plugin to add in your application support for Universal Links (iOS 9) and Deep Links (Android). Basically, open application through the link in the browser.",
