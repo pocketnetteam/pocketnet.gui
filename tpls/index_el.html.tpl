@@ -232,7 +232,8 @@
         <script join src="js/_map.js?v=147657511756"></script>
         <script join src="js/localization.js?v=439731354592"></script>
         <script join src="js/satolist.js?v=439731354592"></script>
-        <script join src="js/bastyonCalls/bastyonCalls.min.js"></script>
+        <script join src="js/modules/bastyon-calls.min.js"></script>
+        <script join src="js/modules/bastyon-streams.min.js"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
         <script join src="js/lib/apps/index.js?v=463508547385"></script>
