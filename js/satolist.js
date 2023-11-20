@@ -22874,6 +22874,8 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+
+                                    device="` + $.md5(self.app.options.device + self.app.user.address.value) +`"
                                     cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
