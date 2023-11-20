@@ -5824,7 +5824,7 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 	var onsuccess = function (fileSystem) {
 
-		fileSystem.getDirectory('Download', { exclusive: false }, function (directory) {
+		fileSystem.getDirectory('Download', { exclusive: false, create : true }, function (directory) {
 
 			directory.getFile(name, { create: true, exclusive: false }, function (entry) {
 				// After you save the file, you can access it with this URL

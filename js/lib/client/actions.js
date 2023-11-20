@@ -1881,7 +1881,7 @@ var Account = function(address, parent){
             //withcompleted
             if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
             
-            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
+            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'actions_checkFail' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
             ){
 
