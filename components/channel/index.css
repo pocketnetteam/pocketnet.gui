@@ -37,6 +37,9 @@
   padding-bottom: 1em;
   border-top: 1px solid rgb(var(--neutral-grad-0));
 }
+#channel .channel .userinfo .about {
+  word-break: break-word;
+}
 #channel .channel .panel {
   margin: 0 auto;
   max-width: 600px;

@@ -25,6 +25,14 @@ var post = (function () {
 
 		var authblock = false;
 
+		/// STREAM
+
+		/*
+
+		var activestream = null
+
+		*/
+
 		var actions = {
 
 			translate : function(dl){
@@ -504,7 +512,7 @@ var post = (function () {
 						},
 
 						pictureInPictureRequest : function(){
-							self.closeContainer()
+							self.closeContainer('movetopip')
 
 							var startTime = player && player.getPosition ? player.getPosition() : 0
 
@@ -588,6 +596,19 @@ var post = (function () {
 						var elem = $(el2)
 
 						if (elem.closest && elem.closest('.shareTable').attr('stxid') != (share.txid || '')) return
+
+						/// STREAM
+
+						/*
+						
+						if(streamlib.checkthisisactivestream(share.txid, share.url)){
+
+							activestream = streamlib.placeInto(el2)
+
+							return
+						}
+						
+						*/
 
 						PlyrEx(el2, options, (_player) => {
 
@@ -2184,6 +2205,35 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
+
+				/// STREAM
+
+				/*
+				
+				if (activestream){
+
+					var as = activestream
+
+					activestream.detachElement()
+
+					activestream = null
+
+
+					if(key == 'movetopip'){
+
+					}
+					else{
+						new dialog(end stream??).yes( () => {
+							activestream.endStream()
+						}).no( () => {
+							
+						})
+					}
+				}
+				
+				*/
+
+				
 				if (chat) {
 					chat.destroy();
 					chat = null
@@ -2234,6 +2284,7 @@ var post = (function () {
 					player = null
 				}
 
+				
 
 				if (_repost) {
 					_repost.destroy();

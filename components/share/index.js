@@ -927,7 +927,18 @@ var share = (function(){
 								return
 							}
 
-							self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
+							var addsettings = {}
+
+							/// STREAM
+
+							/*
+							
+							if(stream and webrtc) addsettings.rejectIfError = true
+							
+							*/
+							
+
+							self.app.platform.actions.addActionAndSendIfCan(currentShare, 1, null, addsettings).then(action => {
 
 								if (action.currentState == 'actions_checkFail'){
 
@@ -943,6 +954,16 @@ var share = (function(){
 								}
 
 								var alias = action.object
+
+								/// STREAM
+
+								/*
+								
+								if (stream and webrtc) 
+
+									streamlib.addnewstream(action.transaction, alias.url)
+								
+								*/
 
 
 								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
@@ -999,6 +1020,21 @@ var share = (function(){
 									essenseData.post(alias)
 								}
 								else{
+
+
+									/// STREAM
+
+									/*
+									
+									if(stream and webrtc) 
+
+									self.app.nav.api.load({
+										open : true,
+										href : 'video=1&v=' + action.transaction,
+										history : true
+									})
+									
+									*/
 
 									if(isMobile()){
 
