@@ -381,7 +381,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-		return isElectron || (window.cordova && !isios());
+		return isElectron || (window.cordova);
 	}
 
 	self.savesupportedForBrowser = function () {

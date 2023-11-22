@@ -5813,7 +5813,7 @@ Platform = function (app, listofnodes) {
 
                             // If we are on mobile/electron and post has a downloadable media video
                             // Do not download video on iOS
-                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+                            if (share.itisvideo() && self.app.savesupported()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
