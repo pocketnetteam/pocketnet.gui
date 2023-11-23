@@ -27,7 +27,6 @@ import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
-
 import com.google.firebase.auth.FirebaseAuthMultiFactorException;
 import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.auth.MultiFactorAssertion;
@@ -41,7 +40,6 @@ import com.google.firebase.auth.UserInfo;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import com.google.android.gms.auth.api.Auth;
-
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -139,7 +137,9 @@ public class FirebasePlugin extends CordovaPlugin {
     private FirebaseFunctions functions;
     private Gson gson;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.IdTokenListener idTokenListener;
     private boolean authStateChangeListenerInitialized = false;
+    private String currentIdToken;
     private static CordovaInterface cordovaInterface = null;
     protected static Context applicationContext = null;
     private static Activity cordovaActivity = null;
@@ -204,6 +204,9 @@ public class FirebasePlugin extends CordovaPlugin {
 
                     authStateListener = new AuthStateListener();
                     FirebaseAuth.getInstance().addAuthStateListener(authStateListener);
+
+                    idTokenListener = new IdTokenListener();
+                    FirebaseAuth.getInstance().addIdTokenListener(idTokenListener);
 
                     firestore = FirebaseFirestore.getInstance();
                     functions = FirebaseFunctions.getInstance();
@@ -480,6 +483,7 @@ public class FirebasePlugin extends CordovaPlugin {
             switch (requestCode) {
                 case GOOGLE_SIGN_IN:
                     throw new Exception("deprecated");
+                    break;
             }
         } catch (Exception e) {
             handleExceptionWithContext(e, FirebasePlugin.activityResultCallbackContext);
@@ -1167,9 +1171,6 @@ public class FirebasePlugin extends CordovaPlugin {
 
                     // Sign out of Firebase
                     FirebaseAuth.getInstance().signOut();
-
-                    // Try to sign out of Google
-                   
 
                 } catch (Exception e) {
                     handleExceptionWithContext(e, callbackContext);
@@ -3754,6 +3755,7 @@ public class FirebasePlugin extends CordovaPlugin {
                             FirebasePlugin.instance.executeGlobalJavascript(JS_GLOBAL_NAMESPACE+"_onAuthIdTokenChange()");
                         }
                     }
+
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
