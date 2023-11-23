@@ -6476,7 +6476,7 @@ Platform = function (app, listofnodes) {
                                                             // Get file size
                                                             targetFile.file(function(fileDetails) {
 
-                                                                targetFile.internalURL = entry.toURL();
+                                                                targetFile.internalURL = isios() ? targetFile.nativeURL : entry.toURL();
 
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
