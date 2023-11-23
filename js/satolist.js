@@ -6265,7 +6265,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve) => {
 
                         // Only save videos on Android
-                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
+                        if (share.itisvideo() && !p.doNotSaveMedia) {
 
                             self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
