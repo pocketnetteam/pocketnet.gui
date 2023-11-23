@@ -9753,7 +9753,20 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
-                        return self.sdk.missed.get(n.storage.block - (blockdif || 0))
+                        console.log('n.storage.block', n.storage.block)
+
+                        return self.sdk.missed.get(n.storage.block - (blockdif || 0)).catch(e => {
+                            if(e != 'block'){
+                                return Promise.reject(e)
+                            }
+
+                            return Promise.resolve({
+                                block : {
+                                    block : self.currentBlock
+                                },
+                                notifications : []
+                            })
+                        })
 
                     }).then(({block, notifications}) => {
 
@@ -9777,8 +9790,6 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
-
-                        console.error(e)
 
                         n.inited = false;
                         n.loading = false;
@@ -18265,7 +18276,7 @@ Platform = function (app, listofnodes) {
 
                 if(app.curation()) return ''
 
-                h = '<div class="sharepreview"><div class="shareprwrapper table">'
+                h = '<div class="sharepreview"><div class="shareprwrapper">'
 
                 if (images.length && !extendedpreview) {
 
@@ -18370,7 +18381,7 @@ Platform = function (app, listofnodes) {
             transaction: function (data, message) {
                 var h = '<div class="transactionmessage">'
 
-                h += '<div class="transactionmessagewrapper table">'
+                h += '<div class="transactionmessagewrapper">'
 
                 if (message) {
                     h += '<div class="tcell formessage">'
@@ -18542,7 +18553,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                     <div class="cell cellforimage">\
                         <div class="icon">'
 
@@ -18660,7 +18671,7 @@ Platform = function (app, listofnodes) {
 
             simple : function(json){
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                         <div class="cell cellforimage">\
                             <div class="icon">'
 
@@ -19035,20 +19046,13 @@ Platform = function (app, listofnodes) {
 
                     if (text) {
 
-
                         if (data.postsCnt > 1) {
 
                             var c = data.postsCnt - 1
-
-                            //text = text + '<div class="moreshares">And more ' + c + " " + pluralform(c, ['post', 'posts']) + '</div>'
-
                         }
-
-
 
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                     }
-
 
                     return html;
 
@@ -19093,8 +19097,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
-
                     })
+
+                    if(data.share && data.share.itisstream()){
+                        message.el.addClass('bright')
+                    }
 
                 },
 
@@ -19456,6 +19463,12 @@ Platform = function (app, listofnodes) {
                         })
 
                     }*/
+                },
+
+                fastMessageEvents: function (data, message, close) {
+
+                    //message.el.addClass('bright')
+
                 }
             },
 
@@ -20686,6 +20699,8 @@ Platform = function (app, listofnodes) {
         self.messageHandler = function (data, clbk) {
 
             data || (data = {})
+
+            console.log('data', data)
 
             if (data.msg || data.mesType) {
 
@@ -24043,6 +24058,17 @@ Platform = function (app, listofnodes) {
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
+                changeTitle : function(text){
+                    console.log('changeTitle', text)
+                    if(!self.titleManager) return 
+
+                    if(!text) {
+                        self.titleManager.clear();
+                    }
+                    else{
+                        self.titleManager.add(text)
+                    }
+                },
 				getUserInfo: async (address) => {
 
 					let res = new Promise((resolve, reject) => {
