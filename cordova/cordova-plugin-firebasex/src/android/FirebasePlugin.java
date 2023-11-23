@@ -483,7 +483,6 @@ public class FirebasePlugin extends CordovaPlugin {
             switch (requestCode) {
                 case GOOGLE_SIGN_IN:
                     throw new Exception("deprecated");
-                    break;
             }
         } catch (Exception e) {
             handleExceptionWithContext(e, FirebasePlugin.activityResultCallbackContext);
