@@ -356,7 +356,12 @@ var pSDK = function ({ app, api, actions }) {
 
                 var rjc = function(e){
 
+                    console.log("rjc", e)
+                    console.log("rjc", load, p.indexedDb)
+
+
                     getfromdb(p.indexedDb, load, true).then(r => {
+                        console.log("rjc", r)
                         if(!r && r.length != load.length){
                             reject(e)
                         }
@@ -528,8 +533,11 @@ var pSDK = function ({ app, api, actions }) {
 
                 return Promise.resolve(r)
             }).catch(e => {
-                console.log("E", e)
-                return getfromdbone(p.requestIndexedDb, hash, true).then(() => {
+                console.log("rjc", e)
+                return getfromdbone(p.requestIndexedDb, hash, true).then((r) => {
+
+                    console.log("rjc", r)
+                    console.log("rjc", r)
 
                     if (r) return Promise.resolve(r)
 

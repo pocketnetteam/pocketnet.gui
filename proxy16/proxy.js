@@ -2741,7 +2741,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
 					if (settings.server.captcha/* && !self.test*/) {

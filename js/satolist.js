@@ -294,7 +294,11 @@ Platform = function (app, listofnodes) {
         'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
         'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
         'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
-        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true
+        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true,
+        'PCsZ9ADzGgyaK99QpRdaFPFCY6qiRTAYoa': true,
+        'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
+        'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
+        'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true
     } 
 
     self.bch = {
@@ -9440,7 +9444,11 @@ Platform = function (app, listofnodes) {
 
                 var old = {}
 
-                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") } catch (e){}
+                try { 
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") 
+                } catch (e){
+                    
+                }
 
                 this.import(old)
 
@@ -9463,7 +9471,7 @@ Platform = function (app, listofnodes) {
                         return -Number(n.time || n.nTime)
                     })
 
-                    e.notifications = firstEls(e.notifications, 75)
+                    e.notifications = firstEls(e.notifications, 150)
 
                     if (self.sdk.address.pnet()){
                         try{
@@ -9589,10 +9597,8 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
-
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
-
 
                 return this.getNotifications().then(r => {
 
@@ -9603,6 +9609,10 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve(r)
                 })
 
+            },
+
+            initcl : function(clbk){
+                self.sdk.notifications.init().then(clbk).catch(clbk)
             },
 
             wsBlock: function (block) {
@@ -9641,7 +9651,7 @@ Platform = function (app, listofnodes) {
 
                 n.loading = true
 
-                notifications = firstEls(notifications, 75)
+                notifications = firstEls(notifications, 150)
 
                 notifications = _.filter(notifications, function (ns) {
                     if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
@@ -9797,11 +9807,13 @@ Platform = function (app, listofnodes) {
                         block : {
                             block : self.currentBlock,
                             contentsLang : {},
+                            contentsSubscribes : {},
                             msg : 'newblocks'
                         }
                     }
                 }
 
+                console.log('self.currentBlock', self.currentBlock, block)
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
@@ -14567,6 +14579,8 @@ Platform = function (app, listofnodes) {
 
                     if (self.lasttimecheck){
 
+                        console.log('block lasttimecheck error')
+
                         var d = new Date()
 
                         if(self.lasttimecheck.addSeconds(10) > d){
@@ -14580,6 +14594,8 @@ Platform = function (app, listofnodes) {
 
                         self.currentBlock = 0
                         self.timeDifference = 0;
+
+                        console.log('block getnodeinfo', d)
                         
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
@@ -14587,6 +14603,8 @@ Platform = function (app, listofnodes) {
                         }catch(e){
                             
                         }
+
+                        console.log('self.currentBlock', self.currentBlock)
 
                         if (t) {
 
@@ -20321,13 +20339,17 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-                    self.getMissed()
-
-                    lost = platform.currentBlock || 0;
+                    lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
+                    
+                    console.log("block LOST", lost)
+                    self.getMissed(true).then(() => {
+                    })
 
                     opened = true;
 
-                    auth(null, wss.proxy)
+                    auth(() => {
+                        
+                    }, wss.proxy)
 
                     if (clbk)
                         clbk()
@@ -20484,11 +20506,11 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        self.getMissed = function () {
+        self.getMissed = function (initial) {
 
-            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1))) return Promise.resolve()
 
-            if(self.loadingMissed) return Promise.resolve()
+            if (self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -22215,18 +22237,16 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            //self.prepareUserData(function(){
 
-                self.app.reload({
-                    clbk : function () {
-                        reloading = false
+            self.app.reload({
+                clbk : function () {
+                    reloading = false
 
-                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                        if(clbk) clbk()
-                    }
-                })
-            //})
+                    if(clbk) clbk()
+                }
+            })
 
         })
     }
@@ -22448,33 +22468,6 @@ Platform = function (app, listofnodes) {
         });
     }
 
-    self.prepareUserData = function(clbk){
-
-
-
-        lazyActions([
-            self.sdk.broadcaster.init,
-            self.actions.prepare,
-            self.sdk.node.transactions.loadTemp,
-            self.sdk.ustate.meUpdate,
-            self.firebase.init,
-            self.sdk.user.meUpdate,
-            self.sdk.categories.load,
-            self.sdk.activity.load,
-            self.sdk.recommendations.load,
-            self.sdk.memtags.load,
-            self.sdk.node.shares.parameters.load,
-
-
-        ], function () {
-
-            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-            self.sdk.notifications.init().catch(e => {})
-
-            if(clbk) clbk()
-        })
-    }
 
     var checkfeatures = function(){
 
@@ -22569,7 +22562,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.user.get,
                         self.sdk.usersettings.init,
                         self.matrixchat.importifneed,
-                        self.ws.init,
+                        
                         self.firebase.init,
                         /*self.app.platform.sdk.node.transactions.get.allBalance,*/
     
@@ -22582,11 +22575,13 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        
+                        self.sdk.notifications.initcl
     
                     ], function () {
     
                         //self.ui.showmykey()
+
+                        self.ws.init()
     
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
@@ -22641,7 +22636,7 @@ Platform = function (app, listofnodes) {
                                 }
                             }
     
-                            self.sdk.notifications.init().catch(e => {})
+                            
     
                             if(self.istest()){
                                 $('html').addClass('testaddress')

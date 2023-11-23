@@ -407,12 +407,6 @@ Application = function (p) {
 		state: {},
 		clbks: {
 
-			/*_platform : function(change){
-			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
-				self.prepareUserData()
-			  }
-			},*/
-
 			_modules: function (change) {
 
 
