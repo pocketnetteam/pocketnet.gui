@@ -6430,8 +6430,14 @@ Platform = function (app, listofnodes) {
                                                 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                                                 thumbFile.nativeURL,
                                                 function (entry) {
+
+                                                    var url = entry.toURL()
+
+                                                    if (isios())
+                                                        url = window.WkWebView.convertFilePath(thumbFile.nativeURL)
+
                                                     // Success
-                                                    resolve(entry.toURL());
+                                                    resolve(url);
                                                 },
                                                 function (error) {
                                                     reject('download thumbnail error');
@@ -6462,7 +6468,7 @@ Platform = function (app, listofnodes) {
                                             // Write into file
                                             infoFile.createWriter(function (fileWriter) {
 
-                                                fileWriter.write(infos);
+                                                fileWriter.write(JSON.stringify(infos));
 
                                                 dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
@@ -6477,7 +6483,10 @@ Platform = function (app, listofnodes) {
                                                             // Get file size
                                                             targetFile.file(function(fileDetails) {
 
-                                                                targetFile.internalURL = isios() ? targetFile.nativeURL : entry.toURL();
+                                                                targetFile.internalURL = entry.toURL();
+
+                                                                if(isios())
+                                                                    targetFile.internalURL = window.WkWebView.convertFilePath(targetFile.nativeURL)
 
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
@@ -6766,9 +6775,15 @@ Platform = function (app, listofnodes) {
                 video : {
                     cordova : function(to, from){
 
+                        console.log('video cordova', to, from)
+
+
                         return new Promise((resolve, reject) => {
 
                             from.getDirectory('videos', { create: true }, function (videosFolder) {
+
+                                console.log('videoFolder2', videosFolder)
+
 
                                 to.videos = {};
 
@@ -6781,6 +6796,7 @@ Platform = function (app, listofnodes) {
                                         action: function (p) {
                                             var videoFolder = p.item;
 
+                                            console.log('videoFolder', videoFolder)
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
@@ -6803,10 +6819,14 @@ Platform = function (app, listofnodes) {
 
                                                                         infoFile = file;
 
+                                                                        console.log('fileDetails', fileDetails, file)
+
 
                                                                         var reader = new FileReader();
 
                                                                         reader.onloadend = function() {
+
+                                                                            console.log('fileDetails result', this.result)
 
 
                                                                             try {
@@ -6814,7 +6834,7 @@ Platform = function (app, listofnodes) {
 
                                                                             } catch(err){
 
-                                                                                console.error('e', err)
+                                                                                console.error('fileDetails error', err)
 
                                                                             }
 
@@ -6831,16 +6851,30 @@ Platform = function (app, listofnodes) {
 
                                                                         videoFile = file;
 
+                                                                        console.log('videoFile2', videoFile)
+
+
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
 
-                                                                            videoFile.internalURL =  entry.toInternalURL()
+                                                                            console.log('videoFile1', videoFile, entry)
 
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            try{
+                                                                                videoFile.internalURL =  entry.toInternalURL()
 
+                                                                                if(isios())
+                                                                                    videoFile.internalURL = window.WkWebView.convertFilePath(videoFile.nativeURL)
+    
+                                                                                to.videos[videoFolder.name].video = videoFile;
+    
+                                                                            }catch(e){
+                                                                                console.error(e)
+                                                                            }
+
+                                                                            
 
                                                                             _p.success()
                                                                         });

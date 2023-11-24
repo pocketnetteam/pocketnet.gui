@@ -2964,12 +2964,11 @@ Application = function (p) {
 		screen: {
 
 			lock: function (orientation) {
-				if (window.cordova && (orientation || baseorientation))
+				if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
 					window.screen.orientation.lock(orientation || baseorientation)
 			},
 			unlock: function () {
-				if (window.cordova) {
-					//window.screen.orientation.lock(baseorientation)
+				if (window.cordova && window.screen.orientation.unlock) {
 					window.screen.orientation.unlock()
 				}
 
