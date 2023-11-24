@@ -2,8 +2,8 @@ var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
     dustValue : 700 / 100000000,
-    optimizeUnspentsMin : 20,
-    optimizeUnspentsMax : 50,
+    optimizeUnspentsMin : 80,
+    optimizeUnspentsMax : 300,
     clearRejected : true,
     clearCompleted : true,
     objects : {
