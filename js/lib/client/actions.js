@@ -2,6 +2,8 @@ var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
     dustValue : 700 / 100000000,
+    optimizeUnspentsMin : 20,
+    optimizeUnspentsMax : 50,
     clearRejected : true,
     clearCompleted : true,
     objects : {
@@ -370,7 +372,24 @@ var Action = function(account, object, priority, settings){
 
     var getBestInputs = function(unspents, value){
 
-        if(value == 0) value = 0.000000001
+        var optimizeUnspents = false
+
+        console.log('unspents', unspents.length, value)
+
+        if (value == 0) {
+            value = 0.00000001
+        }
+
+        if (value < 0.0000001) {
+
+            console.log('unspents here')
+
+            if (unspents.length > ActionOptions.optimizeUnspentsMax){
+                optimizeUnspents = true
+
+                console.log("OPTIMIZE UNSPENTS")
+            }
+        }
 
         var added = 0
         var addedUnspents = {}
@@ -385,8 +404,8 @@ var Action = function(account, object, priority, settings){
         }
 
 
-        while ((added < dustValue || added < value) && unspents.length){
-            var diff = Math.max(value, dustValue) - added
+        while ((added < dustValue || added < value || (optimizeUnspents && _.toArray(addedUnspents).length < 5)) && unspents.length){
+            var diff = Math.max(Math.max(value, dustValue) - added, 0)
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
 
@@ -623,7 +642,7 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            if(unspents.length < 100 && totalInputAmount > 0.001){
+            if(unspents.length < ActionOptions.optimizeUnspentsMin && totalInputAmount > 0.001){
 
                 var spcount = 2
 
@@ -1208,7 +1227,8 @@ var Account = function(address, parent){
     self.unspents = {
         willChange : null, /// date, wait free coins
         value : [],
-        updated : null
+        updated : null,
+        height : 0
     }
 
     self.actions = {
@@ -2042,6 +2062,7 @@ var Account = function(address, parent){
 
             self.unspents.value = unspents
             self.unspents.updated = new Date()
+            self.unspents.height = app.platform.currentBlock || 0
 
             cleanOutputs()
 
@@ -2066,6 +2087,7 @@ var Account = function(address, parent){
 
             //if(transaction.addr != self.address) return
 
+            if (transaction.height < self.unspents.height) return
 
             parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
 

@@ -22044,7 +22044,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl' || id == 'tags') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags' || id == 'localshares') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -22059,7 +22059,7 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if(id != 'tags'){
+            if(id != 'tags' && id != 'localshares'){
                 if (c.storage) {
                     c.storage = {}
                 }
@@ -22076,21 +22076,6 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
-
-
-
-        /*self.sdk.node.shares.storage = {
-            trx: {}
-        }*/
-
-
-        //// REMOVE
-
-        /*if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
-            _.each(self.sdk.node.shares.storage.trx, function(tr){
-                delete tr.myVal
-            })
-        }*/
        
 
         self.sdk.sharesObserver.storage = {
@@ -22611,6 +22596,12 @@ Platform = function (app, listofnodes) {
                             console.error(e)
                         })
     
+                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
+                            unspents = _.sortBy(unspents, (u) => {
+                                return u.amount
+                            })
+                            console.log("UNSPENTS", unspents)
+                        })*/
                         
     
                         self.preparingUser = false;
