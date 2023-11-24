@@ -29,7 +29,10 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
 
-    self.streamlib = null;
+    self.streamlib = {
+        instance: null,
+        baseClass: null,
+    };
 
     self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
 
@@ -22656,7 +22659,7 @@ Platform = function (app, listofnodes) {
     
                         }, 2000)
     
-                        options.getPixi = (clbk) => {
+                        const getPixi = (clbk) => {
                             const appVersion = numfromreleasestring(window.packageversion);
                             const appVersionSuffix = window.versionsuffix || '0';
                             const vs = `${appVersion}_${appVersionSuffix}`;
@@ -22664,33 +22667,41 @@ Platform = function (app, listofnodes) {
                             importScript(`js/vendor/pixi.min.js?v=${vs}`, clbk);
                         }
 
-                        options.address = self.app.user.address.value;
+                        const userAddr = self.app.user.address.value;
 
                         // TODO SH007: Look further here...
-                        if (self.streamlib) {
-                            self.streamlib.destroy();
+                        if (self.streamlib.instance) {
+                            self.streamlib.instance.destroy();
                         }
 
-                        options.getPixi((PixiLib) => {
-                            const { BastyonStreams } = BastyonStreamsCreator(/* PIXI INSTANCE */);
+                        getPixi(async () => {
+                            const userInfo = self.app.platform.sdk.user.me();
+                            const userName = userInfo.name.toLowerCase();
 
-                            // self.streamlib = new BastyonStreams();
+                            const { BastyonStreams } = BastyonStreamsCreator(window.PIXI);
+
+                            self.streamlib.baseClass = BastyonStreams;
 
                             // TODO SH007: Add stream verification function as second argument
-                            const userActiveStream = BastyonStreams.continueStreaming(options.address);
+                            const userActiveStream = await BastyonStreams.continueStreaming(userAddr);
 
                             if (userActiveStream) {
-                                new dialog('You have an active stream. Do you want to continue it?')
-                                    .continue(() => {
+                                new dialog({
+                                    html: 'You have an active stream. Do you want to continue it?',
+                                    btn1text: 'Continue stream',
+                                    btn2text: 'Close it',
+                                    success: () => {
                                         self.app.nav.api.load({
                                             open : true,
-                                            href : 'video=1&v=', // TODO SH007: Add post TXID to href
+                                            href : `${userName}?v=${userActiveStream.postTxid}`, // TODO SH007: Add post TXID to href
                                             history : true,
                                         });
-                                    })
-                                    .no(() => {
-                                        // TODO SH007: Finish stream with Peertube API call
-                                    });
+                                    },
+                                    fail: () => {
+                                        alert('You closed the stream');
+                                    },
+                                    class : 'zindex'
+                                });
                             }
                         })
                     })

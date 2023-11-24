@@ -104,6 +104,13 @@ var streampeertube = (function () {
 								rtmpInput.val(res.rtmpUrl);
 								streamKeyInput.val(res.streamKey);
 
+								const userAddr = self.app.user.address.value;
+
+								self.app.platform.streamlib.baseClass.saveStreamInfo(userAddr, {
+									uuid: res.streamKey,
+									server: res.rtmpUrl,
+								});
+
 								// actions.added(response.formattedLink);
 
 								clbk();

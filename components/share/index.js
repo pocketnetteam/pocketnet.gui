@@ -929,14 +929,10 @@ var share = (function(){
 
 							var addsettings = {}
 
-							/// STREAM
-
-							/*
-							
-							if(stream and webrtc) addsettings.rejectIfError = true
-							
-							*/
-							
+							// TODO SH007: What is the mean of func itiswebrtc()
+							if (currentShare.itisstream() /* && itiswebrtc() */) {
+								addsettings.rejectIfError = true;
+							}
 
 							self.app.platform.actions.addActionAndSendIfCan(currentShare, 1, null, addsettings).then(action => {
 
@@ -955,16 +951,21 @@ var share = (function(){
 
 								var alias = action.object
 
-								/// STREAM
+								// TODO SH007: What is the mean of func itiswebrtc()
+								if (alias.itisstream() /* && itiswebrtc() */) {
+									const userAddr = self.app.user.address.value;
 
-								/*
-								
-								if (stream and webrtc) 
+									// TODO SH007: Remove on prod
+									console.log('SH007: SAVE STREAM INFO DBG', {
+										postTxid: action.transaction,
+										//debugFurther: alias,
+									});
 
-									streamlib.addnewstream(action.transaction, alias.url)
-								
-								*/
-
+									self.app.platform.streamlib.baseClass.updateStreamInfo(userAddr, {
+										postTxid: action.transaction,
+										//debugFurther: alias,
+									});
+								}
 
 								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
 									var unpostedVideos;
@@ -1020,21 +1021,15 @@ var share = (function(){
 									essenseData.post(alias)
 								}
 								else{
+									if (alias.itisstream() /* && itiswebrtc() */) {
+										self.app.nav.api.load({
+											open : true,
+											href : `video=1&v=${action.transaction}`,
+											history : true
+										});
 
-
-									/// STREAM
-
-									/*
-									
-									if(stream and webrtc) 
-
-									self.app.nav.api.load({
-										open : true,
-										href : 'video=1&v=' + action.transaction,
-										history : true
-									})
-									
-									*/
+										return;
+									}
 
 									if(isMobile()){
 
