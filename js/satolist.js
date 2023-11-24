@@ -294,7 +294,12 @@ Platform = function (app, listofnodes) {
         'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
         'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
         'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
-        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true
+        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true,
+        'PCsZ9ADzGgyaK99QpRdaFPFCY6qiRTAYoa': true,
+        'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
+        'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
+        'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true
     } 
 
     self.bch = {
@@ -5813,7 +5818,7 @@ Platform = function (app, listofnodes) {
 
                             // If we are on mobile/electron and post has a downloadable media video
                             // Do not download video on iOS
-                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+                            if (share.itisvideo() && self.app.savesupported()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
@@ -6261,7 +6266,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve) => {
 
                         // Only save videos on Android
-                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
+                        if (share.itisvideo() && !p.doNotSaveMedia) {
 
                             self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
@@ -6425,8 +6430,14 @@ Platform = function (app, listofnodes) {
                                                 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                                                 thumbFile.nativeURL,
                                                 function (entry) {
+
+                                                    var url = entry.toURL()
+
+                                                    if (isios())
+                                                        url = window.WkWebView.convertFilePath(thumbFile.nativeURL)
+
                                                     // Success
-                                                    resolve(entry.toURL());
+                                                    resolve(url);
                                                 },
                                                 function (error) {
                                                     reject('download thumbnail error');
@@ -6457,7 +6468,7 @@ Platform = function (app, listofnodes) {
                                             // Write into file
                                             infoFile.createWriter(function (fileWriter) {
 
-                                                fileWriter.write(infos);
+                                                fileWriter.write(JSON.stringify(infos));
 
                                                 dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
@@ -6473,6 +6484,9 @@ Platform = function (app, listofnodes) {
                                                             targetFile.file(function(fileDetails) {
 
                                                                 targetFile.internalURL = entry.toURL();
+
+                                                                if(isios())
+                                                                    targetFile.internalURL = window.WkWebView.convertFilePath(targetFile.nativeURL)
 
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
@@ -6761,9 +6775,15 @@ Platform = function (app, listofnodes) {
                 video : {
                     cordova : function(to, from){
 
+                        console.log('video cordova', to, from)
+
+
                         return new Promise((resolve, reject) => {
 
                             from.getDirectory('videos', { create: true }, function (videosFolder) {
+
+                                console.log('videoFolder2', videosFolder)
+
 
                                 to.videos = {};
 
@@ -6776,6 +6796,7 @@ Platform = function (app, listofnodes) {
                                         action: function (p) {
                                             var videoFolder = p.item;
 
+                                            console.log('videoFolder', videoFolder)
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
@@ -6798,10 +6819,14 @@ Platform = function (app, listofnodes) {
 
                                                                         infoFile = file;
 
+                                                                        console.log('fileDetails', fileDetails, file)
+
 
                                                                         var reader = new FileReader();
 
                                                                         reader.onloadend = function() {
+
+                                                                            console.log('fileDetails result', this.result)
 
 
                                                                             try {
@@ -6809,7 +6834,7 @@ Platform = function (app, listofnodes) {
 
                                                                             } catch(err){
 
-                                                                                console.error('e', err)
+                                                                                console.error('fileDetails error', err)
 
                                                                             }
 
@@ -6826,16 +6851,30 @@ Platform = function (app, listofnodes) {
 
                                                                         videoFile = file;
 
+                                                                        console.log('videoFile2', videoFile)
+
+
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
 
-                                                                            videoFile.internalURL =  entry.toInternalURL()
+                                                                            console.log('videoFile1', videoFile, entry)
 
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            try{
+                                                                                videoFile.internalURL =  entry.toInternalURL()
 
+                                                                                if(isios())
+                                                                                    videoFile.internalURL = window.WkWebView.convertFilePath(videoFile.nativeURL)
+    
+                                                                                to.videos[videoFolder.name].video = videoFile;
+    
+                                                                            }catch(e){
+                                                                                console.error(e)
+                                                                            }
+
+                                                                            
 
                                                                             _p.success()
                                                                         });
@@ -9440,7 +9479,11 @@ Platform = function (app, listofnodes) {
 
                 var old = {}
 
-                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") } catch (e){}
+                try { 
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") 
+                } catch (e){
+                    
+                }
 
                 this.import(old)
 
@@ -9463,7 +9506,7 @@ Platform = function (app, listofnodes) {
                         return -Number(n.time || n.nTime)
                     })
 
-                    e.notifications = firstEls(e.notifications, 75)
+                    e.notifications = firstEls(e.notifications, 150)
 
                     if (self.sdk.address.pnet()){
                         try{
@@ -9589,10 +9632,8 @@ Platform = function (app, listofnodes) {
 
                 this.load();
 
-
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
-
 
                 return this.getNotifications().then(r => {
 
@@ -9603,6 +9644,10 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve(r)
                 })
 
+            },
+
+            initcl : function(clbk){
+                self.sdk.notifications.init().then(clbk).catch(clbk)
             },
 
             wsBlock: function (block) {
@@ -9641,7 +9686,7 @@ Platform = function (app, listofnodes) {
 
                 n.loading = true
 
-                notifications = firstEls(notifications, 75)
+                notifications = firstEls(notifications, 150)
 
                 notifications = _.filter(notifications, function (ns) {
                     if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
@@ -9743,7 +9788,20 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
-                        return self.sdk.missed.get(n.storage.block - (blockdif || 0))
+                        console.log('n.storage.block', n.storage.block)
+
+                        return self.sdk.missed.get(n.storage.block - (blockdif || 0)).catch(e => {
+                            if(e != 'block'){
+                                return Promise.reject(e)
+                            }
+
+                            return Promise.resolve({
+                                block : {
+                                    block : self.currentBlock
+                                },
+                                notifications : []
+                            })
+                        })
 
                     }).then(({block, notifications}) => {
 
@@ -9767,8 +9825,6 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
-
-                        console.error(e)
 
                         n.inited = false;
                         n.loading = false;
@@ -9797,11 +9853,13 @@ Platform = function (app, listofnodes) {
                         block : {
                             block : self.currentBlock,
                             contentsLang : {},
+                            contentsSubscribes : {},
                             msg : 'newblocks'
                         }
                     }
                 }
 
+                console.log('self.currentBlock', self.currentBlock, block)
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
@@ -14567,6 +14625,8 @@ Platform = function (app, listofnodes) {
 
                     if (self.lasttimecheck){
 
+                        console.log('block lasttimecheck error')
+
                         var d = new Date()
 
                         if(self.lasttimecheck.addSeconds(10) > d){
@@ -14580,6 +14640,8 @@ Platform = function (app, listofnodes) {
 
                         self.currentBlock = 0
                         self.timeDifference = 0;
+
+                        console.log('block getnodeinfo', d)
                         
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
@@ -14587,6 +14649,8 @@ Platform = function (app, listofnodes) {
                         }catch(e){
                             
                         }
+
+                        console.log('self.currentBlock', self.currentBlock)
 
                         if (t) {
 
@@ -18247,7 +18311,7 @@ Platform = function (app, listofnodes) {
 
                 if(app.curation()) return ''
 
-                h = '<div class="sharepreview"><div class="shareprwrapper table">'
+                h = '<div class="sharepreview"><div class="shareprwrapper">'
 
                 if (images.length && !extendedpreview) {
 
@@ -18352,7 +18416,7 @@ Platform = function (app, listofnodes) {
             transaction: function (data, message) {
                 var h = '<div class="transactionmessage">'
 
-                h += '<div class="transactionmessagewrapper table">'
+                h += '<div class="transactionmessagewrapper">'
 
                 if (message) {
                     h += '<div class="tcell formessage">'
@@ -18524,7 +18588,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                     <div class="cell cellforimage">\
                         <div class="icon">'
 
@@ -18642,7 +18706,7 @@ Platform = function (app, listofnodes) {
 
             simple : function(json){
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                         <div class="cell cellforimage">\
                             <div class="icon">'
 
@@ -19017,20 +19081,13 @@ Platform = function (app, listofnodes) {
 
                     if (text) {
 
-
                         if (data.postsCnt > 1) {
 
                             var c = data.postsCnt - 1
-
-                            //text = text + '<div class="moreshares">And more ' + c + " " + pluralform(c, ['post', 'posts']) + '</div>'
-
                         }
-
-
 
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                     }
-
 
                     return html;
 
@@ -19075,8 +19132,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
-
                     })
+
+                    if(data.share && data.share.itisstream()){
+                        message.el.addClass('bright')
+                    }
 
                 },
 
@@ -19438,6 +19498,12 @@ Platform = function (app, listofnodes) {
                         })
 
                     }*/
+                },
+
+                fastMessageEvents: function (data, message, close) {
+
+                    //message.el.addClass('bright')
+
                 }
             },
 
@@ -20321,13 +20387,17 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-                    self.getMissed()
-
-                    lost = platform.currentBlock || 0;
+                    lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
+                    
+                    console.log("block LOST", lost)
+                    self.getMissed(true).then(() => {
+                    })
 
                     opened = true;
 
-                    auth(null, wss.proxy)
+                    auth(() => {
+                        
+                    }, wss.proxy)
 
                     if (clbk)
                         clbk()
@@ -20484,11 +20554,11 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        self.getMissed = function () {
+        self.getMissed = function (initial) {
 
-            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1))) return Promise.resolve()
 
-            if(self.loadingMissed) return Promise.resolve()
+            if (self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -20664,6 +20734,8 @@ Platform = function (app, listofnodes) {
         self.messageHandler = function (data, clbk) {
 
             data || (data = {})
+
+            console.log('data', data)
 
             if (data.msg || data.mesType) {
 
@@ -22007,7 +22079,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl' || id == 'tags') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags' || id == 'localshares') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -22022,7 +22094,7 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if(id != 'tags'){
+            if(id != 'tags' && id != 'localshares'){
                 if (c.storage) {
                     c.storage = {}
                 }
@@ -22039,21 +22111,6 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
-
-
-
-        /*self.sdk.node.shares.storage = {
-            trx: {}
-        }*/
-
-
-        //// REMOVE
-
-        /*if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
-            _.each(self.sdk.node.shares.storage.trx, function(tr){
-                delete tr.myVal
-            })
-        }*/
        
 
         self.sdk.sharesObserver.storage = {
@@ -22215,18 +22272,16 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            //self.prepareUserData(function(){
 
-                self.app.reload({
-                    clbk : function () {
-                        reloading = false
+            self.app.reload({
+                clbk : function () {
+                    reloading = false
 
-                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                        if(clbk) clbk()
-                    }
-                })
-            //})
+                    if(clbk) clbk()
+                }
+            })
 
         })
     }
@@ -22448,33 +22503,6 @@ Platform = function (app, listofnodes) {
         });
     }
 
-    self.prepareUserData = function(clbk){
-
-
-
-        lazyActions([
-            self.sdk.broadcaster.init,
-            self.actions.prepare,
-            self.sdk.node.transactions.loadTemp,
-            self.sdk.ustate.meUpdate,
-            self.firebase.init,
-            self.sdk.user.meUpdate,
-            self.sdk.categories.load,
-            self.sdk.activity.load,
-            self.sdk.recommendations.load,
-            self.sdk.memtags.load,
-            self.sdk.node.shares.parameters.load,
-
-
-        ], function () {
-
-            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-            self.sdk.notifications.init().catch(e => {})
-
-            if(clbk) clbk()
-        })
-    }
 
     var checkfeatures = function(){
 
@@ -22569,7 +22597,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.user.get,
                         self.sdk.usersettings.init,
                         self.matrixchat.importifneed,
-                        self.ws.init,
+                        
                         self.firebase.init,
                         /*self.app.platform.sdk.node.transactions.get.allBalance,*/
     
@@ -22582,11 +22610,13 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        
+                        self.sdk.notifications.initcl
     
                     ], function () {
     
                         //self.ui.showmykey()
+
+                        self.ws.init()
     
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
@@ -22601,6 +22631,12 @@ Platform = function (app, listofnodes) {
                             console.error(e)
                         })
     
+                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
+                            unspents = _.sortBy(unspents, (u) => {
+                                return u.amount
+                            })
+                            console.log("UNSPENTS", unspents)
+                        })*/
                         
     
                         self.preparingUser = false;
@@ -22641,7 +22677,7 @@ Platform = function (app, listofnodes) {
                                 }
                             }
     
-                            self.sdk.notifications.init().catch(e => {})
+                            
     
                             if(self.istest()){
                                 $('html').addClass('testaddress')
@@ -24048,6 +24084,17 @@ Platform = function (app, listofnodes) {
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
+                changeTitle : function(text){
+                    console.log('changeTitle', text)
+                    if(!self.titleManager) return 
+
+                    if(!text) {
+                        self.titleManager.clear();
+                    }
+                    else{
+                        self.titleManager.add(text)
+                    }
+                },
 				getUserInfo: async (address) => {
 
 					let res = new Promise((resolve, reject) => {

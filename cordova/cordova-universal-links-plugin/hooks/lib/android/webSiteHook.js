@@ -17,7 +17,7 @@ var WEB_HOOK_FILE_PATH = path.join(
 );
 var WEB_HOOK_TPL_FILE_PATH = path.join(
   "plugins",
-  "cordova-wtto00-universal-link",
+  "cordova-universal-links-plugin",
   "ul_web_hooks",
   "android_web_hook_tpl.html"
 );
