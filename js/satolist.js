@@ -9777,7 +9777,7 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            getNotifications: function (blockdif) {
+            getNotifications: function () {
                 var n = this;
 
 
@@ -9788,9 +9788,7 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
-                        console.log('n.storage.block', n.storage.block)
-
-                        return self.sdk.missed.get(n.storage.block - (blockdif || 0)).catch(e => {
+                        return self.sdk.missed.get(n.storage.block).catch(e => {
                             if(e != 'block'){
                                 return Promise.reject(e)
                             }
@@ -9825,6 +9823,8 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
+
+                        console.error(e)
 
                         n.inited = false;
                         n.loading = false;
@@ -18257,7 +18257,7 @@ Platform = function (app, listofnodes) {
         var socket;
         var opened = false;
         var closing = false;
-        var lost = 0;
+
         var wait = null;
 
         self.connected = {};
@@ -19510,7 +19510,11 @@ Platform = function (app, listofnodes) {
             'newblocks': {
                 loadMore: function (data, clbk) {
 
-                    if (data.block <= platform.currentBlock) {
+                    var hb = (data.block || data.height)
+
+                    if (hb <= platform.currentBlock) {
+
+                        platform.sdk.notifications.wsBlock(hb)
 
                         if(clbk) clbk(0)
 
@@ -19520,13 +19524,12 @@ Platform = function (app, listofnodes) {
 
                         var s = platform.sdk.node.transactions;
 
-                        var dif = platform.currentBlock - data.block
+                        var dif = platform.currentBlock - hb
 
-                        platform.currentBlock = data.block;
+                        platform.currentBlock = hb;
                         platform.lasttimecheck = new Date()
                         platform.lastblocktime = new Date()
 
-                        lost = data.block;
 
                         try{
                             localStorage['lastblock'] = platform.currentBlock
@@ -19540,7 +19543,7 @@ Platform = function (app, listofnodes) {
 
                     //self.reconnected = platform.currentBlock;
 
-                    platform.sdk.notifications.wsBlock(data.height)
+                    platform.sdk.notifications.wsBlock(hb)
 
                     _.each(s.unspent, function (unspents) {
                         _.each(unspents, function (txu) {
@@ -19552,7 +19555,7 @@ Platform = function (app, listofnodes) {
 
                     clbk(dif)
 
-                    data.difference = platform.currentBlock - (data.block || data.height)
+                    data.difference = platform.currentBlock - hb
 
                     platform.actions.ws.block(data)
 
@@ -19591,7 +19594,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk) {
 
-                    if (data.height <= platform.currentBlock) return
+                    if (data.height <= platform.currentBlock) {
+                        platform.sdk.notifications.wsBlock(data.data.height)
+                        return
+                    }
 
                     var s = platform.sdk.node.transactions;
 
@@ -19604,9 +19610,6 @@ Platform = function (app, listofnodes) {
                     }catch(e){
 
                     }
-
-                    lost = platform.currentBlock;
-
                     
 
                     platform.sdk.notifications.wsBlock(data.height)
@@ -20312,7 +20315,6 @@ Platform = function (app, listofnodes) {
             }
 
             closing = false;
-            //lost = platform.currentBlock;
 
             self.close();
 
@@ -20387,10 +20389,10 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-                    lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
+                    //lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
                     
-                    console.log("block LOST", lost)
-                    self.getMissed(true).then(() => {
+                    
+                    self.getMissed().then(() => {
                     })
 
                     opened = true;
@@ -20556,7 +20558,7 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function (initial) {
 
-            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1))) return Promise.resolve()
+            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(2))))) return Promise.resolve()
 
             if (self.loadingMissed) return Promise.resolve()
 
@@ -20564,14 +20566,12 @@ Platform = function (app, listofnodes) {
 
             return platform.sdk.node.get.timepr().then(r => {
 
-                return platform.sdk.missed.get(lost)
+                return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
             }).then(({block, notifications}) => {
 
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
-
-                    lost = 0;
 
                     if(!notifications) return
 
@@ -20590,6 +20590,8 @@ Platform = function (app, listofnodes) {
                 })
 
             }).catch(e => {
+
+                console.error(e)
 
                 self.loadingMissed = false;
 
@@ -20929,7 +20931,6 @@ Platform = function (app, listofnodes) {
             self.close()
 
             self.loadingMissed = false;
-            lost = 0;
         }
 
 

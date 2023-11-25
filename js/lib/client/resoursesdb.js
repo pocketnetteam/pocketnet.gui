@@ -144,6 +144,7 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.clearAll = function(key){
+        console.log('clearAll', key)
         return transaction(key).then(items => {
 
             const req = items.clear();
@@ -188,13 +189,17 @@ ResoursesDB = function(storageName, version, storages){
                     
                     if (time >= req.result.cachedTo && !getold) {
 
-                        if(useapptimeCorrection()){
-
+                        if (useapptimeCorrection()){
 
                             var ttime = time - apptimeCorrection
 
                             if (ttime >= req.result.cachedTo) {
                                 reject('delete');
+                                return;
+                            }
+
+                            if(!getold){
+                                reject('Data does not exist');
                                 return;
                             }
                         }
