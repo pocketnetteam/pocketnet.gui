@@ -381,7 +381,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-		return isElectron || (window.cordova && !isios());
+		return isElectron || (window.cordova);
 	}
 
 	self.savesupportedForBrowser = function () {
@@ -406,12 +406,6 @@ Application = function (p) {
 		},
 		state: {},
 		clbks: {
-
-			/*_platform : function(change){
-			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
-				self.prepareUserData()
-			  }
-			},*/
 
 			_modules: function (change) {
 
@@ -2970,12 +2964,11 @@ Application = function (p) {
 		screen: {
 
 			lock: function (orientation) {
-				if (window.cordova && (orientation || baseorientation))
+				if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
 					window.screen.orientation.lock(orientation || baseorientation)
 			},
 			unlock: function () {
-				if (window.cordova) {
-					//window.screen.orientation.lock(baseorientation)
+				if (window.cordova && window.screen.orientation.unlock) {
 					window.screen.orientation.unlock()
 				}
 

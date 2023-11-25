@@ -6195,10 +6195,14 @@ html.allcontent_application{
     }
 
     .transactionmessagewrapper{
+        display: flex;
         >div{
-            vertical-align: top;
+            align-items: flex-start;
+            flex-grow: 1;
 
             &.foramount{
+                white-space: nowrap;
+                flex-grow: 0;
                 font-weight: 700;
                 text-align: right;
                 color : rgb(var(--color-good));
@@ -6412,23 +6416,26 @@ html.allcontent_application{
         }
     }
     .cwrapper{
+        display: flex;
+
         >div{
-            vertical-align: middle;
+            align-items: center;
+            flex-grow: 2;
 
             &.cellforimage{
                 width: 50px;
-                vertical-align: top;
+                flex-grow: 0;
+                max-width: 50px;
             }
 
             &.extra{
-                width: 90px;
+                max-width: 90px;
             }
 
             .infomain{
                 padding-left:  @rhythm;
 
                 .caption{
-                    font-size : 1em;
                 }
 
                 .donate{
@@ -6464,6 +6471,10 @@ html.allcontent_application{
         /*&:hover{
             color : rgb(var(--color-txt-ac));
         }*/
+    }
+
+    .caption{
+        font-size: 0.9em;
     }
 }
 
@@ -6506,6 +6517,8 @@ html.allcontent_application{
             margin-bottom : 4px;
         }
     }
+
+   
 }
 
 .closecsscross{
@@ -6779,6 +6792,19 @@ html.allcontent_application{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.bright{
+        background: rgba(var(--color-bg-ac-bright), 0.98);
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
     }
 
 }
