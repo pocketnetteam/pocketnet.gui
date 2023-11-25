@@ -127,5 +127,6 @@
         __JSPOST__
 
 
+        <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
     </body>
 </html>
