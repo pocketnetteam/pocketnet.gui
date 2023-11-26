@@ -361,6 +361,46 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
+    self.archivedServers = [
+        'pocketnetpeertube1.nohost.me',
+        'pocketnetpeertube2.nohost.me',
+        'pocketnetpeertube5.nohost.me',
+        'pocketnetpeertube7.nohost.me',
+        'pocketnetpeertube4.nohost.me',
+        'pocketnetpeertube6.nohost.me',
+        'pocketnetpeertube8.nohost.me',
+        'pocketnetpeertube9.nohost.me',
+        'pocketnetpeertube10.nohost.me',
+        'pocketnetpeertube11.nohost.me',
+        'bastyonmma.pocketnet.app',
+        'bastyonmma.nohost.me',
+        '01rus.nohost.me',
+        '02rus.pocketnet.app',
+        'pocketnetpeertube12.nohost.me',
+        'pocketnetpeertube13.nohost.me',
+        'peertube14.pocketnet.app',
+        'peertube15.pocketnet.app',
+        'peertube18.pocketnet.app',
+        'peertube17mirror.pocketnet.app',
+        'peertube18mirror.pocketnet.app',
+        'peertube19mirror.pocketnet.app',
+        'peertube20.pocketnet.app',
+        'peertube21.pocketnet.app',
+        'peertube22.pocketnet.app',
+        'peertube23.pocketnet.app',
+        'peertube24.pocketnet.app',
+        'peertube25.pocketnet.app',
+        'peertube25mirror.pocketnet.app',
+        'peertube26.pocketnet.app',
+        'peertube26mirror.pocketnet.app',
+        'peertube27.pocketnet.app',
+        'peertube29.pocketnet.app',
+        'peertube30.pocketnet.app',
+        'peertube5new.pocketnet.app',
+        'peertube4new.pocketnet.app',
+        'peertube31.pocketnet.app',
+    ];
+
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
     self.focus = true;
