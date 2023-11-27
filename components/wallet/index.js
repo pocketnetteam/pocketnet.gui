@@ -109,7 +109,7 @@ var wallet = (function(){
 					defaultValueTemplate : function(d, f, g, firstdef){
 						if(_.isObject(d)){
 
-							var img = d.image ? d.image.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet') : null
+							var img = d.image ? replaceArchiveInImage(d.image) : null
 
 							var h = ''
 

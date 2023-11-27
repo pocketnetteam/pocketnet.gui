@@ -391,6 +391,9 @@ var userslist = (function(){
 				addresses = sorting(deep(p.settings, 'essenseData.addresses') || [], sort)
 
 				data.addresses = addresses
+				data.count = ed.count || 0
+
+				console.log('data.count', data.count)
 
 				data.empty = deep(p.settings, 'essenseData.empty');
 				data.caption = deep(p.settings, 'essenseData.caption');

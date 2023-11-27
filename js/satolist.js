@@ -361,6 +361,46 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
+    self.archivedServers = [
+        'pocketnetpeertube1.nohost.me',
+        'pocketnetpeertube2.nohost.me',
+        'pocketnetpeertube5.nohost.me',
+        'pocketnetpeertube7.nohost.me',
+        'pocketnetpeertube4.nohost.me',
+        'pocketnetpeertube6.nohost.me',
+        'pocketnetpeertube8.nohost.me',
+        'pocketnetpeertube9.nohost.me',
+        'pocketnetpeertube10.nohost.me',
+        'pocketnetpeertube11.nohost.me',
+        'bastyonmma.pocketnet.app',
+        'bastyonmma.nohost.me',
+        '01rus.nohost.me',
+        '02rus.pocketnet.app',
+        'pocketnetpeertube12.nohost.me',
+        'pocketnetpeertube13.nohost.me',
+        'peertube14.pocketnet.app',
+        'peertube15.pocketnet.app',
+        'peertube18.pocketnet.app',
+        'peertube17mirror.pocketnet.app',
+        'peertube18mirror.pocketnet.app',
+        'peertube19mirror.pocketnet.app',
+        'peertube20.pocketnet.app',
+        'peertube21.pocketnet.app',
+        'peertube22.pocketnet.app',
+        'peertube23.pocketnet.app',
+        'peertube24.pocketnet.app',
+        'peertube25.pocketnet.app',
+        'peertube25mirror.pocketnet.app',
+        'peertube26.pocketnet.app',
+        'peertube26mirror.pocketnet.app',
+        'peertube27.pocketnet.app',
+        'peertube29.pocketnet.app',
+        'peertube30.pocketnet.app',
+        'peertube5new.pocketnet.app',
+        'peertube4new.pocketnet.app',
+        'peertube31.pocketnet.app',
+    ];
+
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
     self.focus = true;
@@ -9627,22 +9667,16 @@ Platform = function (app, listofnodes) {
                     return Promise.reject('openapi')
                 }
 
-                this.inited = false;
-                this.loading = true;
+                this.inited = true;
+                this.loading = false;
 
                 this.load();
 
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
-                return this.getNotifications().then(r => {
+                return Promise.resolve()
 
-                    _.each(this.clbks.inited, function (f) {
-                        f()
-                    })
-
-                    return Promise.resolve(r)
-                })
 
             },
 
@@ -9681,162 +9715,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getNotificationsInfo: function (notifications, clbk) {
-                var n = this;
-
-                n.loading = true
-
-                notifications = firstEls(notifications, 150)
-
-                notifications = _.filter(notifications, function (ns) {
-                    if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
-
-                    if (ns.commentid && _.find(n.storage.notifications, function (n) {
-                        return n.commentid == ns.commentid
-                    })) return false
-
-                    if (ns.msg == "transaction" && ns.txinfo && ns.txinfo.pockettx) {
-                        return false
-                    }
-
-                    return true
-                })
-
-                notifications = _.sortBy(notifications, function (n) {
-                    return -Number(n.time || n.nTime)
-                })
-
-                lazyEach({
-                    array: notifications,
-                    action: function (p) {
-
-
-                        var ns = p.item;
-                        var m = null;
-
-                        ns.loading = true;
-
-                        if (ns.mesType) m = self.ws.messages[ns.mesType]
-                        if (ns.msg && !m) m = self.ws.messages[ns.msg]
-
-
-                        if (m) {
-                            m.loadMore(ns, function () {
-                                ns.loaded = true;
-
-                                ns.loading = false;
-
-                                p.success()
-
-                            }, true)
-                        }
-                        else {
-                            p.success()
-                        }
-
-                    },
-                    sync: true,
-                    all: {
-                        success: function () {
-
-                            n.loading = false
-
-                            var ns = _.filter(notifications, function (no) {
-                                if (no.msg == 'transaction' && no.address == self.sdk.address.pnet().address) {
-                                    return
-                                }
-                                return true
-                            })
-
-                            var added = [];
-
-                            _.each(ns, function (no) {
-
-                                var f = _.find(n.storage.notifications, function (n) {
-                                    if (no.txid && n.txid == no.txid) return true
-                                })
-
-                                if (!f) {
-                                    added.push(no)
-
-                                    if (n.storage.notifications)
-                                        n.storage.notifications.push(no)
-                                }
-
-
-                            })
-
-                            _.each(n.clbks.added, function (f) {
-                                f(added)
-                            })
-
-                            if (clbk)
-                                clbk()
-                        }
-                    }
-                })
-            },
-
-            getNotifications: function () {
-                var n = this;
-
-
-                if(!n.inited && !n.loading) {
-                    return n.init()
-                }
-                else {
-
-                    return self.sdk.node.get.timepr().then(r => {
-
-                        return self.sdk.missed.get(n.storage.block).catch(e => {
-                            if(e != 'block'){
-                                return Promise.reject(e)
-                            }
-
-                            return Promise.resolve({
-                                block : {
-                                    block : self.currentBlock
-                                },
-                                notifications : []
-                            })
-                        })
-
-                    }).then(({block, notifications}) => {
-
-                        return new Promise((resolve, reject) => {
-
-                            n.getNotificationsInfo(notifications || [], function () {
-
-                                if (block.block > n.storage.block) {
-                                    n.storage.block = block.block
-                                }
-
-                                n.inited = true;
-                                n.save();
-
-                                resolve();
-
-                            })
-
-                        })
-
-
-
-                    }).catch(e => {
-
-                        console.error(e)
-
-                        n.inited = false;
-                        n.loading = false;
-
-
-                        return Promise.reject(e)
-                    })
-
-                }
-
-
-            },
+          
 
             find: function (txid) {
                 return _.find(this.storage.notifications, function (n) {
@@ -20392,12 +20271,14 @@ Platform = function (app, listofnodes) {
                     //lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
                     
                     
-                    self.getMissed().then(() => {
-                    })
+                    
 
                     opened = true;
 
                     auth(() => {
+
+                        self.getMissed().then(() => {
+                        })
                         
                     }, wss.proxy)
 
@@ -20431,7 +20312,7 @@ Platform = function (app, listofnodes) {
 
             if (message.timeout) clearTimeout(message.timeout);
 
-            if (platform.focus) {
+            if (platform.focus || noarrange) {
 
                 message.timeout = setTimeout(function () {
 
@@ -20450,7 +20331,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (!noarrange)
-                            arrangeMessages()
+                            tArrangeMessages()
 
                     }, 300)
 
@@ -20466,6 +20347,7 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotifications = function(){
+            hideallnotificationselement(false)
             self.destroyMessages()
 
         }
@@ -20509,54 +20391,66 @@ Platform = function (app, listofnodes) {
 				_.each(self.fastMessages, function(m, i){
 
 					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
-
 						m.el.addClass('smallsize');
-
 						s = true
 					}
 
 				})
 			}
 
-			setTimeout(function(){
+            console.log('showremove', showremove, self.fastMessages.length, remove)
 
-                if (showremove && self.fastMessages.length >= showremove){
-                    boffset = 50
 
-                    hideallnotificationselement(true)
+            if (showremove && self.fastMessages.length >= showremove){
+                boffset = 50
+
+                console.log("showremove SHOW")
+
+                hideallnotificationselement(true)
+            }
+            else{
+
+                console.log("showremove hide")
+
+                hideallnotificationselement(false)
+            }
+
+            offset = offset + boffset
+
+            _.each(self.fastMessages, function(m, i){
+
+                if(i < remove){
+                    destroyMessage(m, 1, true)
                 }
-                else{
-                    hideallnotificationselement(false)
+
+                else
+                {
+                    if(!mtbl){
+                        offset += 5;
+                    }
+
+                    if(!mtbl){
+                        var r = offset
+                        window.requestAnimationFrame(() => {
+                            m.el.css('bottom', r + 'px');
+                        })
+                        
+                    }
+                        
+
+                    offset += m.el.outerHeight();
                 }
 
-                offset = offset + boffset
-
-				_.each(self.fastMessages, function(m, i){
-
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
-
-					else
-					{
-						if(!mtbl){
-							offset += 5;
-						}
-
-						if(!mtbl)
-
-							m.el.css('bottom', offset + 'px');
-
-						offset += m.el.outerHeight();
-					}
-
-				})
-			}, s ? 300 : 3)
+            })
 
 
 		}
 
+        var tArrangeMessages = _.debounce(arrangeMessages, 300)
+
         self.getMissed = function (initial) {
+
+            console.log('missed platform.lastblocktime', platform.lastblocktime)
 
             if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(2))))) return Promise.resolve()
 
@@ -20565,6 +20459,8 @@ Platform = function (app, listofnodes) {
             self.loadingMissed = true;
 
             return platform.sdk.node.get.timepr().then(r => {
+
+                console.log("GETMISSED")
 
                 return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
@@ -20608,7 +20504,7 @@ Platform = function (app, listofnodes) {
             })
 
             setTimeout(function(){
-                arrangeMessages()
+                tArrangeMessages()
             }, 301)
         }
 
@@ -20679,10 +20575,10 @@ Platform = function (app, listofnodes) {
 
                         message.expanded = true
 
-                        arrangeMessages();
+                        tArrangeMessages();
 
                         setTimeout(function(){
-                            arrangeMessages();
+                            tArrangeMessages();
                         }, 300)
                     }
                 }
@@ -20711,7 +20607,9 @@ Platform = function (app, listofnodes) {
                     el: message.el,
                     directions: {
                         up : {
-                            trueshold: 10,
+                            endmove : true,
+                            trueshold: 1,
+                            distance : 20,
                             positionclbk: function (px) {
 
                             },
@@ -20719,7 +20617,6 @@ Platform = function (app, listofnodes) {
                             clbk: function () {
                                 message.el.remove()
                                 destroyMessage(message, 1, false, true);
-
                             }
 
                         }
@@ -20728,7 +20625,7 @@ Platform = function (app, listofnodes) {
                 }).init()
             }
 
-            arrangeMessages();
+            tArrangeMessages();
 
             return message
         }
@@ -21106,8 +21003,6 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-
-
             if(!_OpenApi){
 
                 closing = false;
@@ -21123,7 +21018,9 @@ Platform = function (app, listofnodes) {
 
                 initconnection();
 
-                self.hideallnotificationsel = $('#hideallnotifications')
+                self.hideallnotificationsel = $('#hideallnotificationsel')
+
+                self.getMissed(true)
 
             }
 
@@ -23492,7 +23389,6 @@ Platform = function (app, listofnodes) {
                     account.updateUnspents()
                 }
                
-                self.sdk.notifications.getNotifications().catch(e => {})
             }
 
             if(time > 120 && window.cordova){
