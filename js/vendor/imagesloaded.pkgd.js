@@ -348,7 +348,7 @@
       }
     }
 
-    url = url.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+    url = replaceArchiveInImage(url)
 
     if (app){
 

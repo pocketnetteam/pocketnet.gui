@@ -1788,11 +1788,8 @@ bgImagesClApply = function (el, src) {
 
 bgImagesClApplyTemplate = function (src) {
 
-	src = (src || "").replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
-
-	app.platform.archivedServers.map(server => {
-		if (src.includes(server)) src = src.replace(server, 'peertube.archive.pocketnet.app');
-	});
+	src = (src || "");
+	src = replaceArchiveInImage(src);
 
 	if (src && imagesLoadedCache[src]) {
 		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
@@ -9577,7 +9574,7 @@ edjsHTML = function () {
 			if (t.withBorder) cl.push('withBorder')
 			if (t.stretched) cl.push('stretched')
 
-			var src = (t.file && t.file.url ? t.file.url : t.file).replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+			var src = replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file)
 
 			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + (r) + '" />' +
 
@@ -10554,6 +10551,16 @@ var connectionSpeed = function()
             return 600;            
     }
     return defaultSpeed;
+};
+
+function replaceArchiveInImage(src) {
+	var srcNew = src;
+
+	app.platform.archivedServers.map(server => {
+		if (src.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+	});
+
+	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet');
 };
 
 /*test*/
