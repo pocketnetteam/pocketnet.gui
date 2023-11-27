@@ -2923,7 +2923,7 @@ Application = function (p) {
 														account.releaseCheckInAnotherSession()
 													}
 
-													self.platform.sdk.notifications.getNotifications()
+													self.platform.ws.getMissed()
 												}
 
 											})
