@@ -1790,6 +1790,10 @@ bgImagesClApplyTemplate = function (src) {
 
 	src = (src || "").replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 
+	app.platform.archivedServers.map(server => {
+		if (src.includes(server)) src = src.replace(server, 'peertube.archive.pocketnet.app');
+	});
+
 	if (src && imagesLoadedCache[src]) {
 		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
 	}
