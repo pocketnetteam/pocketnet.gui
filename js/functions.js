@@ -10557,7 +10557,7 @@ function replaceArchiveInImage(src) {
 	var srcNew = src;
 
 	app.platform.archivedServers.map(server => {
-		if (src.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 
 	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet');
