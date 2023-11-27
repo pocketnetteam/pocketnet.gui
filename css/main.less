@@ -6139,7 +6139,7 @@ html.allcontent_application{
 .fastMessage,
 .notification{
 
-    .transition(0.3s);
+    
 
     .time{
         padding-left: @rhythm;
@@ -6480,7 +6480,7 @@ html.allcontent_application{
 
 .fastMessage{
     border-radius: 12px;
-    
+    .transition(0.3s, bottom);
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -6519,6 +6519,32 @@ html.allcontent_application{
     }
 
    
+}
+
+#hideallnotificationsel{
+    .hidenf{
+        position: fixed;
+        left : 5px;
+        bottom : 5px;
+        width: 390px;
+        background: rgba(var(--color-shadow-base), 0.98);
+        color: rgb(var(--color-txt-ac-1));
+        z-index: 140;
+        overflow: hidden;
+        padding: 2 * @rhythm;
+        text-align: center;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        cursor: pointer;
+        .transition(0.3s, opacity);
+
+        &:hover{
+            opacity: 0.8;
+        }
+    }
 }
 
 .closecsscross{
@@ -7306,6 +7332,9 @@ html{
             input{
                 display: none;
             }
+        }
+        #hideallnotificationsel{
+            display: none;
         }
 
         #panelWrapper{

@@ -6379,7 +6379,17 @@ SwipeParallaxNew = function (p) {
 
 					set(mainDirection.i, distance)
 
+					if(mainDirection.endmove){
+						if ((!mainDirection.distance || mainDirection.distance < distance)) {
+							mainDirection.clbk()
+							self.clear()
+							document.ontouchmove = () => true
+						}
+					}
+
 				}
+
+				
 
 				if (e.cancelable !== false) {
 					e.stopPropagation();
