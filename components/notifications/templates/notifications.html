@@ -40,12 +40,17 @@
 				if (notification.msg && !m) m = ws.messages[notification.msg]
 
 
-				if(!m) return
+				if(!m) {
+					console.log("CANT RENDER", notification)
+
+					return
+				}
 				
 				var tpl = m.fastMessage(notification)
 
 
 				if(!tpl) {
+					console.log("CANT RENDER", notification)
 					return
 				}
 			%>
