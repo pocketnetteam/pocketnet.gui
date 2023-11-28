@@ -10567,7 +10567,7 @@ var connectionSpeed = function()
     return defaultSpeed;
 };
 
-function replaceArchiveInImage(src) {
+replaceArchiveInImage = function(src) {
 	var srcNew = src;
 
 	app.platform.archivedServers.map(server => {
