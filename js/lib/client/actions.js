@@ -646,8 +646,9 @@ var Action = function(account, object, priority, settings){
 
                 var spcount = 2
 
-                if(totalInputAmount > 0.5){
+                if(totalInputAmount > 0.5 && !account.wasdvii){
                     spcount = 10
+                    account.wasdvii = true
                 }
 
                 var divii = toFixed(totalInputAmount / spcount, 8)
@@ -803,6 +804,12 @@ var Action = function(account, object, priority, settings){
                     })
                 }
                 
+            }
+
+            if (code == 26){
+                self.logerror({
+                    method, parameters, error : e
+                })
             }
 
             /*if (options.rejectedAsk){
