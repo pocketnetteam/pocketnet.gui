@@ -99,7 +99,7 @@ ImageUploader = function(app) {
 
                         app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_SUCCESS" });
 
-                        var url = 'https://' + data.url
+                        var url = data.url.indexOf('http://') > -1 ? data.url : 'https://' + data.url
 
                         resolve(url)
                     }

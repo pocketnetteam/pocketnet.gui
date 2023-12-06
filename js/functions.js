@@ -1791,9 +1791,7 @@ bgImagesClApplyTemplate = function (src) {
 	src = (src || "");
 	src = replaceArchiveInImage(src);
 
-	app.platform.archivedServers.map(server => {
-		if (src.includes(server)) src = src.replace(server, 'peertube.archive.pocketnet.app');
-	});
+	
 
 	if (src && imagesLoadedCache[src]) {
 		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
@@ -1833,7 +1831,7 @@ bgImagesCl = function (el, p) {
 
 			var image = new Image()
 
-			src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+			src = replaceArchiveInImage(src)
 
 			if (src.includes('www.youtube.com')) {
 				const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
@@ -10574,7 +10572,8 @@ replaceArchiveInImage = function(src) {
 		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 
-	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet');
+
+	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
 };
 
 /*test*/
