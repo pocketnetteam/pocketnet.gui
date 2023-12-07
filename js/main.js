@@ -10,7 +10,7 @@ if(!_Node)
 		"version": "1.0.0",
 		"scope" : "test.barter.pocketnet.app",
 		"cantdelete" : true,
-		"name" : "Barteron"
+		"name" : "Demo application"
 	}]
 
 	var translateApiProxy = {
