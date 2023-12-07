@@ -32,15 +32,33 @@ var application = (function(){
 			},
 
 			loaded : function(p){
-
 				if(!application) return
 
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
+
+					var pid = parameters().pid;
+
+					if (pid) {
+						self.app.apps.emit('changeroute', hexDecode(pid))
+						console.log(`emitted: ${ hexDecode(pid) }`)
+					}
 				}
 
 				if (el.c)
 					el.c.find('.captionRow').addClass('notactive')
+			},
+
+			historychange : function(p) {
+				if(!application) return
+
+				if (p.application == application.manifest.id){
+					self.app.nav.api.history.addRemoveParameters([], {
+						pid: hexEncode(p.data?.data?.path)
+					}, {
+						replaceState: true
+					})
+				}
 			}
 		}
 
@@ -136,6 +154,7 @@ var application = (function(){
 
 		var initEvents = function(){
 			self.app.apps.on('loaded', events.loaded)
+			self.app.apps.on('historychange', events.historychange)
 		}
 
 		var make = function(){
@@ -168,6 +187,19 @@ var application = (function(){
 		return {
 			primary : primary,
 
+			parametersHandler : function() {
+				var
+					id = parameters().id,
+					pid = parameters().pid;
+
+					if (id && application.manifest.id !== id) {
+						this.destroy();
+						this.init();
+					} else if (pid) {
+						self.app.apps.emit('changeroute', hexDecode(pid))
+					}
+			},
+
 			getdata : function(clbk, p){
 				
 				window.requestAnimationFrame(() => {
@@ -175,7 +207,7 @@ var application = (function(){
 					self.app.mobile.reload.destroyparallax()
 				})
 
-				var id = parameters().id
+				var id = parameters().id;
 
 				self.app.apps.get.application(id).then((f) => {
 
@@ -210,6 +242,7 @@ var application = (function(){
 				})
 
 				self.app.apps.off('loaded', events.loaded)
+				self.app.apps.off('historychange', events.historychange)
 
 			},
 			
