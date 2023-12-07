@@ -209,6 +209,60 @@ var BastyonApps = function(app){
                 return Promise.resolve('application:settings:opened')
             }
         },
+
+        createroom : {
+            parameters : [],
+            action : function({data, application}) {
+                const
+                    core = app.platform.matrixchat.core,
+                    invite = (data.members?.slice(1) ?? []).map(address => {
+                        return core.user.matrixId(address/* , application.manifest.id */);
+                    }),
+                    alias = (() => {
+                        if (invite.length === 1) {
+                            return core.mtrx.kit.tetatetid({ id: data.members[0] }, { id: data.members[1] });
+                        } else {
+                            return (data.members ?? []).join('');
+                        }
+                    })(),
+                    name = data?.name || "",
+                    sendMessage = (chat, text) => {
+                        core.mtrx.sendtext(chat, text);
+                    };
+
+                /* Create public room */
+                core.mtrx.client.createRoom({
+                    room_alias_name: alias,
+                    visibility: 'private',
+                    invite: invite,
+                    name: name,
+                    initial_state: {
+                        type: 'm.set.encrypted',
+                        state_key: '',
+                        content: {
+                            encrypted: true,
+                        }
+                    }
+                })
+                .then(chat => {
+                    sendMessage(chat, data.message);
+                })
+                .catch((e) => {
+                    if (e?.errcode == 'M_ROOM_IN_USE') {
+                        console.log(e)
+                        return core.mtrx.client.joinRoom(
+                            /* `${ alias }:${ core.mtrx.baseUrl.replace('https://', '') }` */
+                            alias
+                        )
+                        .then(chat => sendMessage(chat, data.message))
+                        .catch((e) => {});
+                    }
+
+                    return Promise.reject(e);
+                });
+            }
+        },
+
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
@@ -335,6 +389,13 @@ var BastyonApps = function(app){
 
                 return Promise.resolve()
              
+            }
+        },
+
+        checkPermission : {
+            parameters : ['permission'],
+            action : function({data, application}){
+                return Promise.resolve(checkPermission(application, data.permission));
             }
         },
 
@@ -507,7 +568,7 @@ var BastyonApps = function(app){
                 application : application.manifest.id,
                 data : {
                     value : value,
-                    encoded : hexEncode(data.value)
+                    encoded : hexEncode(data.value || "")
                 }
                 
             }, source)
@@ -515,6 +576,13 @@ var BastyonApps = function(app){
 
         loaded : function(application, data, source){
             trigger('loaded', {
+                application : application.manifest.id,
+                data
+            }, source)
+        },
+
+        any : function(application, data, source){
+            trigger('historychange', {
                 application : application.manifest.id,
                 data
             }, source)
@@ -893,11 +961,12 @@ var BastyonApps = function(app){
 
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
+        var state = checkPermission(application, permission);
 
         if(!appdata) return Promise.reject(appsError('error:code:appdata'))
         if(!meta) return Promise.reject(appsError('permission:missing'))
 
-        if(checkPermission(application, permission)) return Promise.resolve()
+        if(state) return Promise.resolve({ [permission]: 'granted' })
         if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
 
         
@@ -909,7 +978,7 @@ var BastyonApps = function(app){
 
             savelocaldata()
     
-            return Promise.resolve()
+            return Promise.resolve({ [permission]: state })
         }
         
 
@@ -925,13 +994,13 @@ var BastyonApps = function(app){
 
                     savelocaldata()
                 }
-        
-                return Promise.resolve()
+
+                return Promise.resolve({ [permission]: state })
             }
 
             if (state == 'once'){
                 ///maybe temp array
-                return Promise.resolve()
+                return Promise.resolve({ [permission]: state })
             }
 
             if (state == 'forbid'){
