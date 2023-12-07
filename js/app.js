@@ -374,6 +374,7 @@ Application = function (p) {
 	}
 
 	self.canuseip = function () {
+		return false
 		if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
 			return true
 		}
@@ -381,7 +382,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-		return isElectron || (window.cordova && !isios());
+		return isElectron || (window.cordova);
 	}
 
 	self.savesupportedForBrowser = function () {
@@ -406,12 +407,6 @@ Application = function (p) {
 		},
 		state: {},
 		clbks: {
-
-			/*_platform : function(change){
-			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
-				self.prepareUserData()
-			  }
-			},*/
 
 			_modules: function (change) {
 
@@ -602,7 +597,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
 
 			if (address) {
 				body += '<p>Address: ' + (address) + '</p>'
@@ -661,7 +656,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
 
 			if (link1)
 				body += '<p>Link: <a href="' + link1 + '">' + link1 + '</a></p>'
@@ -721,7 +716,7 @@ Application = function (p) {
 			_p.TemplateID = '2002'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + s3 + '" href="https://' + self.options.url + '/authorn?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
 			body += '<p>Reason: ' + i1 + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -769,7 +764,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/author?address=' + address2 + '">user(' + address2 + ')</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/authorn?address=' + address2 + '">user(' + address2 + ')</a></p>'
 			body += '<p>Reason: ' + reason + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -852,7 +847,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + address1 + '" href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + address1 + '" href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
 
 			body += '<p>Reason: ' + reason + '</p>'
 
@@ -887,22 +882,27 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+		},
+
+		authorn: {
+			href: 'authorn',
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
 		}
 
 	}
@@ -1052,14 +1052,13 @@ Application = function (p) {
 
 		self.nav.dynamic = function (p, clbk) {
 
-
 			self.platform.sdk.users.addressByName((p.href), function (r) {
 
 				if (r) {
 					if (clbk)
 						clbk(null, {
 
-							id: 'author',
+							id: 'authorn',
 							extra: {
 								address: r
 							}
@@ -1477,6 +1476,7 @@ Application = function (p) {
 
 				if (cordova.plugins && cordova.plugins.backgroundMode)
 					cordova.plugins.backgroundMode.on('activate', function () {
+						console.log("BACKGROUND ACTIVATED")
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
 
@@ -1689,7 +1689,7 @@ Application = function (p) {
 				var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
 				self.mobile.unsleep(unsleep)
-				//self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
+				self.mobile.backgroundMode(unsleep && self.platform.sdk.videos.volume && !self.mobile.pip.element)
 
 			}, 1000)
 
@@ -1833,12 +1833,18 @@ Application = function (p) {
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
-		window.requestAnimationFrame(() => {
 
 
 			document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
 			document.documentElement.style.setProperty('--keyboardheight', `0px`);
-		})
+
+
+		if(!window.cordova || isios()){
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `40px`);
+		}else{
+			document.documentElement.style.setProperty('--app-margin-bottom-default', `0px`);
+		}
+			
 
 		istouchstyle()
 
@@ -2382,13 +2388,14 @@ Application = function (p) {
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
-						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+						var h = isios() ? event.keyboardHeight : Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
 
-						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = h
 
+						document.documentElement.style.setProperty('--keyboardheight', `${h}px`);
 
 						self.apps.emit('keyboard', {
-							height : event.keyboardHeight
+							height : h
 						})
 
 					});
@@ -2601,6 +2608,8 @@ Application = function (p) {
 
 									self.mobile.saveImages.save(base64, name, function (d, err) {
 
+										console.log(d, err)
+
 										globalpreloader(false)
 
 										if (d) {
@@ -2674,6 +2683,7 @@ Application = function (p) {
 			}
 		},
 		statusbar: {
+			status : 'background',
 			initial : function(){
 				/*if (window.NavigationBar)
 					window.NavigationBar.hide()*/
@@ -2702,11 +2712,12 @@ Application = function (p) {
 
 					window.NavigationBar.backgroundColorByHexString(colors[c], c == 'white');
 				}
+
+				self.mobile.statusbar.status = 'background'
 					
 			},
 
 			gallerybackground: function () {
-
 
 				if (window.StatusBar) {
 
@@ -2717,6 +2728,9 @@ Application = function (p) {
 
 				if (window.NavigationBar)
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+
+				self.mobile.statusbar.status = 'gallerybackground'
+				
 
 			},
 
@@ -2910,7 +2924,7 @@ Application = function (p) {
 														account.releaseCheckInAnotherSession()
 													}
 
-													self.platform.sdk.notifications.getNotifications()
+													self.platform.ws.getMissed()
 												}
 
 											})
@@ -2951,12 +2965,11 @@ Application = function (p) {
 		screen: {
 
 			lock: function (orientation) {
-				if (window.cordova && (orientation || baseorientation))
+				if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
 					window.screen.orientation.lock(orientation || baseorientation)
 			},
 			unlock: function () {
-				if (window.cordova) {
-					//window.screen.orientation.lock(baseorientation)
+				if (window.cordova && window.screen.orientation.unlock) {
 					window.screen.orientation.unlock()
 				}
 

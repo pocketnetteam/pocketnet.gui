@@ -342,8 +342,14 @@ class OG {
                         $this->currentOg['title']= urldecode($r->c);
                         $title = true;
                     }
-                        
-                    $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
+
+                    if(isset($r->s) && isset($r->s->v) && $r->s->v == 'a'){
+                        $this->currentOg['description'] = '';
+                    }
+                    else{
+                        $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
+                    }
+                    
                     $description = true;
 
                     $this->currentOg['type'] = 'article';

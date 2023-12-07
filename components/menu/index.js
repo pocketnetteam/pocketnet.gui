@@ -570,7 +570,7 @@ var menu = (function(){
 									var name = $(this).attr('name')
 
 									self.nav.api.go({
-										href : name ? name.toLowerCase() : 'author?address=' + r,
+										href : name ? name.toLowerCase() : 'authorn?address=' + r,
 										history : true,
 										open : true
 									})
@@ -990,7 +990,9 @@ var menu = (function(){
 
 					}
 
-					var setValue = function(){		
+					var setValue = function(){	
+						
+						
 						
 						var account = self.app.platform.actions.getCurrentAccount()
 
@@ -1006,6 +1008,9 @@ var menu = (function(){
 								add = 0;
 								current = balance.actual
 							}
+
+							if(!first && current == balance.actual) return
+
 
 							first = false;
 

@@ -1004,7 +1004,7 @@ var share = (function(){
 
 										self.app.nav.api.load({
 											open : true,
-											href : 'author?address=' + self.app.user.address.value,
+											href : 'authorn?address=' + self.app.user.address.value,
 											history : true
 										})
 
@@ -1598,9 +1598,6 @@ var share = (function(){
 			postline : function(clbk){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
-
-					console.log('_mestate', _mestate)
-
 
 					self.shell({
 						name :  'postline',

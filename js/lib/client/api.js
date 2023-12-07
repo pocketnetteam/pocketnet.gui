@@ -218,6 +218,7 @@ var ProxyRequest = function(app = {}, proxy){
 
     self.rpc = function(url, method, parameters, options){
 
+
         if(!method) return Promise.reject('method')
 
         var data = {}
@@ -1034,7 +1035,7 @@ var Api = function(app){
 
         if(!options) 
             options = {}
-
+        
         return getproxy(options.proxy).then(proxy => {
             selectedProxy = proxy;
 

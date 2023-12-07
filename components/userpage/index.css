@@ -478,7 +478,7 @@ html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="followers
   padding-top: 1em;
   border-top: 1px solid rgb(var(--color-medium-theme));
 }
-html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="following"] {
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="blocking"] {
   margin-bottom: 0.5em;
   padding-bottom: 1em;
   border-bottom: 1px solid rgb(var(--color-medium-theme));

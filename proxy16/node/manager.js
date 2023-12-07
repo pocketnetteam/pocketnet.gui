@@ -1063,7 +1063,7 @@ var Nodemanager = function(p){
     self.selectProbability = function(){
 
         var nds = _.filter(self.initednodes(), (nd) => {
-            return nd.allowRpc
+            return nd.allowRpc && nd.export().canuse && !nd.backward
         })
 
         var np = _.map(nds, function(node){

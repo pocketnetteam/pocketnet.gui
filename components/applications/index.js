@@ -115,9 +115,17 @@ var applications = (function(){
 
 		var make = function(){
 
+
+
 			var filtered = _.filter(oss, function(os){
 				return !ed.filter || ed.filter(os)
 			})
+
+			if(window.cordova && isios()){
+				filtered = _.filter(filtered, (f) => {
+					return f.id == 'macos' || f.id == 'ios'
+				})
+			}
 
 			var fl = filtered.length
 

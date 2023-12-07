@@ -25,7 +25,7 @@ var telements = function(address){ %>
 
 			%>
 
-				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == 1 || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 			
 			<% } %>
 
@@ -52,11 +52,7 @@ _.each(addresses, function(address){
 
 	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
 	
-	console.log('address', address)
-
 	var sUserInfo = psdk.userInfo.getShortForm(address) 
-
-	
 
 %>
 	<div class="wrk">
@@ -76,7 +72,7 @@ _.each(addresses, function(address){
 
 							%>
 
-							<div class="usericon" image="<%-src || '*'%>">
+							<div class="usericon" ban=".gif" contain="none" image="<%-src || '*'%>">
 
 								<% if(!src && letter) {%>
 
@@ -84,11 +80,10 @@ _.each(addresses, function(address){
 										<%-letter.toUpperCase()%>
 									</span>
 			
-								<% } else if (!src) { %>
-			
-									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-			
+								<% } else if (!letter) { %>
+									<i class="far fa-user"></i>
 								<% } %>
+								<%= app.platform.ui.markUser(address)%>
 							</div>
 						</div>
 					</a>

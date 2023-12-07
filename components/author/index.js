@@ -137,14 +137,6 @@ var author = (function(){
 				})
 			},
 
-			startchat: function(){
-				self.app.mobile.vibration.small()
-
-				self.app.platform.matrixchat.startchat(author.address)
-
-				
-			},
-
 			subscribePrivate : function(){
 
 				self.app.mobile.vibration.small()
@@ -170,6 +162,16 @@ var author = (function(){
 
 				})
 			},
+
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+
+				
+			},
+
+			
 
 		}
 
@@ -248,18 +250,6 @@ var author = (function(){
 
 
 							return deep(author, 'data.subscribes_count') || 0
-		
-							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-								return a.adddress
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-		
-							return u.length
 						}
 					},
 		
@@ -274,13 +264,7 @@ var author = (function(){
 						},
 						count : function(){
 
-							console.log('author', author)
-
 							return deep(author, 'data.blockings_count') || 0
-		
-							var blocked = deep(author, 'data.blocking') || []
-		
-							return blocked.length
 						}
 					},
 			
@@ -642,7 +626,7 @@ var author = (function(){
 				})
 			},
 
-			userslist : function(_el, users, empty, caption, clbk){
+			userslist : function(_el, users, empty, caption, clbk, count){
 				self.nav.api.load({
 
 					open : true,
@@ -655,6 +639,7 @@ var author = (function(){
 						empty : empty,
 						caption : caption,
 						sort : 'commonuserrelation',
+						count : count
 					},
 					
 					clbk : function(e, p){
@@ -778,6 +763,8 @@ var author = (function(){
 					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
 						return a
 					})
+
+					var c = u.length
 	
 					var blocked = deep(author, 'data.blocking') || []
 	
@@ -790,10 +777,12 @@ var author = (function(){
 					if(self.user.isItMe(author.address)){
 						e = self.app.localization.e('aynofollowers')
 					}
+
+					console.log("COUNT 2" , c)
 	
 					renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
 						report.module = p;
-					})
+					}, c)
 
 				})
 
@@ -808,6 +797,8 @@ var author = (function(){
 						return a.adddress
 					})
 
+					var c = u.length
+
 					var blocked = deep(author, 'data.blocking') || []
 
 					u = _.filter(u, function(a){
@@ -820,9 +811,10 @@ var author = (function(){
 						e = self.app.localization.e('aynofollowing')
 					}
 
+					console.log("COUNT 1" , c)
 					renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
 						report.module = p;
-					})
+					}, c)
 
 				})
 			},
@@ -1008,8 +1000,6 @@ var author = (function(){
 								if (acsearch){
 									acsearch.destroy()
 								}
-								
-
 
 								acsearch = new search(p.el.find('.authorsearch'), {
 									placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
@@ -1077,7 +1067,7 @@ var author = (function(){
 									
 								})
 
-
+								
 
 								if(isTablet()){
 									c.addClass('searchactive')
@@ -1399,23 +1389,15 @@ var author = (function(){
 				}
 
 				if(type == 'userInfo'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-					
 				}
 
 				if (type == 'accDel'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-
 				}
 				
 			}
@@ -1450,7 +1432,6 @@ var author = (function(){
 			if(!isMobile()){
 				upbutton = self.app.platform.api.upbutton(el.up, {
 					top : function(){
-	
 						return '65px'
 					},
 					class : 'light',

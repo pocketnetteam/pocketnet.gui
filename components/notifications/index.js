@@ -131,8 +131,6 @@ var notifications = (function(){
 					return -Number(n.time || n.nTime)
 				})
 
-				console.log('_notifications', _notifications)
-
 				var currentDate = new Date();
 
 				_notifications = _.filter(_notifications, function(notification){
@@ -211,7 +209,9 @@ var notifications = (function(){
 							e.fastMessageEvents(n, {
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
 							}, function(){
-								self.closeContainer()
+
+								if(!self.app.mobileview)
+									self.closeContainer()
 							})
 						}
 					})
@@ -243,6 +243,8 @@ var notifications = (function(){
 
 				el.error.addClass('hidden')
 				el.empty.removeClass('hidden')
+
+				console.log('self.app.platform.sdk.notifications', self.app.platform.sdk.notifications)
 
 				if (!self.app.platform.sdk.notifications.inited || self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')
@@ -299,7 +301,6 @@ var notifications = (function(){
 		var addWSClbk = function(){
 			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications, now){
 
-				console.log("ADDED NOTIFICATIONS", notifications)
 
 				renders.notifications({
 					notifications : notifications,
@@ -309,8 +310,6 @@ var notifications = (function(){
 			}
 
 			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
-
-				console.log("INITED NOTIFICATIONS")
 
 
 				renders.notifications()

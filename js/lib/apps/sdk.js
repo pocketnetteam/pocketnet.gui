@@ -240,8 +240,6 @@ var BastyonSdk = function(){
     self.init = function(){
         self.get.appinfo().then(({margintop, theme}) => {
 
-            console.log('theme', theme)
-
             if (document.documentElement.hasAttribute('theme')){
                 document.documentElement.removeAttribute('theme');
             }

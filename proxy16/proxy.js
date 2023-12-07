@@ -906,7 +906,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
-					}
+						offline: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				21: [
@@ -922,7 +925,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
-					}
+						offline: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				23: [
@@ -1089,13 +1095,21 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host: 'peertube4new.pocketnet.app',
 						ip: '135.181.108.193',
-					}
+					},
+					{
+						host: 'peertube41.pocketnet.app',
+						ip: '135.181.108.193',
+						cantuploading: true,
+						archiveDouble: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				39: [
 					{
 						host: 'peertube6new.pocketnet.app',
 						ip: '159.69.127.9',
+						cantuploading: true,
 					}
 				],
 
@@ -1103,6 +1117,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host: 'peertube32.pocketnet.app',
 						ip: '185.141.60.101',
+						cantuploading: true,
 					}
 				],
 				
@@ -1142,6 +1157,27 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host: 'peertube51.pocketnet.app',
 						ip: '95.217.209.217',
+					},
+				],
+
+				46: [
+					{
+						host: 'peertube41.pocketnet.app',
+						ip: '135.181.108.193',
+					},
+				],
+
+				47: [
+					{
+						host : 'peertube70.pocketnet.app',
+						ip: '37.27.11.93',
+					},
+				],
+
+				48: [
+					{
+						host : 'peertube80.pocketnet.app',
+						ip: '65.21.249.150',
 					},
 				],
       		};
@@ -2711,7 +2747,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
 					if (settings.server.captcha/* && !self.test*/) {

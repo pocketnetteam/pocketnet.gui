@@ -18,6 +18,8 @@
 - (void)signInUserAnonymously:(CDVInvokedUrlCommand*)command;
 - (void)authenticateUserWithGoogle:(CDVInvokedUrlCommand*)command;
 - (void)authenticateUserWithApple:(CDVInvokedUrlCommand*)command;
+- (void)authenticateUserWithMicrosoft:(CDVInvokedUrlCommand*)command;
+- (void)authenticateUserWithFacebook:(CDVInvokedUrlCommand*)command;
 - (void)signInWithCredential:(CDVInvokedUrlCommand*)command;
 - (void)linkUserWithCredential:(CDVInvokedUrlCommand*)command;
 - (void)reauthenticateWithCredential:(CDVInvokedUrlCommand*)command;
@@ -27,12 +29,17 @@
 - (void)reloadCurrentUser:(CDVInvokedUrlCommand*)command;
 - (void)updateUserProfile:(CDVInvokedUrlCommand*)command;
 - (void)updateUserEmail:(CDVInvokedUrlCommand*)command;
+- (void)verifyBeforeUpdateEmail:(CDVInvokedUrlCommand*)command;
 - (void)sendUserEmailVerification:(CDVInvokedUrlCommand*)command;
 - (void)updateUserPassword:(CDVInvokedUrlCommand*)command;
 - (void)sendUserPasswordResetEmail:(CDVInvokedUrlCommand*)command;
 - (void)deleteUser:(CDVInvokedUrlCommand*)command;
 - (void)useAuthEmulator:(CDVInvokedUrlCommand*)command;
 - (void)getClaims:(CDVInvokedUrlCommand*)command;
+- (void)enrollSecondAuthFactor:(CDVInvokedUrlCommand*)command;
+- (void)verifySecondAuthFactor:(CDVInvokedUrlCommand*)command;
+- (void)listEnrolledSecondAuthFactors:(CDVInvokedUrlCommand*)command;
+- (void)unenrollSecondAuthFactor:(CDVInvokedUrlCommand*)command;
 
 // Remote notifications
 - (void)getId:(CDVInvokedUrlCommand*)command;
@@ -132,6 +139,8 @@
 - (void)setDefaultChannel:(CDVInvokedUrlCommand *)command;
 - (void)deleteChannel:(CDVInvokedUrlCommand *)command;
 - (void)listChannels:(CDVInvokedUrlCommand *)command;
+
+@property (nonatomic, readonly) BOOL isFCMEnabled;
 
 @property (nonatomic, copy) NSString *notificationCallbackId;
 @property (nonatomic, copy) NSString *openSettingsCallbackId;

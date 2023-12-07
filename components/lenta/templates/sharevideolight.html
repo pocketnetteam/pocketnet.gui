@@ -29,7 +29,8 @@ if(share.address){
 	var emptywithrepost = share.isEmpty() && share.repost
 	var value = Number(share.score)
 
-
+var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+var cview = 'video'
 var icondisplay = function(){ %>
 
 
@@ -134,7 +135,42 @@ var icondisplay = function(){ %>
 
 			var h = '' %>
 
-			<div class="url"></div>
+			<% if(!checkvisibility) {%>
+
+				<div class="url"></div>
+
+			<% } else {%> 
+				<div class="hiddenpost">
+				
+					<% if(checkvisibility == 'sub'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_sub_' + cview)%>
+						</div>
+
+						
+
+					<% } %>
+
+					<% if(checkvisibility == 'reg'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_reg_' + cview)%>
+						</div>
+
+
+					<% } %>
+
+
+					<% if(!state) {%>
+
+						<div class="hiddenlabelaction">
+							<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+						</div>
+
+					<% } %>
+				</div>
+			<% } %> 
 
 		<% } %>
 	<% },
@@ -170,6 +206,8 @@ var icondisplay = function(){ %>
 				<div class="cntswrk formeta">
 					<% icondisplay() %> 
 				</div>
+
+				
 
 				<div class="cntswrk">
 

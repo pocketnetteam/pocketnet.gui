@@ -182,6 +182,9 @@
 :root {
 	--app-margin-top-default: 0px;
 	--app-margin-top: 0px;
+    --app-margin-bottom-default: 0px;
+	--keyboardheight: 0px;
+	--app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
 }
 
 @supports (width: max(1px, 1px)) {
@@ -708,7 +711,7 @@ hr {
 
         &.vjs-thumb{
             display: block;
-            
+            background-color: transparent;
         }
     }
 
@@ -884,9 +887,8 @@ button{
     color: rgb(var(--text-on-bg-ac-color));
     border: 1px solid rgb(var(--color-bg-ac-bright));
     text-align: center;
-    font-size: 0.9em;
-    font-weight: 600;
     border-radius: 8px;
+    font-size: 0.9em;
 
     .transition(0.3s);
 
@@ -3228,6 +3230,14 @@ html.mobileview.android{
             display: none!important;
         }
 
+        .statswrapperExtended{
+            display: none!important;
+        }
+
+        #post .forurl>.url{
+            position: static!important;
+        }
+
         .wndinner{
             box-shadow: none;
         }
@@ -5143,6 +5153,11 @@ html.mobileview.android{
             display: flex;
             width: 75px;
             justify-content: space-between;
+
+            i{
+                font-size: 0.8em;
+                color : rgb(var(--neutral-grad-3));
+            }
         }
 
         span{
@@ -5437,7 +5452,6 @@ html.mobileview{
             margin : 0 auto;
             border : 0;
             margin-bottom: 0;
-            padding-bottom: 60px;
             box-shadow: none;
         }
 
@@ -6125,7 +6139,7 @@ html.allcontent_application{
 .fastMessage,
 .notification{
 
-    .transition(0.3s);
+    
 
     .time{
         padding-left: @rhythm;
@@ -6181,10 +6195,14 @@ html.allcontent_application{
     }
 
     .transactionmessagewrapper{
+        display: flex;
         >div{
-            vertical-align: top;
+            align-items: flex-start;
+            flex-grow: 1;
 
             &.foramount{
+                white-space: nowrap;
+                flex-grow: 0;
                 font-weight: 700;
                 text-align: right;
                 color : rgb(var(--color-good));
@@ -6398,23 +6416,26 @@ html.allcontent_application{
         }
     }
     .cwrapper{
+        display: flex;
+
         >div{
-            vertical-align: middle;
+            align-items: center;
+            flex-grow: 2;
 
             &.cellforimage{
                 width: 50px;
-                vertical-align: top;
+                flex-grow: 0;
+                max-width: 50px;
             }
 
             &.extra{
-                width: 90px;
+                max-width: 90px;
             }
 
             .infomain{
                 padding-left:  @rhythm;
 
                 .caption{
-                    font-size : 1em;
                 }
 
                 .donate{
@@ -6451,11 +6472,15 @@ html.allcontent_application{
             color : rgb(var(--color-txt-ac));
         }*/
     }
+
+    .caption{
+        font-size: 0.9em;
+    }
 }
 
 .fastMessage{
     border-radius: 12px;
-    
+    .transition(0.3s, bottom);
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -6490,6 +6515,34 @@ html.allcontent_application{
             line-height: 31px;
             font-size: 0.8em;
             margin-bottom : 4px;
+        }
+    }
+
+   
+}
+
+#hideallnotificationsel{
+    .hidenf{
+        position: fixed;
+        left : 5px;
+        bottom : 5px;
+        width: 390px;
+        background: rgba(var(--color-shadow-base), 0.98);
+        color: rgb(var(--color-txt-ac-1));
+        z-index: 140;
+        overflow: hidden;
+        padding: 2 * @rhythm;
+        text-align: center;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        cursor: pointer;
+        .transition(0.3s, opacity);
+
+        &:hover{
+            opacity: 0.8;
         }
     }
 }
@@ -6765,6 +6818,19 @@ html.allcontent_application{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.bright{
+        background: rgba(var(--color-bg-ac-bright), 0.98);
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
     }
 
 }
@@ -7267,6 +7333,9 @@ html{
                 display: none;
             }
         }
+        #hideallnotificationsel{
+            display: none;
+        }
 
         #panelWrapper{
             position: fixed;
@@ -7330,7 +7399,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
 
                 .fakem{
@@ -7339,7 +7408,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 100px;
+                    height: calc(var(--app-margin-bottom, 0) + 60px);
                 }
             }
         }
@@ -7418,7 +7487,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
     
                 .fakem{
@@ -7427,7 +7496,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 100px;
+                    height: 70px;
                 }
             }
         }
@@ -7841,6 +7910,20 @@ html.mobileview{
     }
 }
 
+html.allcontent{
+   
+
+    
+    /*body{
+        background: #051b48;
+    }*/
+
+    #footerWrapper{
+        background: #051b28;
+    }
+    
+}
+
 /*t*/ @media only screen and (max-width: 768px){
 
     
@@ -8077,16 +8160,14 @@ html.mobileview{
     }
 
     html.allcontent{
-        .contentWrapper{
-            padding-top: 0;
-            margin-top: 0;
-        }
+        
         
         /*body{
             background: #051b48;
         }*/
 
         #footerWrapper{
+            display: none;
             background: #051b28;
         }
         
@@ -8107,7 +8188,7 @@ html.mobileview{
     &.keyboadrshown{
         .focusedinput{
             position: fixed!important;
-            bottom : calc(var(--keyboardheight, 0) - 1px)!important;
+            bottom : calc(var(--app-margin-bottom, 0) - 1px)!important;
             top : auto!important;
             left : 0!important;
             right: 0!important;
@@ -8116,7 +8197,7 @@ html.mobileview{
     }
 
     .dialog{
-        padding-bottom : calc(var(--keyboardheight, 0) - 1px);
+        padding-bottom : calc(var(--app-margin-bottom, 0) - 1px);
     }
 
     .sitemessage{    
@@ -8458,12 +8539,12 @@ html.mobileview{
 html.mobileview{
     .keyboardsafe{
         .transition(0.3s, padding-bottom);
-        padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
+        padding-bottom: calc(var(--app-margin-bottom, 0) - 1px)!important;
     }
 
     .keyboardsafetranslate{
         .transition(0.3s);
-        transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+        transform: translateY(calc(-1 * var(--app-margin-bottom, 0) + 1px));
     }
 }
 

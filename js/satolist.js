@@ -208,7 +208,6 @@ Platform = function (app, listofnodes) {
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
         'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        // 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true, //??????????????????
         'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
         'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
         'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
@@ -290,8 +289,18 @@ Platform = function (app, listofnodes) {
         'PXVp4QeaaomcREBJXuzH34GWiiinNby6HA': true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1': true,
         'PLm44qx3ArWbd46dKybCc43dwr2WFn8dT6': true,
-        'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true
-    }
+        'PLpjFQ67uxgvvk1GdKFrdXacWj6jr9wHSm': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
+        'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
+        'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
+        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true,
+        'PCsZ9ADzGgyaK99QpRdaFPFCY6qiRTAYoa': true,
+        'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
+        'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
+        'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true,
+        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true
+    } 
 
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
@@ -352,6 +361,46 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
+    self.archivedServers = [
+        'pocketnetpeertube1.nohost.me',
+        'pocketnetpeertube2.nohost.me',
+        'pocketnetpeertube5.nohost.me',
+        'pocketnetpeertube7.nohost.me',
+        'pocketnetpeertube4.nohost.me',
+        'pocketnetpeertube6.nohost.me',
+        'pocketnetpeertube8.nohost.me',
+        'pocketnetpeertube9.nohost.me',
+        'pocketnetpeertube10.nohost.me',
+        'pocketnetpeertube11.nohost.me',
+        'bastyonmma.pocketnet.app',
+        'bastyonmma.nohost.me',
+        '01rus.nohost.me',
+        '02rus.pocketnet.app',
+        'pocketnetpeertube12.nohost.me',
+        'pocketnetpeertube13.nohost.me',
+        'peertube14.pocketnet.app',
+        'peertube15.pocketnet.app',
+        'peertube18.pocketnet.app',
+        'peertube17mirror.pocketnet.app',
+        'peertube18mirror.pocketnet.app',
+        'peertube19mirror.pocketnet.app',
+        'peertube20.pocketnet.app',
+        'peertube21.pocketnet.app',
+        'peertube22.pocketnet.app',
+        'peertube23.pocketnet.app',
+        'peertube24.pocketnet.app',
+        'peertube25.pocketnet.app',
+        'peertube25mirror.pocketnet.app',
+        'peertube26.pocketnet.app',
+        'peertube26mirror.pocketnet.app',
+        'peertube27.pocketnet.app',
+        'peertube29.pocketnet.app',
+        'peertube30.pocketnet.app',
+        'peertube5new.pocketnet.app',
+        'peertube4new.pocketnet.app',
+        'peertube31.pocketnet.app',
+    ];
+
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
     self.focus = true;
@@ -405,7 +454,6 @@ Platform = function (app, listofnodes) {
 
             window.requestAnimationFrame(() => {
                 _.each(self.actionListeners, (c, i) => {
-
                     if (c)
                         c({type : action.object.type, alias, status})
                 })
@@ -4163,8 +4211,6 @@ Platform = function (app, listofnodes) {
 
                                         if (node) link += '&node=' + node
 
-                                        console.log("send link", link)
-
                                         self.matrixchat.shareInChat.url(p.roomid, link) /// change protocol
                                     }
 
@@ -4579,9 +4625,9 @@ Platform = function (app, listofnodes) {
 
             var name = self.psdk.userInfo.getShortForm(address).clname
 
-            if (name && (!self.app.mobileview || namelink)) return encodeURIComponent(name.toLowerCase());
+            if (name) return encodeURIComponent(name.toLowerCase());
 
-            else return 'author?address=' + address
+            else return 'authorn?address=' + address
         },
 
         authororexplorerlink: function (address) {
@@ -5817,7 +5863,7 @@ Platform = function (app, listofnodes) {
 
                             // If we are on mobile/electron and post has a downloadable media video
                             // Do not download video on iOS
-                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+                            if (share.itisvideo() && self.app.savesupported()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
@@ -6265,7 +6311,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve) => {
 
                         // Only save videos on Android
-                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
+                        if (share.itisvideo() && !p.doNotSaveMedia) {
 
                             self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
@@ -6429,8 +6475,14 @@ Platform = function (app, listofnodes) {
                                                 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                                                 thumbFile.nativeURL,
                                                 function (entry) {
+
+                                                    var url = entry.toURL()
+
+                                                    if (isios())
+                                                        url = window.WkWebView.convertFilePath(thumbFile.nativeURL)
+
                                                     // Success
-                                                    resolve(entry.toURL());
+                                                    resolve(url);
                                                 },
                                                 function (error) {
                                                     reject('download thumbnail error');
@@ -6461,7 +6513,7 @@ Platform = function (app, listofnodes) {
                                             // Write into file
                                             infoFile.createWriter(function (fileWriter) {
 
-                                                fileWriter.write(infos);
+                                                fileWriter.write(JSON.stringify(infos));
 
                                                 dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
@@ -6477,6 +6529,9 @@ Platform = function (app, listofnodes) {
                                                             targetFile.file(function(fileDetails) {
 
                                                                 targetFile.internalURL = entry.toURL();
+
+                                                                if(isios())
+                                                                    targetFile.internalURL = window.WkWebView.convertFilePath(targetFile.nativeURL)
 
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
@@ -6765,9 +6820,15 @@ Platform = function (app, listofnodes) {
                 video : {
                     cordova : function(to, from){
 
+                        console.log('video cordova', to, from)
+
+
                         return new Promise((resolve, reject) => {
 
                             from.getDirectory('videos', { create: true }, function (videosFolder) {
+
+                                console.log('videoFolder2', videosFolder)
+
 
                                 to.videos = {};
 
@@ -6780,6 +6841,7 @@ Platform = function (app, listofnodes) {
                                         action: function (p) {
                                             var videoFolder = p.item;
 
+                                            console.log('videoFolder', videoFolder)
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
@@ -6802,10 +6864,14 @@ Platform = function (app, listofnodes) {
 
                                                                         infoFile = file;
 
+                                                                        console.log('fileDetails', fileDetails, file)
+
 
                                                                         var reader = new FileReader();
 
                                                                         reader.onloadend = function() {
+
+                                                                            console.log('fileDetails result', this.result)
 
 
                                                                             try {
@@ -6813,7 +6879,7 @@ Platform = function (app, listofnodes) {
 
                                                                             } catch(err){
 
-                                                                                console.error('e', err)
+                                                                                console.error('fileDetails error', err)
 
                                                                             }
 
@@ -6830,16 +6896,30 @@ Platform = function (app, listofnodes) {
 
                                                                         videoFile = file;
 
+                                                                        console.log('videoFile2', videoFile)
+
+
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
 
-                                                                            videoFile.internalURL =  entry.toInternalURL()
+                                                                            console.log('videoFile1', videoFile, entry)
 
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            try{
+                                                                                videoFile.internalURL =  entry.toInternalURL()
 
+                                                                                if(isios())
+                                                                                    videoFile.internalURL = window.WkWebView.convertFilePath(videoFile.nativeURL)
+    
+                                                                                to.videos[videoFolder.name].video = videoFile;
+    
+                                                                            }catch(e){
+                                                                                console.error(e)
+                                                                            }
+
+                                                                            
 
                                                                             _p.success()
                                                                         });
@@ -8533,7 +8613,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
 
-                    var userInfo = self.psdk.userInfo.getmy()
+                    var userInfo = self.psdk.userInfo.getmyoriginal()
 
                     if (userInfo){
 
@@ -9444,7 +9524,11 @@ Platform = function (app, listofnodes) {
 
                 var old = {}
 
-                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") } catch (e){}
+                try { 
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") 
+                } catch (e){
+                    
+                }
 
                 this.import(old)
 
@@ -9467,7 +9551,7 @@ Platform = function (app, listofnodes) {
                         return -Number(n.time || n.nTime)
                     })
 
-                    e.notifications = firstEls(e.notifications, 75)
+                    e.notifications = firstEls(e.notifications, 150)
 
                     if (self.sdk.address.pnet()){
                         try{
@@ -9588,25 +9672,21 @@ Platform = function (app, listofnodes) {
                     return Promise.reject('openapi')
                 }
 
-                this.inited = false;
-                this.loading = true;
+                this.inited = true;
+                this.loading = false;
 
                 this.load();
-
 
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
+                return Promise.resolve()
 
-                return this.getNotifications().then(r => {
 
-                    _.each(this.clbks.inited, function (f) {
-                        f()
-                    })
+            },
 
-                    return Promise.resolve(r)
-                })
-
+            initcl : function(clbk){
+                self.sdk.notifications.init().then(clbk).catch(clbk)
             },
 
             wsBlock: function (block) {
@@ -9640,151 +9720,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getNotificationsInfo: function (notifications, clbk) {
-                var n = this;
-
-                n.loading = true
-
-                notifications = firstEls(notifications, 75)
-
-                notifications = _.filter(notifications, function (ns) {
-                    if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
-
-                    if (ns.commentid && _.find(n.storage.notifications, function (n) {
-                        return n.commentid == ns.commentid
-                    })) return false
-
-                    if (ns.msg == "transaction" && ns.txinfo && ns.txinfo.pockettx) {
-                        return false
-                    }
-
-                    return true
-                })
-
-                notifications = _.sortBy(notifications, function (n) {
-                    return -Number(n.time || n.nTime)
-                })
-
-                lazyEach({
-                    array: notifications,
-                    action: function (p) {
-
-
-                        var ns = p.item;
-                        var m = null;
-
-                        ns.loading = true;
-
-                        if (ns.mesType) m = self.ws.messages[ns.mesType]
-                        if (ns.msg && !m) m = self.ws.messages[ns.msg]
-
-
-                        if (m) {
-                            m.loadMore(ns, function () {
-                                ns.loaded = true;
-
-                                ns.loading = false;
-
-                                p.success()
-
-                            }, true)
-                        }
-                        else {
-                            p.success()
-                        }
-
-                    },
-                    sync: true,
-                    all: {
-                        success: function () {
-
-                            n.loading = false
-
-                            var ns = _.filter(notifications, function (no) {
-                                if (no.msg == 'transaction' && no.address == self.sdk.address.pnet().address) {
-                                    return
-                                }
-                                return true
-                            })
-
-                            var added = [];
-
-                            _.each(ns, function (no) {
-
-                                var f = _.find(n.storage.notifications, function (n) {
-                                    if (no.txid && n.txid == no.txid) return true
-                                })
-
-                                if (!f) {
-                                    added.push(no)
-
-                                    if (n.storage.notifications)
-                                        n.storage.notifications.push(no)
-                                }
-
-
-                            })
-
-                            _.each(n.clbks.added, function (f) {
-                                f(added)
-                            })
-
-                            if (clbk)
-                                clbk()
-                        }
-                    }
-                })
-            },
-
-            getNotifications: function (blockdif) {
-                var n = this;
-
-
-                if(!n.inited && !n.loading) {
-                    return n.init()
-                }
-                else {
-
-                    return self.sdk.node.get.timepr().then(r => {
-
-                        return self.sdk.missed.get(n.storage.block - (blockdif || 0))
-
-                    }).then(({block, notifications}) => {
-
-                        return new Promise((resolve, reject) => {
-
-                            n.getNotificationsInfo(notifications || [], function () {
-
-                                if (block.block > n.storage.block) {
-                                    n.storage.block = block.block
-                                }
-
-                                n.inited = true;
-                                n.save();
-
-                                resolve();
-
-                            })
-
-                        })
-
-
-
-                    }).catch(e => {
-
-                        console.error(e)
-
-                        n.inited = false;
-                        n.loading = false;
-
-
-                        return Promise.reject(e)
-                    })
-
-                }
-
-
-            },
+          
 
             find: function (txid) {
                 return _.find(this.storage.notifications, function (n) {
@@ -9801,11 +9737,13 @@ Platform = function (app, listofnodes) {
                         block : {
                             block : self.currentBlock,
                             contentsLang : {},
+                            contentsSubscribes : {},
                             msg : 'newblocks'
                         }
                     }
                 }
 
+                console.log('self.currentBlock', self.currentBlock, block)
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
@@ -10002,8 +9940,8 @@ Platform = function (app, listofnodes) {
             },
             
             get: function (addresses, clbk, light, reload) {
-
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
+
 
                     if(clbk) clbk(r)
 
@@ -10012,6 +9950,8 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk(null, e)
                 })
+            
+                
 
             },
 
@@ -10099,6 +10039,14 @@ Platform = function (app, listofnodes) {
             //////////////// ANOTHER
 
             addressByName: function (name, clbk) {
+
+                if(!name){
+                    if (clbk){
+                        clbk(null)
+                    }
+
+                    return
+                }
 
 
                 var valid = true;
@@ -14516,7 +14464,9 @@ Platform = function (app, listofnodes) {
                         return
                     }
 
-                    self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
+                    self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
+                        rejectIfError : true
+                    }).then(action => {
 
                         var alias = action.get()
 
@@ -14559,6 +14509,8 @@ Platform = function (app, listofnodes) {
 
                     if (self.lasttimecheck){
 
+                        console.log('block lasttimecheck error')
+
                         var d = new Date()
 
                         if(self.lasttimecheck.addSeconds(10) > d){
@@ -14572,6 +14524,8 @@ Platform = function (app, listofnodes) {
 
                         self.currentBlock = 0
                         self.timeDifference = 0;
+
+                        console.log('block getnodeinfo', d)
                         
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
@@ -14579,6 +14533,8 @@ Platform = function (app, listofnodes) {
                         }catch(e){
                             
                         }
+
+                        console.log('self.currentBlock', self.currentBlock)
 
                         if (t) {
 
@@ -17097,6 +17053,47 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            historygetall : function(){
+
+                var data = {}
+
+                for (var i = 0; i < localStorage.length; i++){
+
+                    var key = localStorage.key(i)
+
+                    if (key.indexOf(this.historykey) > -1){
+                        try{
+                            data[key.replace(this.historykey, '')] = JSON.parse(localStorage.getItem(key))
+
+                        }
+                        catch(e){
+
+                        }
+                    }
+                    
+                }
+
+                return _.map(_.sortBy(_.toArray(data),(v) => {
+                    return -(new Date(v.date)).getTime()
+                }), (v) => {
+                    if(v.data && v.data.data){
+
+                        var s = new pShare();
+
+                        var cleaned = self.psdk.share.cleanData([v.data.data])
+
+                        if (cleaned && cleaned.length){
+                            s._import(cleaned[0]);
+
+                            v.data.share = s
+                        }
+                        
+                    }
+
+                    return v
+                })
+            },
+
             historyget : function(txid){
 
                 var h = {
@@ -17129,6 +17126,8 @@ Platform = function (app, listofnodes) {
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
                 lasthistory.percent = data.percent
+                lasthistory.txid = txid
+                lasthistory.data = data
 
                 try{
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
@@ -17203,7 +17202,7 @@ Platform = function (app, listofnodes) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
-                        return Promise.resolve()
+                        return Promise.resolve(r)
                     }).catch(e => {
                         return Promise.resolve()
                     })
@@ -17292,6 +17291,9 @@ Platform = function (app, listofnodes) {
                             original : linkInfo
                         } : '';
 
+                        if(link.meta.id.indexOf('/audio') > -1){
+                            window.peertubeglobalcache[link.meta.id.replace('/audio', '')] = linkInfo
+                        }
                         window.peertubeglobalcache[link.meta.id] = linkInfo
                     }
 
@@ -17988,6 +17990,7 @@ Platform = function (app, listofnodes) {
                                 }else {
     
                                     const params = new URLSearchParams(body.url);
+
                                     platform.app.nav.api.load({
                                         open: true,
                                         href: 'post?s=' + params.get('s'),
@@ -18007,6 +18010,7 @@ Platform = function (app, listofnodes) {
                                             }
                                         }
                                     })
+
                                 }
                             }else{
                                 platform.app.nav.api.go({
@@ -18043,7 +18047,7 @@ Platform = function (app, listofnodes) {
 
                     platform.fcmtoken = token
                     currenttoken = token
-                platform.matrixchat.changeFcm()
+                    platform.matrixchat.changeFcm()
 
                     //prepareclbk(token)
 
@@ -18137,7 +18141,7 @@ Platform = function (app, listofnodes) {
         var socket;
         var opened = false;
         var closing = false;
-        var lost = 0;
+
         var wait = null;
 
         self.connected = {};
@@ -18191,7 +18195,7 @@ Platform = function (app, listofnodes) {
 
                 if(app.curation()) return ''
 
-                h = '<div class="sharepreview"><div class="shareprwrapper table">'
+                h = '<div class="sharepreview"><div class="shareprwrapper">'
 
                 if (images.length && !extendedpreview) {
 
@@ -18296,7 +18300,7 @@ Platform = function (app, listofnodes) {
             transaction: function (data, message) {
                 var h = '<div class="transactionmessage">'
 
-                h += '<div class="transactionmessagewrapper table">'
+                h += '<div class="transactionmessagewrapper">'
 
                 if (message) {
                     h += '<div class="tcell formessage">'
@@ -18468,7 +18472,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                     <div class="cell cellforimage">\
                         <div class="icon">'
 
@@ -18586,7 +18590,7 @@ Platform = function (app, listofnodes) {
 
             simple : function(json){
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                         <div class="cell cellforimage">\
                             <div class="icon">'
 
@@ -18961,20 +18965,13 @@ Platform = function (app, listofnodes) {
 
                     if (text) {
 
-
                         if (data.postsCnt > 1) {
 
                             var c = data.postsCnt - 1
-
-                            //text = text + '<div class="moreshares">And more ' + c + " " + pluralform(c, ['post', 'posts']) + '</div>'
-
                         }
-
-
 
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                     }
-
 
                     return html;
 
@@ -18984,25 +18981,46 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.sharepreview').on('click', function () {
 
+                        self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                            var share = self.app.platform.psdk.share.get(data.txid) 
 
-                                    if(close) close()
-                                },
+                            if (share && share.itisstream()){
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                                platform.app.nav.api.load({
+                                    open : true,
+                                    href : 'index?video=1&v=' + data.txid,
+                                    history : true
+                                })
 
+                                if(close) close()
+                                
+                            }
+                            else{
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + data.txid,
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+
+                                        if(close) close()
+                                    },
+
+                                    essenseData: {
+                                        share: data.txid
+                                    }
+                                })
+                            }
+
+                        })
 
                     })
+
+                    if(data.share && data.share.itisstream()){
+                        message.el.addClass('bright')
+                    }
 
                 },
 
@@ -19364,13 +19382,23 @@ Platform = function (app, listofnodes) {
                         })
 
                     }*/
+                },
+
+                fastMessageEvents: function (data, message, close) {
+
+                    //message.el.addClass('bright')
+
                 }
             },
 
             'newblocks': {
                 loadMore: function (data, clbk) {
 
-                    if (data.block <= platform.currentBlock) {
+                    var hb = (data.block || data.height)
+
+                    if (hb <= platform.currentBlock) {
+
+                        platform.sdk.notifications.wsBlock(hb)
 
                         if(clbk) clbk(0)
 
@@ -19380,13 +19408,12 @@ Platform = function (app, listofnodes) {
 
                         var s = platform.sdk.node.transactions;
 
-                        var dif = platform.currentBlock - data.block
+                        var dif = platform.currentBlock - hb
 
-                        platform.currentBlock = data.block;
+                        platform.currentBlock = hb;
                         platform.lasttimecheck = new Date()
                         platform.lastblocktime = new Date()
 
-                        lost = data.block;
 
                         try{
                             localStorage['lastblock'] = platform.currentBlock
@@ -19400,7 +19427,7 @@ Platform = function (app, listofnodes) {
 
                     //self.reconnected = platform.currentBlock;
 
-                    platform.sdk.notifications.wsBlock(data.height)
+                    platform.sdk.notifications.wsBlock(hb)
 
                     _.each(s.unspent, function (unspents) {
                         _.each(unspents, function (txu) {
@@ -19412,7 +19439,7 @@ Platform = function (app, listofnodes) {
 
                     clbk(dif)
 
-                    data.difference = platform.currentBlock - (data.block || data.height)
+                    data.difference = platform.currentBlock - hb
 
                     platform.actions.ws.block(data)
 
@@ -19451,7 +19478,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk) {
 
-                    if (data.height <= platform.currentBlock) return
+                    if (data.height <= platform.currentBlock) {
+                        platform.sdk.notifications.wsBlock(data.data.height)
+                        return
+                    }
 
                     var s = platform.sdk.node.transactions;
 
@@ -19464,9 +19494,6 @@ Platform = function (app, listofnodes) {
                     }catch(e){
 
                     }
-
-                    lost = platform.currentBlock;
-
                     
 
                     platform.sdk.notifications.wsBlock(data.height)
@@ -20172,7 +20199,6 @@ Platform = function (app, listofnodes) {
             }
 
             closing = false;
-            //lost = platform.currentBlock;
 
             self.close();
 
@@ -20247,13 +20273,19 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-                    self.getMissed()
-
-                    lost = platform.currentBlock || 0;
+                    //lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
+                    
+                    
+                    
 
                     opened = true;
 
-                    auth(null, wss.proxy)
+                    auth(() => {
+
+                        self.getMissed().then(() => {
+                        })
+                        
+                    }, wss.proxy)
 
                     if (clbk)
                         clbk()
@@ -20285,7 +20317,7 @@ Platform = function (app, listofnodes) {
 
             if (message.timeout) clearTimeout(message.timeout);
 
-            if (platform.focus) {
+            if (platform.focus || noarrange) {
 
                 message.timeout = setTimeout(function () {
 
@@ -20304,7 +20336,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (!noarrange)
-                            arrangeMessages()
+                            tArrangeMessages()
 
                     }, 300)
 
@@ -20320,6 +20352,7 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotifications = function(){
+            hideallnotificationselement(false)
             self.destroyMessages()
 
         }
@@ -20363,71 +20396,83 @@ Platform = function (app, listofnodes) {
 				_.each(self.fastMessages, function(m, i){
 
 					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
-
 						m.el.addClass('smallsize');
-
 						s = true
 					}
 
 				})
 			}
 
-			setTimeout(function(){
+            console.log('showremove', showremove, self.fastMessages.length, remove)
 
-                if (showremove && self.fastMessages.length >= showremove){
-                    boffset = 50
 
-                    hideallnotificationselement(true)
+            if (showremove && self.fastMessages.length >= showremove){
+                boffset = 50
+
+                console.log("showremove SHOW")
+
+                hideallnotificationselement(true)
+            }
+            else{
+
+                console.log("showremove hide")
+
+                hideallnotificationselement(false)
+            }
+
+            offset = offset + boffset
+
+            _.each(self.fastMessages, function(m, i){
+
+                if(i < remove){
+                    destroyMessage(m, 1, true)
                 }
-                else{
-                    hideallnotificationselement(false)
+
+                else
+                {
+                    if(!mtbl){
+                        offset += 5;
+                    }
+
+                    if(!mtbl){
+                        var r = offset
+                        window.requestAnimationFrame(() => {
+                            m.el.css('bottom', r + 'px');
+                        })
+                        
+                    }
+                        
+
+                    offset += m.el.outerHeight();
                 }
 
-                offset = offset + boffset
-
-				_.each(self.fastMessages, function(m, i){
-
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
-
-					else
-					{
-						if(!mtbl){
-							offset += 5;
-						}
-
-						if(!mtbl)
-
-							m.el.css('bottom', offset + 'px');
-
-						offset += m.el.outerHeight();
-					}
-
-				})
-			}, s ? 300 : 3)
+            })
 
 
 		}
 
-        self.getMissed = function () {
+        var tArrangeMessages = _.debounce(arrangeMessages, 300)
 
-            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+        self.getMissed = function (initial) {
 
-            if(self.loadingMissed) return Promise.resolve()
+            console.log('missed platform.lastblocktime', platform.lastblocktime)
+
+            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(2))))) return Promise.resolve()
+
+            if (self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
             return platform.sdk.node.get.timepr().then(r => {
 
-                return platform.sdk.missed.get(lost)
+                console.log("GETMISSED")
+
+                return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
             }).then(({block, notifications}) => {
 
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
-
-                    lost = 0;
 
                     if(!notifications) return
 
@@ -20447,6 +20492,8 @@ Platform = function (app, listofnodes) {
 
             }).catch(e => {
 
+                console.error(e)
+
                 self.loadingMissed = false;
 
                 return Promise.reject(e)
@@ -20462,7 +20509,7 @@ Platform = function (app, listofnodes) {
             })
 
             setTimeout(function(){
-                arrangeMessages()
+                tArrangeMessages()
             }, 301)
         }
 
@@ -20533,10 +20580,10 @@ Platform = function (app, listofnodes) {
 
                         message.expanded = true
 
-                        arrangeMessages();
+                        tArrangeMessages();
 
                         setTimeout(function(){
-                            arrangeMessages();
+                            tArrangeMessages();
                         }, 300)
                     }
                 }
@@ -20565,7 +20612,9 @@ Platform = function (app, listofnodes) {
                     el: message.el,
                     directions: {
                         up : {
-                            trueshold: 10,
+                            endmove : true,
+                            trueshold: 1,
+                            distance : 20,
                             positionclbk: function (px) {
 
                             },
@@ -20573,7 +20622,6 @@ Platform = function (app, listofnodes) {
                             clbk: function () {
                                 message.el.remove()
                                 destroyMessage(message, 1, false, true);
-
                             }
 
                         }
@@ -20582,7 +20630,7 @@ Platform = function (app, listofnodes) {
                 }).init()
             }
 
-            arrangeMessages();
+            tArrangeMessages();
 
             return message
         }
@@ -20590,6 +20638,8 @@ Platform = function (app, listofnodes) {
         self.messageHandler = function (data, clbk) {
 
             data || (data = {})
+
+            console.log('data', data)
 
             if (data.msg || data.mesType) {
 
@@ -20783,7 +20833,6 @@ Platform = function (app, listofnodes) {
             self.close()
 
             self.loadingMissed = false;
-            lost = 0;
         }
 
 
@@ -20959,8 +21008,6 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-
-
             if(!_OpenApi){
 
                 closing = false;
@@ -20976,7 +21023,9 @@ Platform = function (app, listofnodes) {
 
                 initconnection();
 
-                self.hideallnotificationsel = $('#hideallnotifications')
+                self.hideallnotificationsel = $('#hideallnotificationsel')
+
+                self.getMissed(true)
 
             }
 
@@ -21933,7 +21982,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl' || id == 'tags') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags' || id == 'localshares') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -21948,7 +21997,7 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if(id != 'tags'){
+            if(id != 'tags' && id != 'localshares'){
                 if (c.storage) {
                     c.storage = {}
                 }
@@ -21965,21 +22014,6 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
-
-
-
-        /*self.sdk.node.shares.storage = {
-            trx: {}
-        }*/
-
-
-        //// REMOVE
-
-        /*if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
-            _.each(self.sdk.node.shares.storage.trx, function(tr){
-                delete tr.myVal
-            })
-        }*/
        
 
         self.sdk.sharesObserver.storage = {
@@ -22141,18 +22175,16 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            //self.prepareUserData(function(){
 
-                self.app.reload({
-                    clbk : function () {
-                        reloading = false
+            self.app.reload({
+                clbk : function () {
+                    reloading = false
 
-                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                        if(clbk) clbk()
-                    }
-                })
-            //})
+                    if(clbk) clbk()
+                }
+            })
 
         })
     }
@@ -22374,33 +22406,6 @@ Platform = function (app, listofnodes) {
         });
     }
 
-    self.prepareUserData = function(clbk){
-
-
-
-        lazyActions([
-            self.sdk.broadcaster.init,
-            self.actions.prepare,
-            self.sdk.node.transactions.loadTemp,
-            self.sdk.ustate.meUpdate,
-            self.firebase.init,
-            self.sdk.user.meUpdate,
-            self.sdk.categories.load,
-            self.sdk.activity.load,
-            self.sdk.recommendations.load,
-            self.sdk.memtags.load,
-            self.sdk.node.shares.parameters.load,
-
-
-        ], function () {
-
-            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-            self.sdk.notifications.init().catch(e => {})
-
-            if(clbk) clbk()
-        })
-    }
 
     var checkfeatures = function(){
 
@@ -22486,102 +22491,114 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
-                lazyActions([
-                    self.actions.prepare,
-                    //self.sdk.node.transactions.loadTemp,
-                    
-                    self.sdk.addresses.init,
-                    self.sdk.ustate.me,
-                    self.sdk.user.get,
-                    self.sdk.usersettings.init,
-                    self.matrixchat.importifneed,
-                    self.ws.init,
-                    self.firebase.init,
-                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
+                self.actions.prepare(() => {
+                    lazyActions([
+                
+                        //self.sdk.node.transactions.loadTemp,
+                        self.sdk.addresses.init,
+                        self.sdk.ustate.me,
+                        self.sdk.user.get,
+                        self.sdk.usersettings.init,
+                        self.matrixchat.importifneed,
+                        
+                        self.firebase.init,
+                        /*self.app.platform.sdk.node.transactions.get.allBalance,*/
+    
+                        //self.sdk.exchanges.load,
+                        self.sdk.articles.init,
+                        self.sdk.categories.load,
+                        self.sdk.activity.load,
+                        self.sdk.recommendations.load,
+                        self.sdk.memtags.load,
+                        self.sdk.node.shares.parameters.load,
+                        self.sdk.sharesObserver.init,
+                        self.sdk.comments.loadblocked,
+                        self.sdk.notifications.initcl
+    
+                    ], function () {
+    
+                        //self.ui.showmykey()
 
-                    //self.sdk.exchanges.load,
-                    self.sdk.articles.init,
-                    self.sdk.categories.load,
-                    self.sdk.activity.load,
-                    self.sdk.recommendations.load,
-                    self.sdk.memtags.load,
-                    self.sdk.node.shares.parameters.load,
-                    self.sdk.sharesObserver.init,
-                    self.sdk.comments.loadblocked,
-                    
-
-                ], function () {
-
-                    //self.ui.showmykey()
-
-                    setTimeout(() => {
-                        self.ui.showkeyafterregistration()
-                    },3000)
-                    
-                    var account = self.actions.addAccount(self.app.user.address.value)
-
-                    if (self.psdk.userState.getmy()) account.setStatus(true)
-
-                    account.setKeys(app.user.keys())
-                    account.updateUnspents().catch(e => {
-                        console.error(e)
-                    })
-
-                    
-
-                    self.preparingUser = false;
-
-                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                    self.app.Logger.info({
-                        actionId: 'SESSION_STARTED',
-                        actionSubType: 'AUTHORIZED_SESSION',
-                    });
-
-                    setTimeout(() => {
-                        self.matrixchat.init()
-                    }, 10)
-
-                    if (clbk)
-                        clbk()
-
-                    setTimeout(self.acceptterms, 5000)
-
-                    setTimeout(function(){
-
-                        self.app.peertubeHandler.init()
-
-                        lazyActions([
-                            self.cryptography.prepare,
-                            self.sdk.pool.init,
-                            self.sdk.user.subscribeRef
-                        ], function(){
-                            //app.notifications.subscribe()
+                        self.ws.init()
+    
+                        setTimeout(() => {
+                            self.ui.showkeyafterregistration()
+                        },3000)
+                        
+                        var account = self.actions.addAccount(self.app.user.address.value)
+    
+                        if (self.psdk.userState.getmy()) account.setStatus(true)
+    
+                        account.setKeys(app.user.keys())
+                        account.updateUnspents().catch(e => {
+                            console.error(e)
                         })
-
-                        if (app.curation()){
-                            if(app.user.validate()){
-                                if(app.nav.get.href() == 'userpage?pc=1'){
-                                    self.matrixchat.core.apptochat()
+    
+                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
+                            unspents = _.sortBy(unspents, (u) => {
+                                return u.amount
+                            })
+                            console.log("UNSPENTS", unspents)
+                        })*/
+                        
+    
+                        self.preparingUser = false;
+    
+                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+    
+                        self.app.Logger.info({
+                            actionId: 'SESSION_STARTED',
+                            actionSubType: 'AUTHORIZED_SESSION',
+                        });
+    
+                        setTimeout(() => {
+                            self.matrixchat.init()
+                        }, 10)
+    
+                        if (clbk)
+                            clbk()
+    
+                        setTimeout(self.acceptterms, 5000)
+    
+                        setTimeout(function(){
+    
+                            self.app.peertubeHandler.init()
+    
+                            lazyActions([
+                                self.cryptography.prepare,
+                                self.sdk.pool.init,
+                                self.sdk.user.subscribeRef
+                            ], function(){
+                                //app.notifications.subscribe()
+                            })
+    
+                            if (app.curation()){
+                                if(app.user.validate()){
+                                    if(app.nav.get.href() == 'userpage?pc=1'){
+                                        self.matrixchat.core.apptochat()
+                                    }
                                 }
                             }
-                        }
-
-                        self.sdk.notifications.init().catch(e => {})
-
-                        if(self.istest()){
-                            $('html').addClass('testaddress')
-                        }
-                        else{
-                            if ($('html').hasClass('testaddress'))
-                                $('html').removeClass('testaddress')
-                        }
-
-                    }, 2000)
-
-            
-
+    
+                            
+    
+                            if(self.istest()){
+                                $('html').addClass('testaddress')
+                            }
+                            else{
+                                if ($('html').hasClass('testaddress'))
+                                    $('html').removeClass('testaddress')
+                            }
+    
+                        }, 2000)
+    
+                       
+    
+                    })
                 })
+                
+
+                
             }
             else {
                 self.app.Logger.info({
@@ -22796,6 +22813,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+                                    device="` + $.md5(self.app.options.device + self.app.user.address.value) +`"
                                     cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
@@ -23376,7 +23394,6 @@ Platform = function (app, listofnodes) {
                     account.updateUnspents()
                 }
                
-                self.sdk.notifications.getNotifications().catch(e => {})
             }
 
             if(time > 120 && window.cordova){
@@ -23530,7 +23547,8 @@ Platform = function (app, listofnodes) {
                     }, 200)
                 })
 
-
+                
+                
 
 
             }
@@ -23968,6 +23986,17 @@ Platform = function (app, listofnodes) {
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
+                changeTitle : function(text){
+                    console.log('changeTitle', text)
+                    if(!self.titleManager) return 
+
+                    if(!text) {
+                        self.titleManager.clear();
+                    }
+                    else{
+                        self.titleManager.add(text)
+                    }
+                },
 				getUserInfo: async (address) => {
 
 					let res = new Promise((resolve, reject) => {

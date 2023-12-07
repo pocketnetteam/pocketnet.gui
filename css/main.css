@@ -147,6 +147,9 @@
 :root {
   --app-margin-top-default: 0px;
   --app-margin-top: 0px;
+  --app-margin-bottom-default: 0px;
+  --keyboardheight: 0px;
+  --app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
 }
 @supports (width: max(1px, 1px)) {
   :root {
@@ -606,6 +609,7 @@ input.ie[type="range"]::-ms-thumb {
 }
 .js-player .video-js.vjs-thumb {
   display: block;
+  background-color: transparent;
 }
 .js-player.player-ready .video-js {
   display: block;
@@ -737,9 +741,8 @@ button {
   color: rgb(var(--text-on-bg-ac-color));
   border: 1px solid rgb(var(--color-bg-ac-bright));
   text-align: center;
-  font-size: 0.9em;
-  font-weight: 600;
   border-radius: 8px;
+  font-size: 0.9em;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -2728,6 +2731,12 @@ html.mobileview.android .wnd .wndback {
 .wnd.pipmini .recomandationsFromContent {
   display: none!important;
 }
+.wnd.pipmini .statswrapperExtended {
+  display: none!important;
+}
+.wnd.pipmini #post .forurl > .url {
+  position: static!important;
+}
 .wnd.pipmini .wndinner {
   box-shadow: none;
 }
@@ -4251,6 +4260,13 @@ html.mobileview.android .wnd .wndback {
   width: 75px;
   justify-content: space-between;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalLentaWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalSearchUsersWrapper .horizontalLentacaption .controlhors i,
+.horizontalLentaWrapper .horizontalLentacaption .controlhors i {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+}
 .horizontalSearchUsersWrapper .horizontalSearchUserscaption span,
 .horizontalLentaWrapper .horizontalSearchUserscaption span,
 .horizontalSearchUsersWrapper .horizontalLentacaption span,
@@ -4494,7 +4510,6 @@ html.mobileview .tooltipMobileDialog .thwrapper {
   margin: 0 auto;
   border: 0;
   margin-bottom: 0;
-  padding-bottom: 60px;
   box-shadow: none;
 }
 html.mobileview .tooltipMobileDialog ._close {
@@ -4978,13 +4993,6 @@ html.allcontent_application #footerWrapper {
   cursor: pointer;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-.fastMessage,
-.notification {
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
 .fastMessage .time,
 .notification .time {
   padding-left: 0.5em;
@@ -5037,12 +5045,19 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--color-bad));
   border: 1px solid rgb(var(--color-bad));
 }
+.fastMessage .transactionmessagewrapper,
+.notification .transactionmessagewrapper {
+  display: flex;
+}
 .fastMessage .transactionmessagewrapper > div,
 .notification .transactionmessagewrapper > div {
-  vertical-align: top;
+  align-items: flex-start;
+  flex-grow: 1;
 }
 .fastMessage .transactionmessagewrapper > div.foramount,
 .notification .transactionmessagewrapper > div.foramount {
+  white-space: nowrap;
+  flex-grow: 0;
   font-weight: 700;
   text-align: right;
   color: rgb(var(--color-good));
@@ -5249,26 +5264,28 @@ html.allcontent_application #footerWrapper {
 .notification .subscribeWrapper > div.forsubscribe button.disabled:hover {
   background: transparent;
 }
+.fastMessage .cwrapper,
+.notification .cwrapper {
+  display: flex;
+}
 .fastMessage .cwrapper > div,
 .notification .cwrapper > div {
-  vertical-align: middle;
+  align-items: center;
+  flex-grow: 2;
 }
 .fastMessage .cwrapper > div.cellforimage,
 .notification .cwrapper > div.cellforimage {
   width: 50px;
-  vertical-align: top;
+  flex-grow: 0;
+  max-width: 50px;
 }
 .fastMessage .cwrapper > div.extra,
 .notification .cwrapper > div.extra {
-  width: 90px;
+  max-width: 90px;
 }
 .fastMessage .cwrapper > div .infomain,
 .notification .cwrapper > div .infomain {
   padding-left: 0.5em;
-}
-.fastMessage .cwrapper > div .infomain .caption,
-.notification .cwrapper > div .infomain .caption {
-  font-size: 1em;
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
@@ -5299,8 +5316,16 @@ html.allcontent_application #footerWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
+.fastMessage .caption,
+.notification .caption {
+  font-size: 0.9em;
+}
 .fastMessage {
   border-radius: 12px;
+  -moz-transition: bottom 0.3s;
+  -o-transition: bottom 0.3s;
+  -webkit-transition: bottom 0.3s;
+  transition: bottom 0.3s;
 }
 .fastMessage.smallsize {
   padding: 0.5em;
@@ -5326,6 +5351,31 @@ html.allcontent_application #footerWrapper {
   line-height: 31px;
   font-size: 0.8em;
   margin-bottom: 4px;
+}
+#hideallnotificationsel .hidenf {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  width: 390px;
+  background: rgba(var(--color-shadow-base), 0.98);
+  color: rgb(var(--color-txt-ac-1));
+  z-index: 140;
+  overflow: hidden;
+  padding: 1em;
+  text-align: center;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#hideallnotificationsel .hidenf:hover {
+  opacity: 0.8;
 }
 .closecsscross {
   position: relative;
@@ -5516,6 +5566,12 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .ghost {
   color: rgb(var(--color-bg-ac));
+}
+.fastMessage.bright {
+  background: rgba(var(--color-bg-ac-bright), 0.98);
+}
+.fastMessage.bright .transactionmessagewrapper > div.foramount {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .editCategoryPath,
 .path {
@@ -5931,6 +5987,9 @@ html.mobileview .plyr__volume {
 html.mobileview .plyr__volume input {
   display: none;
 }
+html.mobileview #hideallnotificationsel {
+  display: none;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
@@ -5983,7 +6042,7 @@ html.mobileview.scrollmodedown #comments .captionfwrapper {
   transform: translateY(calc(-65px - var(--app-margin-top)));
 }
 html.mobileview.scrollmodedown #navigation .nmenu {
-  transform: translateY(90px);
+  transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
 html.mobileview.scrollmodedown #navigation .fakem {
   display: block;
@@ -5991,7 +6050,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 100px;
+  height: calc(var(--app-margin-bottom, 0) + 60px);
 }
 html.mobileview #navigation .fakem {
   display: none;
@@ -6043,7 +6102,7 @@ html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
 html.mobileview.scrollmodedown #navigation .nmenu {
-  transform: translateY(90px);
+  transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
 html.mobileview.scrollmodedown #navigation .fakem {
   display: block;
@@ -6051,7 +6110,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 100px;
+  height: 70px;
 }
 html.mobileview #navigation .fakem {
   display: none;
@@ -6397,6 +6456,14 @@ html.mobileview #content .work {
     page-break-after: avoid;
   }
 }
+html.allcontent {
+  /*body{
+        background: #051b48;
+    }*/
+}
+html.allcontent #footerWrapper {
+  background: #051b28;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   button.medium {
@@ -6556,11 +6623,8 @@ html.mobileview #content .work {
             background: #051b48;
         }*/
   }
-  html.allcontent .contentWrapper {
-    padding-top: 0;
-    margin-top: 0;
-  }
   html.allcontent #footerWrapper {
+    display: none;
     background: #051b28;
   }
   html.allcontent.cameraenabled body {
@@ -6569,14 +6633,14 @@ html.mobileview #content .work {
 }
 html.mobileview.keyboadrshown .focusedinput {
   position: fixed!important;
-  bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+  bottom: calc(var(--app-margin-bottom, 0) - 1px) !important;
   top: auto!important;
   left: 0!important;
   right: 0!important;
   max-height: 25vh!important;
 }
 html.mobileview .dialog {
-  padding-bottom: calc(var(--keyboardheight, 0) - 1px);
+  padding-bottom: calc(var(--app-margin-bottom, 0) - 1px);
 }
 html.mobileview .sitemessage {
   position: fixed;
@@ -6840,14 +6904,14 @@ html.mobileview .keyboardsafe {
   -o-transition: padding-bottom 0.3s;
   -webkit-transition: padding-bottom 0.3s;
   transition: padding-bottom 0.3s;
-  padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+  padding-bottom: calc(var(--app-margin-bottom, 0) - 1px) !important;
 }
 html.mobileview .keyboardsafetranslate {
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+  transform: translateY(calc(-1 * var(--app-margin-bottom, 0) + 1px));
 }
 html.pipmode .pipped {
   position: fixed!important;

@@ -82,7 +82,7 @@ var test = (function(){
 						
 						_p.ref += name
 	
-						body += '<p><a elementsid="https://'+self.app.options.url+'/author?address='+self.app.ref+'" href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+						body += '<p><a elementsid="https://'+self.app.options.url+'/authorn?address='+self.app.ref+'" href="https://'+self.app.options.url+'/authorn?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 					}							
 	
 					var r = deep(document, 'referrer')
@@ -173,7 +173,7 @@ var test = (function(){
 
 					saving = false
 
-					if (primary){
+					if (primary && !ed.reloadOnly){
 
 						self.nav.api.go({
 							href : 'index',
@@ -291,9 +291,6 @@ var test = (function(){
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
 						//exist = false
-
-						console.log('exist', exist)
-						
 
 						if(!exist || (exist == self.app.user.address.value)){
 
@@ -1222,7 +1219,7 @@ var test = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen testwindow normalizedmobile',
+				class : 'withoutButtons allscreen testwindow normalizedmobile maxheight',
 				closecross : function(){
 					if(ed.fail) ed.fail()
 				}

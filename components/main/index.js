@@ -216,8 +216,6 @@ var main = (function(){
 				actions.backtolentaClear()
 
 				self.app.actions.scroll(lastscroll || 0)
-				
-
 			},
 
 			backtolentaClear : function(){
@@ -264,7 +262,6 @@ var main = (function(){
 
 			up : function(){
 				self.app.actions.scroll(0)
-				//lastscroll = 0
 			}
 
 		}
@@ -758,8 +755,6 @@ var main = (function(){
 
 							self.app.psdk.share.insertFromResponseSmall(shares)
 
-							console.log('shares', shares)
-
 							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
 								return s.txid
 							}))
@@ -882,9 +877,6 @@ var main = (function(){
 									}, 300)
 
 								})
-
-
-								
 
 								setTimeout(() => {
 
