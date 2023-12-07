@@ -205,6 +205,12 @@ var BastyonSdk = function(){
         }
     }
 
+    self.check = {
+        permission : function(data){
+            return action('checkPermission', data)
+        }
+    }
+
     self.request = {
         permissions : function(permissions){
             return action('requestPermissions', {permissions})
@@ -225,6 +231,10 @@ var BastyonSdk = function(){
         opensettings: function(){
             return action('opensettings', {})
         },
+
+        createroom: function(args){
+            return action('createroom', args)
+        }
     }
 
     self.init = function(){
