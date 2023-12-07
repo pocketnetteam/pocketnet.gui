@@ -40,7 +40,7 @@ var application = (function(){
 					var pid = parameters().pid;
 
 					if (pid) {
-						self.app.apps.emit('changeroute', hexDecode(pid))
+						self.app.apps.emit('changeroute', hexDecode(pid), id)
 						console.log(`emitted: ${ hexDecode(pid) }`)
 					}
 				}
@@ -196,7 +196,7 @@ var application = (function(){
 						this.destroy();
 						this.init();
 					} else if (pid) {
-						self.app.apps.emit('changeroute', hexDecode(pid))
+						self.app.apps.emit('changeroute', hexDecode(pid), id)
 					}
 			},
 
