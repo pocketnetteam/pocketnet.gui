@@ -626,7 +626,7 @@ var author = (function(){
 				})
 			},
 
-			userslist : function(_el, users, empty, caption, clbk){
+			userslist : function(_el, users, empty, caption, clbk, count){
 				self.nav.api.load({
 
 					open : true,
@@ -639,6 +639,7 @@ var author = (function(){
 						empty : empty,
 						caption : caption,
 						sort : 'commonuserrelation',
+						count : count
 					},
 					
 					clbk : function(e, p){
@@ -762,6 +763,8 @@ var author = (function(){
 					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
 						return a
 					})
+
+					var c = u.length
 	
 					var blocked = deep(author, 'data.blocking') || []
 	
@@ -774,10 +777,12 @@ var author = (function(){
 					if(self.user.isItMe(author.address)){
 						e = self.app.localization.e('aynofollowers')
 					}
+
+					console.log("COUNT 2" , c)
 	
 					renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
 						report.module = p;
-					})
+					}, c)
 
 				})
 
@@ -792,6 +797,8 @@ var author = (function(){
 						return a.adddress
 					})
 
+					var c = u.length
+
 					var blocked = deep(author, 'data.blocking') || []
 
 					u = _.filter(u, function(a){
@@ -804,9 +811,10 @@ var author = (function(){
 						e = self.app.localization.e('aynofollowing')
 					}
 
+					console.log("COUNT 1" , c)
 					renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
 						report.module = p;
-					})
+					}, c)
 
 				})
 			},
@@ -1381,23 +1389,15 @@ var author = (function(){
 				}
 
 				if(type == 'userInfo'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-					
 				}
 
 				if (type == 'accDel'){
-
 					if(alias.address == author.address){
-
 						renders.authorcaption()
-
 					}
-
 				}
 				
 			}

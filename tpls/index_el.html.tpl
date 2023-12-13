@@ -244,5 +244,7 @@
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
         <script async src="js/pwa-service-worker.js"></script>
+
+        <div id="hideallnotificationsel"></div>
     </body>
 </html>

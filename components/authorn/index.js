@@ -382,10 +382,13 @@ var authorn = (function(){
 			},
 			
 			subscribes : function(){
-				return this.subscribersOrSubscribes('subscribes').then(u => {
-					return _.map(u, (u) => {
-						return u.adddress || u.address
-					})
+				return this.subscribersOrSubscribes('subscribes').then(({addresses, count}) => {
+					return {
+						addresses : _.map(addresses, (u) => {
+							return u.adddress || u.address
+						}), 
+						count
+					}
 				})
 			},
 
@@ -395,6 +398,8 @@ var authorn = (function(){
 					var u = _.map(deep(author, 'data.' + rkey) || [], function(a){
 						return a
 					})
+
+					var count = u.length
 	
 					var blocked = (deep(author, 'data.blocking') || []).concat()
 
@@ -408,11 +413,17 @@ var authorn = (function(){
 					})
 
 
-					return Promise.resolve(u)
+					return Promise.resolve({
+						addresses : u,
+						count
+					})
 
 				}).catch((e) => {
 					console.error(e)
-					return []
+					return {
+						addresses : [],
+						count : 0
+					}
 				})
 			}
 		}
@@ -511,26 +522,26 @@ var authorn = (function(){
 			},
 
 			showsubscribes : function(){
-				load.subscribes().then(addresses => {
+				load.subscribes().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
 					var ctext = self.app.localization.e('following')
 
-					events.showuserslist(el.subscribes, addresses, etext, ctext)
+					events.showuserslist(el.subscribes, addresses, etext, ctext, null, count)
 				})
 			},
 
 			showsubscribers : function(){
-				load.subscribers().then(addresses => {
+				load.subscribers().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
 					var ctext = self.app.localization.e('followers')
 
-					events.showuserslist(el.subscribers, addresses, etext, ctext)
+					events.showuserslist(el.subscribers, addresses, etext, ctext, null, count)
 				})
 			},
 
-			showuserslist : function(_el, addresses, empty, caption, clbk){
+			showuserslist : function(_el, addresses, empty, caption, clbk, count){
 				self.nav.api.load({
 
 					open : true,
@@ -542,7 +553,8 @@ var authorn = (function(){
 						addresses : addresses,
 						empty : empty,
 						caption : caption,
-						sort : 'commonuserrelation'
+						sort : 'commonuserrelation',
+						count
 					},
 					
 					clbk : function(e, p){
@@ -1226,27 +1238,29 @@ var authorn = (function(){
 
 
 			subscribes : function(clbk){
-				load.subscribes().then(addresses => {
+				load.subscribes().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
 					var ctext = self.app.localization.e('following')
 
-					renders.userslist(el.subscribes, addresses, etext, ctext, clbk, 'subscribes')
+					renders.userslist(el.subscribes, addresses, etext, ctext, clbk, 'subscribes', count)
 				})
 			},
 
 			subscribers : function(clbk){
-				load.subscribers().then(addresses => {
+				load.subscribers().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
 					var ctext = self.app.localization.e('followers')
 
 
-					renders.userslist(el.subscribers, addresses, etext, ctext, clbk, 'subscribers')
+					renders.userslist(el.subscribers, addresses, etext, ctext, clbk, 'subscribers', count)
 				})
 			},
 
-			userslist : function(_el, addresses, empty, caption, clbk, mid){
+			userslist : function(_el, addresses, empty, caption, clbk, mid, count){
+
+				console.log('count', count)
 
 				if (modules['userlist' + mid]){
 					modules['userlist' + mid].destroy()
@@ -1266,7 +1280,8 @@ var authorn = (function(){
 						empty : empty,
 						caption : caption,
 						sort : 'random',
-						preview : true
+						preview : true,
+						count
 					},
 					
 					clbk : function(e, p){

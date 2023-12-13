@@ -2564,3 +2564,4 @@ _l.cleartempactions = "Вы действительно хотите очисти
 _l.captiontempactions = "Информация о транзакциях в локальном хранилище"
 _l.labeltempactions = "Количество ожидающих транзакций"
 _l.labeltempactionszero = "Нет ожидающих транзакций"
+_l.hideallnotifications = "Скрыть все оповещения"

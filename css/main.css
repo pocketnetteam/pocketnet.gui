@@ -4993,13 +4993,6 @@ html.allcontent_application #footerWrapper {
   cursor: pointer;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-.fastMessage,
-.notification {
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
 .fastMessage .time,
 .notification .time {
   padding-left: 0.5em;
@@ -5052,12 +5045,19 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--color-bad));
   border: 1px solid rgb(var(--color-bad));
 }
+.fastMessage .transactionmessagewrapper,
+.notification .transactionmessagewrapper {
+  display: flex;
+}
 .fastMessage .transactionmessagewrapper > div,
 .notification .transactionmessagewrapper > div {
-  vertical-align: top;
+  align-items: flex-start;
+  flex-grow: 1;
 }
 .fastMessage .transactionmessagewrapper > div.foramount,
 .notification .transactionmessagewrapper > div.foramount {
+  white-space: nowrap;
+  flex-grow: 0;
   font-weight: 700;
   text-align: right;
   color: rgb(var(--color-good));
@@ -5264,26 +5264,28 @@ html.allcontent_application #footerWrapper {
 .notification .subscribeWrapper > div.forsubscribe button.disabled:hover {
   background: transparent;
 }
+.fastMessage .cwrapper,
+.notification .cwrapper {
+  display: flex;
+}
 .fastMessage .cwrapper > div,
 .notification .cwrapper > div {
-  vertical-align: middle;
+  align-items: center;
+  flex-grow: 2;
 }
 .fastMessage .cwrapper > div.cellforimage,
 .notification .cwrapper > div.cellforimage {
   width: 50px;
-  vertical-align: top;
+  flex-grow: 0;
+  max-width: 50px;
 }
 .fastMessage .cwrapper > div.extra,
 .notification .cwrapper > div.extra {
-  width: 90px;
+  max-width: 90px;
 }
 .fastMessage .cwrapper > div .infomain,
 .notification .cwrapper > div .infomain {
   padding-left: 0.5em;
-}
-.fastMessage .cwrapper > div .infomain .caption,
-.notification .cwrapper > div .infomain .caption {
-  font-size: 1em;
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
@@ -5314,8 +5316,16 @@ html.allcontent_application #footerWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
+.fastMessage .caption,
+.notification .caption {
+  font-size: 0.9em;
+}
 .fastMessage {
   border-radius: 12px;
+  -moz-transition: bottom 0.3s;
+  -o-transition: bottom 0.3s;
+  -webkit-transition: bottom 0.3s;
+  transition: bottom 0.3s;
 }
 .fastMessage.smallsize {
   padding: 0.5em;
@@ -5341,6 +5351,31 @@ html.allcontent_application #footerWrapper {
   line-height: 31px;
   font-size: 0.8em;
   margin-bottom: 4px;
+}
+#hideallnotificationsel .hidenf {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  width: 390px;
+  background: rgba(var(--color-shadow-base), 0.98);
+  color: rgb(var(--color-txt-ac-1));
+  z-index: 140;
+  overflow: hidden;
+  padding: 1em;
+  text-align: center;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#hideallnotificationsel .hidenf:hover {
+  opacity: 0.8;
 }
 .closecsscross {
   position: relative;
@@ -5531,6 +5566,12 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .ghost {
   color: rgb(var(--color-bg-ac));
+}
+.fastMessage.bright {
+  background: rgba(var(--color-bg-ac-bright), 0.98);
+}
+.fastMessage.bright .transactionmessagewrapper > div.foramount {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .editCategoryPath,
 .path {
@@ -5944,6 +5985,9 @@ html.mobileview .plyr__volume {
   max-width: 32px;
 }
 html.mobileview .plyr__volume input {
+  display: none;
+}
+html.mobileview #hideallnotificationsel {
   display: none;
 }
 html.mobileview #panelWrapper {

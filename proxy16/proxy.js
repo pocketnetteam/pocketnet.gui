@@ -906,7 +906,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
-					}
+						offline: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				21: [
@@ -922,7 +925,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
-					}
+						offline: true,
+						cantuploading: true,
+					},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 
 				23: [
@@ -1172,6 +1178,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube80.pocketnet.app',
 						ip: '65.21.249.150',
+					},
+				],
+				49: [
+					{
+						host : 'peertube90.pocketnet.app',
+						ip: '135.181.107.25',
+					},
+				],
+				50: [
+					{
+						host : 'peertube100.pocketnet.app',
+						ip: '135.181.158.64',
 					},
 				],
       		};
@@ -2741,7 +2759,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
 					if (settings.server.captcha/* && !self.test*/) {

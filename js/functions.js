@@ -1788,7 +1788,10 @@ bgImagesClApply = function (el, src) {
 
 bgImagesClApplyTemplate = function (src) {
 
-	src = (src || "").replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+	src = (src || "");
+	src = replaceArchiveInImage(src);
+
+	
 
 	if (src && imagesLoadedCache[src]) {
 		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
@@ -1828,7 +1831,7 @@ bgImagesCl = function (el, p) {
 
 			var image = new Image()
 
-			src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+			src = replaceArchiveInImage(src)
 
 			if (src.includes('www.youtube.com')) {
 				const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
@@ -5824,7 +5827,7 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 	var onsuccess = function (fileSystem) {
 
-		fileSystem.getDirectory('Download', { exclusive: false }, function (directory) {
+		fileSystem.getDirectory('Download', { exclusive: false, create : true }, function (directory) {
 
 			directory.getFile(name, { create: true, exclusive: false }, function (entry) {
 				// After you save the file, you can access it with this URL
@@ -6379,7 +6382,17 @@ SwipeParallaxNew = function (p) {
 
 					set(mainDirection.i, distance)
 
+					if(mainDirection.endmove){
+						if ((!mainDirection.distance || mainDirection.distance < distance)) {
+							mainDirection.clbk()
+							self.clear()
+							document.ontouchmove = () => true
+						}
+					}
+
 				}
+
+				
 
 				if (e.cancelable !== false) {
 					e.stopPropagation();
@@ -9573,7 +9586,7 @@ edjsHTML = function () {
 			if (t.withBorder) cl.push('withBorder')
 			if (t.stretched) cl.push('stretched')
 
-			var src = (t.file && t.file.url ? t.file.url : t.file).replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+			var src = replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file)
 
 			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + (r) + '" />' +
 
@@ -10550,6 +10563,17 @@ var connectionSpeed = function()
             return 600;            
     }
     return defaultSpeed;
+};
+
+replaceArchiveInImage = function(src) {
+	var srcNew = src;
+
+	app.platform.archivedServers.map(server => {
+		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+	});
+
+
+	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
 };
 
 /*test*/

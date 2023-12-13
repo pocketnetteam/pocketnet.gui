@@ -3,6 +3,13 @@ ResoursesDB = function(storageName, version, storages){
     var db = null
     var debugFlag = false
     var initing = null
+    var apptimeCorrection = 60 * 60 * 24 * 365
+
+    useapptimeCorrection = function(){
+        if(window.cordova || typeof _Electron != 'undefined'){
+            return true
+        }
+    }
 
     let debugLog = () => {};
 
@@ -34,6 +41,10 @@ ResoursesDB = function(storageName, version, storages){
             const req = items.openCursor();
 
             var time = getHourUnixtime()
+
+            if(useapptimeCorrection()){
+                time = time - apptimeCorrection
+            }
 
             return new Promise((resolve, reject) => {
 
@@ -133,6 +144,7 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.clearAll = function(key){
+        console.log('clearAll', key)
         return transaction(key).then(items => {
 
             const req = items.clear();
@@ -152,7 +164,7 @@ ResoursesDB = function(storageName, version, storages){
         })
     }
 
-    self.get = function(key, id){
+    self.get = function(key, id, getold){
 
         var time = getHourUnixtime()
 
@@ -175,9 +187,31 @@ ResoursesDB = function(storageName, version, storages){
                         return;
                     }
                     
-                    if (time >= req.result.cachedTo) {
-                        reject('delete');
-                        return;
+                    if (time >= req.result.cachedTo && !getold) {
+
+                        if (useapptimeCorrection()){
+
+                            var ttime = time - apptimeCorrection
+
+                            if (ttime >= req.result.cachedTo) {
+                                reject('delete');
+                                return;
+                            }
+
+                            if(!getold){
+                                reject('Data does not exist');
+                                return;
+                            }
+                        }
+                        else{
+                            reject('delete');
+                            return;
+                        }
+                        
+
+                        
+
+                        
                     }
 
                     resolve(req.result.message);

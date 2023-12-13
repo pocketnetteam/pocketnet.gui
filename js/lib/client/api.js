@@ -218,6 +218,7 @@ var ProxyRequest = function(app = {}, proxy){
 
     self.rpc = function(url, method, parameters, options){
 
+
         if(!method) return Promise.reject('method')
 
         var data = {}

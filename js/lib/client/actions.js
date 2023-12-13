@@ -2,6 +2,8 @@ var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
     dustValue : 700 / 100000000,
+    optimizeUnspentsMin : 80,
+    optimizeUnspentsMax : 300,
     clearRejected : true,
     clearCompleted : true,
     objects : {
@@ -219,6 +221,7 @@ var errorCodesAndActions = {
 var Action = function(account, object, priority, settings){
 
     var options = ActionOptions.objects[object.type] || {}
+    var updatehash = ''
 
     var self = this
 
@@ -316,7 +319,9 @@ var Action = function(account, object, priority, settings){
 
         self.id = e.id || makeid()
 
-        self.checkConfirmationUntil = e.checkConfirmationUntil
+        if (e.checkConfirmationUntil)
+            self.checkConfirmationUntil = new Date(e.checkConfirmationUntil)
+
         self.inputs = _.clone(e.inputs)
         self.outputs = _.clone(e.outputs)
         self.attempts = e.attempts
@@ -345,11 +350,11 @@ var Action = function(account, object, priority, settings){
 
         options = ActionOptions.objects[self.object.type] || {}
         self.options = options
+
+        updatehash = getinternalhash()
     }
 
     self.logerror = function(data){
-
-        console.log("ADD LOG", data)
 
         try{
             account.parent.app.Logger.error({
@@ -367,7 +372,24 @@ var Action = function(account, object, priority, settings){
 
     var getBestInputs = function(unspents, value){
 
-        if(value == 0) value = 0.000000001
+        var optimizeUnspents = false
+
+        console.log('unspents', unspents.length, value)
+
+        if (value == 0) {
+            value = 0.00000001
+        }
+
+        if (value < 0.0000001) {
+
+            console.log('unspents here')
+
+            if (unspents.length > ActionOptions.optimizeUnspentsMax){
+                optimizeUnspents = true
+
+                console.log("OPTIMIZE UNSPENTS")
+            }
+        }
 
         var added = 0
         var addedUnspents = {}
@@ -382,8 +404,8 @@ var Action = function(account, object, priority, settings){
         }
 
 
-        while ((added < dustValue || added < value) && unspents.length){
-            var diff = Math.max(value, dustValue) - added
+        while ((added < dustValue || added < value || (optimizeUnspents && _.toArray(addedUnspents).length < 5)) && unspents.length){
+            var diff = Math.max(Math.max(value, dustValue) - added, 0)
 
             var iterationUnspents = _.first(_.sortBy(unspents, (u) => {
 
@@ -446,19 +468,35 @@ var Action = function(account, object, priority, settings){
 
     var save = function(){
 
-        self.updated = new Date()
-
-        account.save()
+        if(setUpdated()) account.save()
     }
 
     var trigger = function(){
 
-        self.updated = new Date()
+        if(setUpdated()) account.trigger(self)
+
+    }
+
+    var getinternalhash = function(){
+        var e = self.export()
+
+        delete e.updated
+        //delete e.checkConfirmationUntil
+
+        return rot13(JSON.stringify(e))
+    }
+
+    var setUpdated = function(){
+
+        var hash = getinternalhash()
+
+        if (updatehash != hash){
+            self.updated = new Date()
+            updatehash = hash
+
+            return true
+        }
         
-        //if(options.change) options.change(action, account)
-
-        account.trigger(self)
-
     }
 
     var filterUnspents = function(unspents){
@@ -525,8 +563,6 @@ var Action = function(account, object, priority, settings){
             amount += (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
             feeIncludedinAmount = true
         }
-
-        console.log('amount', amount)
 
         var inputs = getBestInputs(unspents, amount)
 
@@ -606,14 +642,13 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            console.log('unspents', unspents.length , totalInputAmount)
-
-            if(unspents.length < 100 && totalInputAmount > 0.001){
+            if(unspents.length < ActionOptions.optimizeUnspentsMin && totalInputAmount > 0.001){
 
                 var spcount = 2
 
-                if(totalInputAmount > 0.5){
+                if(totalInputAmount > 0.5 && !account.wasdvii){
                     spcount = 10
+                    account.wasdvii = true
                 }
 
                 var divii = toFixed(totalInputAmount / spcount, 8)
@@ -725,8 +760,6 @@ var Action = function(account, object, priority, settings){
             parameters.push(optstype)
         }
 
-        console.log('outputs inputs', outputs, inputs)
-
         self.sending = new Date()
         self.inputs = inputs
         self.outputs = outputs
@@ -771,6 +804,12 @@ var Action = function(account, object, priority, settings){
                     })
                 }
                 
+            }
+
+            if (code == 26){
+                self.logerror({
+                    method, parameters, error : e
+                })
             }
 
             /*if (options.rejectedAsk){
@@ -1195,7 +1234,8 @@ var Account = function(address, parent){
     self.unspents = {
         willChange : null, /// date, wait free coins
         value : [],
-        updated : null
+        updated : null,
+        height : 0
     }
 
     self.actions = {
@@ -1839,6 +1879,7 @@ var Account = function(address, parent){
     }
 
     self.import = function(e, flag){
+        
         self.status = e.status
         self.unspents = e.unspents
         
@@ -1857,13 +1898,17 @@ var Account = function(address, parent){
 
         _.each(e.actions.value, (exported) => {
 
-            if (exported.until < new Date()) return
+            if (new Date(exported.until) < new Date()) return
+
+            if (exported.completed && self.emitted.completed[exported.id]){
+                return
+            }
 
 
             //withcompleted
             if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
             
-            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
+            (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'actions_checkFail' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
             ){
 
@@ -2024,6 +2069,7 @@ var Account = function(address, parent){
 
             self.unspents.value = unspents
             self.unspents.updated = new Date()
+            self.unspents.height = app.platform.currentBlock || 0
 
             cleanOutputs()
 
@@ -2048,6 +2094,7 @@ var Account = function(address, parent){
 
             //if(transaction.addr != self.address) return
 
+            if (transaction.height < self.unspents.height) return
 
             parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
 
@@ -2132,6 +2179,7 @@ var Account = function(address, parent){
 
     self.processing = async function(){
 
+
         if(processing) return
 
         self.checkWillChangeUnspents()
@@ -2153,7 +2201,11 @@ var Account = function(address, parent){
             })
 
         }).finally(() => {
-            processing = null
+
+            setTimeout(() => {
+                processing = null
+            }, 1000)
+            
         })
 
         
@@ -2248,6 +2300,7 @@ var Account = function(address, parent){
             
 
             if(!emitted[estatus][action.id]){
+
                 parent.emit('actionFiltered', {
                     action,
                     address : self.address,
@@ -2446,10 +2499,13 @@ var Actions = function(app, api, storage = localStorage){
    
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
+            console.log("EMIT 1", key)
             e(data)
         })
 
         _.each(namedEvents[key] || {}, function(e){
+            console.log("EMIT 2", key)
+
             e(data)
         })
     }
@@ -2671,13 +2727,23 @@ var Actions = function(app, api, storage = localStorage){
 
             var rif = null
 
+            if(processInterval){
+                clearInterval(processInterval)
+            }
+    
             processInterval = setInterval(() => {
 
+                self.processing()
+
+                return
+
                 if (rif){
-                    cancelAnimationFrame(rif)
+                    window.cancelAnimationFrame(rif)
                 }
+                
 
                 rif = window.requestAnimationFrame(() => {
+
                     rif = null
 
                     self.processing()

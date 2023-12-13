@@ -195,9 +195,6 @@ var application = (function(){
 
 				})
 
-
-				
-
 			},
 
 			destroy : function(){

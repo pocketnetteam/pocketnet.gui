@@ -374,6 +374,7 @@ Application = function (p) {
 	}
 
 	self.canuseip = function () {
+		return false
 		if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
 			return true
 		}
@@ -381,7 +382,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-		return isElectron || (window.cordova && !isios());
+		return isElectron || (window.cordova);
 	}
 
 	self.savesupportedForBrowser = function () {
@@ -406,12 +407,6 @@ Application = function (p) {
 		},
 		state: {},
 		clbks: {
-
-			/*_platform : function(change){
-			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
-				self.prepareUserData()
-			  }
-			},*/
 
 			_modules: function (change) {
 
@@ -2393,13 +2388,14 @@ Application = function (p) {
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
-						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+						var h = isios() ? event.keyboardHeight : Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
 
-						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = h
 
+						document.documentElement.style.setProperty('--keyboardheight', `${h}px`);
 
 						self.apps.emit('keyboard', {
-							height : event.keyboardHeight
+							height : h
 						})
 
 					});
@@ -2928,7 +2924,7 @@ Application = function (p) {
 														account.releaseCheckInAnotherSession()
 													}
 
-													self.platform.sdk.notifications.getNotifications()
+													self.platform.ws.getMissed()
 												}
 
 											})
@@ -2969,12 +2965,11 @@ Application = function (p) {
 		screen: {
 
 			lock: function (orientation) {
-				if (window.cordova && (orientation || baseorientation))
+				if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
 					window.screen.orientation.lock(orientation || baseorientation)
 			},
 			unlock: function () {
-				if (window.cordova) {
-					//window.screen.orientation.lock(baseorientation)
+				if (window.cordova && window.screen.orientation.unlock) {
 					window.screen.orientation.unlock()
 				}
 
