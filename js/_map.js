@@ -142,7 +142,8 @@ __map =  {
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 		"js/vendor/shadow-popup/css/popup.css",
 		"css/fontawesome/css/all.min.css",
-		"js/vendor/hex-captcha/css/captcha.css"
+		"js/vendor/hex-captcha/css/captcha.css",
+		"css/bastyon-streams.css",
 	],
 
 	__exportcss : {

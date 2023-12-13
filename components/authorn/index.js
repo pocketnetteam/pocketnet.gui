@@ -1526,6 +1526,11 @@ var authorn = (function(){
 
 				destroy()
 
+				if (openedpost){
+					openedpost.clearessense()
+					openedpost = null
+				}
+
 				if (acsearch){
 					acsearch.destroy()
 					acsearch = null

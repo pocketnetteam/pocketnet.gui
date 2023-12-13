@@ -1,0 +1,143 @@
+.js-player canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 100%;
+    max-height: 100%;
+    transform: translate(-50%, -50%) scale(1.001); /* Scale 1.001 to fix 1 pixel diff */
+    margin: auto;
+}
+
+.pixi-controls {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5em;
+    background: #00000040;
+    box-sizing: border-box;
+    padding: 0.5em;
+    backdrop-filter: blur(4px);
+    border-top: 1px solid #00000030;
+}
+
+.pixi-controls .left {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    margin-left: 1em;
+}
+
+.pixi-controls .right {
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+}
+
+.pixi-controls .left button,
+.pixi-controls .right button {
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 1em;
+}
+
+.pixi-controls .toggle-stream {
+    background: #ff242480;
+    color: #fff;
+    text-shadow: 0 0 2px #000000aa;
+}
+
+.pixi-controls .toggle-stream:hover {
+    background: #ff2424cc;
+}
+
+.pixi-controls .toggle-stream.active {
+    animation: Pulse 1s linear infinite;
+    animation-direction: alternate;
+}
+
+.pixi-controls .modes {
+    float: left;
+    align-self: flex-start;
+    background: #ffffff80;
+    border-radius: 10000px;
+    padding: 0.3em;
+    margin-right: 0.3em;
+}
+
+.pixi-controls .modes button {
+    margin: 0;
+    border: 0;
+    background: none;
+}
+
+.pixi-controls .modes button.active {
+    cursor: inherit;
+    background: #48484880;
+    color: #fff;
+    text-shadow: 0 0 2px #000000aa;
+}
+
+.pixi-controls button {
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    width: 2.6em;
+    height: 2.6em;
+    background: #ffffff80;
+    color: #000;
+    text-shadow: 0 0 2px #ffffffaa;
+    font-size: 1.2em;
+    border: 2px solid #0000003b;
+    border-radius: 10000px;
+    margin: 0 0.3em;
+}
+
+.pixi-controls > button:hover,
+.pixi-controls > div > button:hover {
+    background: #ffffffcc;
+    transition: background-color ease-in 0.05s;
+}
+
+.pixi-controls button::after {
+    opacity: 0;
+    content: attr(data-title);
+    position: absolute;
+    top: -10000px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    line-height: 1;
+    font-size: 8pt;
+    white-space: nowrap;
+    display: block;
+    height: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #9d9d9d;
+    background: #e5e5e5a8;
+    color: #000;
+    transition: none;
+    text-shadow: none;
+}
+
+.pixi-controls button:hover::after {
+    opacity: 1;
+    top: -30px;
+    transition: opacity ease-in 0.05s 1s;
+}
+
+@keyframes Pulse {
+    from {
+        background: #ff242480;
+    }
+    to {
+        background: #ff2424cc;
+    }
+}

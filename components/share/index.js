@@ -963,7 +963,7 @@ var share = (function(){
 
 									self.app.platform.streamlib.baseClass.updateStreamInfo(userAddr, {
 										postTxid: action.transaction,
-										//debugFurther: alias,
+										peertubeUrl: currentShare.url,
 									});
 								}
 

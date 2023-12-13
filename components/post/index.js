@@ -25,13 +25,7 @@ var post = (function () {
 
 		var authblock = false;
 
-		/// STREAM
-
-		/*
-
 		var activestream = null
-
-		*/
 
 		var actions = {
 
@@ -642,6 +636,41 @@ var post = (function () {
 					});
 
 				}
+			},
+
+			initStreamUI: function (callback) {
+				const BastyonStreams = self.app.platform.streamlib.baseClass;
+
+				if (!el.c) {
+					return;
+				}
+
+				const playerWrapper = el.c.find('.js-player-ini')[0];
+				playerWrapper.style.aspectRatio = '16/9';
+
+				//const mountPoint = $('<div/>',{ class: 'bastyon-stream' });
+
+				//mountPoint.appendTo(playerWrapper);
+
+				const userInfo = self.app.platform.sdk.user.me();
+				const avatar = userInfo.image;
+				const userNickname = userInfo.name.toLowerCase();
+
+				self.app.platform.streamlib.instance = new BastyonStreams({
+					view: self.app.platform.streamlib.view,
+					wrapper: playerWrapper,
+					user: {
+						image: replaceArchiveInImage(avatar),
+						nickname: userNickname,
+					},
+					streamCredentials: BastyonStreams.getStreamInfo(userInfo.address),
+				});
+
+				self.app.platform.streamlib.instance.mountApp();
+
+				el.c.find('.jsPlayerLoading').remove();
+
+				console.log('SH007 DBG POINT', el.c);
 			},
 
 			likeWithR: function (value, clbk) {
@@ -1497,16 +1526,37 @@ var post = (function () {
 
 								actions.position();
 
-								renders.urlContent(function () {
+								renders.urlContent(async function () {
 
 									if(!el.share) return
 
 									actions.position();
 
+									console.log('SH007 DBG POINT', ed);
+
+									const isStream = share.itisstream();
+									const isMyPost = (app.user.address.value === share.address);
+									const isMyStreamPost = (isStream && isMyPost);
+
+									let isStreamStillLive = false;
+
+									if (isMyStreamPost) {
+										// Doing this to get rid of redundant requests to peertube
+										const streamInfo = await app.platform.sdk.videos.info([share.url], true);
+										isStreamStillLive = streamInfo[0][0].data.isLive;
+
+										if (!isStreamStillLive) {
+											const BastyonStreams = self.app.platform.streamlib.baseClass;
+
+											BastyonStreams.deleteStreamInfo(app.user.address.value);
+										}
+									}
+
 									if(ed.repost){
 										actions.initVideoLight();
-									}
-									else{
+									} if (!ed.repost && isMyStreamPost) {
+										actions.initStreamUI();
+									} else {
 										actions.initVideo();
 									}
 
@@ -2205,34 +2255,21 @@ var post = (function () {
 			},
 
 			destroy: function (key) {
-
-				/// STREAM
-
-				/*
-				
-				if (activestream){
-
-					var as = activestream
-
-					activestream.detachElement()
-
-					activestream = null
-
-
-					if(key == 'movetopip'){
-
-					}
-					else{
-						new dialog(end stream??).yes( () => {
+				console.log('Destroy');
+				if (self.app.platform.streamlib.instance && !self.app.platform.streamlib.instance.isDestroyed) {
+					if (key == 'movetopip') {
+						self.app.platform.streamlib.instance.unmountApp((appView) => {
+							self.app.platform.streamlib.view = appView;
+						});
+					} else {
+						self.app.platform.streamlib.instance.destroy();
+						/* new dialog(end stream??).yes( () => {
 							activestream.endStream()
 						}).no( () => {
 							
-						})
+						}); */
 					}
 				}
-				
-				*/
-
 				
 				if (chat) {
 					chat.destroy();

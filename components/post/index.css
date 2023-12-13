@@ -216,6 +216,7 @@
   border-bottom-right-radius: 0;
 }
 #post.videomainpost .videoWrapper .js-player {
+  position: relative;
   border-radius: 0;
 }
 #post.videomainpost .videoWrapper .vjs-control-bar {

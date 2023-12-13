@@ -39,12 +39,14 @@
         <link rel="stylesheet" href="css/plyr.css?v=1">        
 
         <link rel="stylesheet" href="css/openapi.css?v=815525481864">
+        <link rel="stylesheet" href="css/bastyon-streams.css?v=815525481864">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
 
         <script src="js/vendor/device.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="js/widgets.js?v=136"></script>
+        <script src="js/vendor/pixi.min.js"></script>
 
         <style type="text/css">
             :root {
