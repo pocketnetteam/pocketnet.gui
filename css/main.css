@@ -6943,6 +6943,7 @@ html.pipmode .matrixchatwrapper {
 .peertube-server-hint {
   z-index: 3;
   position: absolute;
+  right: 0;
   margin: 10px;
   padding: 5px 7px;
   border-radius: 4px;
