@@ -552,6 +552,9 @@ var BastyonApps = function(app){
         balance : {
             permissions : ['account']
         },
+        changeroute : {
+
+        },
         test : {
 
         },
@@ -581,7 +584,7 @@ var BastyonApps = function(app){
             }, source)
         },
 
-        any : function(application, data, source){
+        historychange : function(application, data, source){
             trigger('historychange', {
                 application : application.manifest.id,
                 data

@@ -147,7 +147,8 @@ const publics = {
     getbarteronoffersbyhashes: true,
     getbarteronfeed: true,
     getbarterondeals: true,
-    getbarteronoffersdetails: true
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -519,7 +520,8 @@ RpcClient.callspec = {
     getbarteronoffersbyhashes: 'obj',
     getbarteronfeed: 'obj',
     getbarterondeals: 'obj',
-    getbarteronoffersdetails: 'obj'
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj'
 };
 
 var slice = function(arr, start, end) {
