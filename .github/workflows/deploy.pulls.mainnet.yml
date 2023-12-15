@@ -1,4 +1,4 @@
-name: Deploy Dev PR
+name: PR Deploy on Mainnet
 
 on:
   workflow_dispatch:
