@@ -2456,7 +2456,7 @@ _l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
 _l.boost_c34 = 'Buying PKOIN peer-to-peer on Bastyon'
 _l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
 _l.boost_c36 = 'How do I start advertising?'
-_l.boost_c37 = 'Launching ads on Bastion is very simple. To do this, you need:'
+_l.boost_c37 = 'Launching ads on Bastyon is very simple. To do this, you need:'
 _l.boost_c38 = 'Prepare an advertising publication (video, post or article)'
 _l.boost_c39 = 'Buy PKOIN'
 _l.boost_c40 = 'Deposit the required amount of PKOIN to start advertising'
@@ -2639,9 +2639,9 @@ _l.commonRequest_er_email = "Leave an email for feedback"
 _l.registration_e13114 = "There is some problem with your registration due to strange activity."
 _l.balance_e13114 = "There is some problem with sending your actions due to strange activity."
 
-_l.solutionbalance_1 = "To continue interacting with Bastion, you can replenish the balance of your wallet yourself"
+_l.solutionbalance_1 = "To continue interacting with Bastyon, you can replenish the balance of your wallet yourself"
 _l.solutionbalance_2 = "or contact support"
-_l.solutionbalance_3 = "To continue interacting with Bastion, you can contact support"
+_l.solutionbalance_3 = "To continue interacting with Bastyon, you can contact support"
 
 _l.commonRequest_submitted = "Thank you for contacting us, we will review your application"
 _l.torusing_changedirectProxy = "Change to External proxy";
