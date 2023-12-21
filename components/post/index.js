@@ -1554,7 +1554,7 @@ var post = (function () {
 											})
 										})
 
-										el.share.closest('.wndcontent').on('click', events.clickOut);
+										el.share.closest('.wndcontent').on('mousedown', events.clickOut);
 
 										if (clbk) clbk();
 									});
