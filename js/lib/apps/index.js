@@ -187,6 +187,13 @@ var BastyonApps = function(app){
             description : 'permissions_descriptions_location',
             level : 2,
             uniq : false
+        },
+
+        'chat' : {
+            name : 'permissions_name_chat',
+            description : 'permissions_descriptions_chat',
+            level : 2,
+            uniq : false
         }
     }
 
@@ -211,55 +218,72 @@ var BastyonApps = function(app){
         },
 
         createroom : {
+            permissions : ['chat'],
             parameters : [],
             action : function({data, application}) {
                 const
                     core = app.platform.matrixchat.core,
-                    invite = (data.members?.slice(1) ?? []).map(address => {
-                        return core.user.matrixId(address/* , application.manifest.id */);
-                    }),
-                    alias = (() => {
-                        if (invite.length === 1) {
-                            return core.mtrx.kit.tetatetid({ id: data.members[0] }, { id: data.members[1] });
-                        } else {
-                            return (data.members ?? []).join('');
-                        }
-                    })(),
-                    name = data?.name || "",
                     sendMessage = (chat, text) => {
-                        core.mtrx.sendtext(chat, text);
-                    };
+                        const link = `chat?id=${ data.alias }`;
 
-                /* Create public room */
-                core.mtrx.client.createRoom({
-                    room_alias_name: alias,
-                    visibility: 'private',
-                    invite: invite,
-                    name: name,
-                    initial_state: {
-                        type: 'm.set.encrypted',
-                        state_key: '',
-                        content: {
-                            encrypted: true,
+                        /* Send message */
+                        core.mtrx.client.sendMessage(
+                            chat.roomId,
+                            core.mtrx.sdk.ContentHelpers.makeTextMessage(text)
+                        );
+
+                        /* Open chat */
+                        if (app.mobileview){
+                            core.apptochat(link)
                         }
-                    }
-                })
-                .then(chat => {
-                    sendMessage(chat, data.message);
-                })
-                .catch((e) => {
-                    if (e?.errcode == 'M_ROOM_IN_USE') {
-                        console.log(e)
-                        return core.mtrx.client.joinRoom(
-                            /* `${ alias }:${ core.mtrx.baseUrl.replace('https://', '') }` */
-                            alias
-                        )
-                        .then(chat => sendMessage(chat, data.message))
-                        .catch((e) => {});
-                    }
+                        else{
+                            core.gotoRoute(link)
+                        }
 
-                    return Promise.reject(e);
-                });
+                        return chat;
+                    };
+                
+                return core.user
+                    .usersInfo(data.members.map(u => hexEncode(u)))
+                    .then(info => {
+                        const
+                            myMatrixId = core.user.matrixId(core.user.userinfo.id),
+                            matrixId = core.user.matrixId(info[0].id),
+                            alias = data.alias = core.mtrx.kit.tetatetid(info[0], core.user.userinfo),
+                            room = core.mtrx.client.getRooms().filter(room => room.normalizedName === alias)[0];
+
+                        return room || core.mtrx.client.createRoom({
+                            room_alias_name: `${ alias }@${ application.manifest.id }`,
+                            visibility: "private",
+                            invite: [matrixId],
+                            name: `#${ alias }`,
+                            /* initial_state: {
+                                type: "m.set.encrypted",
+                                state_key: "",
+                                content: {
+                                    encrypted: true,
+                                },
+                            } */
+                        });
+                    })
+                    .then(chat => sendMessage(chat, data.message))
+                    .catch(e => {
+                        if (e && e.errcode == "M_ROOM_IN_USE") {
+                            return core.mtrx.client
+                                .joinRoom(
+                                    "#" +
+                                        `${ data.alias }@${ application.manifest.id }` +
+                                        ":" +
+                                        core.mtrx.baseUrl.replace('https://', '')
+                                )
+                                .then(chat => {
+                                    sendMessage(chat, data.message)
+                                })
+                                .catch(e => {});
+                        }
+
+                        return Promise.reject(e);
+                    })
             }
         },
 

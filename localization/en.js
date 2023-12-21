@@ -2605,6 +2605,8 @@ _l.permissions_name_payment = "Make a payment"
 _l.permissions_descriptions_payment = "The application asks for permission to make a payment in PKOIN"
 _l.permissions_name_location = "Access to location"
 _l.permissions_descriptions_location = "The application asks for permission to access your location"
+_l.permissions_name_chat = "Access to chat"
+_l.permissions_descriptions_chat = "The application asks for permission to access your chat"
 
 _l.permissions_name_messaging = "Message display"
 _l.permissions_descriptions_messaging = "Give the app permission to display an informational message"
