@@ -154,6 +154,26 @@ var VARS = args.test ? vars.test : vars.prod
 
 console.log('VARS', VARS)
 
+var downloadActualPeertubeList = function() {
+	const listUrl = 'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json';
+	const deployPath = _path.join(__dirname, 'proxy16/peertube-servers.json');
+
+	console.log('----------------');
+	console.log('Gathering Peertube list from Github repository');
+	console.log('----------------');
+
+	try {
+		execSync(`curl ${listUrl} --output ${deployPath} -s`, {
+			encoding: "utf8",
+			windowsHide: true,
+		});
+	} catch (e) {
+		console.log('Peertubes video servers are not found!');
+		process.exit();
+	}
+}
+
+downloadActualPeertubeList();
 
 var babelifycode = function(code){
 	var c = bablecore.transformSync(code, {
