@@ -144,7 +144,7 @@ const publics = {
     // Barteron
     getbarteronaccounts: true,
     getbarteronoffersbyaddress: true,
-    getbarteronoffersbyhashes: true,
+    getbarteronoffersbyroottxhashes: true,
     getbarteronfeed: true,
     getbarterondeals: true,
     getbarteronoffersdetails: true,
@@ -517,7 +517,7 @@ RpcClient.callspec = {
     // Barteron
     getbarteronaccounts: 'obj',
     getbarteronoffersbyaddress: 'str',
-    getbarteronoffersbyhashes: 'obj',
+    getbarteronoffersbyroottxhashes: 'obj',
     getbarteronfeed: 'obj',
     getbarterondeals: 'obj',
     getbarteronoffersdetails: 'obj',
