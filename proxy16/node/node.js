@@ -295,7 +295,7 @@ var Node = function(options, manager){
     self.ckey = self.host + ":" + self.port + ":" + self.ws
 
     self.rpc = new RpcClient({
-        protocol: 'http',
+        protocol: 'https',
         user: self.rpcuser,
         pass: self.rpcpass,
         host: self.host,
@@ -947,8 +947,8 @@ var Node = function(options, manager){
 
                 var node = new Node({
                     host : pr[0],
-                    port : 38081, //// TODO
-                    ws : 8087, //// TODO
+                    port : 39991,
+                    ws : 8087,
                     peer : true
                 }, manager)  
 

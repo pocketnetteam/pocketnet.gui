@@ -35,7 +35,7 @@ logger.setlevel('debug');
 var testnodes = [
 	{
 		host : '78.37.233.202',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : 'test.v.pocketnet.app',
 		stable : true
@@ -43,35 +43,35 @@ var testnodes = [
 
 	{
 		host : '157.90.235.121',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : 'test.1.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '157.90.228.34',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '116.203.219.28',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : 'test.pocketnet.app',
 		stable : true
 	},
 	{
 		host : 'pnettool.pocketnet.app',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
 		host : '109.173.41.29',
-		port : 39091,
+		port : 39991,
 		ws : 6067,
 		name : 'lostystyg',
 		stable : false
