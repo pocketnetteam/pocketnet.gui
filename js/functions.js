@@ -7426,12 +7426,10 @@ search = function (el, p) {
 
 		var elements = [
 
-			'<img class="christmasBranchRight" src="img/christmas_branch_right.svg">',
 			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 				'<i class="fa fa-search" aria-hidden="true"></i>' +
 				'<i class="fas fa-circle-notch fa-spin"></i>') +
 			'</div>',
-			'<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">',
 
 			'<div class="searchInputWrapper">' +
 				'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
@@ -7446,6 +7444,11 @@ search = function (el, p) {
 			'</div>'
 
 		]
+
+		if (app.platform.ischristmastime){
+			elements.splice(0, 0, '<img class="christmasBranchRight" src="img/christmas_branch_right.svg">');
+			elements.splice(2, 0, '<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">');
+		}
 
 		if (p.right) {
 			elements.reverse();
