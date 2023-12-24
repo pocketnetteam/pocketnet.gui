@@ -1308,9 +1308,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			var promises = _.map(list, (i) => {
-				return self[i].init().catch(catchError(i)).then(() => {
-					return Promise.resolve()
-				})
+				var p = null
+
+				try{
+					p = self[i].init().catch(catchError(i)).then(() => {
+						return Promise.resolve()
+					})
+				}catch(e){
+
+					console.log(e)
+
+					catchError(i)
+
+					p = Promise.resolve()
+				}
+
+				return p
 			})
 
 			return Promise.all(promises)

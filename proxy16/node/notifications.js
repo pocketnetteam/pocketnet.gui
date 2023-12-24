@@ -221,8 +221,6 @@ class Notifications{
 
     run () {
 
-        this.logger.w('system', 'info', `Notification: run`)
-        
         this.destroyed = false
 
         if(!this.checkInterval)
@@ -480,7 +478,7 @@ class Notifications{
         }catch(e){
             console.log('destroy', e)
         }
-        
+
     }
 
     info(){
