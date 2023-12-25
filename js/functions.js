@@ -7445,6 +7445,11 @@ search = function (el, p) {
 
 		]
 
+		if (app.platform.ischristmastime){
+			elements.splice(0, 0, '<img class="christmasBranchRight" src="img/christmas_branch_right.svg">');
+			elements.splice(2, 0, '<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">');
+		}
+
 		if (p.right) {
 			elements.reverse();
 
