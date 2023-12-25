@@ -410,6 +410,20 @@ Platform = function (app, listofnodes) {
     self.repost = true;
     self.videoenabled = true;
 
+    self.ischristmastime = function() {
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth() + 1; 
+        var currentDay = currentDate.getDate();
+      
+        if (currentMonth === 12 && currentDay >= 15) {
+          return true;
+        } else if (currentMonth === 1 && currentDay <= 15) {
+          return true;
+        } else {
+          return false;
+        }
+    }();
+
     var bastyonhelperOpened = false
     self.uicamerapreview = null
     self.uimobilesearch = null
