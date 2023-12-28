@@ -1099,6 +1099,11 @@
 #comments .post .hasemoji.hasembedimage .embeddonate {
   right: 80px;
 }
+#comments .edit .hasemoji.hasdonate.hasembedimage .emojionearea-editor,
+#comments .answer .hasemoji.hasdonate.hasembedimage .emojionearea-editor,
+#comments .post .hasemoji.hasdonate.hasembedimage .emojionearea-editor {
+  padding-right: 110px;
+}
 #comments .edit .commentPanel,
 #comments .answer .commentPanel,
 #comments .post .commentPanel {
