@@ -223,21 +223,23 @@ var BastyonApps = function(app){
             action : function({data, application}) {
                 const
                     core = app.platform.matrixchat.core,
-                    sendMessage = (chat, text) => {
-                        const link = `chat?id=${ data.alias }`;
+                    sendMessage = (chat, message) => {
+                        const chatLink = `chat?id=${ data.alias }`;
 
-                        /* Send message */
-                        core.mtrx.client.sendMessage(
-                            chat.roomId,
-                            core.mtrx.sdk.ContentHelpers.makeTextMessage(text)
-                        );
+                        if (message) {
+                            /* Send message */
+                            core.mtrx.client.sendMessage(
+                                chat.roomId,
+                                core.mtrx.sdk.ContentHelpers.makeTextMessage(message)
+                            );
+                        }
 
                         /* Open chat */
                         if (app.mobileview){
-                            core.apptochat(link)
+                            core.apptochat(chatLink)
                         }
                         else{
-                            core.gotoRoute(link)
+                            core.gotoRoute(chatLink)
                         }
 
                         return chat;
