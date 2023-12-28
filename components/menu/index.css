@@ -707,12 +707,14 @@
 }
 #menu .postssearch .christmasBranchLeft {
   position: absolute;
+  z-index: -1;
   height: 52px;
   bottom: -10px;
   left: -35px;
 }
 #menu .postssearch .christmasBranchRight {
   position: absolute;
+  z-index: -1;
   bottom: -10px;
   right: -21px;
   height: 52px;

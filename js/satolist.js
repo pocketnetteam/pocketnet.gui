@@ -293,13 +293,24 @@ Platform = function (app, listofnodes) {
         'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
         'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
         'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
-        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
         'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true,
         'PCsZ9ADzGgyaK99QpRdaFPFCY6qiRTAYoa': true,
         'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
         'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
         'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true,
-        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true
+        'PWo7o1nY77PK9CWiFoAJwzAeDFfnFwNxpu' : true,
+        'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv' : true,
+        'PNYB5PRW8GCjJz1qTDkffrooLdnbMeRQdn' : true,
+        'PDCYW1fyBk2NvckLzPpxruzTWHXJM8gj9y' : true,
+        'PTJH7TnDF9kYfdwF2bhrXqHwcm2QtQqyVh' : true,
+        'PS7Ki2SnrkHh4Wtt7fQewM2TdgHTCZbDYF' : true,
+        'PEDpvHfW68rHHLbPwVgHy1zej6Bzrhsy11' : true,
+        'PMSvfdcTdMnXxicqjB8XA64rkhPpXoznB5' : true,
+        'PVfeMAEsRt5rkaeZVxGFu6yTPBpsy9M1kP' : true,
+        'PSd47DchqhKK3JtNAbKU4FqR7u1S5yHxau' : true,
+        'PFDduS88TXG6ZaYu4r9h52h7BDnv6uiYWg' : true,
+        'PUVj2MyBV7aQUSBKc8DNivghtHcAuY66gT' : true,
+        'PV72Tzp1N7JhTvisstwpAfmVNJnnMsm3zP' : true
     } 
 
     self.bch = {
@@ -409,6 +420,20 @@ Platform = function (app, listofnodes) {
     self.avblocktime = 45;
     self.repost = true;
     self.videoenabled = true;
+
+    self.ischristmastime = function() {
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth() + 1; 
+        var currentDay = currentDate.getDate();
+      
+        if (currentMonth === 12 && currentDay >= 15) {
+          return true;
+        } else if (currentMonth === 1 && currentDay <= 15) {
+          return true;
+        } else {
+          return false;
+        }
+    }();
 
     var bastyonhelperOpened = false
     self.uicamerapreview = null
