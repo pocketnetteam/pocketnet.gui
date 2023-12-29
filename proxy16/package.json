@@ -34,7 +34,7 @@
         "iconv-lite": "",
         "is-localhost-ip": "^2.0.0",
         "jsdom": "^7.2.2",
-        "lambda-rate-limiter": "",
+        "lambda-rate-limiter": "3.0.1",
         "lodash": "^4.17.15",
         "md5": "^2.3.0",
         "nedb": "^1.8.0",
