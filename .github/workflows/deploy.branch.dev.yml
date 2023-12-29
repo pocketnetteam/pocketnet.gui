@@ -7,7 +7,6 @@ jobs:
 
   # Deploy test & pre sites
   deploy-pre:
-    needs: merge
     runs-on: gui
     steps:
       - name: Checkout git repository
@@ -24,7 +23,6 @@ jobs:
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
 
   deploy-test:
-    needs: merge
     runs-on: gui
     steps:
       - name: Checkout git repository
@@ -42,7 +40,6 @@ jobs:
 
   # Build & Deploy proxy services
   build-proxy:
-    needs: merge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -106,7 +103,6 @@ jobs:
 
   # Build applications
   build-app-macos:
-    needs: merge
     runs-on: macos-latest
     steps:
       - name: Checkout git repository
@@ -142,7 +138,6 @@ jobs:
           path: ./dist/BastyonSetup.dmg
 
   build-app-unix:
-    needs: merge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -170,7 +165,6 @@ jobs:
             ./dist/Bastyon.AppImage
 
   build-app-windows:
-    needs: merge
     runs-on: windows-latest
     steps:
       - name: Checkout git repository
@@ -194,7 +188,6 @@ jobs:
           path: ./dist/BastyonSetup.exe
 
   build-app-android:
-    needs: merge
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout git repository
@@ -252,7 +245,6 @@ jobs:
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
   build-app-android-gf:
-    needs: merge
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout git repository
