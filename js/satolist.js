@@ -8631,8 +8631,7 @@ Platform = function (app, listofnodes) {
 
                             console.log('currentblock', self.currentBlock);
 
-                            var endDate = new Date(new Date().getTime() - (ban.ending - self.currentBlock) * 60 * 1000);
-
+                            var endDate = new Date(new Date().getTime() + ((ban.ending - self.currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1)));
 
                             var formattedDate = convertDate(dateToStr(endDate));
 
@@ -14698,8 +14697,6 @@ Platform = function (app, listofnodes) {
                     }
 
                     return self.app.api.rpc('getnodeinfo').then(d => {
-
-                        debugger;
 
                         var t = deep(d, 'time') || 0
 
