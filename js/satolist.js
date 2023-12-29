@@ -8611,17 +8611,47 @@ Platform = function (app, listofnodes) {
 
             getbans : function(clbk){
 
-                var address = self.app.platform.sdk.address && self.app.platform.sdk.address.pnet().address;
+                var address = self.app.user.address.value;
 
-                console.log('getbans', address);
+                console.log('getbans!!!', address);
+
+                if (!address){
+
+                    if (clbk)
+                        clbk();
+
+                    return;
+                
+                }
 
                 var params = [address];
 
-                self.app.api.rpc('getbans', params).then(d => {
+                  
 
-                    console.log('DDDD', d);
+                self.app.api.rpc('getbans', params)
+                .then(d => {
+                        
+                    var findObjectWithMaxEnding = function(arr) {
+                        if (!Array.isArray(arr)) {
+                        return null;
+                        }
+                    
+                        if (arr.length === 0) {
+                        return null; 
+                        }
+                    
+                        return arr.reduce((maxObject, currentObject) => {
+                        if (currentObject.ending > maxObject.ending) {
+                            return currentObject; 
+                        } else {
+                            return maxObject; 
+                        }
+                        });
+                    }
 
-                    var ban = d && d[0];
+                    var ban = findObjectWithMaxEnding(d);
+
+                    console.log('ban!', ban, d);
 
                     if (ban && ban.reason){
 
@@ -8663,6 +8693,11 @@ Platform = function (app, listofnodes) {
 
 
 
+                })
+                .catch(e => {
+                    console.error(e)
+                    if (clbk)
+                        clbk(null, e)
                 })
 
             },
