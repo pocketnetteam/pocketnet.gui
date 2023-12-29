@@ -1829,6 +1829,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
 							}
 
+
+							//////////////////
+
+							/*
+							
+							BRTRN: insert data processing here: process(method, parameters, data)
+							
+							*/
+
+							//////////////////
+
 							return Promise.resolve({
 								data: data,
 								code: 200,
