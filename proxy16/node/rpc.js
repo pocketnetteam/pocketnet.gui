@@ -143,7 +143,9 @@ const publics = {
     getalljury: true,
     getjuryassigned: true,
     getjurymoderators: true,
-    getaccountearning : true
+    getaccountearning : true,
+
+    getbans : true
 
 }
 
@@ -512,7 +514,9 @@ RpcClient.callspec = {
     getalljury: '',
     getjuryassigned: 'str',
     getjurymoderators: 'str',
-    getaccountearning : 'str int int'
+    getaccountearning : 'str int int',
+
+    getbans: 'str'
 };
 
 var slice = function(arr, start, end) {

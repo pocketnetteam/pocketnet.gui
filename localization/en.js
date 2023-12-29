@@ -2783,3 +2783,8 @@ _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
+
+_l.accountBanned = "Your account has been blocked for actions contrary to the Bastyon rules.";
+_l.reason = "Reason: ";
+_l.accountBannedActions = "You can't post, comment, and do other similar activities, but you can continue to use your wallet.";
+_l.unlockDate = "Unlock date:";

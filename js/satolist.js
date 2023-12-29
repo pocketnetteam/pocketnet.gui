@@ -8609,6 +8609,65 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getbans : function(clbk){
+
+                var address = self.app.platform.sdk.address && self.app.platform.sdk.address.pnet().address;
+
+                console.log('getbans', address);
+
+                var params = [address];
+
+                self.app.api.rpc('getbans', params).then(d => {
+
+                    console.log('DDDD', d);
+
+                    var ban = d && d[0];
+
+                    if (ban && ban.reason){
+
+                        var showBanDialog = content => {
+
+                            console.log('dddd', content);
+
+                            console.log('currentblock', self.currentBlock);
+
+                            var endDate = new Date(new Date().getTime() - (ban.ending - self.currentBlock) * 60 * 1000);
+
+
+                            var formattedDate = convertDate(dateToStr(endDate));
+
+                            new dialog({
+                                html: self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' + self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' + self.app.localization.e('accountBannedActions'),
+                                btn1text: 'OK',
+
+                                class: 'zindex one',
+
+                            })
+
+                            self.app.platform.sdk.user.blocked = true;
+                            
+                            if (clbk)
+                                clbk();
+    
+                        }
+
+                        self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
+                        .catch(e => {
+                            
+                            showBanDialog(null, e);
+                            
+                        })
+
+
+
+                    }
+
+
+
+                })
+
+            },
+
             getfullfb: function (clbk, update) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
@@ -8807,6 +8866,8 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlockedMe : function(address, count){
+
+                if (self.app.platform.sdk.user.blocked) return true;
 
                 if(!address) address = self.app.user.address.value
 
@@ -14638,12 +14699,15 @@ Platform = function (app, listofnodes) {
 
                     return self.app.api.rpc('getnodeinfo').then(d => {
 
+                        debugger;
+
                         var t = deep(d, 'time') || 0
 
                         self.currentBlock = 0
                         self.timeDifference = 0;
                         
                         try{
+                            
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
                             localStorage['lastblock'] = self.currentBlock
                         }catch(e){
@@ -22535,7 +22599,7 @@ Platform = function (app, listofnodes) {
 
             setTimeout(function(){
                 self.sdk.tags.cloud()
-                self.sdk.node.get.time()
+                self.sdk.node.get.time(self.sdk.user.getbans);
             }, 1000)
 
             self.sdk.videos.init()
