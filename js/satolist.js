@@ -15292,6 +15292,10 @@ Platform = function (app, listofnodes) {
                     }
                         else {
 
+                            self.app.platform.sdk.jury.getalljury();
+
+                            self.app.platform.sdk.jury.getjurymoderators('fa0bcc03dbb2fe7b4c6f5d17580c8c875e3fe44168a2fe8a3aa6b6ca974ed40d');
+
                             self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
 

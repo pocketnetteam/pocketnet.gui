@@ -2482,29 +2482,25 @@ var lenta = (function(){
 				var modVote = share.modVote(share.jury.juryid, verdict);
 
 				topPreloader(30);
-				self.sdk.node.transactions.create.commonFromUnspent(
 
-					modVote,
+				self.app.platform.actions.addActionAndSendIfCan(modVote)
+				.then(function(action){
 
-					function(tx, error){
+					sitemessage(self.app.localization.e('juryvote_success'));
 
-						topPreloader(100)
+					var alias = action.object;
+					console.log('alias', alias);
 
-						if(!tx){
+					if (clbk) clbk();
 
-							self.app.platform.errorHandler(error, true)
+				})
+				.catch(error => {
 
-						} else {
+					self.app.platform.errorHandler(error, true);
 
-							successCheck()
-							sitemessage(self.app.localization.e('juryvote_success'))
-							if (clbk)
-								clbk()
+					if(clbk) clbk(null, e);
+				})
 
-						}
-
-					}
-				)
 
 			}
 
