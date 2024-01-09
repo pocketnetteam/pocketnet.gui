@@ -234,6 +234,10 @@ var BastyonSdk = function(){
 
         createroom: function(args){
             return action('createroom', args)
+        },
+
+        sendmessage: function(args){
+            return action('sendmessage', args)
         }
     }
 
