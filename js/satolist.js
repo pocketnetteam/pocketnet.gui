@@ -413,6 +413,9 @@ Platform = function (app, listofnodes) {
         'peertube5new.pocketnet.app',
         'peertube4new.pocketnet.app',
         'peertube31.pocketnet.app',
+        'peertube32.pocketnet.app',
+        'peertube34.pocketnet.app',
+        'peertube35.pocketnet.app',
     ];
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
