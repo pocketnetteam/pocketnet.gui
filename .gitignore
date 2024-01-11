@@ -64,3 +64,4 @@ posts/
 ./main.js
 cordova/cert.keystore
 package.cordova.json
+/proxy16/peertube-servers.json
