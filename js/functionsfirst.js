@@ -392,6 +392,116 @@ parameters = function(uri, split){
     return r;
 }
 
+
+getcommonlinkProtocol = function(){
+    return ((typeof _Electron != 'undefined' && _Electron) || window.cordova) ? 'https:' : window.location.protocol
+}
+
+formatInternalLinkReverse = function(value){
+    if(thislink(value)){
+
+        var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+        value = protocol + '://' + value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url)) + '/', '')
+    }
+    else{
+    }
+
+	return value
+}
+
+formatInternalLink = function(value){
+
+    if(thislink(value)){
+
+        var protocol = ((window.project_config || {}).protocol || 'bastyon')
+        var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
+
+        if (value.indexOf(protocol + '://') == 0){
+            value = value.replace(protocol + '://', 'https://' + host + '/')
+        }
+    }
+    else{
+    }
+
+	return value
+}
+
+formatInternalLinkHref = function(value){
+
+    if(((typeof _Electron != 'undefined' && _Electron) || window.cordova)) return value
+
+	try {
+		if(thislink(value)){
+
+            var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+            var host = window.location.host || ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
+
+            if (value.indexOf(protocol + '://') == 0){
+
+                var v = value.replace(protocol + '://', getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
+
+                console.log("URLURL0 b", value, thislink(v), v)
+
+                return v
+            }
+
+            var url = new URL(value)
+
+            //url.protocol = window.location.protocol
+            //url.host = window.location.host
+
+            console.log("URLURL1", url, url.toString())
+
+            return value.replace(url.protocol + "//" + url.host + '/', getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
+			
+			
+		}
+		else{
+			console.log("URLURL2", value)
+		}
+	}
+	catch (e) {
+	}
+
+	return value
+}
+
+thislink = function (_url = '') {
+
+    var host = window.location.host || ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
+
+    if(_url.indexOf(getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath) == 0) return true
+    
+    var url = {}
+
+    try {
+        url = new URL(_url)
+    }
+    catch (e) {
+        url.host = ''
+    }
+
+    var groups = {
+        p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
+    }
+
+    if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
+
+    var domain = (window.project_config || {}).url || 'localhost'
+
+    var m = _.find(groups, function (g) {
+
+        return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
+    })
+
+    if (m && _url.indexOf("embedVideo.php") == -1 && _url.indexOf("docs/") == -1 && _url.indexOf("/blockexplorer") == -1) {
+        return true;
+    }
+
+}
+
 checkIfAllowedImage = function(src){
 
 	if(!src) return false

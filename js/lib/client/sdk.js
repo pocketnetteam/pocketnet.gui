@@ -194,6 +194,8 @@ var pSDK = function ({ app, api, actions }) {
 
     var getfromdb = function (dbname, ids, getold) {
 
+        console.log('getfromdb', dbname, getold, ids)
+
         if (!ids) return Promise.resolve([])
 
         if (!_.isArray(ids)) ids = [ids]
@@ -369,7 +371,8 @@ var pSDK = function ({ app, api, actions }) {
                             resolve(r)
                         }
                     }).catch(e2 => {
-                        reject(e)
+                        console.error(e2)
+                        reject(e2)
                     })
 
                 }
@@ -582,11 +585,12 @@ var pSDK = function ({ app, api, actions }) {
 
         if (extendCache[cacheId]) {
 
+            if(type == 'share') console.log("GET FROM CACHE", extendCache[cacheId])
+
             return extendCache[cacheId]
         }
 
         var extendedObject = null
-
 
         _.each(actions.getAccounts(), (account) => {
 
@@ -628,6 +632,7 @@ var pSDK = function ({ app, api, actions }) {
 
         })
 
+        if(type == 'share') console.log("SET CACHE", extendedObject , object)
 
         extendCache[cacheId] = extendedObject || object
 
@@ -1377,6 +1382,8 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, id) {
 
+            console.log("EXTEND FROM ACTION CACHE")
+
             return extendFromActions('comment', 
                 ['comment', 'cScore'],
                 object,
@@ -1434,6 +1441,9 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['share'],
 
         request: function (executor, hash) {
+
+            console.log("SHAREREQUEST", hash)
+
             return request('share', hash, (data) => {
                 
                 return executor(data).then(r => {
@@ -1556,6 +1566,7 @@ var pSDK = function ({ app, api, actions }) {
 
         transform: function ({ key, data: share }, small) {
 
+
             if (share.userprofile || share.user) {
                 self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile || share.user]), true)
             }
@@ -1567,6 +1578,8 @@ var pSDK = function ({ app, api, actions }) {
             var s = new pShare();
 
             s._import(share);
+
+
 
             if (share.ranks) {
                 s.info = share.ranks
@@ -1617,7 +1630,7 @@ var pSDK = function ({ app, api, actions }) {
 
         cleanData: function (rawshares) {
 
-            
+            console.log('rawshares', rawshares)
 
 
             return _.filter(_.map(rawshares, (c) => {
@@ -1720,7 +1733,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         load: function (txids, update) {
-
+            
 
             return loadList('share', txids, (txids) => {
 
@@ -1816,6 +1829,8 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, txid) {
 
+            console.log("EXTEND CACHE SHARE", object, txid)
+
             return extendFromActions('share', 
                 ['share', 'upvoteShare', 'comment', 'contentDelete'],
                 object,
@@ -1828,8 +1843,6 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('share'), filter)
-
-
 
                 _.each(actions, (a) => {
                     objects.unshift(a)

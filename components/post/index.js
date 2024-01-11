@@ -1820,7 +1820,14 @@ var post = (function () {
 						) {
 							if (clbk) clbk();
 						} else {
+
+							console.log('url remote', url)
+
 							self.app.platform.sdk.remote.get(url, function (og) {
+
+							console.log('url remote', og)
+
+
 								if (og) {
 									renders.url(clbk);
 								} else {

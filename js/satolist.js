@@ -11620,10 +11620,17 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.sharesinfo = {}
 
                 self.psdk.share.insertFromResponse(_.map(_.filter(p.unseen || [], (sd) => {
-                    if(time - sd.date < 60 * 60) {
+
+                    if (self.psdk.share.get(sd.share.txid)) return false
+                    
+
+                    if (time - sd.date < 60 * 60) {
+
                         self.sdk.recommendations.sharesinfo[sd.share.txid] = sd.info
+
                         return true
                     }
+
                 }), (sd) => {
                     return sd.share   
                 })).then(r => {
@@ -22455,7 +22462,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.articles.init,
                         self.sdk.categories.load,
                         self.sdk.activity.load,
-                        self.sdk.recommendations.load,
+                        
                         self.sdk.memtags.load,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
@@ -22471,6 +22478,10 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
                         },3000)
+
+                        setTimeout(() => {
+                            self.sdk.recommendations.load()
+                        },30000)
                         
                         var account = self.actions.addAccount(self.app.user.address.value)
     
@@ -23068,12 +23079,19 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                console.log('link', link)
+
 
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
-                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
+
+                    var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '').replace(protocol + "://", '')
+
+                    console.log('link2', link)
 
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&

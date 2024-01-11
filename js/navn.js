@@ -1050,7 +1050,7 @@ Nav = function(app)
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
+				&& (href.indexOf(host) == -1) && !thislink(href)
 			)
 
 			if (!e && ex) e = true; 
@@ -1114,6 +1114,13 @@ Nav = function(app)
 			}
 			else
 			{
+
+				var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+				if (href.indexOf(protocol + '://') == 0){
+					href = href.replace(protocol + '://', '')
+				}
+
 				return href
 			}
 		},
@@ -1337,8 +1344,6 @@ Nav = function(app)
 
 			pathnameSearch : function(){
 				var loc =  window.location; 
-
-				
 
 				return protocolActions.file.pathname() + loc.search
 			},

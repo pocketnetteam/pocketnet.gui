@@ -192,6 +192,7 @@
 
         <script src="js/vendor/linkify.js"></script>
         <script src="js/vendor/linkify-html.js"></script>
+        <script src="js/vendor/linkify-string.js"></script>
         <script src="js/vendor/jquery.inputmask.bundle.js"></script>
 
         __VAR__.test

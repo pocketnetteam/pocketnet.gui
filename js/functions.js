@@ -9016,8 +9016,33 @@ numberToBool = function (v) {
 
 }
 
+findAndReplaceLinkClearReverse = function(inputText = ''){
+	return findAndReplaceLinkClear(inputText, formatInternalLinkReverse)
+}
 
-findAndReplaceLink = function (inputText, nottrust) {
+findAndReplaceLinkClear = function(inputText = '', fu){
+	if (typeof linkifyStr != 'undefined') {
+		var l = linkifyStr(inputText, {
+			formatHref : (value, type) => {
+				if (type == 'url'){
+					value = (fu || formatInternalLinkHref)(value)
+				}
+
+				return value
+			},
+
+			render: (v) => {
+				return `${v.attributes.href}`;
+			},
+		})
+
+		console.log("LLL", inputText, l)
+
+		return l
+	}
+}
+
+findAndReplaceLink = function (inputText = '', nottrust) {
 
 	if (typeof linkifyHtml != 'undefined') {
 
@@ -9031,11 +9056,30 @@ findAndReplaceLink = function (inputText, nottrust) {
 				s.donottrust = 'true'
 			}
 
-
-
 			var l = linkifyHtml(inputText, {
 				attributes: s,
-				truncate: 80
+				truncate: 50,
+
+				format : (value, type) => {
+
+					if(type == 'url'){
+						value = formatInternalLink(value)
+					}
+
+					if(value.length > 50){
+						value = value.slice(0, 50) + "…"
+					}
+
+					return value
+				},
+
+				formatHref : (value, type) => {
+					if (type == 'url'){
+						value = formatInternalLinkHref(value)
+					}
+
+					return value
+				}
 			})
 
 
@@ -9507,7 +9551,7 @@ stringEqTrig = function (s1, s2) {
 
 }
 
-edjsHTML = function () {
+edjsHTML = function (a, app) {
 	"use strict";
 
 	var c_xss = function (text) {

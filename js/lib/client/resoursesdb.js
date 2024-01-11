@@ -166,6 +166,8 @@ ResoursesDB = function(storageName, version, storages){
 
     self.get = function(key, id, getold){
 
+        console.log("GET FROM DV", key, id)
+
         var time = getHourUnixtime()
 
         return transaction(key).then(items => {
