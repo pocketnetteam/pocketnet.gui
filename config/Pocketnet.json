@@ -1,0 +1,86 @@
+{
+    "url" : "pocketnet.app",
+    "turl" : "test.pocketnet.app",
+    "name" : "Pocketnet",
+    "fullname" : "Pocketnet",
+    "developapps" : [],
+    "protocol" : "pocketnet",
+	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
+    "servers" : {
+
+        "production" : {
+            "proxy" : [
+                {
+                    "host" : "1.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                
+                {
+                    "host" : "2.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                
+                {
+                    "host" : "3.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "6.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+            
+            "matrix" : "matrix.pocketnet.app"
+        },
+
+        "test" : {
+            "proxy" : [
+                {
+                    "host" : "test.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+        
+            "matrix" : "test.matrix.pocketnet.app"
+        }
+    },
+    "forbiddenNames" : [
+        "bastyon", "pocketnet"
+    ],
+    "applications" : {
+        "ui" : {
+        },
+        "node": {
+            "windows": {
+                "github": {
+                    "name": "pocketnetcore_0.22.0_win_x64_setup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            },
+
+            "linux": {
+                "github": {
+                    "name": "Pocketnet_linux_x64.AppImage",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            }
+        }
+    }
+}

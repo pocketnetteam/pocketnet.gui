@@ -110,12 +110,14 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	self._meta = window.projects_meta
-	self.meta = self._meta.Pocketnet
+	//self._meta = window.projects_meta
+	self.meta = window.project_config || {}
+	
+	/*self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
 		self.meta = self._meta[window.pocketnetproject]
-	}
+	}*/
 
 	var url = window.pocketnetdomain
 
@@ -3135,6 +3137,7 @@ Application = function (p) {
 
 	self.thislink = function (_url) {
 
+
 		var url = {}
 
 		try {
@@ -3159,8 +3162,9 @@ Application = function (p) {
 			return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
 		})
 
-
-		if (m) return true
+		if (m && _url.indexOf("embedVideo.php") == -1 && _url.indexOf("docs/") == -1 && _url.indexOf("/blockexplorer") == -1) {
+			return true;
+		}
 
 	}
 

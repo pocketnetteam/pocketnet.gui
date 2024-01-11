@@ -73,9 +73,11 @@
         "cordova-plugin-x-socialsharing": "^6.0.4",
         "cordova-plugin-file-opener2":"^4.0.0",
         "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+
         <% if(!store) {%>
-                "cordova-plugin-apkupdater": "~4.0.0",
+            "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
+        
         "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
