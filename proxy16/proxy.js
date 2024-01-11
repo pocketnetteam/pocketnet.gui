@@ -38,6 +38,8 @@ const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
 
+const offlinePeertubeList = require('./peertube-servers.json');
+
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -730,35 +732,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				});
 			}
 
-			let fileRead;
+			let fileRead = JSON.parse(offlinePeertubeList);
 
 			try {
 				const res = await fetch('https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json');
 				fileRead = await res.json();
 			} catch (e) {
 				console.error('No peertube servers list!');
-				throw Error('ACCESS_PEERTUBE_LIST');
 			}
 
-			if (!fileRead) {
-				try {
-					fileRead = fs.readFileSync('./proxy16/peertube-servers.json', 'utf8');
-				} catch (e) {
-					console.error('No peertube servers list!');
-					throw Error('ACCESS_PEERTUBE_LIST');
-				}
-			}
-
-			let listData;
-
-			try {
-				listData = JSON.parse(fileRead);
-			} catch (e) {
-				console.error('Peertube servers list corrupted!');
-				throw Error('READ_PEERTUBE_LIST');
-			}
-
-			return toLegacyList(listData);
+			return toLegacyList(fileRead);
 		},
 
 		destroy: function () {
@@ -826,7 +809,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
 				admins: settings.admins,
-				
+
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
@@ -933,7 +916,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
-				
+
 				return new Promise((resolve, reject) => {
 					try{
 
@@ -961,9 +944,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					}
 				})
 
-					
 
-				
+
+
 			})
 
 			return Promise.all(promises).then(r => {
@@ -1143,7 +1126,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.getmostcommentedfeed
-	
+
 
 	self.checkSlideAdminHash = function(hash) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
@@ -1258,7 +1241,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
-							
+
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
@@ -1727,7 +1710,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					const info = self.kit.info(true);
 
 					//info.captcha.hexCaptcha = true;
-					
+
 					return Promise.resolve({
 						data: {
 							info: info,
@@ -2146,11 +2129,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					});
 				},
 			},
-			
+
 			getHex: {
 				authorization: 'signature',
 				path: '/captchaHex',
-				
+
 				action: function ({ captcha, ip }) {
 					if (captcha && captchas[captcha]?.done) {
 						return Promise.resolve({
@@ -2170,10 +2153,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return Promise.reject('hex-captcha not setup')
 					}
 
-					
+
 					captchaip[ip] || (captchaip[ip] = 0);
 					captchaip[ip]++;
-					
+
 					captcha = hexCaptcha({
 						text: {
 							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
@@ -2182,7 +2165,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					});
 
 					captcha.id = f.makeid();
-					
+
 					return new Promise((resolve, reject) => {
 						captcha.generate().then(({ frames, layers }) => {
 
@@ -2193,7 +2176,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								done: false,
 								time: f.now(),
 							};
-							
+
 							resolve({
 								data: {
 									id: captcha.id,
@@ -2243,7 +2226,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							angles[3] == -captcha.angles[3] &&
 							angles[4] == -captcha.angles[4] &&
 							angles[5] == -captcha.angles[5] &&
-							angles[6] == -captcha.angles[6] 
+							angles[6] == -captcha.angles[6]
 
 						if(!check)
 							return Promise.reject('captchanotequal_angles');
@@ -2251,7 +2234,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					if (captcha.text == text.toLocaleLowerCase()) {
 
-						
+
 
 						captcha.done = true;
 
