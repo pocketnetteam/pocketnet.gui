@@ -8657,16 +8657,24 @@ Platform = function (app, listofnodes) {
 
                         var showBanDialog = content => {
 
-                            console.log('dddd', content);
+                            console.log('content!', content, self.currentBlock);
 
-                            console.log('currentblock', self.currentBlock);
+                            var currentBlock = self.currentBlock || localStorage['lastblock'];
 
-                            var endDate = new Date(new Date().getTime() + ((ban.ending - self.currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1)));
+                            var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
 
                             var formattedDate = convertDate(dateToStr(endDate));
 
+                            var banHtml =  self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' 
+
+                            if (currentBlock){
+                                banHtml += self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' 
+                            }
+
+                            banHtml += self.app.localization.e('accountBannedActions');
+
                             new dialog({
-                                html: self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' + self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' + self.app.localization.e('accountBannedActions'),
+                                html: banHtml,
                                 btn1text: 'OK',
 
                                 class: 'zindex one',
@@ -8900,6 +8908,8 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlockedMe : function(address, count){
+
+                console.log('reputationBlockedMe');
 
                 if (self.app.platform.sdk.user.blocked) return true;
 
@@ -14739,8 +14749,8 @@ Platform = function (app, listofnodes) {
                         self.timeDifference = 0;
                         
                         try{
-                            
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                            console.log('height!!!', self.currentBlock);
                             localStorage['lastblock'] = self.currentBlock
                         }catch(e){
                             
@@ -22631,7 +22641,7 @@ Platform = function (app, listofnodes) {
 
             setTimeout(function(){
                 self.sdk.tags.cloud()
-                self.sdk.node.get.time(self.sdk.user.getbans);
+                self.sdk.node.get.time();
             }, 1000)
 
             self.sdk.videos.init()
@@ -22826,6 +22836,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
+                        self.sdk.user.getbans
                         
     
                     ], function () {
@@ -23075,6 +23086,7 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.initing = false
 
                 if (state) {
+                    
 
                     if(self.sdk.user.reputationBlockedMe()) return
                     if(self.sdk.user.myaccauntdeleted()) return
