@@ -1,6 +1,6 @@
 {
-    "name": "pocketnet.app",
-    "displayName": "Pocketnet",
+    "name": "<%-config.cordova.name%>",
+    "displayName": "<%-config.cordova.displayName%>",
     "version": "1.0.0",
     "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
     "main": "index.js",
@@ -106,11 +106,13 @@
             "cordova-plugin-file-opener2" : {},
             "cc.fovea.cordova.openwith": {
                 "ANDROID_MIME_TYPE": "*",
-                "IOS_URL_SCHEME": "pocketnet",
                 "IOS_UNIFORM_TYPE_IDENTIFIER": "public.item",
-                "IOS_GROUP_IDENTIFIER": "group.app.pocketnet",
-                "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
                 "ANDROID_EXTRA_ACTIONS": " "
+
+                <% if(config.cordova.iosUrlScheme) {%>,"IOS_URL_SCHEME": "<%-config.cordova.iosUrlScheme%>"<% } %>
+                <% if(config.cordova.groupIdentifier) {%>,"IOS_GROUP_IDENTIFIER": "<%-config.cordova.groupIdentifier%>"<% } %>
+                <% if(config.cordova.iosTeamId) {%>,"SHAREEXT_DEVELOPMENT_TEAM": "<%-config.cordova.iosTeamId%>"<% } %>
+                
             },
             "cordova-plugin-insomnia": {},
             "cordova-plugin-taptic-engine": {},

@@ -1619,7 +1619,9 @@ Nav = function(app)
 				//////
 				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox){
+				var electronprotocol = ((window.project_config || {}).electron || {}).protocol || ""
+
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox && electronprotocol){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
@@ -1649,7 +1651,7 @@ Nav = function(app)
 
 							try{
 
-								window.location = app.meta.protocol + '://electron/' + currentHref;
+								window.location = electronprotocol + '://electron/' + currentHref;
 								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
 								
 							}
