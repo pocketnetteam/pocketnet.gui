@@ -198,11 +198,16 @@ var BastyonApps = function(app){
     }
 
     var actions = {
+        isloggedin : {
+            parameters: [],
+            action : function() {
+                return Promise.resolve(!!(app.user.address && app.user.address?.value));
+            }
+        },
+
         opensettings : {
             parameters : [],
-
             action : function({data, application}){
-
                 app.nav.api.load({
                     open : true,
                     id : 'applicationmeta',
@@ -214,6 +219,31 @@ var BastyonApps = function(app){
                 })
 
                 return Promise.resolve('application:settings:opened')
+            }
+        },
+
+        openregistration : {
+            parameters : [],
+            action : function({data, application}){
+                app.nav.api.load({
+                    open : true,
+                    id : 'registration',
+                    inWnd : true,
+                    essenseData : {
+                        application : application.manifest.id,
+                        successHref : '_this',
+                        signInClbk : function(){
+                            if (app.platform.sdk.user.myaccauntdeleted()){
+                                return
+                            }
+                            
+                            if (clbk)
+                                clbk()
+                        }
+                    }
+                });
+
+                return Promise.resolve('application:registration:opened')
             }
         },
 

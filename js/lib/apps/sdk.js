@@ -228,8 +228,16 @@ var BastyonSdk = function(){
             return action('alert', {message})
         },
 
+        isloggedin: function(){
+            return action('isloggedin', {})
+        },
+
         opensettings: function(){
             return action('opensettings', {})
+        },
+
+        openregistration: function(){
+            return action('openregistration', {})
         },
 
         createroom: function(args){
