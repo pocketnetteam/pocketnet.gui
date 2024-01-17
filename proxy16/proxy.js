@@ -725,7 +725,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					const serversList = s.list;
 
 					if (s.archived) {
-						serversList.push(list.archive);
+						// FIXME: This is a temporary solution. Archive servers must be checked by order
+						if (s.archived.length === 2) {
+							serversList.push({
+								...list.archive[s.archived[0]],
+								archiveDouble: true,
+							});
+							serversList.push(list.archive[s.archived[1]]);
+						} else {
+							serversList.push(list.archive[s.archived[0]]);
+						}
 					}
 
 					return serversList;
