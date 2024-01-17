@@ -732,7 +732,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				});
 			}
 
-			let fileRead = JSON.parse(offlinePeertubeList);
+			let fileRead = offlinePeertubeList;
 
 			try {
 				const res = await fetch('https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json');
