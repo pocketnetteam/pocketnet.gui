@@ -1,5 +1,6 @@
 {
     "name": "pocketnet",
+    "project" : "Bastyon",
     "version": "0.8.76",
     "versionsuffix": "2",
     "cordovaversion": "1.8.76",

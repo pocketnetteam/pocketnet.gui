@@ -19,7 +19,7 @@ var args = {
 	vendor : 90,
     path : '/',
     makewebnode: false,
-	project : "Pocketnet",
+	project : "",
 	composetemplates : false
 }
 
@@ -45,6 +45,8 @@ _.each(argcli, function(a){
 	}
 	
 })
+
+if(!args.project) args.project = package.project
 
 var addzeros = function(v){
     v = v.toString()
@@ -77,35 +79,7 @@ console.log("run")
 console.log(args)
 
 var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, {name : 'package.cordova.json', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
-/*
-var tplspath = {
 
-}
-	
-var _meta = {
-	Pocketnet : {
-		url : "pocketnet.app",
-		turl : "test.pocketnet.app",
-		name : 'Pocketnet'
-	},
-
-	Bastyon : {
-		url : "bastyon.com",
-		turl : "test.pocketnet.app",
-		name : 'Bastyon'
-	},
-
-	BastyonPapp: {
-		url : "bastyon.com",
-		turl : "test.pocketnet.app",
-		name : 'Bastyon'
-	},
-}*/
-
-/**
- * If no commit SHA provided, trying
- * to get it using git command
- */
 if (!args.sha) {
 	try {
 		args.sha = execSync('git rev-parse HEAD', {
