@@ -1470,10 +1470,7 @@ dialog = function (p) {
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
 
-		setTimeout(() => {
-			$el.on('click', clickOutsideOfWindow)
-		}, 500)
-		
+		setTimeout(() => initOutsideClickEvent(), 500);
 
 		var title = $el.find('.poll .title');
 
@@ -1545,19 +1542,20 @@ dialog = function (p) {
 		if(p.onDestroy) p.onDestroy()
 	}
 
-	var clickOutsideOfWindow = function (e) {
-		const clickedElem = e.target;
+	var initOutsideClickEvent = function (e) {
+		let isOutside = false;
 
-		const isElem1Clicked = clickedElem.classList.contains('secondwrapper');
+		$el.on('mousedown', e => {
+			isOutside = e.target.classList.contains('secondwrapper');
+		});
 
-		const isClickOutside = (isElem1Clicked);
+		$el.on('mouseup', e => {
+			if (isOutside) {
+				destroy();
+			}
 
-		if (!isClickOutside) {
-			return;
-		}
-
-		destroy()
-
+			isOutside = false;
+		});
 	}
 
 	init();
