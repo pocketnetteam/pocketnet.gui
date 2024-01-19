@@ -15,7 +15,7 @@
         "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
         "uninstall-windows-service": "winser -r",
-        "build": "gulp build --gulpfile ./build/gulpfile.js"
+        "build": "gulp build"
     },
     "author": "Max Grishkov",
     "license": "ISC",

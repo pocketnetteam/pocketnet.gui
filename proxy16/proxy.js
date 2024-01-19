@@ -38,6 +38,7 @@ const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
 
+const config = require('./config.json');
 const offlinePeertubeList = require('./peertube-servers.json');
 
 process.setMaxListeners(0);
@@ -744,7 +745,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			let fileRead = offlinePeertubeList;
 
 			try {
-				const res = await fetch('https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json');
+				const res = await fetch(config.peertubesListLink);
 				fileRead = await res.json();
 			} catch (e) {
 				console.error('No peertube servers list!');
