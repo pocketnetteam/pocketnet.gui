@@ -19,6 +19,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:bastyon:test -- -sha=${{ github.sha }}
 
       - name: Copy to dest dir

@@ -14,7 +14,8 @@
         "serveProd": "nodemon cli.js --cli",
         "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
-        "uninstall-windows-service": "winser -r"
+        "uninstall-windows-service": "winser -r",
+        "build": "gulp build --gulpfile ./build/gulpfile.js"
     },
     "author": "Max Grishkov",
     "license": "ISC",
@@ -54,5 +55,10 @@
         "tree-kill": "^1.2.2",
         "underscore": "^1.12.1",
         "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "better-logging": "^5.0.0",
+        "gulp": "^4.0.2",
+        "gulp-cli": "^2.3.0"
     }
 }
