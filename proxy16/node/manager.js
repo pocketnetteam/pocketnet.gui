@@ -1,6 +1,6 @@
 
 var Node = require('./node');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var _ = require('lodash');
 var f = require('../functions');
 const fs = require('fs');

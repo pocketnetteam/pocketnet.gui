@@ -1,5 +1,5 @@
 var f = require('./functions');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 
 ////temporarily until a consensus algorithm appears
 

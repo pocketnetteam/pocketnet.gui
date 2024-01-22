@@ -1,7 +1,7 @@
 //const TelegramBot = require('node-telegram-bot-api');
 var _ = require('underscore')
 var f = require('./functions');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 const { forEach } = require('lodash');
 
 ////settings

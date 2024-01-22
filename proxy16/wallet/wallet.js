@@ -1,5 +1,5 @@
 
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var f = require('../functions');
 var _ = require('lodash');
 

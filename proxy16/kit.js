@@ -1,5 +1,5 @@
 var Proxy = require("./proxy");
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 
 var deepExtend = require('deep-extend');
 var cloneDeep = require('clone-deep');
