@@ -1372,7 +1372,9 @@ const kit = {
 
 		settings = state.expand(environmentDefaultSettings, settings)
 
-		db = new Datastore(f.path(settingsPath));
+		db = new Datastore({
+			filename: f.path(settingsPath),
+		});
 
 		return new Promise((resolve, reject) => {
 

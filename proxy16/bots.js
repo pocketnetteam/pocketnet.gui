@@ -6,7 +6,9 @@ var Datastore = require('@seald-io/nedb');
 var Bots = function(p){
     var self = this
     var inited = false
-    var db = new Datastore(f.path(p.dbpath));
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
 
     var addresses = [];
 

@@ -16,9 +16,10 @@ var Applications = function(settings, applications = {}, proxy, useArch = false)
 
     var self = this;
 
-    var db = new Datastore(f.path(settings.dbpath2 || settings.dbpath));
-    
-    
+    var db = new Datastore({
+        filename: f.path(settings.dbpath2 || settings.dbpath),
+    });
+
     var platform = process.platform
 
     if (useArch) {

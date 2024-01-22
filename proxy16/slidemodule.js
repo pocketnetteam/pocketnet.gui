@@ -15,7 +15,9 @@ var Slidemodule = function(p) {
         // ...
     ]
 
-    var db = new Datastore(f.path(p.dbpath));
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
 
     self.init = function() {
         return new Promise((resolve, reject) => {
