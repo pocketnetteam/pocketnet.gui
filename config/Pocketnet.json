@@ -82,5 +82,18 @@
                 }
             }
         }
+    },
+
+    "cordova" : {
+        "name" : "pocketnet.app",
+        "displayName" : "Pocketnet",
+        "iosTeamId" : "Y5JW9JU787",
+        "reversedClientId" : "com.googleusercontent.apps.1020521924918-0he8n2cuadpvdm9mi2dv9vj8llr8pgr1",
+        "iosUrlScheme" : "pocketnet",
+        "groupIdentifier" : "group.app.pocketnet"
+    },
+
+    "electron" : {
+        "protocol" : "bastyon"
     }
 }
