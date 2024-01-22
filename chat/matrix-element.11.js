@@ -1726,6 +1726,7 @@ var request_component = Object(componentNormalizer["a" /* default */])(
         bc = this.decryptEvent;
       }
       var content = bc.pbody || bc.body || "";
+      console.log('content', content);
       if (window.findAndReplaceLinkClear) content = window.findAndReplaceLinkClear(content);
       if (bc.msgtype === "m.text") this.markMatches(content);
       return content;
@@ -1823,11 +1824,15 @@ var request_component = Object(componentNormalizer["a" /* default */])(
       if (this.streamMode && this.content.url || !this.streamMode && !this.preview && this.content.msgtype !== "m.file" && this.content.msgtype !== "m.image" && this.content.msgtype !== "m.audio") {
         var url = functions["a" /* default */].getUrl(this.streamMode ? this.content.url : this.body);
         if (url) {
-          var _u = new URL(url);
-          if (_u.pathname == "/") {
-            if (functions["a" /* default */].knsite(url)) return "";
+          try {
+            var _u = new URL(url);
+            if (_u.pathname == "/") {
+              if (functions["a" /* default */].knsite(url)) return "";
+            }
+            return url;
+          } catch (e) {
+            return "";
           }
-          return url;
         }
         return url || "";
       }
