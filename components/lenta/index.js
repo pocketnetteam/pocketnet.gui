@@ -2829,17 +2829,7 @@ var lenta = (function(){
 			},
 
 			clickOutsideOfWindow: function(e){
-				const clickedElem = e.target;
-
-				const isElem1Clicked = clickedElem.classList.contains('sharecnt');
-
-				const isClickOutside = isElem1Clicked;
-
-				if (!isClickOutside) {
-					return;
-				}
-
-				const shareId = $(this).closest('.share').attr('id');
+				const shareId = $(e.target).closest('.share').attr('id');
 				actions.exitFullScreenVideo(shareId);
 			},
 
@@ -4852,7 +4842,25 @@ var lenta = (function(){
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
-			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
+
+			function initOutsideClickEvent(e) {
+				let isOutside = false;
+
+				el.c.on('mousedown', '.sharecnt', e => {
+					isOutside = e.target.classList.contains('sharecnt');
+				});
+
+				el.c.on('mouseup', '.sharecnt', e => {
+					if (isOutside) {
+						events.clickOutsideOfWindow(e);
+					}
+
+					isOutside = false;
+				});
+			}
+
+			initOutsideClickEvent();
+
 			//el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
 			//el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)

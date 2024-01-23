@@ -602,7 +602,7 @@ var menu = (function(){
 
 					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
-						icon : self.app.platform.ischristmastime ? '<img class="christmas_search" src="img/christmas_search.svg"></img>' : '<i class="fas fa-search"></i>',
+						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
 						mobileSearch : self.app.width <= 768,
 
