@@ -41,7 +41,6 @@
         "@babel/core": "^7.23.7",
         "@babel/preset-env": "^7.23.8",
         "babel-plugin-remove-use-strict": "^1.0.1",
-        "dmg-license": "^1.0.11",
         "electron": "^28.1.4",
         "electron-builder": "^24.9.1",
         "electron-builder-notarize": "^1.5.1",
