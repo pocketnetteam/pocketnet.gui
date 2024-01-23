@@ -214,7 +214,7 @@ var Roy = function (parent) {
 			return instance
 				.request(method, data, p)
 				.then((r) => {
-					if (r.data && r.data.status === 404) {
+					if (r.data && r.data.status === 404 && !r.data.videoBrief) {
 						error = r.data;
 						return Promise.reject(r);
 					}
@@ -224,6 +224,7 @@ var Roy = function (parent) {
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
+
 					if (e && e.status) {
 						if (e.status != 500) {
 							error = e;

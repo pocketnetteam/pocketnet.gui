@@ -870,7 +870,7 @@ var pSDK = function ({ app, api, actions }) {
             return {
                 address: address,
                 name: name,
-                reputation: Math.max(userInfo.reputation || 0, 0),
+                reputation: userInfo.reputation || 0,
                 image: userInfo.image,
                 letter: (name ? name[0] : '').toUpperCase(),
                 deleted: userInfo.deleted, /// check temp ///app.platform.sdk.user.deletedaccount(address),
