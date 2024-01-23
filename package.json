@@ -93,7 +93,7 @@
         "jquery.animate-number": "0.0.14",
         "jsdom": "^7.2.2",
         "jsonwebtoken": "^8.5.1",
-        "lambda-rate-limiter": "",
+        "lambda-rate-limiter": "3.0.1",
         "lodash": "^4.17.15",
         "m3u8-parser": "^5.0.0",
         "make-fetch-happen": "^10.1.2",
