@@ -1,4 +1,4 @@
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var f = require('../functions');
 var dictionary = require('../node/notificationsDictionary');
 const admin = require("firebase-admin");
@@ -39,8 +39,10 @@ var Firebase = function(p){
 
     var admin = require('firebase-admin');
     var serviceAccount = null;
-    var db = new Datastore(f.path(p.dbpath));
-    
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
+
     self.users = [];
     self.query = [];
     self.pushStatus = []

@@ -77,8 +77,6 @@
             </div>
         </div>
 
-        <script src="js/polyfills.js"></script>
-
         <script type="text/javascript">
 
             _Node = false;

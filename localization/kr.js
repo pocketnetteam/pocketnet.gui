@@ -5,7 +5,7 @@ loclib.kr = {};
 
 var _l = loclib.kr;
 
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 //time
 
@@ -845,7 +845,7 @@ _l.noDownloadedVideos = "다운로드한 동영상이 없습니다.";
 
 _l.buy = '구입';
 
-_l.lowstar1 = "Bastyon 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
+_l.lowstar1 = ""+appname+" 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
 _l.lowstar_reason_1 = "에로틱/포르노"
 _l.lowstar_reason_2 = "아동 착취"
 _l.lowstar_reason_3 = "직접적인 폭력 위협"
@@ -853,11 +853,11 @@ _l.lowstar_reason_4 = "불법 마약"
 _l.lowstar2 = "다른 이유로 별점 1 및 2를 사용하지 마십시오. 새로운 중재가 중반에 릴리스된 후. 다른 이유로 낮은 평점을 사용할 수 있습니다."
 _l.lowstaragree = "이 게시물에는 4가지 유형의 금지된 콘텐츠 중 하나가 포함되어 있음을 확인합니다."
 
-_l.androidPopupTitle = "Bastyon 모바일 앱에서 무수정 정보 가져오기"
+_l.androidPopupTitle = ""+appname+" 모바일 앱에서 무수정 정보 가져오기"
 _l.androidPopupAgree = "앱으로 전환"
 _l.androidPopupDisagree = "지금은 아닙니다"
 
-_l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
+_l.desktopPopupTitle = ""+appname+" 데스크탑 앱에서 무수정 정보 가져오기"
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
 

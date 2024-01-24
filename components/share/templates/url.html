@@ -251,7 +251,7 @@
 
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
-							<a elementsid="titlehref" href="<%- url %>" donottrust="true">
+							<a elementsid="titlehref" href="<%= findAndReplaceLinkClear(url) %>" donottrust="true">
 								<div class="title">
 									<%- truncateString(og.title || og.titlePage, 100) %>
 								</div>
@@ -259,7 +259,7 @@
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
-							<a elementsid="descriptionhref" href="<%- url %>" donottrust="true">
+							<a elementsid="descriptionhref" href="<%= findAndReplaceLinkClear(url) %>" donottrust="true">
 								<div class="description"><%- truncateString(og.description || og.descriptionPage, 100) %></div>
 							</a>
 						<% } %>
@@ -281,7 +281,7 @@
 		<div class="urlcnttable table">
 			<div class="linkcnt">
 				<span class="linkedstyle <%- (meta.type === 'peertube' && typeof remove === 'undefined') ? 'hidden' : '' %>">
-					<a elementsid="peertubehref" href="<%- url %>" cordovalink="_system" donottrust="true">
+					<a href="<%= findAndReplaceLinkClear(url) %>" cordovalink="_system" donottrust="true">
 						<%- url %>
 					</a>
 				</span>

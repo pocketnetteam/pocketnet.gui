@@ -3540,7 +3540,7 @@ html.mobileview.android .wnd .wndback {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   border-radius: 5px;
-  scrollbar-width: 0px;
+  scrollbar-width: none;
 }
 .menudialog .mobiledialogcontent::-webkit-scrollbar {
   width: 0;
