@@ -1,5 +1,7 @@
 var electron = null, fs, url, path, https;
 
+window.project_config || (window.project_config = {})
+
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
@@ -375,45 +377,7 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.archivedServers = [
-        'pocketnetpeertube1.nohost.me',
-        'pocketnetpeertube2.nohost.me',
-        'pocketnetpeertube5.nohost.me',
-        'pocketnetpeertube7.nohost.me',
-        'pocketnetpeertube4.nohost.me',
-        'pocketnetpeertube6.nohost.me',
-        'pocketnetpeertube8.nohost.me',
-        'pocketnetpeertube9.nohost.me',
-        'pocketnetpeertube10.nohost.me',
-        'pocketnetpeertube11.nohost.me',
-        'bastyonmma.pocketnet.app',
-        'bastyonmma.nohost.me',
-        '01rus.nohost.me',
-        '02rus.pocketnet.app',
-        'pocketnetpeertube12.nohost.me',
-        'pocketnetpeertube13.nohost.me',
-        'peertube14.pocketnet.app',
-        'peertube15.pocketnet.app',
-        'peertube18.pocketnet.app',
-        'peertube17mirror.pocketnet.app',
-        'peertube18mirror.pocketnet.app',
-        'peertube19mirror.pocketnet.app',
-        'peertube20.pocketnet.app',
-        'peertube21.pocketnet.app',
-        'peertube22.pocketnet.app',
-        'peertube23.pocketnet.app',
-        'peertube24.pocketnet.app',
-        'peertube25.pocketnet.app',
-        'peertube25mirror.pocketnet.app',
-        'peertube26.pocketnet.app',
-        'peertube26mirror.pocketnet.app',
-        'peertube27.pocketnet.app',
-        'peertube29.pocketnet.app',
-        'peertube30.pocketnet.app',
-        'peertube5new.pocketnet.app',
-        'peertube4new.pocketnet.app',
-        'peertube31.pocketnet.app',
-    ];
+    self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
@@ -691,7 +655,9 @@ Platform = function (app, listofnodes) {
         const ghCoreLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest';
         const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
 
-        return {
+        var configmeta = ((window.project_config || {}).applications) || {}
+
+        var meta = {
 
             ui: {
                 android : {
@@ -702,20 +668,9 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e132221'),
                         label: self.app.localization.e('e132233')
                     },
-
-                    github: {
-                        name: 'Bastyon' + ".apk",
-                        gfname: 'BastyonGF' + ".apk",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
-
                     icon: '<i class="fab fa-android"></i>',
-
                     modile : true,
                     image : 'applications_android.png',
-
-                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
                     hreflabel : 'downloadplaystore',
                     githublabel : 'downloadgithub'
                 },
@@ -728,13 +683,9 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e132221'),
                         label: self.app.localization.e('e132233ios')
                     },
-
                     icon: '<i class="fab fa-apple"></i>',
-
                     modile : true,
                     image : 'applications_ios.jpg',
-
-                    href: 'https://apps.apple.com/app/id1537944200',
                     hreflabel : 'installpwa',
                 },
 
@@ -749,15 +700,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-windows"></i>',
-
-                    github: {
-                        name: 'Bastyon' + "Setup.exe",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
                     image : 'applications_windows.png',
-
-
                     node : true
                 },
 
@@ -771,12 +714,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-apple"></i>',
-                    image : 'applications_macos.png',
-                    github: {
-                        name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
+                    image : 'applications_macos.png'
                 },
 
                 linux: {
@@ -790,13 +728,6 @@ Platform = function (app, listofnodes) {
 
                     image : 'applications_linux.png',
                     icon: '<i class="fab fa-linux"></i>',
-
-                    github: {
-                        name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
-
                     node : true
                 }
             },
@@ -811,12 +742,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-windows"></i>',
-
-                    github: {
-                        name: "pocketnetcore_0.18.13_win_x64_setup.exe",
-                        url: ghCoreLatest,
-                        page: readmeDownloadsLink,
-                    }
                 },
 
                 linux: {
@@ -828,16 +753,20 @@ Platform = function (app, listofnodes) {
                         label: self.app.localization.e('e13228')
                     },
 
-                    icon: '<i class="fab fa-linux"></i>',
-
-                    github: {
-                        name: "Pocketnet_linux_x64.AppImage",
-                        url: ghCoreLatest,
-                        page: readmeDownloadsLink,
-                    }
+                    icon: '<i class="fab fa-linux"></i>'
                 }
             }
         }
+        
+        _.each(meta, (o, i) => {
+            _.each(o, (a, j) => {
+                meta[i][j] = {...a, ...configmeta[i][j] || {}}
+            })
+        })
+
+        console.log('meta', meta)
+
+        return meta
     }
 
     self.__getSettingsMeta = function(){
@@ -4657,11 +4586,6 @@ Platform = function (app, listofnodes) {
 
             return app.meta.blockexplorer + 'address/' + address
 
-            /*var name = self.psdk.userInfo.getShortForm(address).name
-
-            if (name) return encodeURIComponent(name.toLowerCase());
-
-            else return app.meta.blockexplorer + 'address/' + address*/
         },
 
         upbutton: function (el, p) {
@@ -9255,7 +9179,7 @@ Platform = function (app, listofnodes) {
                     return removeMatrix()
                 }).then(() => {
 
-                    progress('removeBastyon')
+                    progress('removeBB')
 
                     return removeBastyon()
                 }).then(() => {
@@ -11696,10 +11620,17 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.sharesinfo = {}
 
                 self.psdk.share.insertFromResponse(_.map(_.filter(p.unseen || [], (sd) => {
-                    if(time - sd.date < 60 * 60) {
+
+                    if (self.psdk.share.get(sd.share.txid)) return false
+                    
+
+                    if (time - sd.date < 60 * 60) {
+
                         self.sdk.recommendations.sharesinfo[sd.share.txid] = sd.info
+
                         return true
                     }
+
                 }), (sd) => {
                     return sd.share   
                 })).then(r => {
@@ -21957,7 +21888,7 @@ Platform = function (app, listofnodes) {
             if (!d) {
                 if (self.app.platform.applications.ui[os()]) {
                     var _os = self.app.platform.applications.ui[os()]
-                    if (_os.github && _os.github.url) {
+                    if (_os.github && _os.github.page) {
                         d = new dialog({
                             html:  self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
@@ -22531,7 +22462,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.articles.init,
                         self.sdk.categories.load,
                         self.sdk.activity.load,
-                        self.sdk.recommendations.load,
+                        
                         self.sdk.memtags.load,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
@@ -22547,6 +22478,10 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
                         },3000)
+
+                        setTimeout(() => {
+                            self.sdk.recommendations.load()
+                        },30000)
                         
                         var account = self.actions.addAccount(self.app.user.address.value)
     
@@ -23144,12 +23079,19 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                console.log('link', link)
+
 
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
-                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
+
+                    var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '').replace(protocol + "://", '')
+
+                    console.log('link2', link)
 
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&

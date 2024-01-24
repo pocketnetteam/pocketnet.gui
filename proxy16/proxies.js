@@ -1,4 +1,3 @@
-/*var hashFiles = require('hash-files');*/
 
 
 var ProxyRequest = function(){

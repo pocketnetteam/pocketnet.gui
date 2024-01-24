@@ -1135,14 +1135,6 @@ var post = (function () {
 			},
 
 			clickOut: function(e) {
-				const clickedElem = $(e.target);
-
-				const isClickOut = (clickedElem.hasClass('wndcontent'));
-
-				if (!isClickOut) {
-					return;
-				}
-
 				actions.closeWindow();
 			}
 		}
@@ -1554,7 +1546,23 @@ var post = (function () {
 											})
 										})
 
-										el.share.closest('.wndcontent').on('click', events.clickOut);
+										function initOutsideClickEvent(e) {
+											let isOutside = false;
+
+											el.share.closest('.wndcontent').on('mousedown', e => {
+												isOutside = e.target.classList.contains('wndcontent');
+											});
+
+											el.share.closest('.wndcontent').on('mouseup', e => {
+												if (isOutside) {
+													events.clickOut(e);
+												}
+
+												isOutside = false;
+											});
+										}
+
+										initOutsideClickEvent();
 
 										if (clbk) clbk();
 									});
@@ -1820,7 +1828,14 @@ var post = (function () {
 						) {
 							if (clbk) clbk();
 						} else {
+
+							console.log('url remote', url)
+
 							self.app.platform.sdk.remote.get(url, function (og) {
+
+							console.log('url remote', og)
+
+
 								if (og) {
 									renders.url(clbk);
 								} else {
