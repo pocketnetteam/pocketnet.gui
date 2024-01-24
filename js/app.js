@@ -110,12 +110,14 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	self._meta = window.projects_meta
-	self.meta = self._meta.Pocketnet
+	//self._meta = window.projects_meta
+	self.meta = window.project_config || {}
+	
+	/*self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
 		self.meta = self._meta[window.pocketnetproject]
-	}
+	}*/
 
 	var url = window.pocketnetdomain
 
@@ -1207,7 +1209,7 @@ Application = function (p) {
 						linkify.registerCustomProtocol('pocketnet')
 						linkify.registerCustomProtocol('bastyon')
 					}
-				}, 2000)
+				}, 20000)
 
 
 				/*self.platform.ui.support('balance', {
@@ -3133,36 +3135,7 @@ Application = function (p) {
 
 	}
 
-	self.thislink = function (_url) {
-
-		var url = {}
-
-		try {
-			url = new URL(_url)
-		}
-		catch (e) {
-			url.host = ''
-		}
-
-		var groups = {
-			p: ['pocketnet.app', 'bastyon.com'],
-			pt: ['test.pocketnet.app', 'test.bastyon.com']
-		}
-
-		if (_url.indexOf('bastyon://') > -1) return true
-		if (_url.indexOf('pocketnet://') > -1) return true
-
-		var domain = self.options.url
-
-		var m = _.find(groups, function (g) {
-
-			return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
-		})
-
-
-		if (m) return true
-
-	}
+	self.thislink = thislink
 
 	self.setref = function (r, na) {
 

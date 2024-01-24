@@ -2,7 +2,7 @@ if(typeof loclib == "undefined" || !loclib)
 loclib = {};
 
 loclib.de = {};
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 
 var _l = loclib.de;
@@ -845,7 +845,7 @@ _l.noDownloadedVideos = "Keine heruntergeladenen Videos";
 _l.buy = 'Kaufen';
 
 
-_l.lowstar1 = "Das Bastyon-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
+_l.lowstar1 = "Das "+appname +"-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
 _l.lowstar_reason_1 = "Erotik/Porno"
 _l.lowstar_reason_2 = "Ausbeutung von Kindern"
 _l.lowstar_reason_3 = "Direkte Androhung von Gewalt"
@@ -853,11 +853,11 @@ _l.lowstar_reason_4 = "Illegale Drogen"
 _l.lowstar2 = "Bitte verwenden Sie keine 1- und 2-Sterne-Bewertungen aus anderen Gründen. Nachdem die neue Moderation Mitte Mai veröffentlicht wurde, können Sie niedrige Bewertungen aus anderen Gründen verwenden."
 _l.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Arten von verbotenen Inhalten enthält"
 
-_l.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen Bastyon-App"
+_l.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen "+appname +"-App"
 _l.androidPopupAgree = "Zur App wechseln"
 _l.androidPopupDisagree = "Nicht jetzt"
 
-_l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
+_l.desktopPopupTitle = "Unzensierte Informationen in der "+appname +"-Desktop-App abrufen"
 _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
 

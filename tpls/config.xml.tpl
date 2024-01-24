@@ -154,20 +154,22 @@
         <preference name="InterceptRemoteRequests" value="all" />
         <preference name="allowFileAccessFromFileURLs" value="true" />
         <preference name="allowUniversalAccessFromFileURLs" value="true" />
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-        <array>
-            <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLName</key>
-                <string>REVERSED_CLIENT_ID</string>
-                <key>CFBundleURLSchemes</key>
+        <% if(config.cordova.reversedClientId) {%>
+            <config-file target="*-Info.plist" parent="CFBundleURLTypes">
                 <array>
-                    <string>com.googleusercontent.apps.1020521924918-0he8n2cuadpvdm9mi2dv9vj8llr8pgr1</string>
+                    <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>REVERSED_CLIENT_ID</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                            <string><%-config.cordova.reversedClientId%></string>
+                        </array>
+                    </dict>
                 </array>
-            </dict>
-        </array>
-        </config-file>
+            </config-file>
+        <% } %>
 
     </platform>
     <platform name="android">
@@ -207,21 +209,11 @@
     </platform>
 
     <universal-links>
-        <ios-team-id value="Y5JW9JU787"/>
+        <% if(config.cordova.iosTeamId) {%>
+            <ios-team-id value="<%-config.cordova.iosTeamId%>"/>
+        <% } %>
 
-        <host name="pocketnet.app" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="test.pocketnet.app" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="bastyon.com" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="test.bastyon.com" scheme="https">
+        <host name="<%-domain%>" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 

@@ -806,8 +806,10 @@ var comments = (function(){
 
 				id || (id = '0')
 
+				console.log("value", v, findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
+
 				if (currents[id])
-					currents[id].message.set(v.replace('⠀', ' '))
+					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
 
 				state.save()
 
@@ -2696,13 +2698,11 @@ var comments = (function(){
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-				
-
-			
 				if(type == 'comment'){
 					var comment = alias
 
 					if (comment.postid == txid){
+						if(currents[comment.id]) return
 
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						
@@ -2720,15 +2720,6 @@ var comments = (function(){
 						}
 					}
 
-					/*if (alias.postid == share.txid){
-						clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
-					}*/
-
-					/*var share = _.find(sharesInview, (share) => share.txid == alias.share)
-
-					if (share){
-						renders.stars(share)
-					}*/
 				}
 				
 			}
