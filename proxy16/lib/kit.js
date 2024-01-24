@@ -2046,10 +2046,10 @@ var pShare = function(){
 
 			if(self.settings.v != 'a'){
 
-				nm = nl2br(trimrn(findAndReplaceLink(filterXSS(nm, {
+				nm = nl2br(trimrn(filterXSS(nm, {
 					whiteList: [],
 					stripIgnoreTag: true,
-				}))));	
+				})));	
 
 			}
 			else

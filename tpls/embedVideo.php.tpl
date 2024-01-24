@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex" />
     <meta property="og:platform" content="PeerTube" />
     <link href="./peertube/video-embed.css" rel="stylesheet" />
-
+    <title>__VAR__.name video</title>
     <?php 
         
             require_once('php/og.php'); 
