@@ -44,9 +44,7 @@
         "electron": "^28.1.4",
         "electron-builder": "^24.9.1",
         "electron-builder-notarize": "^1.5.1",
-        "electron-notarize": "",
-        "electron-reload": "",
-        "electron-reloader": ""
+        "electron-notarize": ""
     },
     "dependencies": {
         "@seald-io/nedb": "^4.0.4",
