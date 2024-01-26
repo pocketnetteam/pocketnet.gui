@@ -3,7 +3,15 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    "developapps" : [],
+    "developapps" : [
+        {
+            "id" : "barteron.pocketnet.app",
+            "version": "1.0.0",
+            "scope" : "test.barter.pocketnet.app",
+            "cantdelete" : true,
+            "name" : "Demo application"
+        }
+    ],
     "protocol" : "bastyon",
 	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
     "servers" : {
