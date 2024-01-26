@@ -1933,7 +1933,9 @@ var request_component = Object(componentNormalizer["a" /* default */])(
       return Promise.resolve();
     },
     menucopy: function () {
-      this.$f.copytext(this.replacedmintionsbody);
+      var txt = this.replacedmintionsbody;
+      if (window.findAndReplaceLinkClearReverse) txt = window.findAndReplaceLinkClearReverse(txt);
+      this.$f.copytext(txt);
       return Promise.resolve();
     },
     menudelete: function () {
