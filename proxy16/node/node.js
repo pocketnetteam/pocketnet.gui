@@ -27,6 +27,7 @@ var Node = function(options, manager){
 
     self.host = options.host
     self.web = options.web
+    self.sweb = options.sweb
     self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
