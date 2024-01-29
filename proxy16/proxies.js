@@ -126,17 +126,17 @@ var Proxy16 = function(meta){
     var request = new ProxyRequest()
 
     self.host = meta.host || ""
-    self.port = meta.port || 0
+    self.web = meta.web || 0
     self.wss = meta.wss || 0
 
-    self.id = self.host + ":" + self.port + ":" + self.wss
+    self.id = self.host + ":" + self.web + ":" + self.wss
     self.enabled = true
     self.current = null
 
     self.export = function(){
         return {
             host : self.host,
-            port : self.port,
+            port : self.web,
             wss : self.wss,
             user : self.user
         }
@@ -209,7 +209,7 @@ var Proxy16 = function(meta){
     }
 
     self.url = {
-        https : () => {return "https://" + self.host + ":" + self.port},
+        https : () => {return "https://" + self.host + ":" + self.web},
         wss : () => {return "wss://" + self.host + ":" + self.wss}
     }
 
@@ -263,7 +263,7 @@ var Proxy16 = function(meta){
     }
 
     self.valid = function(){
-        return self.host && self.port && self.wss
+        return self.host && self.web && self.wss
     }
 
     self.init = function(){

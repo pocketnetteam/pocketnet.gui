@@ -6,7 +6,7 @@ var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
-    this.port = opts.port || 38081;
+    this.web = opts.web || 38081;
     this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
     this.pass = opts.pass || '';
@@ -229,7 +229,7 @@ function rpc(request, callback, obj) {
         host: self.host,
         path: pst ? '/post/' : (pbl ? '/public/' : '/'),
         method: 'POST',
-        port: prv ? self.portPrivate : self.port,
+        port: prv ? self.portPrivate : self.web,
         agent: keepAliveAgent,
         signal : signal,
     };
@@ -245,7 +245,7 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    const url = self.http + '://' + options.host + ':' + options.port + options.path;
+    const url = self.http + '://' + options.host + ':' + options.web + options.path;
 
     const config = {
         headers: {

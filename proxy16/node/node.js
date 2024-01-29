@@ -26,7 +26,7 @@ var Node = function(options, manager){
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
     self.host = options.host
-    self.port = options.port
+    self.web = options.web
     self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
@@ -290,16 +290,16 @@ var Node = function(options, manager){
         
     }
 
-    self.key = self.host + ":" + self.port
+    self.key = self.host + ":" + self.web
     self.wskey = self.host + ":" + self.ws
-    self.ckey = self.host + ":" + self.port + ":" + self.ws
+    self.ckey = self.host + ":" + self.web + ":" + self.ws
 
     self.rpc = new RpcClient({
         protocol: 'https',
         user: self.rpcuser,
         pass: self.rpcpass,
         host: self.host,
-        port: self.port,
+        web: self.web,
         portPrivate: self.portPrivate,
     })
 
@@ -901,7 +901,7 @@ var Node = function(options, manager){
 
         self.hostchecked = true
 
-        if(!self.port) return 'port'
+        if(!self.web) return 'web'
         if(!self.ws) return 'ws'
         
         return null
@@ -1067,7 +1067,7 @@ var Node = function(options, manager){
 
         return {
             host : self.host,
-            port : self.port,
+            web : self.web,
             rpcuser : self.rpcuser,
             rpcpass : self.rpcpass,
             ws : self.ws,

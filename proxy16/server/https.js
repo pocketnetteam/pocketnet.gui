@@ -134,7 +134,7 @@ var Server = function(settings, admins, manage){
     }
 
     self.http = function(settings){
-        var port = (settings.port || 8899) - 1
+        var port = (settings.web || 8899) - 1
 
         return new Promise((resolve, reject) => {
 
@@ -185,7 +185,7 @@ var Server = function(settings, admins, manage){
 
                 server.on('listening',function(){
 
-                    self.listening = settings.port || 8899
+                    self.listening = settings.web || 8899
 
                     
 
@@ -200,9 +200,9 @@ var Server = function(settings, admins, manage){
                     socket.setNoDelay();
                 });
 
-                server.listen(settings.port || 8899);
+                server.listen(settings.web || 8899);
 
-                console.log('listen', settings.port || 8899)
+                console.log('listen', settings.web || 8899)
 
             }
             catch(e) {
