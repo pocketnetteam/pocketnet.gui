@@ -1050,7 +1050,7 @@ Nav = function(app)
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
+				&& (href.indexOf(host) == -1) && !thislink(href)
 			)
 
 			if (!e && ex) e = true; 
@@ -1114,6 +1114,13 @@ Nav = function(app)
 			}
 			else
 			{
+
+				var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+				if (href.indexOf(protocol + '://') == 0){
+					href = href.replace(protocol + '://', '')
+				}
+
 				return href
 			}
 		},
@@ -1337,8 +1344,6 @@ Nav = function(app)
 
 			pathnameSearch : function(){
 				var loc =  window.location; 
-
-				
 
 				return protocolActions.file.pathname() + loc.search
 			},
@@ -1614,7 +1619,9 @@ Nav = function(app)
 				//////
 				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox){
+				var electronprotocol = ((window.project_config || {}).electron || {}).protocol || ""
+
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox && electronprotocol){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
@@ -1644,7 +1651,7 @@ Nav = function(app)
 
 							try{
 
-								window.location = app.meta.protocol + '://electron/' + currentHref;
+								window.location = electronprotocol + '://electron/' + currentHref;
 								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
 								
 							}

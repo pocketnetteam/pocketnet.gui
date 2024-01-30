@@ -121,6 +121,10 @@ var applications = (function(){
 				return !ed.filter || ed.filter(os)
 			})
 
+			filtered = _.filter(filtered, function(os){
+				return os.github || os.href
+			})
+
 			if(window.cordova && isios()){
 				filtered = _.filter(filtered, (f) => {
 					return f.id == 'macos' || f.id == 'ios'

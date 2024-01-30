@@ -1470,10 +1470,7 @@ dialog = function (p) {
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
 
-		setTimeout(() => {
-			$el.on('click', clickOutsideOfWindow)
-		}, 500)
-		
+		setTimeout(() => initOutsideClickEvent(), 500);
 
 		var title = $el.find('.poll .title');
 
@@ -1545,19 +1542,20 @@ dialog = function (p) {
 		if(p.onDestroy) p.onDestroy()
 	}
 
-	var clickOutsideOfWindow = function (e) {
-		const clickedElem = e.target;
+	var initOutsideClickEvent = function (e) {
+		let isOutside = false;
 
-		const isElem1Clicked = clickedElem.classList.contains('secondwrapper');
+		$el.on('mousedown', e => {
+			isOutside = e.target.classList.contains('secondwrapper');
+		});
 
-		const isClickOutside = (isElem1Clicked);
+		$el.on('mouseup', e => {
+			if (isOutside) {
+				destroy();
+			}
 
-		if (!isClickOutside) {
-			return;
-		}
-
-		destroy()
-
+			isOutside = false;
+		});
 	}
 
 	init();
@@ -9011,8 +9009,33 @@ numberToBool = function (v) {
 
 }
 
+findAndReplaceLinkClearReverse = function(inputText = ''){
+	return findAndReplaceLinkClear(inputText, formatInternalLinkReverse)
+}
 
-findAndReplaceLink = function (inputText, nottrust) {
+findAndReplaceLinkClear = function(inputText = '', fu){
+	if (typeof linkifyStr != 'undefined') {
+		var l = linkifyStr(inputText, {
+			formatHref : (value, type) => {
+				if (type == 'url'){
+					value = (fu || formatInternalLinkHref)(value)
+				}
+
+				return value
+			},
+
+			render: (v) => {
+				return `${v.attributes.href}`;
+			},
+		})
+
+		console.log("LLL", inputText, l)
+
+		return l
+	}
+}
+
+findAndReplaceLink = function (inputText = '', nottrust) {
 
 	if (typeof linkifyHtml != 'undefined') {
 
@@ -9026,11 +9049,30 @@ findAndReplaceLink = function (inputText, nottrust) {
 				s.donottrust = 'true'
 			}
 
-
-
 			var l = linkifyHtml(inputText, {
 				attributes: s,
-				truncate: 80
+				truncate: 50,
+
+				format : (value, type) => {
+
+					if(type == 'url'){
+						value = formatInternalLink(value)
+					}
+
+					if(value.length > 50){
+						value = value.slice(0, 50) + "…"
+					}
+
+					return value
+				},
+
+				formatHref : (value, type) => {
+					if (type == 'url'){
+						value = formatInternalLinkHref(value)
+					}
+
+					return value
+				}
 			})
 
 
@@ -9502,7 +9544,7 @@ stringEqTrig = function (s1, s2) {
 
 }
 
-edjsHTML = function () {
+edjsHTML = function (a, app) {
 	"use strict";
 
 	var c_xss = function (text) {
@@ -10576,107 +10618,6 @@ replaceArchiveInImage = function(src) {
 	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
 };
 
-/*test*/
-/*
-if(typeof Window != 'undefined'){
-
-	Window.prototype._addEventListener = Window.prototype.addEventListener;
-
-	Window.prototype.addEventListener = function(a, b, c) {
-	if (c==undefined) c=false;
-	this._addEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-	this.eventListenerList[a].push({listener:b,options:c});
-	};
-
-	EventTarget.prototype._addEventListener = EventTarget.prototype.addEventListener;
-
-	EventTarget.prototype.addEventListener = function(a, b, c) {
-	if (c==undefined) c=false;
-	this._addEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-	this.eventListenerList[a].push({listener:b,options:c});
-	};
-
-	EventTarget.prototype._getEventListeners = function(a) {
-		if (! this.eventListenerList) this.eventListenerList = {};
-		if (a==undefined)  { return this.eventListenerList; }
-		return this.eventListenerList[a];
-	};
-
-	EventTarget.prototype._removeEventListener = EventTarget.prototype.removeEventListener;
-	EventTarget.prototype.removeEventListener = function(a, b ,c) {
-	if (c==undefined) c=false;
-	this._removeEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-
-	for(let i=0; i < this.eventListenerList[a].length; i++){
-		if(this.eventListenerList[a][i].listener==b, this.eventListenerList[a][i].options==c){
-			this.eventListenerList[a].splice(i, 1);
-			break;
-		}
-	}
-	if(this.eventListenerList[a].length==0) delete this.eventListenerList[a];
-	};
-
-
-	function listAllEventListeners() {
-		const allElements = Array.prototype.slice.call(document.querySelectorAll('*'));
-		allElements.push(document);
-		allElements.push(window);
-	
-		const types = [];
-	
-		for (let ev in window) {
-		if (/^on/.test(ev)) types[types.length] = ev;
-		}
-	
-		let elements = [];
-		for (let i = 0; i < allElements.length; i++) {
-		const currentElement = allElements[i];
-	
-		// Events defined in attributes
-		for (let j = 0; j < types.length; j++) {
-	
-			if (typeof currentElement[types[j]] === 'function' ) {
-			elements.push({
-				"node": currentElement,
-				"type": types[j],
-				"func": currentElement[types[j]].toString(),
-			});
-			}
-		}
-	
-		// Events defined with addEventListener
-		if (typeof currentElement._getEventListeners === 'function') {
-			evts = currentElement._getEventListeners();
-			if (Object.keys(evts).length >0) {
-			for (let evt of Object.keys(evts)) {
-				for (k=0; k < evts[evt].length; k++) {
-
-					if(evts[evt][k].listener){
-						elements.push({
-							"node": currentElement,
-							"type": evt,
-							"func": evts[evt][k].listener.toString()
-						});
-					}
-				
-				}
-			}
-			}
-		}
-		}
-	
-		return elements.sort();
-	}
-
-}*/
-
-
 function Circles(params) {
 
     this.init = function(pobj) {
@@ -10872,40 +10813,3 @@ function isInt(n) {
 function randone() {
     return (Math.round(Math.random()) == 1);
 }
-
-
-
-
-
-/*
-Sample parameters:
-BGCircles({
-    target: document.getElementById('bg-screen'),
-    quantity: 15,
-    radius: {
-        min: 2,
-        max: 400
-    },
-    zIndex: {
-        min: 0,
-        max: 20
-    },
-    hue: {
-        min: 0,
-        max: 180
-    },
-    saturation: {
-        min: 50,
-        max: 100
-    },
-    light: {
-        min: 25,
-        max: 75
-    },
-    alpha: {
-        min: 0.2,
-        max: 0.8
-    }
-});
-
-*/

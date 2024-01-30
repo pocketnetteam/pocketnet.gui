@@ -1,5 +1,5 @@
 var Proxy = require("./proxy");
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 
 var deepExtend = require('deep-extend');
 var cloneDeep = require('clone-deep');
@@ -1412,7 +1412,9 @@ const kit = {
 
 		settings = state.expand(environmentDefaultSettings, settings)
 
-		db = new Datastore(f.path(settingsPath));
+		db = new Datastore({
+			filename: f.path(settingsPath),
+		});
 
 		return new Promise((resolve, reject) => {
 

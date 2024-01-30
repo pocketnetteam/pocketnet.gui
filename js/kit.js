@@ -2738,6 +2738,7 @@ pShare = function(){
 		if (v.reposted)
 			self.reposted = v.reposted
 
+			console.log('v.lastComment', v.lastComment)
 		
 		if (v.lastComment)
 			self.lastComment = v.lastComment.id || v.lastComment
@@ -2786,6 +2787,8 @@ pShare = function(){
 		v.txidEdit = self.txidEdit
 		v.edit = self.edit
 
+		
+
 		if(self.lastComment){
 			/*if(self.lastComment.export){
 				v.lastComment = self.lastComment.export()
@@ -2794,6 +2797,9 @@ pShare = function(){
 				v.lastComment = self.lastComment
 			//}
 		}
+
+		console.log('v.lastComment2', v.lastComment)
+
 
 		return v
 	}

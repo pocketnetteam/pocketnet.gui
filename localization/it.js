@@ -1,4 +1,4 @@
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 
 if(typeof loclib == "undefined" || !loclib)
@@ -522,7 +522,7 @@ _l.e13082 = "Cosa otterrai per la tua donazione oltre a sapere che hai sostenuto
 _l.e13083 = "Come segno della nostra gratitudine per la donazione, riceverai un regalo in una certa quantità di Pocketcoin";
 _l.e13084 = "Inoltre, quando costruiremo la chat di gruppo, sarai membro di un gruppo speciale di donatori che avranno accesso diretto al team di " + appname + ", anche quando la piattaforma crescerà";
 _l.e13085 = "Il link al tuo profilo" + appname + " sarà elencato di seguito portando più persone ai tuoi post (a meno che tu non ci chieda di non farlo)";
-_l.e13086 = "Supporta Bastyon ora";
+_l.e13086 = "Supporta "+appname+" ora";
 _l.e13087 = "Bitcoin, Litecoin";
 
 _l.e13088 = "Membri "+appname+" che hanno donato per sostenere "+appname+"";
@@ -657,7 +657,7 @@ _l.e13169 = "Collegamento diretto";
 _l.copy = "Copia";
 _l.e13170 = "Includere " + appname + " sign up call-to-action";
 _l.more = "Altro";
-_l.e13171 = 'Finalmente! Ho detto "basta" ai soliti social media e alle informazioni controllate! Entra anche tu in Bastyon.com e dì addio alla censura. Un social network libero e basato sulla blockchain. Clicca qui per iniziare!';
+_l.e13171 = 'Finalmente! Ho detto "basta" ai soliti social media e alle informazioni controllate! Entra anche tu in website e dì addio alla censura. Un social network libero e basato sulla blockchain. Clicca qui per iniziare!';
 _l.e13172 = "Ti voglio invitare ad un nuovo social network decentralizzato chiamato " + appname + " ! Troverai una tonnellata di cose interessanti e se ti iscrivi, entrambi otterremo un bonus in criptovaluta PKOIN!";
 _l.e13173 = "Invia per e-mail";
 _l.e13174 = "Condividi sui social";
@@ -1200,15 +1200,15 @@ _l.ErrorLoadingRates = "Errore di caricamento";
 _l.userGuides = "Guide";
 _l.liveSreamingGuide = "Streaming dal vivo";
 
-_l.bastyonhelperTitle1 = "Pocketnet si è spostato,";
-_l.bastyonhelperTitle2 = "Bastyon, libertà di espressione";
-_l.bastyonhelperSubtitle1 = "Pocketnet è ora";
-_l.bastyonhelperSubtitle2 = "Per favore, segui il link qui sotto";
+_l.bhelperTitle1 = "Pocketnet si è spostato,";
+_l.bhelperTitle2 = ""+appname+", libertà di espressione";
+_l.bhelperSubtitle1 = "Pocketnet è ora";
+_l.bhelperSubtitle2 = "Per favore, segui il link qui sotto";
 
 _l.buy = 'Acquistare';
 
 
-_l.lowstar1 = "Il team di Bastyon sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
+_l.lowstar1 = "Il team di "+appname+" sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
 _l.lowstar_reason_1 = "Erotico/porno"
 _l.lowstar_reason_2 = "Sfruttamento minorile"
 _l.lowstar_reason_3 = "Minaccia diretta di violenza"
@@ -1216,11 +1216,11 @@ _l.lowstar_reason_4 = "Droghe illegali"
 _l.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
 _l.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
 
-_l.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
+_l.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile "+appname+""
 _l.androidPopupAgree = "Passa all'app"
 _l.androidPopupDisagree = "Non ora"
 
-_l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
+_l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop "+appname+""
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
 

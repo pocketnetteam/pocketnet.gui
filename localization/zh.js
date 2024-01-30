@@ -4,7 +4,7 @@ loclib = {};
 loclib.zh = {};
 
 var _l = loclib.zh;
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 //time
 
@@ -1016,7 +1016,7 @@ _l.noDownloadedVideos = "没有下载的视频";
 
 _l.buy = '买';
 
-_l.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
+_l.lowstar1 = ""+appname+" 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
 _l.lowstar_reason_1 = "情色/色情"
 _l.lowstar_reason_2 = "兒童剝削"
 _l.lowstar_reason_3 = "直接的暴力威脅"
@@ -1024,11 +1024,11 @@ _l.lowstar_reason_4 = "非法藥物"
 _l.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 _l.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
 
-_l.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+_l.androidPopupTitle = "在 "+appname+" 移动应用中获取未经审查的信息"
 _l.androidPopupAgree = "切换到应用"
 _l.androidPopupDisagree = "不是现在"
 
-_l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+_l.desktopPopupTitle = "在 "+appname+" 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
 
