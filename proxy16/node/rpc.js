@@ -251,7 +251,7 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    const url = self.http + '://' + options.host + ':' + options.web + options.path;
+    const url = self.http + '://' + options.host + ':' + options.port + options.path;
 
     const config = {
         headers: {
