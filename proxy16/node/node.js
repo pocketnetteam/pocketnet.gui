@@ -954,7 +954,7 @@ var Node = function(options, manager){
                 var node = new Node({
                     host : pr[0],
                     port : (global.USE_TLS_NODES_ONLY) ? 38881 : 38081,
-                    ws : 8087,
+                    ws : (global.USE_TLS_NODES_ONLY) ? 8887 : 8087,
                     peer : true
                 }, manager)
 
