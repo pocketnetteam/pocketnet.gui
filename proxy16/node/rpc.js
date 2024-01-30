@@ -6,8 +6,13 @@ var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
+
     this.web = opts.web || 38081;
-    this.sweb = opts.sweb || 38881;
+
+    if (global.USE_TLS_NODES_ONLY) {
+        this.web = opts.sweb || 38881;
+    }
+
     this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
     this.pass = opts.pass || '';

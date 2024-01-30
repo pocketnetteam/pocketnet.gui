@@ -27,11 +27,16 @@ var Node = function(options, manager){
 
     self.host = options.host
     self.web = options.web
-    self.sweb = options.sweb
+    self.ws = options.ws
+
+    if (global.USE_TLS_NODES_ONLY) {
+        self.web = options.sweb
+        self.ws = options.sws
+    }
+
     self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
-    self.ws = options.ws
     self.name = options.name || "Pocketnet Node"
     self.stable = options.stable || false
     self.addedby = options.addedby || ''
@@ -296,7 +301,7 @@ var Node = function(options, manager){
     self.ckey = self.host + ":" + self.web + ":" + self.ws
 
     self.rpc = new RpcClient({
-        protocol: 'https',
+        protocol: (global.USE_TLS_NODES_ONLY) ? 'https' : 'http',
         user: self.rpcuser,
         pass: self.rpcpass,
         host: self.host,
@@ -948,7 +953,7 @@ var Node = function(options, manager){
 
                 var node = new Node({
                     host : pr[0],
-                    port : 39991,
+                    port : 38081,
                     ws : 8087,
                     peer : true
                 }, manager)  
