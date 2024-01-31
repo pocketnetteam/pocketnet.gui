@@ -2572,8 +2572,6 @@ var wallet = (function(){
 					var samount = 100 * Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
 
 
-					console.log('balance', balance, samount)
-
 					var move = {
 						positive : {
 							summary : 100 - samount,

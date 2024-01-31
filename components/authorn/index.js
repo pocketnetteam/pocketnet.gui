@@ -294,7 +294,6 @@ var authorn = (function(){
 			id : 'search',
 			parameter : 'ssa',
 			extend : function(params){
-				console.log("EXTEND PARAMS", params)
 				params.search = true
 				params.searchValue = parameters().ssa
 				params.loader = function(clbk){
@@ -343,11 +342,9 @@ var authorn = (function(){
 
 		var load = {
 			postssearch : function(clbk, start, count){
-				console.log("Rblock", start, count)
 
 				self.app.platform.sdk.search.get(parameters().ssa, 'posts', start, count, fixedBlock, function(r, block){
 
-					console.log("Rblock", r, block)
 
 					fixedBlock = block
 					
@@ -944,7 +941,6 @@ var authorn = (function(){
 					p.el.find('.searchIcon').on('click', function(){
 						$(this).closest('.navisearchWrapper').toggleClass('searchActive')
 
-						console.log('acsearch', acsearch)
 
 						if($(this).closest('.navisearchWrapper').hasClass('searchActive')){
 							acsearch.focus()
@@ -1004,7 +1000,6 @@ var authorn = (function(){
 									href = '?ssa=' + value
 								}
 
-								console.log('value', value, href)
 
 								try{
 									actions.clearSearch(true)
@@ -1031,7 +1026,6 @@ var authorn = (function(){
 							},
 
 							clear : function(fs){
-								console.log("CLEAR?")
 								p.el.find('.navisearchWrapper').removeClass('searchActive')
 
 								actions.clearSearch()
@@ -1041,7 +1035,6 @@ var authorn = (function(){
 						
 					})
 
-					console.log('acsearch', acsearch)
 
 					if (parameters().ssa){
 						acsearch.setvalue(parameters().ssa)
@@ -1062,14 +1055,10 @@ var authorn = (function(){
 
 				var d = {author};
 
-				console.log('metmenu', _el)
-
 				self.fastTemplate('metmenu', function(rendered, template){
 
 					self.app.platform.api.tooltip(_el, function(){
 
-						console.log("Data", d)
-					
 						return template(d);
 
 					}, function(el, n, close){
@@ -1123,7 +1112,6 @@ var authorn = (function(){
 					byauthor : true,
 					hr : hr,
 					cancelsearch : function(){
-						console.log('cancelsearch')
 						actions.clearSearch()
 					},
 					renderclbk : function(){
@@ -1259,8 +1247,6 @@ var authorn = (function(){
 			},
 
 			userslist : function(_el, addresses, empty, caption, clbk, mid, count){
-
-				console.log('count', count)
 
 				if (modules['userlist' + mid]){
 					modules['userlist' + mid].destroy()
