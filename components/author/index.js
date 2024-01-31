@@ -778,8 +778,6 @@ var author = (function(){
 						e = self.app.localization.e('aynofollowers')
 					}
 
-					console.log("COUNT 2" , c)
-	
 					renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
 						report.module = p;
 					}, c)
@@ -811,7 +809,6 @@ var author = (function(){
 						e = self.app.localization.e('aynofollowing')
 					}
 
-					console.log("COUNT 1" , c)
 					renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
 						report.module = p;
 					}, c)
