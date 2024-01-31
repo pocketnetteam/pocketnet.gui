@@ -616,13 +616,13 @@ var BastyonApps = function(app){
 
         imagesToImgur : {
             permissions : ['account'],
-            parameters : ['images', 'resize', 'watermark'],
+            parameters : [],
             action : function({data, application}){
                 return Promise.all(
                     data?.images.map(async image => {
                         let resized = await resizeImage(image, data?.resize);
 
-                        if (data.watermark) {
+                        if (data?.watermark) {
                             resized = await addWatermark({
                                 ...{ image: resized },
                                 ...{ watermark: data.watermark }
@@ -630,7 +630,7 @@ var BastyonApps = function(app){
                         }
                         
                         return app.imageUploader.uploadImage({
-                            Action : "image",
+                            Action : 'image',
                             base64 : resized
                         }, 'imgur').then(data => data).catch(err => err)
                     })

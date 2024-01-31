@@ -186,8 +186,8 @@ var BastyonSdk = function(){
     }
 
     self.set = {
-        imagesToImgur : function(images) {
-            return action('imagesToImgur', images)
+        imagesToImgur : function(data) {
+            return action('imagesToImgur', data)
         },
 
         barteron : {
