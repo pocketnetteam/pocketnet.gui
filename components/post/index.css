@@ -27,6 +27,9 @@
   position: relative;
   overflow: hidden;
 }
+#post .videoWrapper.verticalVideo {
+  max-width: 350px;
+}
 #post .lockedaccount,
 #post .empty {
   text-align: center;

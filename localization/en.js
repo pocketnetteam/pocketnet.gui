@@ -657,8 +657,8 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 
-_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
-_l.e13109lg = "Please enter the words in the picture to continue registration"
+_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue"
+_l.e13109lg = "Please enter the words in the picture to continue"
 _l.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
 
 _l.e13110 = "Enter words"

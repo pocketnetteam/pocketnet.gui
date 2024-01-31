@@ -1449,6 +1449,7 @@ var Account = function(address, parent){
                 parameters.reason = 'balance'
             }
 
+            console.log('parameters', parameters)
 
             return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
 
@@ -1596,6 +1597,8 @@ var Account = function(address, parent){
 
     self.userInteractive = function(action, error, type, parameters){
 
+        console.log('action, error, type, parameters', action, error, type, parameters)
+
         if(!self.isCurrentAccount()) return Promise.reject('actions_userInteractive')
 
         if (self.waitUserAction) return Promise.reject('actions_waitUserInteractive')
@@ -1650,6 +1653,8 @@ var Account = function(address, parent){
     }
 
     self.solveCaptcha = function(parameters = {}, proxyOptions){
+
+        console.log('parameters', parameters)
         
         return parent.app.platform.ui.captcha(parameters.reason, (component) => {
             waitUserActionComponent = component
@@ -1883,8 +1888,8 @@ var Account = function(address, parent){
         self.status = e.status
         self.unspents = e.unspents
         
-        self.unspents.updated ? self.unspents.updated = new Date(self.unspents.updated) : null
-        self.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
+        e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
+        e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
         
         self.waitUserAction = e.waitUserAction || null

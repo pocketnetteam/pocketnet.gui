@@ -2569,7 +2569,10 @@ var wallet = (function(){
 
 					var colorN = '#414244';
 					var colorG = '#0F8623';
-					var samount = Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
+					var samount = 100 * Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
+
+
+					console.log('balance', balance, samount)
 
 					var move = {
 						positive : {
