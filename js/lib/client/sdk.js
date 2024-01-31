@@ -138,6 +138,8 @@ var pSDK = function ({ app, api, actions }) {
 
         return Promise.all(_.map(result, ({ key, data }) => {
 
+            if (data.___temp) return Promise.resolve()
+
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
             return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
@@ -194,7 +196,6 @@ var pSDK = function ({ app, api, actions }) {
 
     var getfromdb = function (dbname, ids, getold) {
 
-        console.log('getfromdb', dbname, getold, ids)
 
         if (!ids) return Promise.resolve([])
 
@@ -358,12 +359,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 var rjc = function(e){
 
-                    console.log("rjc", e)
-                    console.log("rjc", load, p.indexedDb)
-
 
                     getfromdb(p.indexedDb, load, true).then(r => {
-                        console.log("rjc", r)
                         if(!r && r.length != load.length){
                             reject(e)
                         }
@@ -536,11 +533,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 return Promise.resolve(r)
             }).catch(e => {
-                console.log("rjc", e)
                 return getfromdbone(p.requestIndexedDb, hash, true).then((r) => {
-
-                    console.log("rjc", r)
-                    console.log("rjc", r)
 
                     if (r) return Promise.resolve(r)
 
@@ -584,8 +577,6 @@ var pSDK = function ({ app, api, actions }) {
         var cacheId = type + ":" + (helpId || "") + ":" + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
 
         if (extendCache[cacheId]) {
-
-            if(type == 'share') console.log("GET FROM CACHE", extendCache[cacheId])
 
             return extendCache[cacheId]
         }
@@ -632,7 +623,6 @@ var pSDK = function ({ app, api, actions }) {
 
         })
 
-        if(type == 'share') console.log("SET CACHE", extendedObject , object)
 
         extendCache[cacheId] = extendedObject || object
 
@@ -803,7 +793,6 @@ var pSDK = function ({ app, api, actions }) {
         getmyoriginal : function(){
             if(!app.user.address.value) return null
 
-            console.log("userinfo original",  objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value])
 
             return objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value]
 
@@ -1382,7 +1371,6 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, id) {
 
-            console.log("EXTEND FROM ACTION CACHE")
 
             return extendFromActions('comment', 
                 ['comment', 'cScore'],
@@ -1442,7 +1430,6 @@ var pSDK = function ({ app, api, actions }) {
 
         request: function (executor, hash) {
 
-            console.log("SHAREREQUEST", hash)
 
             return request('share', hash, (data) => {
                 
@@ -1549,12 +1536,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(result, (r) => {
 
-                if (!storage[key][r.key])
+                if (!storage[key][r.key] || storage[key][r.key].___temp)
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !objects[key][r.key]) {
+                if (object && !(objects[key][r.key] || objects[key][r.key].___temp)) {
                     objects[key][r.key] = object
                 }
 
@@ -1629,9 +1616,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         cleanData: function (rawshares) {
-
-            console.log('rawshares', rawshares)
-
 
             return _.filter(_.map(rawshares, (c) => {
 
@@ -1828,8 +1812,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         tempExtend: function (object, txid) {
-
-            console.log("EXTEND CACHE SHARE", object, txid)
 
             return extendFromActions('share', 
                 ['share', 'upvoteShare', 'comment', 'contentDelete'],

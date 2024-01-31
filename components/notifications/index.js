@@ -244,7 +244,6 @@ var notifications = (function(){
 				el.error.addClass('hidden')
 				el.empty.removeClass('hidden')
 
-				console.log('self.app.platform.sdk.notifications', self.app.platform.sdk.notifications)
 
 				if (!self.app.platform.sdk.notifications.inited || self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')

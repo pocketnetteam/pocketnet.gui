@@ -4303,8 +4303,6 @@ var lenta = (function(){
 
 			sstuff : function(shares, error, pr, clbk, bshares, includingsub){
 
-				console.log('rawshares2', shares)
-
 				if(!bshares) bshares = []
 
 				newsharescount = shares.length

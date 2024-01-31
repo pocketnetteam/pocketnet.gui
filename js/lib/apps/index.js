@@ -121,6 +121,106 @@ var validateParameters = function(data, parameters){
     return appsError('parameters:missing:' + e)
 }
 
+/**
+ * Resize image if it's dimensions more than max
+ * 
+ * @param {base64|URL} image
+ * @param {Number} max
+ * 
+ * @returns {Promise}
+ */
+var resizeImage = function(image, max = 1000) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+
+        img.onload = () => {
+            let
+                width = img.width,
+                height = img.height;
+
+            if (width > max || height > max) {
+                const aspectRatio = width / height;
+
+                if (width > height) {
+                    width = max;
+                    height = width / aspectRatio;
+                } else {
+                    height = max;
+                    width = height * aspectRatio;
+                }
+            }
+
+            const
+                canvas = document.createElement('canvas'),
+                ctx = canvas.getContext('2d');
+
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+            resolve(canvas.toDataURL('image/png'));
+        }
+
+        img.onerror = (e) => reject(e);
+
+        img.src = image;
+    });
+}
+
+/**
+ * Add watermark to image
+ * 
+ * @param {Object} data
+ * @param {base64|URL} data.image
+ * @param {base64|URL} data.watermark
+ * @param {Number} [opacity] - default: .5
+ * @param {Number} [top] - default: 0
+ * @param {Number} [right] - default: auto
+ * @param {Number} [bottom] - default: auto
+ * @param {Number} [left] - default: 0
+ * @param {Number} [height] - default: auto
+ * @param {Number} [width] - default: auto
+ * 
+ * @returns {Promise}
+ */
+var addWatermark = function(data) {
+    return new Promise((resolve, reject) => {
+        const
+            canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            image = new Image(),
+            watermark = new Image();
+
+        image.onload = () => {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            
+            ctx.drawImage(image, 0, 0);
+
+            watermark.onload = () => {
+                const
+                    offsetTop = data?.bottom ? (image.height - watermark.height - data.bottom) : (data?.top || 0),
+                    offsetLeft = data?.right ? (image.width - watermark.width - data.right) : (data?.left || 0);
+
+                ctx.globalAlpha = data?.opacity || .5;
+                ctx.drawImage(watermark, offsetLeft, offsetTop, data?.width || watermark.width, data?.height || watermark.height);
+                ctx.globalAlpha = 1;
+
+                resolve(canvas.toDataURL('image/png'));
+            };
+    
+            watermark.onerror = (e) => reject(e);
+    
+            watermark.src = data.watermark.image;
+        }
+
+        image.onerror = (e) => reject(e);
+
+        image.src = data.image;
+    });
+}
+
 var BastyonApps = function(app){
     var self = this
     var installed = {}
@@ -516,13 +616,22 @@ var BastyonApps = function(app){
 
         imagesToImgur : {
             permissions : ['account'],
-            parameters : [],
+            parameters : ['images', 'resize', 'watermark'],
             action : function({data, application}){
                 return Promise.all(
-                    data.map(image => {
+                    data?.images.map(async image => {
+                        let resized = await resizeImage(image, data?.resize);
+
+                        if (data.watermark) {
+                            resized = await addWatermark({
+                                ...{ image: resized },
+                                ...{ watermark: data.watermark }
+                            });
+                        }
+                        
                         return app.imageUploader.uploadImage({
                             Action : "image",
-                            base64 : image
+                            base64 : resized
                         }, 'imgur').then(data => data).catch(err => err)
                     })
                 )
