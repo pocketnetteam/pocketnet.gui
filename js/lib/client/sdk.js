@@ -138,6 +138,8 @@ var pSDK = function ({ app, api, actions }) {
 
         return Promise.all(_.map(result, ({ key, data }) => {
 
+            if (data.___temp) return Promise.resolve()
+
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
             return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
@@ -1442,7 +1444,6 @@ var pSDK = function ({ app, api, actions }) {
 
         request: function (executor, hash) {
 
-            console.log("SHAREREQUEST", hash)
 
             return request('share', hash, (data) => {
                 
@@ -1549,12 +1550,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(result, (r) => {
 
-                if (!storage[key][r.key])
+                if (!storage[key][r.key] || storage[key][r.key].___temp)
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !objects[key][r.key]) {
+                if (object && !(objects[key][r.key] || objects[key][r.key].___temp)) {
                     objects[key][r.key] = object
                 }
 
