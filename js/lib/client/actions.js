@@ -374,20 +374,15 @@ var Action = function(account, object, priority, settings){
 
         var optimizeUnspents = false
 
-        console.log('unspents', unspents.length, value)
-
         if (value == 0) {
             value = 0.00000001
         }
 
         if (value < 0.0000001) {
 
-            console.log('unspents here')
-
             if (unspents.length > ActionOptions.optimizeUnspentsMax){
                 optimizeUnspents = true
 
-                console.log("OPTIMIZE UNSPENTS")
             }
         }
 
@@ -419,7 +414,6 @@ var Action = function(account, object, priority, settings){
             added += unspent.amount
 
             if(dustValue > added){
-                console.log("ADDED DUST")
             }
 
 
@@ -1449,8 +1443,6 @@ var Account = function(address, parent){
                 parameters.reason = 'balance'
             }
 
-            console.log('parameters', parameters)
-
             return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
 
                 action.checkInAnotherSession = true
@@ -1597,7 +1589,6 @@ var Account = function(address, parent){
 
     self.userInteractive = function(action, error, type, parameters){
 
-        console.log('action, error, type, parameters', action, error, type, parameters)
 
         if(!self.isCurrentAccount()) return Promise.reject('actions_userInteractive')
 
@@ -1654,7 +1645,6 @@ var Account = function(address, parent){
 
     self.solveCaptcha = function(parameters = {}, proxyOptions){
 
-        console.log('parameters', parameters)
         
         return parent.app.platform.ui.captcha(parameters.reason, (component) => {
             waitUserActionComponent = component
@@ -2504,12 +2494,10 @@ var Actions = function(app, api, storage = localStorage){
    
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
-            console.log("EMIT 1", key)
             e(data)
         })
 
         _.each(namedEvents[key] || {}, function(e){
-            console.log("EMIT 2", key)
 
             e(data)
         })

@@ -806,7 +806,6 @@ var comments = (function(){
 
 				id || (id = '0')
 
-				console.log("value", v, findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
 
 				if (currents[id])
 					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
@@ -2870,7 +2869,6 @@ var comments = (function(){
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
 
-					console.log("Comments", comments)
 
 					if (clbk)
 						clbk(comments, e)
