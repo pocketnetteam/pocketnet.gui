@@ -5391,6 +5391,12 @@ html.mobileview.android{
 
 html.mobileview{
 
+    &[chatposition='above']{
+        .matrixchatwrapper{
+            z-index: 1006;
+        }
+    }
+
     .matrixchatwrapper{
         position: fixed;
         contain: strict;
@@ -5417,11 +5423,7 @@ html.mobileview{
         }
     }
 
-    &[chatposition='above']{
-        .matrixchatwrapper{
-            z-index: 1006;
-        }
-    }
+    
     
     .tooltipMobileDialog{
 
@@ -5667,7 +5669,7 @@ html.cameraenabledrun{
                 right: @rhythm;
                 width: auto;
                 max-width: none;
-                top : 70px;
+                top : calc(70px + var(--app-margin-top));
                 will-change: transform;
                 .transition(0.3s, transform);
 

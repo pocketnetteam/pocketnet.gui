@@ -1727,7 +1727,7 @@ var request_component = Object(componentNormalizer["a" /* default */])(
       }
       var content = bc.pbody || bc.body || "";
       console.log('content', content);
-      if (window.findAndReplaceLinkClear) content = window.findAndReplaceLinkClear(content);
+      if (window.findAndReplaceLinkClear && (typeof content === 'string' || content instanceof String)) content = window.findAndReplaceLinkClear(content);
       if (bc.msgtype === "m.text") this.markMatches(content);
       return content;
     },
@@ -1933,7 +1933,9 @@ var request_component = Object(componentNormalizer["a" /* default */])(
       return Promise.resolve();
     },
     menucopy: function () {
-      this.$f.copytext(this.replacedmintionsbody);
+      var txt = this.replacedmintionsbody;
+      if (window.findAndReplaceLinkClearReverse && (typeof txt === 'string' || txt instanceof String)) txt = window.findAndReplaceLinkClearReverse(txt);
+      this.$f.copytext(txt);
       return Promise.resolve();
     },
     menudelete: function () {
