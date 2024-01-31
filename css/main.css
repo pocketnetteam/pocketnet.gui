@@ -4455,6 +4455,9 @@ html.mobileview.android .wnd .wndback {
   max-width: 600px;
   border-radius: 10px;
 }
+html.mobileview[chatposition='above'] .matrixchatwrapper {
+  z-index: 1006;
+}
 html.mobileview .matrixchatwrapper {
   position: fixed;
   contain: strict;
@@ -4480,9 +4483,6 @@ html.mobileview .matrixchatwrapper {
 html.mobileview .matrixchatwrapper.active {
   -webkit-transform: translateX(0);
   transform: translateX(0);
-}
-html.mobileview[chatposition='above'] .matrixchatwrapper {
-  z-index: 1006;
 }
 html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
@@ -4667,7 +4667,7 @@ html.cameraenabledrun .appcnt {
     right: 0.5em;
     width: auto;
     max-width: none;
-    top: 70px;
+    top: calc(70px + var(--app-margin-top));
     will-change: transform;
     -moz-transition: transform 0.3s;
     -o-transition: transform 0.3s;

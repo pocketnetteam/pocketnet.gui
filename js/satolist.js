@@ -473,6 +473,9 @@ Platform = function (app, listofnodes) {
         },
         upvoteShare : function(alias, status){
 
+            console.log('upvoteShare listener', alias, status)
+
+
             var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
 
@@ -483,7 +486,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            if (status == 'sent'){
+
+            if (status == 'relay'){
 
                 self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 
@@ -3248,6 +3252,8 @@ Platform = function (app, listofnodes) {
         
                     }
                     else{
+
+                        console.log('parameters reason', reason)
 
                         app.nav.api.load({
                             open : true,
@@ -11560,7 +11566,7 @@ Platform = function (app, listofnodes) {
             },
 
             lskey : function(){
-                if(window.testpocketnet){
+                if (window.testpocketnet){
                     return 'recommendations_tn'
                 }
                 else{
@@ -11624,10 +11630,13 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.storage.keys = p.keys || {}
                 self.sdk.recommendations.sharesinfo = {}
 
-                self.psdk.share.insertFromResponse(_.map(_.filter(p.unseen || [], (sd) => {
+                var unseens = _.map(p.unseen || [], (us) => {
+                    return {...us, ...{ ___temp : true }}
+                })
+
+                self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
 
                     if (self.psdk.share.get(sd.share.txid)) return false
-                    
 
                     if (time - sd.date < 60 * 60) {
 
@@ -13867,6 +13876,7 @@ Platform = function (app, listofnodes) {
             },
 
             add : function(tags, id, value){
+                console.log("ADD TAGS", tags, id, value)
                 if(id && this.added[id]) return
 
                 if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
@@ -13896,26 +13906,33 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.scheduler()
             },
 
-            
+            lskey : function(){
+                if (window.testpocketnet){
+                    return 'memtags_tn'
+                }
+                else{
+                    return 'memtags'
+                }
+            },
 
             save : function(){
 
                 try{
-                    localStorage['memtags'] = JSON.stringify({
+                    localStorage[self.sdk.memtags.lskey()] = JSON.stringify({
                         tags : self.sdk.memtags.storage.tags,
                     })
                 }catch(e){
                     
                 }
-                
             },
-
 
             load: function (clbk) {
                 var p = {};
 
+                console.log('self.sdk.memtags.lskey(', self.sdk.memtags.lskey())
+
                 try {
-                    p = JSON.parse(localStorage['memtags'] || '{}');
+                    p = JSON.parse(localStorage[self.sdk.memtags.lskey()] || '{}');
                 }
                 catch (e) {}
 
@@ -22467,8 +22484,8 @@ Platform = function (app, listofnodes) {
                         self.sdk.articles.init,
                         self.sdk.categories.load,
                         self.sdk.activity.load,
-                        
                         self.sdk.memtags.load,
+                        self.sdk.recommendations.load,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
@@ -22484,13 +22501,12 @@ Platform = function (app, listofnodes) {
                             self.ui.showkeyafterregistration()
                         },3000)
 
-                        setTimeout(() => {
-                            self.sdk.recommendations.load()
-                        },30000)
                         
                         var account = self.actions.addAccount(self.app.user.address.value)
     
-                        if (self.psdk.userState.getmy()) account.setStatus(true)
+                        if (self.psdk.userState.getmy()) {
+                            account.setStatus(true)
+                        }
     
                         account.setKeys(app.user.keys())
                         account.updateUnspents().catch(e => {
@@ -23084,7 +23100,7 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log('link', link)
+                console.log("CHAT TO APP")
 
 
                 if (self.app.mobileview)
@@ -23151,6 +23167,18 @@ Platform = function (app, listofnodes) {
                     c(false)
                 })
 
+            }
+
+            core.activeChange = function(value){
+                var wnds = self.app.el.windows.find('.wnd')
+
+                window.requestAnimationFrame(() => {
+                    if (value){
+                        wnds.css('z-index', 999)
+                    }else{
+                        wnds.css('z-index', '')
+                    }
+                })
             }
 
             core.apptochat = function(link){
