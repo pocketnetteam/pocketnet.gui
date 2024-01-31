@@ -10607,6 +10607,15 @@ var connectionSpeed = function()
     return defaultSpeed;
 };
 
+replaceIpfsCID = function(src) {
+	if (src.startsWith('/ipfs/')) {
+		// TODO (aok) - replace with ipfs gateways array
+		return src.replace('/ipfs/', 'https://ipfs.1.pocketnet.app/ipfs/');
+	}
+
+	return src;
+};
+
 replaceArchiveInImage = function(src) {
 	var srcNew = src;
 
@@ -10614,8 +10623,9 @@ replaceArchiveInImage = function(src) {
 		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 
+	srcNew = srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
 
-	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
+	return replaceIpfsCID(srcNew);
 };
 
 function Circles(params) {
