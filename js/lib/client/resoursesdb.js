@@ -144,7 +144,6 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.clearAll = function(key){
-        console.log('clearAll', key)
         return transaction(key).then(items => {
 
             const req = items.clear();
@@ -165,8 +164,6 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.get = function(key, id, getold){
-
-        console.log("GET FROM DV", key, id)
 
         var time = getHourUnixtime()
 

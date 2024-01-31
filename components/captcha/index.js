@@ -197,8 +197,6 @@ var captcha = (function(){
 
 				ed = p.settings.essenseData
 
-				console.log("parameters ed", ed)
-
 				var data = {
 					ed
 				};
