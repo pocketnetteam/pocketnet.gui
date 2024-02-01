@@ -437,7 +437,7 @@ var Firebase = function(p){
 
             const resend = [];
 
-            var tokens = users?.filter?.(el=>el?.settings?.port===false).map(el=>el.token) || []
+            var tokens = users?.filter?.(el=>el?.settings?.web===false).map(el=>el.token) || []
             if (tokens.length) {
                 message.notification = data.header;
                 const resendTokens = await sendPush(message, tokens, users);
@@ -445,7 +445,7 @@ var Firebase = function(p){
             }
 
 
-            var tokensWeb = users?.filter?.(el=>el?.settings?.port===true).map(el=>el.token) || []
+            var tokensWeb = users?.filter?.(el=>el?.settings?.web===true).map(el=>el.token) || []
             if (tokensWeb.length) {
                 delete message.notification;
                 const resendTokens = await sendPush(message, tokensWeb, users)

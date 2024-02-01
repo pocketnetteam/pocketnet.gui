@@ -956,7 +956,7 @@ var Node = function(options, manager){
                     port : (global.USE_TLS_NODES_ONLY) ? 38881 : 38081,
                     ws : (global.USE_TLS_NODES_ONLY) ? 8887 : 8087,
                     peer : true
-                }, manager)
+                }, manager)  
 
                 return node
 
