@@ -138,6 +138,8 @@ var pSDK = function ({ app, api, actions }) {
 
         return Promise.all(_.map(result, ({ key, data }) => {
 
+            if (data.___temp) return Promise.resolve()
+
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
             return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
@@ -181,8 +183,8 @@ var pSDK = function ({ app, api, actions }) {
         }])
     }
 
-    var getfromdbone = function (dbname, hash) {
-        return getfromdb(dbname, hash).then(r => {
+    var getfromdbone = function (dbname, hash, getold) {
+        return getfromdb(dbname, hash, getold).then(r => {
 
             if (r.length) {
                 return Promise.resolve(r[0].data)
@@ -192,7 +194,8 @@ var pSDK = function ({ app, api, actions }) {
         })
     }
 
-    var getfromdb = function (dbname, ids) {
+    var getfromdb = function (dbname, ids, getold) {
+
 
         if (!ids) return Promise.resolve([])
 
@@ -208,7 +211,7 @@ var pSDK = function ({ app, api, actions }) {
 
 
         return Promise.all(_.map(ids, id => {
-            return self.db.get(dbname, id).then(data => {
+            return self.db.get(dbname, id, getold).then(data => {
 
                 if (dbmeta[dbname].authorized) {
                     id = id.replace('_' + app.user.address.value, '')
@@ -354,6 +357,23 @@ var pSDK = function ({ app, api, actions }) {
                     return
                 }
 
+                var rjc = function(e){
+
+
+                    getfromdb(p.indexedDb, load, true).then(r => {
+                        if(!r && r.length != load.length){
+                            reject(e)
+                        }
+                        else{
+                            resolve(r)
+                        }
+                    }).catch(e2 => {
+                        console.error(e2)
+                        reject(e2)
+                    })
+
+                }
+
                 var c = (result) => {
 
                     if (p.transformResult) {
@@ -364,7 +384,7 @@ var pSDK = function ({ app, api, actions }) {
                         settodb(p.fallbackIndexedDB, result)
                     })
 
-                    return resolve(result.concat(dbr))
+                    resolve(result.concat(dbr))
 
                 }
 
@@ -374,9 +394,7 @@ var pSDK = function ({ app, api, actions }) {
                         load,
                         executor,
                         resolve: c,
-
-                        reject
-
+                        reject : rjc
                     })
                 }
                 else {
@@ -400,7 +418,7 @@ var pSDK = function ({ app, api, actions }) {
 
                         c(_.flatten(r, true))
 
-                    }).catch(reject)
+                    }).catch(rjc)
 
                     //executor(load).then(c).catch(reject)
                 }
@@ -506,6 +524,7 @@ var pSDK = function ({ app, api, actions }) {
 
             return executor().then(r => {
 
+          
                 if (p.transformResult) {
                     r = p.transformResult(r)
                 }
@@ -513,11 +532,17 @@ var pSDK = function ({ app, api, actions }) {
                 settodbone(p.requestIndexedDb, hash, r)
 
                 return Promise.resolve(r)
+            }).catch(e => {
+                return getfromdbone(p.requestIndexedDb, hash, true).then((r) => {
+
+                    if (r) return Promise.resolve(r)
+
+                    return Promise.reject(e)
+
+                })
             })
 
         }).then(result => {
-
-
 
             if (p.insertFromResponse) {
                 return p.insertFromResponse(result).then(() => {
@@ -558,7 +583,6 @@ var pSDK = function ({ app, api, actions }) {
 
         var extendedObject = null
 
-
         _.each(actions.getAccounts(), (account) => {
 
             _.each(temps, (k) => {
@@ -584,6 +608,10 @@ var pSDK = function ({ app, api, actions }) {
                     if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
+
+                        if(!extendedObject){
+                            //console.log("RELA CLONE OBJECT", object, k, alias)
+                        }
 
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
@@ -688,10 +716,19 @@ var pSDK = function ({ app, api, actions }) {
                         filtered.push(r)
                     }
 
+
+
+                    if (objects[key][r.key]){
+                        return
+                    }
+
                     var object = this.transform(r)
 
-                    if (object)
+                    if (object && !objects[key][r.key]){
+                        
                         objects[key][r.key] = object
+                    }
+                        
 
                 })
 
@@ -755,6 +792,7 @@ var pSDK = function ({ app, api, actions }) {
 
         getmyoriginal : function(){
             if(!app.user.address.value) return null
+
 
             return objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value]
 
@@ -826,7 +864,7 @@ var pSDK = function ({ app, api, actions }) {
             return {
                 address: address,
                 name: name,
-                reputation: Math.max(userInfo.reputation || 0, 0),
+                reputation: userInfo.reputation || 0,
                 image: userInfo.image,
                 letter: (name ? name[0] : '').toUpperCase(),
                 deleted: userInfo.deleted, /// check temp ///app.platform.sdk.user.deletedaccount(address),
@@ -1333,6 +1371,7 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, id) {
 
+
             return extendFromActions('comment', 
                 ['comment', 'cScore'],
                 object,
@@ -1390,6 +1429,8 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['share'],
 
         request: function (executor, hash) {
+
+
             return request('share', hash, (data) => {
                 
                 return executor(data).then(r => {
@@ -1495,12 +1536,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(result, (r) => {
 
-                if (!storage[key][r.key])
+                if (!storage[key][r.key] || storage[key][r.key].___temp)
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !objects[key][r.key]) {
+                if (object && !(objects[key][r.key] || objects[key][r.key].___temp)) {
                     objects[key][r.key] = object
                 }
 
@@ -1511,6 +1552,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         transform: function ({ key, data: share }, small) {
+
 
             if (share.userprofile || share.user) {
                 self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile || share.user]), true)
@@ -1523,6 +1565,8 @@ var pSDK = function ({ app, api, actions }) {
             var s = new pShare();
 
             s._import(share);
+
+
 
             if (share.ranks) {
                 s.info = share.ranks
@@ -1572,9 +1616,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         cleanData: function (rawshares) {
-
-            
-
 
             return _.filter(_.map(rawshares, (c) => {
 
@@ -1676,7 +1717,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         load: function (txids, update) {
-
+            
 
             return loadList('share', txids, (txids) => {
 
@@ -1784,8 +1825,6 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('share'), filter)
-
-
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -2236,7 +2275,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
                     rpc : {
-                        fnode : '178.217.159.221:38081'
+                        fnode : '65.21.56.203:38081'
                     }
                 }).then(r => {
 
@@ -2480,8 +2519,12 @@ var pSDK = function ({ app, api, actions }) {
         }
     })
 
+    self. storage = storage
+    self. objects = objects
+
     return self
 }
+
 
 if (typeof module != "undefined") { module.exports = { pSDK }; }
 else { window.pSDK = pSDK; }

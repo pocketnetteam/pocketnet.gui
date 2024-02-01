@@ -1050,9 +1050,9 @@ var Node = function(options, manager){
     self.forbidUsage = function(){
         if (global.EXPERIMENTALNODES || f.deep(manager,'proxy.test')) return false 
 
-        if (self.version){
+        /*if (self.version){
             if(f.numfromreleasestring(self.version) >= 0.22) return true
-        }
+        }*/
 
         return false
     }
@@ -1062,6 +1062,8 @@ var Node = function(options, manager){
         var s = self.statistic.getst()
 
         var lastblock = self.lastblock() || {}
+
+        var chainStatus = self.chainStatus()
 
         return {
             host : self.host,
@@ -1083,7 +1085,8 @@ var Node = function(options, manager){
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false,
             allowRpc : self.allowRpc,
-            single : self.single
+            single : self.single,
+            backward : chainStatus.fork || chainStatus.difference > 20
 
         }
     }

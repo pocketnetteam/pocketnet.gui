@@ -214,7 +214,7 @@ var metadisplay = function(){ %>
 
 			if(typeof all == 'undefined' || !all){
 
-				nm = trimHtml(m, 750);
+				nm = trimHtml(m, 750, 15);
 
 				if(nm != m){
 					bigmessage = true;
@@ -222,6 +222,8 @@ var metadisplay = function(){ %>
 			}
 
 			nm = share.renders.message(nm)
+
+			nm = findAndReplaceLink(nm, true)
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo piphidden">

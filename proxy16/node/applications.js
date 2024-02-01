@@ -4,7 +4,7 @@ const https = require('https');
 const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var progress = require('request-progress');
 var targz = require('targz');
 const request = require("request");
@@ -16,9 +16,10 @@ var Applications = function(settings, applications = {}, proxy, useArch = false)
 
     var self = this;
 
-    var db = new Datastore(f.path(settings.dbpath2 || settings.dbpath));
-    
-    
+    var db = new Datastore({
+        filename: f.path(settings.dbpath2 || settings.dbpath),
+    });
+
     var platform = process.platform
 
     if (useArch) {

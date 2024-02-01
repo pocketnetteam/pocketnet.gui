@@ -109,7 +109,7 @@ var wallet = (function(){
 					defaultValueTemplate : function(d, f, g, firstdef){
 						if(_.isObject(d)){
 
-							var img = d.image ? d.image.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet') : null
+							var img = d.image ? replaceArchiveInImage(d.image) : null
 
 							var h = ''
 
@@ -2569,7 +2569,8 @@ var wallet = (function(){
 
 					var colorN = '#414244';
 					var colorG = '#0F8623';
-					var samount = Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
+					var samount = 100 * Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
+
 
 					var move = {
 						positive : {

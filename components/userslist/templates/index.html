@@ -1,7 +1,7 @@
 <div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
 	
 	<div class="caption">
-		<span><%=caption%></span> <span>(<%=addresses.length%>)</span>
+		<span><%=caption%></span> <span>(<%=count || addresses.length%>)</span>
 	</div>
 	
 	<% if(addresses.length) {%>

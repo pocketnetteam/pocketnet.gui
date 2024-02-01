@@ -18,10 +18,22 @@ module.exports = {
  * @param {Object} pluginPreferences - plugin preferences as JSON object; already parsed
  */
 function writePreferences(cordovaContext, pluginPreferences) {
-  var pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+  var pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'AndroidManifest.xml');
   var manifestSource = xmlHelper.readXmlAsJson(pathToManifest);
   var cleanManifest;
   var updatedManifest;
+
+  /**
+   * Cordova-Android 7.0+ FIX
+   *
+   * cordova-android 7.0+ changes the path to AndroidManifest
+   * So if manifestSource/manifestData is empty (or undefined) we assume is cordova-android 7.0+
+   * @see http://cordova.apache.org/announcements/2017/12/04/cordova-android-7.0.0.html
+   */
+  if (!manifestSource) {
+      pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+      manifestSource = xmlHelper.readXmlAsJson(pathToManifest);
+  }
 
   // remove old intent-filters
   cleanManifest = removeOldOptions(manifestSource);
@@ -186,13 +198,9 @@ function injectOptions(manifestData, pluginPreferences) {
   launchActivity = activitiesList[launchActivityIndex];
 
   // generate intent-filters
-
-  ulIntentFilters.push(createIntentReceiver());
-
   pluginPreferences.hosts.forEach(function(host) {
     host.paths.forEach(function(hostPath) {
       ulIntentFilters.push(createIntentFilter(host.name, host.scheme, hostPath));
-
     });
   });
 
@@ -289,47 +297,6 @@ function createIntentFilter(host, scheme, pathName) {
   };
 
   injectPathComponentIntoIntentFilter(intentFilter, pathName);
-
-
-  return intentFilter;
-}
-
-function createIntentReceiver() {
-  var intentFilter = {
-
-    'data': [
-      {
-        '$': {
-          'android:mimeType':'audio/*'      
-        }
-      }, {
-        '$': {
-          'android:mimeType':'application/*'
-        }
-      },
-      {
-        '$': {
-          'android:mimeType':'image/*'
-        }
-      }, {
-        '$': {
-          'android:mimeType':'text/*'
-        }
-      }
-    ],
-    'action': [{
-      '$': {
-        'android:name': 'android.intent.action.SEND'
-      }
-    }],
-    'category': [{
-      '$': {
-        'android:name':'android.intent.category.DEFAULT'
-      }
-    }]
-  };
-
-  injectPathComponentIntoIntentFilter(intentFilter, '*');
 
   return intentFilter;
 }

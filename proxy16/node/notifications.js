@@ -327,7 +327,7 @@ class Notifications{
 
             this.logger.w('system', 'info', `Notification: Firebase autocheck fail`)
 
-            destroy()
+            this.destroy()
 
             try{
                 this.run()

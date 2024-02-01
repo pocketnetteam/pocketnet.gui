@@ -3230,6 +3230,14 @@ html.mobileview.android{
             display: none!important;
         }
 
+        .statswrapperExtended{
+            display: none!important;
+        }
+
+        #post .forurl>.url{
+            position: static!important;
+        }
+
         .wndinner{
             box-shadow: none;
         }
@@ -4234,7 +4242,7 @@ html.mobileview.android{
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
         border-radius: 5px;
-        scrollbar-width: 0px;
+        scrollbar-width: none;
 
         &::-webkit-scrollbar{
             width: 0;
@@ -5383,6 +5391,12 @@ html.mobileview.android{
 
 html.mobileview{
 
+    &[chatposition='above']{
+        .matrixchatwrapper{
+            z-index: 1006;
+        }
+    }
+
     .matrixchatwrapper{
         position: fixed;
         contain: strict;
@@ -5409,11 +5423,7 @@ html.mobileview{
         }
     }
 
-    &[chatposition='above']{
-        .matrixchatwrapper{
-            z-index: 1006;
-        }
-    }
+    
     
     .tooltipMobileDialog{
 
@@ -5659,7 +5669,7 @@ html.cameraenabledrun{
                 right: @rhythm;
                 width: auto;
                 max-width: none;
-                top : 70px;
+                top : calc(70px + var(--app-margin-top));
                 will-change: transform;
                 .transition(0.3s, transform);
 
@@ -6140,7 +6150,7 @@ html.allcontent_application{
 .fastMessage,
 .notification{
 
-    .transition(0.3s);
+    
 
     .time{
         padding-left: @rhythm;
@@ -6196,10 +6206,14 @@ html.allcontent_application{
     }
 
     .transactionmessagewrapper{
+        display: flex;
         >div{
-            vertical-align: top;
+            align-items: flex-start;
+            flex-grow: 1;
 
             &.foramount{
+                white-space: nowrap;
+                flex-grow: 0;
                 font-weight: 700;
                 text-align: right;
                 color : rgb(var(--color-good));
@@ -6413,23 +6427,26 @@ html.allcontent_application{
         }
     }
     .cwrapper{
+        display: flex;
+
         >div{
-            vertical-align: middle;
+            align-items: center;
+            flex-grow: 2;
 
             &.cellforimage{
                 width: 50px;
-                vertical-align: top;
+                flex-grow: 0;
+                max-width: 50px;
             }
 
             &.extra{
-                width: 90px;
+                max-width: 90px;
             }
 
             .infomain{
                 padding-left:  @rhythm;
 
                 .caption{
-                    font-size : 1em;
                 }
 
                 .donate{
@@ -6466,11 +6483,15 @@ html.allcontent_application{
             color : rgb(var(--color-txt-ac));
         }*/
     }
+
+    .caption{
+        font-size: 0.9em;
+    }
 }
 
 .fastMessage{
     border-radius: 12px;
-    
+    .transition(0.3s, bottom);
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -6505,6 +6526,34 @@ html.allcontent_application{
             line-height: 31px;
             font-size: 0.8em;
             margin-bottom : 4px;
+        }
+    }
+
+   
+}
+
+#hideallnotificationsel{
+    .hidenf{
+        position: fixed;
+        left : 5px;
+        bottom : 5px;
+        width: 390px;
+        background: rgba(var(--color-shadow-base), 0.98);
+        color: rgb(var(--color-txt-ac-1));
+        z-index: 140;
+        overflow: hidden;
+        padding: 2 * @rhythm;
+        text-align: center;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        cursor: pointer;
+        .transition(0.3s, opacity);
+
+        &:hover{
+            opacity: 0.8;
         }
     }
 }
@@ -6780,6 +6829,19 @@ html.allcontent_application{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.bright{
+        background: rgba(var(--color-bg-ac-bright), 0.98);
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
     }
 
 }
@@ -7281,6 +7343,9 @@ html{
             input{
                 display: none;
             }
+        }
+        #hideallnotificationsel{
+            display: none;
         }
 
         #panelWrapper{

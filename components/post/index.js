@@ -56,7 +56,7 @@ var post = (function () {
 
 				var c = findAndReplaceLink(share.renders.caption(translated.c, translated.m), true)
 				var m = share.renders.message(translated.c, translated.m);
-				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750);
+				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
 				window.requestAnimationFrame(() => {
@@ -933,7 +933,7 @@ var post = (function () {
 
 				self.nav.api.load({
 					open : true,
-					href : name ? name : 'author?address=' + address,
+					href : name ? name : 'authorn?address=' + address,
 					history : true
 				})
 			},
@@ -1140,14 +1140,6 @@ var post = (function () {
 			},
 
 			clickOut: function(e) {
-				const clickedElem = $(e.target);
-
-				const isClickOut = (clickedElem.hasClass('wndcontent'));
-
-				if (!isClickOut) {
-					return;
-				}
-
 				actions.closeWindow();
 			}
 		}
@@ -1873,7 +1865,10 @@ var post = (function () {
 						) {
 							if (clbk) clbk();
 						} else {
+
+
 							self.app.platform.sdk.remote.get(url, function (og) {
+
 								if (og) {
 									renders.url(clbk);
 								} else {

@@ -1,6 +1,6 @@
 
 var Node = require('./node');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var _ = require('lodash');
 var f = require('../functions');
 const fs = require('fs');
@@ -70,8 +70,10 @@ var Nodemanager = function(p){
     var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
     var iniNodeCount = global.INI_NODE_COUNT || 10
 
-    var db = new Datastore(f.path(p.dbpath));
-   
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
+
     self.remap = function(){
         self.nodesmap = {};
 
@@ -1063,7 +1065,7 @@ var Nodemanager = function(p){
     self.selectProbability = function(){
 
         var nds = _.filter(self.initednodes(), (nd) => {
-            return nd.allowRpc && nd.export().canuse
+            return nd.allowRpc && nd.export().canuse && !nd.backward
         })
 
         var np = _.map(nds, function(node){

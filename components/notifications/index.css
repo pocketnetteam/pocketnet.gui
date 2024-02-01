@@ -88,7 +88,6 @@
 #notifications .nwrapper .notification .caption {
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
 }
 #notifications .nwrapper .notification .date {
   font-size: 0.8em;

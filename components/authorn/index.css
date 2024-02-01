@@ -50,10 +50,12 @@
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
   cursor: pointer;
   border-radius: 12px;
-  width: 44px;
+  min-width: 44px;
   line-height: 42px;
-  background: rgba(var(--background-main), 0.3);
-  border: 1px solid rgba(var(--background-main), 0.5);
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background: rgba(var(--background-main-contrast), 0.3);
+  border: 1px solid rgba(var(--background-main), 0.8);
   color: rgba(var(--background-main), 0.7);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -62,7 +64,7 @@
   text-align: center;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item:hover {
-  background: rgba(var(--background-main), 0.3);
+  background: rgba(var(--background-main-contrast), 0.3);
   border: 1px solid rgba(var(--background-main), 0.7);
   color: rgba(var(--background-main), 0.9);
 }
@@ -81,6 +83,7 @@
 #authorn .bgwallpaperWrapper .bgwallpaper > div {
   opacity: 0.4;
 }
+#authorn .bgwallpaperWrapper .bgwallpaper > div.bgpanel,
 #authorn .bgwallpaperWrapper .bgwallpaper > div.grad {
   opacity: 1;
 }
@@ -136,7 +139,6 @@
   padding-left: 0.5em;
   flex-grow: 2;
 }
-#authorn .lcolumn .blocking,
 #authorn .lcolumn .subscribes,
 #authorn .lcolumn .subscribers {
   border-radius: 12px;
@@ -144,17 +146,31 @@
   padding: 1em;
   display: none;
 }
-#authorn .lcolumn .blocking .empty,
 #authorn .lcolumn .subscribes .empty,
 #authorn .lcolumn .subscribers .empty {
   text-align: center;
   color: rgb(var(--neutral-grad-3));
   font-size: 0.9em;
 }
-#authorn .lcolumn .blocking.active,
 #authorn .lcolumn .subscribes.active,
 #authorn .lcolumn .subscribers.active {
   display: block;
+}
+#authorn .lcolumn .blocking {
+  text-align: center;
+  padding: 1em;
+}
+#authorn .lcolumn .blocking .showblocking {
+  font-size: 0.9em;
+  color: rgb(var(--neutral-grad-3));
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#authorn .lcolumn .blocking .showblocking:hover {
+  color: rgb(var(--color-txt-ac));
 }
 #authorn .uinfo {
   border-radius: 12px;
@@ -225,7 +241,7 @@
   background: rgb(var(--background-total-theme));
   color: rgb(var(--text-color));
   border-color: rgb(var(--background-total-theme));
-  min-width: 30%;
+  min-width: 35%;
 }
 #authorn .buttonsrow button:nth-last-child(1) {
   margin-right: 0;
@@ -370,7 +386,7 @@
   white-space: nowrap;
   scroll-snap-type: x mandatory;
   overflow-x: scroll;
-  scrollbar-width: 0px;
+  scrollbar-width: none;
 }
 #authorn .alentanavigation .navi .naviscrollwrapper::-webkit-scrollbar {
   width: 0;

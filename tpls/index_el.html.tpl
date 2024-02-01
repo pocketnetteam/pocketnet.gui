@@ -192,6 +192,7 @@
 
         <script src="js/vendor/linkify.js"></script>
         <script src="js/vendor/linkify-html.js"></script>
+        <script src="js/vendor/linkify-string.js"></script>
         <script src="js/vendor/jquery.inputmask.bundle.js"></script>
 
         __VAR__.test
@@ -214,7 +215,8 @@
         <script src="js/vendor/mark.js"></script>
         <script src="js/vendor/hc-sticky.js"></script>
         <script join src="js/vendor/axios.js"></script>
-
+        <script  join src="js/media.js"></script>
+        
         __JSENV__
 
         <script>window.design = true;</script>
@@ -242,5 +244,7 @@
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
         <script async src="js/pwa-service-worker.js"></script>
+
+        <div id="hideallnotificationsel"></div>
     </body>
 </html>

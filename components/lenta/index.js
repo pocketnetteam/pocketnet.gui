@@ -1231,7 +1231,7 @@ var lenta = (function(){
 				var c = findAndReplaceLink(share.renders.caption(translated.c, translated.m), true)
 
 				var m = share.renders.message(translated.c, translated.m);
-				if(!showMoreStatus[share.txid]) m = trimHtml(m, 750);
+				if(!showMoreStatus[share.txid]) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
 				window.requestAnimationFrame(() => {
@@ -2550,7 +2550,7 @@ var lenta = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : name ? name : 'author?address=' + address,
+					href : name ? name : 'authorn?address=' + address,
 					history : true
 				})
 			},
@@ -2573,7 +2573,7 @@ var lenta = (function(){
 					self.sdk.registrations.redirect = 'post?s=' + shareId
 				}
 				else{
-					self.sdk.registrations.redirect = 'author?address='+share.address+'&s=' + shareId
+					self.sdk.registrations.redirect = 'authorn?address='+share.address+'&s=' + shareId
 				}
 
 				self.nav.api.go({
@@ -2982,17 +2982,7 @@ var lenta = (function(){
 			},
 
 			clickOutsideOfWindow: function(e){
-				const clickedElem = e.target;
-
-				const isElem1Clicked = clickedElem.classList.contains('sharecnt');
-
-				const isClickOutside = isElem1Clicked;
-
-				if (!isClickOutside) {
-					return;
-				}
-
-				const shareId = $(this).closest('.share').attr('id');
+				const shareId = $(e.target).closest('.share').attr('id');
 				actions.exitFullScreenVideo(shareId);
 			},
 
@@ -5178,7 +5168,25 @@ var lenta = (function(){
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
-			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
+
+			function initOutsideClickEvent(e) {
+				let isOutside = false;
+
+				el.c.on('mousedown', '.sharecnt', e => {
+					isOutside = e.target.classList.contains('sharecnt');
+				});
+
+				el.c.on('mouseup', '.sharecnt', e => {
+					if (isOutside) {
+						events.clickOutsideOfWindow(e);
+					}
+
+					isOutside = false;
+				});
+			}
+
+			initOutsideClickEvent();
+
 			//el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
 			//el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)

@@ -47,6 +47,9 @@
 #usersettings .cacheContent .panel {
   padding: 2em 0;
 }
+#usersettings .cacheContent .copyvalue {
+  cursor: pointer;
+}
 #usersettings .cacheContent .pending {
   padding: 1em 0;
 }
@@ -64,12 +67,16 @@
 #usersettings .cacheContent .empty span {
   font-size: 0.8em;
 }
-#usersettings .cacheContent .clearLocalStorage {
+#usersettings .cacheContent .cachePanel {
+  display: flex;
   padding-bottom: 2em;
+}
+#usersettings .cacheContent .cachePanel > div {
+  margin-right: 1.5em;
   color: rgb(var(--color-bg-ac-bright));
   cursor: pointer;
 }
-#usersettings .cacheContent .clearLocalStorage span {
+#usersettings .cacheContent .cachePanel > div span {
   font-size: 0.8em;
 }
 #usersettings .cacheContent .tx {

@@ -1,5 +1,7 @@
 var electron = null, fs, url, path, https;
 
+window.project_config || (window.project_config = {})
+
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
@@ -208,7 +210,6 @@ Platform = function (app, listofnodes) {
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
         'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        // 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true, //??????????????????
         'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
         'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
         'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
@@ -294,7 +295,35 @@ Platform = function (app, listofnodes) {
         'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
         'PGiSpH8yYE2XTQeXMzWNaxZhVLnqjkDdvK': true,
         'PWaZra9H38zZUsc7A7bcKq7p5namyaVRAw': true,
-        'PBrE3RbATwd6bS3Qq9jR4rr66fesEaZiNA': true,
+        'PDtdKLksh2q5Gq831bcFd4VjvGJAYtNa3Q': true,
+        'PCsZ9ADzGgyaK99QpRdaFPFCY6qiRTAYoa': true,
+        'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
+        'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
+        'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true,
+        'PWo7o1nY77PK9CWiFoAJwzAeDFfnFwNxpu' : true,
+        'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv' : true,
+        'PNYB5PRW8GCjJz1qTDkffrooLdnbMeRQdn' : true,
+        'PDCYW1fyBk2NvckLzPpxruzTWHXJM8gj9y' : true,
+        'PTJH7TnDF9kYfdwF2bhrXqHwcm2QtQqyVh' : true,
+        'PS7Ki2SnrkHh4Wtt7fQewM2TdgHTCZbDYF' : true,
+        'PEDpvHfW68rHHLbPwVgHy1zej6Bzrhsy11' : true,
+        'PMSvfdcTdMnXxicqjB8XA64rkhPpXoznB5' : true,
+        'PVfeMAEsRt5rkaeZVxGFu6yTPBpsy9M1kP' : true,
+        'PSd47DchqhKK3JtNAbKU4FqR7u1S5yHxau' : true,
+        'PFDduS88TXG6ZaYu4r9h52h7BDnv6uiYWg' : true,
+        'PUVj2MyBV7aQUSBKc8DNivghtHcAuY66gT' : true,
+        'PV72Tzp1N7JhTvisstwpAfmVNJnnMsm3zP' : true,
+        'PJVukT6jQYrovaWnfEr7Y5US4vu4gXN2Wh' : true,
+        'PCperKU7icDBQmMBUWceWwWPbqL4ZVe32S' : true,
+        'PGjYxSEzYKVUmg8T4jXtmJuue6psPqaqz6' : true,
+        'PMxxG7ivzLxi7qRBDtoZ6qXy173RRUjnvk' : true,
+        'P8nCpDWuBj6G31P1qP5M29efL7thPQuDyV' : true,
+        'PWibgcduckVSdeHJURrQYHVUcGknxJBj2T' : true,
+        'PVwYGmp5V7SfBhTFLYYuPoVXdDcKcWPVA4' : true,
+        'PJRAwFaXuyYbUgbghWykpApQYYGUNQMNJ9' : true,
+        'PSp72PK7zKXepZ6PDF6DsiX8knyeRnFbvW' : true,
+        'PUzgekqrsTtCxmB17HyXe74ofjKowXXYXy' : true,
+        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true
     } 
 
     self.shark = {}
@@ -359,6 +388,8 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
+    self.archivedServers = window.project_config.archivedPeertubeServers || []
+
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
     self.focus = true;
@@ -367,6 +398,20 @@ Platform = function (app, listofnodes) {
     self.avblocktime = 45;
     self.repost = true;
     self.videoenabled = true;
+
+    self.ischristmastime = function() {
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth() + 1; 
+        var currentDay = currentDate.getDate();
+      
+        if (currentMonth === 12 && currentDay >= 15) {
+          return true;
+        } else if (currentMonth === 1 && currentDay <= 15) {
+          return true;
+        } else {
+          return false;
+        }
+    }();
 
     var bastyonhelperOpened = false
     self.uicamerapreview = null
@@ -412,7 +457,6 @@ Platform = function (app, listofnodes) {
 
             window.requestAnimationFrame(() => {
                 _.each(self.actionListeners, (c, i) => {
-
                     if (c)
                         c({type : action.object.type, alias, status})
                 })
@@ -440,6 +484,9 @@ Platform = function (app, listofnodes) {
         },
         upvoteShare : function(alias, status){
 
+            console.log('upvoteShare listener', alias, status)
+
+
             var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
 
@@ -450,7 +497,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            if (status == 'sent'){
+
+            if (status == 'relay'){
 
                 self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 
@@ -622,7 +670,9 @@ Platform = function (app, listofnodes) {
         const ghCoreLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest';
         const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
 
-        return {
+        var configmeta = ((window.project_config || {}).applications) || {}
+
+        var meta = {
 
             ui: {
                 android : {
@@ -633,20 +683,9 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e132221'),
                         label: self.app.localization.e('e132233')
                     },
-
-                    github: {
-                        name: 'Bastyon' + ".apk",
-                        gfname: 'BastyonGF' + ".apk",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
-
                     icon: '<i class="fab fa-android"></i>',
-
                     modile : true,
                     image : 'applications_android.png',
-
-                    href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
                     hreflabel : 'downloadplaystore',
                     githublabel : 'downloadgithub'
                 },
@@ -659,13 +698,9 @@ Platform = function (app, listofnodes) {
                         download: self.app.localization.e('e132221'),
                         label: self.app.localization.e('e132233ios')
                     },
-
                     icon: '<i class="fab fa-apple"></i>',
-
                     modile : true,
                     image : 'applications_ios.jpg',
-
-                    href: 'https://apps.apple.com/app/id1537944200',
                     hreflabel : 'installpwa',
                 },
 
@@ -680,15 +715,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-windows"></i>',
-
-                    github: {
-                        name: 'Bastyon' + "Setup.exe",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
                     image : 'applications_windows.png',
-
-
                     node : true
                 },
 
@@ -702,12 +729,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-apple"></i>',
-                    image : 'applications_macos.png',
-                    github: {
-                        name: 'Bastyon'+ "Setup.dmg", //app.meta.fullname + "Setup.dmg",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
+                    image : 'applications_macos.png'
                 },
 
                 linux: {
@@ -721,13 +743,6 @@ Platform = function (app, listofnodes) {
 
                     image : 'applications_linux.png',
                     icon: '<i class="fab fa-linux"></i>',
-
-                    github: {
-                        name: 'Bastyon' + "Setup.deb",//  self.app.meta.fullname + "Setup.deb",
-                        url: ghAppLatest,
-                        page: readmeDownloadsLink,
-                    },
-
                     node : true
                 }
             },
@@ -742,12 +757,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-windows"></i>',
-
-                    github: {
-                        name: "pocketnetcore_0.18.13_win_x64_setup.exe",
-                        url: ghCoreLatest,
-                        page: readmeDownloadsLink,
-                    }
                 },
 
                 linux: {
@@ -759,16 +768,20 @@ Platform = function (app, listofnodes) {
                         label: self.app.localization.e('e13228')
                     },
 
-                    icon: '<i class="fab fa-linux"></i>',
-
-                    github: {
-                        name: "Pocketnet_linux_x64.AppImage",
-                        url: ghCoreLatest,
-                        page: readmeDownloadsLink,
-                    }
+                    icon: '<i class="fab fa-linux"></i>'
                 }
             }
         }
+        
+        _.each(meta, (o, i) => {
+            _.each(o, (a, j) => {
+                meta[i][j] = {...a, ...configmeta[i][j] || {}}
+            })
+        })
+
+        console.log('meta', meta)
+
+        return meta
     }
 
     self.__getSettingsMeta = function(){
@@ -3247,6 +3260,8 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
+                        console.log('parameters reason', reason)
+
                         app.nav.api.load({
                             open : true,
                             id : 'captcha',
@@ -4609,11 +4624,6 @@ Platform = function (app, listofnodes) {
 
             return app.meta.blockexplorer + 'address/' + address
 
-            /*var name = self.psdk.userInfo.getShortForm(address).name
-
-            if (name) return encodeURIComponent(name.toLowerCase());
-
-            else return app.meta.blockexplorer + 'address/' + address*/
         },
 
         upbutton: function (el, p) {
@@ -5838,7 +5848,7 @@ Platform = function (app, listofnodes) {
 
                             // If we are on mobile/electron and post has a downloadable media video
                             // Do not download video on iOS
-                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+                            if (share.itisvideo() && self.app.savesupported()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
@@ -6286,7 +6296,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve) => {
 
                         // Only save videos on Android
-                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
+                        if (share.itisvideo() && !p.doNotSaveMedia) {
 
                             self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
@@ -6450,8 +6460,14 @@ Platform = function (app, listofnodes) {
                                                 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                                                 thumbFile.nativeURL,
                                                 function (entry) {
+
+                                                    var url = entry.toURL()
+
+                                                    if (isios())
+                                                        url = window.WkWebView.convertFilePath(thumbFile.nativeURL)
+
                                                     // Success
-                                                    resolve(entry.toURL());
+                                                    resolve(url);
                                                 },
                                                 function (error) {
                                                     reject('download thumbnail error');
@@ -6482,7 +6498,7 @@ Platform = function (app, listofnodes) {
                                             // Write into file
                                             infoFile.createWriter(function (fileWriter) {
 
-                                                fileWriter.write(infos);
+                                                fileWriter.write(JSON.stringify(infos));
 
                                                 dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
@@ -6498,6 +6514,9 @@ Platform = function (app, listofnodes) {
                                                             targetFile.file(function(fileDetails) {
 
                                                                 targetFile.internalURL = entry.toURL();
+
+                                                                if(isios())
+                                                                    targetFile.internalURL = window.WkWebView.convertFilePath(targetFile.nativeURL)
 
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
@@ -6786,9 +6805,15 @@ Platform = function (app, listofnodes) {
                 video : {
                     cordova : function(to, from){
 
+                        console.log('video cordova', to, from)
+
+
                         return new Promise((resolve, reject) => {
 
                             from.getDirectory('videos', { create: true }, function (videosFolder) {
+
+                                console.log('videoFolder2', videosFolder)
+
 
                                 to.videos = {};
 
@@ -6801,6 +6826,7 @@ Platform = function (app, listofnodes) {
                                         action: function (p) {
                                             var videoFolder = p.item;
 
+                                            console.log('videoFolder', videoFolder)
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
@@ -6823,10 +6849,14 @@ Platform = function (app, listofnodes) {
 
                                                                         infoFile = file;
 
+                                                                        console.log('fileDetails', fileDetails, file)
+
 
                                                                         var reader = new FileReader();
 
                                                                         reader.onloadend = function() {
+
+                                                                            console.log('fileDetails result', this.result)
 
 
                                                                             try {
@@ -6834,7 +6864,7 @@ Platform = function (app, listofnodes) {
 
                                                                             } catch(err){
 
-                                                                                console.error('e', err)
+                                                                                console.error('fileDetails error', err)
 
                                                                             }
 
@@ -6851,16 +6881,30 @@ Platform = function (app, listofnodes) {
 
                                                                         videoFile = file;
 
+                                                                        console.log('videoFile2', videoFile)
+
+
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
 
-                                                                            videoFile.internalURL =  entry.toInternalURL()
+                                                                            console.log('videoFile1', videoFile, entry)
 
-                                                                            to.videos[videoFolder.name].video = videoFile;
+                                                                            try{
+                                                                                videoFile.internalURL =  entry.toInternalURL()
 
+                                                                                if(isios())
+                                                                                    videoFile.internalURL = window.WkWebView.convertFilePath(videoFile.nativeURL)
+    
+                                                                                to.videos[videoFolder.name].video = videoFile;
+    
+                                                                            }catch(e){
+                                                                                console.error(e)
+                                                                            }
+
+                                                                            
 
                                                                             _p.success()
                                                                         });
@@ -9309,7 +9353,7 @@ Platform = function (app, listofnodes) {
                     return removeMatrix()
                 }).then(() => {
 
-                    progress('removeBastyon')
+                    progress('removeBB')
 
                     return removeBastyon()
                 }).then(() => {
@@ -9608,7 +9652,11 @@ Platform = function (app, listofnodes) {
 
                 var old = {}
 
-                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") } catch (e){}
+                try { 
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") 
+                } catch (e){
+                    
+                }
 
                 this.import(old)
 
@@ -9631,7 +9679,7 @@ Platform = function (app, listofnodes) {
                         return -Number(n.time || n.nTime)
                     })
 
-                    e.notifications = firstEls(e.notifications, 75)
+                    e.notifications = firstEls(e.notifications, 150)
 
                     if (self.sdk.address.pnet()){
                         try{
@@ -9752,25 +9800,21 @@ Platform = function (app, listofnodes) {
                     return Promise.reject('openapi')
                 }
 
-                this.inited = false;
-                this.loading = true;
+                this.inited = true;
+                this.loading = false;
 
                 this.load();
-
 
                 this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
+                return Promise.resolve()
 
-                return this.getNotifications().then(r => {
 
-                    _.each(this.clbks.inited, function (f) {
-                        f()
-                    })
+            },
 
-                    return Promise.resolve(r)
-                })
-
+            initcl : function(clbk){
+                self.sdk.notifications.init().then(clbk).catch(clbk)
             },
 
             wsBlock: function (block) {
@@ -9804,151 +9848,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getNotificationsInfo: function (notifications, clbk) {
-                var n = this;
-
-                n.loading = true
-
-                notifications = firstEls(notifications, 75)
-
-                notifications = _.filter(notifications, function (ns) {
-                    if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
-
-                    if (ns.commentid && _.find(n.storage.notifications, function (n) {
-                        return n.commentid == ns.commentid
-                    })) return false
-
-                    if (ns.msg == "transaction" && ns.txinfo && ns.txinfo.pockettx) {
-                        return false
-                    }
-
-                    return true
-                })
-
-                notifications = _.sortBy(notifications, function (n) {
-                    return -Number(n.time || n.nTime)
-                })
-
-                lazyEach({
-                    array: notifications,
-                    action: function (p) {
-
-
-                        var ns = p.item;
-                        var m = null;
-
-                        ns.loading = true;
-
-                        if (ns.mesType) m = self.ws.messages[ns.mesType]
-                        if (ns.msg && !m) m = self.ws.messages[ns.msg]
-
-
-                        if (m) {
-                            m.loadMore(ns, function () {
-                                ns.loaded = true;
-
-                                ns.loading = false;
-
-                                p.success()
-
-                            }, true)
-                        }
-                        else {
-                            p.success()
-                        }
-
-                    },
-                    sync: true,
-                    all: {
-                        success: function () {
-
-                            n.loading = false
-
-                            var ns = _.filter(notifications, function (no) {
-                                if (no.msg == 'transaction' && no.address == self.sdk.address.pnet().address) {
-                                    return
-                                }
-                                return true
-                            })
-
-                            var added = [];
-
-                            _.each(ns, function (no) {
-
-                                var f = _.find(n.storage.notifications, function (n) {
-                                    if (no.txid && n.txid == no.txid) return true
-                                })
-
-                                if (!f) {
-                                    added.push(no)
-
-                                    if (n.storage.notifications)
-                                        n.storage.notifications.push(no)
-                                }
-
-
-                            })
-
-                            _.each(n.clbks.added, function (f) {
-                                f(added)
-                            })
-
-                            if (clbk)
-                                clbk()
-                        }
-                    }
-                })
-            },
-
-            getNotifications: function (blockdif) {
-                var n = this;
-
-
-                if(!n.inited && !n.loading) {
-                    return n.init()
-                }
-                else {
-
-                    return self.sdk.node.get.timepr().then(r => {
-
-                        return self.sdk.missed.get(n.storage.block - (blockdif || 0))
-
-                    }).then(({block, notifications}) => {
-
-                        return new Promise((resolve, reject) => {
-
-                            n.getNotificationsInfo(notifications || [], function () {
-
-                                if (block.block > n.storage.block) {
-                                    n.storage.block = block.block
-                                }
-
-                                n.inited = true;
-                                n.save();
-
-                                resolve();
-
-                            })
-
-                        })
-
-
-
-                    }).catch(e => {
-
-                        console.error(e)
-
-                        n.inited = false;
-                        n.loading = false;
-
-
-                        return Promise.reject(e)
-                    })
-
-                }
-
-
-            },
+          
 
             find: function (txid) {
                 return _.find(this.storage.notifications, function (n) {
@@ -9965,11 +9865,13 @@ Platform = function (app, listofnodes) {
                         block : {
                             block : self.currentBlock,
                             contentsLang : {},
+                            contentsSubscribes : {},
                             msg : 'newblocks'
                         }
                     }
                 }
 
+                console.log('self.currentBlock', self.currentBlock, block)
 
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
@@ -11834,7 +11736,7 @@ Platform = function (app, listofnodes) {
             },
 
             lskey : function(){
-                if(window.testpocketnet){
+                if (window.testpocketnet){
                     return 'recommendations_tn'
                 }
                 else{
@@ -11898,11 +11800,21 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.storage.keys = p.keys || {}
                 self.sdk.recommendations.sharesinfo = {}
 
-                self.psdk.share.insertFromResponse(_.map(_.filter(p.unseen || [], (sd) => {
-                    if(time - sd.date < 60 * 60) {
+                var unseens = _.map(p.unseen || [], (us) => {
+                    return {...us, ...{ ___temp : true }}
+                })
+
+                self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
+
+                    if (self.psdk.share.get(sd.share.txid)) return false
+
+                    if (time - sd.date < 60 * 60) {
+
                         self.sdk.recommendations.sharesinfo[sd.share.txid] = sd.info
+
                         return true
                     }
+
                 }), (sd) => {
                     return sd.share   
                 })).then(r => {
@@ -14134,6 +14046,7 @@ Platform = function (app, listofnodes) {
             },
 
             add : function(tags, id, value){
+                console.log("ADD TAGS", tags, id, value)
                 if(id && this.added[id]) return
 
                 if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
@@ -14163,26 +14076,33 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.scheduler()
             },
 
-            
+            lskey : function(){
+                if (window.testpocketnet){
+                    return 'memtags_tn'
+                }
+                else{
+                    return 'memtags'
+                }
+            },
 
             save : function(){
 
                 try{
-                    localStorage['memtags'] = JSON.stringify({
+                    localStorage[self.sdk.memtags.lskey()] = JSON.stringify({
                         tags : self.sdk.memtags.storage.tags,
                     })
                 }catch(e){
                     
                 }
-                
             },
-
 
             load: function (clbk) {
                 var p = {};
 
+                console.log('self.sdk.memtags.lskey(', self.sdk.memtags.lskey())
+
                 try {
-                    p = JSON.parse(localStorage['memtags'] || '{}');
+                    p = JSON.parse(localStorage[self.sdk.memtags.lskey()] || '{}');
                 }
                 catch (e) {}
 
@@ -14734,6 +14654,8 @@ Platform = function (app, listofnodes) {
 
                     if (self.lasttimecheck){
 
+                        console.log('block lasttimecheck error')
+
                         var d = new Date()
 
                         if(self.lasttimecheck.addSeconds(10) > d){
@@ -14747,6 +14669,8 @@ Platform = function (app, listofnodes) {
 
                         self.currentBlock = 0
                         self.timeDifference = 0;
+
+                        console.log('block getnodeinfo', d)
                         
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
@@ -14755,6 +14679,8 @@ Platform = function (app, listofnodes) {
                         }catch(e){
                             
                         }
+
+                        console.log('self.currentBlock', self.currentBlock)
 
                         if (t) {
 
@@ -18445,7 +18371,7 @@ Platform = function (app, listofnodes) {
         var socket;
         var opened = false;
         var closing = false;
-        var lost = 0;
+
         var wait = null;
 
         self.connected = {};
@@ -18501,7 +18427,7 @@ Platform = function (app, listofnodes) {
 
                 if(app.curation()) return ''
 
-                h = '<div class="sharepreview"><div class="shareprwrapper table">'
+                h = '<div class="sharepreview"><div class="shareprwrapper">'
 
                 if (images.length && !extendedpreview) {
 
@@ -18606,7 +18532,7 @@ Platform = function (app, listofnodes) {
             transaction: function (data, message) {
                 var h = '<div class="transactionmessage">'
 
-                h += '<div class="transactionmessagewrapper table">'
+                h += '<div class="transactionmessagewrapper">'
 
                 if (message) {
                     h += '<div class="tcell formessage">'
@@ -18778,7 +18704,7 @@ Platform = function (app, listofnodes) {
                 }*/
 
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                     <div class="cell cellforimage">\
                         <div class="icon">'
 
@@ -18896,7 +18822,7 @@ Platform = function (app, listofnodes) {
 
             simple : function(json){
 
-                h += '<div class="cwrapper table">\
+                h += '<div class="cwrapper">\
                         <div class="cell cellforimage">\
                             <div class="icon">'
 
@@ -19271,20 +19197,13 @@ Platform = function (app, listofnodes) {
 
                     if (text) {
 
-
                         if (data.postsCnt > 1) {
 
                             var c = data.postsCnt - 1
-
-                            //text = text + '<div class="moreshares">And more ' + c + " " + pluralform(c, ['post', 'posts']) + '</div>'
-
                         }
-
-
 
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                     }
-
 
                     return html;
 
@@ -19329,8 +19248,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
-
                     })
+
+                    if(data.share && data.share.itisstream()){
+                        message.el.addClass('bright')
+                    }
 
                 },
 
@@ -19692,13 +19614,23 @@ Platform = function (app, listofnodes) {
                         })
 
                     }*/
+                },
+
+                fastMessageEvents: function (data, message, close) {
+
+                    //message.el.addClass('bright')
+
                 }
             },
 
             'newblocks': {
                 loadMore: function (data, clbk) {
 
-                    if (data.block <= platform.currentBlock) {
+                    var hb = (data.block || data.height)
+
+                    if (hb <= platform.currentBlock) {
+
+                        platform.sdk.notifications.wsBlock(hb)
 
                         if(clbk) clbk(0)
 
@@ -19708,13 +19640,12 @@ Platform = function (app, listofnodes) {
 
                         var s = platform.sdk.node.transactions;
 
-                        var dif = platform.currentBlock - data.block
+                        var dif = platform.currentBlock - hb
 
-                        platform.currentBlock = data.block;
+                        platform.currentBlock = hb;
                         platform.lasttimecheck = new Date()
                         platform.lastblocktime = new Date()
 
-                        lost = data.block;
 
                         try{
                             localStorage['lastblock'] = platform.currentBlock
@@ -19728,7 +19659,7 @@ Platform = function (app, listofnodes) {
 
                     //self.reconnected = platform.currentBlock;
 
-                    platform.sdk.notifications.wsBlock(data.height)
+                    platform.sdk.notifications.wsBlock(hb)
 
                     _.each(s.unspent, function (unspents) {
                         _.each(unspents, function (txu) {
@@ -19740,7 +19671,7 @@ Platform = function (app, listofnodes) {
 
                     clbk(dif)
 
-                    data.difference = platform.currentBlock - (data.block || data.height)
+                    data.difference = platform.currentBlock - hb
 
                     platform.actions.ws.block(data)
 
@@ -19779,7 +19710,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk) {
 
-                    if (data.height <= platform.currentBlock) return
+                    if (data.height <= platform.currentBlock) {
+                        platform.sdk.notifications.wsBlock(data.data.height)
+                        return
+                    }
 
                     var s = platform.sdk.node.transactions;
 
@@ -19792,9 +19726,6 @@ Platform = function (app, listofnodes) {
                     }catch(e){
 
                     }
-
-                    lost = platform.currentBlock;
-
                     
 
                     platform.sdk.notifications.wsBlock(data.height)
@@ -20500,7 +20431,6 @@ Platform = function (app, listofnodes) {
             }
 
             closing = false;
-            //lost = platform.currentBlock;
 
             self.close();
 
@@ -20575,13 +20505,19 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-                    self.getMissed()
-
-                    lost = platform.currentBlock || 0;
+                    //lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
+                    
+                    
+                    
 
                     opened = true;
 
-                    auth(null, wss.proxy)
+                    auth(() => {
+
+                        self.getMissed().then(() => {
+                        })
+                        
+                    }, wss.proxy)
 
                     if (clbk)
                         clbk()
@@ -20613,7 +20549,7 @@ Platform = function (app, listofnodes) {
 
             if (message.timeout) clearTimeout(message.timeout);
 
-            if (platform.focus) {
+            if (platform.focus || noarrange) {
 
                 message.timeout = setTimeout(function () {
 
@@ -20632,7 +20568,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (!noarrange)
-                            arrangeMessages()
+                            tArrangeMessages()
 
                     }, 300)
 
@@ -20648,6 +20584,7 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotifications = function(){
+            hideallnotificationselement(false)
             self.destroyMessages()
 
         }
@@ -20691,71 +20628,83 @@ Platform = function (app, listofnodes) {
 				_.each(self.fastMessages, function(m, i){
 
 					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
-
 						m.el.addClass('smallsize');
-
 						s = true
 					}
 
 				})
 			}
 
-			setTimeout(function(){
+            console.log('showremove', showremove, self.fastMessages.length, remove)
 
-                if (showremove && self.fastMessages.length >= showremove){
-                    boffset = 50
 
-                    hideallnotificationselement(true)
+            if (showremove && self.fastMessages.length >= showremove){
+                boffset = 50
+
+                console.log("showremove SHOW")
+
+                hideallnotificationselement(true)
+            }
+            else{
+
+                console.log("showremove hide")
+
+                hideallnotificationselement(false)
+            }
+
+            offset = offset + boffset
+
+            _.each(self.fastMessages, function(m, i){
+
+                if(i < remove){
+                    destroyMessage(m, 1, true)
                 }
-                else{
-                    hideallnotificationselement(false)
+
+                else
+                {
+                    if(!mtbl){
+                        offset += 5;
+                    }
+
+                    if(!mtbl){
+                        var r = offset
+                        window.requestAnimationFrame(() => {
+                            m.el.css('bottom', r + 'px');
+                        })
+                        
+                    }
+                        
+
+                    offset += m.el.outerHeight();
                 }
 
-                offset = offset + boffset
-
-				_.each(self.fastMessages, function(m, i){
-
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
-
-					else
-					{
-						if(!mtbl){
-							offset += 5;
-						}
-
-						if(!mtbl)
-
-							m.el.css('bottom', offset + 'px');
-
-						offset += m.el.outerHeight();
-					}
-
-				})
-			}, s ? 300 : 3)
+            })
 
 
 		}
 
-        self.getMissed = function () {
+        var tArrangeMessages = _.debounce(arrangeMessages, 300)
 
-            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+        self.getMissed = function (initial) {
 
-            if(self.loadingMissed) return Promise.resolve()
+            console.log('missed platform.lastblocktime', platform.lastblocktime)
+
+            if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(2))))) return Promise.resolve()
+
+            if (self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
             return platform.sdk.node.get.timepr().then(r => {
 
-                return platform.sdk.missed.get(lost)
+                console.log("GETMISSED")
+
+                return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
             }).then(({block, notifications}) => {
 
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
-
-                    lost = 0;
 
                     if(!notifications) return
 
@@ -20775,6 +20724,8 @@ Platform = function (app, listofnodes) {
 
             }).catch(e => {
 
+                console.error(e)
+
                 self.loadingMissed = false;
 
                 return Promise.reject(e)
@@ -20790,7 +20741,7 @@ Platform = function (app, listofnodes) {
             })
 
             setTimeout(function(){
-                arrangeMessages()
+                tArrangeMessages()
             }, 301)
         }
 
@@ -20861,10 +20812,10 @@ Platform = function (app, listofnodes) {
 
                         message.expanded = true
 
-                        arrangeMessages();
+                        tArrangeMessages();
 
                         setTimeout(function(){
-                            arrangeMessages();
+                            tArrangeMessages();
                         }, 300)
                     }
                 }
@@ -20893,7 +20844,9 @@ Platform = function (app, listofnodes) {
                     el: message.el,
                     directions: {
                         up : {
-                            trueshold: 10,
+                            endmove : true,
+                            trueshold: 1,
+                            distance : 20,
                             positionclbk: function (px) {
 
                             },
@@ -20901,7 +20854,6 @@ Platform = function (app, listofnodes) {
                             clbk: function () {
                                 message.el.remove()
                                 destroyMessage(message, 1, false, true);
-
                             }
 
                         }
@@ -20910,7 +20862,7 @@ Platform = function (app, listofnodes) {
                 }).init()
             }
 
-            arrangeMessages();
+            tArrangeMessages();
 
             return message
         }
@@ -20918,6 +20870,8 @@ Platform = function (app, listofnodes) {
         self.messageHandler = function (data, clbk) {
 
             data || (data = {})
+
+            console.log('data', data)
 
             if (data.msg || data.mesType) {
 
@@ -21111,7 +21065,6 @@ Platform = function (app, listofnodes) {
             self.close()
 
             self.loadingMissed = false;
-            lost = 0;
         }
 
 
@@ -21287,8 +21240,6 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-
-
             if(!_OpenApi){
 
                 closing = false;
@@ -21304,7 +21255,9 @@ Platform = function (app, listofnodes) {
 
                 initconnection();
 
-                self.hideallnotificationsel = $('#hideallnotifications')
+                self.hideallnotificationsel = $('#hideallnotificationsel')
+
+                self.getMissed(true)
 
             }
 
@@ -22213,7 +22166,7 @@ Platform = function (app, listofnodes) {
             if (!d) {
                 if (self.app.platform.applications.ui[os()]) {
                     var _os = self.app.platform.applications.ui[os()]
-                    if (_os.github && _os.github.url) {
+                    if (_os.github && _os.github.page) {
                         d = new dialog({
                             html:  self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
@@ -22261,7 +22214,7 @@ Platform = function (app, listofnodes) {
     self.clearStorageFast = function () {
         _.each(self.sdk, function (c, id) {
 
-            if (id == 'users' || id == 'usersl' || id == 'tags') return;
+            if (id == 'users' || id == 'usersl' || id == 'tags' || id == 'localshares') return;
 
             if (c.storage) {
                 c.storage = {}
@@ -22276,7 +22229,7 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if(id != 'tags'){
+            if(id != 'tags' && id != 'localshares'){
                 if (c.storage) {
                     c.storage = {}
                 }
@@ -22293,21 +22246,6 @@ Platform = function (app, listofnodes) {
             users: {},
             tags : {}
         }
-
-
-
-        /*self.sdk.node.shares.storage = {
-            trx: {}
-        }*/
-
-
-        //// REMOVE
-
-        /*if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
-            _.each(self.sdk.node.shares.storage.trx, function(tr){
-                delete tr.myVal
-            })
-        }*/
        
 
         self.sdk.sharesObserver.storage = {
@@ -22469,18 +22407,16 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            //self.prepareUserData(function(){
 
-                self.app.reload({
-                    clbk : function () {
-                        reloading = false
+            self.app.reload({
+                clbk : function () {
+                    reloading = false
 
-                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                        if(clbk) clbk()
-                    }
-                })
-            //})
+                    if(clbk) clbk()
+                }
+            })
 
         })
     }
@@ -22702,33 +22638,6 @@ Platform = function (app, listofnodes) {
         });
     }
 
-    self.prepareUserData = function(clbk){
-
-
-
-        lazyActions([
-            self.sdk.broadcaster.init,
-            self.actions.prepare,
-            self.sdk.node.transactions.loadTemp,
-            self.sdk.ustate.meUpdate,
-            self.firebase.init,
-            self.sdk.user.meUpdate,
-            self.sdk.categories.load,
-            self.sdk.activity.load,
-            self.sdk.recommendations.load,
-            self.sdk.memtags.load,
-            self.sdk.node.shares.parameters.load,
-
-
-        ], function () {
-
-            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-            self.sdk.notifications.init().catch(e => {})
-
-            if(clbk) clbk()
-        })
-    }
 
     var checkfeatures = function(){
 
@@ -22823,7 +22732,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.user.get,
                         self.sdk.usersettings.init,
                         self.matrixchat.importifneed,
-                        self.ws.init,
+                        
                         self.firebase.init,
                         /*self.app.platform.sdk.node.transactions.get.allBalance,*/
     
@@ -22831,31 +22740,42 @@ Platform = function (app, listofnodes) {
                         self.sdk.articles.init,
                         self.sdk.categories.load,
                         self.sdk.activity.load,
-                        self.sdk.recommendations.load,
                         self.sdk.memtags.load,
+                        self.sdk.recommendations.load,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        self.sdk.user.getbans
-                        
+                        self.sdk.user.getbans,
+                        self.sdk.notifications.initcl
     
                     ], function () {
     
                         //self.ui.showmykey()
+
+                        self.ws.init()
     
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
                         },3000)
+
                         
                         var account = self.actions.addAccount(self.app.user.address.value)
     
-                        if (self.psdk.userState.getmy()) account.setStatus(true)
+                        if (self.psdk.userState.getmy()) {
+                            account.setStatus(true)
+                        }
     
                         account.setKeys(app.user.keys())
                         account.updateUnspents().catch(e => {
                             console.error(e)
                         })
     
+                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
+                            unspents = _.sortBy(unspents, (u) => {
+                                return u.amount
+                            })
+                            console.log("UNSPENTS", unspents)
+                        })*/
                         
     
                         self.preparingUser = false;
@@ -22896,7 +22816,7 @@ Platform = function (app, listofnodes) {
                                 }
                             }
     
-                            self.sdk.notifications.init().catch(e => {})
+                            
     
                             if(self.istest()){
                                 $('html').addClass('testaddress')
@@ -22908,7 +22828,7 @@ Platform = function (app, listofnodes) {
     
                         }, 2000)
     
-                
+                       
     
                     })
                 })
@@ -23130,6 +23050,7 @@ Platform = function (app, listofnodes) {
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
+                                    device="` + $.md5(self.app.options.device + self.app.user.address.value) +`"
                                     cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
@@ -23437,12 +23358,19 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                console.log("CHAT TO APP")
+
 
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
-                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
+
+                    var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '').replace(protocol + "://", '')
+
+                    console.log('link2', link)
 
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
@@ -23497,6 +23425,18 @@ Platform = function (app, listofnodes) {
                     c(false)
                 })
 
+            }
+
+            core.activeChange = function(value){
+                var wnds = self.app.el.windows.find('.wnd')
+
+                window.requestAnimationFrame(() => {
+                    if (value){
+                        wnds.css('z-index', 999)
+                    }else{
+                        wnds.css('z-index', '')
+                    }
+                })
             }
 
             core.apptochat = function(link){
@@ -23710,7 +23650,6 @@ Platform = function (app, listofnodes) {
                     account.updateUnspents()
                 }
                
-                self.sdk.notifications.getNotifications().catch(e => {})
             }
 
             if(time > 120 && window.cordova){
@@ -24303,6 +24242,17 @@ Platform = function (app, listofnodes) {
 		return {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
+                changeTitle : function(text){
+                    console.log('changeTitle', text)
+                    if(!self.titleManager) return 
+
+                    if(!text) {
+                        self.titleManager.clear();
+                    }
+                    else{
+                        self.titleManager.add(text)
+                    }
+                },
 				getUserInfo: async (address) => {
 
 					let res = new Promise((resolve, reject) => {

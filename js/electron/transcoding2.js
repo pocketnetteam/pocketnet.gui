@@ -192,6 +192,7 @@ class BinariesDownloader {
 
       const options = {
         destination: this.path,
+        version: '6.1',
         tickerFn: ({progress}) => {
           if (progress < lastProgress) {
             return;

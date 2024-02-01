@@ -68,7 +68,7 @@ var Peertube = function (settings) {
 		var responseTime = performance.now();
 
 		// Direct server call for streams
-		if (data.isStream) parameters.host = host;
+		// if (data.isStream) parameters.host = host;
 
 		return roy
 			.request(method, data, parameters)

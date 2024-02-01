@@ -1,12 +1,12 @@
 {
-    "name": "pocketnet.app",
-    "displayName": "Pocketnet",
+    "name": "<%-config.cordova.name%>",
+    "displayName": "<%-config.cordova.displayName%>",
     "version": "1.0.0",
     "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
     "main": "index.js",
     "scripts": {
         "android-add": "cordova platform add android@12.0.1",
-        "ios-add": "cordova platform add ios",
+        "ios-add": "cordova platform add ios@6.3.0",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",
         "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
@@ -45,7 +45,7 @@
         "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
         "cordova-android": "^11.0.0",
         "cordova-androidx-build": "^1.0.4",
-        "cordova-ios": "^6.2.0",
+        "cordova-ios": "^6.3.0",
         "cordova-plugin-actionsheet": "^2.3.3",
         "cordova-plugin-navigationbar-color": "file:cordova-plugin-navigationbar-color",
         "cordova-plugin-add-swift-support": "^2.0.2",
@@ -71,10 +71,13 @@
         "cordova-plugin-taptic-engine": "^2.2.0",
         "cordova-plugin-webview-checker": "^1.0.1",
         "cordova-plugin-x-socialsharing": "^6.0.4",
+        "cordova-plugin-file-opener2":"^4.0.0",
         "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+
         <% if(!store) {%>
-                "cordova-plugin-apkupdater": "~4.0.0",
+            "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
+        
         "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
@@ -100,17 +103,21 @@
             "cordova-plugin-contacts-x": {},
             "cordova-plugin-ionic-keyboard": {},
             "cordova-universal-links-plugin": {},
+            "cordova-plugin-file-opener2" : {},
             "cc.fovea.cordova.openwith": {
                 "ANDROID_MIME_TYPE": "*",
-                "IOS_URL_SCHEME": "pocketnet",
                 "IOS_UNIFORM_TYPE_IDENTIFIER": "public.item",
-                "IOS_GROUP_IDENTIFIER": "group.app.pocketnet",
-                "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
                 "ANDROID_EXTRA_ACTIONS": " "
+
+                <% if(config.cordova.iosUrlScheme) {%>,"IOS_URL_SCHEME": "<%-config.cordova.iosUrlScheme%>"<% } %>
+                <% if(config.cordova.groupIdentifier) {%>,"IOS_GROUP_IDENTIFIER": "<%-config.cordova.groupIdentifier%>"<% } %>
+                <% if(config.cordova.iosTeamId) {%>,"SHAREEXT_DEVELOPMENT_TEAM": "<%-config.cordova.iosTeamId%>"<% } %>
+                
             },
             "cordova-plugin-insomnia": {},
             "cordova-plugin-taptic-engine": {},
             "cordova-plugin-background-download": {},
+            "cordova-plugin-background-mode" : {},
             "cordova-plugin-camera": {
                 "ANDROIDX_CORE_VERSION": "1.6.+",
                 "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",

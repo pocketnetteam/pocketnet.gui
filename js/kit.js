@@ -2227,6 +2227,7 @@ Transaction = function(){
 
 }
 
+
 pUserInfo = function(){
 
 	var self = this;
@@ -2271,7 +2272,6 @@ pUserInfo = function(){
 	self.content = {}
 
 	self.objectid = makeid()
-
 
 	self._import = function(v){
 		self.name = v.n || v.name || '';
@@ -2465,6 +2465,8 @@ pUserInfo = function(){
 
 	var loadingRelations = {}
 
+	self.relclbks = {}
+
 	self.loadRelation = function(key, loadFunction){
 		if (self[key + '_loaded']){
 			return Promise.resolve()
@@ -2474,11 +2476,22 @@ pUserInfo = function(){
 
 		loadingRelations[key] = loadFunction(self.address, key).then(v => {
 
-			self[key] = v
+			if(v){
 
-			self[key + '_loaded'] = true
+				self[key] = v
 
-			return Promise.resolve(self[key])
+				self[key + '_loaded'] = true
+
+				_.each(self.relclbks || {}, (c) => {
+					c(key, v)
+				})
+	
+				return Promise.resolve(self[key])
+			}
+
+			return Promise.resolve(null)
+
+			
 		}).catch(e => {
 
 			console.error(e)
@@ -2570,20 +2583,32 @@ pUserInfo = function(){
 		_.each(loadingRelations, (relfu, key) => {
 			ui.setLoadingRelations(relfu, key)
 		})
-		
+
+		ui.relclbks[self.objectid] = (key, v) => {
+
+			self[key] = v
+			self[key + '_loaded'] = true
+
+			_.each(self.relclbks || {}, (c) => {
+				c(key, v)
+			})
+		}
+
+		ui.cloned = self.objectid
+
 		return ui
 	}
 
 	self.setLoadingRelations = function(relfu, key){
 		loadingRelations[key] = relfu
 
-
 		loadingRelations[key].then((result) => {
 
-
 			if (result){
+
 				self[key] = v
 				self[key + '_loaded'] = true
+
 			}
 
 			return Promise.resolve(result)
@@ -2613,6 +2638,7 @@ pShare = function(){
 	self.language = '';
 	self.poll = {};
 	self.time = new Date()
+	self.___temp = false
 
 	self.comments = 0;
 	self.lastComment = null;
@@ -2759,6 +2785,8 @@ pShare = function(){
 		if (v.id)
 			self.id = v.id;
 
+		if(v.___temp) self.___temp = v.___temp
+
 		if (v.txidEdit){
 			self.txidEdit = v.txidEdit;	
 			self.edit = true
@@ -2788,7 +2816,6 @@ pShare = function(){
 		if (v.reposted)
 			self.reposted = v.reposted
 
-		
 		if (v.lastComment)
 			self.lastComment = v.lastComment.id || v.lastComment
 
@@ -2835,6 +2862,8 @@ pShare = function(){
 		v.repost = self.repost
 		v.txidEdit = self.txidEdit
 		v.edit = self.edit
+		v.___temp = self.___temp
+
 
 		if(self.lastComment){
 			/*if(self.lastComment.export){
@@ -2844,6 +2873,7 @@ pShare = function(){
 				v.lastComment = self.lastComment
 			//}
 		}
+
 
 		return v
 	}

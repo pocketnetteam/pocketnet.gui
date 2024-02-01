@@ -669,6 +669,7 @@ var share = (function(){
 
 				var text = el.eMessage[0].emojioneArea.getText();
 
+				text = text.split(findAndReplaceLinkClearReverse(l)).join('');
 				text = text.split(l).join('');
 
 
@@ -690,11 +691,11 @@ var share = (function(){
 			
 
 			applyText : function(text){
-				currentShare.message.set(text);
+				currentShare.message.set(findAndReplaceLinkClearReverse(text));
 			},
 
 			caption : function(caption){
-				currentShare.caption.set(caption);
+				currentShare.caption.set(findAndReplaceLinkClearReverse(caption));
 			},
 
 			loadimage : function(url, callback){
@@ -1006,7 +1007,7 @@ var share = (function(){
 
 										self.app.nav.api.load({
 											open : true,
-											href : 'author?address=' + self.app.user.address.value,
+											href : 'authorn?address=' + self.app.user.address.value,
 											history : true
 										})
 
@@ -2852,11 +2853,11 @@ var share = (function(){
 				}
 
 				if (essenseData.name) {
-					currentShare.caption.set(essenseData.name);
+					currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
 				}
 
 				if (essenseData.description) {
-					currentShare.message.set(essenseData.description);
+					currentShare.message.set(findAndReplaceLinkClearReverse(essenseData.description));
 				}
 
 				if (essenseData.tags) {

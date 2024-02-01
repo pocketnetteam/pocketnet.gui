@@ -82,7 +82,7 @@ var test = (function(){
 						
 						_p.ref += name
 	
-						body += '<p><a elementsid="https://'+self.app.options.url+'/author?address='+self.app.ref+'" href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+						body += '<p><a elementsid="https://'+self.app.options.url+'/authorn?address='+self.app.ref+'" href="https://'+self.app.options.url+'/authorn?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 					}							
 	
 					var r = deep(document, 'referrer')
@@ -237,7 +237,7 @@ var test = (function(){
 
 					userInfo.name.set(trim(superXSS(tempInfo.name)));
 					userInfo.language.set(superXSS(tempInfo.language));
-					userInfo.about.set(trim(superXSS(tempInfo.about)));
+					userInfo.about.set(findAndReplaceLinkClearReverse(trim(superXSS(tempInfo.about))));
 					userInfo.site.set(trim(superXSS(tempInfo.site)));
 					userInfo.image.set(superXSS(tempInfo.image));
 					userInfo.addresses.set(tempInfo.addresses);

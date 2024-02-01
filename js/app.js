@@ -110,12 +110,14 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	self._meta = window.projects_meta
-	self.meta = self._meta.Pocketnet
+	//self._meta = window.projects_meta
+	self.meta = window.project_config || {}
+	
+	/*self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
 		self.meta = self._meta[window.pocketnetproject]
-	}
+	}*/
 
 	var url = window.pocketnetdomain
 
@@ -381,7 +383,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-		return isElectron || (window.cordova && !isios());
+		return isElectron || (window.cordova);
 	}
 
 	self.savesupportedForBrowser = function () {
@@ -406,12 +408,6 @@ Application = function (p) {
 		},
 		state: {},
 		clbks: {
-
-			/*_platform : function(change){
-			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
-				self.prepareUserData()
-			  }
-			},*/
 
 			_modules: function (change) {
 
@@ -602,7 +598,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ')</a> contact support (' + template + ')</p>'
 
 			if (address) {
 				body += '<p>Address: ' + (address) + '</p>'
@@ -661,7 +657,7 @@ Application = function (p) {
 
 			var body = ''
 
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
 
 			if (link1)
 				body += '<p>Link: <a href="' + link1 + '">' + link1 + '</a></p>'
@@ -721,7 +717,7 @@ Application = function (p) {
 			_p.TemplateID = '2002'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + s3 + '" href="https://' + self.options.url + '/authorn?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
 			body += '<p>Reason: ' + i1 + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -769,7 +765,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/author?address=' + address2 + '">user(' + address2 + ')</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/authorn?address=' + address2 + '">user(' + address2 + ')</a></p>'
 			body += '<p>Reason: ' + reason + '</p>'
 
 			_p.body = encodeURIComponent(body)
@@ -852,7 +848,7 @@ Application = function (p) {
 			_p.TemplateID = '2000'
 
 			var body = ''
-			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + address1 + '" href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
+			body += '<p><a elementsid="https://' + self.options.url + '/authorn?address=' + address1 + '" href="https://' + self.options.url + '/authorn?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
 
 			body += '<p>Reason: ' + reason + '</p>'
 
@@ -1212,7 +1208,7 @@ Application = function (p) {
 						linkify.registerCustomProtocol('pocketnet')
 						linkify.registerCustomProtocol('bastyon')
 					}
-				}, 2000)
+				}, 20000)
 
 
 				/*self.platform.ui.support('balance', {
@@ -1481,6 +1477,7 @@ Application = function (p) {
 
 				if (cordova.plugins && cordova.plugins.backgroundMode)
 					cordova.plugins.backgroundMode.on('activate', function () {
+						console.log("BACKGROUND ACTIVATED")
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
 
@@ -1693,7 +1690,7 @@ Application = function (p) {
 				var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
 				self.mobile.unsleep(unsleep)
-				//self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
+				self.mobile.backgroundMode(unsleep && self.platform.sdk.videos.volume && !self.mobile.pip.element)
 
 			}, 1000)
 
@@ -2392,13 +2389,14 @@ Application = function (p) {
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
-						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+						var h = isios() ? event.keyboardHeight : Math.max(event.keyboardHeight, Math.min(303, window.innerHeight / 2))
 
-						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = h
 
+						document.documentElement.style.setProperty('--keyboardheight', `${h}px`);
 
 						self.apps.emit('keyboard', {
-							height : event.keyboardHeight
+							height : h
 						})
 
 					});
@@ -2927,7 +2925,7 @@ Application = function (p) {
 														account.releaseCheckInAnotherSession()
 													}
 
-													self.platform.sdk.notifications.getNotifications()
+													self.platform.ws.getMissed()
 												}
 
 											})
@@ -2968,12 +2966,11 @@ Application = function (p) {
 		screen: {
 
 			lock: function (orientation) {
-				if (window.cordova && (orientation || baseorientation))
+				if (window.cordova && (orientation || baseorientation) && window.screen.orientation.lock)
 					window.screen.orientation.lock(orientation || baseorientation)
 			},
 			unlock: function () {
-				if (window.cordova) {
-					//window.screen.orientation.lock(baseorientation)
+				if (window.cordova && window.screen.orientation.unlock) {
 					window.screen.orientation.unlock()
 				}
 
@@ -3137,36 +3134,7 @@ Application = function (p) {
 
 	}
 
-	self.thislink = function (_url) {
-
-		var url = {}
-
-		try {
-			url = new URL(_url)
-		}
-		catch (e) {
-			url.host = ''
-		}
-
-		var groups = {
-			p: ['pocketnet.app', 'bastyon.com'],
-			pt: ['test.pocketnet.app', 'test.bastyon.com']
-		}
-
-		if (_url.indexOf('bastyon://') > -1) return true
-		if (_url.indexOf('pocketnet://') > -1) return true
-
-		var domain = self.options.url
-
-		var m = _.find(groups, function (g) {
-
-			return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
-		})
-
-
-		if (m) return true
-
-	}
+	self.thislink = thislink
 
 	self.setref = function (r, na) {
 

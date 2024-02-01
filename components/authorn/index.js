@@ -294,7 +294,6 @@ var authorn = (function(){
 			id : 'search',
 			parameter : 'ssa',
 			extend : function(params){
-				console.log("EXTEND PARAMS", params)
 				params.search = true
 				params.searchValue = parameters().ssa
 				params.loader = function(clbk){
@@ -343,11 +342,9 @@ var authorn = (function(){
 
 		var load = {
 			postssearch : function(clbk, start, count){
-				console.log("Rblock", start, count)
 
 				self.app.platform.sdk.search.get(parameters().ssa, 'posts', start, count, fixedBlock, function(r, block){
 
-					console.log("Rblock", r, block)
 
 					fixedBlock = block
 					
@@ -382,10 +379,13 @@ var authorn = (function(){
 			},
 			
 			subscribes : function(){
-				return this.subscribersOrSubscribes('subscribes').then(u => {
-					return _.map(u, (u) => {
-						return u.adddress || u.address
-					})
+				return this.subscribersOrSubscribes('subscribes').then(({addresses, count}) => {
+					return {
+						addresses : _.map(addresses, (u) => {
+							return u.adddress || u.address
+						}), 
+						count
+					}
 				})
 			},
 
@@ -395,19 +395,32 @@ var authorn = (function(){
 					var u = _.map(deep(author, 'data.' + rkey) || [], function(a){
 						return a
 					})
+
+					var count = u.length
 	
 					var blocked = (deep(author, 'data.blocking') || []).concat()
-	
+
 					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
+
+						if(!a) return false
+
+						var address = a.adddress || a.address || a
+
+						return _.indexOf(blocked, address) == -1
 					})
 
 
-					return Promise.resolve(u)
+					return Promise.resolve({
+						addresses : u,
+						count
+					})
 
 				}).catch((e) => {
 					console.error(e)
-					return []
+					return {
+						addresses : [],
+						count : 0
+					}
 				})
 			}
 		}
@@ -506,37 +519,39 @@ var authorn = (function(){
 			},
 
 			showsubscribes : function(){
-				load.subscribes().then(addresses => {
+				load.subscribes().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
 					var ctext = self.app.localization.e('following')
 
-					events.showuserslist(el.subscribes, addresses, etext, ctext)
+					events.showuserslist(el.subscribes, addresses, etext, ctext, null, count)
 				})
 			},
 
 			showsubscribers : function(){
-				load.subscribers().then(addresses => {
+				load.subscribers().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
 					var ctext = self.app.localization.e('followers')
 
-					events.showuserslist(el.subscribers, addresses, etext, ctext)
+					events.showuserslist(el.subscribers, addresses, etext, ctext, null, count)
 				})
 			},
 
-			showuserslist : function(_el, addresses, empty, caption, clbk){
+			showuserslist : function(_el, addresses, empty, caption, clbk, count){
 				self.nav.api.load({
 
 					open : true,
 					id : 'userslist',
 					animation : false,
 					inWnd : true,
+					history : true,
 					essenseData : {
 						addresses : addresses,
 						empty : empty,
 						caption : caption,
-						sort : 'commonuserrelation'
+						sort : 'commonuserrelation',
+						count
 					},
 					
 					clbk : function(e, p){
@@ -926,7 +941,6 @@ var authorn = (function(){
 					p.el.find('.searchIcon').on('click', function(){
 						$(this).closest('.navisearchWrapper').toggleClass('searchActive')
 
-						console.log('acsearch', acsearch)
 
 						if($(this).closest('.navisearchWrapper').hasClass('searchActive')){
 							acsearch.focus()
@@ -986,7 +1000,6 @@ var authorn = (function(){
 									href = '?ssa=' + value
 								}
 
-								console.log('value', value, href)
 
 								try{
 									actions.clearSearch(true)
@@ -1013,7 +1026,6 @@ var authorn = (function(){
 							},
 
 							clear : function(fs){
-								console.log("CLEAR?")
 								p.el.find('.navisearchWrapper').removeClass('searchActive')
 
 								actions.clearSearch()
@@ -1023,7 +1035,6 @@ var authorn = (function(){
 						
 					})
 
-					console.log('acsearch', acsearch)
 
 					if (parameters().ssa){
 						acsearch.setvalue(parameters().ssa)
@@ -1044,14 +1055,10 @@ var authorn = (function(){
 
 				var d = {author};
 
-				console.log('metmenu', _el)
-
 				self.fastTemplate('metmenu', function(rendered, template){
 
 					self.app.platform.api.tooltip(_el, function(){
 
-						console.log("Data", d)
-					
 						return template(d);
 
 					}, function(el, n, close){
@@ -1096,7 +1103,7 @@ var authorn = (function(){
 			
 			lenta : function(){
 
-				var hr = 'author?address=' + author.address
+				var hr = 'authorn?address=' + author.address
 				var n =  app.platform.api.name(author.address)
 				if (n) hr = n.toLowerCase() + "?"
 
@@ -1105,7 +1112,6 @@ var authorn = (function(){
 					byauthor : true,
 					hr : hr,
 					cancelsearch : function(){
-						console.log('cancelsearch')
 						actions.clearSearch()
 					},
 					renderclbk : function(){
@@ -1187,7 +1193,25 @@ var authorn = (function(){
 					el.blocking.removeClass('active')
 				}
 				else{
-					load.blocking().then(addresses => {
+					
+
+					self.shell({
+						name :  'blockinglabel',
+						el :   el.blocking,
+						data : {
+							
+						},
+						insertimmediately : true,
+					}, function(p){
+
+						el.blocking.addClass('active')
+						
+						p.el.find('.showblocking').on('click', events.showblocking)
+
+					})
+
+
+					/*load.blocking().then(addresses => {
 
 						var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynoblocked') : self.app.localization.e('anoblocked')
 						
@@ -1195,35 +1219,34 @@ var authorn = (function(){
 	
 						renders.userslist(el.blocking, addresses, etext, ctext, clbk, 'blocking')
 	
-					})
+					})*/
 				}
-
 				
 			},
 
 
 			subscribes : function(clbk){
-				load.subscribes().then(addresses => {
+				load.subscribes().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
 					var ctext = self.app.localization.e('following')
 
-					renders.userslist(el.subscribes, addresses, etext, ctext, clbk, 'subscribes')
+					renders.userslist(el.subscribes, addresses, etext, ctext, clbk, 'subscribes', count)
 				})
 			},
 
 			subscribers : function(clbk){
-				load.subscribers().then(addresses => {
+				load.subscribers().then(({addresses, count}) => {
 
 					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
 					var ctext = self.app.localization.e('followers')
 
 
-					renders.userslist(el.subscribers, addresses, etext, ctext, clbk, 'subscribers')
+					renders.userslist(el.subscribers, addresses, etext, ctext, clbk, 'subscribers', count)
 				})
 			},
 
-			userslist : function(_el, addresses, empty, caption, clbk, mid){
+			userslist : function(_el, addresses, empty, caption, clbk, mid, count){
 
 				if (modules['userlist' + mid]){
 					modules['userlist' + mid].destroy()
@@ -1243,7 +1266,8 @@ var authorn = (function(){
 						empty : empty,
 						caption : caption,
 						sort : 'random',
-						preview : true
+						preview : true,
+						count
 					},
 					
 					clbk : function(e, p){
@@ -1288,6 +1312,9 @@ var authorn = (function(){
 		var relationsClbk = function(address){
 
 			if (address == author.address){
+
+				author.data = self.psdk.userInfo.get(author.address)
+
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
@@ -1300,6 +1327,9 @@ var authorn = (function(){
 			self.app.platform.actionListeners.authorn = function({type, alias, status}){
 
 				if(type == 'blocking' || type == 'unblocking'){
+
+					author.data = self.psdk.userInfo.get(author.address)
+					
 					renders.randombg()
 				}
 
@@ -1318,6 +1348,8 @@ var authorn = (function(){
 
 					if(alias.address == author.address){
 
+						author.data = self.psdk.userInfo.get(author.address)
+
 						renders.aucaption()
 						renders.uinfo()
 
@@ -1328,6 +1360,8 @@ var authorn = (function(){
 				if (type == 'accDel'){
 
 					if(alias.address == author.address){
+
+						author.data = self.psdk.userInfo.get(author.address)
 
 						renders.aucaption()
 						renders.uinfo()

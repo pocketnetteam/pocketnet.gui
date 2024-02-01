@@ -125,7 +125,7 @@
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
         
-
+        <div id="hideallnotificationsel"></div>
         
 
     </body>
