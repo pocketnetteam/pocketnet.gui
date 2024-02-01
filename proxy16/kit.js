@@ -47,9 +47,9 @@ const TestSecureWsPort = 6667;
 var testnodes = [
 	{
 		host : '78.37.233.202',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : 'test.v.pocketnet.app',
 		stable : true
@@ -57,45 +57,45 @@ var testnodes = [
 
 	{
 		host : '157.90.235.121',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : 'test.1.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '157.90.228.34',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '116.203.219.28',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : 'test.pocketnet.app',
 		stable : true
 	},
 	{
 		host : 'pnettool.pocketnet.app',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
 		host : '109.173.41.29',
-		web : TestWebPort,
+		port : TestWebPort,
 		ws : TestWsPort,
-		sweb : TestSecureWebPort,
+		sport : TestSecureWebPort,
 		sws : TestSecureWsPort,
 		name : 'lostystyg',
 		stable : false
@@ -107,9 +107,9 @@ var activenodes = [
 
 	{
 		host : '135.181.196.243',
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '135.181.196.243',
 		stable : true
@@ -117,9 +117,9 @@ var activenodes = [
 
 	{
 		host : '202.61.253.55', //
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '202.61.253.55',
 		stable : true
@@ -127,9 +127,9 @@ var activenodes = [
 
 	{
 		host : '140.99.153.138',
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '140.99.153.138',
 		stable : true
@@ -137,9 +137,9 @@ var activenodes = [
 
 	{
 		host : '172.83.108.41',
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '172.83.108.41',
 		stable : true
@@ -147,9 +147,9 @@ var activenodes = [
 
 	{
 		host : '207.180.201.246', ///
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '207.180.201.246',
 		stable : true
@@ -157,27 +157,27 @@ var activenodes = [
 
 	{
 		host : '5.189.141.204', ///
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '5.189.141.204',
 		stable : true
 	},
 	{
 		host : '162.246.52.155',
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '162.246.52.155',
 		stable : true
 	},
 	{
 		host : '172.83.108.40',
-		web : WebPort,
+		port : WebPort,
 		ws : WsPort,
-		sweb : SecureWebPort,
+		sport : SecureWebPort,
 		sws : SecureWsPort,
 		name : '172.83.108.40',
 		stable : true

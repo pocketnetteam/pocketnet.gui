@@ -7,10 +7,10 @@ function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
 
-    this.web = opts.web || 38081;
+    this.port = opts.port || 38081;
 
     if (global.USE_TLS_NODES_ONLY) {
-        this.web = opts.sweb || 38881;
+        this.port = opts.sport || 38881;
     }
 
     this.portPrivate = opts.portPrivate || 37071;
@@ -235,7 +235,7 @@ function rpc(request, callback, obj) {
         host: self.host,
         path: pst ? '/post/' : (pbl ? '/public/' : '/'),
         method: 'POST',
-        port: prv ? self.portPrivate : self.web,
+        port: prv ? self.portPrivate : self.port,
         agent: keepAliveAgent,
         signal : signal,
     };

@@ -499,7 +499,7 @@ var WSS = function(admins, manage){
         edisconnect = 0
         econnect = 0
 
-        var port = settings.web || 8099
+        var port = settings.port || 8099
         
         return new Promise((resolve, reject) => {
 
