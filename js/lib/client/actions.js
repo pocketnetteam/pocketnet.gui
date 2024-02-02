@@ -532,7 +532,7 @@ var Action = function(account, object, priority, settings){
 
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
 
-                        if(!account.unspent.updated){
+                        if(!account.unspents.updated){
                             return Promise.reject('actions_inputs_not_updated')
                         }
 
@@ -1429,6 +1429,7 @@ var Account = function(address, parent){
 
     self.actionRejected = async function(action, error){
 
+
         //// use getActionById(in clbk)
 
         if(action.checkInAnotherSession) return Promise.reject(error)
@@ -1737,6 +1738,7 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
+            console.error(e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
