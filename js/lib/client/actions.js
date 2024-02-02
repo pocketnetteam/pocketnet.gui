@@ -531,6 +531,11 @@ var Action = function(account, object, priority, settings){
                     clearUnspents = filterUnspents(clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
+
+                        if(!account.unspent.updated){
+                            return Promise.reject('actions_inputs_not_updated')
+                        }
+
                         return Promise.reject('actions_noinputs')
                     }
     
@@ -1113,7 +1118,7 @@ var Action = function(account, object, priority, settings){
 
             if(rejectIfError){
                 if(
-
+                    error == 'actions_inputs_not_updated' ||
                     error == 'actions_noinputs_wait' || 
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 

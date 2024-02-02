@@ -2890,11 +2890,20 @@ Application = function (p) {
 								trueshold: 70,
 								clbk: function () {
 
+
+
 									self.mobile.reload.reloading = true
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
 
 									globalpreloader(true)
+
+									_.each(self.modules, (m) => {
+										if(!m.module) return
+										_.each(m.module.essenses, (mm) => {
+											if(mm.willreload) mm.willreload()
+										})
+									})
 
 									setTimeout(function () {
 

@@ -500,14 +500,16 @@
 }
 #comments .list .commentpanel {
   overflow: hidden;
-  margin-top: 0.5em;
 }
 #comments .list .commentpanel .items {
   display: flex;
   align-items: center;
 }
 #comments .list .commentpanel .items > div {
-  margin-right: 1em;
+  padding: 0.5em;
+  padding-top: 1em;
+  margin-right: 0.5em;
+  padding-left: 0;
 }
 #comments .list .commentpanel .items > div .cact {
   cursor: pointer;
