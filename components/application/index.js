@@ -18,7 +18,16 @@ var application = (function(){
                     inWnd : true,
 
                     essenseData : {
-                        application : application.manifest.id
+                        application : application.manifest.id,
+
+						onremove : function(){
+							self.app.nav.api.load({
+								open : true,
+								href : 'home',
+								history : true,
+								replaceState : true,
+							})
+						}
                     }
                 })
 			}
@@ -193,6 +202,20 @@ var application = (function(){
 	
 					clbk(data);
 
+				}).catch(e => {
+					console.error(e)
+
+					setTimeout(() => {
+
+						self.app.nav.api.load({
+							open : true,
+							href : 'page404',
+							history : true,
+							replaceState : true,
+							fade : self.app.el.content
+						})
+
+					}, 200)
 				})
 
 			},

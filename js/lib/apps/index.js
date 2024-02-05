@@ -471,6 +471,15 @@ var BastyonApps = function(app){
                 cached : {}
             }
 
+            if (application.develop){
+                _.each(application.grantedPermissions || [], (permission) => {
+                    localdata[application.id].permissions.push({
+                        id : permission,
+                        state : 'granted'
+                    })
+                })
+            }
+
             savelocaldata()
         }
             
@@ -582,9 +591,10 @@ var BastyonApps = function(app){
         installing[application.id] = {promise : resources(application, cached).then((resourses) => {
             result.path = application.path
 
-            installed[application.id] = {result, ...resourses}
+            installed[application.id] = {...result, ...resourses}
 
             registerLocal(application)
+
 
             return installed[application.id]
 
@@ -658,7 +668,7 @@ var BastyonApps = function(app){
             var action = deep(actions, data.action)
 
             if(!action){
-                promise = Promise.reject(appsError('missing:action in actions'))
+                promise = Promise.reject(appsError('missing:action in actions (' + data.action + ')'))
             }
 
             else{   
@@ -808,6 +818,7 @@ var BastyonApps = function(app){
 
         if(!appdata) return Promise.reject(appsError('error:code:appdata'))
         if(!meta) return Promise.reject(appsError('permission:missing'))
+
 
         if(checkPermission(application, permission)) return Promise.resolve()
         if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
@@ -1132,7 +1143,8 @@ var BastyonApps = function(app){
     self.givePermission = givePermission
     self.removePermission = removePermission
     self.clearPermission = clearPermission
-    
+    self.install = install
+    self.remove = remove
 
     return self
 }
