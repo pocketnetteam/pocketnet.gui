@@ -27,12 +27,9 @@ var Node = function(options, manager){
 
     self.host = options.host
     self.port = options.port
+    self.sport = options.sport
     self.ws = options.ws
-
-    if (global.USE_TLS_NODES_ONLY) {
-        self.port = options.sport
-        self.ws = options.sws
-    }
+    self.sws = options.sws
 
     self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
@@ -296,16 +293,26 @@ var Node = function(options, manager){
         
     }
 
-    self.key = self.host + ":" + self.port
-    self.wskey = self.host + ":" + self.ws
-    self.ckey = self.host + ":" + self.port + ":" + self.ws
+    let tprotocol = 'http'
+    let webport = self.port
+    let wsport = self.ws
+
+    if (global.USE_TLS_NODES_ONLY) {
+        tprotocol = 'https'
+        webport = options.sport
+        wsport = options.sws
+    }
+
+    self.key = self.host + ":" + webport
+    self.wskey = self.host + ":" + wsport
+    self.ckey = self.host + ":" + webport + ":" + wsport
 
     self.rpc = new RpcClient({
-        protocol: (global.USE_TLS_NODES_ONLY) ? 'https' : 'http',
+        protocol: tprotocol,
         user: self.rpcuser,
         pass: self.rpcpass,
         host: self.host,
-        port: self.port,
+        port: webport,
         portPrivate: self.portPrivate,
     })
 
@@ -1074,9 +1081,11 @@ var Node = function(options, manager){
         return {
             host : self.host,
             port : self.port,
+            sport : self.sport,
+            ws : self.ws,
+            sws : self.sws,
             rpcuser : self.rpcuser,
             rpcpass : self.rpcpass,
-            ws : self.ws,
             name : self.name,
             addedby : self.addedby,
             key : self.key,

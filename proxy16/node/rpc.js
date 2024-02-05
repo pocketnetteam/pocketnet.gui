@@ -8,10 +8,7 @@ function RpcClient(opts) {
     this.host = opts.host || '127.0.0.1';
 
     this.port = opts.port || 38081;
-
-    if (global.USE_TLS_NODES_ONLY) {
-        this.port = opts.sport || 38881;
-    }
+    this.sport = opts.sport || 38881;
 
     this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
