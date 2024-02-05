@@ -2782,3 +2782,5 @@ _l.labeltempactionszero = "No pending transactions"
 
 _l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
 _l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"

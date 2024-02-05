@@ -22536,6 +22536,8 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.matrixchat.init()
                         }, 10)
+                        
+                        self.app.initApplications()
     
                         if (clbk)
                             clbk()
@@ -22575,7 +22577,7 @@ Platform = function (app, listofnodes) {
                         }, 2000)
     
                        
-    
+                        
                     })
                 })
                 
@@ -23028,6 +23030,14 @@ Platform = function (app, listofnodes) {
 
                 return Promise.reject('matrixchat.core')
             }
+        },
+
+        getNotificationsCount : function(){
+            if (self.matrixchat.core){
+                return self.matrixchat.core.getNotificationsCount()
+            }
+
+            return 0
         },
 
         share : {

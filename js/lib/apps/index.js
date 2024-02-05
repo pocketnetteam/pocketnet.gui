@@ -608,10 +608,18 @@ var BastyonApps = function(app){
 
     var remove = function(id){
 
-        delete localdata[id]
-        delete installed[id]
+        self.get.application(id).then(({application}) => {
 
-        return Promise.resolve()
+            self.emit('removed', {}, application)
+
+            unregisterApplication(application)
+
+            delete localdata[application.manifest.id]
+            delete installed[application.manifest.id]
+    
+            return Promise.resolve()
+        })
+       
     }
 
     var savelocaldata = function(){
@@ -993,6 +1001,17 @@ var BastyonApps = function(app){
 
     self.destroy = function(){
         window.removeEventListener("message", listener)
+
+        installed = {}
+        installing = {}
+        downloading = {}
+        localdata = {}
+        windows = {}
+        clbks = {}
+        allresources = {}
+        getresources = {}
+
+        app.platform.sdk.syncStorage.off('change', 'apps');
     }
 
     self.init = function(){
@@ -1058,9 +1077,11 @@ var BastyonApps = function(app){
                     })
 
                 }).catch(e => {
-                    return Promise.resolve(null)
+                    return Promise.reject(e)
                 })
             }
+
+            return Promise.reject(appsError("missing:application"))
         },
 
         installed : function(){

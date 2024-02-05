@@ -146,16 +146,19 @@ var applicationmeta = (function(){
                     btn2text: self.app.localization.e('dno'),
 
                     success: function () {
-						self.app.apps.remove(application.manifest.id);
+						
+						self.app.apps.remove(application.manifest.id).then(() => {
+							if(ed.onremove) ed.onremove()
 
-						if(ed.onremove) ed.onremove()
+							successCheck()
 
-						successCheck()
+							setTimeout(() => {
+								self.closeContainer()
+							}, 300)
 
-						setTimeout(() => {
-							self.closeContainer()
-						}, 300)
-
+						}).catch(e => {
+							sitemessage(JSON.stringify(e), null, 5000)
+						})
 						
                     },
 
