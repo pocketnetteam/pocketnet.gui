@@ -1301,6 +1301,21 @@ Application = function (p) {
 			}
 
 		})
+
+		self.platform.actionListeners['apps'] = function({type, alias, status}){
+
+			if (type == 'userInfo'){
+
+				var account = self.platform.actions.getCurrentAccount()
+
+				if (account && alias.address == account.address) {
+					self.apps.emit('accountStatus', account.getStatus())
+				}
+				
+			}
+			
+		}
+
 	}
 
 	self.reload = function (p) {

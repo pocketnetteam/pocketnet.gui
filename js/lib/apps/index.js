@@ -214,9 +214,13 @@ var BastyonApps = function(app){
         account : {
             permissions : ['account'],
             action : function({data, application}){
+
+                var account = self.platform.actions.getCurrentAccount()
+
                 return Promise.resolve({
                     address : app.user.address.value,
-                    signature : app.user.signature(application.manifest.id, 1280)
+                    signature : app.user.signature(application.manifest.id, 1280),
+                    status : account ? account.getStatus() : undefined
                 })
             }
         },
