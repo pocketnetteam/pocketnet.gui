@@ -22598,6 +22598,8 @@ Platform = function (app, listofnodes) {
                     actionSubType: 'UNAUTHORIZED_SESSION',
                 });
 
+                self.app.initApplications()
+
                 self.preparingUser = false;
 
                 if (clbk)
