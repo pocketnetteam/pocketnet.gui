@@ -85,12 +85,14 @@ var Wss = function(node, service){
 
     self.connect = function(user){
         let wsprotocol = 'ws';
+        let wsport = node.ws;
 
         if (global.USE_TLS_NODES_ONLY && !node.portPrivate) {
             wsprotocol = 'wss';
+            wsport = node.sws;
         }
 
-        var path = `${wsprotocol}://${node.host}:${node.ws}/ws`;
+        var path = `${wsprotocol}://${node.host}:${wsport}/ws`;
 
         if(!ws){
             ws = new WebSocket(path);        
