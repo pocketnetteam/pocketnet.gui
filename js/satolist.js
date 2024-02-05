@@ -22590,6 +22590,9 @@ Platform = function (app, listofnodes) {
                 
             }
             else {
+
+                self.app.initApplications()
+                
                 self.app.Logger.info({
                     actionId: 'SESSION_STARTED',
                     actionSubType: 'UNAUTHORIZED_SESSION',
