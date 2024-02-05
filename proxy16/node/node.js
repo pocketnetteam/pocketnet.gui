@@ -297,7 +297,7 @@ var Node = function(options, manager){
     let webport = self.port
     let wsport = self.ws
 
-    if (global.USE_TLS_NODES_ONLY) {
+    if (global.USE_TLS_NODES_ONLY && !self.portPrivate) {
         tprotocol = 'https'
         webport = options.sport
         wsport = options.sws
@@ -960,8 +960,10 @@ var Node = function(options, manager){
 
                 var node = new Node({
                     host : pr[0],
-                    port : (global.USE_TLS_NODES_ONLY) ? 38881 : 38081,
-                    ws : (global.USE_TLS_NODES_ONLY) ? 8887 : 8087,
+                    port : 38081,
+                    sport : 38881,
+                    ws : 8087,
+                    sws : 8887,
                     peer : true
                 }, manager)  
 
