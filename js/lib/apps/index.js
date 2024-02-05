@@ -434,7 +434,7 @@ var BastyonApps = function(app){
             permissions : ['account'],
             action : function({data, application}){
 
-                var account = self.platform.actions.getCurrentAccount()
+                var account = app.platform.actions.getCurrentAccount()
 
                 return Promise.resolve({
                     address : app.user.address.value,
