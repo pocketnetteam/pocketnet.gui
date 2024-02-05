@@ -1276,6 +1276,8 @@ Application = function (p) {
 
 	self.initApplications = function(){
 
+		console.log('initApplications')
+
 		if (self.apps) {
 			self.apps.destroy()
 		}
