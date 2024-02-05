@@ -606,6 +606,8 @@ var lenta = (function(){
 					el.shares.isotope('destroy')
 				}
 
+				actions.observe()
+
 				isotopeinited = false
 				
 
@@ -743,17 +745,7 @@ var lenta = (function(){
 						return s.id
 					})
 
-					//var first = _.first(sharesInview)
-
-
 					if (first && last){
-
-						/*
-
-						if(sharesFromSub[last.txid] || sharesFromSub[first.txid]){
-							k = '_sub'
-						}*/
-
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
 
@@ -5767,6 +5759,10 @@ var lenta = (function(){
 				if (fullscreenvideoShowed){
 					actions.exitFullScreenVideo(fullscreenvideoShowed)
 				}
+			},
+
+			willreload : function(){
+				actions.observe()
 			}
 		}
 	};

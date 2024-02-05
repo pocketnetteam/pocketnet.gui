@@ -2615,6 +2615,7 @@ _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
+_l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
@@ -2780,3 +2781,8 @@ _l.captiontempactions = "Local storage Transactions Info"
 _l.labeltempactions = "Number of pending transactions"
 _l.labeltempactionszero = "No pending transactions"
 
+
+_l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
+_l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"

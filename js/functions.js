@@ -9029,8 +9029,6 @@ findAndReplaceLinkClear = function(inputText = '', fu){
 			},
 		})
 
-		console.log("LLL", inputText, l)
-
 		return l
 	}
 }
