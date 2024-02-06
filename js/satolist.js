@@ -1008,6 +1008,8 @@ Platform = function (app, listofnodes) {
 
     self.errorHandler = function (key, action, akey) {
 
+        console.log("actions, errorHandler", key, action, akey)
+
         var er = null
 
         if(_.isObject(key)){
@@ -1225,6 +1227,12 @@ Platform = function (app, listofnodes) {
         },
         "actions_noinputs_wait" : {
            
+        },
+
+        "actions_noinputs_wait_comment" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait_comment')
+            }
         },
         "actions_totalAmountZero" : {
             message: function () {

@@ -2705,6 +2705,8 @@ _l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into a
 _l.actions_noinputs = "You don't have enough coins to complete the operation"
 _l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
 _l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_noinputs_wait_comment = "You don't have enough active coins to post a comment. Please wait"
+
 _l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
 
 _l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'

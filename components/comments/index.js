@@ -165,6 +165,12 @@ var comments = (function(){
 
 		var actions = {
 
+			removeSending : function(wrapper){
+				setTimeout(() => {
+					wrapper.removeClass('sending')
+				}, 400)
+			},
+
 			repliesCount: function(parentid){
 				var parent = el.c.find("#" + parentid)
 				var panel = parent.find('.commentpanel[comment="'+parentid+'"]')
@@ -654,8 +660,7 @@ var comments = (function(){
 					var e = current.validation();
 
 					if (e){
-
-						wrapper.removeClass('sending')
+						actions.removeSending(wrapper)
 						sitemessage(errors[e])
 
 					}
@@ -669,14 +674,14 @@ var comments = (function(){
 
 							sitemessage(self.app.localization.e('lockedaccount'))
 		
-							wrapper.removeClass('sending')
+							actions.removeSending(wrapper)
 		
 							return
 						}
 
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
-							wrapper.removeClass('sending')
+							actions.removeSending(wrapper)
 	
 							new dialog({
 								html : self.app.localization.e('ratings123'),
@@ -706,6 +711,8 @@ var comments = (function(){
 
 						self.app.platform.sdk.comments.send(current, function(error, alias){
 
+							console.log('action error, alias', error, alias)
+
 							if(!editid && ed.send){
 								ed.send(alias, alias)
 							}
@@ -718,6 +725,8 @@ var comments = (function(){
 							}
 							else{
 
+								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
+
 								self.app.platform.errorHandler(error, true)
 							}
 
@@ -725,7 +734,7 @@ var comments = (function(){
 
 							window.requestAnimationFrame(() => {
 								wrapper.find('.emojionearea-editor').blur();
-								wrapper.removeClass('sending')
+								actions.removeSending(wrapper)
 
 								if(!error){
 	
@@ -760,7 +769,7 @@ var comments = (function(){
 					}
 				}
 				else{
-					wrapper.removeClass('sending')
+					actions.removeSending(wrapper)
 
 					sitemessage(errors['content'])
 				}
@@ -2696,6 +2705,8 @@ var comments = (function(){
 			}*/
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
+
+				console.log("actions listener", status)
 
 				if(type == 'comment'){
 					var comment = alias
