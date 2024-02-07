@@ -196,18 +196,18 @@ class TorControl {
         const getSettingsPath = (...parts) => path.join(this.getsettingspath(), ...parts);
 
         const snowflakeStuns = [
-            "stun.voip.blackberry.com:3478",
-            "stun.altar.com.pl:3478",
+            "stun.l.google.com:19302",
             "stun.antisip.com:3478",
             "stun.bluesip.net:3478",
             "stun.dus.net:3478",
             "stun.epygi.com:3478",
             "stun.sonetel.com:3478",
             "stun.sonetel.net:3478",
-            "stun.stunprotocol.org:3478",
             "stun.uls.co.za:3478",
             "stun.voipgate.com:3478",
             "stun.voys.nl:3478",
+            "stun.relay.metered.ca:80",
+            "turn.pocketnet.app:80",
         ].map(s => `stun:${s}`).join(',');
 
         let torConfig = [
