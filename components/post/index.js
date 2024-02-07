@@ -1829,15 +1829,14 @@ var post = (function () {
 							if (clbk) clbk();
 						} else {
 
-
-							self.app.platform.sdk.remote.get(url, function (og) {
-
+							self.app.platform.sdk.remote.getnew(url).then(og => {
 								if (og) {
 									renders.url(clbk);
 								} else {
 									if (clbk) clbk();
 								}
-							});
+							})
+							
 						}
 					} else {
 						if (clbk) clbk();

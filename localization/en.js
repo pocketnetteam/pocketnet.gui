@@ -2786,3 +2786,7 @@ _l.deleteapplicationQuestion = "Are you sure you want to delete the application?
 _l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
 _l.application_settings = "Settings"
 _l.application_close = "Close"
+
+_l.application_notexist = "Application not found or application server not responding"
+_l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
+_l.permissions_name_chat = appname + " chat"

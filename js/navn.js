@@ -1690,6 +1690,7 @@ Nav = function(app)
 
 	self.relations = relations;
 	self.current = current
+	self.thisSiteLink = core.thisSiteLink
 
 	return self;
 }

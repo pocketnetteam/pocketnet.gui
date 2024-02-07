@@ -32,6 +32,25 @@ var application = (function(){
 						}
                     }
                 })
+			},
+
+			getpath : function(){
+				var p = parameters().p || ''
+				var decoded = ''
+
+				if (p){
+
+					try{
+						decoded = hexDecode(p)
+					}
+					catch(e){
+	
+					}
+				}
+
+				return decoded
+
+
 			}
 		}
 
@@ -57,6 +76,21 @@ var application = (function(){
 
 				if (el.c)
 					el.c.find('.captionRow').addClass('notactive')
+			},
+
+			changestate : function(p = {}){
+				if(!p.data) return
+				if(!application) return
+
+				if (p.application == application.manifest.id && p.data.encoded){
+
+					self.app.nav.api.history.addRemoveParameters([], {
+						p: p.data.encoded
+					}, {
+						replaceState: p.data.replace
+					})
+					
+				}
 			},
 
 
@@ -182,12 +216,11 @@ var application = (function(){
 				})
 			},
 			frameremote : function(clbk){
+				var src = application.manifest.scope + '/' + (actions.getpath() || application.manifest.start || '')
 
-				var src = application.manifest.scope + '/' + (application.manifest.start || '')
-
-				if(window.testpocketnet){
+				/*if(window.testpocketnet){
 					src = src + '?testnetwork=true'
-				}
+				}*/
 
 				self.shell({
 
@@ -220,12 +253,13 @@ var application = (function(){
 
 		var initEvents = function(){
 			self.app.apps.on('loaded', events.loaded)
+			self.app.apps.on('changestate', events.changestate)
 		}
 
 		var make = function(){
 
 			if(!application || !appdata){
-				renders.error('notexist')
+				renders.error('application_notexist')
 				return
 			}
 
@@ -252,6 +286,48 @@ var application = (function(){
 		return {
 			primary : primary,
 
+			parametersHandler : function() {
+				console.log('HERE')
+				var id = parameters().id,
+					p = parameters().p;
+
+				if (id && (!application || application.manifest.id !== id)){
+
+					application = null
+					appdata = null
+
+					self.app.apps.get.application(id).then((f) => {
+
+						if (f){
+							application = f.application
+							appdata = f.appdata
+						}
+
+						make()
+
+					}).catch(e => {
+						make()
+					})
+
+					return
+				}
+
+				if (p && application && application.manifest.id == id) {
+
+					var decoded = actions.getpath()
+
+					console.log("PATH, decoded", decoded)
+
+					if (decoded){
+						self.app.apps.emit('changestate', {
+							route : decoded
+						}, application.manifest.id)
+					}
+
+				
+				}
+			},
+
 			getdata : function(clbk, p){
 				
 				window.requestAnimationFrame(() => {
@@ -261,7 +337,8 @@ var application = (function(){
 
 				var id = parameters().id
 
-				console.log('self.app.apps.get.application(id)', self.app.apps.get.application(id))
+				application = null
+				appdata = null
 
 				self.app.apps.get.application(id).then((f) => {
 
@@ -316,6 +393,7 @@ var application = (function(){
 				})
 
 				self.app.apps.off('loaded', events.loaded)
+				self.app.apps.off('changestate', events.changestate)
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application
 
@@ -331,8 +409,6 @@ var application = (function(){
 				initEvents();
 
 				make()
-
-
 
 				p.clbk(null, p);
 

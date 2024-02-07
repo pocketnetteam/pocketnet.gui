@@ -4121,9 +4121,8 @@ var lenta = (function(){
 						!self.app.platform.sdk.usersettings.meta.preview.value
 					){
 
-						self.app.platform.sdk.remote.get(url, function(og){
-							
-							if(og && el.share && el.share[share.txid]){
+						self.app.platform.sdk.remote.getnew(url).then(og => {
+							if (og && el.share && el.share[share.txid]){
 								renders.url(el.share[share.txid].find('.url'), url, share, clbk)
 							}
 							else
@@ -4131,8 +4130,13 @@ var lenta = (function(){
 								if (clbk)
 									clbk()
 							}
-
 						})
+
+						/*self.app.platform.sdk.remote.get(url, function(og){
+							
+							
+
+						})*/
 
 						return
 

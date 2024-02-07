@@ -2037,6 +2037,7 @@ var request_component = Object(componentNormalizer["a" /* default */])(
     urlloaded: function (data) {
       /* Parse donation link */
 
+      if (!data) return;
       const holder = data === null || data === void 0 ? void 0 : data.el.find('.txcnt'),
         colors = {
           /* amt: color */

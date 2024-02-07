@@ -1,3 +1,11 @@
+#application .errorwrapper {
+  text-align: center;
+  padding: 2em;
+}
+#application .errorwrapper span {
+  font-size: 2em;
+  font-weight: 100;
+}
 #application .chatDoubleRow {
   position: fixed;
   left: 0;
