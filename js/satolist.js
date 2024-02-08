@@ -1008,6 +1008,8 @@ Platform = function (app, listofnodes) {
 
     self.errorHandler = function (key, action, akey) {
 
+        console.log("actions, errorHandler", key, action, akey)
+
         var er = null
 
         if(_.isObject(key)){
@@ -1225,6 +1227,12 @@ Platform = function (app, listofnodes) {
         },
         "actions_noinputs_wait" : {
            
+        },
+
+        "actions_noinputs_wait_comment" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait_comment')
+            }
         },
         "actions_totalAmountZero" : {
             message: function () {
@@ -5941,6 +5949,11 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        geolocation : {
+            get : function(){
+                return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
+            }
+        },
         broadcaster : {
             clbks : {},
             history : [],
@@ -11131,6 +11144,41 @@ Platform = function (app, listofnodes) {
         remote: {
             storage: {},
             failed: {},
+            loading : {},
+
+            getnew : function(url, action){
+                var s = self.sdk.remote.storage;
+                var f = self.sdk.remote.failed;
+                var l = self.sdk.remote.loading;
+
+                if (l[url]) return l[url]
+                if (f[url]) return Promise.resolve(null)
+                if (s[url]) return Promise.resolve(s[url])
+
+                l[url] = self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+
+                    var og = deep(d, 'og');
+
+                    if(!og) return Promise.reject()
+
+                    _.each(og, (o, i) => {
+                        og[i] = superXSS(o)
+                    })
+
+                    s[url] = og
+
+                    return Promise.resolve(s[url])
+
+                }).catch(e => {
+                    f[url] = true
+
+                    return Promise.resolve(null)
+                }).finally(() => {
+                    delete l[url]
+                })
+
+                return l[url]
+            },
 
             get: function (url, clbk, action) {
 
@@ -11161,14 +11209,19 @@ Platform = function (app, listofnodes) {
 
                         s[url] = og
 
-                        if (!s[url])
+                        if(!s[url]){
                             f[url] = true
 
-                        if (clbk) {
-                            if (s[url].title) s[url].title = decodeEntities(s[url].title);
-                            if (s[url].description) s[url].description = decodeEntities(s[url].description);
-                            clbk(s[url]);
+                            if (clbk)
+                                clbk(null)
+
+                            return 
                         }
+
+                        if (s[url].title) s[url].title = superXSS(s[url].title);
+                        if (s[url].description) s[url].description = superXSS(s[url].description);
+                            
+                        clbk(s[url]);
 
                     }).catch(e => {
                         f[url] = true
@@ -22536,6 +22589,8 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.matrixchat.init()
                         }, 10)
+                        
+                        self.app.initApplications()
     
                         if (clbk)
                             clbk()
@@ -22575,7 +22630,7 @@ Platform = function (app, listofnodes) {
                         }, 2000)
     
                        
-    
+                        
                     })
                 })
                 
@@ -22587,6 +22642,8 @@ Platform = function (app, listofnodes) {
                     actionId: 'SESSION_STARTED',
                     actionSubType: 'UNAUTHORIZED_SESSION',
                 });
+
+                self.app.initApplications()
 
                 self.preparingUser = false;
 
@@ -23030,6 +23087,14 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        getNotificationsCount : function(){
+            if (self.matrixchat.core){
+                return self.matrixchat.core.getNotificationsCount()
+            }
+
+            return 0
+        },
+
         share : {
 
             object : function(sharing){
@@ -23079,6 +23144,8 @@ Platform = function (app, listofnodes) {
         wait : function(){
             return pretry(function(){
                 return self.matrixchat.core
+            }).then(() => {
+                return self.matrixchat.core
             })
         },
 
@@ -23115,10 +23182,8 @@ Platform = function (app, listofnodes) {
 
                     link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '').replace(protocol + "://", '')
 
-                    console.log('link2', link)
 
-
-                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
+                    if (link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
                         link = link.replace('index', 'post')
 
@@ -23126,7 +23191,7 @@ Platform = function (app, listofnodes) {
                         open: true,
                         href: link,
                         history: true,
-                        /*handler : true*/
+                        handler : true
                     })
                 }
 

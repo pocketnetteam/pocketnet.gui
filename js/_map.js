@@ -696,6 +696,7 @@ __map =  {
 			uri : "home",
 			href : "home",
 			add : insertingfunc,
+			anonimus : true,
 		},
 
 

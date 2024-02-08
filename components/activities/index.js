@@ -398,8 +398,8 @@ var activities = (function () {
 
 
 			loadmorescroll: function () {
-
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
+				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight : false;
+				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 
 						var ids = _.map(data, (v) => {
