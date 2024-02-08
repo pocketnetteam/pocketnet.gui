@@ -11,6 +11,13 @@ var application = (function(){
 		var el, ed, application, appdata;
 
 		var actions = {
+			gotohome : function(){
+				self.app.nav.api.load({
+					open : true,
+					href : 'home',
+					history : true,
+				})
+			},
 			openinfo : function(){
 				app.nav.api.load({
                     open : true,
@@ -18,7 +25,11 @@ var application = (function(){
                     inWnd : true,
 
                     essenseData : {
-                        application : application.manifest.id
+                        application : application.manifest.id,
+
+						onremove : function(){
+							actions.gotohome()
+						}
                     }
                 })
 			}
@@ -26,25 +37,114 @@ var application = (function(){
 
 		var events = {
 			pageevents : function(p){
-				p.el.find('.settings .icon').on('click', () => {
-					actions.openinfo()
+				p.el.find('.settings .icon').on('click', function(){
+					renders.menu($(this))
 				})
+
+				var chatel = p.el.find('.chatDoubleRow')
+
+				chatel.on('click', events.chats.click)
+				events.chats.init(chatel)
 			},
 
 			loaded : function(p){
-
 				if(!application) return
 
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
+
+					var pid = parameters().pid;
+
+					if (pid) {
+						self.app.apps.emit('changeroute', hexDecode(pid), p.application)
+					}
 				}
 
 				if (el.c)
 					el.c.find('.captionRow').addClass('notactive')
-			}
+			},
+
+			historychange : function(p) {
+				if(!application) return
+
+				if (p.application == application.manifest.id){
+					self.app.nav.api.history.addRemoveParameters([], {
+						pid: hexEncode(p.data?.data?.path)
+					}, {
+						replaceState: true
+					})
+				}
+			},
+
+			chats : {
+				click : function(){
+
+					var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+					if (show) {
+						self.app.mobile.vibration.small()
+						show()
+					}
+
+				},
+
+				init : function(el){
+
+					var setH = function(c){
+						if(c){
+							el.addClass('amountHave')
+						}else{
+							el.removeClass('amountHave')
+						}
+
+						el.find('.amount').html(c)
+					}
+
+					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application = function(count){
+						setH(count)
+					}
+
+					setH(self.app.platform.matrixchat.getNotificationsCount())
+				},
+
+			},
 		}
 
 		var renders = {
+
+			menu : function(el){
+
+				console.log("metmenu el", el)
+
+				var d = {application}
+
+				self.fastTemplate('metmenu', (rendered, template) => {
+
+					self.app.platform.api.tooltip(el, function(){
+
+						return template(d);
+
+					}, function(el, f, close){
+
+						el.find('.settings').on('click', function(){
+							actions.openinfo()
+
+							close()
+						})
+
+						el.find('.close').on('click', function(){
+							actions.gotohome()
+
+							close()
+						})
+
+					})
+
+				}, d)
+		  
+				
+			},
+
 			error : function(error, clbk){
 
 				self.shell({
@@ -136,6 +236,7 @@ var application = (function(){
 
 		var initEvents = function(){
 			self.app.apps.on('loaded', events.loaded)
+			self.app.apps.on('historychange', events.historychange)
 		}
 
 		var make = function(){
@@ -168,6 +269,19 @@ var application = (function(){
 		return {
 			primary : primary,
 
+			parametersHandler : function() {
+				var
+					id = parameters().id,
+					pid = parameters().pid;
+
+					if (id && application.manifest.id !== id) {
+						this.destroy();
+						this.init();
+					} else if (pid) {
+						self.app.apps.emit('changeroute', hexDecode(pid), id)
+					}
+			},
+
 			getdata : function(clbk, p){
 				
 				window.requestAnimationFrame(() => {
@@ -175,7 +289,9 @@ var application = (function(){
 					self.app.mobile.reload.destroyparallax()
 				})
 
-				var id = parameters().id
+				var id = parameters().id;
+
+				console.log('self.app.apps.get.application(id)', self.app.apps.get.application(id))
 
 				self.app.apps.get.application(id).then((f) => {
 
@@ -193,6 +309,29 @@ var application = (function(){
 	
 					clbk(data);
 
+				}).catch(e => {
+
+					ed = p.settings.essenseData
+
+					var data = {
+						ed
+					};
+	
+					clbk(data);
+
+					/*console.error(e)
+
+					setTimeout(() => {
+
+						self.app.nav.api.load({
+							open : true,
+							href : 'page404',
+							history : true,
+							replaceState : true,
+							fade : self.app.el.content
+						})
+
+					}, 200)*/
 				})
 
 			},
@@ -207,6 +346,9 @@ var application = (function(){
 				})
 
 				self.app.apps.off('loaded', events.loaded)
+				self.app.apps.off('historychange', events.historychange)
+
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application
 
 			},
 			

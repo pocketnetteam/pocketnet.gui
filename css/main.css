@@ -251,8 +251,6 @@
   .customscroll {
     overflow-y: overlay;
     overflow-x: hidden;
-    scrollbar-width: 7px;
-    scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
     overscroll-behavior: contain;
     scroll-behavior: smooth;
   }
@@ -274,8 +272,6 @@
 .wnd .wndcustomscroll {
   overflow-y: overlay;
   overflow-x: hidden;
-  scrollbar-width: 7px;
-  scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
   overscroll-behavior: contain;
   scroll-behavior: smooth;
 }

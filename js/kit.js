@@ -3225,6 +3225,252 @@ pComment = function(){
 	return self;
 }
 
+brtAccount = function(){
+	var self = this;
+
+	self.address = '';
+	self.tags = [];
+	self.geohash = '';
+	self.static = false;
+	self.radius = 0;
+
+	self.validation = function(){
+		
+	}
+
+	self.serialize = function(){
+		return self.address +
+					 JSON.stringify({
+						a: self.tags,
+						g: self.geohash,
+						s: self.static,
+						r: self.radius
+					 });
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				tags: self.tags,
+				geohash: self.geohash,
+				static: self.static,
+				radius: self.radius
+			};
+		}
+
+		return {
+			s1: self.address,
+			p: {
+				s4: JSON.stringify({
+					a: self.tags,
+					g: self.geohash,
+					s: self.static,
+					r: self.radius
+				})
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || app.user.address.value;
+		self.tags = d.tags;
+		self.geohash = d.geohash;
+		self.static = d.static;
+		self.radius = d.radius;
+	}
+
+	self.type = 'brtaccount';
+
+	return self;
+}
+
+brtOffer = function(){
+	var self = this;
+
+	self.hash = null;
+	self.address = '';
+	self.language = '';
+	self.caption = '';
+	self.description = '';
+	self.tag = '';
+	self.tags = [];
+	self.condition = [];
+	self.images = [];
+	self.geohash = '';
+	self.price = 0;
+
+	self.validation = function(){
+		if(!self.address) return 'address';
+		if(!self.language) return 'language';
+		if(!self.caption) return 'caption';
+		if(!self.description) return 'description';
+		if(!self.tag) return 'tag';
+		if(!self.tags) return 'tags';
+		if(!self.condition) return 'condition';
+		if(!self.images) return 'images';
+		if(!self.geohash) return 'geohash';
+		if(!(self.price > -1)) return 'price';
+	}
+
+	self.serialize = function(){
+		return self.address +
+					 (self.hash ?? '') +
+					 self.language +
+					 self.caption +
+					 self.description +
+					 JSON.stringify({
+						t: self.tag,
+						a: self.tags,
+						c: self.condition
+					 }) +
+					 JSON.stringify(self.images) +
+					 self.geohash +
+					 self.price;
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				hash: self.hash || null,
+				language: self.language,
+				caption: self.caption,
+				description: self.description,
+				tag: self.tag,
+				tags: self.tags,
+				condition: self.condition,
+				images: self.images,
+				geohash: self.geohash,
+				price: self.price
+			};
+		}
+
+		return {
+			s1: self.address,
+			...(self.hash && { s2: self.hash }),
+			p: {
+				s1: self.language,
+				s2: self.caption,
+				s3: self.description,
+				s4: JSON.stringify({
+					t: self.tag,
+					a: self.tags,
+					c: self.condition,
+				}),
+				s5: JSON.stringify(self.images),
+				s6: self.geohash,
+				i1: self.price
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || app.user.address.value;
+		self.hash = d.hash || null;
+		self.language = d.language;
+		self.caption = d.caption;
+		self.description = d.description;
+		self.tag = d.tag;
+		self.tags = d.tags;
+		self.condition = d.condition,
+		self.images = d.images;
+		self.geohash = d.geohash;
+		self.price = d.price;
+	}
+
+	self.type = 'brtoffer';
+
+	return self;
+}
+
+brtComment = function(){
+	var self = this;
+
+	self.id = '';
+	self.parentid = '';
+	self.answerid = '';
+	self.postid = '';
+	self.message = '';
+
+	self.validation = function(){
+		
+	}
+
+	self.serialize = function(){
+		return self.postid +
+					 JSON.stringify({
+						 message : self.message
+					 }) +
+					 (self.parentid || "") +
+					 (self.answerid || "");
+	}
+
+	self.export = function(alias){
+		var r = {
+			postid : self.postid,
+			answerid : self.answerid || '',
+			parentid : self.parentid || ''
+		}
+
+		if(alias){
+			r.msgparsed = {
+				message : self.message,
+				type: 'comment'
+			}
+		}else{
+			r.msg = JSON.stringify({
+				message : (self.message)
+			})
+		}
+
+		return r;
+	}
+
+	self.import = function(d){
+		self.parentid = d.parentid;
+		self.answerid = d.answerid;
+		self.postid = d.postid;
+		self.message = d.message;
+	}
+
+	self.alias = function(){
+		var comment = new brtComment();
+			comment.import({
+				parentid: self.parentid,
+				answerid: self.answerid,
+				postid: self.postid,
+				message: self.message,
+			})
+
+			comment.id = self.id
+			comment.postid = self.postid
+
+		return comment;
+	}
+
+	self.donate = {
+		set : function() {},
+		remove : function() {},
+		get : function(){
+			return _.map(this.v, donate => donate)
+		},
+		v : []
+	};
+
+	self.typeop = function(){
+		if(self.id){
+			return 'commentEdit';
+		}
+
+		return self.type
+	}
+
+	self.type = 'comment';
+
+	return self;
+}
+
 Img = function(p){
 	if(!p) p = {};
  

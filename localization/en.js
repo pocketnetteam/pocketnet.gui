@@ -2600,6 +2600,10 @@ _l.permissions_name_sign = "Digital Signature of Data"
 _l.permissions_descriptions_sign = "You authorize the data to be signed with your unique signature"
 _l.permissions_name_payment = "Make a payment"
 _l.permissions_descriptions_payment = "The application asks for permission to make a payment in PKOIN"
+_l.permissions_name_location = "Access to location"
+_l.permissions_descriptions_location = "The application asks for permission to access your location"
+_l.permissions_name_chat = "Access to chat"
+_l.permissions_descriptions_chat = "The application asks for permission to access your chat"
 
 _l.permissions_name_messaging = "Message display"
 _l.permissions_descriptions_messaging = "Give the app permission to display an informational message"
@@ -2607,12 +2611,11 @@ _l.permissions_descriptions_messaging = "Give the app permission to display an i
 _l.permissions_name_mobilecamera = "Possibility to upload a photo"
 _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
 
-
-
 _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
+_l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
@@ -2778,3 +2781,9 @@ _l.captiontempactions = "Local storage Transactions Info"
 _l.labeltempactions = "Number of pending transactions"
 _l.labeltempactionszero = "No pending transactions"
 
+
+_l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
+_l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"
+_l.applications = "Applications"

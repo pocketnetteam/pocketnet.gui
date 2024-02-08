@@ -3134,6 +3134,10 @@ Platform = function (app, listofnodes) {
 
     }
 
+    self.location = function(options){
+        return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);;
+    }
+
     self.ui = {
 
         support : function(template, parameters){
@@ -3310,6 +3314,7 @@ Platform = function (app, listofnodes) {
             })
 
         },
+
 
         uploadImage : function(p){
 
@@ -22536,6 +22541,8 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.matrixchat.init()
                         }, 10)
+                        
+                        self.app.initApplications()
     
                         if (clbk)
                             clbk()
@@ -22575,7 +22582,7 @@ Platform = function (app, listofnodes) {
                         }, 2000)
     
                        
-    
+                        
                     })
                 })
                 
@@ -22583,6 +22590,9 @@ Platform = function (app, listofnodes) {
                 
             }
             else {
+
+                self.app.initApplications()
+                
                 self.app.Logger.info({
                     actionId: 'SESSION_STARTED',
                     actionSubType: 'UNAUTHORIZED_SESSION',
@@ -23028,6 +23038,14 @@ Platform = function (app, listofnodes) {
 
                 return Promise.reject('matrixchat.core')
             }
+        },
+
+        getNotificationsCount : function(){
+            if (self.matrixchat.core){
+                return self.matrixchat.core.getNotificationsCount()
+            }
+
+            return 0
         },
 
         share : {

@@ -164,12 +164,50 @@ var BastyonSdk = function(){
             return action('account', {})
         },
 
+        balance : function() {
+            return action('balance', {})
+        },
+
         imageFromMobileCamera : function(){
             return action('mobile.camera', {})
         },
 
         appinfo : function(){
             return action('appinfo', {})
+        },
+
+        location : function(){
+            return action('location', {})
+        },
+        
+        currency : function(){
+            return action('currency', {})
+        }
+    }
+
+    self.set = {
+        imagesToImgur : function(data) {
+            return action('imagesToImgur', data)
+        },
+
+        barteron : {
+            account : function(data){
+                return action('barteron.account', data)
+            },
+
+            offer : function(data){
+                return action('barteron.offer', data)
+            },
+
+            comment : function(data){
+                return action('barteron.comment', data)
+            }
+        }
+    }
+
+    self.check = {
+        permission : function(data){
+            return action('checkPermission', data)
         }
     }
 
@@ -190,9 +228,25 @@ var BastyonSdk = function(){
             return action('alert', {message})
         },
 
+        isloggedin: function(){
+            return action('isloggedin', {})
+        },
+
         opensettings: function(){
             return action('opensettings', {})
         },
+
+        openregistration: function(){
+            return action('openregistration', {})
+        },
+
+        createroom: function(args){
+            return action('createroom', args)
+        },
+
+        sendmessage: function(args){
+            return action('sendmessage', args)
+        }
     }
 
     self.init = function(){

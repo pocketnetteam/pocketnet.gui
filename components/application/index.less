@@ -1,6 +1,66 @@
 @import "../../css/__cssvar";
 
 #application{
+    .chatDoubleRow{
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding-top: var(--app-margin-top);
+        height: calc(55px + var(--app-margin-top));
+        display: flex;
+        align-items: center;
+        z-index: 2;
+        width: 55px;
+
+        .icon{
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 12px;
+            background: rgba(var(--background-hidden-layer), 0.15);
+            backdrop-filter: blur(4px);
+            color : #AAAAAA;
+            -webkit-backdrop-filter: blur(4px);  
+            .transition(0.3s);
+            position: absolute;
+            left: @rhythm;
+            bottom: 5px;
+            text-align: center;
+            svg{
+                margin-bottom: 3px;
+                height: 23px;
+                width: 23px;
+                fill: #AAAAAA;
+            }
+
+            .amount{
+                position: absolute;
+                left: 50%;
+                top : 50%;
+                padding : 0 @rhythm;
+                min-width: 16px;
+                height: 16px;
+                line-height: 16px;
+                text-align: center;
+                font-size: 0.5em;
+                background: rgba(var(--color-bg-ac-bright), 0.95);
+                color : rgb(var(--text-on-bg-ac-color));
+                .shadowSmaller();
+                z-index: 20;
+                border-radius: 50%;
+                display : none;
+            }
+            
+        }
+
+        &.amountHave{
+            .icon{
+                .amount{
+                    display : block;
+                }
+            }
+        }
+    }
     .captionRow{
         position: fixed;
         left: 0;
@@ -39,9 +99,9 @@
             
             position: absolute;
             right: 100%;
-            top : 5px;
+            top : auto;
             bottom : 5px;
-            margin-left: 5px;
+            margin-left: @rhythm;
             
             .icon{
                 width: 45px;
