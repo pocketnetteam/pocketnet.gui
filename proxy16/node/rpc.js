@@ -139,7 +139,16 @@ const publics = {
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
 
-    getaccountearning : true
+    getaccountearning : true,
+
+    // Barteron
+    getbarteronaccounts: true,
+    getbarteronoffersbyaddress: true,
+    getbarteronoffersbyroottxhashes: true,
+    getbarteronfeed: true,
+    getbarterondeals: true,
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true
 
 }
 
@@ -506,7 +515,14 @@ RpcClient.callspec = {
 
     getaccountearning : 'str int int',
 
-
+    // Barteron
+    getbarteronaccounts: 'obj',
+    getbarteronoffersbyaddress: 'str',
+    getbarteronoffersbyroottxhashes: 'obj',
+    getbarteronfeed: 'obj',
+    getbarterondeals: 'obj',
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj'
     
 
 };

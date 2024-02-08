@@ -612,7 +612,7 @@ var BastyonApps = function(app){
                 permissions : ['account'],
                 authorization : true,
                 action : function({data, application}){
-                    var comment = new brtComment();
+                    var comment = new Comment();
 
                     comment.import(data);
 
