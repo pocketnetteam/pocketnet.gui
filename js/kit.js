@@ -3387,6 +3387,7 @@ brtOffer = function(){
 brtComment = function(){
 	var self = this;
 
+	self.id = '';
 	self.parentid = '';
 	self.answerid = '';
 	self.postid = '';
@@ -3397,28 +3398,33 @@ brtComment = function(){
 	}
 
 	self.serialize = function(){
-		return self.parentid +
-					 self.answerid +
-					 self.postid +
-					 self.message;
+		return self.postid +
+					 JSON.stringify({
+						 message : self.message
+					 }) +
+					 (self.parentid || "") +
+					 (self.answerid || "");
 	}
 
 	self.export = function(alias){
-		if(alias){
-			return {
-				parentid: self.parentid,
-				answerid: self.answerid,
-				postid: self.postid,
-				msg: self.message
-			};
+		var r = {
+			postid : self.postid,
+			answerid : self.answerid || '',
+			parentid : self.parentid || ''
 		}
 
-		return {
-			parentid: self.parentid,
-			answerid: self.answerid,
-			postid: self.postid,
-			msg: self.message
-		};
+		if(alias){
+			r.msgparsed = {
+				message : self.message,
+				type: 'comment'
+			}
+		}else{
+			r.msg = JSON.stringify({
+				message : (self.message)
+			})
+		}
+
+		return r;
 	}
 
 	self.import = function(d){
@@ -3426,6 +3432,38 @@ brtComment = function(){
 		self.answerid = d.answerid;
 		self.postid = d.postid;
 		self.message = d.message;
+	}
+
+	self.alias = function(){
+		var comment = new brtComment();
+			comment.import({
+				parentid: self.parentid,
+				answerid: self.answerid,
+				postid: self.postid,
+				message: self.message,
+			})
+
+			comment.id = self.id
+			comment.postid = self.postid
+
+		return comment;
+	}
+
+	self.donate = {
+		set : function() {},
+		remove : function() {},
+		get : function(){
+			return _.map(this.v, donate => donate)
+		},
+		v : []
+	};
+
+	self.typeop = function(){
+		if(self.id){
+			return 'commentEdit';
+		}
+
+		return self.type
 	}
 
 	self.type = 'comment';
