@@ -2790,3 +2790,6 @@ _l.application_close = "Close"
 _l.application_notexist = "Application not found or application server not responding"
 _l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
 _l.permissions_name_chat = appname + " chat"
+
+_l.permissions_name_location = "Access to location"
+_l.permissions_descriptions_location = "The application asks for permission to access your location"
