@@ -5950,7 +5950,7 @@ Platform = function (app, listofnodes) {
 
     self.sdk = {
         geolocation : {
-            get : function(){
+            get : function(options){
                 return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
             }
         },
