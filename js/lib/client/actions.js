@@ -2727,6 +2727,20 @@ var Actions = function(app, api, storage = localStorage){
         return action
     }
 
+    self.getActionsByApp = function(application){
+        var actions = []
+
+        var account = self.getCurrentAccount()
+
+        if(!account) return actions
+
+        _.each(account.actions.value, (a) => {
+            if(a.settings.application == application) actions.push(application)
+        })
+
+        return actions
+    }
+
     
 
     self.init = function(){

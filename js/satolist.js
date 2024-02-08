@@ -5949,6 +5949,11 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        geolocation : {
+            get : function(){
+                return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
+            }
+        },
         broadcaster : {
             clbks : {},
             history : [],

@@ -215,6 +215,18 @@ var BastyonSdk = function(){
             return action('account', {})
         },
 
+        balance : function() {
+            return action('balance', {})
+        },
+
+        geolocation : function(){
+            return action('geolocation', {})
+        },
+
+        currency : function(){
+            return action('currency', {})
+        },
+
         imageFromMobileCamera : function(){
             return action('mobile.camera', {})
         },
@@ -231,8 +243,12 @@ var BastyonSdk = function(){
         }
     }
 
-    self.request = {
-        permissions : function(permissions){
+    self.permissions = {
+        check : function({permission}){
+            return action('checkPermission', {permission})
+        },
+
+        request : function(permissions){
             return action('requestPermissions', {permissions})
         }
     }
@@ -279,6 +295,14 @@ var BastyonSdk = function(){
 
         opensettings: function(){
             return action('opensettings', {})
+        },
+
+        registration: function(){
+            return action('registration', {})
+        },
+
+        userstate : function(){
+            return action('registration', {})
         },
     }
 

@@ -186,7 +186,15 @@ var BastyonApps = function(app){
             name : 'permissions_name_chat',
             description : 'permissions_descriptions_chat',
             level : 2
-        }
+        },
+
+        'geolocation' : {
+            name : 'permissions_name_geolocation',
+            description : 'permissions_descriptions_geolocation',
+            level : 2,
+            uniq : false,
+            session : true
+        },
     }
 
     var actions = {
@@ -208,6 +216,7 @@ var BastyonApps = function(app){
                 return Promise.resolve('application:settings:opened')
             }
         },
+
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
@@ -273,7 +282,9 @@ var BastyonApps = function(app){
                 if (data.message)
 					transaction.message.set(data.message)
 
-                return makeAction(transaction, application)
+                return makeAction(transaction, application, {
+                    rejectIfError : true
+                })
 
             }
         },
@@ -289,6 +300,17 @@ var BastyonApps = function(app){
                 }
 
                 return action.export()
+            }
+        },
+
+        getactions: {
+            authorization : true,
+            action : function({application}){
+                var actions = app.platform.actions.getActionsByApp(application.manifest.id)
+
+                return _.map(actions, (a) => {
+                    return a.export()
+                })
             }
         },
 
@@ -308,6 +330,13 @@ var BastyonApps = function(app){
 
                 return Promise.resolve()
              
+            }
+        },
+
+        checkPermission : {
+            parameters : ['permission'],
+            action : function({data, application}){
+                return Promise.resolve(checkPermission(application, data.permission));
             }
         },
 
@@ -450,20 +479,158 @@ var BastyonApps = function(app){
                     project : project_config
                 })
             }
+        },
+
+        geolocation : {
+            permissions : ['geolocation'],
+            parameters : [],
+            action : function({data, application}){
+                return new Promise((resolve, reject) => {
+                    app.platform.sdk.geolocation.get({
+                        onSuccess : (pos) => {
+                            resolve({
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude
+                            });
+                        },
+                        onError : () => {
+                            reject(appsError('location:notavailable'))
+                        }
+                    });
+                })
+            }
+        },
+
+        currency : {
+            permissions : [],
+            parameters : [],
+            action : function({ data, application }) {
+                return app.api.fetch('exchanges/history').then(result => {
+                    return result.prices;
+                })
+            }
+        },
+
+        userstate : {
+            permissions : [],
+            parameters : [],
+            action : function({data, application}){
+                return app.user.isStatePromise()
+            }
+        },
+
+        registration : {
+            parameters : [],
+            action : function({data, application}){
+
+                return app.user.isStatePromise().then(state => {
+
+                    if (state){
+                        return Promise.reject(appsError('user:authorized'))
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'registration',
+                        inWnd : true,
+                        essenseData : {
+                            application : application.manifest.id,
+                            successHref : '_this',
+                            signInClbk : function(){
+                                if (clbk) clbk()
+                            }
+                        }
+                    });
+    
+                    return Promise.resolve('registration:opened')
+
+                })
+
+                
+            }
+        },
+
+        images : {
+            upload : {
+                authorization : true,
+                permissions : [],
+                parameters : ['images'],
+
+                action : function({data, application}){
+                    
+                    if(data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
+
+                    return Promise.all(_.map(data.images, (img) => {
+                        return resizePromise(img, 1080, 1080).then((resized) => {
+
+                            return app.imageUploader.upload({
+                                Action : 'image',
+                                base64 : resized
+                            }, 'imgur').then((url) => {
+                                return Promise.resolve({
+                                    url
+                                })
+                            }).catch(error => {
+                                return Promise.resolve({
+                                    error
+                                })
+                            })
+
+                        })
+                    }))
+                   
+                }
+            }
+        },
+
+        barteron : {
+            account : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var account = new brtAccount();
+
+                    account.import(data);
+
+                    return makeAction(account, application);
+                }
+            },
+
+            offer : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var offer = new brtOffer();
+
+                    offer.import(data);
+
+                    return makeAction(offer, application, true);
+                }
+            },
+
+            comment : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var comment = new brtComment();
+
+                    comment.import(data);
+
+                    return makeAction(comment, application)
+                }
+            }
         }
 
     }
 
-    var makeAction = function(data, application){
+    var makeAction = function(data, application, settings){
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application : application.manifest.id
+            application : application.manifest.id,
+            ...settings
         }).then(action => {
-
             return Promise.resolve(action.export())
-
         }).catch(e => {
-
-            Promise.reject(appsError(e))
+            return Promise.reject(appsError(e))
 
         })
     }
