@@ -149,9 +149,9 @@ var BastyonApps = function(app){
             description : 'permissions_descriptions_account',
             level : 5,
 
-            canrequest : function(){
+            /*canrequest : function(){
                 return app.user.address.value ? true : false
-            }
+            }*/
         },
 
         'sign' : {
@@ -934,13 +934,16 @@ var BastyonApps = function(app){
 
                     if (error) return Promise.reject(error)
 
+                    console.log('action', action)
+
                     if (action.authorization){
                         return app.user.isStatePromise().then(state => {
+                            console.log('state', state)
                             if(state){
                                 return Promise.resolve()
                             }
                             else{
-                                return appsError('required:authorization')
+                                return Promise.reject(appsError('required:authorization'))
                             }
                         })
                     }
@@ -990,6 +993,8 @@ var BastyonApps = function(app){
             }
 
         }).catch(e => {
+
+            console.error(e)
 
             if (data.id){
 
