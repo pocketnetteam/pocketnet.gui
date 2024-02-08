@@ -39,7 +39,7 @@ var testnodes = [
 		ws : 6067,
 		name : 'pnettool.pocketnet.app',
 		stable : true
-	}
+	},
 
 	{
 		host : '157.90.235.121',
