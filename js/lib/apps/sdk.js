@@ -227,6 +227,14 @@ var BastyonSdk = function(){
             if(!self.applicationInfo) return path
             
             return self.project.protocol + "://application?id=" + self.applicationInfo.id + (currentState ? '&p=' + hexEncode(currentState) : '')
+        },
+
+        action : function(){
+            return action('getaction', {})
+        },
+        
+        actions : function(){
+            return action('getactions', {})
         }
     }
 
