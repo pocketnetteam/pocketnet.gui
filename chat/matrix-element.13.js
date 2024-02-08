@@ -1604,13 +1604,13 @@ var createvue_type_template_id_48411756_scoped_true_staticRenderFns = [];
         // this.selectedValue === 'Private' ? 'private' : 'public',
         invite: data.idForInviting,
         name: "@" + (this.groupName ? this.groupName : "New Room"),
-        initial_state: [{
+        initial_state: this.type.id == "publicgroup" ? [{
           type: "m.room.guest_access",
           state_key: "",
           content: {
             guest_access: "can_join"
           }
-        }]
+        }] : []
       }).then(chat => {
         this.$store.state.globalpreloader = false;
         return chat;

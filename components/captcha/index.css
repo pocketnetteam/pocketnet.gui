@@ -78,6 +78,10 @@
 .wnd.captchawindow .wndinner {
   max-width: 450px;
 }
+html[theme='gray'] #captcha .captchaSvgImage,
+html[theme='black'] #captcha .captchaSvgImage {
+  filter: invert(1);
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #captcha .addContainer button {

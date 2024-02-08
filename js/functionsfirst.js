@@ -452,8 +452,6 @@ formatInternalLinkHref = function(value){
             //url.protocol = window.location.protocol
             //url.host = window.location.host
 
-            console.log("URLURL1", url, url.toString())
-
             return value.replace(url.protocol + "//" + url.host + '/', getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
 			
 			

@@ -26,45 +26,67 @@
 - (void)checkVideoPermission:(CDVInvokedUrlCommand *)command {
 	NSString *mediaType = AVMediaTypeVideo;
 
-	[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-		if (!granted) {
-			//Not granted access to mediaType
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[[[UIAlertView alloc] initWithTitle:@"Error"
-				message:@"Camera permission not found. Please, check your privacy settings."
-				delegate:self
-				cancelButtonTitle:@"OK"
-				otherButtonTitles:nil] show];
-			});
+	AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+	
+    if(authStatus == AVAuthorizationStatusAuthorized || authStatus == AVAuthorizationStatusDenied){
 
-			
-		}
+		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+			if (!granted) {
+				//Not granted access to mediaType
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[[[UIAlertView alloc] initWithTitle:@"Error"
+					message:@"Camera permission not found. Please, check your privacy settings."
+					delegate:self
+					cancelButtonTitle:@"OK"
+					otherButtonTitles:nil] show];
+				});
 
+				
+			}
+
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
+																	callbackId:command.callbackId];
+		}];
+
+	}
+	else{
 		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
-																callbackId:command.callbackId];
-	}];
+																	callbackId:command.callbackId];
+	}
+
+	
 }
 
 - (void)checkAudioPermission:(CDVInvokedUrlCommand *)command {
 	NSString *mediaType = AVMediaTypeAudio;
 
-	[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-		if (!granted) {
-			//Not granted access to mediaType
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[[[UIAlertView alloc] initWithTitle:@"Error"
-				message:@"Microphone permission not found. Please, check your privacy settings."
-				delegate:self
-				cancelButtonTitle:@"OK"
-				otherButtonTitles:nil] show];
-			});
+	AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
 
-			
-		}
+	if (authStatus == AVAuthorizationStatusAuthorized || authStatus == AVAuthorizationStatusDenied){
 
+		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+			if (!granted) {
+				//Not granted access to mediaType
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[[[UIAlertView alloc] initWithTitle:@"Error"
+					message:@"Microphone permission not found. Please, check your privacy settings."
+					delegate:self
+					cancelButtonTitle:@"OK"
+					otherButtonTitles:nil] show];
+				});
+
+				
+			}
+
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
+																	callbackId:command.callbackId];
+		}];
+
+	}
+	else{
 		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
-																callbackId:command.callbackId];
-	}];
+																	callbackId:command.callbackId];
+	}
 }
 
 @end
