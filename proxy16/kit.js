@@ -41,7 +41,7 @@ var testnodes = [
 		stable : true
 	}
 
-/*	{
+	{
 		host : '157.90.235.121',
 		port : 39091,
 		ws : 6067,
@@ -75,7 +75,7 @@ var testnodes = [
 		ws : 6067,
 		name : 'lostystyg',
 		stable : false
-	}*/
+	}
 ]
 
 
