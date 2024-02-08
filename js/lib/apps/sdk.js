@@ -320,7 +320,7 @@ var BastyonSdk = function(){
         },
 
         userstate : function(){
-            return action('registration', {})
+            return action('userstate', {})
         },
     }
 
