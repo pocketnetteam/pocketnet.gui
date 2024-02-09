@@ -412,7 +412,7 @@ var BastyonApps = function(app){
                 authorization : true,
                 action : function({data, application}){
 
-                    var chatLink = 'chat?id=' + data.roomid;
+                    var chatLink = '/chat?id=' + data.roomid;
 
                     console.log('chatLink', chatLink)
 
@@ -420,7 +420,7 @@ var BastyonApps = function(app){
                         if (app.mobileview){
                             core.apptochat(chatLink)
                         } else {
-                            core.gotoRoute(chatLink)
+                            core.gopage(chatLink)
                         }
 
                         return Promise.resolve()
