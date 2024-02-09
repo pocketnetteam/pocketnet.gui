@@ -323,6 +323,10 @@ var BastyonSdk = function(){
         },
     }
 
+    self.getroute = function(data){
+        return !data.route ? '/' : data.route
+    }
+
     self.init = function(){
 
         self.on('keyboard', ({height}) => {
