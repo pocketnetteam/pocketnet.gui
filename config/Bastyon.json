@@ -10,14 +10,7 @@
         "cantdelete" : true,
         "name" : "Barteron",
 		"grantedPermissions" : ["account", "chat"]
-    },{
-		"id" : "demo.pocketnet.app",
-		"version": "0.0.1",
-		"scope" : "localhost:8081",
-		"cantdelete" : true,
-		"name" : "Demo application",
-		"grantedPermissions" : []
-	}],
+    }],
     "protocol" : "bastyon",
 	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
     "servers" : {
