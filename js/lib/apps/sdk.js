@@ -324,7 +324,7 @@ var BastyonSdk = function(){
     }
 
     self.getroute = function(data){
-        return !data.route ? '/' : data.route
+        return '/' + data.route
     }
 
     self.init = function(){
