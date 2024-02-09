@@ -47,6 +47,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		self.test = test
 		self.reverseproxy = reverseproxy
 
+	if (self.test){
+		process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+	}
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
