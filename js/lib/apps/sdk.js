@@ -46,15 +46,15 @@ var BastyonSdk = function(){
         setTimeout(() => {
             var link = (document.location.pathname + document.location.search).replace('/', '');
 
-            if(currentState == link) return
+            if(currentState == link && isReplace) return
     
             currentState = link
-    
+
             send({
                 event : 'changestate',
                 data : {
                     value : currentState,
-                    replace : isReplace
+                    replace : false
                 }
             })
         })
@@ -67,7 +67,9 @@ var BastyonSdk = function(){
         window.history['_' + changeState] = window.history[changeState]
         
         window.history[changeState] = new Proxy(window.history[changeState], {
+            
             apply (target, thisArg, argList) {
+                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 
@@ -325,6 +327,11 @@ var BastyonSdk = function(){
 
         self.on('keyboard', ({height}) => {
             document.documentElement.style.setProperty('--keyboardheight', `${height}px`);
+		})
+
+        self.on('changestate', (data) => {
+            console.log("CHA2", data.route)
+            currentState = data.route
 		})
 
         return new Promise((resolve, reject) => {
