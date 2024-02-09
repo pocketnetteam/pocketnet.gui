@@ -322,7 +322,7 @@ var application = (function(){
 
 					if (decoded == curpath) return
 
-					console.log("PATH, decoded", decoded)
+						curpath = actions.getpath()
 
 						self.app.apps.emit('changestate', {
 							route : decoded
@@ -406,6 +406,8 @@ var application = (function(){
 			init : function(p){
 
 				state.load();
+
+				curpath = ''
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
