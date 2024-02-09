@@ -43,21 +43,25 @@ var BastyonSdk = function(){
 
     const onChangeState = (state, title, url, isReplace) => { 
 
-        if(currentState == state.current) return
+        setTimeout(() => {
+            var link = (document.location.pathname + document.location.search).replace('/', '');
 
-        currentState = state.current.replace('/', '')
-
-        send({
-            event : 'changestate',
-            data : {
-                value : currentState,
-                replace : isReplace
-            }
+            if(currentState == link) return
+    
+            currentState = link
+    
+            send({
+                event : 'changestate',
+                data : {
+                    value : currentState,
+                    replace : isReplace
+                }
+            })
         })
+        
 
     }
     
-    // set onChangeState() listener:
     ['pushState', 'replaceState'].forEach((changeState) => {
         // store original values under underscored keys (`window.history._pushState()` and `window.history._replaceState()`):
         window.history['_' + changeState] = window.history[changeState]
@@ -71,19 +75,6 @@ var BastyonSdk = function(){
             },
         })
     })
-
-    /*window.addEventListener('pushstate', (event) => {
-
-        console.log("pushstate event", event)
-        
-        send({
-            event : 'popstate',
-            data : {
-                value : document.location.pathname + document.location.search
-            }
-        })
-
-    });*/
 
     window.addEventListener("message", (event) => {
         if (event.data){
@@ -119,8 +110,6 @@ var BastyonSdk = function(){
         catch(e){
             console.error(e)
         }
-
-       
         
     }
 
@@ -238,6 +227,14 @@ var BastyonSdk = function(){
             if(!self.applicationInfo) return path
             
             return self.project.protocol + "://application?id=" + self.applicationInfo.id + (currentState ? '&p=' + hexEncode(currentState) : '')
+        },
+
+        action : function(){
+            return action('getaction', {})
+        },
+        
+        actions : function(){
+            return action('getactions', {})
         }
     }
 

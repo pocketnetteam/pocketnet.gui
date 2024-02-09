@@ -147,14 +147,14 @@ body {
   min-height: 100%;
   height: 100%;
 }
-button {
+button.bstyle {
   min-height: 44px;
 }
-textarea,
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"] {
+textarea.bstyle,
+input[type="text"].bstyle,
+input[type="email"].bstyle,
+input[type="password"].bstyle,
+input[type="number"].bstyle {
   min-height: 44px;
   background: rgb(var(--background-hidden-layer));
   color: rgb(var(--text-color));
@@ -212,19 +212,23 @@ select::-ms-expand {
   display: none;
 }
 @media only screen and (min-width: 768px) {
-  html {
+  html,
+  body {
     overflow-y: overlay;
     overflow-x: hidden;
     overscroll-behavior: contain;
     scroll-behavior: smooth;
   }
-  html::-webkit-scrollbar {
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
     width: 7px;
   }
-  html::-webkit-scrollbar-track {
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
     background: rgba(var(--background-main-contrast), 0.05);
   }
-  html::-webkit-scrollbar-thumb {
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
     background-color: rgba(var(--background-main-contrast), 0.25);
     border: 0 solid rgba(var(--background-main-contrast), 0.05);
     background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);

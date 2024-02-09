@@ -245,7 +245,7 @@ var BastyonApps = function(app){
             permissions : ['account'],
             authorization : true,
             action : function(){
-                var account = self.platform.actions.getCurrentAccount()
+                var account = app.platform.actions.getCurrentAccount()
 
                 if (account){
                     var balance = account.actualBalance([account.address])
