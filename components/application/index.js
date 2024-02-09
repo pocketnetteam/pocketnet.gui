@@ -85,13 +85,13 @@ var application = (function(){
 
 				if (p.application == application.manifest.id/* && p.data.encoded*/){
 
-					curpath = actions.getpath()
-
 					self.app.nav.api.history.addRemoveParameters([], {
 						p: p.data.encoded
 					}, {
 						replaceState: p.data.replace
 					})
+
+					curpath = actions.getpath()
 					
 				}
 			},
@@ -322,7 +322,7 @@ var application = (function(){
 
 					if (decoded == curpath) return
 
-						curpath = actions.getpath()
+						curpath = decoded
 
 						self.app.apps.emit('changestate', {
 							route : decoded
