@@ -533,6 +533,7 @@ Comment = function(txid){
 				images : _.map(self.images.v, function(i){
 					return (i)
 				}),
+				info : (self.info.v || '')
 
 			}))
 			
