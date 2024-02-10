@@ -1443,6 +1443,16 @@ var BastyonApps = function(app){
                     url = url + '/' + path
                 }
 
+                try{
+                    var u = new URL(url)
+
+                    u.searchParams.set('l', app.localization.key)
+
+                    url = u.toString()
+                }catch(e){
+                    
+                }
+
                 return app.platform.sdk.remote.getnew(url).catch(e => {
                     return {}
                 }).then(meta => {
