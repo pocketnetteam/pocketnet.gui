@@ -334,15 +334,12 @@ var BastyonSdk = function(){
 		})
 
         self.on('changestate', (data) => {
-            console.log("CHA2", data.route)
             currentState = data.route
 		})
 
         return new Promise((resolve, reject) => {
             
             self.get.appinfo().then(({margintop, theme, application, project, production}) => {
-
-               
 
                 self.applicationInfo = application
                 self.project = project
@@ -361,6 +358,14 @@ var BastyonSdk = function(){
 
         })
 
+    }
+
+    self.inbastyon = function(){
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
     }
 
 
