@@ -3983,7 +3983,10 @@ Platform = function (app, listofnodes) {
         socialshare : function(url, p){
             if(!p) p = {}
 
-            url = 'https://'+app.options.url+'/' + url
+            if (url){
+                url = 'https://'+app.options.url+'/' + url
+            }
+            
 
             app.nav.api.load({
                 open : true,
@@ -23195,14 +23198,13 @@ Platform = function (app, listofnodes) {
                     })
                 }
 
-                if (self.matrixchat.el){
+                if(!self.matrixchat.el) return
 
-                    if(!self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.removeClass('active')
-                }
-                else{
-                    return
-                }
+                core.activeChange(false)
+
+                if(!self.matrixchat.el.hasClass('active')) return
+                    self.matrixchat.el.removeClass('active')
+               
 
                 if (app.chatposition)
                     app.chatposition(false)
@@ -23235,10 +23237,13 @@ Platform = function (app, listofnodes) {
                     c(false)
                 })
 
+                
+
             }
 
             core.activeChange = function(value){
-                var wnds = self.app.el.windows.find('.wnd')
+                console.log('activeChange')
+                var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
 
                 window.requestAnimationFrame(() => {
                     if (value){
@@ -23264,15 +23269,12 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if (self.matrixchat.el){
+                if(!self.matrixchat.el) return
 
-                    if (self.matrixchat.el.hasClass('active')) return
+                core.activeChange(true)
+
+                if (self.matrixchat.el.hasClass('active')) return
                     self.matrixchat.el.addClass('active')
-
-                }
-                else{
-                    return
-                }
 
                 if (app.chatposition)
                     app.chatposition(true)
@@ -23303,6 +23305,9 @@ Platform = function (app, listofnodes) {
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
                 })
+
+                
+
 
 
             }

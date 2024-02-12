@@ -169,7 +169,7 @@ var imagegallery = (function(){
 
 			},
 			nFormat : function(num){
-				if(num < 10 ) num =  "0" + num;
+				//if(num < 10 ) num =  "0" + num;
 
 				return num;
 			},
@@ -575,6 +575,27 @@ var imagegallery = (function(){
 
 			el.imagesWrapper.closest('.wndcontent').on('click', events.clickOut);
 
+			el.share.on('click', function(){
+
+				self.nav.api.load({
+					open : true,
+					href : 'socialshare2',
+					history : true,
+					inWnd : true,
+
+					essenseData : {
+						caption : self.app.localization.e('e13133'),
+						withouturl : true,
+						sharing : {
+							images : [$(currentImage).attr('src')]
+						},
+					}
+				})
+
+				return false;
+
+			})
+
 
 			if(!isMobile() && !isTablet()) el.c.on('click', events.body)
 
@@ -698,6 +719,7 @@ var imagegallery = (function(){
 				el.images = p.el.find('.images');
 				el.imageNavigation = p.el.find('.imageNavigation');
 				el.arrows = el.imageNavigation.find('.arrow');
+				el.share = el.c.find('.share')
 
 				make();
 

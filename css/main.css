@@ -2204,7 +2204,7 @@ input[type=radio].radio:checked + label {
   height: 3.5em;
   line-height: 3.5em;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.9em;
   cursor: pointer;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
@@ -2519,15 +2519,15 @@ html.mobileview.android .wnd .wndback {
 }
 .wnd ._close {
   top: calc(0.5em + var(--app-margin-top));
-  right: 0.75em;
+  right: 0.5em;
 }
 .wnd ._expand {
   top: 0.5em;
-  left: 0.75em;
+  left: 0.5em;
 }
 .wnd ._changeplace {
   bottom: 0.5em;
-  left: 0.75em;
+  left: 0.5em;
 }
 .wnd .wndok,
 .wnd .wndclose {
@@ -2722,7 +2722,7 @@ html.mobileview.android .wnd .wndback {
   max-width: 300px;
   width: 25%;
   height: auto;
-  z-index: 999;
+  z-index: 1007;
 }
 .wnd.pipmini .recomandationsFromContent {
   display: none!important;
@@ -6775,7 +6775,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   max-width: 768px;
   scroll-behavior: smooth;
   max-height: calc(var(--vh, 1vh) * 92);
-  min-height: calc(var(--vh, 1vh) * 30);
+  min-height: calc(var(--vh, 1vh) * 20);
   top: 0;
   bottom: 0;
   right: 0;

@@ -5,6 +5,31 @@
 	height: 640px;
 	height: 100%;
 
+	.share{
+		position: absolute;
+		left : @rhythm;
+		top : calc(@rhythm + var(--app-margin-top));
+		backdrop-filter: blur(2px) grayscale(30%);
+		z-index: 150;
+		border-radius: 50%;
+		.transition(0.3s);
+		color : rgb(var(--text-on-bg-ac-color));
+		width: 7 * @rhythm;
+		height: 7 * @rhythm;
+		line-height : 7 * @rhythm;
+		text-align: center;
+		font-size: 0.9em;
+		cursor: pointer;
+		.shadowText();
+
+		@media (pointer:hover) {
+			&:hover{
+				background : rgba(var(--background-total-theme), 0.2);
+				.shadowSmaller();
+			}
+		}
+	}
+
 	.imagePreloader{
 		position: absolute;
 		width: 100px;
@@ -91,8 +116,10 @@
 					cursor: pointer;
 					.transition(0.3s);
 
-					&:hover{
-						color : rgb(var(--color-good));
+					@media (pointer:hover) {
+						&:hover{
+							color : rgb(var(--color-good));
+						}
 					}
 				}
 
@@ -184,7 +211,28 @@
 	#imagegallery{
 		.panel{
 			padding-right: 1.5 * @rhythm;
-			bottom: @rhythm;
+			bottom: auto;
+			height: auto;
+			padding : 0;
+			left : 50%;
+			width: 150px;
+			margin-left: -75px;
+			top : calc(0.5 * @rhythm + var(--app-margin-top));
+
+			.items{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+			}
+
+			.imageNavigation{
+				>div{
+					&:nth-last-child(1) {
+						padding-right: @rhythm;
+					}
+				}
+			}
 		}
 
 		

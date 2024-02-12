@@ -1391,6 +1391,7 @@ Application = function (p) {
 	}
 
 	self.chatposition = function (ab) {
+		return
 		var attr = ab ? 'above' : 'under'
 
 		self.el.html.attr('chatposition', attr)
