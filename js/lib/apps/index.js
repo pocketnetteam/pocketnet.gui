@@ -404,6 +404,44 @@ var BastyonApps = function(app){
             }
         },
 
+        share : {
+            permissions : [],
+            parameters : [],
+            authorization : true,
+            action : function({data, application}){
+
+                //url, sharing {images, }, embeding
+                /*
+
+                    {
+                        url : string,
+                        sharing : {
+                            image : '', //url
+							images : [], //base64
+							title : '', 
+							html : {
+								body : '',
+								preview : ''
+							},
+
+							text : {
+								body : '',
+								preview : ''
+							}
+                        }
+                    }
+
+                */
+
+                if(!data.url) data.withouturl = true
+
+                app.platform.ui.socialshare(null, data)
+
+                return Promise.resolve()
+                
+            }
+        },
+
         chat : {
 
             openRoom : {
@@ -425,7 +463,6 @@ var BastyonApps = function(app){
 
                         return Promise.resolve()
                     })
-
                     
                 }
             },

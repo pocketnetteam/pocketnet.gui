@@ -299,6 +299,10 @@ var BastyonSdk = function(){
         userstate : function(){
             return action('userstate', {})
         },
+
+        share: function(data){
+            return action('share', {data})
+        },
     }
 
     self.init = function(){

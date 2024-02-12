@@ -323,7 +323,10 @@ Platform = function (app, listofnodes) {
         'PJRAwFaXuyYbUgbghWykpApQYYGUNQMNJ9' : true,
         'PSp72PK7zKXepZ6PDF6DsiX8knyeRnFbvW' : true,
         'PUzgekqrsTtCxmB17HyXe74ofjKowXXYXy' : true,
-        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true
+        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true,
+        'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
+        'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
+        'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
     } 
 
     self.bch = {
@@ -3934,7 +3937,7 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        images : function(allimages, initialValue, clbk){
+        images : function(allimages, initialValue, clbk, p){
 
             if(!_.isArray(allimages)) allimages = [allimages]
 
@@ -3950,12 +3953,6 @@ Platform = function (app, listofnodes) {
                 }
             })
 
-            /*var num = findIndex(images, function(image){
-
-                if (image.src == initialValue) return true;
-
-            })*/
-
             self.app.nav.api.load({
                 open : true,
                 href : 'imagegallery',
@@ -3966,12 +3963,13 @@ Platform = function (app, listofnodes) {
                     initialValue : initialValue,
                     idName : 'src',
                     images : images,
-                    gid : gid
+                    gid : gid,
+                    ...p
                 },
 
-                clbk : function(){
+                clbk : function(p){
                     if (clbk)
-                        clbk()
+                        clbk(p)
                 }
             })
 
@@ -3995,7 +3993,7 @@ Platform = function (app, listofnodes) {
                 inWnd : true,
 
                 essenseData : {
-                    url : url,
+                    url : url || p.url,
                     caption : app.localization.e('e13133'),
                     sharing : p.sharing || null,
                     embedding : p.embedding || null,

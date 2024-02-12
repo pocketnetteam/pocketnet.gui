@@ -48,7 +48,7 @@ var socialshare2 = (function(){
 			},
 
 			saveimage : function(){
-				console.log("HERE")
+				console.log("HERE", ed)
 				var src = ed.sharing.images[0];
 
 				console.log('src', src)
