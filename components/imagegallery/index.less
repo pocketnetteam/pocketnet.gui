@@ -7,7 +7,7 @@
 
 	.share{
 		position: absolute;
-		left : @rhythm;
+		right : 66px;
 		top : calc(@rhythm + var(--app-margin-top));
 		backdrop-filter: blur(2px) grayscale(30%);
 		z-index: 150;
@@ -187,7 +187,7 @@
 			background: rgb(var(--color-shadow-base));
 		}
 		.wndcontent{
-			padding : 2 * @rhythm;
+			padding : 0;
 		}
 
 		.wndinner{
@@ -233,6 +233,13 @@
 					}
 				}
 			}
+		}
+
+		.share{
+			left : @rhythm;
+			right: auto;
+			top : calc(@rhythm + var(--app-margin-top));
+			
 		}
 
 		

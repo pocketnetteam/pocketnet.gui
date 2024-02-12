@@ -5,7 +5,7 @@
 }
 #imagegallery .share {
   position: absolute;
-  left: 0.5em;
+  right: 66px;
   top: calc(0.5em + var(--app-margin-top));
   backdrop-filter: blur(2px) grayscale(30%);
   z-index: 150;
@@ -154,7 +154,7 @@
   background: rgb(var(--color-shadow-base));
 }
 .wnd.imageGallery .wndcontent {
-  padding: 1em;
+  padding: 0;
 }
 .wnd.imageGallery .wndinner {
   width: 100%;
@@ -186,6 +186,11 @@
   }
   #imagegallery .panel .imageNavigation > div:nth-last-child(1) {
     padding-right: 0.5em;
+  }
+  #imagegallery .share {
+    left: 0.5em;
+    right: auto;
+    top: calc(0.5em + var(--app-margin-top));
   }
   .wnd.imageGallery .wndcontent {
     padding: 0;
