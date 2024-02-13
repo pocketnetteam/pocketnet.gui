@@ -488,7 +488,7 @@ wnd = function (p) {
 				})
 			}
 
-			app.actions.playingvideo(null);
+			//app.actions.playingvideo(null);
 
 			if (p.class) wnd.addClass(p.class);
 

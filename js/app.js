@@ -1580,6 +1580,7 @@ Application = function (p) {
 	self.fullscreenmode = false
 	self.pseudofullscreenmode = false
 	self.playingvideo = null
+	self.playingvideocollisions = {}
 	self.pipwindow = null
 
 	var blockScroll = false
@@ -1674,18 +1675,36 @@ Application = function (p) {
 
 		},
 
-		playingvideo: function (v) {
+		
+
+		playingvideo: function (v, from) {
+
+			
+
+			if(from && from.player_id){
+				if(self.playingvideocollisions[from.player_id]){
+					delete self.playingvideocollisions[from.player_id]
+					return
+				}
+			}
+
+			console.log("playingvideo caller", v, self.playingvideo)
 
 			if (self.playingvideo && self.playingvideo.playing) {
 
 				try {
 					self.playingvideo.pause()
+
+					if (self.playingvideo.player_id)
+						self.playingvideocollisions[self.playingvideo.player_id] = true
 				}
 				catch (e) {
-
 				}
 
 			}
+
+			console.log("playingvideo caller v3", v, self.playingvideo)
+
 
 			self.playingvideo = v
 

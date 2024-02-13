@@ -301,6 +301,18 @@ var BastyonSdk = function(){
         },
 
         share: function(data){
+
+            /*
+            
+            data.path
+            data.sharing
+            
+            */
+
+            if (data.path){
+                data.url = self.get.applink(data.path)
+            }
+
             return action('share', {data})
         },
     }

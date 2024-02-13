@@ -5688,8 +5688,9 @@ html.cameraenabledrun{
                 }
 
                 &[position='bottom']{
-                    bottom : 100px;
+                    bottom : calc(var(--keyboardheight, 0) + 100px);
                     top : auto;
+                    
 
                     ._changeplace{
                         transform: rotate(180deg);

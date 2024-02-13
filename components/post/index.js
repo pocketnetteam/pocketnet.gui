@@ -495,7 +495,10 @@ var post = (function () {
 
 						play : function(){
 
-							if(!p.pip)
+							console.log("set post playing play")
+
+
+							//if(!p.pip)
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
@@ -517,8 +520,8 @@ var post = (function () {
 						},
 
 						pause : function(){
-							if(!p.pip)
-								self.app.actions.playingvideo(null)
+							console.log("set post playing pause")
+							self.app.actions.playingvideo(null, player)
 						},
 
 						playbackStatusUpdate : function({
@@ -1945,7 +1948,7 @@ var post = (function () {
 		var initEvents = function () {
 
 
-			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
+			/*self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
 				if(v && player){
 
 					if (player.error) return
@@ -1957,7 +1960,7 @@ var post = (function () {
 				else{
 				
 				}
-			}
+			}*/
 
 			/*self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
@@ -2225,7 +2228,7 @@ var post = (function () {
 
 				videoinfoupdateInterval = null
 
-				self.app.actions.playingvideo(null)
+				//self.app.actions.playingvideo(null)
 				
 				//self.app.el.menu.find('#menu').removeClass('static')
 
@@ -2244,7 +2247,7 @@ var post = (function () {
 				if (player) {
 
 					if (player.playing){
-						player.stop()
+						player.pause()
 					}
 
 					if (player.destroy) player.destroy()

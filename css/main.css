@@ -4687,7 +4687,7 @@ html.cameraenabledrun .appcnt {
     transition: transform 0.3s;
   }
   html.mobileview .wnd.pipmini[position='bottom'] {
-    bottom: 100px;
+    bottom: calc(var(--keyboardheight, 0) + 100px);
     top: auto;
   }
   html.mobileview .wnd.pipmini[position='bottom'] ._changeplace {

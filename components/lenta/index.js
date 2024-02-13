@@ -1109,7 +1109,11 @@ var lenta = (function(){
 						play : function(){
 							videopaused = false
 
+							console.log("set lenta playing play")
+
 							self.app.actions.playingvideo(players[share.txid].p)
+
+							if(essenseData.playingClbk) essenseData.playingClbk(players[share.txid].p)
 
 							if(isMobile() && share.itisvideo() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value){
 								actions.fullScreenVideo(share.txid)
@@ -1117,9 +1121,14 @@ var lenta = (function(){
 						},
 
 						pause : function(){
+
+							console.log("set lenta playing pause")
+
 							videopaused = true
 
-							self.app.actions.playingvideo(null)
+							self.app.actions.playingvideo(null, players[share.txid].p)
+
+							if(essenseData.playingClbk) essenseData.playingClbk(null)
 						},
 
 						playbackStatusUpdate : function({
@@ -4999,7 +5008,7 @@ var lenta = (function(){
 
 				if(!essenseData.txids){
 
-					self.app.platform.matrixchat.clbks.SHOWING[mid] = function(v){
+					/*self.app.platform.matrixchat.clbks.SHOWING[mid] = function(v){
 						if(v){
 							_.each(players, function(player){
 								if (player.error || !player.p) return
@@ -5012,7 +5021,7 @@ var lenta = (function(){
 						else{
 							
 						}
-					}
+					}*/
 	
 					self.app.platform.ws.messages.event.clbks[mid] = function(data){
 	
@@ -5674,7 +5683,7 @@ var lenta = (function(){
 			
 				delete self.app.platform.actionListeners[mid]
 
-				app.actions.playingvideo(null);
+				
 
 				_.each(initedcommentes, function(c){
 					c?.clearessense()
@@ -5707,8 +5716,17 @@ var lenta = (function(){
 				}
 
 				_.each(players, function(p){
-					if (p.p)
+
+					
+					if (p.p){
+
+						if (p.p.playing){
+							p.p.pause()
+						}
+
 						p.p.destroy()
+					}
+						
 				})
 
 				players = {}
