@@ -6336,11 +6336,13 @@ SwipeParallaxNew = function (p) {
 				direction = mainDirection.i
 			}
 
+			console.log('mainDirection', mainDirection, phase, distance)
+
 			if (phase == 'cancel' || phase == 'end') {
 
 				if (mainDirection) {
 
-					if (phase == 'end' && mainDirection.clbk && direction == mainDirection.i) {
+					if ((phase == 'end' || mainDirection.distance < 50 && phase == 'cancel') && mainDirection.clbk && direction == mainDirection.i) {
 
 						if ((!mainDirection.distance || mainDirection.distance < distance)) {
 							mainDirection.clbk()

@@ -20640,16 +20640,19 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
+                var d = 25
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
+                    allowPageScroll : false,
                     directions: {
                         up : {
-                            endmove : true,
+                            //endmove : true,
                             trueshold: 1,
-                            distance : 20,
+                            distance : d,
                             positionclbk: function (px) {
-
+                                var p = 1 - Math.min(px / d, 1)
+                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
@@ -21071,6 +21074,18 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
+            /*self.messageHandler({
+                "txid": "d4864ba4af7cd61deb7346d3cfd5eeaf4007518ea7c1ed2a01fc4984c4786dff",
+                "time": 1707803215,
+                "nblock": 2624587,
+                "addrFrom": "PEqZBgw92riGLivcDWJet7RKs3xjZLpVyi",
+                "nameFrom": "Janos",
+                "avatarFrom": "https://bastyon.com:8092/i/JcldUvzVxGlOxXMvZFQuDJ.jfif",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 11
+            })*/
+
             // self.messageHandler({
             //     addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
             //     addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
@@ -21182,6 +21197,7 @@ Platform = function (app, listofnodes) {
 		}, 3000)
     }
 
+    
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);

@@ -188,9 +188,15 @@ var activities = (function () {
 					[self.user.address.value, blockNumber, null, getters.getFilters(currentFilter)]
 				).then((data) => {
 
+					console.log('data', data)
+
 					if (!data.length) {
 						end = true
 					}
+
+					data = _.uniq(data, (d) => {
+						return d.hash
+					})
 
 					
 					activitiesByGroup[currentFilter].push(...data)

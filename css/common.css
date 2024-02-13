@@ -602,7 +602,7 @@
 .share_common .images .imagesContainer.owlcar {
   height: auto;
   width: 100%;
-  max-width: 450px;
+  max-width: 768px;
 }
 .share_common .images .imagesContainer.owlcar .imagesWrapper {
   height: 500px;
@@ -613,10 +613,10 @@
   background-size: contain!important;
 }
 .share_common .images .imagesContainer.carousel {
-  max-width: 450px;
+  max-width: 768px;
 }
 .share_common .images .carousel_markers {
-  max-width: 450px;
+  max-width: 768px;
 }
 .share_common .images .imagesContainer {
   display: flex;

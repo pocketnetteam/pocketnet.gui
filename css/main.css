@@ -2011,8 +2011,17 @@ input[type=radio].radio:checked + label {
   bottom: 0.75em;
   width: auto;
 }
+.m-message-container.is-bottom-right .close {
+  display: none;
+}
 .m-message-container.is-top-left {
   top: calc(0.5em + var(--app-margin-top));
+}
+.m-message-container .close {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
 }
 .m-message-container .notificationWrapper {
   display: block;
@@ -6677,6 +6686,9 @@ html.mobileview .fastMessage .time {
   display: none;
 }
 html.mobileview .fastMessage .tips {
+  /*display: none; */
+}
+html.mobileview .fastMessage .tips .additionalcontent {
   display: none;
 }
 html.mobileview .fastMessage .cwrapper.table > div {

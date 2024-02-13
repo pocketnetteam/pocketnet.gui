@@ -2322,6 +2322,10 @@ input[type=radio].radio:checked + label {
     right: 56px;
     bottom : 1.5 * @rhythm;
     width: auto;
+
+    .close{
+        display: none;
+    }
 }
 
 .m-message-container.is-top-left{
@@ -2330,6 +2334,13 @@ input[type=radio].radio:checked + label {
     
     
 .m-message-container{
+
+    .close{
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+    }
     
     .notificationWrapper {
         display: block;
@@ -8245,7 +8256,11 @@ html.mobileview{
         }
 
         .tips{
-           display: none; 
+           /*display: none; */
+
+            .additionalcontent{
+                display: none;
+            }
         }
 
         .cwrapper.table{
