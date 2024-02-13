@@ -121,7 +121,7 @@
   display: none;
 }
 #post .share .images {
-  max-width: 620px;
+  max-width: 768px;
   /*.imagesWrapper{
 				width: 180px;
 				height: 180px;
@@ -190,7 +190,7 @@
   max-width: 620px;
 }
 #post .share .message {
-  max-width: 620px;
+  max-width: 768px;
 }
 #post.videomainpost {
   padding-top: 0;

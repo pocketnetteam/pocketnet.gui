@@ -1109,7 +1109,11 @@ var lenta = (function(){
 						play : function(){
 							videopaused = false
 
+							console.log("set lenta playing play")
+
 							self.app.actions.playingvideo(players[share.txid].p)
+
+							if(essenseData.playingClbk) essenseData.playingClbk(players[share.txid].p)
 
 							if(isMobile() && share.itisvideo() && !self.app.platform.sdk.usersettings.meta.videoautoplay2.value){
 								actions.fullScreenVideo(share.txid)
@@ -1117,9 +1121,14 @@ var lenta = (function(){
 						},
 
 						pause : function(){
+
+							console.log("set lenta playing pause")
+
 							videopaused = true
 
-							self.app.actions.playingvideo(null)
+							self.app.actions.playingvideo(null, players[share.txid].p)
+
+							if(essenseData.playingClbk) essenseData.playingClbk(null)
 						},
 
 						playbackStatusUpdate : function({
@@ -3832,7 +3841,9 @@ var lenta = (function(){
 
 				var cwidth = self.app.width
 
-				if (self.app.width <= 768 || essenseData.openapi){ 
+				var mw = self.app.width <= 768 || essenseData.openapi
+
+				if (mw){ 
 
 					if(essenseData.openapi){
 						cwidth = lwidth
@@ -3865,7 +3876,7 @@ var lenta = (function(){
 
 					if(s.settings.v != "a"){
 
-						if((isMobile() || essenseData.openapi) && image.images.length > 1 ){
+						if((mw || essenseData.openapi) && image.images.length > 1 ){
 
 							_.each(image.images, function(img, n){
 								var _img = img.img;
@@ -3877,7 +3888,7 @@ var lenta = (function(){
 								if(aspectRatio > 1.66) aspectRatio = 1.66
 
 								window.requestAnimationFrame(() => {
-									el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
+									el.height( Math.min( self.app.height / 1.5, images.width() || lwidth || self.app.width) * aspectRatio)
 								})
 							})
 							
@@ -3893,7 +3904,7 @@ var lenta = (function(){
 
 								var ac = '';
 
-								var _w = isMobile() ? self.app.width : el.width() || el.closest('.share').width();
+								var _w = mw ? self.app.width : el.width() || el.closest('.share').width();
 								var _h = el.height()
 								
 
@@ -3962,7 +3973,7 @@ var lenta = (function(){
 
 					if(s.settings.v != 'a' && image.images.length > 1){
 
-						if (isMobile() || essenseData.openapi) {
+						if (mw || essenseData.openapi) {
 							carousels[s.txid] = new carousel(images, '.imagesWrapper', '.imagesContainer')
 							isclbk()
 
@@ -4070,7 +4081,7 @@ var lenta = (function(){
 
 					}, function(_p){
 
-						var images = _p.el.find('img');
+						var images = _p.el.find('.ogimage');
 	
 						self.app.nav.api.links(null, _p.el, function(event){
 							event.stopPropagation()
@@ -4084,12 +4095,21 @@ var lenta = (function(){
 								if (!i.isLoaded){
 									$(images[index]).closest('.image').css('display', 'none')
 								}
+
+								else{
+									$(images[index]).on('click', function(){
+										var src = $(this).attr('src')
+			
+										self.app.platform.ui.images(src)
+									})
+								}
 							})
 	
 							essenserenderclbk()
 	
 							images = null
 						});
+
 	
 						if (clbk)
 							clbk()
@@ -4988,7 +5008,7 @@ var lenta = (function(){
 
 				if(!essenseData.txids){
 
-					self.app.platform.matrixchat.clbks.SHOWING[mid] = function(v){
+					/*self.app.platform.matrixchat.clbks.SHOWING[mid] = function(v){
 						if(v){
 							_.each(players, function(player){
 								if (player.error || !player.p) return
@@ -5001,7 +5021,7 @@ var lenta = (function(){
 						else{
 							
 						}
-					}
+					}*/
 	
 					self.app.platform.ws.messages.event.clbks[mid] = function(data){
 	
@@ -5663,7 +5683,7 @@ var lenta = (function(){
 			
 				delete self.app.platform.actionListeners[mid]
 
-				app.actions.playingvideo(null);
+				
 
 				_.each(initedcommentes, function(c){
 					c?.clearessense()
@@ -5696,8 +5716,17 @@ var lenta = (function(){
 				}
 
 				_.each(players, function(p){
-					if (p.p)
+
+					
+					if (p.p){
+
+						if (p.p.playing){
+							p.p.pause()
+						}
+
 						p.p.destroy()
+					}
+						
 				})
 
 				players = {}

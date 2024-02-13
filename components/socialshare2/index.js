@@ -47,25 +47,79 @@ var socialshare2 = (function(){
 
 			},
 
+			saveimage : function(){
+				console.log("HERE", ed)
+				var src = ed.sharing.images[0];
+
+				console.log('src', src)
+
+				globalpreloader(true)
+
+				srcToData(src, function (base64) {
+
+					imagetojpegifneed({ base64, name }).then(({ base64, name }) => {
+
+						self.app.mobile.saveImages.save(base64, name, function (d, err) {
+
+							console.log(d, err)
+
+							globalpreloader(false)
+
+							if (d) {
+								successCheck()
+							}
+							else {
+								sitemessage(self.localization.e('e13230') + (err && err.code ? (': ' + err.code) : '' ))
+							}
+
+						})
+
+					})
+
+
+
+				})
+			},
+
 			nativeshare : function(){
 
 				if (plugin){
-					plugin.shareWithOptions({
 
-						message: ed.sharing.text.body || '', 
-						subject: ed.sharing.text.title || '',
-						images : ed.sharing.images || [],
-						url: ed.url
 
-					}, function(){
+					var images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
 
-						setTimeout(function(){
-							self.closeContainer()
-						}, 200)
+					globalpreloader(true)
 
-					}, function(){
+					convertimages(images).then((imgs) => {
+						var sharing = {...ed.sharing}
 
-					});
+						delete sharing.image
+
+						sharing.images = imgs || []
+
+						var options = {}
+
+						sharing.text && sharing.text.body ? options.message = sharing.text.body : ''
+						sharing.text && sharing.text.title ? options.subject = sharing.text.title : ''
+						sharing.images && sharing.images.length ? options.files = sharing.images : ''
+						ed.url ? options.url = ed.url : ''
+
+						plugin.shareWithOptions(options, function(){
+	
+							globalpreloader(false)
+	
+							setTimeout(function(){
+								self.closeContainer()
+							}, 200)
+	
+						}, function(e){
+							console.error(e)
+							globalpreloader(false)
+	
+						});
+					})
+
+					
 				}
 				else{
 					actions.applyview('share')
@@ -232,7 +286,9 @@ var socialshare2 = (function(){
 		var renders = {
 			sharebuttons : function(){
 
-				if (ed.sharing){
+				console.log('ed', ed)
+
+				if (ed.sharing && ed.url){
 					self.shell({
 
 						name :  'sharebuttons',
@@ -623,7 +679,12 @@ var socialshare2 = (function(){
 				}
 				else{
 
-					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + self.app.localization.e('continueon') + ' ' + self.app.meta.fullname
+					var text = ''
+					
+					if(ed.sharing.title || ed.sharing.text){
+						ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + self.app.localization.e('continueon') + ' ' + self.app.meta.fullname
+					}
+					
 
 					var type = _el.data('type');
 					var b = findsocial(type)
@@ -698,14 +759,44 @@ var socialshare2 = (function(){
 
 			el.c.find('.chat .button').on('click', function(){
 
-				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
+				if (ed.url){
+					var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
 			
-				self.app.platform.matrixchat.share.url(url).catch(r => {
-				})
+					self.app.platform.matrixchat.share.url(url).catch(r => {})
+	
+					
+				}
+
+				else{
+
+
+					var images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
+
+					globalpreloader(true)
+
+
+					convertimages(images).then((imgs) => {
+						var sharing = {...ed.sharing}
+
+						delete sharing.image
+
+						sharing.images = imgs || []
+
+						console.log('sharing', sharing)
+
+						self.app.platform.matrixchat.share.object(sharing).catch(r => {})
+
+						globalpreloader(false)
+					})
+
+					
+				}
+
 
 				setTimeout(function(){
 					self.closeContainer()
 				}, 200)
+				
 			
 			})
 
@@ -713,6 +804,8 @@ var socialshare2 = (function(){
 
 
 			el.c.find('.nativeshare .button').on('click', events.nativeshare)
+
+			el.c.find('.saveimage .button').on('click', actions.saveimage)
 
 			el.c.find('.backwrapper').on('click', function(){
 				actions.applyview('')
@@ -794,31 +887,38 @@ var socialshare2 = (function(){
 
 				prepareParameters()
 
-				if(ed.notincludedRef) notincludedRef = ed.notincludedRef
-
-			    if(!ed.url){
-
-			    	if(typeof _Electron != 'undefined' || window.cordova){
-
-			    		var p = window.location.pathname.split('/')
-
-			    		var pn = p[p.length - 1]
-
-						if(!pn) pn = 'index'
-
-						ed.url = 'https://'+self.app.options.url+'/' +  pn + window.location.search
-						
-				    }
-				    else
-				    {
-				    	ed.url = 'https://'+self.app.options.url+'/' + self.app.nav.get.href() || 'index'
-				    }
-
-				}
-
 				var share = null
 
-				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
+				if(ed.notincludedRef) notincludedRef = ed.notincludedRef
+
+				if(!ed.withouturl){
+					if(!ed.url){
+
+						if(typeof _Electron != 'undefined' || window.cordova){
+	
+							var p = window.location.pathname.split('/')
+	
+							var pn = p[p.length - 1]
+	
+							if(!pn) pn = 'index'
+	
+							ed.url = 'https://'+self.app.options.url+'/' +  pn + window.location.search
+							
+						}
+						else
+						{
+							ed.url = 'https://'+self.app.options.url+'/' + self.app.nav.get.href() || 'index'
+						}
+	
+					}
+	
+					
+	
+					ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
+				}
+
+			    
+				
 
 				if(ed.embedding && ed.embedding.type == 'post'){
 					postId = ed.embedding && ed.embedding.id;
