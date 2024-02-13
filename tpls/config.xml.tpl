@@ -118,8 +118,9 @@
     
 
     <allow-navigation href="*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="*" />
-    
+    <allow-intent href="data:*" />
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
@@ -183,6 +184,12 @@
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <provider android:authorities="${applicationId}.sharing.provider" android:exported="false" android:grantUriPermissions="true" android:name="nl.xservices.plugins.FileProvider">
+                <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/sharing_paths" />
+            </provider>
+        </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/notification_icon" />

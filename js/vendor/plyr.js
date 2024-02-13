@@ -9321,6 +9321,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
   
           var api = embed.api
               api.mute()
+              api.player_id = makeid()
 
               api.el = $(target)
   
@@ -9385,6 +9386,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
                         return Promise.resolve()
                       }
 
+                      plyrPlayer.player_id = makeid()
+
                     if (clbk) clbk(plyrPlayer);
 
                 } else {
@@ -9412,6 +9415,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           plyrPlayer.prepare = function(){
             return Promise.resolve()
           }
+
+          plyrPlayer.player_id = makeid()
 
       if (clbk) clbk(plyrPlayer);
 

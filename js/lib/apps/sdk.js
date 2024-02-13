@@ -228,7 +228,7 @@ var BastyonSdk = function(){
             if(!self.project) return path
             if(!self.applicationInfo) return path
             
-            return self.project.protocol + "://application?id=" + self.applicationInfo.id + (currentState ? '&p=' + hexEncode(currentState) : '')
+            return self.project.protocol + "://application?id=" + self.applicationInfo.id + (path ? (path ? '&p=' + hexEncode(path) : '') :  (currentState ? '&p=' + hexEncode(currentState) : ''))
         },
 
         action : function(){
@@ -320,6 +320,24 @@ var BastyonSdk = function(){
 
         userstate : function(){
             return action('userstate', {})
+        },
+
+        share: function(data){
+
+            /*
+            
+            data.path
+            data.sharing
+            
+            */
+
+            if (data.path){
+                data.url = self.get.applink(data.path)
+            }
+
+            
+
+            return action('share', data)
         },
     }
 
