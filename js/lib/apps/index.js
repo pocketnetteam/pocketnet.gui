@@ -433,7 +433,10 @@ var BastyonApps = function(app){
 
                 */
 
+                console.log('data', data)
+
                 if(!data.url) data.withouturl = true
+                if (data.url) data.url = findAndReplaceLinkClear(data.url)
 
                 app.platform.ui.socialshare(null, data)
 

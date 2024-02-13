@@ -226,7 +226,7 @@ var BastyonSdk = function(){
             if(!self.project) return path
             if(!self.applicationInfo) return path
             
-            return self.project.protocol + "://application?id=" + self.applicationInfo.id + (currentState ? '&p=' + hexEncode(currentState) : '')
+            return self.project.protocol + "://application?id=" + self.applicationInfo.id + (path ? (path ? '&p=' + hexEncode(path) : '') :  (currentState ? '&p=' + hexEncode(currentState) : ''))
         },
 
         action : function(){
@@ -313,7 +313,9 @@ var BastyonSdk = function(){
                 data.url = self.get.applink(data.path)
             }
 
-            return action('share', {data})
+            
+
+            return action('share', data)
         },
     }
 
