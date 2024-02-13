@@ -495,7 +495,10 @@ var post = (function () {
 
 						play : function(){
 
-							if(!p.pip)
+							console.log("set post playing play")
+
+
+							//if(!p.pip)
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
@@ -517,8 +520,8 @@ var post = (function () {
 						},
 
 						pause : function(){
-							if(!p.pip)
-								self.app.actions.playingvideo(null)
+							console.log("set post playing pause")
+							self.app.actions.playingvideo(null, player)
 						},
 
 						playbackStatusUpdate : function({
@@ -1267,13 +1270,14 @@ var post = (function () {
 						if (clbk) clbk();
 					} else {
 
+						var mw = self.app.width <= 768
 
 						_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
 
 
 							if (share.settings.v != 'a') {
 
-								if((isMobile() || ed.repost) && image.images.length > 1){
+								if((mw || ed.repost) && image.images.length > 1){
 
 									
 									_.each(image.images, function(img, n){
@@ -1286,7 +1290,7 @@ var post = (function () {
 										if(aspectRatio > 1.66) aspectRatio = 1.66
 
 
-										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
+										el.height( Math.min( self.app.height / 1.5, images.width() || self.app.width) * aspectRatio)
 									})
 
 								
@@ -1308,7 +1312,7 @@ var post = (function () {
 										var _w = el.width();
 										var _h = el.height()
 
-										if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+										if(_img.width >= _img.height && (!mw && self.app.width > 768 && !ed.openapi)){
 											ac = 'w2'
 
 											var w = _w * (_img.width / _img.height);
@@ -1324,7 +1328,7 @@ var post = (function () {
 											el.width(w);
 										}
 
-										if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+										if(_img.height >= _img.width || (mw || self.app.width <= 768 || ed.openapi)){
 											ac = 'h2'
 
 											el.height(_w * (_img.height / _img.width))
@@ -1357,7 +1361,7 @@ var post = (function () {
 
 								var gutter = 5;
 
-								if (isMobile() || ed.repost) {
+								if (mw || ed.repost) {
 
 
 									new carousel(images, '.imagesWrapper', '.imagesContainer')
@@ -1734,9 +1738,9 @@ var post = (function () {
 
 				}, function (_p) {
 
-					var images = _p.el.find('img');
+					var images = _p.el.find('.ogimage');
 
-					_p.el.find('img').imagesLoadedPN({ background: true }, function (image) {
+					images.imagesLoadedPN({ background: true }, function (image) {
 						_.each(image.images, function (i, index) {
 							if (i.isLoaded) {
 								$(images[index]).addClass('active');
@@ -1744,6 +1748,13 @@ var post = (function () {
 								if (i.img.naturalWidth > 500) {
 									_p.el.addClass('bigimageinlink');
 								}
+
+								$(images[index]).on('click', function(){
+									var src = $(this).attr('src')
+		
+									self.app.platform.ui.images(src)
+								})
+
 							} else {
 								$(images[index]).closest('.image').css('display', 'none');
 							}
@@ -1937,7 +1948,7 @@ var post = (function () {
 		var initEvents = function () {
 
 
-			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
+			/*self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
 				if(v && player){
 
 					if (player.error) return
@@ -1949,7 +1960,7 @@ var post = (function () {
 				else{
 				
 				}
-			}
+			}*/
 
 			/*self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
@@ -2217,7 +2228,7 @@ var post = (function () {
 
 				videoinfoupdateInterval = null
 
-				self.app.actions.playingvideo(null)
+				//self.app.actions.playingvideo(null)
 				
 				//self.app.el.menu.find('#menu').removeClass('static')
 
@@ -2236,7 +2247,7 @@ var post = (function () {
 				if (player) {
 
 					if (player.playing){
-						player.stop()
+						player.pause()
 					}
 
 					if (player.destroy) player.destroy()

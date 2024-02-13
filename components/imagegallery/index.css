@@ -3,6 +3,32 @@
   height: 640px;
   height: 100%;
 }
+#imagegallery .share {
+  position: absolute;
+  right: 66px;
+  top: calc(0.5em + var(--app-margin-top));
+  backdrop-filter: blur(2px) grayscale(30%);
+  z-index: 150;
+  border-radius: 50%;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: rgb(var(--text-on-bg-ac-color));
+  width: 3.5em;
+  height: 3.5em;
+  line-height: 3.5em;
+  text-align: center;
+  font-size: 0.9em;
+  cursor: pointer;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+@media (pointer: hover) {
+  #imagegallery .share:hover {
+    background: rgba(var(--background-total-theme), 0.2);
+    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  }
+}
 #imagegallery .imagePreloader {
   position: absolute;
   width: 100px;
@@ -76,8 +102,10 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#imagegallery .panel .imageNavigation > div.arrow:hover {
-  color: rgb(var(--color-good));
+@media (pointer: hover) {
+  #imagegallery .panel .imageNavigation > div.arrow:hover {
+    color: rgb(var(--color-good));
+  }
 }
 #imagegallery .panel .imageNavigation > div:nth-last-child(1) {
   padding-right: 0;
@@ -126,7 +154,7 @@
   background: rgb(var(--color-shadow-base));
 }
 .wnd.imageGallery .wndcontent {
-  padding: 1em;
+  padding: 0;
 }
 .wnd.imageGallery .wndinner {
   width: 100%;
@@ -143,7 +171,26 @@
 @media only screen and (max-width: 768px) {
   #imagegallery .panel {
     padding-right: 0.75em;
-    bottom: 0.5em;
+    bottom: auto;
+    height: auto;
+    padding: 0;
+    left: 50%;
+    width: 150px;
+    margin-left: -75px;
+    top: calc(0.5 * 0.5em + var(--app-margin-top));
+  }
+  #imagegallery .panel .items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #imagegallery .panel .imageNavigation > div:nth-last-child(1) {
+    padding-right: 0.5em;
+  }
+  #imagegallery .share {
+    left: 0.5em;
+    right: auto;
+    top: calc(0.5em + var(--app-margin-top));
   }
   .wnd.imageGallery .wndcontent {
     padding: 0;
