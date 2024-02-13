@@ -84,22 +84,42 @@ var socialshare2 = (function(){
 			nativeshare : function(){
 
 				if (plugin){
-					plugin.shareWithOptions({
 
-						message: ed.sharing.text ? ed.sharing.text.body || '' : '', 
-						subject: ed.sharing.text ? ed.sharing.text.title || '' : '',
-						images : ed.sharing.image? [ed.sharing.image] : ed.sharing.images || [],
-						url: ed.url || ''
 
-					}, function(){
+					var images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
 
-						setTimeout(function(){
-							self.closeContainer()
-						}, 200)
+					globalpreloader(true)
 
-					}, function(){
+					convertimages(images).then((imgs) => {
+						var sharing = {...ed.sharing}
 
-					});
+						delete sharing.image
+
+						sharing.images = imgs || []
+
+						var options = {}
+
+						sharing.text && sharing.text.body ? options.message = sharing.text.body : ''
+						sharing.text && sharing.text.title ? options.subject = sharing.text.title : ''
+						sharing.images && sharing.images.length ? options.files = sharing.images : ''
+						ed.url ? options.url = ed.url : ''
+
+						plugin.shareWithOptions(options, function(){
+	
+							globalpreloader(false)
+	
+							setTimeout(function(){
+								self.closeContainer()
+							}, 200)
+	
+						}, function(e){
+							console.error(e)
+							globalpreloader(false)
+	
+						});
+					})
+
+					
 				}
 				else{
 					actions.applyview('share')
