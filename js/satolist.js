@@ -22751,7 +22751,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
-                    self.matrixchat.core.gotoRoute(link)
+                    self.matrixchat.core.gopage(link)
                 }
             }
 
