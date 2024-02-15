@@ -638,15 +638,18 @@ var Proxy16 = function(meta, app, api){
 
             if(!proxystate) return
 
-
-            var hash = bitcoin.crypto.hash256(JSON.stringify(proxystate))
-
-            var change = (hash.join('') !== state.hash.join(''))
-
-            state.hash = hash
             state.tick = proxystate
 
-            _.each(self.clbks.tick, (c) => { c(state.tick, change) })
+            if(!_.isEmpty(self.clbks.tick)){
+                var hash = rot13(JSON.stringify(proxystate))
+                var change = (hash.join('') !== state.hash.join(''))
+    
+                state.hash = hash
+                
+    
+                _.each(self.clbks.tick, (c) => { c(state.tick, change) })
+            }
+            
 
         }
 
