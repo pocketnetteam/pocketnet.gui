@@ -6665,7 +6665,7 @@ html.mobileview .fastMessage {
   left: 0.25em;
   right: 0.25em;
   top: calc(0.5 * 0.5em + var(--app-margin-top));
-  max-height: 210px;
+  max-height: 105px;
   width: auto;
   min-width: 0;
   max-width: none;
