@@ -18,6 +18,7 @@
 ![GitHub release Linux Deb](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.deb?label=Debian&logo=linux)
 ![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage?label=AppImage&logo=linux)
 ![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk?label=Android&logo=android)
+![GitHub release Google Free Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonGF.apk?label=Android&logo=android)
 
 <!--
 [![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml)
