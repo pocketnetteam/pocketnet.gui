@@ -323,7 +323,10 @@ Platform = function (app, listofnodes) {
         'PJRAwFaXuyYbUgbghWykpApQYYGUNQMNJ9' : true,
         'PSp72PK7zKXepZ6PDF6DsiX8knyeRnFbvW' : true,
         'PUzgekqrsTtCxmB17HyXe74ofjKowXXYXy' : true,
-        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true
+        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true,
+        'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
+        'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
+        'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
     } 
 
     self.shark = {}
@@ -483,9 +486,6 @@ Platform = function (app, listofnodes) {
 
         },
         upvoteShare : function(alias, status){
-
-            console.log('upvoteShare listener', alias, status)
-
 
             var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
@@ -778,8 +778,6 @@ Platform = function (app, listofnodes) {
                 meta[i][j] = {...a, ...configmeta[i][j] || {}}
             })
         })
-
-        console.log('meta', meta)
 
         return meta
     }
@@ -1228,6 +1226,12 @@ Platform = function (app, listofnodes) {
         },
         "actions_noinputs_wait" : {
            
+        },
+
+        "actions_noinputs_wait_comment" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait_comment')
+            }
         },
         "actions_totalAmountZero" : {
             message: function () {
@@ -2794,7 +2798,6 @@ Platform = function (app, listofnodes) {
         },
 
         clenta : function(el, clbk, p){
-
             if(!p) p = {}
 
             var id = p.id || makeid()
@@ -2843,7 +2846,8 @@ Platform = function (app, listofnodes) {
                     filter : p.filter,
                     ended : p.ended,
                     afterload : p.afterload,
-                    count : p.count
+                    count : p.count,
+                    playingClbk : p.playingClbk
                 },
 
                 clbk : clbk
@@ -2875,7 +2879,8 @@ Platform = function (app, listofnodes) {
                     renderclbk : p.renderclbk,
                     ready : p.ready,
                     second : true,
-                    allowblocked : true
+                    allowblocked : true,
+                    playingClbk : p.playingClbk
                 },
 
                 clbk : clbk
@@ -2969,7 +2974,8 @@ Platform = function (app, listofnodes) {
                             minimize : p.minimize,
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
-                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi,
+                            playingClbk : p.playingClbk
                         }
                     })
 
@@ -3260,8 +3266,6 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
-                        console.log('parameters reason', reason)
-
                         app.nav.api.load({
                             open : true,
                             id : 'captcha',
@@ -3372,7 +3376,7 @@ Platform = function (app, listofnodes) {
 
             self.app.actions.playingvideo(null)
             self.app.actions.pipwindow(p)
-            self.matrixchat.backtoapp()
+            //self.matrixchat.backtoapp()
         },
 
         popup : function(key, always, data){
@@ -3950,7 +3954,7 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        images : function(allimages, initialValue, clbk){
+        images : function(allimages, initialValue, clbk, p){
 
             if(!_.isArray(allimages)) allimages = [allimages]
 
@@ -3966,12 +3970,6 @@ Platform = function (app, listofnodes) {
                 }
             })
 
-            /*var num = findIndex(images, function(image){
-
-                if (image.src == initialValue) return true;
-
-            })*/
-
             self.app.nav.api.load({
                 open : true,
                 href : 'imagegallery',
@@ -3982,12 +3980,13 @@ Platform = function (app, listofnodes) {
                     initialValue : initialValue,
                     idName : 'src',
                     images : images,
-                    gid : gid
+                    gid : gid,
+                    ...p
                 },
 
-                clbk : function(){
+                clbk : function(p){
                     if (clbk)
-                        clbk()
+                        clbk(p)
                 }
             })
 
@@ -3999,7 +3998,10 @@ Platform = function (app, listofnodes) {
         socialshare : function(url, p){
             if(!p) p = {}
 
-            url = 'https://'+app.options.url+'/' + url
+            if (url){
+                url = 'https://'+app.options.url+'/' + url
+            }
+            
 
             app.nav.api.load({
                 open : true,
@@ -4008,7 +4010,7 @@ Platform = function (app, listofnodes) {
                 inWnd : true,
 
                 essenseData : {
-                    url : url,
+                    url : url || p.url,
                     caption : app.localization.e('e13133'),
                     sharing : p.sharing || null,
                     embedding : p.embedding || null,
@@ -5965,6 +5967,11 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        geolocation : {
+            get : function(options){
+                return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
+            }
+        },
         broadcaster : {
             clbks : {},
             history : [],
@@ -6805,14 +6812,10 @@ Platform = function (app, listofnodes) {
                 video : {
                     cordova : function(to, from){
 
-                        console.log('video cordova', to, from)
-
 
                         return new Promise((resolve, reject) => {
 
                             from.getDirectory('videos', { create: true }, function (videosFolder) {
-
-                                console.log('videoFolder2', videosFolder)
 
 
                                 to.videos = {};
@@ -6826,7 +6829,6 @@ Platform = function (app, listofnodes) {
                                         action: function (p) {
                                             var videoFolder = p.item;
 
-                                            console.log('videoFolder', videoFolder)
                                             if (videoFolder.isDirectory) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
@@ -6849,14 +6851,10 @@ Platform = function (app, listofnodes) {
 
                                                                         infoFile = file;
 
-                                                                        console.log('fileDetails', fileDetails, file)
-
 
                                                                         var reader = new FileReader();
 
                                                                         reader.onloadend = function() {
-
-                                                                            console.log('fileDetails result', this.result)
 
 
                                                                             try {
@@ -6881,16 +6879,12 @@ Platform = function (app, listofnodes) {
 
                                                                         videoFile = file;
 
-                                                                        console.log('videoFile2', videoFile)
-
 
                                                                         if (fileDetails.size)
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
                                                                         window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-
-                                                                            console.log('videoFile1', videoFile, entry)
 
                                                                             try{
                                                                                 videoFile.internalURL =  entry.toInternalURL()
@@ -9871,8 +9865,6 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                console.log('self.currentBlock', self.currentBlock, block)
-
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
@@ -11298,6 +11290,41 @@ Platform = function (app, listofnodes) {
         remote: {
             storage: {},
             failed: {},
+            loading : {},
+
+            getnew : function(url, action){
+                var s = self.sdk.remote.storage;
+                var f = self.sdk.remote.failed;
+                var l = self.sdk.remote.loading;
+
+                if (l[url]) return l[url]
+                if (f[url]) return Promise.resolve(null)
+                if (s[url]) return Promise.resolve(s[url])
+
+                l[url] = self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+
+                    var og = deep(d, 'og');
+
+                    if(!og) return Promise.reject()
+
+                    _.each(og, (o, i) => {
+                        og[i] = superXSS(o)
+                    })
+
+                    s[url] = og
+
+                    return Promise.resolve(s[url])
+
+                }).catch(e => {
+                    f[url] = true
+
+                    return Promise.resolve(null)
+                }).finally(() => {
+                    delete l[url]
+                })
+
+                return l[url]
+            },
 
             get: function (url, clbk, action) {
 
@@ -11328,14 +11355,19 @@ Platform = function (app, listofnodes) {
 
                         s[url] = og
 
-                        if (!s[url])
+                        if(!s[url]){
                             f[url] = true
 
-                        if (clbk) {
-                            if (s[url].title) s[url].title = decodeEntities(s[url].title);
-                            if (s[url].description) s[url].description = decodeEntities(s[url].description);
-                            clbk(s[url]);
+                            if (clbk)
+                                clbk(null)
+
+                            return 
                         }
+
+                        if (s[url].title) s[url].title = superXSS(s[url].title);
+                        if (s[url].description) s[url].description = superXSS(s[url].description);
+                            
+                        clbk(s[url]);
 
                     }).catch(e => {
                         f[url] = true
@@ -14046,7 +14078,6 @@ Platform = function (app, listofnodes) {
             },
 
             add : function(tags, id, value){
-                console.log("ADD TAGS", tags, id, value)
                 if(id && this.added[id]) return
 
                 if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
@@ -14098,8 +14129,6 @@ Platform = function (app, listofnodes) {
 
             load: function (clbk) {
                 var p = {};
-
-                console.log('self.sdk.memtags.lskey(', self.sdk.memtags.lskey())
 
                 try {
                     p = JSON.parse(localStorage[self.sdk.memtags.lskey()] || '{}');
@@ -14654,8 +14683,6 @@ Platform = function (app, listofnodes) {
 
                     if (self.lasttimecheck){
 
-                        console.log('block lasttimecheck error')
-
                         var d = new Date()
 
                         if(self.lasttimecheck.addSeconds(10) > d){
@@ -14670,8 +14697,6 @@ Platform = function (app, listofnodes) {
                         self.currentBlock = 0
                         self.timeDifference = 0;
 
-                        console.log('block getnodeinfo', d)
-                        
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
                             console.log('height!!!', self.currentBlock);
@@ -14679,8 +14704,6 @@ Platform = function (app, listofnodes) {
                         }catch(e){
                             
                         }
-
-                        console.log('self.currentBlock', self.currentBlock)
 
                         if (t) {
 
@@ -20635,19 +20658,12 @@ Platform = function (app, listofnodes) {
 				})
 			}
 
-            console.log('showremove', showremove, self.fastMessages.length, remove)
-
-
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
-
-                console.log("showremove SHOW")
 
                 hideallnotificationselement(true)
             }
             else{
-
-                console.log("showremove hide")
 
                 hideallnotificationselement(false)
             }
@@ -20687,8 +20703,6 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function (initial) {
 
-            console.log('missed platform.lastblocktime', platform.lastblocktime)
-
             if (!initial && ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(2))))) return Promise.resolve()
 
             if (self.loadingMissed) return Promise.resolve()
@@ -20696,8 +20710,6 @@ Platform = function (app, listofnodes) {
             self.loadingMissed = true;
 
             return platform.sdk.node.get.timepr().then(r => {
-
-                console.log("GETMISSED")
 
                 return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
@@ -20839,16 +20851,19 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
+                var d = 25
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
+                    allowPageScroll : false,
                     directions: {
                         up : {
-                            endmove : true,
+                            //endmove : true,
                             trueshold: 1,
-                            distance : 20,
+                            distance : d,
                             positionclbk: function (px) {
-
+                                var p = 1 - Math.min(px / d, 1)
+                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
@@ -20870,8 +20885,6 @@ Platform = function (app, listofnodes) {
         self.messageHandler = function (data, clbk) {
 
             data || (data = {})
-
-            console.log('data', data)
 
             if (data.msg || data.mesType) {
 
@@ -21270,6 +21283,18 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
+            /*self.messageHandler({
+                "txid": "d4864ba4af7cd61deb7346d3cfd5eeaf4007518ea7c1ed2a01fc4984c4786dff",
+                "time": 1707803215,
+                "nblock": 2624587,
+                "addrFrom": "PEqZBgw92riGLivcDWJet7RKs3xjZLpVyi",
+                "nameFrom": "Janos",
+                "avatarFrom": "https://bastyon.com:8092/i/JcldUvzVxGlOxXMvZFQuDJ.jfif",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 11
+            })*/
+
             // self.messageHandler({
             //     addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
             //     addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
@@ -21381,6 +21406,7 @@ Platform = function (app, listofnodes) {
 		}, 3000)
     }
 
+    
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
@@ -22790,6 +22816,8 @@ Platform = function (app, listofnodes) {
                         setTimeout(() => {
                             self.matrixchat.init()
                         }, 10)
+                        
+                        self.app.initApplications()
     
                         if (clbk)
                             clbk()
@@ -22829,7 +22857,7 @@ Platform = function (app, listofnodes) {
                         }, 2000)
     
                        
-    
+                        
                     })
                 })
                 
@@ -22841,6 +22869,8 @@ Platform = function (app, listofnodes) {
                     actionId: 'SESSION_STARTED',
                     actionSubType: 'UNAUTHORIZED_SESSION',
                 });
+
+                self.app.initApplications()
 
                 self.preparingUser = false;
 
@@ -22972,7 +23002,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.apptochat(link)
                 }
                 else{
-                    self.matrixchat.core.gotoRoute(link)
+                    self.matrixchat.core.gopage(link)
                 }
             }
 
@@ -23115,7 +23145,6 @@ Platform = function (app, listofnodes) {
 
 
                     if(self.matrixchat.chatparallax) return
-
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -23285,6 +23314,14 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        getNotificationsCount : function(){
+            if (self.matrixchat.core){
+                return self.matrixchat.core.getNotificationsCount()
+            }
+
+            return 0
+        },
+
         share : {
 
             object : function(sharing){
@@ -23334,6 +23371,8 @@ Platform = function (app, listofnodes) {
         wait : function(){
             return pretry(function(){
                 return self.matrixchat.core
+            }).then(() => {
+                return self.matrixchat.core
             })
         },
 
@@ -23358,9 +23397,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log("CHAT TO APP")
-
-
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
@@ -23370,10 +23406,8 @@ Platform = function (app, listofnodes) {
 
                     link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '').replace(protocol + "://", '')
 
-                    console.log('link2', link)
 
-
-                    if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
+                    if (link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
                         link = link.replace('index', 'post')
 
@@ -23381,24 +23415,23 @@ Platform = function (app, listofnodes) {
                         open: true,
                         href: link,
                         history: true,
-                        /*handler : true*/
+                        handler : true
                     })
                 }
 
-                if (self.matrixchat.el){
+                if(!self.matrixchat.el) return
 
-                    if(!self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.removeClass('active')
-                }
-                else{
-                    return
-                }
+                core.activeChange(false)
+
+                if(!self.matrixchat.el.hasClass('active')) return
+                    self.matrixchat.el.removeClass('active')
+               
 
                 if (app.chatposition)
                     app.chatposition(false)
 
 
-                self.app.actions.playingvideo()
+                //self.app.actions.playingvideo()
 
                 if (self.app.mobileview) self.app.actions.restore()
 
@@ -23425,10 +23458,13 @@ Platform = function (app, listofnodes) {
                     c(false)
                 })
 
+                
+
             }
 
             core.activeChange = function(value){
-                var wnds = self.app.el.windows.find('.wnd')
+                var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
+                var pips = self.app.el.windows.find('.wnd.pipmini')
 
                 window.requestAnimationFrame(() => {
                     if (value){
@@ -23436,15 +23472,35 @@ Platform = function (app, listofnodes) {
                     }else{
                         wnds.css('z-index', '')
                     }
+
+                    if(!self.app.mobileview){
+                        if(value){
+                            pips.css('right', '360px')
+                        }
+                        else{
+                            pips.css('right', '')
+                        }
+                        
+                    }
                 })
+
+
+                if(!value){
+                    app.mobile.reload.initdestroyparallaxAuto()
+                }
+                else{
+                    app.mobile.reload.destroyparallax()
+                }
+
+
             }
 
             core.apptochat = function(link){
 
-                self.app.Logger.info({
+                /*self.app.Logger.info({
 					actionId: 'CHAT_OPENED',
 					actionSubType: 'FROM_MOBILE_INTERFACE',
-				});
+				});*/
 
                 if (document.activeElement) document.activeElement.blur()
 
@@ -23454,20 +23510,17 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if (self.matrixchat.el){
+                if(!self.matrixchat.el) return
 
-                    if (self.matrixchat.el.hasClass('active')) return
+                core.activeChange(true)
+
+                if (self.matrixchat.el.hasClass('active')) return
                     self.matrixchat.el.addClass('active')
-
-                }
-                else{
-                    return
-                }
 
                 if (app.chatposition)
                     app.chatposition(true)
 
-                self.app.actions.playingvideo()
+                //self.app.actions.playingvideo()
 
                 if (self.app.mobileview){
                     setTimeout(function(){
@@ -23493,6 +23546,9 @@ Platform = function (app, listofnodes) {
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
                 })
+
+                
+
 
 
             }
@@ -24243,7 +24299,6 @@ Platform = function (app, listofnodes) {
 			el : $("#bastyonCalls").first()[0],
 			parameters : {
                 changeTitle : function(text){
-                    console.log('changeTitle', text)
                     if(!self.titleManager) return 
 
                     if(!text) {
@@ -24303,6 +24358,7 @@ Platform = function (app, listofnodes) {
 				},
 
                 onIncomingCall : function(){
+
                     if (self.app.playingvideo){
                         self.app.playingvideo.exitFullScreen()
                         self.app.playingvideo.pause()

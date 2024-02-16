@@ -2028,13 +2028,18 @@ var share = (function(){
 						} 
 						
 						else if (meta.type != 'brighteon' && meta.type != 'stream.brighteon') {
-							self.app.platform.sdk.remote.get(meta.url, function(og){
+							self.app.platform.sdk.remote.getnew(meta.url).then(og => {
+								if(og){
+									renders.url()
+								}
+							})
+							/*self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
 									renders.url()
 								}
 
-							})
+							})*/
 						}
 					}
 

@@ -2614,6 +2614,7 @@ _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
+_l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
@@ -2715,6 +2716,8 @@ _l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into a
 _l.actions_noinputs = "You don't have enough coins to complete the operation"
 _l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
 _l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_noinputs_wait_comment = "You don't have enough active coins to post a comment. Please wait"
+
 _l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
 
 _l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'
@@ -2794,3 +2797,15 @@ _l.captiontempactions = "Local storage Transactions Info"
 _l.labeltempactions = "Number of pending transactions"
 _l.labeltempactionszero = "No pending transactions"
 
+
+_l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
+_l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"
+
+_l.application_notexist = "Application not found or application server not responding"
+_l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
+_l.permissions_name_chat = appname + " chat"
+
+_l.permissions_name_geolocation = "Access to location"
+_l.permissions_descriptions_geolocation = "The application asks for permission to access your location"

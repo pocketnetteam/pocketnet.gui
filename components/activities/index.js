@@ -188,9 +188,15 @@ var activities = (function () {
 					[self.user.address.value, blockNumber, null, getters.getFilters(currentFilter)]
 				).then((data) => {
 
+					console.log('data', data)
+
 					if (!data.length) {
 						end = true
 					}
+
+					data = _.uniq(data, (d) => {
+						return d.hash
+					})
 
 					
 					activitiesByGroup[currentFilter].push(...data)
@@ -398,8 +404,8 @@ var activities = (function () {
 
 
 			loadmorescroll: function () {
-
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
+				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight : false;
+				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 
 						var ids = _.map(data, (v) => {

@@ -149,9 +149,9 @@ var BastyonApps = function(app){
             description : 'permissions_descriptions_account',
             level : 5,
 
-            canrequest : function(){
+            /*canrequest : function(){
                 return app.user.address.value ? true : false
-            }
+            }*/
         },
 
         'sign' : {
@@ -180,7 +180,21 @@ var BastyonApps = function(app){
             description : 'permissions_descriptions_payment',
             level : 2,
             uniq : true
-        }
+        },
+
+        'chat' : {
+            name : 'permissions_name_chat',
+            description : 'permissions_descriptions_chat',
+            level : 2
+        },
+
+        'geolocation' : {
+            name : 'permissions_name_geolocation',
+            description : 'permissions_descriptions_geolocation',
+            level : 2,
+            uniq : false,
+            session : true
+        },
     }
 
     var actions = {
@@ -202,6 +216,7 @@ var BastyonApps = function(app){
                 return Promise.resolve('application:settings:opened')
             }
         },
+
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
@@ -213,18 +228,24 @@ var BastyonApps = function(app){
 
         account : {
             permissions : ['account'],
+            authorization : true,
             action : function({data, application}){
+
+                var account = app.platform.actions.getCurrentAccount()
+
                 return Promise.resolve({
                     address : app.user.address.value,
-                    signature : app.user.signature(application.manifest.id, 1280)
+                    signature : app.user.signature(application.manifest.id, 1280),
+                    status : account ? account.getStatus() : undefined
                 })
             }
         },
 
         balance : {
             permissions : ['account'],
+            authorization : true,
             action : function(){
-                var account = self.platform.actions.getCurrentAccount()
+                var account = app.platform.actions.getCurrentAccount()
 
                 if (account){
                     var balance = account.actualBalance([account.address])
@@ -238,6 +259,7 @@ var BastyonApps = function(app){
 
         sign : {
             permissions : ['sign'],
+            authorization : true,
             action : function({data, application}){
                 return Promise.reject(appsError('todo:action:sign'))
             }
@@ -246,6 +268,7 @@ var BastyonApps = function(app){
         payment : {
             parameters : ['recievers', 'feemode'],
             permissions : ['account', 'payment'],
+            authorization : true,
             action : function({data, application}){
 
                 var source = [app.user.address.value];
@@ -259,13 +282,16 @@ var BastyonApps = function(app){
                 if (data.message)
 					transaction.message.set(data.message)
 
-                return makeAction(transaction, application)
+                return makeAction(transaction, application, {
+                    rejectIfError : true
+                })
 
             }
         },
 
         getaction : {
             parameters : ['id'],
+            authorization : true,
             action : function({data, application}){
                 var action = app.platform.actions.getActionById(data.id)
 
@@ -274,6 +300,17 @@ var BastyonApps = function(app){
                 }
 
                 return action.export()
+            }
+        },
+
+        getactions: {
+            authorization : true,
+            action : function({application}){
+                var actions = app.platform.actions.getActionsByApp(application.manifest.id)
+
+                return _.map(actions, (a) => {
+                    return a.export()
+                })
             }
         },
 
@@ -293,6 +330,13 @@ var BastyonApps = function(app){
 
                 return Promise.resolve()
              
+            }
+        },
+
+        checkPermission : {
+            parameters : ['permission'],
+            action : function({data, application}){
+                return Promise.resolve(checkPermission(application, data.permission));
             }
         },
 
@@ -360,9 +404,109 @@ var BastyonApps = function(app){
             }
         },
 
+        share : {
+            permissions : [],
+            parameters : [],
+            authorization : true,
+            action : function({data, application}){
+
+                //url, sharing {images, }, embeding
+                /*
+
+                    {
+                        url : string,
+                        sharing : {
+                            image : '', //url
+							images : [], //base64
+							title : '', 
+							html : {
+								body : '',
+								preview : ''
+							},
+
+							text : {
+								body : '',
+								preview : ''
+							}
+                        }
+                    }
+
+                */
+
+                console.log('data', data)
+
+                if(!data.url) data.withouturl = true
+                if (data.url) data.url = findAndReplaceLinkClear(data.url)
+
+                app.platform.ui.socialshare(null, data)
+
+                return Promise.resolve()
+                
+            }
+        },
+
+        chat : {
+
+            openRoom : {
+                permissions : ['chat'],
+                parameters : [],
+                authorization : true,
+                action : function({data, application}){
+
+                    var chatLink = 'chat?id=' + data.roomid;
+
+                    console.log('chatLink', chatLink)
+
+                    return app.platform.matrixchat.wait().then((core) => {
+                        if (app.mobileview){
+                            core.apptochat(chatLink)
+                        } else {
+                            core.gotoRoute(chatLink)
+                        }
+
+                        return Promise.resolve()
+                    })
+                    
+                }
+            },
+
+            getOrCreateRoom : {
+                permissions : ['chat'],
+                parameters : ['users'],
+                authorization : true,
+                action : function({data, application}){
+                    return app.platform.matrixchat.wait().then((core) => {
+                        return core.getOrCreateRoom({
+                            users : data.users,
+                            parameters : data.parameters || {},
+                            alliasSuffix : application.manifest.id
+                        })
+                    })
+                }
+            },
+            send : {
+                permissions : ['chat'],
+                parameters : ['roomid', 'content'],
+                authorization : true,
+
+                action : function({data, application}){
+                    return app.platform.matrixchat.wait().then((core) => {
+                        return core.sendMessage({
+                            alliasSuffix : application.manifest.id,
+                            content : data.content,
+                            roomid : data.roomid
+                        })
+                    })
+                }   
+            }
+        },
+
         appinfo : {
             parameters : [],
             action : function({data, application}){
+
+                console.log('application', application)
+
                 return Promise.resolve({
                     pkoin : !app.pkoindisable,
                     device : typeof _Electron != 'undefined' ? 'application_electron' : (window.cordova ? (isios() ? 'application_ios' : 'application_android') : 'browser'),
@@ -370,23 +514,163 @@ var BastyonApps = function(app){
                     production : !window.testpocketnet,
                     locale : app.localization.key,
                     theme : app.platform.sdk.theme.all[app.platform.sdk.theme.current],
-                    margintop : document.documentElement.style.getPropertyValue('--app-margin-top') || '0px'
+                    margintop : document.documentElement.style.getPropertyValue('--app-margin-top') || '0px',
+                    application : application.manifest,
+                    project : project_config
                 })
+            }
+        },
+
+        geolocation : {
+            permissions : ['geolocation'],
+            parameters : [],
+            action : function({data, application}){
+                return new Promise((resolve, reject) => {
+                    app.platform.sdk.geolocation.get({
+                        onSuccess : (pos) => {
+                            resolve({
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude
+                            });
+                        },
+                        onError : () => {
+                            reject(appsError('location:notavailable'))
+                        }
+                    });
+                })
+            }
+        },
+
+        currency : {
+            permissions : [],
+            parameters : [],
+            action : function({ data, application }) {
+                return app.api.fetch('exchanges/history').then(result => {
+                    return result.prices;
+                })
+            }
+        },
+
+        userstate : {
+            permissions : [],
+            parameters : [],
+            action : function({data, application}){
+                return app.user.isStatePromise()
+            }
+        },
+
+        registration : {
+            parameters : [],
+            action : function({data, application}){
+
+                return app.user.isStatePromise().then(state => {
+
+                    if (state){
+                        return Promise.reject(appsError('user:authorized'))
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'registration',
+                        inWnd : true,
+                        essenseData : {
+                            application : application.manifest.id,
+                            successHref : '_this',
+                            signInClbk : function(){
+                                if (clbk) clbk()
+                            }
+                        }
+                    });
+    
+                    return Promise.resolve('registration:opened')
+
+                })
+
+                
+            }
+        },
+
+        images : {
+            upload : {
+                authorization : true,
+                permissions : [],
+                parameters : ['images'],
+
+                action : function({data, application}){
+                    
+                    if(data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
+
+                    return Promise.all(_.map(data.images, (img) => {
+                        return resizePromise(img, 1080, 1080).then((resized) => {
+
+                            return app.imageUploader.upload({
+                                Action : 'image',
+                                base64 : resized
+                            }, 'imgur').then((url) => {
+                                return Promise.resolve({
+                                    url
+                                })
+                            }).catch(error => {
+                                return Promise.resolve({
+                                    error
+                                })
+                            })
+
+                        })
+                    }))
+                   
+                }
+            }
+        },
+
+        barteron : {
+            account : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var account = new brtAccount();
+
+                    account.import(data);
+
+                    return makeAction(account, application);
+                }
+            },
+
+            offer : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var offer = new brtOffer();
+
+                    offer.import(data);
+
+                    return makeAction(offer, application, true);
+                }
+            },
+
+            comment : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var comment = new brtComment();
+
+                    comment.import(data);
+
+                    return makeAction(comment, application)
+                }
             }
         }
 
     }
 
-    var makeAction = function(data, application){
+    var makeAction = function(data, application, settings){
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application : application.manifest.id
+            application : application.manifest.id,
+            ...settings
         }).then(action => {
-
             return Promise.resolve(action.export())
-
         }).catch(e => {
-
-            Promise.reject(appsError(e))
+            return Promise.reject(appsError(e))
 
         })
     }
@@ -407,19 +691,22 @@ var BastyonApps = function(app){
 
         },
         locale : {},
-        theme : {}
+        theme : {},
+        changestate : {}
     }
 
     var events = {
-        popstate : function(application, data, source){
-            var value = hexEncode(application.manifest.id + ':' + data.value)
+        changestate : function(application, data, source){
 
-            trigger('popstate', {
+            console.log('changestate', application, data, source)
+
+            trigger('changestate', {
 
                 application : application.manifest.id,
                 data : {
-                    value : value,
-                    encoded : hexEncode(data.value)
+                    value : data.data.value,
+                    replace : data.data.replace,
+                    encoded : hexEncode(data.data.value)
                 }
                 
             }, source)
@@ -471,6 +758,15 @@ var BastyonApps = function(app){
                 cached : {}
             }
 
+            if (application.develop){
+                _.each(application.grantedPermissions || [], (permission) => {
+                    localdata[application.id].permissions.push({
+                        id : permission,
+                        state : 'granted'
+                    })
+                })
+            }
+
             savelocaldata()
         }
             
@@ -508,7 +804,7 @@ var BastyonApps = function(app){
     var resources = function(application, cached = {}){
         
         if (allresources[application.id]) return Promise.resolve(allresources[application.id])
-        if (getresources[application.id]) return Promise.resolve(getresources[application.id])
+        if (getresources[application.id]) return getresources[application.id]
 
         if (application.develop){
             application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
@@ -582,9 +878,10 @@ var BastyonApps = function(app){
         installing[application.id] = {promise : resources(application, cached).then((resourses) => {
             result.path = application.path
 
-            installed[application.id] = {result, ...resourses}
+            installed[application.id] = {...result, ...resourses}
 
             registerLocal(application)
+
 
             return installed[application.id]
 
@@ -598,10 +895,18 @@ var BastyonApps = function(app){
 
     var remove = function(id){
 
-        delete localdata[id]
-        delete installed[id]
+        self.get.application(id).then(({application}) => {
 
-        return Promise.resolve()
+            self.emit('removed', {}, application)
+
+            unregisterApplication(application)
+
+            delete localdata[application.manifest.id]
+            delete installed[application.manifest.id]
+    
+            return Promise.resolve()
+        })
+       
     }
 
     var savelocaldata = function(){
@@ -658,7 +963,7 @@ var BastyonApps = function(app){
             var action = deep(actions, data.action)
 
             if(!action){
-                promise = Promise.reject(appsError('missing:action in actions'))
+                promise = Promise.reject(appsError('missing:action in actions (' + data.action + ')'))
             }
 
             else{   
@@ -667,9 +972,27 @@ var BastyonApps = function(app){
 
                     var error = validateParameters(data.data, action.parameters)
 
-
                     if (error) return Promise.reject(error)
 
+                    console.log('action', action)
+
+                    if (action.authorization){
+                        return app.user.isStatePromise().then(state => {
+                            console.log('state', state)
+                            if(state){
+                                return Promise.resolve()
+                            }
+                            else{
+                                return Promise.reject(appsError('required:authorization'))
+                            }
+                        })
+                    }
+                    else{
+                        return Promise.resolve()
+                    }
+
+                    
+                }).then(() => {
                     return action.action({
                         data : data.data,
                         application
@@ -710,6 +1033,8 @@ var BastyonApps = function(app){
             }
 
         }).catch(e => {
+
+            console.error(e)
 
             if (data.id){
 
@@ -808,6 +1133,7 @@ var BastyonApps = function(app){
 
         if(!appdata) return Promise.reject(appsError('error:code:appdata'))
         if(!meta) return Promise.reject(appsError('permission:missing'))
+
 
         if(checkPermission(application, permission)) return Promise.resolve()
         if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
@@ -982,6 +1308,17 @@ var BastyonApps = function(app){
 
     self.destroy = function(){
         window.removeEventListener("message", listener)
+
+        installed = {}
+        installing = {}
+        downloading = {}
+        localdata = {}
+        windows = {}
+        clbks = {}
+        allresources = {}
+        getresources = {}
+
+        app.platform.sdk.syncStorage.off('change', 'apps');
     }
 
     self.init = function(){
@@ -1047,9 +1384,11 @@ var BastyonApps = function(app){
                     })
 
                 }).catch(e => {
-                    return Promise.resolve(null)
+                    return Promise.reject(e)
                 })
             }
+
+            return Promise.reject(appsError("missing:application"))
         },
 
         installed : function(){
@@ -1109,7 +1448,77 @@ var BastyonApps = function(app){
             })
 
             return result
+        },
+
+        applicationAny : function({id, path}){
+
+            var result = {}
+
+            return self.get.application(id).catch(e => {
+                return null
+            }).then(application => {
+
+
+                if(!application){
+                    //search in blockchain
+                    // in search == true --- result.application = application result.notinstalled = true
+                }
+
+                if(!application){
+                    return Promise.reject(appsError("missing:application"))
+                }
+
+                return Promise.resolve(application)
+
+            }).then(a => {
+
+
+                console.log('application 2', a)
+
+                result = {...result, ...a}
+
+                var url = a.application.manifest.scope
+
+                if (path){
+                    url = url + '/' + path
+                }
+
+                return app.platform.sdk.remote.getnew(url).catch(e => {
+                    return {}
+                }).then(meta => {
+                    result.meta = meta
+
+                    return Promise.resolve()
+                })
+
+            }).then(() => {
+                console.log("application result ", result)
+                return Promise.resolve(result)
+            })
+
         }
+    }
+
+    self.isApplicationLink = function(href){
+        if(thislink(href)){
+            var th = app.nav.thisSiteLink(href)
+
+            if (th.indexOf('application?') != 0) return null
+
+            var pps = parameters(th, true)
+
+            if(!pps.id) return null
+
+            if (pps.p) pps.p = hexDecode(pps.p)
+
+            return {
+                id : pps.id,
+                path : pps.p || ''
+            }
+        }
+
+        return null
+        
     }
 
     self.on = function(key, action){
@@ -1132,7 +1541,8 @@ var BastyonApps = function(app){
     self.givePermission = givePermission
     self.removePermission = removePermission
     self.clearPermission = clearPermission
-    
+    self.install = install
+    self.remove = remove
 
     return self
 }

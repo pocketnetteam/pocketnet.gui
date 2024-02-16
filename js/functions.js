@@ -488,7 +488,7 @@ wnd = function (p) {
 				})
 			}
 
-			app.actions.playingvideo(null);
+			//app.actions.playingvideo(null);
 
 			if (p.class) wnd.addClass(p.class);
 
@@ -796,7 +796,7 @@ wnd = function (p) {
 
 			}
 
-			if (!isMobile()) {
+			if (!isMobile() || !wnd.hasClass('normalizedmobile')) {
 				cl()
 			}
 			else {
@@ -2140,14 +2140,21 @@ resizePromise = function(srcData, width, height, format) {
 
 imagetojpegifneed = function ({ base64, name }) {
 
-	var nm = name.split('.')
+	var _name = ''
+	var _format = ''
 
-	var _name = nm[0],
+	if(name){
+		var nm = name.split('.')
+
+		_name = nm[0]
 		_format = nm[1]
-
-	if (_format == 'png' || _format == 'jpg' || _format == 'jpeg') {
-		return Promise.resolve({ base64, name });
+	
+		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg') {
+			return Promise.resolve({ base64, name });
+		}
 	}
+
+	
 
 	return new Promise((resolve, reject) => {
 
@@ -2172,11 +2179,28 @@ imagetojpegifneed = function ({ base64, name }) {
 
 			$(canvas).remove();
 
-			return resolve({ base64: url, name: _name + '.jpg' });
+			return resolve({ base64: url, name: (_name || makeid()) + '.jpg' });
 		};
 
 	});
 }
+
+convertimages = function(images){
+	return Promise.all(_.map(images, (src) => {
+
+		return new Promise((resolve, reject) => {
+			srcToData(src, function (base64) {
+				imagetojpegifneed({ base64 }).then(({ base64, name }) => {
+					resolve(base64)
+				})
+			})
+		})
+
+		
+	}))
+}
+
+
 
 resizeNew = function (srcData, width, height, format) {
 	return new Promise((resolve, reject) => {
@@ -6316,7 +6340,7 @@ SwipeParallaxNew = function (p) {
 
 				if (mainDirection) {
 
-					if (phase == 'end' && mainDirection.clbk && direction == mainDirection.i) {
+					if ((phase == 'end' || mainDirection.distance < 50 && phase == 'cancel') && mainDirection.clbk && direction == mainDirection.i) {
 
 						if ((!mainDirection.distance || mainDirection.distance < distance)) {
 							mainDirection.clbk()
@@ -9028,8 +9052,6 @@ findAndReplaceLinkClear = function(inputText = '', fu){
 				return `${v.attributes.href}`;
 			},
 		})
-
-		console.log("LLL", inputText, l)
 
 		return l
 	}

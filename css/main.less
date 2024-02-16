@@ -11,7 +11,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
- 
+
 :root{
     --background-hidden-layer: 255, 255, 255;
     --background-total-theme: 255, 255, 255;
@@ -224,8 +224,6 @@
     
     overflow-y: overlay;
     overflow-x: hidden;
-    scrollbar-width: 7px;
-    scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
     overscroll-behavior: contain;
     scroll-behavior: smooth;
 
@@ -2324,6 +2322,10 @@ input[type=radio].radio:checked + label {
     right: 56px;
     bottom : 1.5 * @rhythm;
     width: auto;
+
+    .close{
+        display: none;
+    }
 }
 
 .m-message-container.is-top-left{
@@ -2332,6 +2334,13 @@ input[type=radio].radio:checked + label {
     
     
 .m-message-container{
+
+    .close{
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+    }
     
     .notificationWrapper {
         display: block;
@@ -2559,7 +2568,7 @@ input[type=radio].radio:checked + label {
     height: 7 * @rhythm;
     line-height : 7 * @rhythm;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.9em;
     cursor: pointer;
     .shadowText();
 
@@ -2937,16 +2946,16 @@ html.mobileview.android{
     ._close{
         
         top: calc(@rhythm + var(--app-margin-top));
-        right: 1.5 * @rhythm;
+        right: 1 * @rhythm;
     }
     ._expand{
         top: @rhythm;
-        left: 1.5 * @rhythm;
+        left: 1 * @rhythm;
     }
 
     ._changeplace{
         bottom : @rhythm;
-        left: 1.5 * @rhythm;
+        left: 1 * @rhythm;
     }
 
     
@@ -3224,7 +3233,7 @@ html.mobileview.android{
         max-width: 300px;
         width: 25%;
         height: auto;
-        z-index: 999;
+        z-index: 1007;
 
         .recomandationsFromContent{
             display: none!important;
@@ -5679,8 +5688,9 @@ html.cameraenabledrun{
                 }
 
                 &[position='bottom']{
-                    bottom : 100px;
+                    bottom : calc(var(--keyboardheight, 0) + 100px);
                     top : auto;
+                    
 
                     ._changeplace{
                         transform: rotate(180deg);
@@ -8230,7 +8240,7 @@ html.mobileview{
         left: 0.5 * @rhythm;
         right: 0.5 * @rhythm;
         top: calc(0.5 * @rhythm + var(--app-margin-top));
-        max-height: 210px;
+        max-height: 105px;
         width: auto;
         min-width: 0;
         max-width: none;
@@ -8256,7 +8266,11 @@ html.mobileview{
         }
 
         .tips{
-           display: none; 
+           /*display: none; */
+
+            .additionalcontent{
+                display: none;
+            }
         }
 
         .cwrapper.table{
@@ -8366,7 +8380,7 @@ html.mobileview{
                     max-width: 768px;
                     scroll-behavior: smooth;
                     max-height: calc(var(--vh, 1vh) * 92);
-                    min-height: calc(var(--vh, 1vh) * 30);
+                    min-height: calc(var(--vh, 1vh) * 20);
                     top : 0;
                     bottom : 0;
                     right: 0;

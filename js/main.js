@@ -11,11 +11,12 @@ if(!_Node)
 	
 	
 	/*[{
-		"id" : 'demo.pocketnet.app',
-    	"version": "0.0.1",
+		"id" : "demo.pocketnet.app",
+		"version": "0.0.1",
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
-		"name" : "Demo application"
+		"name" : "Demo application",
+		"grantedPermissions" : ["account"]
 	}]*/
 
 	var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}

@@ -495,6 +495,8 @@ var Action = function(account, object, priority, settings){
 
     var filterUnspents = function(unspents){
 
+        console.log("action", unspents)
+
         if (options.addresses){
             var addresses = options.addresses(self, account)
 
@@ -514,6 +516,7 @@ var Action = function(account, object, priority, settings){
 
     var makeTransaction = async function(retry, calculatedFee, send){
 
+
         var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
         if(!changeAddresses.length) changeAddresses = [account.address]
 
@@ -528,9 +531,19 @@ var Action = function(account, object, priority, settings){
             try{
                 await account.updateUnspents(retry ? 0 : 60).then((clearUnspents) => {
 
+                    console.log('action clearUnspents 1', clearUnspents)
+
+
                     clearUnspents = filterUnspents(clearUnspents)
 
+                    console.log('action clearUnspents 2', clearUnspents)
+
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
+
+                        if(!account.unspents.updated){
+                            return Promise.reject('actions_inputs_not_updated')
+                        }
+
                         return Promise.reject('actions_noinputs')
                     }
     
@@ -1111,9 +1124,11 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
+            console.log("actions error", error)
+
             if(rejectIfError){
                 if(
-
+                    error == 'actions_inputs_not_updated' ||
                     error == 'actions_noinputs_wait' || 
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 
@@ -1206,7 +1221,7 @@ var Action = function(account, object, priority, settings){
 
     self.options = options
     self.makeTransaction = makeTransaction
-
+    self.setUpdated = setUpdated
     return self
 }
 
@@ -1423,6 +1438,9 @@ var Account = function(address, parent){
     }
 
     self.actionRejected = async function(action, error){
+
+        console.log("ACTION", action, error)
+
 
         //// use getActionById(in clbk)
 
@@ -1732,6 +1750,7 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
+            console.error(e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
@@ -1841,11 +1860,21 @@ var Account = function(address, parent){
             value : [],
             updated : null
         }
+
+        self.actions.value = _.filter(self.actions, (a) => {
+            if(a.completed || a.rejected) return false
+
+            return true
+        })
+
+        _.each(self.actions.value, (action) => {
+            action.rejectedByUser()
+        })
     
-        self.actions = {
+        /*self.actions = {
             value : [],
             updated : null
-        }
+        }*/
 
         self.save()
     }
@@ -2060,6 +2089,8 @@ var Account = function(address, parent){
 
         var promise = parent.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
 
+            console.log("action UNS", unspents)
+
             checkTransactionByUnspents(unspents)
 
             self.unspents.value = unspents
@@ -2074,6 +2105,7 @@ var Account = function(address, parent){
 
             return Promise.resolve(unspents)
         }).catch(e => {
+            console.error('action', e)
             delete temps.unspents
         })
 
@@ -2693,6 +2725,20 @@ var Actions = function(app, api, storage = localStorage){
         })
 
         return action
+    }
+
+    self.getActionsByApp = function(application){
+        var actions = []
+
+        var account = self.getCurrentAccount()
+
+        if(!account) return actions
+
+        _.each(account.actions.value, (a) => {
+            if(a.settings.application == application) actions.push(application)
+        })
+
+        return actions
     }
 
     

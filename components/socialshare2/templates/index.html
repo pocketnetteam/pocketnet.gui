@@ -39,13 +39,25 @@
 
 					<% } %>
 
-					
-						<div class="nativeshare">
-							<div elementsid="nativeshare" class="button black">
-								<i class="fas fa-share-alt"></i>
-								<span><%- e('shareVia') %></span>
+						<% if(window.cordova || ed.url) {%>
+							<div class="nativeshare">
+								<div elementsid="nativeshare" class="button black">
+									<i class="fas fa-share-alt"></i>
+									<span><%- e('shareVia') %></span>
+								</div>
 							</div>
-						</div>
+						<% } %>
+						<% 
+						
+						
+						if(!ed.url && ed.sharing && ed.sharing.images && ed.sharing.images.length == 1) {%>
+							<div class="saveimage">
+								<div elementsid="saveimage" class="button black">
+									<i class="fas fa-download"></i>
+									<span><%- e('saveimage') %></span>
+								</div>
+							</div>
+						<% } %>
 
 						<% if(ed.embedding) {%>
 
@@ -58,18 +70,19 @@
 
 						<% } %>
 						
-						
+					<% if(ed.url) {%>
 					<div class="url">
 						<div elementsid="urlbutton" class="button black">
 							<i class="fas fa-link"></i>
 							<span><%- e('copyLink') %></span> 
 						</div>
 					</div>
+					<% } %>
 
 					
 				</div>
 
-				<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
+				<% if(typeof eparameters != 'undefined' && state && !notincludedRef && ed.url) {%>
 					<div class="includeRefWrapper">
 						<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 					</div>

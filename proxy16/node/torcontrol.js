@@ -196,18 +196,18 @@ class TorControl {
         const getSettingsPath = (...parts) => path.join(this.getsettingspath(), ...parts);
 
         const snowflakeStuns = [
-            "stun.voip.blackberry.com:3478",
-            "stun.altar.com.pl:3478",
+            "stun.l.google.com:19302",
             "stun.antisip.com:3478",
             "stun.bluesip.net:3478",
             "stun.dus.net:3478",
             "stun.epygi.com:3478",
             "stun.sonetel.com:3478",
             "stun.sonetel.net:3478",
-            "stun.stunprotocol.org:3478",
             "stun.uls.co.za:3478",
             "stun.voipgate.com:3478",
             "stun.voys.nl:3478",
+            "relay1.expressturn.com:443",
+            "relay2.expressturn.com:443",
         ].map(s => `stun:${s}`).join(',');
 
         let torConfig = [
@@ -231,9 +231,9 @@ class TorControl {
                 "# Bridges configurations\n",
 
                 "UseBridges 1",
-                "UpdateBridgesFromAuthority 1",
                 `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
-                `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=${snowflakeStuns}`
+                `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=foursquare.com ice=${snowflakeStuns} utls-imitate=hellorandomizedalpn`,
+                `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=foursquare.com ice=${snowflakeStuns} utls-imitate=hellorandomizedalpn`
             )
         } else if (customObfs4) {
             torConfig.push(
