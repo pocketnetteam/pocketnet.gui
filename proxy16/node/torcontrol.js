@@ -206,8 +206,17 @@ class TorControl {
             "stun.uls.co.za:3478",
             "stun.voipgate.com:3478",
             "stun.voys.nl:3478",
+            "relay1.expressturn.com:443",
+            "relay2.expressturn.com:443",
+            "relay3.expressturn.com:443",
+            "relay1.expressturn.com:3478",
+            "relay2.expressturn.com:3478",
+            "relay4.expressturn.com:3478",
+            "relay5.expressturn.com:3478",
+            "relay6.expressturn.com:3478",
+            "relay8.expressturn.com:3478",
+            "relay1.expressturn.com:80",
             "stun.relay.metered.ca:80",
-            "turn.pocketnet.app:80",
         ].map(s => `stun:${s}`).join(',');
 
         let torConfig = [

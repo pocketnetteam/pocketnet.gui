@@ -2876,6 +2876,18 @@ Application = function (p) {
 				}
 
 			},
+
+			initdestroyparallaxAuto : function(){
+				var scrollTop = self.actions.getScroll()
+
+				if (!scrollTop) {
+					self.mobile.reload.initparallax()
+				}
+				else {
+					self.mobile.reload.destroyparallax()
+				}
+			},
+
 			initparallax: function () {
 
 				if ((isTablet() || isMobile()) && !self.el.html.hasClass('allcontent_application')) {

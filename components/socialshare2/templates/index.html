@@ -50,7 +50,7 @@
 						<% 
 						
 						
-						if(ed.sharing && ed.sharing.images && ed.sharing.images.length == 1) {%>
+						if(!ed.url && ed.sharing && ed.sharing.images && ed.sharing.images.length == 1) {%>
 							<div class="saveimage">
 								<div elementsid="saveimage" class="button black">
 									<i class="fas fa-download"></i>

@@ -2795,7 +2795,6 @@ Platform = function (app, listofnodes) {
         },
 
         clenta : function(el, clbk, p){
-            console.log('p clenta', p)
             if(!p) p = {}
 
             var id = p.id || makeid()
@@ -2853,8 +2852,6 @@ Platform = function (app, listofnodes) {
         },
 
         lenta : function(ids, el, clbk, p){
-
-            console.log('p lenta', p)
 
             if(!p) p = {}
             var id = makeid()
@@ -22894,7 +22891,6 @@ Platform = function (app, listofnodes) {
 
                     if(self.matrixchat.chatparallax) return
 
-
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
@@ -23232,6 +23228,14 @@ Platform = function (app, listofnodes) {
                         
                     }
                 })
+
+
+                if(!value){
+                    app.mobile.reload.initdestroyparallaxAuto()
+                }
+                else{
+                    app.mobile.reload.destroyparallax()
+                }
 
 
             }
@@ -24084,8 +24088,6 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.audiotoggle()
 
-                    console.log("PLAYING HERE")
-
                     if (self.app.playingvideo){
                         self.app.playingvideo.pause()
                     }
@@ -24101,7 +24103,6 @@ Platform = function (app, listofnodes) {
 				},
 
                 onIncomingCall : function(){
-                    console.log("PLAYING HERE 2" )
 
                     if (self.app.playingvideo){
                         self.app.playingvideo.exitFullScreen()
