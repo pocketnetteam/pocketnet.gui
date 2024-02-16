@@ -642,10 +642,10 @@ var Proxy16 = function(meta, app, api){
 
             if(!_.isEmpty(self.clbks.tick)){
                 var hash = rot13(JSON.stringify(proxystate))
-                var change = (hash.join('') !== state.hash.join(''))
+
+                var change = (hash !== state.hash)
     
                 state.hash = hash
-                
     
                 _.each(self.clbks.tick, (c) => { c(state.tick, change) })
             }
