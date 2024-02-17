@@ -15349,14 +15349,14 @@ Platform = function (app, listofnodes) {
 
                             self.app.platform.sdk.jury.getalljury();
 
-                            self.app.platform.sdk.jury.getjurymoderators('fa0bcc03dbb2fe7b4c6f5d17580c8c875e3fe44168a2fe8a3aa6b6ca974ed40d');
+                            self.app.platform.sdk.jury.getjurymoderators('1e67ce672ba3a0fc7c4639831453bdee94b72b3687fb1a9ee7ae70cf4fb03626');
 
                             self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
 
                                 newShares = shares.map((share) => {
 
-                                    var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' ? new pShare() : new pComment();
+                                    var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' || share.type === 'article' ? new pShare() : new pComment();
 
                                     if (s.type === 'userInfo'){
 

@@ -191,6 +191,20 @@
   padding-top: 0.5em;
   padding-left: 4.5em;
 }
+#lenta .share .commentJury .commentWrapper .commentBody .author {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+#lenta .share .commentJury .commentWrapper .commentBody .author > span {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#lenta .share .commentJury .commentWrapper .commentBody .author > a {
+  margin-right: 5px;
+  display: flex;
+}
 #lenta .share .userJury .userWrapper {
   margin-top: 2em;
   margin-left: auto;
@@ -451,6 +465,7 @@
 #lenta .jury-text {
   text-align: center;
   margin-top: 20px;
+  padding-top: 20px;
 }
 #lenta .jury-buttons {
   display: flex;
