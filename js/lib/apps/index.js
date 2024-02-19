@@ -433,7 +433,6 @@ var BastyonApps = function(app){
 
                 */
 
-                console.log('data', data)
 
                 if(!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
@@ -455,7 +454,6 @@ var BastyonApps = function(app){
 
                     var chatLink = 'chat?id=' + data.roomid;
 
-                    console.log('chatLink', chatLink)
 
                     return app.platform.matrixchat.wait().then((core) => {
                         if (app.mobileview){
@@ -505,7 +503,6 @@ var BastyonApps = function(app){
             parameters : [],
             action : function({data, application}){
 
-                console.log('application', application)
 
                 return Promise.resolve({
                     pkoin : !app.pkoindisable,
@@ -698,7 +695,6 @@ var BastyonApps = function(app){
     var events = {
         changestate : function(application, data, source){
 
-            console.log('changestate', application, data, source)
 
             trigger('changestate', {
 
@@ -974,11 +970,9 @@ var BastyonApps = function(app){
 
                     if (error) return Promise.reject(error)
 
-                    console.log('action', action)
 
                     if (action.authorization){
                         return app.user.isStatePromise().then(state => {
-                            console.log('state', state)
                             if(state){
                                 return Promise.resolve()
                             }
@@ -1473,7 +1467,6 @@ var BastyonApps = function(app){
             }).then(a => {
 
 
-                console.log('application 2', a)
 
                 result = {...result, ...a}
 
@@ -1492,7 +1485,6 @@ var BastyonApps = function(app){
                 })
 
             }).then(() => {
-                console.log("application result ", result)
                 return Promise.resolve(result)
             })
 

@@ -14109,7 +14109,7 @@ Platform = function (app, listofnodes) {
                         }, np).then(d => {
 
                             d = _.filter(_.map(d, (a) => {
-                                return self.psdk.userInfo.get(a.address)
+                                return a && self.psdk.userInfo.get(a.address)
                             }), (v) => {return v})
 
                             d = {
@@ -18765,7 +18765,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
                         }
 
                     }
@@ -19568,29 +19568,27 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.posttxid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.posttxid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                                if(close) close()
+                            },
 
-                                    if(close) close()
-                                },
+                            essenseData: {
+                                share: data.posttxid,
 
-                                essenseData: {
-                                    share: data.posttxid,
-
-                                    reply: {
-                                        answerid: data.commentid,
-                                        parentid: data.parentid || "",
-                                        noaction: true
-                                    }
+                                reply: {
+                                    answerid: data.commentid,
+                                    parentid: data.parentid || "",
+                                    noaction: true
                                 }
-                            })
-
+                            }
+                        })
 
                     })
 
@@ -19719,7 +19717,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
+                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time, data.donation);
 
                             html += toptext
                         }
@@ -19735,7 +19733,7 @@ Platform = function (app, listofnodes) {
 
                             var toptext = self.app.localization.e('e13338')
 
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time)
                         }
                     }
 

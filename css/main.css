@@ -6706,6 +6706,10 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 html.mobileview .fastMessage .foramount {
   width: auto!important;
 }
+html.mobileview .fastMessage .foranswer,
+html.mobileview .notification .foranswer {
+  display: none;
+}
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;
   /*.hideButton{

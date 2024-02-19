@@ -1706,6 +1706,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
+                    console.log("ERROR IN:", c)
 
                     return null
                 }
@@ -2396,6 +2397,10 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         insertFromResponseEx : function(data){
+
+            data = _.filter(data, (d) => {
+                return d
+            })
 
             data = self.userInfo.cleanData(data)
 
