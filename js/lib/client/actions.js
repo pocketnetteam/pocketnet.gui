@@ -1897,6 +1897,8 @@ var Account = function(address, parent){
         
         self.status = e.status
         self.unspents = e.unspents
+
+        console.log("UNSPENTS IMPORT", e, self)
         
         e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
         e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
@@ -2058,6 +2060,7 @@ var Account = function(address, parent){
             var until = self.unspents.updated.addSeconds(time)
 
             if (until > new Date()){
+                console.log("UNSPENTS CHECK DATE")
                 return Promise.resolve(self.unspents.value)
             }
         }
@@ -2067,6 +2070,7 @@ var Account = function(address, parent){
     }
 
     self.loadUnspents = function(){
+
 
         if(!self.isCurrentNetwork()){
             return Promise.reject('otherNetwork')
@@ -2079,6 +2083,20 @@ var Account = function(address, parent){
         var zAddresses = (self.address == app.user.address.value) ? (parent.app.platform.sdk.addresses.storage.addresses || []) : []
 
         var promise = parent.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
+            delete temps.unspents
+
+            //// FIX NODE BUG:
+            if(!unspents.length && self.unspents.value && self.unspents.value.length > 2 && (!self.unspents.buganswer || self.unspents.buganswer < 50)){
+
+                self.unspents.buganswer || (self.unspents.buganswer = 0)
+                self.unspents.buganswer ++
+
+                console.log('buganswer unspents')
+
+                return Promise.resolve(self.unspents.value)
+            }
+
+            delete self.unspents.buganswer
 
             checkTransactionByUnspents(unspents)
 
@@ -2088,11 +2106,10 @@ var Account = function(address, parent){
 
             cleanOutputs()
 
-            delete temps.unspents
-
             self.trigger()
 
             return Promise.resolve(unspents)
+
         }).catch(e => {
             console.error('action', e)
             delete temps.unspents
