@@ -1725,7 +1725,6 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
-                    console.log("ERROR IN:", c)
 
                     return null
                 }
