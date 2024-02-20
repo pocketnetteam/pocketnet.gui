@@ -1109,8 +1109,6 @@ var lenta = (function(){
 						play : function(){
 							videopaused = false
 
-							console.log("set lenta playing play")
-
 							self.app.actions.playingvideo(players[share.txid].p)
 
 							if(essenseData.playingClbk) essenseData.playingClbk(players[share.txid].p)
@@ -1121,8 +1119,6 @@ var lenta = (function(){
 						},
 
 						pause : function(){
-
-							console.log("set lenta playing pause")
 
 							videopaused = true
 

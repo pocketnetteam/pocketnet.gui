@@ -711,8 +711,6 @@ var comments = (function(){
 
 						self.app.platform.sdk.comments.send(current, function(error, alias){
 
-							console.log('action error, alias', error, alias)
-
 							if(!editid && ed.send){
 								ed.send(alias, alias)
 							}
@@ -2705,8 +2703,6 @@ var comments = (function(){
 			}*/
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
-
-				console.log("actions listener", status)
 
 				if(type == 'comment'){
 					var comment = alias
