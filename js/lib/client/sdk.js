@@ -5,6 +5,7 @@ var pSDK = function ({ app, api, actions }) {
     var objects = {}
     var temp = {}
     var queue = {}
+    var qtick = 300
     //var dbstorages = {}
 
     var dbmeta = {
@@ -128,7 +129,10 @@ var pSDK = function ({ app, api, actions }) {
         if (!storage[key]) storage[key] = {}
         if (!temp[key]) temp[key] = {}
         if (!objects[key]) objects[key] = {}
-        if (!queue[key]) queue[key] = []
+        if (!queue[key]) queue[key] = {
+            d : 0,
+            a : []
+        }
     }
 
     var settodb = function (dbname, result) {
@@ -242,9 +246,9 @@ var pSDK = function ({ app, api, actions }) {
     var processingQueue = function (queue) {
 
 
-        if (queue.length) {
+        if (queue.a.length) {
 
-            var groupped = group(queue, (q) => { return q.executor })
+            var groupped = group(queue.a, (q) => { return q.executor })
 
             _.each(groupped, (g) => {
 
@@ -274,9 +278,18 @@ var pSDK = function ({ app, api, actions }) {
     var processingAll = function () {
         _.each(queue, (q, type) => {
 
+
+            if (q.d && q.d > 0){
+                q.d = q.d - qtick
+                return
+            }
+
             processingQueue(q)
 
-            queue[type] = []
+            queue[type] = {
+                d : 0,
+                a : []
+            }
         })
     }
 
@@ -390,7 +403,12 @@ var pSDK = function ({ app, api, actions }) {
 
 
                 if (p.queue) {
-                    queue[key].push({
+
+                    if(!queue[key].a.length && p.queueDelay){
+                        queue[key].d = p.queueDelay
+                    }
+
+                    queue[key].a.push({
                         load,
                         executor,
                         resolve: c,
@@ -2101,6 +2119,8 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
+                queue : true,
+                queueDelay : 1000,
                 update,
                 transform: (v) => this.transform(v),
                 indexedDb: 'myScore',
@@ -2497,7 +2517,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var interval = setInterval(() => {
         processingAll()
-    }, 300)
+    }, qtick)
 
 
     self.actions.on('actionFiltered', ({ action, address, status }) => {
