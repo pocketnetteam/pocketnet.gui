@@ -78,7 +78,37 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, {name : 'package.cordova.json', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = [
+	'embedVideo.php', 
+	'index_el.html', 
+	'index.html', 
+	'index.php', 
+	'indexcordova.html', 
+	{
+		name : 'config.xml', 
+		underscoreTemplate : true
+	}, 
+	{
+		name : 'package.cordova.json', 
+		underscoreTemplate : true
+	}, 
+	'openapi.html', 
+	'service-worker.js', 
+	'manifest.json', 
+	'main.js',
+
+	{
+		name : 'privacy_a.html', 
+		path : 'dcs/'
+	},{
+		name : 'privacy_p.html', 
+		path : 'dcs/'
+	},
+	{
+		name : 'terms.html', 
+		path : 'dcs/'
+	}
+]
 
 if (!args.sha) {
 	try {
@@ -117,6 +147,8 @@ var vars = {
 		name : config.name,
 		sha : args.sha || false,
 		run : args.run || false,
+		lname : config.lname || config.name,
+		support : config.support,
 		config
 	},
 	prod : {
@@ -130,8 +162,10 @@ var vars = {
 		store : args.store || false,
 		gfree : args.gfree || false,
 		name : config.name,
+		lname : config.lname || config.name,
 		sha : args.sha || false,
 		run : args.run || false,
+		support : config.support,
 		config
 	}
 }
@@ -1018,15 +1052,22 @@ fs.exists(mapJsPath, function (exists) {
 
 								index = t(VARS)
 							}
+
+							if(options.path) {
+								console.log("CREATE FOLDER " + options.path)
+
+								if(!fs.existsSync(options.path)){
+									fs.mkdirSync(options.path);
+								}
+							}
 	
-							fs.writeFile('./' + tplname, index, function(err) {
+							fs.writeFile('./' + (options.path ? options.path : '') + tplname, index, function(err) {
 
 								if (err) {
 									return reject(err)
 								}
 
 								resolve()
-								
 							})
 	
 						});
