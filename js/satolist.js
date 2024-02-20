@@ -20557,7 +20557,7 @@ Platform = function (app, listofnodes) {
                 destroyMessage(message, 1)
             });
 
-            destroyMessage(message, 50000000, false, true);
+            destroyMessage(message, 5000, false, true);
 
             message.el.on('click', function(){
 
@@ -20672,7 +20672,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                /*if (data.txid) {
+                if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -20680,7 +20680,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }*/
+                }
 
 
                 var clbks = function (loadedData) {
