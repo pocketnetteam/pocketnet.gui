@@ -30,7 +30,6 @@ var PNWIDGETS = function(){
 
     self.make = function(seed, action, id, p, fast, __el, resized, additional){
 
-        console.log("MAKE", additional, id, action)
 
         if(!additional) additional = {}
 

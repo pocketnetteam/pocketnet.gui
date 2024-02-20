@@ -577,10 +577,6 @@ var imagegallery = (function(){
 
 			el.share.on('click', function(){
 
-				
-
-				console.log("V$(currentImage).attr('src')", $(currentImage).attr('src'))
-
 				self.nav.api.load({
 					open : true,
 					href : 'socialshare2',

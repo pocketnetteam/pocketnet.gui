@@ -1677,6 +1677,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "-1": {
+            message: function () {
+                return  self.app.localization.e('e2000')
+            }
+        },
+
         "-26": {
             message: function (v, er) {
 
@@ -14109,7 +14115,7 @@ Platform = function (app, listofnodes) {
                         }, np).then(d => {
 
                             d = _.filter(_.map(d, (a) => {
-                                return self.psdk.userInfo.get(a.address)
+                                return a && self.psdk.userInfo.get(a.address)
                             }), (v) => {return v})
 
                             d = {
@@ -18577,13 +18583,12 @@ Platform = function (app, listofnodes) {
                     d = 'disabled'
                 }
 
-                var h = '<div class="subscribeWrapper table">'
+                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var clink = "</a>"
 
-                h += '<div class="scell forsubscribe">'
-                h += '<button class="subscribe ghost + ' + d + '">'
-                h += '<i class="far fa-check-circle"></i> '
-                h += 'Follow</button>'
-                h += '</div>'
+                var h = '<div class="subscribeWrapper ">'
+
+                h += link + self.app.localization.e('gotoprofileMessage') + clink
 
                 h += '</div>'
 
@@ -18677,6 +18682,10 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
+                        
+
+                        return false
+
                     })
 
                 },
@@ -18765,7 +18774,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
                         }
 
                     }
@@ -18871,23 +18880,23 @@ Platform = function (app, listofnodes) {
                     message.el.find('.sharepreview').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
 
-                                    if(close) close()
-                                },
+                                if(close) close()
+                            },
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                            essenseData: {
+                                share: data.txid
+                            }
+                        })
 
-
+                        return false
                     })
 
                 },
@@ -19018,6 +19027,8 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        return false
+
                     })
 
                     if(data.share && data.share.itisstream()){
@@ -19114,23 +19125,23 @@ Platform = function (app, listofnodes) {
                     message.el.find('.sharepreview').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
 
-                                    if(close) close()
-                                },
+                                if(close) close()
+                            },
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                            essenseData: {
+                                share: data.txid
+                            }
+                        })
 
-
+                        return false
                     })
 
                 },
@@ -19568,6 +19579,35 @@ Platform = function (app, listofnodes) {
 
                     message.el.find('.commentprev').on('click', function () {
 
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.posttxid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+
+                                if(close) close()
+                            },
+
+                            essenseData: {
+                                share: data.posttxid,
+
+                                reply: {
+                                    answerid: data.commentid,
+                                    parentid: data.parentid || "",
+                                    noaction: true
+                                }
+                            }
+                        })
+
+                        return false
+
+                    })
+
+                    message.el.find('.reply').on('click', function () {
+
+                        platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
                             platform.app.nav.api.load({
                                 open: true,
@@ -19585,39 +19625,14 @@ Platform = function (app, listofnodes) {
 
                                     reply: {
                                         answerid: data.commentid,
-                                        parentid: data.parentid || "",
-                                        noaction: true
-                                    }
-                                }
-                            })
-
-
-                    })
-
-                    message.el.find('.reply').on('click', function () {
-
-                        platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
-
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.posttxid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
-
-                                essenseData: {
-                                    share: data.posttxid,
-
-                                    reply: {
-                                        answerid: data.commentid,
                                         parentid: data.parentid || ""
                                     }
                                 }
                             })
 
                         })
+
+                        return false
 
                     })
 
@@ -19719,7 +19734,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
+                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time, data.donation);
 
                             html += toptext
                         }
@@ -19735,7 +19750,7 @@ Platform = function (app, listofnodes) {
 
                             var toptext = self.app.localization.e('e13338')
 
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time)
                         }
                     }
 
@@ -19962,6 +19977,8 @@ Platform = function (app, listofnodes) {
                                     be.removeClass('disabled');
                                 }
                             })
+
+                            return false
                         })
 
                     }
@@ -19971,23 +19988,23 @@ Platform = function (app, listofnodes) {
                         message.el.find('.sharepreview').on('click', function () {
 
 
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'post?s=' + data.posttxid,
-                                    inWnd: true,
-                                    history: true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['post'] = p
+                            platform.app.nav.api.load({
+                                open: true,
+                                href: 'post?s=' + data.posttxid,
+                                inWnd: true,
+                                history: true,
+                                clbk: function (d, p) {
+                                    app.nav.wnds['post'] = p
 
-                                        if(close) close()
-                                    },
+                                    if(close) close()
+                                },
 
-                                    essenseData: {
-                                        share: data.posttxid
-                                    }
-                                })
+                                essenseData: {
+                                    share: data.posttxid
+                                }
+                            })
 
-
+                            return false
                         })
 
                     }
@@ -20061,9 +20078,9 @@ Platform = function (app, listofnodes) {
                     if (data.mesType == 'subscribe' || data.mesType == 'subscribePrivate') {
                         if ((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)) {
 
-                            text = ''
+                            text = self.tempates.subscribe(data.user)
                             caption = platform.app.localization.e('subscribeUserMessage')
-                            extra = self.tempates.subscribe(data.user)
+                            extra = null
 
                         }
                     }
@@ -20143,7 +20160,7 @@ Platform = function (app, listofnodes) {
                 fastMessageEvents: function (data, message) {
 
                     message.el.find('.tochat').on('click', function () {
-
+                        return false
                     })
 
                 },
@@ -20540,7 +20557,7 @@ Platform = function (app, listofnodes) {
                 destroyMessage(message, 1)
             });
 
-            destroyMessage(message, 5000, false, true);
+            destroyMessage(message, 50000000, false, true);
 
             message.el.on('click', function(){
 
@@ -20655,7 +20672,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if (data.txid) {
+                /*if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -20663,7 +20680,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }
+                }*/
 
 
                 var clbks = function (loadedData) {
@@ -20715,7 +20732,9 @@ Platform = function (app, listofnodes) {
                                     });
 
                                     if (m.fastMessageEvents) {
-                                        m.fastMessageEvents(data, message)
+                                        m.fastMessageEvents(data, message, () => {
+                                            destroyMessage(message, 1)
+                                        })
                                     }
 
                                     data.loaded = true
@@ -21031,6 +21050,18 @@ Platform = function (app, listofnodes) {
             //platform.matrixchat.notify.event()
 
             /*self.messageHandler({
+                "addr": "PXqzCNZjUsCALqiNkhTsgn6gZSQLKicVY3",
+                "msg": "event",
+                "mesType": "cScore",
+                "addrFrom": "PJBban63zJqsrYvd8JCVxVbyQsPnaB1jsH",
+                "txid": "d9e0505ed1a27eb0366cbc1b0a5fa2ea5b8a81c4c54c0de852f8c67107c5024f",
+                "time": 1708022928,
+                "commentid": "17dcfb892ba6e9440ef0c5e1db074154bfb1c3d91e3ad74b323862ae3dd32671",
+                "upvoteVal": 1,
+                "nblock": 2628209
+            })*/
+
+            /*self.messageHandler({
                 "txid": "d4864ba4af7cd61deb7346d3cfd5eeaf4007518ea7c1ed2a01fc4984c4786dff",
                 "time": 1707803215,
                 "nblock": 2624587,
@@ -21042,15 +21073,15 @@ Platform = function (app, listofnodes) {
                 "postsCnt": 11
             })*/
 
-            // self.messageHandler({
-            //     addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
-            //     addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
-            //     mesType: "post",
-            //     msg: "comment",
-            //     text: "Please, set avatar",
-            //     reason: "system",
-            //     time: "1619697839",
-            // })
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
+                mesType: "post",
+                msg: "comment",
+                text: "Please, set avatar",
+                reason: "system",
+                time: "1619697839",
+            })*/
 
             /*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",

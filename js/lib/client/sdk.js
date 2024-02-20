@@ -1536,12 +1536,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(result, (r) => {
 
-                if (!storage[key][r.key] || storage[key][r.key].___temp)
+                if (!storage[key][r.key] || (storage[key][r.key] && storage[key][r.key].___temp))
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !(objects[key][r.key] || objects[key][r.key].___temp)) {
+                if (object && !(objects[key][r.key] && objects[key][r.key].___temp)) {
                     objects[key][r.key] = object
                 }
 
@@ -1706,6 +1706,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
+                    console.log("ERROR IN:", c)
 
                     return null
                 }
@@ -2396,6 +2397,10 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         insertFromResponseEx : function(data){
+
+            data = _.filter(data, (d) => {
+                return d
+            })
 
             data = self.userInfo.cleanData(data)
 

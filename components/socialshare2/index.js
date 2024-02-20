@@ -48,10 +48,8 @@ var socialshare2 = (function(){
 			},
 
 			saveimage : function(){
-				console.log("HERE", ed)
 				var src = ed.sharing.images[0];
 
-				console.log('src', src)
 
 				globalpreloader(true)
 
@@ -61,7 +59,6 @@ var socialshare2 = (function(){
 
 						self.app.mobile.saveImages.save(base64, name, function (d, err) {
 
-							console.log(d, err)
 
 							globalpreloader(false)
 
@@ -285,8 +282,6 @@ var socialshare2 = (function(){
 
 		var renders = {
 			sharebuttons : function(){
-
-				console.log('ed', ed)
 
 				if (ed.sharing && ed.url){
 					self.shell({
@@ -781,8 +776,6 @@ var socialshare2 = (function(){
 						delete sharing.image
 
 						sharing.images = imgs || []
-
-						console.log('sharing', sharing)
 
 						self.app.platform.matrixchat.share.object(sharing).catch(r => {})
 

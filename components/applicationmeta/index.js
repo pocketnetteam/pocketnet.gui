@@ -138,8 +138,6 @@ var applicationmeta = (function(){
 			
 			el.c.find('.remove').on('click', () => {
 
-				console.log('application', application)
-
 				new dialog({
                     html: self.app.localization.e(application.develop ? 'deleteapplicationQuestionDevelop' : 'deleteapplicationQuestion'),
                     btn1text: self.app.localization.e('dyes'),
