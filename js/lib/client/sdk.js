@@ -680,12 +680,13 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
+                queue: light ? true : false,
                 update,
                 indexedDb: light ? 'userInfoLight' : 'userInfoFull',
                 fallbackIndexedDB: !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage: light ? 'userInfoFull' : null,
                 transform: (r) => this.transform(r),
-                maxcount : 70
+                maxcount : light ? 70 : 10
             })
         },
 
@@ -2496,7 +2497,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var interval = setInterval(() => {
         processingAll()
-    }, 30)
+    }, 300)
 
 
     self.actions.on('actionFiltered', ({ action, address, status }) => {

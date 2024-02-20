@@ -6,6 +6,8 @@
     "developapps" : [],
     "protocol" : "pocketnet",
 	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
+    "support" : "support@bastyon.com",
+    "lname" : "Dvm Analytics LLC",
     "servers" : {
 
         "production" : {
