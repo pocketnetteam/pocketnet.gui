@@ -98,7 +98,10 @@ var tpls = [
 	'main.js',
 
 	{
-		name : 'privacy.html', 
+		name : 'privacy_a.html', 
+		path : 'dcs/'
+	},{
+		name : 'privacy_p.html', 
 		path : 'dcs/'
 	},
 	{
