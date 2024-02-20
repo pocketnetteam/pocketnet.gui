@@ -9058,6 +9058,8 @@ findAndReplaceLinkClear = function(inputText = '', fu){
 
 		return l
 	}
+
+	return inputText
 }
 
 findAndReplaceLink = function (inputText = '', nottrust) {
