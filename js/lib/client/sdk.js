@@ -3,6 +3,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var storage = {}
     var objects = {}
+    var baddata = {}
     var temp = {}
     var queue = {}
     var qtick = 300
@@ -131,8 +132,11 @@ var pSDK = function ({ app, api, actions }) {
         if (!objects[key]) objects[key] = {}
         if (!queue[key]) queue[key] = {
             d : 0,
-            a : []
+            a : [],
+            mc : 0
         }
+
+        if(!baddata[key]) baddata[key] = {}
     }
 
     var settodb = function (dbname, result) {
@@ -141,6 +145,8 @@ var pSDK = function ({ app, api, actions }) {
         }
 
         return Promise.all(_.map(result, ({ key, data }) => {
+
+            if(!data) return Promise.resolve()
 
             if (data.___temp) return Promise.resolve()
 
@@ -248,17 +254,50 @@ var pSDK = function ({ app, api, actions }) {
 
         if (queue.a.length) {
 
-            var groupped = group(queue.a, (q) => { return q.executor })
+            var grouppedByEx = _.toArray(group(queue.a, (q) => { return q.executor }))
 
-            _.each(groupped, (g) => {
+            _.each(grouppedByEx, (g) => {
 
                 var executor = g[0].executor
                 var load = _.reduce(g, (m, q) => m.concat(q.load), [])
 
-                executor(load).then(r => {
+                load = _.uniq(load)
+
+                var batches = []
+
+                if (queue.mc){
+
+                    for (let i = 0; i < load.length; i += queue.mc) {
+
+                        var batch = load.slice(i, i + queue.mc)
+
+                        batches.push(batch)
+                    }
+
+                }
+                else{
+                    batches.push(load)
+                }
+
+                Promise.all(_.map(batches, (batch) => {
+                    return executor(batch)
+
+
+                })).then((r) => {
+
+                    return Promise.resolve(_.flatten(r, true))
+
+                }).then(r => {
 
                     _.each(g, (q) => {
-                        q.resolve(r)
+
+                        var localresult = _.filter(r, (d) => {
+                            if(d && d.key){
+                                return _.indexOf(q.load, d.key) > -1
+                            }
+                        })
+
+                        q.resolve(localresult)
                     })
 
                 }).catch(e => {
@@ -288,7 +327,8 @@ var pSDK = function ({ app, api, actions }) {
 
             queue[type] = {
                 d : 0,
-                a : []
+                a : [],
+                mc : 0
             }
         })
     }
@@ -299,7 +339,8 @@ var pSDK = function ({ app, api, actions }) {
         indexedDb: null,
         alternativeGetStorage: null,
         transform: null,
-        maxcount: 0
+        maxcount: 0,
+        ignoreBadData : false
     }) {
 
         if (!key) return Promise.reject('missing:key')
@@ -308,6 +349,17 @@ var pSDK = function ({ app, api, actions }) {
         if (!_.isArray(keys)) keys = [keys]
 
         keys = _.filter(_.uniq(keys), k => k)
+
+        if(p.ignoreBadData){
+            keys = _.filter(keys, (k) => {
+
+                if(p.update && baddata[key][k]){
+                    delete baddata[key][k]
+                }
+
+                return !baddata[key][k]
+            })
+        }
 
         var loading = {}
         var loaded = {}
@@ -372,9 +424,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 var rjc = function(e){
 
-
                     getfromdb(p.indexedDb, load, true).then(r => {
-                        if(!r && r.length != load.length){
+                        if(!r || r.length != load.length){
                             reject(e)
                         }
                         else{
@@ -401,11 +452,18 @@ var pSDK = function ({ app, api, actions }) {
 
                 }
 
-
                 if (p.queue) {
 
-                    if(!queue[key].a.length && p.queueDelay){
-                        queue[key].d = p.queueDelay
+                    if(!queue[key].a.length){
+
+                        if (p.queueDelay){
+                            queue[key].d = p.queueDelay
+                        }
+                        if (p.maxcount){
+                            queue[key].mc = p.maxcount
+                        }
+
+                        
                     }
 
                     queue[key].a.push({
@@ -414,6 +472,8 @@ var pSDK = function ({ app, api, actions }) {
                         resolve: c,
                         reject : rjc
                     })
+
+                    
                 }
                 else {
 
@@ -437,8 +497,6 @@ var pSDK = function ({ app, api, actions }) {
                         c(_.flatten(r, true))
 
                     }).catch(rjc)
-
-                    //executor(load).then(c).catch(reject)
                 }
 
                 /**/
@@ -461,6 +519,9 @@ var pSDK = function ({ app, api, actions }) {
             var filtered = []
 
 
+            //// TODO NOW check load length and result length
+
+
             try{
             
                 _.each(result, (r) => {
@@ -468,6 +529,12 @@ var pSDK = function ({ app, api, actions }) {
                     if (r && r.key && r.data) {
                         storage[key][r.key] = r.data
                         filtered.push(r)
+                    }
+                    else{
+                        if(r && r.key){
+                            baddata[key][r.key] = true
+                        }
+                        
                     }
 
 
@@ -704,7 +771,8 @@ var pSDK = function ({ app, api, actions }) {
                 fallbackIndexedDB: !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage: light ? 'userInfoFull' : null,
                 transform: (r) => this.transform(r),
-                maxcount : light ? 70 : 10
+                maxcount : light ? 70 : 10,
+                ignoreBadData : true
             })
         },
 
@@ -2473,6 +2541,7 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(keys, (k) => {
                 delete storage[k][key]
+                delete baddata[k][key]
             })
         },
 
