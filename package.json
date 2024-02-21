@@ -3,9 +3,9 @@
     "project": "Bastyon",
 
     "version": "0.8.81",
-    "versionsuffix": "0",
+    "versionsuffix": "1",
     "cordovaversion": "1.8.81",
-    "cordovaversioncode": "180810",
+    "cordovaversioncode": "180811",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
