@@ -112,7 +112,7 @@ Application = function (p) {
 
 	//self._meta = window.projects_meta
 	self.meta = window.project_config || {}
-
+	
 	/*self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
@@ -1249,7 +1249,7 @@ Application = function (p) {
 
 				})
 
-
+				
 
 				/*setInterval(() => {
 					self.apps.emit('test', {
@@ -1311,9 +1311,9 @@ Application = function (p) {
 				if (account && alias.address == account.address) {
 					self.apps.emit('accountStatus', account.getStatus())
 				}
-
+				
 			}
-
+			
 		}
 
 	}
@@ -1675,11 +1675,11 @@ Application = function (p) {
 
 		},
 
-
+		
 
 		playingvideo: function (v, from) {
 
-
+			
 
 			if(from && from.player_id){
 				if(self.playingvideocollisions[from.player_id]){
@@ -1762,8 +1762,8 @@ Application = function (p) {
 			if (scrollrif){
 				cancelAnimationFrame(scrollrif)
 			}
-
-
+			
+			
 			scrollrif = window.requestAnimationFrame(() => {
 				blockScroll = true
 				scrollrif = null
@@ -1811,7 +1811,7 @@ Application = function (p) {
 
 
 			/*if (self.mobileview && window.bodyScrollLock && target){
-
+	  
 			  window.bodyScrollLock.disableBodyScroll(target[0])
 			  self.scrolltarget = target
 			}*/
@@ -1889,7 +1889,7 @@ Application = function (p) {
 		}else{
 			document.documentElement.style.setProperty('--app-margin-bottom-default', `0px`);
 		}
-
+			
 
 		istouchstyle()
 
@@ -2033,7 +2033,7 @@ Application = function (p) {
 			setTimeout(() => {
 				self.blockScroll = false
 			}, 100)
-
+			
 
 			checkTouchStyle()
 
@@ -2750,7 +2750,7 @@ Application = function (p) {
 				/*if (window.NavigationBar)
 					window.NavigationBar.hide()*/
 
-
+			
 			},
 			background: function () {
 
@@ -2776,7 +2776,7 @@ Application = function (p) {
 				}
 
 				self.mobile.statusbar.status = 'background'
-
+					
 			},
 
 			gallerybackground: function () {
@@ -2792,7 +2792,7 @@ Application = function (p) {
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
 				self.mobile.statusbar.status = 'gallerybackground'
-
+				
 
 			},
 
@@ -2854,7 +2854,7 @@ Application = function (p) {
 
 
 			if (isios()) {
-
+				
 			}
 			else {
 				window.requestAnimationFrame(() => {
