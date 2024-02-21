@@ -267,6 +267,10 @@ var BastyonSdk = function(){
 
         comment : function(data){
             return action('barteron.comment', data)
+        },
+
+        vote : function(data){
+            return action('barteron.vote', data)
         }
     }
 

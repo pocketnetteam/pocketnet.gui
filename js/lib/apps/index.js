@@ -655,6 +655,18 @@ var BastyonApps = function(app){
 
                     return makeAction(comment, application)
                 }
+            },
+
+            vote : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var vote = new UpvoteShare();
+
+                    vote.import(data);
+
+                    return makeAction(vote, application)
+                }
             }
         }
 
