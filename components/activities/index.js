@@ -255,6 +255,8 @@ var activities = (function () {
 				})).then(() => {
 
 					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
+
+					console.log('activitiesByGroup', activitiesByGroup)
 					
 					actions.setloading(false)
 
@@ -288,12 +290,12 @@ var activities = (function () {
 
 								if (!p) return reject('np')
 
-									resolve({ ...p.data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
+									resolve({ ...p.data, date: new Date(d.date), name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 
 								return
 							}
-							resolve({ ...r[0][0].data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
+							resolve({ ...r[0][0].data, date: new Date(d.date), name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 						}).catch(e => {
 							console.error(e)
