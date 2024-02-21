@@ -320,7 +320,33 @@ var Cache = function(p){
 
             getrecomendedcontentsbyscoresfromaddress : {
                 time : 3600
-            }
+            },
+
+            getaccountearning: {
+                time : 460,
+                block : 0,
+            }, 
+
+            //Jury
+            getalljury: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getjuryassigned: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getjurymoderators: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getbans: {
+                time : 460,
+                block : 0,
+            } 
         }
     }
 
