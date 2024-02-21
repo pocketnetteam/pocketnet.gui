@@ -14,7 +14,8 @@ if(share.address){
 
 	if(!my && user.address.value){
 
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = psdk.userInfo.getmy()
+		
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'
 		}
@@ -34,13 +35,17 @@ var value = Number(share.score)
 
 var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
+var userInfo = psdk.userInfo.get(share.address) || {}
+
+var name = app.platform.api.clearname(userInfo.name || share.address)
+
 var makecaptionclear = function(){
 
 	%> 
 
 		<% if(cc) {
 
-			cc = filterXSS(clearScripts((findAndReplaceLink(cc))))
+			cc = findAndReplaceLink(cc)
 
 
 		%>
@@ -73,7 +78,8 @@ var metadisplay = function(){ %>
         
         
                                 <% 
-									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+									var src = userInfo.image
+									
 									var letter = name ? name[0] : '';
 
 								%>
@@ -109,8 +115,7 @@ var metadisplay = function(){ %>
 						<div class="authorCell">
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+									<span class="adr"><%-(name || share.address) %></span><% if(userInfo.reputation > 1 || userInfo.reputation < -1) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
 								</a>
 
 								
@@ -189,7 +194,7 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+			c = findAndReplaceLink(c, true)
 		%>
 			<div class="paddingWrapper piphidden">
 				<div class="sharecaption canmark opensviurl lenta_opensviurl">
@@ -205,26 +210,26 @@ var metadisplay = function(){ %>
 
             if(typeof tplvideo != 'undefined' && tplvideo) return
 
-			m = (m)
-			
 			var nm = m;
 
 			if(typeof all == 'undefined' || !all){
 
-				nm = trimHtml(m, 750);
+				nm = trimHtml(m, 750, 15);
 
 				if(nm != m){
 					bigmessage = true;
 				}
 			}
 
-			nm = share.renders.xssmessage(nm)
+			nm = share.renders.message(nm)
+
+			nm = findAndReplaceLink(nm, true)
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo piphidden">
 				<div class="message canmark">
 
-					<%=app.actions.emoji((clearScripts(((nm)))))%>
+					<%=app.actions.emoji(nl2br(nm))%>
 
 				</div>
 			</div>
@@ -234,17 +239,13 @@ var metadisplay = function(){ %>
 				<div class="paddingWrapper showMorePW piphidden">
 					<div elementsid="lenta_showmore" class="showMore">
 						<div class="showmoretable table">
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
+						
 							<div class="buttoncell">
 								<button>
 									<%=e('showmore')%>
 								</button>
 							</div>
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
+							
 						</div>
 						
 
@@ -530,6 +531,9 @@ var metadisplay = function(){ %>
 					<div class="unblockWrapper">
 						<button elementsid="lenta_unblockbutton" class="button small unblockbutton">
 							<%=e('unblock')%>
+						</button>
+						<button class="button small ghost showblockedpost">
+							<%=e('showhiddenPost')%>
 						</button>
 					</div>
 				</div>

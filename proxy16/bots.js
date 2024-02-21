@@ -1,12 +1,14 @@
 var f = require('./functions');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 
 ////temporarily until a consensus algorithm appears
 
 var Bots = function(p){
     var self = this
     var inited = false
-    var db = new Datastore(f.path(p.dbpath));
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
 
     var addresses = [];
 

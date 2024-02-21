@@ -218,10 +218,6 @@
 		flex-wrap: nowrap;
 		justify-content: space-between;
 
-		.mobileUpperLeft, .mobileUpperRight{
-			display: none;
-		}
-
 		.section{
 			min-height: 65px;
 			height: 100%;
@@ -423,12 +419,7 @@
 						padding-right: 0.25 * @rhythm;
 						padding-left : 0.25 * @rhythm;
 						padding-bottom: 0.5 * @rhythm;
-						opacity: 0.6;
 						cursor: pointer;
-
-						&:hover{
-							opacity: 1;
-						}
 					}
 				}
 
@@ -685,7 +676,6 @@
 				&.wallets{
 					font-size: 0.8em;
 					font-weight: 700;
-					color : rgb(var(--color-txt-gray));
 					margin-right : 3 * @rhythm;
 					cursor: pointer;
 					.transition(0.3s);
@@ -697,7 +687,6 @@
 					.icon{
 						width: 30px;
 						opacity: 0;
-						color : rgb(var(--color-txt-gray));
 					}
 
 					&.good{
@@ -875,9 +864,6 @@
 		height: 100%;
 		width: 100%;
 
-		.christmas_search{
-			height: 16px;
-		}
 
 		.searchInputIcon,
 		.searchInput,
@@ -953,22 +939,7 @@
 			width: 4 * @rhythm;
 			font-size: 0.8em;
 			text-align: center;			
-		}
-
-		.christmasBranchLeft{
-			position: absolute;
-			height: 52px;
-			bottom: -10px;
-			left: -35px;
-		}
-
-		.christmasBranchRight{
-			position: absolute;
-			bottom: -10px;
-			right: -21px;
-			height: 52px;
-		}
-		
+		}		
 
 		
 	}
@@ -997,6 +968,54 @@
 	
 }
 
+html.allcontent{
+	#menu{
+		.menuWrapper {
+			.searchIconLabel i,
+			.icon i{
+				//color : #2672ff;
+			}
+
+			.postssearch {
+				.searchInput{
+					input{
+						background: transparent;
+					}
+
+					:placeholder-shown{
+					}
+	
+					
+				}
+
+				.searchIconLabel, .searchPanel{
+					background: transparent;
+				}
+			}
+
+	
+		}
+
+
+		.usericon{
+			.shadowSmaller();
+		}
+
+		.far.fa-comment{
+			font-weight: 700;
+		}
+
+		.sitenames{
+		}
+
+		.sections .items .item.wallets{
+		}
+
+		.sections .items .item .icon .icn svg{
+		}	
+
+	}
+} 
 
 /*t*/ @media only screen and (max-width: 768px){
 	#menu{
@@ -1048,12 +1067,14 @@
 				}
 
 				&.searchWrapper{
-					padding-right: 3 * @rhythm;
+					padding-right: 2 * @rhythm;
 
 					.item{
 						min-width: 0;
 					}
 				}
+
+				
 
 				.item{
 
@@ -1063,6 +1084,13 @@
 						padding-right: 2 * @rhythm;
 					}
 
+					&.wallets{
+						margin-right: @rhythm;
+					
+						.pkoinlabel{
+							font-size: 0.7em;
+						}
+					}
 
 					&.signin{
 						display: none;
@@ -1085,30 +1113,9 @@
 						}
 					}
 
-					.mobileUpperLeft{
-						display: block;
-						position: absolute;
-						left: -20px;
-						top: -6px;
-		
-						.christmasBranch{
-							height: 40px;
-						}
-					}
 				}
 			}
 
-			.mobileUpperRight{
-				display: block;
-				position: absolute;
-				right: -22px;
-				top: 23px;
-				rotate: 35deg;
-				
-				.christmasBranch{
-					height: 40px;
-				}
-			}
 
 		}
 
@@ -1209,106 +1216,15 @@
 
 	#menu{
 
-		/*.postssearch{
-			font-size: 1.2em;
-		}*/
-
-		/*&.searchactive{
-
-			.sections{
-				padding : 0;
-
-				.section{
-					width : 100%;
-					&.right{
-						width : 100%;
-					}
-					
-					.items.searchWrapper{
-						width : 100%;
-
-						.item{
-							width : 100%;
-						}
-
-						.postssearch{
-							width : 100%;
-						}
-					}
-
-					&.leftpart{
-						display: none;
-					}
-
-					&.right{
-						display: none;
-					}
-				}
-
-
-				.items{
-					&.searchWrapper{
-						width: 100%;
-						max-width: none;
-						padding-right: 0;
-
-						.postssearchwrapper{
-							padding : 1.5 * @rhythm 1.5 * @rhythm;
-						}
-					}
-				}
-			}
-		}*/
 	}
 
 	html.allcontent{
 		#menu{
-			.menuWrapper {
-				backdrop-filter: blur(2px);
-                -webkit-backdrop-filter: blur(2px);  
-				background: transparent;
-				.searchIconLabel i,
-				.icon i{
-					color : rgba(var(--color-bg-ac-bright), 0.9);
-					//color : #2672ff;
-				}
-
-				.sitename .label{
-					display: none;
-				}
-		
-			}
-
-			.mobsearch{
-				i{
-					color : rgba(var(--color-bg-ac-bright), 0.9);
-				}
-			}
-
-			//.centerpart,
-			.application,
-			.walletsWrapper,
-			.keyexportWrapper,
-			.notificationsWrapper{
-				display: none!important;
-			}
-
-			.usericon{
-				.shadowSmaller();
-			}
-
-			.far.fa-comment{
-				font-weight: 700;
-			}
 
 			.sitenames{
 				overflow: hidden;
 				width: 24px!important;
 			}
-
-			.sections .items .item .icon .icn svg{
-				fill: rgba(var(--color-bg-ac-bright),0.9)
-			}	
 
 		}
 	} 

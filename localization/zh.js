@@ -4,7 +4,7 @@ loclib = {};
 loclib.zh = {};
 
 var _l = loclib.zh;
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 //time
 
@@ -532,7 +532,10 @@ _l.e13106 = "口袋网节点"
 _l.e13107 = "节点管理可通过应用程序进行"
 _l.e13108 = "没有与Electron代理接口的连接"
 
+
 _l.e13109 = "请输入图片中的字以接收口袋币并继续注册"
+_l.e13109h = "点击六边形组合图片，然后在生成的图片上输入文字"
+
 _l.e13110 = "輸入單詞"
 _l.poll = "创建投票"
 _l.next = "下一步"
@@ -1013,7 +1016,7 @@ _l.noDownloadedVideos = "没有下载的视频";
 
 _l.buy = '买';
 
-_l.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
+_l.lowstar1 = ""+appname+" 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
 _l.lowstar_reason_1 = "情色/色情"
 _l.lowstar_reason_2 = "兒童剝削"
 _l.lowstar_reason_3 = "直接的暴力威脅"
@@ -1021,11 +1024,11 @@ _l.lowstar_reason_4 = "非法藥物"
 _l.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 _l.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
 
-_l.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+_l.androidPopupTitle = "在 "+appname+" 移动应用中获取未经审查的信息"
 _l.androidPopupAgree = "切换到应用"
 _l.androidPopupDisagree = "不是现在"
 
-_l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+_l.desktopPopupTitle = "在 "+appname+" 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
 
@@ -1066,3 +1069,15 @@ _l.torusing_stat_totalTorBytes = "总计，TOR电话"
 _l.torusing_settings = "TOR设置"
 _l.torusing_stats = "查询统计"
 _l.torusing_proxychangequestion = "你确定你要改变代理服务器吗？"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '更新';
+_l.updateNotifier_topHeading2 = '可用';
+_l.updateNotifier_mainHeading = '我们有一个更新';
+_l.updateNotifier_mainText = '我们建议保持应用程序的更新。新的功能和更好的性能正在等待你！';
+_l.updateNotifier_button1 = '安装';
+_l.updateNotifier_button2 = '稍后...';
+_l.updateNotifier_stateStart = '开始...';
+_l.updateNotifier_stateDownload = '已下载';
+_l.updateNotifier_stateError = '发生错误';
+/** ↑ Component UpdateNotifier ↑ */

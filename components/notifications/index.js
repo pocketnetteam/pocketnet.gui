@@ -208,6 +208,10 @@ var notifications = (function(){
 
 							e.fastMessageEvents(n, {
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
+							}, function(){
+
+								/*if(!self.app.mobileview)
+									self.closeContainer()*/
 							})
 						}
 					})
@@ -239,6 +243,7 @@ var notifications = (function(){
 
 				el.error.addClass('hidden')
 				el.empty.removeClass('hidden')
+
 
 				if (!self.app.platform.sdk.notifications.inited || self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')
@@ -278,96 +283,6 @@ var notifications = (function(){
 				renders.loadingAndEmpty()
 			}
 
-			if(isMobile()){
-
-				var cc = el.c.find('.circularprogress');
-				var maxheight = 220;
-
-				var progress = new CircularProgress({
-					radius: 30,
-					strokeStyle: '#00A3F7',
-					lineCap: 'round',
-					lineWidth: 1,
-					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-					fillStyle : "#00A3F7",
-					text : {						
-						value : ""
-					},
-					initial: {
-						strokeStyle: '#fff',
-						lineWidth: 1
-					}
-				});
-
-				progress.update(70);
-
-				el.c.find('.circularprogressWrapper').html(progress.el);
-
-				var trueshold = 90
-
-				var w = el.c.closest('.customscroll')
-
-				/*var parallax = new SwipeParallaxNew({
-
-					el : el.c.find('.ntf'),
-
-					allowPageScroll : 'vertical',
-	
-					directions : {
-						down : {
-							cancellable : true,						
-
-							positionclbk : function(px){
-								var percent = Math.abs(px) / trueshold;
-
-								if (px >= 0){
-
-									progress.options.text = {
-										value: ''
-									};
-
-									progress.update(percent * 100);
-
-
-									cc.height((maxheight * percent)+ 'px')								
-
-									//tp.css('opacity', 1 -  (4 * percent))
-
-								}
-
-							},
-
-							constraints : function(){
-								if(w.scrollTop() == 0){
-									return true;
-								}
-							},
-
-							restrict : true,
-							trueshold : trueshold,
-							clbk : function(){
-
-								el.loader.removeClass('hidden')
-
-								self.app.platform.sdk.notifications.getNotifications(100).catch(e=>{
-									return Promise.resolve()
-								}).then(r => {
-
-									if(!el.c) return
-
-									el.loader.addClass('hidden')
-
-									renders.notifications()
-								})
-	
-							}
-	
-						}
-					}
-					
-	
-				}).init()*/
-			}
 
 		}
 
@@ -385,6 +300,7 @@ var notifications = (function(){
 		var addWSClbk = function(){
 			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications, now){
 
+
 				renders.notifications({
 					notifications : notifications,
 					now : now
@@ -393,8 +309,9 @@ var notifications = (function(){
 			}
 
 			self.app.platform.sdk.notifications.clbks.inited['notifications' + t] = function(notifications, now){
-				renders.notifications()
 
+
+				renders.notifications()
 			}
 		}
 

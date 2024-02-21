@@ -85,7 +85,7 @@ var leftpanel = (function(){
 							method = 'hierarchical';
 		
 						}
-		
+
 						self.sdk.lentaMethod.set(method)
 		
 					})

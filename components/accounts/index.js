@@ -45,7 +45,7 @@ var accounts = (function(){
 								}
 
 								if (ed.toaccpage) {
-									h = 'author?address=' + address
+									h = 'authorn?address=' + address
 									history = true
 								}
 
@@ -278,7 +278,7 @@ var accounts = (function(){
 					el :   el.addresses,
 
 					data : {
-						current : self.app.platform.sdk.address.pnet().address,
+						current : self.app.user.address.value,
 						pack : pack
 					},
 
@@ -314,7 +314,7 @@ var accounts = (function(){
 		}
 
 		var make = function(){
-			var address = self.app.platform.sdk.address.pnet().address;
+			var address = self.app.user.address.value;
 
 			var pa = self.app.platform.sdk.pool.getPack(address);
 

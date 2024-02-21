@@ -79,36 +79,17 @@ var postscores = (function(){
 						return
 					}
 
-					self.sdk.node.transactions.create.commonFromUnspent(
+					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
+						if (clbk)
+							clbk(true)
+					}).catch(e => {
+						self.app.platform.errorHandler(e, true)
 
-						upvoteShare,
+						if (clbk)
+							clbk(false)
+					})
 
-						function(tx, error){
-
-							topPreloader(100)
-
-							if(!tx){							
-
-								share.myVal = null;		
-
-								self.app.platform.errorHandler(error, true)	
-
-								if (clbk)
-									clbk(false)
-								
-							}
-							else
-							{
-
-								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
-								self.app.platform.sdk.recommendations.successRecommendation(share)
-
-								if (clbk)
-									clbk(true)
-							}
-
-						}
-					)
+					
 				}, function(){
 					if (clbk)
 						clbk(false)
@@ -257,12 +238,15 @@ var postscores = (function(){
 					turi : 'lenta',
 					name :  'stars',
 					el : el.stars,
+					insertimmediately : true,
 					data : {
 						share : share,
 						hideCount : true
 					}					
 
-				}, function(p){					
+				}, function(p){				
+					
+					el.c.addClass('rndr')
 
 					fastars(p.el.find('.stars'))
 
@@ -281,6 +265,7 @@ var postscores = (function(){
 				self.shell({
 					name :  'details',
 					el : el.details,
+					insertimmediately : true,
 					data : {
 						share : share,
 						scores : scores
@@ -336,29 +321,15 @@ var postscores = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([shareid], function(){
 
-					//share = self.app.platform.sdk.node.shares.storage.trx[shareid] 
-						
-					share = self.app.platform.sdk.node.shares.getWithTemp(shareid) 
-
-					/*if(!share){
-						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-							return s.txid == shareid
-						})
-
-						if (temp){
-							share = new pShare();
-							share._import(temp, true);
-							share.temp = true;
-							share.address = self.app.platform.sdk.address.pnet().address
-						}
-
-					}*/
+					share = self.psdk.share.get(shareid) 
 
 					if (share){
 
 						self.app.platform.sdk.postscores.get(shareid, function(){
 
-							scores = self.sdk.postscores.storage[shareid] || []
+							scores = self.psdk.postScores.get(shareid) 
+							
+							// self.sdk.postscores.storage[shareid] || []
 
 							var data = {
 								share : share

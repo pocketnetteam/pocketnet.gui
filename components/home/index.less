@@ -1,0 +1,119 @@
+@import "../../css/__cssvar";
+
+#home{
+    margin-top: 20vh;
+    padding : 2 * @rhythm @rhythm;
+    padding-top: 4 * @rhythm;
+
+    .work{
+        margin : 0 auto;
+        max-width: 768px;
+    }
+
+    .chapter{
+        margin-bottom: 5 * @rhythm;
+    }
+    .caption{
+        padding-left: @rhythm;
+        padding-right: @rhythm;
+        span{
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+    }
+
+    .searchWrapper{
+        padding : @rhythm 0;
+        margin-top: 2 * @rhythm;
+    }
+
+    .applicationSearch{
+        background: rgb(var(--background-main));
+        border-radius: 24px;
+
+        .searchIconLabel{
+        }
+
+        input{
+            background: transparent;
+            border: 0;
+            line-height: 44px;
+            padding: 0;
+        }
+
+        .searchPanel{
+            background: transparent;
+            border: 0;
+        }
+    }
+
+    .applicationsList{
+        
+        margin-top: 2 * @rhythm;
+        padding : @rhythm;
+        
+        .list{
+            display: grid;
+            grid-template-columns: 20% 20% 20% 20% 20%;
+            grid-template-rows: 14 * @rhythm;
+        }
+
+        .application{
+            position: relative;
+            padding: @rhythm 0;
+            cursor: pointer;
+
+            .icon{
+                margin : 0 auto;
+                border-radius: 12px;
+                
+                width: 6 * @rhythm;
+                height: 6 * @rhythm;
+            }
+
+            .name{
+                text-align: center;
+                margin-top: @rhythm;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .badge{
+                position: absolute;
+                top : 0.5 * @rhythm;
+                right: 0.5 * @rhythm;
+                width: 2 * @rhythm;
+                height: 2 * @rhythm;
+                border-radius: 50%;
+                background: rgb(var(--neutral-grad-1));
+
+                &[num="0"]{
+                    display: none;
+                }
+            }
+
+            &.installed{
+                .badge{
+                    background: rgb(var(--color-bg-orange));
+                    width: 1 * @rhythm;
+                    height: 1 * @rhythm;
+                    top : 1 * @rhythm;
+                    right: 1 * @rhythm;
+                }
+            }
+
+            &.installing{
+                .icon{
+                    border-radius: 12px;
+                    background: rgb(var(--neutral-grad-0));
+                }
+                
+                .badge{
+                    background: rgb(var(--color-good));
+                }
+            }
+        }
+    
+    }
+}

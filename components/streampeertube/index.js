@@ -1,351 +1,322 @@
 var streampeertube = (function () {
-  var self = new nModule();
+	var self = new nModule();
 
-  var essenses = {};
+	var essenses = {};
 
-  var ed = {};
+	var ed = {};
 
-  var streamCreated = false;
+	var streamCreated = false;
 
-  var streamInfo = null;
+	var streamInfo = null;
 
-  var Essense = function (p) {
-    var primary = deep(p, 'history');
+	var Essense = function (p) {
+		var primary = deep(p, 'history');
 
-    var el;
+		var el;
 
-    var wnd;
-    var wndObj;
+		var wnd;
+		var wndObj;
 
-    var actions = {};
+		var actions = {};
 
-    self.added = {};
-    self.closed = {};
+		self.added = {};
+		self.closed = {};
 
-    var add = function (v) {
-      self.app.settings.set('common', 'lastuploadedvideo', {
-        link: v,
-        name: '',
-        wasclbk: !_.isEmpty(self.added),
-      });
-      // For videocabinet
-      // try {
-      //   var currentUnloadedVideos = JSON.parse(
-      //     localStorage.getItem('unpostedVideos') || '{}',
-      //   );
+		var add = function (v) {
+			self.app.settings.set('common', 'lastuploadedvideo', {
+				link: v,
+				name: '',
+				wasclbk: !_.isEmpty(self.added),
+			});
+			_.each(self.added, function (a) {
+				a(v);
+			});
 
-      //   if (
-      //     currentUnloadedVideos[self.app.user.address.value] &&
-      //     typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
-      //   ) {
-      //     currentUnloadedVideos[self.app.user.address.value].push(v);
-      //   } else {
-      //     currentUnloadedVideos[self.app.user.address.value] = [v];
-      //   }
+			if (_.isEmpty(self.added))
+				if (el.c && el.c.closest('.wnd').hasClass('hiddenState')) {
+					sitemessage(self.app.localization.e('importingVideoSuccess'));
+				}
+		};
 
-      //   localStorage.setItem(
-      //     'unpostedVideos',
-      //     JSON.stringify(currentUnloadedVideos),
-      //   );
-      // } catch (error) {
-      //   localStorage.setItem(
-      //     'unpostedVideos',
-      //     JSON.stringify({
-      //       [self.app.user.address.value]: [v],
-      //     }),
-      //   );
-      // }
+		var events = {
+			createStream(clbk = () => { }) {
+				if (streamCreated) {
+					streamCreated = false;
 
-      _.each(self.added, function (a) {
-        a(v);
-      });
+					return wndObj.close();
+				}
 
-      if (_.isEmpty(self.added))
-        if (el.c && el.c.closest('.wnd').hasClass('hiddenState')) {
-          sitemessage(self.app.localization.e('importingVideoSuccess'));
-        }
-    };
+				var contentSection = wnd.find('.content-section');
+				var preloaderSection = wnd.find('.preloader-section');
 
-    var events = {
-      createStream(clbk = () => {}) {
-        if (streamCreated) {
-          streamCreated = false;
+				el.streamButton.addClass('disabledButton');
+				el.streamButton.text('Starting...');
 
-          return wndObj.close();
-        }
+				contentSection.addClass('hidden');
+				preloaderSection.removeClass('hidden');
 
-        var contentSection = wnd.find('.content-section');
-        var preloaderSection = wnd.find('.preloader-section');
+				var videoWallpaperFile = el.videoWallpaper.prop('files');
 
-        el.streamButton.addClass('disabledButton');
-        el.streamButton.text('Starting...');
+				var videoName = wnd.find('.upload-video-name').val();
+				var nameError = wnd.find('.name-type-error');
 
-        contentSection.addClass('hidden');
-        preloaderSection.removeClass('hidden');
+				var filesWrittenObject = {};
 
-        var videoWallpaperFile = el.videoWallpaper.prop('files');
+				filesWrittenObject.name = videoName;
 
-        var videoName = wnd.find('.upload-video-name').val();
-        var nameError = wnd.find('.name-type-error');
+				var options = {
+					type: 'liveStream',
+				};
 
-        var filesWrittenObject = {};
+				self.app.peertubeHandler.api.videos
+					.live(filesWrittenObject, options)
+					.then((response) => {
+						var resultElement = wnd.find('.result-section');
 
-        filesWrittenObject.name = videoName;
+						self.app.peertubeHandler.api.videos
+							.getLiveInfo({ id: response.uuid }, { host: response.host })
+							.then((res) => {
+								preloaderSection.addClass('hidden');
 
-        var options = {
-          type: 'liveStream',
-        };
+								if (response.error) {
+									var error = deep(response, 'error.responseJSON.errors') || {};
 
-        self.app.peertubeHandler.api.videos
-          .live(filesWrittenObject, options)
-          .then((response) => {
-            var resultElement = wnd.find('.result-section');
+									var message = (Object.values(error)[0] || {}).msg;
 
-            self.app.peertubeHandler.api.videos
-              .getLiveInfo({ id: response.uuid }, { host: response.host })
-              .then((res) => {
-                preloaderSection.addClass('hidden');
+									sitemessage(message || 'Uploading error');
 
-                if (response.error) {
-                  var error = deep(response, 'error.responseJSON.errors') || {};
+									return;
+								}
 
-                  var message = (Object.values(error)[0] || {}).msg;
+								streamCreated = true;
+								resultElement.removeClass('hidden');
+								el.streamButton.html(
+									'<i class="fas fa-check"></i> Stream Created',
+								);
+								el.streamButton.removeClass('disabledButton');
+								el.streamButton.addClass('successButton');
 
-                  sitemessage(message || 'Uploading error');
+								var rtmpInput = resultElement.find('.result-video-rtmp');
+								var streamKeyInput = resultElement.find(
+									'.result-video-streamKey',
+								);
 
-                  return;
-                }
+								rtmpInput.val(res.rtmpUrl);
+								streamKeyInput.val(res.streamKey);
 
-                streamCreated = true;
-                resultElement.removeClass('hidden');
-                el.streamButton.html(
-                  '<i class="fas fa-check"></i> Stream Created',
-                );
-                el.streamButton.removeClass('disabledButton');
-                el.streamButton.addClass('successButton');
+								// actions.added(response.formattedLink);
 
-                var rtmpInput = resultElement.find('.result-video-rtmp');
-                var streamKeyInput = resultElement.find(
-                  '.result-video-streamKey',
-                );
+								clbk();
 
-                rtmpInput.val(res.rtmpUrl);
-                streamKeyInput.val(res.streamKey);
+								add(response.formattedLink);
+							}).catch(err => {
+								sitemessage(`${self.app.localization.e('error')} ${JSON.stringify(err)}`)
+								wndObj.close();
+							});
+					});
+			},
+		};
 
-                // actions.added(response.formattedLink);
+		var renders = {};
 
-                clbk();
+		var state = {
+			save: function () { },
+			load: function () { },
+		};
 
-                add(response.formattedLink);
-              }).catch(err => {
-                sitemessage(`${self.app.localization.e('error')} ${JSON.stringify(err)}`)
-                wndObj.close();
-              });
-          });
-      },
-    };
+		var initEvents = function () {
+			el.c.find('.tooltip').tooltipster({
+				theme: 'tooltipster-light',
+				maxWidth: 600,
+				zIndex: 1006,
+				position: 'bottom',
+			});
 
-    var renders = {};
+			el.copyButton.each((index, button) => {
+				var buttonElement = $(button);
 
-    var state = {
-      save: function () {},
-      load: function () {},
-    };
+				var inputClass = buttonElement.attr('linkType');
 
-    var initEvents = function () {
-      el.c.find('.tooltip').tooltipster({
-        theme: 'tooltipster-light',
-        maxWidth: 600,
-        zIndex: 1006,
-        position: 'bottom',
-      });
+				buttonElement.on('click', () => {
+					var linkValue = el.c.find(`.${inputClass}`);
 
-      el.copyButton.each((index, button) => {
-        var buttonElement = $(button);
+					copyText(linkValue);
 
-        var inputClass = buttonElement.attr('linkType');
+					sitemessage('Link was copied to clipboard');
+				});
+			});
 
-        buttonElement.on('click', () => {
-          var linkValue = el.c.find(`.${inputClass}`);
+			el.c.find('.closewindowaction').on('click', function () {
+				wndObj.close();
+			});
+		};
 
-          copyText(linkValue);
+		return {
+			primary: primary,
 
-          sitemessage('Link was copied to clipboard');
-        });
-      });
-
-      el.c.find('.closewindowaction').on('click', function () {
-        wndObj.close();
-      });
-    };
-
-    return {
-      primary: primary,
-
-      addclbk : function(index, fun, event){
-				if(!event) event = 'added'
+			addclbk: function (index, fun, event) {
+				if (!event) event = 'added'
 
 				if (self[event])
 					self[event][index] = fun
 			},
 
-			removeclbk : function(index, event){
+			removeclbk: function (index, event) {
 
-				if(!event) event = 'added'
+				if (!event) event = 'added'
 
 				if (self[event])
 					delete self[event][index]
 			},
 
-      getdata: function (clbk, p) {
-        ed = p.settings.essenseData;
+			getdata: function (clbk, p) {
+				ed = p.settings.essenseData;
 
-        actions = ed.actions;
+				actions = ed.actions;
 
-        if (self.app.peertubeHandler.checklink(ed.currentLink)) {
-          var parsedLink = self.app.peertubeHandler.parselink(ed.currentLink);
-          var videoId = parsedLink.id;
+				if (self.app.peertubeHandler.checklink(ed.currentLink)) {
+					var parsedLink = self.app.peertubeHandler.parselink(ed.currentLink);
+					var videoId = parsedLink.id;
 
-          if (!videoId) {
-            var data = {};
+					if (!videoId) {
+						var data = {};
 
-            clbk(data);
-          } else {
-            self.app.peertubeHandler.api.videos
-              .getLiveInfo(
-                { id: videoId },
-                {
-                  host: parsedLink.host,
-                },
-              )
-              .then((res) => {
-                if (res.error) {
-                  var error = deep(res, 'error.responseJSON.errors') || {};
+						clbk(data);
+					} else {
+						self.app.peertubeHandler.api.videos
+							.getLiveInfo(
+								{ id: videoId },
+								{
+									host: parsedLink.host,
+								},
+							)
+							.then((res) => {
+								if (res.error) {
+									var error = deep(res, 'error.responseJSON.errors') || {};
 
-                  var message = (Object.values(error)[0] || {}).msg;
+									var message = (Object.values(error)[0] || {}).msg;
 
-                  sitemessage(message || 'Server error');
-                } else {
-                  streamCreated = true;
+									sitemessage(message || 'Server error');
+								} else {
+									streamCreated = true;
 
-                  streamInfo = {
-                    rtmpUrl: res.rtmpUrl,
-                    streamKey: res.streamKey,
-                  };
-                }
+									streamInfo = {
+										rtmpUrl: res.rtmpUrl,
+										streamKey: res.streamKey,
+									};
+								}
 
-                var data = {};
+								var data = {};
 
-                clbk(data);
-              });
-          }
-        } else {
-          var data = {};
+								clbk(data);
+							});
+					}
+				} else {
+					var data = {};
 
-          streamInfo = null;
-          streamCreated = false;
+					streamInfo = null;
+					streamCreated = false;
 
-          clbk(data);
-        }
-      },
+					clbk(data);
+				}
+			},
 
-      destroy: function () {
-        el = {};
-      },
+			destroy: function () {
+				el = {};
+			},
 
-      init: function (p) {
-        state.load();
+			init: function (p) {
+				state.load();
 
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
-        el.videoInput = el.c.find('.upload-video-file');
-        el.videoWallpaper = el.c.find('.upload-video-wallpaper');
-        el.videoError = el.c.find('.file-type-error');
-        el.wallpaperError = el.c.find('.wallpaper-type-error');
-        el.uploadProgress = el.c.find('.upload-progress-container');
-        el.contentSection = el.c.find('.content-section');
-        el.resultSection = el.c.find('.result-section');
-        el.dateInput = el.c.find('#dtBox');
+				el = {};
+				el.c = p.el.find('#' + self.map.id);
+				el.videoInput = el.c.find('.upload-video-file');
+				el.videoWallpaper = el.c.find('.upload-video-wallpaper');
+				el.videoError = el.c.find('.file-type-error');
+				el.wallpaperError = el.c.find('.wallpaper-type-error');
+				el.uploadProgress = el.c.find('.upload-progress-container');
+				el.contentSection = el.c.find('.content-section');
+				el.resultSection = el.c.find('.result-section');
+				el.dateInput = el.c.find('#dtBox');
 
-        el.streamButton = el.c.find('.streamButton');
+				el.streamButton = el.c.find('.streamButton');
 
-        el.copyButton = el.c.find('.copyStreamInfo');
+				el.copyButton = el.c.find('.copyStreamInfo');
 
-        if (streamInfo) {
-          streamCreated = true;
-          el.contentSection.addClass('hidden');
-          el.resultSection.removeClass('hidden');
+				if (streamInfo) {
+					streamCreated = true;
+					el.contentSection.addClass('hidden');
+					el.resultSection.removeClass('hidden');
 
-          el.resultSection.find('.result-video-rtmp').val(streamInfo.rtmpUrl);
-          el.resultSection
-            .find('.result-video-streamKey')
-            .val(streamInfo.streamKey);
+					el.resultSection.find('.result-video-rtmp').val(streamInfo.rtmpUrl);
+					el.resultSection
+						.find('.result-video-streamKey')
+						.val(streamInfo.streamKey);
 
-          el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
-          el.streamButton.addClass('successButton');
+					el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
+					el.streamButton.addClass('successButton');
 
-          initEvents();
+					initEvents();
 
-          p.clbk(null, p);
-        } else {
-          events.createStream(() => {
-            initEvents();
+					p.clbk(null, p);
+				} else {
+					events.createStream(() => {
+						initEvents();
 
-            p.clbk(null, p);
-          });
-        }
-      },
+						p.clbk(null, p);
+					});
+				}
+			},
 
-      wnd: {
-        header: '',
+			wnd: {
+				header: '',
 
-        close: function () {
-          _.each(self.closed, function(c){
+				close: function () {
+					_.each(self.closed, function (c) {
 						c()
 					})
-        },
-        postRender: function (_wnd, _wndObj, clbk) {
-          wndObj = _wndObj;
-          wnd = _wnd;
+				},
+				postRender: function (_wnd, _wndObj, clbk) {
+					wndObj = _wndObj;
+					wnd = _wnd;
 
-          if (clbk) {
-            clbk();
-          }
-        },
-        offScroll: true,
-        noInnerScroll: true,
-        class: 'streampeertube',
-        allowHide: true,
-        noCloseButton: true,
-        noButtons: true,
+					if (clbk) {
+						clbk();
+					}
+				},
+				offScroll: true,
+				noInnerScroll: true,
+				class: 'streampeertube',
+				noCloseButton: true,
+				noButtons: true,
 
-        swipeClose: true,
-        swipeCloseDir: 'right',
-        swipeMintrueshold: 30,
-      },
-    };
-  };
+				swipeClose: true,
+				swipeCloseDir: 'right',
+				swipeMintrueshold: 30,
+			},
+		};
+	};
 
-  self.run = function (p) {
-    var essense = self.addEssense(essenses, Essense, p);
+	self.run = function (p) {
+		var essense = self.addEssense(essenses, Essense, p);
 
-    self.init(essense, p);
-  };
+		self.init(essense, p);
+	};
 
-  self.stop = function () {
-    _.each(essenses, function (essense) {
-      window.requestAnimationFrame(() => {
-        essense.destroy();
-      });
-    });
-  };
+	self.stop = function () {
+		_.each(essenses, function (essense) {
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			});
+		});
+	};
 
-  return self;
+	return self;
 })();
 
 if (typeof module != 'undefined') {
-  module.exports = streampeertube;
+	module.exports = streampeertube;
 } else {
-  app.modules.streampeertube = {};
-  app.modules.streampeertube.module = streampeertube;
+	app.modules.streampeertube = {};
+	app.modules.streampeertube.module = streampeertube;
 }

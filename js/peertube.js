@@ -196,6 +196,12 @@ PeerTubePocketnet = function (app) {
 			},
 		},
 
+		videoDescription: {
+			path: function ({ id }) {
+				return `api/v1/videos/${id}/description`;
+			},
+		},
+
 		oauthClientsLocal: {
 			path: 'api/v1/oauth-clients/local',
 		},
@@ -592,7 +598,7 @@ PeerTubePocketnet = function (app) {
 			},
 
 			best: function (type) {
-				const special = deep(app, 'platform.real')[app.user.address.value];
+				const special = deep(app, 'platform.real')[app.user.address.value] || deep(app, 'platform.testaddresses').includes(app.user.address.value);
 
 				return this.roys({ type, special, })
 					.then((data = {}) => {
@@ -905,12 +911,26 @@ PeerTubePocketnet = function (app) {
 				return request('proceedResumableUploadVideo', data, optionsPrepared)
 					.then((r) => {
 
+						// Fix for the situations when original server was archived, and url info is invalid
+						let trueHost;
+						if (r.status === 200) {
+							trueHost = self.parselink(
+                                (deep(r, 'data.video.videoCreated.url') || '').replace(
+                                    'https://',
+                                    PEERTUBE_ID
+                                )
+                            ).host;
+						} else {
+							trueHost = '';
+						}
+
+
 						const handleResume = () => Promise.resolve({
 							responseType: 'resume_upload',
 						});
 						const handleLastChunk = () => Promise.resolve({
 							responseType: 'upload_end',
-							videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid, r.data.video.isAudio),
+							videoLink: self.composeLink(trueHost || optionsPrepared.host, r.data.video.uuid, r.data.video.isAudio),
 						});
 						const handleNotFound = () => Promise.resolve({
 							responseType: 'not_found',
@@ -1127,6 +1147,10 @@ PeerTubePocketnet = function (app) {
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
+			},
+
+			getDirectVideoDescription(parameters = {}, options = {}) {
+				return request('videoDescription', parameters, options);
 			},
 
 			totalViews: (parameters = {}, options = {}) =>

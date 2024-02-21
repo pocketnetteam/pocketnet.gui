@@ -1,0 +1,37 @@
+<div class="ucaptcha">
+
+    <% if(typeof reason != 'undefined' && reason) {%>
+        <div class="reason"><span><%=e('actions_reason_' + reason)%></span></div>
+    <% } %>
+
+    <% if(captcha.hex) {%>
+        <div class="subcaption"><span><%=e('e13109h')%></span></div>
+    <% } else { %>
+        <div class="subcaption"><span><%=e('e13109')%></span></div>
+    <% } %>
+
+  
+    <div class="captchaImageWrapper">
+        <div class="captchaImage">
+            <% if(captcha.img) {%>
+                <div class="captchaSvgImage">
+
+                    <%=captcha.img ? captcha.img : ''%>
+
+                </div>
+            <% } %>
+        </div>
+    </div>
+    
+    <div class="wrpes">
+        <div class="inputWrapper">
+            <input type="text" class="ucaptchainput" placeholder="<%=e('e13110')%>">
+        </div>
+    
+        <div class="addContainer">
+            <button elementsid="filluser_addCaptcha" class="addCaptcha disabled"><%=e('next')%></button> <button elementsid="filluser_redo" class="redo ghost"><%=e('refresh')%></button>
+        </div>
+    </div>
+  
+   
+</div>

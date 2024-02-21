@@ -11,7 +11,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
- 
+
 :root{
     --background-hidden-layer: 255, 255, 255;
     --background-total-theme: 255, 255, 255;
@@ -182,6 +182,9 @@
 :root {
 	--app-margin-top-default: 0px;
 	--app-margin-top: 0px;
+    --app-margin-bottom-default: 0px;
+	--keyboardheight: 0px;
+	--app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
 }
 
 @supports (width: max(1px, 1px)) {
@@ -218,10 +221,9 @@
 }
 
 .customscrollclass(){
+    
     overflow-y: overlay;
     overflow-x: hidden;
-    scrollbar-width: 7px;
-    scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
     overscroll-behavior: contain;
     scroll-behavior: smooth;
 
@@ -337,6 +339,11 @@
 }
 
 .wnd{
+
+    &:not(.pipmini){
+        contain: strict;
+
+    }
     .wndcustomscroll{
         .customscrollclass()
     }
@@ -347,6 +354,7 @@
 body{
     overscroll-behavior: none;
     scroll-behavior: smooth;
+    
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -357,8 +365,7 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: overlay;
-    
-    
+    scroll-behavior: initial!important;
     /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -378,7 +385,7 @@ html {
 
 [image]{
     will-change : opacity, background;
-    /*contain: strict;*/
+    contain: strict;
     opacity: 0;
     .transition(0.3s, opacity);
 
@@ -615,12 +622,7 @@ hr {
    Browser Upgrade Prompt
    ========================================================================== */
 
-.browserupgrade {
-    margin: 0.2em 0;
-    background: rgb(var(--neutral-grad-2));
-    color: rgb(var(--text-color));
-    padding: 0.2em 0;
-}
+
 
 #topsmallpreloader,
 #globalpreloader,
@@ -707,7 +709,7 @@ hr {
 
         &.vjs-thumb{
             display: block;
-            
+            background-color: transparent;
         }
     }
 
@@ -726,6 +728,8 @@ hr {
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+
+
 }
 
 html{
@@ -790,9 +794,21 @@ input[type="number"]
     background:  rgb(var(--background-hidden-layer));
     color: rgb(var(--text-color));
     border-radius: 6px;
-    padding: @rhythm;
+    padding: 0 @rhythm;
     border: 1px solid rgb(var(--neutral-grad-2));
+    
     // border-right: 0;
+}
+
+button{
+    padding : @rhythm;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"]{
+    min-height: 44px;
 }
 
 textarea{
@@ -800,7 +816,6 @@ textarea{
     color: rgb(var(--text-color));
     border: 1px solid rgb(var(--neutral-grad-2));
     border-radius: 6px;
-
     
 }
 
@@ -870,9 +885,8 @@ button{
     color: rgb(var(--text-on-bg-ac-color));
     border: 1px solid rgb(var(--color-bg-ac-bright));
     text-align: center;
-    font-size: 0.9em;
-    font-weight: 600;
     border-radius: 8px;
+    font-size: 0.9em;
 
     .transition(0.3s);
 
@@ -1138,15 +1152,7 @@ l{
 
 }
 
-pie {
-    width: 5em;
-    height: 5em;
-    display: block;
-    border-radius: 50%;
-    background-color: rgb(var(--color-good));
-    border: 2px solid rgb(var(--color-good));
-    float: left;
-}
+
 
 .ten {
     background-image:
@@ -1201,20 +1207,6 @@ pie {
 }
 
 
-.clearfix { 
-    display: block; 
-
-    &:after{
-        content: ""; 
-        display: block; 
-        clear: both; 
-        visibility: hidden; 
-        line-height: 0; 
-        height: 0; 
-        margin: 0; 
-        padding: 0; 
-    }
-}
 
 .upbutton{
     position: fixed;
@@ -1251,7 +1243,7 @@ pie {
         padding : 2 * @rhythm 0;
         padding-left : 0;
         color : rgba(var(--neutral-grad-2), 0.5);
-        height: 50px;
+        height: 100%;
         width : 100%;
         cursor: pointer;
         .transition(0.3s);
@@ -2330,6 +2322,10 @@ input[type=radio].radio:checked + label {
     right: 56px;
     bottom : 1.5 * @rhythm;
     width: auto;
+
+    .close{
+        display: none;
+    }
 }
 
 .m-message-container.is-top-left{
@@ -2338,6 +2334,13 @@ input[type=radio].radio:checked + label {
     
     
 .m-message-container{
+
+    .close{
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+    }
     
     .notificationWrapper {
         display: block;
@@ -2565,7 +2568,7 @@ input[type=radio].radio:checked + label {
     height: 7 * @rhythm;
     line-height : 7 * @rhythm;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.9em;
     cursor: pointer;
     .shadowText();
 
@@ -2595,19 +2598,22 @@ input[type=radio].radio:checked + label {
     right : 0;
     top : 0;
     bottom : 0;
-    display: none;
-    width : 78px;
-    height : 78px;
+    //display: none;
+    opacity: 0;
     margin : auto;
     z-index: 20000;
+    contain: strict;
+    .transition(0.3s, opacity);
 
     .successCheckWrapper{
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         >div{
-            vertical-align: middle;
-            text-align: center;
+            
 
             .chw{
                 margin : 0 auto;
@@ -2620,6 +2626,10 @@ input[type=radio].radio:checked + label {
                 .shadowSmaller();
             }
         }
+    }
+
+    &.active{
+        opacity: 1;
     }
 
     .text{
@@ -2680,6 +2690,7 @@ input[type=radio].radio:checked + label {
     }
     .wnd{
 
+        &:nth-last-child(2),
         &:nth-last-child(1){
             .wndback{
                 background: rgba(var(--color-shadow-base), 0.75);
@@ -2935,16 +2946,16 @@ html.mobileview.android{
     ._close{
         
         top: calc(@rhythm + var(--app-margin-top));
-        right: 1.5 * @rhythm;
+        right: 1 * @rhythm;
     }
     ._expand{
         top: @rhythm;
-        left: 1.5 * @rhythm;
+        left: 1 * @rhythm;
     }
 
     ._changeplace{
         bottom : @rhythm;
-        left: 1.5 * @rhythm;
+        left: 1 * @rhythm;
     }
 
     
@@ -3222,10 +3233,18 @@ html.mobileview.android{
         max-width: 300px;
         width: 25%;
         height: auto;
-        z-index: 999;
+        z-index: 1007;
 
         .recomandationsFromContent{
             display: none!important;
+        }
+
+        .statswrapperExtended{
+            display: none!important;
+        }
+
+        #post .forurl>.url{
+            position: static!important;
         }
 
         .wndinner{
@@ -3445,6 +3464,8 @@ html.mobileview.android{
         width: 100%;        
         margin : 0 auto;
         padding : 0;
+
+        
        
         &.full{
             max-width: none;
@@ -3482,6 +3503,15 @@ html.mobileview.android{
                 }
             }
         }
+    }
+}
+
+.shell_fadefast{
+    opacity: 0;
+
+    &.shell_fadein{
+        .transition(0.3s, opacity);
+        opacity: 1;
     }
 }
 
@@ -3576,8 +3606,8 @@ html.mobileview.android{
     left: 0;
     right: 0;   
     height: 360px;
-    z-index: 30;
-    .transition(0.6s);
+    z-index: 300;
+    .transition(0.3s);
     color: rgb(var(--text-on-bg-ac-color));
     background: rgb(var(--color-shadow-var));
 }
@@ -3587,7 +3617,7 @@ html.mobileview.android{
     height: 2px;
     left: 0;
     right: 0;
-    top: 0;
+    top: var(--app-margin-top);
     width: 100%;
     z-index: 10000000;
     display: none;
@@ -3644,6 +3674,7 @@ html.mobileview.android{
    }
 }
 
+.preloader6,
 .preloader5{
 
     display: flex;
@@ -3656,6 +3687,11 @@ html.mobileview.android{
         width: 30px;
     }
 }
+
+.preloader6{
+    display: inline-block;
+}
+
 .preloader5 span {
    vertical-align:middle;
    border-radius:50%;
@@ -3698,7 +3734,7 @@ html.mobileview.android{
     bottom: 0;
     right: 0;
     background: rgba(var(--color-shadow-var), 0.9);
-    z-index: 150;
+    z-index: 1010;
 
     &.zindex{
         z-index: 5000;
@@ -4215,7 +4251,7 @@ html.mobileview.android{
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
         border-radius: 5px;
-        scrollbar-width: 0px;
+        scrollbar-width: none;
 
         &::-webkit-scrollbar{
             width: 0;
@@ -4953,7 +4989,7 @@ html.mobileview.android{
 
 .vc_valuecustom{
     width : 200px;
-    height: 38px;
+    height: 44px;
     position: relative;
     border-radius: 6px;
 
@@ -5023,7 +5059,7 @@ html.mobileview.android{
         border-top-right-radius: 0;
 
         .vc_value{
-            padding :  0.5 * @rhythm @rhythm;
+            padding : 2 * @rhythm @rhythm;
             
             cursor: pointer;
 
@@ -5108,10 +5144,12 @@ html.mobileview.android{
         }
     }
 }
+.horizontalSearchUsersWrapper,
 .horizontalLentaWrapper{
 
     position: relative;
 
+    .horizontalSearchUserscaption,
     .horizontalLentacaption{
         display: flex;
         justify-content: space-between;
@@ -5124,6 +5162,11 @@ html.mobileview.android{
             display: flex;
             width: 75px;
             justify-content: space-between;
+
+            i{
+                font-size: 0.8em;
+                color : rgb(var(--neutral-grad-3));
+            }
         }
 
         span{
@@ -5357,6 +5400,12 @@ html.mobileview.android{
 
 html.mobileview{
 
+    &[chatposition='above']{
+        .matrixchatwrapper{
+            z-index: 1006;
+        }
+    }
+
     .matrixchatwrapper{
         position: fixed;
         contain: strict;
@@ -5383,11 +5432,7 @@ html.mobileview{
         }
     }
 
-    &[chatposition='above']{
-        .matrixchatwrapper{
-            z-index: 1006;
-        }
-    }
+    
     
     .tooltipMobileDialog{
 
@@ -5398,14 +5443,14 @@ html.mobileview{
 
         .mobiledialogcontent{
             -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-            .transition(0.15s);
+            transform: translateY(100%) scale(0.5);
+            .transition(0.3s);
         }
 
         &.animend{
             .mobiledialogcontent{
                 -webkit-transform: translateY(0);
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -5414,11 +5459,10 @@ html.mobileview{
             padding : 0;
             max-width: 450px;
             background: transparent;
-            width: 93%;
+            width: 85%;
             margin : 0 auto;
             border : 0;
             margin-bottom: 0;
-            padding-bottom: 2 * @rhythm;
             box-shadow: none;
         }
 
@@ -5427,7 +5471,7 @@ html.mobileview{
         }
 
         .mobiledialogcontent{
-            max-height: calc(var(--vh, 1vh) * 60);
+            max-height: calc(var(--vh, 1vh) * 90);
         }
 
         .secondwrapper{
@@ -5456,7 +5500,7 @@ html.mobileview{
         
         .closeButton,
         .menuitem{
-            padding : 4 * @rhythm 2 * @rhythm;
+            padding : 3 * @rhythm 2 * @rhythm;
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
@@ -5634,7 +5678,7 @@ html.cameraenabledrun{
                 right: @rhythm;
                 width: auto;
                 max-width: none;
-                top : 70px;
+                top : calc(70px + var(--app-margin-top));
                 will-change: transform;
                 .transition(0.3s, transform);
 
@@ -5644,8 +5688,9 @@ html.cameraenabledrun{
                 }
 
                 &[position='bottom']{
-                    bottom : 100px;
+                    bottom : calc(var(--keyboardheight, 0) + 100px);
                     top : auto;
+                    
 
                     ._changeplace{
                         transform: rotate(180deg);
@@ -5728,7 +5773,14 @@ html.mobileview.fullscreen{
     }
 }
 
+html.allcontent_application{
+    #navigationWrapper,
+    #menuWrapper,
+    #footerWrapper{
+        display: none!important;
+    }
 
+}
 
 .windowsContainer{
     position: relative;
@@ -5762,33 +5814,6 @@ html.mobileview.fullscreen{
         margin-bottom: 10px;
 	}
 
-}
-
-.thinput{
-
-    &[value='1']{
-        i{
-            &:before{
-                content : "\f00c";
-            }
-        }
-    }
-
-    &[value='-1']{
-        i{
-            &:before{
-                content : "";
-            }
-        }
-    }
-
-    &[value='0']{
-        i{
-            &:before{
-                content : "\f00d";
-            }
-        }
-    }
 }
 
 .coinwithsmall{
@@ -5992,6 +6017,45 @@ html.mobileview.fullscreen{
     }
 }
 
+.registrationProgressIcon{
+    display: flex;
+    align-items: center;
+    
+    span{
+        margin-left: 2 * @rhythm;
+    }
+
+    i{
+        color : rgb(var(--color-txt-gray-dark))!important;
+    }
+
+    &.not_in_progress{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
+
+    &.in_progress_wait_unspents{
+        i{
+            color : rgb(var(--color-good))!important;
+        }
+    }
+
+    &.in_progress_transaction,
+    &.in_progress_hasUnspents{
+        i{
+            color : rgb(var(--color-bg-ac-bright))!important;
+        }
+        
+    }
+
+    &.blocked{
+        i{
+            color : rgb(var(--color-bad))!important;
+        }
+    }
+    
+}
 
 .usericon{
     background: rgb(var(--neutral-grad-0));
@@ -6051,6 +6115,20 @@ html.mobileview.fullscreen{
         }
     }
 
+    .registrationProgressIcon{
+        position : absolute;
+        bottom : -4%;
+        left : -4%;
+
+        i{
+            font-size: 0.8em;
+            .shadowSmaller()
+        }
+        span{
+            display: none;
+        }
+    }
+
 }
 
 
@@ -6073,7 +6151,7 @@ html.mobileview.fullscreen{
 .fastMessage,
 .notification{
 
-    .transition(0.3s);
+    
 
     .time{
         padding-left: @rhythm;
@@ -6129,10 +6207,14 @@ html.mobileview.fullscreen{
     }
 
     .transactionmessagewrapper{
+        display: flex;
         >div{
-            vertical-align: top;
+            align-items: flex-start;
+            flex-grow: 1;
 
             &.foramount{
+                white-space: nowrap;
+                flex-grow: 0;
                 font-weight: 700;
                 text-align: right;
                 color : rgb(var(--color-good));
@@ -6220,6 +6302,7 @@ html.mobileview.fullscreen{
     .sharedivide{
         color : rgb(var(--color-text-ac));
         padding : 0.5 * @rhythm 0;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
     }
     
     .sharepreview{
@@ -6345,23 +6428,26 @@ html.mobileview.fullscreen{
         }
     }
     .cwrapper{
+        display: flex;
+
         >div{
-            vertical-align: middle;
+            align-items: center;
+            flex-grow: 2;
 
             &.cellforimage{
                 width: 50px;
-                vertical-align: top;
+                flex-grow: 0;
+                max-width: 50px;
             }
 
             &.extra{
-                width: 90px;
+                max-width: 90px;
             }
 
             .infomain{
                 padding-left:  @rhythm;
 
                 .caption{
-                    font-size : 1em;
                 }
 
                 .donate{
@@ -6398,11 +6484,15 @@ html.mobileview.fullscreen{
             color : rgb(var(--color-txt-ac));
         }*/
     }
+
+    .caption{
+        font-size: 0.9em;
+    }
 }
 
 .fastMessage{
     border-radius: 12px;
-    
+    .transition(0.3s, bottom);
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -6437,6 +6527,34 @@ html.mobileview.fullscreen{
             line-height: 31px;
             font-size: 0.8em;
             margin-bottom : 4px;
+        }
+    }
+
+   
+}
+
+#hideallnotificationsel{
+    .hidenf{
+        position: fixed;
+        left : 5px;
+        bottom : 5px;
+        width: 390px;
+        background: rgba(var(--color-shadow-base), 0.98);
+        color: rgb(var(--color-txt-ac-1));
+        z-index: 140;
+        overflow: hidden;
+        padding: 2 * @rhythm;
+        text-align: center;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        cursor: pointer;
+        .transition(0.3s, opacity);
+
+        &:hover{
+            opacity: 0.8;
         }
     }
 }
@@ -6712,6 +6830,19 @@ html.mobileview.fullscreen{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.bright{
+        background: rgba(var(--color-bg-ac-bright), 0.98);
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
     }
 
 }
@@ -7209,6 +7340,13 @@ html{
 
         .plyr__volume{
             max-width: 32px;
+
+            input{
+                display: none;
+            }
+        }
+        #hideallnotificationsel{
+            display: none;
         }
 
         #panelWrapper{
@@ -7273,7 +7411,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
 
                 .fakem{
@@ -7282,7 +7420,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 90px;
+                    height: calc(var(--app-margin-bottom, 0) + 60px);
                 }
             }
         }
@@ -7361,7 +7499,7 @@ html{
     
             #navigation{
                 .nmenu{
-                    transform: translateY(90px);
+                    transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
     
                 .fakem{
@@ -7370,7 +7508,7 @@ html{
                     left : 0;
                     bottom : 0;
                     right: 0;
-                    height: 90px;
+                    height: 70px;
                 }
             }
         }
@@ -7405,7 +7543,7 @@ html{
     
     .menudialog{
         .secondwrapper{
-            padding-bottom: 3 * @rhythm;
+            padding-bottom: 8 * @rhythm;
             vertical-align: bottom;
         }
     }
@@ -7784,6 +7922,20 @@ html.mobileview{
     }
 }
 
+html.allcontent{
+   
+
+    
+    /*body{
+        background: #051b48;
+    }*/
+
+    #footerWrapper{
+        background: #051b28;
+    }
+    
+}
+
 /*t*/ @media only screen and (max-width: 768px){
 
     
@@ -8020,14 +8172,14 @@ html.mobileview{
     }
 
     html.allcontent{
-        .contentWrapper{
-            padding-top: 0;
-        }
-        body{
+        
+        
+        /*body{
             background: #051b48;
-        }
+        }*/
 
         #footerWrapper{
+            display: none;
             background: #051b28;
         }
         
@@ -8048,7 +8200,7 @@ html.mobileview{
     &.keyboadrshown{
         .focusedinput{
             position: fixed!important;
-            bottom : calc(var(--keyboardheight, 0) - 1px)!important;
+            bottom : calc(var(--app-margin-bottom, 0) - 1px)!important;
             top : auto!important;
             left : 0!important;
             right: 0!important;
@@ -8057,7 +8209,7 @@ html.mobileview{
     }
 
     .dialog{
-        padding-bottom : calc(var(--keyboardheight, 0) - 1px);
+        padding-bottom : calc(var(--app-margin-bottom, 0) - 1px);
     }
 
     .sitemessage{    
@@ -8079,7 +8231,7 @@ html.mobileview{
         left: 0.5 * @rhythm;
         right: 0.5 * @rhythm;
         top: calc(0.5 * @rhythm + var(--app-margin-top));
-        max-height: 210px;
+        max-height: 105px;
         width: auto;
         min-width: 0;
         max-width: none;
@@ -8105,7 +8257,11 @@ html.mobileview{
         }
 
         .tips{
-           display: none; 
+           /*display: none; */
+
+            .additionalcontent{
+                display: none;
+            }
         }
 
         .cwrapper.table{
@@ -8155,6 +8311,8 @@ html.mobileview{
                 height: auto!important;
                 border-radius: 0!important;
                 padding-right: 0!important;
+                max-width: 768px;
+                margin : 0 auto;
 
                 .close{
                     display: none!important;
@@ -8188,6 +8346,8 @@ html.mobileview{
                 max-height: none!important;
                 top : auto!important;
                 bottom : 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
                 height: auto!important;
                 max-width: none!important;
                 -webkit-transform: translateY(100%);
@@ -8211,7 +8371,7 @@ html.mobileview{
                     max-width: 768px;
                     scroll-behavior: smooth;
                     max-height: calc(var(--vh, 1vh) * 92);
-                    min-height: calc(var(--vh, 1vh) * 30);
+                    min-height: calc(var(--vh, 1vh) * 20);
                     top : 0;
                     bottom : 0;
                     right: 0;
@@ -8335,6 +8495,8 @@ html.mobileview{
                 }
             }
 
+            
+
             &:only-child{
 
                 .wndback{
@@ -8393,12 +8555,12 @@ html.mobileview{
 html.mobileview{
     .keyboardsafe{
         .transition(0.3s, padding-bottom);
-        padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
+        padding-bottom: calc(var(--app-margin-bottom, 0) - 1px)!important;
     }
 
     .keyboardsafetranslate{
         .transition(0.3s);
-        transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+        transform: translateY(calc(-1 * var(--app-margin-bottom, 0) + 1px));
     }
 }
 
@@ -8630,13 +8792,23 @@ html.pipmode{
 		textarea,
 		input{
 			width: 100%;
-			padding: @rhythm;
+			padding: 0 @rhythm;
 			border-radius: 6px;
 
 			&.error{
 				border : 1px solid rgb(var(--color-bad));
 			}
 		}
+
+        select,
+		input{
+            line-height: 3em;
+        }
+
+        textarea{
+            padding-top: 1.5 * @rhythm;
+            padding-bottom: 1.5 * @rhythm;
+        }
 
 		.error{
 			select,
@@ -8648,14 +8820,14 @@ html.pipmode{
 		}
 
 		select{
-			height: 38px;
+			height: 3em;
 			padding-right: 25px;
 			width: auto;
 		}
 
 		.vc_valuecustom{
 			width: 100%;
-			font-size: 0.8em;
+            height: 3em;
 		}
 
 		.vc_valuecustom,
@@ -8678,6 +8850,7 @@ html.pipmode{
 			}
 		}
 		
+       
 	}
 }
 
@@ -9189,3 +9362,21 @@ html.pipmode{
 		aspect-ratio: 1.44;
 	}
 }
+
+
+div#bc-root{
+    &.pipped{
+        position: fixed;
+        left : 0!important;
+        top : 0!important;
+        bottom : 0!important;
+        right : 0!important;
+        border: 0!important;
+
+        .bc-video-container{
+            max-width: none!important;
+        }
+    }
+    
+}
+  

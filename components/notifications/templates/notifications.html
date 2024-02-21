@@ -40,7 +40,10 @@
 				if (notification.msg && !m) m = ws.messages[notification.msg]
 
 
-				if(!m) return
+				if(!m) {
+
+					return
+				}
 				
 				var tpl = m.fastMessage(notification)
 

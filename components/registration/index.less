@@ -41,20 +41,22 @@
 	}
 
 	.upanelloader{
-		display: none;
+		/*display: none;*/
+		visibility: hidden;
+		opacity: 0;
 		position: absolute;
 		left : 0;
 		right : 0;
 		top : 0;
 		bottom : 0;
-		z-index: 3000;
+		z-index: 1000;
 		background: rgba(var(--background-total-theme));
+		.transition(0.3s, opacity);
 
 		.table{
 			width : 100%;
 			height: 100%;
 			>div{
-				vertical-align: middle;
 				text-align: center;
 				color : rgba(var(--color-txt-ac));
 			}
@@ -62,8 +64,16 @@
 	}
 
 	&.loading{
+		.stepsWrapper{
+			opacity: 0;
+		}
 		.upanelloader{
-			display: block;
+			visibility: visible;
+			opacity: 1;
+		}
+
+		.hasaccount{
+			display: none;
 		}
 	}
 
@@ -71,72 +81,10 @@
 		margin-top: 4 * @rhythm;
 		position: relative;
 
-		.panelWrapper{
-			margin-top: 4 * @rhythm;
-			padding : 2 * @rhythm;
-			padding-bottom: 10 * @rhythm;
-
-			.elpanel{
-				opacity: 0;
-				.transition(0.3s);
-
-				&.active{
-					opacity: 1;
-				}
-
-				.lwrapper{
-					display: none;
-				}
-
-
-			}
-
-			&.loading{
-				.elpanel{
-					opacity: 0.5;
-					.nlberl{
-						display: none;
-					}
-					.lwrapper{
-						display: inline;
-					}
-
-				}
-			}
-
-
-			.btn{
-				margin : 0 auto;
-				text-align: center;
-				width: 200px;
-				color : rgba(var(--text-on-bg-ac-color));
-				cursor : pointer;
-				background: rgba(var(--color-bg-orange));
-				padding : @rhythm 0;
-				border-radius: 2px;
-
-				&.save{
-					border-radius: 30px;
-					cursor: default;
-					background: rgba(var(--color-txt-orange));
-					.transition(0.3s);
-				}
-
-				
-			}
-
-			&.changes{
-				.btn{
-					&.save{
-						background: rgba(var(--color-bg-orange));
-						color : rgba(var(--text-on-bg-ac-color));
-						cursor : pointer;
-					}
-				}
-			}
-		}
+		
 
 		.stepsWrapper{
+			.transition(0.3s, opacity);
 			overflow: hidden;
 
 			.stepsWrapperLine{
@@ -188,6 +136,7 @@
 			.parameter{
 				display: flex;
 				flex-direction: column-reverse;
+				margin : 0 auto;
 
 				>div{
 					width: 100%;
@@ -229,22 +178,28 @@
 
 			.subcaption{
 				text-align: center;
+				display: none;
 			}
+
+
 
 			.uploadTable{
 				width: auto;
 				margin : 0 auto;
+				flex-direction: column;
 				>div{
+
 					&.label{
-						display : none;
+						margin-top: 2 * @rhythm;
+						margin-left: 0;
 					}
-
+					
 					&.iconWrapper{
-						width: 60px;
-						position: relative;
-
-						.plissingCnt{
-							left : 45px;
+						width: 130px;
+						.usericon{
+							width : 130px;
+							height: 130px;
+							line-height: 130px;
 						}
 					}
 				}
@@ -275,15 +230,7 @@
 					margin-bottom: @rhythm;
 				}
 
-				.uploadPhoto{
-					height: 130px;
-				}
-
-				.uploadTable>div.iconWrapper .usericon{
-					width: 130px;
-					height: 130px;
-					line-height: 130px;
-				}
+				
 			}
 			.parameterMaketWrapper[parameter="addresses"]{
 				display: none;
@@ -292,6 +239,36 @@
 			.parameterMaketWrapper[parameter="email"]{
 				display: block;
 			}
+		}
+
+		.filluser{
+				
+			.elpanel{
+				margin-top: 4 * @rhythm;
+				padding : 2 * @rhythm;
+				padding-bottom: 10 * @rhythm;
+
+				.btn{
+					margin : 0 auto;
+					text-align: center;
+					width: 200px;
+					color : rgba(var(--text-on-bg-ac-color));
+					cursor : pointer;
+					background: rgba(var(--color-bg-orange));
+					padding : @rhythm 0;
+					border-radius: 2px;
+	
+					&.save{
+						border-radius: 30px;
+						cursor: default;
+						background: rgba(var(--color-txt-orange));
+						.transition(0.3s);
+					}
+					
+				}
+
+			}
+	
 		}
 
 		.ucaptcha{
@@ -312,23 +289,25 @@
 				font-size: 1.7em;
 				font-weight: 300;
 				text-align: center;
-				max-width: 600px;
+				max-width: 300px;
 			}
 
 			.inputWrapper{
-				max-width: 600px;
+				max-width: 300px;
 				margin : 3 * @rhythm auto;
 			}
 
 			input{
 				font-size: 1.4em;
-				border : 0;
+				border: 0;
+
 				border-bottom: 1px solid rgb(var(--neutral-grad-2));
 				.transition(0.3s);
+				border-radius: 0;
 				width: 100%;
 				background: transparent;
 				text-align : center;
-			
+				
 
 				&:focus{
 					border-color : rgb(var(--color-txt-ac));
@@ -1109,7 +1088,39 @@
     
 }
 
+.wnd.regwindow{
+	.wndcontent{
+		padding : 0;
+	}
+	.wndinner{
+		max-width: 400px;
+		max-height: 670px;
+	}
+	#registration{
+		.work{
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.caption{
+			margin-top: 2 * @rhythm;
+			font-size: 1.5em;
+		}
+
+		.mWrapper{
+			.panelWrapper{
+				padding-bottom: 2 * @rhythm;
+			}
+
+			#test{
+				width: 100%;
+			}
+		}
+	}
+}
+
 .wndcontent{
+	
 	#registration{
 		.categories{
 

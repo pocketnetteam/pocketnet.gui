@@ -4,6 +4,7 @@
 #socialshare2 .includeRefWrapper {
   padding-top: 0.5em;
   padding-left: 1em;
+  white-space: nowrap;
 }
 #socialshare2 .flexWrapper {
   overflow: hidden;
@@ -15,6 +16,9 @@
   background: rgb(var(--background-secondary-theme));
   text-align: center;
   padding: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -32,6 +36,7 @@
 #socialshare2 .flexWrapper .button span {
   white-space: nowrap;
   display: block;
+  text-overflow: ellipsis;
   font-size: 0.8em;
 }
 #socialshare2 .flexWrapper > div {
@@ -238,7 +243,7 @@
 }
 .wnd.sharingwindow2 .wndinner {
   width: auto;
-  max-width: 370px;
+  max-width: 390px;
 }
 .wnd.sharingwindow2 .wndinner .wndheader {
   display: none;

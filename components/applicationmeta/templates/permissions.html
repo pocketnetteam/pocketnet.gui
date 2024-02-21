@@ -1,0 +1,38 @@
+<div class="subcaption">
+    <span><%-e('permissions')%></span>
+</div>
+
+<% if(permissions.length) {%>
+
+    <div class="list">
+        <% _.each(permissions, function(permission){ 
+            
+            var meta = appsinfo.permissions[permission]
+            
+            var status = _.find(appdata.permissions, function(_permission){
+                return _permission.id == permission
+            })
+            
+            %>
+
+            <div class="permission" permission="<%-permission%>">
+                <div class="name">
+                    <%- e(meta.name) %>
+                </div>
+
+                <div class="status">
+                    <% if ((!status && meta.auto) || (status && status.state == 'granted')) {%><span class="granted"><i class="fas fa-check-circle"></i></span><%}%>
+                    <% if ((!status && !meta.auto) || (status && status.state == 'forbid')) {%><span class="forbidden"><i class="fas fa-times-circle"></i></span><%}%>
+                </div>
+            </div>
+
+        <% }) %>
+    </div>
+
+<% } else { %> 
+
+    <div class="empty">
+        empty
+    </div>
+    
+<% } %>

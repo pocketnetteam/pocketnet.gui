@@ -1,0 +1,43 @@
+<% 
+
+var me = psdk.userInfo.getmy()
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+var modclass = ''
+
+if(!author.me) {
+        
+
+    var r = me ? me.relation(author.address, 'subscribes') : null
+    var blocking = me ? me.relation(author.address, 'blocking') : null
+
+    if (blocking){
+        modclass = 'blocked'
+    }
+}
+
+if(sUserInfo.deleted){
+    modclass = 'deleted'
+}
+
+%>
+
+
+<div class="bgwallpaper <%- modclass %>">
+    <div class="grad"></div>
+    <div class="bgpanel">
+        <div class="rightchatspacer">
+            <div class="work">
+                <div class="panel">
+                    <div class="item share">
+                        <span class="workstation"><%=e('share')%></span>
+                        <i class="fas fa-share-alt"></i>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

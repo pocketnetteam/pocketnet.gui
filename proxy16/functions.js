@@ -18,6 +18,17 @@ f.mix = function(array){
     })
 }
 
+f.trydecode = function(s = ''){
+    var r = s
+    try{
+        r = decodeURIComponent(s)
+    }catch(e){
+
+    }
+
+    return r
+}
+
 var lastgctime = new Date()
 
 f.gcwrapper = function(){
@@ -188,7 +199,6 @@ f.downloadgitrelease = function(name, p, repo = { user: "pocketnetteam", name: "
     }
     
     return downloadRelease(repo.user, repo.name, dest, filterRelease, filterAsset, false).then(function() {
-        console.log('Downloading repository files', repo.name)
 
         return Promise.resolve(fullname)
     })
@@ -619,7 +629,6 @@ f.rot13 = function(str){
 }
 
 f.hash = function(str){
-
     return md5(str)
 }
 

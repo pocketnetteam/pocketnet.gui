@@ -7,17 +7,26 @@ More documentation on that can be found here:
 https://developer.android.com/training/app-indexing/enabling-app-indexing.html
 */
 
-var fs = require('fs');
-var path = require('path');
-var mkpath = require('mkpath');
-var ConfigXmlHelper = require('../configXmlHelper.js');
-var WEB_HOOK_FILE_PATH = path.join('ul_web_hooks', 'android', 'android_web_hook.html');
-var WEB_HOOK_TPL_FILE_PATH = path.join('plugins', 'cordova-universal-links-plugin', 'ul_web_hooks', 'android_web_hook_tpl.html');
-var LINK_PLACEHOLDER = '[__LINKS__]';
-var LINK_TEMPLATE = '<link rel="alternate" href="android-app://<package_name>/<scheme>/<host><path>" />';
+var fs = require("fs");
+var path = require("path");
+var ConfigXmlHelper = require("../configXmlHelper.js");
+var WEB_HOOK_FILE_PATH = path.join(
+  "ul_web_hooks",
+  "android",
+  "android_web_hook.html"
+);
+var WEB_HOOK_TPL_FILE_PATH = path.join(
+  "plugins",
+  "cordova-universal-links-plugin",
+  "ul_web_hooks",
+  "android_web_hook_tpl.html"
+);
+var LINK_PLACEHOLDER = "[__LINKS__]";
+var LINK_TEMPLATE =
+  '<link rel="alternate" href="android-app://<package_name>/<scheme>/<host><path>" />';
 
 module.exports = {
-  generate: generateWebHook
+  generate: generateWebHook,
 };
 
 // region Public API
@@ -31,7 +40,7 @@ module.exports = {
 function generateWebHook(cordovaContext, pluginPreferences) {
   var projectRoot = cordovaContext.opts.projectRoot;
   var configXmlHelper = new ConfigXmlHelper(cordovaContext);
-  var packageName = configXmlHelper.getPackageName('android');
+  var packageName = configXmlHelper.getPackageName("android");
   var template = readTemplate(projectRoot);
 
   // if template was not found - exit
@@ -40,7 +49,11 @@ function generateWebHook(cordovaContext, pluginPreferences) {
   }
 
   // generate hook content
-  var linksToInsert = generateLinksSet(projectRoot, packageName, pluginPreferences);
+  var linksToInsert = generateLinksSet(
+    projectRoot,
+    packageName,
+    pluginPreferences
+  );
   var hookContent = template.replace(LINK_PLACEHOLDER, linksToInsert);
 
   // save hook
@@ -62,9 +75,9 @@ function readTemplate(projectRoot) {
   var tplData = null;
 
   try {
-    tplData = fs.readFileSync(filePath, 'utf8');
+    tplData = fs.readFileSync(filePath, "utf8");
   } catch (err) {
-    console.warn('Template file for android web hook is not found!');
+    console.warn("Template file for android web hook is not found!");
     console.warn(err);
   }
 
@@ -80,12 +93,13 @@ function readTemplate(projectRoot) {
  * @return {String} list of <link /> tags
  */
 function generateLinksSet(projectRoot, packageName, pluginPreferences) {
-  var linkTpl = LINK_TEMPLATE.replace('<package_name>', packageName);
-  var content = '';
+  var linkTpl = LINK_TEMPLATE.replace("<package_name>", packageName);
+  var content = "";
 
-  pluginPreferences.hosts.forEach(function(host) {
-    host.paths.forEach(function(hostPath) {
-      content += generateLinkTag(linkTpl, host.scheme, host.name, hostPath) + '\n';
+  pluginPreferences.hosts.forEach(function (host) {
+    host.paths.forEach(function (hostPath) {
+      content +=
+        generateLinkTag(linkTpl, host.scheme, host.name, hostPath) + "\n";
     });
   });
 
@@ -102,22 +116,22 @@ function generateLinksSet(projectRoot, packageName, pluginPreferences) {
  * @return {String} <link /> tag
  */
 function generateLinkTag(linkTpl, scheme, host, path) {
-  linkTpl = linkTpl.replace('<scheme>', scheme).replace('<host>', host);
-  if (path == null || path === '*') {
-    return linkTpl.replace('<path>', '');
+  linkTpl = linkTpl.replace("<scheme>", scheme).replace("<host>", host);
+  if (path == null || path === "*") {
+    return linkTpl.replace("<path>", "");
   }
 
   // for android we need to replace * with .* for pattern matching
-  if (path.indexOf('*') >= 0) {
-    path = path.replace(/\*/g, '.*');
+  if (path.indexOf("*") >= 0) {
+    path = path.replace(/\*/g, ".*");
   }
 
   // path should start with /
-  if (path.indexOf('/') != 0) {
-    path = '/' + path;
+  if (path.indexOf("/") != 0) {
+    path = "/" + path;
   }
 
-  return linkTpl.replace('<path>', path);
+  return linkTpl.replace("<path>", path);
 }
 
 /**
@@ -136,9 +150,9 @@ function saveWebHook(projectRoot, hookContent) {
 
   // write data to file
   try {
-    fs.writeFileSync(filePath, hookContent, 'utf8');
+    fs.writeFileSync(filePath, hookContent, "utf8");
   } catch (err) {
-    console.warn('Failed to create android web hook!');
+    console.warn("Failed to create android web hook!");
     console.warn(err);
     isSaved = false;
   }
@@ -153,7 +167,9 @@ function saveWebHook(projectRoot, hookContent) {
  */
 function createDirectoryIfNeeded(dir) {
   try {
-    mkpath.sync(dir);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
   } catch (err) {
     console.log(err);
   }

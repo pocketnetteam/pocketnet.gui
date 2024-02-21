@@ -9,19 +9,17 @@
 		ncur = ''
 	}
 
+	var info = psdk.userInfo.get(address) || {}
+
+	var src = info.image;  
+	var name = app.platform.api.clearname(info.name || address); 
+	var letter = name ? name[0] : '';
+
 %>
 	<div class="wrk">
 		<div elementsid="accounts_<%-ncur%>" class="addressTable <%-cur%> <%-ncur%>" address="<%-address%>">
 			<div class="iconWrapper">
 				<div class="icon">
-
-					<% 
-
-						var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
-						var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name'); 
-						var letter = name ? name[0] : '';
-						
-					%>
 
 					<div class="usericon" ban=".gif" image="<%-src || '*'%>" contain="none">
 
@@ -46,7 +44,7 @@
 			<div class="label">
 
 				<span class="name">
-					<%- deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
+					<%- name %>
 				</span>
 
 				<% if(cur) { %> 

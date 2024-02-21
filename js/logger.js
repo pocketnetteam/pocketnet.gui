@@ -161,9 +161,9 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
-      userData,
-      uri,
-      timezone,
+      // userData,
+      // uri,
+      // timezone,
       guid,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,
@@ -352,7 +352,7 @@ class FrontendLogger {
     },
   };
 
-  info({ actionId = '', actionSubType = '', actionValue = '' }) {
+  info({ actionId = '', actionSubType = '', actionValue = '', active = false }) {
     const {
       _logsCache,
       guid,
@@ -366,7 +366,7 @@ class FrontendLogger {
       app,
     } = this;
 
-    if (!loggerActive) return;
+    if (!loggerActive && !active) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : actionId;
     const language = (app.localization || {}).key || 'no';

@@ -38,7 +38,12 @@ Nav = function(app)
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
 
-		if(window.cordova) protocol = 'file'
+		if(window.cordova) {
+			protocol = 'file'
+
+			if(isios()) protocol = 'bstn'
+		}
+		
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -59,6 +64,7 @@ Nav = function(app)
 	var relations = {}
 
 	self.wnds = {};
+	self.prepared = false
 
 	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
 
@@ -75,6 +81,7 @@ Nav = function(app)
 			p.module.nav = self;
 			p.module.app = app;
 			p.module.sdk = app.platform.sdk;
+			p.module.psdk = app.platform.psdk;
 			p.module.user = app.user;
 			p.module.ajax = app.ajax;
 			p.module.componentsPath = options.path;
@@ -152,7 +159,7 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref']);
+				href = khref + collectParameters(np, ['back', 'ref', 'pc']);
 
 
 			var wb = false;
@@ -382,7 +389,7 @@ Nav = function(app)
 				}
 
 				if (p.replaceState){
-					
+
 					history.replaceState({
 
 						href : href,
@@ -530,7 +537,7 @@ Nav = function(app)
 						current.completeHref = p.completeHref;
 						
 
-						if(!p.goback){
+						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
 						}
 							
@@ -577,7 +584,7 @@ Nav = function(app)
 
 						try{
 
-							var stop = current.module.stop(p.href);
+							var stop = current.module.stop(p.href, p);
 
 							if (stop && _.isObject(stop)){
 
@@ -617,8 +624,11 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 
-							core.removeWindows(p.completeHref)
-							core.removeChat(p.completeHref)
+							if(!p.loadDefault){
+								core.removeWindows(p.completeHref)
+								core.removeChat(p.completeHref)
+							}
+							
 
 							if (p.goback){
 								app.actions.scroll(p.goback.scroll)
@@ -707,7 +717,7 @@ Nav = function(app)
 
 				topPreloader(40)
 
-				if (window.design)
+				if (window.design || map.ignoreMinimize)
 				{
 
 					if(!cssimported[map.uri])
@@ -724,8 +734,6 @@ Nav = function(app)
 				}
 				else
 				{
-
-
 
 					importScript(src, function(){
 
@@ -902,8 +910,23 @@ Nav = function(app)
 			if(p.href){
 
 				p.completeHref || (p.completeHref = p.href)
-
 				p.href = p.href.split("?")[0];
+
+				if (p.saveparameters){
+
+					var currentParameters = parameters(),
+						hrefParameters = parameters(p.completeHref, true);
+					var filteredParameters = {}
+
+					_.each(p.saveparameters, (i) => {
+						if(currentParameters[i]) filteredParameters[i] = currentParameters[i]
+					})
+
+					currentParameters = _.extend(filteredParameters, hrefParameters);
+
+					p.completeHref = p.href + collectParameters(currentParameters);
+
+				}
 
 				p.map = module.find(p.href);
 
@@ -1027,7 +1050,7 @@ Nav = function(app)
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
+				&& (href.indexOf(host) == -1) && !thislink(href)
 			)
 
 			if (!e && ex) e = true; 
@@ -1065,20 +1088,7 @@ Nav = function(app)
 				link.off('click').on('click', function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
-
-					/*var scrollremoved = app.scrollRemoved
-
-					 '_blank', 'location=yes'
-
-					if (scrollremoved){
-						app.onScroll()
-					}
-
-					ref.addEventListener('exit', function(){
-						if (scrollremoved){
-							app.offScroll()
-						}
-					});*/
+					
 
 					return false
 					
@@ -1104,6 +1114,13 @@ Nav = function(app)
 			}
 			else
 			{
+
+				var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+				if (href.indexOf(protocol + '://') == 0){
+					href = href.replace(protocol + '://', '')
+				}
+
 				return href
 			}
 		},
@@ -1114,7 +1131,12 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a'); else _links = $('a');		
+			if(_el) _links = _el.find('a'); else {
+				console.error("GLOBAL LINKS")
+
+				return
+				//_links = $('a');		
+			}
 
 			if(!_links.length) return
 
@@ -1126,17 +1148,17 @@ Nav = function(app)
 
 				var external = core.externalLink(link);
 
+
 				if(!external)
 				{
 					if(link.attr('donottrust'))
 					{
-						
-						link.off('click').on('click', function(){
+						link.off('click').on('click', function(e){
 							var href = $(this).attr('href');	
 
 							app.mobile.vibration.small()
 
-							if (href.indexOf('http') == -1) href = 'https://' + href						
+							if (href.indexOf('http') == -1) href = 'https://' + href
 
 							self.api.load({
 								open : true,
@@ -1147,6 +1169,7 @@ Nav = function(app)
 									link : href
 								}
 							})
+
 
 							return false;
 						})
@@ -1229,7 +1252,8 @@ Nav = function(app)
 							open : true,
 							handler : handler,
 							replaceState : replace,
-							force : force
+							force : force,
+							fade : app.el.content
 						})
 
 						
@@ -1321,8 +1345,6 @@ Nav = function(app)
 			pathnameSearch : function(){
 				var loc =  window.location; 
 
-				
-
 				return protocolActions.file.pathname() + loc.search
 			},
 
@@ -1336,6 +1358,28 @@ Nav = function(app)
 				}
 
 				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
+			}
+
+		},
+		bstn : {
+			prefix : function(){
+
+				options.navPrefix = '/'
+
+			},
+
+			pathnameSearch : function(){
+				var loc =  window.location; 
+
+				
+
+				return protocolActions.bstn.pathname() + loc.search
+			},
+
+			pathname : function(){
+				var loc =  window.location; 
+
+				return loc.pathname.replace("bstn://bastyon", "").replace(".html", "").replace(options.navPrefix, '').replace('indexcordova', "index")
 			}
 
 		},
@@ -1449,8 +1493,6 @@ Nav = function(app)
 				backManager.clearAll()	
 			}
 
-			console.log("LOADDEFAULT", p)
-
 			backManager.add(p.href)
 
 			historyManager.add(p.href, { replaceState : true })
@@ -1522,6 +1564,17 @@ Nav = function(app)
 
 			protocolAction('prefix');
 			protocolAction('seoRedirect');
+
+			if (window.cordova && backManager.chain.length){
+				var href = backManager.chain[0].href || ''
+
+				history.replaceState({
+
+					href : href,
+					lfox : true
+
+				}, 'Bastyon', href);
+			}
 		
 			if (options.history === true && !_OpenApi)
 			{
@@ -1540,12 +1593,13 @@ Nav = function(app)
 				};
 			}
 
+			
+
 			core.openInitialModules(function(){
 
 				p.open = true;
 				p.history = true;
 				p.loadDefault = true;
-
 
 				var path = parameters().path
 
@@ -1565,7 +1619,9 @@ Nav = function(app)
 				//////
 				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox){
+				var electronprotocol = ((window.project_config || {}).electron || {}).protocol || ""
+
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox && electronprotocol){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
@@ -1595,7 +1651,7 @@ Nav = function(app)
 
 							try{
 
-								window.location = app.meta.protocol + '://electron/' + currentHref;
+								window.location = electronprotocol + '://electron/' + currentHref;
 								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
 								
 							}
@@ -1634,6 +1690,7 @@ Nav = function(app)
 
 	self.relations = relations;
 	self.current = current
+	self.thisSiteLink = core.thisSiteLink
 
 	return self;
 }

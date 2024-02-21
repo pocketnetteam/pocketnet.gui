@@ -190,8 +190,9 @@
         <script src="js/vendor/autosize.min.js"></script>
         <script src="js/vendor/ion.sound/ion.sound.js"></script>   
 
-        <script src="js/vendor/linkify.min.js"></script>
-        <script src="js/vendor/linkify-html.min.js"></script>
+        <script src="js/vendor/linkify.js"></script>
+        <script src="js/vendor/linkify-html.js"></script>
+        <script src="js/vendor/linkify-string.js"></script>
         <script src="js/vendor/jquery.inputmask.bundle.js"></script>
 
         __VAR__.test
@@ -214,13 +215,17 @@
         <script src="js/vendor/mark.js"></script>
         <script src="js/vendor/hc-sticky.js"></script>
         <script join src="js/vendor/axios.js"></script>
-
+        <script  join src="js/media.js"></script>
+        
         __JSENV__
 
         <script>window.design = true;</script>
         <script join src="js/functionsfirst.js?v=138441565214"></script>
         <script join src="js/functions.js?v=138441565214"></script>
+        <script join src="js/lib/client/resoursesdb.js?v=375481859972"></script>
         <script join src="js/kit.js"></script>
+        <script join src="js/lib/client/actions.js?v=937458050853"></script>
+        <script join src="js/lib/client/sdk.js?v=310943151538"></script>
         <script join src="js/user.js?v=101388250711"></script>
         <script join src="js/module.js?v=908573389519"></script>
         <script join src="js/navn.js?v=533010043902"></script>
@@ -231,6 +236,7 @@
         <script join src="js/bastyonCalls/bastyonCalls.min.js"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
+        <script join src="js/lib/apps/index.js?v=463508547385"></script>
         <script join src="js/lib/client/p2pvideo.js"></script>
         <script join src="js/logger.js"></script>
         <script join src="js/videotransport.js"></script>
@@ -238,5 +244,7 @@
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
         <script async src="js/pwa-service-worker.js"></script>
+
+        <div id="hideallnotificationsel"></div>
     </body>
 </html>

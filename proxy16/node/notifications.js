@@ -60,9 +60,15 @@ class Notifications{
         this.statsShort = new NotificationStatsShort()
         firebase.useNotifications = true
 
-        // this.test()
+        this.checkInterval = null
 
-        //this.checkBlock(2126503)
+
+        try{
+            this.run()
+        }catch(e){
+            console.log('run', e)
+        }
+        
 
         return this;
     }
@@ -125,9 +131,8 @@ class Notifications{
             node = this.nodeManager.selectbest();
         }
 
-
         const notifications = await node.rpcs("getnotifications", [data.height])
-        const block = new NotificationBlock()
+        var block = new NotificationBlock()
 
 
         block.height = data.height
@@ -173,11 +178,13 @@ class Notifications{
                                         this.logger.w('system', 'error', `Notification: Error generate description ${e.message || e}`)
                                     }
                                 }
+
+                                
                                 if(description.caption){
-                                    const caption = decodeURIComponent(description.caption)
+                                    const caption = f.trydecode(description.caption)
                                     notification.header.body = `${caption.length > 100 ? caption.slice(0, 100)+'...' : caption}`
                                 }else if(description.message){
-                                    const message = decodeURIComponent(description.message)
+                                    const message = f.trydecode(description.message)
                                     notification.header.body = `${message.length > 100 ? message.slice(0, 100)+'...' : message}`
                                 }else if(description.images && description.images.length) {
                                     const imageText = dic?.['images']?.[notification?.info?.l || notification?.info?.lang || 'en']
@@ -212,6 +219,23 @@ class Notifications{
         return {events, block}
     }
 
+    run () {
+
+        this.logger.w('system', 'info', `Notification: run`)
+        
+        this.destroyed = false
+
+        if(!this.checkInterval)
+            this.checkInterval = setInterval(() => {
+                try{
+                    this.autocheck()
+                }catch(e){
+                    console.log('autocheck', e)
+                }
+                
+            }, 30 * 60 * 1000)
+    }
+
     startWorker(){
         if(!this.workerEnable) this.worker()
 
@@ -221,6 +245,9 @@ class Notifications{
     }
 
     addblock(block, node, ignore){
+
+        if(this.destroyed) return
+
         if(!node.version || f.numfromreleasestring(node.version) < 0.21) {
             // this.logger.w('system', 'warn', `Notification: Node version is lower: ${node?.version}`)
             return;
@@ -240,6 +267,7 @@ class Notifications{
             this.logger.w('system', 'error', `Notification: Firebase not inited`)
             return
         }
+        
         if(!info.users){
             this.logger.w('system', 'info', `Notification: Firebase user list is empty`)
             return;
@@ -274,6 +302,41 @@ class Notifications{
             console.log(e)
         }
         //}, 5000)
+    }
+
+    checkHeight(){
+        if (this.height){
+            var info = this.nodeManager.info()
+
+            if (info.chain && info.chain.commonHeight){
+
+                if(info.chain.commonHeight - this.height > 50){
+                    return false
+                }
+
+            }
+        }
+
+        return true
+    }
+
+    autocheck(){
+        if(!this.checkHeight()){
+
+            console.log('autocheck')
+
+            this.logger.w('system', 'info', `Notification: Firebase autocheck fail`)
+
+            this.destroy()
+
+            try{
+                this.run()
+            }catch(e){
+                console.log('run2', e)
+            }
+
+            
+        }
     }
 
     transaction(notification, address){
@@ -399,7 +462,25 @@ class Notifications{
     }
 
     destroy(){
-        this.queue = [];
+        try{
+            this.queue = [];
+            this.height = 0
+            this.workerEnable = false
+    
+            this.stats = new NotificationStats()
+            this.statsShort = new NotificationStatsShort()
+            this.destroyed = true
+    
+            if(this.checkInterval){
+                clearInterval(this.checkInterval)
+                this.checkInterval = null
+            }
+    
+            this.logger.w('system', 'info', `Notification: destroy`)
+        }catch(e){
+            console.log('destroy', e)
+        }
+        
     }
 
     info(){

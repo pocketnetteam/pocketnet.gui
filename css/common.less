@@ -60,10 +60,16 @@
         .shadowSmaller();
     }
 
-    .commentsWrapper{			
+    .commentsWrapper{
         background: rgb(var(--background-secondary-theme));
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
+
+        &.commentsEmpty {
+            background: rgb(var(--background-total-theme));
+            padding: 0;
+            min-height: 2 * @rhythm;
+        }
     }
     .commentRegisterDiv .commentRegister {
         border-bottom-left-radius: 12px;
@@ -80,10 +86,11 @@
 
     .sbtnxs,
     .adr{
-		max-width: 30vw;
+		max-width: 25vw;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		vertical-align: middle;
+		vertical-align: -webkit-baseline-middle;
 		display: inline-block;
 		white-space: nowrap;
 	}
@@ -204,13 +211,18 @@
         .captionpreview{
             font-weight: 700;
         }
+
+        .sharecaption{
+            max-width: none!important;
+        }
     }
 
     .repostShare{
         border-radius: 12px;
         border : 1px solid rgba(var(--neutral-grad-1), 0.5); 
-        border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
-        border-right: 1px solid rgba(var(--background-total-theme), 0.75);
+        border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.35);
+        border-right: 1px solid rgba(var(--neutral-grad-1), 0.35);
+        min-height: 120px
 
         .shadowSmaller();
 
@@ -222,7 +234,17 @@
             margin-bottom: 0!important;
 
             .videoTips{
-                display: none!important;
+                &:not(.tipsforstream){
+                    display: none!important;
+                }
+                
+            }
+
+            .videoTips{
+                &.tipsforstream{
+                    display: block!important;
+                }
+                
             }
         }
     }
@@ -377,6 +399,10 @@
             opacity: 0;
             .transition(0.3s);
 
+            &.tipsforstream{
+                bottom: 0;
+            }
+
             .videoTip{
                 position : absolute;
                 top: 0;
@@ -435,7 +461,7 @@
     .cntswrk{
         margin-left: 8 * @rhythm;
         padding-left : 2 * @rhythm;
-        padding-right : 3 * @rhythm; //// /4 lenta ?
+        padding-right : 4 * @rhythm; //// /4 lenta ?
 
         &.forcomments{
             padding-left: 0;
@@ -662,7 +688,7 @@
 
 
     .meta{
-        padding-top: 1.5 * @rhythm;
+        padding-top: 0.75 * @rhythm;
         margin-bottom: @rhythm;
 
         .authorCell{
@@ -786,7 +812,7 @@
             &.owlcar{
                 height: auto;
                 width: 100%;
-                max-width: 450px;
+                max-width: 768px;
 
                 .imagesWrapper{
                     height: 500px;
@@ -800,12 +826,12 @@
             }
 
             &.carousel{
-                max-width: 450px;
+                max-width: 768px;
             }
         }
 
         .carousel_markers{
-            max-width: 450px;
+            max-width: 768px;
         }
 
         .imagesContainer{
@@ -1061,6 +1087,46 @@
         }
     }
 
+    .translateApi{
+        margin-bottom: @rhythm;
+        display: flex;
+        
+
+        .translateto{
+            margin-right: @rhythm;
+            border-radius: 8px;
+            padding: 4px 10px;
+            background: rgb(var(--background-secondary-theme));
+            display: flex;
+            align-items: center;
+
+            i{
+                color : rgb(var(--color-bg-ac-bright));
+                margin-left: 0.5 * @rhythm;
+                display: none;
+            }
+
+            cursor: pointer;
+            span{
+                font-weight: 500;
+                font-size: 0.9em;
+                color : rgb(var(--neutral-grad-4));
+            }
+
+            &.active{
+                span{
+                    color : rgb(var(--color-bg-ac-bright))
+                }
+            }
+
+            &.loading{
+                i{
+                    display: block;
+                }
+            }
+        }
+    }
+
     .tags{
         margin-bottom: 2 * @rhythm;
         max-width: 650px;
@@ -1135,7 +1201,6 @@
                         font-size: 0.8em;
                     }
                 }
-
             
             }
 
@@ -1166,7 +1231,6 @@
                 font-size: 1em;
                 color : rgb(var(--neutral-grad-3));
                 cursor: pointer;
-                border-radius : 40%;
             }
 
             &.right{
@@ -1184,11 +1248,6 @@
                 }
             }
 
-            &:hover{
-                .icon{
-                    opacity: 0.7;
-                }
-            }
 
 
             &.sharesocial{
@@ -1251,6 +1310,11 @@
         .blockCell{
             text-align: center;
             width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
             .label{
                 margin-bottom : 3 * @rhythm;
@@ -1260,6 +1324,10 @@
                 width : 180px;
                 border-radius: 30px;
                 font-size: 0.8em;
+            }
+
+            .showblockedpost{
+                margin-top: 2 * @rhythm;
             }
         }
 
@@ -1309,6 +1377,7 @@
         padding-top: 0;
         border-radius: 0!important;
         margin-bottom: 0!important;
+        contain: strict;
         
         .extrashare{
             display: block;
@@ -1858,7 +1927,8 @@ html.mobileview.ios{
                     margin-right: 0;
                 
                     &.metapanel{
-                        width: 47px;
+                        padding : 2 * @rhythm;
+                        margin-right: @rhythm;
 
                         .metapanelitem{
                             opacity: 1;
@@ -2146,6 +2216,24 @@ html.mobileview.ios{
 			.author{
 				white-space: nowrap;
 			}
+
+            .translateApi{
+                margin-bottom: 0;
+
+                .translateto{
+				    margin-right: 0;
+                    background: transparent;
+                    span{
+                        color : rgb(var(--text-on-bg-shadow-color));
+                    }
+
+                    &.active{
+                        span{
+                            color : rgb(var(--color-bg-ac-bright))
+                        }
+                    }
+                }
+            }
 	
 			.shareBgCaption{
 				height: 425px;
@@ -2465,6 +2553,21 @@ html.mobileview.ios{
 				.shareBgCaption{
 					&.verticalcover{
 						height: 520px;
+
+                        .translateApi{
+            
+                            .translateto{
+                                span{
+                                    color : rgb(var(--text-color));
+                                }
+            
+                                &.active{
+                                    span{
+                                        color : rgb(var(--color-bg-ac-bright))
+                                    }
+                                }
+                            }
+                        }
 	
 						.articleCover{
 							left : 0;

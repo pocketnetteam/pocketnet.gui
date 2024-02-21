@@ -1,21 +1,3 @@
-#authorization #registration .caption {
-  display: none;
-}
-#authorization #registration .work {
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
-}
-#authorization #registration .mWrapper {
-  margin-top: 0;
-}
-#authorization #registration .mWrapper #test {
-  width: 100%;
-}
-#authorization #registration .mWrapper #test .userPanel {
-  padding-top: 0;
-}
 #authorization .work {
   padding-top: 2em;
   padding-bottom: 2em;
@@ -165,54 +147,71 @@
 .wnd.authwindow .wndinner .wndcontent {
   padding: 0;
 }
-.wnd.authwindow #authorization .topCaption {
+.wnd.authwindow #authorization .work {
   padding-top: 1em;
   padding-bottom: 1em;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
 .wnd.authwindow #authorization .caption {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+.wnd.authwindow #authorization .caption.cpt2 {
+  font-size: 2.5em;
+}
+.wnd.authwindow #authorization button {
+  width: 100%;
+  min-width: 0;
+}
+.wnd.authwindow #authorization button.toRegistration {
+  min-width: 0;
+}
+.wnd.authwindow #authorization .keytable {
+  display: block;
+  position: relative;
+}
+.wnd.authwindow #authorization .keytable > div {
+  display: block;
+}
+.wnd.authwindow #authorization .keytable > div.actionButtonsWrapper {
+  /*width: 50%;*/
+  width: 80px;
   text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 0;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
 }
-.wnd.authwindow #authorization .work {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.wnd.authwindow #authorization .leftPart {
+.wnd.authwindow #authorization .keytable > div.actionButtonsWrapper .label {
   display: none;
 }
-.wnd.authwindow #authorization #registration .mWrapper .panelWrapper {
-  padding-bottom: 1em;
+.wnd.authwindow #authorization .keytable > div.actionButtonsWrapper .uploadFile,
+.wnd.authwindow #authorization .keytable > div.actionButtonsWrapper .showPassword {
+  height: 100%;
+}
+.wnd.authwindow #authorization .keytable > div input {
+  border-radius: 3px;
+  padding-right: 80px !important;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
   #authorization {
     padding-bottom: 3em;
-    /*.maket{
-
-			&.leftPart{
-				background: #F7F7F9;
-			}
-		}*/
   }
   #authorization .work {
     padding-top: 1em;
     padding-bottom: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
-  #authorization .mpad {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
   }
   #authorization .caption {
     margin-top: 0.5em;
-    font-size: 2em;
-    font-weight: 700;
-    text-align: center;
+    font-size: 3em;
   }
   #authorization .caption.cpt2 {
-    font-size: 2em;
+    font-size: 3em;
   }
   #authorization button {
     width: 100%;
@@ -220,9 +219,6 @@
   }
   #authorization button.toRegistration {
     min-width: 0;
-  }
-  #authorization .formh {
-    text-align: center;
   }
   #authorization .keytable {
     display: block;
@@ -252,27 +248,41 @@
     border-radius: 3px;
     padding-right: 80px !important;
   }
-  .wnd.authwindow #authorization .topCaption {
-    padding-left: 1em;
-    margin-top: 0;
-    padding-right: 1em;
-  }
-  .wnd.authwindow #authorization #registration {
-    padding-top: 1.5em;
-  }
-  .wnd.authwindow #authorization .work {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .wnd.authwindow #authorization .label {
-    text-align: center;
-  }
-  .wnd.authwindow #authorization button {
-    width: 100%;
-  }
-  .wnd.authwindow #authorization button.toRegistration {
-    min-width: 190px;
-  }
+  /*.wnd.authwindow{
+	
+		#authorization{	
+			.work{
+				padding-left : 0 * @rhythm!important;
+				padding-right: 0 * @rhythm!important;
+			}
+			.topCaption{
+				padding-left: 2 * @rhythm;
+				margin-top : 0;
+				padding-right: 2 * @rhythm;
+			}
+	
+			.scrollmaketpart{
+				
+			}
+		
+			.work{
+				padding-top: 0;
+				padding-bottom : 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+	
+			.label{
+				text-align: center;
+			}
+		
+			button{
+				width : 100%;
+		
+				&.toRegistration{
+					min-width: 190px;
+				}
+			}
+		}
+	}*/
 }

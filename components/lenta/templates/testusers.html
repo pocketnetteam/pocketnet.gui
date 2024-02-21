@@ -8,8 +8,7 @@
                 var uadmin = _uadmin.split("_")[0]
                 var value = _uadmin.split("_")[1]
 
-                var user = deep(app, 'platform.sdk.users.storage.'+uadmin) || {} %>
-    
+                var user = psdk.userInfo.get(uadmin) || {} %>
            
                 <div class="adminWrapper">
                     <div class="tableovfWrapper">

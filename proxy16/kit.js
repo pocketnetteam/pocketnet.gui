@@ -1,11 +1,12 @@
 var Proxy = require("./proxy");
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 
 var deepExtend = require('deep-extend');
 var cloneDeep = require('clone-deep');
 var tcpPortUsed = require('tcp-port-used');
 _ = 	require("underscore");
 var fs = require('fs');
+
 
 var Pocketnet = require('./pocketnet.js');
 var Logger = require('./logger.js');
@@ -24,6 +25,8 @@ var settings = {};
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
+
+typeof global.EXPERIMENTALNODES == 'undefined' ? global.EXPERIMENTALNODES = _.indexOf(process.argv, '--experimentalnodes') > -1 : false
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol', 'peertube', 'transports', 'logs290323']).init()
 
@@ -60,10 +63,10 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '137.135.25.73',
+		host : 'pnettool.pocketnet.app',
 		port : 39091,
 		ws : 6067,
-		name : 'tawmaz',
+		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
@@ -77,28 +80,7 @@ var testnodes = [
 
 
 var activenodes = [
-	/*{
-		host : '178.217.159.221',
-		port: 38381,
-		ws: 8387,
-		name : 'test3.v.pocketnet.app',
-		stable : true,
-		single : true,
-		allowRpc : false,
-		alwaysrun : true
-	},*/
-
-	/*{
-		host : '65.21.252.135', 
-		port: 38081,
-		ws: 8087,
-		name : 'test4.v.pocketnet.app',
-		stable : true,
-		single : true,
-		allowRpc : false,
-		alwaysrun : true
-	},*/
-	//////////////
+	
 	{
 		host : '135.181.196.243',
 		port : 38081,
@@ -106,13 +88,12 @@ var activenodes = [
 		name : '135.181.196.243',
 		stable : true
 	},
-	
 
 	{
-		host : '136.243.145.143',
+		host : '202.61.253.55', //
 		port : 38081,
 		ws : 8087,
-		name : '136.243.145.143',
+		name : '202.61.253.55',
 		stable : true
 	},
 
@@ -124,7 +105,6 @@ var activenodes = [
 		stable : true
 	},
 
-	
 	{
 		host : '172.83.108.41',
 		port : 38081,
@@ -134,19 +114,18 @@ var activenodes = [
 	},
 
 	{
-		host : '188.18.52.142',
+		host : '207.180.201.246', ///
 		port : 38081,
 		ws : 8087,
-		name : '188.18.52.142',
+		name : '207.180.201.246',
 		stable : true
 	},
-	
 
 	{
-		host : '142.116.40.18',
+		host : '5.189.141.204', ///
 		port : 38081,
 		ws : 8087,
-		name : '142.116.40.18',
+		name : '5.189.141.204',
 		stable : true
 	},
 	{
@@ -162,56 +141,7 @@ var activenodes = [
 		ws : 8087,
 		name : '172.83.108.40',
 		stable : true
-	},
-	/*{
-		host : '178.217.159.227',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.227',
-		stable : true
-	},*/
-	/*{
-		host : '178.217.159.221',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.221',
-		stable : true
-	},
-	{
-		host : '46.175.122.243',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.122.243',
-		stable : true
-	},
-	{
-		host : '46.175.123.77',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.123.77',
-		stable : true
-	},
-	{
-		host : '178.217.155.169',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.169',
-		stable : true
-	},
-	{
-		host : '178.217.155.170',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.170',
-		stable : true
-	},*/
-	{
-		host : '93.100.117.108',
-		port : 38081,
-		ws : 8087,
-		name : '93.100.117.108',
-		stable : true
-	},
+	}
 ]
 
 var nodes = activenodes
@@ -241,6 +171,7 @@ var defaultSettings = {
 
         dontCache: false,
 		captcha : true,
+		hexCaptcha : false,
 		host : '',
 		iplimiter : {
 			interval : 30000,
@@ -275,8 +206,20 @@ var defaultSettings = {
 				amount : 0.0006,
 				outs : 30,
 				check : 'ipAndUniqAddress'
+			},
+
+			balance : {
+				privatekey : "",
+				amount : 0.0002,
+				outs : 10,
+				check : 'ipAndUniqAddress' //// ipAndUniqAddress4m 
 			}
 		}
+	},
+
+	translateapi : {
+		api : '',
+		key : ''
 	},
 
     node: {
@@ -360,7 +303,11 @@ var state = {
 				customObfs4 : settings.tor.customObfs4,
 			},
 			testkeys : state.exportkeys(),
-			systemnotify : settings.systemnotify
+			systemnotify : settings.systemnotify,
+			translateapi : {
+				api : settings.translateapi.api,
+				key : settings.translateapi.key
+			}
 			//rsa : settings.rsa
 		}
 
@@ -384,6 +331,12 @@ var state = {
 
 			if (exporting.wallet.addresses.registration.privatekey)
 				exporting.wallet.addresses.registration.privatekey = "*"
+
+			if (exporting.wallet.addresses.balance.privatekey)
+				exporting.wallet.addresses.balance.privatekey = "*"
+
+			if (exporting.translateapi.key)
+				exporting.translateapi.key = "*"
 		}
 
 		return exporting
@@ -554,7 +507,6 @@ const kit = {
 					if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
 					if (settings.customObfs4) notification.customObfs4 = settings.customObfs4
 
-					console.log('settings', settings)
 					return kit.proxy().then(proxy => {
 
 						return proxy.wss.sendtoall({
@@ -636,7 +588,14 @@ const kit = {
 								return Promise.resolve('enabled error')
 							}))
 
-						if (!promises.length)
+						if (typeof settings.hexCaptcha != 'undefined')  
+							promises.push(ctx.hexCaptcha(settings.hexCaptcha).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('enabled error')
+							}))
+
+						if(!promises.length) 
 							return Promise.reject('nothingchanged')
 
 						return Promise.all(promises)
@@ -743,6 +702,21 @@ const kit = {
 					settings.server.captcha = v
 
 					return kit.save()
+					
+				},
+
+				hexCaptcha : function(v){
+
+					if(typeof v == 'undefined') return Promise.reject('emptyargs')
+	
+					if (settings.server.hexCaptcha == v) return Promise.resolve()
+						settings.server.hexCaptcha = v
+		
+					return kit.save()
+					
+				},
+	
+				enabled : function(v){
 
 				},
 
@@ -1087,6 +1061,25 @@ const kit = {
 
 					return state.save()
 				}
+			},
+
+			translateapi : {
+				settings: function (data) {
+					return kit.proxy().then((proxy) => {
+
+						if (typeof data.api != 'undefined')
+							settings.translateapi.api = data.api
+
+						if (typeof data.key != 'undefined') {
+							settings.translateapi.key = data.key
+						}
+						
+						return proxy.translateapi.settingChanged(settings.translateapi)
+
+					}).then(() => {
+						return state.save()
+					})
+				},
 			}
 		},
 
@@ -1272,40 +1265,6 @@ const kit = {
 				})
 			}
 
-			/*remove: function () {
-				return kit.proxy().then(proxy => {
-					return proxy.torapplications.remove();
-				})
-			}*/
-			//settings.tor.useSnowFlake
-
-			/*start: function (data) {
-				const isPersistent = data?.persistence;
-
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.start();
-
-					if (isPersistent) {
-						settings.tor.enabled = true
-					}
-
-					await state.save();
-				})
-			},
-			stop: function (data) {
-				const isPersistent = data?.persistence;
-
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.stop();
-
-					if (isPersistent) {
-						settings.tor.enabled = false
-					}
-
-					await state.save()
-				})
-			},*/
-
 		},
 
 		notifications: {
@@ -1412,7 +1371,9 @@ const kit = {
 
 		settings = state.expand(environmentDefaultSettings, settings)
 
-		db = new Datastore(f.path(settingsPath));
+		db = new Datastore({
+			filename: f.path(settingsPath),
+		});
 
 		return new Promise((resolve, reject) => {
 

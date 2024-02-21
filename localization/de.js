@@ -2,7 +2,7 @@ if(typeof loclib == "undefined" || !loclib)
 loclib = {};
 
 loclib.de = {};
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 
 var _l = loclib.de;
@@ -526,6 +526,7 @@ _l.e13107 = "Netzwerkknoten Management kann durch die Anwendung ausgeführt werd
 _l.e13108 = "Es gibt keine Verbindung mit dem Electron proxy Interface"
 
 _l.e13109 = "Bitte geben Sie die Wörter in dem Bild ein, um Pocketcoins zu empfangen und mit der Registrierung fortzufahren"
+_l.e13109h = "Klicken Sie auf die Sechsecke, um das Bild zusammenzusetzen, und geben Sie dann Text in das resultierende Bild ein."
 _l.e13110 = "Wörter eingeben"
 _l.next = "Weiter"
 _l.refresh = "Neu laden"
@@ -844,7 +845,7 @@ _l.noDownloadedVideos = "Keine heruntergeladenen Videos";
 _l.buy = 'Kaufen';
 
 
-_l.lowstar1 = "Das Bastion-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
+_l.lowstar1 = "Das "+appname +"-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
 _l.lowstar_reason_1 = "Erotik/Porno"
 _l.lowstar_reason_2 = "Ausbeutung von Kindern"
 _l.lowstar_reason_3 = "Direkte Androhung von Gewalt"
@@ -852,11 +853,11 @@ _l.lowstar_reason_4 = "Illegale Drogen"
 _l.lowstar2 = "Bitte verwenden Sie keine 1- und 2-Sterne-Bewertungen aus anderen Gründen. Nachdem die neue Moderation Mitte Mai veröffentlicht wurde, können Sie niedrige Bewertungen aus anderen Gründen verwenden."
 _l.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Arten von verbotenen Inhalten enthält"
 
-_l.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen Bastion-App"
+_l.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen "+appname +"-App"
 _l.androidPopupAgree = "Zur App wechseln"
 _l.androidPopupDisagree = "Nicht jetzt"
 
-_l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
+_l.desktopPopupTitle = "Unzensierte Informationen in der "+appname +"-Desktop-App abrufen"
 _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
 
@@ -897,3 +898,15 @@ _l.torusing_stat_totalTorBytes = "Gesamt, TOR anrufe"
 _l.torusing_settings = "TOR einstellungen"
 _l.torusing_stats = "Statistik abfragen"
 _l.torusing_proxychangequestion = "Sind Sie sicher, dass Sie den proxy ändern wollen?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Aktualisieren';
+_l.updateNotifier_topHeading2 = 'Verfügbar';
+_l.updateNotifier_mainHeading = 'Wir haben aktualisiert';
+_l.updateNotifier_mainText = 'Wir empfehlen, die Anwendung zu aktualisieren. Neue Funktionen und bessere Leistung warten auf Sie!';
+_l.updateNotifier_button1 = 'Installieren';
+_l.updateNotifier_button2 = 'Später...';
+_l.updateNotifier_stateStart = 'Starten...';
+_l.updateNotifier_stateDownload = 'Heruntergeladen';
+_l.updateNotifier_stateError = 'Fehler aufgetreten';
+/** ↑ Component UpdateNotifier ↑ */

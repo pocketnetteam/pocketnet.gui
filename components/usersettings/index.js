@@ -11,8 +11,6 @@ var usersettings = (function(){
 
 		var el, composed, controller;
 
-		var checking = false
-
 
 		var actions = {
 			clearLocalStorage : function(){
@@ -80,7 +78,7 @@ var usersettings = (function(){
 							})
 
 							self.app.reload({
-								href : 'author'
+								href : 'authorn'
 							});
 
 						}).catch(e => {
@@ -263,7 +261,7 @@ var usersettings = (function(){
 
 					var value = input.val();
 
-					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
+					//self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
 
 					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
@@ -272,48 +270,25 @@ var usersettings = (function(){
 			},
 
 			cache : function(){
-				var temp = self.app.platform.sdk.node.transactions.temp
+				var account = self.app.platform.actions.getCurrentAccount()
+				var temp = []
 
-				var t = [];
-
-				_.each(temp, function(trx, s){
-					_.each(trx, function(tr){
-						t.push(tr)
+				if (account){
+					temp = _.sortBy(account.getTempActions(null, null, true), (a) => {
+						return -a.added
 					})
-				})
+				}
 
 				self.shell({
 					name :  'cache',
 					el : el.cache,
 					data : {
-						temp : t,
-						checking : checking
+						temp : temp
 					}
 
 				}, function(p){
 
 					p.el.find('.clearLocalStorage').on('click', events.clearLocalStorage);
-
-
-					p.el.find('.check').on('click', function(){
-
-						if($(this).hasClass('disabled')) return
-
-						checking = true
-
-						renders.cache()
-
-						self.app.platform.sdk.node.transactions.checkTemps(function(){
-
-							setTimeout(function(){
-								checking = false
-
-								renders.cache()
-							}, 100)
-
-						})
-
-					})
 
 					p.el.find('.copyvalue').on('click', function(){
 
@@ -322,16 +297,15 @@ var usersettings = (function(){
 						sitemessage(self.app.localization.e('successcopied'))
 					})
 
-					p.el.find('.clear').on('click', function(){
-
+					p.el.find('.clearLocalActions').on('click', function(){
 
 						new dialog({
 							class : 'zindex',
-							html : "Do you really want to clear temporary application information?",
+							html : self.app.localization.e('cleartempactions'),
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
 							success : function(){
-								self.app.platform.sdk.node.transactions.clearTempHard()
+								account.clear()
 								renders.cache()
 							}
 						})
@@ -383,10 +357,10 @@ var usersettings = (function(){
 
 			//if (self.app.user.features.telegram){
 
-			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+			/*controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
 			controller.abort();
-			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();*/
 
 
 			el.c.find('.removeAccount').on('click', events.removeAccount)
@@ -461,13 +435,13 @@ var usersettings = (function(){
 
 				delete self.app.platform.sdk.node.transactions.clbks.settings
 
-				if (self.app.user.features.telegram){
+				/*if (self.app.user.features.telegram){
 
 					controller.abort();
 					controller = new AbortController();
 					self.app.platform.sdk.system.get.telegramUpdates();
 
-				}
+				}*/
 			},
 
 			init : function(p){

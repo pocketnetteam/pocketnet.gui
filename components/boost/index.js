@@ -23,59 +23,63 @@ var boost = (function(){
 
 				var faqLangsFiltered = {};
 
-				var faqLangs = self.sdk.faqLangs.get() 
+				self.sdk.faqLangs.get(function(faqLangs){
 
-				for (var l in faqLangs){
+					for (var l in faqLangs){
 
-					if (l !== 'fr'){
-
-
-						faqLangsFiltered[l] = faqLangs[l]
-						.filter(function(g){
-
-							return g.id === 'buy-pkoin';
+						if (l !== 'fr'){
 	
-						})
-						.map(function(g){
-							
-							if (g.id === 'buy-pkoin'){
-
-								var newG = JSON.parse(JSON.stringify(g))
-
-								newG.group = g.group.slice(0, 7)
-
-								return newG;
-							}
-
-							return g;
-							
-						})
-
+	
+							faqLangsFiltered[l] = faqLangs[l]
+							.filter(function(g){
+	
+								return g.id === 'buy-pkoin';
+		
+							})
+							.map(function(g){
+								
+								if (g.id === 'buy-pkoin'){
+	
+									var newG = JSON.parse(JSON.stringify(g))
+	
+									newG.group = g.group.slice(0, 7)
+	
+									return newG;
+								}
+	
+								return g;
+								
+							})
+	
+						}
+	
 					}
+	
+					
+					var k = self.app.localization.key;
+	
+					if(!faqLangsFiltered[k]) k = 'en';
+	
+					var faqcontent = faqLangsFiltered[k];
+	
+	
+					self.shell({
+						name :  'faq',
+						turi : 'easynode',
+						el : el.faqWrapper,
+						data : {
+							groups : faqcontent
+						},
+						animation : false,				
+	
+					}, function(p){
+	
+	
+					})
 
-				}
+				}) 
 
 				
-				var k = self.app.localization.key;
-
-				if(!faqLangsFiltered[k]) k = 'en';
-
-				var faqcontent = faqLangsFiltered[k];
-
-
-				self.shell({
-					name :  'faq',
-					turi : 'easynode',
-					el : el.faqWrapper,
-					data : {
-						groups : faqcontent
-					},
-					animation : false,				
-
-				}, function(p){
-
-
-				})
 			}
 		}
 
@@ -96,14 +100,6 @@ var boost = (function(){
 		}
 
 		var make = function(){
-			/*self.app.platform.papi.post(
-				"18399921cc5455b3283322a488f553d0169d00e3501246fc60d2e0c67c98bfc6",
-				el.lenta,
-				function (e, p) {
-					ext = p
-				},
-			);*/
-
 			renders.faq()
 		}
 
@@ -118,9 +114,6 @@ var boost = (function(){
 					minimal : ed.minimal ? 'minimal' : '',
 					autoplay : ed.autoplay
 				};
-
-				console.log('datat', data);
-
 
 				clbk(data);
 
@@ -154,6 +147,10 @@ var boost = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'normalizedmobile maxheight',
 			}
 		}
 	};

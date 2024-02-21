@@ -1,0 +1,64 @@
+#applicationmeta .wrapper {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+#applicationmeta .applicationInfo {
+  display: flex;
+  align-items: center;
+}
+#applicationmeta .applicationInfo .appicon {
+  height: 22px;
+  width: 22px;
+}
+#applicationmeta .applicationInfo .appname {
+  margin-left: 0.5em;
+}
+#applicationmeta .version {
+  opacity: 0.7;
+  margin-top: 1em;
+}
+#applicationmeta .subcaption span {
+  font-weight: 700;
+}
+#applicationmeta .desctiption {
+  margin-top: 1em;
+}
+#applicationmeta .permissions {
+  padding-top: 2em;
+}
+#applicationmeta .permissions .list {
+  margin-top: 1em;
+}
+#applicationmeta .permissions .list .permission {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+#applicationmeta .permissions .list .permission .name {
+  padding: 1em 0;
+}
+#applicationmeta .permissions .list .permission .status {
+  margin-left: auto;
+  padding: 1em 0.5em;
+}
+#applicationmeta .permissions .list .permission .status .granted {
+  color: rgb(var(--color-good));
+}
+#applicationmeta .permissions .list .permission .status .forbidden {
+  color: rgb(var(--color-bad));
+}
+#applicationmeta .panel {
+  opacity: 0;
+  margin-top: 4em;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#applicationmeta.permissionsRendered .panel {
+  opacity: 1;
+}
+.applicationmetaWindow .wndinner {
+  max-width: 560px;
+  max-height: 90vh;
+}

@@ -33,83 +33,48 @@
   margin-top: 0.5em;
 }
 #registration .upanelloader {
-  display: none;
+  /*display: none;*/
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 3000;
+  z-index: 1000;
   background: rgba(var(--background-total-theme));
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 #registration .upanelloader .table {
   width: 100%;
   height: 100%;
 }
 #registration .upanelloader .table > div {
-  vertical-align: middle;
   text-align: center;
   color: rgba(var(--color-txt-ac));
 }
+#registration.loading .stepsWrapper {
+  opacity: 0;
+}
 #registration.loading .upanelloader {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+#registration.loading .hasaccount {
+  display: none;
 }
 #registration .mWrapper {
   margin-top: 2em;
   position: relative;
 }
-#registration .mWrapper .panelWrapper {
-  margin-top: 2em;
-  padding: 1em;
-  padding-bottom: 5em;
-}
-#registration .mWrapper .panelWrapper .elpanel {
-  opacity: 0;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#registration .mWrapper .panelWrapper .elpanel.active {
-  opacity: 1;
-}
-#registration .mWrapper .panelWrapper .elpanel .lwrapper {
-  display: none;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel {
-  opacity: 0.5;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel .nlberl {
-  display: none;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel .lwrapper {
-  display: inline;
-}
-#registration .mWrapper .panelWrapper .btn {
-  margin: 0 auto;
-  text-align: center;
-  width: 200px;
-  color: rgba(var(--text-on-bg-ac-color));
-  cursor: pointer;
-  background: rgba(var(--color-bg-orange));
-  padding: 0.5em 0;
-  border-radius: 2px;
-}
-#registration .mWrapper .panelWrapper .btn.save {
-  border-radius: 30px;
-  cursor: default;
-  background: rgba(var(--color-txt-orange));
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#registration .mWrapper .panelWrapper.changes .btn.save {
-  background: rgba(var(--color-bg-orange));
-  color: rgba(var(--text-on-bg-ac-color));
-  cursor: pointer;
-}
 #registration .mWrapper .stepsWrapper {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
   overflow: hidden;
 }
 #registration .mWrapper .stepsWrapper .stepsWrapperLine {
@@ -155,6 +120,7 @@
 #registration .mWrapper #test .parameter {
   display: flex;
   flex-direction: column-reverse;
+  margin: 0 auto;
 }
 #registration .mWrapper #test .parameter > div {
   width: 100%;
@@ -182,20 +148,24 @@
 }
 #registration .mWrapper #test .subcaption {
   text-align: center;
+  display: none;
 }
 #registration .mWrapper #test .uploadTable {
   width: auto;
   margin: 0 auto;
+  flex-direction: column;
 }
 #registration .mWrapper #test .uploadTable > div.label {
-  display: none;
+  margin-top: 1em;
+  margin-left: 0;
 }
 #registration .mWrapper #test .uploadTable > div.iconWrapper {
-  width: 60px;
-  position: relative;
+  width: 130px;
 }
-#registration .mWrapper #test .uploadTable > div.iconWrapper .plissingCnt {
-  left: 45px;
+#registration .mWrapper #test .uploadTable > div.iconWrapper .usericon {
+  width: 130px;
+  height: 130px;
+  line-height: 130px;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="about"],
 #registration .mWrapper #test .parameterMaketWrapper[parameter="site"],
@@ -218,19 +188,35 @@
 #registration .mWrapper #test .userPanel .pgroup {
   margin-bottom: 0.5em;
 }
-#registration .mWrapper #test .userPanel .uploadPhoto {
-  height: 130px;
-}
-#registration .mWrapper #test .userPanel .uploadTable > div.iconWrapper .usericon {
-  width: 130px;
-  height: 130px;
-  line-height: 130px;
-}
 #registration .mWrapper #test .parameterMaketWrapper[parameter="addresses"] {
   display: none;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="email"] {
   display: block;
+}
+#registration .mWrapper .filluser .elpanel {
+  margin-top: 2em;
+  padding: 1em;
+  padding-bottom: 5em;
+}
+#registration .mWrapper .filluser .elpanel .btn {
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+  color: rgba(var(--text-on-bg-ac-color));
+  cursor: pointer;
+  background: rgba(var(--color-bg-orange));
+  padding: 0.5em 0;
+  border-radius: 2px;
+}
+#registration .mWrapper .filluser .elpanel .btn.save {
+  border-radius: 30px;
+  cursor: default;
+  background: rgba(var(--color-txt-orange));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 #registration .mWrapper .ucaptcha {
   padding-top: 3em;
@@ -249,10 +235,10 @@
   font-size: 1.7em;
   font-weight: 300;
   text-align: center;
-  max-width: 600px;
+  max-width: 300px;
 }
 #registration .mWrapper .ucaptcha .inputWrapper {
-  max-width: 600px;
+  max-width: 300px;
   margin: 1.5em auto;
 }
 #registration .mWrapper .ucaptcha input {
@@ -263,6 +249,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-radius: 0;
   width: 100%;
   background: transparent;
   text-align: center;
@@ -857,6 +844,27 @@
 }
 #registration[step="bloggers"] .stepsWrapper .stepsWrapperLine {
   overflow: visible;
+}
+.wnd.regwindow .wndcontent {
+  padding: 0;
+}
+.wnd.regwindow .wndinner {
+  max-width: 400px;
+  max-height: 670px;
+}
+.wnd.regwindow #registration .work {
+  padding-left: 0;
+  padding-right: 0;
+}
+.wnd.regwindow #registration .caption {
+  margin-top: 1em;
+  font-size: 1.5em;
+}
+.wnd.regwindow #registration .mWrapper .panelWrapper {
+  padding-bottom: 1em;
+}
+.wnd.regwindow #registration .mWrapper #test {
+  width: 100%;
 }
 .wndcontent #registration .categories .welcome_text {
   margin-top: 0.5em !important;

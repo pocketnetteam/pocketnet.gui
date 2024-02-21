@@ -12,6 +12,10 @@ var activities = (function () {
 
 		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
+		if (window.testpocketnet){
+			filtersList.push('pending')
+		}
+
 		var activities = []
 		var videos = []
 
@@ -112,7 +116,6 @@ var activities = (function () {
 					})) return true
 				})
 
-				console.log('tid', tid, activity, activitiesByGroup)
 
 				return activity
 			}
@@ -139,11 +142,17 @@ var activities = (function () {
 
 				renders.showcurrentFilter()
 
-				var promise = currentFilter === 'video' ? actions.getDataVideos : actions.getdata
+				var promise = currentFilter === 'video' ? actions.getDataVideos : (currentFilter === 'pending' ? actions.getActions : actions.getdata)
 
-				promise().then(() => {
+				promise().then((data) => {
 
-					renders.content()
+					if(currentFilter === 'pending'){
+						renders.actions(data)
+					}
+					else{
+						renders.content()
+					}
+					
 					
 				}).catch(e => {
 					console.error(e)
@@ -179,9 +188,15 @@ var activities = (function () {
 					[self.user.address.value, blockNumber, null, getters.getFilters(currentFilter)]
 				).then((data) => {
 
+					console.log('data', data)
+
 					if (!data.length) {
 						end = true
 					}
+
+					data = _.uniq(data, (d) => {
+						return d.hash
+					})
 
 					
 					activitiesByGroup[currentFilter].push(...data)
@@ -192,6 +207,18 @@ var activities = (function () {
 					actions.setloading(false)
 				})
 
+			},
+
+			getActions : () => {
+				var account = self.app.platform.actions.getCurrentAccount()
+
+				if (account){
+					return Promise.resolve(_.sortBy(account.getTempActions(null, null, true), (a) => {
+						return -a.added
+					}))
+				}else{
+					return Promise.resolve([])
+				}
 			},
 
 			getDataVideos: () => {
@@ -221,8 +248,6 @@ var activities = (function () {
 
 					}).then(readyVideo => {
 
-						
-
 						activitiesByGroup['video'].push(readyVideo)
 
 					}).catch(e => {
@@ -231,7 +256,7 @@ var activities = (function () {
 
 				})).then(() => {
 
-					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return v.date}) 
+					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
 					
 					actions.setloading(false)
 
@@ -241,31 +266,36 @@ var activities = (function () {
 			},
 
 			getVideos: () => {
+
 				
-				let vid = JSON.parse(localStorage.getItem('latestactivity'))?.activity?.video
+				
+				let vid = self.app.platform.sdk.videos.historygetall()
 				let res = []
+				
 
-				_.each(vid, (video) => {
+				_.each(vid, (d) => {
 
-					console.log('video', video)
+
+
+					var video = (d.data || {}).share
+
+					if(!video) return
 
 					let a = new Promise((resolve, reject) => {
-						self.app.platform.sdk.videos.info([video.data.value.url]).then(r => {
+						self.app.platform.sdk.videos.info([video.url]).then(r => {
 
 							if (!r?.[0]?.[0]?.data) {
 
-								let p = self.app.platform.sdk.videos.storage[video.data.value.url]
+								let p = self.app.platform.sdk.videos.storage[video.url]
 
 								if (!p) return reject('np')
 
-								console.log("P", p)
-
-									resolve({ ...p.data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+									resolve({ ...p.data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 
 								return
 							}
-							resolve({ ...r[0][0].data, date: video.date, name: video.data.value.caption, comments: video.data.value.comments, txid: video.data.value.txid, rating: +video.data.value.scnt === 0 ? 0 : +video.data.value.score / +video.data.value.scnt })
+							resolve({ ...r[0][0].data, date: video.date, name: video.caption, comments: video.comments, txid: video.txid, rating: +video.scnt === 0 ? 0 : +video.score / +video.scnt })
 
 						}).catch(e => {
 							console.error(e)
@@ -276,6 +306,7 @@ var activities = (function () {
 
 					res.push(a)
 				})
+
 				return res
 			},
 
@@ -293,8 +324,6 @@ var activities = (function () {
 				} else {
 					return
 				}
-
-				console.log('openPost', data, href)
 
 				answer = data.type === "answer" ? data.hash : ''
 
@@ -319,6 +348,7 @@ var activities = (function () {
 					}
 				})
 			},
+
 			openMultiBlocks(data, clbk) {
 				self.app.nav.api.load({
 					open: true,
@@ -374,8 +404,8 @@ var activities = (function () {
 
 
 			loadmorescroll: function () {
-
-				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end && currentFilter !== 'video') {
+				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight : false;
+				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 
 						var ids = _.map(data, (v) => {
@@ -401,7 +431,60 @@ var activities = (function () {
 
 				}
 			},
+
+			actionsCount: function (act) {
+				actions.getActions().then(a => {
+
+					var c = a.length
+					
+					el.c.find('.filters .tab[rid="pending"] .count').html(!c ? '' : c)
+				})
+			},
 			
+			actions: function (act) {
+
+				actions.setloading(false)
+
+				self.shell({
+
+					name: 'actions',
+					el: el.content,
+					data: {
+						actions : act
+					},
+
+				}, function (_p) {
+
+					_p.el.find('.cancel').on('click', function(){
+						var id = $(this).closest('.action').attr('aid')
+
+						new dialog({
+							html : self.app.localization.e('actions_rejectedByUser_question'),
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+	
+							success : function(){
+								try{
+									self.app.platform.actions.cancelAction(self.app.user.address.value, id).then(() => {
+									}).catch(e => {
+										console.error(e)
+									})
+								}catch(e){
+									console.error(e)
+								}
+								
+							}
+						})
+					})
+
+					_p.el.find('.typeRow').on('click', function(){
+						var id = $(this).closest('.action').attr('aid')
+
+						var a = self.app.platform.actions.getActionById(id)
+					})
+					
+				})
+			},
 
 			content: function (type, ids) {
 
@@ -466,6 +549,18 @@ var activities = (function () {
 
 			})
 
+
+			self.app.platform.actionListeners['activies'] = function({type, alias, status}){
+				renders.actionsCount()
+
+				if (currentFilter === 'pending'){
+					actions.getActions().then(a => {
+						renders.actions(a)
+					})
+					
+				}
+			}
+
 		}
 
 		return {
@@ -497,6 +592,8 @@ var activities = (function () {
 				el = {};
 				scnt.off('scroll', events.loadmorescroll)
 				delete self.app.events.scroll['activities']
+
+				delete self.app.platform.actionListeners['activies']
 			},
 
 			init: function (p) {
@@ -515,6 +612,8 @@ var activities = (function () {
 				actions.applyFilter()
 
 				initEvents();
+
+				renders.actionsCount()
 
 
 				p.clbk(null, p);

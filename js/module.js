@@ -105,7 +105,15 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImagesCl(p.el, p.bgImages)
+
+				if(p.inner == replaceWith){
+					bgImagesCl(p.el.parent(), p.bgImages)
+				}
+				else{
+					bgImagesCl(p.el, p.bgImages)
+				}
+
+				
 			}
 
 			if (typeof clbk  === 'function'){
@@ -205,8 +213,6 @@ nModule = function(){
 
 						self.container.essenseDestroy = options.destroy
 						
-					
-
 						if (insert.after) 
 						{
 							topPreloader(100);
@@ -266,7 +272,11 @@ nModule = function(){
 
 		p.inner || (p.inner = html);	
 
-		p.inner(p.el, _html);
+		var nel = p.inner(p.el, _html);
+
+		if (nel) {
+			p.el = nel
+		}
 
 		if (p.display){
 			p.el.css("display", p.display)
@@ -289,6 +299,7 @@ nModule = function(){
 			p.data.module = self;	
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
+			p.data.psdk = self.app.platform.psdk
 
 			try{
 				p.rendered = template(p.data);
@@ -322,14 +333,14 @@ nModule = function(){
 
 		if(loading.templates[p.name]){
 
-			retry(
-				function(){
-					return !loading.templates[p.name];
-				},
-				function(){
-					self.loadTemplate(p, clbk)
+			loading.templates[p.name].then(() => {
+				if (clbk)
+					clbk(self.storage.templates[p.name]);
+			}).catch(e => {
+				if (p.fail){
+					p.fail()
 				}
-			)
+			})
 
 			return
 		}
@@ -364,65 +375,84 @@ nModule = function(){
 				
 			}
 
-			loading.templates[p.name] = true;
+			loading.templates[p.name] = new Promise((resolve, reject) => {
 
-			var url;
-			var appPath = (self.map.pathtpl || self.map.path || "");	
+				var url;
+				var appPath = (self.map.pathtpl || self.map.path || "");	
 
-			if (_Node){
-				appPath = 'https://bastyon.com/'
-			}		
+				if (_Node){
+					appPath = 'https://bastyon.com/'
+				}		
 
-			if(p.common){
+				if(p.common){
 
-				url = appPath + 'common';
-
-			}
-			else
-			{
-				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
-			}
-
-			var vs = '131'
-
-			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
-			}
-
-			url += '/templates/' + p.name + '.html?v=' + vs;
-
-			
-			self.ajax.run({
-				url : url,
-				type : 'GET',
-				dataType : 'html',
-				success : function(tpl){
-
-					try{
-						self.storage.templates[p.name] = _.template(tpl);
-						loading.templates[p.name] = false;
-					}
-
-					catch(e){
-						console.error(e)
-					}
-
-					if (clbk) clbk(self.storage.templates[p.name]);
-					
-
-				},
-				fail : function(){
-
-					if (p.fail){
-						p.fail()
-					}
+					url = appPath + 'common';
 
 				}
-			});
+				else
+				{
+					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
+				}
+
+				var vs = '131'
+
+				if (typeof numfromreleasestring != 'undefined'){
+					vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+				}
+
+				url += '/templates/' + p.name + '.html?v=' + vs;
+
+				
+				self.ajax.run({
+					url : url,
+					type : 'GET',
+					dataType : 'html',
+					success : function(tpl){
+
+						try{
+							self.storage.templates[p.name] = _.template(tpl);
+							loading.templates[p.name] = null;
+						}
+
+						catch(e){
+							console.error(e)
+
+							if (p.fail){
+								p.fail()
+							}
+	
+							reject()
+
+							return
+						}
+
+						
+
+						if (clbk) clbk(self.storage.templates[p.name]);
+
+						resolve()
+						
+
+					},
+					fail : function(){
+
+						if (p.fail){
+							p.fail()
+						}
+
+						reject()
+
+					}
+				});
+
+			})
+
+			
 		}
 	}
 
 	self.fastTemplate = function(name, clbk, data, turi){
+
 		self.loadTemplate({
 			name : name,
 			turi : turi || "",
@@ -455,7 +485,7 @@ nModule = function(){
 				data : {},
 
 				animation: settings.animation,
-				fast : settings.fast
+				fast : settings.fast,
 
 			},
 
@@ -468,6 +498,8 @@ nModule = function(){
 				delete settings.animation
 
 				settings.fast = true
+				settings.waspreshell = true
+				settings.insertimmediately = true
 
 				if (clbk)
 					clbk()
@@ -477,8 +509,11 @@ nModule = function(){
 		}
 		else{
 
-			if (clbk)
-				clbk()
+			window.requestAnimationFrame(() => {
+
+				if (clbk)
+					clbk()
+			})
 
 		}
 	}
@@ -493,6 +528,15 @@ nModule = function(){
 		var frommodule = true;
 		var globalpreloaderTimer = p.globalpreloaderTimer || null
 
+		var rmpreloader = function(){
+			if(globalpreloaderTimer){
+
+				globalpreloader(false)
+
+				clearTimeout(globalpreloaderTimer)
+			}
+		}
+
 
 		if (p.restartModule) {
 			frommodule = false
@@ -506,35 +550,26 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
-		/*if(p.inWnd){
-
-			globalpreloaderTimer = setTimeout(function(){
-				globalpreloader(true)
-			}, 100)
-			
-		}*/
 
 		beforegetdata(settings, function(){
+
+			if (settings.fade && !settings.waspreshell){
+				window.requestAnimationFrame(() => {
+					settings.fade.addClass('shell_fadefast')
+				})
+			}
+
+			
 			self.user.isState(function(state){	
-				
-				
 				settings.getdata(function(data, err){
 
+					topPreloader(100);
+
+					rmpreloader()
+
 					if(err){
-
-						topPreloader(100);
-
-						if(globalpreloaderTimer){
-
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
 						return
 					}
-
-					topPreloader(45);
 
 					settings.data = data || {};
 
@@ -542,14 +577,8 @@ nModule = function(){
 
 					self.shell(settings, function(p){
 
-						if(globalpreloaderTimer){
+						rmpreloader()
 
-							globalpreloader(false)
-
-							clearTimeout(globalpreloaderTimer)
-						}
-
-						topPreloader(100);	
 
 						p.clbk = addToFunction(p.clbk, function(){
 
@@ -569,12 +598,33 @@ nModule = function(){
 						if (settings.init)
 							settings.init(p)
 
+						if (settings.fade && !settings.waspreshell){
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									settings.fade.addClass('shell_fadein')
+								})
+							}, 100)
+
+							setTimeout(() => {
+								window.requestAnimationFrame(() => {
+									settings.fade.removeClass('shell_fadefast')
+									settings.fade.removeClass('shell_fadein')
+								})
+							}, 400)
+						}
+
 					}, frommodule)
+
+					
+
+					
 
 				}, {
 					state : state,
 					settings : settings
 				});	
+
+
 
 			})
 		})

@@ -14,7 +14,7 @@
   font-size: 0.4em;
 }
 #test .errorname {
-  color: rgb(var(--color-bad));
+  color: rgb(var(--neutral-grad-4));
   padding: 1em;
   text-align: center;
   display: none;
@@ -52,7 +52,7 @@
   display: block;
 }
 #test .userPanel .pgroupIconWrapper {
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
 #test .userPanel .pgroupIconWrapper .pgroup {
   height: 100%;
@@ -65,14 +65,9 @@
 #test .userPanel .pgroup {
   margin-bottom: 3em;
 }
-#test .userPanel .uploadPhoto {
-  height: 60px;
-}
-#test .userPanel .uploadTable > div {
-  vertical-align: middle;
-}
-#test .userPanel .uploadTable > div.iconWrapper {
-  width: 85px;
+#test .userPanel .uploadTable {
+  display: flex;
+  align-items: center;
 }
 #test .userPanel .uploadTable > div.iconWrapper .usericon {
   width: 60px;
@@ -80,79 +75,41 @@
   line-height: 60px;
 }
 #test .userPanel .uploadTable > div.label {
+  margin-left: 1em;
   font-weight: 700;
   font-size: 0.9em;
-  color: rgb(var(--color-txt-ac));
-}
-#test .userPanel .referalMaketWrapper {
-  margin-top: 0.5em;
-}
-#test .userPanel .referalMaketWrapper > div {
-  vertical-align: middle;
-}
-#test .userPanel .referalMaketWrapper > div.refLabel {
-  padding-top: 0.5em;
-  padding-right: 0.5em;
-  width: 190px;
-}
-#test .userPanel .referalMaketWrapper > div.refLabel .span {
-  color: rgb(var(--color-txt-ac));
-  font-weight: 700;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div {
-  vertical-align: middle;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div.refAv {
-  width: 40px;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div.refAv .usericon {
-  width: 40px;
-  height: 40px;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div.refName {
-  padding-left: 1em;
-  padding-right: 1em;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div.refRemove {
-  width: 30px;
-  text-align: center;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  cursor: pointer;
-}
-#test .userPanel .referalMaketWrapper > div .refNameTable > div.refRemove:hover {
   color: rgb(var(--color-txt-ac));
 }
 #test .userPanel .parameter {
   max-width: 600px;
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+#test .userPanel .parameter input,
+#test .userPanel .parameter textarea {
+  width: 100%;
 }
 #test .userPanel .parameter > div {
   padding: 0.5em 0;
-  vertical-align: top;
 }
 #test .userPanel .parameter .pName {
-  vertical-align: top;
-  padding-top: 1em;
-  padding-right: 0.5em;
-  width: 190px;
+  min-width: 190px;
 }
 #test .userPanel .parameter .pName .pNameW {
+  font-weight: 700;
   padding-top: 0.5em / 3;
   font-size: 0.8em;
-  line-height: 1.4em;
 }
 #test .userPanel .parameter .pInput {
   position: relative;
-  vertical-align: top;
-}
-#test .userPanel .parameter .pInput .vm_valuesmulti {
-  padding-top: 0.5em / 2;
+  flex-grow: 2;
 }
 #test .userPanel .parameterMaketWrapper[parameter="addresses"] .parameter {
   max-width: 800px;
+}
+#test .userPanel .parameterMaketWrapper[parameter="about"] .parameter {
+  align-items: flex-start;
 }
 #test .userPanel .parameterMaketWrapper[parameter="email"] {
   display: none;
@@ -168,9 +125,10 @@
 #test .userPanel .upanel {
   margin-top: 1em;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 #test .userPanel .upanel > div {
-  float: left;
   margin-right: 1em;
 }
 #test .userPanel .upanel > div button {
@@ -217,6 +175,18 @@
 }
 #test .userPanel .upanel.wait > div.loadingToB {
   display: block;
+}
+#test .upanel,
+#test .reqsnoska {
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#test.rendered .upanel,
+#test.rendered .reqsnoska {
+  opacity: 1;
 }
 #test.firstTime .userPanel .parameterMaketWrapper[parameter="ref"] {
   display: block;
@@ -398,9 +368,6 @@
   width: auto;
   margin: 0 auto;
 }
-.wnd.testwindow #test .uploadTable > div.label {
-  display: none;
-}
 .wnd.testwindow #test .uploadTable > div.iconWrapper {
   width: 60px;
   position: relative;
@@ -435,15 +402,12 @@
   }
   #test .userPanel .parameter {
     max-width: none;
-    display: block;
-  }
-  #test .userPanel .parameter > div {
-    padding: 0;
-    display: block;
+    flex-direction: column;
+    margin-top: 0.75em;
   }
   #test .userPanel .parameter .pName {
     width: 100%;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.25em;
   }
   #test .userPanel .parameter .pInput {
     width: 100%;

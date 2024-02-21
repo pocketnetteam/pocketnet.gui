@@ -44,7 +44,7 @@
         </style>
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
-       
+        
        
     </head>
     <body id="application" class="menu-hide ">
@@ -113,23 +113,20 @@
             
         </script>
 
-        <script src="js/polyfills.js"></script>
-        <script src="js/vendor/firebase-app.js"></script>
-        <script src="js/vendor/firebase-messaging.js"></script>
         
 
         __JSENV__
-
-        __VE__
-
         __JS__
-
         __CSS__
+        __VE__
 
         __JSPOST__
 
-        <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
+
+        
+        <div id="hideallnotificationsel"></div>
+        
 
     </body>
 </html>

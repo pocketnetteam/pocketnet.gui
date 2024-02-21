@@ -7,7 +7,7 @@ var author = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var author, _state;
+		var author;
 		var el = {};
 		var upbutton;
 
@@ -17,6 +17,8 @@ var author = (function(){
 		var actions = {
 			subscribeLabel : function(){
 
+				if(!author) return
+
 				var user = self.app.user
 
 				var my = (user.address.value && author.address == user.address.value)
@@ -25,7 +27,7 @@ var author = (function(){
 
 				if(!my && user.address.value){
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
+					var me = self.psdk.userInfo.getmy()
 
 					if (me && me.relation(author.address, 'subscribes')){
 						subscribed = true
@@ -135,14 +137,6 @@ var author = (function(){
 				})
 			},
 
-			startchat: function(){
-				self.app.mobile.vibration.small()
-
-				self.app.platform.matrixchat.startchat(author.address)
-
-				
-			},
-
 			subscribePrivate : function(){
 
 				self.app.mobile.vibration.small()
@@ -168,6 +162,16 @@ var author = (function(){
 
 				})
 			},
+
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+
+				
+			},
+
+			
 
 		}
 
@@ -214,18 +218,9 @@ var author = (function(){
 							return !self.app.curation()
 						},
 						count : function(){
+
+							return deep(author, 'data.subscribers_count') || 0
 		
-							var u = _.map(deep(author, 'data.subscribers') || [], function(a){
-								return a
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-							
-							return u.length
 						
 						}
 					},
@@ -252,18 +247,9 @@ var author = (function(){
 							return !self.app.curation()
 						},
 						count : function(){
-		
-							var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-								return a.adddress
-							})
-			
-							var blocked = deep(author, 'data.blocking') || []
-			
-							u = _.filter(u, function(a){
-								return _.indexOf(blocked, a) == -1
-							})
-		
-							return u.length
+
+
+							return deep(author, 'data.subscribes_count') || 0
 						}
 					},
 		
@@ -277,10 +263,8 @@ var author = (function(){
 							if(self.user.isItMe(author.address)) return true
 						},
 						count : function(){
-		
-							var blocked = deep(author, 'data.blocking') || []
-		
-							return blocked.length
+
+							return deep(author, 'data.blockings_count') || 0
 						}
 					},
 			
@@ -365,7 +349,7 @@ var author = (function(){
 						class : 'more',
 		
 						if : function(){
-							if(!self.user.isItMe(author.address) && _state) return true
+							if(!self.user.isItMe(author.address) && state) return true
 						},
 		
 						events : {
@@ -412,6 +396,7 @@ var author = (function(){
 							author : author,
 							selected : selected
 						},
+						insertimmediately : true,
 					}
 
 					self.shell(pp, function(p){})
@@ -421,55 +406,53 @@ var author = (function(){
 
 			authorcaption : function(clbk){
 
-				el.menu = el.authorcaption.find('.usermenu')
-				el.panel = el.c.find('.panel')
-				el.caption = el.c.find('.bgCaption')
-				el.usericon = el.c.find('.usericon');
-				el.subscribe = el.c.find('.subscribebuttonstop');
-				el.subscribe.find('.subscribe').on('click', events.subscribe)
-				el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
-				el.caption.find('.startchat').on('click', events.startchat)
-				el.caption.find('.unblocking').on('click', function(){
-	
-					new dialog({
-						html : self.app.localization.e('e13023'),
-						btn1text : self.app.localization.e('unblock'),
-						btn2text : self.app.localization.e('ucancel'),
-	
-						class : 'zindex',
-	
-						success : function(){
-	
-							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-	
-						}
-					})
-	
-					
-				})
+				self.shell({
+					name :  'bgcaption',
+					el :   el.authorcaption,
+					data : {
+						author : author,
+					},
+					insertimmediately : true,
+				}, function(p){
 
-				el.authorcaption.find('.notificationturn').on('click', events.subscribePrivate)
-	
-				el.authorcaption.find('.changeaccount').on('click', function(){
-	
-					self.nav.api.go({
-						open : true,
-						href : 'accounts',
-						inWnd : true,
-						history : true,
-						essenseData : {
-							toaccpage : true
-						}
-	
+					el.menu = el.authorcaption.find('.usermenu')
+					el.caption = el.c.find('.bgCaption')
+					el.usericon = el.c.find('.usericon');
+
+					renders.panel()
+					renders.info(el.c.find('.mobileinfo'))
+					renders.menu()
+					if(!isTablet())
+						renders.info(el.info)
+
+
+					p.el.find('.deletedsettings').on('click', () => {
+						self.nav.api.go({
+							open : true,
+							href : 'userpage',
+							inWnd : isTablet(),
+							history : true,
+							
+							essenseData : {
+								rmhistory : true
+							}
+						})
 					})
+					
+					if(clbk) clbk()
 				})
 
 				
-				if(clbk) clbk()
+
+				//el.subscribe = el.c.find('.subscribebuttonstop');
+
+
+
+
+				
+
+				
+				
 			},
 			
 			metmenu : function(_el){
@@ -498,7 +481,6 @@ var author = (function(){
 							actions.donate(id)
 
 							close()
-
 						})
 
 						el.find('.block').on('click', function(){
@@ -614,7 +596,7 @@ var author = (function(){
 					data : {
 						reports : reports
 					},
-
+					insertimmediately : true,
 
 				}, function(p){
 
@@ -624,6 +606,8 @@ var author = (function(){
 							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 					})
+
+					
 					
 					_.each(reports, function(r, j){
 						if(r.events){
@@ -642,7 +626,7 @@ var author = (function(){
 				})
 			},
 
-			userslist : function(_el, users, empty, caption, clbk){
+			userslist : function(_el, users, empty, caption, clbk, count){
 				self.nav.api.load({
 
 					open : true,
@@ -655,6 +639,7 @@ var author = (function(){
 						empty : empty,
 						caption : caption,
 						sort : 'commonuserrelation',
+						count : count
 					},
 					
 					clbk : function(e, p){
@@ -665,110 +650,190 @@ var author = (function(){
 				})
 			},
 
-			info : function(_el){
+			panel : function(){
+				
+				self.shell({
 
-					author.state = self.sdk.ustate.storage[author.address]
+					name :  'panel',
+					el :   el.authorcaption.find('.panelWrapper'),
 
-					self.shell({
+					data : {
+						author : author
+					},
+					insertimmediately : true,
+					animation : false,
 
-						name :  'info',
-						el :   _el,
+				}, function(p){
 
-						data : {
-							author : author
-						},
+					p.el.find('.donate').on('click', () => {
+						self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+					})
 
-						animation : false,
-
-					}, function(p){
-
-						p.el.find('.todonate').on('click', () => {
-							self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
-							
+					p.el.find('.subscribe').on('click', events.subscribe)
+					p.el.find('.unsubscribe').on('click', events.unsubscribe)
+					p.el.find('.startchat').on('click', events.startchat)
+					p.el.find('.unblocking').on('click', function(){
+		
+						new dialog({
+							html : self.app.localization.e('e13023'),
+							btn1text : self.app.localization.e('unblock'),
+							btn2text : self.app.localization.e('ucancel'),
+		
+							class : 'zindex',
+		
+							success : function(){
+		
+								self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+									if(!tx){
+										self.app.platform.errorHandler(error, true)	
+									}
+								})
+		
+							}
 						})
+		
+						
+					})
 
-						p.el.find('.showmoreabout').on('click', actions.showmoreabout)
-
-						p.el.find('.copyaddress').on('click', function(){
-							copyText($(this))
-
-							sitemessage(self.app.localization.e('successcopied'))
-						})
-
-						p.el.find('.postcnt').on('click', function(){
-
-							renders.report(reports.contents)
-
-						})
-
-						p.el.find('.showmoreinabout').on('click', function(){
-							p.el.find('.authorinfo').addClass('displayedall')
+					p.el.find('.notifications').on('click', events.subscribePrivate)
+		
+					p.el.find('.changeAccount').on('click', function(){
+		
+						self.nav.api.go({
+							open : true,
+							href : 'accounts',
+							inWnd : true,
+							history : true,
+							essenseData : {
+								toaccpage : true
+							}
+		
 						})
 					})
+				
+				})
+			},
+
+			info : function(_el){
+
+					//author.state = self.psdk.userState.get(author.address)
+
+				self.shell({
+
+					name :  'info',
+					el :   _el,
+
+					data : {
+						author : author
+					},
+
+					animation : false,
+					insertimmediately : true,
+
+				}, function(p){
+
+					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
+
+					
+
+					p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
+					/*p.el.find('.postcnt').on('click', function(){
+
+						renders.report(reports.contents)
+
+					})*/
+
+					p.el.find('.showmoreinabout').on('click', function(){
+						p.el.find('.authorinfo').addClass('displayedall')
+					})
+				})
 
 			
 			},
 
 			followers : function(_el, report){
 
-				var u = _.map(deep(author, 'data.subscribers') || [], function(a){
-					return a
+				author.data.loadRelations(['subscribers', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
+
+					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
+						return a
+					})
+
+					var c = u.length
+	
+					var blocked = deep(author, 'data.blocking') || []
+	
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
+	
+					var e = self.app.localization.e('anofollowers');
+	
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowers')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
+						report.module = p;
+					}, c)
+
 				})
 
-				var blocked = deep(author, 'data.blocking') || []
-
-				u = _.filter(u, function(a){
-					return _.indexOf(blocked, a) == -1
-				})
-
-				var e = self.app.localization.e('anofollowers');
-
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynofollowers')
-				}
-
-				renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
-					report.module = p;
-				})
+				
 			},
 
 			following : function(_el, report){
 
-				var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-					return a.adddress
-				})
+				author.data.loadRelations(['subscribes', 'blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
 
-				var blocked = deep(author, 'data.blocking') || []
+					var u = _.map(deep(author, 'data.subscribes') || [], function(a){
+						return a.adddress
+					})
 
-				u = _.filter(u, function(a){
-					return _.indexOf(blocked, a) == -1
-				})
+					var c = u.length
 
-				var e = self.app.localization.e('anofollowing');
+					var blocked = deep(author, 'data.blocking') || []
 
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynofollowing')
-				}
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
 
-				renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
-					report.module = p;
+					var e = self.app.localization.e('anofollowing');
+
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowing')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
+						report.module = p;
+					}, c)
+
 				})
 			},
 
 			blocking : function(_el, report){
 
-				var u = _.map(deep(author, 'data.blocking') || [], function(a){
-					return a
-				})
+				author.data.loadRelations(['blocking'], self.app.platform.sdk.user.loadRelation).then(() => {
 
-				var e = self.app.localization.e('anoblocked');
+					var u = _.map(deep(author, 'data.blocking') || [], function(a){
+						return a
+					})
 
-				if(self.user.isItMe(author.address)){
-					e = self.app.localization.e('aynoblocked')
-				}
+					var e = self.app.localization.e('anoblocked');
 
-				renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), function(e, p){
-					report.module = p;
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynoblocked')
+					}
+
+					renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), function(e, p){
+						report.module = p;
+					})
+
 				})
 			},
 
@@ -841,7 +906,7 @@ var author = (function(){
 						id : 'share',
 						el : _el.find('.newsharewrapper'),
 						animation : false,
-	
+						insertimmediately : true,
 						mid : 'shareauthor',
 						
 						clbk : function(e, p){
@@ -880,7 +945,7 @@ var author = (function(){
 
 						name :  'lenta',
 						el :   _el,
-	
+						insertimmediately : true,
 						data : {
 						},
 	
@@ -891,17 +956,18 @@ var author = (function(){
 						if(!self.app.curation()){
 							if(self.user.isItMe(author.address) && !params.searchValue && !params.searchTags) renders.share(_el)
 
-						
+							var el = _el.find('.authorlentawrapper')
 							self.nav.api.load({
 		
 								open : true,
 								id : 'lenta',
-								el : _el.find('.authorlentawrapper'),
+								el : el,
 								animation : false,
 			
 								mid : author.address,
-			
+								insertimmediately : true,
 								essenseData : params,
+								fade : el,
 								
 								clbk : function(e, p){
 								
@@ -931,8 +997,6 @@ var author = (function(){
 								if (acsearch){
 									acsearch.destroy()
 								}
-								
-
 
 								acsearch = new search(p.el.find('.authorsearch'), {
 									placeholder : self.app.localization.e('e13140') + ' ' + author.data.name,
@@ -1000,7 +1064,7 @@ var author = (function(){
 									
 								})
 
-
+								
 
 								if(isTablet()){
 									c.addClass('searchactive')
@@ -1063,7 +1127,12 @@ var author = (function(){
 						params.loader = function(clbk){
 
 							var _clbk = function(data){
-								var shares = self.app.platform.sdk.node.shares.transform(data) 
+
+								self.app.psdk.share.insertFromResponseSmall(data)
+
+								var shares = self.app.psdk.share.gets(_.map(data, (s) => {
+									return s.txid
+								}))
 
 								if (clbk)
 									clbk(shares, null, {
@@ -1176,22 +1245,31 @@ var author = (function(){
 			},
 		}
 
+		var relationsClbk = function(address){
+
+			if (address == author.address){
+				renders.panel()
+			}
+
+			if(address == author.address || author.address == self.app.user.address.value){
+
+				window.requestAnimationFrame(() => {
+
+					if(!el.c) return
+
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+
+				})
+
+			}
+		}
+
 		var initEvents = function(){
 
 			el.up.on('click', events.up)
 
-			el.c.find('.deletedsettings').on('click', () => {
-				self.nav.api.go({
-					open : true,
-					href : 'userpage',
-					inWnd : isTablet(),
-					history : true,
-					
-					essenseData : {
-						rmhistory : true
-					}
-				})
-			})
+			
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -1203,14 +1281,12 @@ var author = (function(){
 				}
 				
 			}
-
-
+			/*
 			self.app.platform.clbks.api.actions.subscribe.author = function(address){
 
 				if (address == author.address){
 
-					if (el.subscribe)
-						el.subscribe.addClass('following')
+					if (el.subscribe) el.subscribe.addClass('following')
 
 					el.c.find('.notificationturn').removeClass('turnon')	
 
@@ -1285,6 +1361,42 @@ var author = (function(){
 						el.caption.removeClass('blocking');
 				}
 
+			}*/
+
+			self.app.platform.actionListeners.author = function({type, alias, status}){
+
+				if(type == 'unblocking'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'blocking'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'subscribe'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'unsubscribe'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'subscribePrivate'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'userInfo'){
+					if(alias.address == author.address){
+						renders.authorcaption()
+					}
+				}
+
+				if (type == 'accDel'){
+					if(alias.address == author.address){
+						renders.authorcaption()
+					}
+				}
+				
 			}
 
 		}
@@ -1296,15 +1408,15 @@ var author = (function(){
 			if (reports[r])
 				reports[r].active = true;
 
-			renders.info(el.c.find('.mobileinfo'))
+			
+
 			renders.report(reports[r], null, ini)
-			renders.menu()
 
 			self.app.user.isState(function(state){
 
 				if(state){
-					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
+					var me = self.psdk.userInfo.getmy()
+					
 					if (me && me.relation(author.address, 'blocking')){
 						el.caption.addClass('blocking');
 					}
@@ -1314,24 +1426,23 @@ var author = (function(){
 
 			})
 			
-			upbutton = self.app.platform.api.upbutton(el.up, {
-				top : function(){
-
-					return '65px'
-				},
-				class : 'light',
-				rightEl : el.c.find('.leftpanelcell')
-			})	
-
-			if(!isTablet())
-				renders.info(el.info)
+			if(!isMobile()){
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
+						return '65px'
+					},
+					class : 'light',
+					rightEl : el.c.find('.leftpanelcell')
+				})	
+			}
+			
+			
 		}
 
 		var init = function(){
 
 			renders.authorcaption(function(){
 				make(true);
-
 
 				self.sdk.activity.adduser('visited', author.address)
 
@@ -1344,14 +1455,20 @@ var author = (function(){
 		}
 
 		var redir404 = function(){
-			self.app.el.html.removeClass('allcontent')
 
-			self.app.nav.api.load({
-				open : true,
-				href : 'page404',
-				history : true,
-				replaceState : true
-			})
+			setTimeout(() => {
+				self.app.el.html.removeClass('allcontent')
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'page404',
+					history : true,
+					replaceState : true,
+					fade : self.app.el.content
+
+				})
+			}, 400)
+			
 		}
 
 		var preinit = function(address, clbk){
@@ -1359,8 +1476,6 @@ var author = (function(){
 			author = {};
 
 			if (address){
-
-				
 				
 				author.address = address
 
@@ -1372,8 +1487,11 @@ var author = (function(){
 
 					var deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
 
+					author.data = self.psdk.userInfo.get(author.address)
 
-					if(!deleted || self.app.user.isItMe(author.address)){
+
+					
+					if(author.data && (!deleted || self.app.user.isItMe(author.address))){
 
 						if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
 	
@@ -1382,7 +1500,7 @@ var author = (function(){
 							return
 						}
 	
-						if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+						if (author.address != self.app.user.address.value){
 							reports.shares.name = self.app.localization.e('uposts')
 						}
 						else
@@ -1390,36 +1508,67 @@ var author = (function(){
 							reports.shares.name = self.app.localization.e('myuposts')
 	
 							if(!self.app.user.validate()){
+
+								setTimeout(() => {
 	
-								self.app.el.html.removeClass('allcontent')
-	
-								self.nav.api.load({
-									href : 'userpage?id=test',
-									history : true,
-									open : true,
-									replaceState : true
-								})
+									self.app.el.html.removeClass('allcontent')
+		
+									self.nav.api.load({
+										href : 'userpage?id=test',
+										history : true,
+										open : true,
+										replaceState : true,
+										fade : self.app.el.content
+									})
+
+								}, 400)
 	
 								return;
 							}
 						
 						}
 	
-						author.data = self.sdk.users.storage[author.address]
 	
 						var data = {
 							author : author
 						};
+
 	
 						clbk(data);
+
 
 					}
 
 					else{
-						redir404()
+
+						if(self.app.user.isItMe(author.address)){
+							if(!self.app.user.validate()){
+
+								setTimeout(() => {
+	
+									self.app.el.html.removeClass('allcontent')
+		
+									self.nav.api.load({
+										href : 'userpage?id=test',
+										history : true,
+										open : true,
+										replaceState : true,
+										fade : self.app.el.content
+									})
+
+								}, 400)
+	
+								return;
+							}
+						}
+						else{
+							redir404()
+						}
+
+						
 					}
 	
-				})
+				}, true)
 	
 	
 				return
@@ -1477,7 +1626,7 @@ var author = (function(){
 			},
 
 			getdata : function(clbk, settings){
-				
+
 				self.app.el.html.addClass('allcontent')
 
 				self.app.platform.sdk.search.clear()
@@ -1485,8 +1634,6 @@ var author = (function(){
 				var ed = settings.settings.essenseData || {}
 
 				var p = parameters();
-
-				_state = settings.state
 
 				p.address || (p.address = ed.address || self.app.user.address.value || '')
 
@@ -1503,6 +1650,7 @@ var author = (function(){
 				}, function(){
 
 					self.sdk.users.addressByName(p.address, function(address){
+
 						preinit(address, clbk)
 					})
 
@@ -1510,7 +1658,7 @@ var author = (function(){
 				
 			},
 
-			destroy : function(){
+			destroy : function(href, p){
 
 				if(el.c) el.c.empty()
 
@@ -1532,6 +1680,8 @@ var author = (function(){
 					acsearch = null
 				}
 
+				delete self.app.platform.actionListeners.author
+
 				delete self.app.platform.ws.messages.event.clbks.author
 				delete self.app.platform.clbks.api.actions.subscribe.author
 				delete self.app.platform.clbks.api.actions.unsubscribe.author
@@ -1539,9 +1689,12 @@ var author = (function(){
 
 				actions.destroy();
 
+				author = null
+
 				el = {};
 
-				self.app.el.html.removeClass('allcontent')
+				if(href != 'author')
+					self.app.el.html.removeClass('allcontent')
 
 			},
 			
@@ -1583,12 +1736,12 @@ var author = (function(){
 
 	};
 
-	self.stop = function(){
+	self.stop = function(href, p){
 
 		_.each(essenses, function(essense){
 
 			window.requestAnimationFrame(() => {
-				essense.destroy();
+				essense.destroy(href, p);
 			})
 
 		})

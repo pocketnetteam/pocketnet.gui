@@ -1,6 +1,5 @@
 
-var Datastore = require('nedb');
-const { object } = require('underscore');
+var Datastore = require('@seald-io/nedb');
 var f = require('../functions');
 var _ = require('lodash');
 
@@ -92,7 +91,9 @@ var Wallet = function(p){
         return Promise.resolve()
     }
 
-    var db = new Datastore(f.path(p.dbpath));
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
 
     var initProcess = function(){
 
@@ -168,7 +169,6 @@ var Wallet = function(p){
             }
             else{
 
-                
             }
 
         })

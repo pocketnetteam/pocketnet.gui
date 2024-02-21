@@ -13,7 +13,7 @@ var showAvatar = function(relatedContent){
 
 				
 			<div class="icon" profile="<%-relatedContent.address%>" >
-				<div class="usericon usericonsbsa another" image="<%-src || '*'%>" visibleimage="true" ban=".gif" contain="none">
+				<div class="usericon usericonsbsa another" <% if(src) {%> <%= bgImagesClApplyTemplate(src) %> <% } %> visibleimage="true" ban=".gif" contain="none">
 
 					<% if(!src && letter) { %>
 
@@ -32,9 +32,6 @@ var showAvatar = function(relatedContent){
 		<% if(!app.mobileview) {%></a><% } %>
 
 	<% } %>
-	
-	
-	
 
 <% }
 
@@ -83,13 +80,13 @@ if(activity.txType === 204)
 			</a>
 		</div>
 		<% if(activity.description) { %>
-		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<div class="message"><%- trydecode(activity.description.message) %></div>
 		<% } %>
 			<% if(activity.description.images) {
 		%>
 		<div class="images">
 			<%_.each(activity.description.images, function(image){%>
-				<div class="img" image="<%-decodeURIComponent(image)%>">
+				<div class="img" image="<%-trydecode(image)%>">
 				</div>
 			<% }) %>
 		</div>
@@ -116,7 +113,7 @@ if(activity.txType === 301) { %>
 			</a>
 		</div>
 		<% if(activity.description) { %>
-		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<div class="message"><%- trydecode(activity.description.message) %></div>
 		<% } %>
 		<div class="date"><%- activity.date.calendar() %></div>
 	</div>
@@ -203,7 +200,7 @@ if(activity.txType === 208)
 			</a>
 		</div>
 		<% if(activity.description) { %>
-		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<div class="message"><%- trydecode(activity.description.message) %></div>
 		<% } %>
 		<div class="date"><%- activity.date.calendar() %></div>
 	</div>
@@ -228,7 +225,7 @@ if(activity.txType === 300) {
 			</a>
 		</div>
 		<% if(activity.description) { %>
-		<div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+		<div class="message"><%- trydecode(activity.description.message) %></div>
 		<% } %>
 		<div class="stars">
 			<%
@@ -308,8 +305,6 @@ if(videos.length) {
 				</div>
 				<%
 				if(video?.date) {
-
-					console.log('video.date', video.date)
 
 				%>
 					<div class="date">

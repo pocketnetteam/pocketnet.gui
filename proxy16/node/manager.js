@@ -1,8 +1,10 @@
 
 var Node = require('./node');
-var Datastore = require('nedb');
+var Datastore = require('@seald-io/nedb');
 var _ = require('lodash');
 var f = require('../functions');
+const fs = require('fs');
+
 const { performance } = require('perf_hooks');
 const queuemethods = {
     getcontent: true,
@@ -66,9 +68,12 @@ var Nodemanager = function(p){
 
     var minnodescount = global.MIN_NODES_COUNT || 1
     var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
+    var iniNodeCount = global.INI_NODE_COUNT || 10
 
-    var db = new Datastore(f.path(p.dbpath));
-   
+    var db = new Datastore({
+        filename: f.path(p.dbpath),
+    });
+
     self.remap = function(){
         self.nodesmap = {};
 
@@ -177,8 +182,9 @@ var Nodemanager = function(p){
 
         _.each(_.shuffle(notinitednodes), function(node, i){
 
-            if (i < 10) // not more 10 for time
+            if (i < iniNodeCount){
                 self.initIfNeed(node)
+            }
 
         })
 
@@ -456,6 +462,8 @@ var Nodemanager = function(p){
                         }
     
                     })
+                }).catch(e => {
+                    self.logger.w('system', 'error', `Can't save node ${node.key}`)
                 })
 
             else
@@ -510,10 +518,11 @@ var Nodemanager = function(p){
         if(!node.eventsCount) return
 
         var workingNodes = getWorkingNodes()
+        var inited = 0
 
-        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || node.alwaysrun){
-
+        if (workingNodes.length + inited < minnodescount || !usersfornode || (self.proxy.users() / usersfornode >= workingNodes.length + inited) || node.alwaysrun){
             node.init()
+            inited++
         }
         
     }
@@ -521,33 +530,35 @@ var Nodemanager = function(p){
     var forgetIfNotUsing = function(){
 
         var workingNodes = getWorkingNodes()
+        var forgotten = 0
 
+        _.each(self.nodes, function(n){
 
-        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || workingNodes.length <= 1){
+            if ((workingNodes.length - forgotten < minnodescount) || !usersfornode || (self.proxy.users() / usersfornode >= workingNodes.length - forgotten) || (workingNodes.length - forgotten) <= 1){
 
-        }else{
-
-            _.each(self.nodes, function(n){
-
+            }else{
+    
                 if(n.inited && !n.alwaysrun){
 
                     if(!n.wss.count()){
-
+    
                         if(f.date.addseconds(n.initedTime, 60) > new Date()){
                         }
                         else{
                             n.forget()
+                            forgotten++
                         }
                         
-
+    
                     }
                     else{
                     }
                 }
+               
+            }
 
-            })
-           
-        }
+        })
+        
     }
 
     /// add to main
@@ -556,6 +567,8 @@ var Nodemanager = function(p){
         if(!self.nodesmap[node.key]){
             self.nodes.push(node);
             self.remap()
+
+            return node
         }
     }
     
@@ -731,7 +744,6 @@ var Nodemanager = function(p){
                 penalty : node.penalty(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
-                
                 users : node.wss.count(),
 
                 probability : probability,
@@ -837,10 +849,8 @@ var Nodemanager = function(p){
 
         return new Promise((resolve, reject) => {
 
-            db.remove({ version: {$in : ['0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22', '0.20.21', '0.20.22', '0.20.21', '0.20.20', '0.20.19', '0.20.16', '0.20.17', '0.20.18', '0.20.16', '0.20.15', '0.20.14']}  }, { multi: true }, function (err, numRemoved) {
+            db.remove({ version: {$in : ['0.21.1', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
 
-                console.log("db cleared", numRemoved)
-                
                 if(err) return reject(err)
                 
                 resolve()
@@ -852,6 +862,22 @@ var Nodemanager = function(p){
        
     }
 
+    var dbcheck = function(loaderr, clbk){
+        if(loaderr){
+
+            fs.unlinkSync(f.path(p.dbpath))
+
+            db.loadDatabase(err => {
+
+                clbk()
+
+            })
+        }
+        else{
+            clbk()
+        }
+    }
+
 
     self.init = function(){
 
@@ -860,83 +886,84 @@ var Nodemanager = function(p){
         return new Promise((resolve, reject) => {
             db.loadDatabase(err => {
 
-                db.ensureIndex({ fieldName: 'key', unique: true });
 
-                self.cleardatabase().catch(e => {}).then(() => {
+                dbcheck(err, function(){
 
-                    var bchain = 'main'
+                    db.ensureIndex({ fieldName: 'key', unique: true });
 
-                    if (self.proxy.test) bchain = 'test'
+                    self.cleardatabase().catch(e => {}).then(() => {
 
-                    db.find({bchain}).exec(function (err, docs) {
+                        var bchain = 'main'
 
-                        self.nodes = []
+                        if (self.proxy.test) bchain = 'test'
 
-                        var haslocal = self.nodeControl.kit.hasbin()
+                        db.find({bchain}).exec(function (err, docs) {
 
-                        var c = []
+                            self.nodes = []
 
-                        if (haslocal) c = [{
-                            host : '127.0.0.1',
-                            port : 38081,
-                            ws : 8087,
-                            name : 'Local Proxy Pocketnet Node',
-                            local : true
-                        }]
+                            var haslocal = self.nodeControl.kit.hasbin()
 
-                        docs = _.filter(_.shuffle(docs), function(d, i){
-                            if(i < 5) return true
-                        })
+                            var c = []
 
-                        if (usetrustnodesonly){
-                            docs = []
-                        }
+                            if (haslocal) c = [{
+                                host : '127.0.0.1',
+                                port : 38081,
+                                ws : 8087,
+                                name : 'Local Proxy Pocketnet Node',
+                                local : true
+                            }]
 
-                        var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
+                            docs = _.filter(_.shuffle(docs), function(d, i){
+                                if(i < 5) return true
+                            })
 
-                            var node = new Node(options, self)
+                            if (usetrustnodesonly){
+                                docs = []
+                            }
 
-                            self.add(node)
+                            var nodes = _.filter(_.map(c.concat(p.stable, docs || []) , function(options){
 
-                            return node
-                            
-                        })
+                                var node = new Node(options, self)
 
-                        self.api.connected(nodes, function(nodes){
-                            saveNodes(nodes)
-                        })
+                                return self.add(node)
+                                
+                            }), (n) => {return n})
 
-                        setTimeout(function(){
-                            self.find()
-                        }, 2000)
-                        
-                        if(!findInterval)
-                            findInterval = setInterval(self.find, 30000)
+                            self.api.connected(nodes, function(nodes){
+                                saveNodes(nodes).catch(e => {
 
-                        if(!commonnotinitedInterval)
-                            commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
+                                })
+                            })
 
-                        if(!queueInterval)
-                            queueInterval =  setInterval(worker, 10) 
-
-                        if(!statscalculationInterval)
-                            statscalculationInterval = setInterval(function(){
+                            setTimeout(function(){
+                                self.find()
                                 self.bestapply()
                                 self.bestnodesapply()
-                            }, statscalculationTime) 
+                            }, 2000)
+                            
+                            if(!findInterval)
+                                findInterval = setInterval(self.find, 30000)
 
-                        setTimeout(function(){
-                            self.bestapply()
-                            self.bestnodesapply()
-                        }, 2000)
+                            if(!commonnotinitedInterval)
+                                commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
 
-                        inited = true
+                            if(!queueInterval)
+                                queueInterval =  setInterval(worker, 10) 
 
-                        
+                            if(!statscalculationInterval)
+                                statscalculationInterval = setInterval(function(){
+                                    self.bestapply()
+                                    self.bestnodesapply()
+                                }, statscalculationTime) 
 
-                        resolve()
+                            inited = true
 
+                            resolve()
+
+                        })
                     })
+
+
                 })
 
                 
@@ -1038,7 +1065,7 @@ var Nodemanager = function(p){
     self.selectProbability = function(){
 
         var nds = _.filter(self.initednodes(), (nd) => {
-            return nd.allowRpc
+            return nd.allowRpc && nd.export().canuse && !nd.backward
         })
 
         var np = _.map(nds, function(node){
@@ -1172,32 +1199,27 @@ var Nodemanager = function(p){
         connected : function(nodes){
             var connected = []
 
+            var bchain = self.proxy.test ? 'test' : 'main'
+
             var promises = _.map(nodes, function(node){
 
                 return node.info().then(r => {
 
-                    var bchain = 'main'
-
-                    if (self.proxy.test) bchain = 'test'
-
-                    if(node.bchain != bchain){
+                    if (node.bchain != bchain){
                         return Promise.reject('bchain')
                     }
 
                     connected.push(node)
 
+                    return Promise.resolve()
+
                 }).catch(e => {
 
-                    return Promise.reject({
-                        e : e,
-                        node : node
-                    })
+                    return Promise.resolve()
                 })
             })
 
-            return Promise.all(promises).catch(en => {
-                return Promise.resolve(connected)
-            }).then(r => {
+            return Promise.all(promises).then(r => {
                 return Promise.resolve(connected)
             })
 
@@ -1284,7 +1306,9 @@ var Nodemanager = function(p){
                     self.add(node)
                 })
 
-                saveNodes(connected)
+                saveNodes(connected).catch(e => {
+                    
+                })
 
                 self.remap()
 

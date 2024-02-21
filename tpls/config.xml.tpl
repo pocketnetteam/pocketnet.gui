@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="32" />
+    <preference name="android-targetSdkVersion" value="33" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -20,6 +20,8 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="NavigationBarBackgroundColor" value="#011621" />
+    <preference name="NavigationBarLight" value="true" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
     <preference name="BackgroundColor" value="#011621" />
@@ -109,12 +111,16 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
+        <preference name="scheme" value="bstn" />
+        <preference name="hostname" value="bastyon" />
+        
     </platform>
     
 
     <allow-navigation href="*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="*" />
-    
+    <allow-intent href="data:*" />
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
@@ -149,20 +155,22 @@
         <preference name="InterceptRemoteRequests" value="all" />
         <preference name="allowFileAccessFromFileURLs" value="true" />
         <preference name="allowUniversalAccessFromFileURLs" value="true" />
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-        <array>
-            <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLName</key>
-                <string>REVERSED_CLIENT_ID</string>
-                <key>CFBundleURLSchemes</key>
+        <% if(config.cordova.reversedClientId) {%>
+            <config-file target="*-Info.plist" parent="CFBundleURLTypes">
                 <array>
-                    <string>com.googleusercontent.apps.1020521924918-0he8n2cuadpvdm9mi2dv9vj8llr8pgr1</string>
+                    <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>REVERSED_CLIENT_ID</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                            <string><%-config.cordova.reversedClientId%></string>
+                        </array>
+                    </dict>
                 </array>
-            </dict>
-        </array>
-        </config-file>
+            </config-file>
+        <% } %>
 
     </platform>
     <platform name="android">
@@ -178,6 +186,12 @@
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <provider android:authorities="${applicationId}.sharing.provider" android:exported="false" android:grantUriPermissions="true" android:name="nl.xservices.plugins.FileProvider">
+                <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/sharing_paths" />
+            </provider>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/notification_icon" />
         </config-file>
 
@@ -188,6 +202,10 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+            <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+            <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+            <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
@@ -198,21 +216,11 @@
     </platform>
 
     <universal-links>
-        <ios-team-id value="Y5JW9JU787"/>
+        <% if(config.cordova.iosTeamId) {%>
+            <ios-team-id value="<%-config.cordova.iosTeamId%>"/>
+        <% } %>
 
-        <host name="pocketnet.app" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="test.pocketnet.app" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="bastyon.com" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="test.bastyon.com" scheme="https">
+        <host name="<%-domain%>" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 

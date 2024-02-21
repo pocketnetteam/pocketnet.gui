@@ -102,7 +102,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         answer: {
             ru: {
-                title: `${data.user} оставил ответ на Ваш комментарий`,
+                title: `${data.user} оставил ответ на ваш комментарий`,
                 body: ``
             },
             en: {
@@ -122,7 +122,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         subscriber: {
             ru: {
-                title: `У Вас новый подписчик`,
+                title: `У вас новый подписчик`,
                 body: `Пользователь ${data.user}`
             },
             en: {
@@ -132,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} оцененил Вашу публикацию`,
+                title: `Пользователь ${data.user} оценил вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -142,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} оцененил Ваш комментарий`,
+                title: `Пользователь ${data.user} оценил ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {

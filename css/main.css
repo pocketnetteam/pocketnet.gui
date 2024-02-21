@@ -147,6 +147,9 @@
 :root {
   --app-margin-top-default: 0px;
   --app-margin-top: 0px;
+  --app-margin-bottom-default: 0px;
+  --keyboardheight: 0px;
+  --app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
 }
 @supports (width: max(1px, 1px)) {
   :root {
@@ -248,8 +251,6 @@
   .customscroll {
     overflow-y: overlay;
     overflow-x: hidden;
-    scrollbar-width: 7px;
-    scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
     overscroll-behavior: contain;
     scroll-behavior: smooth;
   }
@@ -265,11 +266,12 @@
     background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
   }
 }
+.wnd:not(.pipmini) {
+  contain: strict;
+}
 .wnd .wndcustomscroll {
   overflow-y: overlay;
   overflow-x: hidden;
-  scrollbar-width: 7px;
-  scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
   overscroll-behavior: contain;
   scroll-behavior: smooth;
 }
@@ -296,6 +298,7 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: overlay;
+  scroll-behavior: initial!important;
   /*&.mobileview{
         scroll-behavior: smooth;
     }*/
@@ -310,7 +313,7 @@ html.testpocketnet .testpocketnetbg {
 }
 [image] {
   will-change: opacity, background;
-  /*contain: strict;*/
+  contain: strict;
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
@@ -514,12 +517,6 @@ input.ie[type="range"]::-ms-thumb {
 /* ==========================================================================
    Browser Upgrade Prompt
    ========================================================================== */
-.browserupgrade {
-  margin: 0.2em 0;
-  background: rgb(var(--neutral-grad-2));
-  color: rgb(var(--text-color));
-  padding: 0.2em 0;
-}
 #topsmallpreloader,
 #globalpreloader,
 .updatingFrontend {
@@ -608,6 +605,7 @@ input.ie[type="range"]::-ms-thumb {
 }
 .js-player .video-js.vjs-thumb {
   display: block;
+  background-color: transparent;
 }
 .js-player.player-ready .video-js {
   display: block;
@@ -665,8 +663,17 @@ input[type="number"] {
   background: rgb(var(--background-hidden-layer));
   color: rgb(var(--text-color));
   border-radius: 6px;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border: 1px solid rgb(var(--neutral-grad-2));
+}
+button {
+  padding: 0.5em;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  min-height: 44px;
 }
 textarea {
   background: rgb(var(--background-hidden-layer));
@@ -730,9 +737,8 @@ button {
   color: rgb(var(--text-on-bg-ac-color));
   border: 1px solid rgb(var(--color-bg-ac-bright));
   text-align: center;
-  font-size: 0.9em;
-  font-weight: 600;
   border-radius: 8px;
+  font-size: 0.9em;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -933,15 +939,6 @@ l {
 .radio label > input:checked + i {
   background: rgb(var(--color-bg-ac));
 }
-pie {
-  width: 5em;
-  height: 5em;
-  display: block;
-  border-radius: 50%;
-  background-color: rgb(var(--color-good));
-  border: 2px solid rgb(var(--color-good));
-  float: left;
-}
 .ten {
   background-image: linear-gradient(126deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%);
 }
@@ -979,19 +976,6 @@ pie {
 }
 .abbr {
   display: none;
-}
-.clearfix {
-  display: block;
-}
-.clearfix:after {
-  content: "";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
 }
 .upbutton {
   position: fixed;
@@ -1032,7 +1016,7 @@ pie {
   padding: 1em 0;
   padding-left: 0;
   color: rgba(var(--neutral-grad-2), 0.5);
-  height: 50px;
+  height: 100%;
   width: 100%;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -2027,8 +2011,17 @@ input[type=radio].radio:checked + label {
   bottom: 0.75em;
   width: auto;
 }
+.m-message-container.is-bottom-right .close {
+  display: none;
+}
 .m-message-container.is-top-left {
   top: calc(0.5em + var(--app-margin-top));
+}
+.m-message-container .close {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
 }
 .m-message-container .notificationWrapper {
   display: block;
@@ -2220,7 +2213,7 @@ input[type=radio].radio:checked + label {
   height: 3.5em;
   line-height: 3.5em;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.9em;
   cursor: pointer;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
@@ -2246,19 +2239,21 @@ input[type=radio].radio:checked + label {
   right: 0;
   top: 0;
   bottom: 0;
-  display: none;
-  width: 78px;
-  height: 78px;
+  opacity: 0;
   margin: auto;
   z-index: 20000;
+  contain: strict;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 .successCheck .successCheckWrapper {
   width: 100%;
   height: 100%;
-}
-.successCheck .successCheckWrapper > div {
-  vertical-align: middle;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .successCheck .successCheckWrapper > div .chw {
   margin: 0 auto;
@@ -2269,6 +2264,9 @@ input[type=radio].radio:checked + label {
   -webkit-backdrop-filter: blur(14px);
   padding: 1em;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.successCheck.active {
+  opacity: 1;
 }
 .successCheck .text {
   margin-top: 0.5em;
@@ -2315,6 +2313,7 @@ input[type=radio].radio:checked + label {
 #windowsContainer .rightchatspacer {
   margin-right: 0;
 }
+#windowsContainer .wnd:nth-last-child(2) .wndback,
 #windowsContainer .wnd:nth-last-child(1) .wndback {
   background: rgba(var(--color-shadow-base), 0.75);
   backdrop-filter: blur(14px);
@@ -2529,15 +2528,15 @@ html.mobileview.android .wnd .wndback {
 }
 .wnd ._close {
   top: calc(0.5em + var(--app-margin-top));
-  right: 0.75em;
+  right: 0.5em;
 }
 .wnd ._expand {
   top: 0.5em;
-  left: 0.75em;
+  left: 0.5em;
 }
 .wnd ._changeplace {
   bottom: 0.5em;
-  left: 0.75em;
+  left: 0.5em;
 }
 .wnd .wndok,
 .wnd .wndclose {
@@ -2732,10 +2731,16 @@ html.mobileview.android .wnd .wndback {
   max-width: 300px;
   width: 25%;
   height: auto;
-  z-index: 999;
+  z-index: 1007;
 }
 .wnd.pipmini .recomandationsFromContent {
   display: none!important;
+}
+.wnd.pipmini .statswrapperExtended {
+  display: none!important;
+}
+.wnd.pipmini #post .forurl > .url {
+  position: static!important;
 }
 .wnd.pipmini .wndinner {
   box-shadow: none;
@@ -2953,6 +2958,16 @@ html.mobileview.android .wnd .wndback {
   height: 100%;
   vertical-align: middle;
 }
+.shell_fadefast {
+  opacity: 0;
+}
+.shell_fadefast.shell_fadein {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
 .bgCaption {
   height: 180px;
   background: rgb(var(--color-bg-ac-1));
@@ -3030,11 +3045,11 @@ html.mobileview.android .wnd .wndback {
   left: 0;
   right: 0;
   height: 360px;
-  z-index: 30;
-  -moz-transition: 0.6s;
-  -o-transition: 0.6s;
-  -webkit-transition: 0.6s;
-  transition: 0.6s;
+  z-index: 300;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   color: rgb(var(--text-on-bg-ac-color));
   background: rgb(var(--color-shadow-var));
 }
@@ -3043,7 +3058,7 @@ html.mobileview.android .wnd .wndback {
   height: 2px;
   left: 0;
   right: 0;
-  top: 0;
+  top: var(--app-margin-top);
   width: 100%;
   z-index: 10000000;
   display: none;
@@ -3088,15 +3103,20 @@ html.mobileview.android .wnd .wndback {
 .preloader6 img {
   width: 30px;
 }
+.preloader6,
 .preloader5 {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 7.5px;
 }
+.preloader6 img,
 .preloader5 img {
   height: 7.5px;
   width: 30px;
+}
+.preloader6 {
+  display: inline-block;
 }
 .preloader5 span {
   vertical-align: middle;
@@ -3147,7 +3167,7 @@ html.mobileview.android .wnd .wndback {
   bottom: 0;
   right: 0;
   background: rgba(var(--color-shadow-var), 0.9);
-  z-index: 150;
+  z-index: 1010;
 }
 .dialog.zindex {
   z-index: 5000;
@@ -3525,7 +3545,7 @@ html.mobileview.android .wnd .wndback {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   border-radius: 5px;
-  scrollbar-width: 0px;
+  scrollbar-width: none;
 }
 .menudialog .mobiledialogcontent::-webkit-scrollbar {
   width: 0;
@@ -4097,7 +4117,7 @@ html.mobileview.android .wnd .wndback {
 }
 .vc_valuecustom {
   width: 200px;
-  height: 38px;
+  height: 44px;
   position: relative;
   border-radius: 6px;
 }
@@ -4162,7 +4182,7 @@ html.mobileview.android .wnd .wndback {
   border-top-right-radius: 0;
 }
 .vc_valuecustom .vc_selectInput .vc_value {
-  padding: 0.25em 0.5em;
+  padding: 1em 0.5em;
   cursor: pointer;
 }
 .vc_valuecustom .vc_selectInput .vc_value:hover {
@@ -4222,9 +4242,13 @@ html.mobileview.android .wnd .wndback {
 .vc_valuecustom .currencies .vc_value .obscure {
   font-size: 0.9em;
 }
+.horizontalSearchUsersWrapper,
 .horizontalLentaWrapper {
   position: relative;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption,
+.horizontalLentaWrapper .horizontalSearchUserscaption,
+.horizontalSearchUsersWrapper .horizontalLentacaption,
 .horizontalLentaWrapper .horizontalLentacaption {
   display: flex;
   justify-content: space-between;
@@ -4233,15 +4257,29 @@ html.mobileview.android .wnd .wndback {
   padding-bottom: 0.5em;
   font-size: 18px;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption .controlhors,
+.horizontalLentaWrapper .horizontalSearchUserscaption .controlhors,
+.horizontalSearchUsersWrapper .horizontalLentacaption .controlhors,
 .horizontalLentaWrapper .horizontalLentacaption .controlhors {
   display: flex;
   width: 75px;
   justify-content: space-between;
 }
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalLentaWrapper .horizontalSearchUserscaption .controlhors i,
+.horizontalSearchUsersWrapper .horizontalLentacaption .controlhors i,
+.horizontalLentaWrapper .horizontalLentacaption .controlhors i {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+}
+.horizontalSearchUsersWrapper .horizontalSearchUserscaption span,
+.horizontalLentaWrapper .horizontalSearchUserscaption span,
+.horizontalSearchUsersWrapper .horizontalLentacaption span,
 .horizontalLentaWrapper .horizontalLentacaption span {
   font-weight: 700;
   font-size: 0.8em;
 }
+.horizontalSearchUsersWrapper .controlhor,
 .horizontalLentaWrapper .controlhor {
   display: none;
   border-radius: 8px;
@@ -4261,15 +4299,19 @@ html.mobileview.android .wnd .wndback {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+.horizontalSearchUsersWrapper .controlhor.controlleft,
 .horizontalLentaWrapper .controlhor.controlleft {
   left: 0.5em;
 }
+.horizontalSearchUsersWrapper .controlhor.controlright,
 .horizontalLentaWrapper .controlhor.controlright {
   right: 0.5em;
 }
+.horizontalSearchUsersWrapper.hasitems .controlhor,
 .horizontalLentaWrapper.hasitems .controlhor {
   display: flex;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper,
 .horizontalLentaWrapper .showmorebywrapper {
   overflow: hidden;
   overflow-x: scroll;
@@ -4277,22 +4319,27 @@ html.mobileview.android .wnd .wndback {
   scrollbar-width: none;
   border-radius: 6px;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
   height: 4px;
   width: 4px;
   background: rgba(var(--neutral-grad-0), 0.3);
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar-thumb:horizontal,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar-thumb:horizontal {
   background: rgb(var(--color-shadow-base));
   border-radius: 10px;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper::-webkit-scrollbar,
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
   display: none!important;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper .anothercntswrk,
 .horizontalLentaWrapper .showmorebywrapper .anothercntswrk {
   padding-left: 0!important;
   padding-right: 0!important;
 }
+.horizontalSearchUsersWrapper .showmorebywrapper .showmorebywrapper,
 .horizontalLentaWrapper .showmorebywrapper .showmorebywrapper {
   display: none;
 }
@@ -4413,6 +4460,9 @@ html.mobileview.android .wnd .wndback {
   max-width: 600px;
   border-radius: 10px;
 }
+html.mobileview[chatposition='above'] .matrixchatwrapper {
+  z-index: 1006;
+}
 html.mobileview .matrixchatwrapper {
   position: fixed;
   contain: strict;
@@ -4439,9 +4489,6 @@ html.mobileview .matrixchatwrapper.active {
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
-html.mobileview[chatposition='above'] .matrixchatwrapper {
-  z-index: 1006;
-}
 html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -4450,32 +4497,31 @@ html.mobileview .tooltipMobileDialog {
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
-  transform: translateY(100%);
-  -moz-transition: 0.15s;
-  -o-transition: 0.15s;
-  -webkit-transition: 0.15s;
-  transition: 0.15s;
+  transform: translateY(100%) scale(0.5);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 html.mobileview .tooltipMobileDialog.animend .mobiledialogcontent {
   -webkit-transform: translateY(0);
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 html.mobileview .tooltipMobileDialog .thwrapper {
   padding: 0;
   max-width: 450px;
   background: transparent;
-  width: 93%;
+  width: 85%;
   margin: 0 auto;
   border: 0;
   margin-bottom: 0;
-  padding-bottom: 1em;
   box-shadow: none;
 }
 html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
-  max-height: calc(var(--vh, 1vh) * 60);
+  max-height: calc(var(--vh, 1vh) * 90);
 }
 html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;
@@ -4498,7 +4544,7 @@ html.mobileview .tooltipMobileDialog .header .text {
 }
 html.mobileview .tooltipMobileDialog .closeButton,
 html.mobileview .tooltipMobileDialog .menuitem {
-  padding: 2em 1em;
+  padding: 1.5em 1em;
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;
@@ -4626,7 +4672,7 @@ html.cameraenabledrun .appcnt {
     right: 0.5em;
     width: auto;
     max-width: none;
-    top: 70px;
+    top: calc(70px + var(--app-margin-top));
     will-change: transform;
     -moz-transition: transform 0.3s;
     -o-transition: transform 0.3s;
@@ -4641,7 +4687,7 @@ html.cameraenabledrun .appcnt {
     transition: transform 0.3s;
   }
   html.mobileview .wnd.pipmini[position='bottom'] {
-    bottom: 100px;
+    bottom: calc(var(--keyboardheight, 0) + 100px);
     top: auto;
   }
   html.mobileview .wnd.pipmini[position='bottom'] ._changeplace {
@@ -4691,6 +4737,11 @@ html.mobileview.fullscreen #menuWrapper {
 html.mobileview.fullscreen #navigationWrapper {
   display: none!important;
 }
+html.allcontent_application #navigationWrapper,
+html.allcontent_application #menuWrapper,
+html.allcontent_application #footerWrapper {
+  display: none!important;
+}
 .windowsContainer {
   position: relative;
 }
@@ -4713,15 +4764,6 @@ html.mobileview.fullscreen #navigationWrapper {
     border-radius: 0px;
     margin-bottom: 10px;
   }
-}
-.thinput[value='1'] i:before {
-  content: "\f00c";
-}
-.thinput[value='-1'] i:before {
-  content: "";
-}
-.thinput[value='0'] i:before {
-  content: "\f00d";
 }
 .coinwithsmall {
   width: auto;
@@ -4868,6 +4910,29 @@ html.mobileview.fullscreen #navigationWrapper {
   border-left-color: rgb(var(--background-total-theme));
   left: 0px;
 }
+.registrationProgressIcon {
+  display: flex;
+  align-items: center;
+}
+.registrationProgressIcon span {
+  margin-left: 1em;
+}
+.registrationProgressIcon i {
+  color: rgb(var(--color-txt-gray-dark)) !important;
+}
+.registrationProgressIcon.not_in_progress i {
+  color: rgb(var(--color-bad)) !important;
+}
+.registrationProgressIcon.in_progress_wait_unspents i {
+  color: rgb(var(--color-good)) !important;
+}
+.registrationProgressIcon.in_progress_transaction i,
+.registrationProgressIcon.in_progress_hasUnspents i {
+  color: rgb(var(--color-bg-ac-bright)) !important;
+}
+.registrationProgressIcon.blocked i {
+  color: rgb(var(--color-bad)) !important;
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -4908,6 +4973,18 @@ html.mobileview.fullscreen #navigationWrapper {
 .usericon:hover .realperson {
   opacity: 0.7;
 }
+.usericon .registrationProgressIcon {
+  position: absolute;
+  bottom: -4%;
+  left: -4%;
+}
+.usericon .registrationProgressIcon i {
+  font-size: 0.8em;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.usericon .registrationProgressIcon span {
+  display: none;
+}
 .userpic {
   width: 40px;
   height: 40px;
@@ -4920,13 +4997,6 @@ html.mobileview.fullscreen #navigationWrapper {
   color: rgb(var(--color-txt-ac-1));
   cursor: pointer;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
-}
-.fastMessage,
-.notification {
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
 }
 .fastMessage .time,
 .notification .time {
@@ -4980,12 +5050,19 @@ html.mobileview.fullscreen #navigationWrapper {
   color: rgb(var(--color-bad));
   border: 1px solid rgb(var(--color-bad));
 }
+.fastMessage .transactionmessagewrapper,
+.notification .transactionmessagewrapper {
+  display: flex;
+}
 .fastMessage .transactionmessagewrapper > div,
 .notification .transactionmessagewrapper > div {
-  vertical-align: top;
+  align-items: flex-start;
+  flex-grow: 1;
 }
 .fastMessage .transactionmessagewrapper > div.foramount,
 .notification .transactionmessagewrapper > div.foramount {
+  white-space: nowrap;
+  flex-grow: 0;
   font-weight: 700;
   text-align: right;
   color: rgb(var(--color-good));
@@ -5067,6 +5144,7 @@ html.mobileview.fullscreen #navigationWrapper {
 .notification .sharedivide {
   color: rgb(var(--color-text-ac));
   padding: 0.25em 0;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
 }
 .fastMessage .sharepreview .shareprwrapper > div,
 .notification .sharepreview .shareprwrapper > div {
@@ -5191,26 +5269,28 @@ html.mobileview.fullscreen #navigationWrapper {
 .notification .subscribeWrapper > div.forsubscribe button.disabled:hover {
   background: transparent;
 }
+.fastMessage .cwrapper,
+.notification .cwrapper {
+  display: flex;
+}
 .fastMessage .cwrapper > div,
 .notification .cwrapper > div {
-  vertical-align: middle;
+  align-items: center;
+  flex-grow: 2;
 }
 .fastMessage .cwrapper > div.cellforimage,
 .notification .cwrapper > div.cellforimage {
   width: 50px;
-  vertical-align: top;
+  flex-grow: 0;
+  max-width: 50px;
 }
 .fastMessage .cwrapper > div.extra,
 .notification .cwrapper > div.extra {
-  width: 90px;
+  max-width: 90px;
 }
 .fastMessage .cwrapper > div .infomain,
 .notification .cwrapper > div .infomain {
   padding-left: 0.5em;
-}
-.fastMessage .cwrapper > div .infomain .caption,
-.notification .cwrapper > div .infomain .caption {
-  font-size: 1em;
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
@@ -5241,8 +5321,16 @@ html.mobileview.fullscreen #navigationWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
+.fastMessage .caption,
+.notification .caption {
+  font-size: 0.9em;
+}
 .fastMessage {
   border-radius: 12px;
+  -moz-transition: bottom 0.3s;
+  -o-transition: bottom 0.3s;
+  -webkit-transition: bottom 0.3s;
+  transition: bottom 0.3s;
 }
 .fastMessage.smallsize {
   padding: 0.5em;
@@ -5268,6 +5356,31 @@ html.mobileview.fullscreen #navigationWrapper {
   line-height: 31px;
   font-size: 0.8em;
   margin-bottom: 4px;
+}
+#hideallnotificationsel .hidenf {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  width: 390px;
+  background: rgba(var(--color-shadow-base), 0.98);
+  color: rgb(var(--color-txt-ac-1));
+  z-index: 140;
+  overflow: hidden;
+  padding: 1em;
+  text-align: center;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#hideallnotificationsel .hidenf:hover {
+  opacity: 0.8;
 }
 .closecsscross {
   position: relative;
@@ -5458,6 +5571,12 @@ html.mobileview.fullscreen #navigationWrapper {
 }
 .fastMessage .ghost {
   color: rgb(var(--color-bg-ac));
+}
+.fastMessage.bright {
+  background: rgba(var(--color-bg-ac-bright), 0.98);
+}
+.fastMessage.bright .transactionmessagewrapper > div.foramount {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .editCategoryPath,
 .path {
@@ -5870,6 +5989,12 @@ html.mobileview.fullscreen #navigationWrapper {
 html.mobileview .plyr__volume {
   max-width: 32px;
 }
+html.mobileview .plyr__volume input {
+  display: none;
+}
+html.mobileview #hideallnotificationsel {
+  display: none;
+}
 html.mobileview #panelWrapper {
   position: fixed;
   top: 65px;
@@ -5922,7 +6047,7 @@ html.mobileview.scrollmodedown #comments .captionfwrapper {
   transform: translateY(calc(-65px - var(--app-margin-top)));
 }
 html.mobileview.scrollmodedown #navigation .nmenu {
-  transform: translateY(90px);
+  transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
 html.mobileview.scrollmodedown #navigation .fakem {
   display: block;
@@ -5930,7 +6055,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 90px;
+  height: calc(var(--app-margin-bottom, 0) + 60px);
 }
 html.mobileview #navigation .fakem {
   display: none;
@@ -5982,7 +6107,7 @@ html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
 html.mobileview.scrollmodedown #navigation .nmenu {
-  transform: translateY(90px);
+  transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
 html.mobileview.scrollmodedown #navigation .fakem {
   display: block;
@@ -5990,7 +6115,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 90px;
+  height: 70px;
 }
 html.mobileview #navigation .fakem {
   display: none;
@@ -6004,7 +6129,7 @@ html.mobileview #navigation .fakem {
     display: none!important;
   }
   .menudialog .secondwrapper {
-    padding-bottom: 1.5em;
+    padding-bottom: 4em;
     vertical-align: bottom;
   }
 }
@@ -6336,6 +6461,14 @@ html.mobileview #content .work {
     page-break-after: avoid;
   }
 }
+html.allcontent {
+  /*body{
+        background: #051b48;
+    }*/
+}
+html.allcontent #footerWrapper {
+  background: #051b28;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   button.medium {
@@ -6490,13 +6623,13 @@ html.mobileview #content .work {
     font-size: 1.1em;
     font-weight: 100;
   }
-  html.allcontent .contentWrapper {
-    padding-top: 0;
-  }
-  html.allcontent body {
-    background: #051b48;
+  html.allcontent {
+    /*body{
+            background: #051b48;
+        }*/
   }
   html.allcontent #footerWrapper {
+    display: none;
     background: #051b28;
   }
   html.allcontent.cameraenabled body {
@@ -6505,14 +6638,14 @@ html.mobileview #content .work {
 }
 html.mobileview.keyboadrshown .focusedinput {
   position: fixed!important;
-  bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+  bottom: calc(var(--app-margin-bottom, 0) - 1px) !important;
   top: auto!important;
   left: 0!important;
   right: 0!important;
   max-height: 25vh!important;
 }
 html.mobileview .dialog {
-  padding-bottom: calc(var(--keyboardheight, 0) - 1px);
+  padding-bottom: calc(var(--app-margin-bottom, 0) - 1px);
 }
 html.mobileview .sitemessage {
   position: fixed;
@@ -6532,7 +6665,7 @@ html.mobileview .fastMessage {
   left: 0.25em;
   right: 0.25em;
   top: calc(0.5 * 0.5em + var(--app-margin-top));
-  max-height: 210px;
+  max-height: 105px;
   width: auto;
   min-width: 0;
   max-width: none;
@@ -6553,6 +6686,9 @@ html.mobileview .fastMessage .time {
   display: none;
 }
 html.mobileview .fastMessage .tips {
+  /*display: none; */
+}
+html.mobileview .fastMessage .tips .additionalcontent {
   display: none;
 }
 html.mobileview .fastMessage .cwrapper.table > div {
@@ -6595,6 +6731,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   height: auto!important;
   border-radius: 0!important;
   padding-right: 0!important;
+  max-width: 768px;
+  margin: 0 auto;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons .close {
   display: none!important;
@@ -6622,6 +6760,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   max-height: none!important;
   top: auto!important;
   bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   height: auto!important;
   max-width: none!important;
   -webkit-transform: translateY(100%);
@@ -6647,7 +6787,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   max-width: 768px;
   scroll-behavior: smooth;
   max-height: calc(var(--vh, 1vh) * 92);
-  min-height: calc(var(--vh, 1vh) * 30);
+  min-height: calc(var(--vh, 1vh) * 20);
   top: 0;
   bottom: 0;
   right: 0;
@@ -6772,14 +6912,14 @@ html.mobileview .keyboardsafe {
   -o-transition: padding-bottom 0.3s;
   -webkit-transition: padding-bottom 0.3s;
   transition: padding-bottom 0.3s;
-  padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+  padding-bottom: calc(var(--app-margin-bottom, 0) - 1px) !important;
 }
 html.mobileview .keyboardsafetranslate {
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+  transform: translateY(calc(-1 * var(--app-margin-bottom, 0) + 1px));
 }
 html.pipmode .pipped {
   position: fixed!important;
@@ -6963,7 +7103,7 @@ html.pipmode .matrixchatwrapper {
 #application .parameter textarea,
 #application .parameter input {
   width: 100%;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border-radius: 6px;
 }
 #application .parameter select.error,
@@ -6971,19 +7111,27 @@ html.pipmode .matrixchatwrapper {
 #application .parameter input.error {
   border: 1px solid rgb(var(--color-bad));
 }
+#application .parameter select,
+#application .parameter input {
+  line-height: 3em;
+}
+#application .parameter textarea {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+}
 #application .parameter .error select,
 #application .parameter .error textarea,
 #application .parameter .error input {
   border: 1px solid rgb(var(--color-bad));
 }
 #application .parameter select {
-  height: 38px;
+  height: 3em;
   padding-right: 25px;
   width: auto;
 }
 #application .parameter .vc_valuecustom {
   width: 100%;
-  font-size: 0.8em;
+  height: 3em;
 }
 #application .parameter .vc_valuecustom .vc_textInput,
 #application .parameter .vc_valuecustom_multibig .vc_textInput {
@@ -7480,4 +7628,15 @@ body.dg-open {
   .brighteonVideoIframe {
     aspect-ratio: 1.44;
   }
+}
+div#bc-root.pipped {
+  position: fixed;
+  left: 0!important;
+  top: 0!important;
+  bottom: 0!important;
+  right: 0!important;
+  border: 0!important;
+}
+div#bc-root.pipped .bc-video-container {
+  max-width: none!important;
 }

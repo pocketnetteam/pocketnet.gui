@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
@@ -9246,18 +9246,30 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       if (localVideo)
         localVideo.infos = localVideo.infos || {};
 
-        console.log('localVideo', localVideo)
-
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
 
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
+      }
+
+      else{
+
+        var vs = '10'
+
+        if (typeof numfromreleasestring != 'undefined'){
+            vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+        }
+
+        importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
+
+					clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9309,6 +9321,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
   
           var api = embed.api
               api.mute()
+              api.player_id = makeid()
 
               api.el = $(target)
   
@@ -9373,6 +9386,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
                         return Promise.resolve()
                       }
 
+                      plyrPlayer.player_id = makeid()
+
                     if (clbk) clbk(plyrPlayer);
 
                 } else {
@@ -9401,6 +9416,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
             return Promise.resolve()
           }
 
+          plyrPlayer.player_id = makeid()
+
       if (clbk) clbk(plyrPlayer);
 
       clear()
@@ -9413,3 +9430,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

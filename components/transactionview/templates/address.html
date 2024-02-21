@@ -2,7 +2,7 @@
     <div class="empty">&mdash;</div>
 <% } else { %> 
 
-    <% var user = deep(app, 'platform.sdk.users.storage.'+ address) || {} %>
+    <% var user = psdk.userInfo.get(address) || {} %>
 
     <div class="userWrapper">
         <div class="tableovfWrapper">

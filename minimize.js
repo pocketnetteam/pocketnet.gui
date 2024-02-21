@@ -8,7 +8,7 @@ require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 var uglifycss = require('uglifycss');
 var ncp = require('ncp').ncp;
-const _path = require('path');
+const { execSync } = require('child_process');
 ncp.limit = 16;
 
 var minifyHtml = require('html-minifier').minify;
@@ -19,7 +19,7 @@ var args = {
 	vendor : 90,
     path : '/',
     makewebnode: false,
-	project : "Pocketnet",
+	project : "",
 	composetemplates : false
 }
 
@@ -45,6 +45,8 @@ _.each(argcli, function(a){
 	}
 	
 })
+
+if(!args.project) args.project = package.project
 
 var addzeros = function(v){
     v = v.toString()
@@ -78,34 +80,33 @@ console.log(args)
 
 var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, {name : 'package.cordova.json', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
 
-var tplspath = {
-
+if (!args.sha) {
+	try {
+		args.sha = execSync('git rev-parse HEAD', {
+			encoding: "utf8",
+			windowsHide: true,
+		}).trim();
+	} catch (e) {
+		console.log('It is not a git project, omitting commit SHA');
+	}
 }
+
+var config = {}
+
+try{
+	var config = require('./config/'+args.project+'.json');
+	var commonconfig = require('./config/common.json');
 	
-var _meta = {
-	Pocketnet : {
-		url : "pocketnet.app",
-		turl : "test.pocketnet.app",
-		name : 'Pocketnet'
-	},
+	config = {...commonconfig, ...config}
+}
+catch(e){
 
-	Bastyon : {
-		url : "bastyon.com",
-		turl : "test.pocketnet.app",
-		name : 'Bastyon'
-	},
-
-	BastyonPapp: {
-		url : "bastyon.com",
-		turl : "test.pocketnet.app",
-		name : 'Bastyon'
-	},
 }
 
 var vars = {
 	test : {
-		proxypath : '"https://test.pocketnet.app:8899/"',
-		domain : _meta[args.project].turl,
+		proxypath : '"http://test.pocketnet.app:8898/"',
+		domain : config.turl,
 		packageVersion: package.version,
 		test : '<script>window.testpocketnet = true;</script>',
 		globaltest : 'global.TESTPOCKETNET = true;',
@@ -113,13 +114,14 @@ var vars = {
 		project : args.project,
 		store : args.store || false,
 		gfree : args.gfree || false,
-		name : _meta[args.project].name,
+		name : config.name,
 		sha : args.sha || false,
 		run : args.run || false,
+		config
 	},
 	prod : {
-		proxypath : '"https://pocketnet.app:8899/"',
-		domain : _meta[args.project].url,
+		proxypath : '"http://pocketnet.app:8898/"',
+		domain : config.url,
 		packageVersion: package.version,
 		test : '',
 		globaltest : '',
@@ -127,9 +129,10 @@ var vars = {
 		project : args.project,
 		store : args.store || false,
 		gfree : args.gfree || false,
-		name : _meta[args.project].name,
+		name : config.name,
 		sha : args.sha || false,
 		run : args.run || false,
+		config
 	}
 }
 
@@ -171,11 +174,6 @@ fs.exists(mapJsPath, function (exists) {
 			path : './js/joinfirst.min.js'
 		}
 
-		var joinlast = {
-			data : "",
-			path : './js/joinlast.min.js'
-		}
-
 		var vendor = {
 			data : "",
 			path : './js/vendor.min.js'
@@ -192,7 +190,6 @@ fs.exists(mapJsPath, function (exists) {
 
 		var exported = {
 			data : "",
-			//path : '../matrix/src/components/events/event/metaMessage/exported.less'
 			path : './css/exported.less'
 		}
 
@@ -237,17 +234,9 @@ fs.exists(mapJsPath, function (exists) {
 			}]
 		}
 
-		var cordovaiosfast = {
-			path : './cordova/platforms/ios/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html']
-		}
-
-
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss') return true;
-			
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss' && !_m.ignoreMinimize) return true;
 		})
-
 
 		var webnode = {
 			path : './web',
@@ -380,7 +369,7 @@ fs.exists(mapJsPath, function (exists) {
 	
 							var arf = _.clone(m.__sourcesfirst || []);
 	
-							var arl = _.clone(m.__sourceslast || []);
+							//var arl = _.clone(m.__sourceslast || []);
 	
 							var ar = _.clone(m.__sources || []);
 								ar.push(modules.path.replace('./', ''));
@@ -404,23 +393,25 @@ fs.exists(mapJsPath, function (exists) {
 										joinScripts(ar, join, function(){
 	
 											console.log("joinScripts DONE")
+
+											joinCss(function(){
 	
-											joinScripts(arl, joinlast, function(){
+												console.log("joinCss DONE")
+
+												createTemplates().catch(e => {
+													
+												}).then( r => {
+													if(_clbk) _clbk()
+												})
+											})
+	
+											/*joinScripts(arl, joinlast, function(){
 	
 												console.log("joinScriptsLast DONE")
 	
-												joinCss(function(){
+												
 	
-													console.log("joinCss DONE")
-	
-													createTemplates().catch(e => {
-														
-													}).then( r => {
-														if(_clbk) _clbk()
-													})
-												})
-	
-											})
+											})*/
 											
 										});
 	
@@ -467,7 +458,7 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var pre2 = data
+									var pre2 = data.toString().replace(/\.\.\/webfonts/g, 'fontawesome/webfonts')
 
 									try{
 										pre2 = uglifycss.processString(data, {
@@ -887,13 +878,15 @@ fs.exists(mapJsPath, function (exists) {
 							var VE = "";
 							var CACHED_FILES = "";
 	
-							if(args.test){
+							if (args.test){
 								JSENV += '<script>window.testpocketnet = true;</script>\n';
 							}
 
-							if(args.path){
+							if (args.path){
 								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>\n';
 							}
+
+							JSENV += '<script>window.project_config = ' + JSON.stringify(VARS.config || {}) + ';</script>\n';
 
 							if(VARS.domain){
 								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>\n';
@@ -940,7 +933,8 @@ fs.exists(mapJsPath, function (exists) {
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
 								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
 								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
+								///remove peertube in clbk
+								//JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
@@ -976,7 +970,7 @@ fs.exists(mapJsPath, function (exists) {
 									CACHED_FILES += `'${filepath}',\n`;
 								})
 
-								_.each(m.__sourceslast, function(source){
+								/*_.each(m.__sourceslast, function(source){
 
 									var filepath = source;
 
@@ -986,7 +980,7 @@ fs.exists(mapJsPath, function (exists) {
 
 									JSPOST += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${filepath}',\n`;
-								})
+								})*/
 	
 								_.each(m.__css, function(source){
 									CSS += '<link rel="stylesheet" href="'+source+'?v='+rand(1, 999999999999)+'">\n';

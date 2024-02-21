@@ -43,9 +43,8 @@
 
 		<div class="ways">
 
-			<% if(!app.curation()) {%>
+			<% if(!app.curation() && 1 == 0) {%>
 				<div class="wayf">
-
 					<div class="row flx forfiats">
 
 						<div class="fiat">
@@ -80,7 +79,7 @@
 
 					<div class="row table">
 						<div class="reciever">
-							<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-a.address || ''%>">
+							<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-address || ''%>">
 								<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
 							</a>
 						</div>
@@ -113,7 +112,7 @@
 
 
 					<div class="reciever">
-						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-a.address || ''%>">
+						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-address || ''%>">
 							<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
 						</a>
 					</div>

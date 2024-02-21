@@ -46,7 +46,12 @@ module.exports = class VideoDownload {
     });
 
     ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
-      return videoDownloader.getVideoData(shareId, videoId);
+      try{
+        return videoDownloader.getVideoData(shareId, videoId);
+      }catch(e){
+        return null
+      }
+      
     });
 
     ipcMain.handle('getVideoSegment', async (event, videoDir, filename) => {

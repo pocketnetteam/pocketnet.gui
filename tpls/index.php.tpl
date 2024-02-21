@@ -29,7 +29,7 @@
         connect-src blob: data: 'self' http: ws: https: wss:;
         img-src 'self' blob: data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com www.brighteon.com stream.brighteon.com;
+        frame-src 'self' https:;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ use.fontawesome.com 'unsafe-inline';
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src data: blob: *">
@@ -124,23 +124,20 @@
             
         </script>
 
-        <script src="js/polyfills.js"></script>
-        <script src="js/vendor/firebase-app.js"></script>
-        <script src="js/vendor/firebase-messaging.js"></script>
-
+        
+        
 
         __JSENV__
-
-        __VE__
-
         __JS__
-
         __CSS__
-
+        __VE__
         __JSPOST__
 
-        <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
+
+        <div id="hideallnotificationsel"></div>
+
+        
         
 
 

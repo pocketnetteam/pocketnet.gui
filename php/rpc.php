@@ -93,7 +93,7 @@ class RPC {
 
     public function author($author){
         $action = 'getuserprofile';
-        $params = array(array($author));
+        $params = array(array($author), '1');
 
         return $this->send($action, $params);
     }

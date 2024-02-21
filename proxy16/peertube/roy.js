@@ -33,8 +33,11 @@ var Roy = function (parent) {
 		var can = true;
 
 		_.each(instances, function (instance) {
+
+
 			if (!instance.info().canuploading || instance.cantuploading) can = false;
 		});
+
 
 		return can && instances.length;
 	};
@@ -59,6 +62,7 @@ var Roy = function (parent) {
 		if (options.special) instance.special = true;
 		if (options.old) instance.old = true;
 		if (options.offline) instance.offline = true;
+		if (options.archiveDouble) instance.archiveDouble = true;
 
 		instance.init();
 
@@ -124,6 +128,7 @@ var Roy = function (parent) {
 			return instance.canuse() || self.useall;
 		});
 
+
 		return _.sortBy(_instances, (instance) => {
 			return getBestByType[type]
 				? getBestByType[type].calculate(instance)
@@ -133,6 +138,7 @@ var Roy = function (parent) {
 
 	self.best = function (type = 'view') {
 		var bestlist = self.bestlist(type);
+
 
 		if (bestlist.length) return [...bestlist].pop();
 
@@ -208,12 +214,17 @@ var Roy = function (parent) {
 			return instance
 				.request(method, data, p)
 				.then((r) => {
+					if (r.data && r.data.status === 404 && !r.data.videoBrief) {
+						error = r.data;
+						return Promise.reject(r);
+					}
 					if (r.data) {
 						r.data.from = instance.host;
 					}
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
+
 					if (e && e.status) {
 						if (e.status != 500) {
 							error = e;
@@ -242,7 +253,7 @@ var Roy = function (parent) {
 
 	self.find = function (host) {
 		return _.find(instances, function (instance) {
-			return instance.host == host;
+			return instance.host == host && !instance.archiveDouble;
 		});
 	};
 

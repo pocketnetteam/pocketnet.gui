@@ -1,0 +1,16 @@
+<div class="navisearchWrapper <% if(current.id == 'search' || current.id == 'searchTags') {%>searchActive<% } %>">
+    <div class="navi">
+        <div class="naviscrollwrapper">
+            <% _.each(lentameta, function(meta){ 
+                
+                if(!meta.text) return
+                
+                %>
+                <div class="navitem <% if(meta.id == current.id) {%> active <% } %> truenav" mid="<%- meta.id %>"><span class="label"><%-e(meta.text)%></span><% if(meta.count()) {%><span class="count"><%-meta.count()%></span><%}%></div>
+            <% }) %>
+        </div>
+        <div class="navitem searchIcon"><i class="fas fa-search"></i></div>
+    </div>
+    <div class="alSearchWrapper">
+    </div>
+</div>

@@ -1,0 +1,91 @@
+#captcha .captchaImageWrapper {
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#captcha .captchaImageWrapper .captchaSvgImage {
+  margin: 1.5em 0;
+  text-align: center;
+}
+#captcha .wrpes {
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#captcha.cashowed .captchaImageWrapper,
+#captcha.cashowed .wrpes {
+  opacity: 1;
+}
+#captcha .reason {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 1em;
+}
+#captcha .reason span {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: rgb(var(--color-txt-orange));
+}
+#captcha .subcaption,
+#captcha .subsubcaption {
+  margin: 0 auto;
+  margin-top: 0.5em;
+  font-weight: 700;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#captcha .inputWrapper {
+  margin: 0 auto;
+  margin-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#captcha input {
+  font-size: 1.4em;
+  border: 0;
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-radius: 0;
+  width: 100%;
+  background: transparent;
+}
+#captcha .addContainer {
+  margin-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#captcha .redoContainer {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#captcha button {
+  min-width: 180px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#captcha button.next {
+  color: rgb(var(--color-txt-ac));
+}
+.wnd.captchawindow .wndinner {
+  max-width: 450px;
+}
+html[theme='gray'] #captcha .captchaSvgImage,
+html[theme='black'] #captcha .captchaSvgImage {
+  filter: invert(1);
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #captcha .addContainer button {
+    margin-bottom: 1em;
+    width: 100%;
+  }
+}

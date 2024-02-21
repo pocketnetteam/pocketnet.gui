@@ -17,6 +17,13 @@ var userslist = (function(){
 			sort = null,
 			page = 0;
 
+		var emodule = null
+
+
+		var mid = p.mid || ''
+
+		var ed = {}
+
 		var loading;
 
 		var actions = {
@@ -105,11 +112,53 @@ var userslist = (function(){
 					}
 
 				})
+			},
+
+			statusClass : function(address){
+				var element = el.c.find('.user[address="'+address+'"]')
+
+				if (element.length){
+					var me = self.psdk.userInfo.getmy() 
+
+					if(!me) return
+
+					var r = me.relation(address, 'subscribes')
+					var rb = me.relation(address, 'blocking')
+
+					
+
+					window.requestAnimationFrame(() => {
+						element.find('.notificationturn').removeClass('turnon')
+						element.find('.subscribebuttonstop').removeClass('following')
+						element.find('.subscribebuttonstop').removeClass('blocking')				
+						element.removeClass('userblocking')
+
+						if(r){
+
+							element.find('.subscribebuttonstop').addClass('following')
+
+							if (r.private == 'true' || r.private === true){
+								element.find('.notificationturn').addClass('turnon')
+							}
+						}
+
+						if (rb){
+							element.find('.subscribebuttonstop').addClass('blocking')				
+							element.addClass('userblocking')
+						}
+					})
+
+					
+
+					
+				}
 			}
+
 		}
 
 		var events = {
 			loadmorescroll : function(){
+
 				if (
 
 					(el.c.height() - scnt.scrollTop() < 1000) 
@@ -149,6 +198,7 @@ var userslist = (function(){
 
 		var renders = {
 			page : function(addresses, clbk){
+
 
 				self.shell({
 
@@ -201,7 +251,7 @@ var userslist = (function(){
 				}
 			})	
 
-			if(newadresses.length){
+			if (newadresses.length){
 
 				load.info(newadresses, function(){
 					renders.page(newadresses, clbk)
@@ -229,33 +279,50 @@ var userslist = (function(){
 
 		var initEvents = function(){
 			
-			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
+			el.c.find('.showmore').on('click', function(){
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')		
-			}
+				self.nav.api.load({
 
-			self.app.platform.clbks.api.actions.subscribePrivate.userlist = function(address){
+					open : true,
+					id : 'userslist',
+					animation : false,
+					inWnd: true,
+					history: true,
+					essenseData : {
+						...ed,
+						preview : false
+					},
+					
+					clbk : function(e, p){
+						emodule = p
+					}
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')	
-				el.c.find('.user[address="'+address+'"] .notificationturn').addClass('turnon')	
-			}
+				})
 
-			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+			})
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')
-			}
+			self.app.platform.actionListeners[userslist + mid] = function({type, alias, status}){
 
-			self.app.platform.clbks.api.actions.blocking.userlist = function(address){
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')		
-				el.c.find('.user[address="'+address+'"] .notificationturn').removeClass('turnon')			
-			}
+				if(type == 'unblocking'){
+					actions.statusClass(alias.address.v)
+				}
 
-			self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
+				if(type == 'blocking'){
+					actions.statusClass(alias.address.v)
+				}
 
-				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
-				el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
+				if(type == 'subscribe'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'unsubscribe'){
+					actions.statusClass(alias.address.v)
+				}
+
+				if(type == 'subscribePrivate'){
+					actions.statusClass(alias.address.v)
+				}
+				
 			}
 
 			el.c.on('click', '.subscribe', events.subscribe)
@@ -267,6 +334,8 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
+
+				if(ed.preview) return
 
 				if(scnt.hasClass('applicationhtml')){
 					self.app.events.scroll['userlist'] = events.loadmorescroll
@@ -284,11 +353,19 @@ var userslist = (function(){
 
 			if (type == 'commonuserrelation'){
 
-				var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value)
+				var me = self.psdk.userInfo.getmy() 
 
 				return _.sortBy(addresses, function(address){
 
 					return -self.app.platform.sdk.users.commonuserpoint(address, me)
+				})
+
+			}	
+
+			if (type == 'random'){
+
+				return _.sortBy(addresses, (a) => {
+					return rand(0, 1000)
 				})
 
 			}	
@@ -298,7 +375,7 @@ var userslist = (function(){
 
 		return {
 			primary : primary,
-
+			id : mid,
 			getdata : function(clbk, p){
 
 				end = false;
@@ -307,16 +384,23 @@ var userslist = (function(){
 
 				var data = {};
 
+				ed = deep(p.settings, 'essenseData') || {}
+
 				sort = deep(p.settings, 'essenseData.sort') || null;
 
 				addresses = sorting(deep(p.settings, 'essenseData.addresses') || [], sort)
 
 				data.addresses = addresses
+				data.count = ed.count || 0
+
 
 				data.empty = deep(p.settings, 'essenseData.empty');
 				data.caption = deep(p.settings, 'essenseData.caption');
 
 				extra = deep(p.settings, 'essenseData.extra');
+				data.ed = ed
+
+				cnt = ed.preview ? 10 : 50
 
 				//scnt = deep(p.settings, 'essenseData.cnt') || $(window);
 
@@ -328,14 +412,18 @@ var userslist = (function(){
 
 				scnt.off('scroll', events.loadmorescroll)
 				delete self.app.events.scroll['userlist']
+				delete self.app.platform.actionListeners[userslist + mid]
 				//scnt.removeEventListener('scroll', events.loadmorescroll)
 
-				delete self.app.platform.clbks.api.actions.subscribe.userlist
+				/*delete self.app.platform.clbks.api.actions.subscribe.userlist
 				delete self.app.platform.clbks.api.actions.subscribePrivate.userlist
-	
 				delete self.app.platform.clbks.api.actions.unsubscribe.userlist
-	
-				delete self.app.platform.clbks.api.actions.blocking.userlist
+				delete self.app.platform.clbks.api.actions.blocking.userlist*/
+
+				if (emodule){
+					emodule.destroy()
+					emodule = null
+				}
 
 				el = {};
 			},
@@ -348,7 +436,6 @@ var userslist = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.users = el.c.find('.users')
 
-
 				scnt = el.c.closest('.customscroll:not(body)') 
 				if(!scnt.length) scnt = $(window);
 
@@ -357,7 +444,13 @@ var userslist = (function(){
 				make();
 
 				p.clbk(null, p);
-			}
+			},
+
+			wnd : {
+				close : function(){
+				},
+				class : "userlistwindow normalizedmobile maxheight showbetter"
+			},
 		}
 	};
 

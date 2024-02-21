@@ -11,7 +11,7 @@
 
 			var aspectRatio = Number((info.data || deep(localdata, 'infos.videoDetails') || {}).aspectRatio || 0);
 
-			var image = (info.data || {}).image
+			var image = (info.data || {}).image || share.images[0];
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 			
@@ -84,11 +84,26 @@
 									</div>
 								<% } %>
 									<div class="statswrapper">
-										<% if(info.data.views) {%>
-											<div class="viewsWrapper">
-												<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
-											</div>
-										<% } %>
+
+										<% if(info.data.isLive) {%>
+
+											<% if(info.data.viewers) {%>
+												<div class="viewsWrapper">
+													<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.viewers)%></span>
+												</div>
+											<% } %>
+
+										<% } else {%> 
+
+											<% if(info.data.views) {%>
+												<div class="viewsWrapper">
+													<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+												</div>
+											<% } %>
+											
+										<%}%>
+
+										
 
 			
 										<% if(share) {
@@ -128,10 +143,17 @@
 				
 				</div>	
 
-				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) { %> 
-					<div class="videoTips">
+				<% if((typeof video == 'undefined' || !video) && share.itisaudio() != true) {
+					
+					%> 
+					<div class="videoTips <%- share.itisstream() ? 'tipsforstream' : '' %>">
 						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
-							<span><%=e('expandvideo')%></span>
+							<% if(share.itisstream()) {%>
+								<span><%=e('watchstream')%></span>
+							<% } else { %>
+								<span><%=e('expandvideo')%></span>
+							<% } %>
+							
 						</div>
 					</div>
 				<% } %>
@@ -164,7 +186,7 @@
 	
 			<% } %>
 
-
+			<div class="animationWrapper"></div>
 			
 		</div>
 
@@ -172,15 +194,29 @@
 
 			<% if((typeof preview == 'undefined' || !preview) && info.data) {%>
 
-				<% if(info.data.views) {%>
+				<% if(info.data.isLive) {%>
 
-					<div class="statswrapperExtended">
+					<% if(info.data.viewers) {%>
 
-						<div><span class="label"><%=e(share.itisaudio() ? 'listeners' : 'views')%>:</span> <span class="number"><%-info.data.views || 0%></span></div>
+						<div class="statswrapperExtended">
+							<div><span class="label"><%=e(share.itisaudio() ? 'listeners' : 'viewers')%>:</span> <span class="number"><%-info.data.viewers || 0%></span></div>
+						</div>
+	
+					<% } %>
 
-					</div>
+				<% } else {%>
+
+					<% if(info.data.views) {%>
+
+						<div class="statswrapperExtended">
+							<div><span class="label"><%=e(share.itisaudio() ? 'listeners' : 'views')%>:</span> <span class="number"><%-info.data.views || 0%></span></div>
+						</div>
+	
+					<% } %>
 
 				<% } %>
+
+				
 
 			<% } %>
 
@@ -203,7 +239,7 @@
 						if (imagesetting == 'a'){ %>
 
 							<div class="image">							
-								<img src="<%- og.image %>">		
+								<img class="ogimage" src="<%- og.image %>">		
 
 								<div elementsid="removeImage" class="removeImage">
 									<i class="fas fa-times-circle"></i>
@@ -215,7 +251,7 @@
 
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
-							<a elementsid="titlehref" href="<%- url %>" donottrust="true">
+							<a elementsid="titlehref" href="<%= findAndReplaceLinkClear(url) %>" donottrust="true">
 								<div class="title">
 									<%- truncateString(og.title || og.titlePage, 100) %>
 								</div>
@@ -223,7 +259,7 @@
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
-							<a elementsid="descriptionhref" href="<%- url %>" donottrust="true">
+							<a elementsid="descriptionhref" href="<%= findAndReplaceLinkClear(url) %>" donottrust="true">
 								<div class="description"><%- truncateString(og.description || og.descriptionPage, 100) %></div>
 							</a>
 						<% } %>
@@ -245,7 +281,7 @@
 		<div class="urlcnttable table">
 			<div class="linkcnt">
 				<span class="linkedstyle <%- (meta.type === 'peertube' && typeof remove === 'undefined') ? 'hidden' : '' %>">
-					<a elementsid="peertubehref" href="<%- url %>" cordovalink="_system" donottrust="true">
+					<a href="<%= findAndReplaceLinkClear(url) %>" cordovalink="_system" donottrust="true">
 						<%- url %>
 					</a>
 				</span>

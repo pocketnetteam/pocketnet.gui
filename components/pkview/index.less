@@ -205,6 +205,10 @@
        
         #pkview{
 
+            .work{
+                width: 100%!important;
+            }
+
             .keywrapper{
                 padding-left: @rhythm;
                 padding-right: @rhythm;
@@ -212,6 +216,7 @@
           
             .key{
                 padding : @rhythm;
+                padding-bottom: 10*@rhythm;
             }
            
             .mnemonicKey{
@@ -232,6 +237,33 @@
                     }
     
                 }
+            }
+
+            .dontshowagain{
+                position: fixed;
+                bottom : -10%;
+                left : 5%;
+                width : 90%;
+                margin-left: 0;
+
+                &.active{
+                    bottom : 10%;
+                   
+                }
+            }
+        }
+    }
+}
+
+
+/*t*/ @media only screen and (max-height: 480px){
+    .wnd.pkviewwnd{
+       
+        #pkview{
+          
+            .key{
+                padding : @rhythm;
+                padding-bottom: 10*@rhythm;
             }
         }
     }

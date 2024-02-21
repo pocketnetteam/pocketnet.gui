@@ -348,10 +348,13 @@ var Node = function(options, manager){
 
                     if(err.code == -5) code = 200 // not found
 
+                
                     if(err.code == 521) penalty.set(0.8, 220000, '521')
                     if(err.code == 408) penalty.set(0.5, 60000, '408')
                     if(err.code == 429) penalty.set(0.3, 60000, '429')
-    
+
+                    manager.logger.w('rpc', 'error', `Node (${self.host}) request error: ${err.code}: ${err.error || 'undefined'}`)
+
                 }	
 
                 self.statistic.add({
@@ -668,12 +671,12 @@ var Node = function(options, manager){
 
             var lastblock = self.lastblock() || {}
             var result = 0;
+            var notcache = false
 
             if(
-                (!lastblock.height) || (self.testing)
-                || (!self.inited)
+                (!lastblock.height) || (self.testing) || (!self.inited)
             ){
-
+                notcache = true
             }
             else{
 
@@ -681,8 +684,12 @@ var Node = function(options, manager){
 
                 var difference = status.difference || 0
 
-                if (difference > 0) difference = 0
-                    difference = -difference
+                if (difference > 0) {
+                    difference = 0
+                }
+
+                difference = -difference
+
                 if (
                     (status.fork && difference > 5 || difference > 50)
                 ){
@@ -697,8 +704,7 @@ var Node = function(options, manager){
                     var availabilityAllTime = self.statistic.calcAvailability(s) || 0
                     var availability5Minutes = self.statistic.calcAvailability(slice) || 0
                     ///
-        
-        
+                    
                     var usersl = _.toArray(wss.users).length + 1
                     var userski = 1
         
@@ -721,11 +727,14 @@ var Node = function(options, manager){
             }
 
             ///
-    
-            cachedrating = {
-                result : result,
-                time : new Date()
+            
+            if(!notcache){
+                cachedrating = {
+                    result : result,
+                    time : new Date()
+                }
             }
+            
 
             return  result
         },
@@ -1038,11 +1047,23 @@ var Node = function(options, manager){
         return options
     }
 
+    self.forbidUsage = function(){
+        if (global.EXPERIMENTALNODES || f.deep(manager,'proxy.test')) return false 
+
+        /*if (self.version){
+            if(f.numfromreleasestring(self.version) >= 0.22) return true
+        }*/
+
+        return false
+    }
+
     self.export = function(){
 
         var s = self.statistic.getst()
 
         var lastblock = self.lastblock() || {}
+
+        var chainStatus = self.chainStatus()
 
         return {
             host : self.host,
@@ -1055,7 +1076,7 @@ var Node = function(options, manager){
             key : self.key,
             testing : self.testing,
             stable : self.stable,
-            canuse : (s.success > 0 && lastblock.height) ? true : false,
+            canuse : (s.success > 0 && lastblock.height && !self.forbidUsage()) ? true : false,
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
@@ -1063,7 +1084,10 @@ var Node = function(options, manager){
             version : self.version,
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false,
-            allowRpc : self.allowRpc
+            allowRpc : self.allowRpc,
+            single : self.single,
+            backward : chainStatus.fork || chainStatus.difference > 20
+
         }
     }
 

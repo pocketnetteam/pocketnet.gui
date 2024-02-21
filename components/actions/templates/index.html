@@ -1,0 +1,42 @@
+<div id="<%-module.map.id%>">
+	<div class="work">
+		<div class="caption">
+			<span>Actions</span>
+		</div>
+	</div>
+	<% 
+	
+	var sorted = _.sortBy(accounts, function(a){
+		return -(a.address == user.address.value ? 10 : (a.isCurrentNetwork() ? 5 : 0))
+	})
+	
+	if(!_.isEmpty(sorted)) {%>
+
+		<div class="accounts">
+			<% _.each(sorted, function(account){ %> 
+				<div class="account" address="<%-account.address%>">
+					<div class="work">
+						<div class="subcaption">
+							<span><%- account.address %></span> 
+							<% if(!account.isCurrentNetwork()) {%>
+								<i class="fas fa-project-diagram"></i>
+							<% } %>
+						</div>
+					</div>
+
+					<div class="stateWrapper">
+
+					</div>
+				</div>
+			<% }) %> 
+		</div>
+
+	<% } else { %> 
+		<div class="work">
+			<div class="empty">
+				<span>No accounts registered</span>
+			</div>
+		</div>
+	<% } %>
+
+</div>

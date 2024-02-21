@@ -13,29 +13,6 @@ var menu = (function(){
 			controlTorElem = null,
 			networkStatsListenerId = null;
 
-		var logotime = 180000, changeLogoInterval = null
-
-		var loc = new Parameter({
-
-			type : "VALUES",
-			name : "Localization",
-			id : 'localization',
-			defaultValue : app.localization.current().name,
-			possibleValues : app.localization.availableMap('name'),
-			format : {
-				right : true
-			},
-
-			_onChange : function(value){
-				var a = app.localization.findByName(value);
-
-				if (a && a.key != app.localization.key)
-				{
-					app.localization.set(a.key);
-				}
-			}
-
-		})
 
 		var updateNew = function(){
 
@@ -226,6 +203,8 @@ var menu = (function(){
 
 							if(!state) k = 'index'
 
+							if(k == self.app.nav.current.completeHref) k = 'index'
+
 							if(self.app.curation()){
 								if(!state){
 									k = 'welcome'
@@ -243,7 +222,8 @@ var menu = (function(){
 									href : k,
 									history : true,
 									open : true,
-									handler : parameters().video && parameters().v
+									handler : parameters().video && parameters().v,
+									fade : self.app.el.content
 								})
 							}, 50)
 
@@ -387,19 +367,26 @@ var menu = (function(){
 			activities : {
 				init : function(el){
 
-					/*setTimeout(function(){
-
-						if(!isTablet()){
-							self.nav.api.load({
-								eid : 'menu',
-								open : true,
-								id : 'activities',
-								el : el,
-								inTooltip : true
-							})
+					if(window.testpocketnet){
+						var gca = function(){
+							var account = self.app.platform.actions.getCurrentAccount()
+							var c = 0
+	
+							if (account){
+								c = account.getTempActions().length
+							}
+	
+							actions.ah(el, c)
 						}
-						
-					},2000)*/
+	
+						self.app.platform.actionListeners['menu_activies'] = function({type, alias, status}){
+							gca()
+						}
+	
+						gca()
+					}
+
+					
 
 				},
 
@@ -421,42 +408,6 @@ var menu = (function(){
 			},
 
 
-			savecross : {
-				init : function(el){
-
-					/*var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-					actions.ah(el, n)
-
-					self.app.platform.ws.messages.event.clbks.menusave = function(d){
-						if(d.mesType == 'userInfo'){
-
-							var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-							actions.ah(el, n)
-							
-						}
-					}*/
-
-
-					
-
-				},
-				click : function(){
-
-
-					self.nav.api.load({
-						open : true,
-						href : 'socialshare',
-						history : true,
-						inWnd : true,
-
-						essenseData : {
-							rescue : true
-						}
-					})
-				}
-			},
 
 			search : {
 				fast : true,
@@ -619,7 +570,7 @@ var menu = (function(){
 									var name = $(this).attr('name')
 
 									self.nav.api.go({
-										href : name ? name.toLowerCase() : 'author?address=' + r,
+										href : name ? name.toLowerCase() : 'authorn?address=' + r,
 										history : true,
 										open : true
 									})
@@ -987,7 +938,6 @@ var menu = (function(){
 			},
 			wallets : {
 				click : function(){
-
 					
 					self.nav.api.go({
 						open : true,
@@ -1008,68 +958,78 @@ var menu = (function(){
 
 						var c = 'good';
 
-						el.removeClass('hidden')
+						window.requestAnimationFrame(() => {
+							el.removeClass('hidden')
 
-						if (add == 0){
-							al.text(self.app.platform.mp.coin(value))
+							if (add == 0){
+								al.text(self.app.platform.mp.coin(value))
+							}
+							else
+							{
+								al.animateNumber({
+									number: add,
+	
+									numberStep: function(now, tween) {
+	
+										var number = Number(value + now).toFixed(8),
+											target = $(tween.elem);
+	
+										window.requestAnimationFrame(() => {
+											target.text(self.app.platform.mp.coin(number));
+										})
+	
+									},
+	
+								}, rand(400, 1200), function(){
+									window.requestAnimationFrame(() => {
+										el.removeClass(c)
+									})
+								});
+							}
+						})
 
-						}
-						else
-						{
-							al.animateNumber({
-						    	number: add,
-
-						    	numberStep: function(now, tween) {
-
-						        	var number = Number(value + now).toFixed(8),
-						            	target = $(tween.elem);
-
-						    		target.text(self.app.platform.mp.coin(number));
-
-						    	},
-
-						    }, rand(400, 1200), function(){
-						    	el.removeClass(c)
-						    });
-						}
-						
 					}
 
-					var setValue = function(){						
+					var setValue = function(){	
+						
+						
+						
+						var account = self.app.platform.actions.getCurrentAccount()
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						if(!account){
+							set(0,0)
+						}
+						else{
+							var balance = account.actualBalance(account.allAddresses())
 
-							var t = self.app.platform.sdk.node.transactions.tempBalance()
-
-							amount = amount + t
-
-							var add = amount - current;
+							var add = balance.actual - current;
 
 							if (first) {
 								add = 0;
-								current = amount
+								current = balance.actual
 							}
+
+							if(!first && current == balance.actual) return
+
 
 							first = false;
 
 							set(current, add)
 
-							current = amount;
+							current = balance.actual
 
-							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
-						})
+							self.app.platform.sdk.wallet.drawSpendLineActions(el.find('.numberWrp'), balance)
+						}
 
-					}
-
-					var act = function(){
-
-						setValue()
 						
+
 					}
 
-					self.app.platform.sdk.node.transactions.clbks.menu = act;
+					self.app.platform.actions.clbk('change', 'menu', setValue)
 
-					act(0)
+					//self.app.platform.sdk.node.transactions.clbks.menu = setValue;
+
+					setValue()
 					
 				}
 			},
@@ -1202,7 +1162,19 @@ var menu = (function(){
 
 			})
 
-			ParametersLive([loc], el.c);
+			self.app.platform.actionListeners['menu'] = function({type, alias, status}){
+
+				if (type == 'userInfo'){
+					renders.userinfo()
+				}
+
+				if (type == 'accDel'){
+					renders.userinfo()
+				}
+				
+			}
+
+			//ParametersLive([loc], el.c);
 		}
 
 		var renders = {
@@ -1223,15 +1195,29 @@ var menu = (function(){
 					if (clbk)
 						clbk(_p.rendered);
 				})
-			}
+			},
+
+			userinfo: function(clbk){
+
+				self.shell({
+					name :  'userinfo',
+					data : {
+						
+					},
+
+					el : el.userinfoWrapper
+
+				}, function(_p){
+					if(clbk) clbk()
+				})
+			},
+
+			
 		}
 
 		var make = function(){
 
-			self.app.user.isState(function(state){
-
-				
-			})
+			renders.userinfo()
 
 		}
 
@@ -1252,9 +1238,9 @@ var menu = (function(){
 
 				var data = {};
 
-					loc.value = app.localization.current().name;
+					//loc.value = app.localization.current().name;
 
-					data.loc = loc;
+					//data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
@@ -1263,17 +1249,17 @@ var menu = (function(){
 
 				if(p.state){
 
-					var addr = self.sdk.address.pnet().address
+					var addr = self.app.user.address.value
 
-					if (self.app.platform.sdk.registrations.showprivate()){
+					//if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true
-					}
+					//}
 
 					self.app.platform.sdk.users.getone(addr, function(){
 				
 						clbk(data)
 
-					})
+					}, true)
 					
 
 				}
@@ -1299,7 +1285,12 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
-				delete self.app.platform.sdk.node.transactions.clbks.menu
+				delete self.app.platform.actionListeners['menu']
+
+				//delete self.app.platform.sdk.node.transactions.clbks.menu
+
+				self.app.platform.actions.clbk('change', 'menu', null)
+
 				delete self.app.platform.ws.messages.event.clbks.menusave
 
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
@@ -1311,12 +1302,8 @@ var menu = (function(){
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
-				delete self.sdk.broadcaster.clbks['menu']
+				delete self.app.platform.actionListeners['menu_activies']
 
-				if (changeLogoInterval){
-					clearInterval(changeLogoInterval)
-					changeLogoInterval = null
-				}
 
 				_.each(events, function(e){
 
@@ -1379,18 +1366,10 @@ var menu = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.cart = el.c.find('.cart');
-				el.likes = el.c.find('.favorites');
 
-				el.messagesCount = el.c.find('.dialogs .count');
-				el.notificationsCount = el.c.find('.notifications .count');
 
-				el.walletsAmount = el.c.find('.wallets .amount');
-				el.notactive = el.c.find('.notactive');
-				el.currency = el.c.find('.currencyWrapper');
 				el.postssearch =  el.c.find('.postssearch')
-				el.nav = el.c.find('.menutoppanel')
-
+				el.userinfoWrapper = el.c.find('.userinfoWrapper')
 				actions.ahnotifyclear()
 
 				initEvents();

@@ -29,7 +29,7 @@
 
 				<% if(value.indexOf("#") == -1) {%>
 
-					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
+					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value.replace(/[,.!?;:()\n\r]/g, '')%>">
 						<div class="searchby searchbyvalue">
 					
 							<div class="swrp managebutton">
@@ -101,8 +101,9 @@
 
 			var c = 6
 			var filteredResults = results.filter(user => {
-			if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
-			else return true
+				if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
+				if (user.deleted) return false
+				return true
 			})
 
 			if(isMobile()) c = 12

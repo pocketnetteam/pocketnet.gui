@@ -15,11 +15,16 @@ ImageUploader = function(app) {
             if (1 == 1) {
                 
                 return self.uploadImage({ base64 }, 'peertube').catch(err => {
+                    console.error(err)
                     return self.uploadImage({ base64 }, 'imgur')
                 }).catch(err => {
+                    console.error(err)
                     return self.uploadImage({ base64 }, 'up1')
                 }).then(url => {
                     return Promise.resolve(url)
+                }).catch(err => {
+                    console.error(err)
+                    return Promise.reject(err)
                 })
 
             }
@@ -94,20 +99,22 @@ ImageUploader = function(app) {
 
                         app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_SUCCESS" });
 
-                        var url = 'https://' + data.url
+                        var url = data.url.indexOf('http://') > -1 ? data.url : 'https://' + data.url
 
                         resolve(url)
                     }
 
-                    p.fail = function(){
+                    p.fail = function(e){
 
                         app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_FAILED" });
 
-                        reject()
+                        reject(e)
                     }
 
                     app.ajax.run(p)
                     
+                }).catch((e) => {
+                    reject(e)
                 });
 
                 return 

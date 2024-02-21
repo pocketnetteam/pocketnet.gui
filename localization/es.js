@@ -3,7 +3,7 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.es = {};
 
-	var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+	var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 
 var _l = loclib.es;
@@ -247,7 +247,7 @@ _l.lpublic = "Público";
 
 //inviteComment
 _l.commentBannerTitle = "Deja un comentario para el autor";
-_l.commentBannerDescription = "Comentar te desbloquea nuevas funciones en Bastyon y te ayuda a encontrar amigos 😀";
+_l.commentBannerDescription = "Comentar te desbloquea nuevas funciones en "+appname +" y te ayuda a encontrar amigos 😀";
 _l.dontShowAgain = 'No mostrar más';
 
 //share
@@ -473,7 +473,7 @@ _l.e13082 = "Lo que obtendrás por tu donación además de saber que apoyaste la
 _l.e13083 = "Como muestra de nuestra gratitud por la donación, recibirá un regalo en cierta cantidad de Pocketcoin"
 _l.e13084 = "Además, cuando construimos chat grupal, usted será miembro de un grupo especial de donantes que tendrán acceso directo al equipo de "+appname+", incluso a medida que la plataforma crezca"
 _l.e13085 = "El enlace a su perfil de "+appname+" se enumerará a continuación, llevando a más personas a sus publicaciones (a menos que nos pida que no lo hagamos)"
-_l.e13086 = "Soporte Bastyon Ahora"
+_l.e13086 = "Soporte "+appname +" Ahora"
 _l.e13087 = "Bitcoin, Litecoin, Monero"
 _l.e13088 = "Miembros de "+appname+" que han donado para apoyar a "+appname+""
 _l.thankyou = "¡Gracias!"
@@ -499,7 +499,10 @@ _l.e13106 = "Node "+appname+""
 _l.e13107 = "El node se podéis controlar usando una aplicación de escritorio"
 _l.e13108 = "No tiene conexión con interfaz proxy Electron"
 
+
 _l.e13109 = "Ingrese las palabras de la imagen para recibir una bolsa de coinmonedas y continuar con el registro"
+_l.e13109h = "Haga clic en los hexágonos para ensamblar la imagen, luego ingrese el texto en la imagen resultante"
+
 _l.e13110 = "Ingresar captcha"
 _l.next = "Siguiente"
 _l.refresh = "Actualizar"
@@ -841,7 +844,7 @@ _l.torHintStateEnabled = "Estado de red Tor - activado"
 _l.torHintStateDisabled = "Estado de red Tor - desactivado"
 _l.torHintStateLoading = "Estado de red Tor - cargando"
 
-_l.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
+_l.lowstar1 = "El equipo de "+appname +" está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
 _l.lowstar_reason_1 = "Erótico/Porno"
 _l.lowstar_reason_2 = "Explotación de menores"
 _l.lowstar_reason_3 = "Amenaza directa de violencia"
@@ -849,11 +852,11 @@ _l.lowstar_reason_4 = "Drogas ilegales"
 _l.lowstar2 = "Por favor, no use calificaciones de 1 y 2 estrellas por otras razones. Después de que se publique la nueva moderación a mediados. Puede que pueda usar calificaciones bajas por otras razones"
 _l.lowstaragree = "Confirmo que esta publicación contiene uno de los cuatro tipos de contenido prohibido"
 
-_l.androidPopupTitle = "Obtenga información sin censura en la aplicación móvil Bastyon"
+_l.androidPopupTitle = "Obtenga información sin censura en la aplicación móvil "+appname +""
 _l.androidPopupAgree = "Cambiar a la aplicación"
 _l.androidPopupDisagree = "Ahora no"
 
-_l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio Bastyon"
+_l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio "+appname +""
 _l.desktopPopupAgree = "Descargar la aplicación"
 _l.desktopPopupDisagree = "Ahora no"
 
@@ -894,3 +897,15 @@ _l.torusing_stat_totalTorBytes = "Total, solicitudes TOR"
 _l.torusing_settings = "Ajustes TOR"
 _l.torusing_stats = "Estadísticas de solicitudes"
 _l.torusing_proxychangequestion = "Seguro que quieres cambiar el proxy?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Actualización';
+_l.updateNotifier_topHeading2 = 'Disponible';
+_l.updateNotifier_mainHeading = 'Tenemos novedades';
+_l.updateNotifier_mainText = 'Le recomendamos que mantenga la aplicación actualizada. Te esperan nuevas funciones y un rendimiento mejorado.';
+_l.updateNotifier_button1 = 'Instalar';
+_l.updateNotifier_button2 = 'Más tarde...';
+_l.updateNotifier_stateStart = 'Iniciando...';
+_l.updateNotifier_stateDownload = 'Descargado';
+_l.updateNotifier_stateError = 'Algo ha fallado';
+/** ↑ Component UpdateNotifier ↑ */
