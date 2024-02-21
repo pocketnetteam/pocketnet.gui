@@ -249,6 +249,23 @@
 		padding-bottom : 0;
 		border-radius: 12px;
 
+		&.animated {
+			border: 2px solid transparent;
+			animation: running-border 4s linear;
+		}
+	
+		@keyframes running-border {
+			0% {
+			  border-color: transparent;
+			}
+			50% {
+			  border-color: rgb(var(--color-bg-ac-bright));
+			}
+			100% {
+			  border-color: transparent;
+			}
+		}
+
 		.shareSpacer{
 			display: none;
 			height: 400px;

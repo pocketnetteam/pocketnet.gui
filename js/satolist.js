@@ -20355,6 +20355,42 @@ Platform = function (app, listofnodes) {
                         html += self.tempates.user(data.user, text || "", true, caption, extra, data.time)
                     }
 
+                    if (data.mesType === "jurymoderate"){
+
+                        html += `
+                        <div class="cwrapper">                    
+                            <div class="cell cellforimage">                                  
+                                <div class="icon">
+                                    <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                                        <div class="usericon" contain ban=".gif" image="*">
+                                            <span class="letter">
+                                                <i class="fa fa-gavel"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>                    
+                            </div>                    
+                            <div class="ccell">                        
+                                <div class="infomain">                            
+                                    <div class="caption">${self.app.localization.e('juryComplaint')}</div>  
+                                    <div class="caption reason">  
+                                        ${self.app.localization.e('reason')  + self.app.localization.e('lowstar_reason_' + data.reason)}
+                                    </div>                        
+                                </div>
+                            </div>
+                            <div class="ccell extra">
+                                <div class="subscribeWrapper table">
+                                    <div class="scell forsubscribe">
+                                        <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                                            <button class="subscribe ghost + "><i class="far fa-check-circle"></i> Jury</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    }
+
 
                     return html;
 

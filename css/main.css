@@ -5336,6 +5336,10 @@ html.allcontent_application #footerWrapper {
 .notification .caption {
   font-size: 0.9em;
 }
+.fastMessage .reason,
+.notification .reason {
+  margin-top: 1em;
+}
 .fastMessage {
   border-radius: 12px;
   -moz-transition: bottom 0.3s;

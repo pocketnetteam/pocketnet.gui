@@ -3479,6 +3479,42 @@ var lenta = (function(){
 			
 			share : function(share, clbk, all, p){
 
+				var c = function(p){
+	
+					window.requestAnimationFrame(() => {
+
+						if(!p.el.hasClass('rendered')){
+							p.el.addClass('rendered')
+
+							if (p.el.hasClass('hashiddengroup')){
+								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							}
+
+						}
+
+						var contentHash = getUrlParameter("contentHash");
+
+						var id = p.el.attr('id');
+
+						if (id === contentHash){
+
+							p.el.addClass('animated');
+
+							$('html, body').animate({
+								scrollTop: p.el.offset().top - 70
+							}, 1000);
+
+						}
+
+
+
+						if (clbk)
+							clbk();
+							clbk = null
+
+					})
+				}
+
 				if(!p) p = {}
 
 				if(!share) {
@@ -3506,36 +3542,14 @@ var lenta = (function(){
 
 
 						if(!p.repost) shareInitedMap[share.txid] = true;	
-						
-	
-						var c = function(){
-	
-							window.requestAnimationFrame(() => {
-	
-								if(!p.el.hasClass('rendered')){
-									p.el.addClass('rendered')
-	
-									if (p.el.hasClass('hashiddengroup')){
-										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
-									}
-	
-								}
-	
-	
-								if (clbk)
-									clbk();
-									clbk = null
-	
-							})
-						}
-	
+				
 						
 						if (video){
-							c()
+							c(p)
 						}
 						else{
 							setTimeout(() => {
-								c()
+								c(p)
 							}, 300)
 						}
 					})
@@ -3564,38 +3578,14 @@ var lenta = (function(){
 							ed : essenseData,
 						}
 					}, function(p){
-						console.log('p!!!!!!!!', p);
 						if(!p.repost) shareInitedMap[share.txid] = true;	
-						
-	
-						var c = function(){
-	
-							window.requestAnimationFrame(() => {
-	
-								if(!p.el.hasClass('rendered')){
-									p.el.addClass('rendered')
-	
-									if (p.el.hasClass('hashiddengroup')){
-										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
-									}
-	
-								}
-	
-	
-								if (clbk)
-									clbk();
-									clbk = null
-	
-							})
-						}
-	
-						
+												
 						if (video){
-							c()
+							c(p)
 						}
 						else{
 							setTimeout(() => {
-								c()
+								c(p)
 							}, 300)
 						}
 					})
@@ -3710,35 +3700,14 @@ var lenta = (function(){
 							}
 						}
 	
-						var c = function(){
-	
-							window.requestAnimationFrame(() => {
-	
-								if(!p.el.hasClass('rendered')){
-									p.el.addClass('rendered')
-	
-									if (p.el.hasClass('hashiddengroup')){
-										p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
-									}
-	
-								}
-	
-	
-								if (clbk) clbk();
-	
-								clbk = null
-	
-							})
-						}
-	
 						
 						if (video){
-							c()
+							c(p)
 						}
 						else{
 	
 							Promise.all(promises).catch(e => {}).then(() => {
-								c()
+								c(p)
 	
 								/*setTimeout(() => {
 									p.el.css('contain-intrinsic-size', p.el.height() + 'px')
@@ -3747,7 +3716,7 @@ var lenta = (function(){
 							})
 							
 							setTimeout(() => {
-								c()
+								c(p)
 							}, 300)
 						}
 						
