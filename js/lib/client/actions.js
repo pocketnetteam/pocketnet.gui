@@ -1898,8 +1898,6 @@ var Account = function(address, parent){
         self.status = e.status
         self.unspents = e.unspents
 
-        console.log("UNSPENTS IMPORT", e, self)
-        
         e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
         e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
@@ -2060,7 +2058,6 @@ var Account = function(address, parent){
             var until = self.unspents.updated.addSeconds(time)
 
             if (until > new Date()){
-                console.log("UNSPENTS CHECK DATE")
                 return Promise.resolve(self.unspents.value)
             }
         }
@@ -2090,8 +2087,6 @@ var Account = function(address, parent){
 
                 self.unspents.buganswer || (self.unspents.buganswer = 0)
                 self.unspents.buganswer ++
-
-                console.log('buganswer unspents')
 
                 return Promise.resolve(self.unspents.value)
             }

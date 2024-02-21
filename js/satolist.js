@@ -18774,7 +18774,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
                         }
 
                     }
@@ -19734,7 +19734,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (text) {
-                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time, data.donation);
+                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
 
                             html += toptext
                         }
@@ -19750,7 +19750,7 @@ Platform = function (app, listofnodes) {
 
                             var toptext = self.app.localization.e('e13338')
 
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', false, ' ' + toptext, extra, data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
                     }
 

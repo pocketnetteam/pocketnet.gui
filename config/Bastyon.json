@@ -5,6 +5,8 @@
     "fullname" : "Bastyon",
     "developapps" : [],
     "protocol" : "bastyon",
+    "support" : "support@bastyon.com",
+    "lname" : "Dvm Analytics LLC",
 	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
     "servers" : {
         "production" : {
@@ -126,5 +128,7 @@
     "electron" : {
         "protocol" : "bastyon"
     }
+
+    
     
 }
