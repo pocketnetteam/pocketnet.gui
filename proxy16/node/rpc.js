@@ -139,7 +139,15 @@ const publics = {
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
 
-    getaccountearning : true
+    getaccountearning : true,
+
+    // Jury
+    getalljury: true,
+    getjuryassigned: true,
+    getjurymoderators: true,
+    getaccountearning : true,
+
+    getbans : true
 
 }
 
@@ -506,6 +514,13 @@ RpcClient.callspec = {
 
     getaccountearning : 'str int int',
 
+    // Jury
+    getalljury: '',
+    getjuryassigned: 'str',
+    getjurymoderators: 'str',
+    getaccountearning : 'str int int',
+
+    getbans: 'str'
 
     
 
