@@ -1866,13 +1866,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     shareRoomLink: function () {
       return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`;
-
-      /*if(this.chat.info.title === '@New Room'){
-      return `https://bastyon.com/welcome?publicroom=${this.chat.roomId}`
-      }
-      return `https://bastyon.com/welcome?publicroom=${this.chat.info.title.replace(/ /g, '_')}`*/
     },
-
     me: function () {
       return _.find(this.membersList, m => {
         return m.userId == this.core.user.userinfo.id;
