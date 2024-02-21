@@ -6973,6 +6973,10 @@ html.pipmode .matrixchatwrapper {
   flex-direction: row;
   align-items: center;
 }
+.topvideosWrapper .peertube-server-hint {
+  bottom: 0;
+  font-size: 0.6em;
+}
 #application.default-scroll {
   overflow-x: visible;
 }

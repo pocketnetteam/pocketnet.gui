@@ -2123,6 +2123,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
     replaceMentions(text) {
       _.each(this.userlist, function (user) {
+        if (!user.name) return;
         text = text.replace(new RegExp("@" + user.name, "g"), "@" + user.id + ":" + user.name);
       });
       return text;
