@@ -2372,6 +2372,7 @@ pUserInfo = function(){
 	self.subscribes_loaded = false
 	self.subscribers_loaded = false
 	self.blocking_loaded = false;
+	self.dev = false
 
 
 	self.recomendedSubscribes = [];
@@ -2531,6 +2532,8 @@ pUserInfo = function(){
 		v.likers_count = self.likers_count
 		v.postcnt = self.postcnt
 		v.content = _.clone(self.content)
+
+		v.dev = self.dev
 
 
 		if (self.regdate && self.regdate.getTime){

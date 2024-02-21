@@ -376,6 +376,9 @@ Application = function (p) {
 	}
 
 	self.canuseip = function () {
+		return false
+
+		
 		if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
 			return true
 		}
@@ -1502,7 +1505,6 @@ Application = function (p) {
 
 				if (cordova.plugins && cordova.plugins.backgroundMode)
 					cordova.plugins.backgroundMode.on('activate', function () {
-						console.log("BACKGROUND ACTIVATED")
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
 
@@ -1688,8 +1690,6 @@ Application = function (p) {
 				}
 			}
 
-			console.log("playingvideo caller", v, self.playingvideo)
-
 			if (self.playingvideo && self.playingvideo.playing) {
 
 				try {
@@ -1702,8 +1702,6 @@ Application = function (p) {
 				}
 
 			}
-
-			console.log("playingvideo caller v3", v, self.playingvideo)
 
 
 			self.playingvideo = v
@@ -2358,7 +2356,7 @@ Application = function (p) {
 		memory: function () {
 
 			document.addEventListener('memorywarning', function () {
-				console.log("MOMORY WARNING1")
+				console.log("MEMORY WARNING")
 			});
 
 		},
@@ -2653,8 +2651,6 @@ Application = function (p) {
 
 									self.mobile.saveImages.save(base64, name, function (d, err) {
 
-										console.log(d, err)
-
 										globalpreloader(false)
 
 										if (d) {
@@ -2876,6 +2872,18 @@ Application = function (p) {
 				}
 
 			},
+
+			initdestroyparallaxAuto : function(){
+				var scrollTop = self.actions.getScroll()
+
+				if (!scrollTop) {
+					self.mobile.reload.initparallax()
+				}
+				else {
+					self.mobile.reload.destroyparallax()
+				}
+			},
+
 			initparallax: function () {
 
 				if ((isTablet() || isMobile()) && !self.el.html.hasClass('allcontent_application')) {
@@ -3224,7 +3232,7 @@ Application = function (p) {
 
 	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
 
-
+	edjsHTML = edjsHTMLCnt(null, self)
 
 	return self;
 }

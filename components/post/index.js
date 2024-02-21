@@ -495,8 +495,6 @@ var post = (function () {
 
 						play : function(){
 
-							console.log("set post playing play")
-
 
 							//if(!p.pip)
 								self.app.actions.playingvideo(player)
@@ -520,7 +518,6 @@ var post = (function () {
 						},
 
 						pause : function(){
-							console.log("set post playing pause")
 							self.app.actions.playingvideo(null, player)
 						},
 
@@ -1551,6 +1548,8 @@ var post = (function () {
 										})
 
 										function initOutsideClickEvent(e) {
+											if(share.itisarticle()) return
+
 											let isOutside = false;
 
 											el.share.closest('.wndcontent').on('mousedown', e => {

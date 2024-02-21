@@ -135,8 +135,6 @@ var application = (function(){
 
 			menu : function(el){
 
-				console.log("metmenu el", el)
-
 				var d = {application}
 
 				self.fastTemplate('metmenu', (rendered, template) => {
@@ -291,7 +289,6 @@ var application = (function(){
 			primary : primary,
 
 			parametersHandler : function() {
-				console.log('HERE')
 				var id = parameters().id,
 					p = parameters().p;
 
