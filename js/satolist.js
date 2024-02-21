@@ -9571,6 +9571,16 @@ Platform = function (app, listofnodes) {
                         if (attr.exported) {
                             var alias = new kits.alias[attr.type]()
 
+                            if (attr.type == 'userInfo'){
+                                attr.exported.blocking = []
+                                attr.exported.subscribers = []
+                                attr.exported.subscribes = []
+
+                                attr.exported.blocking_loaded = false 
+                                attr.exported.subscribers_loaded = false 
+                                attr.exported.subscribes_loaded = false 
+                            }
+
                             alias._import(attr.exported)
 
                             imp[i] = alias
@@ -9606,8 +9616,25 @@ Platform = function (app, listofnodes) {
                         if (!attr) return;
 
                         if (attr.export) {
+
+                            var exported = attr.export()
+
+                            if (attr.type == 'userInfo' && exported){
+                                exported.blocking = [] 
+                                exported.blocking_loaded = false 
+
+                                exported.subscribers = [] 
+                                exported.subscribers_loaded = false 
+
+                                exported.subscribes = [] 
+                                exported.subscribes_loaded = false 
+
+                                exported.recomendedSubscribes = []
+                               
+                            }
+
                             l[i] = {
-                                exported: attr.export(),
+                                exported: exported,
                                 type: attr.type
                             }
                         }
