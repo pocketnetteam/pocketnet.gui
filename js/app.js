@@ -2100,24 +2100,24 @@ Application = function (p) {
 
 	self.name = self.options.name;
 
-  /**
-   * This function cuts given timestamp to fit
-   * the current unix digits count. It resolves
-   * issues with dates that was
-   * erroneously converted
-   *
-   * @param {Date} time UNIX timestamp
-   * @returns {Date} Fixed UNIX timestamp
-   */
-  self.fixDate = (time) => {
-    const unixtime = +new Date(time);
-    const currDigits = Date.now().toString().length;
-    const fixedDate = unixtime.toString().slice(0, currDigits) * 1;
-    return new Date(fixedDate);
-  };
+	/**
+	 * This function cuts given timestamp to fit
+	 * the current unix digits count. It resolves
+	 * issues with dates that was
+	 * erroneously converted
+	 *
+	 * @param {Date} time UNIX timestamp
+	 * @returns {Date} Fixed UNIX timestamp
+	 */
+	self.fixDate = (time) => {
+		const unixtime = +new Date(time);
+		const currDigits = Date.now().toString().length;
+		const fixedDate = unixtime.toString().slice(0, currDigits) * 1;
+		return new Date(fixedDate);
+	};
 
 	self.reltime = function (time) {
-    time = self.fixDate(time);
+		time = self.fixDate(time);
 
 		var value = time || new Date()
 		var today = moment()
