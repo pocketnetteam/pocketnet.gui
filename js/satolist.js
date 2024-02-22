@@ -8706,11 +8706,11 @@ Platform = function (app, listofnodes) {
 
                             var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
 
-                            if (endDate < new Date().getTime()){
+                            if (endDate < new Date()){
 
                                 if (clbk)
                                     clbk();
-                                
+
                                 return;
                             }
 
