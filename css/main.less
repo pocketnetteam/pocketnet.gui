@@ -6181,7 +6181,6 @@ html.allcontent_application{
         color : rgb(var(--color-txt-ac));
         margin-left : auto;
         font-size: 0.8em;
-        background: rgba(var(--background-total-theme), 0.3);
         .shadowSmall(); 
     }
 
@@ -6217,6 +6216,7 @@ html.allcontent_application{
 
     .transactionmessagewrapper{
         display: flex;
+        justify-content: flex-end;
         >div{
             align-items: flex-start;
             flex-grow: 1;
@@ -6228,6 +6228,7 @@ html.allcontent_application{
                 text-align: right;
                 color : rgb(var(--color-good));
                 font-size : 0.8em;
+                text-align: right;
             }
         }
     }
@@ -6278,10 +6279,9 @@ html.allcontent_application{
         }
 
         .commenttext{
+            padding-top: @rhythm;
             cursor: pointer;
             span{
-                font-size : 1;
-                font-weight: 700;
             }
             
         }
@@ -6406,6 +6406,7 @@ html.allcontent_application{
     }
 
     .subscribeWrapper{
+        margin-top: @rhythm;
         >div{
             vertical-align: bottom;
             &.forsubscribe{
@@ -8244,7 +8245,7 @@ html.mobileview{
         left: 0.5 * @rhythm;
         right: 0.5 * @rhythm;
         top: calc(0.5 * @rhythm + var(--app-margin-top));
-        max-height: 105px;
+        max-height: 135px;
         width: auto;
         min-width: 0;
         max-width: none;
@@ -8298,6 +8299,15 @@ html.mobileview{
             width: auto!important;
         }
 
+       
+
+    }
+
+    .fastMessage,
+    .notification{
+        .foranswer{
+            display: none;
+        }
     }
 
 
@@ -8641,11 +8651,16 @@ html.pipmode{
     }
 }
 
+
 .skip-ads{
     right: 0;
     cursor: pointer;
 }
 
+.topvideosWrapper .peertube-server-hint {
+	bottom: 0;
+	font-size: 0.6em;
+}
 ///////////
 #application{
 

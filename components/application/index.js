@@ -132,8 +132,6 @@ var application = (function(){
 
 			menu : function(el){
 
-				console.log("metmenu el", el)
-
 				var d = {application}
 
 				self.fastTemplate('metmenu', (rendered, template) => {
@@ -287,7 +285,6 @@ var application = (function(){
 			primary : primary,
 
 			parametersHandler : function() {
-				console.log('HERE')
 				var id = parameters().id,
 					p = parameters().p;
 
@@ -315,8 +312,6 @@ var application = (function(){
 				if (p && application && application.manifest.id == id) {
 
 					var decoded = actions.getpath()
-
-					console.log("PATH, decoded", decoded)
 
 					if (decoded){
 						self.app.apps.emit('changestate', {

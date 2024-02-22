@@ -5029,7 +5029,6 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--color-txt-ac));
   margin-left: auto;
   font-size: 0.8em;
-  background: rgba(var(--background-total-theme), 0.3);
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .fastMessage .messagestar,
@@ -5064,6 +5063,7 @@ html.allcontent_application #footerWrapper {
 .fastMessage .transactionmessagewrapper,
 .notification .transactionmessagewrapper {
   display: flex;
+  justify-content: flex-end;
 }
 .fastMessage .transactionmessagewrapper > div,
 .notification .transactionmessagewrapper > div {
@@ -5075,9 +5075,9 @@ html.allcontent_application #footerWrapper {
   white-space: nowrap;
   flex-grow: 0;
   font-weight: 700;
-  text-align: right;
   color: rgb(var(--color-good));
   font-size: 0.8em;
+  text-align: right;
 }
 .fastMessage .repostshare,
 .notification .repostshare {
@@ -5123,12 +5123,8 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .commentmessagewrapper .commenttext,
 .notification .commentmessagewrapper .commenttext {
+  padding-top: 0.5em;
   cursor: pointer;
-}
-.fastMessage .commentmessagewrapper .commenttext span,
-.notification .commentmessagewrapper .commenttext span {
-  font-size: 1;
-  font-weight: 700;
 }
 .fastMessage .commentmessagewrapper .commentimages,
 .notification .commentmessagewrapper .commentimages {
@@ -5246,6 +5242,10 @@ html.allcontent_application #footerWrapper {
 .fastMessage .sharepreview:nth-child(1),
 .notification .sharepreview:nth-child(1) {
   padding-top: 0.5em;
+}
+.fastMessage .subscribeWrapper,
+.notification .subscribeWrapper {
+  margin-top: 0.5em;
 }
 .fastMessage .subscribeWrapper > div,
 .notification .subscribeWrapper > div {
@@ -6680,7 +6680,7 @@ html.mobileview .fastMessage {
   left: 0.25em;
   right: 0.25em;
   top: calc(0.5 * 0.5em + var(--app-margin-top));
-  max-height: 105px;
+  max-height: 135px;
   width: auto;
   min-width: 0;
   max-width: none;
@@ -6720,6 +6720,10 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 }
 html.mobileview .fastMessage .foramount {
   width: auto!important;
+}
+html.mobileview .fastMessage .foranswer,
+html.mobileview .notification .foranswer {
+  display: none;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;
@@ -6990,6 +6994,10 @@ html.pipmode .matrixchatwrapper {
 .skip-ads {
   right: 0;
   cursor: pointer;
+}
+.topvideosWrapper .peertube-server-hint {
+  bottom: 0;
+  font-size: 0.6em;
 }
 #application.default-scroll {
   overflow-x: visible;

@@ -5,6 +5,7 @@
 .vs
 .idea
 /dist
+
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
 exported.less
@@ -65,3 +66,4 @@ posts/
 ./main.js
 cordova/cert.keystore
 package.cordova.json
+dcs

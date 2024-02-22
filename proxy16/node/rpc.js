@@ -139,11 +139,12 @@ const publics = {
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
 
+    getaccountearning : true,
+
     // Jury
     getalljury: true,
     getjuryassigned: true,
     getjurymoderators: true,
-    getaccountearning : true,
 
     getbans : true
 

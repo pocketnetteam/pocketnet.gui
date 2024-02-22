@@ -495,8 +495,6 @@ var post = (function () {
 
 						play : function(){
 
-							console.log("set post playing play")
-
 
 							//if(!p.pip)
 								self.app.actions.playingvideo(player)
@@ -520,7 +518,6 @@ var post = (function () {
 						},
 
 						pause : function(){
-							console.log("set post playing pause")
 							self.app.actions.playingvideo(null, player)
 						},
 
@@ -1573,20 +1570,25 @@ var post = (function () {
 												$(this).addClass('allshowed')
 											})
 
-											el.share.find('.openetc').on('click', function(){
-												
-
-												self.closeContainer()
-
-												self.nav.api.load({
-													open : true,
-													href : 'post?s=' + $(this).attr('share'),
-													inWnd : true,
-													history : true
-												})
-											})
-
-											el.share.closest('.wndcontent').on('click', events.clickOut);
+											function initOutsideClickEvent(e) {
+												if(share.itisarticle()) return
+	
+												let isOutside = false;
+	
+												el.share.closest('.wndcontent').on('mousedown', e => {
+													isOutside = e.target.classList.contains('wndcontent');
+												});
+	
+												el.share.closest('.wndcontent').on('mouseup', e => {
+													if (isOutside) {
+														events.clickOut(e);
+													}
+	
+													isOutside = false;
+												});
+											}
+	
+											initOutsideClickEvent();
 
 											if (clbk) clbk();
 										});

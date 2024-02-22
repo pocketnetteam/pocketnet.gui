@@ -495,8 +495,6 @@ var Action = function(account, object, priority, settings){
 
     var filterUnspents = function(unspents){
 
-        console.log("action", unspents)
-
         if (options.addresses){
             var addresses = options.addresses(self, account)
 
@@ -531,12 +529,8 @@ var Action = function(account, object, priority, settings){
             try{
                 await account.updateUnspents(retry ? 0 : 60).then((clearUnspents) => {
 
-                    console.log('action clearUnspents 1', clearUnspents)
-
 
                     clearUnspents = filterUnspents(clearUnspents)
-
-                    console.log('action clearUnspents 2', clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
 
@@ -1124,7 +1118,6 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
-            console.log("actions error", error)
 
             if(rejectIfError){
                 if(
@@ -1438,8 +1431,6 @@ var Account = function(address, parent){
     }
 
     self.actionRejected = async function(action, error){
-
-        console.log("ACTION", action, error)
 
 
         //// use getActionById(in clbk)
@@ -1906,7 +1897,7 @@ var Account = function(address, parent){
         
         self.status = e.status
         self.unspents = e.unspents
-        
+
         e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
         e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
@@ -2077,6 +2068,7 @@ var Account = function(address, parent){
 
     self.loadUnspents = function(){
 
+
         if(!self.isCurrentNetwork()){
             return Promise.reject('otherNetwork')
         }
@@ -2088,8 +2080,18 @@ var Account = function(address, parent){
         var zAddresses = (self.address == app.user.address.value) ? (parent.app.platform.sdk.addresses.storage.addresses || []) : []
 
         var promise = parent.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
+            delete temps.unspents
 
-            console.log("action UNS", unspents)
+            //// FIX NODE BUG:
+            if(!unspents.length && self.unspents.value && self.unspents.value.length > 2 && (!self.unspents.buganswer || self.unspents.buganswer < 50)){
+
+                self.unspents.buganswer || (self.unspents.buganswer = 0)
+                self.unspents.buganswer ++
+
+                return Promise.resolve(self.unspents.value)
+            }
+
+            delete self.unspents.buganswer
 
             checkTransactionByUnspents(unspents)
 
@@ -2099,11 +2101,10 @@ var Account = function(address, parent){
 
             cleanOutputs()
 
-            delete temps.unspents
-
             self.trigger()
 
             return Promise.resolve(unspents)
+
         }).catch(e => {
             console.error('action', e)
             delete temps.unspents
