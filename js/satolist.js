@@ -8669,7 +8669,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 var params = [address];
-
                   
 
                 self.app.api.rpc('getbans', params)
@@ -8741,6 +8740,10 @@ Platform = function (app, listofnodes) {
 
 
 
+                    } else {
+
+                        if (clbk)
+                            clbk();
                     }
 
 
