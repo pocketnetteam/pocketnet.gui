@@ -8706,6 +8706,14 @@ Platform = function (app, listofnodes) {
 
                             var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
 
+                            if (endDate < new Date().getTime()){
+
+                                if (clbk)
+                                    clbk();
+                                
+                                return;
+                            }
+
                             var formattedDate = convertDate(dateToStr(endDate));
 
                             var banHtml =  self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' 
