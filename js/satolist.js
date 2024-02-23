@@ -20427,10 +20427,7 @@ Platform = function (app, listofnodes) {
                             </div>                    
                             <div class="ccell">                        
                                 <div class="infomain">                            
-                                    <div class="caption">${self.app.localization.e('juryComplaint')}</div>  
-                                    <div class="caption reason">  
-                                        ${self.app.localization.e('reason')  + self.app.localization.e('lowstar_reason_' + data.reason)}
-                                    </div>                        
+                                    <div class="caption complaint">${self.app.localization.e('juryComplaint')}</div>                        
                                 </div>
                             </div>
                             <div class="ccell extra">
