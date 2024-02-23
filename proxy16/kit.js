@@ -33,11 +33,11 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 logger.setlevel('debug');
 
 var testnodes = [
-	{
-		host : '78.37.233.202',
+	/*{
+		host : '65.21.252.135',
 		port : 39091,
 		ws : 6067,
-		name : 'test.v.pocketnet.app',
+		name : 'pnettool.pocketnet.app',
 		stable : true
 	},
 
@@ -47,7 +47,7 @@ var testnodes = [
 		ws : 6067,
 		name : 'test.1.pocketnet.app',
 		stable : true
-	},
+	},*/
 	{
 		host : '157.90.228.34',
 		port : 39091,
@@ -61,7 +61,7 @@ var testnodes = [
 		ws : 6067,
 		name : 'test.pocketnet.app',
 		stable : true
-	},
+	}/*,
 	{
 		host : 'pnettool.pocketnet.app',
 		port : 39091,
@@ -75,7 +75,7 @@ var testnodes = [
 		ws : 6067,
 		name : 'lostystyg',
 		stable : false
-	}
+	}*/
 ]
 
 
