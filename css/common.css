@@ -896,6 +896,7 @@
 }
 .share_common .sharepanel > div:nth-last-child(1) {
   margin-right: 0;
+  margin-left: auto;
 }
 .share_common .sharepanel > div .count {
   cursor: pointer;

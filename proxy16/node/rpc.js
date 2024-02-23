@@ -148,7 +148,13 @@ const publics = {
     getbarteronfeed: true,
     getbarterondeals: true,
     getbarteronoffersdetails: true,
-    getbarteroncomplexdeals: true
+    getbarteroncomplexdeals: true,
+    // Jury
+    getalljury: true,
+    getjuryassigned: true,
+    getjurymoderators: true,
+
+    getbans : true
 
 }
 
@@ -522,7 +528,14 @@ RpcClient.callspec = {
     getbarteronfeed: 'obj',
     getbarterondeals: 'obj',
     getbarteronoffersdetails: 'obj',
-    getbarteroncomplexdeals: 'obj'
+    getbarteroncomplexdeals: 'obj',
+    // Jury
+    getalljury: '',
+    getjuryassigned: 'str',
+    getjurymoderators: 'str',
+
+    getbans: 'str'
+
     
 
 };
