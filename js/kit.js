@@ -2275,6 +2275,7 @@ pUserInfo = function(){
 	self.objectid = makeid()
 
 	self._import = function(v){
+
 		self.name = v.n || v.name || '';
 		self.image = v.i || v.image;
 		self.about = v.a || v.about || '';
@@ -2285,7 +2286,8 @@ pUserInfo = function(){
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
-		self.deleted = v.deleted || false
+		self.deleted = v.deleted || false;
+		self.bans = v.bans || {};
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;

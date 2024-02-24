@@ -6409,7 +6409,7 @@ html.allcontent_application{
         margin-top: @rhythm;
         >div{
             vertical-align: bottom;
-            &.forsubscribe{
+            &.forsubscribe, &.forjury{
                 width: 80px;
                 text-align: right;
                 button{
@@ -6435,8 +6435,15 @@ html.allcontent_application{
                     }
                 }
             }
+
+            &.forjury{
+                button{
+                    padding-bottom: 5px;
+                }
+            }
         }
     }
+
     .cwrapper{
         display: flex;
 
@@ -6448,6 +6455,13 @@ html.allcontent_application{
                 width: 50px;
                 flex-grow: 0;
                 max-width: 50px;
+            }
+
+            &.verdict{
+
+                .icon i{
+                    color: rgb(var(--color-bad));
+                }
             }
 
             &.extra{
@@ -6501,7 +6515,9 @@ html.allcontent_application{
     }
 
     .complaint{
-        margin-bottom: @rhythm * 2;
+        margin-top: 3px;
+        margin-bottom: @rhythm * 3;
+        width: 95%;
     }
 }
 

@@ -8653,11 +8653,48 @@ Platform = function (app, listofnodes) {
 
             },
 
+            showBanDialog : function(ban, clbk){
+
+                var currentBlock = self.currentBlock || localStorage['lastblock'];
+
+                var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
+
+                if (endDate < new Date()){
+
+                    if (clbk)
+                        clbk();
+
+                    return;
+                }
+
+                var formattedDate = convertDate(dateToStr(endDate));
+
+                var banHtml =  self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' 
+
+                if (currentBlock){
+                    banHtml += self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' 
+                }
+
+                banHtml += self.app.localization.e('accountBannedActions');
+
+                new dialog({
+                    html: banHtml,
+                    btn1text: 'OK',
+
+                    class: 'zindex one',
+
+                })
+
+                self.app.platform.sdk.user.blocked = true;
+                
+                if (clbk)
+                    clbk();
+
+            },
+
             getbans : function(clbk){
 
                 var address = self.app.user.address.value;
-
-                console.log('getbans!!!', address);
 
                 if (!address){
 
@@ -8698,53 +8735,14 @@ Platform = function (app, listofnodes) {
 
                     if (ban && ban.reason){
 
-                        var showBanDialog = content => {
+                        self.sdk.user.showBanDialog(ban, clbk);
 
-                            console.log('content!', content, self.currentBlock);
-
-                            var currentBlock = self.currentBlock || localStorage['lastblock'];
-
-                            var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
-
-                            if (endDate < new Date()){
-
-                                if (clbk)
-                                    clbk();
-
-                                return;
-                            }
-
-                            var formattedDate = convertDate(dateToStr(endDate));
-
-                            var banHtml =  self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' 
-
-                            if (currentBlock){
-                                banHtml += self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' 
-                            }
-
-                            banHtml += self.app.localization.e('accountBannedActions');
-
-                            new dialog({
-                                html: banHtml,
-                                btn1text: 'OK',
-
-                                class: 'zindex one',
-
-                            })
-
-                            self.app.platform.sdk.user.blocked = true;
+                        // self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
+                        // .catch(e => {
                             
-                            if (clbk)
-                                clbk();
-    
-                        }
-
-                        self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
-                        .catch(e => {
+                        //     showBanDialog(null, e);
                             
-                            showBanDialog(null, e);
-                            
-                        })
+                        // })
 
 
 
@@ -15391,9 +15389,9 @@ Platform = function (app, listofnodes) {
                     }
                         else {
 
-                            self.app.platform.sdk.jury.getalljury();
+                            // self.app.platform.sdk.jury.getalljury();
 
-                            self.app.platform.sdk.jury.getjurymoderators('1e67ce672ba3a0fc7c4639831453bdee94b72b3687fb1a9ee7ae70cf4fb03626');
+                            // self.app.platform.sdk.jury.getjurymoderators('1e67ce672ba3a0fc7c4639831453bdee94b72b3687fb1a9ee7ae70cf4fb03626');
 
                             self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
@@ -20095,15 +20093,22 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk, wa) {
 
 
+                    if (data.mesType == 'juryverdict'){
+
+                        self.app.platform.sdk.user.blocked = true;
+
+                        if (self.app.platform.actionListeners && self.app.platform.actionListeners.menu) self.app.platform.actionListeners.menu({type: 'userInfo'});
+                 
+                    }
+
                     if (data.addrFrom) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
                             
-
                             data.user.address = data.addrFrom
-
+                            
                             if (data.mesType == 'userInfo' && !wa) {
                                 var me = platform.psdk.userInfo.getmy()
                                 
@@ -20338,6 +20343,7 @@ Platform = function (app, listofnodes) {
                 },
                 fastMessage: function (data) {
 
+
                     var text = '';
                     var html = '';
                     var caption = '';
@@ -20413,7 +20419,7 @@ Platform = function (app, listofnodes) {
                     if (data.mesType === "jurymoderate"){
 
                         html += `
-                        <div class="cwrapper">                    
+                        <div class="cwrapper jurymoderate">                    
                             <div class="cell cellforimage">                                  
                                 <div class="icon">
                                     <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
@@ -20426,22 +20432,57 @@ Platform = function (app, listofnodes) {
                                 </div>                    
                             </div>                    
                             <div class="ccell">                        
-                                <div class="infomain">                            
-                                    <div class="caption complaint">${self.app.localization.e('juryComplaint')}</div>                        
-                                </div>
+                                <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                                    <div class="infomain">                            
+                                        <div class="caption complaint">${self.app.localization.e('juryComplaint')}</div>                        
+                                    </div>
+                                </a>
+
                             </div>
                             <div class="ccell extra">
-                                <div class="subscribeWrapper table">
-                                    <div class="scell forsubscribe">
+                                    <div class="subscribeWrapper table">
+                                        <div class="scell forjury">
                                         <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
-                                            <button class="subscribe ghost + "><i class="far fa-check-circle"></i> Jury</button>
-                                        </a>
+
+                                            <button class="subscribe ghost +"> ${self.app.localization.e('start')}</button> 
+                                            </a>
+                                  
+                                        </div>
                                     </div>
-                                </div>
                             </div>
+
                         </div>
                         `
                     }
+
+
+                    if (data.mesType === 'juryverdict' && data.reason === 1){
+
+                        html += `
+                        <div class="cwrapper juryverdict">                    
+                            <div class="cell cellforimage verdict">                                  
+                                <div class="icon">
+                                    <div class="usericon" contain ban=".gif" image="*">
+                                        <span class="letter">
+                                            <i class="fa fa-ban"></i>
+                                        </span>
+                                    </div>
+                                </div>                    
+                            </div>                    
+                            <div class="ccell">                        
+                                <div class="infomain">                            
+                                    <div class="caption complaint">${self.app.localization.e('accountBanned')}</div>                        
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        `
+                    
+                    }
+
+
 
 
                     return html;

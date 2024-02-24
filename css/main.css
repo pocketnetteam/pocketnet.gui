@@ -5252,33 +5252,49 @@ html.allcontent_application #footerWrapper {
   vertical-align: bottom;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe,
-.notification .subscribeWrapper > div.forsubscribe {
+.notification .subscribeWrapper > div.forsubscribe,
+.fastMessage .subscribeWrapper > div.forjury,
+.notification .subscribeWrapper > div.forjury {
   width: 80px;
   text-align: right;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button,
-.notification .subscribeWrapper > div.forsubscribe button {
+.notification .subscribeWrapper > div.forsubscribe button,
+.fastMessage .subscribeWrapper > div.forjury button,
+.notification .subscribeWrapper > div.forjury button {
   text-align: right;
   width: auto;
   padding-top: 0;
   padding-bottom: 0;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button i,
-.notification .subscribeWrapper > div.forsubscribe button i {
+.notification .subscribeWrapper > div.forsubscribe button i,
+.fastMessage .subscribeWrapper > div.forjury button i,
+.notification .subscribeWrapper > div.forjury button i {
   display: none;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled,
-.notification .subscribeWrapper > div.forsubscribe button.disabled {
+.notification .subscribeWrapper > div.forsubscribe button.disabled,
+.fastMessage .subscribeWrapper > div.forjury button.disabled,
+.notification .subscribeWrapper > div.forjury button.disabled {
   color: rgb(var(--color-good));
   background: transparent;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled i,
-.notification .subscribeWrapper > div.forsubscribe button.disabled i {
+.notification .subscribeWrapper > div.forsubscribe button.disabled i,
+.fastMessage .subscribeWrapper > div.forjury button.disabled i,
+.notification .subscribeWrapper > div.forjury button.disabled i {
   display: inline;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled:hover,
-.notification .subscribeWrapper > div.forsubscribe button.disabled:hover {
+.notification .subscribeWrapper > div.forsubscribe button.disabled:hover,
+.fastMessage .subscribeWrapper > div.forjury button.disabled:hover,
+.notification .subscribeWrapper > div.forjury button.disabled:hover {
   background: transparent;
+}
+.fastMessage .subscribeWrapper > div.forjury button,
+.notification .subscribeWrapper > div.forjury button {
+  padding-bottom: 5px;
 }
 .fastMessage .cwrapper,
 .notification .cwrapper {
@@ -5294,6 +5310,10 @@ html.allcontent_application #footerWrapper {
   width: 50px;
   flex-grow: 0;
   max-width: 50px;
+}
+.fastMessage .cwrapper > div.verdict .icon i,
+.notification .cwrapper > div.verdict .icon i {
+  color: rgb(var(--color-bad));
 }
 .fastMessage .cwrapper > div.extra,
 .notification .cwrapper > div.extra {
@@ -5338,7 +5358,9 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .complaint,
 .notification .complaint {
-  margin-bottom: 1em;
+  margin-top: 3px;
+  margin-bottom: 1.5em;
+  width: 95%;
 }
 .fastMessage {
   border-radius: 12px;
