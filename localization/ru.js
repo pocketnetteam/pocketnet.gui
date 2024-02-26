@@ -2581,3 +2581,5 @@ _l.permissions_name_chat = appname + " чат"
 
 _l.permissions_name_geolocation = "Доступ к местоположению"
 _l.permissions_descriptions_geolocation = "Приложение запрашивает разрешение к вашему местоположению"
+
+_l.shop = "Магазин"

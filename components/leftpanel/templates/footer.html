@@ -1,18 +1,18 @@
 <div class="rightbottomlinks">
 
-    <% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
-        <div class="downloadapplication">
-            <button class="button small"><%= e('e13120') %></button>
+    <div class="brtitems">
+        <div class="reportCaption">
+            <div class="label">
+                <i class="fas fa-shopping-cart"></i> <a href="https://www.brighteonstore.com/" cordovalink="_system" external="external"><%=e('shop')%> </a>
+            </div>
         </div>
 
-    <% } %>
-
-    <% if (!window.cordova && !isMobile()) {%>
-        <div class="donations">
-            <button class="button small good"><%= e('donate') %></button>
+        <div class="reportCaption">
+            <div class="label">
+                <i class="fas fa-donate"></i> <a href="https://donation.brighteon.com/" cordovalink="_system" external="external"><%=e('donate')%> </a>
+            </div>
         </div>
-    <% } %>
-
+    </div>
 
     <div>
 

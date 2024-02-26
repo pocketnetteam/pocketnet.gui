@@ -213,6 +213,16 @@
 #leftpanel .rightbottomnav .rightbottomlinks .download-button {
   margin-bottom: 0.5em;
 }
+#leftpanel .rightbottomnav .rightbottomlinks .brtitems {
+  margin-bottom: 2em;
+}
+#leftpanel .rightbottomnav .rightbottomlinks .brtitems a {
+  font-weight: 700;
+}
+#leftpanel .rightbottomnav .rightbottomlinks .brtitems i {
+  text-align: center;
+  width: 30px;
+}
 #leftpanel .rightbottomnav .copyright {
   display: flex;
   justify-content: flex-start;
