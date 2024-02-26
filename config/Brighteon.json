@@ -1,0 +1,114 @@
+{
+    "url" : "brighteon.io",
+    "turl" : "test.brighteon.io",
+    "name" : "Brighteon",
+    "fullname" : "Brighteon",
+    "developapps" : [],
+    "protocol" : "bastyon",
+    "support" : "support@brighteon.io",
+    "lname" : "Webseed, LLC",
+	"blockexplorer" : "https://brighteon.io/blockexplorer/",
+    "servers" : {
+        "production" : {
+            "proxy" : [
+                {
+                    "host" : "1.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+            
+            "matrix" : "matrix.pocketnet.app"
+        },
+
+        "test" : {
+            "proxy" : [
+                {
+                    "host" : "test.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+        
+            "matrix" : "test.matrix.pocketnet.app"
+        }
+    },
+    "forbiddenNames" : [
+        "bastyon", "pocketnet", "brighteon"
+    ],
+    "applications" : {
+        "ui" : {
+            "android" : {
+                "github" : {
+                    "name": "Bastyon.apk",
+                    "gfname": "BastyonGF.apk",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                },
+                "href" : "https://play.google.com/store/apps/details?id=pocketnet.app"
+            },
+            "ios" : {
+                "href" : "https://apps.apple.com/app/id1537944200"
+            },
+            "windows" : {
+                "github" : {
+                    "name": "BastyonSetup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                }
+            },
+            "macos" : {
+                "github" : {
+                    "name": "BastyonSetup.dmg",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                }
+            },
+            "linux" : {
+                "github" : {
+                    "name": "BastyonSetup.deb",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                }
+            }
+        },
+        "node": {
+            "windows": {
+                "github": {
+                    "name": "pocketnetcore_0.22.0_win_x64_setup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            },
+
+            "linux": {
+                "github": {
+                    "name": "Pocketnet_linux_x64.AppImage",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            }
+        }
+    },
+
+    "cordova" : {
+        "name" : "io.brighteon",
+        "displayName" : "Brighteon",
+        "iosTeamId" : "",
+        "reversedClientId" : "",
+        "iosUrlScheme" : "brighteon",
+        "groupIdentifier" : "group.io.brighteon"
+    },
+
+    "electron" : {
+        "protocol" : "brighteon"
+    }
+}

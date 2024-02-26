@@ -1,5 +1,5 @@
 name: Report a bug
-description: Report a bug that isn't caused by Bastyon. If unsure, use this form
+description: Report a bug that isn't caused by Brighteon. If unsure, use this form
 body:
   - type: markdown
     attributes:

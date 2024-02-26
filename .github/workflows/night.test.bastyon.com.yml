@@ -1,4 +1,4 @@
-name: Deploy to night.test.bastyon.com
+name: Deploy to night.test.brighteon.io
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
-          npm run minimize:bastyon:test -- -sha=${{ github.sha }}
+          npm run minimize:brighteon:test -- -sha=${{ github.sha }}
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night.test/
       - name: Reset nginx cache
@@ -41,7 +41,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon:test -- -sha=${{ github.sha }}
+          npm run dev:brighteon:test -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: macos
-          path: ./dist/BastyonSetup.dmg
+          path: ./dist/BrighteonSetup.dmg
 
   build-unix:
     runs-on: ubuntu-latest
@@ -79,7 +79,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
-          npm run dev:bastyon:test -- -sha=${{ github.sha }}
+          npm run dev:brighteon:test -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
@@ -89,9 +89,9 @@ jobs:
         with:
           name: unix
           path: |
-            ./dist/BastyonSetup.deb
-            ./dist/BastyonSetup.rpm
-            ./dist/Bastyon.AppImage
+            ./dist/BrighteonSetup.deb
+            ./dist/BrighteonSetup.rpm
+            ./dist/Brighteon.AppImage
             ./head.txt
 
   build-windows:
@@ -106,7 +106,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon:test -- -sha=${{ github.sha }}
+          npm run dev:brighteon:test -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
@@ -115,7 +115,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows
-          path: ./dist/BastyonSetup.exe
+          path: ./dist/BrighteonSetup.exe
 
   build-android:
     runs-on: ubuntu-20.04
@@ -166,12 +166,12 @@ jobs:
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
           ls -lh
-          mv app-release.apk Bastyon.apk
+          mv app-release.apk Brighteon.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: android
-          path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/Brighteon.apk
 
   deploy-binaries:
     needs: [ build-macos, build-unix, build-windows, build-android ]
@@ -180,7 +180,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
       - name: Copy artifacts
-        run: cp ./**/Bastyon* /data/dev/binaries/night.test/
+        run: cp ./**/Brighteon* /data/dev/binaries/night.test/
       - name: Copy HEAD information
         run: cp ./unix/head.txt /data/dev/binaries/night.test/head.txt
       - name: Clean work dir
