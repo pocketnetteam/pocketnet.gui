@@ -4,6 +4,12 @@
 </div>-->
 <div class="contentsInner">
 
+    <% if(app.mobileview) {%>
+    <div class="headerLogo">
+        <img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+    </div>
+    <% } %>
+
     <div class=" contentmenu">
 
         <%

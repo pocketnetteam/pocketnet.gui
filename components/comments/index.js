@@ -2087,7 +2087,7 @@ var comments = (function(){
 
 				p.el.find('.lcpp').removeClass('donateactive')
 
-				__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
+				__el.html('<img class="donateIcon" src="img/logo20coin.svg" alt=""></img>')
 
 				
 
