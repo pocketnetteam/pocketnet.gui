@@ -25,7 +25,7 @@ Domain
 Actions
 ===
 
-- [ ] 1. Open https://bastyon.com / https://test.pocketnet.app (depends of required testing environment)
+- [ ] 1. Open https://brighteon.io / https://test.pocketnet.app (depends of required testing environment)
 - [ ] 2. Push at commentary text field/grades that must open registration windows.
 - [ ] 3. Finish registration procedure, choose some tags, save account key
 - [ ] 4. Walk through overall interface
@@ -42,7 +42,7 @@ Actions
 - [ ] 15. Notifications. New post
 - [ ] 16. Notifications. New commentary
 - [ ] 16. Notifications. Answer for commentary
-- [ ] 17. Play some video (from Bastyon servers)
+- [ ] 17. Play some video (from Brighteon servers)
 - [ ] 18. Play some video (built-in player for Youtube-ish)
 - [ ] 19. Donate with commentary under post.
 - [ ] 20. Open chat. Start conversation with a user

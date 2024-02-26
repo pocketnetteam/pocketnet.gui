@@ -17,7 +17,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon -- -sha=${{ github.sha }}
+          npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/

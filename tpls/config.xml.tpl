@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="pocketnet.app" android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
+<widget id="io.brighteon" android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="io.brighteon" ios-CFBundleIdentifier="io.brighteon" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -20,11 +20,11 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
-    <preference name="NavigationBarBackgroundColor" value="#011621" />
+    <preference name="NavigationBarBackgroundColor" value="#212529" />
     <preference name="NavigationBarLight" value="true" />
-    <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
-    <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
-    <preference name="BackgroundColor" value="#011621" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#212529" />
+    <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#212529" />
+    <preference name="BackgroundColor" value="#212529" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
