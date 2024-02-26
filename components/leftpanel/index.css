@@ -222,10 +222,9 @@
   width: 14px;
   height: 14px;
   margin-top: 3px;
-  background-image: url('../../img/logotypes/bastyon_logo_black.svg');
+  background-image: url('../../img/logo20.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  filter: grayscale(1) brightness(1.8) contrast(0.5);
 }
 #leftpanel .rightbottomnav .copyright .text {
   margin-left: 0.5em;
