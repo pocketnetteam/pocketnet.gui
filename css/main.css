@@ -5352,14 +5352,11 @@ html.allcontent_application #footerWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
-.fastMessage .caption,
-.notification .caption {
-  font-size: 0.9em;
-}
 .fastMessage .complaint,
 .notification .complaint {
-  margin-top: 3px;
-  margin-bottom: 1.5em;
+  font-size: 0.9em;
+  margin-top: 2px;
+  margin-bottom: 0.5em;
   width: 95%;
 }
 .fastMessage {
