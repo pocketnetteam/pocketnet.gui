@@ -15396,6 +15396,12 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
 
+                                shares.sort(function(a, b){
+
+                                    return b.time - a.time;
+
+                                })
+
                                 newShares = shares.map((share) => {
 
                                     var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' || share.type === 'article' ? new pShare() : new pComment();
@@ -20416,42 +20422,42 @@ Platform = function (app, listofnodes) {
                         html += self.tempates.user(data.user, text || "", true, caption, extra, data.time)
                     }
 
+
+
                     if (data.mesType === "jurymoderate"){
 
+                        var q = data.contentType === '100' ? self.app.localization.e('juryQuestionUser2', data.m) : data.contentType === '200' || data.contentType === 'share' || data.contentType === 'video' || data.contentType === 'article' ? self.app.localization.e('juryQuestionPost2', data.m) : self.app.localization.e('juryQuestionComment2', data.m);
+
                         html += `
-                        <div class="cwrapper jurymoderate">                    
-                            <div class="cell cellforimage">                                  
-                                <div class="icon">
-                                    <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                        <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                            <div class="cwrapper jurymoderate">                    
+                                <div class="cell cellforimage">                                  
+                                    <div class="icon">
                                         <div class="usericon" contain ban=".gif" image="*">
                                             <span class="letter">
                                                 <i class="fa fa-gavel"></i>
                                             </span>
                                         </div>
-                                    </a>
+                                    </div>                    
                                 </div>                    
-                            </div>                    
-                            <div class="ccell">                        
-                                <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                                <div class="ccell">                        
                                     <div class="infomain">                            
-                                        <div class="caption complaint">${self.app.localization.e('juryComplaint')}</div>                        
+                                        <div class="caption complaint">${self.app.localization.e('juryComplaint', data.m)}</div>   
+                                        <div class="caption question">
+                                            ${q}
+                                        </div>                     
                                     </div>
-                                </a>
-
-                            </div>
-                            <div class="ccell extra">
+                                </div>
+                                <div class="ccell extra">
                                     <div class="subscribeWrapper table">
                                         <div class="scell forjury">
-                                        <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
-
-                                            <button class="subscribe ghost +"> ${self.app.localization.e('start')}</button> 
-                                            </a>
-                                  
+                                            <button class="subscribe ghost +"> ${self.app.localization.e('start')}</button>                                   
                                         </div>
                                     </div>
-                            </div>
+                                </div>
 
-                        </div>
+                            </div>
+                        </a>
                         `
                     }
 
@@ -20471,7 +20477,7 @@ Platform = function (app, listofnodes) {
                             </div>                    
                             <div class="ccell">                        
                                 <div class="infomain">                            
-                                    <div class="caption complaint">${self.app.localization.e('accountBanned')}</div>                        
+                                    <div class="caption complaint">${self.app.localization.e('accountBanned')}</div>
                                 </div>
 
                             </div>
