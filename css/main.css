@@ -5352,6 +5352,10 @@ html.allcontent_application #footerWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
+.fastMessage .caption,
+.notification .caption {
+  font-size: 0.9em;
+}
 .fastMessage .complaint,
 .notification .complaint {
   font-size: 0.9em;
