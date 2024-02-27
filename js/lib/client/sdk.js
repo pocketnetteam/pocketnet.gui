@@ -1185,7 +1185,7 @@ var pSDK = function ({ app, api, actions }) {
                     if(_.isObject(c.msgparsed)){
                         c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
 
-                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
     
                         c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
     
@@ -1710,7 +1710,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 try {
                     c.u = clearStringXss(trydecode(c.u || ''));
-                    c.c = clearStringXss(trydecode(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
+                    c.c = clearStringXss(trydecode(c.c || '')).replace(/&nbsp;/g, ' ');
 
                     if (c.s && c.s.v == 'a') {
 
