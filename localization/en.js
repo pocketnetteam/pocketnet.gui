@@ -2667,6 +2667,53 @@ _l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for 
 _l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
 _l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
 
+_l.juryQuestionPost2 = function(m){
+    
+    let q = "Can you confirm this post"
+
+    if (m){
+        q += ' of <b>' + m + '</b>';
+    }
+    
+    q += " does not belong on Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionComment2 = function(m){
+    
+    let q = "Can you confirm this comment"
+
+    if (m){
+        q += ' of <b>' + m + '</b>';
+    }
+    
+    q += " does not belong on Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionUser2 = function(m){
+    
+    let q = "Can you confirm"
+
+    if (m){
+
+        q += ' <b>' + m + '</b>';
+
+    } else {
+
+        q += ' this user';
+
+    }
+    
+    q += " is violating the rules of Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionUser2 = "Can you confirm this user is violating the rules of Bastyon?"
+
 _l.juryvote_success =  "Your vote has been successfully submitted"
 _l.juryconfirm = "Do you confirm your decision?"
 
