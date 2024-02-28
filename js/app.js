@@ -377,6 +377,8 @@ Application = function (p) {
 
 	self.canuseip = function () {
 		return false
+
+		
 		if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
 			return true
 		}
@@ -1250,27 +1252,7 @@ Application = function (p) {
 
 				})
 
-				self.apps = new BastyonApps(self)
-				self.apps.init()
-
-
-				self.platform.actions.clbk('change', 'apps', () => {
-					var account = self.platform.actions.getCurrentAccount()
-
-					if (account) {
-						var balance = account.actualBalance([account.address])
-
-						self.apps.emit('balance', balance)
-					}
-				})
-
-				self.platform.actions.on('actionFiltered', ({ action, address, status }) => {
-
-					if (action.settings && action.settings.application) {
-						self.apps.emit('action', action.export(), action.settings.application)
-					}
-
-				})
+				
 
 				/*setInterval(() => {
 					self.apps.emit('test', {
@@ -1293,6 +1275,50 @@ Application = function (p) {
 		 * conditional checking in appear method of instance
 		 */
 		if (typeof initShadowPopups === 'function') initShadowPopups()
+	}
+
+	self.initApplications = function(){
+
+		if (self.apps) {
+			self.apps.destroy()
+		}
+
+		self.apps = new BastyonApps(self)
+		self.apps.init()
+
+
+		self.platform.actions.clbk('change', 'apps', () => {
+			var account = self.platform.actions.getCurrentAccount()
+
+			if (account) {
+				var balance = account.actualBalance([account.address])
+
+				self.apps.emit('balance', balance)
+			}
+		})
+
+		self.platform.actions.on('actionFiltered', ({ action, address, status }) => {
+
+			if (action.settings && action.settings.application) {
+				self.apps.emit('action', action.export(), action.settings.application)
+			}
+
+		})
+
+		self.platform.actionListeners['apps'] = function({type, alias, status}){
+
+			if (type == 'userInfo'){
+
+				var account = self.platform.actions.getCurrentAccount()
+
+				if (account && alias.address == account.address) {
+					self.apps.emit('accountStatus', account.getStatus())
+				}
+				
+			}
+			
+		}
+
 	}
 
 	self.reload = function (p) {
@@ -1368,6 +1394,7 @@ Application = function (p) {
 	}
 
 	self.chatposition = function (ab) {
+		return
 		var attr = ab ? 'above' : 'under'
 
 		self.el.html.attr('chatposition', attr)
@@ -1478,7 +1505,6 @@ Application = function (p) {
 
 				if (cordova.plugins && cordova.plugins.backgroundMode)
 					cordova.plugins.backgroundMode.on('activate', function () {
-						console.log("BACKGROUND ACTIVATED")
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
 
@@ -1556,6 +1582,7 @@ Application = function (p) {
 	self.fullscreenmode = false
 	self.pseudofullscreenmode = false
 	self.playingvideo = null
+	self.playingvideocollisions = {}
 	self.pipwindow = null
 
 	var blockScroll = false
@@ -1650,18 +1677,32 @@ Application = function (p) {
 
 		},
 
-		playingvideo: function (v) {
+		
+
+		playingvideo: function (v, from) {
+
+			
+
+			if(from && from.player_id){
+				if(self.playingvideocollisions[from.player_id]){
+					delete self.playingvideocollisions[from.player_id]
+					return
+				}
+			}
 
 			if (self.playingvideo && self.playingvideo.playing) {
 
 				try {
 					self.playingvideo.pause()
+
+					if (self.playingvideo.player_id)
+						self.playingvideocollisions[self.playingvideo.player_id] = true
 				}
 				catch (e) {
-
 				}
 
 			}
+
 
 			self.playingvideo = v
 
@@ -2315,7 +2356,7 @@ Application = function (p) {
 		memory: function () {
 
 			document.addEventListener('memorywarning', function () {
-				console.log("MOMORY WARNING1")
+				console.log("MEMORY WARNING")
 			});
 
 		},
@@ -2610,8 +2651,6 @@ Application = function (p) {
 
 									self.mobile.saveImages.save(base64, name, function (d, err) {
 
-										console.log(d, err)
-
 										globalpreloader(false)
 
 										if (d) {
@@ -2833,6 +2872,18 @@ Application = function (p) {
 				}
 
 			},
+
+			initdestroyparallaxAuto : function(){
+				var scrollTop = self.actions.getScroll()
+
+				if (!scrollTop) {
+					self.mobile.reload.initparallax()
+				}
+				else {
+					self.mobile.reload.destroyparallax()
+				}
+			},
+
 			initparallax: function () {
 
 				if ((isTablet() || isMobile()) && !self.el.html.hasClass('allcontent_application')) {
@@ -2891,11 +2942,20 @@ Application = function (p) {
 								trueshold: 70,
 								clbk: function () {
 
+
+
 									self.mobile.reload.reloading = true
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
 
 									globalpreloader(true)
+
+									_.each(self.modules, (m) => {
+										if(!m.module) return
+										_.each(m.module.essenses, (mm) => {
+											if(mm.willreload) mm.willreload()
+										})
+									})
 
 									setTimeout(function () {
 
@@ -3172,7 +3232,7 @@ Application = function (p) {
 
 	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
 
-
+	edjsHTML = edjsHTMLCnt(null, self)
 
 	return self;
 }

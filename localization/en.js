@@ -657,8 +657,8 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 
-_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
-_l.e13109lg = "Please enter the words in the picture to continue registration"
+_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue"
+_l.e13109lg = "Please enter the words in the picture to continue"
 _l.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
 
 _l.e13110 = "Enter words"
@@ -886,7 +886,7 @@ _l.e13237 = "You cannot rate yourself"
 _l.e13238 = "Comment editing error. Please wait one minute and try again/ 37"
 _l.e13239 = "Comment sending error. You are replying to a comment that was deleted"
 _l.e13240 = "The comment you are replying to has been deleted by the user"
-_l.e13241 = "This comment is too long, please break it up"
+_l.e13241 = "The content has exceeded the size limit. It is impossible to perform the action"
 _l.e13242 = "You have been blocked by this person"
 _l.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
 _l.e13244 = "You can edit a comment only during the first day after its publication and only 4 times"
@@ -2613,6 +2613,7 @@ _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
+_l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
@@ -2704,6 +2705,8 @@ _l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into a
 _l.actions_noinputs = "You don't have enough coins to complete the operation"
 _l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
 _l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_noinputs_wait_comment = "You don't have enough active coins to post a comment. Please wait"
+
 _l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
 
 _l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'
@@ -2778,3 +2781,15 @@ _l.captiontempactions = "Local storage Transactions Info"
 _l.labeltempactions = "Number of pending transactions"
 _l.labeltempactionszero = "No pending transactions"
 
+
+_l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
+_l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"
+
+_l.application_notexist = "Application not found or application server not responding"
+_l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
+_l.permissions_name_chat = appname + " chat"
+
+_l.permissions_name_geolocation = "Access to location"
+_l.permissions_descriptions_geolocation = "The application asks for permission to access your location"

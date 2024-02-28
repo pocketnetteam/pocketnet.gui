@@ -1117,7 +1117,6 @@ const kit = {
 						return proxy.translateapi.settingChanged(settings.translateapi)
 
 					}).then(() => {
-						console.log('settings.translateapi', settings.translateapi)
 						return state.save()
 					})
 				},

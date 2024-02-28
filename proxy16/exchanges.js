@@ -12,14 +12,14 @@ var Exchanges = function(){
     var keys = {
         //'mercatox' : 'last_price',
         //'bilaxy' : 'close',
-        'bitforex' : 'last',
+        //'bitforex' : 'last',
         'digifinex' : 'last'
     }
 
     var apis = {
         //'mercatox' : 'https://mercatox.com/api/public/v1/ticker',
         //'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr',
-        'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
+        //'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
         'digifinex' : 'https://openapi.digifinex.vip/v3/ticker'
     }
 
@@ -75,7 +75,7 @@ var Exchanges = function(){
                 })
             },
 
-            bitforex : function(){
+            /*bitforex : function(){
                  return self.transports.axios.post(apis.bitforex).then(function(response) {
 
 
@@ -98,7 +98,7 @@ var Exchanges = function(){
 
                      return Promise.reject('notfound')
                  })
-            },
+            },*/
         }
 
     }

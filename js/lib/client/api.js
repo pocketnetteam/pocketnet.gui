@@ -559,7 +559,7 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == 429 || e.code == -28 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28 || e.code == -1 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
 
                 //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -638,15 +638,18 @@ var Proxy16 = function(meta, app, api){
 
             if(!proxystate) return
 
-
-            var hash = bitcoin.crypto.hash256(JSON.stringify(proxystate))
-
-            var change = (hash.join('') !== state.hash.join(''))
-
-            state.hash = hash
             state.tick = proxystate
 
-            _.each(self.clbks.tick, (c) => { c(state.tick, change) })
+            if(!_.isEmpty(self.clbks.tick)){
+                var hash = rot13(JSON.stringify(proxystate))
+
+                var change = (hash !== state.hash)
+    
+                state.hash = hash
+    
+                _.each(self.clbks.tick, (c) => { c(state.tick, change) })
+            }
+            
 
         }
 
