@@ -75,7 +75,7 @@ var Exchanges = function(){
                 })
             },
 
-            bitforex : function(){
+            /*bitforex : function(){
                  return self.transports.axios.post(apis.bitforex).then(function(response) {
 
 
@@ -98,7 +98,7 @@ var Exchanges = function(){
 
                      return Promise.reject('notfound')
                  })
-            },
+            },*/
         }
 
     }
