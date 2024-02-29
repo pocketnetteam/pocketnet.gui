@@ -6,7 +6,10 @@ var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
+
     this.port = opts.port || 38081;
+    this.sport = opts.sport || 38881;
+
     this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
     this.pass = opts.pass || '';
@@ -141,6 +144,14 @@ const publics = {
 
     getaccountearning : true,
 
+    // Barteron
+    getbarteronaccounts: true,
+    getbarteronoffersbyaddress: true,
+    getbarteronoffersbyroottxhashes: true,
+    getbarteronfeed: true,
+    getbarterondeals: true,
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true,
     // Jury
     getalljury: true,
     getjuryassigned: true,
@@ -511,6 +522,16 @@ RpcClient.callspec = {
     dumpwallet: 'str',
     importwallet: 'str',
 
+    getaccountearning : 'str int int',
+
+    // Barteron
+    getbarteronaccounts: 'obj',
+    getbarteronoffersbyaddress: 'str',
+    getbarteronoffersbyroottxhashes: 'obj',
+    getbarteronfeed: 'obj',
+    getbarterondeals: 'obj',
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj',
     // Jury
     getalljury: '',
     getjuryassigned: 'str',
