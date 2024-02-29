@@ -68,3 +68,4 @@ cordova/cert.keystore
 package.cordova.json
 dcs
 /proxy16/peertube-servers.json
+peertube-servers.json
