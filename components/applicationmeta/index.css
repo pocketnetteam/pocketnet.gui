@@ -59,5 +59,6 @@
   opacity: 1;
 }
 .applicationmetaWindow .wndinner {
-  max-width: 768px;
+  max-width: 560px;
+  max-height: 90vh;
 }

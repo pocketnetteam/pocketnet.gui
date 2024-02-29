@@ -374,20 +374,15 @@ var Action = function(account, object, priority, settings){
 
         var optimizeUnspents = false
 
-        console.log('unspents', unspents.length, value)
-
         if (value == 0) {
             value = 0.00000001
         }
 
         if (value < 0.0000001) {
 
-            console.log('unspents here')
-
             if (unspents.length > ActionOptions.optimizeUnspentsMax){
                 optimizeUnspents = true
 
-                console.log("OPTIMIZE UNSPENTS")
             }
         }
 
@@ -419,7 +414,6 @@ var Action = function(account, object, priority, settings){
             added += unspent.amount
 
             if(dustValue > added){
-                console.log("ADDED DUST")
             }
 
 
@@ -520,6 +514,7 @@ var Action = function(account, object, priority, settings){
 
     var makeTransaction = async function(retry, calculatedFee, send){
 
+
         var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
         if(!changeAddresses.length) changeAddresses = [account.address]
 
@@ -534,9 +529,15 @@ var Action = function(account, object, priority, settings){
             try{
                 await account.updateUnspents(retry ? 0 : 60).then((clearUnspents) => {
 
+
                     clearUnspents = filterUnspents(clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange && account.actualBalance().total <= 0){
+
+                        if(!account.unspents.updated){
+                            return Promise.reject('actions_inputs_not_updated')
+                        }
+
                         return Promise.reject('actions_noinputs')
                     }
     
@@ -1117,9 +1118,10 @@ var Action = function(account, object, priority, settings){
         }
         else{
 
+
             if(rejectIfError){
                 if(
-
+                    error == 'actions_inputs_not_updated' ||
                     error == 'actions_noinputs_wait' || 
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 
@@ -1212,7 +1214,7 @@ var Action = function(account, object, priority, settings){
 
     self.options = options
     self.makeTransaction = makeTransaction
-
+    self.setUpdated = setUpdated
     return self
 }
 
@@ -1430,6 +1432,7 @@ var Account = function(address, parent){
 
     self.actionRejected = async function(action, error){
 
+
         //// use getActionById(in clbk)
 
         if(action.checkInAnotherSession) return Promise.reject(error)
@@ -1448,7 +1451,6 @@ var Account = function(address, parent){
             }else{
                 parameters.reason = 'balance'
             }
-
 
             return await self.userInteractive(action, error, 'requestUnspents', parameters).catch(e => {
 
@@ -1596,6 +1598,7 @@ var Account = function(address, parent){
 
     self.userInteractive = function(action, error, type, parameters){
 
+
         if(!self.isCurrentAccount()) return Promise.reject('actions_userInteractive')
 
         if (self.waitUserAction) return Promise.reject('actions_waitUserInteractive')
@@ -1650,6 +1653,7 @@ var Account = function(address, parent){
     }
 
     self.solveCaptcha = function(parameters = {}, proxyOptions){
+
         
         return parent.app.platform.ui.captcha(parameters.reason, (component) => {
             waitUserActionComponent = component
@@ -1737,6 +1741,7 @@ var Account = function(address, parent){
 
         }).catch(e => {
 
+            console.error(e)
 
             if(e == 'captcha'){
                 return self.requestUnspents(parameters, proxyoptions)
@@ -1846,11 +1851,21 @@ var Account = function(address, parent){
             value : [],
             updated : null
         }
+
+        self.actions.value = _.filter(self.actions, (a) => {
+            if(a.completed || a.rejected) return false
+
+            return true
+        })
+
+        _.each(self.actions.value, (action) => {
+            action.rejectedByUser()
+        })
     
-        self.actions = {
+        /*self.actions = {
             value : [],
             updated : null
-        }
+        }*/
 
         self.save()
     }
@@ -1882,9 +1897,9 @@ var Account = function(address, parent){
         
         self.status = e.status
         self.unspents = e.unspents
-        
-        self.unspents.updated ? self.unspents.updated = new Date(self.unspents.updated) : null
-        self.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
+
+        e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
+        e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
         
         self.waitUserAction = e.waitUserAction || null
@@ -2053,6 +2068,7 @@ var Account = function(address, parent){
 
     self.loadUnspents = function(){
 
+
         if(!self.isCurrentNetwork()){
             return Promise.reject('otherNetwork')
         }
@@ -2064,6 +2080,18 @@ var Account = function(address, parent){
         var zAddresses = (self.address == app.user.address.value) ? (parent.app.platform.sdk.addresses.storage.addresses || []) : []
 
         var promise = parent.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
+            delete temps.unspents
+
+            //// FIX NODE BUG:
+            if(!unspents.length && self.unspents.value && self.unspents.value.length > 2 && (!self.unspents.buganswer || self.unspents.buganswer < 50)){
+
+                self.unspents.buganswer || (self.unspents.buganswer = 0)
+                self.unspents.buganswer ++
+
+                return Promise.resolve(self.unspents.value)
+            }
+
+            delete self.unspents.buganswer
 
             checkTransactionByUnspents(unspents)
 
@@ -2073,12 +2101,12 @@ var Account = function(address, parent){
 
             cleanOutputs()
 
-            delete temps.unspents
-
             self.trigger()
 
             return Promise.resolve(unspents)
+
         }).catch(e => {
+            console.error('action', e)
             delete temps.unspents
         })
 
@@ -2499,12 +2527,10 @@ var Actions = function(app, api, storage = localStorage){
    
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
-            console.log("EMIT 1", key)
             e(data)
         })
 
         _.each(namedEvents[key] || {}, function(e){
-            console.log("EMIT 2", key)
 
             e(data)
         })
@@ -2700,6 +2726,20 @@ var Actions = function(app, api, storage = localStorage){
         })
 
         return action
+    }
+
+    self.getActionsByApp = function(application){
+        var actions = []
+
+        var account = self.getCurrentAccount()
+
+        if(!account) return actions
+
+        _.each(account.actions.value, (a) => {
+            if(a.settings.application == application) actions.push(application)
+        })
+
+        return actions
     }
 
     

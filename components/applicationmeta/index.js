@@ -136,6 +136,34 @@ var applicationmeta = (function(){
 
 		var initEvents = function(){
 			
+			el.c.find('.remove').on('click', () => {
+
+				new dialog({
+                    html: self.app.localization.e(application.develop ? 'deleteapplicationQuestionDevelop' : 'deleteapplicationQuestion'),
+                    btn1text: self.app.localization.e('dyes'),
+                    btn2text: self.app.localization.e('dno'),
+
+                    success: function () {
+						
+						self.app.apps.remove(application.manifest.id).then(() => {
+							if(ed.onremove) ed.onremove()
+
+							successCheck()
+
+							setTimeout(() => {
+								self.closeContainer()
+							}, 300)
+
+						}).catch(e => {
+							sitemessage(JSON.stringify(e), null, 5000)
+						})
+						
+                    },
+
+                    fail: function () {
+                    }
+                })
+			})
 
 		}
 

@@ -30,25 +30,8 @@ var Remote = function(app){
 	    return result;
 	}
 
-	var gethead = function(body){
-
-		if(!body) return ''
-		
-		var match = body.toLowerCase().match(/<head>[\s\S]*?<\/head>/gi)
-
-
-		if(match && match[0]){
-			return "<!DOCTYPE html><html>" + match[0] + "<body>abs</body></html>"
-		}
-
-		return ''
-	}
-
 	var load = {
 		
-
-
-
 		ogcache : function(uri, clbk){
 			if(errors[uri]){
 
@@ -200,11 +183,13 @@ var Remote = function(app){
 				return
 			}
 
+
 			request({
 				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
 				timeout : 30000,
 				type : "POST"
 			}, function(error, response, body){
+
 
 				if (error){
 					errors[uri] = 'nc'

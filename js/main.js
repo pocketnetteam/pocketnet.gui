@@ -2,102 +2,42 @@ if(typeof _Node == 'undefined') _Node = false;
 if(typeof _OpenApi == 'undefined') _OpenApi = false;
 if(typeof _SEO == 'undefined') 	_SEO = false;
 
+window.project_config || (window.project_config = {})
+
 if(!_Node)
 {
 
-	var developapps = [/*{
-		"id" : 'demo.pocketnet.app',
-    	"version": "0.0.1",
+	var developapps = window.project_config.developapps || [] 
+	
+	
+	/*[{
+		"id" : "demo.pocketnet.app",
+		"version": "0.0.1",
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
-		"name" : "Demo application"
-	}*/]
+		"name" : "Demo application",
+		"grantedPermissions" : ["account"]
+	}]*/
 
-	var translateApiProxy = {
-		host : '2.pocketnet.app',
-		port : 8899,
-		wss : 8099
-		/*host : '127.0.0.1',
-		port : 8887,
-		wss : 8087*/
-	} 
+	var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}
+
+	var translateApiProxy = servers.translateProxy || null
 	
-	var _listofproxies =  [
-		
+	var _listofproxies = servers.proxy || []
 
-		/*{
-			host : '127.0.0.1',
-			port : 8887,
-			wss : 8087
-		},*/
-			
-		/*{
-			host : 'pocketnet.app',
-			port : 8899,
-			wss : 8099
-	    },*/
-		
-		{
-			host : '1.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-		
-		{
-			host : '2.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-		
-		{
-			host : '3.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-		{
-			host : '6.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		}
-	
-	]
+	var matrix = servers.matrix || ""
 
-	/* test */
-
-	/*if(window.cordova){
-		_listofproxies.push({
-			host : '6.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		})
-	}*/
-
-
-	var matrix = 'matrix.pocketnet.app'
-
-	if (window.testpocketnet){
+	/*if (window.testpocketnet){
 		_listofproxies = [
-			
-			/*{
-				host : 'pocketnet.app',
-				port : 8887,
-				wss : 8087
-			}*/
-			/*{
-			host : '127.0.0.1',
-			port : 8887,
-			wss : 8087
-		},*/ 
 			{
 				host : 'test.pocketnet.app',
 				port : 8899,
 				wss : 8099
 			}
-			
 		]
 
 		matrix = 'test.matrix.pocketnet.app'
-	}
+	}*/
 		
 	if (window.location.host === 'pre.pocketnet.app') {
 		_listofproxies = [
@@ -105,17 +45,12 @@ if(!_Node)
 				host : 'pre.pocketnet.app',
 				port : 8899,
 				wss : 8099
-			},
-			{
-				host : '6.pocketnet.app',
-				port : 8899,
-				wss : 8099
-			},
+			}
 		];
 
 	}
 
-	window.projects_meta = {
+	/*window.projects_meta = {
 		Pocketnet : {
 		  url : "pocketnet.app",
 		  turl : "test.pocketnet.app",
@@ -139,14 +74,13 @@ if(!_Node)
 		  protocol : 'bastyon',
 		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
 		}
-	  }
+	  }*/
 
 	if(!_OpenApi){
 		if (window.parent.frames.length > 0) {
 			window.stop();
 		}
 	}
-
 
 	app = new Application({
 		listofproxies : _listofproxies,
@@ -156,9 +90,6 @@ if(!_Node)
 	});
 
 	app.preapi()
-
-	// Prepare notifications
-	//app.notifications = new Notifications(app);
 
 	retry(function(){
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || (window.design && typeof window.Platform != 'undefined')

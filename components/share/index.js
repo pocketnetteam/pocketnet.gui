@@ -667,6 +667,7 @@ var share = (function(){
 
 				var text = el.eMessage[0].emojioneArea.getText();
 
+				text = text.split(findAndReplaceLinkClearReverse(l)).join('');
 				text = text.split(l).join('');
 
 
@@ -688,11 +689,11 @@ var share = (function(){
 			
 
 			applyText : function(text){
-				currentShare.message.set(text);
+				currentShare.message.set(findAndReplaceLinkClearReverse(text));
 			},
 
 			caption : function(caption){
-				currentShare.caption.set(caption);
+				currentShare.caption.set(findAndReplaceLinkClearReverse(caption));
 			},
 
 			loadimage : function(url, callback){
@@ -2026,13 +2027,18 @@ var share = (function(){
 						} 
 						
 						else if (meta.type != 'brighteon' && meta.type != 'stream.brighteon') {
-							self.app.platform.sdk.remote.get(meta.url, function(og){
+							self.app.platform.sdk.remote.getnew(meta.url).then(og => {
+								if(og){
+									renders.url()
+								}
+							})
+							/*self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
 									renders.url()
 								}
 
-							})
+							})*/
 						}
 					}
 
@@ -2756,11 +2762,11 @@ var share = (function(){
 				}
 
 				if (essenseData.name) {
-					currentShare.caption.set(essenseData.name);
+					currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
 				}
 
 				if (essenseData.description) {
-					currentShare.message.set(essenseData.description);
+					currentShare.message.set(findAndReplaceLinkClearReverse(essenseData.description));
 				}
 
 				if (essenseData.tags) {

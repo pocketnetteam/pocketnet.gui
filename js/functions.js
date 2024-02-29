@@ -488,7 +488,7 @@ wnd = function (p) {
 				})
 			}
 
-			app.actions.playingvideo(null);
+			//app.actions.playingvideo(null);
 
 			if (p.class) wnd.addClass(p.class);
 
@@ -796,7 +796,7 @@ wnd = function (p) {
 
 			}
 
-			if (!isMobile()) {
+			if (!isMobile() || !wnd.hasClass('normalizedmobile')) {
 				cl()
 			}
 			else {
@@ -2140,14 +2140,21 @@ resizePromise = function(srcData, width, height, format) {
 
 imagetojpegifneed = function ({ base64, name }) {
 
-	var nm = name.split('.')
+	var _name = ''
+	var _format = ''
 
-	var _name = nm[0],
+	if(name){
+		var nm = name.split('.')
+
+		_name = nm[0]
 		_format = nm[1]
-
-	if (_format == 'png' || _format == 'jpg' || _format == 'jpeg') {
-		return Promise.resolve({ base64, name });
+	
+		if (_format == 'png' || _format == 'jpg' || _format == 'jpeg') {
+			return Promise.resolve({ base64, name });
+		}
 	}
+
+	
 
 	return new Promise((resolve, reject) => {
 
@@ -2172,11 +2179,28 @@ imagetojpegifneed = function ({ base64, name }) {
 
 			$(canvas).remove();
 
-			return resolve({ base64: url, name: _name + '.jpg' });
+			return resolve({ base64: url, name: (_name || makeid()) + '.jpg' });
 		};
 
 	});
 }
+
+convertimages = function(images){
+	return Promise.all(_.map(images, (src) => {
+
+		return new Promise((resolve, reject) => {
+			srcToData(src, function (base64) {
+				imagetojpegifneed({ base64 }).then(({ base64, name }) => {
+					resolve(base64)
+				})
+			})
+		})
+
+		
+	}))
+}
+
+
 
 resizeNew = function (srcData, width, height, format) {
 	return new Promise((resolve, reject) => {
@@ -5893,7 +5917,6 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 	}
 
 	var onerror = function (evt) {
-		console.log('evt', evt)
 		if (clbk) clbk(null, evt)
 	}
 
@@ -6316,7 +6339,7 @@ SwipeParallaxNew = function (p) {
 
 				if (mainDirection) {
 
-					if (phase == 'end' && mainDirection.clbk && direction == mainDirection.i) {
+					if ((phase == 'end' || mainDirection.distance < 50 && phase == 'cancel') && mainDirection.clbk && direction == mainDirection.i) {
 
 						if ((!mainDirection.distance || mainDirection.distance < distance)) {
 							mainDirection.clbk()
@@ -9009,8 +9032,37 @@ numberToBool = function (v) {
 
 }
 
+findAndReplaceLinkClearReverse = function(inputText = ''){
+	return findAndReplaceLinkClear(inputText, formatInternalLinkReverse)
+}
 
-findAndReplaceLink = function (inputText, nottrust) {
+findAndReplaceLinkClear = function(inputText = '', fu){
+	if (typeof linkifyStr != 'undefined') {
+		var l = linkifyStr(inputText, {
+			formatHref : (value, type) => {
+				if (type == 'url'){
+					value = (fu || formatInternalLinkHref)(value)
+				}
+
+				return value
+			},
+
+			render: (v) => {
+				var href = deep(v, 'attributes.href') || ''
+
+				href = href.replace('mailto:', '')
+
+				return href
+			},
+		})
+
+		return l
+	}
+
+	return inputText
+}
+
+findAndReplaceLink = function (inputText = '', nottrust) {
 
 	if (typeof linkifyHtml != 'undefined') {
 
@@ -9024,11 +9076,30 @@ findAndReplaceLink = function (inputText, nottrust) {
 				s.donottrust = 'true'
 			}
 
-
-
 			var l = linkifyHtml(inputText, {
 				attributes: s,
-				truncate: 80
+				truncate: 50,
+
+				format : (value, type) => {
+
+					if(type == 'url'){
+						value = formatInternalLink(value)
+					}
+
+					if(value.length > 50){
+						value = value.slice(0, 50) + "…"
+					}
+
+					return value
+				},
+
+				formatHref : (value, type) => {
+					if (type == 'url'){
+						value = formatInternalLinkHref(value)
+					}
+
+					return value
+				}
 			})
 
 
@@ -9500,435 +9571,6 @@ stringEqTrig = function (s1, s2) {
 
 }
 
-edjsHTML = function () {
-	"use strict";
-
-	var c_xss = function (text) {
-
-		var ftext = filterXSS(text, {
-			stripIgnoreTag: true,
-			whiteList: {
-				a: ["href", "title", "target", 'cordovalink'],
-				br: ["style"],
-				b: ["style"],
-				span: ["style"],
-				figure: ["style"],
-				figcaption: ["style"/*, "class"*/],
-				i: ["style"],
-				img: ["src"/*, "width", "height"*/],
-				div: [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
-				p: [],
-				ul: [],
-				ol: [],
-				li: [],
-				h2: [],
-				h1: [],
-				h3: [],
-				h4: [],
-				h5: [],
-				em: [],
-				u: [],
-				blockquote: [],
-				strong: [],
-				picture: ['img-type'],
-				source: ['srcset', 'type'],
-				strike: []
-			}
-
-		})
-
-		return ftext
-	}
-
-	var e = {
-		delimiter: function () {
-			return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
-		},
-
-		header: function (e) {
-			var t = e.data;
-			return "<h" + _.escape(t.level) + ">" + c_xss(t.text) + "</h" + _.escape(t.level) + ">"
-		},
-
-		paragraph: function (e) {
-
-			return "<p>" + c_xss(e.data.text) + "</p>"
-		},
-
-		list: function (e) {
-			var t = e.data,
-				r = "unordered" === t.style ? "ul" : "ol",
-
-				n = function (e, t) {
-
-					var r = e.map((function (e) {
-						if (!e.content && !e.items) return "<li>" + c_xss(e) + "</li>";
-						var r = "";
-						return e.items && (r = n(e.items, t)), e.content ? "<li> " + c_xss(e.content) + " </li>" + r : void 0
-					}));
-
-					return "<" + t + ">" + r.join("") + "</" + t + ">"
-				};
-			return '<div class="article_list">' + n(t.items, r) + '</div>'
-		},
-
-		image: function (e) {
-			var t = e.data,
-
-				r = c_xss(t.caption || "");
-
-
-			var cl = []
-
-			if (t.withBackground) cl.push('withBackground')
-			if (t.withBorder) cl.push('withBorder')
-			if (t.stretched) cl.push('stretched')
-
-			var src = replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file)
-
-			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + (r) + '" />' +
-
-				(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
-
-				+ '</div>'
-
-		},
-
-		quote: function (e) {
-
-			var t = e.data;
-
-			return '<div class="article_quote"><div class="article_quote_text">' + c_xss(t.text) + '</div><div class="article_quote_author">' + c_xss(t.caption) + ' </div></div>'
-		},
-
-		code: function (e) {
-			return "<pre><code>" + _.escape(e.data.code) + "</code></pre>"
-		},
-
-		embed: function (e) {
-			var t = e.data;
-
-            switch (t.service) {
-
-				case "vimeo":
-                    return '<div class="js-player-ini" data-plyr-provider="vimeo" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
-
-				case "youtube":
-					return '<div class="js-player-ini" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
-
-				default:
-					//return '<iframe src="'+t.embed+'"></iframe>'
-					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
-			}
-		},
-
-		warning: function (e) {
-
-			var t = e.data;
-
-			if (!t.title || !t.message) {
-				return this.error('warning', e)
-			}
-
-			return '<div class="article_warning"><div class="article_warning_icon"><i class="fas fa-exclamation-triangle"></i></div><div class="article_warning_content"><div class="article_warning_title">' + c_xss(t.title || '') + '</div><div class="article_warning_message">' + c_xss(t.message || '') + '</div></div></div>'
-		},
-
-		carousel: function (e) {
-
-			var imageshtml = _.map(e.data, function (i) {
-				return '<div class="img" image="' + _.escape(i.url) + '" i="' + _.escape(i.url) + '" save="' + _.escape(i.url) + '"></div>'
-			}).join('')
-
-
-			return '<div class="article_carousel"><div class="article_carousel_container carousel noswipepnt">' + imageshtml + '</div></div>'
-		},
-
-		linkTool: function (e) {
-			var t = e.data;
-
-			if (!t.link) {
-				return this.error('link', e)
-			}
-
-			var url = {}
-
-			try {
-				url = new URL(t.link)
-			}
-			catch (e) {
-				url.host = ''
-			}
-
-			if (app.thislink(t.link)) {
-				return '<div class="article_this_embed" href="' + _.escape(t.link) + '"></div>'
-			}
-			else {
-
-				var img = ''
-
-				if (deep(t, 'meta.image.url'))
-					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url')) + '"></div></div>'
-
-				return '<a href="' + t.link + '" donottrust="true"><div class="article_link_custom">' + img + '<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
-			}
-
-
-		},
-
-		error: function (type, e) {
-			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
-		},
-
-		text : function(e, type){
-
-			var t = type === 'paragraph' ? '\n\n' : '';
-			t += (e.data.text ? e.data.text + ' ' : '');
-
-			return t;
-		}
-	};
-
-	var encdec = {
-		header: function (data, fu) {
-
-			return {
-				level: data.level,
-				text: fu(data.text)
-			}
-
-		},
-
-		paragraph: function (data, fu) {
-
-			return {
-				text: fu(data.text)
-			}
-
-		},
-
-		list: function (data, fu) {
-
-			var n = function (e) {
-
-
-				if (!e.content && !e.items) return fu(e)
-
-				var nd = { ...e }
-
-				if (nd.content)
-					nd.content = fu(nd.content)
-
-				if (nd.items) {
-					nd.items = _.map(nd.items, function (i) {
-						return n(i)
-					})
-				}
-
-				return nd
-			}
-
-			return n(data)
-
-		},
-
-		carousel: function (data, fu) {
-
-
-			return _.map(data, function (i) {
-				var nd = { ...i }
-
-				nd.url = fu(nd.url)
-
-				if (nd.caption) nd.caption = fu(nd.caption)
-
-				return nd
-			})
-
-		},
-
-		image: function (data, fu) {
-
-			var nd = { ...data }
-
-			if (nd.caption) nd.caption = fu(nd.caption)
-
-			if (data.file) {
-				nd.file = { ...data.file }
-				nd.file.url = fu(nd.file.url)
-			}
-
-			return nd
-
-		},
-
-		quote: function (data, fu) {
-
-			return {
-				caption: fu(data.caption),
-				text: fu(data.text)
-			}
-
-		},
-
-		code: function (data, fu) {
-			return {
-				code: fu(data.code)
-			}
-		},
-
-		warning: function (data, fu) {
-
-			return {
-				title: fu(data.title),
-				message: fu(data.message),
-			}
-
-		},
-
-		linkTool: function (data, fu) {
-
-			var nd = { ...data }
-
-			nd.link = fu(nd.link)
-
-			if (data.meta) {
-				nd.meta = { ...data.meta }
-				nd.meta.title = fu(nd.meta.title)
-				nd.meta.description = fu(nd.meta.description)
-
-				if (data.meta.image) {
-					nd.meta.image = { ...data.meta.image }
-					nd.meta.image.url = fu(nd.meta.image.url)
-				}
-			}
-
-			return nd
-
-		},
-
-		embed: function (data, fu) {
-
-			var nd = { ...data }
-
-			nd.embed = fu(nd.embed)
-			nd.source = fu(nd.source)
-
-			if (nd.caption) nd.caption = fu(nd.caption)
-
-			return nd
-		},
-	}
-
-	function t(e) {
-		return new Error('The Parser function of type "' + _.escape(e) + '" is not defined. \n\n  Define your custom parser functions as: https://github.com/pavittarx/editorjs-html#extend-for-custom-blocks')
-	}
-
-	var r = function (n, app) {
-
-		void 0 === n && (n = {});
-
-		var i = Object.assign({}, e, n);
-
-		return {
-
-			words: function (_e) {
-
-				var r = 0
-
-				var add = function (str) {
-
-					r += (str || "").split(/\s+/).length
-				}
-
-
-				if (_e && _e.blocks) {
-					_e.blocks.map((function (e) {
-
-						if (encdec[e.type]) {
-							encdec[e.type](e.data, add)
-						}
-
-					}))
-				}
-
-				return r
-			},
-
-			apply: function (_e, fu) {
-
-				if (!fu) fu = (f) => f
-
-				var e = { ..._e };
-
-				if (e.blocks) {
-					e.blocks = e.blocks.map((function (e) {
-
-						return {
-							type: e.type,
-							id: e.id,
-							data: encdec[e.type] ? encdec[e.type](e.data, fu) : _.clone(e.data)
-						}
-
-					}))
-				}
-
-
-
-				return e
-			},
-
-			parse: function (e) {
-				return '<div class="article_body">' + e.blocks.map((function (e) {
-					return i[e.type] ? i[e.type](e) : t(e.type)
-				})).join('') + '</div>'
-			},
-
-			text: function(e){
-
-				var text = e.blocks.map(function(e) {
-					return i['text'](e, e.type);
-                }).join('');
-
-				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
-					stripIgnoreTag : true,
-					whiteList: {
-						img : []
-					}
-				});
-			},
-
-            parseBlock: function(e) {
-                return i[e.type] ? i[e.type](e) : t(e.type)
-            },
-
-			parseStrict: function (e) {
-				var n = e.blocks,
-					o = r(i).validate({
-						blocks: n
-					});
-				if (o.length) throw new Error("Parser Functions missing for blocks: " + o.toString());
-				for (var a = [], u = 0; u < n.length; u++) {
-					if (!i[n[u].type]) throw t(n[u].type);
-					a.push(i[n[u].type](n[u]))
-				}
-				return a
-			},
-
-			validate: function (e) {
-				var t = e.blocks.map((function (e) {
-					return e.type
-				})).filter((function (e, t, r) {
-					return r.indexOf(e) === t
-				})),
-					r = Object.keys(i);
-				return t.filter((function (e) {
-					return !r.includes(e)
-				}))
-			}
-		}
-	};
-	return r
-}();
 
 function formatBytes(bytes, decimals = 2) {
 	if (bytes === 0) return '0 Bytes';
@@ -10574,107 +10216,6 @@ replaceArchiveInImage = function(src) {
 	return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
 };
 
-/*test*/
-/*
-if(typeof Window != 'undefined'){
-
-	Window.prototype._addEventListener = Window.prototype.addEventListener;
-
-	Window.prototype.addEventListener = function(a, b, c) {
-	if (c==undefined) c=false;
-	this._addEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-	this.eventListenerList[a].push({listener:b,options:c});
-	};
-
-	EventTarget.prototype._addEventListener = EventTarget.prototype.addEventListener;
-
-	EventTarget.prototype.addEventListener = function(a, b, c) {
-	if (c==undefined) c=false;
-	this._addEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-	this.eventListenerList[a].push({listener:b,options:c});
-	};
-
-	EventTarget.prototype._getEventListeners = function(a) {
-		if (! this.eventListenerList) this.eventListenerList = {};
-		if (a==undefined)  { return this.eventListenerList; }
-		return this.eventListenerList[a];
-	};
-
-	EventTarget.prototype._removeEventListener = EventTarget.prototype.removeEventListener;
-	EventTarget.prototype.removeEventListener = function(a, b ,c) {
-	if (c==undefined) c=false;
-	this._removeEventListener(a,b,c);
-	if (! this.eventListenerList) this.eventListenerList = {};
-	if (! this.eventListenerList[a]) this.eventListenerList[a] = [];
-
-	for(let i=0; i < this.eventListenerList[a].length; i++){
-		if(this.eventListenerList[a][i].listener==b, this.eventListenerList[a][i].options==c){
-			this.eventListenerList[a].splice(i, 1);
-			break;
-		}
-	}
-	if(this.eventListenerList[a].length==0) delete this.eventListenerList[a];
-	};
-
-
-	function listAllEventListeners() {
-		const allElements = Array.prototype.slice.call(document.querySelectorAll('*'));
-		allElements.push(document);
-		allElements.push(window);
-	
-		const types = [];
-	
-		for (let ev in window) {
-		if (/^on/.test(ev)) types[types.length] = ev;
-		}
-	
-		let elements = [];
-		for (let i = 0; i < allElements.length; i++) {
-		const currentElement = allElements[i];
-	
-		// Events defined in attributes
-		for (let j = 0; j < types.length; j++) {
-	
-			if (typeof currentElement[types[j]] === 'function' ) {
-			elements.push({
-				"node": currentElement,
-				"type": types[j],
-				"func": currentElement[types[j]].toString(),
-			});
-			}
-		}
-	
-		// Events defined with addEventListener
-		if (typeof currentElement._getEventListeners === 'function') {
-			evts = currentElement._getEventListeners();
-			if (Object.keys(evts).length >0) {
-			for (let evt of Object.keys(evts)) {
-				for (k=0; k < evts[evt].length; k++) {
-
-					if(evts[evt][k].listener){
-						elements.push({
-							"node": currentElement,
-							"type": evt,
-							"func": evts[evt][k].listener.toString()
-						});
-					}
-				
-				}
-			}
-			}
-		}
-		}
-	
-		return elements.sort();
-	}
-
-}*/
-
-
 function Circles(params) {
 
     this.init = function(pobj) {
@@ -10870,40 +10411,3 @@ function isInt(n) {
 function randone() {
     return (Math.round(Math.random()) == 1);
 }
-
-
-
-
-
-/*
-Sample parameters:
-BGCircles({
-    target: document.getElementById('bg-screen'),
-    quantity: 15,
-    radius: {
-        min: 2,
-        max: 400
-    },
-    zIndex: {
-        min: 0,
-        max: 20
-    },
-    hue: {
-        min: 0,
-        max: 180
-    },
-    saturation: {
-        min: 50,
-        max: 100
-    },
-    light: {
-        min: 25,
-        max: 75
-    },
-    alpha: {
-        min: 0.2,
-        max: 0.8
-    }
-});
-
-*/

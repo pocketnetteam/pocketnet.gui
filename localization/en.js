@@ -1,7 +1,4 @@
-var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
-
-
-console.log('window.projects_meta', window.projects_meta)
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -261,7 +258,7 @@ _l.artc = "Articles count";
 _l.stp = "Beginner";
 _l.stpg = "Top";
 _l.stpreal = "Verified";
-_l.stpdev = "Bastyon developer";
+_l.stpdev = ""+appname+" developer";
 
 _l.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
 _l.trialreputationtipaction = "Learn more about reputation here"
@@ -326,7 +323,7 @@ _l.lpublic = "Public";
 
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
-_l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.commentBannerDescription = "Commenting unlocks features on "+appname+" and helps you find friends 😀";
 _l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
 _l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";
@@ -620,9 +617,9 @@ _l.e13080 = "How will the funds be used?"
 _l.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
 _l.e13082 = "What you will get for your donation besides knowing you supported freedom:"
 _l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-_l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in Bastyon"
+_l.e13084 = "As a sign of our gratitude if you donate more than 250 USD or equivalent will receive a special sign in the form of a knight next to your name in "+appname+""
 _l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-_l.e13086 = "Support Bastyon Now"
+_l.e13086 = "Support "+appname+" Now"
 _l.e13087 = "Bitcoin, Litecoin"
 
 _l.supportFormTitle = "Do you want to donate in another way or have other questions? Contact us"
@@ -660,8 +657,8 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 
-_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
-_l.e13109lg = "Please enter the words in the picture to continue registration"
+_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue"
+_l.e13109lg = "Please enter the words in the picture to continue"
 _l.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
 
 _l.e13110 = "Enter words"
@@ -889,7 +886,7 @@ _l.e13237 = "You cannot rate yourself"
 _l.e13238 = "Comment editing error. Please wait one minute and try again/ 37"
 _l.e13239 = "Comment sending error. You are replying to a comment that was deleted"
 _l.e13240 = "The comment you are replying to has been deleted by the user"
-_l.e13241 = "This comment is too long, please break it up"
+_l.e13241 = "The content has exceeded the size limit. It is impossible to perform the action"
 _l.e13242 = "You have been blocked by this person"
 _l.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
 _l.e13244 = "You can edit a comment only during the first day after its publication and only 4 times"
@@ -1243,15 +1240,15 @@ _l.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 
-_l.pbp_1 = "Bastyon Bonus Program"
+_l.pbp_1 = ""+appname+" Bonus Program"
 _l.pbp_2 = "Criteria for bonus for original content:"
 _l.pbp_3 = "Every 15k views + 1250 five star ratings from unique users  + 1500 referral users"
 _l.pbp_4 = "PKOIN Equivalent:"
 _l.pbp_5 = "1,000 USDT"
 _l.pbp_6 = "How You Speed Up Your Bonus?"
-_l.pbp_7 = "Embed your Bastyon video to external websites (click Share and choose Embed)"
+_l.pbp_7 = "Embed your "+appname+" video to external websites (click Share and choose Embed)"
 _l.pbp_8 = "Share your video to social networks and via email"
-_l.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your Bastyon subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
+_l.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your "+appname+" subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
 _l.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings from the first 4 bonuses."
 _l.pbp_11 = "For any questions, email"
 
@@ -1353,7 +1350,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to Bastyon yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -1401,13 +1398,13 @@ _l.ErrorLoadingRates = "Loading Error";
 _l.userGuides = "Guides";
 _l.liveSreamingGuide = "Live Streaming";
 
-_l.bastyonhelperTitle1 = "Pocketnet has moved",
-_l.bastyonhelperTitle2 = "Bastyon of Free Speech";
-_l.bastyonhelperSubtitle1 = "Pocketnet is now";
-_l.bastyonhelperSubtitle2 = "Please, follow the link bellow";
+_l.bhelperTitle1 = "Pocketnet has moved",
+_l.bhelperTitle2 = ""+appname+" of Free Speech";
+_l.bhelperSubtitle1 = "Pocketnet is now";
+_l.bhelperSubtitle2 = "Please, follow the link bellow";
 
 
-_l.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
+_l.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on "+appname+".";
 _l.views = "Views";
 _l.viewers = "Viewers";
 
@@ -1440,17 +1437,17 @@ _l.showhiddenPost = "Show post"
 
 _l.visibletoeveryone = 'Visible for everyone'
 _l.visibleonlytosubscribers = 'Visible only for subscribers'
-_l.visibleonlytoregistered = 'Visible only for Bastyon users'
+_l.visibleonlytoregistered = "Visible only for "+appname+" users"
 
 _l.sharevisibility_sub = 'For subscribers'
-_l.sharevisibility_reg = 'For Bastyon users'
+_l.sharevisibility_reg = "For "+appname+" users"
 
 _l.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b> available only for subscribers'
-_l.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
+_l.sharevisibilitylabel_reg_post = "Author chose to make this <b>post</b> available only for registered "+appname+" users"
 _l.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
-_l.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
+_l.sharevisibilitylabel_reg_article = "Author chose to make this <b>article</b> available only for registered "+appname+" users"
 _l.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
-_l.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
+_l.sharevisibilitylabel_reg_video = "Author chose to make this <b>video</b> available only for registered "+appname+" users"
 
 _l.buy = 'Buy';
 
@@ -1475,9 +1472,9 @@ _l.MainBoard8 = 'Download for';
 
 
 _l.works = 'We Believe in Freedom';
-_l.works1 = 'Bastyon is an innovative network that can bypass common censorship tactics, such as blocking of domains and banning bloggers for dissent';
-_l.works2 = 'Bastyon is also a video sharing platform that, unlike traditional and mainstream social media, gives your privacy and freedom from arbitrary censorship';
-_l.works3 = 'Bastyon is also a private and freedom-oriented financial system powered by Pocketcoin (PKOIN) that is used to promote content and goods';
+_l.works1 = ""+appname+" is an innovative network that can bypass common censorship tactics, such as blocking of domains and banning bloggers for dissent";
+_l.works2 = ""+appname+" is also a video sharing platform that, unlike traditional and mainstream social media, gives your privacy and freedom from arbitrary censorship";
+_l.works3 = ""+appname+" is also a private and freedom-oriented financial system powered by Pocketcoin (PKOIN) that is used to promote content and goods";
 _l.works4 = 'We are driven by FREEDOM';
 _l.works5 = 'Does not depend on corporate entities';
 _l.works6 = 'Does not depend on banks for financing and operations';
@@ -1488,24 +1485,24 @@ _l.works7 = 'Does not depend on any domain or website which can be easily blocke
 _l.aboutServices = 'NO CENSORSHIP';
 
 _l.aboutServices1 = 'Censorship resistant';
-_l.aboutServices2 = 'Bastyon exists on decentralized node computers around the world run by users. Every node computer runs on the same exact transparent set of rules, preventing someone from arbitrarily banning content. Not even Bastyon developers can ban anyone, the platform is user moderated';
-_l.aboutServices3 = 'Not even Bastyon developers can ban anyone, the platform is user moderated';
+_l.aboutServices2 = ""+appname+" exists on decentralized node computers around the world run by users. Every node computer runs on the same exact transparent set of rules, preventing someone from arbitrarily banning content. Not even "+appname+" developers can ban anyone, the platform is user moderated";
+_l.aboutServices3 = "Not even "+appname+" developers can ban anyone, the platform is user moderated";
 
 _l.aboutServices4 = 'Bitcoin of Social Media';
-_l.aboutServices5 = 'Bastyon runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content. ';
-_l.aboutServices6 = 'Bastyon is the “Bitcoin of social media”';
+_l.aboutServices5 = ""+appname+" runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content.";
+_l.aboutServices6 = ""+appname+" is the “Bitcoin of social media”";
 
 _l.aboutServices7 = 'Privacy Protection';
-_l.aboutServices8 = 'Bastyon account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. Bastyon also features a peer-to-peer encrypted messenger. ';
-_l.aboutServices9 = 'Your privacy is the main goal of Bastyon. Your private key is known only to you and cannot be recovered even by the developers.';
+_l.aboutServices8 = ""+appname+" account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. "+appname+" also features a peer-to-peer encrypted messenger.";
+_l.aboutServices9 = "Your privacy is the main goal of "+appname+". Your private key is known only to you and cannot be recovered even by the developers.";
 _l.aboutServices10 = 'In addition, hackers cannot enter your account and change your password.';
 
-_l.aboutServices11 = 'Earn with Bastyon';
+_l.aboutServices11 = "Earn with "+appname+"";
 _l.aboutServices12 = 'You can get paid 1,000 USD';
 _l.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace with 100% proceeds going to bloggers is set to be released in December 2021.  ';
 
 _l.aboutServices14 = 'Upload your videos';
-_l.aboutServices15 = 'Bastyon lets you';
+_l.aboutServices15 = ""+appname+" lets you";
 _l.aboutServices16 = 'share your posts and videos';
 _l.aboutServices17 = ', Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.';
 
@@ -1513,21 +1510,21 @@ _l.aboutServices17 = ', Upload them safely, import them from YouTube (contact us
 _l.aboutServices18 = 'Open Source';
 _l.aboutServices19 = 'We believe that';
 _l.aboutServices20 = 'privacy and security';
-_l.aboutServices21 = 'have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.';
+_l.aboutServices21 = "have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that "+appname+" is not storing any personal data.";
 
 
-_l.aboutNewBlock = 'How to Earn with Bastyon';
+_l.aboutNewBlock = "How to Earn with "+appname+"";
 _l.aboutNewBlock1 = 'Popular Content & Featured Comments ';
 _l.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the platform. So, if you bring over your audience, you will be protected from censorship, while earning for their interaction with your content. Your followers can also add PKOIN to their comments to feature them under your post, 100% of proceeds go to you, because there is no corporate entity.';
 _l.aboutNewBlock3 = 'Bonus Program';
-_l.aboutNewBlock4 = 'Bastyon has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.';
+_l.aboutNewBlock4 = ""+appname+" has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.";
 _l.aboutNewBlock5 = 'Decentralized Ads ';
 _l.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
 
 
 
-_l.aboutOpen = 'Discover Bastyon';
-_l.aboutOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutOpen = "Discover "+appname+"";
+_l.aboutOpen1 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.aboutOpen2 = 'Official Website';
 _l.aboutOpen3 = 'Contact us';
 _l.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
@@ -1535,9 +1532,9 @@ _l.aboutOpen5 = 'Source Code';
 _l.aboutOpen5_1 = 'Email us at:';
 
 /////////////aboutYoutube
-_l.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
+_l.aboutMainBoard = ""+appname+" - the best alternative to YouTube";
 _l.aboutYoutubeMainDescription1 = 'Some people ask us:';
-_l.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
+_l.aboutYoutubeMainDescription2 = "Why should I use "+appname+"?";
 _l.aboutYoutubeMainDescription3 = 'The real question is:';
 _l.aboutYoutubeMainDescription4 = '"Why should you use YouTube?!"';
 _l.aboutYoutubeMainDescription5 = 'YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
@@ -1554,36 +1551,36 @@ _l.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't
 _l.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
 _l.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
 _l.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-_l.aboutYoutubeThreeColumn11 = 'Move to Bastyon before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)';
+_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)";
 _l.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
 
 _l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
 
-_l.aboutYoutubeImgAndText1 = "EARN WITH BASTYON NO DEMONETIZATION";
-_l.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel';
+_l.aboutYoutubeImgAndText1 = "EARN WITH "+appname+" NO DEMONETIZATION";
+_l.aboutYoutubeImgAndText2 = ""+appname+" pays you to post videos and for each interaction (like/comment) that you get. Right now "+appname+" has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel";
 _l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post porn/nudity or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
 _l.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
-_l.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are porn/nudity and illicit content.';
-_l.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And Bastyon is not owned by a corporation and is independent of the banking system.';
+_l.aboutYoutubeImgAndText5 = "On "+appname+" you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates "+appname+" and the only topics that are blocked are porn/nudity and illicit content.";
+_l.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And "+appname+" is not owned by a corporation and is independent of the banking system.';
 _l.aboutYoutubeImgAndText7 = 'PRIVATE AND SECURE';
-_l.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the Bastyon account is your private key, only you have control over it, even developers could not access or restore it, if lost.';
+_l.aboutYoutubeImgAndText8 = ""+appname+" does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the "+appname+" account is your private key, only you have control over it, even developers could not access or restore it, if lost.";
 _l.aboutYoutubeImgAndText9 = 'NO CENSORSHIP';
-_l.aboutYoutubeImgAndText10 = 'Bastyon will not censor your videos. Not even admins can block your account and ban you. Your account is YOURS and your subscribers will always be free to follow you.';
-_l.aboutYoutubeImgAndText11 = 'Bastyon is based on the blockchain: there is no way, at all, to remove accounts and videos';
+_l.aboutYoutubeImgAndText10 = ""+appname+" will not censor your videos. Not even admins can block your account and ban you. Your account is YOURS and your subscribers will always be free to follow you.";
+_l.aboutYoutubeImgAndText11 = ""+appname+" is based on the blockchain: there is no way, at all, to remove accounts and videos";
 _l.aboutYoutubeImgAndText12 = 'Each video is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
 _l.aboutYoutubeImgAndText13 = 'Each video you publish will be there forever. No one, really, can censor them. No one can remove your videos, subscribers and account.';
 _l.aboutYoutubeImgAndText14 = 'Censorship Resistance ';
-_l.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes on users’ machines. Even if the main website Bastyon.com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on Bastyon that users do not want.";
-_l.aboutYoutubeImgAndText16 = 'Bastyon is a Protocol, Not a Company or a Social Network  ';
-_l.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon';
+_l.aboutYoutubeImgAndText15 = ""+appname+" runs on a network of nodes on users’ machines. Even if the main website "+appname+".com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on "+appname+" that users do not want.";
+_l.aboutYoutubeImgAndText16 = ""+appname+" is a Protocol, Not a Company or a Social Network";
+_l.aboutYoutubeImgAndText17 = "Unlike Facebook and the main Social Networks, there is no company behind "+appname+". It is an open source project. This means that there is no company that can control the contents posted on "+appname+"";
 
-_l.aboutYoutubeSecondBoard1 = 'Bastyon - the best alternative to YouTube';
+_l.aboutYoutubeSecondBoard1 = ""+appname+" - the best alternative to YouTube";
 _l.aboutYoutubeSecondBoard2 = 'Your personal data is not sold to external companies';
 _l.aboutYoutubeSecondBoard3 = 'No one can block your account or remove your videos and subscribers';
 _l.aboutYoutubeSecondBoard4 = 'No personal info from users';
 _l.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world, even if the domain is not accessible.';
 _l.aboutYoutubeSecondBoard6 = 'Keep your subscribers forever, they are yours';
-_l.aboutYoutubeSecondBoard7 = 'Bastyon will not remove your subscribers, videos and money!';
+_l.aboutYoutubeSecondBoard7 = ""+appname+" will not remove your subscribers, videos and money!";
 _l.aboutYoutubeSecondBoard8 = 'You will never get DEMONETIZED and you keep 100% of ad proceeds. Freedom of speech is real.';
 _l.aboutYoutubeSecondBoard9 = 'You will earn MORE to post your videos!';
 
@@ -1604,7 +1601,7 @@ _l.aboutYoutubeThirdBoard13 = 'YouTube shares what it wants';
 _l.aboutYoutubeThirdBoard14 = '100% to blogger';
 _l.aboutYoutubeThirdBoard15 = 'What if Domain Blocked in Some Country?';
 _l.aboutYoutubeThirdBoard16 = 'YouTube inaccessible';
-_l.aboutYoutubeThirdBoard17 = 'Bastyon works directly with nodes';
+_l.aboutYoutubeThirdBoard17 = ""+appname+" works directly with nodes";
 _l.aboutYoutubeThirdBoard18 = 'Internal Cryptocurency for Monetization & Payments';
 _l.aboutYoutubeThirdBoard19 = 'No';
 _l.aboutYoutubeThirdBoard20 = 'Yes';
@@ -1627,28 +1624,28 @@ _l.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
 _l.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
 _l.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
 _l.aboutYoutubeThirdBoard24 = 'Way too many!';
-_l.aboutYoutubeThirdBoard25 = 'Bastyon pays you way more than YouTube!';
-_l.aboutYoutubeThirdBoard26 = 'You can earn money with Bastyon.';
-_l.aboutYoutubeThirdBoard27 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutYoutubeThirdBoard25 = ""+appname+" pays you way more than YouTube!";
+_l.aboutYoutubeThirdBoard26 = "You can earn money with "+appname+".";
+_l.aboutYoutubeThirdBoard27 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-_l.aboutYoutubeThirdBoard30 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutYoutubeThirdBoard30 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
-_l.aboutYoutubeOpenBoard1 = 'Discover Bastyon';
-_l.aboutYoutubeOpenBoard2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutYoutubeOpenBoard1 = "Discover "+appname+"";
+_l.aboutYoutubeOpenBoard2 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.aboutYoutubeOpenBoard3 = 'Official Website';
 
 _l.sourceCode = 'Source Code';
 
-_l.aboutYoutubeDiscover1 = 'Join Bastyon Today and Own Your Destiny!';
+_l.aboutYoutubeDiscover1 = "Join "+appname+" Today and Own Your Destiny!";
 _l.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
-_l.aboutMainBoard = 'Bastyon, The best alternative to Twitter. Leave behind the bans and suspensions.';
+_l.aboutMainBoard = ""+appname+", The best alternative to Twitter. Leave behind the bans and suspensions.";
 _l.aboutMainBoard1 = 'Free, private and secure social network';
 
 _l.aboutTwitterMainDescriptionText1 = 'Some people ask us:';
-_l.aboutTwitterMainDescriptionText2 = '"Why should I use Bastyon?"';
+_l.aboutTwitterMainDescriptionText2 = "Why should I use "+appname+"?";
 _l.aboutTwitterMainDescriptionText3 = 'The real question is:';
 _l.aboutTwitterMainDescriptionText4 = '"Why should you use Twitter?!"';
 _l.aboutTwitterMainDescriptionText5 = 'TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
@@ -1659,7 +1656,7 @@ _l.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been banned in t
 _l.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
 _l.aboutTwitterThreeColumn3 = 'Here below you can find a short list of accounts that have been banned or suspended by Twitter, along with the reason.';
 _l.aboutTwitterThreeColumn4 = 'You can make your own considerations: you can easily realize how Twitter has been banning people for several unspecified reasons, for simply saying that the leader of Talibans was pro-sharia, for supporting the "Occupy" movement without breaking any policy.';
-_l.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and that is why the protocol was created in the first place';
+_l.aboutTwitterThreeColumn5 = "This is the kind of censorship that we do not want on "+appname+", and that is why the protocol was created in the first place";
 
 _l.aboutTitterBannedAcc1 = "Building a community on Twitter is like building a home on a land you don't own.";
 _l.aboutTitterBannedAcc2 = 'Click here to see the list of the accounts banned by Twitter in 2019';
@@ -1679,33 +1676,33 @@ _l.aboutTitterBannedAcc15 = 'Unmasked as a fictitious person operated by a Russi
 
 
 
-_l.aboutTitterH3Section1 = 'Why Bastyon?';
+_l.aboutTitterH3Section1 = "Why "+appname+"?";
 _l.aboutTitterH3Section2 = 'NO GOVERNMENT CONTROL';
-_l.aboutTitterH3Section3 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+_l.aboutTitterH3Section3 = ""+appname+" runs on a network of nodes that no government can block or limit. Even if the main website "+appname+".com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on "+appname+".";
 _l.aboutTitterH3Section4 = 'PRIVATE AND SECURE';
-_l.aboutTitterH3Section5 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+_l.aboutTitterH3Section5 = ""+appname+" does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.";
 
 
 
 _l.aboutTitterImgAndText1 = 'NO CENSORSHIP';
-_l.aboutTitterImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
-_l.aboutTitterImgAndText3 = 'Unlike Twitter, Bastyon does not apply a dictatorship-like method to remove content and users. There is a loooong list of people that have been banned, temporarily or permanently, by Twitter for shallow reasons or for no apparent reason at all.';
-_l.aboutTitterImgAndText4 = 'On Bastyon bans are simply impossible: it is based on the blockchain and no one has the power to cancel a block from it. Every post will always remain there. Even if an admin or a user wants to ban your posts, he will never be able to do so.';
-_l.aboutTitterImgAndText5 = 'Censorship is banned by the technology itself. Even if one day Bastyon`s creators want to shut down the platform, the posts will always be there and the social network can be re-created again from the same point it was left.';
-_l.aboutTitterImgAndText6 = 'NO COMPANY BEHIND BASTYON';
-_l.aboutTitterImgAndText7 = 'Unlike Twitter and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+_l.aboutTitterImgAndText2 = ""+appname+" will not censor your posts and videos. Not even admins can block your account and ban you.";
+_l.aboutTitterImgAndText3 = 'Unlike Twitter, "+appname+" does not apply a dictatorship-like method to remove content and users. There is a loooong list of people that have been banned, temporarily or permanently, by Twitter for shallow reasons or for no apparent reason at all.';
+_l.aboutTitterImgAndText4 = 'On "+appname+" bans are simply impossible: it is based on the blockchain and no one has the power to cancel a block from it. Every post will always remain there. Even if an admin or a user wants to ban your posts, he will never be able to do so.';
+_l.aboutTitterImgAndText5 = "Censorship is banned by the technology itself. Even if one day "+appname+"`s creators want to shut down the platform, the posts will always be there and the social network can be re-created again from the same point it was left.";
+_l.aboutTitterImgAndText6 = "NO COMPANY BEHIND "+appname+"";
+_l.aboutTitterImgAndText7 = "Unlike Twitter and the main Social Networks, there is no company behind "+appname+". It is an open source project. This means that there is no company that can control the contents posted on "+appname+". No bans, no censorship.";
 _l.aboutTitterImgAndText8 = 'Unlike Twitter...';
 _l.aboutTitterImgAndText9 = 'You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
 _l.aboutTitterImgAndText10 = 'No one can block your account or remove your posts';
 _l.aboutTitterImgAndText11 = 'Privacy is complete and guaranteed';
 _l.aboutTitterImgAndText12 = 'Access is always possible from any country and region of the world';
-_l.aboutTitterImgAndText13 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+_l.aboutTitterImgAndText13 = "Chat sessions are entirely private and encrypted and not even "+appname+" can access them. Not even with a court warrant.";
 _l.aboutTitterImgAndText14 = 'Your posts can be longer';
 
 
 
 _l.aboutTitterTable1 = 'TWITTER';
-_l.aboutTitterTable2 = 'BASTYON';
+_l.aboutTitterTable2 = ""+appname+"";
 _l.aboutTitterTable3 = 'Account ownership';
 _l.aboutTitterTable4 = 'Property of Twitter';
 _l.aboutTitterTable5 = 'Your Private Key Belongs to You';
@@ -1726,10 +1723,10 @@ _l.aboutTitterTable19 = 'Twitter shares what it wants';
 _l.aboutTitterTable20 = '100% to blogger through PKOIN';
 _l.aboutTitterTable21 = 'What if Domain Blocked in Some Country?';
 _l.aboutTitterTable22 = 'Twiter inaccessible';
-_l.aboutTitterTable23 = 'Bastyon works directly with nodes';
+_l.aboutTitterTable23 = ""+appname+" works directly with nodes";
 _l.aboutTitterTable24 = 'Personal Messages';
 _l.aboutTitterTable25 = 'Twitter can read every message';
-_l.aboutTitterTable26 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
+_l.aboutTitterTable26 = ""+appname+" uses peer-to-peer encryption for 1-on-1 chats, nobody can read them";
 _l.aboutTitterTable27 = 'Internal Cryptocurency for Monetization & Payments';
 _l.aboutTitterTable28 = 'No';
 _l.aboutTitterTable29 = 'Yes';
@@ -1742,17 +1739,17 @@ _l.aboutTitterTable35 = 'No';
 
 
 
-_l.aboutTitterMainBoard31 = 'And there`s more! Bastyon pays you.';
-_l.aboutTitterMainBoard32 = 'You can earn money with Bastyon.';
-_l.aboutTitterMainBoard33 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutTitterMainBoard31 = "And there`s more! "+appname+" pays you.";
+_l.aboutTitterMainBoard32 = "You can earn money with "+appname+".";
+_l.aboutTitterMainBoard33 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-_l.aboutTitterMainBoard36 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutTitterMainBoard36 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
-_l.aboutTitterOpen1 = 'Discover Bastyon';
-_l.aboutTitterOpen2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutTitterOpen1 = "Discover "+appname+"";
+_l.aboutTitterOpen2 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.aboutTitterOpen3 = 'Official Website';
 _l.aboutTitterOpen4 = 'Source Code';
 _l.aboutTitterOpen5 = 'Contact us';
@@ -1760,39 +1757,39 @@ _l.aboutTitterOpen6 = 'Send us a message if you need help or if you are a conten
 
 
 /////////////aboutFacebook
-_l.aboutFbMainBoard = 'Bastyon - the best alternative to Facebook';
+_l.aboutFbMainBoard = ""+appname+" - the best alternative to Facebook";
 _l.aboutFbMainBoard1 = 'Social and financial protocol';
 
-_l.aboutFbMainDesc = '"Bastyon is not an alternative to Facebook.';
-_l.aboutFbMainDesc1 = 'Bastyon is the Anti-Facebook.';
+_l.aboutFbMainDesc = ""+appname+" is not an alternative to Facebook.";
+_l.aboutFbMainDesc1 = ""+appname+" is the Anti-Facebook.";
 _l.aboutFbMainDesc2 = '-- John Milton';
 
 
-_l.aboutFbH3Section = 'Why Bastyon?';
+_l.aboutFbH3Section = "Why "+appname+"?";
 _l.aboutFbH3Section1 = 'NO GOVERNMENT CONTROL';
-_l.aboutFbH3Section2 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+_l.aboutFbH3Section2 = ""+appname+" runs on a network of nodes that no government can block or limit. Even if the main website "+appname+".com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on "+appname+".";
 _l.aboutFbH3Section3 = 'PRIVATE AND SECURE';
-_l.aboutFbH3Section4 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+_l.aboutFbH3Section4 = ""+appname+" does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.";
 
 
 
 _l.aboutFbImgAndText = 'NO CENSORSHIP';
-_l.aboutFbImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
-_l.aboutFbImgAndText3 = 'Bastyon is based on the blockchain: there is no way, at all, to remove posts. Each post is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
-_l.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
-_l.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+_l.aboutFbImgAndText2 = ""+appname+" will not censor your posts and videos. Not even admins can block your account and ban you.";
+_l.aboutFbImgAndText3 = ""+appname+" is based on the blockchain: there is no way, at all, to remove posts. Each post is registered on the blockchain and, for its nature, it cannot be removed. By anyone.";
+_l.aboutFbImgAndText4 = "No company behind "+appname+"";
+_l.aboutFbImgAndText5 = "Unlike Facebook and the main Social Networks, there is no company behind "+appname+". It is an open source project. This means that there is no company that can control the contents posted on "+appname+". No bans, no censorship.";
 _l.aboutFbImgAndText6 = 'Unlike Facebook...';
 _l.aboutFbImgAndText7 = 'Your personal data is not sold to external companies';
 _l.aboutFbImgAndText8 = 'No arbitrary censorship';
 _l.aboutFbImgAndText9 = 'Does not take personal information';
 _l.aboutFbImgAndText10 = 'No corporation behind it';
-_l.aboutFbImgAndText11 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
+_l.aboutFbImgAndText11 = "Chat sessions are entirely private and encrypted and not even "+appname+" can access them.";
 _l.aboutFbImgAndText12 = 'Mark Zuckerberg won’t bother you!';
 
 
 
 _l.aboutFbTable = 'FACEBOOK';
-_l.aboutFbTable1 = 'BASTYON';
+_l.aboutFbTable1 = ""+appname+"";
 _l.aboutFbTable2 = 'Account ownership';
 _l.aboutFbTable3 = 'Property of Facebook ';
 _l.aboutFbTable4 = 'Your Private Key Belongs to You';
@@ -1813,10 +1810,10 @@ _l.aboutFbTable18 = 'Facebook shares what it wants';
 _l.aboutFbTable19 = '100% to blogger through PKOIN';
 _l.aboutFbTable20 = 'What if Domain Blocked in Some Country?';
 _l.aboutFbTable21 = 'Facebook inaccessible';
-_l.aboutFbTable22 = 'Bastyon works directly with nodes';
+_l.aboutFbTable22 = ""+appname+" works directly with nodes";
 _l.aboutFbTable23 = 'Personal Messages';
 _l.aboutFbTable24 = 'Facebook can read every message';
-_l.aboutFbTable25 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
+_l.aboutFbTable25 = ""+appname+" uses peer-to-peer encryption for 1-on-1 chats, nobody can read them";
 _l.aboutFbTable26 = 'Mark Zuckerberg';
 _l.aboutFbTable27 = 'Always besides you';
 _l.aboutFbTable28 = 'NO!';
@@ -1832,17 +1829,17 @@ _l.aboutFbTable37 = 'No';
 
 
 
-_l.aboutFbMainBoard3 = 'And there`s more! Bastyon pays you.';
-_l.aboutFbMainBoard31 = 'You can earn money with Bastyon.';
-_l.aboutFbMainBoard32 = 'Bastyon uses its own Cryptocurrency: ';
+_l.aboutFbMainBoard3 = "And there`s more! "+appname+" pays you.";
+_l.aboutFbMainBoard31 = "You can earn money with "+appname+".";
+_l.aboutFbMainBoard32 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-_l.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutFbMainBoard34 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
-_l.aboutFbOpen = 'Discover Bastyon';
-_l.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutFbOpen = "Discover "+appname+"";
+_l.aboutFbOpen1 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.aboutFbOpen2 = 'Official Website';
 _l.aboutFbOpen3 = 'Source Code';
 _l.aboutFbOpen4 = 'Contact us';
@@ -1851,13 +1848,13 @@ _l.aboutFbOpen5 = 'Send us a message if you need help or if you are a content cr
 
 /////aboutHIW
 
-_l.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST CENSORSHIP?';
+_l.aboutHowItWMainBoard = "HOW DOES "+appname+" RESIST CENSORSHIP?";
 _l.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT CORPORATE CONTROL.';
-_l.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
+_l.aboutHowItWMainBoard2 = "ENJOY THE FRESH AIR OF "+appname+".";
 
 
 
-_l.aboutHowItWMD = '"Bastyon is the Bitcoin of social networks."';
+_l.aboutHowItWMD = ""+appname+" is the Bitcoin of social networks.";
 
 
 
@@ -1869,30 +1866,30 @@ _l.aboutHowItWImgAndText4 = 'The timestamp proves that the transaction data exis
 _l.aboutHowItWImgAndText5 = 'As blocks each contain information about the block previous to it, they form a chain, with each additional block reinforcing the ones before it.';
 _l.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks.”';
 _l.aboutHowItWImgAndText7 = 'So, how does the blockchain  protects from censorship?';
-_l.aboutHowItWImgAndText8 = 'From Bitcoins to Bastyon.';
+_l.aboutHowItWImgAndText8 = "From Bitcoins to "+appname+".";
 _l.aboutHowItWImgAndText9 = 'The blockchain is the technology behind all the cryptocurrencies. Bitcoins, Ethereum, Dogecoins and so on are all powered by the Blockchain.';
 _l.aboutHowItWImgAndText10 = 'The principle is simple: what happens on the blockchain, stays on the blockchain. Forever.';
 _l.aboutHowItWImgAndText11 = 'All the existing blocks of the blockchain are immutable and permanent. ';
 _l.aboutHowItWImgAndText12 = 'Think about cryptocurrency: when you send some Bitcoins (or parts of it) to someone, the transaction is registered on the blockchain.';
 _l.aboutHowItWImgAndText13 = 'From that moment the transaction cannot be reverted, modified, changed, removed, suspended, edited in any of its parts. It is there and stays there forever. And you can explore the blocks on the blockchain to see all the transactions.';
-_l.aboutHowItWImgAndText14 = 'Bastyon works EXACTLY the same way. Each post, each account, each video is recorded on the blockchain. And once there, it cannot be removed.';
-_l.aboutHowItWImgAndText15 = 'Indeed, Bastyon works on a fork of the original Bitcoin blockchain.';
+_l.aboutHowItWImgAndText14 = ""+appname+" works EXACTLY the same way. Each post, each account, each video is recorded on the blockchain. And once there, it cannot be removed.";
+_l.aboutHowItWImgAndText15 = "Indeed, "+appname+" works on a fork of the original Bitcoin blockchain.";
 _l.aboutHowItWImgAndText16 = 'Censorship-resistant';
 _l.aboutHowItWImgAndText17 = 'Not only the Blockchain.';
-_l.aboutHowItWImgAndText18 = 'Bastyon is not owned by a corporation';
-_l.aboutHowItWImgAndText19 = 'Bastyon is an open-source project';
-_l.aboutHowItWImgAndText20 = 'Bastyon runs on a network of decentralized nodes, if you are using the Bastyon desktop app, it speaks directly to the nodes around the world';
+_l.aboutHowItWImgAndText18 = ""+appname+" is not owned by a corporation";
+_l.aboutHowItWImgAndText19 = ""+appname+" is an open-source project";
+_l.aboutHowItWImgAndText20 = ""+appname+" runs on a network of decentralized nodes, if you are using the "+appname+" desktop app, it speaks directly to the nodes around the world";
 _l.aboutHowItWImgAndText21 = 'In addition, even if a government wants to remove a post, it is technically impossible.';
-_l.aboutHowItWImgAndText22 = 'Likewise, since it runs on a network of nodes, there is no way to limit the access to Bastyon. Even in the event of a government blocking access to https://bastyon.com, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.';
+_l.aboutHowItWImgAndText22 = "Likewise, since it runs on a network of nodes, there is no way to limit the access to "+appname+". Even in the event of a government blocking access to website, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.";
 _l.aboutHowItWImgAndText23 = 'Privacy protection,';
 _l.aboutHowItWImgAndText24 = 'for your security';
-_l.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
-_l.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
+_l.aboutHowItWImgAndText25 = ""+appname+" does not know who you are.";
+_l.aboutHowItWImgAndText26 = ""+appname+" DOES NOT collect any personal information.";
 _l.aboutHowItWImgAndText27 = ' You can register without revealing your phone number (only email is required)';
-_l.aboutHowItWImgAndText28 = 'Bastyon does not ask for your real name to protect dissent';
-_l.aboutHowItWImgAndText29 = 'Bastyon does not collect IP addresses and does not track you';
-_l.aboutHowItWImgAndText291 = 'Bastyon allows multiple accounts for different purposes';
-_l.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
+_l.aboutHowItWImgAndText28 = ""+appname+" does not ask for your real name to protect dissent";
+_l.aboutHowItWImgAndText29 = ""+appname+" does not collect IP addresses and does not track you";
+_l.aboutHowItWImgAndText291 = ""+appname+" allows multiple accounts for different purposes";
+_l.aboutHowItWImgAndText30 = ""+appname+" will never know who you are, unless you explicitly share your personal data.";
 _l.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
 
 
@@ -1929,19 +1926,19 @@ _l.HIVTable23 = 'Yes';
 
 
 _l.aboutHowItWImgAndText32 = 'And there`s more!';
-_l.aboutHowItWImgAndText33 = 'Bastyon pays you';
-_l.aboutHowItWImgAndText34 = 'You can earn money with Bastyon.';
-_l.aboutHowItWImgAndText35 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutHowItWImgAndText33 = ""+appname+" pays you";
+_l.aboutHowItWImgAndText34 = "You can earn money with "+appname+".";
+_l.aboutHowItWImgAndText35 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
 _l.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
-_l.aboutHowItWImgAndText38 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutHowItWImgAndText38 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
-_l.aboutHowItWImgAndText40 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+_l.aboutHowItWImgAndText40 = "Next step: contact us to get your "+appname+" account verified and to access the bonus program.";
 _l.aboutHowItWImgAndText41 = 'Contact Us Now';
 
 
-_l.aboutHowItWOpen = 'Discover Bastyon';
-_l.aboutHowItWOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutHowItWOpen = "Discover "+appname+"";
+_l.aboutHowItWOpen1 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.aboutHowItWOpen2 = 'Official Website';
 _l.aboutHowItWOpen3 = 'Source Code';
 _l.aboutHowItWOpen4 = 'Contact us';
@@ -1950,14 +1947,14 @@ _l.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a conten
 //aboutContentCreator
 
 _l.ContentCreatorsMainBoard = 'Great Bonus Program for Content Creators';
-_l.ContentCreatorsMainBoard1 = '"There are many ways to earn money with Bastyon..."';
+_l.ContentCreatorsMainBoard1 = "There are many ways to earn money with "+appname+"...";
 
 
 _l.ContentCreatorsImgAndText = 'Post your videos';
-_l.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
+_l.ContentCreatorsImgAndText1 = "Post your videos on "+appname+"";
 _l.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
 _l.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
-_l.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+_l.ContentCreatorsImgAndText4 = "Next step: contact us to get your "+appname+" account verified and to access the bonus program.";
 _l.ContentCreatorsImgAndText5 = 'Contact Us Now ';
 _l.ContentCreatorsImgAndText6 = 'Invite your followers';
 _l.ContentCreatorsImgAndText7 = 'Share your personal referral link';
@@ -1972,7 +1969,7 @@ _l.ContentCreatorsImgAndText15 = 'The more followers you have, the more your ear
 _l.ContentCreatorsImgAndText16 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
 _l.ContentCreatorsImgAndText17 = 'Contact Us Now';
 _l.ContentCreatorsImgAndText18 = 'Earn with Decentralized Ads';
-_l.ContentCreatorsImgAndText19 = 'Ads comes to you through Bastyon Ad Marketplace';
+_l.ContentCreatorsImgAndText19 = "Ads comes to you through "+appname+" Ad Marketplace";
 _l.ContentCreatorsImgAndText20 = 'You can choose which ads to repost to your channel';
 _l.ContentCreatorsImgAndText21 = '100% of ad proceeds from interactions to go your wallet';
 _l.ContentCreatorsImgAndText22 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
@@ -1986,8 +1983,8 @@ _l.ContentCreatorsImgAndText29 = 'Contact Us Now';
 
 
 
-_l.ContentCreatorsOpen = 'Discover Bastyon';
-_l.ContentCreatorsOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.ContentCreatorsOpen = "Discover "+appname+"";
+_l.ContentCreatorsOpen1 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
 _l.ContentCreatorsOpen2 = 'Official Website';
 _l.ContentCreatorsOpen3 = 'Source Code';
 _l.ContentCreatorsOpen4 = 'Contact us';
@@ -2035,7 +2032,7 @@ _l.reachedlimits = 'You reached your daily limit of actions. To increase your li
 _l.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
 
 
-_l.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
+_l.sendUserStatistics = "Send anonimous report of errors to "+appname+" Team"
 _l.captionUserStats = 'Statistics'
 
 _l.editarticledraft = 'Edit article Draft'
@@ -2046,26 +2043,26 @@ _l.publishquestion = 'Are you sure you want to public this article?'
 
 _l.etc = 'And so on...'
 _l.openlinkssettings = 'Do not open links in the desktop application'
-_l.nametaken = 'This username is taken in Bastyon'
+_l.nametaken = "This username is taken in "+appname+""
 
 _l.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
 
 
 _l.name20symbols = "The name length can't be more than 20 symbols"
 _l.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
-_l.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+_l.namereservedbn = "To avoid user confusion using "+appname+" in name is reserved"
 
 _l.photohassizegreater = function(v){
     return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
 }
 _l.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
-_l.downloadDesctApp = "Download Bastyon for desktop"
+_l.downloadDesctApp = "Download "+appname+" for desktop"
 _l.downloadMobileApp = "Install Mobile Application"
 
 
 _l.easyNode_e10000 = "Node"
 _l.easyNode_e10001 = "Download and install node"
-_l.easyNode_e10002 = "Bastyon Node"
+_l.easyNode_e10002 = ""+appname+" Node"
 _l.easyNode_e10003 = "Loading"
 _l.easyNode_e10004 = "Node Installing"
 _l.easyNode_e10005 = "Node Removing"
@@ -2135,8 +2132,8 @@ _l.stakingCalculator = "Staking Calculator - calculate how much you earn by putt
 _l.easyNode_e2000 = "Defend Freedom of Speech & "
 _l.easyNode_e2000_1 = "Earn"
 _l.easyNode_e2000_2 = " Cryptocurrency"
-_l.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
-_l.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
+_l.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform "+appname+". It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on "+appname+"."
+_l.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of "+appname+" that supports the network and"
 _l.easyNode_e2002_1 = " earns "
 _l.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 _l.easyNode_e2002_2_1 = " earn "
@@ -2202,9 +2199,9 @@ _l.postby = "Post by"
 _l.continueon = "Сontinue on"
 _l.bestwishes = "Best,"
 
-_l.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+_l.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because "+appname+" does NOT require any personal information for registration."
 
-_l.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+_l.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because "+appname+" does NOT require any personal information for registration."
 
 _l.clearfilters = "Clear filters"
 _l.clearcategories = "Do you really want to clear category filters?"
@@ -2274,10 +2271,10 @@ _l.gotoProfile2 = "Go to Profile";
 _l.countviews = "Views";
 _l.countview = "View";
 
-_l.popup_applications_header = "Important! Please download Bastyon Application";
+_l.popup_applications_header = "Important! Please download "+appname+" Application";
 
-_l.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
-_l.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+_l.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use "+appname+"";
+_l.popup_applications_feature_2 = "Desktop application doesn't depend on "+appname+".com";
 _l.popup_applications_feature_3 = "Desktop is like a built-in VPN";
 
 _l.popup_applications_button = " Download here";
@@ -2308,7 +2305,7 @@ _l.savevideo = "Download video";
 
 _l.useanimations = "Enable animations";
 
-_l.welcomecaption1 = "Bastyon of Free Speech";
+_l.welcomecaption1 = ""+appname+" of Free Speech";
 _l.welcomecaption2 = "Read Content Banned by Big Tech";
 _l.welcomecaption3 = "Chat privately with friends - no SIM card";
 
@@ -2320,7 +2317,7 @@ _l.shareexternaluploadpeertube = "Media upload window open";
 _l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
 
-_l.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
+_l.lowstar1 = ""+appname+" team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
 _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
@@ -2347,11 +2344,11 @@ _l['dust (code 64)'] = "You are trying to send an amount too small, it cannot be
 _l.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
 _l.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
 
-_l.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+_l.androidPopupTitle = "Get uncensored information in "+appname+" mobile app"
 _l.androidPopupAgree = "Switch to the app"
 _l.androidPopupDisagree = "Not now"
 
-_l.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+_l.desktopPopupTitle = "Get uncensored information in "+appname+" desktop app"
 _l.desktopPopupAgree = "Download the app"
 _l.desktopPopupDisagree = "Not now"
 
@@ -2366,7 +2363,7 @@ _l.removeAccount_prepare = 'Preparing'
 
 _l.removeAccount_removePeertube = 'Deleting data from video servers'
 _l.removeAccount_removeMatrix = 'Deleting data from the chat server'
-_l.removeAccount_removeBastyon = 'Removing an account from the blockchain'
+_l.removeAccount_removeBB = 'Removing an account from the blockchain'
 _l.removeAccount_finish = 'Success'
 _l.removeAccount_success = 'Deleting your account was successful. Within 10 minutes, the procedure should be completed completely.'
 
@@ -2397,7 +2394,7 @@ _l.recommendations_caption_tags = 'Tag based recommendation'
 _l.recommendations_caption_users = 'Recommendations based on information about interactions with other users'
 
 
-_l.recommendations_caption_disclamer = "Statistics are stored only on your device, are not sent to the Bastyon servers, are not transferred to third parties"
+_l.recommendations_caption_disclamer = "Statistics are stored only on your device, are not sent to the "+appname+" servers, are not transferred to third parties"
 
 _l.recommendations_tags_table_caption = 'Tag, probability, points, last interaction date'
 _l.recommendations_tags_completed_caption = 'Requested recommendations'
@@ -2419,18 +2416,18 @@ _l.searchbytags = "Search by tags:"
 
 _l.boost_c1 = 'Advertise with PKOIN & get leads for your crypto project today'
 _l.boost_c2 = 'Web 2.0'
-_l.boost_c3 = 'Bastyon Web 3.0'
+_l.boost_c3 = ""+appname+" Web 3.0"
 _l.boost_c4 = 'Are you trying to be heard on the internet?'
 _l.boost_c5 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
-_l.boost_c6 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
-_l.boost_c7 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
-_l.boost_c8 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
-_l.boost_c9 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
-_l.boost_c10 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c6 = ""+appname+", the blockchain social network has just released a way of promoting content, including videos."
+_l.boost_c7 = "The cost of an impression on "+appname+" is many times lower than on traditional ad networks."
+_l.boost_c8 = "Boosting posts on "+appname+" is very simple, you just need some Pocketcoin, a native cryptocurrency of "+appname+". Click Boost below the post and enter the amount and your post is moved to the top!"
+_l.boost_c9 = ""+appname+" has millions of visitors and growing. Your content will be seen!"
+_l.boost_c10 = "If you are an aspiring author who wants to increase your audience, "+appname+" boosting of posts can work for you!"
 _l.boost_c11 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
 _l.boost_c12 = 'Open source'
 _l.boost_c13 = 'Upload your videos'
-_l.boost_c14 = 'Earn with Bastyon'
+_l.boost_c14 = "Earn with "+appname+""
 _l.boost_c15 = 'Privacy protection'
 _l.boost_c16 = 'Bitcoin of social media'
 _l.boost_c17 = 'Censorship resistant'
@@ -2443,43 +2440,43 @@ _l.boost_c21 = ' Cost per Thousand Impressions is 28 cents!'
 _l.boost_c22 = 'Advertising for Pocketcoin - Cost-Effective Coverage'
 _l.boost_c23 = 'Are you trying to be heard on the internet?'
 _l.boost_c24 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
-_l.boost_c25 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
-_l.boost_c26 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
-_l.boost_c27 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
-_l.boost_c28 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
-_l.boost_c29 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c25 = ""+appname+", the blockchain social network has just released a way of promoting content, including videos."
+_l.boost_c26 = "The cost of an impression on "+appname+" is many times lower than on traditional ad networks."
+_l.boost_c27 = "Boosting posts on "+appname+" is very simple, you just need some Pocketcoin, a native cryptocurrency of "+appname+". Click Boost below the post and enter the amount and your post is moved to the top!"
+_l.boost_c28 = ""+appname+" has millions of visitors and growing. Your content will be seen!"
+_l.boost_c29 = "If you are an aspiring author who wants to increase your audience, "+appname+" boosting of posts can work for you!"
 _l.boost_c30 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
 _l.boost_c31 = 'Where to buy PKOIN?'
 _l.boost_c32 = 'PKOIN can be purchased on the following sites.'
 _l.boost_c33 = '- here you can buy PKOIN for other cryptocurrencies.'
 _l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
-_l.boost_c34 = 'Buying PKOIN peer-to-peer on Bastyon'
-_l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
+_l.boost_c34 = "Buying PKOIN peer-to-peer on "+appname+""
+_l.boost_c35 = "PKOIN purchase is possible from other "+appname+" users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category 'PKOIN/peer-to-peer'"
 _l.boost_c36 = 'How do I start advertising?'
-_l.boost_c37 = 'Launching ads on Bastyon is very simple. To do this, you need:'
+_l.boost_c37 = "Launching ads on "+appname+" is very simple. To do this, you need:"
 _l.boost_c38 = 'Prepare an advertising publication (video, post or article)'
 _l.boost_c39 = 'Buy PKOIN'
 _l.boost_c40 = 'Deposit the required amount of PKOIN to start advertising'
 _l.boost_c41 = 'Click the lightning bolt icon in the lower right corner of the selected post:'
 _l.boost_c42 = 'Enter PKOIN in the "Amount" field and click "Send":'
-_l.boost_c43 = 'Congratulations! You have launched an advertisement on Bastyon!'
-_l.boost_c44 = 'Learn more about ads on Bastyon'
-_l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on Bastyon.';
+_l.boost_c43 = "Congratulations! You have launched an advertisement on "+appname+"!"
+_l.boost_c44 = "Learn more about ads on "+appname+""
+_l.boost_c44_subject = "Hi, I would like to learn more about launching my ads on "+appname+".";
 
 _l.reach = 'Reach'
-_l.reachAudience = 'Approximate audience based on statistics about Bastyon from Semrush.com and Github.com' 
+_l.reachAudience = "Approximate audience based on statistics about "+appname+" from Semrush.com and Github.com"
 
 _l.reachDescription = 'Average cost of thousand impressions (CPM) is 28 cents'
-_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+_l.boost_c44 = "I want to launch an advertisement on the "+appname+"!"
 _l.boost_c45 = 'Incredibly Low CPM'
 _l.boost_c46 = 'Cost per Thousand Impressions is 28 cents!'
 _l.boost_c47 = '(average CPM for large networks is over $1)'
 _l.boost_c48 = '(How is this derived?)'
-_l.boost_c49 = 'Bastyon has about 1.68 MILLION unique visitors a month. Average visitor visits 5 times per month, and English language feed is 10% of Bastyon, so TOTAL NUMBER OF MONTHLY VISITS = 	840,000'
-_l.boost_c50 = 'STEPS TO CALCULATE CPM ON BASTYON'
-_l.boost_c51 = '*There are TOTAL 1.68 MILLION unique visitors per month (1.4M on bastyon.com, 130k on Android, 100k on Desktop app)'
+_l.boost_c49 = ""+appname+" has about 1.68 MILLION unique visitors a month. Average visitor visits 5 times per month, and English language feed is 10% of "+appname+", so TOTAL NUMBER OF MONTHLY VISITS = 	840,000"
+_l.boost_c50 = "STEPS TO CALCULATE CPM ON "+appname+""
+_l.boost_c51 = "*There are TOTAL 1.68 MILLION unique visitors per month (1.4M on "+appname+".com, 130k on Android, 100k on Desktop app)"
 _l.boost_c52 = 'STEP 1.'
-_l.boost_c53 = '1.4M is on Bastyon.com (SEMRUSH data)'
+_l.boost_c53 = "1.4M is on "+appname+".com (SEMRUSH data)"
 _l.boost_c54 = 'STEP 2.'
 _l.boost_c55 = 'Number of active android users is 130,000+'
 _l.boost_c56 = 'STEP 3.'
@@ -2496,7 +2493,7 @@ _l.boost_c66 = 'Total visits in 3 hour interval = 28,000/8= 3500 '
 _l.boost_c67 = 'Average cost of ad is $1 '
 _l.boost_c68 = 'CPM = $. 28'
 _l.boost_c69 = '28 cents on average is a very low CPM'
-_l.boost_c70 = 'Bastyon is a new, fast-growing decentralized social network with millions of users and super-profitable advertising'
+_l.boost_c70 = ""+appname+" is a new, fast-growing decentralized social network with millions of users and super-profitable advertising"
 _l.boost_c71 = 'Distribution by Country'
 _l.boost_c72 = 'Employment Status'
 _l.boost_c73 = 'Audience'
@@ -2508,7 +2505,7 @@ _l.howtobuy_c2 = 'PKOIN'
 _l.howtobuy_c3 = 'Cryptocurrency Exchanges'
 _l.howtobuy_c4 = 'Buying For A Visa/Mastercard'
 _l.howtobuy_c5 = 'Buying PKOIN with cryptocurrency'
-_l.howtobuy_c6 = 'Buying PKOIN peer-to-peer on Bastyon'
+_l.howtobuy_c6 = "Buying PKOIN peer-to-peer on "+appname+""
 _l.howtobuy_c7 = 'Buying with cards in Russia/Ukraine/Belarus'
 _l.howtobuy_c8 = 'Next, select the appropriate profile offering the purchase/sale of PKOIN. Be careful when buying with your hands. Look at the reviews and do not take large amounts.'
 _l.howtobuy_c9 = 'Next, go to the chat and discuss the terms of the exchange'
@@ -2574,7 +2571,7 @@ _l.incomingCall = "Incoming call"
 
 _l.authHeading = "Auth";
 
-_l.terms = 'Terms and Conditions for Bastyon';
+_l.terms = "Terms and Conditions for "+appname+"";
 _l.daccept = "Accept and continue";
 
 _l.sendToChat = "Send message to chat";
@@ -2585,8 +2582,8 @@ _l.torusing_neveruse = "Never";
 _l.torusing_auto = "Auto";
 _l.torusing_always = "Always";
 
-_l.anotherSupport = "Support Bastyon in another way";
-_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support Bastyon!";
+_l.anotherSupport = "Support "+appname+" in another way";
+_l.supportTicketSuccess = "You messave has been sent and volunteers will contact you. Thanks for your willingness to support "+appname+"!";
 
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";
@@ -2616,6 +2613,7 @@ _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
 _l.permissions_allow_once = "Allow once"
 _l.permissions_forbid = "Forbid"
+_l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
 _l.complainapplication = "Complain application"
@@ -2623,7 +2621,7 @@ _l.complainapplication = "Complain application"
 _l.searchbyapplications = "Find an app"
 
 _l.actions_reason_registration = "In order to complete the registration you need to solve the captcha"
-_l.actions_reason_balance = "To perform actions on the Bastyon you need to solve the captcha"
+_l.actions_reason_balance = "To perform actions on the "+appname+" you need to solve the captcha"
 
 
 _l.commonsubmitapplicationVideoSmall = "Submit"
@@ -2637,9 +2635,9 @@ _l.commonRequest_er_email = "Leave an email for feedback"
 _l.registration_e13114 = "There is some problem with your registration due to strange activity."
 _l.balance_e13114 = "There is some problem with sending your actions due to strange activity."
 
-_l.solutionbalance_1 = "To continue interacting with Bastyon, you can replenish the balance of your wallet yourself"
+_l.solutionbalance_1 = "To continue interacting with "+appname+", you can replenish the balance of your wallet yourself"
 _l.solutionbalance_2 = "or contact support"
-_l.solutionbalance_3 = "To continue interacting with Bastyon, you can contact support"
+_l.solutionbalance_3 = "To continue interacting with "+appname+", you can contact support"
 
 _l.commonRequest_submitted = "Thank you for contacting us, we will review your application"
 _l.torusing_changedirectProxy = "Change to External proxy";
@@ -2707,6 +2705,8 @@ _l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into a
 _l.actions_noinputs = "You don't have enough coins to complete the operation"
 _l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
 _l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_noinputs_wait_comment = "You don't have enough active coins to post a comment. Please wait"
+
 _l.actions_totalAmountZero = 'The total amount of the transaction is zero or smaller than fee'
 
 _l.actions_totalAmountSmaller_amount = 'You have less money in your account than you want to send.'
@@ -2781,3 +2781,15 @@ _l.captiontempactions = "Local storage Transactions Info"
 _l.labeltempactions = "Number of pending transactions"
 _l.labeltempactionszero = "No pending transactions"
 
+
+_l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
+_l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
+_l.application_settings = "Settings"
+_l.application_close = "Close"
+
+_l.application_notexist = "Application not found or application server not responding"
+_l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
+_l.permissions_name_chat = appname + " chat"
+
+_l.permissions_name_geolocation = "Access to location"
+_l.permissions_descriptions_geolocation = "The application asks for permission to access your location"

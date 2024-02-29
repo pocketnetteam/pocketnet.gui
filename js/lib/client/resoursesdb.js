@@ -144,7 +144,6 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.clearAll = function(key){
-        console.log('clearAll', key)
         return transaction(key).then(items => {
 
             const req = items.clear();

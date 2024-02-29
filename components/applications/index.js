@@ -121,19 +121,27 @@ var applications = (function(){
 				return !ed.filter || ed.filter(os)
 			})
 
-			if(window.cordova && isios()){
-				filtered = _.filter(filtered, (f) => {
-					return f.id == 'macos' || f.id == 'ios'
-				})
-			}
+			filtered = _.filter(filtered, function(os){
+				return os.github || os.href
+			})
 
 			var fl = filtered.length
 
 			var __os = os()
 
+			if(window.cordova && isios() && __os == 'ios'){
+				__os = 'macos'
+			}
+
 			var filtered = _.filter(oss, function(os){
 				return os.id != __os
 			})
+
+			if(window.cordova && isios()){
+				filtered = _.filter(filtered, (f) => {
+					return f.id == 'macos'
+				})
+			}
 
 			if (filtered.length != fl){
 				renders.mainoss(oss[__os])

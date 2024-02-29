@@ -1,3 +1,66 @@
+#application .errorwrapper {
+  text-align: center;
+  padding: 2em;
+}
+#application .errorwrapper span {
+  font-size: 2em;
+  font-weight: 100;
+}
+#application .chatDoubleRow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: var(--app-margin-top);
+  height: calc(55px + var(--app-margin-top));
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  width: 55px;
+}
+#application .chatDoubleRow .icon {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 12px;
+  background: rgba(var(--background-hidden-layer), 0.15);
+  backdrop-filter: blur(4px);
+  color: #AAAAAA;
+  -webkit-backdrop-filter: blur(4px);
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  position: absolute;
+  left: 0.5em;
+  bottom: 5px;
+  text-align: center;
+}
+#application .chatDoubleRow .icon svg {
+  margin-bottom: 3px;
+  height: 23px;
+  width: 23px;
+  fill: #AAAAAA;
+}
+#application .chatDoubleRow .icon .amount {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0 0.5em;
+  min-width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 0.5em;
+  background: rgba(var(--color-bg-ac-bright), 0.95);
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  z-index: 20;
+  border-radius: 50%;
+  display: none;
+}
+#application .chatDoubleRow.amountHave .icon .amount {
+  display: block;
+}
 #application .captionRow {
   position: fixed;
   left: 0;
@@ -34,9 +97,9 @@
 #application .captionRow .abssettings {
   position: absolute;
   right: 100%;
-  top: 5px;
+  top: auto;
   bottom: 5px;
-  margin-left: 5px;
+  margin-left: 0.5em;
 }
 #application .captionRow .abssettings .icon {
   width: 45px;

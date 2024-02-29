@@ -2,6 +2,7 @@
 
 const request = require('request');
 const nodeFetch = require('node-fetch');
+
 global.fetch = (...args) => {
     try {
         return nodeFetch(...args);

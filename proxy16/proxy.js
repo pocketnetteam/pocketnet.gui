@@ -36,7 +36,6 @@ var bitcoin = require('./lib/btc16.js');
 var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
-const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
 
 const config = require('./config.json');
 const offlinePeertubeList = require('./peertube-servers.json');

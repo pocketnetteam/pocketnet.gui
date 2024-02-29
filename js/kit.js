@@ -2186,6 +2186,7 @@ pUserInfo = function(){
 	self.subscribes_loaded = false
 	self.subscribers_loaded = false
 	self.blocking_loaded = false;
+	self.dev = false
 
 
 	self.recomendedSubscribes = [];
@@ -2345,6 +2346,8 @@ pUserInfo = function(){
 		v.likers_count = self.likers_count
 		v.postcnt = self.postcnt
 		v.content = _.clone(self.content)
+
+		v.dev = self.dev
 
 
 		if (self.regdate && self.regdate.getTime){
@@ -2564,6 +2567,7 @@ pShare = function(){
 	self.language = '';
 	self.poll = {};
 	self.time = new Date()
+	self.___temp = false
 
 	self.comments = 0;
 	self.lastComment = null;
@@ -2709,6 +2713,8 @@ pShare = function(){
 		if (v.id)
 			self.id = v.id;
 
+		if(v.___temp) self.___temp = v.___temp
+
 		if (v.txidEdit){
 			self.txidEdit = v.txidEdit;	
 			self.edit = true
@@ -2738,7 +2744,6 @@ pShare = function(){
 		if (v.reposted)
 			self.reposted = v.reposted
 
-		
 		if (v.lastComment)
 			self.lastComment = v.lastComment.id || v.lastComment
 
@@ -2785,6 +2790,8 @@ pShare = function(){
 		v.repost = self.repost
 		v.txidEdit = self.txidEdit
 		v.edit = self.edit
+		v.___temp = self.___temp
+
 
 		if(self.lastComment){
 			/*if(self.lastComment.export){
@@ -2794,6 +2801,7 @@ pShare = function(){
 				v.lastComment = self.lastComment
 			//}
 		}
+
 
 		return v
 	}

@@ -994,7 +994,7 @@ var linkifyHtml = (function (linkifyjs) {
       return `<${tagName} ${attributesToString(attributes)}>${escapeText(content)}</${tagName}>`;
     }
     function escapeText(text) {
-      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
     function escapeAttr(attr) {
       return attr.replace(/"/g, '&quot;');

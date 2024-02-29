@@ -3,8 +3,10 @@ var pSDK = function ({ app, api, actions }) {
 
     var storage = {}
     var objects = {}
+    var baddata = {}
     var temp = {}
     var queue = {}
+    var qtick = 300
     //var dbstorages = {}
 
     var dbmeta = {
@@ -128,7 +130,13 @@ var pSDK = function ({ app, api, actions }) {
         if (!storage[key]) storage[key] = {}
         if (!temp[key]) temp[key] = {}
         if (!objects[key]) objects[key] = {}
-        if (!queue[key]) queue[key] = []
+        if (!queue[key]) queue[key] = {
+            d : 0,
+            a : [],
+            mc : 0
+        }
+
+        if(!baddata[key]) baddata[key] = {}
     }
 
     var settodb = function (dbname, result) {
@@ -137,6 +145,10 @@ var pSDK = function ({ app, api, actions }) {
         }
 
         return Promise.all(_.map(result, ({ key, data }) => {
+
+            if(!data) return Promise.resolve()
+
+            if (data.___temp) return Promise.resolve()
 
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
@@ -194,6 +206,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var getfromdb = function (dbname, ids, getold) {
 
+
         if (!ids) return Promise.resolve([])
 
         if (!_.isArray(ids)) ids = [ids]
@@ -239,19 +252,52 @@ var pSDK = function ({ app, api, actions }) {
     var processingQueue = function (queue) {
 
 
-        if (queue.length) {
+        if (queue.a.length) {
 
-            var groupped = group(queue, (q) => { return q.executor })
+            var grouppedByEx = _.toArray(group(queue.a, (q) => { return q.executor }))
 
-            _.each(groupped, (g) => {
+            _.each(grouppedByEx, (g) => {
 
                 var executor = g[0].executor
                 var load = _.reduce(g, (m, q) => m.concat(q.load), [])
 
-                executor(load).then(r => {
+                load = _.uniq(load)
+
+                var batches = []
+
+                if (queue.mc){
+
+                    for (let i = 0; i < load.length; i += queue.mc) {
+
+                        var batch = load.slice(i, i + queue.mc)
+
+                        batches.push(batch)
+                    }
+
+                }
+                else{
+                    batches.push(load)
+                }
+
+                Promise.all(_.map(batches, (batch) => {
+                    return executor(batch)
+
+
+                })).then((r) => {
+
+                    return Promise.resolve(_.flatten(r, true))
+
+                }).then(r => {
 
                     _.each(g, (q) => {
-                        q.resolve(r)
+
+                        var localresult = _.filter(r, (d) => {
+                            if(d && d.key){
+                                return _.indexOf(q.load, d.key) > -1
+                            }
+                        })
+
+                        q.resolve(localresult)
                     })
 
                 }).catch(e => {
@@ -271,9 +317,19 @@ var pSDK = function ({ app, api, actions }) {
     var processingAll = function () {
         _.each(queue, (q, type) => {
 
+
+            if (q.d && q.d > 0){
+                q.d = q.d - qtick
+                return
+            }
+
             processingQueue(q)
 
-            queue[type] = []
+            queue[type] = {
+                d : 0,
+                a : [],
+                mc : 0
+            }
         })
     }
 
@@ -283,7 +339,8 @@ var pSDK = function ({ app, api, actions }) {
         indexedDb: null,
         alternativeGetStorage: null,
         transform: null,
-        maxcount: 0
+        maxcount: 0,
+        ignoreBadData : false
     }) {
 
         if (!key) return Promise.reject('missing:key')
@@ -292,6 +349,17 @@ var pSDK = function ({ app, api, actions }) {
         if (!_.isArray(keys)) keys = [keys]
 
         keys = _.filter(_.uniq(keys), k => k)
+
+        if(p.ignoreBadData){
+            keys = _.filter(keys, (k) => {
+
+                if(p.update && baddata[key][k]){
+                    delete baddata[key][k]
+                }
+
+                return !baddata[key][k]
+            })
+        }
 
         var loading = {}
         var loaded = {}
@@ -356,20 +424,16 @@ var pSDK = function ({ app, api, actions }) {
 
                 var rjc = function(e){
 
-                    console.log("rjc", e)
-                    console.log("rjc", load, p.indexedDb)
-
-
                     getfromdb(p.indexedDb, load, true).then(r => {
-                        console.log("rjc", r)
-                        if(!r && r.length != load.length){
+                        if(!r || r.length != load.length){
                             reject(e)
                         }
                         else{
                             resolve(r)
                         }
                     }).catch(e2 => {
-                        reject(e)
+                        console.error(e2)
+                        reject(e2)
                     })
 
                 }
@@ -388,14 +452,28 @@ var pSDK = function ({ app, api, actions }) {
 
                 }
 
-
                 if (p.queue) {
-                    queue[key].push({
+
+                    if(!queue[key].a.length){
+
+                        if (p.queueDelay){
+                            queue[key].d = p.queueDelay
+                        }
+                        if (p.maxcount){
+                            queue[key].mc = p.maxcount
+                        }
+
+                        
+                    }
+
+                    queue[key].a.push({
                         load,
                         executor,
                         resolve: c,
                         reject : rjc
                     })
+
+                    
                 }
                 else {
 
@@ -419,8 +497,6 @@ var pSDK = function ({ app, api, actions }) {
                         c(_.flatten(r, true))
 
                     }).catch(rjc)
-
-                    //executor(load).then(c).catch(reject)
                 }
 
                 /**/
@@ -443,6 +519,9 @@ var pSDK = function ({ app, api, actions }) {
             var filtered = []
 
 
+            //// TODO NOW check load length and result length
+
+
             try{
             
                 _.each(result, (r) => {
@@ -450,6 +529,12 @@ var pSDK = function ({ app, api, actions }) {
                     if (r && r.key && r.data) {
                         storage[key][r.key] = r.data
                         filtered.push(r)
+                    }
+                    else{
+                        if(r && r.key){
+                            baddata[key][r.key] = true
+                        }
+                        
                     }
 
 
@@ -533,11 +618,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 return Promise.resolve(r)
             }).catch(e => {
-                console.log("rjc", e)
                 return getfromdbone(p.requestIndexedDb, hash, true).then((r) => {
-
-                    console.log("rjc", r)
-                    console.log("rjc", r)
 
                     if (r) return Promise.resolve(r)
 
@@ -586,7 +667,6 @@ var pSDK = function ({ app, api, actions }) {
         }
 
         var extendedObject = null
-
 
         _.each(actions.getAccounts(), (account) => {
 
@@ -685,12 +765,14 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
+                queue: light ? true : false,
                 update,
                 indexedDb: light ? 'userInfoLight' : 'userInfoFull',
                 fallbackIndexedDB: !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage: light ? 'userInfoFull' : null,
                 transform: (r) => this.transform(r),
-                maxcount : 70
+                maxcount : light ? 70 : 10,
+                ignoreBadData : true
             })
         },
 
@@ -798,7 +880,6 @@ var pSDK = function ({ app, api, actions }) {
         getmyoriginal : function(){
             if(!app.user.address.value) return null
 
-            console.log("userinfo original",  objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value])
 
             return objects['userInfoFull'][app.user.address.value] || objects['userInfoLight'][app.user.address.value]
 
@@ -1377,6 +1458,7 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, id) {
 
+
             return extendFromActions('comment', 
                 ['comment', 'cScore'],
                 object,
@@ -1434,6 +1516,8 @@ var pSDK = function ({ app, api, actions }) {
         keys: ['share'],
 
         request: function (executor, hash) {
+
+
             return request('share', hash, (data) => {
                 
                 return executor(data).then(r => {
@@ -1539,12 +1623,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(result, (r) => {
 
-                if (!storage[key][r.key])
+                if (!storage[key][r.key] || (storage[key][r.key] && storage[key][r.key].___temp))
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !objects[key][r.key]) {
+                if (object && !(objects[key][r.key] && objects[key][r.key].___temp)) {
                     objects[key][r.key] = object
                 }
 
@@ -1555,6 +1639,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         transform: function ({ key, data: share }, small) {
+
 
             if (share.userprofile || share.user) {
                 self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile || share.user]), true)
@@ -1567,6 +1652,8 @@ var pSDK = function ({ app, api, actions }) {
             var s = new pShare();
 
             s._import(share);
+
+
 
             if (share.ranks) {
                 s.info = share.ranks
@@ -1616,9 +1703,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         cleanData: function (rawshares) {
-
-            
-
 
             return _.filter(_.map(rawshares, (c) => {
 
@@ -1720,7 +1804,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         load: function (txids, update) {
-
+            
 
             return loadList('share', txids, (txids) => {
 
@@ -1828,8 +1912,6 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('share'), filter)
-
-
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -2104,6 +2186,8 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
+                queue : true,
+                queueDelay : 1000,
                 update,
                 transform: (v) => this.transform(v),
                 indexedDb: 'myScore',
@@ -2402,6 +2486,10 @@ var pSDK = function ({ app, api, actions }) {
 
         insertFromResponseEx : function(data){
 
+            data = _.filter(data, (d) => {
+                return d
+            })
+
             data = self.userInfo.cleanData(data)
 
             return self.userInfo.insertFromResponse(data, true).then(() => {
@@ -2453,6 +2541,7 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(keys, (k) => {
                 delete storage[k][key]
+                delete baddata[k][key]
             })
         },
 
@@ -2496,7 +2585,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var interval = setInterval(() => {
         processingAll()
-    }, 30)
+    }, qtick)
 
 
     self.actions.on('actionFiltered', ({ action, address, status }) => {

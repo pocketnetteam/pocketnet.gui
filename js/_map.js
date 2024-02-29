@@ -32,6 +32,7 @@ __map =  {
 		"js/vendor/aesjs.js",//
 		{path : "js/vendor/linkify.js", babelify : true},
 		{path : "js/vendor/linkify-html.js", babelify : true},
+		{path : "js/vendor/linkify-string.js", babelify : true},
 		"js/vendor/exif.js",
 		"js/vendor/firebase-app.js",
 		"js/vendor/firebase-messaging.js",
@@ -695,6 +696,7 @@ __map =  {
 			uri : "home",
 			href : "home",
 			add : insertingfunc,
+			anonimus : true,
 		},
 
 

@@ -210,8 +210,8 @@ var notifications = (function(){
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
 							}, function(){
 
-								if(!self.app.mobileview)
-									self.closeContainer()
+								/*if(!self.app.mobileview)
+									self.closeContainer()*/
 							})
 						}
 					})
@@ -244,7 +244,6 @@ var notifications = (function(){
 				el.error.addClass('hidden')
 				el.empty.removeClass('hidden')
 
-				console.log('self.app.platform.sdk.notifications', self.app.platform.sdk.notifications)
 
 				if (!self.app.platform.sdk.notifications.inited || self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')

@@ -165,6 +165,12 @@ var comments = (function(){
 
 		var actions = {
 
+			removeSending : function(wrapper){
+				setTimeout(() => {
+					wrapper.removeClass('sending')
+				}, 400)
+			},
+
 			repliesCount: function(parentid){
 				var parent = el.c.find("#" + parentid)
 				var panel = parent.find('.commentpanel[comment="'+parentid+'"]')
@@ -654,8 +660,7 @@ var comments = (function(){
 					var e = current.validation();
 
 					if (e){
-
-						wrapper.removeClass('sending')
+						actions.removeSending(wrapper)
 						sitemessage(errors[e])
 
 					}
@@ -669,14 +674,14 @@ var comments = (function(){
 
 							sitemessage(self.app.localization.e('lockedaccount'))
 		
-							wrapper.removeClass('sending')
+							actions.removeSending(wrapper)
 		
 							return
 						}
 
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
-							wrapper.removeClass('sending')
+							actions.removeSending(wrapper)
 	
 							new dialog({
 								html : self.app.localization.e('ratings123'),
@@ -718,6 +723,8 @@ var comments = (function(){
 							}
 							else{
 
+								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
+
 								self.app.platform.errorHandler(error, true)
 							}
 
@@ -725,7 +732,7 @@ var comments = (function(){
 
 							window.requestAnimationFrame(() => {
 								wrapper.find('.emojionearea-editor').blur();
-								wrapper.removeClass('sending')
+								actions.removeSending(wrapper)
 
 								if(!error){
 	
@@ -760,7 +767,7 @@ var comments = (function(){
 					}
 				}
 				else{
-					wrapper.removeClass('sending')
+					actions.removeSending(wrapper)
 
 					sitemessage(errors['content'])
 				}
@@ -806,8 +813,9 @@ var comments = (function(){
 
 				id || (id = '0')
 
+
 				if (currents[id])
-					currents[id].message.set(v.replace('⠀', ' '))
+					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
 
 				state.save()
 
@@ -2696,13 +2704,11 @@ var comments = (function(){
 
 			self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-				
-
-			
 				if(type == 'comment'){
 					var comment = alias
 
 					if (comment.postid == txid){
+						if(currents[comment.id]) return
 
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						
@@ -2720,15 +2726,6 @@ var comments = (function(){
 						}
 					}
 
-					/*if (alias.postid == share.txid){
-						clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
-					}*/
-
-					/*var share = _.find(sharesInview, (share) => share.txid == alias.share)
-
-					if (share){
-						renders.stars(share)
-					}*/
 				}
 				
 			}
@@ -2879,7 +2876,6 @@ var comments = (function(){
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
 
-					console.log("Comments", comments)
 
 					if (clbk)
 						clbk(comments, e)
