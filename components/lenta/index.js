@@ -1527,7 +1527,7 @@ var lenta = (function(){
 
 					//players[id].p.muted = false
 
-					actions.setVolume(players[id], videosVolume || 0.5)
+					actions.setVolume(players[id], videosVolume || 1)
 			},
 
 			opensvi : function(id){
