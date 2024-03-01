@@ -13,7 +13,7 @@ const { execSync } = require("child_process");
 
 // Configuration constants
 const PeertubeListLink = config.peertubesListLink;
-const PeertubeTargetFile = "../peertube-servers.json";
+const PeertubeTargetFile = "./peertube-servers.json";
 
 function bundlePeertube(finished) {
 	const deployPath = path.join(__dirname, PeertubeTargetFile);
