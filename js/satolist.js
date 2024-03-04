@@ -8731,9 +8731,13 @@ Platform = function (app, listofnodes) {
 
                     var ban = findObjectWithMaxEnding(d);
 
-                    console.log('ban!', ban, d);
+                    var address = self.app.user.address.value;
 
-                    if (ban && ban.reason){
+                    var info = self.psdk.userInfo.get(address); 
+                
+                    console.log('ban!', ban, d, info, info.reputation);
+
+                    if (ban && ban.reason && info.reputation < 500){
 
                         self.sdk.user.showBanDialog(ban, clbk);
 
@@ -20098,8 +20102,11 @@ Platform = function (app, listofnodes) {
                 },
                 loadMore: function (data, clbk, wa) {
 
+                    var address = self.app.user.address.value;
 
-                    if (data.mesType == 'juryverdict'){
+                    var info = self.psdk.userInfo.get(address); 
+
+                    if (data.mesType == 'juryverdict' && info.reputation < 500){
 
                         self.app.platform.sdk.user.blocked = true;
 
