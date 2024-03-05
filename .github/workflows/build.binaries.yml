@@ -64,7 +64,6 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
           npm run distm
-          ls -lh ./dist/
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -93,7 +92,6 @@ jobs:
       - name: Building
         run: |
           npm run distl
-          ls -lh ./dist/
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -124,7 +122,6 @@ jobs:
       - name: Building
         run: |
           npm run dist
-          ls .\dist\
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -165,8 +162,6 @@ jobs:
           echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
           echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
-          ls -l cert.keystore
-          ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
             cd $ANDROID_HOME/build-tools/33.0.0
@@ -184,7 +179,6 @@ jobs:
       - name: Rename apk binary
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
-          ls -lh
           mv app-release.apk Brighteon.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -243,7 +237,6 @@ jobs:
       - name: Rename apk binary
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
-          ls -lh
           mv app-release.apk BrighteonGF.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
