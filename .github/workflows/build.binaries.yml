@@ -1,112 +1,46 @@
-name: Deploy branch on dev
+name: Build Binaries
 
 on:
   workflow_dispatch:
 
 jobs:
 
-  # Deploy test & pre sites
-  deploy-pre:
-    runs-on: gui
-    steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Prepare
-        run: |
-          npm i
-          npm run minimize:brighteon -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
-      - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
-
-  deploy-test:
-    runs-on: gui
-    steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Prepare
-        run: |
-          npm i
-          npm run minimize:brighteon:test -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
-      - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
-
-  # Build & Deploy proxy services
-  build-proxy:
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.DOCKER_HUB_USERNAME }}/proxy
-          tags: type=raw,value=night
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
+          ref: master
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
+      - name: Archive repo
+        run: |
+          mkdir -p /tmp/repo
+          rsync -ah --exclude={'.git','.gitignore','.github','node_modules','.well-known'} ./ /tmp/repo/
+          cd /tmp/repo
+          tar czf /tmp/repo.tgz ./
+      - name: Upload artifact repo.tgz
+        uses: actions/upload-artifact@v3
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Cache Docker layers
-        uses: actions/cache@v3
+          name: repo.tgz
+          path: /tmp/repo.tgz
+      - name: Save artifact head.txt
+        uses: actions/upload-artifact@v3
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./proxy16
-          file: ./proxy16/dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-
-  deploy-proxy:
-    needs: build-proxy
-    runs-on: proxy.test
-    steps:
-      - name: Pull && Up proxy container
-        run: /data/proxy_pre_pull_up.sh
-        shell: bash
-      - name: Reset nginx cache
-        run: /data/reset_cache.sh
-        shell: bash
-
-  deploy-proxy-test:
-    needs: build-proxy
-    runs-on: proxy.test
-    steps:
-      - name: Pull && Up proxy container
-        run: /data/proxy_test_pull_up.sh
-        shell: bash
-      - name: Reset nginx cache
-        run: /data/reset_cache.sh
-        shell: bash
-
-  # Build applications
-  build-app-macos:
+          name: head
+          path: ./head.txt
+          
+  build-macos:
+    needs: prepare
     runs-on: macos-latest
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -114,7 +48,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:brighteon -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -136,12 +70,17 @@ jobs:
         with:
           name: macos
           path: ./dist/BrighteonSetup.dmg
-
-  build-app-unix:
+        
+  build-unix:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -150,7 +89,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
-          npm run dev:brighteon -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
@@ -163,12 +102,17 @@ jobs:
             ./dist/BrighteonSetup.deb
             ./dist/BrighteonSetup.rpm
             ./dist/Brighteon.AppImage
-
-  build-app-windows:
+    
+  build-windows:
+    needs: prepare
     runs-on: windows-latest
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -176,7 +120,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:brighteon -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
@@ -187,13 +131,17 @@ jobs:
           name: windows
           path: ./dist/BrighteonSetup.exe
 
-  build-app-android:
+  build-android:
+    needs: prepare
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
@@ -208,7 +156,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
       - name: Prepare configuration
@@ -221,10 +169,10 @@ jobs:
           ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
-          cd $ANDROID_HOME/build-tools/33.0.0
-          mv d8 dx
-          cd lib
-          mv d8.jar dx.jar
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
       - name: Configure Cordova Plugins
         run: |
           cd ./cordova
@@ -244,13 +192,17 @@ jobs:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Brighteon.apk
 
-  build-app-android-gf:
+  build-android-gf:
+    needs: prepare
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
@@ -276,10 +228,10 @@ jobs:
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
         run: |
-          cd $ANDROID_HOME/build-tools/33.0.0
-          mv d8 dx
-          cd lib
-          mv d8.jar dx.jar
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
       - name: Configure Cordova Plugins
         run: |
           cd ./cordova
@@ -298,14 +250,3 @@ jobs:
         with:
           name: android-gfree
           path: ./cordova/platforms/android/app/build/outputs/apk/release/BrighteonGF.apk
-
-  deploy-app-binaries:
-    needs: [ build-app-macos, build-app-unix, build-app-windows, build-app-android, build-app-android-gf ]
-    runs-on: dev.pocketnet.app
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-      - name: Copy artifacts
-        run: cp ./**/Brighteon* /data/dev/binaries/dev/
-      - name: Clean work dir
-        run: rm -rf ./*

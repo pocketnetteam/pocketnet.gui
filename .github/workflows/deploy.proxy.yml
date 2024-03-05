@@ -48,10 +48,7 @@ jobs:
   
   deploy:
     needs: build
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        runner: [ proxy.1, proxy.2, proxy.3, proxy.6 ]
+    runs-on: brighteon.proxy.1
     steps:
       - name: Pull && Up proxy container
         run: /data/proxy_pull_up.sh
