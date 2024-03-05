@@ -1,11 +1,3 @@
-const { series } = require("gulp");
-
-require("better-logging")(console, {
-	format: ctx => {
-		return `${ctx.time.replace(/\.\d+/, '')} ${ctx.type} ${ctx.msg}`
-	}
-});
-
 const config = require("./config.json");
 
 const path = require("path");
@@ -15,10 +7,10 @@ const { execSync } = require("child_process");
 const PeertubeListLink = config.peertubesListLink;
 const PeertubeTargetFile = "./peertube-servers.json";
 
-function bundlePeertube(finished) {
+function bundlePeertube(grunt) {
 	const deployPath = path.join(__dirname, PeertubeTargetFile);
 
-	console.info("Gathering Peertube list from Github repository");
+	grunt.log.ok("Gathering Peertube list from Github repository");
 
 	try {
 		execSync(`curl ${PeertubeListLink} --output ${deployPath} -s`, {
@@ -26,10 +18,12 @@ function bundlePeertube(finished) {
 			windowsHide: true,
 		});
 	} catch (e) {
-		console.error("Repository is not available!");
+		grunt.log.error("Repository is not available!");
 	}
-
-	finished();
 }
 
-exports.build = series([bundlePeertube]);
+module.exports = function(grunt) {
+	grunt.registerTask('peertube', () => bundlePeertube(grunt));
+
+	grunt.registerTask('default', ['peertube']);
+};

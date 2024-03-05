@@ -15,7 +15,7 @@
         "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
         "uninstall-windows-service": "winser -r",
-        "build": "gulp build"
+        "build": "grunt"
     },
     "author": "Max Grishkov",
     "license": "ISC",
@@ -51,10 +51,11 @@
         "ws": "^8.16.0"
     },
     "devDependencies": {
-        "nodemon": "^3.0.3",
-        "winser": "^1.0.3",
+        "@types/grunt": "^0.4.31",
         "better-logging": "^5.0.0",
-        "gulp": "^4.0.2",
-        "gulp-cli": "^2.3.0"
+        "grunt": "^1.6.1",
+        "grunt-cli": "^1.4.3",
+        "nodemon": "^3.0.3",
+        "winser": "^1.0.3"
     }
 }
