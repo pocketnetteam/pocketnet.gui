@@ -9,7 +9,16 @@ EXPOSE 8899 8099
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm i
-RUN npm run build
+
+COPY gruntfile.js ./
+COPY dockerbuild.js ./
+RUN npm i -g grunt-cli
+RUN npm i grunt
+
+RUN ls
+RUN ls /usr/src/app/node_modules
+
+CMD node dockerbuild.js
 
 RUN apt-get -y autoremove g++ make python3 pkg-config libpixman-1-dev libcairo2-dev libpango1.0-dev libgif-dev
 
