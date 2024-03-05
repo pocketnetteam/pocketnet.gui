@@ -159,7 +159,7 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
-          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > brighteon.keystore
           echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
@@ -217,7 +217,7 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
-          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > brighteon.keystore
           echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > buildgfree.json
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
