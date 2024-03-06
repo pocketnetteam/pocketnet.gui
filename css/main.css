@@ -7653,3 +7653,6 @@ div#bc-root.pipped .bc-video-container {
   background-size: 100px 14px!important;
   opacity: 0.8 !important;
 }
+.onlylight {
+  color-scheme: only light;
+}

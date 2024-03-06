@@ -73,7 +73,7 @@ var cli = {
 
         rl.on('line', (input) => {
 
-          input = input.toLowerCase();
+          //input = input.toLowerCase();
 
           rl.close();
 
