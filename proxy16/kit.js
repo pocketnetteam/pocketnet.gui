@@ -181,7 +181,79 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '172.83.108.40',
 		stable : true
-	}
+	},
+	{
+		host : '95.31.45.162',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '95.31.45.162',
+		stable : true
+	},
+	{
+		host : '79.143.35.233',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '79.143.35.233',
+		stable : true
+	},
+	{
+		host : '109.197.196.106',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '109.197.196.106',
+		stable : true
+	},
+	{
+		host : '50.65.56.253',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '50.65.56.253',
+		stable : true
+	},
+	{
+		host : '65.21.252.135',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.252.135',
+		stable : true
+	},
+	{
+		host : '178.217.159.221',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '178.217.159.221',
+		stable : true
+	},
+	{
+		host : '178.217.159.227',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '178.217.159.221',
+		stable : true
+	},
+	{
+		host : '65.21.56.203',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.56.203',
+		stable : true
+	},
 ]
 
 var nodes = activenodes
