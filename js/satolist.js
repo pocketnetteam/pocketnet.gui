@@ -20104,7 +20104,7 @@ Platform = function (app, listofnodes) {
 
                     var address = self.app.user.address.value;
 
-                    var info = self.psdk.userInfo.get(address); 
+                    var info = platform.psdk.userInfo.get(address); 
 
                     if (data.mesType == 'juryverdict' && info.reputation < 500){
 
