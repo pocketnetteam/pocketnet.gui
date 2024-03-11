@@ -8694,76 +8694,85 @@ Platform = function (app, listofnodes) {
 
             getbans : function(clbk){
 
-                var address = self.app.user.address.value;
-
-                if (!address){
-
-                    if (clbk)
-                        clbk();
-
-                    return;
-                
-                }
-
-                var params = [address];
-                  
-
-                self.app.api.rpc('getbans', params)
-                .then(d => {
-                        
-                    var findObjectWithMaxEnding = function(arr) {
-                        if (!Array.isArray(arr)) {
-                        return null;
-                        }
-                    
-                        if (arr.length === 0) {
-                        return null; 
-                        }
-                    
-                        return arr.reduce((maxObject, currentObject) => {
-                        if (currentObject.ending > maxObject.ending) {
-                            return currentObject; 
-                        } else {
-                            return maxObject; 
-                        }
-                        });
-                    }
-
-                    var ban = findObjectWithMaxEnding(d);
+                try {
 
                     var address = self.app.user.address.value;
 
-                    var info = self.psdk.userInfo.get(address); 
-                
-                    console.log('ban!', ban, d, info, info.reputation);
-
-                    if (ban && ban.reason && info.reputation < 500){
-
-                        self.sdk.user.showBanDialog(ban, clbk);
-
-                        // self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
-                        // .catch(e => {
-                            
-                        //     showBanDialog(null, e);
-                            
-                        // })
-
-
-
-                    } else {
-
+                    if (!address){
+    
                         if (clbk)
                             clbk();
+    
+                        return;
+                    
                     }
+    
+                    var params = [address];
+                      
+    
+                    self.app.api.rpc('getbans', params)
+                    .then(d => {
+                            
+                        var findObjectWithMaxEnding = function(arr) {
+                            if (!Array.isArray(arr)) {
+                            return null;
+                            }
+                        
+                            if (arr.length === 0) {
+                            return null; 
+                            }
+                        
+                            return arr.reduce((maxObject, currentObject) => {
+                            if (currentObject.ending > maxObject.ending) {
+                                return currentObject; 
+                            } else {
+                                return maxObject; 
+                            }
+                            });
+                        }
+    
+                        var ban = findObjectWithMaxEnding(d);
+    
+                        var ustate = self.psdk.userInfo.getmy()
+                    
+                        console.log('ban!', ban);
+    
+                        if (ban && ban.reason && ustate.reputation < 500){
+    
+                            self.sdk.user.showBanDialog(ban, clbk);
+    
+                            // self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
+                            // .catch(e => {
+                                
+                            //     showBanDialog(null, e);
+                                
+                            // })
+    
+    
+    
+                        } else {
+    
+                            if (clbk)
+                                clbk();
+                        }
+    
+    
+    
+                    })
+                    .catch(e => {
+                        console.error(e)
+                        if (clbk)
+                            clbk(null, e)
+                    })
 
+                } catch(e){
 
-
-                })
-                .catch(e => {
                     console.error(e)
                     if (clbk)
                         clbk(null, e)
-                })
+      
+                }
+
 
             },
 
@@ -15395,7 +15404,7 @@ Platform = function (app, listofnodes) {
 
                             // self.app.platform.sdk.jury.getalljury();
 
-                            // self.app.platform.sdk.jury.getjurymoderators('1e67ce672ba3a0fc7c4639831453bdee94b72b3687fb1a9ee7ae70cf4fb03626');
+                            // self.app.platform.sdk.jury.getjurymoderators('60e0ce4157cbc8839696b87995f62a7f198aaaae4a400776ad56cad435fbd625');
 
                             self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
                                 console.log(shares);
@@ -22927,12 +22936,12 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        self.sdk.user.getbans,
                         self.sdk.notifications.initcl
     
                     ], function () {
     
                         //self.ui.showmykey()
+                        self.sdk.user.getbans()
 
                         self.ws.init()
     
