@@ -37,14 +37,14 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ web.1, web.2, web.3 ]
+        runner: [ btio1 ]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: brighteon.tgz
       - name: Unpack artifact
-        run: tar xzf brighteon.tgz -C /data/gui/ --no-same-owner
+        run: tar xzf brighteon.tgz -C /home/bastyon/.bastyon.gui --no-same-owner
       - name: Delete artifacts
         run: rm -rf brighteon.tgz
       - name: Reset nginx cache
