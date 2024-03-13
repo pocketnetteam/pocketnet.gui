@@ -115,7 +115,9 @@ var Exchanges = function(){
                     let totalVolume = 0, totalPrice = 0
                     tickers.forEach(ticker => (totalVolume += ticker.volume))
                     tickers.forEach(ticker => (totalPrice += ticker.volume * ticker.price))
-                    return (totalPrice / totalVolume)
+
+                    /** Float point truncation to 6 decimals */
+                    return Math.floor(totalPrice / totalVolume * 1e6) / 1e6;
                 }
 
                 return self.transports.fetch(apis.coingecko).then(async function(response) {
