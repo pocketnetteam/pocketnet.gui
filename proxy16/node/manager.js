@@ -922,6 +922,10 @@ var Nodemanager = function(p){
                             }
 
                             var nodes = _.filter(_.map(c.concat(p.stable, docs || []) , function(options){
+                                // Missing property when moving to > 0.8.82
+                                if (!options.sws) {
+                                    options.sws = 8887
+                                }
 
                                 var node = new Node(options, self)
 
