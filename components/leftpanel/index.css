@@ -20,6 +20,28 @@
 #leftpanel .donations button {
   width: 100%;
 }
+#leftpanel .brighteonSites .brtitems {
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+#leftpanel .brighteonSites .brtitems .brtitemsCaption {
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+#leftpanel .brighteonSites .brtitems .brtitemsCaption span {
+  font-weight: 700;
+}
+#leftpanel .brighteonSites .brtitems .reportCaption {
+  margin-bottom: 0.75em;
+}
+#leftpanel .brighteonSites .brtitems i {
+  text-align: center;
+  margin-right: 10px;
+  width: 20px;
+}
+#leftpanel .brighteonSites .brtitems .label {
+  font-size: 0.9em;
+}
 #leftpanel .donations {
   margin-top: 0.5em;
   margin-bottom: 1em;
@@ -212,16 +234,6 @@
 }
 #leftpanel .rightbottomnav .rightbottomlinks .download-button {
   margin-bottom: 0.5em;
-}
-#leftpanel .rightbottomnav .rightbottomlinks .brtitems {
-  margin-bottom: 2em;
-}
-#leftpanel .rightbottomnav .rightbottomlinks .brtitems a {
-  font-weight: 700;
-}
-#leftpanel .rightbottomnav .rightbottomlinks .brtitems i {
-  text-align: center;
-  width: 30px;
 }
 #leftpanel .rightbottomnav .copyright {
   display: flex;

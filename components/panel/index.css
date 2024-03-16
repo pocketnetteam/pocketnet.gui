@@ -4,6 +4,15 @@
 #panel > div .wrp {
   padding-bottom: 10px;
 }
+#panel .adcnt {
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+#panel .adcnt .img {
+  width: 100%;
+  aspect-ratio: 1.2;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #panel {

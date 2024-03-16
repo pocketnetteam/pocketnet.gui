@@ -1274,7 +1274,7 @@ Application = function (p) {
 		 * for desktop popup before we had created popup
 		 * conditional checking in appear method of instance
 		 */
-		if (typeof initShadowPopups === 'function') initShadowPopups()
+		//if (typeof initShadowPopups === 'function') initShadowPopups()
 	}
 
 	self.initApplications = function(){

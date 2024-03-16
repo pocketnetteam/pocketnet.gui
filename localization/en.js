@@ -2795,3 +2795,20 @@ _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
 _l.shop = "Shop"
+
+_l.brighteon = "Brighteon"
+_l.brighteonsites = "Brighteon sites"
+_l.brighteonshop = "Brighteon Store"
+_l.brighteonbooks = "Brighteon Books"
+_l.brighteonUniversity = "Brighteon University"
+_l.brighteonU = "BrightU"
+_l.brighteonsocial = "Brighteon.social"
+_l.brighteontv = "Brighteon.TV"
+_l.brighteonradio = "Brighteon Radio"
+_l.brighteonnews = "Brighteon.news"
+_l.brighteondonate = "Donate to Brighteon"
+
+
+
+
+
