@@ -2,6 +2,22 @@
   background: rgb(var(--background-main));
   min-height: 1200px;
 }
+#main .brighteonbanner {
+  height: 44px;
+  background: #009fff;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+#main .brighteonbanner .rightchatspacer {
+  height: 100%;
+}
+#main .brighteonbanner .work {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #main.wshar .bgCaption {
   display: none;
 }
