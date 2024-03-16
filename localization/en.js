@@ -1217,8 +1217,8 @@ _l.settingsTranscoding = "On video upload transcode it on my device"
 _l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 _l.videoTranscodingError = "There was an error with processing your video"
 _l.videoUploadingFinish = "Finishing uploading..."
-_l.uploadNewVideo = "Upload New Pocketvideo"
-_l.uploadNewAudio = "Upload New Pocketaudio"
+_l.uploadNewVideo = "Upload New video"
+_l.uploadNewAudio = "Upload New audio"
 _l.selectVideoFile = "Select video file"
 _l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
@@ -2793,3 +2793,22 @@ _l.permissions_name_chat = appname + " chat"
 
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
+
+_l.shop = "Shop"
+
+_l.brighteon = "Brighteon"
+_l.brighteonsites = "Brighteon sites"
+_l.brighteonshop = "Brighteon Store"
+_l.brighteonbooks = "Brighteon Books"
+_l.brighteonUniversity = "Brighteon University"
+_l.brighteonU = "BrightU"
+_l.brighteonsocial = "Brighteon.social"
+_l.brighteontv = "Brighteon.TV"
+_l.brighteonradio = "Brighteon Radio"
+_l.brighteonnews = "Brighteon.news"
+_l.brighteondonate = "Donate to Brighteon"
+
+
+
+
+

@@ -4,6 +4,12 @@
 </div>-->
 <div class="contentsInner">
 
+    <% if(app.mobileview) {%>
+    <div class="headerLogo">
+        <img class="header_logo onlylight all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+    </div>
+    <% } %>
+
     <div class=" contentmenu">
 
         <%
@@ -113,6 +119,24 @@
     <% if(isTablet()) {%>
     <div class="additional addmenu">
 
+        
+
+        <div class="reportCaption">
+            <div class="label">
+                <a href="https://www.brighteonstore.com/" cordovalink="_system" external="external"><%=e('shop')%> </a>
+            </div>
+        </div>
+
+        <div class="reportCaption">
+            <div class="label">
+                <a href="https://donation.brighteon.com/" cordovalink="_system" external="external"><%=e('donate')%> </a>
+            </div>
+        </div>
+
+
+        
+
+
         <% if(!window.cordova) {%>
 
             <div class="reportCaption">
@@ -121,20 +145,13 @@
                 </div>
             </div>
 
-            <% if(!window.pocketnetstore) {%>
-
-                <div class="reportCaption">
-                    <div class="label">
-                        <a elementsid="hrefabout" href="donations"><%=e('donate')%> </a>
-                    </div>
-                </div>
-
-            <% } %>  
             
         <% } else { %> 
 
 
         <% } %>
+
+
 
         <% if(!app.cutversion) {%>
             <div class="reportCaption">

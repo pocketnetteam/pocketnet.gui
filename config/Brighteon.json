@@ -52,9 +52,9 @@
         "ui" : {
             "android" : {
                 "github" : {
-                    "name": "Bastyon.apk",
-                    "gfname": "BastyonGF.apk",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                    "name": "Brighteon.apk",
+                    "gfname": "BrighteonGF.apk",
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest"
                 },
                 "href" : "https://play.google.com/store/apps/details?id=pocketnet.app"
             },
@@ -63,22 +63,22 @@
             },
             "windows" : {
                 "github" : {
-                    "name": "BastyonSetup.exe",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                    "name": "BrighteonSetup.exe",
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest"
                 }
             },
             "macos" : {
                 "github" : {
-                    "name": "BastyonSetup.dmg",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
-                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                    "name": "BrighteonSetup.dmg",
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
                 }
             },
             "linux" : {
                 "github" : {
-                    "name": "BastyonSetup.deb",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
-                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                    "name": "BrighteonSetup.deb",
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
                 }
             }
         },
@@ -86,14 +86,14 @@
             "windows": {
                 "github": {
                     "name": "pocketnetcore_0.22.0_win_x64_setup.exe",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.core/releases/latest"
                 }
             },
 
             "linux": {
                 "github": {
                     "name": "Pocketnet_linux_x64.AppImage",
-                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                    "url": "https://api.github.com/repos/brighteon/pocketnet.core/releases/latest"
                 }
             }
         }

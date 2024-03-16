@@ -20,6 +20,28 @@
 #leftpanel .donations button {
   width: 100%;
 }
+#leftpanel .brighteonSites .brtitems {
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+#leftpanel .brighteonSites .brtitems .brtitemsCaption {
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+#leftpanel .brighteonSites .brtitems .brtitemsCaption span {
+  font-weight: 700;
+}
+#leftpanel .brighteonSites .brtitems .reportCaption {
+  margin-bottom: 0.75em;
+}
+#leftpanel .brighteonSites .brtitems i {
+  text-align: center;
+  margin-right: 10px;
+  width: 20px;
+}
+#leftpanel .brighteonSites .brtitems .label {
+  font-size: 0.9em;
+}
 #leftpanel .donations {
   margin-top: 0.5em;
   margin-bottom: 1em;
@@ -222,10 +244,9 @@
   width: 14px;
   height: 14px;
   margin-top: 3px;
-  background-image: url('../../img/logotypes/bastyon_logo_black.svg');
+  background-image: url('../../img/logo20.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  filter: grayscale(1) brightness(1.8) contrast(0.5);
 }
 #leftpanel .rightbottomnav .copyright .text {
   margin-left: 0.5em;

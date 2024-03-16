@@ -742,6 +742,8 @@ var userpage = (function(){
 
 				var s = helpers.selector();
 
+				var theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
+
 				var r = function(){
 					self.shell({
 						name :  'contents',
@@ -749,7 +751,7 @@ var userpage = (function(){
 						data : {
 							reports : reports,
 							each : helpers.eachReport,
-	
+							theme,
 							selector : s
 						},
 	

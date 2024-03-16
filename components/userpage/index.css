@@ -187,6 +187,12 @@
   padding-top: 0.25em;
   padding-bottom: 0.25em;
 }
+#userpage .maketsWrapper .contents .headerLogo {
+  margin-top: 2em;
+}
+#userpage .maketsWrapper .contents .headerLogo .header_logo {
+  height: 30px;
+}
 #userpage .maketsWrapper .contents .reportCaption {
   font-weight: 700;
   cursor: pointer;
