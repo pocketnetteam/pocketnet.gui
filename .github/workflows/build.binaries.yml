@@ -1,10 +1,7 @@
-name: Deploy to night.brighteon.io
+name: Build Binaries
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
 
 jobs:
 
@@ -34,32 +31,6 @@ jobs:
           name: head
           path: ./head.txt
           
-  deploy-pre:
-    needs: prepare
-    runs-on: gui
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: repo.tgz
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Prepare
-        run: |
-          tar xzf repo.tgz
-          rm -rf repo.tgz
-          npm i
-          npm run minimize:brighteon -- -sha=${{ github.sha }}
-      - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
-      - name: Reset nginx cache
-        run: /data/reset_cache.sh
-        shell: bash
-      - name: Clean work dir
-        run: rm -rf ./*
-        
   build-macos:
     needs: prepare
     runs-on: macos-latest
@@ -93,7 +64,6 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
           npm run distm
-          ls -lh ./dist/
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -122,7 +92,6 @@ jobs:
       - name: Building
         run: |
           npm run distl
-          ls -lh ./dist/
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -153,7 +122,6 @@ jobs:
       - name: Building
         run: |
           npm run dist
-          ls .\dist\
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -191,11 +159,9 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
-          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > brighteon.keystore
           echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
-          ls -l cert.keystore
-          ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
             cd $ANDROID_HOME/build-tools/33.0.0
@@ -213,7 +179,6 @@ jobs:
       - name: Rename apk binary
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
-          ls -lh
           mv app-release.apk Brighteon.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -252,8 +217,8 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
-          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
-          echo "${{ secrets.ANDROID_BUILD_GFREE_CONF }}" | base64 -d > buildgfree.json
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > brighteon.keystore
+          echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > buildgfree.json
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
         run: |
@@ -272,23 +237,9 @@ jobs:
       - name: Rename apk binary
         run: |
           cd ./cordova/platforms/android/app/build/outputs/apk/release
-          ls -lh
           mv app-release.apk BrighteonGF.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-gfree
           path: ./cordova/platforms/android/app/build/outputs/apk/release/BrighteonGF.apk
-        
-  deploy-app-binaries:
-    needs: [ build-macos, build-unix, build-windows, build-android, build-android-gf ]
-    runs-on: dev.pocketnet.app
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-      - name: Copy artifacts
-        run: cp ./**/Brighteon* /data/dev/binaries/night/
-      - name: Copy HEAD information
-        run: cp ./head/head.txt /data/dev/binaries/night/head.txt
-      - name: Clean work dir
-        run: rm -rf ./*
