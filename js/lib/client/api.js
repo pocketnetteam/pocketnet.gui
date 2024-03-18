@@ -401,8 +401,27 @@ var Proxy16 = function(meta, app, api){
     }
 
     var pinging = false
+    var peertubeserversListRecieved = null
+    var peertubeserversListRecieving = null
 
     self.api = {
+        peertubeserversList : () => {
+            if(peertubeserversListRecieved) return peertubeserversListRecieved
+            if(peertubeserversListRecieving) return peertubeserversListRecieving
+
+            peertubeserversListRecieving = self.fetch('peertubeserversList', {}).then(r => {
+
+                peertubeserversListRecieved = r
+
+                return Promise.resolve(peertubeserversListRecieved)
+
+            }).finally(() => {
+                peertubeserversListRecieving = null
+            })
+
+            return peertubeserversListRecieving
+        },
+
         ping : () => {
 
             if(pinging){
@@ -990,6 +1009,16 @@ var Api = function(app){
                         })
 
                     })
+                },
+
+                peertubeserversList : function(){
+                    var current = self.get.current()
+
+                    if(!current) {
+                        return Promise.resolve(null)
+                    }
+
+                    return current.api.peertubeserversList()
                 }
             }
         }
@@ -1526,13 +1555,26 @@ var Api = function(app){
         return internal.proxy.manage.init().then(r => { 
             //softping
 
-            internal.proxy.api.mixedping(proxies).then(()=>{
+            internal.proxy.api.mixedping(proxies).then(() => {
                 
                 successPingClbk()
 
             }).catch(e => {
             })
 
+            return Promise.resolve()
+        })
+    }
+
+    self.getPeertubeserversList = function(){
+        return internal.proxy.api.peertubeserversList().then(result => {
+
+            console.log('archivedPeertubeServers')
+
+            window.project_config.archivedPeertubeServers = result || []
+
+            return Promise.resolve()
+        }).catch(() => {
             return Promise.resolve()
         })
     }

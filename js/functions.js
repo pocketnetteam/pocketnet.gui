@@ -10221,7 +10221,7 @@ var connectionSpeed = function()
 replaceArchiveInImage = function(src) {
 	var srcNew = src;
 
-	app.platform.archivedServers.map(server => {
+	window.project_config.archivedPeertubeServers.map(server => {
 		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 

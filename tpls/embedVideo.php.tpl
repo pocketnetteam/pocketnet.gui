@@ -24,7 +24,13 @@
       <div id="error-content"></div>
     </div>
     <div class="video-js-wrapper"><div id="video-wrapper"></div></div>
+    <script>_OpenApi = true</script>
+    __JSENV__
     <script src="./peertube/video-embed.bundle.js"></script>
+    <script src="js/vendor/underscore-min.js?v=136"></script>
+    <script join src="js/functionsfirst.js?v=138441565214"></script>
+    <script join src="js/lib/client/system16.js?v=4"></script>
+    <script join src="js/lib/client/api.js?v=4"></script>  
     <script>
       const addVideoToPage = () => {
         const elem = document.getElementById('video-wrapper');
@@ -37,6 +43,11 @@
 
         if (!isVideEmbed || !host || !id) return;
 
+
+        window.project_config.archivedPeertubeServers.map(server => {
+          if (host.includes(server)) host = host.replace(server, 'peertube.archive.pocketnet.app');
+        });
+
         PeerTubeEmbeding.main(elem, id, 'https://' + host, {
           videoEmbedded: true,
           autoplay: autoplay && true,
@@ -44,7 +55,32 @@
         });
       };
 
-      addVideoToPage();
+      var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}
+
+      var listofproxies = servers.proxy || []
+
+
+      var api = new Api({
+        options : {
+          listofproxies : listofproxies
+        }
+      })
+      
+      console.log("here1")
+      api.initIf(() => {
+
+        return api.getPeertubeserversList()
+
+        console.log("here")
+
+      }).catch(e => {
+        console.error(e)
+      }).then(() => {
+        addVideoToPage();
+      })
+
+
+      
     </script>
     <script src="./peertube/video-embed.bundle.js"></script>
   </body>

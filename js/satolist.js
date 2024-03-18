@@ -389,7 +389,7 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.archivedServers = window.project_config.archivedPeertubeServers || []
+    //self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
@@ -22326,7 +22326,6 @@ Platform = function (app, listofnodes) {
 
         self.app.api.wait.ready('use', 6000).then(r => {
 
-
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
 
@@ -22351,6 +22350,8 @@ Platform = function (app, listofnodes) {
                 }, 50)
             })
 
+        }).then(() => {
+            return self.app.api.getPeertubeserversList()
         }).then(r => {
 
 
