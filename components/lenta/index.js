@@ -4369,6 +4369,10 @@ var lenta = (function(){
 
 				}
 
+				allshares = _.uniq(allshares, (s) => {
+					return s.txid
+				})
+
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){

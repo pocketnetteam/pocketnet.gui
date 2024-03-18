@@ -553,7 +553,8 @@ nModule = function(){
 
 		beforegetdata(settings, function(){
 
-			if (settings.fade && !settings.waspreshell){
+
+			if (settings.fade && (!settings.waspreshell || settings.replaceState)){
 				window.requestAnimationFrame(() => {
 					settings.fade.addClass('shell_fadefast')
 				})
@@ -567,7 +568,7 @@ nModule = function(){
 
 					rmpreloader()
 
-					if(err){
+					if (err){
 						return
 					}
 
@@ -598,7 +599,9 @@ nModule = function(){
 						if (settings.init)
 							settings.init(p)
 
-						if (settings.fade && !settings.waspreshell){
+
+
+						if (settings.fade && (!settings.waspreshell || settings.replaceState)){
 							setTimeout(() => {
 								window.requestAnimationFrame(() => {
 									settings.fade.addClass('shell_fadein')
