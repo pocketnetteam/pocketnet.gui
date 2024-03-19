@@ -4127,7 +4127,6 @@ Platform = function (app, listofnodes) {
                     if (needshowkey){
                         if (isMobile()){
                             self.ui.showmykey({
-                                //afterregistration : true,
                                 showsavelabel : true
                             })
                         }

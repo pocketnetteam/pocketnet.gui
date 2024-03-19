@@ -406,8 +406,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		info: function () {
-			return wallet.info()
+		info: function (compact) {
+			return wallet.info(compact)
 		},
 
 
@@ -544,8 +544,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return nodeControl.kit
 		},
 
-		info: function () {
-			return nodeControl.info()
+		info: function (compact) {
+			return nodeControl.info(compact)
 		},
 
 
@@ -1322,7 +1322,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wss: self.wss.info(compact),
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
-				admins: settings.admins,
+				admins: compact ? settings.admins.length : settings.admins,
 				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
@@ -1341,6 +1341,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				translateapi : translateapi.info(compact)
 			}
+
 		},
 
 		initlist: function (list) {

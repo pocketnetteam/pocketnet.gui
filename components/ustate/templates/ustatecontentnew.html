@@ -117,12 +117,18 @@
                                         var l = Number(mestate[metrica.key + "_unspent"] || 0)
                                         var s = Number(mestate[metrica.key + "_spent"] || 0)
                             
+
+                                        if(l < 0) { l = 0 }
+                                        if(s < 0) { s = 0 }
+                                        
                                         var t = l + s
                             
                                         if (t == 0){
                                             t = 1;
                                             l = 0;
                                         }   
+
+                                        
 
                                     %>
                                 

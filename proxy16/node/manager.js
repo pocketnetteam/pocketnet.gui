@@ -827,17 +827,21 @@ var Nodemanager = function(p){
             countuse : _.filter(self.nodes, function(node){
                 return node.inited && node.export().canuse
             }).length,
-
-            nodes : self.getnodes(function(n){
-                return n.inited
-            }),
-
             chain : _ch,
-            peers : self.askedpeers,
-            tmp : self.getnodes(function(n){
-                return !n.inited
-            }),
+            
 
+        }
+
+        if(!compact){
+            stats.nodes = self.getnodes(function(n){
+                return n.inited
+            })
+
+            stats.peers = self.askedpeers
+
+            stats.tmp = self.getnodes(function(n){
+                return !n.inited
+            })
         }
 
         return stats
