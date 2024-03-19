@@ -365,7 +365,7 @@ var system16 = (function(){
 						
 						if (el.c){
 							renders.nodescontenttable(el.c)
-							renders.notificationcontenttable(el.c)
+							//renders.notificationcontenttable(el.c)
 							//renders.notificationuserstable(el.c)
 							renders.peertubeinstancestable(el.c)
 							renders.webadminscontent(el.c)
@@ -3774,28 +3774,28 @@ var system16 = (function(){
 				const stats = await proxy.fetchauth('notifications/stats')
 
 				self.shell({
-						inner : html,
-						name : 'notificationcontenttable',
-						data : {
-							info : info,
-							stats : stats,
-							proxy : proxy,
-							admin : actions.admin(),
-						},
-						insertimmediately : true,
-						el : elc.find('.notificationsWrapper .notifications')
-
+					inner : html,
+					name : 'notificationcontenttable',
+					data : {
+						info : info,
+						stats : stats,
+						proxy : proxy,
+						admin : actions.admin(),
 					},
-					function(p){
+					insertimmediately : true,
+					el : elc.find('.notificationsWrapper .notifications')
 
-						p.el.find('.button').on('click', function(){
-							var href = $(this).attr('href')
-							$(this).attr('href', href.replaceAll("https://", ""))
-						})
+				},
+				function(p){
 
-						if (clbk)
-							clbk()
+					p.el.find('.button').on('click', function(){
+						var href = $(this).attr('href')
+						$(this).attr('href', href.replaceAll("https://", ""))
 					})
+
+					if (clbk)
+						clbk()
+				})
 			},
 
 			notificationuserstable : async function(elc, clbk){
@@ -4132,7 +4132,7 @@ var system16 = (function(){
 			panel : function(){
 				if(el.c){
 					renders.nodescontenttable(el.c)
-					renders.notificationcontenttable(el.c)
+					//renders.notificationcontenttable(el.c)
 					renders.peertubeinstancestable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)

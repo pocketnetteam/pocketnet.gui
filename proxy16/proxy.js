@@ -88,7 +88,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	})
 
 	var stats = [];
-	var statcount = 100;
+	var statcount = 60;
 	var statInterval = null;
 
 	var captchas = {};
@@ -96,9 +96,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
+		var info = self.kit.info(true)
+		var nn = {}
+
+		_.each(info.nodeManager.nodes, (n, k) => {
+			if (n.rating){
+				nn[k] = n
+			} 
+		})
+
+		info.nodeManager.nodes = nn
+
+		delete info.wallet.addresses
+		delete info.admins
+		delete info.nodeControl
+
 		var data = {
 			time: f.now(),
-			info: self.kit.info(true)
+			info: info
 		}
 
 		stats.push(data)
@@ -1322,7 +1337,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wss: self.wss.info(compact),
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
-				admins: compact ? settings.admins.length : settings.admins,
+				admins: settings.admins,
 				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
@@ -1389,7 +1404,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 30000)
+					statInterval = setInterval(addStats, 60000)
 
 				return Promise.resolve()
 			})

@@ -25,7 +25,7 @@ class NotificationStats{
 
         this.blocks.unshift(block)
 
-        if (this.blocks.length > 10) this.blocks.pop()
+        if (this.blocks.length > 3) this.blocks.pop()
     }
 }
 

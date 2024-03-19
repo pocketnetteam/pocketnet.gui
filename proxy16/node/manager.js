@@ -832,16 +832,17 @@ var Nodemanager = function(p){
 
         }
 
-        if(!compact){
-            stats.nodes = self.getnodes(function(n){
-                return n.inited
-            })
+        stats.nodes = self.getnodes(function(n){
+            return n.inited
+        })
 
-            stats.peers = self.askedpeers
+        if(!compact){
 
             stats.tmp = self.getnodes(function(n){
                 return !n.inited
             })
+
+            stats.peers = self.askedpeers
         }
 
         return stats

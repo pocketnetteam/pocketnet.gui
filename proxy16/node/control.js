@@ -323,13 +323,6 @@ var Control = function(settings, proxy) {
 
     self.info = function(compact){
 
-        if(compact){
-            return {
-                enabled, 
-                instance : node.instance ? true : false
-            }
-        }
-
         return {
             enabled : enabled,
             instance : node.instance ? true : false,

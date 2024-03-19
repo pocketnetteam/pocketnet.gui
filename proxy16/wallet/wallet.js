@@ -1043,7 +1043,7 @@ var Wallet = function(p){
 
     self.info = function(compact){
 
-        if (compact){
+        /*if (compact){
 
             return {
                 inited,
@@ -1060,7 +1060,7 @@ var Wallet = function(p){
                 }, 0),
             }
 
-        }
+        }*/
 
         var info = {
             inited : inited,
