@@ -274,6 +274,10 @@ var defaultSettings = {
 		dbpath : 'data/bots',
 	},
 
+	atransactions : {
+		dbpath : 'data/atransactions',
+	},
+
 	proxies : {
 		dbpath : 'data/proxies',
 		explore : true
@@ -1234,6 +1238,39 @@ const kit = {
 				rec(kit.manage)
 
 				return Promise.resolve(list.join("\n"))
+			}
+		},
+
+		atransactions: {
+			get: function () {
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						atransactions: proxy.aTransactions.get()
+					})
+				})
+			},
+
+			add: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.add(txid)
+				})
+			},
+
+			addlist: function ({txids}) {
+				return kit.proxy().then(proxy => {
+
+					var promises = _.map(txids, function (txid) {
+						return proxy.aTransactions.add(txid)
+					})
+
+					return Promise.all(promises)
+				})
+			},
+
+			remove: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.remove(txid)
+				})
 			}
 		},
 

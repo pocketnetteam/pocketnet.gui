@@ -140,7 +140,7 @@ class Notifications{
         block.eventsCount = notifications.data.length
         block.nodeVersion = node.version
         block.nodeAddress = node.host
-        this.stats.addBlock(block)
+        this.stats.addBlock(_.clone(block))
         for (const address of Object.keys(notifications?.notifiers)) {
             const notifier = notifications?.notifiers?.[address]
             for (const type of Object.keys(notifier?.e || [])) {

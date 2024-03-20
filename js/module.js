@@ -416,6 +416,7 @@ nModule = function(){
 
 						catch(e){
 							console.error(e)
+							console.log(p)
 
 							if (p.fail){
 								p.fail()

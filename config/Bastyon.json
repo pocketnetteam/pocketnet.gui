@@ -129,5 +129,6 @@
         "protocol" : "bastyon"
     },
 
-    "regAccounts" : ["PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd"]
+    "regAccounts" : ["PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd"],
+    "adminTools" : false
 }

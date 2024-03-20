@@ -44,7 +44,7 @@
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span class="mobiledevice"><%- e('peertubeAddVideo') %></span>
                         </div>
-                        <% if ((( typeof u != 'undefined' && (_.indexOf(u.badges || [], 'shark') > -1) || app.platform.istest(app.user.address.value) || app.test || app.platform.ui.usertype(app.user.address.value)) && !isTablet()) {%>
+                        <% if ((( typeof u != 'undefined' && (_.indexOf(u.badges || [], 'shark') > -1) || app.platform.istest(app.user.address.value) || app.test || app.platform.ui.usertype(app.user.address.value)) && !isTablet())) {%>
                             <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
                                 <i class="fas fa-dot-circle"></i> <span class="mobiledevice"><%- e('peertubeAddStream') %></span>
                             </div>
