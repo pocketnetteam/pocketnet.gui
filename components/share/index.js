@@ -1602,6 +1602,8 @@ var share = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
+					console.log('_mestate' , _mestate)
+
 					self.shell({
 						name :  'postline',
 						el : el.postline,

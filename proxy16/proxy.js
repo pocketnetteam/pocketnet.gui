@@ -28,6 +28,7 @@ var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
+var ATransactions = require('./atransactions.js');
 var SystemNotify = require('./systemnotify.js');
 var Notifications = require('./node/notifications')
 var Transports = require("./transports")
@@ -61,6 +62,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var exchanges = new Exchanges()
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
+	var aTransactions = new ATransactions(settings.atransactions)
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var slidemodule = new Slidemodule(settings.slide)
 	slidemodule.init()
@@ -82,6 +84,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
+		aTransactions,
 		systemnotify, notifications,
 		logger,
 		translateapi,
@@ -89,7 +92,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	})
 
 	var stats = [];
-	var statcount = 100;
+	var statcount = 60;
 	var statInterval = null;
 
 	var captchas = {};
@@ -97,9 +100,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
+		var info = self.kit.info(true)
+		var nn = {}
+
+		_.each(info.nodeManager.nodes, (n, k) => {
+			if (n.rating){
+				nn[k] = n
+			} 
+		})
+
+		info.nodeManager.nodes = nn
+
+		delete info.wallet.addresses
+		delete info.admins
+		delete info.nodeControl
+
 		var data = {
 			time: f.now(),
-			info: self.kit.info(true)
+			info: info
 		}
 
 		stats.push(data)
@@ -328,6 +346,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
+	self.aTransactions = {
+		add: function (txid) {
+			return aTransactions.add(txid)
+		},
+		remove: function (txid) {
+			return aTransactions.remove(txid)
+		},
+		check: function (txid) {
+			return aTransactions.check(txid)
+		},
+		init: function () {
+			return aTransactions.init()
+		},
+		get: function () {
+			return aTransactions.get()
+		},
+	}
+
 	self.bots = {
 		add: function (address) {
 			return bots.add(address)
@@ -407,8 +443,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		info: function () {
-			return wallet.info()
+		info: function (compact) {
+			return wallet.info(compact)
 		},
 
 
@@ -545,8 +581,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return nodeControl.kit
 		},
 
-		info: function () {
-			return nodeControl.info()
+		info: function (compact) {
+			return nodeControl.info(compact)
 		},
 
 
@@ -1342,6 +1378,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				translateapi : translateapi.info(compact)
 			}
+
 		},
 
 		initlist: function (list) {
@@ -1384,12 +1421,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions', 'notifications']).then(r => {
 
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 30000)
+					statInterval = setInterval(addStats, 60000)
 
 				return Promise.resolve()
 			})
@@ -1432,7 +1469,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
-			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions'], (i) => {
 				
 				return new Promise((resolve, reject) => {
 					try{
@@ -1553,7 +1590,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					result = r
 
 				posts = _.filter(posts, p => {
-					return p
+					return p && p.txid
+				})
+				/// for brighteon not bastyon
+				_.each(posts, (p) => {
+					if(!self.aTransactions.check(p.txid)){
+						p.deleted = true
+					}
 				})
 
 				var withvideos = _.filter(posts, p => {
@@ -1865,14 +1908,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							 * Added in context of disappearing
 							 * comments investigation.
 							 */
-							if (method === 'sendrawtransactionwithmessage') {
+							/*if (method === 'sendrawtransactionwithmessage') {
 								const type = cparameters[2];
 								const txid = data;
 								const nodeHost = node.host;
 								const block = node.height();
 
 								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
-							}
+							}*/
 
 							return Promise.resolve({
 								data: data,

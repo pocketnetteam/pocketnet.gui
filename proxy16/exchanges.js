@@ -225,6 +225,8 @@ var Exchanges = function(){
 
                 history.prices.common.push(common)
 
+                history.prices.common = f.lastelements(history.prices.common, 100)
+
                 hasdata = true
 
                 return Promise.resolve()

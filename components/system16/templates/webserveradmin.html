@@ -37,13 +37,13 @@
                         <span>Hex Captcha enabled</span>
                     </div>
 
-                    <div elementsid="hexCaptcha" class="value" sys="hexCaptcha" value="<%-(typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled)%>">
+                    <div elementsid="hexCaptcha" class="value" sys="hexCaptcha" value="<%-(typeof changes.hexCaptcha != 'undefined' ? changes.hexCaptcha : system.server.hexCaptcha)%>">
                         <span><%- (typeof changes.hexCaptcha != 'undefined' ? changes.hexCaptcha : system.server.hexCaptcha) ? 'Yes' : 'No' %></span>
                     </div>
 
                     <% if(typeof changes.hexCaptcha != 'undefined') {%>
                         <div class="icon">
-                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="enabled"></i>
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="hexCaptcha"></i>
                         </div>
                     <% } %>
                 </div>

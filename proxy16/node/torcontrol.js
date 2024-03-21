@@ -506,18 +506,25 @@ class TorControl {
         const stateNormalized = { ...this.state };
         delete stateNormalized.instance;
 
-        return {
+        var info = {
             enabled : this.settings.enabled2,
             useSnowFlake : this.settings.useSnowFlake,
             customObfs4 : this.settings.customObfs4,
-            instance : this.instance ? this.instance.pid : null,
-            state : {
-                status : this.state.status
-            },
-            binPath : path.join(this.getpath()),
-            dataPath : this.getsettingspath(),
-            installed : this.isInstalled,
         }
+
+        if(!compact){
+
+            info.instance = this.instance ? this.instance.pid : null
+            info.state = {
+                status : this.state.status
+            }
+
+            info.binPath = path.join(this.getpath())
+            info.dataPath = this.getsettingspath()
+            info.installed = this.isInstalled
+        }
+
+        return info
     }
 
     destroy = async ()=>{
