@@ -24,6 +24,8 @@
 			var r = u.reputation;
 	
 			if (me && me.relation(address, 'subscribes')){ _class="following" };
+
+			if(typeof subscribe != "undefined" && _.indexOf(subscribe, address) > -1) { _class="following" };
 	
 			if (me && me.relation(address, 'blocking')){ _class="blocking" };
 	

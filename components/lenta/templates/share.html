@@ -43,6 +43,8 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 var deletedaccount = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(share.address) : false
 
+if (typeof adv == undefined) var adv = '';
+
 var userInfo = psdk.userInfo.get(share.address) || {}
 
 var name = app.platform.api.clearname(userInfo.name || share.address)
@@ -74,7 +76,8 @@ var metadisplay = function(){ %>
 
 							<% if(!medeleted) {%>
 
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount) { %> 
+
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount && recommended != 'jury') { %> 
 
 									<span elementsid="sbtnxs-follow" class="sbtnxs">
 										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
@@ -101,7 +104,7 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<% if(!share.temp && !share.relay) {%>
+					<% if(!share.temp && !share.relay && recommended != 'jury') {%>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
@@ -358,6 +361,27 @@ var arranges = {
 
 	<div class="work unselectablemobile">
 
+		<% if (recommended == 'jury' && share && share.jury) { %>
+
+			<div class="cntswrk">
+
+				<div class="sharecaption jury-text">
+
+					<span><%=e('juryQuestionPost')%>:</span>
+					<br/><br/>
+					<span><%=e('lowstar_reason_' + share.jury.reason)%></span>
+
+				</div>
+
+				<div class="jury-buttons">
+					<button class="button medium yes"><%=e('yes')%></button>
+					<button class="button medium no black"><%=e('no')%></button>
+				</div>
+
+			</div>
+
+		<% } %>
+
 		<div class="shareTable unselectablemobile <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			
@@ -410,6 +434,7 @@ var arranges = {
 				</div> 
 
 			</div>
+
 			
 			<% if(!checkvisibility && !lockedaccount) {%>
 
@@ -535,7 +560,8 @@ var arranges = {
 						<% } %>
 						
 
-						<% if((!share.temp && !share.relay) && (typeof repost == 'undefined' || !repost || fromempty)) {%>
+						<% if((!share.temp && !share.relay) && (typeof repost == 'undefined' || !repost || fromempty) && recommended != 'jury') {%>
+
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
@@ -606,7 +632,8 @@ var arranges = {
 							
 						<% };
 
-						if (share.relay || share.temp) { %>
+						if ((share.relay || share.temp) && recommended != 'jury') { %>
+
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
 
@@ -631,6 +658,26 @@ var arranges = {
 									</div>
 								</div>
 							</div>
+
+						<% } else if(share.temp && recommended != 'jury') {%>
+
+							<div class="panel sharepanel unselectablemobile">
+								<div class="item right">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div elementsid="lenta_forstars_count" class="count">
+											<div class="label">
+
+												<span><%=e('postWaitConf')%></span>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+
 						<% } %>
 
 					</div>
@@ -639,7 +686,7 @@ var arranges = {
 
 				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
 
-					<% if(!emptywithrepost) {%>
+					<% if(!emptywithrepost && recommended != 'jury') {%>
 
 						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 							<div class="cntswrk forcomments">
@@ -685,7 +732,7 @@ var arranges = {
 
 	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
-		<% if(!emptywithrepost) {%>
+		<% if(!emptywithrepost && recommended != 'jury') {%>
 
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 

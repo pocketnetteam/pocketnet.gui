@@ -102,9 +102,10 @@ var Cache = function(p){
                 block : 0
             },
 
-            // node + , add block
+
             getuseraddress : {
-                time : 82000
+                time : 82000,
+                stats : true
             },
 
             // node +
@@ -132,18 +133,21 @@ var Cache = function(p){
             getrawtransactionwithmessagebyid: {
                 time : 460,
                 block : 0,
+                stats : true
             },
             
             // node +
             getrawtransactionwithmessage: {
                 time : 460,
                 block : 0,
+                stats : true
             },
 
             // ?
             getrawtransaction: {
                 time : 460,
-                block : 0
+                block : 0,
+                stats : true
             },
 
             // node +
@@ -175,6 +179,7 @@ var Cache = function(p){
             gethistoricalstrip: {
                 time : 460,
                 block : 0,
+                stats : true
                 /*smart : {
                     idin : '0',
                     idou : 'txid',
@@ -244,6 +249,7 @@ var Cache = function(p){
             // node -
             peertubevideo: {
                 time : 600,
+                stats : true
             },
 
             // node ?
@@ -616,21 +622,17 @@ var Cache = function(p){
         f.gcwrapper()
     }
 
-    self.info = function(){
+    self.info = function(compact){
 
         var meta = {}
 
         _.each(ckeys, function(c, key){
 
+            if(compact && !c.stats) return
+
             var size = 0;
             
-            
-            /*try{
-                size = JSON.stringify(storage[key] || "").length / 1024;
-            }
-            catch(e){}*/
-
-            var length = _.toArray(storage[key] || {}).length /// ???
+            var length = _.toArray(storage[key] || {}).length
 
             meta[key] = {
                 block : c.block,

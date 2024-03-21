@@ -1410,13 +1410,16 @@ var authorn = (function(){
 					author.me = self.app.user.isItMe(author.address)
 
 					//var me = self.app.platform.psdk.userInfo.getmy()
-
 				
+					var maxEnding = Math.max(...Object.values(author.data.bans || {}));
 
-	
+					var endDate = new Date(new Date().getTime() + ((maxEnding - app.platform.currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
+
+					var blocked = endDate > new Date();
+
 					if(
 						self.app.platform.sdk.user.reputationBlocked(address) || 
-						!author.data
+						!author.data || (blocked && !author.me)
 					){
 						return redir(author.me ? 'userpage?id=test' : 'page404')
 					}

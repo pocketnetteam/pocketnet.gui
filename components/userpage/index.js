@@ -77,7 +77,7 @@ var userpage = (function(){
 
 
 			reports.push({
-				name :  self.app.localization.e('rstate'),
+				name :  self.app.localization.e('limits'),
 				id : 'ustate',
 				report : 'ustate',
 				mobile : true,

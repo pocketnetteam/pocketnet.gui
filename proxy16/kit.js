@@ -45,13 +45,11 @@ const TestWsPort = 6067;
 const TestSecureWsPort = 6667;
 
 var testnodes = [
-	{
-		host : '78.37.233.202',
-		port : TestWebPort,
-		ws : TestWsPort,
-		sport : TestSecureWebPort,
-		sws : TestSecureWsPort,
-		name : 'test.v.pocketnet.app',
+	/*{
+		host : '65.21.252.135',
+		port : 39091,
+		ws : 6067,
+		name : 'pnettool.pocketnet.app',
 		stable : true
 	},
 
@@ -63,7 +61,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.1.pocketnet.app',
 		stable : true
-	},
+	},*/
 	{
 		host : '157.90.228.34',
 		port : TestWebPort,
@@ -81,7 +79,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.pocketnet.app',
 		stable : true
-	},
+	}/*,
 	{
 		host : 'pnettool.pocketnet.app',
 		port : TestWebPort,
@@ -99,7 +97,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'lostystyg',
 		stable : false
-	}
+	}*/
 ]
 
 
@@ -272,6 +270,10 @@ var defaultSettings = {
 	
 	bots : {
 		dbpath : 'data/bots',
+	},
+
+	atransactions : {
+		dbpath : 'data/atransactions',
 	},
 
 	proxies : {
@@ -1234,6 +1236,39 @@ const kit = {
 				rec(kit.manage)
 
 				return Promise.resolve(list.join("\n"))
+			}
+		},
+
+		atransactions: {
+			get: function () {
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						atransactions: proxy.aTransactions.get()
+					})
+				})
+			},
+
+			add: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.add(txid)
+				})
+			},
+
+			addlist: function ({txids}) {
+				return kit.proxy().then(proxy => {
+
+					var promises = _.map(txids, function (txid) {
+						return proxy.aTransactions.add(txid)
+					})
+
+					return Promise.all(promises)
+				})
+			},
+
+			remove: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.remove(txid)
+				})
 			}
 		},
 

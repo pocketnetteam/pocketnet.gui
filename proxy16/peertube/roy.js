@@ -257,10 +257,15 @@ var Roy = function (parent) {
 		});
 	};
 
-	self.info = function () {
+	self.info = function (compact) {
 		var info = {};
 
 		_.each(instances, function (instance) {
+
+			if (compact && (!instance.canuse() || !instance.info().canuploading || instance.cantuploading)){
+				return
+			}
+
 			var stats = instance.stats();
 
 			info[instance.host] = {

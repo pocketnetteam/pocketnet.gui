@@ -321,12 +321,12 @@ var Control = function(settings, proxy) {
         return Promise.resolve()
     }
 
-    self.info = function(){
+    self.info = function(compact){
+
         return {
             enabled : enabled,
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
-
             
             state : state,
             node : {

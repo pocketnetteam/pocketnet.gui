@@ -327,7 +327,14 @@ Platform = function (app, listofnodes) {
         'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
         'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
         'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
+        'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop' : true,
+        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true,
+        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
+        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true
     } 
+
+    self.shark = {}
+    self.moderator = {}
 
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
@@ -388,7 +395,7 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.archivedServers = window.project_config.archivedPeertubeServers || []
+    //self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
@@ -3770,6 +3777,8 @@ Platform = function (app, listofnodes) {
 
             var t = self.ui.usertype(address)
 
+            if (self.moderator[address]) return this.markModerator();
+            if (self.shark[address]) return this.markShark();
             if (t == 'dev') return this.markDev();
             if (t == 'real') return this.markReal();
 
@@ -3796,6 +3805,25 @@ Platform = function (app, listofnodes) {
                     </span>
                 </div>`
 
+        },
+
+        markShark : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
 
         recommendations : function(el, share, ed, clbk){
@@ -4126,7 +4154,6 @@ Platform = function (app, listofnodes) {
                     if (needshowkey){
                         if (isMobile()){
                             self.ui.showmykey({
-                                //afterregistration : true,
                                 showsavelabel : true
                             })
                         }
@@ -6268,7 +6295,7 @@ Platform = function (app, listofnodes) {
                         id : share.txid,
                         share: exported,
                         user: user.export(),
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 };
 
@@ -7746,6 +7773,30 @@ Platform = function (app, listofnodes) {
             },
         },
 
+        jury: {
+
+            // Fetch all the jurys
+            getalljury: function() {
+
+                return self.app.api.rpc('getalljury');
+
+            },
+
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function(address) {
+
+                return self.app.api.rpc('getjuryassigned', [address]);
+
+            },
+
+            getjurymoderators: function(juryId) {
+
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+
+            },
+
+        },
+
         lentaMethod: {
             all: {
                 hierarchical: 'hierarchical',
@@ -8605,6 +8656,129 @@ Platform = function (app, listofnodes) {
 
             },
 
+            showBanDialog : function(ban, clbk){
+
+                var currentBlock = self.currentBlock || localStorage['lastblock'];
+
+                var endDate = new Date(new Date().getTime() + ((ban.ending - currentBlock) * 60 * 1000 / (window.testpocketnet ? 2 : 1))) ;
+
+                if (endDate < new Date()){
+
+                    if (clbk)
+                        clbk();
+
+                    return;
+                }
+
+                var formattedDate = convertDate(dateToStr(endDate));
+
+                var banHtml =  self.app.localization.e('accountBanned') + '<br><br>' + self.app.localization.e('reason') + '<br><b>' + self.app.localization.e('lowstar_reason_' + ban.reason) + '. </b><br><br>' 
+
+                if (currentBlock){
+                    banHtml += self.app.localization.e('unlockDate') + '<br><b>' + formattedDate + '</b><br><br>' 
+                }
+
+                banHtml += self.app.localization.e('accountBannedActions');
+
+                new dialog({
+                    html: banHtml,
+                    btn1text: 'OK',
+
+                    class: 'zindex one',
+
+                })
+
+                self.app.platform.sdk.user.blocked = true;
+                
+                if (clbk)
+                    clbk();
+
+            },
+
+            getbans : function(clbk){
+
+                try {
+
+                    var address = self.app.user.address.value;
+
+                    if (!address){
+    
+                        if (clbk)
+                            clbk();
+    
+                        return;
+                    
+                    }
+    
+                    var params = [address];
+                      
+    
+                    self.app.api.rpc('getbans', params)
+                    .then(d => {
+                            
+                        var findObjectWithMaxEnding = function(arr) {
+                            if (!Array.isArray(arr)) {
+                            return null;
+                            }
+                        
+                            if (arr.length === 0) {
+                            return null; 
+                            }
+                        
+                            return arr.reduce((maxObject, currentObject) => {
+                            if (currentObject.ending > maxObject.ending) {
+                                return currentObject; 
+                            } else {
+                                return maxObject; 
+                            }
+                            });
+                        }
+    
+                        var ban = findObjectWithMaxEnding(d);
+    
+                        var ustate = self.psdk.userInfo.getmy()
+                    
+                        console.log('ban!', ban);
+    
+                        if (ban && ban.reason && ustate.reputation < 500){
+    
+                            self.sdk.user.showBanDialog(ban, clbk);
+    
+                            // self.app.api.rpc('getcontents', [ban.contentid]).then(showBanDialog)
+                            // .catch(e => {
+                                
+                            //     showBanDialog(null, e);
+                                
+                            // })
+    
+    
+    
+                        } else {
+    
+                            if (clbk)
+                                clbk();
+                        }
+    
+    
+    
+                    })
+                    .catch(e => {
+                        console.error(e)
+                        if (clbk)
+                            clbk(null, e)
+                    })
+
+                } catch(e){
+
+                    console.error(e)
+                    if (clbk)
+                        clbk(null, e)
+      
+                }
+
+
+            },
+
             getfullfb: function (clbk, update) {
 
                 self.sdk.users.getone(app.user.address.value, (user, error) => {
@@ -8762,6 +8936,13 @@ Platform = function (app, listofnodes) {
                 return self.psdk.userInfo.getmy()
             },
 
+            isjury : function() {
+                var address = self.app.platform.sdk.address.pnet()
+                if (address && self.moderator[address.address])
+                    return true
+                return false
+            },
+
             itisme : function(_address){
 
                 if(!self.app.user.address.value) return true
@@ -8796,6 +8977,10 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlockedMe : function(address, count){
+
+                console.log('reputationBlockedMe');
+
+                if (self.app.platform.sdk.user.blocked) return true;
 
                 if(!address) address = self.app.user.address.value
 
@@ -9284,8 +9469,15 @@ Platform = function (app, listofnodes) {
                     if (state){
                         self.sdk.ustate.get(app.user.address.value, (r) => {
 
+                            var info = r[app.user.address.value] || {}
+
+                            if (!_.isEmpty(info) && info.badges && info.badges.indexOf('shark') > -1)
+                                self.shark[info.address] = true;
+                            if (!_.isEmpty(info) && info.badges && info.badges.indexOf('moderator') > -1)
+                                self.moderator[info.address] = true;
+
                             if (clbk) 
-                                clbk(r[app.user.address.value] || {})
+                                clbk(info)
 
                         }, update)
                     }
@@ -14466,7 +14658,6 @@ Platform = function (app, listofnodes) {
                     if (clbk) {
                         clbk(e, null)
                     }
-
                 })
 
 
@@ -14566,6 +14757,7 @@ Platform = function (app, listofnodes) {
 
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                            console.log('height!!!', self.currentBlock);
                             localStorage['lastblock'] = self.currentBlock
                         }catch(e){
                             
@@ -15185,6 +15377,96 @@ Platform = function (app, listofnodes) {
 
                         }
 
+                    })
+                },
+
+                jury: function (p, clbk, cache) {
+
+                    if (!p) p = {};
+
+                    var address = deep(app, 'user.address.value')
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'jury'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                    }
+                        else {
+
+                            // self.app.platform.sdk.jury.getalljury();
+
+                            // self.app.platform.sdk.jury.getjurymoderators('60e0ce4157cbc8839696b87995f62a7f198aaaae4a400776ad56cad435fbd625');
+
+                            self.app.platform.sdk.jury.getjuryassigned(p.address).then((shares) => {
+                                console.log(shares);
+
+                                shares.sort(function(a, b){
+
+                                    return b.time - a.time;
+
+                                })
+
+                                newShares = shares.map((share) => {
+
+                                    var s = share.type === 100 ? new pUserInfo() : share.type === 'share' || share.type === 'video' || share.type === 'article' ? new pShare() : new pComment();
+
+                                    if (s.type === 'userInfo'){
+
+                                        s._import(share);
+                                        s.a = share.a;
+
+                                    } else if (s.type === 'share' || s.type === 'video'){
+
+                                        s._import(share);
+
+                                    } else if (s.type === 'comment'){
+
+                                        s.import(share);
+
+                                    }
+
+                                    s.txid = share.txid || share.id;
+                                    s.time = new Date();
+                                    s.address = share.address;
+                                    s.time.setTime(share.time * 1000);
+                                    s.score = share.scoreSum;
+                                    s.scnt = share.scoreCnt;
+                                    s.edit = false;
+                                    s.info = null;
+                                    s.jury = share.jury;
+                                    return s;
+                                });
+
+                                storage[key] = newShares;
+
+                                if (clbk)
+                                    clbk(newShares, null, p);
+
+                            }, (err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            }).catch((err) => {
+
+                                if (clbk)
+                                    clbk([], err, p);
+
+                            });
+
+                        }
                     })
                 },
 
@@ -18209,6 +18491,8 @@ Platform = function (app, listofnodes) {
             share: function (share, extra, extendedpreview) {
                 var h = '';
 
+                if (!share) return;
+                
                 var m = share.caption;
 
                 if(!m) m = share.renders.text()
@@ -19830,6 +20114,17 @@ Platform = function (app, listofnodes) {
                 },
                 loadMore: function (data, clbk, wa) {
 
+                    var address = self.app.user.address.value;
+
+                    var info = platform.psdk.userInfo.get(address); 
+
+                    if (data.mesType == 'juryverdict' && info.reputation < 500){
+
+                        self.app.platform.sdk.user.blocked = true;
+
+                        if (self.app.platform.actionListeners && self.app.platform.actionListeners.menu) self.app.platform.actionListeners.menu({type: 'userInfo'});
+                 
+                    }
 
                     if (data.addrFrom) {
 
@@ -19837,9 +20132,8 @@ Platform = function (app, listofnodes) {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
                             
-
                             data.user.address = data.addrFrom
-
+                            
                             if (data.mesType == 'userInfo' && !wa) {
                                 var me = platform.psdk.userInfo.getmy()
                                 
@@ -20074,6 +20368,7 @@ Platform = function (app, listofnodes) {
                 },
                 fastMessage: function (data) {
 
+
                     var text = '';
                     var html = '';
                     var caption = '';
@@ -20145,6 +20440,74 @@ Platform = function (app, listofnodes) {
                     if (caption || text) {
                         html += self.tempates.user(data.user, text || "", true, caption, extra, data.time)
                     }
+
+
+
+                    if (data.mesType === "jurymoderate"){
+
+                        var q = data.contentType === '100' ? self.app.localization.e('juryQuestionUser2', data.m) : data.contentType === '200' || data.contentType === 'share' || data.contentType === 'video' || data.contentType === 'article' ? self.app.localization.e('juryQuestionPost2', data.m) : self.app.localization.e('juryQuestionComment2', data.m);
+
+                        html += `
+                        <a elementsid="index?r=jury" href="index?r=jury&contentHash=${data.contentHash}">
+                            <div class="cwrapper jurymoderate">                    
+                                <div class="cell cellforimage">                                  
+                                    <div class="icon">
+                                        <div class="usericon" contain ban=".gif" image="*">
+                                            <span class="letter">
+                                                <i class="fa fa-gavel"></i>
+                                            </span>
+                                        </div>
+                                    </div>                    
+                                </div>                    
+                                <div class="ccell">                        
+                                    <div class="infomain">                            
+                                        <div class="caption complaint">${self.app.localization.e('juryComplaint', data.m)}</div>   
+                                        <div class="caption question">
+                                            ${q}
+                                        </div>                     
+                                    </div>
+                                </div>
+                                <div class="ccell extra">
+                                    <div class="subscribeWrapper table">
+                                        <div class="scell forjury">
+                                            <button class="subscribe ghost +"> ${self.app.localization.e('start')}</button>                                   
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                        `
+                    }
+
+
+                    if (data.mesType === 'juryverdict' && data.reason === 1){
+
+                        html += `
+                        <div class="cwrapper juryverdict">                    
+                            <div class="cell cellforimage verdict">                                  
+                                <div class="icon">
+                                    <div class="usericon" contain ban=".gif" image="*">
+                                        <span class="letter">
+                                            <i class="fa fa-ban"></i>
+                                        </span>
+                                    </div>
+                                </div>                    
+                            </div>                    
+                            <div class="ccell">                        
+                                <div class="infomain">                            
+                                    <div class="caption complaint">${self.app.localization.e('accountBanned')}</div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        `
+                    
+                    }
+
+
 
 
                     return html;
@@ -22325,7 +22688,6 @@ Platform = function (app, listofnodes) {
 
         self.app.api.wait.ready('use', 6000).then(r => {
 
-
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
 
@@ -22350,6 +22712,8 @@ Platform = function (app, listofnodes) {
                 }, 50)
             })
 
+        }).then(() => {
+            return self.app.api.getPeertubeserversList()
         }).then(r => {
 
 
@@ -22408,7 +22772,7 @@ Platform = function (app, listofnodes) {
 
             setTimeout(function(){
                 self.sdk.tags.cloud()
-                self.sdk.node.get.time()
+                self.sdk.node.get.time();
             }, 1000)
 
             self.sdk.videos.init()
@@ -22581,6 +22945,7 @@ Platform = function (app, listofnodes) {
                     ], function () {
     
                         //self.ui.showmykey()
+                        self.sdk.user.getbans()
 
                         self.ws.init()
     
@@ -22840,6 +23205,7 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.initing = false
 
                 if (state) {
+                    
 
                     if(self.sdk.user.reputationBlockedMe()) return
                     if(self.sdk.user.myaccauntdeleted()) return

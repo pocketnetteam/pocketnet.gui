@@ -1,0 +1,135 @@
+<% 
+	
+var me = null;
+
+if(user.address.value)
+    me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'));
+
+var _class='';
+var address = u.address;		
+var followers = u.subscribers_count;
+var following  = u.subscribes_count;
+var about = u.about || '';
+var src = u.image;
+var name = u.name
+var letter = name ? name[0] : ''; 
+var r = u.reputation;
+
+if (me && me.relation(address, 'subscribes')){ _class="following" };
+
+if (me && me.relation(address, 'blocking')){ _class="blocking" };
+
+%>
+
+<div class="userJury user">
+    <% if (recommended == 'jury') { %>
+
+        <div class="cntswrk">
+
+            <div class="sharecaption jury-text">
+
+                <span><%=e('juryQuestionUser')%>:</span>
+                <br/><br/>
+                <span><%=e('lowstar_reason_' + u.jury.reason)%></span>
+
+            </div>
+
+            <% if (u && u.jury) { %>
+                <div class="jury-buttons">
+                    <button class="button medium yes"><%=e('yes')%></button>
+                    <button class="button medium no black"><%=e('no')%></button>
+                </div>
+            <% } %>
+
+        </div>
+
+    <% } %>
+
+    <div class="cntswrk">
+
+        
+        <div class="userWrapper">
+
+            <div class="topInfo">
+                <div class="iconWrapper">
+                    <div class="icon">
+            
+                        <a href="<%-app.platform.api.authorlink(u.address)%>">
+                            <div class="usericon">
+                            <% 
+
+                                if (src){
+                            %>
+
+                                <img class="usericonQ" src="<%-src || '*'%>">
+
+                            <% } else if(!src && letter) {%>
+                                
+                                <span class="letter">
+                                    <%-letter.toUpperCase()%>
+                                </span>
+
+                            <% } else if (!src) { %>
+
+                                <svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+
+                            <% } %>
+
+                            <% if(app.platform.ui.markUser) {%>
+
+                                <%= app.platform.ui.markUser(address)%>
+
+                            <% } %>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="label">
+                    <div>
+                        <a href="<%-app.platform.api.authorlink(u.address)%>">
+                            <div class="top">
+                                <div class="name">
+                                    <%- u.name %>							
+                                </div>		
+
+                                <% if (r) {%>
+
+                                <% } %>
+
+                            </div>	
+                        </a>
+
+                        <div class="reputation">
+                            <%=e('reputation') %> <span class="value"><%- Number(r).toFixed(0) %></span> 
+                        </div>
+
+                    </div>			
+
+                </div>
+            </div>				
+            <div class="follow">
+                <div class="followers">
+                    <span class="value"><%- followers || '0' %></span>
+                    <span>
+                        <%=e('followers2') %>
+                    </span>
+                </div>	
+                <div class="following">			
+                    <span class="value">
+                        <%- following || '0' %>
+                    </span>			
+                    <span>
+                        <%=e('following2') %>
+                    </span> 
+                </div>
+
+            </div>
+            <div class="aboutWrapper">
+                <%- decodeURIComponent(about || '') %>
+            </div>
+            
+        </div>
+
+    </div>
+</div>

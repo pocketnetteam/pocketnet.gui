@@ -12,7 +12,6 @@ var registration = (function(){
 		var el = {}, k = {},  gliperror = false, essenseData, initialParameters, ext = null;
 
 		var addresses = [];
-
 		
 		var categoryIcons = [
 			{
@@ -100,6 +99,8 @@ var registration = (function(){
 		
 		var current = null;
 		var regproxy = null;
+
+		var subscribe = []
 
 		var getproxyoptions = function(){
 
@@ -216,7 +217,6 @@ var registration = (function(){
 					"PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr",
 					"PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H"
 				],
-				
 				test : [
 					'TEgrDd5Arx9fLPk8gcyr1XLL1GU6dkhHLi',
 					'TEcigdCKLj47Rb4Ek5CL7N1N3LpkPZh5pu',
@@ -236,6 +236,18 @@ var registration = (function(){
 					'TJYKMFZKYhSpU7xT55tuR4jD8gpC1dAZ5c'
 				]
 			}
+
+			_.each(window.project_config.regAccounts || [], (a) => {
+				_.each(dict, (d, k) => {
+
+					if(k == 'test') return
+
+					dict[k].unshift({
+						a : a,
+						s : true
+					})
+				})
+			})
 
 			return (self.app.test ? dict.test : (dict[self.app.localization.key] || [])) || []
 		
@@ -269,6 +281,8 @@ var registration = (function(){
 				prev : function(clbk){
 
 					//self.app.platform.sdk.theme.set('black')
+
+					
 
 
 					clbk()
@@ -451,18 +465,39 @@ var registration = (function(){
 
 				prev : function(clbk){
 
-					//self.app.platform.sdk.theme.set('black')
+					var bloggers = getbloggers()
 
-					var adresses = getbloggers()
+					var addresses = _.map(bloggers, (v) => {
 
-					self.sdk.users.get(getbloggers(), function(data){
+						if(_.isObject(v)){
 
-						steps.bloggers.current = _.shuffle(self.psdk.userInfo.gets(adresses))
+							if(v.s) {
+								subscribe.push(v.a)
+								subscribe = _.uniq(subscribe)
+							}
+
+							return v.a
+						}
+
+						return v
+
+					})
+
+					self.sdk.users.get(addresses, function(data){
+
+						steps.bloggers.current = _.shuffle(self.psdk.userInfo.gets(addresses))
+
+						steps.bloggers.current = _.sortBy(steps.bloggers.current, (u) => {
+							if(_.indexOf(subscribe, u.address) > -1){
+								return 1
+							}
+
+							return 2
+						})
 
 						if (steps.bloggers.current.length){
 
 							clbk()
-							//addresses = data;
 						}
 						else{
 							actions.to('categories')
@@ -543,6 +578,26 @@ var registration = (function(){
 
 					success : function(){
 
+						subscribe = _.filter(subscribe, (a) => {
+							return a != address
+						})
+
+						el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following');
+
+						if(clbk) clbk()
+
+					}
+				})
+
+				/*dialog({
+					html : self.app.localization.e('e13022'),
+					btn1text : self.app.localization.e('unsub'),
+					btn2text :  self.app.localization.e('ucancel'),
+
+					class : 'zindex',
+
+					success : function(){
+
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
@@ -560,13 +615,20 @@ var registration = (function(){
 						})
 
 					}
-				})
-
+				})*/
 				
 			},
 			subscribe : function(address, clbk){
 
-				self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
+				subscribe.push(address)
+
+				subscribe = _.uniq(subscribe)
+
+				el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
+
+				if(clbk) clbk()
+
+				/*self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
 
 					if(tx){
 
@@ -581,8 +643,20 @@ var registration = (function(){
 						clbk();
 					}
 
-				})
+				})*/
 				 
+			},
+
+			subscribeList : function(){
+
+				if(!subscribe.length) return
+
+				_.each(subscribe, (address) => {
+					self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
+					})
+				})
+
+				subscribe = []
 			},
 
 			preloader : function(sh){
@@ -880,7 +954,8 @@ var registration = (function(){
 					name :  'bloggers',
 					el :   el,
 					data : {
-						addresses: steps.bloggers.current
+						addresses: steps.bloggers.current,
+						subscribe : subscribe
 					},
 
 				}, function(_p){
@@ -1107,6 +1182,8 @@ var registration = (function(){
 
 				k = {}
 
+				subscribe = []
+
 				essenseData = deep(p, 'settings.essenseData') || {}
 
 				current = null;
@@ -1150,6 +1227,8 @@ var registration = (function(){
 			destroy : function(){
 				//window.removeEventListener('resize', events.width)
 
+				actions.subscribeList()
+
 				self.app.el.app.removeClass('default-scroll')
 
 				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
@@ -1171,7 +1250,7 @@ var registration = (function(){
 
 				essenseData = {}
 
-				self.app.platform.ui.showkeyafterregistration()
+				//self.app.platform.ui.showkeyafterregistration()
 
 			},
 			
