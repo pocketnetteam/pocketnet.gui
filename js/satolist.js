@@ -328,7 +328,9 @@ Platform = function (app, listofnodes) {
         'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
         'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
         'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop' : true,
-        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true
+        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true,
+        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
+        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true
     } 
 
     self.bch = {
@@ -6269,7 +6271,7 @@ Platform = function (app, listofnodes) {
                         id : share.txid,
                         share: exported,
                         user: user.export(),
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 };
 

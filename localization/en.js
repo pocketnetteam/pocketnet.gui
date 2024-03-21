@@ -2793,3 +2793,5 @@ _l.permissions_name_chat = appname + " chat"
 
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
+
+_l.limits = "Limits"
