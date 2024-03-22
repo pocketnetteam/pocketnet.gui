@@ -1308,6 +1308,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return peertube.info(compact)
 		},
 
+
 		get kit() {
 			return peertube.kit
 		},

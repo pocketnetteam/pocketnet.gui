@@ -512,13 +512,13 @@ class TorControl {
             customObfs4 : this.settings.customObfs4,
         }
 
+        info.state = {
+            status : this.state.status
+        }
+
         if(!compact){
 
             info.instance = this.instance ? this.instance.pid : null
-            info.state = {
-                status : this.state.status
-            }
-
             info.binPath = path.join(this.getpath())
             info.dataPath = this.getsettingspath()
             info.installed = this.isInstalled
