@@ -697,7 +697,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			trustpeertube = []
 
-			const ins = await this.readList();
+			const ins = await this.syncAndReadList();
 
 			if (test) {
 				ins.unshift([
@@ -719,12 +719,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		readList: async function () {
+		syncAndReadList: async function () {
 			function toLegacyList(list) {
 				return Object.values(list.swarms).map(s => {
-					const serversList = s.list;
+					const serversList = [...s.list];
 
 					if (s.archived) {
+						serversList.forEach(s => s.archived = true);
+
 						// FIXME: This is a temporary solution. Archive servers must be checked by order
 						if (s.archived.length === 2) {
 							serversList.push({
@@ -751,6 +753,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			return toLegacyList(fileRead);
+		},
+
+		getArchivedServers: function() {
+			const peertubesData = peertube.info();
+			const peertubeList = peertubesData.instances;
+
+			return Object.values(peertubeList)
+				.filter(h => !!h.archived)
+				.map(h => h.host);
 		},
 
 		destroy: function () {
@@ -1922,6 +1933,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						},
 					});
 				},
+			},
+
+			peertubeserversList: {
+				path: '/peertubeserversList',
+				action: async () => ({
+					data: {
+						archivedPeertubeServers: self.peertube.getArchivedServers(),
+					}
+				}),
 			},
 
 			nodes: {
