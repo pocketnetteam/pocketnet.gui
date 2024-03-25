@@ -37,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ btio1 ]
+        runner: [ btio1, btio2, btio3 ]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
