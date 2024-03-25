@@ -43,10 +43,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: brighteon.tgz
-      - name: Unpack artifact
-        run: tar xzf brighteon.tgz -C /home/bastyon/.bastyon.gui --no-same-owner
-      - name: Delete artifacts
-        run: rm -rf brighteon.tgz
+      - name: Install
+        run: /data/install_web.sh
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
