@@ -1385,12 +1385,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			var catchError = function (key) {
 				return (e) => {
 
+					console.log('error', key, e)
+
 					return Promise.resolve()
 				}
 			}
 
 			var promises = _.map(list, (i) => {
 				return self[i].init().catch(catchError(i)).then(() => {
+					console.log('ini', i)
 					return Promise.resolve()
 				})
 			})
