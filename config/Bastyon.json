@@ -127,8 +127,8 @@
 
     "electron" : {
         "protocol" : "bastyon"
-    }
+    },
 
-    
-    
+    "regAccounts" : ["PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd"],
+    "adminTools" : false
 }

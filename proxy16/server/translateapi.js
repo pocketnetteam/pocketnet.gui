@@ -178,7 +178,7 @@ var TranslateApi = function(p = {}){
 
     //var db = new Datastore(f.path(p.dbpath));
 
-    self.info = function(){
+    self.info = function(compact){
 
         var meta = {
             storages : {},
@@ -204,6 +204,11 @@ var TranslateApi = function(p = {}){
             }
 
         })
+
+        if(compact){
+            delete meta.api
+            delete meta.lasterror
+        }
 
         return {
             meta : meta,
