@@ -24,7 +24,7 @@
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src 'self' cdvfile: cdvphotolibrary: data: https: blob:;">
 
-        <meta name="theme-color" content="#212529" />
+        <meta name="theme-color" content="#011621" />
 
         <link rel="dns-prefetch" href="https://__VAR__.domain:8899" />
         <link rel="dns-prefetch" href="https://__VAR__.domain" />

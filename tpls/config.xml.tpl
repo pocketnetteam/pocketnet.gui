@@ -20,11 +20,11 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
-    <preference name="NavigationBarBackgroundColor" value="#212529" />
+    <preference name="NavigationBarBackgroundColor" value="#011621" />
     <preference name="NavigationBarLight" value="true" />
-    <preference name="AndroidWindowSplashScreenBackground" value="#212529" />
-    <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#212529" />
-    <preference name="BackgroundColor" value="#212529" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
+    <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
+    <preference name="BackgroundColor" value="#011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />

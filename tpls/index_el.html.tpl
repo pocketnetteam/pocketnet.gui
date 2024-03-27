@@ -26,7 +26,7 @@
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
-        <meta name="theme-color" content="#212529" />
+        <meta name="theme-color" content="#011621" />
 
         <link rel="stylesheet" href="css/normalize.css?v=136">
         <!-- Place favicon.ico in the root directory -->        
