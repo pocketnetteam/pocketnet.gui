@@ -8667,7 +8667,11 @@ pluralform = function (n, w) {
 decodeEntities = function (s) {
 	const temp = document.createElement('p');
 	temp.innerHTML = s;
-	return temp.textContent || temp.innerText;
+	var v = temp.textContent || temp.innerText;
+
+	temp.remove()
+
+	return v
 }
 
 truncateString = function (str, n, useWordBoundary) {
