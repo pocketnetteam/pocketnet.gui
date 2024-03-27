@@ -332,7 +332,8 @@ Platform = function (app, listofnodes) {
         'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
         'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true,
         'PNAez3KW8mcQdaVJDzTdv5WSGddcoDwBH2' : true,
-        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG' : true
+        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG' : true,
+        'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s' : true
     } 
 
     self.bch = {
@@ -19524,7 +19525,7 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk) {
 
                     if (data.height <= platform.currentBlock) {
-                        platform.sdk.notifications.wsBlock(data.data.height)
+                        platform.sdk.notifications.wsBlock(data.height)
                         return
                     }
 
