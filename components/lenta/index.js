@@ -3872,7 +3872,7 @@ var lenta = (function(){
 
 					if(s.settings.v != "a"){
 
-						if((mw || essenseData.openapi) && image.images.length > 1 ){
+						if((mw) && image.images.length > 1 ){
 
 							_.each(image.images, function(img, n){
 								var _img = img.img;
@@ -3900,7 +3900,7 @@ var lenta = (function(){
 
 								var ac = '';
 
-								var _w = mw ? self.app.width : el.width() || el.closest('.share').width();
+								var _w = mw && !essenseData.openapi ? self.app.width : el.width() || el.closest('.share').width();
 								var _h = el.height()
 								
 
