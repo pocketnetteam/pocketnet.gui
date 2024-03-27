@@ -14,7 +14,8 @@
         "serveProd": "nodemon cli.js --cli",
         "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
-        "uninstall-windows-service": "winser -r"
+        "uninstall-windows-service": "winser -r",
+        "build": "grunt"
     },
     "author": "Max Grishkov",
     "license": "ISC",
@@ -51,6 +52,9 @@
         "ws": "^8.16.0"
     },
     "devDependencies": {
+        "@types/grunt": "^0.4.31",
+        "grunt": "^1.6.1",
+        "grunt-cli": "^1.4.3",
         "nodemon": "^3.0.3",
         "winser": "^1.0.3"
     }
