@@ -51,6 +51,7 @@ jobs:
           tar xzf repo.tgz
           rm -rf repo.tgz
           npm i
+          npm run build:proxy16
           npm run minimize:bastyon -- -sha=${{ github.sha }}
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
