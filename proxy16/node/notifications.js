@@ -1,6 +1,6 @@
 var f = require('../functions');
 const dictionary = require("./notificationsDictionary");
-
+var _ = require('underscore');
 
 class NotificationBlock{
     constructor() {
@@ -25,7 +25,7 @@ class NotificationStats{
 
         this.blocks.unshift(block)
 
-        if (this.blocks.length > 3) this.blocks.pop()
+        if (this.blocks.length > 10) this.blocks.pop()
     }
 }
 
@@ -141,6 +141,7 @@ class Notifications{
         block.nodeVersion = node.version
         block.nodeAddress = node.host
         this.stats.addBlock(_.clone(block))
+        console.log("ADD BLOCK SUCCESS")
         for (const address of Object.keys(notifications?.notifiers)) {
             const notifier = notifications?.notifiers?.[address]
             for (const type of Object.keys(notifier?.e || [])) {

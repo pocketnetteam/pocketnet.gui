@@ -63,6 +63,7 @@ var Roy = function (parent) {
 		if (options.old) instance.old = true;
 		if (options.offline) instance.offline = true;
 		if (options.archiveDouble) instance.archiveDouble = true;
+		if (options.archived) instance.archived = true;
 
 		instance.init();
 
@@ -271,6 +272,7 @@ var Roy = function (parent) {
 			info[instance.host] = {
 				host: instance.host,
 				ip : instance.ip,
+				archived: !!instance.archived,
 				canuse: instance.canuse(),
 				stats
 			};
