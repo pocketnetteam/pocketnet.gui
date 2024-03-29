@@ -1551,13 +1551,13 @@ _l.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't
 _l.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
 _l.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
 _l.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)";
+_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort";
 _l.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
 
 _l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
 
 _l.aboutYoutubeImgAndText1 = "EARN WITH "+appname+" NO DEMONETIZATION";
-_l.aboutYoutubeImgAndText2 = ""+appname+" pays you to post videos and for each interaction (like/comment) that you get. Right now "+appname+" has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel";
+_l.aboutYoutubeImgAndText2 = ""+appname+" pays you to post videos and for each interaction (like/comment) that you get.";
 _l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post porn/nudity or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
 _l.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
 _l.aboutYoutubeImgAndText5 = "On "+appname+" you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates "+appname+" and the only topics that are blocked are porn/nudity and illicit content.";
@@ -1628,7 +1628,7 @@ _l.aboutYoutubeThirdBoard25 = ""+appname+" pays you way more than YouTube!";
 _l.aboutYoutubeThirdBoard26 = "You can earn money with "+appname+".";
 _l.aboutYoutubeThirdBoard27 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutYoutubeThirdBoard29 = '';
 _l.aboutYoutubeThirdBoard30 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1743,7 +1743,7 @@ _l.aboutTitterMainBoard31 = "And there`s more! "+appname+" pays you.";
 _l.aboutTitterMainBoard32 = "You can earn money with "+appname+".";
 _l.aboutTitterMainBoard33 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutTitterMainBoard35 = '';
 _l.aboutTitterMainBoard36 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1833,7 +1833,7 @@ _l.aboutFbMainBoard3 = "And there`s more! "+appname+" pays you.";
 _l.aboutFbMainBoard31 = "You can earn money with "+appname+".";
 _l.aboutFbMainBoard32 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutFbMainBoard34 = '';
 _l.aboutFbMainBoard34 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1930,7 +1930,7 @@ _l.aboutHowItWImgAndText33 = ""+appname+" pays you";
 _l.aboutHowItWImgAndText34 = "You can earn money with "+appname+".";
 _l.aboutHowItWImgAndText35 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
-_l.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
+_l.aboutHowItWImgAndText37 = '';
 _l.aboutHowItWImgAndText38 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 _l.aboutHowItWImgAndText40 = "Next step: contact us to get your "+appname+" account verified and to access the bonus program.";
