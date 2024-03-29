@@ -3188,6 +3188,8 @@ pComment = function(){
 	self.myScore = 0;
 	self.deleted = false;
 	self.address = ''
+	self.blck_cnt_cmt = 0
+	self.blck_cmt_cnt = 0
 
 	self.reputation = 0;
 
@@ -3213,7 +3215,8 @@ pComment = function(){
 		self.parentid = v.parentid;
 
 
-		
+		v.blck_cmt_cnt == 1 ? self.blck_cmt_cnt = 1 : self.blck_cmt_cnt = 0
+		v.blck_cnt_cmt == 1 ? self.blck_cnt_cmt = 1 : self.blck_cnt_cmt = 0
 
 
 		self.scoreDown = Number(v.scoreDown || '0');
@@ -3260,7 +3263,6 @@ pComment = function(){
 
 	self.export = function(){
 
-
 		var r = {
 			id : self.id,
 			postid : self.postid || "",
@@ -3282,7 +3284,9 @@ pComment = function(){
 			children : self.children,
 			time : self.time.getTime() / 1000,
 			timeUpd: self.timeUpd.getTime() / 1000,
-			commentTo : self.commentTo
+			commentTo : self.commentTo,
+			blck_cmt_cnt : self.blck_cmt_cnt,
+			blck_cnt_cmt : self.blck_cnt_cmt
 		}
 
 		return r

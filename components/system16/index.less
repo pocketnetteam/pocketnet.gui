@@ -178,6 +178,62 @@
         }
     }
 
+
+    .aTransactionsWrapper{
+
+        .emptyATransactions{
+            background: rgba(var(--neutral-grad-3), 0.15);
+            margin-top : 2 * @rhythm;
+            padding : 2 * @rhythm 0;
+            text-align: center;
+
+            span{
+                color : rgb(var(--neutral-grad-3));
+                font-size: 0.8em;
+            }
+        }
+
+        .exportpanel{
+            padding : 2 * @rhythm 0;
+        }
+
+        .aTransactionslist{
+            padding : 2 * @rhythm 0;
+            overflow: hidden;
+
+            >div{
+                width: 50%;
+                float: left;
+                padding-right: 2 * @rhythm;
+            }
+        }
+
+        .aTransactioninlist{
+            color : rgb(var(--neutral-grad-3));
+            margin-right: 2 * @rhythm;
+            margin-bottom: 2 * @rhythm;
+            font-size: 0.8em;
+            display: flex;
+
+            a{
+                font-weight: 700;
+            }
+
+            .removefromlist{
+                margin-left: @rhythm;
+                cursor: pointer;
+                .transition(0.3s);
+                color : rgba(var(--neutral-grad-3), 0.7);
+
+                &:hover{
+                    color : rgb(var(--color-good));
+                }
+            }
+            
+           
+        }
+    }
+
    
 
     .proxyselecttable{
