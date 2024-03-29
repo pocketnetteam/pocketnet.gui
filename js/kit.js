@@ -951,6 +951,70 @@ ModFlag = function(){
 	return self;
 }
 
+ModVote = function(){
+	var self = this;
+
+	self.s2 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	
+
+	self.validation = function(){
+
+		if(!self.s2.v){
+			return 'jury'
+		}
+
+		if(self.i1.v != 0 && self.i1.v != 1){
+			return 'verdict'
+		}
+	}
+
+	self.serialize = function(){
+		return self.s2.v + self.i1.v
+	}
+
+	self.export = function(alias){
+
+		if (alias){
+			return {
+				type : self.type,
+				i1: self.i1.v,
+				s2 : self.s2.v
+			}
+		}
+
+		return {
+			s2 : self.s2.v,
+			i1 : self.i1.v
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+			
+	}
+
+	self.type = 'modVote'
+	return self;
+}
+
 ContentBoost = function(txid){
 	var self = this;
 	
@@ -1391,6 +1455,7 @@ Share = function(lang){
 		videos : [],
 		image : '',
 		f : '0',
+		ads: '',
 		c : ''
 	}
 	
@@ -2210,6 +2275,7 @@ pUserInfo = function(){
 	self.objectid = makeid()
 
 	self._import = function(v){
+
 		self.name = v.n || v.name || '';
 		self.image = v.i || v.image;
 		self.about = v.a || v.about || '';
@@ -2220,7 +2286,8 @@ pUserInfo = function(){
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
-		self.deleted = v.deleted || false
+		self.deleted = v.deleted || false;
+		self.bans = v.bans || {};
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;
@@ -2503,6 +2570,15 @@ pUserInfo = function(){
 			removeEqual(self[key], obj)
 
 	}
+
+	self.modVote = function(juryId, verdict){
+		var modVote = new ModVote();
+
+		modVote.s2.set(juryId);
+		modVote.i1.set(verdict);
+
+		return modVote;
+	}
 	
 	self.clone = function(){
 		var ui = new pUserInfo()
@@ -2598,6 +2674,7 @@ pShare = function(){
 		videos : [],
 		image : '',
 		f : '0',
+		ads : '',
 		c : ''
 	}
 
@@ -2946,6 +3023,14 @@ pShare = function(){
 
 		return modFlag;
 	}
+	self.modVote = function(juryId, verdict){
+		var modVote = new ModVote();
+
+		modVote.s2.set(juryId);
+		modVote.i1.set(verdict);
+
+		return modVote;
+	}
 
 	self.alias = function(){
 		var share = new Share();
@@ -3190,6 +3275,16 @@ pComment = function(){
 
 		return s
 
+	}
+
+
+	self.modVote = function(juryId, verdict){
+		var modVote = new ModVote();
+
+		modVote.s2.set(juryId);
+		modVote.i1.set(verdict);
+
+		return modVote;
 	}
 
 	self.renders = {

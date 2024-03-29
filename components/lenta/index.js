@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, adsShowed = false, bannerComment = null;
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -949,7 +949,6 @@ var lenta = (function(){
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
-
 						actions.initVideo(share, function(v){
 
 							if (players[share.txid])
@@ -968,18 +967,19 @@ var lenta = (function(){
 				button = null
 			},	
 
-			initVideo : function(share, clbk, shadow){
+			initVideo : function(share, clbk, shadow, ads){
 
 				if(!share || !share.txid || !el.share[share.txid]) return
 
 				var pels = el.share[share.txid].find('.js-player-ini');
 				var vel = el.share[share.txid].find('.videoWrapper')
+				var ended = false;
 
 				if (pels.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
 				if(!vel.length) return
 
-				if (shadow && !players[share.txid]){
+				if (shadow){
 
 					players[share.txid] = {
 						shadow : true,
@@ -1062,7 +1062,7 @@ var lenta = (function(){
 
 					var startTime = 0;
 
-					if (self.app.platform.sdk.videos.historyget && share.itisvideo()){
+					if (self.app.platform.sdk.videos.historyget && share.itisvideo() && !ads){
 
 						var pr = self.app.platform.sdk.videos.historyget(share.txid)
 
@@ -1107,6 +1107,7 @@ var lenta = (function(){
 						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
+
 							videopaused = false
 
 							self.app.actions.playingvideo(players[share.txid].p)
@@ -1153,6 +1154,12 @@ var lenta = (function(){
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration,  share)
 							}
 
+							if (playbackState === 'ended' && ads && !ended){
+
+								ended = true;
+								clbk(true, true);
+							}
+
 						},
 
 						error : function(error){
@@ -1195,6 +1202,7 @@ var lenta = (function(){
 					s.logoType = self.app.meta.fullname
 					s.app = self.app
 					s.light = true
+
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
@@ -1658,6 +1666,8 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
+				console.log('fullscreenvideo');
+
 				var share = self.psdk.share.get(id) 
 
 				if(!share) return
@@ -1678,96 +1688,197 @@ var lenta = (function(){
 
 					return
 				}
-
-				if (fullscreenvideoShowing) { return }
-				if (fullscreenvideoShowed) { return }
-				if (essenseData.openapi){ return }
-
-				fullscreenvideoShowing = id
-
-				var _el = el.share[id]
 				
+				//self.app.platform.sdk.node.shares.storage.trx[id];
 
-				actions.initVideo(share, function(res){
+				/*if(!share){
+					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
+						return s.txid == id
+					}) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
 
-					fullscreenvideoShowing = null
+					share = new pShare();
+					share._import(temp);
+					share.temp = true;
+					share.address = self.app.platform.sdk.address.pnet().address
+				}*/
 
-					if(!res){
-						return
-					}
+				var initVideoClbk = function(ads){
+
+					if (fullscreenvideoShowing) { return }
+					if (fullscreenvideoShowed) { return }
+					if (essenseData.openapi){ return }
+	
+					fullscreenvideoShowing = id
+	
+					var _el = el.share[id]
 					
-					if(!players[id]) return;
+					actions.initVideo(share, function(res, next){
 
-					self.app.actions.closepip()
+						if (next){
 
-					fullscreenvideoShowed = id;
+							players[share.txid] = null;
 
-					self.app.mobile.reload.destroyparallax()
+							actions.exitFullScreenVideo(id);
 
-					self.app.pseudofullscreenmode = true
+							renders.url(urlWrapper, share.url, share, function(){
 
-					_el.addClass('fullScreenVideo')
-				
-					actions.videoPosition(id)
-
-					actions.fullScreenVideoParallax(_el, id)
-
-					self.app.mobile.statusbar.gallerybackground()
-
-					self.app.nav.api.history.addParameters({
-						v : id
-					})
-
-					var player = players[id]
-
-					player.p.prepare().then(() => {
-
-						if(!essenseData.openapi && !essenseData.second){
-
-							lastscroll = self.app.lastScrollTop
-							self.app.actions.offScroll()
-
-						
-							if(!player.p.playing && !auto){
-								player.p.play()
-							}
-
-							if (player.p.enableHotKeys) player.p.enableHotKeys()
-				
-							
-							actions.addRecommendationsFullScreenVideo(id)
-						}
-
-						actions.setVolume(players[id], videosVolume || 0.5)
-
-						if(!essenseData.comments && !share.temp && !share.relay){
-
-							retry(function(){
-								return initedcommentes[id] || !el.c
-							}, function(){
-
-								if(el.c){
-									if (initedcommentes[id]){
-										initedcommentes[id].destroy()
-										initedcommentes[id] = null
-									}
+								renders.urlContent(share, function(){
 			
-									renders.comments(id, false, true)
-								}	
+									if(!video) actions.initVideoLight(share, null, null, true);
+			
+									if(isotopeinited) el.shares.isotope()
+			
+									shareInitingMap[share.txid] = false;
+			
+									initVideoClbk();
+			
+								});
 								
 							})
-							
+
+							return;
 						}
 
+						if (!res){
+							return;
+						}
+
+						fullscreenvideoShowing = null;
+
+						self.app.actions.closepip()
+
+						fullscreenvideoShowed = id;
+
+						self.app.mobile.reload.destroyparallax()
+
+						self.app.pseudofullscreenmode = true
+
+						_el.addClass('fullScreenVideo')
+					
+						actions.videoPosition(id)
+
+						actions.fullScreenVideoParallax(_el, id)
+
+						self.app.mobile.statusbar.gallerybackground()
+
+						self.app.nav.api.history.addParameters({
+							v : id
+						})
+
+						var player = players[id]
+
+						player.p.prepare().then(() => {
+
+							if(!essenseData.openapi && !essenseData.second){
+
+								lastscroll = self.app.lastScrollTop
+								self.app.actions.offScroll()
+
+							
+								if(!player.p.playing && !auto){
+									player.p.play()
+								}
+
+								if (player.p.enableHotKeys) player.p.enableHotKeys()
+					
+								
+								actions.addRecommendationsFullScreenVideo(id)
+							}
+
+							actions.setVolume(players[id], videosVolume || 0.5)
+
+							if(!essenseData.comments && !share.temp && !share.relay){
+
+								retry(function(){
+									return initedcommentes[id] || !el.c
+								}, function(){
+
+									if(el.c){
+										if (initedcommentes[id]){
+											initedcommentes[id].destroy()
+											initedcommentes[id] = null
+										}
+				
+										renders.comments(id, false, true)
+									}	
+									
+								})
+								
+							}
 
 
 
-						if (clbk)
-							clbk()
 
-					})
+							if (clbk)
+								clbk()
 
-				})
+						})
+
+					}, false, ads)
+
+				}
+
+				var adsCount = localStorage.getItem('adsCount') || 0;
+
+				if (share.settings.ads && !adsShowed && adsCount < 3){
+
+					adsCount++;
+					
+					adsShowed = true;
+
+					players[share.txid] = null;
+
+					var ads = share.settings.ads;
+									
+					var urlWrapper = el.share[share.txid].find('.url');
+
+					renders.url(urlWrapper, ads, share, function(){
+
+						renders.urlContent(share, function(){
+		
+							if(!video) actions.initVideoLight(share, null, null, true);
+
+							if(isotopeinited) el.shares.isotope()
+
+							shareInitingMap[share.txid] = false;
+
+							urlWrapper.find('.skip-ads').on('click', function(){
+
+								players[share.txid] = null;
+
+								var id = el.share[share.txid].attr('id');
+
+								actions.exitFullScreenVideo(id);
+
+								renders.url(urlWrapper, share.url, share, function(){
+
+									renders.urlContent(share, function(){
+				
+										if(!video) actions.initVideoLight(share, null, null, true);
+				
+										if(isotopeinited) el.shares.isotope()
+				
+										shareInitingMap[share.txid] = false;
+				
+										initVideoClbk();
+				
+									});
+									
+								})
+							})
+
+							initVideoClbk(true);
+
+						});
+						
+					}, ads)
+
+				} else {
+
+					initVideoClbk();
+				}
+
+
 
 			},
 
@@ -2346,6 +2457,48 @@ var lenta = (function(){
 				_.each(willshowed, function(share){
 					actions.shareReturnAfterOptimization(share)
 				})
+			},
+
+			getJuryShare : function(id) {
+
+				let juryShares = self.app.platform.sdk.node.shares.storage['jury']
+				if (!juryShares || juryShares.length <= 0)
+					return;
+
+				let s = juryShares.filter((s) => s.txid == id);
+				if (s.length > 0)
+					return s[0]
+
+			},
+
+			sendJuryVote : function(share, verdict, clbk) {
+
+				if (!share || !share.jury || !share.jury.juryid || (verdict != 0 && verdict != 1))
+					return;
+
+				var modVote = share.modVote(share.jury.juryid, verdict);
+
+				topPreloader(30);
+
+				self.app.platform.actions.addActionAndSendIfCan(modVote)
+				.then(function(action){
+
+					sitemessage(self.app.localization.e('juryvote_success'));
+
+					var alias = action.object;
+					console.log('alias', alias);
+
+					if (clbk) clbk();
+
+				})
+				.catch(error => {
+
+					self.app.platform.errorHandler(error, true);
+
+					if(clbk) clbk(null, e);
+				})
+
+
 			}
 
 		}
@@ -2930,7 +3083,57 @@ var lenta = (function(){
 			loadprev : function(){
 				actions.loadprev();
 
-			}
+			},
+
+			modVoteYes : function(){
+				var id = $(this).closest('.share').attr('id');
+				if(!id) id = $(this).closest('.truerepost').attr('stxid')
+				let s = actions.getJuryShare(id)
+				var shareDiv = $(this).closest('.share')
+
+				new dialog({
+					class : 'zindex',
+					html : self.app.localization.e('juryconfirm'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+
+						console.log('EE!E', s);
+
+						actions.sendJuryVote(s, 1, function() {
+							// Vote sent successfully, remove share from view
+							shareDiv.remove()
+						});
+
+					}
+				})
+
+			},
+			modVoteNo : function(){
+				var id = $(this).closest('.share').attr('id');
+				if(!id) id = $(this).closest('.truerepost').attr('stxid')
+				let s = actions.getJuryShare(id)
+				var shareDiv = $(this).closest('.share')
+				
+
+				new dialog({
+					class : 'zindex',
+					html : self.app.localization.e('juryconfirm'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+
+						console.log('EE!E', s);
+
+						actions.sendJuryVote(s, 0, function() {
+							// Vote sent successfully, remove share from view
+							shareDiv.remove()
+						});
+
+					}
+				})
+
+			},
 		}
 
 		var renders = {
@@ -3272,6 +3475,42 @@ var lenta = (function(){
 			
 			share : function(share, clbk, all, p){
 
+				var c = function(p){
+	
+					window.requestAnimationFrame(() => {
+
+						if(!p.el.hasClass('rendered')){
+							p.el.addClass('rendered')
+
+							if (p.el.hasClass('hashiddengroup')){
+								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							}
+
+						}
+
+						var contentHash = getUrlParameter("contentHash");
+
+						var id = p.el.attr('id');
+
+						if (id === contentHash){
+
+							p.el.addClass('animated');
+
+							$('html, body').animate({
+								scrollTop: p.el.offset().top - 70
+							}, 1000);
+
+						}
+
+
+
+						if (clbk)
+							clbk();
+							clbk = null
+
+					})
+				}
+
 				if(!p) p = {}
 
 				if(!share) {
@@ -3284,167 +3523,213 @@ var lenta = (function(){
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
 
-
-				self.shell({
-					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
-
-					el : _el,
-					animation : false,
-					data : {
-						share : share,
-						ed : essenseData,
-						mestate : mestate,
-						all : all || false,
-						tplvideo : video ,
-						openapi : essenseData.openapi,
-						sharesFromSub,
-						boosted : p.boosted,
-						shareRelayedFlag : false,
-						authorsettings,
-						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
-					},
-					insertimmediately : p.insertimmediately
-
-				}, function(p){
+				if (share.type === 'userInfo'){
+		
+					self.shell({
+						name : 'userjury',
+	
+						el : _el,
+						animation : false,
+						data : {
+							u: share,
+							recommended: recommended
+						}
+					}, function(p){
 
 
-					if(!p.repost) shareInitedMap[share.txid] = true;	
-
-					var promises = []
-
-					promises.push(new Promise((resolve, reject) => {
-
-						renders.stars(share, () => {
-							resolve()
-						})
-					}))
-
-					if(!share.temp && !share.relay){
-
-						promises.push(new Promise((resolve, reject) => {
-
-							renders.comments(share.txid, false, false, true, () => {
-								resolve()
-							})
-						}))
+						if(!p.repost) shareInitedMap[share.txid] = true;	
+				
 						
-					}
+						if (video){
+							c(p)
+						}
+						else{
+							setTimeout(() => {
+								c(p)
+							}, 300)
+						}
+					})
 
-					promises.push(new Promise((resolve, reject) => {
+				} else if (share.type === 'comment'){
 
-
-						renders.url(p.el.find('.url'), share.url, share, function(){
-
-							renders.urlContent(share, function(){
+					self.shell({
+						name : 'commentjury',
 	
-								if(essenseData.searchValue){
-									p.el.find('.canmark').mark(essenseData.searchValue);
-								}
+						el : _el,
+						animation : false,
+						data : {
+							comment : share,
+							newcomments : '',
+							_class: '',
+							needtoshow : 0,
+							mestate : mestate,
+							recommended : recommended,
+							replaceName : function(name, p){
+								return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
+							},
 
-								if(essenseData.searchTags){
-									p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
-										return '#' + t
-									}).join(' '));
-								}
-	
-								if(!video) actions.initVideoLight(share)
-	
-								if(isotopeinited) el.shares.isotope()
-	
-								shareInitingMap[share.txid] = false;	
-								
-								resolve()
+							replaceNameNoComment : function(name, p){
+								return '<span elementsid="comments_tocommentno" class="tocommentno">' + name + "</span>"
+							},
+							ed : essenseData,
+						}
+					}, function(p){
+						if(!p.repost) shareInitedMap[share.txid] = true;	
 												
-								
-	
-							});
-	
-						})
+						if (video){
+							c(p)
+						}
+						else{
+							setTimeout(() => {
+								c(p)
+							}, 300)
+						}
+					})
 
-					}))
-			
-					
+				} else {
 
-					if (!video) {
+					self.shell({
+						name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
+	
+						el : _el,
+						animation : false,
+						data : {
+							share : share,
+							ed : essenseData,
+							mestate : mestate,
+							all : all || false,
+							tplvideo : video ,
+							recommended : recommended,
+							openapi : essenseData.openapi,
+							sharesFromSub,
+							boosted : p.boosted,
+							shareRelayedFlag : false,
+							authorsettings,
+							fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
+						},
+						insertimmediately : p.insertimmediately
+	
+					}, function(p){
+
+
+						if(!p.repost) shareInitedMap[share.txid] = true;	
+	
+						var promises = []
+	
 						promises.push(new Promise((resolve, reject) => {
-							renders.images(p.el.find('.postcontent'), share, () => {
+	
+							renders.stars(share, () => {
 								resolve()
 							})
 						}))
-						
-						if (share.itisarticle()){
+	
+						if(!share.temp && !share.relay){
+	
 							promises.push(new Promise((resolve, reject) => {
-								renders.articlespart(p.el.find('.sharearticle'), share, () => {
+	
+								renders.comments(share.txid, false, false, true, () => {
 									resolve()
 								})
 							}))
 							
 						}
+	
+						promises.push(new Promise((resolve, reject) => {
+	
+	
+							renders.url(p.el.find('.url'), share.url, share, function(){
+	
+								renders.urlContent(share, function(){
+		
+									if(essenseData.searchValue){
+										p.el.find('.canmark').mark(essenseData.searchValue);
+									}
+	
+									if(essenseData.searchTags){
+										p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
+											return '#' + t
+										}).join(' '));
+									}
+		
+									if(!video) actions.initVideoLight(share)
+		
+									if(isotopeinited) el.shares.isotope()
+		
+									shareInitingMap[share.txid] = false;	
+									
+									resolve()
+													
+									
+		
+								});
+		
+							})
+	
+						}))
+				
+						
+	
+						if (!video) {
+							promises.push(new Promise((resolve, reject) => {
+								renders.images(p.el.find('.postcontent'), share, () => {
+									resolve()
+								})
+							}))
+							
+							if (share.itisarticle()){
+								promises.push(new Promise((resolve, reject) => {
+									renders.articlespart(p.el.find('.sharearticle'), share, () => {
+										resolve()
+									})
+								}))
+								
+							}
+							else{
+		
+								// TO DO
+								promises.push(new Promise((resolve, reject) => {
+	
+									renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
+	
+								}))
+									
+							}
+						}
+	
+						
+						if (video){
+							c(p)
+						}
 						else{
 	
-							// TO DO
-							promises.push(new Promise((resolve, reject) => {
-
-								renders.repost(p.el, share.repost, share.txid, share.isEmpty(), resolve, all)
-
-							}))
-								
+							Promise.all(promises).catch(e => {}).then(() => {
+								c(p)
+	
+								/*setTimeout(() => {
+									p.el.css('contain-intrinsic-size', p.el.height() + 'px')
+									p.el.css('content-visibility', 'auto')
+								}, 5000)*/
+							})
+							
+							setTimeout(() => {
+								c(p)
+							}, 300)
 						}
-					}
-
-					var c = function(){
-
-						window.requestAnimationFrame(() => {
-
-							if(!p.el.hasClass('rendered')){
-								p.el.addClass('rendered')
-
-								if (p.el.hasClass('hashiddengroup')){
-									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
-								}
-
-							}
-
-
-							if (clbk) clbk();
-
-							clbk = null
-
-						})
-					}
-
-					
-					if (video){
-						c()
-					}
-					else{
-
-						Promise.all(promises).catch(e => {}).then(() => {
-							c()
-
-							/*setTimeout(() => {
-								p.el.css('contain-intrinsic-size', p.el.height() + 'px')
-								p.el.css('content-visibility', 'auto')
-							}, 5000)*/
-						})
 						
-						setTimeout(() => {
-							c()
-						}, 300)
-					}
-					
-					
-
-					/*var time = 3000
-
-					if(p.el.find(".shareImages .image").length > 1 || !index) c()
-					else
-
-						setTimeout(() => {
-							c()
-						}, time)*/
-					
-				})
+						
+	
+						/*var time = 3000
+	
+						if(p.el.find(".shareImages .image").length > 1 || !index) c()
+						else
+	
+							setTimeout(() => {
+								c()
+							}, time)*/
+						
+					})
+	
+				}
 
 			},
 
@@ -3693,6 +3978,8 @@ var lenta = (function(){
 			},
 
 			shares : function(shares, clbk, p){
+
+				console.log('shares', shares);
 
 				if(!p) p = {};
 
@@ -4037,7 +4324,12 @@ var lenta = (function(){
 				}
 			},
 
-			url : function(el, url, share, clbk){
+			url : function(el, url, share, clbk, ads){
+
+				// debugger;
+
+				// url = 'peertube://peertube6new.pocketnet.app/8acd9ab2-2159-476e-be14-a2ba4aaeb655';
+				// share.url = 'peertube://peertube6new.pocketnet.app/8acd9ab2-2159-476e-be14-a2ba4aaeb655';
 
 				if (essenseData.nourlload){
 
@@ -4061,8 +4353,9 @@ var lenta = (function(){
 							el : el,
 							mid : 'sharelenta',
 							data : {
-								url : url,
+								url : ads || url,
 								og : og,
+								ads: ads,
 								share : share,
 								video : video,
 								preview : video ? true : false,
@@ -4324,7 +4617,6 @@ var lenta = (function(){
 					emptyinarow = 0
 				}
 
-
 				var allshares = [].concat(shares, bshares)
 
 				if(includingsub) {
@@ -4444,7 +4736,7 @@ var lenta = (function(){
 
 							if(!essenseData.author){
 								shares = _.filter(shares, function(share){
-									var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+									var checkvisibility = share.visibility && self.app.platform.sdk.node.shares.checkvisibility(share)
 
 									return !checkvisibility
 								})
@@ -4646,6 +4938,10 @@ var lenta = (function(){
 
 								else if(recommended == 'saved'){
 									
+								}
+
+								else if(recommended == 'jury'){
+									loader = 'jury'
 								}
 
 								else
@@ -4890,6 +5186,8 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
+			el.c.on('click', '.jury-buttons .yes', events.modVoteYes)
+			el.c.on('click', '.jury-buttons .no', events.modVoteNo)
 
 			el.c.on('click', '.translateto', events.translateto)
 

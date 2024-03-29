@@ -4967,6 +4967,17 @@ html.allcontent_application #footerWrapper {
 .usericon .realperson .dev .fa-code {
   color: rgb(var(--text-on-bg-ac-color));
 }
+.usericon .realperson .shark .fa-certificate,
+.usericon .realperson .moderator .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.usericon .realperson .shark .fa-crown,
+.usericon .realperson .moderator .fa-crown,
+.usericon .realperson .shark .fa-flag,
+.usericon .realperson .moderator .fa-flag {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+}
 .usericon .letter {
   font-size: 1.5em;
 }
@@ -5241,33 +5252,49 @@ html.allcontent_application #footerWrapper {
   vertical-align: bottom;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe,
-.notification .subscribeWrapper > div.forsubscribe {
+.notification .subscribeWrapper > div.forsubscribe,
+.fastMessage .subscribeWrapper > div.forjury,
+.notification .subscribeWrapper > div.forjury {
   width: 80px;
   text-align: right;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button,
-.notification .subscribeWrapper > div.forsubscribe button {
+.notification .subscribeWrapper > div.forsubscribe button,
+.fastMessage .subscribeWrapper > div.forjury button,
+.notification .subscribeWrapper > div.forjury button {
   text-align: right;
   width: auto;
   padding-top: 0;
   padding-bottom: 0;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button i,
-.notification .subscribeWrapper > div.forsubscribe button i {
+.notification .subscribeWrapper > div.forsubscribe button i,
+.fastMessage .subscribeWrapper > div.forjury button i,
+.notification .subscribeWrapper > div.forjury button i {
   display: none;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled,
-.notification .subscribeWrapper > div.forsubscribe button.disabled {
+.notification .subscribeWrapper > div.forsubscribe button.disabled,
+.fastMessage .subscribeWrapper > div.forjury button.disabled,
+.notification .subscribeWrapper > div.forjury button.disabled {
   color: rgb(var(--color-good));
   background: transparent;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled i,
-.notification .subscribeWrapper > div.forsubscribe button.disabled i {
+.notification .subscribeWrapper > div.forsubscribe button.disabled i,
+.fastMessage .subscribeWrapper > div.forjury button.disabled i,
+.notification .subscribeWrapper > div.forjury button.disabled i {
   display: inline;
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button.disabled:hover,
-.notification .subscribeWrapper > div.forsubscribe button.disabled:hover {
+.notification .subscribeWrapper > div.forsubscribe button.disabled:hover,
+.fastMessage .subscribeWrapper > div.forjury button.disabled:hover,
+.notification .subscribeWrapper > div.forjury button.disabled:hover {
   background: transparent;
+}
+.fastMessage .subscribeWrapper > div.forjury button,
+.notification .subscribeWrapper > div.forjury button {
+  padding-bottom: 5px;
 }
 .fastMessage .cwrapper,
 .notification .cwrapper {
@@ -5283,6 +5310,10 @@ html.allcontent_application #footerWrapper {
   width: 50px;
   flex-grow: 0;
   max-width: 50px;
+}
+.fastMessage .cwrapper > div.verdict .icon i,
+.notification .cwrapper > div.verdict .icon i {
+  color: rgb(var(--color-bad));
 }
 .fastMessage .cwrapper > div.extra,
 .notification .cwrapper > div.extra {
@@ -5321,9 +5352,12 @@ html.allcontent_application #footerWrapper {
             color : rgb(var(--color-txt-ac));
         }*/
 }
-.fastMessage .caption,
-.notification .caption {
+.fastMessage .complaint,
+.notification .complaint {
   font-size: 0.9em;
+  margin-top: 2px;
+  margin-bottom: 0.5em;
+  width: 95%;
 }
 .fastMessage {
   border-radius: 12px;
@@ -6952,7 +6986,8 @@ html.pipmode #content,
 html.pipmode .matrixchatwrapper {
   display: none;
 }
-.peertube-server-hint {
+.peertube-server-hint,
+.skip-ads {
   z-index: 3;
   position: absolute;
   margin: 10px;
@@ -6963,15 +6998,21 @@ html.pipmode .matrixchatwrapper {
   background: #000000bb;
   color: #fff;
 }
-.peertube-server-hint i.fa {
+.peertube-server-hint i.fa,
+.skip-ads i.fa {
   font-size: 0.8em;
   margin-top: 1px;
   margin-right: 5px;
 }
-.peertube-server-hint a {
+.peertube-server-hint a,
+.skip-ads a {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.skip-ads {
+  right: 0;
+  cursor: pointer;
 }
 .topvideosWrapper .peertube-server-hint {
   bottom: 0;

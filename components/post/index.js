@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false, adsShowed = false;
 
 		var progressInterval;
 
@@ -413,7 +413,7 @@ var post = (function () {
 
 			},
 
-			initVideoLight: function(clbk){
+			initVideoLight: function(clbk, ads){
 				//js-player-dummy
 
 				var button = el.c.find('.initvideoplayer');
@@ -441,22 +441,22 @@ var post = (function () {
 					})
 				}
 				else {
-					actions.initVideo(clbk)
+					actions.initVideo(clbk, ads)
 				}
 
 				button = null
 			},
 
-			initVideo: function (clbk) {
-
+			initVideo: function (clbk, ads) {
 
 				if(!el.c) return
+
+				var ended;
 
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 
 				var pels = el.c.find('.js-player-ini');
-
 
 				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -545,6 +545,11 @@ var post = (function () {
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration, share)
 							}
+
+							if (playbackState === 'ended' && ads && !ended){
+								ended = true;
+								clbk(true, true);
+							}
 						},
 
 						error : function(error){
@@ -581,6 +586,7 @@ var post = (function () {
 						enableHotkeys : !p.pip
 					};
 
+
 					$.each(pels, function (key, el2) {
 
 						var videoId = el2.getAttribute('data-plyr-video-id');
@@ -590,7 +596,6 @@ var post = (function () {
 						if (elem.closest && elem.closest('.shareTable').attr('stxid') != (share.txid || '')) return
 
 						PlyrEx(el2, options, (_player) => {
-
 
 							if(!el.c) {
 								_player.destroy()
@@ -1459,120 +1464,154 @@ var post = (function () {
 
 							renders.mystars(function () { });
 
-							renders.url(function () {
+							var adsCount = localStorage.getItem('adsCount') || 0;
 
-								if(!el.share) return
+							var ads
 
+							if (share.settings.ads && !adsShowed && adsCount < 3){
 
+								adsCount++;
 
-								if(!el.share.find('.showMore').length) renders.repost();
+								localStorage.setItem('adsCount', adsCount);
+								
+								adsShowed = true;
 
-								actions.position();
+								ads = share.settings.ads;
 
-								renders.urlContent(function () {
+							}
+
+							player = null;
+				
+							var initVideoClbk = function(showAds){
+								
+								renders.url(function () {
 
 									if(!el.share) return
 
+									if(!el.share.find('.showMore').length) renders.repost();
+
 									actions.position();
 
-									if(ed.repost){
-										actions.initVideoLight();
-									}
-									else{
-										actions.initVideo();
-									}
-
-									renders.images(function () {
+									renders.urlContent(function () {
 
 										if(!el.share) return
 
+										actions.position();
 
-										if (!ed.repost) {
+										if(ed.repost){
+											actions.initVideoLight(function(res, next){
 
-											actions.position();
-
-											el.share.find('.complain').on('click', events.complain);
-
-											el.share.on(
-												'click',
-												'.imagePostOpent',
-												events.openGallery,
-											);
-											el.share.on('click', '.forrepost', events.repost);
-
-											el.share.find('.shareSave').on('click', events.shareSave);
-
-											el.share.find('.piptest').on('click', function(){
+												if (next){
+													initVideoClbk();
+												}
 											
-											
-											});
 
-											el.share.find('.toregistration').on('click', events.toregistration)
-
-											el.share.find('.txid').on('click', events.getTransaction);
-											el.share.find('.donate').on('click', events.donate);
-											
-											el.share
-												.find('.asubscribe')
-												.on('click', events.subscribe);
-											el.share
-												.find('.aunsubscribe')
-												.on('click', events.unsubscribe);
-											el.share.find('.metmenu').on('click', events.metmenu);
-
-
-											el.share
-												.find('.notificationturn')
-												.on('click', events.subscribePrivate);
+											}, true);
 										}
+										else{
+											actions.initVideo(function(res, next){
 
-										el.share.find('.sharesocial').on('click', events.sharesocial);
-
-										el.share.find('.postscoresshow').on('click', events.postscores);
-
-										el.share.find('.postcontent').on('click', function(){
-											$(this).addClass('allshowed')
-										})
-
-										el.share.find('.openetc').on('click', function(){
-											
-
-											self.closeContainer()
-
-											self.nav.api.load({
-												open : true,
-												href : 'post?s=' + $(this).attr('share'),
-												inWnd : true,
-												history : true
-											})
-										})
-
-										function initOutsideClickEvent(e) {
-											if(share.itisarticle()) return
-
-											let isOutside = false;
-
-											el.share.closest('.wndcontent').on('mousedown', e => {
-												isOutside = e.target.classList.contains('wndcontent');
-											});
-
-											el.share.closest('.wndcontent').on('mouseup', e => {
-												if (isOutside) {
-													events.clickOut(e);
+												if (next){
+													initVideoClbk();
 												}
 
-												isOutside = false;
-											});
+											}, true);
 										}
 
-										initOutsideClickEvent();
+										renders.images(function () {
 
-										if (clbk) clbk();
+											if(!el.share) return
+
+
+											if (!ed.repost) {
+
+												actions.position();
+
+												el.share.find('.complain').on('click', events.complain);
+
+												el.share.on(
+													'click',
+													'.imagePostOpent',
+													events.openGallery,
+												);
+												el.share.on('click', '.forrepost', events.repost);
+
+												el.share.find('.shareSave').on('click', events.shareSave);
+
+												el.share.find('.piptest').on('click', function(){
+													
+													
+												});
+
+												el.share.find('.toregistration').on('click', events.toregistration)
+
+												el.share.find('.txid').on('click', events.getTransaction);
+												el.share.find('.donate').on('click', events.donate);
+												
+												el.share
+													.find('.asubscribe')
+													.on('click', events.subscribe);
+												el.share
+													.find('.aunsubscribe')
+													.on('click', events.unsubscribe);
+												el.share.find('.metmenu').on('click', events.metmenu);
+
+
+												el.share
+													.find('.notificationturn')
+													.on('click', events.subscribePrivate);
+											}
+
+											el.share.find('.sharesocial').on('click', events.sharesocial);
+
+											el.share.find('.postscoresshow').on('click', events.postscores);
+
+											el.share.find('.postcontent').on('click', function(){
+												$(this).addClass('allshowed')
+											})
+
+											function initOutsideClickEvent(e) {
+												if(share.itisarticle()) return
+	
+												let isOutside = false;
+	
+												el.share.closest('.wndcontent').on('mousedown', e => {
+													isOutside = e.target.classList.contains('wndcontent');
+												});
+	
+												el.share.closest('.wndcontent').on('mouseup', e => {
+													if (isOutside) {
+														events.clickOut(e);
+													}
+	
+													isOutside = false;
+												});
+											}
+	
+											initOutsideClickEvent();
+
+											if (clbk) clbk();
+										});
+
 									});
 
-									
-								});
-							});
+									el.c.find('.skip-ads').on('click', function(){
+
+										initVideoClbk();
+
+									});
+
+								}, showAds);
+
+							}
+
+							initVideoClbk(ads);
+
+
+							
+			
+
+
 						});
 
 						if (share.itisarticle()){
@@ -1711,7 +1750,7 @@ var post = (function () {
 					);
 				}
 			},
-			url: function (clbk) {
+			url: function (clbk, ads) {
 				var url = share.url;
 
 				var og = self.app.platform.sdk.remote.storage[url];
@@ -1723,7 +1762,8 @@ var post = (function () {
 						name: 'url',
 						el: el.c.find('.url'),
 						data: {
-							url: url,
+							url: ads || url,
+							ads: ads,
 							og: og,
 							share: share,
 							fullplayer : !ed.repost

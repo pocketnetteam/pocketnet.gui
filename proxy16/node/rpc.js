@@ -514,17 +514,13 @@ RpcClient.callspec = {
     dumpwallet: 'str',
     importwallet: 'str',
 
-    getaccountearning : 'str int int',
-
     // Jury
     getalljury: '',
     getjuryassigned: 'str',
     getjurymoderators: 'str',
+    getaccountearning : 'str int int',
 
     getbans: 'str'
-
-    
-
 };
 
 var slice = function(arr, start, end) {

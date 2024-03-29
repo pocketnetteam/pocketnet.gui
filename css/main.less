@@ -6101,6 +6101,15 @@ html.allcontent_application{
             }   
         }
 
+        .shark, .moderator {
+            .fa-certificate{
+                color : rgb(var(--color-bg-ac-bright));
+            }
+            .fa-crown, .fa-flag{
+                color : rgb(var(--text-on-bg-ac-color));
+                box-shadow: none;
+            }
+        }
 
 
     }
@@ -6400,7 +6409,7 @@ html.allcontent_application{
         margin-top: @rhythm;
         >div{
             vertical-align: bottom;
-            &.forsubscribe{
+            &.forsubscribe, &.forjury{
                 width: 80px;
                 text-align: right;
                 button{
@@ -6426,8 +6435,15 @@ html.allcontent_application{
                     }
                 }
             }
+
+            &.forjury{
+                button{
+                    padding-bottom: 5px;
+                }
+            }
         }
     }
+
     .cwrapper{
         display: flex;
 
@@ -6439,6 +6455,13 @@ html.allcontent_application{
                 width: 50px;
                 flex-grow: 0;
                 max-width: 50px;
+            }
+
+            &.verdict{
+
+                .icon i{
+                    color: rgb(var(--color-bad));
+                }
             }
 
             &.extra{
@@ -6486,9 +6509,16 @@ html.allcontent_application{
         }*/
     }
 
-    .caption{
+
+
+    .complaint{
         font-size: 0.9em;
+        margin-top: 2px;
+        margin-bottom: @rhythm;
+        width: 95%;
     }
+
+
 }
 
 .fastMessage{
@@ -8614,7 +8644,7 @@ html.pipmode{
     }
 }
 
-.peertube-server-hint {
+.peertube-server-hint, .skip-ads {
     z-index: 3;
     position: absolute;
     margin: 10px;
@@ -8638,11 +8668,16 @@ html.pipmode{
     }
 }
 
+
+.skip-ads{
+    right: 0;
+    cursor: pointer;
+}
+
 .topvideosWrapper .peertube-server-hint {
 	bottom: 0;
 	font-size: 0.6em;
 }
-
 ///////////
 #application{
 

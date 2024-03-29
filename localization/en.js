@@ -668,7 +668,7 @@ _l.refresh = "Refresh"
 _l.e13111 = "Add your email to get the latest "+appname+" updates"
 _l.e13112 = "Enter email"
 _l.e13113 = "Add email"
-_l.skip = "Skip"
+_l.skip = "Continue watch"
 _l.e13114 = "There is some problem with your registration due to strange activity."
 _l.e13115 = "Please email"
 _l.e13116 = "to receive coins and open your account."
@@ -2322,6 +2322,7 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2660,6 +2661,62 @@ _l.torusing_proxychangequestion = "Are you sure you want to change proxy?"
 
 _l.listeners = "Listeners";
 
+_l.jury = "Jury"
+_l.juryComplaint = "You are selected for jury duty"
+_l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
+
+_l.juryQuestionPost2 = function(m){
+    
+    let q = "Can you confirm this post"
+
+    if (m){
+        q += ' of <b>' + m + '</b>';
+    }
+    
+    q += " does not belong on Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionComment2 = function(m){
+    
+    let q = "Can you confirm this comment"
+
+    if (m){
+        q += ' of <b>' + m + '</b>';
+    }
+    
+    q += " does not belong on Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionUser2 = function(m){
+    
+    let q = "Can you confirm"
+
+    if (m){
+
+        q += ' <b>' + m + '</b>';
+
+    } else {
+
+        q += ' this user';
+
+    }
+    
+    q += " is violating the rules of Bastyon?"
+
+    return q;
+}
+
+_l.juryQuestionUser2 = "Can you confirm this user is violating the rules of Bastyon?"
+
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
+
 _l.enterTheAmount = "Enter the amount in PKOIN to see your ad reach and to launch the ad";
 
 _l.boost = "Boost";
@@ -2669,6 +2726,8 @@ _l.clearLocal = 'Clear Local Storage';
 _l.clearLocalActions = 'Clear transaction information';
 
 _l.clearLocalQuestion = 'Do you really want to clear Local Storage?';
+
+_l.showAds = 'Show info about boost at the beginning of the video';
 
 
 _l.registration_not_in_progress = "Your registration process has not started yet, you need to either solve the captcha or have PKOIN on your account address"
@@ -2774,6 +2833,11 @@ _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
+
+_l.accountBanned = "Your account has been blocked for actions contrary to the Bastyon rules.";
+_l.reason = "Reason: ";
+_l.accountBannedActions = "You can't post, comment, and do other similar activities, but you can continue to use your wallet.";
+_l.unlockDate = "Unlock date:";
 _l.showblockedusers = "Show blocked users";
 
 _l.cleartempactions = "Do you really want to clear temporary application information about your actions?"
@@ -2795,3 +2859,5 @@ _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
 _l.limits = "Limits"
+
+_l.start = "Start"
