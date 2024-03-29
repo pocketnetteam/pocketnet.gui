@@ -45,7 +45,7 @@ const TestWsPort = 6067;
 const TestSecureWsPort = 6667;
 
 var testnodes = [
-	{
+	/*{
 		host : '78.37.233.202',
 		port : TestWebPort,
 		ws : TestWsPort,
@@ -63,7 +63,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.1.pocketnet.app',
 		stable : true
-	},
+	},*/
 	{
 		host : '157.90.228.34',
 		port : TestWebPort,
@@ -81,7 +81,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.pocketnet.app',
 		stable : true
-	},
+	}/*,
 	{
 		host : 'pnettool.pocketnet.app',
 		port : TestWebPort,
@@ -99,7 +99,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'lostystyg',
 		stable : false
-	}
+	}*/
 ]
 
 
