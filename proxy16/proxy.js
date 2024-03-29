@@ -51,6 +51,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		self.test = test
 		self.reverseproxy = reverseproxy
 
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
