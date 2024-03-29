@@ -979,6 +979,16 @@
 		.postbody{
 			position: relative;
 			.closeAnswer{
+				margin-left: 1.5 * @rhythm;
+				color: rgba(var(--neutral-grad-2));
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : rgba(var(--color-txt-ac));
+				}
+			}
+			/*.closeAnswer{
 				right: 0;
 				top : 0;
 				padding : @rhythm;
@@ -990,7 +1000,7 @@
 				&:hover{
 					color : rgba(var(--color-txt-ac));
 				}
-			}
+			}*/
 		}
 
 		.errormessage{
@@ -1043,7 +1053,8 @@
 				&.postCellWrapper{
 					width: 38px;
 					min-width: 38px;
-					
+
+					.closeAnswer,
 					.closeEdit,
 					.postaction{
 						line-height: 40px;
@@ -1413,7 +1424,7 @@
 	.menuitem{
 		cursor: pointer;
 		>div{
-			padding : @rhythm;
+			padding : 2*  @rhythm;
 			border-bottom: 1px solid rgb(var(--neutral-grad-0));
 			.transition(0.3s);
 
@@ -1721,10 +1732,6 @@ html.mobileview{
 			.postbody{
 				padding : 0;
 				position: relative;
-
-				.closeAnswer{
-					display: none;
-				}
 			}
 
 			.posttable{
@@ -1740,6 +1747,14 @@ html.mobileview{
 
 		.answer{
 			padding : 0;
+
+			.iconWrapper{
+				display: none;
+			}
+
+			.closeAnswer{
+				margin-left: 0!important;
+			}
 		}
 
 		
@@ -1820,7 +1835,7 @@ html.mobileview{
 
 		.answer{
 			.postbody{
-				.closeAnswer{
+				/*.closeAnswer{
 					position: absolute;
 					left : 0;
 					right: auto;
@@ -1835,7 +1850,7 @@ html.mobileview{
 						width: 38px;
 						height: 38px;
 					}
-				}
+				}*/
 
 				.posttable{
 					>div{
