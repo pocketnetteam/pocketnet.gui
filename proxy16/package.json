@@ -14,7 +14,8 @@
         "serveProd": "nodemon cli.js --cli",
         "servePreProd": "nodemon cli.js --cli --experimentalnodes",
         "install-windows-service": "winser -i",
-        "uninstall-windows-service": "winser -r"
+        "uninstall-windows-service": "winser -r",
+        "build": "grunt"
     },
     "author": "Max Grishkov",
     "license": "ISC",
@@ -30,6 +31,7 @@
         "express-useragent": "^1.0.15",
         "firebase-admin": "^12.0.0",
         "heapdump": "^0.3.15",
+        "hex-captcha": "^2.0.5",
         "is-localhost-ip": "^2.0.0",
         "lambda-rate-limiter": "3.0.1",
         "lodash": "^4.17.15",
@@ -50,6 +52,9 @@
         "ws": "^8.16.0"
     },
     "devDependencies": {
+        "@types/grunt": "^0.4.31",
+        "grunt": "^1.6.1",
+        "grunt-cli": "^1.4.3",
         "nodemon": "^3.0.3",
         "winser": "^1.0.3"
     }

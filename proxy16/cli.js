@@ -1,6 +1,7 @@
 global.MIN_NODES_COUNT = 10
 global.WRITE_LOGS = true
 global.USE_TRUST_NODES_ONLY = false
+global.USE_TLS_NODES_ONLY = false
 
 
 var kit = require('./kit.js');
@@ -12,11 +13,11 @@ var readline = require('readline');
 
 
 
-var destroy = function(repeat){
+var destroy = function (repeat) {
 
     return kit.destroy().catch(e => {
 
-        if(!repeat){
+        if (!repeat) {
 
             return kit.manage.proxy.detach().then(r => {
                 return destroy(true)
@@ -34,9 +35,9 @@ var destroy = function(repeat){
 
 
 var cli = {
-    command : function(input){
+    command: function (input) {
 
-        if(!input || input === 'help'){
+        if (!input || input === 'help') {
 
             input = 'help.commands'
 
@@ -48,21 +49,20 @@ var cli = {
 
         var data = undefined;
 
-        try{
+        try {
             data = JSON.parse(inputs[1] || "")
         }
-        catch(e){
-
+        catch (e) {
         }
 
         var kaction = f.deep(kit, 'manage.' + action)
 
-		if(!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
+        if (!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
 
         return kaction(data)
 
     },
-    waitcommand : function(){
+    waitcommand: function () {
         let rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout,
@@ -73,22 +73,28 @@ var cli = {
 
         rl.on('line', (input) => {
 
-          input = input.toLowerCase();
+            //input = input.toLowerCase();
 
-          rl.close();
+            rl.close();
 
+            try {
+                cli.command(input).then(r => {
 
-          cli.command(input).then(r => {
-
-            console.log(r || "Done")
-            cli.waitcommand()
-
-          }).catch(e => {
-
-            console.error(e || "Error")
-            cli.waitcommand()
-
-          })
+                    console.log(r || "Done")
+                    cli.waitcommand()
+    
+                }).catch(e => {
+    
+                    console.error(e || "Error")
+                    cli.waitcommand()
+    
+                })
+            }
+            catch(e){
+                console.error(e || "Error")
+                cli.waitcommand()
+            }
+          
 
         });
     }
@@ -97,8 +103,8 @@ var cli = {
 
 
 kit.init({
-    node : {
-        dataPath : f.path('pocketcoin')
+    node: {
+        dataPath: f.path('pocketcoin')
     }
 }).catch(r => {
     console.log(r)

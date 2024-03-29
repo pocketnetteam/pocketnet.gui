@@ -1041,9 +1041,26 @@ var Wallet = function(p){
 
     }
 
-    self.info = function(){
+    self.info = function(compact){
 
+        /*if (compact){
 
+            return {
+                inited,
+                queue : _.reduce(addresses, (m ,r) => {
+                    return m + r.queue.length
+                }, 0),
+
+                balance : _.reduce(addresses, (m ,r) => {
+                    return m + (r.unspents ? r.unspents.length : 0)
+                }, 0),
+
+                unspents: _.reduce(addresses, (m ,r) => {
+                    return m + self.unspents.total(r.unspents)
+                }, 0),
+            }
+
+        }*/
 
         var info = {
             inited : inited,

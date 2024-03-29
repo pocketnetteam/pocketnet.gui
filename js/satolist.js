@@ -327,6 +327,13 @@ Platform = function (app, listofnodes) {
         'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
         'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
         'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
+        'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop' : true,
+        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true,
+        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
+        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true,
+        'PNAez3KW8mcQdaVJDzTdv5WSGddcoDwBH2' : true,
+        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG' : true,
+        'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s' : true
     } 
 
     self.shark = {}
@@ -391,7 +398,7 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.archivedServers = window.project_config.archivedPeertubeServers || []
+    //self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
@@ -4150,7 +4157,6 @@ Platform = function (app, listofnodes) {
                     if (needshowkey){
                         if (isMobile()){
                             self.ui.showmykey({
-                                //afterregistration : true,
                                 showsavelabel : true
                             })
                         }
@@ -6292,7 +6298,7 @@ Platform = function (app, listofnodes) {
                         id : share.txid,
                         share: exported,
                         user: user.export(),
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 };
 
@@ -19800,7 +19806,7 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk) {
 
                     if (data.height <= platform.currentBlock) {
-                        platform.sdk.notifications.wsBlock(data.data.height)
+                        platform.sdk.notifications.wsBlock(data.height)
                         return
                     }
 
@@ -22685,7 +22691,6 @@ Platform = function (app, listofnodes) {
 
         self.app.api.wait.ready('use', 6000).then(r => {
 
-
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
 
@@ -22710,6 +22715,8 @@ Platform = function (app, listofnodes) {
                 }, 50)
             })
 
+        }).then(() => {
+            return self.app.api.getPeertubeserversList()
         }).then(r => {
 
 

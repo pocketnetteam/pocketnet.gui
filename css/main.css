@@ -7689,3 +7689,6 @@ div#bc-root.pipped {
 div#bc-root.pipped .bc-video-container {
   max-width: none!important;
 }
+.onlylight {
+  color-scheme: only light;
+}

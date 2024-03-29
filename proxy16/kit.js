@@ -32,47 +32,71 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 logger.setlevel('debug');
 
+// Mainnet ports
+const WebPort = 38081;
+const SecureWebPort = 38881;
+const WsPort = 8087;
+const SecureWsPort = 8887;
+
+// Testnet ports
+const TestWebPort = 39091;
+const TestSecureWebPort = 39991;
+const TestWsPort = 6067;
+const TestSecureWsPort = 6667;
+
 var testnodes = [
 	{
 		host : '78.37.233.202',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : 'test.v.pocketnet.app',
 		stable : true
 	},
 
 	{
 		host : '157.90.235.121',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : 'test.1.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '157.90.228.34',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '116.203.219.28',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : 'test.pocketnet.app',
 		stable : true
 	},
 	{
 		host : 'pnettool.pocketnet.app',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : '0.22-alpha-isolated',
 		stable : false
 	},
 	{
 		host : '109.173.41.29',
-		port : 39091,
-		ws : 6067,
+		port : TestWebPort,
+		ws : TestWsPort,
+		sport : TestSecureWebPort,
+		sws : TestSecureWsPort,
 		name : 'lostystyg',
 		stable : false
 	}
@@ -83,65 +107,105 @@ var activenodes = [
 	
 	{
 		host : '135.181.196.243',
-		port : 38081,
-		ws : 8087,
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
 		name : '135.181.196.243',
 		stable : true
 	},
 
 	{
 		host : '202.61.253.55', //
-		port : 38081,
-		ws : 8087,
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
 		name : '202.61.253.55',
 		stable : true
 	},
-
-	{
-		host : '140.99.153.138',
-		port : 38081,
-		ws : 8087,
-		name : '140.99.153.138',
-		stable : true
-	},
-
-	{
-		host : '172.83.108.41',
-		port : 38081,
-		ws : 8087,
-		name : '172.83.108.41',
-		stable : true
-	},
-
 	{
 		host : '207.180.201.246', ///
-		port : 38081,
-		ws : 8087,
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
 		name : '207.180.201.246',
 		stable : true
 	},
 
 	{
 		host : '5.189.141.204', ///
-		port : 38081,
-		ws : 8087,
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
 		name : '5.189.141.204',
 		stable : true
 	},
 	{
 		host : '162.246.52.155',
-		port : 38081,
-		ws : 8087,
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
 		name : '162.246.52.155',
 		stable : true
 	},
 	{
-		host : '172.83.108.40',
-		port : 38081,
-		ws : 8087,
-		name : '172.83.108.40',
+		host : '95.31.45.162',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '95.31.45.162',
 		stable : true
-	}
+	},
+	{
+		host : '79.143.35.233',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '79.143.35.233',
+		stable : true
+	},
+	{
+		host : '109.197.196.106',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '109.197.196.106',
+		stable : true
+	},
+	{
+		host : '65.21.252.135',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.252.135',
+		stable : true
+	},
+	{
+		host : '178.217.159.221',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '178.217.159.221',
+		stable : true
+	},
+	{
+		host : '65.21.56.203',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.56.203',
+		stable : true
+	},
 ]
 
 var nodes = activenodes
@@ -232,6 +296,10 @@ var defaultSettings = {
 	
 	bots : {
 		dbpath : 'data/bots',
+	},
+
+	atransactions : {
+		dbpath : 'data/atransactions',
 	},
 
 	proxies : {
@@ -1194,6 +1262,39 @@ const kit = {
 				rec(kit.manage)
 
 				return Promise.resolve(list.join("\n"))
+			}
+		},
+
+		atransactions: {
+			get: function () {
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						atransactions: proxy.aTransactions.get()
+					})
+				})
+			},
+
+			add: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.add(txid)
+				})
+			},
+
+			addlist: function ({txids}) {
+				return kit.proxy().then(proxy => {
+
+					var promises = _.map(txids, function (txid) {
+						return proxy.aTransactions.add(txid)
+					})
+
+					return Promise.all(promises)
+				})
+			},
+
+			remove: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.remove(txid)
+				})
 			}
 		},
 

@@ -8667,7 +8667,11 @@ pluralform = function (n, w) {
 decodeEntities = function (s) {
 	const temp = document.createElement('p');
 	temp.innerHTML = s;
-	return temp.textContent || temp.innerText;
+	var v = temp.textContent || temp.innerText;
+
+	temp.remove()
+
+	return v
 }
 
 truncateString = function (str, n, useWordBoundary) {
@@ -8765,10 +8769,23 @@ parseVideo = function(url) {
 		}
 	} else if (hostname.includes('bitchute.com')) {
 		type = 'bitchute';
+
+		
+
 		id = pathParts[1];
 	} else if (hostname.includes('brighteon.com')) {
 		type = 'brighteon';
-		id = path;
+
+		var ps = (path || "").split('?')[0]
+
+		var pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+		if(!pattern.test(ps)){
+			return {}
+		}
+
+
+		id = ps;
 	} else if (pathname.includes('/ipfs/')) {
 		const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
 		const ipfsId = path.match(ipfsIdRegex)[1];
@@ -10208,7 +10225,7 @@ var connectionSpeed = function()
 replaceArchiveInImage = function(src) {
 	var srcNew = src;
 
-	app.platform.archivedServers.map(server => {
+	window.project_config.archivedPeertubeServers.map(server => {
 		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 

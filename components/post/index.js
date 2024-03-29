@@ -1832,7 +1832,7 @@ var post = (function () {
 
 							var info = app.platform.sdk.videos.storage[share.url]
 
-							if (info){
+							if (info && info.data){
 								if (info.data.isLive){
 									_p.el.find('.statswrapperExtended .number').html(info.data.viewers || 0)
 

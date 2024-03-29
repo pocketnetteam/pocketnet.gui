@@ -63,6 +63,7 @@ var Roy = function (parent) {
 		if (options.old) instance.old = true;
 		if (options.offline) instance.offline = true;
 		if (options.archiveDouble) instance.archiveDouble = true;
+		if (options.archived) instance.archived = true;
 
 		instance.init();
 
@@ -257,15 +258,21 @@ var Roy = function (parent) {
 		});
 	};
 
-	self.info = function () {
+	self.info = function (compact) {
 		var info = {};
 
 		_.each(instances, function (instance) {
+
+			if (compact && (!instance.canuse() || !instance.info().canuploading || instance.cantuploading)){
+				return
+			}
+
 			var stats = instance.stats();
 
 			info[instance.host] = {
 				host: instance.host,
 				ip : instance.ip,
+				archived: !!instance.archived,
 				canuse: instance.canuse(),
 				stats
 			};
