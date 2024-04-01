@@ -72,7 +72,7 @@ jobs:
         if: always()
         run: |
           xcodebuild -version
-          xcrun notarytool --help
+          xcrun --find notarytool
           ls -l ./
           cat notarization-error.log
       - name: Upload artifact
