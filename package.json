@@ -43,6 +43,7 @@
         "@babel/preset-env": "^7.23.8",
         "@electron/notarize": "^2.3.0",
         "babel-plugin-remove-use-strict": "^1.0.1",
+        "dmg-license": "^1.0.11",
         "electron": "^22.3.27",
         "electron-builder": "^24.9.1",
         "electron-builder-notarize": "^1.5.2",
