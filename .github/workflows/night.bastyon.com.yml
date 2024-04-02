@@ -73,7 +73,7 @@ jobs:
         run: |
           xcodebuild -version
           xcrun --find notarytool
-          npm run notarytool
+          npm run notarycheck
           ls -l ./
           cat notarization-error.log
       - name: Upload artifact
