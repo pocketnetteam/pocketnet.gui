@@ -41,11 +41,11 @@
     "devDependencies": {
         "@babel/core": "^7.23.7",
         "@babel/preset-env": "^7.23.8",
+        "@electron/notarize": "^2.3.0",
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^22.3.27",
         "electron-builder": "^24.9.1",
         "electron-builder-notarize": "^1.5.1",
-        "electron-notarize": "",
         "grunt": "^1.6.1",
         "grunt-cli": "^1.4.3",
         "html-minifier": "^4.0.0",
