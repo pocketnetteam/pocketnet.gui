@@ -54,9 +54,7 @@ jobs:
           npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: NOTARYCHECKS
         run: |
-          node notarycheck.js > notarycheck.log &
-          cat notarycheck.log
-          ls
+          node notarycheck.js
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
