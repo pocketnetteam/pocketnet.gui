@@ -1,10 +1,19 @@
+const { spawn } = require('child_process');
+
 function isNotaryToolAvailable() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const result = yield spawn_1.spawn('xcrun', ['--find', 'notarytool']);
-        return result.code === 0;
+    const command = spawn('xcrun', ['--find', 'notarytool']);
+
+    command.on('exit', function (code, signal) {
+        console.log(`EXIT: ${code} ${signal}`);
+    });
+
+    command.stdout.on('data', (data) => {
+        console.log(`STDOUT:\n${data}`);
+    });
+    
+    command.stderr.on('data', (data) => {
+        console.error(`STDERR:\n${data}`);
     });
 }
 
-(async () => {
-    console.log('NOTARY_TOOL', await isNotaryToolAvailable());
-})();
+isNotaryToolAvailable();
