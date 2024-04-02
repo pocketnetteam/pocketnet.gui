@@ -73,6 +73,7 @@ jobs:
       - name: Show logs
         if: always()
         run: |
+          ls ./dist
           xcodebuild -version
           xcrun --find notarytool
           ls -l ./
