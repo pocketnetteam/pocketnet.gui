@@ -45,7 +45,7 @@
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^22.3.27",
         "electron-builder": "^24.9.1",
-        "electron-builder-notarize": "^1.5.1",
+        "electron-builder-notarize": "^1.5.2",
         "grunt": "^1.6.1",
         "grunt-cli": "^1.4.3",
         "html-minifier": "^4.0.0",
