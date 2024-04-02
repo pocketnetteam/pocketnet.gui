@@ -1,12 +1,10 @@
 {
     "name": "pocketnet",
     "project": "Bastyon",
-
     "version": "0.8.84",
     "versionsuffix": "0",
     "cordovaversion": "1.8.84",
     "cordovaversioncode": "180840",
-
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -56,6 +54,7 @@
         "uglifycss": "^0.0.29"
     },
     "dependencies": {
+        "@actions/core": "^1.10.1",
         "@seald-io/nedb": "^4.0.4",
         "arch": "^2.2.0",
         "auto-launch": "^5.0.5",
