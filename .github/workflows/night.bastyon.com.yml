@@ -67,6 +67,10 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
           CSC_LINK: 'file://applecert.p12'
           CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
         run: |
           npm run distm
           ls -lh ./dist/
