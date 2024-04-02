@@ -68,6 +68,16 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 		<% } %>
 
+		<% if(answer) {%>
+
+			<div class="closeWrapper">
+				<div elementsid="comments_closeAnswer" class="closeAnswer">
+					<i class="far fa-times-circle"></i>
+				</div>
+			</div>
+	
+		<% } %>
+
 		<% 
 			
 			
@@ -149,12 +159,6 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 	</div>
 
-	<% if(answer) {%>
-
-		<div elementsid="comments_closeAnswer" class="closeAnswer">
-			<i class="far fa-times-circle"></i>
-		</div>
-
-	<% } %>
+	
 
 </div>

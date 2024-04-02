@@ -1745,23 +1745,33 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'youtube') {
 
-                if (url.indexOf("watch") > -1) {
+                if(url.indexOf('@') == -1){
 
-                    var s = url.split("?");
+                    if (url.indexOf("watch") > -1) {
 
-                    if (s[1]) {
-
-
-                        var v = parameters(s[1]);
-
-                        if (v.v) {
-                            _url = 'https://youtu.be/' + v.v //'https://www.youtube.com/embed/' + v.v;
-
-                            meta.id = v.v
+                        var s = url.split("?");
+    
+                        if (s[1]) {
+    
+    
+                            var v = parameters(s[1]);
+    
+                            if (v.v) {
+                                _url = 'https://youtu.be/' + v.v
+    
+                                meta.id = v.v
+                            }
+    
                         }
-
                     }
+
+                    if (url.indexOf("youtu.be") > -1) {
+                        //_url = 'https://youtu.be/' + v.v
+                    }
+
                 }
+
+                
             }
 
             if (meta.type == 'vimeo' && url.indexOf("player") == -1) {
@@ -1833,6 +1843,9 @@ Platform = function (app, listofnodes) {
         else {
 
         }
+
+        console.log('parse2', meta)
+
         return meta;
     }
 
