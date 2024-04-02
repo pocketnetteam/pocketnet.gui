@@ -14,6 +14,7 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
+        "notarycheck": "node notarytool.js",
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
