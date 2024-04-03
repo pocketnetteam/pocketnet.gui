@@ -107,6 +107,9 @@
         "winston": "^3.3.3",
         "ws": "^8.16.0"
     },
+    "overrides": {
+        "@electron/notarize": "^2.1.0"
+    },
     "build": {
         "productName": "Bastyon",
         "afterSign": "electron-builder-notarize",
