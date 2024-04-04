@@ -8917,10 +8917,14 @@ Platform = function (app, listofnodes) {
             },
 
             hiddenComment : function(comment){
+
+                if(comment.blck_cnt_cmt) return true
+
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (self.app.platform.sdk.user.itisme(address)) return false
+
 
                 if (ustate && ustate.reputation <= -0.5){
                     if(comment.scoreDown >= 5){
@@ -10113,7 +10117,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            nameExist: function (name, clbk) {
+            nameExist: function (name, clbk, reload) {
 
                 var map = self.app.map;
 
@@ -10130,26 +10134,11 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress.load((name)).then((data) => {
+                self.psdk.nameAddress.load(name, reload).then((data) => {
 
                     if (clbk) {
                         clbk(data)
                     }
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(false)
-                    }
-                })
-
-                return
-
-                self.app.api.rpc('getuseraddress', [(name)]).then(d => {
-                    var r = deep(d, '0.address');
-
-                    if (clbk)
-                        clbk(r || false)
-
-
                 }).catch(e => {
                     if (clbk) {
                         clbk(false)

@@ -1427,7 +1427,7 @@ _l.lockedaccount = "Your account has been blocked due to a decrease in reputatio
 _l.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
 _l.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
-_l.hiddenCommentLabel = "Comment hidden due to low rating"
+_l.hiddenCommentLabel = "The comment is hidden due to a low rating or because the author has blocked the user"
 
 _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
 _l.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
