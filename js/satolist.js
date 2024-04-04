@@ -8917,10 +8917,14 @@ Platform = function (app, listofnodes) {
             },
 
             hiddenComment : function(comment){
+
+                if(comment.blck_cnt_cmt) return true
+
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (self.app.platform.sdk.user.itisme(address)) return false
+
 
                 if (ustate && ustate.reputation <= -0.5){
                     if(comment.scoreDown >= 5){
