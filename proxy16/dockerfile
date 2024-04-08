@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y curl g++ make python3 pkg-config libpix
 WORKDIR /usr/src/app
 COPY . .
 
-RUN npm install --dev && npm run build && rm -rf node_modules
+RUN npm install --dev && npm run build:proxy16 && rm -rf node_modules
 
 ENV NODE_ENV production
 RUN npm install
