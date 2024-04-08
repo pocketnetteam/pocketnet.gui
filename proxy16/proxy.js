@@ -739,7 +739,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			_.each(ins, function(r){
 				_.each(r, function(p){
-					if(!p.old){
+					if(!p.old && !p.offline){
 						trustpeertube.push(p.host)
 					}
 				})
@@ -758,6 +758,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					.filter(s => !!s.testnet === testnet)
 					.map(s => {
 						const serversList = [...s.list];
+
+						serversList.forEach(s => {
+							s.offline = !s.online
+							s.cantuploading = !s.upload
+						});
 
 						if (s.archived) {
 							serversList.forEach(s => s.archived = true);
