@@ -734,18 +734,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			trustpeertube = []
 
-			const ins = await this.syncAndReadList();
+			const targetNetwork = (test) ? "testnet" : "mainnet";
 
-			if (test) {
-				ins.unshift([
-					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					// { host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-				]);
-			}
+			const ins = await this.syncAndReadList(targetNetwork);
 
 			_.each(ins, function(r){
 				_.each(r, function(p){
-					if(!p.old){
+					if(!p.old && !p.offline){
 						trustpeertube.push(p.host)
 					}
 				})
@@ -756,28 +751,37 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		syncAndReadList: async function () {
+		syncAndReadList: async function (network) {
 			function toLegacyList(list) {
-				return Object.values(list.swarms).map(s => {
-					const serversList = [...s.list];
+				const testnet = (network === "testnet");
 
-					if (s.archived) {
-						serversList.forEach(s => s.archived = true);
+				return Object.values(list.swarms)
+					.filter(s => !!s.testnet === testnet)
+					.map(s => {
+						const serversList = [...s.list];
 
-						// FIXME: This is a temporary solution. Archive servers must be checked by order
-						if (s.archived.length === 2) {
-							serversList.push({
-								...list.archive[s.archived[0]],
-								archiveDouble: true,
-							});
-							serversList.push(list.archive[s.archived[1]]);
-						} else {
-							serversList.push(list.archive[s.archived[0]]);
+						serversList.forEach(s => {
+							s.offline = !s.online
+							s.cantuploading = !s.upload
+						});
+
+						if (s.archived) {
+							serversList.forEach(s => s.archived = true);
+
+							// FIXME: This is a temporary solution. Archive servers must be checked by order
+							if (s.archived.length === 2) {
+								serversList.push({
+									...list.archive[s.archived[0]],
+									archiveDouble: true,
+								});
+								serversList.push(list.archive[s.archived[1]]);
+							} else {
+								serversList.push(list.archive[s.archived[0]]);
+							}
 						}
-					}
 
-					return serversList;
-				});
+						return serversList;
+					});
 			}
 
 			let fileRead = offlinePeertubeList;

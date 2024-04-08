@@ -1748,23 +1748,33 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'youtube') {
 
-                if (url.indexOf("watch") > -1) {
+                if(url.indexOf('@') == -1){
 
-                    var s = url.split("?");
+                    if (url.indexOf("watch") > -1) {
 
-                    if (s[1]) {
-
-
-                        var v = parameters(s[1]);
-
-                        if (v.v) {
-                            _url = 'https://youtu.be/' + v.v //'https://www.youtube.com/embed/' + v.v;
-
-                            meta.id = v.v
+                        var s = url.split("?");
+    
+                        if (s[1]) {
+    
+    
+                            var v = parameters(s[1]);
+    
+                            if (v.v) {
+                                _url = 'https://youtu.be/' + v.v
+    
+                                meta.id = v.v
+                            }
+    
                         }
-
                     }
+
+                    if (url.indexOf("youtu.be") > -1) {
+                        //_url = 'https://youtu.be/' + v.v
+                    }
+
                 }
+
+                
             }
 
             if (meta.type == 'vimeo' && url.indexOf("player") == -1) {
@@ -1836,6 +1846,9 @@ Platform = function (app, listofnodes) {
         else {
 
         }
+
+        console.log('parse2', meta)
+
         return meta;
     }
 
@@ -9086,10 +9099,14 @@ Platform = function (app, listofnodes) {
             },
 
             hiddenComment : function(comment){
+
+                if(comment.blck_cnt_cmt) return true
+
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (self.app.platform.sdk.user.itisme(address)) return false
+
 
                 if (ustate && ustate.reputation <= -0.5){
                     if(comment.scoreDown >= 5){
@@ -10289,7 +10306,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            nameExist: function (name, clbk) {
+            nameExist: function (name, clbk, reload) {
 
                 var map = self.app.map;
 
@@ -10306,26 +10323,11 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress.load((name)).then((data) => {
+                self.psdk.nameAddress.load(name, reload).then((data) => {
 
                     if (clbk) {
                         clbk(data)
                     }
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(false)
-                    }
-                })
-
-                return
-
-                self.app.api.rpc('getuseraddress', [(name)]).then(d => {
-                    var r = deep(d, '0.address');
-
-                    if (clbk)
-                        clbk(r || false)
-
-
                 }).catch(e => {
                     if (clbk) {
                         clbk(false)

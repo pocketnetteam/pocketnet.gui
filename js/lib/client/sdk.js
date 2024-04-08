@@ -403,9 +403,12 @@ var pSDK = function ({ app, api, actions }) {
             load.push(k)
         })
 
+        var fixload = _.clone(load)
+
+
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
-            getfromdb(p.indexedDb, load).then(dbr => {
+            (p.update ? Promise.resolve([]) : getfromdb(p.indexedDb, load)).then(dbr => {
 
                 load = _.filter(load, (k) => {
 
@@ -531,7 +534,7 @@ var pSDK = function ({ app, api, actions }) {
                         filtered.push(r)
                     }
                     else{
-                        if(r && r.key){
+                        if (r && r.key){
                             baddata[key][r.key] = true
                         }
                         
@@ -559,13 +562,14 @@ var pSDK = function ({ app, api, actions }) {
 
         }).finally(() => {
 
-            _.each(load, (k) => {
+
+            _.each(fixload, (k) => {
                 delete temp[key][k]
             })
 
         })
 
-        _.each(load, (k) => {
+        _.each(fixload, (k) => {
             temp[key][k] = promise
         })
 

@@ -3671,7 +3671,7 @@ var lenta = (function(){
 	
 						if (!video) {
 							promises.push(new Promise((resolve, reject) => {
-								renders.images(p.el.find('.postcontent'), share, () => {
+								renders.images(p.el.find('.cntswrk.cntscontent.postcontent'), share, () => {
 									resolve()
 								})
 							}))
@@ -4187,35 +4187,35 @@ var lenta = (function(){
 
 								var ac = '';
 
-								var _w = mw && !essenseData.openapi ? self.app.width : el.width() || el.closest('.share').width();
-								var _h = el.height()
-								
+								var _w = mw && !essenseData.openapi ? self.app.width : (el.width() || el.closest('.share').width());
 
-								if(_img.width >= _img.height && (essenseData.openapi || image.images.length == 1)){
+								if(_img.naturalWidth >= _img.naturalHeight && (essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
-									var w = _w * (_img.width / _img.height);
+									var w = _w * (_img.naturalWidth / _img.naturalHeight);
 
 									if (w >= imageswidth){
 										w = imageswidth
 
-										h = w * ( _img.height / _img.width) 
+										var h = w * ( _img.naturalHeight / _img.naturalWidth) 
 
 										window.requestAnimationFrame(() => {
-											el.height(h);
 
+											el.height(h);
 										})
 									}
 									window.requestAnimationFrame(() => {
+
+										
 										el.width(w);
 									})
 								}
 
-								if(_img.height >= _img.width && (essenseData.openapi|| image.images.length == 1)){
+								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
 
 									window.requestAnimationFrame(() => {
-										el.height(_w * (_img.height / _img.width))
+										el.height(_w * (_img.naturalHeight / _img.naturalWidth))
 									})
 								}
 

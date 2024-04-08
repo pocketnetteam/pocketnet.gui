@@ -1574,6 +1574,8 @@ var Api = function(app){
     self.getPeertubeserversList = function(){
         return internal.proxy.api.peertubeserversList().then(result => {
 
+            console.log('result', result)
+
             if (result)
                 window.project_config.archivedPeertubeServers = result 
 
