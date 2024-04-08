@@ -175,7 +175,6 @@ var VARS = args.test ? vars.test : vars.prod
 
 console.log('VARS', VARS)
 
-
 var babelifycode = function(code){
 	var c = bablecore.transformSync(code, {
 		presets: [
