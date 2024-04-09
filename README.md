@@ -80,7 +80,7 @@ It is instead an Open Source project that runs on distributed nodes. In addition
 # Download Bastyon on your devices
 You can download our mobile applications from the app stores below:
 
-[<img src="https://raw.githubusercontent.com/Volorf/Badges/master/App%20Store/App%20Store%20Badge.svg" height="40"/>](https://apps.apple.com/es/app/bastyon/id1537944200) [<img src="https://github.com/Volorf/Badges/blob/master/Google%20Play/Google%20Play%20Badge.svg" height="40"/>](https://play.google.com/store/apps/details?id=pocketnet.app)
+[<img src="https://lh3.googleusercontent.com/q1k2l5CwMV31JdDXcpN4Ey7O43PxnjAuZBTmcHEwQxVuv_2wCE2gAAQMWxwNUC2FYEOnYgFPOpw6kmHJWuEGeIBLTj9CuxcOEeU8UXyzWJq4NJM3lg=s0" height="45"/>](https://apps.apple.com/es/app/bastyon/id1537944200) [<img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred.png" height="45"/>](https://play.google.com/store/apps/details?id=pocketnet.app)
 
 Latest release of desktop and other app types can be downloaded via the links below:
 
