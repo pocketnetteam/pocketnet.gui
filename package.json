@@ -130,13 +130,6 @@
                 ]
             },
             {
-                "from": "proxy16/tor",
-                "to": "tor",
-                "filter": [
-                    "**/*"
-                ]
-            },
-            {
                 "from": "proxy16/static",
                 "to": "static",
                 "filter": [
