@@ -1815,7 +1815,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					return Promise.reject({ error: 'deprecated', code: 401 })
 
-					if (!message.A)
+					/*if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
 
 					var dumpdata = _.clone(dump)
@@ -1895,7 +1895,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							result : 'error',
 							error :  err.toString ? err.toString() : err
 						});
-					}
+					}*/
 
 
 
