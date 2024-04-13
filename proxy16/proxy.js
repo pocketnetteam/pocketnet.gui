@@ -1813,6 +1813,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				action: function (message) {
 
+					return Promise.reject({ error: 'deprecated', code: 401 })
+
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
 
