@@ -30,7 +30,6 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "firebase-admin": "^12.0.0",
-        "heapdump": "^0.3.15",
         "hex-captcha": "^2.0.5",
         "is-localhost-ip": "^2.0.0",
         "lambda-rate-limiter": "3.0.1",
