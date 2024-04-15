@@ -108,7 +108,6 @@
     },
     "build": {
         "productName": "Bastyon",
-        "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
@@ -149,7 +148,10 @@
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
-            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
+            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
+            "notarize" : {
+                "teamId" : "Y5JW9JU787"
+            }
         },
         "linux": {
             "target": [
