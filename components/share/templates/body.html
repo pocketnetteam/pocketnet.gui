@@ -13,6 +13,23 @@ var arranges = {
 		<div class="txt">
 			<div elementsid='emjcontainer' class="message" placeholder="<%=e(ed.repost ? 'whatsnewrepost' : (share.itisvideo() ? 'videodesc' : 'whatsnew'))%>" id='emjcontainer' spellcheck="true"></div>
 		</div>
+<!-- 
+		<% if (share.itisvideo() && app.localization.key == 'ru'){ %>
+
+			<div class="adsCheckboxWrapper">
+				<label class="adsCheckboxLabel" for="checkbox_adsCheckbox">
+					<%=e('showAds')%>
+				</label>
+				<span id="adsCheckbox">
+					<%= checkbox.input() %>
+				</span>
+			</div>
+			<div class="adsVideo <% if(checkbox.value) {%>active<% } %>">
+
+			</div>
+
+		<% } %> -->
+
 	
 	<% },
 

@@ -46,15 +46,15 @@ var BastyonSdk = function(){
         setTimeout(() => {
             var link = (document.location.pathname + document.location.search).replace('/', '');
 
-            if(currentState == link) return
+            if(currentState == link && isReplace) return
     
             currentState = link
-    
+
             send({
                 event : 'changestate',
                 data : {
                     value : currentState,
-                    replace : isReplace
+                    replace : false
                 }
             })
         })
@@ -67,7 +67,9 @@ var BastyonSdk = function(){
         window.history['_' + changeState] = window.history[changeState]
         
         window.history[changeState] = new Proxy(window.history[changeState], {
+            
             apply (target, thisArg, argList) {
+                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 
@@ -254,6 +256,30 @@ var BastyonSdk = function(){
         })
     }
 
+    self.barteron = {
+        account : function(data){
+            return action('barteron.account', data)
+        },
+
+        offer : function(data){
+            return action('barteron.offer', data)
+        },
+
+        comment : function(data){
+            return action('barteron.comment', data)
+        },
+
+        vote : function(data){
+            return action('barteron.vote', data)
+        }
+    }
+
+    self.images = {
+        upload : function(data){
+            return action('images.upload', data)
+        }
+    }
+
     self.chat = {
         getOrCreateRoom : function({users, parameters}){
             return action('chat.getOrCreateRoom', {users, parameters}).then(room => {
@@ -319,18 +345,27 @@ var BastyonSdk = function(){
         },
     }
 
+    self.getroute = function(data){
+        return '/' + data.route
+    }
+
     self.init = function(){
 
         self.on('keyboard', ({height}) => {
             document.documentElement.style.setProperty('--keyboardheight', `${height}px`);
 		})
 
+        self.on('changestate', (data) => {
+            currentState = data.route
+		})
+
         return new Promise((resolve, reject) => {
             
-            self.get.appinfo().then(({margintop, theme, application, project}) => {
+            self.get.appinfo().then(({margintop, theme, application, project, production}) => {
 
                 self.applicationInfo = application
                 self.project = project
+                self.test = !production
 
                 if (document.documentElement.hasAttribute('theme')){
                     document.documentElement.removeAttribute('theme');
@@ -345,6 +380,14 @@ var BastyonSdk = function(){
 
         })
 
+    }
+
+    self.inbastyon = function(){
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
     }
 
 

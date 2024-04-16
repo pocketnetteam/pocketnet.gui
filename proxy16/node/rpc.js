@@ -144,6 +144,14 @@ const publics = {
 
     getaccountearning : true,
 
+    // Barteron
+    getbarteronaccounts: true,
+    getbarteronoffersbyaddress: true,
+    getbarteronoffersbyroottxhashes: true,
+    getbarteronfeed: true,
+    getbarterondeals: true,
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true,
     // Jury
     getalljury: true,
     getjuryassigned: true,
@@ -516,15 +524,21 @@ RpcClient.callspec = {
 
     getaccountearning : 'str int int',
 
+    // Barteron
+    getbarteronaccounts: 'obj',
+    getbarteronoffersbyaddress: 'str',
+    getbarteronoffersbyroottxhashes: 'obj',
+    getbarteronfeed: 'obj',
+    getbarterondeals: 'obj',
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj',
     // Jury
     getalljury: '',
     getjuryassigned: 'str',
     getjurymoderators: 'str',
+    getaccountearning : 'str int int',
 
     getbans: 'str'
-
-    
-
 };
 
 var slice = function(arr, start, end) {
