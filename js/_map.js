@@ -814,7 +814,11 @@ __map =  {
 			
 		},
 	
-
+		external : {
+			uri : "external",
+			href : "external",
+			add : insertingfunc
+		},
 		wallet : {
 			uri : "wallet",
 			href : "wallet",

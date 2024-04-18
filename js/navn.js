@@ -1089,6 +1089,18 @@ Nav = function(app)
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
 					
+					return false
+					
+				})
+
+			}
+
+			if(typeof _Electron != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
+
+				link.off('click').on('click', function(event){
+					event.preventDefault();
+					
+					electron.shell().openExternal(this.href);
 
 					return false
 					

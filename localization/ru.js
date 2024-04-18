@@ -2584,3 +2584,11 @@ _l.permissions_descriptions_geolocation = "Приложение запрашив
 
 
 _l.limits = "Лимиты"
+_l.pay = "Оплатить"
+
+
+_l.external_prepareTransaction = 'Производится оплата'
+_l.external_paySucc_nocbpw = 'Оплата произведена, окно будет закрыто'
+_l.external_paySucc_fetch = 'Оплата произведена, передаём данные продавцу'
+_l.external_paySucc_redirect = 'Оплата произведена, переход на страницу продавца'
+

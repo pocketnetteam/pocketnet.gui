@@ -13,6 +13,7 @@
 #transactionview .usericon {
   width: 1.5em;
   height: 1.5em;
+  line-height: 1.5em;
 }
 #transactionview .line {
   display: flex;

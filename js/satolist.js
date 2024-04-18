@@ -1847,8 +1847,6 @@ Platform = function (app, listofnodes) {
 
         }
 
-        console.log('parse2', meta)
-
         return meta;
     }
 
@@ -4479,8 +4477,109 @@ Platform = function (app, listofnodes) {
         
 
 
+        },
+
+        external : function(action, parameters){
+            self.app.platform.sdk.user.stateAction(() => {
+
+                self.app.nav.api.load({
+                    open : true,
+                    href : 'external',
+                    inWnd : true,
+                    essenseData : {
+                        action, 
+                        parameters
+                    }
+                })
+
+            })
+        },
+
+        externalFromCurrentUrl : function(){
+            var p = parameters()
+
+            if (p.ext){
+
+                try{
+
+                    var ps = JSON.parse(hexDecode(p.ext))
+
+                    console.log('ps', ps)
+
+                    if(!ps.action){
+                        throw 'missing:action'
+                    }
+
+                    if (ps.action == 'pay'){
+
+                        if(!ps.address) throw 'missing:address'
+
+                        
+
+                        try{
+                            bitcoin.address.fromBase58Check(ps.address)
+                        }
+
+                        catch (e){
+                            throw 'wrong:address:notvalid'
+                        }
+                        
+                        if(!ps.c_url_type) ps.c_url_type = 'fetch'
+                        if(!ps.payload) ps.payload = {}
+
+                        if(!ps.store) ps.store = {}
+
+                        if(!ps.items || !_.isArray(ps.items) || ps.items.length == 0) throw 'missing:items'
+
+                        var a = 0
+
+                        _.each(ps.items, (item, i) => {
+                            if(!item.name) throw 'missing:items:'+i+':name'
+                            if(!item.value) throw 'missing:items:'+i+':value'
+
+                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':valu:nan'
+
+                            a += item.value
+
+
+                            item.image = superXSS(item.image || '')
+                            item.name = superXSS(item.name)
+                            //item.formattedAmount = self.mp.coin(item.value)
+                        })
+
+                        if(!ps.store.name) throw 'missing:store.name'
+                        if(!ps.store.site) throw 'missing:store.site'
+
+                        
+
+                        ps.store.site = superXSS(ps.store.site)
+                        ps.store.name = superXSS(ps.store.name)
+
+                        ps.value = a
+
+                        if(!ps.value) throw 'missing:value'
+
+
+                        ps.hash = p.ext
+                    }
+
+                    self.ui.external(ps.action, ps)
+
+                    return true
+                }
+                catch(e){
+                    console.error(e)
+
+                    sitemessage(e)
+                }
+                
+
+
+            }
         }
+
     }
+    
 
     self.effects = {
         manager : null,
@@ -22431,6 +22530,8 @@ Platform = function (app, listofnodes) {
 
             self.prepareUser(function() {
 
+                self.ui.externalFromCurrentUrl()
+
                 self.sdk.theme.load()
 
                 clbk();
@@ -24010,13 +24111,19 @@ Platform = function (app, listofnodes) {
 
                         if (route){
 
-                            if(!state || route.indexOf('welcome?') == -1){
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: route,
-                                    history: true
-                                })
+                            if(!self.ui.externalFromCurrentUrl()){
+
+                                if(!state || route.indexOf('welcome?') == -1){
+                                    self.app.nav.api.load({
+                                        open: true,
+                                        href: route,
+                                        history: true
+                                    })
+                                }
+
                             }
+
+                            
                         }
 
                         /////////////

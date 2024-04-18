@@ -2482,8 +2482,12 @@ var wallet = (function(){
 			})
 
 			self.app.events.resize['wallet'] = function(){
+
 				if (el.total)
 					el.total.html('')
+
+					console.log('mode', mode)
+				
 			 	drawCircles(null)
 				
 				
@@ -2699,7 +2703,8 @@ var wallet = (function(){
 
 				w = el.c.closest('.customscroll')
 
-				initEvents();
+				if(!_p.api)
+					initEvents();
 
 				var executor = make
 

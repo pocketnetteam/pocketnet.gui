@@ -2795,3 +2795,11 @@ _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
 _l.limits = "Limits"
+_l.pay = "Pay"
+_l.external_prepareTransaction = 'Payment is being processed'
+_l.external_paySucc_nocbpw = 'Payment has been made, the window will be closed'
+_l.external_paySucc_fetch = 'Payment has been made, we transfer the data to the seller'
+_l.external_paySucc_redirect = "Payment has been made, go to the seller's page"
+
+
+
