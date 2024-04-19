@@ -58,10 +58,56 @@
                 var button = payments.makeButton()
 
                 var elem = document.getElementById('paymentButton');
-                    elem.appendChild(button)
+                    elem.append(button)
             });
         </script>
         <!-- example 1: PaymentButton: end -->
+
+
+
+        
+
+        <!-- example 2: PaymentLink: begin -->
+        <div>
+            <h2>__VAR__.name payment link</h2>
+        </div>
+        <div class="example" >
+            <a href="" id="paymentURL">Payment link</a>
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var payments = window.bastyonLib.payments({
+                    payment : {
+                        "address": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                        "c_url": "https://6.pocketnet.app:8899/ping",
+                        "c_url_type": "fetch",
+                        "s_url": "https://6.pocketnet.app:8899/ping",
+                        "payload": {
+                            "order": "10"
+                        },
+                        "items": [{
+                            "image": "https://i.imgur.com/xpRSxI1.jpeg",
+                            "name": "Omega 3-6-9 (3-Pack)",
+                            "value": 0.1
+                        }, {
+                            "image": "https://i.imgur.com/d0eD64P.jpeg",
+                            "name": "(6-Pack)",
+                            "value": 0.2
+                        }],
+                        "store": {
+                            "name": "Health Ranger Store",
+                            "site": "www.healthrangerstore.com"
+                        }
+                    }
+                })
+
+                var urlElement = document.getElementById('paymentURL');
+                    urlElement.href = payments.makeURL()
+            });
+        </script>
+        <!-- example 2: PaymentLink: end -->
 
         <script src="external.js"></script>
     </body>
