@@ -342,7 +342,7 @@ var external = (function(){
 			getAdresses : function(){
 				var adresses = []
 
-				if (balanceMode == 'all') adresses = [].concat(self.app.platform.sdk.addresses.storage.addresses).concat(self.app.user.address.value)
+				if (balanceMode == 'all') adresses = [].concat([self.app.user.address.value]).concat(self.app.platform.sdk.addresses.storage.addresses)
 				if (balanceMode == 'user') adresses = [self.app.user.address.value]
 				if (balanceMode == 'wallet') adresses = self.app.platform.sdk.addresses.storage.addresses
 

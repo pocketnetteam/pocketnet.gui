@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js customscroll applicationhtml" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv='expires' content='0'>
+        <meta http-equiv="X-Frame-Options: SAMEORIGIN">
+
+        <title>__VAR__.name Demo</title>
+        <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="fragment" content="!">
+        <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
+        <meta name="theme-color" content="#011621" />
+        <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+        <link rel="stylesheet" href="css/main.css?v=503197461855">
+        <link rel="stylesheet" href="css/common.css?v=503197461855">
+        
+    </head>
+    <body id="application" class="menu-hide ">
+
+        <!-- example 1: PaymentButton: begin -->
+        <div>
+            <h2>__VAR__.name payment button</h2>
+        </div>
+        <div class="example" id="paymentButton">
+
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var payments = window.bastyonLib.payments({
+                    payment : {
+                        "address": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                        "c_url": "https://6.pocketnet.app:8899/ping",
+                        "c_url_type": "fetch",
+                        "payload": {
+                            "order": "10"
+                        },
+                        "items": [{
+                            "image": "https://i.imgur.com/xpRSxI1.jpeg",
+                            "name": "Omega 3-6-9 (3-Pack)",
+                            "value": 0.1
+                        }, {
+                            "image": "https://i.imgur.com/d0eD64P.jpeg",
+                            "name": "(6-Pack)",
+                            "value": 0.2
+                        }],
+                        "store": {
+                            "name": "Health Ranger Store",
+                            "site": "www.healthrangerstore.com"
+                        }
+                    }
+                })
+
+                var button = payments.makeButton()
+
+                var elem = document.getElementById('paymentButton');
+                    elem.appendChild(button)
+            });
+        </script>
+        <!-- example 1: PaymentButton: end -->
+
+        <script src="external.js"></script>
+    </body>
+</html>
