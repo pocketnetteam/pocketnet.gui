@@ -80,13 +80,27 @@
 
                 var payments = window.bastyonLib.payments({
                     payment : {
+                        /*
+                            Seller Address
+                        */
                         "address": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
-                        "c_url": "https://6.pocketnet.app:8899/ping",
-                        "c_url_type": "fetch",
-                        "s_url": "https://6.pocketnet.app:8899/ping",
-                        "payload": {
-                            "order": "10"
-                        },
+                        
+                        /*
+                            Require buyer to enter email address
+                        */
+
+                        "email" : true,
+
+                        /*
+                            Require buyer to enter phone number
+                        */
+
+                        "phone" : true,
+
+                        /*
+                            Shopping list - image, name, value required
+                        */
+                       
                         "items": [{
                             "image": "https://i.imgur.com/xpRSxI1.jpeg",
                             "name": "Omega 3-6-9 (3-Pack)",
@@ -96,10 +110,96 @@
                             "name": "(6-Pack)",
                             "value": 0.2
                         }],
+
+                        /*
+                            Seller info - name, website required
+                        */
+
                         "store": {
                             "name": "Health Ranger Store",
                             "site": "www.healthrangerstore.com"
-                        }
+                        },
+
+                        /*
+                        
+                            Shipment server url
+
+                            If specified, the buyer will need to fill out a delivery form
+
+                            The server must process a request like
+
+                            {
+                                shipment : {
+                                    name,
+                                    country,
+                                    address,
+                                    city,
+                                    state,
+                                    zipcode
+                                },
+
+                                locale : 'en',
+                                payload : (Seller Payload) {}
+                            }
+
+                            And return the answer
+
+                            {
+                                value : 3 (Cost of delivery PKOIN)
+                            }
+
+                            Or
+
+                            {
+                                error : {
+                                    text : 'Error text for the user in (locale) language'
+                                }
+                            }
+                        
+                        */
+
+                        "s_url": "https://6.pocketnet.app:8899/ping",
+
+                        /*
+
+                            Seller payload JSON
+
+                        */
+
+                        "payload": {
+                            "order": "10"
+                        },
+
+                        /*
+                            Callback server route
+
+                            request
+                            {
+                                tx : Transaction id
+                                phone : User phone (if seller required),
+                                email : User email (if seller required),
+                                shipment : Shipment details,
+                                ...payload : (Seller Payload) {}
+                            }
+
+                            expected answer - response with code 200
+                        */
+
+                        "c_url": "https://6.pocketnet.app:8899/ping",
+
+                        /* 
+                            Callback server route type: (fetch, redirect) 
+                        */
+
+                        "c_url_type": "fetch",
+
+
+                        /*
+                            Anonimus flag - Do not transfer buyer data to the seller, prohibit paying from the address linked to the account
+                        */
+                        /*
+                        anonimus : true
+                        */
                     }
                 })
 

@@ -2591,4 +2591,23 @@ _l.external_prepareTransaction = 'Производится оплата'
 _l.external_paySucc_nocbpw = 'Оплата произведена, окно будет закрыто'
 _l.external_paySucc_fetch = 'Оплата произведена, передаём данные продавцу'
 _l.external_paySucc_redirect = 'Оплата произведена, переход на страницу продавца'
+_l.external_email_required = 'Введите ваш адрес электронной почты'
+_l.external_phone_required = 'Введите ваш номер телефона'
+_l.external_shipmentValueEmpty = 'Стоимость доставки не была рассчитана. Проверьте правильность заполнения полей или свяжитесь с продавцом'
+_l.external_fill_shipment = 'Заполните все поля, необходимые для того чтобы рассчитать стоимость доставки'
+_l.receiver_address = "Адрес получателя"
+_l.anonymous_purchase = "Анонимная покупка"
+_l.anonymous_purchase_text = "В данном случае продавец не требует для оплаты данные об аккаунте и держателе аккаунта, но и оплатить покупку нельзя с адреса аккаунта, только с адресов кошелька"
 
+
+_l.phone="Телефон"
+_l.country="Страна"
+_l.name="Имя"
+_l.city="Город"
+_l.state="Штат"
+_l.zipcode="Индекс"
+_l.external_loading = "Загрузка"
+_l.external_paySucc_details = "Оплата произведена. Детали транзакции"
+
+_l.total = "Стоимость"
+_l.shipment = "Доставка"

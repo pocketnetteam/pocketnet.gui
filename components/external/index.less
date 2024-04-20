@@ -59,6 +59,14 @@
         }
     }
 
+    .captionRow{
+        position: sticky;
+        left : 0;
+        top : 0;
+        right: 0;
+        z-index: 2;
+    }
+
     .profile{
         display: flex;
         align-items: top;
@@ -108,12 +116,111 @@
     }
 
     .errorWrapper{
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        background: rgb(var(--background-hidden-layer));
         padding : 2 * @rhythm;
         text-align: center;
         span{
             font-size: 0.8em;
             color : rgb(var(--color-bad));
         }
+    }
+
+    input{
+        background: rgb(var(--background-secondary-theme));
+    }
+    .vc_textInput{
+        background: rgb(var(--background-secondary-theme))!important;
+    }
+
+    .vc_iconWrapper{
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .balanceModeWrapper{
+        margin-top: 2 * @rhythm;
+    }
+
+    .balanceModeWrapper,
+    .customer{
+        padding-left: @rhythm;
+        padding-right: @rhythm;
+        
+    }
+
+    .anonimusBadge{
+        margin-top: @rhythm;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        padding : 2 * @rhythm;
+        text-align: center;
+
+        i{
+            color : rgb(var(--color-good));
+        }
+
+        span{
+            font-size: 0.9em;
+
+            &.b{
+                font-weight: 700;
+                color : rgb(var(--color-good));
+            }
+            &.sb{
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    .pNameW{
+        font-size: 0.9em!important;
+    }
+
+    .pName{
+        margin-bottom: 0.5 * @rhythm;
+    }
+
+    .balanceModeWrapper{
+        .pName{
+            padding-left: @rhythm;
+        }
+    
+    }
+
+    .shipment{
+        padding-left: @rhythm;
+        padding-right: @rhythm;
+
+        .pNam
+
+        .inputs{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .parameterMaketWrapper{
+                width: 100%;
+
+                &[parameter="city"],
+                &[parameter="zipcode"],
+                &[parameter="state"]{
+                    width: 32%;
+                }
+            }
+
+
+        }
+    }
+
+    .parameterMaketWrapper{
+        margin-bottom: @rhythm;
     }
 
     .pay{
@@ -179,6 +286,7 @@
             }
 
             .info{
+                width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;

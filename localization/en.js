@@ -2800,6 +2800,22 @@ _l.external_prepareTransaction = 'Payment is being processed'
 _l.external_paySucc_nocbpw = 'Payment has been made, the window will be closed'
 _l.external_paySucc_fetch = 'Payment has been made, we transfer the data to the seller'
 _l.external_paySucc_redirect = "Payment has been made, go to the seller's page"
+_l.external_email_required = 'Enter your email address'
+_l.external_phone_required = 'Enter your phone number'
+_l.external_shipmentValueEmpty = 'Shipping cost has not been calculated. Check that the fields are filled in correctly or contact the seller'
+_l.external_fill_shipment = 'Fill in all the fields required to calculate the shipping cost'
+_l.anonymous_purchase = "Anonymous purchase"
+_l.anonymous_purchase_text = "In this case, the seller does not require information about the account and account holder for payment, but you cannot pay for the purchase from the account address, only from wallet addresses."
 
 
+_l.phone="Phone"
+_l.country="Country"
+_l.name="Name"
+_l.city="City"
+_l.state="State"
+_l.zipcode="ZIP"
+_l.external_loading = "Loading"
+_l.external_paySucc_details = "Payment has been made. Transaction Details"
 
+_l.total = "Total"
+_l.shipment = "Shipment"

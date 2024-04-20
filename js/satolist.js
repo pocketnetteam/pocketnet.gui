@@ -4504,7 +4504,6 @@ Platform = function (app, listofnodes) {
 
                     var ps = JSON.parse(hexDecode(p.ext))
 
-                    console.log('ps', ps)
 
                     if(!ps.action){
                         throw 'missing:action'
@@ -4514,7 +4513,11 @@ Platform = function (app, listofnodes) {
 
                         if(!ps.address) throw 'missing:address'
 
-                        
+                        if(ps.anonimus){
+                            delete ps.email
+                            delete ps.phone
+                            delete ps.s_url
+                        }
 
                         try{
                             bitcoin.address.fromBase58Check(ps.address)
@@ -4537,7 +4540,7 @@ Platform = function (app, listofnodes) {
                             if(!item.name) throw 'missing:items:'+i+':name'
                             if(!item.value) throw 'missing:items:'+i+':value'
 
-                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':valu:nan'
+                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
 
                             a += item.value
 
@@ -4550,15 +4553,12 @@ Platform = function (app, listofnodes) {
                         if(!ps.store.name) throw 'missing:store.name'
                         if(!ps.store.site) throw 'missing:store.site'
 
-                        
-
                         ps.store.site = superXSS(ps.store.site)
                         ps.store.name = superXSS(ps.store.name)
 
                         ps.value = a
 
                         if(!ps.value) throw 'missing:value'
-
 
                         ps.hash = p.ext
                     }

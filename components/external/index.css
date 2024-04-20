@@ -49,6 +49,13 @@
   -webkit-transition: 1s;
   transition: 1s;
 }
+#external .captionRow {
+  position: sticky;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
 #external .profile {
   display: flex;
   align-items: top;
@@ -90,12 +97,87 @@
   font-weight: 700;
 }
 #external .errorWrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: rgb(var(--background-hidden-layer));
   padding: 1em;
   text-align: center;
 }
 #external .errorWrapper span {
   font-size: 0.8em;
   color: rgb(var(--color-bad));
+}
+#external input {
+  background: rgb(var(--background-secondary-theme));
+}
+#external .vc_textInput {
+  background: rgb(var(--background-secondary-theme)) !important;
+}
+#external .vc_iconWrapper {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+#external .balanceModeWrapper {
+  margin-top: 1em;
+}
+#external .balanceModeWrapper,
+#external .customer {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+#external .anonimusBadge {
+  margin-top: 0.5em;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  text-align: center;
+}
+#external .anonimusBadge i {
+  color: rgb(var(--color-good));
+}
+#external .anonimusBadge span {
+  font-size: 0.9em;
+}
+#external .anonimusBadge span.b {
+  font-weight: 700;
+  color: rgb(var(--color-good));
+}
+#external .anonimusBadge span.sb {
+  font-size: 0.8em;
+}
+#external .pNameW {
+  font-size: 0.9em !important;
+}
+#external .pName {
+  margin-bottom: 0.25em;
+}
+#external .balanceModeWrapper .pName {
+  padding-left: 0.5em;
+}
+#external .shipment {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+#external .shipment .pNam .inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#external .shipment .pNam .inputs .parameterMaketWrapper {
+  width: 100%;
+}
+#external .shipment .pNam .inputs .parameterMaketWrapper[parameter="city"],
+#external .shipment .pNam .inputs .parameterMaketWrapper[parameter="zipcode"],
+#external .shipment .pNam .inputs .parameterMaketWrapper[parameter="state"] {
+  width: 32%;
+}
+#external .parameterMaketWrapper {
+  margin-bottom: 0.5em;
 }
 #external .pay .forReciever {
   display: flex;
@@ -148,6 +230,7 @@
   padding-bottom: 1.5em;
 }
 #external .pay .form .info {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

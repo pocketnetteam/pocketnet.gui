@@ -9,7 +9,110 @@ var external = (function(){
 		var primary = deep(p, 'history');
 
 		var el, ed, balanceMode, loading = false;
+		var balanceModes = [{id : 'all', label : 'tTotal'}, {id : 'user', label : 'twalletaddresses'}, {id : 'wallet', label : 'twallet'}]
 
+		var countryList = {"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Barthelemy", "BM": "Bermuda", "BN": "Brunei", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BQ": "Bonaire, Saint Eustatius and Saba ", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "BZ": "Belize", "RU": "Russia", "RW": "Rwanda", "RS": "Serbia", "TL": "East Timor", "RE": "Reunion", "TM": "Turkmenistan", "TJ": "Tajikistan", "RO": "Romania", "TK": "Tokelau", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "PG": "Papua New Guinea", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "EE": "Estonia", "EG": "Egypt", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands", "FM": "Micronesia", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "XK": "Kosovo", "CI": "Ivory Coast", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos Islands", "CA": "Canada", "CG": "Republic of the Congo", "CF": "Central African Republic", "CD": "Democratic Republic of the Congo", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CW": "Curacao", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syria", "SX": "Sint Maarten", "KG": "Kyrgyzstan", "KE": "Kenya", "SS": "South Sudan", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "South Korea", "SI": "Slovenia", "KP": "North Korea", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "British Virgin Islands", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Laos", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "LV": "Latvia", "TO": "Tonga", "LT": "Lithuania", "LU": "Luxembourg", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libya", "VA": "Vatican", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "U.S. Virgin Islands", "IS": "Iceland", "IR": "Iran", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AQ": "Antarctica", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}
+
+		var countryValues = _.map(countryList, (c, i) => {return i})
+		var countryLabels = _.map(countryList, (c, i) => {return c + ' (' + i + ')'})
+
+		var shipmentsCache = {}
+
+		var inputs = {
+			email : new Parameter({
+				name : 'Email',
+				placeholder : 'Email',
+				id : 'email',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) 
+						setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			phone : new Parameter({
+				name : self.app.localization.e('phone'),
+				placeholder : self.app.localization.e('phone'),
+				id : 'phone',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) 
+						setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			name : new Parameter({
+				name : self.app.localization.e('name'),
+				placeholder : self.app.localization.e('name'),
+				id : 'email',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			country : new Parameter({
+				type : "VALUES",
+				name : self.app.localization.e("country"),
+				placeholder : self.app.localization.e('country'),
+				id : 'country',
+				possibleValues : countryValues, 
+				possibleValuesLabels : countryLabels
+			}),
+
+			
+
+			address : new Parameter({
+				name : self.app.localization.e('address'),
+				placeholder : self.app.localization.e('address'),
+				id : 'address',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			city : new Parameter({
+				name : self.app.localization.e('city'),
+				placeholder : self.app.localization.e('city'),
+				id : 'city',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			state : new Parameter({
+				name : self.app.localization.e('state'),
+				placeholder : self.app.localization.e('state'),
+				id : 'state',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+			zipcode : new Parameter({
+				name : self.app.localization.e('zipcode'),
+				placeholder : self.app.localization.e('zipcode'),
+				id : 'zipcode',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+			}),
+
+		}
+
+		var shipments = {
+		}
 		
 		var events = {
 			
@@ -36,7 +139,8 @@ var external = (function(){
 					name :  'balance',
 					data : {
 						formattedValue : self.app.platform.mp.coin(value),
-						value : value
+						value : value,
+						balanceMode
 					},
 
 					el : el.c.find('.balanceWrapper')
@@ -48,39 +152,64 @@ var external = (function(){
 				})
 			},
 
-			pay : function(_el, parameters, clbk){
-				console.log('parameters', parameters)
+			shipment : function(_el, parameters, lsdata, clbk){
 
-				var lsdata = {}
+				var hp = [inputs.name, inputs.country, inputs.address, inputs.city, inputs.state, inputs.zipcode]
+
+				_.each(hp, (input) => {
+					input.value = lsdata.shipment ? lsdata.shipment[input.id] || '' : ''
+				})
+
+				self.shell({
+					name :  'shipment',
+					data : {
+						parameters,
+						lsdata,
+						inputs : hp
+					},
+
+					el : _el
+
+				}, function(_p){
+
+
+					ParametersLive(hp, _p.el)
+
+					_.each(hp, (p, i) => {
+
+						p._onChange = function(v){
+							if(!lsdata.shipment) lsdata.shipment = {}
+
+							lsdata.shipment[p.id] = v
+
+							state.save(lsdata, parameters.hash)
+
+							if (p.id != 'name')
+								make()
+						}
+
+						
+					})
+
+					if (clbk)
+						clbk(_p);
+				})
+			},
+
+			pay : function(_el, parameters, lsdata, clbk){
+				console.log('parameters', parameters)
 
 				var customerClbk = function(response){
 
 					successCheck()
 					renders.loading(null)
 					lsdata.customersend = response
-					updateStatus()
+					state.save(lsdata, parameters.hash)
 
 					make()
 
 				}
-
-				var updateStatus = function(){
-					
-					try{
-						localStorage['pays_' + parameters.hash] = JSON.stringify(lsdata) || {}
-					}catch(e){
-						console.error(e)
-					}
-				}
-
-				var getStatus = function(){
-					try{
-						lsdata = JSON.parse(localStorage['pays_' + parameters.hash] || "{}") || {}
-					}catch(e){
-						console.error(e)
-					}
-				}
-
+				
 				var txclbk = function(txid){
 					var cbpw = helpers.callbackPayWay(parameters)
 
@@ -88,14 +217,14 @@ var external = (function(){
 
 					lsdata.txid = txid
 
-					updateStatus()
+					state.save(lsdata, parameters.hash)
 
 					/// saveHashInfo
 
 					if(cbpw == 'redirect'){
 						renders.loading('external_paySucc_redirect')
 
-						helpers.callbackPay(parameters, txid).then((w) => {
+						helpers.callbackPay(parameters, txid, lsdata).then((w) => {
 							setTimeout(() => {
 								customerClbk(w)
 							}, 700)
@@ -107,7 +236,7 @@ var external = (function(){
 					if(cbpw == 'fetch'){
 						renders.loading('external_paySucc_fetch')
 
-						helpers.callbackPay(parameters, txid).then((w) => {
+						helpers.callbackPay(parameters, txid, lsdata).then((w) => {
 							customerClbk(w)
 						})
 
@@ -118,18 +247,60 @@ var external = (function(){
 					}
 				}
 
-				getStatus()
+				var hp = []
+
+				if(parameters.email) {hp.push(inputs.email); inputs.email.value = lsdata.email || ""} else inputs.email.value = ''
+				if(parameters.phone) {hp.push(inputs.phone); inputs.phone.value = lsdata.phone || ""} else inputs.phone.value = ''
+
+				var bms = helpers.getBalanceModes(parameters)
+
+				var balanceModeParameter = new Parameter({
+					type : "VALUES",
+					name : self.app.localization.e("source"),
+					placeholder : self.app.localization.e('source'),
+					id : 'balanceMode',
+					possibleValues : _.map(bms, (bm) => {return bm.id}), 
+					possibleValuesLabels : _.map(bms, (bm) => {return self.app.localization.e(bm.label)}),
+					defaultValue : balanceMode,
+					value : balanceMode
+				})
 
 				self.shell({
 					name :  'pay',
 					data : {
 						parameters,
-						lsdata
+						lsdata,
+						inputs : hp,
+						balanceModeParameter
 					},
+
+					insertimmediately : parameters.s_url ? true : false,
 
 					el : _el
 
 				}, function(_p){
+
+					
+
+					ParametersLive(hp, _p.el)
+					ParametersLive([balanceModeParameter], _p.el)
+
+					
+
+					_.each(hp, (p, i) => {
+
+						p._onChange = function(v){
+							lsdata[i] = v
+							state.save(lsdata, parameters.hash)
+						}
+						
+					})
+
+					balanceModeParameter._onChange = function(v){
+						balanceMode = v
+
+						make()
+					}
 
 					_p.el.find('.close').on('click', function(){
 						self.closeContainer()
@@ -138,7 +309,25 @@ var external = (function(){
 					if(parameters.tx){
 						_p.el.find('.sendtx').on('click', function(){
 
-							if(loading) return
+							if (loading) return
+
+							if (document.activeElement && document.activeElement.blur)
+								document.activeElement.blur()
+
+							if (parameters.email && !lsdata.email){
+								sitemessage(self.app.localization.e('external_email_required'))
+								return
+							}
+
+							if (parameters.phone && !lsdata.phone){
+								sitemessage(self.app.localization.e('external_phone_required'))
+								return
+							}
+
+							if (parameters.s_url && typeof parameters.shipmentValue == 'undefined'){
+								sitemessage(self.app.localization.e('external_shipmentValueEmpty'))
+								return
+							}
 							
 							renders.loading('external_prepareTransaction')
 
@@ -147,8 +336,8 @@ var external = (function(){
 								txclbk(txid)
 
 							}).catch(e => {
-
-								siteMessage(e)
+								console.error(e)
+								sitemessage(e)
 
 							}).finally(() => {
 								renders.loading()
@@ -163,7 +352,7 @@ var external = (function(){
 							/*
 							
 							renders.loading()
-							siteMessage('error')
+							sitemessage('error')
 							
 							*/
 
@@ -187,6 +376,12 @@ var external = (function(){
 					}
 
 					renders.recieverProfile(_p.el.find('.profileWrapper'), parameters.address)
+
+					if (parameters.s_url){
+						renders.shipment(_el.find('.shipmentWrapper'), parameters, lsdata, () => {
+
+						})
+					}
 
 					if (clbk)
 						clbk(_p);
@@ -213,10 +408,61 @@ var external = (function(){
 		}
 
 		var state = {
-			save : function(){
-
+			save : function(lsdata, hash){
+				lsdata.updated = new Date()
+					
+				try{
+					localStorage['pays_' + hash] = JSON.stringify(lsdata) || {}
+				}catch(e){
+					console.error(e)
+				}
+				
 			},
-			load : function(){
+			load : function(hash){
+				var lsdata = {}
+
+				try{
+					lsdata = JSON.parse(localStorage['pays_' + hash] || "{}") || {}
+					lsdata.updated = new Date(lsdata.updated)
+				}catch(e){
+					console.error(e)
+				}
+
+				return lsdata
+			},
+
+			loadLastShipment: function(){
+				try{
+
+					var allpays = []
+
+					Object.keys(localStorage).forEach(key => {
+						if (key.indexOf('pays_') == 0){
+							var parsed = JSON.parse(localStorage[key])
+
+							if (parsed.shipment){
+								parsed.updated = new Date(parsed.updated)
+								allpays.push(parsed)
+							}
+							
+						}
+					});
+
+					if(!allpays.length){
+						return null
+					}
+
+					var m = _.max(allpays, (p) => {
+						return p.updated
+					})
+
+					return m.shipment
+
+				}
+
+				catch(e){
+					return null
+				}
 				
 			}
 		}
@@ -228,21 +474,42 @@ var external = (function(){
 		var ways = {
 			pay : function(clbk){
 
-				var tx = null
+				var lsdata = state.load(ed.parameters.hash)
 
-				try{
-					tx = helpers.getTransaction(ed.parameters.value, ed.parameters.address)
-				}
-				catch(e){
-
+				if (ed.parameters.s_url){
+					if(!lsdata.shipment){
+						lsdata.shipment = state.loadLastShipment()
+					}
 				}
 				
-				helpers.getFees(tx).then(fees => {
 
-					renders.pay(el.c.find('.extcnt'), {...ed.parameters, tx, fees}, clbk)
+				renders.loading('external_loading')
 
+				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
+
+					var tx = null
+
+					try{
+						tx = helpers.getTransaction(ed.parameters.value + (shipmentValue || 0), ed.parameters.address)
+					}
+					catch(e){
+
+					}
+					
+					helpers.getFees(tx).then(fees => {
+						renders.pay(el.cnt, {...ed.parameters, tx, fees, shipmentValue}, lsdata, clbk)
+					}).catch(e => {
+						renders.pay(el.cnt, {...ed.parameters, error : e, shipmentValue}, lsdata, clbk)
+					})
+					
 				}).catch(e => {
-					renders.pay(el.c.find('.extcnt'), {...ed.parameters, error : e}, clbk)
+
+					renders.pay(el.cnt, {...ed.parameters, error : e}, lsdata, clbk)
+
+				}).finally(() => {
+
+					renders.loading(null)
+
 				})
 				
 				
@@ -250,6 +517,93 @@ var external = (function(){
 		}
 
 		var helpers = {
+
+			getBalanceModes : function(parameters){
+				if(parameters.anonimus) return _.filter(balanceModes, (bm) => {
+					return bm.id == 'wallet'
+				})
+
+				return balanceModes
+			},
+
+			getShipment : function(parameters, shipment){
+				if(!parameters.s_url) return Promise.resolve()
+
+				if(!shipment || !shipment.name || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
+					return Promise.reject({
+						error : 'missing:shipment',
+						text : self.app.localization.e('external_fill_shipment') 
+					})
+				}
+
+				try{
+					var er = false
+
+					var data = {
+						shipment,
+						locale : self.app.localization.key,
+						payload : parameters.payload || {}
+					}
+
+					var datahash = $.md5(JSON.stringify(data))
+
+					if(!shipmentsCache[parameters.hash]) shipmentsCache[parameters.hash] = {}
+
+					if (shipmentsCache[parameters.hash]) return shipmentsCache[parameters.hash][datahash]
+
+					var headers = _.extend({
+						'Accept': 'application/json',
+						'Content-Type': 'application/json;charset=utf-8'
+					})
+
+					/* check */
+
+					shipmentsCache[parameters.hash][datahash] = fetch(parameters.s_url, {
+
+						method: 'POST',
+						mode: 'cors',
+						headers: headers,
+						body: JSON.stringify(data)
+
+					}).then(r => {
+
+						if(!r.ok){
+							delete shipmentsCache[parameters.hash][datahash]
+							er = true
+						}
+
+						return r.json()
+					}).then(result => {
+
+						/*return Promise.reject({
+							error : 'missing:ship',
+							text : 'Delivery to this region is not possible'
+						})*/
+
+						if (er || result.error){
+							return Promise.reject(result.error)
+						}
+
+						/*
+							test
+						
+
+						return Number(0.05)
+						*/
+
+						return Number(result.value)
+
+					}).catch(e => {
+						return Promise.reject(e)
+					})
+
+					return shipmentsCache[parameters.hash][datahash]
+				}
+				catch(e){
+					return Promise.reject(e)
+				}
+			},
+			
 			callbackPayWay : function(parameters){
 				if(!parameters.c_url){
 					return 
@@ -260,7 +614,7 @@ var external = (function(){
 				return 'redirect'
 			},
 
-			callbackPay : function(parameters, tx){
+			callbackPay : function(parameters, tx, lsdata){
 				var way = helpers.callbackPayWay(parameters)
 
 				if (way == 'redirect'){
@@ -275,6 +629,15 @@ var external = (function(){
 
 						Url.searchParams.append(i, d);
 					})
+
+					if(lsdata.phone) Url.searchParams.append('phone', encodeURIComponent(lsdata.phone));
+					if(lsdata.email) Url.searchParams.append('email', encodeURIComponent(lsdata.email));
+
+					if(lsdata.shipment) {
+						_.each(parameters.shipment, (d, i) => {
+							Url.searchParams.append(i, encodeURIComponent(d));
+						})
+					}
 
 					var url = Url.toString()
 
@@ -309,6 +672,13 @@ var external = (function(){
 						data[i] = d
 					})
 
+					if(lsdata.phone) data.phone = lsdata.phone
+					if(lsdata.email) data.email = lsdata.email
+					if(lsdata.shipment) data.shipment = lsdata.shipment
+
+					if(!parameters.anonimus)
+						data.account = self.app.user.address.value
+
 					var headers = _.extend({
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8'
@@ -339,16 +709,16 @@ var external = (function(){
 				return Promise.resolve('noway')
 			},
 
-			getAdresses : function(){
-				var adresses = []
+			getaddresses : function(){
+				var addresses = []
 
-				if (balanceMode == 'all') adresses = [].concat([self.app.user.address.value]).concat(self.app.platform.sdk.addresses.storage.addresses)
-				if (balanceMode == 'user') adresses = [self.app.user.address.value]
-				if (balanceMode == 'wallet') adresses = self.app.platform.sdk.addresses.storage.addresses
+				if (balanceMode == 'all') addresses = [].concat([self.app.user.address.value]).concat(self.app.platform.sdk.addresses.storage.addresses)
+				if (balanceMode == 'user') addresses = [self.app.user.address.value]
+				if (balanceMode == 'wallet') addresses = self.app.platform.sdk.addresses.storage.addresses
 
-				if(!adresses) throw 'wrong:balanceMode'
+				if(!addresses) throw 'wrong:balanceMode'
 
-				return adresses
+				return addresses
 			},
 
 			getFees : function(transaction){
@@ -372,11 +742,11 @@ var external = (function(){
 			},
 
 			getTransaction : function(amount, reciever){
-				var adresses = helpers.getAdresses()
+				var addresses = helpers.getaddresses()
 
 				var transaction = new Transaction()
 				
-					transaction.source.set(adresses)
+					transaction.source.set(addresses)
 					transaction.reciever.set([
 						{
 							address : reciever,
@@ -416,7 +786,7 @@ var external = (function(){
 				}
 				else{
 
-					var balance = account.actualBalance(helpers.getAdresses())
+					var balance = account.actualBalance(helpers.getaddresses())
 
 					value = balance.actual
 
@@ -427,6 +797,8 @@ var external = (function(){
 		}
 
 		var make = function(clbk){
+
+			
 
 			actions.balance()
 
@@ -442,13 +814,21 @@ var external = (function(){
 
 				ed = p.settings.essenseData
 
+				console.log("ED", ed)
+
 				var userinfo = self.psdk.userInfo.getmy()
 
 				var data = {
 					ed, userinfo
 				};
-
+				
 				balanceMode = 'all'
+
+				if (ed.action == 'pay' && ed.parameters.anonimus){
+					balanceMode = 'wallet'
+				}
+
+				shipmentsCache = {}
 
 				clbk(data);
 
@@ -469,6 +849,7 @@ var external = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+				el.cnt = el.c.find('.extcnt')
 
 				initEvents();
 

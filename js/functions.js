@@ -3515,6 +3515,10 @@ ParametersLive = function (parameters, el, p) {
 							}
 						})
 
+						_el.find('.vc_inputWrapperClick').on(clickAction(), function () {
+							open()
+						})
+
 						_el.find('input').on('focus', function () {
 							$(this).select();
 						})
@@ -4739,8 +4743,11 @@ Parameter = function (p) {
 				if (self.format.right)
 					input += caret;
 
-				input += '<div class="vc_inputWrapper">';
+				input += '<div class="vc_inputWrapper '+(disabled ? 'vc_inputWrapperClick' : '')+'">';
 				input += '<input elementsid="vs_input" ' + disabled + '  type="text" value="' + displayValue + '" placeholder="' + self.placeholder + '">';
+				if(disabled){
+					input += '<div class="displaceholder"></div>'
+				}
 				input += '</div>';
 
 				if (!self.format.right)
