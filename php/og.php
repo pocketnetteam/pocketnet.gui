@@ -12,7 +12,7 @@ class OG {
     private $commentid = NULL;
     private $parentid = NULL;
     private $imageNum = 0;
-    private $ext = NULL
+    private $ext = NULL;
 
     private $domain = NULL;
     private $project = NULL;

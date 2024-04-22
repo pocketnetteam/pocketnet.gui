@@ -156,7 +156,7 @@ _l.waddaddress = "Открыть новый адрес";
 _l.wrecieve = "Получить";
 _l.wrecieveon = "Получить на";
 _l.wcopyshareorcreate = "Скопируйте и поделитесь адресом или создайте ссылку для платежа";
-_l.wdgetlink = "Получить ссылку";
+_l.wdgetlink = "Поделиться ссылкой";
 _l.wdqrcode = "QR-код";
 _l.wdcopyaddress = "Скопировать адрес";
 _l.wdpleasefill = "Пожалуйста, заполните необходимые поля";
@@ -2609,5 +2609,9 @@ _l.zipcode="Индекс"
 _l.external_loading = "Загрузка"
 _l.external_paySucc_details = "Оплата произведена. Детали транзакции"
 
-_l.total = "Стоимость"
+_l.total = "Итого"
 _l.shipment = "Доставка"
+
+_l.external_linkWillExpired = "Действие платёжной ссылки истекает"
+_l.external_linkExpired = "Действие платёжной ссылки истекло"
+_l.paymentLink = "Платёжная ссылка"

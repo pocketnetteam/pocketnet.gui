@@ -179,6 +179,22 @@
 #external .parameterMaketWrapper {
   margin-bottom: 0.5em;
 }
+#external .pay .description {
+  padding: 1em;
+}
+#external .pay .linkWillExpired {
+  background: rgb(var(--background-secondary-theme));
+  text-align: center;
+  padding-bottom: 0.25em;
+}
+#external .pay .linkWillExpired span {
+  color: rgb(var(--neutral-grad-4));
+  font-size: 0.8em;
+}
+#external .pay .linkExpired {
+  padding: 2em;
+  text-align: center;
+}
 #external .pay .forReciever {
   display: flex;
   align-items: center;

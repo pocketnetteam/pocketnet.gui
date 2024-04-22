@@ -1198,6 +1198,7 @@ Nav = function(app)
 				
 					var eve = function(e){
 
+
 						if(blockclick) return false
 
 						blockclick = true
@@ -1223,6 +1224,24 @@ Nav = function(app)
 							app.platform.matrixchat.joinRoom = params.get('publicroom');
 			
 							app.platform.matrixchat.connect();
+			
+							return false;
+						}
+
+
+						if (arrHref && arrHref[0] === 'index'){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							var ext = params.get('ext');
+
+							console.log('ext', ext)
+
+							if (ext){
+								app.platform.ui.externalFromCurrentUrl()
+							}
+			
+							
 			
 							return false;
 						}

@@ -1,191 +1,214 @@
 <div class="pay">
 
-    <% if(parameters.anonimus) {%>
+    <% if(!expired || expiredIn > 0) {%>
 
-        <div class="anonimusBadge">
-            <i class="fas fa-certificate"></i>
-            <span class="bb"><%-e('anonymous_purchase')%></span>
-            <span class="sb"><%-e('anonymous_purchase_text')%></span>
-        </div>
+        <% if(expired) {%>
+            <div class="linkWillExpired">
+                <span><%-e('external_linkWillExpired')%></span>
+                <span class="expiredIn"></span>
+            </div>
+        <% } %>
 
-    <% } %>
+        <% if(parameters.anonimus) {%>
 
-    <div class="store">
-        <div class="name">
-            <span><%-parameters.store.name%></span>
-        </div>
+            <div class="anonimusBadge">
+                <i class="fas fa-certificate"></i>
+                <span class="bb"><%-e('anonymous_purchase')%></span>
+                <span class="sb"><%-e('anonymous_purchase_text')%></span>
+            </div>
 
-        <div class="name">
-            <a href="<%-parameters.store.site%>" donottrust="true"><%-parameters.store.site%></a>
-        </div>
-    </div>
+        <% } %>
 
-    <div class="form">
+        <% if(parameters.store) {%>
+            <div class="store">
+                <div class="name">
+                    <span><%-parameters.store.name%></span>
+                </div>
+                <% if(parameters.store.site) {%>
+                    <div class="site">
+                        <a href="<%-parameters.store.site%>" donottrust="true"><%-parameters.store.site%></a>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
 
-        <% if(parameters.email || parameters.phone) {%>
-            <div class="customer">
-                <% _.each(inputs, function(parameter){ %>
-            
-                    <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
-                        <div class="parameter <%-parameter.type%>">
+        <div class="form">
+
+            <% if(parameters.email || parameters.phone) {%>
+                <div class="customer">
+                    <% _.each(inputs, function(parameter){ %>
                 
-                            <div class="pName">
-                                <div class="pNameW">
-                                    <%= parameter.name %>
+                        <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+                            <div class="parameter <%-parameter.type%>">
+                    
+                                <div class="pName">
+                                    <div class="pNameW">
+                                        <%= parameter.name %>
+                                    </div>
+                                </div>
+                    
+                                <div class="pInput">
+                                    <%= parameter.input({
+                                        init : true
+                                    }) %>
                                 </div>
                             </div>
-                
-                            <div class="pInput">
-                                <%= parameter.input({
-                                    init : true
-                                }) %>
+                            
+                        </div>
+                    
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <% if(parameters.s_url) {%>
+                <div class="shipmentWrapper"></div>
+            <% } %>
+
+            <% if(parameters.items) {%>
+                <div class="items">
+                    <% _.each(parameters.items, function(item){ %>
+                        <div class="row forinfo">
+                            <div class="info">
+                                <div class="imageWrapper">
+                                    <div class="image" image="<%-item.image || ''%>">
+                                    </div>
+                                </div>
+                                <div class="name">
+                                    <%-item.name%>
+                                </div>
+                                <div class="value">
+                                    <span><%- app.platform.mp.coin(item.value)%></span> <span>PKOIN</span>
+                                </div>
                             </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <% if(parameters.description) {%>
+                <div class="description">
+                    <span><%-parameters.description%></span>
+                </div>
+            <% } %>
+            
+            <% if(!lsdata.txid) { %>
+
+                <div class="row">
+                    <div class="label">
+                        <span><%-e('receiver_address')%></span>
+                    </div>
+                    
+                    <div class="value forReciever">
+                        <div class="profileWrapper">
+
+                        </div>
+                        <div class="addressWrapper">
+                            <span><%-parameters.address%></span>
+                        </div>
+                    </div>
+                </div>
+
+                <% if(parameters.fees) {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%-e('wsfees')%></span>
+                        </div>
+
+                        <div class="value">
+                            <span><%-app.platform.mp.coin(parameters.fees)%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if(typeof parameters.shipmentValue != 'undefined') {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%- e('shipment') %></span>
+                        </div>
+
+                        <div class="value">
+                            <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <div class="row">
+                    <div class="label">
+                        <span><b><%-e('total')%></b></span>
+                    </div>
+
+                    <div class="value">
+                        <span><b><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0), {precision : parameters.fees ? 4 : undefined})%></b></span> <span>PKOIN</span>
+                    </div>
+                </div>
+
+                <% if(balanceModeParameter.possibleValues.lenght > 1) {%>
+
+                    <div class="balanceModeWrapper">
+                    
+                        <div class="parameterMaketWrapper <%-balanceModeParameter.pid%>" parameter="<%-balanceModeParameter.id%>">
+                            <div class="parameter <%-balanceModeParameter.type%>">
+                    
+                                <div class="pName">
+                                    <div class="pNameW">
+                                        <%= balanceModeParameter.name %>
+                                    </div>
+                                </div>
+                    
+                                <div class="pInput">
+                                    <%= balanceModeParameter.input({
+                                        init : true
+                                    }) %>
+                                </div>
+                            </div>
+                            
                         </div>
                         
                     </div>
-                
-                <% }) %>
-            </div>
-        <% } %>
 
-        <% if(parameters.s_url) {%>
-            <div class="shipmentWrapper"></div>
-        <% } %>
+                <% } %>
 
-
-        <div class="items">
-            <% _.each(parameters.items, function(item){ %>
-                <div class="row forinfo">
-                    <div class="info">
-                        <div class="imageWrapper">
-                            <div class="image" image="<%-item.image || ''%>">
-                            </div>
-                        </div>
-                        <div class="name">
-                            <%-item.name%>
-                        </div>
-                        <div class="value">
-                            <span><%- app.platform.mp.coin(item.value)%></span> <span>PKOIN</span>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
-        </div>
-
-        
-
-        
-        <% if(!lsdata.txid) { %>
-
-            
-
-            <div class="row">
-                <div class="label">
-                    <span><%-e('receiver_address')%></span>
-                </div>
-                
-                <div class="value forReciever">
-                    <div class="profileWrapper">
-
-                    </div>
-                    <div class="addressWrapper">
-                        <span><%-parameters.address%></span>
-                    </div>
-                </div>
-            </div>
-
-            <% if(parameters.fees) {%>
-                <div class="row">
-                    <div class="label">
-                        <span><%-e('wsfees')%></span>
-                    </div>
-
-                    <div class="value">
-                        <span><%-app.platform.mp.coin(parameters.fees)%></span> <span>PKOIN</span>
-                    </div>
-                </div>
             <% } %>
 
-            <% if(typeof parameters.shipmentValue != 'undefined') {%>
-                <div class="row">
-                    <div class="label">
-                        <span><%- e('shipment') %></span>
-                    </div>
+        </div>
 
-                    <div class="value">
-                        <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
-                    </div>
+        <% if(lsdata.txid) { %>
+
+            <div class="txWrapper">
+                <div class="label">
+                    <span><%-e('external_paySucc_details')%></span>
+                </div>
+
+                <div class="txBody">
+
+                </div>
+            </div>
+
+            <div class="actionButtonWrapper buttonWrapper">
+                <button class="button close"><span><%=e('close')%></span></button>
+            </div>
+
+        <% } else { %> 
+            
+            <% if(parameters.error) {%>
+                <div class="errorWrapper">
+                    <span class="error">
+                        <%- parameters.error.text ? parameters.error.text : e(parameters.error) %>
+                    </span>
                 </div>
             <% } %>
-
-            <div class="row">
-                <div class="label">
-                    <span><b><%-e('total')%></b></span>
-                </div>
-
-                <div class="value">
-                    <span><b><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0), {precision : parameters.fees ? 4 : undefined})%></b></span> <span>PKOIN</span>
-                </div>
+        
+            <div class="actionButtonWrapper buttonWrapper">
+                <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
             </div>
-
-            <div class="balanceModeWrapper">
             
-                <div class="parameterMaketWrapper <%-balanceModeParameter.pid%>" parameter="<%-balanceModeParameter.id%>">
-                    <div class="parameter <%-balanceModeParameter.type%>">
-            
-                        <div class="pName">
-                            <div class="pNameW">
-                                <%= balanceModeParameter.name %>
-                            </div>
-                        </div>
-            
-                        <div class="pInput">
-                            <%= balanceModeParameter.input({
-                                init : true
-                            }) %>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-            </div>
-
         <% } %>
-
-    </div>
-
-    <% if(lsdata.txid) { %>
-
-        <div class="txWrapper">
-            <div class="label">
-                <span><%-e('external_paySucc_details')%></span>
-            </div>
-
-            <div class="txBody">
-
-            </div>
-        </div>
-
-        <div class="actionButtonWrapper buttonWrapper">
-            <button class="button close"><span><%=e('close')%></span></button>
-        </div>
 
     <% } else { %> 
-        
-        <% if(parameters.error) {%>
-            <div class="errorWrapper">
-                <span class="error">
-                    <%- parameters.error.text ? parameters.error.text : e(parameters.error) %>
-                </span>
-            </div>
-        <% } %>
-    
-        <div class="actionButtonWrapper buttonWrapper">
-            <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e('pay')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
+        <div class="linkExpired">
+            <span><%-e('external_linkExpired')%></span>
         </div>
-        
     <% } %>
-
     
    
 </div>

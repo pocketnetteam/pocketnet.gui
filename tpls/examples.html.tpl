@@ -65,8 +65,6 @@
 
 
 
-        
-
         <!-- example 2: PaymentLink: begin -->
         <div>
             <h2>__VAR__.name payment link</h2>
@@ -80,6 +78,11 @@
 
                 var payments = window.bastyonLib.payments({
                     payment : {
+                        /*
+                        Link duration
+                        
+                        */
+                        "expired" : 60 * 10, // 10 minutes
                         /*
                             Seller Address
                         */
@@ -98,6 +101,20 @@
                         "phone" : true,
 
                         /*
+                            Description. Not required
+                        */
+
+                        "description" : "some text",
+
+                        /*
+                        
+                        Transaction amount. Ignored if "items" set
+                        
+                        */
+
+                        "value" : 5,
+
+                        /*
                             Shopping list - image, name, value required
                         */
                        
@@ -112,7 +129,7 @@
                         }],
 
                         /*
-                            Seller info - name, website required
+                            Seller info - name required, website
                         */
 
                         "store": {
@@ -198,8 +215,12 @@
                             Anonimus flag - Do not transfer buyer data to the seller, prohibit paying from the address linked to the account
                         */
                         /*
-                        anonimus : true
+                        "anonimus" : true,
                         */
+
+                        
+
+                        
                     }
                 })
 

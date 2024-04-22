@@ -159,7 +159,7 @@ _l.waddaddress = "Explore a new Wallet address";
 _l.wrecieve = "Receive";
 _l.wrecieveon = "Receive on";
 _l.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
-_l.wdgetlink = "Get Link";
+_l.wdgetlink = "Share Link";
 _l.wdqrcode = "Qr code";
 _l.wdcopyaddress = "Copy Address";
 _l.wdpleasefill = "Please fill in these fields";
@@ -2819,3 +2819,9 @@ _l.external_paySucc_details = "Payment has been made. Transaction Details"
 
 _l.total = "Total"
 _l.shipment = "Shipment"
+
+_l.external_linkWillExpired = "Payment link expires"
+_l.external_linkExpired = "Payment link has expired"
+
+_l.paymentLink = "Payment link"
+

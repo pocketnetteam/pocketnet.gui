@@ -650,7 +650,8 @@ var wallet = (function(){
 
 			linkValidation : function(){
 
-				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value) && trim(deposit.parameters.label.value)
+				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value) 
+				/*&& trim(deposit.parameters.label.value)*/
 			},
 
 			linkValidationQr : function(){
@@ -1649,7 +1650,7 @@ var wallet = (function(){
 
 						var createLink = _p.el.find('.getlink')
 
-						var ps = [deposit.parameters.depositamount, deposit.parameters.message, deposit.parameters.label]
+						var ps = [deposit.parameters.depositamount, deposit.parameters.message/*, deposit.parameters.label*/]
 
 						ParametersLive(ps, _p.el)
 
@@ -1671,8 +1672,25 @@ var wallet = (function(){
 
 						createLink.on('click', function(){
 
-							if (actions.linkValidation())
-								actions.showDepositInStep('showLinkResult', 3, self.app.localization.e('linkCreated'))
+							if (actions.linkValidation()){
+
+
+								var payment = self.app.platform.sdk.payments.make({
+									payment : {
+										address : address,
+										value : deposit.parameters.depositamount.value,
+										description : deposit.parameters.message.value
+									}
+									
+								})
+
+								var hash = payment.makeURLHash()
+
+								self.app.platform.ui.socialshare('index?ext=' + hash)
+
+								//actions.showDepositInStep('showLinkResult', 3, self.app.localization.e('linkCreated'))
+							}
+								
 
 						});
 
@@ -1695,7 +1713,7 @@ var wallet = (function(){
 
 						var createLink = _p.el.find('.getlink')
 
-						var ps = [deposit.parameters.depositamount, deposit.parameters.message, deposit.parameters.label]
+						var ps = [deposit.parameters.depositamount, deposit.parameters.message/*, deposit.parameters.label*/]
 
 						ParametersLive(ps, _p.el)
 
