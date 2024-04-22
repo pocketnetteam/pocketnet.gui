@@ -1089,6 +1089,7 @@ var wallet = (function(){
 					el.total = el.c.find('.total .tttl');
 					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
+					el.payments = el.c.find('.payments')
 					el.buy = el.c.find('.buy');
 					
 					el.send = el.c.find('.send');
@@ -2299,6 +2300,72 @@ var wallet = (function(){
 				})
 				
 			},
+			payments : function(clbk){
+				var payments = self.app.platform.sdk.payments.get()
+
+				console.log('payments', payments)
+
+				if(!payments.length){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+
+					name :  'payments',
+					el :   el.payments,
+					data : {
+						payments
+					},
+
+				}, function(_p){
+
+					_p.el.find('.removePayment').on('click', function(){
+						var pindex = $(this).closest('.payment').attr('vid')
+
+						
+
+						var payment = _.find(payments, (p) => {
+							return p.vid == pindex
+						})
+
+						payments = _.filter(payments, (p) => {
+							return p.vid != pindex
+						})
+
+						self.app.platform.sdk.payments.remove(payment.hash)
+
+						$(this).closest('.payment').remove()
+
+						if(!payments.length){
+							renders.payments()
+						}
+
+						return false
+						
+					})
+				
+					_p.el.find('.payment').on('click', function(){
+						var pindex = $(this).closest('.payment').attr('vid')
+						var payment = _.find(payments, (p) => {
+							return p.vid == pindex
+						})
+
+						self.app.nav.api.history.addRemoveParameters([], {
+							ext : payment.hash
+						}, {
+							replaceState : true
+						})
+
+						self.app.platform.ui.externalFromCurrentUrl()
+					})
+
+					if (clbk)
+						clbk()
+
+				})
+			},
 			
 			addresses : function(clbk){
 
@@ -2645,7 +2712,7 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses/*, renders.htls*/]
+				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 

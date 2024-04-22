@@ -4490,85 +4490,7 @@ Platform = function (app, listofnodes) {
 
         external : function(ps){
 
-            console.log('ps', ps)
-
-            if(!ps.action){
-                throw 'missing:action'
-            }
-
-            if (ps.action == 'pay'){
-
-                if(!ps.address) throw 'missing:address'
-
-                if (ps.anonimus){
-                    delete ps.email
-                    delete ps.phone
-                    delete ps.s_url
-                }
-
-                try{
-                    bitcoin.address.fromBase58Check(ps.address)
-                }
-
-                catch (e){
-                    throw 'wrong:address:notvalid'
-                }
-                
-                if(!ps.c_url_type) ps.c_url_type = 'fetch'
-                if(!ps.payload) ps.payload = {}
-
-                if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
-
-
-                if (ps.items){
-
-                    var a = 0
-
-                    _.each(ps.items, (item, i) => {
-                        if(!item.name) throw 'missing:items:'+i+':name'
-                        if(!item.value) throw 'missing:items:'+i+':value'
-    
-                        if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
-                        if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
-    
-                        a += item.value
-    
-    
-                        item.image = superXSS(item.image || '')
-                        item.name = superXSS(item.name)
-                        //item.formattedAmount = self.mp.coin(item.value)
-                    })
-
-                    ps.value = a
-                }
-                else{
-                    //ps.value
-                }
-
-                if (ps.store){
-                    if(!ps.store.name) throw 'missing:store.name'
-                    //if(!ps.store.site) throw 'missing:store.site'
-
-                    ps.store.name = superXSS(ps.store.name)
-                    
-                    if (ps.store.site)
-                        ps.store.site = superXSS(ps.store.site)
-                    
-                }
-
-                if (ps.expired){
-                    if(!ps.date) throw 'missing:date'
-
-                    if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
-                }
-
-                if (ps.description) ps.description = superXSS(ps.description)
-                
-
-                if(!ps.value || ps.value <= 0) throw 'missing:value'
-
-                //ps.hash = p.ext
-            }
+            
             
             self.app.platform.sdk.user.stateAction(() => {
 
@@ -4592,10 +4514,8 @@ Platform = function (app, listofnodes) {
 
                 try{
 
-                    var ps = self.api.expandExternalLink(JSON.parse(hexDecode(p.ext)))
-
-                    ps.hash = p.ext
-
+                    var ps = self.sdk.external.getFromHash(p.ext)
+                    
                     self.ui.external(ps)
 
                     return true
@@ -4715,48 +4635,6 @@ Platform = function (app, listofnodes) {
 
     self.api = {
 
-        expandExternalLink : function(json = {}){
-            var eExt = {}
-
-            if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
-            if (json.ad)    eExt.address = json.ad
-            if (json.s)     eExt.s_url = json.s
-            if (json.c)     eExt.c_url = json.c
-            if (json.ct)    eExt.c_url_type = json.ct
-            if (json.e)     eExt.email = true
-            if (json.p)     eExt.phone = true
-            if (json.an)    eExt.anonimus = true
-            if (json.pl)    eExt.payload = json.pl
-            if (json.e)     eExt.expired = json.e
-            if (json.d)     eExt.date = json.d
-            if (json.h)     eExt.paymentHash = json.h
-            if (json.de)    eExt.description = json.de
-            if (json.v)     eExt.value = json.v
-
-
-            if (json.st) {
-                eExt.store = {}
-
-                if(json.st.n) eExt.store.name = json.st.n
-                if(json.st.s) eExt.store.site = json.st.s
-            }
-
-            if(json.i){
-                eExt.items = []
-
-                _.each(json.i, (it) => {
-                    var item = {}
-
-                    if (it.i) item.image = it.i
-                    if (it.n) item.name = it.n
-                    if (it.v) item.value = it.v
-
-                    eExt.items.push(item)
-                })
-            }
-           
-            return eExt
-        },
 
         keypair: function (m) {
             let keyPair;
@@ -6146,8 +6024,137 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        external : {
+            expandLink : function(json = {}){
+                var eExt = {}
+    
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
+                if (json.ad)    eExt.address = json.ad
+                if (json.s)     eExt.s_url = json.s
+                if (json.c)     eExt.c_url = json.c
+                if (json.ct)    eExt.c_url_type = json.ct
+                if (json.e)     eExt.email = true
+                if (json.p)     eExt.phone = true
+                if (json.an)    eExt.anonimus = true
+                if (json.pl)    eExt.payload = json.pl
+                if (json.ex)     eExt.expired = json.ex
+                if (json.d)     eExt.date = json.d
+                if (json.h)     eExt.paymentHash = json.h
+                if (json.de)    eExt.description = json.de
+                if (json.v)     eExt.value = json.v
+    
+    
+                if (json.st) {
+                    eExt.store = {}
+    
+                    if(json.st.n) eExt.store.name = json.st.n
+                    if(json.st.s) eExt.store.site = json.st.s
+                }
+    
+                if(json.i){
+                    eExt.items = []
+    
+                    _.each(json.i, (it) => {
+                        var item = {}
+    
+                        if (it.i) item.image = it.i
+                        if (it.n) item.name = it.n
+                        if (it.v) item.value = it.v
+    
+                        eExt.items.push(item)
+                    })
+                }
+               
+                return eExt
+            },
+            getFromHash : function(ext){
+                var ps = self.sdk.external.expandLink(JSON.parse(hexDecode(ext)))
 
+                    ps.hash = ext
+
+                if(!ps.action){
+                    throw 'missing:action'
+                }
+    
+                if (ps.action == 'pay'){
+    
+                    if(!ps.address) throw 'missing:address'
+    
+                    if (ps.anonimus){
+                        delete ps.email
+                        delete ps.phone
+                        delete ps.s_url
+                    }
+    
+                    try{
+                        bitcoin.address.fromBase58Check(ps.address)
+                    }
+    
+                    catch (e){
+                        throw 'wrong:address:notvalid'
+                    }
+                    
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+                    if(!ps.payload) ps.payload = {}
+    
+                    if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
+    
+    
+                    if (ps.items){
+    
+                        var a = 0
+    
+                        _.each(ps.items, (item, i) => {
+                            if(!item.name) throw 'missing:items:'+i+':name'
+                            if(!item.value) throw 'missing:items:'+i+':value'
+        
+                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
+                            if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
+        
+                            a += item.value
+        
+        
+                            item.image = superXSS(item.image || '')
+                            item.name = superXSS(item.name)
+                            //item.formattedAmount = self.mp.coin(item.value)
+                        })
+    
+                        ps.value = a
+                    }
+                    else{
+                        //ps.value
+                    }
+    
+                    if (ps.store){
+                        if(!ps.store.name) throw 'missing:store.name'
+                        //if(!ps.store.site) throw 'missing:store.site'
+    
+                        ps.store.name = superXSS(ps.store.name)
+                        
+                        if (ps.store.site)
+                            ps.store.site = superXSS(ps.store.site)
+                        
+                    }
+    
+                    if (ps.expired){
+                        if(!ps.date) throw 'missing:date'
+    
+                        if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
+                    }
+    
+                    if (ps.description) ps.description = superXSS(ps.description)
+                    
+    
+                    if(!ps.value || ps.value <= 0) throw 'missing:value'
+    
+                    //ps.hash = p.ext
+                }
+
+                return ps
+            }
+        },
         payments : {
+       
             save : function(lsdata, hash){
 				lsdata.updated = new Date()
 					
@@ -6170,8 +6177,9 @@ Platform = function (app, listofnodes) {
 
 				return lsdata
 			},
+            
 
-            getPays : function(){
+            get : function(){
                 try{
 
 					var allpays = []
@@ -6183,6 +6191,8 @@ Platform = function (app, listofnodes) {
 							if (parsed.txid && parsed.account == self.app.user.address.value){
 								parsed.updated = new Date(parsed.updated)
                                 parsed.hash = key.replace('pays_', '')
+                                parsed.info = self.sdk.external.getFromHash(parsed.hash)
+                                parsed.vid = makeid()
 								allpays.push(parsed)
 							}
 							
@@ -6197,7 +6207,8 @@ Platform = function (app, listofnodes) {
 				}
 
 				catch(e){
-					return null
+                    console.error(e)
+					return []
 				}
             },
 
@@ -6234,7 +6245,49 @@ Platform = function (app, listofnodes) {
 					return null
 				}
 				
-			}
+			},
+
+            remove : function(hash){
+                try{
+                    localStorage.removeItem('pays_' + hash);
+                }catch(e){
+
+                }
+                
+            },
+
+            prepare : function(clbk){
+                var removeKeys = []
+
+                try{
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.indexOf('pays_') == 0){
+                            var parsed = JSON.parse(localStorage[key])
+    
+                            if (!parsed.txid && (parsed.updated || parsed.date)){
+                                var upd = new Date(parsed.updated || parsed.date)
+    
+                                if(upd.addDays(3) < (new Date())){
+                                    removeKeys.push(key)
+                                }
+                            }
+                            
+                        }
+                    });
+    
+                    _.each(removeKeys, (key) => {
+                        localStorage.removeItem(key);
+                    })
+                }catch(e){
+
+                }
+
+                if(clbk) clbk()
+
+                
+
+
+            }
         },
         
         geolocation : {
@@ -22858,7 +22911,8 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        self.sdk.notifications.initcl
+                        self.sdk.notifications.initcl,
+                        self.sdk.payments.prepare
     
                     ], function () {
     

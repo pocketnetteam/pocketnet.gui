@@ -104,7 +104,7 @@
                             Description. Not required
                         */
 
-                        "description" : "some text",
+                        //"description" : "some text",
 
                         /*
                         
@@ -112,7 +112,7 @@
                         
                         */
 
-                        "value" : 5,
+                        //"value" : 5,
 
                         /*
                             Shopping list - image, name, value required
@@ -214,9 +214,9 @@
                         /*
                             Anonimus flag - Do not transfer buyer data to the seller, prohibit paying from the address linked to the account
                         */
-                        /*
-                        "anonimus" : true,
-                        */
+                        
+                        //"anonimus" : true,
+                        
 
                         
 

@@ -484,6 +484,11 @@ var external = (function(){
 
 				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
 
+					if (typeof shipmentValue != 'undefined'){
+						lsdata.shipmentValue = shipmentValue || 0
+						state.save(lsdata, ed.parameters.hash)
+					}
+
 					var tx = null
 
 					try{
@@ -700,6 +705,8 @@ var external = (function(){
 							if(!r.ok){
 								return Promise.reject(r.status)
 							}
+
+							///// TODO: save response
 
 							return Promise.resolve('fetch')
 						})

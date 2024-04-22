@@ -2615,3 +2615,5 @@ _l.shipment = "Доставка"
 _l.external_linkWillExpired = "Действие платёжной ссылки истекает"
 _l.external_linkExpired = "Действие платёжной ссылки истекло"
 _l.paymentLink = "Платёжная ссылка"
+
+_l.paymentsOnDevice = "Платежи"
