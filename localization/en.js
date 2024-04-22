@@ -2826,5 +2826,5 @@ _l.external_linkExpired = "Payment link has expired"
 _l.paymentLink = "Payment link"
 
 _l.paymentsOnDevice = "Payments"
-
+_l.scanqrcode = "Scan QR code"
 

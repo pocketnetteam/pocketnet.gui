@@ -815,6 +815,18 @@ __map =  {
 			electronDontOpen : true
 			
 		},
+
+		qrscanner : {
+			uri : "qrscanner",
+			href : "qrscanner",
+			add : insertingfunc,
+
+			relations : [
+				{src : 'js/vendor/qrscanner.js',			   f : 'js', require : function(){
+					html5QrcodeScanner = require('./js/vendor/qrscanner.js')
+				}}
+			],
+		},
 	
 		external : {
 			uri : "external",

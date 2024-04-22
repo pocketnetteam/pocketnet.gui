@@ -1084,7 +1084,7 @@ var wallet = (function(){
 
 					animation : 'fadeIn',
 
-				}, function(){
+				}, function(_p){
 
 					el.total = el.c.find('.total .tttl');
 					el.totaler = el.c.find('.total .tttlforerror');
@@ -1096,6 +1096,17 @@ var wallet = (function(){
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
 					el.htls = el.c.find('.htls')
+
+					_p.el.find('.qrcodescannericon').on('click', function(){
+						app.nav.api.load({
+							open : true,
+							id : 'qrscanner',
+							inWnd : true,
+			
+							essenseData : {
+							}
+						})
+					})
 
 					self.iclbks.main = function(){
 

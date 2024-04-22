@@ -1,0 +1,63 @@
+@import "../../css/__cssvar";
+
+#qrscanner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    #reader{
+        width: 100%;
+        border: 0!important;
+        overflow: hidden;
+        border-radius: 6px;
+
+        img{
+            display: none;
+        }
+    }
+
+    #reader__header_message{
+        background: transparent!important;
+        border : 0!important;
+        font-size: 2em!important;
+        color : rgb(var(--text-on-bg-shadow-color))!important;
+    }
+    #reader__dashboard{
+        display: none!important;
+    }
+
+    .label{
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top : 0;
+        right: 0;
+        text-align: center;
+        padding : 2 * @rhythm;
+        color : rgb(var(--text-on-bg-shadow-color));
+        .shadowText();
+
+        span{
+            font-weight: 700;
+        }
+    }
+}
+.wnd.qrscannerwindow{
+    .wndinner{
+		width: 100%;
+		max-width: 750px;
+		height: 90%;
+		max-height: 740px;
+        background: transparent!important;
+        box-shadow: none!important;
+	}
+
+    .wndcontent{
+        padding : 0!important;
+        overflow: hidden;
+        background: transparent!important;
+        max-height: 100%!important;
+        height: 100vh!important;
+    }
+}

@@ -6068,7 +6068,7 @@ Platform = function (app, listofnodes) {
                 return eExt
             },
             getFromHash : function(ext){
-                var ps = self.sdk.external.expandLink(JSON.parse(hexDecode(ext)))
+                var ps = self.sdk.external.expandLink(JSON.parse(ext[0] == '_' ? hexDecode(ext) : decodeURI(ext)))
 
                     ps.hash = ext
 

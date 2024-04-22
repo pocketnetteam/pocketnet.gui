@@ -1235,8 +1235,6 @@ Nav = function(app)
 
 							var ext = params.get('ext');
 
-							console.log('ext', ext)
-
 							if (ext){
 								app.platform.ui.externalFromCurrentUrl()
 							}

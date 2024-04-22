@@ -1,0 +1,53 @@
+#qrscanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+#qrscanner #reader {
+  width: 100%;
+  border: 0!important;
+  overflow: hidden;
+  border-radius: 6px;
+}
+#qrscanner #reader img {
+  display: none;
+}
+#qrscanner #reader__header_message {
+  background: transparent!important;
+  border: 0!important;
+  font-size: 2em!important;
+  color: rgb(var(--text-on-bg-shadow-color)) !important;
+}
+#qrscanner #reader__dashboard {
+  display: none!important;
+}
+#qrscanner .label {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  text-align: center;
+  padding: 1em;
+  color: rgb(var(--text-on-bg-shadow-color));
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+#qrscanner .label span {
+  font-weight: 700;
+}
+.wnd.qrscannerwindow .wndinner {
+  width: 100%;
+  max-width: 750px;
+  height: 90%;
+  max-height: 740px;
+  background: transparent!important;
+  box-shadow: none!important;
+}
+.wnd.qrscannerwindow .wndcontent {
+  padding: 0!important;
+  overflow: hidden;
+  background: transparent!important;
+  max-height: 100%!important;
+  height: 100vh!important;
+}

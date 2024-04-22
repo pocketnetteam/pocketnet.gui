@@ -5,6 +5,19 @@
 	padding-bottom: 8 * @rhythm;
 	position: relative;
 
+	.qrcodescannericon{
+		position: absolute;
+		left: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+
 	.pkoindisabledisclaimer{
 		padding : 6 * @rhythm;
 		text-align: center;

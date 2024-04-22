@@ -2617,3 +2617,4 @@ _l.external_linkExpired = "Действие платёжной ссылки ис
 _l.paymentLink = "Платёжная ссылка"
 
 _l.paymentsOnDevice = "Платежи"
+_l.scanqrcode = "Сканируйте QR код"
