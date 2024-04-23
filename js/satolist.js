@@ -6031,6 +6031,7 @@ Platform = function (app, listofnodes) {
                 if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
                 if (json.ad)    eExt.address = json.ad
                 if (json.s)     eExt.s_url = json.s
+                if (json.sv)     eExt.shipmentValue = json.shipmentValue
                 if (json.c)     eExt.c_url = json.c
                 if (json.ct)    eExt.c_url_type = json.ct
                 if (json.e)     eExt.email = true

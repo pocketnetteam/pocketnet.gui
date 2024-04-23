@@ -521,11 +521,12 @@ var external = (function(){
 
 				renders.loading('external_loading')
 
-				var v = helpers.getShipment(ed.parameters, lsdata.shipment)
 
-				console.log("V", v)
 
-				v.then(shipmentValue => {
+
+				
+
+				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
 
 					if (typeof shipmentValue != 'undefined'){
 						lsdata.shipmentValue = shipmentValue || 0
@@ -596,6 +597,8 @@ var external = (function(){
 			},
 
 			getShipment : function(parameters, shipment){
+				
+				if (parameters.shipmentValue) return Promise.resolve(shipmentValue)
 				if(!parameters.s_url) return Promise.resolve()
 
 				shipment = helpers.getShipmentFields(shipment)

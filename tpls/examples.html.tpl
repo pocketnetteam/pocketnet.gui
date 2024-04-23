@@ -82,7 +82,7 @@
                         Link duration
                         
                         */
-                        "expired" : 60 * 10, // 10 minutes
+                        //"expired" : 60 * 10, // 10 minutes
                         /*
                             Seller Address
                         */
@@ -177,6 +177,10 @@
 
                         "s_url": "https://6.pocketnet.app:8899/ping",
 
+                        /*
+                            Shipment value: if exist "s_url" ignoring
+                        */
+                            shipmentValue : 5,
                         /*
 
                             Seller payload JSON
