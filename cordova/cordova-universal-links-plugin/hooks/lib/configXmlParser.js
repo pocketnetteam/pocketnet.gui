@@ -51,7 +51,7 @@ function readPreferences(cordovaContext) {
 // region Private API
 
 function getTeamIdPreference(xmlPreferences) {
-  if (xmlPreferences.hasOwnProperty('ios-team-id')) {
+  if (Object.prototype.hasOwnProperty.call(xmlPreferences, 'ios-team-id')) {
     return xmlPreferences['ios-team-id'][0]['$']['value'];
   }
 

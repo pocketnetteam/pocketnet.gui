@@ -182,6 +182,7 @@ public class UniversalLinksPlugin extends CordovaPlugin {
 
         // if app was not launched by the url - ignore
         if (!Intent.ACTION_VIEW.equals(action) || launchUri == null) {
+            Log.d("UniversalLinks", "App was not launched by the url: " + action);
             return;
         }
 

@@ -18,6 +18,7 @@ Additional documentation regarding apple-app-site-association file can be found 
 
 
 var path = require('path');
+var mkpath = require('mkpath');
 var fs = require('fs');
 var rimraf = require('rimraf');
 var ConfigXmlHelper = require('../configXmlHelper.js');
@@ -127,9 +128,7 @@ function saveContentToFile(filePrefix, content) {
  */
 function createDirectoriesIfNeeded(dirPath) {
   try {
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
+    mkpath.sync(dirPath);
   } catch (err) {
     console.log(err);
   }

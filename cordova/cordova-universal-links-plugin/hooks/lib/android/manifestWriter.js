@@ -248,7 +248,7 @@ function isLaunchActivity(activity) {
     var action = intentFilter['action'];
     var category = intentFilter['category'];
 
-    if (action == null || action.length != 1 || category == null || category.length != 1) {
+    if (action == null || !action.length || category == null || !category.length) {
       return false;
     }
 
