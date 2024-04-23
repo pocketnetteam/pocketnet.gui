@@ -2608,6 +2608,7 @@ _l.state="Штат"
 _l.zipcode="Индекс"
 _l.external_loading = "Загрузка"
 _l.external_paySucc_details = "Оплата произведена. Детали транзакции"
+_l.address2 = "Адресс, вторая линия"
 
 _l.total = "Итого"
 _l.shipment = "Доставка"
@@ -2618,3 +2619,4 @@ _l.paymentLink = "Платёжная ссылка"
 
 _l.paymentsOnDevice = "Платежи"
 _l.scanqrcode = "Сканируйте QR код"
+_l.free = "Бесплатно"

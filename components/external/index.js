@@ -11,12 +11,13 @@ var external = (function(){
 		var el, ed, balanceMode, loading = false;
 		var balanceModes = [{id : 'all', label : 'tTotal'}, {id : 'user', label : 'twalletaddresses'}, {id : 'wallet', label : 'twallet'}]
 		var expiredInterval = null;
-		var countryList = {"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Barthelemy", "BM": "Bermuda", "BN": "Brunei", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BQ": "Bonaire, Saint Eustatius and Saba ", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "BZ": "Belize", "RU": "Russia", "RW": "Rwanda", "RS": "Serbia", "TL": "East Timor", "RE": "Reunion", "TM": "Turkmenistan", "TJ": "Tajikistan", "RO": "Romania", "TK": "Tokelau", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "PG": "Papua New Guinea", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "EE": "Estonia", "EG": "Egypt", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands", "FM": "Micronesia", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "XK": "Kosovo", "CI": "Ivory Coast", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos Islands", "CA": "Canada", "CG": "Republic of the Congo", "CF": "Central African Republic", "CD": "Democratic Republic of the Congo", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CW": "Curacao", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syria", "SX": "Sint Maarten", "KG": "Kyrgyzstan", "KE": "Kenya", "SS": "South Sudan", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "South Korea", "SI": "Slovenia", "KP": "North Korea", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "British Virgin Islands", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Laos", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "LV": "Latvia", "TO": "Tonga", "LT": "Lithuania", "LU": "Luxembourg", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libya", "VA": "Vatican", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "U.S. Virgin Islands", "IS": "Iceland", "IR": "Iran", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AQ": "Antarctica", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}
+		var countryList = {"US": "United States", "RU": "Russia", "BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Barthelemy", "BM": "Bermuda", "BN": "Brunei", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BQ": "Bonaire, Saint Eustatius and Saba ", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "BZ": "Belize", "RW": "Rwanda", "RS": "Serbia", "TL": "East Timor", "RE": "Reunion", "TM": "Turkmenistan", "TJ": "Tajikistan", "RO": "Romania", "TK": "Tokelau", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "PG": "Papua New Guinea", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "EE": "Estonia", "EG": "Egypt", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands", "FM": "Micronesia", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "XK": "Kosovo", "CI": "Ivory Coast", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos Islands", "CA": "Canada", "CG": "Republic of the Congo", "CF": "Central African Republic", "CD": "Democratic Republic of the Congo", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CW": "Curacao", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syria", "SX": "Sint Maarten", "KG": "Kyrgyzstan", "KE": "Kenya", "SS": "South Sudan", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "South Korea", "SI": "Slovenia", "KP": "North Korea", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "British Virgin Islands", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Laos", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "LV": "Latvia", "TO": "Tonga", "LT": "Lithuania", "LU": "Luxembourg", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libya", "VA": "Vatican", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "U.S. Virgin Islands", "IS": "Iceland", "IR": "Iran", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AQ": "Antarctica", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}
 
 		var countryValues = _.map(countryList, (c, i) => {return i})
 		var countryLabels = _.map(countryList, (c, i) => {return c + ' (' + i + ')'})
 
 		var shipmentsCache = {}
+		var shipmentsCacheLoading = {}
 
 		var inputs = {
 			email : new Parameter({
@@ -26,8 +27,7 @@ var external = (function(){
 				type : "STRINGANY",
 
 				onFocus : function(pn){
-					if (self.app.mobileview) 
-						setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 
@@ -38,8 +38,7 @@ var external = (function(){
 				type : "STRINGANY",
 
 				onFocus : function(pn){
-					if (self.app.mobileview) 
-						setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 				}
 			}),
 
@@ -69,6 +68,18 @@ var external = (function(){
 				name : self.app.localization.e('address'),
 				placeholder : self.app.localization.e('address'),
 				id : 'address',
+				type : "STRINGANY",
+
+				onFocus : function(pn){
+					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+				}
+				
+			}),
+
+			address2 : new Parameter({
+				name : self.app.localization.e('address2'),
+				placeholder : self.app.localization.e('address2'),
+				id : 'address2',
 				type : "STRINGANY",
 
 				onFocus : function(pn){
@@ -154,11 +165,28 @@ var external = (function(){
 
 			shipment : function(_el, parameters, lsdata, clbk){
 
-				var hp = [inputs.name, inputs.country, inputs.address, inputs.city, inputs.state, inputs.zipcode]
+				var hp = [inputs.name, inputs.country, inputs.address, inputs.address2, inputs.city, inputs.state, inputs.zipcode]
 
 				_.each(hp, (input) => {
 					input.value = lsdata.shipment ? lsdata.shipment[input.id] || '' : ''
 				})
+
+				if (inputs.country.value != 'US'){
+					hp = _.filter(hp, (input) => {
+						return input.id != 'address2' && input.id != 'state'
+					})
+				}
+
+				/*if(lsdata.shipment){
+					_.each(lsdata.shipment, (sh, i) => {
+						if(!_.find(hp, (input) => {
+							return i == input.id
+						})){
+							lsdata.shipment[i] = ''
+						}
+					})
+				}*/
+				
 
 				self.shell({
 					name :  'shipment',
@@ -167,7 +195,7 @@ var external = (function(){
 						lsdata,
 						inputs : hp
 					},
-
+					insertimmediately : true,
 					el : _el
 
 				}, function(_p){
@@ -185,8 +213,14 @@ var external = (function(){
 
 							state.save(lsdata, parameters.hash)
 
-							if (p.id != 'name')
-								make()
+							/////bug with make
+
+							if (p.id != 'name') make(() => {
+								if (i + 1 < hp.length){
+									hp[i + 1].el.focus()
+								}
+								//_scrollTo(_p.el.find('[parameter="'+p.id+'"]'), el.c.closest('.customscroll'), 0)
+							})
 						}
 
 						
@@ -265,6 +299,7 @@ var external = (function(){
 
 				var hp = []
 
+
 				if(parameters.email) {hp.push(inputs.email); inputs.email.value = lsdata.email || ""} else inputs.email.value = ''
 				if(parameters.phone) {hp.push(inputs.phone); inputs.phone.value = lsdata.phone || ""} else inputs.phone.value = ''
 
@@ -334,7 +369,7 @@ var external = (function(){
 					_.each(hp, (p, i) => {
 
 						p._onChange = function(v){
-							lsdata[i] = v
+							lsdata[p.id] = v
 							state.save(lsdata, parameters.hash)
 						}
 						
@@ -423,12 +458,16 @@ var external = (function(){
 
 					if (parameters.s_url){
 						renders.shipment(_el.find('.shipmentWrapper'), parameters, lsdata, () => {
-
+							if (clbk)
+								clbk(_p);
 						})
 					}
+					else{
+						if (clbk)
+							clbk(_p);
+					}
 
-					if (clbk)
-						clbk(_p);
+					
 				})
 			},
 
@@ -482,7 +521,11 @@ var external = (function(){
 
 				renders.loading('external_loading')
 
-				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
+				var v = helpers.getShipment(ed.parameters, lsdata.shipment)
+
+				console.log("V", v)
+
+				v.then(shipmentValue => {
 
 					if (typeof shipmentValue != 'undefined'){
 						lsdata.shipmentValue = shipmentValue || 0
@@ -535,10 +578,31 @@ var external = (function(){
 				return balanceModes
 			},
 
+			getShipmentFields : function(shipment){
+				var fields = {}
+
+				_.each(shipment, (v, i) => {
+
+					if(shipment.country != 'US' && (i == 'state' || i == 'address2')){
+
+					}
+					else{
+						fields[i] = v
+
+					}
+				})
+
+				return fields
+			},
+
 			getShipment : function(parameters, shipment){
 				if(!parameters.s_url) return Promise.resolve()
 
-				if(!shipment || !shipment.name || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
+				shipment = helpers.getShipmentFields(shipment)
+
+				console.log("shipment", shipment)
+
+				if(!shipment || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
 					return Promise.reject({
 						error : 'missing:shipment',
 						text : self.app.localization.e('external_fill_shipment') 
@@ -557,17 +621,19 @@ var external = (function(){
 					var datahash = $.md5(JSON.stringify(data))
 
 					if(!shipmentsCache[parameters.hash]) shipmentsCache[parameters.hash] = {}
+					if(!shipmentsCacheLoading[parameters.hash]) shipmentsCacheLoading[parameters.hash] = {}
 
-					if (shipmentsCache[parameters.hash]) return shipmentsCache[parameters.hash][datahash]
+					if (shipmentsCache[parameters.hash][datahash]) return shipmentsCache[parameters.hash][datahash]
+					if (shipmentsCacheLoading[parameters.hash][datahash]) return shipmentsCacheLoading[parameters.hash][datahash]
 
 					var headers = _.extend({
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=utf-8'
 					})
 
-					/* check */
+					
 
-					shipmentsCache[parameters.hash][datahash] = fetch(parameters.s_url, {
+					shipmentsCacheLoading[parameters.hash][datahash] = fetch(parameters.s_url, {
 
 						method: 'POST',
 						mode: 'cors',
@@ -577,7 +643,7 @@ var external = (function(){
 					}).then(r => {
 
 						if(!r.ok){
-							delete shipmentsCache[parameters.hash][datahash]
+							
 							er = true
 						}
 
@@ -593,6 +659,8 @@ var external = (function(){
 							return Promise.reject(result.error)
 						}
 
+						shipmentsCache[parameters.hash][datahash] = Number(result.value)
+
 						/*
 							test
 						
@@ -600,13 +668,17 @@ var external = (function(){
 						return Number(0.05)
 						*/
 
-						return Number(result.value)
+						return shipmentsCache[parameters.hash][datahash]
 
 					}).catch(e => {
 						return Promise.reject(e)
+					}).finally(() => {
+						delete shipmentsCacheLoading[parameters.hash][datahash]
 					})
 
-					return shipmentsCache[parameters.hash][datahash]
+					console.log('shipmentsCacheLoading', shipmentsCacheLoading)
+
+					return shipmentsCacheLoading[parameters.hash][datahash]
 				}
 				catch(e){
 					return Promise.reject(e)
@@ -643,7 +715,7 @@ var external = (function(){
 					if(lsdata.email) Url.searchParams.append('email', encodeURIComponent(lsdata.email));
 
 					if(lsdata.shipment) {
-						_.each(parameters.shipment, (d, i) => {
+						_.each(helpers.getShipmentFields(parameters.shipment), (d, i) => {
 							Url.searchParams.append(i, encodeURIComponent(d));
 						})
 					}
@@ -683,7 +755,7 @@ var external = (function(){
 
 					if(lsdata.phone) data.phone = lsdata.phone
 					if(lsdata.email) data.email = lsdata.email
-					if(lsdata.shipment) data.shipment = lsdata.shipment
+					if(lsdata.shipment) data.shipment = helpers.getShipmentFields(lsdata.shipment) 
 
 					if(!parameters.anonimus)
 						data.account = self.app.user.address.value
@@ -815,7 +887,7 @@ var external = (function(){
 
 		var make = function(clbk){
 
-			
+			console.log('make', make.caller)
 
 			actions.balance()
 

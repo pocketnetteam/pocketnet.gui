@@ -127,7 +127,11 @@
                         </div>
 
                         <div class="value">
-                            <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
+                            <% if(!parameters.shipmentValue) {%>
+                                <span><%- e('free') %></span>
+                            <% } else { %> 
+                                <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
+                            <% } %>
                         </div>
                     </div>
                 <% } %>

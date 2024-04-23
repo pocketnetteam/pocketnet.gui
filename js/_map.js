@@ -118,7 +118,7 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/apps/index.js", babelify : true},
-		{path : "js/lib/external/index.min.js", babelify : true},
+		{path : "js/lib/external/index.min.js"},
 
 		{path : "js/satolist.js", babelify : true},
 		"js/bastyonCalls/bastyonCalls.min.js",
@@ -822,9 +822,7 @@ __map =  {
 			add : insertingfunc,
 
 			relations : [
-				{src : 'js/vendor/qrscanner.js',			   f : 'js', require : function(){
-					html5QrcodeScanner = require('./js/vendor/qrscanner.js')
-				}}
+				{src : 'js/vendor/qr-scanner.umd.min.js',			   f : 'js'}
 			],
 		},
 	

@@ -8,20 +8,28 @@ var qrscanner = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, html5QrcodeScanner = null;
+		var el, ed, qrScanner = null;
 
 		var config = {
 			fps: 2,
 			disableFlip  : true,
-			formatsToSupport : [Html5QrcodeSupportedFormats.QR_CODE]
 		}
 
 		var actions = {
-
+			destroy : function(){
+				if (qrScanner){
+					qrScanner.stop();
+					qrScanner.destroy();
+					qrScanner = null
+				}
+			}
 		}
 
 		var events = {
-			success : function(decodedText){
+			success : function(result){
+
+				var decodedText = result.data
+				console.log('decodedText', decodedText)
 
 				try{
 					if (ed.success){
@@ -67,6 +75,8 @@ var qrscanner = (function(){
 							})
 						}
 					}
+
+					actions.destroy()
 	
 					self.closeContainer()
 				}
@@ -101,44 +111,22 @@ var qrscanner = (function(){
 
 			window.BSTMedia.permissions({ audio: true, video : true }).then(() => {
 
-				var mx = Math.min (0.85 * self.app.height, 600)
+				qrScanner = new QrScanner(
+					el.c.find('video')[0],
+					events.success,
+					{ 
+						highlightScanRegion : true,
+						maxScansPerSecond : 2
+					},
+				);
 
-				var wh = { width: mx, height: mx }
-
-				if(isMobile()){
-					wh.width = self.app.width * 0.8
-					wh.height = self.app.width * 0.8
-				}
-
-				console.log('wh', wh)
-
-				html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-					...config,
-					qrbox: wh
-	
-				}, false);
-	
-				html5QrcodeScanner.render(events.success);
-
-				/*html5QrcodeScanner.qrCodeErrorCallback = function(t, er){
-					console.log(t, er)
-				}*/
-				
-
-				html5QrcodeScanner.applyVideoConstraints({
-					ideal : true
-				})
-
-				el.c.find('#html5-qrcode-button-camera-permission').click()
-
-				console.log('html5QrcodeScanner', html5QrcodeScanner)
+				qrScanner.start();
 	
 
 			}).catch((e) => {
 				console.error(e)
 				renders.error()
 			})
-		
 			
 		}
 
@@ -161,10 +149,7 @@ var qrscanner = (function(){
 				ed = {}
 				el = {};
 
-				if (html5QrcodeScanner){
-					html5QrcodeScanner.clear();
-					html5QrcodeScanner = null
-				}
+				actions.destroy()
 			},
 			
 			init : function(p){

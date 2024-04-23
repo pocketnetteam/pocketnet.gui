@@ -2817,6 +2817,8 @@ _l.zipcode="ZIP"
 _l.external_loading = "Loading"
 _l.external_paySucc_details = "Payment has been made. Transaction Details"
 
+_l.address2 = "Second line address"
+
 _l.total = "Total"
 _l.shipment = "Shipment"
 
@@ -2828,3 +2830,4 @@ _l.paymentLink = "Payment link"
 _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
 
+_l.free = "Free"

@@ -226,6 +226,10 @@
 
                 var urlElement = document.getElementById('paymentURL');
                     urlElement.href = payments.makeURL()
+
+                    payments.makeQR().then(q => {
+                        console.log(q)
+                    })
             });
         </script>
         <!-- example 2: PaymentLink: end -->
