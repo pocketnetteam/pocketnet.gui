@@ -1,0 +1,18 @@
+
+<div class="qrcode">
+    <% if(payment) {%>
+        <img src="<%-payment.qr%>"/>
+    <% } %>
+</div>
+
+<div class="link">
+    <% if(payment) {%>
+        <textarea><%-payment.url%></textarea>
+    <% } %>
+</div>
+
+<div class="json">
+    <% if(payment) {%>
+        <textarea><%-payment.json%></textarea>
+    <% } %>
+</div>
