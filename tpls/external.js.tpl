@@ -32,7 +32,7 @@ var bastyon_importScript = function(src, callback) {
     appendTo.appendChild(script);
 }
 
-bastyon_importScript('js/lib/external/index.min.js', function(){
+bastyon_importScript('https://__VAR__.domain/js/lib/external/index.min.js', function(){
 
     window.bastyonLib = new window.__BastyonLib(__VAR__.strconfig)
     delete window.__BastyonLib

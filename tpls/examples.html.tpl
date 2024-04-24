@@ -238,6 +238,6 @@
         </script>
         <!-- example 2: PaymentLink: end -->
 
-        <script src="external.js"></script>
+        <script src="https://__VAR__.domain/external.js"></script>
     </body>
 </html>
