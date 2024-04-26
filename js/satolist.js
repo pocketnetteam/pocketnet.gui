@@ -6062,6 +6062,7 @@ Platform = function (app, listofnodes) {
                         if (it.i) item.image = it.i
                         if (it.n) item.name = it.n
                         if (it.v) item.value = it.v
+                        if (it.c) item.count = item.c
     
                         eExt.items.push(item)
                     })
@@ -6112,10 +6113,11 @@ Platform = function (app, listofnodes) {
         
                             if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
                             if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
+
+                            if(item.count && !_.isNumber(item.count)) throw 'wrong:items:'+i+':count:nan'
         
-                            a += item.value
-        
-        
+                            a += (item.count || 1) * item.value
+                            
                             item.image = superXSS(item.image || '')
                             item.name = superXSS(item.name)
                             //item.formattedAmount = self.mp.coin(item.value)

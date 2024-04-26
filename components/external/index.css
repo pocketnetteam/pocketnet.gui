@@ -259,6 +259,24 @@
   border-radius: 1em;
   background: rgb(var(--neutral-grad-1));
 }
+#external .pay .form .info .imageWrapper {
+  position: relative;
+}
+#external .pay .form .info .imageWrapper .count {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  background: rgb(var(--color-bg-ac));
+  color: rgb(var(--text-on-bg-shadow-color));
+  font-weight: 700;
+  font-size: 0.8em;
+  border-radius: 15px;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
 #external .pay .form .info .name {
   margin-left: 1em;
   display: -webkit-box;
@@ -269,6 +287,9 @@
   overflow: hidden;
   font-size: 0.8em;
   margin-right: 6em;
+}
+#external .pay .form .info .count {
+  margin-left: auto;
 }
 #external .pay .form .info .value {
   margin-left: auto;

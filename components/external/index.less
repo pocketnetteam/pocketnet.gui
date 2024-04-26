@@ -316,6 +316,28 @@
                     height: 60px;
                     border-radius: 2 * @rhythm;
                     background: rgb(var(--neutral-grad-1));
+                    
+
+                    
+                }
+
+                .imageWrapper{
+                    position: relative;
+                    .count{
+                        position: absolute;
+                        right: -6px;
+                        top : -6px;
+                        width: 22px;
+                        height: 22px;
+                        line-height: 22px;
+                        text-align: center;
+                        background: rgb(var(--color-bg-ac));
+                        color : rgb(var(--text-on-bg-shadow-color));
+                        font-weight: 700;
+                        font-size: 0.8em;
+                        border-radius: 15px;
+                        .shadowSmaller()
+                    }
                 }
 
                 .name{
@@ -329,7 +351,9 @@
                     font-size: 0.8em;
                     margin-right: 12 * @rhythm;
                 }
-
+                .count{
+                    margin-left: auto;
+                }
                 .value{
                     margin-left: auto;
                 }
