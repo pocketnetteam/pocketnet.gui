@@ -6027,18 +6027,24 @@ Platform = function (app, listofnodes) {
         external : {
             expandLink : function(json = {}){
                 var eExt = {}
+
+                if (json.address) eExt.address = json.address
+                if (json.description) eExt.description = json.description
+                if (json.value) eExt.value = json.value
+                if (json.paymentHash) eExt.paymentHash = json.paymentHash
+                
     
                 if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
                 if (json.ad)    eExt.address = json.ad
                 if (json.s)     eExt.s_url = json.s
-                if (json.sv)     eExt.shipmentValue = json.shipmentValue
+                if (json.sv)    eExt.shipmentValue = json.shipmentValue
                 if (json.c)     eExt.c_url = json.c
                 if (json.ct)    eExt.c_url_type = json.ct
                 if (json.e)     eExt.email = true
                 if (json.p)     eExt.phone = true
                 if (json.an)    eExt.anonimus = true
                 if (json.pl)    eExt.payload = json.pl
-                if (json.ex)     eExt.expired = json.ex
+                if (json.ex)    eExt.expired = json.ex
                 if (json.d)     eExt.date = json.d
                 if (json.h)     eExt.paymentHash = json.h
                 if (json.de)    eExt.description = json.de
@@ -6053,7 +6059,7 @@ Platform = function (app, listofnodes) {
                     if(json.st.s) eExt.store.site = json.st.s
                 }
     
-                if(json.i){
+                if (json.i){
                     eExt.items = []
     
                     _.each(json.i, (it) => {
@@ -6067,13 +6073,15 @@ Platform = function (app, listofnodes) {
                         eExt.items.push(item)
                     })
                 }
+
+                if(!eExt.action) eExt.action = 'pay'
                
                 return eExt
             },
             getFromHash : function(ext){
-                var ps = self.sdk.external.expandLink(JSON.parse(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext)))
+                var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
 
-                    ps.hash = ext
+                ps.hash = ext
 
                 if(!ps.action){
                     throw 'missing:action'
@@ -6118,8 +6126,8 @@ Platform = function (app, listofnodes) {
         
                             a += (item.count || 1) * item.value
                             
-                            item.image = superXSS(item.image || '')
-                            item.name = superXSS(item.name)
+                            item.image = clearStringXss(item.image || '')
+                            item.name = clearStringXss(item.name)
                             //item.formattedAmount = self.mp.coin(item.value)
                         })
     
@@ -6147,10 +6155,10 @@ Platform = function (app, listofnodes) {
                         if(!ps.store.name) throw 'missing:store.name'
                         //if(!ps.store.site) throw 'missing:store.site'
     
-                        ps.store.name = superXSS(ps.store.name)
+                        ps.store.name = clearStringXss(ps.store.name)
                         
                         if (ps.store.site)
-                            ps.store.site = superXSS(ps.store.site)
+                            ps.store.site = clearStringXss(ps.store.site)
                         
                     }
     
@@ -6160,7 +6168,7 @@ Platform = function (app, listofnodes) {
                         if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
                     }
     
-                    if (ps.description) ps.description = superXSS(ps.description)
+                    if (ps.description) ps.description = clearStringXss(ps.description)
                     
     
                     if(!ps.value || ps.value <= 0) throw 'missing:value'
