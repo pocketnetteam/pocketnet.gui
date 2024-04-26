@@ -136,6 +136,18 @@
                     </div>
                 <% } %>
 
+                <% if(parameters.discount) {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%- e('discount') %></span>
+                        </div>
+
+                        <div class="value">
+                            <span>-<%-app.platform.mp.coin(parameters.discount)%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
                 <div class="row">
                     <div class="label">
                         <span><b><%-e('total')%></b></span>
@@ -203,7 +215,7 @@
             <% } %>
         
             <div class="actionButtonWrapper buttonWrapper">
-                <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
+                <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0) - (parameters.discount || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
             </div>
             
         <% } %>

@@ -536,7 +536,7 @@ var external = (function(){
 					var tx = null
 
 					try{
-						tx = helpers.getTransaction(ed.parameters.value + (shipmentValue || 0), ed.parameters.address, ed.parameters)
+						tx = helpers.getTransaction(ed.parameters.value + (shipmentValue || 0) - (ed.parameters.discount || 0), ed.parameters.address, ed.parameters)
 					}
 					catch(e){
 
@@ -661,6 +661,8 @@ var external = (function(){
 						if (er || result.error){
 							return Promise.reject(result.error)
 						}
+
+						if(!_.isNumber(result.value)) return Promise.reject('NaN')
 
 						shipmentsCache[parameters.hash][datahash] = Number(result.value)
 

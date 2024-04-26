@@ -1675,7 +1675,8 @@ tooltip = function (p) {
 
 sitemessage = function (message, func, delay = 5000, p = {}) {
 
-	var m = "<div>" + message + "</div>"
+	
+	var m = "<div>" + clearStringXss(message) + "</div>"
 
 	if (p.action) {
 		m += '<div class="action"><button class="black">' + p.action.text + '</button></div>'

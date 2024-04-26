@@ -2832,3 +2832,4 @@ _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
 
 _l.free = "Free"
+_l.discount = "Discount"

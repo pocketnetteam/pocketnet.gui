@@ -221,7 +221,13 @@
                         
                         //"anonimus" : true,
                         
+                        /*
+                        
+                            For payments when it is not possible to generate a new address for each payment (random small value)
+                            Max: 0.01, 8 digits
+                        */
 
+                        // saltValue : 0.00798765
                         
 
                         

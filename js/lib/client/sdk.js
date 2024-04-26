@@ -735,6 +735,8 @@ var pSDK = function ({ app, api, actions }) {
                     c.l = clearStringXss(trydecode(c.l || ''));
                     c.a = clearStringXss(trydecode(c.a || ''));
 
+                    c.address = clearStringXss(c.address);
+
                 }
                 catch (e) {
                     console.error(e)

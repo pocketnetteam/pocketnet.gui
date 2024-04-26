@@ -643,8 +643,8 @@ Platform = function (app, listofnodes) {
 
             var fp = maskValue(p)
 
-            var html = '<div class="table coinwithsmall"><div class="bignum">' + fp +
-                '</div><div class="svlwr"><div><div div class="smallvalue">' + value + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
+            var html = '<div class="table coinwithsmall"><div class="bignum">' + clearStringXss(fp) +
+                '</div><div class="svlwr"><div><div div class="smallvalue">' + clearStringXss(value) + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
 
             return html;
         }
@@ -6043,7 +6043,8 @@ Platform = function (app, listofnodes) {
                 if (json.h)     eExt.paymentHash = json.h
                 if (json.de)    eExt.description = json.de
                 if (json.v)     eExt.value = json.v
-    
+                if (json.sv)    eExt.saltValue = json.sv
+                if (json.di)    eExt.discount = json.di
     
                 if (json.st) {
                     eExt.store = {}
@@ -6123,7 +6124,21 @@ Platform = function (app, listofnodes) {
                         ps.value = a
                     }
                     else{
-                        //ps.value
+                        if(!_.isNumber(ps.value)) throw 'wrong:value:nan'
+                    }
+
+                    if (ps.saltValue){
+                        if(!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
+                        if(ps.saltValue >= 0.01) throw 'wrong:saltValue:morethan:0.001'
+                        if(ps.saltValue < 0) throw 'wrong:saltValue:lessthan:0'
+                        if(ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
+                    }
+
+                    if (ps.discount){
+                        if(!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
+                        if(ps.discount < 0) throw 'wrong:discount:lessthan:0'
+
+                        ps.value = ps.value - discount
                     }
     
                     if (ps.store){
