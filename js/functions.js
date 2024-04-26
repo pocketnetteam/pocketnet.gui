@@ -1787,7 +1787,7 @@ bgImagesClApply = function (el, src) {
 
 bgImagesClApplyTemplate = function (src) {
 
-	src = (src || "");
+	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
 	
@@ -2068,7 +2068,7 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
@@ -2122,7 +2122,7 @@ resize = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
