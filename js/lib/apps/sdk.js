@@ -283,6 +283,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.fetch = function(url, payload = {}){
+
+        return action('authFetch', {url, payload}).catch(e => {
+            console.error(e)
+            return Promise.reject(e)
+        })
+
+    }
+
     self.helpers = {
         alert : function(message){
             return action('alert', {message})

@@ -147,11 +147,13 @@ var BastyonApps = function(app){
         'account' : {
             name : 'permissions_name_account',
             description : 'permissions_descriptions_account',
-            level : 5,
+            level : 5
+        },
 
-            /*canrequest : function(){
-                return app.user.address.value ? true : false
-            }*/
+        'authFetch' : {
+            name : 'permissions_auth_fetch',
+            description : 'permissions_auth_fetch',
+            level : 5
         },
 
         'sign' : {
@@ -262,6 +264,40 @@ var BastyonApps = function(app){
             authorization : true,
             action : function({data, application}){
                 return Promise.reject(appsError('todo:action:sign'))
+            }
+        },
+
+        authFetch: {
+            permissions : ['authFetch'],
+            authorization : true,
+            parameters : ['url'],
+            action : function({data, application}){
+
+                var url = data.url
+
+                var signature = app.user.signature(application.manifest.id)
+
+                if(!data.data || !_.isObject(data.data)) data.data = {}
+
+                data.data.signature = signature
+
+                if (data.data) data.data = JSON.stringify(data.data)
+
+                delete data.url
+
+                return fetch(url, {
+
+                    ...data
+        
+                }).then(r => {
+        
+                    return Promise.resolve(r.json())
+        
+                }).catch(e => {
+
+                    return Promise.reject(e)
+                })
+
             }
         },
 
