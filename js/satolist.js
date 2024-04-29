@@ -4661,8 +4661,12 @@ Platform = function (app, listofnodes) {
             return keyPair
         },
 
-        clearname: function (n) {
-            return (n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. ]/g, "") : n
+        clearname: function (n, t) {
+            var  fb =  ((n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. *]/g, "") : n)
+
+            if (t) return self.sdk.user.maskNotAllowedName(fb)
+
+            return fb
         },
 
         name: function (address) {
@@ -9229,6 +9233,21 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            isNotAllowedNameStr : function(name){
+                return self.sdk.user.isNotAllowedName({name})
+            },
+
+            maskNotAllowedName : function(name = ''){
+
+                if(!name || name.length <= 1) return name
+
+                if(self.sdk.user.isNotAllowedNameStr(name)){
+                    return name[0] + (name.substring(1).substring(0, name.length - 2)).replace(/[a-zA-Z]/g, '*') + name[name.length - 1]
+                }
+
+                return name
+            },
+
             isNotAllowedName : function (user = {}) {
 
                 let name, address
@@ -9254,6 +9273,8 @@ Platform = function (app, listofnodes) {
                 })
                 
                 if(bwf) return true
+
+                if(!address) return
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
@@ -18743,7 +18764,7 @@ Platform = function (app, listofnodes) {
                     _.each(comment.images, function (image) {
 
                         h += '<div class="imagesWrapper">'
-                        h += '<div class="image imageCommentOpen" image="' + image + '" i="' + image + '">'
+                        h += '<div class="image imageCommentOpen" image="' + (image) + '" i="' + (image) + '">'
                         h += '</div>'
                         h += '</div>'
 
@@ -18814,6 +18835,8 @@ Platform = function (app, listofnodes) {
 
             star: function (count) {
 
+                if(!_.isNumber(count)) return ''
+
                 var _star = '<i class="fas fa-star"></i>';
                 if (electron) _star = '★';
                 return '<div class="messagestar" count="' + count + '">' + count + '' + _star + '</div>'
@@ -18838,7 +18861,7 @@ Platform = function (app, listofnodes) {
             },
 
             _user: function (author) {
-                return filterXSS(deep(author, 'name') || author.address)
+                return platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true)
             },
 
             user: function (author, html, gotoprofile, caption, extra, time, donation) {
@@ -18853,7 +18876,7 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 /*if (app.curation()) {
@@ -18897,7 +18920,7 @@ Platform = function (app, listofnodes) {
                 if (author.address != platform.sdk.address.pnet().address) {
 
                     if (gotoprofile) h += link
-                    h += '<b class="adr">' + filterXSS(deep(author, 'name') || author.address) + '</b>'
+                    h += '<b class="adr">' + platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true) + '</b>'
                     if (gotoprofile) h += clink
 
                 }
@@ -18966,7 +18989,7 @@ Platform = function (app, listofnodes) {
                     d = 'disabled'
                 }
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 var h = '<div class="subscribeWrapper ">'
@@ -18999,7 +19022,7 @@ Platform = function (app, listofnodes) {
                                 }
 
                 h +=            '</div>\
-                                <div class="tips">' + (json.text) + '\
+                                <div class="tips">' + clearStringXss(json.text) + '\
                                 </div>\
                             </div>'
 

@@ -1183,6 +1183,10 @@ var pSDK = function ({ app, api, actions }) {
         cleanData: function (rawcomments) {
 
             return _.filter(_.map(rawcomments, (c) => {
+                
+                //if(c.deleted) return
+
+                if(!c.msgparsed && !c.msg) return null
 
                 try {
 
@@ -1208,6 +1212,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
+                    console.log(c)
                     return null
                 }
 

@@ -153,7 +153,8 @@ var vars = {
 		lname : config.lname || config.name,
 		support : config.support,
 		config,
-		strconfig : JSON.stringify(config)
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	},
 	prod : {
 		proxypath : '"http://pocketnet.app:8898/"',
@@ -171,7 +172,8 @@ var vars = {
 		run : args.run || false,
 		support : config.support,
 		config,
-		strconfig : JSON.stringify(config)
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	}
 }
 

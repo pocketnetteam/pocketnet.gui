@@ -23,7 +23,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 				
 				var src = info.image || ''
 				
-				var name = app.platform.api.clearname(info.name || user.address.value) || ''
+				var name = app.platform.api.clearname(info.name || user.address.value, true) || ''
 				
 				var letter = name ? name[0] : ''
 

@@ -5359,6 +5359,12 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
+							///
+
+							/*if(beginmaterial){
+								console.log('beginmaterial', beginmaterial)
+							}*/
+
 
 							window.requestAnimationFrame(function(){
 								if(!el.shares) return
@@ -5382,12 +5388,12 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s && !p.msh && !p.np){
+								if ((p.s) && !p.msh && !p.np){
 
 									setTimeout(function(){
 
-										actions.openPost(p.s, function(){
-											actions.scrollToPost(p.s)
+										actions.openPost(p.s || p.v, function(){
+											actions.scrollToPost(p.s || p.v)
 										}, null, null, p.commentid)
 										
 									}, 500)
@@ -5396,6 +5402,8 @@ var lenta = (function(){
 	
 								if (p.i){
 									var share = self.psdk.share.get(p.i)
+
+									actions.scrollToPost(p.i)
 									
 									var src = null;
 	
@@ -5410,14 +5418,20 @@ var lenta = (function(){
 	
 										
 								}
+
+								console.log("PPP", p)
 	
 								if(p.v){
+
+									console.log("HERE", video)
 	
 									if(video){
 									}
 									else{	
-										actions.scrollToPost(p.v)
-										actions.fullScreenVideo(p.v, function(){})
+										setTimeout(function(){
+											actions.scrollToPost(p.v)
+											actions.fullScreenVideo(p.v, function(){})
+										}, 500)
 									}
 									
 								}

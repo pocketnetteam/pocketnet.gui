@@ -168,7 +168,7 @@
 								</div>
 
 								<div class="label">
-									<%- decodeURIComponent(user.name || user.address) %>
+									<%- app.platform.api.clearname(decodeURIComponent(user.name || user.address), true) %>
 								</div>
 							</div>
 						</div>
