@@ -609,7 +609,6 @@ var lenta = (function(){
 				actions.observe()
 
 				isotopeinited = false
-				
 
 				clearnewmaterials()	
 
@@ -744,6 +743,8 @@ var lenta = (function(){
 					var last = _.min(larray, (s) => {
 						return s.id
 					})
+
+					console.log('save observe', essenseData.observe + k, first, last)
 
 					if (first && last){
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
@@ -5300,6 +5301,9 @@ var lenta = (function(){
 
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
+
+
+				console.log('observer', subloaded)
 
 
 				var tagsfilter = self.app.platform.sdk.categories.gettags()

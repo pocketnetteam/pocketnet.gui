@@ -177,7 +177,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.read && !np.r){
+				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
 					//// 
 					console.log("khref ???")
 					backManager.clearAll()
@@ -188,7 +188,7 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
 
 					console.log('khref needadd', needadd)
 	

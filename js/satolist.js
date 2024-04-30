@@ -264,7 +264,6 @@ Platform = function (app, listofnodes) {
         'PVcMixqr6FkarzUjskvLL8MXuExAbEmRHT': true,
         'PCf2FqtB4p6APE3c5Avkrg3yk8dBq9ijRN': true,
         'PW5TQSyz3jWEx9k2S7icQXwKJLEBGRUtho': true,
-        'PRtyDsM3wL4Y7baAGRULkGmnpkmQYXcpkH': true,
         'PHVjfPM6bxy84AmWqw7hjBWYk7KVjpdsD2': true,
         'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
         'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
@@ -337,7 +336,15 @@ Platform = function (app, listofnodes) {
         'PRYXTN9A3JF53fvgdk7f9AJDafGnCvTTNv' : true,
         'PLYWB4GzSWKjJQoqHyEgR3CEDnCHFySB21' : true,
         'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ' : true,
-        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN' : true
+        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN' : true,
+        'PV8nA6h5DRznTypDVDVxoHwLHqueh35gpp' : true,
+        'PKBx48sYjn7DyQrAKBLsHSugZAZXiGKR1u' : true,
+        'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX' : true,
+        'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
+        'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
+        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true
+
+
     } 
 
     self.bch = {
@@ -8027,11 +8034,9 @@ Platform = function (app, listofnodes) {
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-
                 if (block){
 
                     if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
-
 
                         return true
                     }
@@ -8081,6 +8086,7 @@ Platform = function (app, listofnodes) {
                     localStorage[self.sdk.sharesObserver.key()] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
                 }
                 catch(e){
+                    console.error('observer', e)
                 }
 
             },
@@ -8089,8 +8095,9 @@ Platform = function (app, listofnodes) {
                 self.app.user.isState(function (state) {
                     if(state){
                         self.sdk.sharesObserver.load(clbk)
-
-                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), this.load);
+                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), () => {
+                            self.sdk.sharesObserver.load()
+                        });
                     }
                     else{
                         if(clbk) clbk()
@@ -8106,6 +8113,7 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
+
                 try{
                     self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage[self.sdk.sharesObserver.key()] || "{}") || {}
                 }
@@ -12022,8 +12030,6 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-
-
                 try{
 
                     localStorage[self.sdk.recommendations.lskey()] = JSON.stringify({
@@ -12057,10 +12063,12 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                
+                console.log('recommendations, save')
             },
 
-            load: function (clbk) {
+            load: function () {
+
+                console.log("recommendations load")
 
                 var p = {};
 
@@ -12080,7 +12088,7 @@ Platform = function (app, listofnodes) {
                     return {...us, ...{ ___temp : true }}
                 })
 
-                self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
+                return self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
 
                     if (self.psdk.share.get(sd.share.txid)) return false
 
@@ -12099,15 +12107,30 @@ Platform = function (app, listofnodes) {
                         return key
                     })), v => v)
 
+                    return Promise.resolve()
+                })
+
+            },
+
+            init : function(clbk){
+                
+                self.sdk.recommendations.load().then(() => {
                     self.sdk.recommendations.scheduler()
+
+                    app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
+                        console.log('recommendations, syncStorage')
+                        self.sdk.recommendations.load()
+                    });
 
                     if(clbk) clbk()
                 })
 
                 
-
-              
             },
+
+            destroy : function(){
+                app.platform.sdk.syncStorage.off('change', self.sdk.recommendations.lskey());
+            }
         },
 
         activity : {
@@ -17890,11 +17913,14 @@ Platform = function (app, listofnodes) {
                 this.eventListeners[lStorageProp][eventType] = callback;
             },
             off(eventType, lStorageProp) {
-                delete this.eventListeners[lStorageProp][eventType];
+                if(this.eventListeners[lStorageProp]){
+                    delete this.eventListeners[lStorageProp][eventType];
 
-                if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
-                    delete this.eventListeners[lStorageProp];
+                    if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
+                        delete this.eventListeners[lStorageProp];
+                    }
                 }
+                
             },
             init() {
                 window.storage_tab = makeid()
@@ -22503,6 +22529,10 @@ Platform = function (app, listofnodes) {
 
         self.sdk.registrations.clbks = {};
 
+        console.log("DESTROY")
+        self.sdk.sharesObserver.destroy()
+        self.sdk.recommendations.destroy()
+
         //self.sdk.node.storage = { balance: {} }
 
         fast ? self.clearStorageFast() : self.clearStorage()
@@ -22957,7 +22987,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.categories.load,
                         self.sdk.activity.load,
                         self.sdk.memtags.load,
-                        self.sdk.recommendations.load,
+                        self.sdk.recommendations.init,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
