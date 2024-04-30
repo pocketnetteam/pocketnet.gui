@@ -1358,6 +1358,11 @@ var BastyonApps = function(app){
         if (app.developapps){
 
             promises.push(Promise.all(_.map(app.developapps, (application) => {
+
+                if (application.access && _.isArray(application.access)){
+                    if(_.indexOf(application.access, app.user.address.value) == -1) return Promise.resolve()
+                }
+
                 return install({...application, develop : true, version : numfromreleasestring(application.version)})
             })))
 

@@ -283,9 +283,9 @@ var BastyonSdk = function(){
         }
     }
 
-    self.fetch = function(url, payload = {}){
+    self.fetch = function(url, data = {}){
 
-        return action('authFetch', {url, payload}).catch(e => {
+        return action('authFetch', {url, data}).catch(e => {
             console.error(e)
             return Promise.reject(e)
         })
@@ -365,4 +365,4 @@ var BastyonSdk = function(){
 
 
 if(typeof module != "undefined"){ module.exports = {BastyonSdk}; } 
-else { window.BastyonApps = BastyonSdk; }
+else { window.BastyonSdk = BastyonSdk; }

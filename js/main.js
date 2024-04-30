@@ -16,7 +16,8 @@ if(!_Node)
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
 		"name" : "Demo application",
-		"grantedPermissions" : ["account"]
+		"grantedPermissions" : ["account"],
+		"access" : ["PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"]
 	}]*/
 
 	var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}
