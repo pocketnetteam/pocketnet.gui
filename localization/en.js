@@ -2833,3 +2833,5 @@ _l.scanqrcode = "Scan QR code"
 
 _l.free = "Free"
 _l.discount = "Discount"
+
+_l.external_paymentlink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."

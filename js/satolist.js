@@ -4497,8 +4497,6 @@ Platform = function (app, listofnodes) {
 
         external : function(ps){
 
-            
-            
             self.app.platform.sdk.user.stateAction(() => {
 
                 self.app.nav.api.load({
@@ -4511,6 +4509,10 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
+            }, {
+                text : 'external_paymentlink_reg',
+                success : 'rcontinue',
+                cancel : 'dcancel'
             })
         },
 
@@ -8887,7 +8889,7 @@ Platform = function (app, listofnodes) {
             storage: {
             },
             
-            stateAction : function(clbk){
+            stateAction : function(clbk, messages){
                 app.user.isState(function(state){
 
 					if(state){
@@ -8910,26 +8912,50 @@ Platform = function (app, listofnodes) {
 							return
 						}
 
-						app.nav.api.load({
-							open : true,
-							id : 'registration',
-							inWnd : true,
-
-							essenseData : {
-
-								successHref : '_this',
-								signInClbk : function(){
-
-                                    if (app.platform.sdk.user.myaccauntdeleted()){
-                                        return
+                        var openreg = function(){
+                            app.nav.api.load({
+                                open : true,
+                                id : 'registration',
+                                inWnd : true,
+    
+                                essenseData : {
+    
+                                    successHref : '_this',
+                                    signInClbk : function(){
+    
+                                        if (app.platform.sdk.user.myaccauntdeleted()){
+                                            return
+                                        }
+                                        
+                                        if (clbk)
+                                            clbk()
+                                        
                                     }
-									
-                                    if (clbk)
-                                        clbk()
-									
-								}
-							}
-						})
+                                }
+                            })
+                        }
+
+                        if(!messages){
+                            openreg()
+                        }
+                        else{
+                            new dialog({
+                                html: self.app.localization.e(messages.text),
+                                btn1text: self.app.localization.e(messages.success),
+                                btn2text: self.app.localization.e(messages.cancel),
+                
+                                class: 'zindex accepting accepting2',
+                
+                                success: function () {
+                                    openreg()
+                                },
+                
+                                fail: function () {
+                                }
+                            })
+                        }
+
+						
 					}
 
 				})
