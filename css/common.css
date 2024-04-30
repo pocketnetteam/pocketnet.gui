@@ -1944,7 +1944,7 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   }
   .share_common .subscribed .authorCell .spsp,
   .share_common .subscribed .authorCell .adr {
-    color: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--color-txt-ac));
   }
 }
 .loading-bar {
