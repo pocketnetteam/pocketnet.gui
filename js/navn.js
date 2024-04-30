@@ -95,10 +95,6 @@ Nav = function(app)
 
 	var indexpage = 'index'
 
-	if (app.curation()){
-		indexpage = 'userpage'
-	}
-
 	var backManager = {
 
 		getindex : function(){
@@ -164,6 +160,8 @@ Nav = function(app)
 
 			var wb = false;
 
+			console.log('khref', khref, np)
+
 			if (np.back || back){
 
 				var index = findIndex(backManager.chain, function(c){
@@ -181,13 +179,18 @@ Nav = function(app)
 
 				if (khref == indexpage && !np.video && !np.read && !np.r){
 					//// 
+					console.log("khref ???")
 					backManager.clearAll()
 				}
 				else{
 
+					console.log("khref ??? 2", deep(backManager, 'chain.0.href'), href)
+
 					if(deep(backManager, 'chain.0.href') == href) return
 
 					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
+
+					console.log('khref needadd', needadd)
 	
 					if (needadd){
 	
@@ -241,8 +244,22 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
+			if(!bp){
+
+				if (self.dynamic && !module.find(lhref)){
+					bp = deep(app, 'backmap.authorn') 
+				}
+			}
+
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
+
+				if (self.dynamic && !module.find(href)){
+					if(bp.childrens.indexOf('authorn') > -1) return true
+				}
+			}
+			else{
+				
 			}
 		}
 
