@@ -1198,7 +1198,6 @@ Nav = function(app)
 				
 					var eve = function(e){
 
-
 						if(blockclick) return false
 
 						blockclick = true
@@ -1237,11 +1236,9 @@ Nav = function(app)
 
 							if (ext){
 								app.platform.ui.externalFromCurrentUrl()
+								return false;
 							}
-			
 							
-			
-							return false;
 						}
 
 						if (mobilepreview && app.mobileview){

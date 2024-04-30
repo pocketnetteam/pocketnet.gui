@@ -9187,6 +9187,7 @@ Platform = function (app, listofnodes) {
                 if(!address) return false
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+                var uinfo = self.psdk.userInfo.get(address)
                 
                 if(!ustate || _.isEmpty(ustate)) return false
 
@@ -9228,7 +9229,7 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
-                if(this.isNotAllowedName(ustate)) {
+                if(this.isNotAllowedName(uinfo)) {
                     return true
                 }
             },
