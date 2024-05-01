@@ -283,6 +283,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.fetch = function(url, data = {}){
+
+        return action('authFetch', {url, data}).catch(e => {
+            console.error(e)
+            return Promise.reject(e)
+        })
+
+    }
+
     self.helpers = {
         alert : function(message){
             return action('alert', {message})
@@ -356,4 +365,4 @@ var BastyonSdk = function(){
 
 
 if(typeof module != "undefined"){ module.exports = {BastyonSdk}; } 
-else { window.BastyonApps = BastyonSdk; }
+else { window.BastyonSdk = BastyonSdk; }

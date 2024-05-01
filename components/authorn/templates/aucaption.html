@@ -11,7 +11,9 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
 <div class="aucaption">
 
+
     <% if(!sUserInfo.deleted) {%>
+
         <div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
             <% if(!sUserInfo.image && sUserInfo.letter) {%>
                 <span class="letter">
@@ -23,33 +25,47 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
             <%= app.platform.ui.markUser(author.address)%>
         </div>
 
-        <div class="contentinfo">
-            <div class="namewrapper">
-                <span class="copyname"><%-sUserInfo.name%></span>
+        
+            <div class="contentinfo">
+                <div class="namewrapper">
+                    <span class="copyname"><%- app.platform.api.clearname(sUserInfo.name, true) %></span>
+                </div>
+
+                <% if(!author.reputationBlocked) {%>
+                    <div class="sminfo">
+                        <div class="row">
+                            <span class="value"><i class="fas fa-star"></i> <%- (sUserInfo.reputation || 0).toFixed(1) %></span>
+                            <span class="label"><%=e('rstate')%></span>
+                        </div>
+
+                        <div class="row showsubscribers">
+                            <span class="value"><%- (author.data.subscribers_count || 0) %></span>
+                            <span class="label"><%=e('followers2')%></span>
+                        </div>
+
+                        <div class="row showsubscribes" >
+                            <span class="value"><%- (author.data.subscribes_count || 0) %></span>
+                            <span class="label"><%=e('following2')%></span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if(author.me) {%>
+                    <div class="editprofileWrapper">
+                        <span class="editprofile"><%-e('e13186')%></span>
+                    </div>
+                <% } %>
+
+                <% if(author.reputationBlocked) {%>
+                    <div class="deletedAccount">
+                        <div class="deletedAccountText">
+                            <span><%-e('lockedaccounta')%></span>
+                        </div>
+                        
+                    </div>
+                <% } %>
             </div>
-            <div class="sminfo">
-                <div class="row">
-                    <span class="value"><i class="fas fa-star"></i> <%- (sUserInfo.reputation || 0).toFixed(1) %></span>
-                    <span class="label"><%=e('rstate')%></span>
-                </div>
-
-                <div class="row showsubscribers">
-                    <span class="value"><%- (author.data.subscribers_count || 0) %></span>
-                    <span class="label"><%=e('followers2')%></span>
-                </div>
-
-                <div class="row showsubscribes" >
-                    <span class="value"><%- (author.data.subscribes_count || 0) %></span>
-                    <span class="label"><%=e('following2')%></span>
-                </div>
-            </div>
-
-            <% if(author.me) {%>
-                <div class="editprofileWrapper">
-                    <span class="editprofile"><%-e('e13186')%></span>
-                </div>
-            <% } %>
-        </div>
+       
     <% } else { %> 
         
         <div class="contentinfo">

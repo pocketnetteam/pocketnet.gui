@@ -34,35 +34,38 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         
         %>
 
-        <% if(!sUserInfo.deleted) {%>
+        <% if(!sUserInfo.deleted && !author.reputationBlocked) {%>
 
             <button class="button startchat"><%= e('startchat') %> <i class="fas fa-comment"></i></button>
 
         <% } %>
 
+        
         <button class="button sendcoins"><%= e('sendcoins') %></button>
+
 
         <% if(!sUserInfo.deleted) {%>
             <% if(!blocking) {%>
 
-                <% if(r) {
-                    
-                    
-                    %>
+                <% if(!author.reputationBlocked) {%>
 
-                    <button class="button unsubscribe"><%= e('youarefollowing') %> <i class="fas fa-user-check"></i></button>
-                
-                    <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
+                    <% if(r) { %>
 
-                        <button class="button notifications icon bright"><i class="fas fa-bell"></i></button>
+                        <button class="button unsubscribe"><%= e('youarefollowing') %> <i class="fas fa-user-check"></i></button>
+                    
+                        <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
+
+                            <button class="button notifications icon bright"><i class="fas fa-bell"></i></button>
+
+                        <% } else { %> 
+                            <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+                        <% } %>
 
                     <% } else { %> 
-                        <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+
+                        <button class="button follow"><%= e('follow') %> <i class="fas fa-user-plus"></i></button>
+
                     <% } %>
-
-                <% } else { %> 
-
-                    <button class="button follow"><%= e('follow') %> <i class="fas fa-user-plus"></i></button>
 
                 <% } %>
 

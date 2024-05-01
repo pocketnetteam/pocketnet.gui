@@ -264,7 +264,6 @@ Platform = function (app, listofnodes) {
         'PVcMixqr6FkarzUjskvLL8MXuExAbEmRHT': true,
         'PCf2FqtB4p6APE3c5Avkrg3yk8dBq9ijRN': true,
         'PW5TQSyz3jWEx9k2S7icQXwKJLEBGRUtho': true,
-        'PRtyDsM3wL4Y7baAGRULkGmnpkmQYXcpkH': true,
         'PHVjfPM6bxy84AmWqw7hjBWYk7KVjpdsD2': true,
         'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
         'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
@@ -336,7 +335,16 @@ Platform = function (app, listofnodes) {
         'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s' : true,
         'PRYXTN9A3JF53fvgdk7f9AJDafGnCvTTNv' : true,
         'PLYWB4GzSWKjJQoqHyEgR3CEDnCHFySB21' : true,
-        'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ' : true
+        'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ' : true,
+        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN' : true,
+        'PV8nA6h5DRznTypDVDVxoHwLHqueh35gpp' : true,
+        'PKBx48sYjn7DyQrAKBLsHSugZAZXiGKR1u' : true,
+        'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX' : true,
+        'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
+        'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
+        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true
+
+
     } 
 
     self.bch = {
@@ -642,8 +650,8 @@ Platform = function (app, listofnodes) {
 
             var fp = maskValue(p)
 
-            var html = '<div class="table coinwithsmall"><div class="bignum">' + fp +
-                '</div><div class="svlwr"><div><div div class="smallvalue">' + value + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
+            var html = '<div class="table coinwithsmall"><div class="bignum">' + clearStringXss(fp) +
+                '</div><div class="svlwr"><div><div div class="smallvalue">' + clearStringXss(value) + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
 
             return html;
         }
@@ -1846,8 +1854,6 @@ Platform = function (app, listofnodes) {
         else {
 
         }
-
-        console.log('parse2', meta)
 
         return meta;
     }
@@ -3058,7 +3064,15 @@ Platform = function (app, listofnodes) {
         },
 
         route : function(href, el, clbk, p){
-            el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+
+            if(href.indexOf('ext=')){
+                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-wallet"></i> '+app.localization.e('paymentLink')+'</a></div>')
+            }
+
+            else{
+                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+            }
+
 
             app.nav.api.links(null, el);
 
@@ -4479,8 +4493,55 @@ Platform = function (app, listofnodes) {
         
 
 
+        },
+
+        external : function(ps){
+
+            self.app.platform.sdk.user.stateAction(() => {
+
+                self.app.nav.api.load({
+                    open : true,
+                    href : 'external',
+                    inWnd : true,
+                    essenseData : {
+                        action : ps.action, 
+                        parameters : ps
+                    }
+                })
+
+            }, {
+                text : 'external_paymentlink_reg',
+                success : 'rcontinue',
+                cancel : 'dcancel'
+            })
+        },
+
+        externalFromCurrentUrl : function(){
+            var p = parameters()
+
+            if (p.ext){
+
+                try{
+
+                    var ps = self.sdk.external.getFromHash(p.ext)
+                    
+                    self.ui.external(ps)
+
+                    return true
+                }
+                catch(e){
+                    console.error(e)
+
+                    sitemessage(e)
+                }
+                
+
+
+            }
         }
+
     }
+    
 
     self.effects = {
         manager : null,
@@ -4583,6 +4644,7 @@ Platform = function (app, listofnodes) {
 
     self.api = {
 
+
         keypair: function (m) {
             let keyPair;
 
@@ -4608,8 +4670,12 @@ Platform = function (app, listofnodes) {
             return keyPair
         },
 
-        clearname: function (n) {
-            return (n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. ]/g, "") : n
+        clearname: function (n, t) {
+            var  fb =  ((n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. *]/g, "") : n)
+
+            if (t) return self.sdk.user.maskNotAllowedName(fb)
+
+            return fb
         },
 
         name: function (address) {
@@ -5971,6 +6037,298 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        external : {
+            expandLink : function(json = {}){
+                var eExt = {}
+
+                if (json.address) eExt.address = json.address
+                if (json.description) eExt.description = json.description
+                if (json.value) eExt.value = json.value
+                if (json.paymentHash) eExt.paymentHash = json.paymentHash
+                
+    
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
+                if (json.ad)    eExt.address = json.ad
+                if (json.s)     eExt.s_url = json.s
+                if (json.sv)    eExt.shipmentValue = json.shipmentValue
+                if (json.c)     eExt.c_url = json.c
+                if (json.ct)    eExt.c_url_type = json.ct
+                if (json.e)     eExt.email = true
+                if (json.p)     eExt.phone = true
+                if (json.an)    eExt.anonimus = true
+                if (json.pl)    eExt.payload = json.pl
+                if (json.ex)    eExt.expired = json.ex
+                if (json.d)     eExt.date = json.d
+                if (json.h)     eExt.paymentHash = json.h
+                if (json.de)    eExt.description = json.de
+                if (json.v)     eExt.value = json.v
+                if (json.sv)    eExt.saltValue = json.sv
+                if (json.di)    eExt.discount = json.di
+    
+                if (json.st) {
+                    eExt.store = {}
+    
+                    if(json.st.n) eExt.store.name = json.st.n
+                    if(json.st.s) eExt.store.site = json.st.s
+                }
+    
+                if (json.i){
+                    eExt.items = []
+    
+                    _.each(json.i, (it) => {
+                        var item = {}
+    
+                        if (it.i) item.image = it.i
+                        if (it.n) item.name = it.n
+                        if (it.v) item.value = it.v
+                        if (it.c) item.count = item.c
+    
+                        eExt.items.push(item)
+                    })
+                }
+
+                if(!eExt.action) eExt.action = 'pay'
+               
+                return eExt
+            },
+            getFromHash : function(ext){
+                var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
+
+                ps.hash = ext
+
+                if(!ps.action){
+                    throw 'missing:action'
+                }
+    
+                if (ps.action == 'pay'){
+    
+                    if(!ps.address) throw 'missing:address'
+    
+                    if (ps.anonimus){
+                        delete ps.email
+                        delete ps.phone
+                        delete ps.s_url
+                    }
+    
+                    try{
+                        bitcoin.address.fromBase58Check(ps.address)
+                    }
+    
+                    catch (e){
+                        throw 'wrong:address:notvalid'
+                    }
+                    
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+                    if(!ps.payload) ps.payload = {}
+    
+                    if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
+    
+    
+                    if (ps.items){
+    
+                        var a = 0
+    
+                        _.each(ps.items, (item, i) => {
+                            if(!item.name) throw 'missing:items:'+i+':name'
+                            if(!item.value) throw 'missing:items:'+i+':value'
+        
+                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
+                            if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
+
+                            if(item.count && !_.isNumber(item.count)) throw 'wrong:items:'+i+':count:nan'
+        
+                            a += (item.count || 1) * item.value
+                            
+                            item.image = clearStringXss(item.image || '')
+                            item.name = clearStringXss(item.name)
+                            //item.formattedAmount = self.mp.coin(item.value)
+                        })
+    
+                        ps.value = a
+                    }
+                    else{
+                        if(!_.isNumber(ps.value)) throw 'wrong:value:nan'
+                    }
+
+                    if (ps.saltValue){
+                        if(!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
+                        if(ps.saltValue >= 0.01) throw 'wrong:saltValue:morethan:0.001'
+                        if(ps.saltValue < 0) throw 'wrong:saltValue:lessthan:0'
+                        if(ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
+                    }
+
+                    if (ps.discount){
+                        if(!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
+                        if(ps.discount < 0) throw 'wrong:discount:lessthan:0'
+
+                        ps.value = ps.value - discount
+                    }
+    
+                    if (ps.store){
+                        if(!ps.store.name) throw 'missing:store.name'
+                        //if(!ps.store.site) throw 'missing:store.site'
+    
+                        ps.store.name = clearStringXss(ps.store.name)
+                        
+                        if (ps.store.site)
+                            ps.store.site = clearStringXss(ps.store.site)
+                        
+                    }
+    
+                    if (ps.expired){
+                        if(!ps.date) throw 'missing:date'
+    
+                        if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
+                    }
+    
+                    if (ps.description) ps.description = clearStringXss(ps.description)
+                    
+    
+                    if(!ps.value || ps.value <= 0) throw 'missing:value'
+    
+                    //ps.hash = p.ext
+                }
+
+                return ps
+            }
+        },
+        payments : {
+       
+            save : function(lsdata, hash){
+				lsdata.updated = new Date()
+					
+				try{
+					localStorage['pays_' + hash] = JSON.stringify(lsdata) || {}
+				}catch(e){
+					console.error(e)
+				}
+				
+			},
+			load : function(hash){
+				var lsdata = {}
+
+				try{
+					lsdata = JSON.parse(localStorage['pays_' + hash] || "{}") || {}
+					lsdata.updated = new Date(lsdata.updated)
+				}catch(e){
+					console.error(e)
+				}
+
+				return lsdata
+			},
+            
+
+            get : function(){
+                try{
+
+					var allpays = []
+
+					Object.keys(localStorage).forEach(key => {
+						if (key.indexOf('pays_') == 0){
+							var parsed = JSON.parse(localStorage[key])
+
+							if (parsed.txid && parsed.account == self.app.user.address.value){
+								parsed.updated = new Date(parsed.updated)
+                                parsed.hash = key.replace('pays_', '')
+                                parsed.info = self.sdk.external.getFromHash(parsed.hash)
+                                parsed.vid = makeid()
+								allpays.push(parsed)
+							}
+							
+						}
+					});
+
+
+					return _.sortBy(allpays, (pay) => {
+                        return pay.updated
+                    })
+
+				}
+
+				catch(e){
+                    console.error(e)
+					return []
+				}
+            },
+
+			getLastShipment: function(){
+				try{
+
+					var allpays = []
+
+					Object.keys(localStorage).forEach(key => {
+						if (key.indexOf('pays_') == 0){
+							var parsed = JSON.parse(localStorage[key])
+
+							if (parsed.shipment && parsed.account == self.app.user.address.value){
+								parsed.updated = new Date(parsed.updated)
+								allpays.push(parsed)
+							}
+							
+						}
+					});
+
+					if(!allpays.length){
+						return null
+					}
+
+					var m = _.max(allpays, (p) => {
+						return p.updated
+					})
+
+					return m.shipment
+
+				}
+
+				catch(e){
+					return null
+				}
+				
+			},
+
+            remove : function(hash){
+                try{
+                    localStorage.removeItem('pays_' + hash);
+                }catch(e){
+
+                }
+                
+            },
+
+            prepare : function(clbk){
+                var removeKeys = []
+
+                try{
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.indexOf('pays_') == 0){
+                            var parsed = JSON.parse(localStorage[key])
+    
+                            if (!parsed.txid && (parsed.updated || parsed.date)){
+                                var upd = new Date(parsed.updated || parsed.date)
+    
+                                if(upd.addDays(3) < (new Date())){
+                                    removeKeys.push(key)
+                                }
+                            }
+                            
+                        }
+                    });
+    
+                    _.each(removeKeys, (key) => {
+                        localStorage.removeItem(key);
+                    })
+                }catch(e){
+
+                }
+
+                if(clbk) clbk()
+
+                
+
+
+            }
+        },
+        
         geolocation : {
             get : function(options){
                 return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
@@ -7678,11 +8036,9 @@ Platform = function (app, listofnodes) {
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-
                 if (block){
 
                     if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
-
 
                         return true
                     }
@@ -7732,6 +8088,7 @@ Platform = function (app, listofnodes) {
                     localStorage[self.sdk.sharesObserver.key()] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
                 }
                 catch(e){
+                    console.error('observer', e)
                 }
 
             },
@@ -7740,8 +8097,9 @@ Platform = function (app, listofnodes) {
                 self.app.user.isState(function (state) {
                     if(state){
                         self.sdk.sharesObserver.load(clbk)
-
-                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), this.load);
+                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), () => {
+                            self.sdk.sharesObserver.load()
+                        });
                     }
                     else{
                         if(clbk) clbk()
@@ -7757,6 +8115,7 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
+
                 try{
                     self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage[self.sdk.sharesObserver.key()] || "{}") || {}
                 }
@@ -8530,7 +8889,7 @@ Platform = function (app, listofnodes) {
             storage: {
             },
             
-            stateAction : function(clbk){
+            stateAction : function(clbk, messages){
                 app.user.isState(function(state){
 
 					if(state){
@@ -8553,26 +8912,50 @@ Platform = function (app, listofnodes) {
 							return
 						}
 
-						app.nav.api.load({
-							open : true,
-							id : 'registration',
-							inWnd : true,
-
-							essenseData : {
-
-								successHref : '_this',
-								signInClbk : function(){
-
-                                    if (app.platform.sdk.user.myaccauntdeleted()){
-                                        return
+                        var openreg = function(){
+                            app.nav.api.load({
+                                open : true,
+                                id : 'registration',
+                                inWnd : true,
+    
+                                essenseData : {
+    
+                                    successHref : '_this',
+                                    signInClbk : function(){
+    
+                                        if (app.platform.sdk.user.myaccauntdeleted()){
+                                            return
+                                        }
+                                        
+                                        if (clbk)
+                                            clbk()
+                                        
                                     }
-									
-                                    if (clbk)
-                                        clbk()
-									
-								}
-							}
-						})
+                                }
+                            })
+                        }
+
+                        if(!messages){
+                            openreg()
+                        }
+                        else{
+                            new dialog({
+                                html: self.app.localization.e(messages.text),
+                                btn1text: self.app.localization.e(messages.success),
+                                btn2text: self.app.localization.e(messages.cancel),
+                
+                                class: 'zindex accepting accepting2',
+                
+                                success: function () {
+                                    openreg()
+                                },
+                
+                                fail: function () {
+                                }
+                            })
+                        }
+
+						
 					}
 
 				})
@@ -8838,6 +9221,7 @@ Platform = function (app, listofnodes) {
                 if(!address) return false
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+                var uinfo = self.psdk.userInfo.get(address)
                 
                 if(!ustate || _.isEmpty(ustate)) return false
 
@@ -8879,9 +9263,24 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
-                if(this.isNotAllowedName(ustate)) {
+                if(this.isNotAllowedName(uinfo)) {
                     return true
                 }
+            },
+
+            isNotAllowedNameStr : function(name){
+                return self.sdk.user.isNotAllowedName({name})
+            },
+
+            maskNotAllowedName : function(name = ''){
+
+                if(!name || name.length <= 1) return name
+
+                if(self.sdk.user.isNotAllowedNameStr(name)){
+                    return name[0] + (name.substring(1).substring(0, name.length - 2)).replace(/[a-zA-Z]/g, '*') + name[name.length - 1]
+                }
+
+                return name
             },
 
             isNotAllowedName : function (user = {}) {
@@ -8909,6 +9308,8 @@ Platform = function (app, listofnodes) {
                 })
                 
                 if(bwf) return true
+
+                if(!address) return
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
@@ -11655,8 +12056,6 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-
-
                 try{
 
                     localStorage[self.sdk.recommendations.lskey()] = JSON.stringify({
@@ -11690,10 +12089,12 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                
+                console.log('recommendations, save')
             },
 
-            load: function (clbk) {
+            load: function () {
+
+                console.log("recommendations load")
 
                 var p = {};
 
@@ -11713,7 +12114,7 @@ Platform = function (app, listofnodes) {
                     return {...us, ...{ ___temp : true }}
                 })
 
-                self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
+                return self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
 
                     if (self.psdk.share.get(sd.share.txid)) return false
 
@@ -11732,15 +12133,30 @@ Platform = function (app, listofnodes) {
                         return key
                     })), v => v)
 
+                    return Promise.resolve()
+                })
+
+            },
+
+            init : function(clbk){
+                
+                self.sdk.recommendations.load().then(() => {
                     self.sdk.recommendations.scheduler()
+
+                    app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
+                        console.log('recommendations, syncStorage')
+                        self.sdk.recommendations.load()
+                    });
 
                     if(clbk) clbk()
                 })
 
                 
-
-              
             },
+
+            destroy : function(){
+                app.platform.sdk.syncStorage.off('change', self.sdk.recommendations.lskey());
+            }
         },
 
         activity : {
@@ -17523,11 +17939,14 @@ Platform = function (app, listofnodes) {
                 this.eventListeners[lStorageProp][eventType] = callback;
             },
             off(eventType, lStorageProp) {
-                delete this.eventListeners[lStorageProp][eventType];
+                if(this.eventListeners[lStorageProp]){
+                    delete this.eventListeners[lStorageProp][eventType];
 
-                if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
-                    delete this.eventListeners[lStorageProp];
+                    if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
+                        delete this.eventListeners[lStorageProp];
+                    }
                 }
+                
             },
             init() {
                 window.storage_tab = makeid()
@@ -18398,7 +18817,7 @@ Platform = function (app, listofnodes) {
                     _.each(comment.images, function (image) {
 
                         h += '<div class="imagesWrapper">'
-                        h += '<div class="image imageCommentOpen" image="' + image + '" i="' + image + '">'
+                        h += '<div class="image imageCommentOpen" image="' + (image) + '" i="' + (image) + '">'
                         h += '</div>'
                         h += '</div>'
 
@@ -18469,6 +18888,8 @@ Platform = function (app, listofnodes) {
 
             star: function (count) {
 
+                if(!_.isNumber(count)) return ''
+
                 var _star = '<i class="fas fa-star"></i>';
                 if (electron) _star = '★';
                 return '<div class="messagestar" count="' + count + '">' + count + '' + _star + '</div>'
@@ -18493,7 +18914,7 @@ Platform = function (app, listofnodes) {
             },
 
             _user: function (author) {
-                return filterXSS(deep(author, 'name') || author.address)
+                return platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true)
             },
 
             user: function (author, html, gotoprofile, caption, extra, time, donation) {
@@ -18508,7 +18929,7 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 /*if (app.curation()) {
@@ -18552,7 +18973,7 @@ Platform = function (app, listofnodes) {
                 if (author.address != platform.sdk.address.pnet().address) {
 
                     if (gotoprofile) h += link
-                    h += '<b class="adr">' + filterXSS(deep(author, 'name') || author.address) + '</b>'
+                    h += '<b class="adr">' + platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true) + '</b>'
                     if (gotoprofile) h += clink
 
                 }
@@ -18621,7 +19042,7 @@ Platform = function (app, listofnodes) {
                     d = 'disabled'
                 }
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 var h = '<div class="subscribeWrapper ">'
@@ -18654,7 +19075,7 @@ Platform = function (app, listofnodes) {
                                 }
 
                 h +=            '</div>\
-                                <div class="tips">' + (json.text) + '\
+                                <div class="tips">' + clearStringXss(json.text) + '\
                                 </div>\
                             </div>'
 
@@ -22134,6 +22555,10 @@ Platform = function (app, listofnodes) {
 
         self.sdk.registrations.clbks = {};
 
+        console.log("DESTROY")
+        self.sdk.sharesObserver.destroy()
+        self.sdk.recommendations.destroy()
+
         //self.sdk.node.storage = { balance: {} }
 
         fast ? self.clearStorageFast() : self.clearStorage()
@@ -22431,6 +22856,8 @@ Platform = function (app, listofnodes) {
 
             self.prepareUser(function() {
 
+                self.ui.externalFromCurrentUrl()
+
                 self.sdk.theme.load()
 
                 clbk();
@@ -22440,6 +22867,8 @@ Platform = function (app, listofnodes) {
         }).catch(e => {
             console.log("ERROR", e)
         })
+
+        self.sdk.payments.make = (new window.__BastyonLib(window.project_config)).payments
 
 
     }
@@ -22584,11 +23013,12 @@ Platform = function (app, listofnodes) {
                         self.sdk.categories.load,
                         self.sdk.activity.load,
                         self.sdk.memtags.load,
-                        self.sdk.recommendations.load,
+                        self.sdk.recommendations.init,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        self.sdk.notifications.initcl
+                        self.sdk.notifications.initcl,
+                        self.sdk.payments.prepare
     
                     ], function () {
     
@@ -23225,6 +23655,29 @@ Platform = function (app, listofnodes) {
                     if (link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
                         link = link.replace('index', 'post')
+
+
+                    if (link.indexOf('index') == '0'){
+
+                        var arrHref = link.split("?");
+
+                        const params = new URLSearchParams('?' + arrHref[1]);
+
+                        var ext = params.get('ext');
+
+                        if (ext){
+
+                            self.app.nav.api.history.addRemoveParameters([], {
+                                ext : ext
+                            }, {
+                                replaceState : true
+                            })
+
+                            self.app.platform.ui.externalFromCurrentUrl()
+                        }
+        
+                        return false;
+                    }
 
                     self.app.nav.api.load({
                         open: true,
@@ -24010,13 +24463,19 @@ Platform = function (app, listofnodes) {
 
                         if (route){
 
-                            if(!state || route.indexOf('welcome?') == -1){
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: route,
-                                    history: true
-                                })
+                            if(!self.ui.externalFromCurrentUrl()){
+
+                                if(!state || route.indexOf('welcome?') == -1){
+                                    self.app.nav.api.load({
+                                        open: true,
+                                        href: route,
+                                        history: true
+                                    })
+                                }
+
                             }
+
+                            
                         }
 
                         /////////////

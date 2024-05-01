@@ -20,9 +20,32 @@
 				d.setTime(_d * 1000);	
 			}
 
+			var me = psdk.userInfo.getmy()
+
+			var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+			var modclass = ''
+			var blocking = false
+
+			if(!author.me) {
+					
+
+				var r = me ? me.relation(author.address, 'subscribes') : null
+				
+				blocking = me ? me.relation(author.address, 'blocking') : null
+
+				if (blocking){
+					modclass = 'blocked'
+				}
+			}
+
+			if(sUserInfo.deleted){
+				modclass = 'deleted'
+			}
+
 		%>
 
-			<div class="userinfo">
+			<div class="userinfo <%-modclass%>">
 				<div class="icon">
 					<% var src = deep(author, 'data.image')  %>
 					<div class="usericon" image="<%-src || '*'%>">
@@ -45,7 +68,7 @@
 				<div class="nameinfo">
 
 					<div class="name">
-						<span class="adr"><%-(name || author.address)%></span>
+						<span class="adr"><%-app.platform.api.clearname(name || author.address, true)%></span>
 					</div>
 
 					<% if(ed.openprofilebutton && !app.curation()) { %>
@@ -92,9 +115,6 @@
 						
 							<div class="usermenuitem" menuitem="<%-report.id%>">
 							
-						
-						
-									
 									<span class="rname"><%-report.name%></span>
 									<%=report.icon%> 
 									<span class="count">
@@ -118,6 +138,17 @@
 							<% } %>
 						<% } %>
 					</div>
+
+					<% if(state) {%>
+						<% if(!author.me && !sUserInfo.deleted) {%>
+							<div class="blockWrapper">
+
+								<span class="block"><%-e('block')%></span>
+								<span class="unblock"><%-e('unblock')%></span>
+								
+							</div>
+						<% } %>
+					<% } %>
 
 				</div>
 

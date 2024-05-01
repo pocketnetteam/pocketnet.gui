@@ -735,6 +735,8 @@ var pSDK = function ({ app, api, actions }) {
                     c.l = clearStringXss(trydecode(c.l || ''));
                     c.a = clearStringXss(trydecode(c.a || ''));
 
+                    c.address = clearStringXss(c.address);
+
                 }
                 catch (e) {
                     console.error(e)
@@ -1181,6 +1183,10 @@ var pSDK = function ({ app, api, actions }) {
         cleanData: function (rawcomments) {
 
             return _.filter(_.map(rawcomments, (c) => {
+                
+                //if(c.deleted) return
+
+                if(!c.msgparsed && !c.msg) return null
 
                 try {
 
@@ -1206,6 +1212,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
+                    console.log(c)
                     return null
                 }
 

@@ -49,7 +49,7 @@ _.each(groupshares, function(gs, address){ 	%>
 
 		<% if(gs.length > 1) { 
 			
-			var name = app.platform.api.clearname((psdk.userInfo.get(address) || {}).name) || address
+			var name = app.platform.api.clearname((psdk.userInfo.get(address) || {}).name, true) || address
 			
 			
 			%>

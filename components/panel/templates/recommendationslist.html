@@ -2,7 +2,7 @@
 
     var user = psdk.userInfo.get(address);
 
-    var name = app.platform.api.clearname(decodeURIComponent(user.name));
+    var name = app.platform.api.clearname(decodeURIComponent(user.name), true);
     
     %>
     <div class="user">

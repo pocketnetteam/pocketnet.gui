@@ -37,7 +37,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 var userInfo = psdk.userInfo.get(share.address) || {}
 
-var name = app.platform.api.clearname(userInfo.name || share.address)
+var name = app.platform.api.clearname(userInfo.name || share.address, true)
 
 var makecaptionclear = function(){
 

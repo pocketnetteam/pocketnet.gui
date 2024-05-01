@@ -3,6 +3,20 @@
   padding-bottom: 4em;
   position: relative;
 }
+#wallet .qrcodescannericon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 1em;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#wallet .qrcodescannericon:hover {
+  color: rgb(var(--color-txt-ac));
+}
 #wallet .pkoindisabledisclaimer {
   padding: 3em;
   text-align: center;
@@ -785,6 +799,54 @@
   width: 100%;
   min-width: 0;
 }
+#wallet .payments .captionTable > div {
+  padding: 1em 0.5em;
+}
+#wallet .payments .captionTable > div span {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+#wallet .payments .paymentTable {
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+  cursor: pointer;
+}
+#wallet .payments .paymentTable > div {
+  vertical-align: top;
+  padding: 1.5em 0.5em;
+}
+#wallet .payments .paymentTable > div.date {
+  padding-left: 2em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+#wallet .payments .paymentTable > div.value {
+  width: 100px;
+  font-weight: 700;
+}
+#wallet .payments .paymentTable > div.info {
+  width: 25%;
+}
+#wallet .payments .paymentTable > div.panel {
+  padding-right: 2em;
+  width: 110px;
+}
+#wallet .payments .paymentTable > div:nth-last-child(1) {
+  padding-right: 2em;
+  text-align: right;
+}
+#wallet .payments .paymentTable > div span {
+  font-size: 0.9em;
+}
+#wallet .payments .paymentTable > div .removePayment {
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#wallet .payments .paymentTable > div .removePayment:hover {
+  color: rgb(var(--color-bad));
+}
 #wallet .addresses .addressesGroupCaption {
   padding: 1em 2em;
 }
@@ -801,6 +863,7 @@
 #wallet .addresses .adressesTable > div.name {
   padding-left: 2em;
   font-weight: 500;
+  white-space: nowrap;
 }
 #wallet .addresses .adressesTable > div.name .alabel {
   font-weight: 300;
@@ -1620,6 +1683,26 @@
   #wallet .deposit .actionbody button {
     width: 100%;
     min-width: 0;
+  }
+  #wallet .payments .paymentTable > div {
+    vertical-align: top;
+    padding: 1.5em 0.5em;
+  }
+  #wallet .payments .paymentTable > div.date {
+    padding-left: 0.5em;
+  }
+  #wallet .payments .paymentTable > div.value {
+    width: 33%;
+    font-weight: 700;
+  }
+  #wallet .payments .paymentTable > div.info {
+    display: none;
+  }
+  #wallet .payments .paymentTable > div.panel {
+    padding-right: 0.5em;
+  }
+  #wallet .payments .paymentTable > div:nth-last-child(1) {
+    padding-right: 0.5em;
   }
   #wallet .addresses .addressesGroupCaption {
     padding: 0.5em;

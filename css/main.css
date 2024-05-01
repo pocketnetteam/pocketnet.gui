@@ -4131,6 +4131,17 @@ html.mobileview.android .wnd .wndback {
 .vc_valuecustom .vc_textInput > div {
   vertical-align: middle;
 }
+.vc_valuecustom .vc_textInput .vc_inputWrapper {
+  position: relative;
+}
+.vc_valuecustom .vc_textInput .vc_inputWrapper .displaceholder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
 .vc_valuecustom .vc_textInput .vc_inputWrapper input {
   background: transparent;
   border: 0;
