@@ -14,7 +14,7 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: ${{ github.ref }}
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Archive repo
