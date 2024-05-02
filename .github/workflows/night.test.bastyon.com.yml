@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -35,6 +37,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -71,6 +75,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
@@ -102,6 +108,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -130,6 +138,8 @@ jobs:
           java-version: '11'
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
