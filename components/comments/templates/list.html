@@ -12,6 +12,10 @@ var commentf = function(comment){
 
 	var sUserInfo = psdk.userInfo.getShortForm(comment.address)
 
+	var src = sUserInfo.image;
+	var name = app.platform.api.clearname(sUserInfo.name, true);
+	var letter = sUserInfo.letter;  
+
 
 	var m = '' %> 
 
@@ -24,9 +28,7 @@ var commentf = function(comment){
 				<div class="iconWrapper">
 					
 					<% 
-						var src = sUserInfo.image;
-						var name = sUserInfo.name;
-						var letter = sUserInfo.letter;  
+						
 					%>
 
 					<% if(!app.mobileview) {%>
@@ -72,7 +74,7 @@ var commentf = function(comment){
 
 							<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 
-							<span class="adr" profile="<%-comment.address%>"><%-sUserInfo.name %></span><% if(!app.mobileview) {%></a><% } %> &middot;
+							<span class="adr" profile="<%-comment.address%>"><%-name %></span><% if(!app.mobileview) {%></a><% } %> &middot;
 								
 							<% if(comment.temp || comment.relay || comment.rejected) {%>
 								<% if(comment.rejected) {%>

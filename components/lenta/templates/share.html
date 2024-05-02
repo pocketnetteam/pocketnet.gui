@@ -45,7 +45,7 @@ var deletedaccount = typeof app.platform.sdk.user.deletedaccount != 'undefined' 
 
 var userInfo = psdk.userInfo.get(share.address) || {}
 
-var name = app.platform.api.clearname(userInfo.name || share.address)
+var name = app.platform.api.clearname(userInfo.name || share.address, true)
 
 var medeleted = app.platform.sdk.user.myaccauntdeleted()
 

@@ -4,7 +4,7 @@
 
     var src = me.image  
 
-    var name = app.platform.api.clearname(me.name || user.address.value)
+    var name = app.platform.api.clearname(me.name || user.address.value, true)
     var letter = name ? name[0] : ''
 
 

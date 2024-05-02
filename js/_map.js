@@ -118,6 +118,8 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/apps/index.js", babelify : true},
+		{path : "js/lib/external/index.min.js"},
+
 		{path : "js/satolist.js", babelify : true},
 		"js/bastyonCalls/bastyonCalls.min.js",
 		{path : "js/lib/client/p2pvideo.js", babelify : true},
@@ -813,8 +815,22 @@ __map =  {
 			electronDontOpen : true
 			
 		},
-	
 
+		qrscanner : {
+			uri : "qrscanner",
+			href : "qrscanner",
+			add : insertingfunc,
+
+			relations : [
+				{src : 'js/vendor/qr-scanner.umd.min.js',			   f : 'js'}
+			],
+		},
+	
+		external : {
+			uri : "external",
+			href : "external",
+			add : insertingfunc
+		},
 		wallet : {
 			uri : "wallet",
 			href : "wallet",

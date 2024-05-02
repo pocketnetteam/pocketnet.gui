@@ -28,7 +28,22 @@ var userslist = (function(){
 
 		var actions = {
 			
-			
+			showprofile : function(address){
+
+				if (self.app.mobileview){
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							openprofilebutton : true
+						}
+					})
+				}
+			},
 			unblocking : function(address){
 
 				new dialog({
@@ -157,6 +172,12 @@ var userslist = (function(){
 		}
 
 		var events = {
+			showprofile : function(){
+				var address = $(this).attr('profile')
+
+				actions.showprofile(address)
+			},
+
 			loadmorescroll : function(){
 
 				if (
@@ -329,6 +350,8 @@ var userslist = (function(){
 			el.c.on('click', '.unsubscribe', events.unsubscribe)
 			el.c.on('click', '.unblocking', events.unblocking)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
+
+			el.c.on('click', '[profile]', events.showprofile)
 			
 		}
 

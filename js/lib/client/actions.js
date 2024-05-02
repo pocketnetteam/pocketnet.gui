@@ -678,19 +678,6 @@ var Action = function(account, object, priority, settings){
                     
                 }
 
-
-                /*var divi = totalInputAmount / 2
-
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : divi
-                })
-                
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : totalInputAmount - divi
-                })*/
-
             }
             else{
                 outputs.push({

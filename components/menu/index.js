@@ -992,8 +992,6 @@ var menu = (function(){
 
 					var setValue = function(){	
 						
-						
-						
 						var account = self.app.platform.actions.getCurrentAccount()
 
 						if(!account){

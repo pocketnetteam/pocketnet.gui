@@ -83,6 +83,7 @@ var tpls = [
 	'index_el.html', 
 	'index.html', 
 	'index.php', 
+	'external.js',
 	'indexcordova.html', 
 	{
 		name : 'config.xml', 
@@ -107,7 +108,9 @@ var tpls = [
 	{
 		name : 'terms.html', 
 		path : 'dcs/'
-	}
+	},
+
+	'examples.html'
 ]
 
 if (!args.sha) {
@@ -149,7 +152,9 @@ var vars = {
 		run : args.run || false,
 		lname : config.lname || config.name,
 		support : config.support,
-		config
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	},
 	prod : {
 		proxypath : '"http://pocketnet.app:8898/"',
@@ -166,7 +171,9 @@ var vars = {
 		sha : args.sha || false,
 		run : args.run || false,
 		support : config.support,
-		config
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	}
 }
 

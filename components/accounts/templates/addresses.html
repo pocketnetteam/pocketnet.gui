@@ -12,7 +12,7 @@
 	var info = psdk.userInfo.get(address) || {}
 
 	var src = info.image;  
-	var name = app.platform.api.clearname(info.name || address); 
+	var name = app.platform.api.clearname(info.name || address, true); 
 	var letter = name ? name[0] : '';
 
 %>
