@@ -832,8 +832,18 @@ formatInternalLinkReverse = function(value){
     if(thislink(value)){
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
+        var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-        value = protocol + '://' + value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url)) + '/', '')
+        var cleared = value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
+
+        if(cleared == url || cleared == '') {
+
+        }
+        else{
+            value = protocol + '://' + cleared
+        }
+
+        
     }
     else{
     }
