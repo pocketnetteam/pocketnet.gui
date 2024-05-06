@@ -274,7 +274,8 @@ var Roy = function (parent) {
 				ip : instance.ip,
 				archived: !!instance.archived,
 				canuse: instance.canuse(),
-				stats
+				stats,
+				auto : self.auto
 			};
 			
 		});
