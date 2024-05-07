@@ -179,7 +179,6 @@ var pSDK = function ({ app, api, actions }) {
 
         if (!dbname || !dbmeta[dbname]) return Promise.resolve()
         
-        
         return self.db.clearAll(dbname)
     }
 
@@ -221,15 +220,18 @@ var pSDK = function ({ app, api, actions }) {
 
 
         return Promise.all(_.map(ids, id => {
-            return self.db.get(dbname, id, getold).then(data => {
+            return self.db.get(dbname, id, getold).then(({data, date}) => {
 
                 if (dbmeta[dbname].authorized) {
                     id = id.replace('_' + app.user.address.value, '')
                 }
 
+                ///// 
+
                 result.push({
                     key: id,
-                    data: data
+                    data,
+                    date
                 })
 
             }).catch(e => { 
@@ -530,7 +532,7 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
                     else{
@@ -810,7 +812,7 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
 
@@ -850,7 +852,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key])
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
 
                 var object = this.transform(r)
 
@@ -1070,7 +1072,7 @@ var pSDK = function ({ app, api, actions }) {
         change: function (address, state) {
             this.clear.all('userState', address)
 
-            storage['userState'][address] = state
+            storage['userState'][address] = state // ADD STORAGE
         }
     }
 
@@ -1285,7 +1287,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (r && r.key && r.data) {
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
                     filtered.push(r)
                 }
 
@@ -1319,7 +1321,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key]) {
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
                 }
 
                 var object = this.transform(r)
@@ -1499,20 +1501,22 @@ var pSDK = function ({ app, api, actions }) {
                     }
                 }
 
-                settodb('myScore', [result]).then(() => {
-                }).catch(e => {
-                    console.error(e)
-                })
+                if(exp.actor == app.user.address.value){
+                    settodb('myScore', [result]).then(() => {
+                    }).catch(e => {
+                        console.error(e)
+                    })
+                }
             }
         },
         applyAction: function (comment, exp) {
 
             if (comment) {
                 if (comment.id == exp.comment.v) {
+
+                    var v = Number(exp.value.v)
                     
                     if(exp.actor == app.user.address.value){
-                        var v = Number(exp.value.v)
-                    
                         comment.myScore = v
                     }
                    
@@ -1573,7 +1577,9 @@ var pSDK = function ({ app, api, actions }) {
 
         insertFromResponseEx: function (response) {
 
-            self.userInfo.insertFromResponse(response.users, true)
+            console.log('response.users', response.users)
+
+            self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
 
             app.platform.sdk.videos.getVideoResponse(response.videos)
 
@@ -1602,11 +1608,11 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
 
-                    var object = this.transform(r)
+                    var object = this.transform(r)  // ADD STORAGE (TR)
 
                     if (object) {
                         objects[key][r.key] = object
@@ -1643,7 +1649,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key] || (storage[key][r.key] && storage[key][r.key].___temp))
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
 
                 var object = this.transform(r, true)
 
@@ -2148,13 +2154,16 @@ var pSDK = function ({ app, api, actions }) {
                     }
                 }
 
+                clearfromdb('postScores', [exp.share.v])
 
                 //// long like cache
 
-                settodb('myScore', [result]).then(() => {
-                }).catch(e => {
-                    console.error(e)
-                })
+                if(exp.actor == app.user.address.value){
+                    settodb('myScore', [result]).then(() => {
+                    }).catch(e => {
+                        console.error(e)
+                    })
+                }
             }
         },
         applyAction: function (share, exp) {
@@ -2311,7 +2320,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (txid) {
-            return storage['postScores'][txid] || []
+            return storage['postScores'][txid] || [] 
         },
 
     }
@@ -2655,6 +2664,73 @@ var pSDK = function ({ app, api, actions }) {
 
         prepareStorages()
     }
+
+    self.ws = {
+        update : function(type, wsdata){
+            console.log('type, wsdata', type, wsdata)
+
+            var status = 'completed'
+            var alias = null
+
+            if (type == 'comment'){
+
+                if(!wsdata.comment) return
+
+                alias = wsdata.comment
+
+                alias.transaction = wsdata.comment.id
+                alias.actor = wsdata.comment.address
+                alias.optype || (alias.optype = wsdata.comment.type)
+
+                self.comment.listener(alias, wsdata.addrFrom, status)
+              
+            }
+
+            if(type == 'cScore'){
+                alias = {
+                    actor : wsdata.addrFrom,
+                    comment : {
+                        v : wsdata.commentid,
+                    },
+                    value : {
+                        v : wsdata.upvoteVal
+                    }
+                }
+
+                self.cScore.listener(alias, wsdata.addrFrom, status)
+                
+            }
+
+            if (type == 'upvoteShare'){
+
+                alias = {
+                    actor : wsdata.addrFrom,
+                    share : {
+                        v : wsdata.posttxid,
+                    },
+                    value : {
+                        v : wsdata.upvoteVal
+                    }
+                }
+
+                self.upvoteShare.listener(alias, wsdata.addrFrom, status)
+
+            }
+
+            if (alias){
+                _.each(self.updatelisteners, (l) => {
+                    l({type, alias, status})
+                })
+            }
+            
+
+            return
+        }
+    }
+
+    self.clearfromdb = clearfromdb
+
+    self.updatelisteners = {}
 
     return self
 }

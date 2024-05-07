@@ -618,6 +618,8 @@ var lenta = (function(){
 
 				self.app.actions.scroll(0)
 
+				self.app.psdk.clearallfromdb('shareRequest')
+
 				make(clbk);
 
 				self.app.nav.api.history.removeParameters(['v', 's'])
@@ -4609,6 +4611,8 @@ var lenta = (function(){
 
 							var _beginmaterial = ''
 
+							var ignoreerror = false
+
 							
 
 							if(!author){
@@ -4721,6 +4725,8 @@ var lenta = (function(){
 
 								includingsub = true
 
+								ignoreerror = true
+
 							}
 
 
@@ -4744,6 +4750,19 @@ var lenta = (function(){
 								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
+
+								if(error && ignoreerror){
+									loading = false
+									if(essenseData.includesub){
+										includingsub = false
+										subloaded = true
+									}
+									
+									if(clbk) clbk([])
+									return
+								}
+
+								console.log("error", error)
 
 								offsetblock = offsetblock + period
 
@@ -5460,6 +5479,9 @@ var lenta = (function(){
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
+
+								console.log('actions.loadmore')
+
 								actions.loadmore()
 							}
 

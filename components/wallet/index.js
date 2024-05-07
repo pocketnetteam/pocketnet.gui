@@ -2727,13 +2727,23 @@ var wallet = (function(){
 
 				lazyActions(actions, clbk)
 
-				self.app.platform.sdk.node.transactions.clbks.circles = function(){
+				/*self.app.platform.sdk.node.transactions.clbks.circles = function(){
 					drawCircles(null, true)
 				};
 
 
 				self.app.platform.sdk.node.transactions.clbks.walletaddresses = function(){
 					renders.addresses()
+				}*/
+
+
+				self.app.platform.actionListeners['wallet'] = function({type, alias, status}){
+
+					if (type == 'transaction'){
+						drawCircles(null, true)
+						renders.addresses()
+					}
+					
 				}
 
 			})
@@ -2770,8 +2780,10 @@ var wallet = (function(){
 
 			destroy : function(){
 
-				delete self.app.platform.sdk.node.transactions.clbks.circles
-				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses 
+				/*delete self.app.platform.sdk.node.transactions.clbks.circles
+				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses */
+
+				delete self.app.platform.actionListeners['wallet']
 
 				delete self.app.events.resize['wallet']
 
