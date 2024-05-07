@@ -661,6 +661,11 @@ var pSDK = function ({ app, api, actions }) {
         })
     }   
 
+    self.clearIdCacheAll = function(){
+        extendCache = {}
+        self.extendCache = extendCache
+    }
+
     var extendFromActions = function(type, temps, object, helpId){
 
         var cacheId = type + ":" + (helpId || "") + ":" + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
@@ -1503,11 +1508,14 @@ var pSDK = function ({ app, api, actions }) {
         applyAction: function (comment, exp) {
 
             if (comment) {
-                if (comment.id == exp.comment.v && exp.actor == app.user.address.value) {
+                if (comment.id == exp.comment.v) {
                     
-                    var v = Number(exp.value.v)
-                    /// for me
-                    comment.myScore = v
+                    if(exp.actor == app.user.address.value){
+                        var v = Number(exp.value.v)
+                    
+                        comment.myScore = v
+                    }
+                   
                     
                     if(v > 0){
                         comment.scoreUp = (comment.scoreUp || 0) + 1
@@ -2152,8 +2160,12 @@ var pSDK = function ({ app, api, actions }) {
         applyAction: function (share, exp) {
 
             if (share) {
-                if (share.txid == exp.share.v && exp.actor == app.user.address.value) { /// for me
-                    share.myVal = Number(exp.value.v)
+                if (share.txid == exp.share.v) { /// for me
+                    
+                    if(exp.actor == app.user.address.value){
+                        share.myVal = Number(exp.value.v)
+                    }
+                    
                     share.scnt = (share.scnt || 0) + 1
                     share.score = (share.score || 0) + Number(exp.value.v)
                 }
@@ -2626,6 +2638,23 @@ var pSDK = function ({ app, api, actions }) {
 
     self. storage = storage
     self. objects = objects
+
+    var prepareStorages = function(){
+        _.each(self, (v) => {
+            if (v && _.isObject(v) && v.keys) {
+                _.each(v.keys, (i) => {
+                    prepareStorage(i)
+                })
+            }
+        })
+    }
+
+    self.clearStorageAndObjects = function(){
+        self.storage = storage = {}
+        self.objects = objects = {}
+
+        prepareStorages()
+    }
 
     return self
 }

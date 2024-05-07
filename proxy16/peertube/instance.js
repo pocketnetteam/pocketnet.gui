@@ -149,7 +149,6 @@ var instance = function (host, ip, Roy) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
 
-
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
 				method: p.type || 'get',
@@ -171,6 +170,7 @@ var instance = function (host, ip, Roy) {
 				try {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
+					console.log(err)
 					resultStr = {};
 				}
 
@@ -181,7 +181,6 @@ var instance = function (host, ip, Roy) {
 				});
 			});
 		} catch(error) {
-
 
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
