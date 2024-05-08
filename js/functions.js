@@ -1862,7 +1862,7 @@ bgImagesCl = function (el, p) {
 
 
 			image.onerror = (e) => {
-				console.error(e)
+				console.error(src, e)
 
 				window.requestAnimationFrame(() => {
 					el.setAttribute('image', '*')

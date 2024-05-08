@@ -1312,20 +1312,32 @@ var authorn = (function(){
 
 		var relationsClbk = function(address){
 
+			console.log('address == author.address', address, author.address)
 			if (address == author.address){
 
 				author.data = self.psdk.userInfo.get(author.address)
 
-				renders.subscribes()
-				renders.subscribers()
-				renders.blocking()
+				console.log('author', author)
+
+				if(!self.app.mobileview){
+					renders.subscribes()
+					renders.subscribers()
+					renders.blocking()
+				}
+
+				
+
+
 				renders.fbuttonsrow()
+				renders.aucaption()
 			}
 		}
 
 		var initEvents = function(){
 			
-			self.app.platform.actionListeners.authorn = function({type, alias, status}){
+			self.app.psdk.updatelisteners.authorn = self.app.platform.actionListeners.authorn = function({type, alias, status}){
+
+				console.log("AUTHORN CLBK", type, alias)
 
 				if(type == 'blocking' || type == 'unblocking'){
 
@@ -1342,6 +1354,7 @@ var authorn = (function(){
 					type == 'subscribePrivate'){
 
 					relationsClbk(alias.address.v)
+					relationsClbk(alias.actor)
 
 				}
 
@@ -1443,10 +1456,14 @@ var authorn = (function(){
 			renders.alentanavigation()
 			renders.lenta()
 			renders.randombg()
-			renders.subscribes()
-			renders.subscribers()
+
+			if(!self.app.mobileview){
+				renders.subscribes()
+				renders.subscribers()
+				renders.blocking()
+			}
+
 			renders.upbutton()
-			renders.blocking()
 		}
 		
 		var destroy = function(){

@@ -15,7 +15,7 @@ var comments = (function(){
 
 		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
 		var share = null
-		var authblock = false;
+		var authblock = false, setFocus = false;
 
 		var paginationcount = 25;
 
@@ -127,6 +127,8 @@ var comments = (function(){
 							return
 						}*/
 
+						if(setFocus || actions.findCurrentText()) return
+
 						renders.list(p)
 
 					}
@@ -141,11 +143,14 @@ var comments = (function(){
 							p.el = parent.find('.answers')
 
 						}
+						
 							
 						load.level(comment.parentid, function(comments){
 
 							p.comments = comments
 							p.add = comment.id
+
+							if(setFocus || actions.findCurrentText()) return
 	
 							renders.list(p, null, comment.parentid)
 	
@@ -164,6 +169,12 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			findCurrentText : function(){
+				return _.find(currents, (c) => {
+					return c.message.v
+				})
+			},
 
 			removeSending : function(wrapper){
 				setTimeout(() => {
@@ -493,13 +504,7 @@ var comments = (function(){
 					
 				})
 
-				var f = m; /*_.filter(m, function(f){
-					if(f.original.indexOf('data:image') > -1){
-						return true;
-					}
-				})
-*/
-				focusfixed = true;
+				var f = m;
 
 				self.nav.api.load({
 					open : true,
@@ -646,6 +651,7 @@ var comments = (function(){
 			removeForm : function(id){
 
 				delete areas[id]
+				delete currents[id]
 
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
@@ -709,6 +715,10 @@ var comments = (function(){
 							current.id = editid
 						}
 
+						var fxc = currents[id]
+
+						delete currents[id]
+
 						self.app.platform.sdk.comments.send(current, function(error, alias){
 
 							if(!editid && ed.send){
@@ -717,11 +727,13 @@ var comments = (function(){
 
 							if(!error){
 
-								delete currents[id]
+								
 
 								successCheck()
 							}
 							else{
+
+								delete currents[id]
 
 								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
 
@@ -816,6 +828,8 @@ var comments = (function(){
 
 				if (currents[id])
 					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
+
+				console.log('currents', currents)
 
 				state.save()
 
@@ -1885,6 +1899,8 @@ var comments = (function(){
 					focus : function() {
 						// Scroll comment section to top of the screen
 
+						setFocus = true
+
 					
 						if(window.cordova){
 							setTimeout(() => {
@@ -1897,6 +1913,8 @@ var comments = (function(){
 					},
 
 					blur : function(){
+						setFocus = false
+
 					},
 
 					onLoad : function(c, d){
@@ -2702,14 +2720,18 @@ var comments = (function(){
 			
 			}*/
 
-			self.app.platform.actionListeners[eid] = function({type, alias, status}){
+			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
+
 
 				if(type == 'comment'){
 					var comment = alias
 
 					if (comment.postid == txid){
-						if(currents[comment.id]) return
 
+						console.log("FOCUS", setFocus, actions.findCurrentText())
+
+						if(currents[comment.id]) return 
+						
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						
 					}
@@ -2718,7 +2740,6 @@ var comments = (function(){
 				if(type == 'cScore'){
 
 					var comment = self.psdk.comment.getclear(alias.comment.v)
-
 
 					if (comment){
 						if(comment.postid == txid){
@@ -3078,10 +3099,12 @@ var comments = (function(){
 				delete self.app.platform.ws.messages.cScore.clbks[eid]*/
 
 				delete self.app.platform.actionListeners[eid]
+				delete self.app.psdk.updatelisteners[eid]
 
 				authblock = false
 
 				share = null
+				setFocus = false
 
 				currentstate = {
 					reply : null,

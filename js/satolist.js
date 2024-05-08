@@ -456,6 +456,8 @@ Platform = function (app, listofnodes) {
     self.actions = app.Actions
     self.psdk = app.psdk
 
+    self.actionListeners = {}
+
     self.actions.on('change', ({account}) => {
         if (account.address == app.user.address.value){
             
@@ -482,8 +484,6 @@ Platform = function (app, listofnodes) {
             })
 
         }
-
-        
 
     })
 
@@ -535,10 +535,11 @@ Platform = function (app, listofnodes) {
         userInfo: function(alias, status){},
         contentDelete : function(alias, status){},
         accSet : function(){},
-        accDel : function(){}
+        accDel : function(){},
+        transaction : function(){}
     }
 
-    self.actionListeners = {}
+    
 
     
 
@@ -14796,7 +14797,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getbyid: function (ids, clbk) {
+            getbyid: function (ids, clbk, update) {
 
                 if (!_.isArray(ids)) ids = [ids]
 
@@ -14811,7 +14812,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                }).catch(e => {
+                }, update).catch(e => {
                     if (clbk)
                         clbk(e)
                 })
@@ -19152,8 +19153,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk, wa) {
 
-                    platform.sdk.users.get([data.addrFrom], function () {
+                    platform.psdk.ws.update('cScore', data)
 
+                    platform.sdk.users.get([data.addrFrom], function () {
+                        
 
                         data.user = platform.psdk.userInfo.get(data.addrFrom)
                         
@@ -19161,8 +19164,6 @@ Platform = function (app, listofnodes) {
                         data.i = '👍';
 
                         if (data.value < 0) data.i = '👎';
-
-                        // TODO WS EVENT
 
                         platform.sdk.comments.getbyid(data.commentid, function (t) {
 
@@ -19180,6 +19181,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             clbk()
+
                         })
 
                     }, true)
@@ -19298,7 +19300,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13330')
-                        n.text = self.tempates._share(data.shareReposted, 100)
+                        n.text = self.tempates._share(data.shareReposted, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19376,10 +19378,10 @@ Platform = function (app, listofnodes) {
 
                             data.user = platform.psdk.userInfo.get(data.addrFrom)
 
-                            // TODO WS EVENT
-                            
 
                             if (data.txids && !data.txid) data.txid = data.txids
+
+                            platform.psdk.ws.update('share', data)
 
                             platform.sdk.node.shares.getbyid(data.txid, function (s, fromcashe) {
 
@@ -19420,7 +19422,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13332')
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19558,7 +19560,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user)
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -20118,10 +20120,13 @@ Platform = function (app, listofnodes) {
 
                         data.txid = data.commentid
 
+
                         platform.sdk.comments.getbyid(ids, function (comments) {
 
-
+                            
                             data.comment = comments[0]
+
+                            platform.psdk.ws.update('comment', data)
 
                             // TODO WS EVENT
 
@@ -20138,7 +20143,7 @@ Platform = function (app, listofnodes) {
 
 
                             clbk()
-                        })
+                        }, true)
 
 
                     }, true)
@@ -20276,11 +20281,16 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
+
+                            console.log('data', data, wa)
                             
 
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
+
+                                platform.psdk.ws.update('userInfo', data)
+
                                 var me = platform.psdk.userInfo.getmy()
                                 
                                 //platform.sdk.users.storage[platform.sdk.address.pnet().address];
@@ -20305,6 +20315,8 @@ Platform = function (app, listofnodes) {
 
                             if (data.mesType == 'upvoteShare') {
 
+                                platform.psdk.ws.update('upvoteShare', data)
+
                                 platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
                                     s || (s = []);
@@ -20318,8 +20330,9 @@ Platform = function (app, listofnodes) {
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
 
-                                        // TODO WS EVENT
                                     }
+
+                                    
                                     if(!data.electronSettings) data.electronSettings = {}
                                     data.electronSettings.size = 'medium'
 
@@ -20328,19 +20341,23 @@ Platform = function (app, listofnodes) {
                             }
                             else {
 
-                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
-                                    var u = platform.psdk.userInfo.get(data.addrFrom)
+                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe' || data.mesType == 'subscribePrivate') && !wa) {
+
+
+                                    platform.psdk.ws.update(data.mesType, data)
+
+                                    //var u = platform.psdk.userInfo.get(data.addrFrom)
                                     
                                     ///platform.sdk.users.storage[data.addrFrom];
 
-                                    var me = platform.psdk.userInfo.getmy() 
+                                    //var me = platform.psdk.userInfo.getmy() 
 
-                                    // TODO WS EVENT
+                                    
                                     
                                     //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
-                                    if (me) {
+                                    /*if (me) {
 
                                         if (data.mesType == 'subscribe') {
                                             me.addRelation(data.addrFrom, 'subscribers')
@@ -20369,7 +20386,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                    }
+                                    }*/
                                 }
 
                                 clbk()
@@ -20530,16 +20547,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if (data.mesType == 'userInfo') {
-
-                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
-
-                            //text = platform.app.localization.e('refferalUserMessage')
-
-                            /*text = ''
-                            caption = platform.app.localization.e('refferalUserMessage')
-                            extra = self.tempates.subscribe(data.user)*/
-
-                        //}
+                       
                     }
 
 
@@ -21651,7 +21659,6 @@ Platform = function (app, listofnodes) {
 
 		}, 3000)
     }
-
     
     self.convertUTCSS = function (str) {
 
