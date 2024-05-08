@@ -2745,6 +2745,7 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     self.clearfromdb = clearfromdb
+    self.clearallfromdb = clearallfromdb
 
     self.updatelisteners = {}
 
