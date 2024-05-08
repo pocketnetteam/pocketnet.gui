@@ -1990,6 +1990,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -2009,7 +2010,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
-                    object.addRelation(exp.address.v, 'subscribers')
+                    object.addRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2061,6 +2062,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -2080,7 +2082,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (object.address == exp.address.v) {
 
-                    object.addRelation(exp.address.v, 'subscribers')
+                    object.addRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2100,6 +2102,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -2112,7 +2115,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
-                    object.removeRelation(exp.address.v, 'subscribers')
+                    object.removeRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2394,7 +2397,7 @@ var pSDK = function ({ app, api, actions }) {
 
             return loadone('blocking', address, (ids) => {
 
-                return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
+                return api.rpc('getuserblockings', [ids[0], '1', '', '', 0, 5000], {
                     rpc : {
                         fnode : '65.21.56.203:38081'
                     }
@@ -2432,7 +2435,7 @@ var pSDK = function ({ app, api, actions }) {
         load: function (address, update) {
 
             return loadone('subscribers', address, (ids) => {
-                return api.rpc('getusersubscribers', [ids[0], '', '', '', '5000']).then(r => {
+                return api.rpc('getusersubscribers', [ids[0], '', '', 0, 5000]).then(r => {
 
                     r = _.map(r, (v) => {
                         return v.address
@@ -2466,7 +2469,7 @@ var pSDK = function ({ app, api, actions }) {
         load: function (address, update) {
 
             return loadone('subscribes', address, (ids) => {
-                return api.rpc('getusersubscribes', [ids[0], '', '', '', '5000']).then(r => {
+                return api.rpc('getusersubscribes', [ids[0], '', '', 0, 5000]).then(r => {
 
                     r = _.map(r, (v) => {
                         return {
@@ -2717,9 +2720,22 @@ var pSDK = function ({ app, api, actions }) {
 
             }
 
+            if (type == 'subscribe' || type == 'subscribePrivate' || type == 'unsubscribe'){
+
+                alias = {
+                    actor : wsdata.addrFrom,
+                    address : {
+                        v : wsdata.addr,
+                    }
+                }
+
+                self[type].listener(alias, wsdata.addrFrom, status)
+
+            }
+
             if (alias){
                 _.each(self.updatelisteners, (l) => {
-                    l({type, alias, status})
+                    l({type, alias, status}, 'updateListener')
                 })
             }
             

@@ -5042,7 +5042,7 @@ var lenta = (function(){
 						}
 					}*/
 	
-					self.app.platform.ws.messages.event.clbks[mid] = function(data){
+					/*self.app.platform.ws.messages.event.clbks[mid] = function(data){
 	
 						if(data.mesType == 'upvoteShare' && data.share){
 	
@@ -5060,10 +5060,10 @@ var lenta = (function(){
 	
 						}
 						
-					}
+					}*/
 
 
-					self.app.platform.actionListeners[mid] = function({type, alias, status}){
+					self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
 						if(type == 'upvoteShare'){
 
@@ -5721,7 +5721,7 @@ var lenta = (function(){
 				}
 			
 				delete self.app.platform.actionListeners[mid]
-
+				delete self.app.psdk.updatelisteners[mid]
 				
 
 				_.each(initedcommentes, function(c){

@@ -19300,7 +19300,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13330')
-                        n.text = self.tempates._share(data.shareReposted, 100)
+                        n.text = self.tempates._share(data.shareReposted, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19422,7 +19422,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13332')
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19560,7 +19560,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user)
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -20281,6 +20281,8 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
+
+                            console.log('data', data, wa)
                             
 
                             data.user.address = data.addrFrom
@@ -20339,23 +20341,23 @@ Platform = function (app, listofnodes) {
                             }
                             else {
 
-                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
+                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe' || data.mesType == 'subscribePrivate') && !wa) {
 
 
                                     platform.psdk.ws.update(data.mesType, data)
 
-                                    var u = platform.psdk.userInfo.get(data.addrFrom)
+                                    //var u = platform.psdk.userInfo.get(data.addrFrom)
                                     
                                     ///platform.sdk.users.storage[data.addrFrom];
 
-                                    var me = platform.psdk.userInfo.getmy() 
+                                    //var me = platform.psdk.userInfo.getmy() 
 
                                     
                                     
                                     //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
-                                    if (me) {
+                                    /*if (me) {
 
                                         if (data.mesType == 'subscribe') {
                                             me.addRelation(data.addrFrom, 'subscribers')
@@ -20384,7 +20386,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                    }
+                                    }*/
                                 }
 
                                 clbk()
@@ -20545,16 +20547,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if (data.mesType == 'userInfo') {
-
-                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
-
-                            //text = platform.app.localization.e('refferalUserMessage')
-
-                            /*text = ''
-                            caption = platform.app.localization.e('refferalUserMessage')
-                            extra = self.tempates.subscribe(data.user)*/
-
-                        //}
+                       
                     }
 
 
