@@ -18645,7 +18645,7 @@ Platform = function (app, listofnodes) {
 
                 if(!m) m = share.renders.text()
 
-                var symbols = extendedpreview ? 180 : 20;
+                var symbols = extendedpreview ? (platform.app.mobileview ? 80 : 180) : 20;
 
                 var nm = trimHtml(m, symbols)
 
