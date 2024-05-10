@@ -1144,7 +1144,7 @@ var helpers = {
 	clearfolder : function(directory, clbk){
 
 		try{
-			fs.rmdirSync(directory, {
+			fs.rmSync(directory, {
 				recursive : true
 			})
 		}
