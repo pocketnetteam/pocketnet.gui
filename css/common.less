@@ -1541,7 +1541,7 @@
 
         .work{
             margin : 0 auto;
-            max-width: 960px;
+            max-width: 960px!important;
             background: rgb(var(--background-total-theme));
             padding : 0;
 
@@ -2659,6 +2659,26 @@ html.mobileview.ios{
 			}
 		}
 	}
+
+    .share_common{
+        .sbtnxs,
+        .adr{
+            max-width: 60vw;
+        }
+
+        .sbtnxs{
+            display: none;
+        }
+
+        .subscribed{
+            .authorCell{
+                .spsp,
+                .adr{
+                    color : rgb(var(--color-txt-ac));
+                }
+            }
+        }
+    }
 }
 
 .loading-bar {

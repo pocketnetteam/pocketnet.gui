@@ -610,7 +610,10 @@ var staking = (function(){
 
 			destroy : function(){
 				delete self.iclbks.mainstacking;
-				graph.destroy()
+				if (graph){
+					graph.destroy()
+				}
+				
 				graph = null
 				charts = {}
 				el = {};

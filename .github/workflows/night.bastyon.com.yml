@@ -14,7 +14,7 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: ${{ github.ref }}
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Archive repo
@@ -33,7 +33,7 @@ jobs:
         with:
           name: head
           path: ./head.txt
-          
+
   deploy-pre:
     needs: prepare
     runs-on: gui
@@ -60,7 +60,7 @@ jobs:
         shell: bash
       - name: Clean work dir
         run: rm -rf ./*
-        
+
   build-macos:
     needs: prepare
     runs-on: macos-latest
@@ -78,6 +78,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
@@ -86,10 +87,10 @@ jobs:
           echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Building
         env:
-          APPLEID: ${{ secrets.APPLEID }}
-          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
-          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASS }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           CSC_LINK: 'file://applecert.p12'
           CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
@@ -100,7 +101,7 @@ jobs:
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
-        
+
   build-unix:
     needs: prepare
     runs-on: ubuntu-latest
@@ -119,6 +120,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
+          npm run build:proxy16
           npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
@@ -132,7 +134,7 @@ jobs:
             ./dist/BastyonSetup.deb
             ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
-    
+
   build-windows:
     needs: prepare
     runs-on: windows-latest
@@ -150,6 +152,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
@@ -186,6 +189,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
@@ -247,6 +251,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:cordova:gfree -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
           cd ./cordova
           npm i
@@ -280,7 +285,7 @@ jobs:
         with:
           name: android-gfree
           path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
-        
+
   deploy-app-binaries:
     needs: [ build-macos, build-unix, build-windows, build-android, build-android-gf ]
     runs-on: dev.pocketnet.app

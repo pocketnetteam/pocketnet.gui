@@ -991,9 +991,7 @@ var menu = (function(){
 					}
 
 					var setValue = function(){	
-						
-						
-						
+						console.log("SASS")
 						var account = self.app.platform.actions.getCurrentAccount()
 
 						if(!account){
@@ -1027,7 +1025,6 @@ var menu = (function(){
 
 					self.app.platform.actions.clbk('change', 'menu', setValue)
 
-					//self.app.platform.sdk.node.transactions.clbks.menu = setValue;
 
 					setValue()
 					
@@ -1287,11 +1284,9 @@ var menu = (function(){
 
 				delete self.app.platform.actionListeners['menu']
 
-				//delete self.app.platform.sdk.node.transactions.clbks.menu
 
 				self.app.platform.actions.clbk('change', 'menu', null)
 
-				delete self.app.platform.ws.messages.event.clbks.menusave
 
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
 				delete self.app.platform.sdk.notifications.clbks.added.menu

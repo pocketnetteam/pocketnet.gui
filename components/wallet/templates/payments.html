@@ -1,0 +1,86 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+			<div class="subcaption">
+				<span><%=e('paymentsOnDevice').toUpperCase()%></span>
+			</div>
+			<div class="panel">
+				
+			</div>
+		</div>
+	</div>
+
+	
+
+	<div class="paymentTable captionTable table">
+		<div class="date">
+			<span>Date</span>
+		</div>
+
+		<div class="value">
+			<span>Value</span>
+		</div>
+
+		<div class="info">
+			<span>Info</span>
+		</div>
+        
+
+		<div class="panel">
+			
+		</div>
+		
+	</div>
+
+    <div class="paymentsGroup">
+
+        <% _.each(payments, function(payment){ 
+            
+            var date = new Date(payment.info.date || payment.updated)
+            %>
+
+            
+                <div class="paymentTable payment table" vid="<%-payment.vid%>">
+                    <div class="date">
+                        <span class="realtime" time="<%-date%>"><%- app.reltime(date) %></span>
+                    </div>
+
+                    <div class="value">
+                        <span><span><%-app.platform.mp.coin(payment.info.value + (payment.info.shipmentValue || 0))%></span> <span>PKOIN</span></span>
+                    </div>
+                
+                    <div class="info">
+
+                        <% if(payment.info.description) {%>
+                            <div class="description">
+                                <span><%-payment.info.description%></span>
+                            </div>
+                        <% } else { %> 
+                            <% if(payment.info.store) {%>
+                                <div class="store">
+                                    <span><%-payment.info.store.name%></span>
+                                </div>
+                            <% } else { %> 
+                                <div class="address">
+                                    <span><%-payment.info.address%></span>
+                                </div>
+                            <% }%>
+                        <% }%>
+                        
+                    </div>
+                    <div class="panel">
+                        <div class="removePayment">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+            
+
+        <% }) %>
+
+    </div>
+
+</div>

@@ -224,6 +224,10 @@
             <path url="*" event="nav-message" />
         </host>
 
+        <host name="*" scheme="__VAR__.protocol">
+            <path url="*" event="nav-message" />
+        </host>
+
     </universal-links>
     
 </widget>

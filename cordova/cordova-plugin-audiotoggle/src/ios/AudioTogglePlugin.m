@@ -28,7 +28,7 @@
 
 	AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
 	
-    if(authStatus == AVAuthorizationStatusAuthorized || authStatus == AVAuthorizationStatusDenied){
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
 
 		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 			if (!granted) {
@@ -50,7 +50,7 @@
 
 	}
 	else{
-		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
+		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true]
 																	callbackId:command.callbackId];
 	}
 
@@ -62,7 +62,7 @@
 
 	AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
 
-	if (authStatus == AVAuthorizationStatusAuthorized || authStatus == AVAuthorizationStatusDenied){
+	if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
 
 		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 			if (!granted) {
@@ -84,7 +84,7 @@
 
 	}
 	else{
-		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted]
+		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true]
 																	callbackId:command.callbackId];
 	}
 }

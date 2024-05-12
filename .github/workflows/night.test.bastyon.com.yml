@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -35,6 +37,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -42,6 +46,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:bastyon:test -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
@@ -50,10 +55,10 @@ jobs:
           echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Building
         env:
-          APPLEID: ${{ secrets.APPLEID }}
-          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
-          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASS }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           CSC_LINK: 'file://applecert.p12'
           CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
@@ -70,6 +75,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
@@ -80,6 +87,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
+          npm run build:proxy16
           npm run dev:bastyon:test -- -sha=${{ github.sha }}
       - name: Building
         run: |
@@ -100,6 +108,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -107,6 +117,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:bastyon:test -- -sha=${{ github.sha }}
       - name: Building
         run: |
@@ -127,6 +138,8 @@ jobs:
           java-version: '11'
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
@@ -138,6 +151,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:cordova:test -- -sha=${{ github.sha }}
           cd ./cordova
           npm i

@@ -37,9 +37,13 @@
 
         const urlParams = new URLSearchParams(window.location.search);
 
-        const isVideEmbed = urlParams.get('embed');
+        var isVideEmbed = urlParams.get('embed');
 
-        const [host, id, s, autoplay] = [urlParams.get('host'), urlParams.get('id'), urlParams.get('s'), urlParams.get('autoplay')];
+
+        var host = urlParams.get('host'), 
+          id = urlParams.get('id'), 
+          s = urlParams.get('s'), 
+          autoplay = urlParams.get('autoplay');
 
         if (!isVideEmbed || !host || !id) return;
 

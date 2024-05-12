@@ -5,6 +5,19 @@
 	padding-bottom: 8 * @rhythm;
 	position: relative;
 
+	.qrcodescannericon{
+		position: absolute;
+		left: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+
 	.pkoindisabledisclaimer{
 		padding : 6 * @rhythm;
 		text-align: center;
@@ -927,6 +940,66 @@
 		}
 	}
 
+	.payments{
+
+		.captionTable{
+			>div{
+				padding : 2 *@rhythm @rhythm;
+				span{
+					font-weight: 700;
+					font-size : 0.8em;
+				}
+			}
+		}
+
+		.paymentTable{
+			border-bottom: 1px solid rgb(var(--neutral-grad-2));
+			cursor: pointer;
+
+			>div{
+				vertical-align: top;
+				padding : 3 *@rhythm @rhythm;
+
+				&.date{
+					padding-left: 4 * @rhythm;
+					font-weight: 500;
+					white-space: nowrap;
+				}
+
+				&.value{
+					width: 100px;
+					font-weight: 700;
+				}
+
+				&.info{
+					width: 25%;
+				}
+
+				&.panel{
+					padding-right: 4 * @rhythm;
+					width: 110px;
+				}
+
+				&:nth-last-child(1){
+					padding-right: 4 * @rhythm;
+					text-align: right;
+				}
+
+				span{
+					font-size: 0.9em;
+				}
+
+				.removePayment{
+					cursor: pointer;
+					.transition(0.3s);
+					&:hover{
+						color : rgb(var(--color-bad));
+					}
+				}
+			}
+		}
+	}
+
 	.addresses{
 
 		.addressesGroupCaption{
@@ -947,6 +1020,7 @@
 				&.name{
 					padding-left: 4 * @rhythm;
 					font-weight: 500;
+					white-space: nowrap;
 
 					.alabel{
 						font-weight: 300;
@@ -1583,6 +1657,7 @@
 						font-weight: 500;
 						overflow: hidden;
 						text-overflow: ellipsis;
+						
 	
 						
 					}
@@ -1955,6 +2030,41 @@
 			}
 
 			
+		}
+	}
+	
+
+	.payments{
+
+
+		.paymentTable{
+			>div{
+				vertical-align: top;
+				padding : 3 * @rhythm @rhythm;
+
+				&.date{
+					padding-left: @rhythm;
+				}
+
+				&.value{
+					width: 33%;
+					font-weight: 700;
+				}
+
+				&.info{
+					display: none;
+				}
+
+				&.panel{
+					padding-right: @rhythm;
+				}
+
+				&:nth-last-child(1){
+					padding-right: @rhythm;
+				}
+
+				
+			}
 		}
 	}
 

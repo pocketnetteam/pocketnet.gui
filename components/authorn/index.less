@@ -12,6 +12,17 @@
         }
     
     }
+
+    .dummylenta{
+        margin-top: @rhythm;
+        min-height: 100px;
+        background: rgb(var(--background-hidden-layer));
+        border-radius: @rad;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color : rgb(var(--neutral-grad-0));
+    }
     
     .work{
 		&.mwork{
@@ -93,6 +104,16 @@
                 }
 
                 
+            }
+
+            &.reputationBlocked{
+                background: #ff0090;
+                .grad{
+                    
+                    background: rgba(1, 1, 1, 1);
+                    background: linear-gradient(180deg, rgba(255, 0, 123, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+                    
+                }
             }
 
             &.deleted{

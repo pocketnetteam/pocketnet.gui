@@ -9,14 +9,14 @@ if(!_Node)
 
 	var developapps = window.project_config.developapps || [] 
 	
-	
 	/*[{
 		"id" : "demo.pocketnet.app",
 		"version": "0.0.1",
 		"scope" : "localhost:8081",
 		"cantdelete" : true,
 		"name" : "Demo application",
-		"grantedPermissions" : ["account"]
+		"grantedPermissions" : ["account"],
+		"access" : ["PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"]
 	}]*/
 
 	var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}
@@ -26,18 +26,6 @@ if(!_Node)
 	var _listofproxies = servers.proxy || []
 
 	var matrix = servers.matrix || ""
-
-	/*if (window.testpocketnet){
-		_listofproxies = [
-			{
-				host : 'test.pocketnet.app',
-				port : 8899,
-				wss : 8099
-			}
-		]
-
-		matrix = 'test.matrix.pocketnet.app'
-	}*/
 		
 	if (window.location.host === 'pre.pocketnet.app') {
 		_listofproxies = [
@@ -49,32 +37,6 @@ if(!_Node)
 		];
 
 	}
-
-	/*window.projects_meta = {
-		Pocketnet : {
-		  url : "pocketnet.app",
-		  turl : "test.pocketnet.app",
-		  fullname : "Pocketnet",
-		  protocol : 'pocketnet',
-		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
-		},
-	
-		Bastyon : {
-		  fullname : "Bastyon",
-		  url : "bastyon.com",
-		  turl : "test.pocketnet.app",
-		  protocol : 'bastyon',
-		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
-		},
-	
-		BastyonPapp : {
-		  fullname : "Bastyon",
-		  url : "pocketnet.app",
-		  turl : "test.pocketnet.app",
-		  protocol : 'bastyon',
-		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
-		}
-	  }*/
 
 	if(!_OpenApi){
 		if (window.parent.frames.length > 0) {

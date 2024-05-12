@@ -72,7 +72,7 @@
         "cordova-plugin-webview-checker": "^1.0.1",
         "cordova-plugin-x-socialsharing": "^6.0.4",
         "cordova-plugin-file-opener2":"^4.0.0",
-        "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+        "cordova-plugin-deeplinks": "file:cordova-plugin-deeplinks",
 
         <% if(!store) {%>
             "cordova-plugin-apkupdater": "~4.0.0",
@@ -102,7 +102,7 @@
             },
             "cordova-plugin-contacts-x": {},
             "cordova-plugin-ionic-keyboard": {},
-            "cordova-universal-links-plugin": {},
+            "cordova-plugin-deeplinks": {},
             "cordova-plugin-file-opener2" : {},
             "cc.fovea.cordova.openwith": {
                 "ANDROID_MIME_TYPE": "*",

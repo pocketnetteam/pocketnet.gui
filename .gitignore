@@ -33,6 +33,8 @@ pocketcoin/
 pocketcoind*/
 .env
 /index.html
+/external.js
+/examples.html
 /index.php
 /index_el.html
 /openapi.html

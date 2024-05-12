@@ -224,16 +224,6 @@ var authorn = (function(){
 				return params
 			},
 
-			/*
-			
-			CONTENT_POST = 200,
-			CONTENT_VIDEO = 201,
-			CONTENT_ARTICLE = 202,
-			CONTENT_STREAM = 209,
-			CONTENT_AUDIO = 210,
-			CONTENT_COLLECTION = 220,
-			
-			*/
 
 			count : function(){
 				return 0
@@ -914,6 +904,12 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
+				/*if (author.deleted || author.reputationBlocked){
+					if (clbk)
+						clbk()
+					return 
+				}*/
+
 				var current = currentLenta()
 
 				self.shell({
@@ -1134,23 +1130,28 @@ var authorn = (function(){
 
 				el.lenta.html('')
 
-				self.nav.api.load({
+				if(!author.reputationBlocked && !author.deleted){
+					self.nav.api.load({
 
-					open : true,
-					id : 'lenta',
-					el : el.lenta,
-					animation : false,
-
-					mid : author.address,
-					insertimmediately : true,
-					essenseData : params,
-					fade : el.lenta,
-					
-					clbk : function(e, p){
-						modules.lenta = p;
-					}
-
-				})
+						open : true,
+						id : 'lenta',
+						el : el.lenta,
+						animation : false,
+	
+						mid : author.address,
+						insertimmediately : true,
+						essenseData : params,
+						fade : el.lenta,
+						
+						clbk : function(e, p){
+							modules.lenta = p;
+						}
+	
+					})
+				}
+				else{
+					el.lenta.html('<div class="dummylenta"><i class="fas fa-dot-circle"></i></div>')
+				}
 
 			},
 
@@ -1311,20 +1312,32 @@ var authorn = (function(){
 
 		var relationsClbk = function(address){
 
+			console.log('address == author.address', address, author.address)
 			if (address == author.address){
 
 				author.data = self.psdk.userInfo.get(author.address)
 
-				renders.subscribes()
-				renders.subscribers()
-				renders.blocking()
+				console.log('author', author)
+
+				if(!self.app.mobileview){
+					renders.subscribes()
+					renders.subscribers()
+					renders.blocking()
+				}
+
+				
+
+
 				renders.fbuttonsrow()
+				renders.aucaption()
 			}
 		}
 
 		var initEvents = function(){
 			
-			self.app.platform.actionListeners.authorn = function({type, alias, status}){
+			self.app.psdk.updatelisteners.authorn = self.app.platform.actionListeners.authorn = function({type, alias, status}){
+
+				console.log("AUTHORN CLBK", type, alias)
 
 				if(type == 'blocking' || type == 'unblocking'){
 
@@ -1341,6 +1354,7 @@ var authorn = (function(){
 					type == 'subscribePrivate'){
 
 					relationsClbk(alias.address.v)
+					relationsClbk(alias.actor)
 
 				}
 
@@ -1384,7 +1398,7 @@ var authorn = (function(){
 				self.app.nav.api.load({
 					open : true,
 					href : page,
-					history : true,
+					history : page == 'page404' ? false : true,
 					replaceState : true,
 					fade : self.app.el.content
 				})
@@ -1409,16 +1423,21 @@ var authorn = (function(){
 					author.data = self.psdk.userInfo.get(author.address)
 					author.me = self.app.user.isItMe(author.address)
 
+					author.reputationBlocked = self.app.platform.sdk.user.reputationBlocked(address)
+
 					//var me = self.app.platform.psdk.userInfo.getmy()
 
-				
-
-	
 					if(
-						self.app.platform.sdk.user.reputationBlocked(address) || 
 						!author.data
 					){
 						return redir(author.me ? 'userpage?id=test' : 'page404')
+					}
+
+	
+					if(
+						author.reputationBlocked && author.me
+					){
+						return redir('userpage?id=test')
 					}
 
 					clbk()
@@ -1437,10 +1456,14 @@ var authorn = (function(){
 			renders.alentanavigation()
 			renders.lenta()
 			renders.randombg()
-			renders.subscribes()
-			renders.subscribers()
+
+			if(!self.app.mobileview){
+				renders.subscribes()
+				renders.subscribers()
+				renders.blocking()
+			}
+
 			renders.upbutton()
-			renders.blocking()
 		}
 		
 		var destroy = function(){

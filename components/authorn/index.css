@@ -5,6 +5,16 @@
 #authorn .maincntwrapperOvf .work {
   max-width: 1076px;
 }
+#authorn .dummylenta {
+  margin-top: 0.5em;
+  min-height: 100px;
+  background: rgb(var(--background-hidden-layer));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--neutral-grad-0));
+}
 #authorn .work.mwork {
   padding: 0!important;
   overflow: hidden;
@@ -76,6 +86,13 @@
 #authorn .bgwallpaperWrapper .bgwallpaper.blocked .grad {
   background: #010101;
   background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.reputationBlocked {
+  background: #ff0090;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper.reputationBlocked .grad {
+  background: #010101;
+  background: linear-gradient(180deg, rgba(255, 0, 123, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
 }
 #authorn .bgwallpaperWrapper .bgwallpaper.deleted .bgpanel {
   display: none;

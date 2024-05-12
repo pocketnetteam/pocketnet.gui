@@ -290,6 +290,8 @@ var test = (function(){
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
+						console.log('exist2', userInfo.name.v, exist)
+
 						//exist = false
 
 						if(!exist || (exist == self.app.user.address.value)){
@@ -388,7 +390,7 @@ var test = (function(){
 							
 							sitemessage(txt)
 						}
-					})
+					}, true)
 
 					
 				})
@@ -583,9 +585,15 @@ var test = (function(){
 							else
 							{
 
-								checkusernameTimer =  slowMade(function(){
+								checkusernameTimer = slowMade(function(){
 
-									self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
+									var n = tempInfo[parameter.id]
+
+									self.app.platform.sdk.users.nameExist(n, function(exist){
+
+										console.log('exist', tempInfo[parameter.id], n)
+
+										if(tempInfo[parameter.id] != n) return
 
 										if(!el.c) return
 	

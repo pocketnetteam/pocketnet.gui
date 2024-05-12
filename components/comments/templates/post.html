@@ -23,7 +23,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 				
 				var src = info.image || ''
 				
-				var name = app.platform.api.clearname(info.name || user.address.value) || ''
+				var name = app.platform.api.clearname(info.name || user.address.value, true) || ''
 				
 				var letter = name ? name[0] : ''
 
@@ -66,6 +66,16 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 				</div>
 			</div>
 
+		<% } %>
+
+		<% if(answer) {%>
+
+			<div class="closeWrapper">
+				<div elementsid="comments_closeAnswer" class="closeAnswer">
+					<i class="far fa-times-circle"></i>
+				</div>
+			</div>
+	
 		<% } %>
 
 		<% 
@@ -149,12 +159,6 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 	</div>
 
-	<% if(answer) {%>
-
-		<div elementsid="comments_closeAnswer" class="closeAnswer">
-			<i class="far fa-times-circle"></i>
-		</div>
-
-	<% } %>
+	
 
 </div>

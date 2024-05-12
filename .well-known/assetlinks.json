@@ -7,8 +7,23 @@
       "namespace": "android_app",
       "package_name": "pocketnet.app",
       "sha256_cert_fingerprints": [
+        "D9:E1:3C:B0:78:ED:32:14:88:ED:A3:86:A9:48:13:F1:31:29:70:DE:D1:45:03:7C:15:04:58:2B:02:9C:C8:6E"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "pocketnet.app",
+      "sha256_cert_fingerprints": [
         "BA:9B:E7:21:6B:A7:07:6B:87:66:F5:4A:A1:95:CC:22:4C:02:8A:8E:B0:BC:47:F7:9D:B4:36:1C:38:06:49:E4"
       ]
     }
   }
+
+
+  
 ]

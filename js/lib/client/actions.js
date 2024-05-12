@@ -678,19 +678,6 @@ var Action = function(account, object, priority, settings){
                     
                 }
 
-
-                /*var divi = totalInputAmount / 2
-
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : divi
-                })
-                
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : totalInputAmount - divi
-                })*/
-
             }
             else{
                 outputs.push({
@@ -1896,11 +1883,15 @@ var Account = function(address, parent){
     self.import = function(e, flag){
         
         self.status = e.status
-        self.unspents = e.unspents
 
-        e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
+        if(e.unspents.updated && (self.unspents.updated || !self.unspents.updated)){
+            if(!self.unspents.updated || (new Date(e.unspents.updated) > self.unspents.updated)){
+                self.unspents = e.unspents
+                self.unspents.updated = new Date(e.unspents.updated)
+            }
+        }
+
         e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
-
         
         self.waitUserAction = e.waitUserAction || null
 

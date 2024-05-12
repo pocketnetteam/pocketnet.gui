@@ -1675,7 +1675,8 @@ tooltip = function (p) {
 
 sitemessage = function (message, func, delay = 5000, p = {}) {
 
-	var m = "<div>" + message + "</div>"
+	
+	var m = "<div>" + clearStringXss(message) + "</div>"
 
 	if (p.action) {
 		m += '<div class="action"><button class="black">' + p.action.text + '</button></div>'
@@ -1786,7 +1787,7 @@ bgImagesClApply = function (el, src) {
 
 bgImagesClApplyTemplate = function (src) {
 
-	src = (src || "");
+	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
 	
@@ -1861,7 +1862,7 @@ bgImagesCl = function (el, p) {
 
 
 			image.onerror = (e) => {
-				console.error(e)
+				console.error(src, e)
 
 				window.requestAnimationFrame(() => {
 					el.setAttribute('image', '*')
@@ -2067,7 +2068,7 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
@@ -2121,7 +2122,7 @@ resize = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
@@ -3515,6 +3516,10 @@ ParametersLive = function (parameters, el, p) {
 							}
 						})
 
+						_el.find('.vc_inputWrapperClick').on(clickAction(), function () {
+							open()
+						})
+
 						_el.find('input').on('focus', function () {
 							$(this).select();
 						})
@@ -4739,8 +4744,11 @@ Parameter = function (p) {
 				if (self.format.right)
 					input += caret;
 
-				input += '<div class="vc_inputWrapper">';
+				input += '<div class="vc_inputWrapper '+(disabled ? 'vc_inputWrapperClick' : '')+'">';
 				input += '<input elementsid="vs_input" ' + disabled + '  type="text" value="' + displayValue + '" placeholder="' + self.placeholder + '">';
+				if(disabled){
+					input += '<div class="displaceholder"></div>'
+				}
 				input += '</div>';
 
 				if (!self.format.right)
