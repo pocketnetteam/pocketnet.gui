@@ -114,6 +114,12 @@ var all = {
 		class : 'savePost'
 	},
 
+	downloadVideo : {
+		icon : '<i class="fas circle-down"></i>',
+		text : e('downloadVideo'),
+		class : 'downloadVideo'
+	},
+
 	deleteSavedPost : {
 		icon : '<i class="fas fa-trash"></i>',
 		text : e('deleteSavedPost'),
@@ -160,6 +166,10 @@ if(share){
 			m.unshift('savePost');
 		}
 
+	}
+
+	if (share.itisvideo()) {
+		m.unshift('downloadVideo');
 	}
 
 	m.push('opennewwindow');
