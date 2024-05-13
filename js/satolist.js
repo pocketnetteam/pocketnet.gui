@@ -19231,7 +19231,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
+                    if (data.comment && !data.comment.deleted && (data.upvoteVal > 0 || platform.sdk.usersettings.meta.downvotes.value)) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
                             text = self.tempates.commentScore(data.comment)
