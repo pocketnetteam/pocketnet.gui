@@ -1457,16 +1457,11 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('comment'), filter)
 
-
                 _.each(actions, (a) => {
 
                     if (a.optype == 'comment'){
                         objects.unshift(a)
                     }
-
-                    /*if(a.optype == 'commentDelete'){
-                        objects = _.filter(objects)
-                    }*/
                 })
             })
 
@@ -2184,7 +2179,24 @@ var pSDK = function ({ app, api, actions }) {
             }
 
             return share
-        }
+        },
+
+        tempGet: function (filter) {
+
+            var objects = []
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('upvoteShare'), filter)
+
+                _.each(actions, (a) => {
+
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+
+        },
     }
 
     /// requests

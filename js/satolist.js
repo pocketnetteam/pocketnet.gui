@@ -18283,10 +18283,28 @@ Platform = function (app, listofnodes) {
         self.getSettings = function (){
             const data = {}
             const settings = platform.sdk.usersettings.meta;
-            for(const key in settings){
-                data[key] = settings[key].value;
+
+            var keys = {
+                transactions: 't',
+                upvotes: 'u',
+                downvotes: 'd',
+                comments: 'c',
+                answers: 'a',
+                followers: 'f',
+                commentScore:'cs',
+                win : 'w'
             }
+
+            _.each(keys, (key, i) => {
+                data[key] = settings[i].value
+            })
+
+            /*for(const key in settings){
+                data[key] = settings[key].value;
+            }*/
+
             data['web'] = Boolean(!window.cordova)
+            
             return data;
         }
 
@@ -19231,7 +19249,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
+                    if (data.comment && !data.comment.deleted && (data.upvoteVal > 0 || platform.sdk.usersettings.meta.downvotes.value)) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
                             text = self.tempates.commentScore(data.comment)
