@@ -31,7 +31,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     
-    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3", "COCET", "OTCOC", "OTCOCAC", "OTCAC", "COCATb", "O4KO", "B_POT", "XYI", "O4KE", "O4KYET", "CYHYTb"], (s) => {return s.toLowerCase()})
 
     self.real = {
         'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
@@ -342,7 +342,8 @@ Platform = function (app, listofnodes) {
         'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX' : true,
         'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
         'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
-        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true
+        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true,
+        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX' : true
 
 
     } 
@@ -455,6 +456,8 @@ Platform = function (app, listofnodes) {
     self.actions = app.Actions
     self.psdk = app.psdk
 
+    self.actionListeners = {}
+
     self.actions.on('change', ({account}) => {
         if (account.address == app.user.address.value){
             
@@ -481,8 +484,6 @@ Platform = function (app, listofnodes) {
             })
 
         }
-
-        
 
     })
 
@@ -534,10 +535,11 @@ Platform = function (app, listofnodes) {
         userInfo: function(alias, status){},
         contentDelete : function(alias, status){},
         accSet : function(){},
-        accDel : function(){}
+        accDel : function(){},
+        transaction : function(){}
     }
 
-    self.actionListeners = {}
+    
 
     
 
@@ -14795,7 +14797,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getbyid: function (ids, clbk) {
+            getbyid: function (ids, clbk, update) {
 
                 if (!_.isArray(ids)) ids = [ids]
 
@@ -14810,7 +14812,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                }).catch(e => {
+                }, update).catch(e => {
                     if (clbk)
                         clbk(e)
                 })
@@ -18281,10 +18283,28 @@ Platform = function (app, listofnodes) {
         self.getSettings = function (){
             const data = {}
             const settings = platform.sdk.usersettings.meta;
-            for(const key in settings){
-                data[key] = settings[key].value;
+
+            var keys = {
+                transactions: 't',
+                upvotes: 'u',
+                downvotes: 'd',
+                comments: 'c',
+                answers: 'a',
+                followers: 'f',
+                commentScore:'cs',
+                win : 'w'
             }
+
+            _.each(keys, (key, i) => {
+                data[key] = settings[i].value
+            })
+
+            /*for(const key in settings){
+                data[key] = settings[key].value;
+            }*/
+
             data['web'] = Boolean(!window.cordova)
+            
             return data;
         }
 
@@ -18643,7 +18663,7 @@ Platform = function (app, listofnodes) {
 
                 if(!m) m = share.renders.text()
 
-                var symbols = extendedpreview ? 180 : 20;
+                var symbols = extendedpreview ? (platform.app.mobileview ? 80 : 180) : 20;
 
                 var nm = trimHtml(m, symbols)
 
@@ -18888,7 +18908,7 @@ Platform = function (app, listofnodes) {
 
             star: function (count) {
 
-                if(!_.isNumber(count)) return ''
+                count = clearStringXss(count)
 
                 var _star = '<i class="fas fa-star"></i>';
                 if (electron) _star = '★';
@@ -19151,8 +19171,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk, wa) {
 
-                    platform.sdk.users.get([data.addrFrom], function () {
+                    platform.psdk.ws.update('cScore', data)
 
+                    platform.sdk.users.get([data.addrFrom], function () {
+                        
 
                         data.user = platform.psdk.userInfo.get(data.addrFrom)
                         
@@ -19177,6 +19199,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             clbk()
+
                         })
 
                     }, true)
@@ -19226,7 +19249,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
+                    if (data.comment && !data.comment.deleted && (data.upvoteVal > 0 || platform.sdk.usersettings.meta.downvotes.value)) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
                             text = self.tempates.commentScore(data.comment)
@@ -19295,7 +19318,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13330')
-                        n.text = self.tempates._share(data.shareReposted, 100)
+                        n.text = self.tempates._share(data.shareReposted, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19372,9 +19395,11 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.get(data.addrFrom)
-                            
+
 
                             if (data.txids && !data.txid) data.txid = data.txids
+
+                            platform.psdk.ws.update('share', data)
 
                             platform.sdk.node.shares.getbyid(data.txid, function (s, fromcashe) {
 
@@ -19415,7 +19440,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13332')
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19553,7 +19578,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user)
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -20113,10 +20138,15 @@ Platform = function (app, listofnodes) {
 
                         data.txid = data.commentid
 
+
                         platform.sdk.comments.getbyid(ids, function (comments) {
 
-
+                            
                             data.comment = comments[0]
+
+                            platform.psdk.ws.update('comment', data)
+
+                            // TODO WS EVENT
 
                             /*if (data.comment) {
                                 platform.sdk.comments.storage[data.comment.postid] ||
@@ -20131,7 +20161,7 @@ Platform = function (app, listofnodes) {
 
 
                             clbk()
-                        })
+                        }, true)
 
 
                     }, true)
@@ -20262,17 +20292,23 @@ Platform = function (app, listofnodes) {
                 },
                 loadMore: function (data, clbk, wa) {
 
+                    
 
                     if (data.addrFrom) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
+
+                            console.log('data', data, wa)
                             
 
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
+
+                                platform.psdk.ws.update('userInfo', data)
+
                                 var me = platform.psdk.userInfo.getmy()
                                 
                                 //platform.sdk.users.storage[platform.sdk.address.pnet().address];
@@ -20291,14 +20327,13 @@ Platform = function (app, listofnodes) {
 
                                     if (c) c()
 
-
-
-
                                     me.rc++
                                 }
                             }
 
                             if (data.mesType == 'upvoteShare') {
+
+                                platform.psdk.ws.update('upvoteShare', data)
 
                                 platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
@@ -20312,7 +20347,10 @@ Platform = function (app, listofnodes) {
                                             data.share.score = Number(data.share.score) + Number(data.upvoteVal)
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
+
                                     }
+
+                                    
                                     if(!data.electronSettings) data.electronSettings = {}
                                     data.electronSettings.size = 'medium'
 
@@ -20321,17 +20359,23 @@ Platform = function (app, listofnodes) {
                             }
                             else {
 
-                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
-                                    var u = platform.psdk.userInfo.get(data.addrFrom)
+                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe' || data.mesType == 'subscribePrivate') && !wa) {
+
+
+                                    platform.psdk.ws.update(data.mesType, data)
+
+                                    //var u = platform.psdk.userInfo.get(data.addrFrom)
                                     
                                     ///platform.sdk.users.storage[data.addrFrom];
 
-                                    var me = platform.psdk.userInfo.getmy() 
+                                    //var me = platform.psdk.userInfo.getmy() 
+
+                                    
                                     
                                     //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
-                                    if (me) {
+                                    /*if (me) {
 
                                         if (data.mesType == 'subscribe') {
                                             me.addRelation(data.addrFrom, 'subscribers')
@@ -20360,7 +20404,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                    }
+                                    }*/
                                 }
 
                                 clbk()
@@ -20521,16 +20565,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if (data.mesType == 'userInfo') {
-
-                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
-
-                            //text = platform.app.localization.e('refferalUserMessage')
-
-                            /*text = ''
-                            caption = platform.app.localization.e('refferalUserMessage')
-                            extra = self.tempates.subscribe(data.user)*/
-
-                        //}
+                       
                     }
 
 
@@ -21642,7 +21677,6 @@ Platform = function (app, listofnodes) {
 
 		}, 3000)
     }
-
     
     self.convertUTCSS = function (str) {
 
@@ -22989,6 +23023,9 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+
+        self.psdk.clearStorageAndObjects()
+        self.psdk.clearIdCacheAll()
 
         app.user.isState(function(state){
 

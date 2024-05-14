@@ -213,7 +213,7 @@ ResoursesDB = function(storageName, version, storages){
                         
                     }
 
-                    resolve(req.result.message);
+                    resolve({data : req.result.message, date : req.result.date || getHourUnixtime()});
                 };
     
                 req.onerror = function (data) {
@@ -244,6 +244,7 @@ ResoursesDB = function(storageName, version, storages){
                 id,
                 message,
                 cachedTo: unixtime + time,
+                date : unixtime
             };
 
             const req = items.put(item);

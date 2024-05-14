@@ -832,8 +832,18 @@ formatInternalLinkReverse = function(value){
     if(thislink(value)){
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
+        var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-        value = protocol + '://' + value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url)) + '/', '')
+        var cleared = value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
+
+        if(cleared == url || cleared == '') {
+
+        }
+        else{
+            value = protocol + '://' + cleared
+        }
+
+        
     }
     else{
     }
@@ -914,6 +924,12 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
+    console.log('_url', _url)
+
+    if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
+        return false;
+    }
+
     if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
 
     var domain = (window.project_config || {}).url || 'localhost'
@@ -923,7 +939,7 @@ thislink = function (_url = '') {
         return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
 
-    if (m && _url.indexOf("embedVideo.php") == -1 && _url.indexOf("docs/") == -1 && _url.indexOf("/blockexplorer") == -1) {
+    if (m) {
         return true;
     }
 

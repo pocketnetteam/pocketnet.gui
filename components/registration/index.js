@@ -1231,9 +1231,7 @@ var registration = (function(){
 
 				self.app.el.app.removeClass('default-scroll')
 
-				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 				delete self.app.errors.clbks.registration
-				delete self.app.platform.sdk.node.transactions.clbks.filluser
 
 				if (ext) 
 					ext.destroy()

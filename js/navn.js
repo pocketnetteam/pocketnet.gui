@@ -66,7 +66,7 @@ Nav = function(app)
 	self.wnds = {};
 	self.prepared = false
 
-	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
+	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){
@@ -244,19 +244,19 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
-			if(!bp){
+			/*if(!bp){
 
 				if (self.dynamic && !module.find(lhref)){
 					bp = deep(app, 'backmap.authorn') 
 				}
-			}
+			}*/
 
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
 
-				if (self.dynamic && !module.find(href)){
+				/*if (self.dynamic && !module.find(href)){
 					if(bp.childrens.indexOf('authorn') > -1) return true
-				}
+				}*/
 			}
 			else{
 				
@@ -1112,12 +1112,12 @@ Nav = function(app)
 
 			}
 
-			if(typeof _Electron != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
+			if(typeof _Electron != 'undefined' && electron && electron.shell && electron.shell.openExternal){
 
 				link.off('click').on('click', function(event){
 					event.preventDefault();
 					
-					electron.shell().openExternal(this.href);
+					electron.shell.openExternal(this.href);
 
 					return false
 					

@@ -323,31 +323,31 @@ var Firebase = function(p){
     self.checkPermissions = function (type, settings) {
         switch (type) {
             case 'money':
-                return settings?.transactions
+                return settings?.transactions || settings?.t
             case 'winPost':
-                return settings?.win
+                return settings?.win || settings?.w
             case 'winComment':
-                return settings?.win
+                return settings?.win || settings?.w
             case 'winCommentref':
-                return settings?.win
+                return settings?.win || settings?.w
             case 'winPostref':
-                return settings?.win
+                return settings?.win || settings?.w
             case 'comment':
-                return settings?.comments
+                return settings?.comments || settings?.c
             case 'privatecontent':
-                return settings?.comments
-            case 'commentDonate':
-                return settings?.transactions
-            case 'answer':
-                return settings?.answers
-            case 'answerDonate':
-                return settings?.transactions
-            case 'subscriber':
-                return settings?.followers
-            case 'contentscore':
                 return true
+            case 'commentDonate':
+                return settings?.comments || settings?.c || settings?.transactions || settings?.t
+            case 'answer':
+                return settings?.answers|| settings?.a
+            case 'answerDonate':
+                return settings?.answers || settings?.a || settings?.transactions || settings?.t
+            case 'subscriber':
+                return settings?.followers || settings?.f
+            case 'contentscore':
+                return settings?.upvotes || settings?.u
             case 'commentscore':
-                return settings?.commentScore
+                return settings?.commentScore || settings?.cs
             default:
                 return true
         }
