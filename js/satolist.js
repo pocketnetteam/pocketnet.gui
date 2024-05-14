@@ -343,7 +343,13 @@ Platform = function (app, listofnodes) {
         'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
         'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
         'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true,
-        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX' : true
+        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX' : true,
+        'PQuQNJExGz9hdQFSaQw36CHSXHVTAivVUx' : true,
+        'PFhnjDAk3yNCXhgVaaT3kHYzShNF6C9zff' : true,
+        'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7' : true,
+        'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
+        'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
+        
 
 
     } 
@@ -18296,7 +18302,10 @@ Platform = function (app, listofnodes) {
             }
 
             _.each(keys, (key, i) => {
-                data[key] = settings[i].value
+                if(settings[i]){
+                    data[key] = settings[i].value
+                }
+                
             })
 
             /*for(const key in settings){
