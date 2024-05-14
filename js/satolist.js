@@ -18302,7 +18302,10 @@ Platform = function (app, listofnodes) {
             }
 
             _.each(keys, (key, i) => {
-                data[key] = settings[i].value
+                if(settings[i]){
+                    data[key] = settings[i].value
+                }
+                
             })
 
             /*for(const key in settings){
