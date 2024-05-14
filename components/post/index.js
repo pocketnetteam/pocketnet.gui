@@ -1995,7 +1995,7 @@ var post = (function () {
 			}*/
 
 
-			self.app.platform.actionListeners[eid] = function({type, alias, status}){
+			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
 				if(type == 'upvoteShare'){
 
@@ -2239,6 +2239,7 @@ var post = (function () {
 
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
 				delete self.app.platform.actionListeners[eid]
+				delete self.app.psdk.updatelisteners[eid]
 
 				authblock = false;
 				showMoreStatus = false;
