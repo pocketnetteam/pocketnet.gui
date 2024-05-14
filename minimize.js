@@ -703,16 +703,24 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									if(!scripted[i.c]) scripted[i.c] = {}
-
-									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+									minifyHtml(data.toString(), {
 										collapseWhitespace : true,
 										removeComments : true
+									}).then((r) => {
+
+										if(!scripted[i.c]) scripted[i.c] = {}
+										
+										scripted[i.c][i.n] = r
+
+									}).catch(e => {
+
+									}).finally(() => {
+										p.success();
 									})
 
-									//var uglified = htmlUglify.process(htmlString);
+									
 
-									p.success();
+									
 								});
 
 							}
