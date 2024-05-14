@@ -228,8 +228,7 @@ class BridgeTask {
     this.sender = sender;
     this.id = taskId;
 
-    this.output = this._static.getTemporaryPath(this.path, taskId);
-    this.finishedOutput = this._static.getFinishedPath(this.path, this.id);
+    this.output = this._static.getTemporaryPath(this.path, this.id);
 
     this.listenProbeEvents();
     this.listenTranscodeEvents();
@@ -289,7 +288,7 @@ class BridgeTask {
       if (this.resultSize <= to) {
         this.stopChunking();
 
-        fs.unlink(this.finishedOutput, () => {
+        fs.unlink(this.output, () => {
           debugLog(`Transcoding task ${this.id}: Chunking reached last chunk. Closed, file purged`);
         });
 
@@ -306,7 +305,7 @@ class BridgeTask {
       debugLog(`Transcoding task ${this.id}: Task closed. All events killed`);
 
       if (purgeResult) {
-        fs.unlink(this.finishedOutput, () => {});
+        fs.unlink(this.output, () => {});
       }
 
       this.closeTask();
@@ -370,8 +369,8 @@ class BridgeTask {
   }
 
   processIfFinished() {
-    if (fs.existsSync(this.finishedOutput)) {
-      this.resultSize = fs.statSync(this.finishedOutput).size;
+    if (fs.existsSync(this.output)) {
+      this.resultSize = fs.statSync(this.output).size;
       this.sender.send('Transcoder:Transcode:Result', this.resultSize);
 
       return true;
@@ -476,8 +475,8 @@ class BridgeTask {
         return;
       }
 
-      fs.renameSync(this.output, this.finishedOutput);
-      this.resultSize = fs.statSync(this.finishedOutput).size;
+      fs.renameSync(this.output, this.output);
+      this.resultSize = fs.statSync(this.output).size;
 
       this.checkSuboptimalResult();
 
@@ -517,8 +516,8 @@ class BridgeTask {
   }
 
   startChunking() {
-    if (fs.existsSync(this.finishedOutput)) {
-      this.chunkFd = fs.openSync(this.finishedOutput, 'r');
+    if (fs.existsSync(this.output)) {
+      this.chunkFd = fs.openSync(this.output, 'r');
     }
   }
 
@@ -550,11 +549,6 @@ class BridgeTask {
 
   static getTemporaryPath(basePath, taskId) {
     const fileName = `transcoding-${taskId}.temp.mp4`;
-    return path.join(basePath, fileName);
-  }
-
-  static getFinishedPath(basePath, taskId) {
-    const fileName = `finished-transcoding-${taskId}.temp.mp4`;
     return path.join(basePath, fileName);
   }
 }

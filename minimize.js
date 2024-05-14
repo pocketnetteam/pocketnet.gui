@@ -11,7 +11,7 @@ var ncp = require('ncp').ncp;
 const { execSync } = require('child_process');
 ncp.limit = 16;
 
-var minifyHtml = require('html-minifier').minify;
+var minifyHtml = require('html-minifier-terser').minify;
 
 var args = {
 	test : false,
@@ -1144,7 +1144,7 @@ var helpers = {
 	clearfolder : function(directory, clbk){
 
 		try{
-			fs.rmdirSync(directory, {
+			fs.rmSync(directory, {
 				recursive : true
 			})
 		}
