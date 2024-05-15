@@ -2826,6 +2826,8 @@ _l.external_linkWillExpired = "Payment link expires"
 _l.external_linkExpired = "Payment link has expired"
 
 _l.paymentLink = "Payment link"
+_l.authLink = "Authorization link"
+_l.undefinedLink = "Unknown link"
 _l.receiver_address = "Reciever Address"
 
 _l.paymentsOnDevice = "Payments"

@@ -232,7 +232,6 @@ var external = (function(){
 			},
 
 			pay : function(_el, parameters, lsdata, clbk){
-				console.log('parameters', parameters)
 
 				helpers.clearExpInterval()
 
@@ -487,6 +486,21 @@ var external = (function(){
 
 					})
 				})
+			},
+
+			auth : function(_el, parameters, clbk){
+				self.shell({
+					name :  'pay',
+					data : {
+						parameters
+					},
+
+					el : _el
+
+				}, function(_p){
+
+					if(clbk) clbk()
+				})
 			}
 		}
 
@@ -517,14 +531,8 @@ var external = (function(){
 						lsdata.shipment = state.getLastShipment()
 					}
 				}
-				
 
 				renders.loading('external_loading')
-
-
-
-
-				
 
 				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
 
@@ -553,13 +561,14 @@ var external = (function(){
 					renders.pay(el.cnt, {...ed.parameters, error : e}, lsdata, clbk)
 
 				}).finally(() => {
-
 					renders.loading(null)
-
 				})
 				
-				
 			},
+
+			auth : function(clbk){
+				renders.auth(el.cnt, {...ed.parameters}, clbk)
+			}
 		}
 
 		var helpers = {
@@ -700,6 +709,58 @@ var external = (function(){
 				return 'fetch'
 			},
 
+			redirect : function(url){
+
+				if (window.cordova){
+
+					cordova.InAppBrowser.open(url, '_system');
+
+					return Promise.resolve()
+				}
+
+				if (typeof _Electron != 'undefined'){
+
+					electron = require('electron');
+					electron.shell().openExternal(url);
+
+					return Promise.resolve()
+				}
+
+				window.open(url)
+
+				return Promise.resolve('redirect')
+			},
+
+			fetch : function(url, data){
+
+				var headers = _.extend({
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8'
+				})
+
+				try{
+					return fetch(url, {
+
+						method: 'POST',
+						mode: 'cors',
+						headers: headers,
+						body: JSON.stringify(data)
+
+					}).then(r => {
+						if(!r.ok){
+							return Promise.reject(r.status)
+						}
+
+						///// TODO: save response
+
+						return r.json()
+					})
+				}
+				catch(e){
+					return Promise.reject(e)
+				}
+			},
+
 			callbackPay : function(parameters, tx, lsdata){
 				var way = helpers.callbackPayWay(parameters)
 
@@ -725,26 +786,8 @@ var external = (function(){
 						})
 					}
 
-					var url = Url.toString()
 
-					if (window.cordova){
-
-						cordova.InAppBrowser.open(url, '_system');
-
-						return Promise.resolve()
-					}
-
-					if (typeof _Electron != 'undefined'){
-
-						electron = require('electron');
-						electron.shell().openExternal(url);
-
-						return Promise.resolve()
-					}
-
-					window.open(url)
-
-					return Promise.resolve('redirect')
+					return helpers.redirect(Url.toString())
 				}
 
 				if (way == 'fetch'){
@@ -765,32 +808,42 @@ var external = (function(){
 					if(!parameters.anonimus)
 						data.account = self.app.user.address.value
 
-					var headers = _.extend({
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8'
+					return helpers.fetch(parameters.c_url, data)
+
+					
+
+				}
+
+				return Promise.resolve('noway')
+			},
+
+			
+
+			callbackAuth : function(parameters, signature){
+				var way = helpers.callbackPayWay(parameters)
+
+				if (way == 'redirect'){
+
+					var Url = new URL(parameters.c_url)
+
+					_.each(signature, (d, i) => {
+						Url.searchParams.append(i, d);
 					})
 
-					try{
-						return fetch(parameters.c_url, {
+					return helpers.redirect(Url.toString())
+				}
 
-							method: 'POST',
-							mode: 'cors',
-							headers: headers,
-							body: JSON.stringify(data)
-	
-						}).then(r => {
-							if(!r.ok){
-								return Promise.reject(r.status)
-							}
+				if (way == 'fetch'){
 
-							///// TODO: save response
+					var data = {signature}
 
-							return Promise.resolve('fetch')
-						})
-					}
-					catch(e){
-						return Promise.reject(e)
-					}
+					return helpers.fetch(parameters.c_url, data).then(result => {
+						if (result.redirect){
+							return helpers.redirect(Url.toString())
+						}
+
+						return Promise.resolve('fetch')
+					})
 
 				}
 
@@ -869,7 +922,6 @@ var external = (function(){
 		}
 
 		var actions = {
-			
 
 			balance : function(){
 				var account = self.app.platform.actions.getCurrentAccount()
@@ -892,8 +944,6 @@ var external = (function(){
 
 		var make = function(clbk){
 
-			console.log('make', make.caller)
-
 			actions.balance()
 
 			if (ways[ed.action]){
@@ -907,8 +957,6 @@ var external = (function(){
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData
-
-				console.log("ED", ed)
 
 				var userinfo = self.psdk.userInfo.getmy()
 

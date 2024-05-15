@@ -3074,7 +3074,24 @@ Platform = function (app, listofnodes) {
         route : function(href, el, clbk, p){
 
             if(href.indexOf('ext=')){
-                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-wallet"></i> '+app.localization.e('paymentLink')+'</a></div>')
+
+                var type = 'undefined'
+                
+                try{
+                    var type = self.sdk.external.type(parameters(href, true).ext)
+
+                    var icon = ''
+
+                    if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
+                    if(type == 'auth') icon = '<i class="fas fa-user"></i>'
+
+                    el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'">'+icon+' '+app.localization.e(type + 'Link')+'</a></div>')
+                }
+                catch(e){
+                    el.html('<div class="internalpocketnetlink">'+app.localization.e('undefinedLink')+'</div>')
+                }
+
+                
             }
 
             else{
@@ -4518,11 +4535,13 @@ Platform = function (app, listofnodes) {
                 })
 
             }, {
-                text : 'external_paymentlink_reg',
+                text : 'external_'+ps.action+'link_reg',
                 success : 'rcontinue',
                 cancel : 'dcancel'
             })
         },
+
+        
 
         externalFromCurrentUrl : function(){
             var p = parameters()
@@ -6055,7 +6074,7 @@ Platform = function (app, listofnodes) {
                 if (json.paymentHash) eExt.paymentHash = json.paymentHash
                 
     
-                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
                 if (json.ad)    eExt.address = json.ad
                 if (json.s)     eExt.s_url = json.s
                 if (json.sv)    eExt.shipmentValue = json.shipmentValue
@@ -6099,6 +6118,13 @@ Platform = function (app, listofnodes) {
                
                 return eExt
             },
+            type : function(ext){
+
+                var ps = self.sdk.external.getFromHash(ext)
+                    
+                return ps.action            
+            },
+
             getFromHash : function(ext){
                 var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
 
@@ -6106,6 +6132,25 @@ Platform = function (app, listofnodes) {
 
                 if(!ps.action){
                     throw 'missing:action'
+                }
+
+                if (ps.action == 'auth'){
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+
+                    if(!ps.c_url){
+                        throw 'missing:c_url'
+                    }
+
+                    try{
+                        var url = new URL(ps.c_url)
+
+                        ps.host = clearStringXss(url.hostname)
+
+                    }catch(e){
+                        throw 'wrong:c_url:notvalid'
+                    }
+
+                    
                 }
     
                 if (ps.action == 'pay'){
