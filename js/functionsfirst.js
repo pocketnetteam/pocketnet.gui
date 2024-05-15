@@ -924,8 +924,6 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
-    console.log('_url', _url)
-
     if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
         return false;
     }
