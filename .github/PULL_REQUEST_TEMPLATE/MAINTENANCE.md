@@ -1,6 +1,6 @@
 <!--
 📣 READ CAREFULLY BEFORE CREATING THIS PR 📣
-1️⃣ This PR template is exclusively for REPOSITORY MAINTANANCE
+1️⃣ This PR template is exclusively for REPOSITORY MAINTENANCE
 2️⃣ The PR title must start from "repo:"
 3️⃣ The PR title must be written in lowercase
 4️⃣ If PR changes workflow, test it before pushing
