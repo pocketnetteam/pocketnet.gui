@@ -367,6 +367,49 @@
             }
         }
     }
+    
+    .empty,
+    .auth{
+        text-align: center;
+        .caption{
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 8 * @rhythm ;
+            max-width: 80%;
+
+            span{
+                font-weight: 700;
+                font-size: 1.2em;
+            }
+        }
+
+        .host{
+            font-size: 2em;
+            font-weight: 100;
+            max-width: 80%;
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 3 * @rhythm ;
+        }
+
+        .buttonsWrapper{
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 8 * @rhythm;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+
+            button{
+                max-width: 80%;
+
+                &.cancel{
+                    margin-top: 2 * @rhythm;
+                }
+            }
+        }
+    }
 
     .value{
         white-space: nowrap;

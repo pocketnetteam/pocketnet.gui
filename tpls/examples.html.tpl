@@ -247,7 +247,7 @@
 
         <!-- example 3: Auth: begin -->
         <div>
-            <h2>__VAR__.name auth link</h2>
+            <h2>__VAR__.name auth button</h2>
         </div>
         <div class="example" >
             <div class="example" id="authButton">
@@ -309,6 +309,8 @@
         </script>
         <!-- example 2: PaymentLink: end -->
 
-        <script src="https://__VAR__.domain/external.js"></script>
+        <script src="https://localhost/pocketnet/external.js"></script>
+        
+        <!-- <script src="https://__VAR__.domain/external.js"></script> -->
     </body>
 </html>

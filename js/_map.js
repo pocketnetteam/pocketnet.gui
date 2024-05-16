@@ -158,8 +158,8 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
+		{ c : 'menu', n : 'userinfo' },
 		
-		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },

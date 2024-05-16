@@ -490,7 +490,7 @@ var external = (function(){
 
 			auth : function(_el, parameters, clbk){
 				self.shell({
-					name :  'pay',
+					name :  'auth',
 					data : {
 						parameters
 					},
@@ -499,6 +499,45 @@ var external = (function(){
 
 				}, function(_p){
 
+					_p.el.find('.allow').on('click', function(){
+						var signature = self.app.user.signature('auth:' + parameters.host)
+
+						renders.loading('external_loading')
+
+						helpers.callbackAuth(parameters, signature).then(() => {
+							self.closeContainer()
+
+							successCheck()
+					
+						}).catch(e => {
+							sitemessage(e)
+						}).finally(() => {
+							renders.loading(null)
+						})
+					})
+
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+
+					if(clbk) clbk()
+				})
+			},
+
+			emptyAction : function(_el, clbk){
+				self.shell({
+					name :  'empty',
+					data : {
+						
+					},
+
+					el : _el
+
+				}, function(_p){
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+					
 					if(clbk) clbk()
 				})
 			}
@@ -842,7 +881,7 @@ var external = (function(){
 							return helpers.redirect(Url.toString())
 						}
 
-						return Promise.resolve('fetch')
+						return Promise.reject('noredirect')
 					})
 
 				}
@@ -948,6 +987,10 @@ var external = (function(){
 
 			if (ways[ed.action]){
 				ways[ed.action](clbk)
+			}
+
+			else{
+				renders.emptyAction(el.cnt, clbk)
 			}
 		}
 

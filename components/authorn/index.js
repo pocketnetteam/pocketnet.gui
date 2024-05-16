@@ -977,7 +977,13 @@ var authorn = (function(){
 
 						right : isTablet(),
 
-						events : {							
+						events : {		
+							active : function(){
+								console.log('focus')
+								if(isMobile()){
+									_scrollTo(p.el.find('.alSearchWrapper'), el.c.closest('.customscroll'))
+								}
+							},				
 							search : function(value, clbk, e, helpers){
 
 								var href = '';

@@ -2830,6 +2830,9 @@ _l.authLink = "Authorization link"
 _l.undefinedLink = "Unknown link"
 _l.receiver_address = "Reciever Address"
 
+_l.authText = "Are you sure you want to log in to the site via "+appname+"?"
+_l.authAllow = "Log in via "+appname
+
 _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
 

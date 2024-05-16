@@ -2618,7 +2618,8 @@ _l.external_linkExpired = "Действие платёжной ссылки ис
 _l.payLink = "Платёжная ссылка"
 _l.authLink = "Авторизационная ссылка"
 _l.undefinedLink = "Неизвестная ссылка"
-
+_l.authText = "Вы действительно хотите авторизоваться на сайте с помощью "+appname+"?"
+_l.authAllow = "Авторизоваться с помощью "+appname
 
 
 _l.paymentsOnDevice = "Платежи"

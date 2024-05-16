@@ -7719,6 +7719,12 @@ search = function (el, p) {
 
 				}
 			}
+			else{
+				events.search(searchInput)
+				e.stopPropagation()
+				e.preventDefault()
+				return false
+			}
 
 		});
 
@@ -7743,13 +7749,13 @@ search = function (el, p) {
 			}, 300)*/
 		})
 
-		searchInput.on('keypress', function (e) {
+		/*searchInput.on('keypress', function (e) {
 
 			if ((e.keyCode || e.which) == 13) {
 				events.search(searchInput)
 			}
 
-		});
+		});*/
 
 		searchEl.find('.searchIconLabel').on('click', function () {
 

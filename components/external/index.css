@@ -300,6 +300,49 @@
 #external .pay .form .value {
   font-size: 0.9em;
 }
+#external .empty,
+#external .auth {
+  text-align: center;
+}
+#external .empty .caption,
+#external .auth .caption {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4em;
+  max-width: 80%;
+}
+#external .empty .caption span,
+#external .auth .caption span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+#external .empty .host,
+#external .auth .host {
+  font-size: 2em;
+  font-weight: 100;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5em;
+}
+#external .empty .buttonsWrapper,
+#external .auth .buttonsWrapper {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4em;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+#external .empty .buttonsWrapper button,
+#external .auth .buttonsWrapper button {
+  max-width: 80%;
+}
+#external .empty .buttonsWrapper button.cancel,
+#external .auth .buttonsWrapper button.cancel {
+  margin-top: 1em;
+}
 #external .value {
   white-space: nowrap;
 }
