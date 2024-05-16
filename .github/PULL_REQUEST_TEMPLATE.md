@@ -1,5 +1,7 @@
-### Please go the the `Preview` tab and select the appropriate sub-template:
+<!-- 📣    SELECT PR TEMPLATE IN PREVIEW TAB    📣 -->
+<!-- 📣 WE WOULD CLOSE THE PR IF YOU DON'T READ 📣 -->
 
+### Select the appropriate PR template
 * [Feature](?expand=1&template=FEATURE.md&title=feat%3A%20fill%20here%20the%20pr%20title)
 * [Patch](?expand=1&template=PATCH.md&title=patch%3A%20fill%20here%20the%20pr%20title)
 * [Fix](?expand=1&template=FIX.md&title=fix%3A%20fill%20here%20the%20pr%20title)
