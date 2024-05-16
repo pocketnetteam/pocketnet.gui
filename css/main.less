@@ -6504,7 +6504,10 @@ html.allcontent_application{
 .fastMessage{
     border-radius: 12px;
     .transition(0.3s, bottom);
-
+    &.willhidden{
+        .transition(0.3s, opacity);
+        opacity: 0;
+    }
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -6567,6 +6570,12 @@ html.allcontent_application{
 
         &:hover{
             opacity: 0.8;
+        }
+    }
+
+    &.willhidden{
+        .hidenf{
+            opacity: 0;
         }
     }
 }
@@ -7360,7 +7369,7 @@ html{
         #hideallnotificationsel{
             .hidenf{
                 position: fixed;
-                top : 5px;
+                top : calc(5px + var(--app-margin-top));
                 left : 0.5 * @rhythm;
                 right : 0.5 * @rhythm;
                 bottom : auto;

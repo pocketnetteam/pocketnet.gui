@@ -20893,7 +20893,7 @@ Platform = function (app, listofnodes) {
 
                 message.timeout = setTimeout(function () {
 
-                    message.el.fadeOut(300)
+                    message.el.addClass('willhidden')
 
                     setTimeout(function () {
 
@@ -20939,7 +20939,12 @@ Platform = function (app, listofnodes) {
 
                     }
                     else{
-                        self.hideallnotificationsel.html('')
+                        self.hideallnotificationsel.addClass('willhidden')
+
+                        setTimeout(function () {
+                            self.hideallnotificationsel.html('')
+                            self.hideallnotificationsel.removeClass('willhidden')
+                        }, 300)
                     }
                 })
 
@@ -21075,9 +21080,7 @@ Platform = function (app, listofnodes) {
                 destroyMessage(message, 1, true)
             })
 
-            setTimeout(function(){
-                tArrangeMessages()
-            }, 301)
+            tArrangeMessages()
         }
 
         self.fastMessageByJson = function(json, destroyclbk, p = {}){
@@ -21157,7 +21160,7 @@ Platform = function (app, listofnodes) {
 
 
 
-			})
+            })
 
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
@@ -21200,6 +21203,7 @@ Platform = function (app, listofnodes) {
             }
 
             tArrangeMessages();
+
 
             return message
         }
@@ -21691,7 +21695,7 @@ Platform = function (app, listofnodes) {
                 txid: "acbd05c9ac81fe9ca2b12bdb7c2fe1127270a9b94fed872d71c7d079004243e9",
             })*/
 
-            self.messageHandler({
+            /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
                 mesType: "post",
@@ -21721,7 +21725,7 @@ Platform = function (app, listofnodes) {
                 node: "51.174.99.18:38081:8087",
                 time: 1625723521,
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
-            })
+            })*/
 
             // referral
             /*self.messageHandler({

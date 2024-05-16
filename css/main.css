@@ -5343,6 +5343,13 @@ html.allcontent_application #footerWrapper {
   -webkit-transition: bottom 0.3s;
   transition: bottom 0.3s;
 }
+.fastMessage.willhidden {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
 .fastMessage.smallsize {
   padding: 0.5em;
   width: 390px;
@@ -5392,6 +5399,9 @@ html.allcontent_application #footerWrapper {
 }
 #hideallnotificationsel .hidenf:hover {
   opacity: 0.8;
+}
+#hideallnotificationsel.willhidden .hidenf {
+  opacity: 0;
 }
 .closecsscross {
   position: relative;
@@ -6005,7 +6015,7 @@ html.mobileview .plyr__volume input {
 }
 html.mobileview #hideallnotificationsel .hidenf {
   position: fixed;
-  top: 5px;
+  top: calc(5px + var(--app-margin-top));
   left: 0.25em;
   right: 0.25em;
   bottom: auto;
