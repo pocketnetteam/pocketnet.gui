@@ -145,7 +145,14 @@
             ]
         },
         "mac": {
-            "target": "dmg",
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "universal"
+                    ]
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
