@@ -20964,7 +20964,7 @@ Platform = function (app, listofnodes) {
 
 			if (mtbl){
 				maxCount = 2;
-                showremove = 1;
+                showremove = 2;
 			}
 
 			var remove = self.fastMessages.length - maxCount;
