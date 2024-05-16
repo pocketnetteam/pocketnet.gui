@@ -29,7 +29,7 @@ var authorn = (function(){
 
 				events.up()
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 				
 					el.c.addClass('opensvishowed')
 
@@ -1396,7 +1396,7 @@ var authorn = (function(){
 
 		var redir = function(page){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
 			})
 
@@ -1517,7 +1517,7 @@ var authorn = (function(){
 
 			getdata : function(clbk, p){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
 				})
 
@@ -1609,7 +1609,7 @@ var authorn = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

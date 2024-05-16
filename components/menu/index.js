@@ -18,7 +18,7 @@ var menu = (function(){
 
 			var s = self.app.platform.sdk.newmaterials.storage
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 
 				if(!el.c) return
 				
@@ -77,7 +77,7 @@ var menu = (function(){
 
 			ah : function(el, c){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (c > 0){
 						el.addClass('amountHave')
 					}
@@ -271,7 +271,7 @@ var menu = (function(){
 
 					self.app.platform.sdk.registrations.clbks.menu = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if (!self.app.platform.sdk.registrations.showprivate()){
 								
@@ -419,7 +419,7 @@ var menu = (function(){
 
 					if (menusearch) {
 						menusearch.setactive(true)
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							menusearch.focus()
 
 						})
@@ -802,7 +802,7 @@ var menu = (function(){
 
 							active : function(a){
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									if (a){
 										el.c.addClass('searchactive')
 									}
@@ -879,7 +879,7 @@ var menu = (function(){
 				init : function(el){
 					
 					var action = function(){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							if(!_.isEmpty(self.app.errors.state)){
 								el.removeClass('hidden')
 							}
@@ -958,7 +958,7 @@ var menu = (function(){
 
 						var c = 'good';
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.removeClass('hidden')
 
 							if (add == 0){
@@ -974,14 +974,14 @@ var menu = (function(){
 										var number = Number(value + now).toFixed(8),
 											target = $(tween.elem);
 	
-										window.requestAnimationFrame(() => {
+										window.rifticker.add(() => {
 											target.text(self.app.platform.mp.coin(number));
 										})
 	
 									},
 	
 								}, rand(400, 1200), function(){
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										el.removeClass(c)
 									})
 								});
@@ -1339,7 +1339,7 @@ var menu = (function(){
 			},
 
 			showsearch : function(v){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c){
 						if (v){
 							el.c.addClass('searchactive')
@@ -1390,7 +1390,7 @@ var menu = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

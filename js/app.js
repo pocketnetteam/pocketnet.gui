@@ -331,7 +331,9 @@ Application = function (p) {
 
 		self.mobileview = istouchstylecalculate()
 
-		window.requestAnimationFrame(() => {
+		var id = window.rifticker.add(() => {
+
+			console.log("EXECUTED RIF", self.mobileview)
 
 			if (self.mobileview) {
 				self.el.html.addClass('mobileview').removeClass('wsview')
@@ -341,6 +343,8 @@ Application = function (p) {
 			}
 
 		})
+
+		console.log("NOTEXECUTED RIF", id)
 	}
 
 	var checkTouchStyle = function () {
@@ -2397,7 +2401,7 @@ Application = function (p) {
 		safearea: function () {
 			if (window.cordova) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
-				margintop = 20
+				self.margintop = 25
 			}
 			else {
 				document.documentElement.style.setProperty('--app-margin-top-default', `0px`);

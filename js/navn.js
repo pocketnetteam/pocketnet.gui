@@ -160,8 +160,6 @@ Nav = function(app)
 
 			var wb = false;
 
-			console.log('khref', khref, np)
-
 			if (np.back || back){
 
 				var index = findIndex(backManager.chain, function(c){
@@ -179,18 +177,15 @@ Nav = function(app)
 
 				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
 					//// 
-					console.log("khref ???")
 					backManager.clearAll()
 				}
 				else{
 
-					console.log("khref ??? 2", deep(backManager, 'chain.0.href'), href)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
 					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
 
-					console.log('khref needadd', needadd)
 	
 					if (needadd){
 	

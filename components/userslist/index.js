@@ -142,7 +142,7 @@ var userslist = (function(){
 
 					
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						element.find('.notificationturn').removeClass('turnon')
 						element.find('.subscribebuttonstop').removeClass('following')
 						element.find('.subscribebuttonstop').removeClass('blocking')				
@@ -491,7 +491,7 @@ var userslist = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -6504,6 +6504,7 @@ html.allcontent_application{
 .fastMessage{
     border-radius: 12px;
     .transition(0.3s, bottom);
+
     &.smallsize{
         padding : @rhythm;
         width: 390px;
@@ -7357,7 +7358,18 @@ html{
             }
         }
         #hideallnotificationsel{
-            display: none;
+            .hidenf{
+                position: fixed;
+                top : 5px;
+                left : 0.5 * @rhythm;
+                right : 0.5 * @rhythm;
+                bottom : auto;
+                width: auto;
+        
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
         }
 
         #panelWrapper{
@@ -8246,8 +8258,9 @@ html.mobileview{
         width: auto;
         min-width: 0;
         max-width: none;
-        border-radius: 6px;
+        border-radius: 12px;
         bottom : auto;
+        .transition(0.3s, top);
 
         .fmCnt{
             width: 100%;
@@ -8295,7 +8308,17 @@ html.mobileview{
         .foramount{
             width: auto!important;
         }
+        
 
+        &.fastMessage{
+            .close{
+                padding-top: 0;
+                padding-bottom: 0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
        
 
     }

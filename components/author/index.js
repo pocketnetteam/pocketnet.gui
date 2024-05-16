@@ -1253,7 +1253,7 @@ var author = (function(){
 
 			if(address == author.address || author.address == self.app.user.address.value){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					if(!el.c) return
 
@@ -1740,7 +1740,7 @@ var author = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy(href, p);
 			})
 

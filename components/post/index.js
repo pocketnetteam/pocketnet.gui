@@ -59,7 +59,7 @@ var post = (function () {
 				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					_el.find('.sharecaption span').html(c)
 
@@ -2356,7 +2356,7 @@ var post = (function () {
 		_.each(essenses, function (essense) {
 
 			if(!essense.pip){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					essense.destroy();
 				})
 			}

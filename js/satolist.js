@@ -484,7 +484,7 @@ Platform = function (app, listofnodes) {
 
             listener(alias, status)
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
                 _.each(self.actionListeners, (c, i) => {
                     if (c)
                         c({type : action.object.type, alias, status})
@@ -2740,7 +2740,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -2809,7 +2809,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -4820,7 +4820,7 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-                    /*window.requestAnimationFrame(() => {
+                    /*window.rifticker.add(() => {
 
                     })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
@@ -10202,6 +10202,8 @@ Platform = function (app, listofnodes) {
         missed : {
             get : function(block){
 
+                console.log("HERE", self.currentBlock, block)
+
                 var dummy = function(){
                     return {
                         block : {
@@ -10217,6 +10219,7 @@ Platform = function (app, listofnodes) {
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
+                    console.log("HERE2")
 
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
@@ -11245,7 +11248,7 @@ Platform = function (app, listofnodes) {
                 var total = balance.actual
                 var amount = balance.actual - balance.tempbalance
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (total > 0 && amount < total) {
 
                         if (!el.find('.spendLine').length) {
@@ -20927,16 +20930,18 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotificationselement = function(show){
+            
             if(self.hideallnotificationsel){
+                window.rifticker.add(() => {
+                    if(show){
+                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
 
-                if(show){
-                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
-
-                }
-                else{
-                    self.hideallnotificationsel.html('')
-                }
+                    }
+                    else{
+                        self.hideallnotificationsel.html('')
+                    }
+                })
 
             }
         }
@@ -20953,8 +20958,8 @@ Platform = function (app, listofnodes) {
             var mtbl = platform.app.mobileview
 
 			if (mtbl){
-				maxCount = 1;
-                showremove = 0;
+				maxCount = 2;
+                showremove = 1;
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -20964,7 +20969,7 @@ Platform = function (app, listofnodes) {
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
+					if(!m.expanded && !m.el.hasClass('smallsize')){
 						m.el.addClass('smallsize');
 						s = true
 					}
@@ -20974,6 +20979,10 @@ Platform = function (app, listofnodes) {
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
+
+                if (mtbl){
+                    boffset += platform.app.margintop
+                }
 
                 hideallnotificationselement(true)
             }
@@ -20992,19 +21001,19 @@ Platform = function (app, listofnodes) {
 
                 else
                 {
-                    if(!mtbl){
-                        offset += 5;
-                    }
+                    offset += 5;
 
-                    if(!mtbl){
-                        var r = offset
-                        window.requestAnimationFrame(() => {
+                
+                    var r = offset
+
+                    window.rifticker.add(() => {
+                        if(!mtbl){
                             m.el.css('bottom', r + 'px');
-                        })
+                        }else{
+                            m.el.css('top', r + 'px');
+                        }
+                    })
                         
-                    }
-                        
-
                     offset += m.el.outerHeight();
                 }
 
@@ -21165,7 +21174,7 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
-                var d = 25
+                var d = 35
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
@@ -21173,7 +21182,7 @@ Platform = function (app, listofnodes) {
                     directions: {
                         up : {
                             //endmove : true,
-                            trueshold: 1,
+                            trueshold: 5,
                             distance : d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
@@ -21181,8 +21190,7 @@ Platform = function (app, listofnodes) {
                             },
 
                             clbk: function () {
-                                message.el.remove()
-                                destroyMessage(message, 1, false, true);
+                                self.destroyMessages()
                             }
 
                         }
@@ -21683,7 +21691,7 @@ Platform = function (app, listofnodes) {
                 txid: "acbd05c9ac81fe9ca2b12bdb7c2fe1127270a9b94fed872d71c7d079004243e9",
             })*/
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
                 mesType: "post",
@@ -21693,9 +21701,9 @@ Platform = function (app, listofnodes) {
                 reason: "post",
                 time: "1619694710",
                 txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 mesType: "subscribe",
@@ -21703,9 +21711,9 @@ Platform = function (app, listofnodes) {
                 node: "135.181.196.243:38081:8087",
                 time: 1625762423,
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
-            })*/
+            })
 
-			/*self.messageHandler({
+			self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -21713,7 +21721,7 @@ Platform = function (app, listofnodes) {
                 node: "51.174.99.18:38081:8087",
                 time: 1625723521,
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
-            })*/
+            })
 
             // referral
             /*self.messageHandler({
@@ -23424,7 +23432,7 @@ Platform = function (app, listofnodes) {
                                 </matrix-element>
                             </div>`
 
-                            window.requestAnimationFrame(() => {
+                            window.rifticker.add(() => {
                                 $('#matrix').html(matrix);
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
@@ -23827,7 +23835,7 @@ Platform = function (app, listofnodes) {
                 var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (value){
                         wnds.css('z-index', 999)
                     }else{

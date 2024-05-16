@@ -284,23 +284,23 @@ successCheck = function (p) {
 			"html": h
 		});
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			el.append(ch);
 			ch.find('svg')[0].classList.add('animate')
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.addClass('active')
 			})
 		})
 
 		setTimeout(function () {
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.removeClass('active')
 			})
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					ch.remove()
 				})
 				
@@ -448,7 +448,7 @@ wnd = function (p) {
 			app.actions.offScroll(wnd);
 		}
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (hiddenState.length) {
 				hiddenState.before(wnd)
@@ -499,7 +499,7 @@ wnd = function (p) {
 
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					wnd.addClass('sette')
 				})
 
@@ -507,7 +507,7 @@ wnd = function (p) {
 			}, 20)
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (wnd)
 						wnd.removeClass('asette')
 				})
@@ -523,7 +523,7 @@ wnd = function (p) {
 
 
 						setTimeout(function () {
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 
 
 								if (wnd)
@@ -771,7 +771,7 @@ wnd = function (p) {
 			delete app.events.resize[id]
 			delete app.events.scroll[id]
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				destroySwipable()
 
 				wnd.addClass('asette')
@@ -787,7 +787,7 @@ wnd = function (p) {
 			var cl = function () {
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					wnd.remove();
 
@@ -1820,7 +1820,7 @@ bgImagesCl = function (el, p) {
 			var src = el.getAttribute('image')
 
 			if (!src || src == '*') {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.setAttribute('imageloaded', 'true')
 				})
 				return Promise.resolve()
@@ -1849,7 +1849,7 @@ bgImagesCl = function (el, p) {
 
 					imagesLoadedCache[src] = true
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						bgImagesClApply(el, src)
 
@@ -1864,7 +1864,7 @@ bgImagesCl = function (el, p) {
 			image.onerror = (e) => {
 				console.error(src, e)
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.setAttribute('image', '*')
 				})
 
@@ -1891,7 +1891,7 @@ carousel = function (el, _items, _container) {
 	var currentscroll = 0
 	var currentitem = 0
 
-	window.requestAnimationFrame(() => {
+	window.rifticker.add(() => {
 		if (!container.hasClass('carousel')) container.addClass('carousel')
 
 		for (var i = 0; i < items.length; i++) {
@@ -1942,7 +1942,7 @@ carousel = function (el, _items, _container) {
 	}
 
 	var gotoslide = function (index) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			container[0].scrollLeft = items[index].offsetLeft
 
@@ -1956,7 +1956,7 @@ carousel = function (el, _items, _container) {
 
 		currentscroll = el.scrollLeft
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			var activeindex = findactive()
 
 			if (activeindex > -1) {
@@ -7402,7 +7402,7 @@ fastars = function (el) {
 mobsearch = function (el, p) {
 
 	if (p.mobileSearch && p.app) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
@@ -8321,7 +8321,7 @@ initUpload = function (p) {
 		var thisid = makeid()
 
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (dark){
 				el.addClass('dark')

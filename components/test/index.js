@@ -1091,7 +1091,7 @@ var test = (function(){
 
 			renders.icon(() => {
 				renders.options(() => {
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('rendered')
 					})
 				})

@@ -255,7 +255,7 @@ nModule = function(){
 					c()
 				}
 				else{
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c()
 					})
 				}
@@ -510,7 +510,7 @@ nModule = function(){
 		}
 		else{
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 
 				if (clbk)
 					clbk()
@@ -556,7 +556,7 @@ nModule = function(){
 
 
 			if (settings.fade && (!settings.waspreshell || settings.replaceState)){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					settings.fade.addClass('shell_fadefast')
 				})
 			}
@@ -604,13 +604,13 @@ nModule = function(){
 
 						if (settings.fade && (!settings.waspreshell || settings.replaceState)){
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									settings.fade.addClass('shell_fadein')
 								})
 							}, 100)
 
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									settings.fade.removeClass('shell_fadefast')
 									settings.fade.removeClass('shell_fadein')
 								})

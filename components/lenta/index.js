@@ -302,7 +302,7 @@ var lenta = (function(){
 							actions.destroyShare(share)
 						})
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							$(this).html('<div class="optimizationDiv" style="height:'+h+'px"></div>').addClass('optimized').attr('optimization', id)
 						})
 						
@@ -578,7 +578,7 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c)
 						el.c.addClass('rebuilding')
 				})
@@ -1226,7 +1226,7 @@ var lenta = (function(){
 				if(!showMoreStatus[share.txid]) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					_el.find('.sharecaption span').html(c)
 
@@ -2943,7 +2943,7 @@ var lenta = (function(){
 				if(show){
 					loadertimeout = setTimeout(() => {
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if(el.loader && !el.loader.hasClass('loading')){
 								el.loader.addClass('loading')
@@ -2964,7 +2964,7 @@ var lenta = (function(){
 					}
 
 					if (el.loader && el.loader.hasClass('loading')){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.loader.removeClass('loading')
 						})
 					}
@@ -3396,7 +3396,7 @@ var lenta = (function(){
 
 					var c = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if(!p.el.hasClass('rendered')){
 								p.el.addClass('rendered')
@@ -3547,7 +3547,7 @@ var lenta = (function(){
 
 				if (el.share && el.share[share.txid] ){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						self.shell({
 							name :  'stars',
@@ -3885,7 +3885,7 @@ var lenta = (function(){
 
 								if(aspectRatio > 1.66) aspectRatio = 1.66
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									el.height( Math.min( self.app.height / 1.5, images.width() || lwidth || self.app.width) * aspectRatio)
 								})
 							})
@@ -3914,12 +3914,12 @@ var lenta = (function(){
 
 										var h = w * ( _img.naturalHeight / _img.naturalWidth) 
 
-										window.requestAnimationFrame(() => {
+										window.rifticker.add(() => {
 
 											el.height(h);
 										})
 									}
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 
 										
 										el.width(w);
@@ -3929,13 +3929,13 @@ var lenta = (function(){
 								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										el.height(_w * (_img.naturalHeight / _img.naturalWidth))
 									})
 								}
 
 								if(ac){
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										el.addClass(ac)
 									})
 								}
@@ -3950,7 +3950,7 @@ var lenta = (function(){
 
 					var isclbk = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 						
 							images.addClass('active')
 							_el.addClass('active')
@@ -5309,7 +5309,7 @@ var lenta = (function(){
 				}
 
 				if(essenseData.author && beginmaterial){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('showprev')
 					})
 				}
@@ -5347,7 +5347,7 @@ var lenta = (function(){
 				if (error){
 					making = false;
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('networkError')
 					})
 				
@@ -5360,7 +5360,7 @@ var lenta = (function(){
 					return;
 				}
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c && el.c.hasClass('networkError'))
 						el.c.removeClass('networkError')
 				})
@@ -5389,13 +5389,13 @@ var lenta = (function(){
 							}*/
 
 
-							window.requestAnimationFrame(function(){
+							window.rifticker.add(function(){
 								if(!el.shares) return
 								el.shares.addClass('initing')
 							}, 200)
 
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									if(!el.shares) return
 									el.shares.removeClass('notinited')
 									el.shares.removeClass('initing')
@@ -5802,6 +5802,8 @@ var lenta = (function(){
 			
 			init : function(p){
 
+				console.log("INIT LENTA")
+
 				w = self.app.el.window
 
 				state.load();
@@ -5861,7 +5863,7 @@ var lenta = (function(){
 
 	self.stop = function(){
 		_.each(essenses, function(essense){
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		})
