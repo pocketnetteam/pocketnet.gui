@@ -4,6 +4,7 @@
 2️⃣ The PR title must start from "repo:"
 3️⃣ The PR title must be written in lowercase
 4️⃣ If PR changes workflow, test it before pushing
+5️⃣ The topic must be provided with requested below information
 -->
 
 ## Standards checklist:

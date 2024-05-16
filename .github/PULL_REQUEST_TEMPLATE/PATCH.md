@@ -3,6 +3,7 @@
 1️⃣ This PR template is exclusively for PATCH
 2️⃣ The PR title must start from "patch:"
 3️⃣ The PR title must be written in lowercase
+4️⃣ The topic must be provided with requested below information
 -->
 
 ## Standards checklist:
