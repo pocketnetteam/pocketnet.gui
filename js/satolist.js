@@ -3073,24 +3073,30 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        route : function(href, el, clbk, p){
+        route : function(href, el, clbk, p = {}, a = {}){
 
-            if(href.indexOf('ext=')){
+            if(a.url && a.url.indexOf('ext=') > -1){
 
                 var type = 'undefined'
+
+                console.log('parameters(href, true).ext', href, parameters(href, true).ext)
+
                 
                 try{
-                    var type = self.sdk.external.type(parameters(href, true).ext)
+                    var type = self.sdk.external.type(parameters(a.url, true).ext)
+
+                    console.log('type', type)
 
                     var icon = ''
 
                     if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
                     if(type == 'auth') icon = '<i class="fas fa-user"></i>'
 
-                    el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'">'+icon+' '+app.localization.e(type + 'Link')+'</a></div>')
+                    el.html('<div class="internalpocketnetlink"><b>'+icon+' '+app.localization.e(type + 'Link')+'</b></div>')
                 }
                 catch(e){
-                    el.html('<div class="internalpocketnetlink">'+app.localization.e('undefinedLink')+'</div>')
+                    console.error('e', e)
+                    el.html('<div class="internalpocketnetlink"><b>'+app.localization.e('undefinedLink')+'</b></div>')
                 }
 
                 
@@ -3106,11 +3112,13 @@ Platform = function (app, listofnodes) {
             if(clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p){
+        channel : function(id, el, clbk, p, a){
 
             var r = false
 
             id = id.replace(/[^a-zA-Z_0-9]/g, '')
+
+            console.log("CHANNEL", id)
 
             try {
                 r = bitcoin.address.fromBase58Check(id);
@@ -3147,7 +3155,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 if(f){
-                    self.papi.route(f.href, el, clbk, p)
+                    self.papi.route(f.href, el, clbk, p, a)
                 }
                 else{
 
@@ -10550,8 +10558,6 @@ Platform = function (app, listofnodes) {
                         return 
 
                     }
-
-                    
 
                     if (lf) {
                         if (clbk) clbk(lf.address)
@@ -20982,6 +20988,10 @@ Platform = function (app, listofnodes) {
 				})
 			}
 
+            if (mtbl){
+                boffset = platform.app.margintop
+            }
+
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
 
@@ -23164,7 +23174,7 @@ Platform = function (app, listofnodes) {
                             actionSubType: 'AUTHORIZED_SESSION',
                         });
     
-                        setTimeout(() => {
+                        ricfbl(() => {
                             self.matrixchat.init()
                         }, 10)
                         
@@ -23175,7 +23185,7 @@ Platform = function (app, listofnodes) {
     
                         setTimeout(self.acceptterms, 5000)
     
-                        setTimeout(function(){
+                        ricfbl(function(){
     
                             self.app.peertubeHandler.init()
     
@@ -23370,7 +23380,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                    self.matrixchat.import(clbk)
+                self.matrixchat.import(clbk)
             })
         },
 

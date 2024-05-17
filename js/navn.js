@@ -688,75 +688,67 @@ Nav = function(app)
 
 			var cashed = app.module(map.id);
 
-			var importScriptClbk = function(){
-				topPreloader(50)
-
-				core.loadTemplates(map, function(){
-
-					topPreloader(100)
-
-					loading[map.id] = false;
-
-					clbk(app.module(map.id));
-
-				})
-			}
-
+			
 			if(loading[map.id]) {
 
-				retry(
-					function(){
-						return !loading[map.id];
-					},
-					function(){
-						core.loadSource(map, clbk)
-					}
-				)
-			
-				return;
+				return loading[map.id].then(() => {
+					clbk(app.module(map.id));
+				})
+				
 			}
 
-			loading[map.id] = true;
+			//loading[map.id] = true;
 
 			var path = map.path || "";
 
 			var src =  path + options.path + map.uri + "/index.js"; 
 
-			topPreloader(20)
-			
 
-			core.loadRelations(map, function(){
+			loading[map.id] = new Promise((resolve, reject) => {
 
-				topPreloader(40)
+				core.loadRelations(map, function(){
 
-				if (window.design || map.ignoreMinimize)
-				{
-
-					if(!cssimported[map.uri])
+					if (window.design || map.ignoreMinimize)
 					{
-						importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
-						cssimported[map.uri] = true
+	
+						if(!cssimported[map.uri])
+						{
+							importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
+							cssimported[map.uri] = true
+						}
 					}
-				}
-				
+					
+	
+					if(options.cashe && cashed)
+					{
 
-				if(options.cashe && cashed)
-				{
-					importScriptClbk()
-				}
-				else
-				{
+						core.loadTemplates(map, function(){
+							clbk(app.module(map.id));
+							resolve()
+						})
+					}
+					else
+					{
+	
+						importScript(src, function(){
 
-					importScript(src, function(){
+							core.loadTemplates(map, function(){
+								clbk(app.module(map.id));
+								resolve()
+							})
+	
+						}, null, app, map.id);
+					}
+	
+					
+	
+				})
 
-						importScriptClbk()
-
-					}, null, app, map.id);
-				}
-
-				
-
+			}).finally(() => {
+				delete loading[map.id]
 			})
+			
+			
 
 				
 		},
@@ -1739,6 +1731,3 @@ if(typeof module != "undefined")
 	module.exports = Nav;
 }
 
-
-topPreloader(45);
-	

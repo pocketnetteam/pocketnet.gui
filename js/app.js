@@ -934,11 +934,18 @@ Application = function (p) {
 
 	var acceleration = function () {
 
+		console.log("h1")
+
 		self.api.wait.ready('use', 1000).then(r => {
+
+		console.log("h2")
+
 
 			var canuse = self.api.ready.use()
 
 			if (canuse) {
+
+				self.api.getPeertubeserversList()
 
 				var stateAdresses = []
 				var infoAdresses = []
@@ -986,8 +993,6 @@ Application = function (p) {
 
 				}
 
-
-
 			}
 		})
 	}
@@ -999,8 +1004,8 @@ Application = function (p) {
 
 		self.api = new Api(self)
 		self.api.initIf(() => {
-			/// acceleration
 			acceleration()
+			
 		}).then(() => {
 
 		})

@@ -67,12 +67,17 @@ RifTicker = function(){
 
     setInterval(() => {
         exe()
-    }, 20)
+    }, 10)
 
     return self
 }
 
 rifticker = new RifTicker()
+
+ricfbl = function(f){
+    if(window.requestIdleCallback) window.requestIdleCallback(f)
+    else setTimeout(f, 10)
+}
 
 deep = function(obj, key){
 
@@ -753,26 +758,40 @@ retry = function(_function, clbk, time, totaltime){
 
     var totalTimeCounter = 0 
     var rif = null
+    var userif = false
 
     var interval = setInterval(function(){
 
-        if (rif){
-            window.rifticker.cancel(rif)
-            rif = null
+        if(userif){
+            if (rif){
+                window.rifticker.cancel(rif)
+                rif = null
+            }
+    
+            rif = window.rifticker.add(() => {
+                rif = null
+    
+                if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+    
+                    clearInterval(interval);
+    
+                    if(clbk) clbk();
+    
+                }
+    
+            })
         }
-
-        rif = window.rifticker.add(() => {
-            rif = null
-
+        else{
+            
             if(_function() || (totaltime && totaltime <= totalTimeCounter)){
-
+    
                 clearInterval(interval);
 
                 if(clbk) clbk();
 
             }
-
-        })
+        }
+        
 
         totalTimeCounter += time
 

@@ -49,6 +49,13 @@
   -webkit-transition: 1s;
   transition: 1s;
 }
+#external .myaddresstext {
+  padding: 2em;
+  text-align: center;
+}
+#external .myaddresstext span {
+  font-weight: 700;
+}
 #external .captionRowExt {
   position: sticky;
   left: 0;

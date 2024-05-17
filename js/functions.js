@@ -1841,7 +1841,9 @@ bgImagesCl = function (el, p) {
 			image.src = src
 
 			if (imagesLoadedCache[src]) {
+				window.rifticker.add(() => {
 				bgImagesClApply(el, src)
+				})
 				resolve()
 			}
 			else {

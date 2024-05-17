@@ -4503,8 +4503,7 @@ html.mobileview .matrixchatwrapper.active {
 html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(var(--color-shadow-var), 0.96);
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
@@ -6739,7 +6738,7 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 html.mobileview .fastMessage .foramount {
   width: auto!important;
 }
-html.mobileview .fastMessage.fastMessage .close {
+html.mobileview .fastMessage.smallsize .close {
   padding-top: 0;
   padding-bottom: 0;
   height: 100%;

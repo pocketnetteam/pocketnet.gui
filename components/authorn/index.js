@@ -979,9 +979,15 @@ var authorn = (function(){
 
 						events : {		
 							active : function(){
-								console.log('focus')
 								if(isMobile()){
-									_scrollTo(p.el.find('.alSearchWrapper'), el.c.closest('.customscroll'))
+
+									self.app.blockscroll = true
+
+									_scrollTo(p.el.find('.searchIcon'), el.c.closest('.customscroll'), 0)
+
+									setTimeout(() => {
+										self.app.blockscroll = false
+									}, 200)
 								}
 							},				
 							search : function(value, clbk, e, helpers){

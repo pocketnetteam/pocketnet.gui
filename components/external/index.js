@@ -312,6 +312,7 @@ var external = (function(){
 					}
 				}
 
+				
 				var balanceModeParameter = new Parameter({
 					type : "VALUES",
 					name : self.app.localization.e("source"),
@@ -323,6 +324,17 @@ var external = (function(){
 					value : balanceMode
 				})
 
+				console.log('parameters', parameters)
+
+				parameters.address
+
+				var alladdresses = (self.app.platform.sdk.addresses.storage.addresses || []).concat(self.app.user.address.value)
+				var myaddress = false
+
+				if(alladdresses.indexOf(parameters.address) > -1){
+					myaddress = true
+				}
+
 				self.shell({
 					name :  'pay',
 					data : {
@@ -331,7 +343,8 @@ var external = (function(){
 						inputs : hp,
 						balanceModeParameter,
 						expired,
-						expiredIn : expiredIn()
+						expiredIn : expiredIn(),
+						myaddress
 					},
 
 					insertimmediately : parameters.s_url ? true : false,
@@ -351,7 +364,7 @@ var external = (function(){
 						}
 					}
 
-					if (expired && expiredIn() > 0){
+					if (expired && expiredIn() > 0 && !myaddress){
 
 						expfunc()
 

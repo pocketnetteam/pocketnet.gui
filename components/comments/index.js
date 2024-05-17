@@ -1354,7 +1354,6 @@ var comments = (function(){
 
 					setTimeout(() => {
 						self.app.blockscroll = false
-
 					}, 200)
 				}
 			}
@@ -2051,17 +2050,20 @@ var comments = (function(){
 
 			})
 
-			actions.checkBanned(p).then((user) => {
-				if (user){
-
-					var info = self.psdk.userInfo.getShortForm(user.address)
-
-					if (info){
-						_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
-
+			setTimeout(() => {
+				actions.checkBanned(p).then((user) => {
+					if (user){
+	
+						var info = self.psdk.userInfo.getShortForm(user.address)
+	
+						if (info){
+							_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
+	
+						}
 					}
-				}
-			})
+				})
+			}, 500)
+			
 
 		}
 		

@@ -406,7 +406,7 @@ var Proxy16 = function(meta, app, api){
 
     self.api = {
         peertubeserversList : () => {
-            if(peertubeserversListRecieved) return peertubeserversListRecieved
+            if(peertubeserversListRecieved) return Promise.resolve(peertubeserversListRecieved)
             if(peertubeserversListRecieving) return peertubeserversListRecieving
 
             peertubeserversListRecieving = self.fetch('peertubeserversList', {}).then(r => {

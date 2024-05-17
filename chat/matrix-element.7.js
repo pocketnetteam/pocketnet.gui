@@ -1183,7 +1183,7 @@ var PNWIDGETS = function () {
       return '<iframe width="100%" src="https://' + domain + "/openapi.html?action=" + action + "&id=" + id + "&embeddingSettigns=" + p + '" id="pocketnet_iframe_' + seed + '" scrolling="no" style="border: none;" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" allowfullscreen allowautoplay></iframe>';
     }
   };
-  self.make = function (seed, action, id, p, fast, __el, resized, additional, _clbk) {
+  self.make = function (seed, action, id, p, fast, __el, resized, additional, _clbk, url) {
     if (!additional) additional = {};
     var elem = document.getElementById("pocketnet_" + seed);
     if (window.POCKETNETINSTANCE && fast) {
@@ -1198,6 +1198,7 @@ var PNWIDGETS = function () {
       embeddingSettigns.openapi = true;
       embeddingSettigns = _.extend(embeddingSettigns, additional);
       elem.addClass("openapipnet");
+      additional.url = url;
       app.platform.papi[action](id, elem, _clbk, embeddingSettigns, additional);
       if (action == "transaction") return false;
       if (app.curation()) return false;
@@ -1264,7 +1265,7 @@ var PNWIDGETS = function () {
     var ps = self.url(url);
     ps.additional || (ps.additional = {});
     ps.additional = _.extend(ps.additional, additional || {});
-    return self.make(seed, ps.action, ps.id, ps.p, true, el, resized, ps.additional, _clbk);
+    return self.make(seed, ps.action, ps.id, ps.p, true, el, resized, ps.additional, _clbk, url);
   };
   return self;
 };

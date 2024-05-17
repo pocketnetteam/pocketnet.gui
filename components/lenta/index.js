@@ -5821,7 +5821,10 @@ var lenta = (function(){
 
 				clearnewmaterials()	
 
-				lwidth = el.c.width()
+				rifticker.add(() => {
+					lwidth = el.c.width()
+				})
+				
 
 				make(null, p);
 

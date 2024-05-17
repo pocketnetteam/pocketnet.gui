@@ -250,7 +250,9 @@ var post = (function () {
 
 			},
 
-			
+			gotocomments : function(){
+				_scrollTo(el.c.find('.articleend'), el.c.closest('.customscroll'))
+			},
 			postscores: function (clbk) {
 
 				self.app.platform.sdk.user.stateAction(() => {
@@ -974,6 +976,10 @@ var post = (function () {
 				actions.postscores()
 			},
 
+			gotocomments : function(){
+				actions.gotocomments()
+			},
+
 			repost: function () {
 				actions.repost(share.txid);
 			},
@@ -1529,6 +1535,9 @@ var post = (function () {
 										el.share.find('.sharesocial').on('click', events.sharesocial);
 
 										el.share.find('.postscoresshow').on('click', events.postscores);
+										el.share.find('.gotocomments').on('click', events.gotocomments);
+
+										
 
 										el.share.find('.postcontent').on('click', function(){
 											$(this).addClass('allshowed')

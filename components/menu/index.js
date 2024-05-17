@@ -309,9 +309,15 @@ var menu = (function(){
 
 							if(!m) return false
 							
-							var tpl = m.fastMessage(notification)
+							/*var tpl = m.fastMessage(notification)
 
-							if(!tpl) return false
+							if(!tpl) {
+								console.log("NOT MESSAGE")
+								return false
+							}
+							else{
+								console.log("MESSAGE")
+							}*/
 
 
 							return true
