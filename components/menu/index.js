@@ -312,11 +312,9 @@ var menu = (function(){
 							/*var tpl = m.fastMessage(notification)
 
 							if(!tpl) {
-								console.log("NOT MESSAGE")
 								return false
 							}
 							else{
-								console.log("MESSAGE")
 							}*/
 
 
@@ -997,7 +995,6 @@ var menu = (function(){
 					}
 
 					var setValue = function(){	
-						console.log("SASS")
 						var account = self.app.platform.actions.getCurrentAccount()
 
 						if(!account){

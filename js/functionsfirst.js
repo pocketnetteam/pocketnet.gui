@@ -11,7 +11,6 @@ RifTicker = function(){
     }
 
     self.cancel = function(index){
-        console.log('RIF cancel', index, queue.length)
         if (queue.length > index){
             queue[index] = null
         }
@@ -23,7 +22,6 @@ RifTicker = function(){
     }
 
     var exe = function(){
-        //console.log('queue.length', queue.length, rif)
         var ql = qlength()
         if (ql && !rif){
             rif = requestAnimationFrame(() => {
@@ -58,7 +56,6 @@ RifTicker = function(){
             empty++
 
             if (empty == 500){
-                console.log("RIF CLEAR", queue.length)
                 queue.splice(0, queue.length);
                 empty = 0
             }

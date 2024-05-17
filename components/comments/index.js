@@ -829,8 +829,6 @@ var comments = (function(){
 				if (currents[id])
 					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
 
-				console.log('currents', currents)
-
 				state.save()
 
 			},
@@ -2729,8 +2727,6 @@ var comments = (function(){
 					var comment = alias
 
 					if (comment.postid == txid){
-
-						console.log("FOCUS", setFocus, actions.findCurrentText())
 
 						if(currents[comment.id]) return 
 						

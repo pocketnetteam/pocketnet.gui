@@ -3079,13 +3079,9 @@ Platform = function (app, listofnodes) {
 
                 var type = 'undefined'
 
-                console.log('parameters(href, true).ext', href, parameters(href, true).ext)
-
                 
                 try{
                     var type = self.sdk.external.type(parameters(a.url, true).ext)
-
-                    console.log('type', type)
 
                     var icon = ''
 
@@ -3117,8 +3113,6 @@ Platform = function (app, listofnodes) {
             var r = false
 
             id = id.replace(/[^a-zA-Z_0-9]/g, '')
-
-            console.log("CHANNEL", id)
 
             try {
                 r = bitcoin.address.fromBase58Check(id);
@@ -10210,8 +10204,6 @@ Platform = function (app, listofnodes) {
         missed : {
             get : function(block){
 
-                console.log("HERE", self.currentBlock, block)
-
                 var dummy = function(){
                     return {
                         block : {
@@ -10227,8 +10219,6 @@ Platform = function (app, listofnodes) {
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
-                    console.log("HERE2")
-
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
@@ -12153,12 +12143,9 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                console.log('recommendations, save')
             },
 
             load: function () {
-
-                console.log("recommendations load")
 
                 var p = {};
 
@@ -12208,7 +12195,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.recommendations.scheduler()
 
                     app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
-                        console.log('recommendations, syncStorage')
                         self.sdk.recommendations.load()
                     });
 
@@ -20365,9 +20351,6 @@ Platform = function (app, listofnodes) {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
 
-                            console.log('data', data, wa)
-                            
-
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
@@ -22666,8 +22649,6 @@ Platform = function (app, listofnodes) {
         self.sdk.ustate.clbks = {};
 
         self.sdk.registrations.clbks = {};
-
-        console.log("DESTROY")
         self.sdk.sharesObserver.destroy()
         self.sdk.recommendations.destroy()
 

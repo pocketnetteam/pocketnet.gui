@@ -333,8 +333,6 @@ Application = function (p) {
 
 		var id = window.rifticker.add(() => {
 
-			console.log("EXECUTED RIF", self.mobileview)
-
 			if (self.mobileview) {
 				self.el.html.addClass('mobileview').removeClass('wsview')
 			}
@@ -344,7 +342,6 @@ Application = function (p) {
 
 		})
 
-		console.log("NOTEXECUTED RIF", id)
 	}
 
 	var checkTouchStyle = function () {
@@ -934,12 +931,7 @@ Application = function (p) {
 
 	var acceleration = function () {
 
-		console.log("h1")
-
 		self.api.wait.ready('use', 1000).then(r => {
-
-		console.log("h2")
-
 
 			var canuse = self.api.ready.use()
 
@@ -2885,7 +2877,7 @@ Application = function (p) {
 			initdestroyparallaxAuto : function(){
 				var scrollTop = self.actions.getScroll()
 
-				if (!scrollTop) {
+				if (!scrollTop && _.isEmpty(self.nav.wnds)) {
 					self.mobile.reload.initparallax()
 				}
 				else {

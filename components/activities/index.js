@@ -256,8 +256,6 @@ var activities = (function () {
 
 					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
 
-					console.log('activitiesByGroup', activitiesByGroup)
-					
 					actions.setloading(false)
 
 					return Promise.resolve(videos)

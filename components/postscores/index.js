@@ -343,8 +343,6 @@ var postscores = (function(){
 									}
 								})
 
-								console.log('scores', scores, tempScores)
-
 								scores = scores.concat(tempScores)
 
 							}

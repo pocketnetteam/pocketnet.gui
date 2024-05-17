@@ -379,6 +379,8 @@ Nav = function(app)
 				historyManager.addParameters(pa)
 
 				self.wnds[p.id] = p
+
+				app.mobile.reload.initdestroyparallaxAuto()
 			
 
 				return
@@ -524,6 +526,8 @@ Nav = function(app)
 			_.each(deleted, function(id){
 				delete self.wnds[id]
 			})
+
+			app.mobile.reload.initdestroyparallaxAuto()
 
 			
 		},

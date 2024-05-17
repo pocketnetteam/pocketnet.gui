@@ -1572,8 +1572,6 @@ var pSDK = function ({ app, api, actions }) {
 
         insertFromResponseEx: function (response) {
 
-            console.log('response.users', response.users)
-
             self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
 
             app.platform.sdk.videos.getVideoResponse(response.videos)
@@ -2682,7 +2680,6 @@ var pSDK = function ({ app, api, actions }) {
 
     self.ws = {
         update : function(type, wsdata){
-            console.log('type, wsdata', type, wsdata)
 
             var status = 'completed'
             var alias = null

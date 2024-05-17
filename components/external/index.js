@@ -324,8 +324,6 @@ var external = (function(){
 					value : balanceMode
 				})
 
-				console.log('parameters', parameters)
-
 				parameters.address
 
 				var alladdresses = (self.app.platform.sdk.addresses.storage.addresses || []).concat(self.app.user.address.value)
@@ -664,8 +662,6 @@ var external = (function(){
 
 				shipment = helpers.getShipmentFields(shipment)
 
-				console.log("shipment", shipment)
-
 				if(!shipment || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
 					return Promise.reject({
 						error : 'missing:shipment',
@@ -741,8 +737,6 @@ var external = (function(){
 					}).finally(() => {
 						delete shipmentsCacheLoading[parameters.hash][datahash]
 					})
-
-					console.log('shipmentsCacheLoading', shipmentsCacheLoading)
 
 					return shipmentsCacheLoading[parameters.hash][datahash]
 				}

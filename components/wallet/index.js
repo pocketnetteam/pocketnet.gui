@@ -2314,8 +2314,6 @@ var wallet = (function(){
 			payments : function(clbk){
 				var payments = self.app.platform.sdk.payments.get()
 
-				console.log('payments', payments)
-
 				if(!payments.length){
 					if(clbk) clbk()
 
@@ -2581,8 +2579,6 @@ var wallet = (function(){
 
 				if (el.total)
 					el.total.html('')
-
-					console.log('mode', mode)
 				
 			 	drawCircles(null)
 				

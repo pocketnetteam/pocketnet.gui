@@ -1324,12 +1324,9 @@ var authorn = (function(){
 
 		var relationsClbk = function(address){
 
-			console.log('address == author.address', address, author.address)
 			if (address == author.address){
 
 				author.data = self.psdk.userInfo.get(author.address)
-
-				console.log('author', author)
 
 				if(!self.app.mobileview){
 					renders.subscribes()
@@ -1348,8 +1345,6 @@ var authorn = (function(){
 		var initEvents = function(){
 			
 			self.app.psdk.updatelisteners.authorn = self.app.platform.actionListeners.authorn = function({type, alias, status}){
-
-				console.log("AUTHORN CLBK", type, alias)
 
 				if(type == 'blocking' || type == 'unblocking'){
 

@@ -1501,8 +1501,6 @@ var main = (function(){
 			
 			init : function(p){
 
-				console.log("MAIN INIT")
-
 				roller = null
 				lenta = null
 				fixeddirection = null

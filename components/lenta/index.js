@@ -746,8 +746,6 @@ var lenta = (function(){
 						return s.id
 					})
 
-					console.log('save observe', essenseData.observe + k, first, last)
-
 					if (first && last){
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
@@ -4762,8 +4760,6 @@ var lenta = (function(){
 									return
 								}
 
-								console.log("error", error)
-
 								offsetblock = offsetblock + period
 
 								///
@@ -5321,10 +5317,6 @@ var lenta = (function(){
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
 
-
-				console.log('observer', subloaded)
-
-
 				var tagsfilter = self.app.platform.sdk.categories.gettags()
 				var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 
@@ -5382,11 +5374,7 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
-							///
-
-							/*if(beginmaterial){
-								console.log('beginmaterial', beginmaterial)
-							}*/
+							
 
 
 							window.rifticker.add(function(){
@@ -5442,12 +5430,8 @@ var lenta = (function(){
 										
 								}
 
-								console.log("PPP", p)
-	
 								if(p.v){
 
-									console.log("HERE", video)
-	
 									if(video){
 									}
 									else{	
@@ -5479,8 +5463,6 @@ var lenta = (function(){
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
-
-								console.log('actions.loadmore')
 
 								actions.loadmore()
 							}
@@ -5801,8 +5783,6 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
-
-				console.log("INIT LENTA")
 
 				w = self.app.el.window
 

@@ -84,8 +84,6 @@ var channel = (function(){
 			blocking : function(){
 				self.app.mobile.vibration.small()
 
-				console.log('author', author)
-
 				var me = self.app.psdk.userInfo.getmy()
 				if(!me) return 
 
