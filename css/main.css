@@ -5354,8 +5354,10 @@ html.allcontent_application #footerWrapper {
   width: 390px;
   cursor: pointer;
 }
-.fastMessage.smallsize:hover {
-  background: rgba(var(--color-shadow-base), 0.8);
+@media (pointer: hover) {
+  .fastMessage.smallsize:hover {
+    background: rgba(var(--color-shadow-base), 0.8);
+  }
 }
 .fastMessage.smallsize .cwrapper > div.cellforimage {
   display: none;
@@ -5523,8 +5525,10 @@ html.allcontent_application #footerWrapper {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.fastMessage .close:hover {
-  color: rgb(var(--neutral-grad-3));
+@media (pointer: hover) {
+  .fastMessage .close:hover {
+    color: rgb(var(--neutral-grad-3));
+  }
 }
 .fastMessage .fastMessageChat .user {
   font-weight: 700;

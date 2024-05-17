@@ -20870,8 +20870,12 @@ Platform = function (app, listofnodes) {
 
             })
 
+        }
 
-
+        var rmmessagesDestroy = function(){
+            _.each(self.fastMessages, function (message, i) {
+                if (message.timeout) clearTimeout(message.timeout);
+            })
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
@@ -20970,6 +20974,13 @@ Platform = function (app, listofnodes) {
 
 				})
 			}
+            else{
+                _.each(self.fastMessages, function(m, i){
+					if (m.el.hasClass('smallsize')){
+						m.el.removeClass('smallsize');
+					}
+				})
+            }
 
             if (mtbl){
                 boffset = platform.app.margintop
@@ -20994,7 +21005,8 @@ Platform = function (app, listofnodes) {
             _.each(self.fastMessages, function(m, i){
 
                 if(i < remove){
-                    destroyMessage(m, 1, true)
+                    if(!isMobile())
+                        destroyMessage(m, 1, true)
                 }
 
                 else
@@ -21134,6 +21146,13 @@ Platform = function (app, listofnodes) {
                         essenseData : {
                         }
                     })
+
+                    if(!p.click)
+                        destroyMessage(message, 1)
+
+                    setTimeout(() => {
+                        rmmessagesDestroy()
+                    }, 50)
 
                 }
                 else{
