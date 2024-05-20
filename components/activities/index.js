@@ -402,7 +402,8 @@ var activities = (function () {
 
 
 			loadmorescroll: function () {
-				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight : false;
+				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight - 500 : false;
+
 				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 

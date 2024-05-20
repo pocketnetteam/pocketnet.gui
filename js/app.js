@@ -2949,6 +2949,9 @@ Application = function (p) {
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
 
+									self.psdk.clearStorageAndObjects()
+        							self.psdk.clearIdCacheAll()
+
 									globalpreloader(true)
 
 									_.each(self.modules, (m) => {
