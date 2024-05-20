@@ -20879,33 +20879,49 @@ Platform = function (app, listofnodes) {
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
+            var rmfu = function () {
+
+                if(!time){
+                    rmfu2()
+                }
+                else{
+                    message.el.addClass('willhidden')
+
+                    setTimeout(rmfu2, 200)
+                }
+
+            }
+
+            var rmfu2 = function(){
+
+                message.el.remove();
+
+                removeEqual(self.fastMessages, {
+                    id: message.id
+                })
+
+                if (message.destroyclbk && destroyUser) {
+                    message.destroyclbk()
+                }
+
+                if (!noarrange)
+                    tArrangeMessages()
+
+            }
+
+            console.log('destroyMessage', message, self.fastMessages, destroyMessage.caller)
 
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
 
-                message.timeout = setTimeout(function () {
-
-                    message.el.addClass('willhidden')
-
-                    setTimeout(function () {
-
-                        message.el.remove();
-
-                        removeEqual(self.fastMessages, {
-                            id: message.id
-                        })
-
-                        if (message.destroyclbk && destroyUser) {
-                            message.destroyclbk()
-                        }
-
-                        if (!noarrange)
-                            tArrangeMessages()
-
-                    }, 300)
-
-                }, time)
+                if(time){
+                    message.timeout = setTimeout(rmfu, time)
+                }
+                else{
+                    rmfu()
+                }
+               
             }
 
             else {
@@ -20937,7 +20953,7 @@ Platform = function (app, listofnodes) {
                         setTimeout(function () {
                             self.hideallnotificationsel.html('')
                             self.hideallnotificationsel.removeClass('willhidden')
-                        }, 300)
+                        }, 200)
                     }
                 })
 
@@ -20986,6 +21002,8 @@ Platform = function (app, listofnodes) {
                 boffset = platform.app.margintop
             }
 
+            console.log('self.fastMessages.length', self.fastMessages.length)
+
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
 
@@ -21002,17 +21020,25 @@ Platform = function (app, listofnodes) {
 
             offset = offset + boffset
 
-            _.each(self.fastMessages, function(m, i){
+            _.each(_.clone(self.fastMessages), function(m, i){
 
                 if(i < remove){
-                    if(!isMobile())
-                        destroyMessage(m, 1, true)
+                    if(!isMobile()) {
+                        destroyMessage(m, 0, true)
+                    }
+                    else {
+                        m.el.addClass('hidden')
+                    }
                 }
 
                 else
                 {
-                    offset += 5;
 
+                    if (m.el.hasClass('hidden')){
+                        m.el.removeClass('hidden')
+                    }
+                    
+                    offset += 5;
                 
                     var r = offset
 
@@ -21032,7 +21058,7 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        var tArrangeMessages = _.debounce(arrangeMessages, 300)
+        var tArrangeMessages = _.debounce(arrangeMessages, 200)
 
         self.getMissed = function (initial) {
 
@@ -21081,8 +21107,9 @@ Platform = function (app, listofnodes) {
 
         self.destroyMessages = function () {
 
-            _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1, true)
+            _.each(_.clone(self.fastMessages), function (message, i) {
+                console.log('destroyMessage 1', message)
+                destroyMessage(message, 0, true)
             })
 
             tArrangeMessages()
@@ -21166,7 +21193,7 @@ Platform = function (app, listofnodes) {
 
                         setTimeout(function(){
                             tArrangeMessages();
-                        }, 300)
+                        }, 200)
                     }
                 }
 
@@ -21189,23 +21216,22 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
-                var d = 35
+                var d = 60
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     allowPageScroll : false,
                     directions: {
-                        up : {
+                        left : {
                             //endmove : true,
-                            trueshold: 5,
+                            trueshold: 15,
                             distance : d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
-                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
-                                self.destroyMessages()
+                                destroyMessage(message, 0)
                             }
 
                         }

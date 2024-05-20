@@ -5337,16 +5337,16 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage {
   border-radius: 12px;
-  -moz-transition: bottom 0.3s;
-  -o-transition: bottom 0.3s;
-  -webkit-transition: bottom 0.3s;
-  transition: bottom 0.3s;
+  -moz-transition: bottom 0.2s;
+  -o-transition: bottom 0.2s;
+  -webkit-transition: bottom 0.2s;
+  transition: bottom 0.2s;
 }
 .fastMessage.willhidden {
-  -moz-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
   opacity: 0;
 }
 .fastMessage.smallsize {
@@ -5393,10 +5393,10 @@ html.allcontent_application #footerWrapper {
   justify-content: center;
   border-radius: 12px;
   cursor: pointer;
-  -moz-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 #hideallnotificationsel .hidenf:hover {
   opacity: 0.8;

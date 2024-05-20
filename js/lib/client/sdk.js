@@ -1349,6 +1349,7 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['share'][exp.postid], exp)
 
                 clearallfromdb('commentRequest')
+                clearfromdb('share', [exp.postid])
             }
         },
         applyAction: function (object, exp) {
@@ -2151,9 +2152,10 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 clearfromdb('postScores', [exp.share.v])
-
+                clearfromdb('share', [exp.share.v])
                 //// long like cache
 
+                
                 if(exp.actor == app.user.address.value){
                     settodb('myScore', [result]).then(() => {
                     }).catch(e => {
