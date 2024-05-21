@@ -1562,6 +1562,8 @@ var authorn = (function(){
 
 				delete self.app.platform.actionListeners.authorn
 
+				if (el.c) el.c.empty()
+
 				ed = {};
 				el = {};
 			},
@@ -1579,7 +1581,7 @@ var authorn = (function(){
 				el.alentanavigation = el.c.find('.alentanavigation')
 				el.lenta = el.c.find('.lentawrapper')
 				el.up = el.c.find('.upbuttonwrapper');
-				el.w = $(window);
+				el.w = self.app.el.window;
 				el.bg = el.c.find('.bgwallpaperWrapper')
 				el.subscribes = el.c.find('.subscribes')
 				el.subscribers = el.c.find('.subscribers')

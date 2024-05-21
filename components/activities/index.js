@@ -606,7 +606,7 @@ var activities = (function () {
 
 				scnt = el.c.closest('.customscroll:not(body)')
 				
-				if (!scnt.length) scnt = $(window);
+				if (!scnt.length) scnt = self.app.el.window;
 
 				actions.applyFilter()
 

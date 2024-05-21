@@ -2683,10 +2683,22 @@ var share = (function(){
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				try{
-					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+					if (el.eMessage) {
+		
+						el.eMessage[0].emojioneArea.destroy();
+
+						el.eMessage.remove()
+
+						delete el.eMessage[0].emojioneArea
+
+
+						console.log('destroy')
+					}
+
+					
 				}
 				catch(e){
-
+					console.error(e)
 				}
 				
 
@@ -2726,6 +2738,8 @@ var share = (function(){
 					sortable.destroy()
 					sortable = null
 				}
+
+				if(el.c) el.c.empty()
 
 				el = {};
 					

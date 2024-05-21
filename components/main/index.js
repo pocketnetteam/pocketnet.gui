@@ -1060,7 +1060,7 @@ var main = (function(){
 						right : {
 							cancellable : true,				
 							basevalue : function(){
-								return - 0.9 * (self.app.width || $(window).width())
+								return - 0.9 * (self.app.width || self.app.el.window.width())
 							},
 
 							positionclbk : function(px){

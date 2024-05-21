@@ -221,7 +221,7 @@ var navigation = (function(){
 
 				var data = {};
 
-				w = $(window)
+				//w = self.app.el.window
 
 				clbk(data);
 
@@ -236,12 +236,13 @@ var navigation = (function(){
 				delete self.app.events.scroll.navigation
 				delete self.app.platform.sdk.registrations.clbks.navigation
 
-				if(window.cordova){
+				if (window.cordova){
 					window.removeEventListener('keyboardWillShow', renders.hide);
 					window.removeEventListener('keyboardWillHide', renders.show);	
 				}
 
 				delete self.app.nav.clbks.history.navigation
+
 
 				if (el){
 					

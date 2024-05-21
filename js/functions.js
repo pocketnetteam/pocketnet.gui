@@ -267,7 +267,7 @@ successCheck = function (p) {
 
 	var self = this,
 		el = p.el || $('body');
-	var _w = $(window);
+
 	var ch = null;
 
 
@@ -1700,7 +1700,7 @@ sitemessage = function (message, func, delay = 5000, p = {}) {
 
 		setTimeout(function () {
 
-			messageel.detach();
+			messageel.remove();
 
 			messageel = null
 

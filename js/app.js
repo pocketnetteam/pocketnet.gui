@@ -912,10 +912,6 @@ Application = function (p) {
 
 	}
 
-	if (self.curation()) {
-		delete self.backmap.index
-	}
-
 	self.options.backmap = self.backMap
 
 	var prepareMap = function () {
@@ -3217,31 +3213,27 @@ Application = function (p) {
 	self.ref = null;
 
 	try {
-		self.Logger.info({
-			actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
-			actionSubType: 'USER_FROM_EXTERNAL_SESSION',
-		});
-
+		
 		self.ref = parameters().ref || localStorage['ref'];
 		self.dsubref = parameters().dsubref || localStorage['dsubref'];
-
 		localStorage['dsubref'] = self.dsubref
-	} catch (e) { }
+	} catch (e) { 
+	}
 
 
-	self.options.device = localStorage['device'] || makeid();
+	
 	try {
+		
+		self.options.device = localStorage['device'] || self.id;
 		localStorage['device'] = self.options.device
+
 	} catch (e) { }
 
-	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
 
 	edjsHTML = edjsHTMLCnt(null, self)
 
 	return self;
 }
-
-topPreloader(85);
 
 if (typeof module != "undefined") {
 	module.exports = Application;

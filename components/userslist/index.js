@@ -425,7 +425,7 @@ var userslist = (function(){
 
 				cnt = ed.preview ? 10 : 50
 
-				//scnt = deep(p.settings, 'essenseData.cnt') || $(window);
+				//scnt = deep(p.settings, 'essenseData.cnt') || self.app.el.window;
 
 				clbk(data);
 
@@ -449,6 +449,8 @@ var userslist = (function(){
 				}
 
 				el = {};
+				ed = {};
+				addresses = []
 			},
 			
 			init : function(p){
@@ -460,7 +462,7 @@ var userslist = (function(){
 				el.users = el.c.find('.users')
 
 				scnt = el.c.closest('.customscroll:not(body)') 
-				if(!scnt.length) scnt = $(window);
+				if(!scnt.length) scnt = self.app.el.window;
 
 				initEvents();
 

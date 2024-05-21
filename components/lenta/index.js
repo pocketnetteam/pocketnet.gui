@@ -656,10 +656,6 @@ var lenta = (function(){
 				authorsettings = {}
 				showMoreStatus = {}
 
-				/*_.each(shareInitedMap, function(s, id){
-					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})*/
-
 				_.each(players, function(p){
 					if (p.p)
 						p.p.destroy()
@@ -681,6 +677,12 @@ var lenta = (function(){
 					if (p)
 						p.destroy()
 				})
+
+				_.each(carousels, function(carousel){
+					carousel.destroy()
+				})
+
+				carousels = {}
 
 				boosted = []
 				boostplaces = {}
@@ -3924,7 +3926,7 @@ var lenta = (function(){
 									})
 								}
 
-								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi|| image.images.length == 1)){
+								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi || image.images.length == 1)){
 									ac = 'h2'
 
 									window.rifticker.add(() => {
@@ -5656,10 +5658,6 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 				fullscreenvideoShowing = null
 
-				/*_.each(shareInitedMap, function(s, id){
-					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})*/
-
 				_.each(recommendations, function(p, id){
 					if (p)
 						p.clearessense()
@@ -5667,7 +5665,6 @@ var lenta = (function(){
 
 				recommendations = {}
 				recommendationsMaking = {}
-
 
 				_.each(_reposts, function(p){
 					if (p)
@@ -5762,6 +5759,7 @@ var lenta = (function(){
 					el.w.off('resize', events.resize);
 				}
 				
+				
 
 				if(el.c) el.c.empty()
 
@@ -5770,6 +5768,8 @@ var lenta = (function(){
 				essenseData = {}
 
 				w = null
+
+				actions.clear()
 			},
 
 			authclbk : function(){

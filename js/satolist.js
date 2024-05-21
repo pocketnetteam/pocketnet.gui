@@ -2667,7 +2667,15 @@ Platform = function (app, listofnodes) {
 
                 graph.chart.destroy();
 
-                graph.el.html('')
+                graph.el.remove()
+
+                graph.el = null;
+
+                graph.series = [];
+
+                delete graph.shell;
+
+                delete graph.stock;
             }
 
             return graph;
@@ -8493,7 +8501,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.uiScale.set(zoomNewName);
                 }
 
-                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
                      * Minus - 189
                      * Minus Numpad - 109
@@ -8511,7 +8519,7 @@ Platform = function (app, listofnodes) {
                     return 0;
                 }));
 
-                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                self.app.el.window.on('wheel', (e) => scaleUi(e, true, (e) => {
                     if(!wheelLock) {
                         $('html').addClass('scroll-lock');
                         wheelLock = true;
@@ -24274,8 +24282,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).on('focus', f);
-            $(window).on('blur', uf);
+            self.app.el.window.on('focus', f);
+            self.app.el.window.on('blur', uf);
 
         }
 
@@ -24304,8 +24312,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).off('focus', f);
-            $(window).off('blur', uf);
+            self.app.el.window.off('focus', f);
+            self.app.el.window.off('blur', uf);
 
 
         }

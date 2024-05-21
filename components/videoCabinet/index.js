@@ -1866,7 +1866,7 @@ var videoCabinet = (function () {
 				el.c = p.el.find('#' + self.map.id);
 				el.windowElement = ed.scrollElementName
 					? $(ed.scrollElementName)
-					: $(window);
+					: self.app.el.window;
 
 				el.scrollElement = ed.scrollElementName
 					? el.c.find('.userVideos')

@@ -1709,7 +1709,7 @@ var author = (function(){
 				
 
 				el.up = el.c.find('.upbuttonwrapper');
-				el.w = $(window);
+				el.w = self.app.el.window;
 				el.contents = el.c.find('.contentswrapper')
 				el.info = el.c.find('.authorinfoWrapper')
 				el.authorcaption = el.c.find('.bgCaptionWrapper')
