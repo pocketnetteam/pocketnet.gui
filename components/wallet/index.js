@@ -1693,7 +1693,6 @@ var wallet = (function(){
 										value : deposit.parameters.depositamount.value,
 										description : deposit.parameters.message.value
 									}
-									
 								})
 
 								var hash = payment.makeURLHash()

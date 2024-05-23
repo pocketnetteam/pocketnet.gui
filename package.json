@@ -3,9 +3,9 @@
     "project": "Bastyon",
 
     "version": "0.8.89",
-    "versionsuffix": "5",
+    "versionsuffix": "6",
     "cordovaversion": "1.8.89",
-    "cordovaversioncode": "180895",
+    "cordovaversioncode": "180896",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -145,7 +145,14 @@
             ]
         },
         "mac": {
-            "target": "dmg",
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "universal"
+                    ]
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",

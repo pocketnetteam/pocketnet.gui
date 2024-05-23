@@ -105,7 +105,6 @@ var menu = (function(){
 			
 			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
 
-
 			var p = {
 				href : href,
 				history : true,
@@ -558,7 +557,6 @@ var menu = (function(){
 								el.find('.gotopage').on('click', function(){
 									var r = $(this).attr('link')
 
-
 									searchlickaction(r)
 
 									helpers.closeResults()
@@ -714,12 +712,15 @@ var menu = (function(){
 
 								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
 
-									composeresult('user', r.data, r.count)
+									
 
+									composeresult('user', r.data, r.count)
+									//composeresult('address', frommap, frommap.length)
 
 									render(getresults(), value, clbk, {
 										counts : counts
 									})
+
 								}, 'pocketnet', true)
 
 								
@@ -739,7 +740,6 @@ var menu = (function(){
 										menusearch.focus()
 									}
 
-									
 
 									return
 								}
@@ -1182,12 +1182,18 @@ var menu = (function(){
 
 				if(!p) p = {}
 
+				var frommap = _.map(_.filter(self.app.map, (m) => {
+					return m.insearch && value == m.href
+				}), (m) => {
+					return ":" + m.href
+				})
+
 				self.shell({
 					name :  'results',
 					data : {
 						results : results,
-						value : value,
-						counts : p.counts || {}
+						value : (frommap.length ? ":" : "") + value,
+						counts : p.counts || {},
 					},
 
 				}, function(_p){
