@@ -6047,6 +6047,8 @@ Platform = function (app, listofnodes) {
     self.sdk = {
         external : {
             expandLink : function(json = {}){
+
+                console.log('json', json)
                 var eExt = {}
 
                 if (json.address) eExt.address = json.address
@@ -6072,6 +6074,7 @@ Platform = function (app, listofnodes) {
                 if (json.v)     eExt.value = json.v
                 if (json.sv)    eExt.saltValue = json.sv
                 if (json.di)    eExt.discount = json.di
+                if (json.ta)    eExt.tax = json.ta
     
                 if (json.st) {
                     eExt.store = {}
@@ -6085,17 +6088,20 @@ Platform = function (app, listofnodes) {
     
                     _.each(json.i, (it) => {
                         var item = {}
-    
+
                         if (it.i) item.image = it.i
                         if (it.n) item.name = it.n
                         if (it.v) item.value = it.v
-                        if (it.c) item.count = item.c
+                        if (it.c) item.count = it.c
+
     
                         eExt.items.push(item)
                     })
                 }
 
                 if(!eExt.action) eExt.action = 'pay'
+
+
                
                 return eExt
             },
@@ -6131,6 +6137,7 @@ Platform = function (app, listofnodes) {
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
     
+                    console.log('ps.items', ps.items)
     
                     if (ps.items){
     
@@ -6160,17 +6167,32 @@ Platform = function (app, listofnodes) {
 
                     if (ps.saltValue){
                         if(!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
-                        if(ps.saltValue >= 0.01) throw 'wrong:saltValue:morethan:0.001'
-                        if(ps.saltValue < 0) throw 'wrong:saltValue:lessthan:0'
+                        if(ps.saltValue >= 1) throw 'wrong:saltValue:morethan:1'
+                        if(ps.saltValue <= -1) throw 'wrong:saltValue:lessthan:-1'
                         if(ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
+
+                        ps.value = ps.value + ps.saltValue
                     }
 
                     if (ps.discount){
                         if(!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
                         if(ps.discount < 0) throw 'wrong:discount:lessthan:0'
 
-                        ps.value = ps.value - discount
+                        ps.value = ps.value - ps.discount
                     }
+
+                    if (ps.tax){
+                        if(!_.isNumber(ps.tax)) throw 'wrong:tax:nan'
+                        if(ps.tax < 0) throw 'wrong:tax:lessthan:0'
+
+                        ps.value = ps.value + ps.tax
+                    }
+
+                    if (typeof ps.shipmentValue != 'undefined'){
+                        if(!_.isNumber(ps.shipmentValue)) throw 'wrong:shipmentValue:nan'
+                        if(ps.shipmentValue < 0) throw 'wrong:shipmentValue:lessthan:0'
+                    }
+                    
     
                     if (ps.store){
                         if(!ps.store.name) throw 'missing:store.name'
@@ -6193,11 +6215,34 @@ Platform = function (app, listofnodes) {
                     
     
                     if(!ps.value || ps.value <= 0) throw 'missing:value'
+
+                    console.log("JSON, ps.value", ps.value)
     
                     //ps.hash = p.ext
                 }
 
                 return ps
+            },
+
+            getObjectFromHash : function(hash){
+
+
+                var eExt = self.sdk.external.getFromHash(hash)
+
+
+                if(eExt.action == 'pay'){
+                    var payment = self.app.platform.sdk.payments.make({payment : eExt})
+
+                    /*payment.makeQR().then(q => {
+                        console.log(q)
+                    })*/
+
+                    return payment
+                }
+
+                return null
+
+                
             }
         },
         payments : {

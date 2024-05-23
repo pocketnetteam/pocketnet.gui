@@ -4944,6 +4944,24 @@ html.allcontent_application #footerWrapper {
 .registrationProgressIcon.blocked i {
   color: rgb(var(--color-bad)) !important;
 }
+.realperson {
+  line-height: 0.25em;
+  font-size: 0.25em;
+  opacity: 1;
+}
+.realperson .real .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.realperson .real .fa-check {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+}
+.realperson .dev .fa-certificate {
+  color: rgb(var(--color-bg-orange));
+}
+.realperson .dev .fa-code {
+  color: rgb(var(--text-on-bg-ac-color));
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -4961,22 +4979,6 @@ html.allcontent_application #footerWrapper {
   bottom: -4%;
   right: -4%;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
-  line-height: 0.25em;
-  font-size: 0.25em;
-  opacity: 1;
-}
-.usericon .realperson .real .fa-certificate {
-  color: rgb(var(--color-bg-ac-bright));
-}
-.usericon .realperson .real .fa-check {
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: none;
-}
-.usericon .realperson .dev .fa-certificate {
-  color: rgb(var(--color-bg-orange));
-}
-.usericon .realperson .dev .fa-code {
-  color: rgb(var(--text-on-bg-ac-color));
 }
 .usericon .letter {
   font-size: 1.5em;
