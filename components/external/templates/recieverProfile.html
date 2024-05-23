@@ -30,5 +30,15 @@
             <svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
         <% } %>
 
+       
+
+    </div>
+    <div class="markuserinline">
+        <% if(app.platform.ui.markUser) {%>
+
+            <%= app.platform.ui.markUser(address)%>
+
+        <% } %>
     </div>
 
+    <div class="name"><b><%- profile.name %></b></div>

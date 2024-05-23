@@ -2826,12 +2826,16 @@ _l.external_linkWillExpired = "Payment link expires"
 _l.external_linkExpired = "Payment link has expired"
 
 _l.paymentLink = "Payment link"
-_l.receiver_address = "Reciever Address"
+_l.receiver_address = "Reciever"
 
 _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
 
 _l.free = "Free"
 _l.discount = "Discount"
+_l.tax = "Taxes"
 
 _l.external_paymentlink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
+
+_l.external_source = "where to send PKOIN from"
+_l.external_tTotal = "Account or wallet"

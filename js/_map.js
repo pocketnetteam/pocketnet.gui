@@ -394,7 +394,8 @@ __map =  {
 		anonimus : true,
 		electronDontOpen : true,
 
-		ignoreMinimize : true
+		ignoreMinimize : true,
+		insearch : true
 
 	},
 
@@ -699,6 +700,7 @@ __map =  {
 			href : "home",
 			add : insertingfunc,
 			anonimus : true,
+			insearch : true
 		},
 
 
