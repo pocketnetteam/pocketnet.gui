@@ -1666,7 +1666,7 @@ Nav = function(app)
 
 					var electronDontOpen = false
 
-					if (mpobj.electronDontOpen) {
+					if (mpobj.electronDontOpen && !parameters().ext) {
 
 						if(typeof mpobj.electronDontOpen == 'function'){
 							electronDontOpen = mpobj.electronDontOpen()

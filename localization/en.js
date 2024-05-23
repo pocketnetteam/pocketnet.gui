@@ -2843,5 +2843,5 @@ _l.tax = "Taxes"
 _l.external_paymentlink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
 
 _l.payment_myaddress = "This is a payment link that specifies your user as the payee. Select another user to use it"
-_l.external_source = "where to send PKOIN from"
+_l.external_source = "Where to send PKOIN from"
 _l.external_tTotal = "Account or wallet"
