@@ -6233,9 +6233,9 @@ Platform = function (app, listofnodes) {
                 if(eExt.action == 'pay'){
                     var payment = self.app.platform.sdk.payments.make({payment : eExt})
 
-                    /*payment.makeQR(q => {
+                    payment.makeQR().then(q => {
                         console.log(q)
-                    })*/
+                    })
 
                     return payment
                 }
