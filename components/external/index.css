@@ -197,6 +197,9 @@
   padding: 2em;
   text-align: center;
 }
+#external .pay .recieverrow {
+  cursor: pointer;
+}
 #external .pay .forReciever {
   display: flex;
   align-items: center;
@@ -206,7 +209,6 @@
   width: 1.5em;
   height: 1.5em;
   line-height: 1.5em;
-  margin-right: 0.5em;
 }
 #external .pay .txWrapper {
   margin-top: 1.5em;
