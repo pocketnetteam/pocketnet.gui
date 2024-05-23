@@ -227,7 +227,8 @@
 #external .pay .store span,
 #external .pay .store a {
   color: rgb(var(--neutral-grad-2));
-  font-size: 0.7em;
+  font-size: 0.8em;
+  font-weight: 700;
 }
 #external .pay .form .row {
   padding: 1em;
@@ -242,8 +243,8 @@
   padding-bottom: 0.5em;
   border-bottom: 1px dashed rgb(var(--neutral-grad-1));
 }
-#external .pay .form .row.forinfo:nth-last-child(1) {
-  border-bottom: 0;
+#external .pay .form .row.forinfo:nth-child(1) {
+  border-top: 1px dashed rgb(var(--neutral-grad-1));
 }
 #external .pay .form .items {
   margin-top: 0.5em;

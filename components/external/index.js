@@ -232,7 +232,6 @@ var external = (function(){
 			},
 
 			pay : function(_el, parameters, lsdata, clbk){
-				console.log('parameters', parameters)
 
 				helpers.clearExpInterval()
 
@@ -288,7 +287,6 @@ var external = (function(){
 				var expiredIn = function(){
 					if(!lsdata.txid){
 						if (parameters.date && parameters.expired){
-
 
 							return  (parameters.date + Number(parameters.expired * 1000)) - (new Date()).getTime() 
 						}
@@ -534,7 +532,6 @@ var external = (function(){
 					
 					helpers.getFees(tx).then(fees => {
 
-						console.log('jsona, fees', fees)
 						renders.pay(el.cnt, {...ed.parameters, tx, fees, shipmentValue}, lsdata, clbk)
 					}).catch(e => {
 						renders.pay(el.cnt, {...ed.parameters, error : e, shipmentValue}, lsdata, clbk)
@@ -568,7 +565,6 @@ var external = (function(){
 					return bm.id == 'wallet'
 				})
 
-				console.log('balanceModes', balanceModes)
 
 				return balanceModes
 			},
@@ -596,8 +592,6 @@ var external = (function(){
 				if(!parameters.s_url) return Promise.resolve()
 
 				shipment = helpers.getShipmentFields(shipment)
-
-				console.log("shipment", shipment)
 
 				if(!shipment || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
 					return Promise.reject({
@@ -674,8 +668,6 @@ var external = (function(){
 					}).finally(() => {
 						delete shipmentsCacheLoading[parameters.hash][datahash]
 					})
-
-					console.log('shipmentsCacheLoading', shipmentsCacheLoading)
 
 					return shipmentsCacheLoading[parameters.hash][datahash]
 				}
@@ -886,8 +878,6 @@ var external = (function(){
 
 		var make = function(clbk){
 
-			console.log('make', make.caller)
-
 			actions.balance()
 
 			if (ways[ed.action]){
@@ -901,8 +891,6 @@ var external = (function(){
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData
-
-				console.log("ED", ed)
 
 				var userinfo = self.psdk.userInfo.getmy()
 

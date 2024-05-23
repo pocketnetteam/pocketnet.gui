@@ -6222,6 +6222,27 @@ Platform = function (app, listofnodes) {
                 }
 
                 return ps
+            },
+
+            getObjectFromHash : function(hash){
+
+
+                var eExt = self.sdk.external.getFromHash(hash)
+
+
+                if(eExt.action == 'pay'){
+                    var payment = self.app.platform.sdk.payments.make({payment : eExt})
+
+                    /*payment.makeQR(q => {
+                        console.log(q)
+                    })*/
+
+                    return payment
+                }
+
+                return null
+
+                
             }
         },
         payments : {
