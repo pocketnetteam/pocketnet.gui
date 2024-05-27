@@ -3185,7 +3185,8 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
                     txid : txid,
-                    node : additional.node
+                    node : additional.node,
+                    verify : additional.verify
                 }
             })
         },
@@ -6190,7 +6191,7 @@ Platform = function (app, listofnodes) {
                     }
                     
                     if(!ps.c_url_type) ps.c_url_type = 'fetch'
-                    if(!ps.payload) ps.payload = {}
+                    //if(!ps.payload) ps.payload = {}
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
     
@@ -6350,7 +6351,7 @@ Platform = function (app, listofnodes) {
 
 
 					return _.sortBy(allpays, (pay) => {
-                        return pay.updated
+                        return -pay.updated
                     })
 
 				}
@@ -16299,59 +16300,6 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                /*
-                setUnspentoptimizationInterval : function(){
-
-                    if(!unspentoptimizationInterval){
-
-                        self.sdk.node.transactions.unspentOptimization()
-
-                        unspentoptimizationInterval = setInterval(function(){
-                            self.sdk.node.transactions.unspentOptimization()
-                        }, 300000)
-                    }
-
-
-                },
-
-                clearUnspentoptimizationInterval : function(){
-
-                    if (unspentoptimizationInterval){
-                        clearInterval(unspentoptimizationInterval)
-                        unspentoptimizationInterval = null
-                    }
-
-                },
-
-                unspentOptimization : function(){
-
-                    var s = self.sdk.node.transactions;
-                    var pnet = self.sdk.address.pnet();
-
-                    if (pnet && s.unspent){
-
-                        var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
-                            return self.sdk.node.transactions.canSpend(u) && u.amount
-                        })
-
-                        if (unspents.length > 200){
-                            unspents = _.filter(unspents, function(u, i){
-                                return i < 180
-                            })
-
-                            var keyPair = self.app.user.keys()
-
-                            self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
-                            })
-
-                        }
-                    }
-
-                },
-                
-                */
-
-
                 get: {
 
                     tx: function (id, clbk, p) {
@@ -19838,7 +19786,7 @@ Platform = function (app, listofnodes) {
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
-                                    if (data.opmessage) {
+                                    if (data.opmessage && data.opmessage.indexOf('pay_') > -1) {
                                         n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
                                     }
                                     else {

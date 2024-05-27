@@ -1159,7 +1159,9 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, w, 50, -70)
+						console.log('_scrollToTop', el.step, w)
+
+						_scrollTop(el.step, w, 50)
 
 						self.shell({
 

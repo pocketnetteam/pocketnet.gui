@@ -258,7 +258,7 @@ var external = (function(){
 
 					/// saveHashInfo
 
-					if(cbpw == 'redirect'){
+					if (cbpw == 'redirect'){
 						renders.loading('external_paySucc_redirect')
 
 						helpers.callbackPay(parameters, txid, lsdata).then((w) => {
@@ -322,8 +322,6 @@ var external = (function(){
 					defaultValue : balanceMode,
 					value : balanceMode
 				})
-
-				parameters.address
 
 				var alladdresses = (self.app.platform.sdk.addresses.storage.addresses || []).concat(self.app.user.address.value)
 				var myaddress = false
@@ -390,8 +388,53 @@ var external = (function(){
 						make()
 					}
 
+					_p.el.find('.getqrcode').on('click', function(){
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+							}
+						})
+
+						console.log("ASD")
+
+						payment.makeQR().then(q => {
+							console.log(q)
+
+							self.app.nav.api.load({
+								open : true,
+								href : 'imagegallery',
+								inWnd : true,
+								essenseData : {
+									idName : 'src',
+									images : [{src : q}]
+								},
+			
+								clbk : function(){
+								
+								}
+							})
+
+						})
+					})
+
 					_p.el.find('.close').on('click', function(){
 						self.closeContainer()
+					})
+
+					_p.el.find('.share').on('click', function(){
+
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+								shipmentValue : lsdata.shipmentValue
+							}
+						}) 
+
+						var hash = payment.makeURLHash()
+
+						var l = 'index?ext=' + hash + (lsdata.txid ? '&etxid='+lsdata.txid : '')
+
+						self.app.platform.ui.socialshare(l)
 					})
 
 					if(parameters.tx){
@@ -436,7 +479,38 @@ var external = (function(){
 					}
 
 					if (lsdata.txid){
-						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'))
+						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'), null, null, {verify : (tx) => {
+
+							if(!ed.completedTransaction){
+								return true
+							}
+
+							var opr = self.app.platform.sdk.node.transactions.getOpreturn(tx)
+
+							var payment = self.app.platform.sdk.payments.make({payment : parameters})
+
+							//parameters.address
+
+							var amount = _.reduce(tx.vout, (m, out) => {
+								var as = deep(out, 'scriptPubKey.addresses')
+
+								if (as && as.length == 1 && as[0] == parameters.address){
+									return m + out.value
+								}
+
+								return m
+							}, 0)
+
+							console.log("VERIFY", amount, tx, parameters.paymentHash, opr, payment, payment.getHash(), parameters)
+
+							if (amount = (parameters.value || 0) + (parameters.shipmentValue || 0)){
+								if (opr.replace('pay_', '') == payment.getHash()){
+									return true
+								}
+							}
+
+							return false
+						}})
 					}
 					
 					if (lsdata.txid && !lsdata.customersend){
@@ -565,11 +639,26 @@ var external = (function(){
 
 				var lsdata = state.load(ed.parameters.hash)
 
+				if(!lsdata.txid && ed.completedTransaction) {
+					lsdata.txid = ed.completedTransaction
+					lsdata.customersend = true
+				}
+
+				if (lsdata.txid){
+					renders.pay(el.cnt, {...ed.parameters}, lsdata, clbk)
+					return
+				}
+
+
 				if (ed.parameters.s_url){
 					if(!lsdata.shipment){
 						lsdata.shipment = state.getLastShipment()
 					}
 				}
+
+				
+
+				
 
 				renders.loading('external_loading')
 
@@ -589,6 +678,8 @@ var external = (function(){
 
 					}
 					
+					console.log("VER", tx)
+
 					helpers.getFees(tx).then(fees => {
 
 						renders.pay(el.cnt, {...ed.parameters, tx, fees, shipmentValue}, lsdata, clbk)
@@ -648,7 +739,7 @@ var external = (function(){
 
 			getShipment : function(parameters, shipment){
 				
-				if (parameters.shipmentValue) return Promise.resolve(shipmentValue)
+				if(parameters.shipmentValue) return Promise.resolve(shipmentValue)
 				if(!parameters.s_url) return Promise.resolve()
 
 				shipment = helpers.getShipmentFields(shipment)
@@ -807,7 +898,7 @@ var external = (function(){
 
 					Url.searchParams.append('tx', tx);
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -831,7 +922,7 @@ var external = (function(){
 
 					var data = {tx : tx}
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -997,7 +1088,9 @@ var external = (function(){
 
 			getdata : function(clbk, p){
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {}
+
+				ed.completedTransaction = parameters().etxid
 
 				var userinfo = self.psdk.userInfo.getmy()
 
@@ -1021,7 +1114,7 @@ var external = (function(){
 				ed = {}
 				el = {};
 
-				self.nav.api.history.removeParameters(['ext'])
+				self.nav.api.history.removeParameters(['ext', 'etxid'])
 
 				self.app.platform.actions.clbk('change', 'external', null)
 

@@ -6018,6 +6018,8 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
+	console.log('scr ofssetObj', ofssetObj)
+
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6028,6 +6030,8 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
+
+		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}

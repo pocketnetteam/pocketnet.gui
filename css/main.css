@@ -5385,7 +5385,7 @@ html.allcontent_application #footerWrapper {
   width: 390px;
   background: rgba(var(--color-shadow-base), 0.98);
   color: rgb(var(--color-txt-ac-1));
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
   padding: 1em;
   text-align: center;
@@ -5457,7 +5457,7 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--text-on-bg-shadow-color));
   text-align: center;
   font-size: 0.9em;
-  z-index: 140;
+  z-index: 1400;
   cursor: pointer;
 }
 #hideallnotifications .hidenf:hover {
@@ -5474,7 +5474,7 @@ html.allcontent_application #footerWrapper {
   padding: 0.75em;
   padding-left: 1em;
   font-size: 1em;
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
 }
 .fastMessage button {
