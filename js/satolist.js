@@ -11696,6 +11696,15 @@ Platform = function (app, listofnodes) {
                         og[i] = superXSS(o)
                     })
 
+
+                    if (d.video){
+                        og.video = {}
+
+                        _.each(d.video, (o, i) => {
+                            og.video[i] = superXSS(o)
+                        })
+                    }
+
                     s[url] = og
 
                     return Promise.resolve(s[url])
@@ -17942,28 +17951,22 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            $.ajax({
-                                url : 'https://pocketnet.app:8888/bitchute',
-                                data : {
-                                    url : hexEncode(link)
-                                },
-                                type : 'POST',
-                                timeout : 5000,
-                                success : function(response){
+                            console.log('link', link)
 
-                                    if (response.data.video && response.data.video.as) {
+                            self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
-                                        return resolve(response.data.video)
+                                if (og.video && og.video.as) {
 
-                                    } else {
-                                        reject()
-                                    }
+                                    return resolve(og.video)
 
-                                },
-                                error : function(){
+                                } else {
                                     reject()
                                 }
-                            });
+
+                                
+                            }).catch(reject)
+
+
 
                         }).then(r => {
 
