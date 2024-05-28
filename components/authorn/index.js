@@ -29,7 +29,7 @@ var authorn = (function(){
 
 				events.up()
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 				
 					el.c.addClass('opensvishowed')
 
@@ -977,7 +977,19 @@ var authorn = (function(){
 
 						right : isTablet(),
 
-						events : {							
+						events : {		
+							active : function(){
+								if(isMobile()){
+
+									self.app.blockscroll = true
+
+									_scrollTo(p.el.find('.searchIcon'), el.c.closest('.customscroll'), 0)
+
+									setTimeout(() => {
+										self.app.blockscroll = false
+									}, 200)
+								}
+							},				
 							search : function(value, clbk, e, helpers){
 
 								var href = '';
@@ -1312,12 +1324,9 @@ var authorn = (function(){
 
 		var relationsClbk = function(address){
 
-			console.log('address == author.address', address, author.address)
 			if (address == author.address){
 
 				author.data = self.psdk.userInfo.get(author.address)
-
-				console.log('author', author)
 
 				if(!self.app.mobileview){
 					renders.subscribes()
@@ -1336,8 +1345,6 @@ var authorn = (function(){
 		var initEvents = function(){
 			
 			self.app.psdk.updatelisteners.authorn = self.app.platform.actionListeners.authorn = function({type, alias, status}){
-
-				console.log("AUTHORN CLBK", type, alias)
 
 				if(type == 'blocking' || type == 'unblocking'){
 
@@ -1390,7 +1397,7 @@ var authorn = (function(){
 
 		var redir = function(page){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
 			})
 
@@ -1511,7 +1518,7 @@ var authorn = (function(){
 
 			getdata : function(clbk, p){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
 				})
 
@@ -1555,6 +1562,8 @@ var authorn = (function(){
 
 				delete self.app.platform.actionListeners.authorn
 
+				if (el.c) el.c.empty()
+
 				ed = {};
 				el = {};
 			},
@@ -1572,7 +1581,7 @@ var authorn = (function(){
 				el.alentanavigation = el.c.find('.alentanavigation')
 				el.lenta = el.c.find('.lentawrapper')
 				el.up = el.c.find('.upbuttonwrapper');
-				el.w = $(window);
+				el.w = self.app.el.window;
 				el.bg = el.c.find('.bgwallpaperWrapper')
 				el.subscribes = el.c.find('.subscribes')
 				el.subscribers = el.c.find('.subscribers')
@@ -1603,7 +1612,7 @@ var authorn = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

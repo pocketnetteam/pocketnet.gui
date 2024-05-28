@@ -1159,7 +1159,9 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, w, 50, -70)
+						console.log('_scrollToTop', el.step, w)
+
+						_scrollTop(el.step, w, 50)
 
 						self.shell({
 
@@ -2313,8 +2315,6 @@ var wallet = (function(){
 			payments : function(clbk){
 				var payments = self.app.platform.sdk.payments.get()
 
-				console.log('payments', payments)
-
 				if(!payments.length){
 					if(clbk) clbk()
 
@@ -2580,8 +2580,6 @@ var wallet = (function(){
 
 				if (el.total)
 					el.total.html('')
-
-					console.log('mode', mode)
 				
 			 	drawCircles(null)
 				
@@ -2898,7 +2896,7 @@ var wallet = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -1,0 +1,172 @@
+@import "../../css/__cssvar";
+
+
+#bnavigation{
+	display: none;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-bottom : calc(var(--app-margin-bottom));
+	height: calc(var(--app-margin-bottom, 0) + 60px + @rhythm);
+	z-index: 200;
+	contain: strict;
+
+
+	.fakem{
+		color : rgb(var(--text-on-bg-ac-color));
+		.shadowText();
+		text-align: center;
+		padding-top : 20px;
+	}
+
+	.nmenu{
+		background: rgb(var(--background-total-theme));
+		border-top : 1px solid rgb(var(--background-secondary-theme));
+		height: 100%;
+		position: absolute;
+		left : 0;
+		top : 0;
+		bottom : 0;
+		right: 0;
+		.transition(0.3s);
+	}
+
+	.items{
+		height: 60px;
+		display: flex;
+		align-items: center;
+		
+		.item{
+			width: 33.3%;
+			flex-grow: 1;
+			text-align: center;
+			overflow : hidden;
+
+			a{
+				display: block;
+			}
+
+			i{
+				
+				font-size: 0.9em;
+			}
+		}
+
+		.icon{
+			width: 20px;
+			margin : 0 auto;
+		}
+
+		.iconWrapper{
+			border-radius: 50%;
+			height: 100%;
+			width: 100%;
+			line-height: calc(60px - @rhythm);
+			margin : 0 auto;
+			position: relative;
+			color : rgb(var(--color-txt-gray-dark), 0.7);
+			text-align: center;
+
+
+			.label{
+				font-size: 0.7em;
+				position: absolute;
+				bottom: 0;
+				left : 0;
+				right : 0;
+				line-height: 1em;
+				text-align: center;
+				opacity: 0.7;
+			}
+       
+
+			.pnetsymb{
+				font-size: 1.7em;
+				font-weight: 500;
+			}
+
+			&.reg,
+			&.shr{
+				font-size: 1.7em;
+				color : #0026ff;
+
+				&.disabled{
+					color : rgb(var(--neutral-grad-2), 0.5);
+				}
+			}
+
+		
+		}
+	}
+
+	.linkButtonWrapper{
+		height: 100%;
+		display: block;
+	}
+
+	.upbuttonWrapper{
+		height: 100%;
+		display: none;
+	}
+
+	&.scrolled{
+		.linkButtonWrapper{
+			display: none;
+		}
+	
+		.upbuttonWrapper{
+			display: block;
+		}
+	}
+
+}
+
+.html{
+	.iphone{
+		#bnavigation{
+			padding-bottom : 30px;
+			height: 90px;
+		}
+	}
+}
+
+#bnavigation{
+	&.curationmode{
+		right: auto;
+		width: 80px;
+
+		.nmenu{
+			background: transparent;
+			width: 70px;
+			left : @rhythm;
+
+			.items{
+				width: 60px;
+			}
+
+			.item{
+				overflow: visible;
+				>div{
+					width: 60px;
+					border-radius: 50%;
+					background: rgba(var(--background-total-theme), 0.95) fade(#fff, 95);
+					border : 1px solid rgb(var(--background-total-theme));
+					.shadowSmaller();
+				}
+
+				.label{
+					display: none!important;
+				}
+				
+			}
+		}
+	}
+}
+
+html.mobileview{
+	#bnavigation{
+		display: block;
+	}
+}

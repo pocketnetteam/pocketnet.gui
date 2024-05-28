@@ -9363,46 +9363,42 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         video_id = video_id.replace('/embed/', '/video/');
 
-        $.ajax({
-            url : 'https://pocketnet.app:8888/bitchute',
-            data : {
-                url : hexEncode(video_id)
-            },
-            type : 'POST',
-            success : function(response){
-                if (response.data.video && response.data.video.as) {
+        console.log('video_id', video_id)
 
-                    _plyr(decodeURIComponent(response.data.video.as), response.data.video.preview || '', response.data.video.title || '');
+        options.app.platform.sdk.remote.getnew(video_id, 'bitchute').then(og => {
 
-                    var plyrPlayer = newPlyr(target, video_options);
+          if (og.video && og.video.as) {
 
-                      plyrPlayer.on('ready', readyCallback)
+            _plyr(decodeURIComponent(og.video.as), og.video.preview || '', og.video.title || '');
 
-                      plyrPlayer.on('volumechange', function(v){
-                        if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
-                      })
+            var plyrPlayer = newPlyr(target, video_options);
 
-                      plyrPlayer.prepare = function(){
-                        return Promise.resolve()
-                      }
+              plyrPlayer.on('ready', readyCallback)
 
-                      plyrPlayer.player_id = makeid()
+              plyrPlayer.on('volumechange', function(v){
+                if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+              })
 
-                    if (clbk) clbk(plyrPlayer);
+              plyrPlayer.prepare = function(){
+                return Promise.resolve()
+              }
 
-                } else {
+              plyrPlayer.player_id = makeid()
 
-                  _error();
+            if (clbk) clbk(plyrPlayer);
 
-                }
+        } else {
 
-                clear()
-            },
+          _error();
 
-            error : function(){
-              _error();
-            }
-        });
+        }
+
+        clear()
+          
+      }).catch(e => {
+        _error();
+      })
+
 
     } else {
 

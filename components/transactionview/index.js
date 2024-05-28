@@ -8,7 +8,7 @@ var transactionview = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, tx = {}, node = null;
+		var el, txid, tx = {}, node = null, ed = {};
 
 		var types = {
 			'7570766f74655368617265': 'Score to Post',
@@ -204,6 +204,13 @@ var transactionview = (function(){
 
 				tx = _tx
 
+				if(ed.verify && !ed.verify(tx)){
+
+					console.error('verify')
+					return
+				}
+
+
 				if(!tx){
 					renders.tx()
 				}
@@ -243,6 +250,8 @@ var transactionview = (function(){
 
 				node = (p.settings.essenseData || {}).node || null
 
+				ed = p.settings.essenseData
+
 				if(!txid){
 
 					self.nav.api.load({
@@ -262,6 +271,7 @@ var transactionview = (function(){
 
 			destroy : function(){
 				el = {};
+				ed = {}
 			},
 			
 			init : function(p){
@@ -292,7 +302,7 @@ var transactionview = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

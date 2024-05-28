@@ -742,7 +742,7 @@ var comments = (function(){
 
 							state.save()
 
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								wrapper.find('.emojionearea-editor').blur();
 								actions.removeSending(wrapper)
 
@@ -755,7 +755,7 @@ var comments = (function(){
 										el : wrapper
 									})
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 
 										if (areas[id]) {
 											areas[id].setText('');
@@ -828,8 +828,6 @@ var comments = (function(){
 
 				if (currents[id])
 					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
-
-				console.log('currents', currents)
 
 				state.save()
 
@@ -968,7 +966,7 @@ var comments = (function(){
 
 				if (show){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c.addClass('showedreplies')
 						c.find('.repliesloaderWrapper').removeClass('hidden')
 					})
@@ -990,7 +988,7 @@ var comments = (function(){
 
 								renders.list(p, function(){
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										c.find('.repliesloaderWrapper').addClass('hidden')
 									})
 	
@@ -1023,7 +1021,7 @@ var comments = (function(){
 
 					actions.removeForm(id)
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c.removeClass('showedreplies')
 						p.el.html('')
 					})
@@ -1141,7 +1139,7 @@ var comments = (function(){
 				showedall = false;
 				ed.showall = false;
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					el.c.removeClass('showedall')	
 					el.c.addClass('listpreview')
@@ -1161,7 +1159,7 @@ var comments = (function(){
 
 				if (listpreview){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.preloader.removeClass('hidden')
 					})
 				
@@ -1170,7 +1168,7 @@ var comments = (function(){
 						if(e){
 							self.app.platform.errorHandler(e, true)
 
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.preloader.addClass('hidden')
 
 							})
@@ -1193,7 +1191,7 @@ var comments = (function(){
 						p.inner = html
 
 						renders.list(p, function(){
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								actions.showhideLabel()	
 								el.c.addClass('showedall')	
 								el.c.removeClass('listpreview')
@@ -1233,7 +1231,7 @@ var comments = (function(){
 					needtoshow = true
 				}
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (showedall){
 						if(!el.showall.hasClass('hidden'))
 							el.showall.addClass('hidden')
@@ -1354,7 +1352,6 @@ var comments = (function(){
 
 					setTimeout(() => {
 						self.app.blockscroll = false
-
 					}, 200)
 				}
 			}
@@ -2051,17 +2048,20 @@ var comments = (function(){
 
 			})
 
-			actions.checkBanned(p).then((user) => {
-				if (user){
-
-					var info = self.psdk.userInfo.getShortForm(user.address)
-
-					if (info){
-						_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
-
+			setTimeout(() => {
+				actions.checkBanned(p).then((user) => {
+					if (user){
+	
+						var info = self.psdk.userInfo.getShortForm(user.address)
+	
+						if (info){
+							_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
+	
+						}
 					}
-				}
-			})
+				})
+			}, 500)
+			
 
 		}
 		
@@ -2205,7 +2205,7 @@ var comments = (function(){
 
 			limits : function(el, message){
 
-				var l = 1000 - message.length;
+				var l = 2000 - message.length;
 
 				el.find('.limits').removeClass('bad')
 
@@ -2619,7 +2619,7 @@ var comments = (function(){
 								
 
 								_p.el.find('.refresh-comments').on('click', (e) => {
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										$(e.currentTarget).addClass('refreshing');
 									})
 									
@@ -2728,8 +2728,6 @@ var comments = (function(){
 
 					if (comment.postid == txid){
 
-						console.log("FOCUS", setFocus, actions.findCurrentText())
-
 						if(currents[comment.id]) return 
 						
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
@@ -2836,7 +2834,7 @@ var comments = (function(){
 
 					if(!el.c) return
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						if(!el.preloader.hasClass('hidden'))
 							el.preloader.addClass('hidden')
 					})
@@ -3132,7 +3130,6 @@ var comments = (function(){
 
 				el = {};
 				ed = {};
-				
 
 				_in = null
 			},
@@ -3325,7 +3322,7 @@ var comments = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

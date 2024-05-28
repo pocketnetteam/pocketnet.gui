@@ -349,7 +349,11 @@ Platform = function (app, listofnodes) {
         'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7' : true,
         'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
         'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
-        
+        'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf' : true,
+        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
+        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
+        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true
 
 
     } 
@@ -482,7 +486,7 @@ Platform = function (app, listofnodes) {
 
             listener(alias, status)
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
                 _.each(self.actionListeners, (c, i) => {
                     if (c)
                         c({type : action.object.type, alias, status})
@@ -2665,7 +2669,15 @@ Platform = function (app, listofnodes) {
 
                 graph.chart.destroy();
 
-                graph.el.html('')
+                graph.el.remove()
+
+                graph.el = null;
+
+                graph.series = [];
+
+                delete graph.shell;
+
+                delete graph.stock;
             }
 
             return graph;
@@ -2738,7 +2750,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -2807,7 +2819,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -3071,10 +3083,29 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        route : function(href, el, clbk, p){
+        route : function(href, el, clbk, p = {}, a = {}){
 
-            if(href.indexOf('ext=')){
-                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-wallet"></i> '+app.localization.e('paymentLink')+'</a></div>')
+            if(a.url && a.url.indexOf('ext=') > -1){
+
+                var type = 'undefined'
+
+                
+                try{
+                    var type = self.sdk.external.type(parameters(a.url, true).ext)
+
+                    var icon = ''
+
+                    if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
+                    if(type == 'auth') icon = '<i class="fas fa-user"></i>'
+
+                    el.html('<div class="internalpocketnetlink"><b>'+icon+' '+app.localization.e(type + 'Link')+'</b></div>')
+                }
+                catch(e){
+                    console.error('e', e)
+                    el.html('<div class="internalpocketnetlink"><b>'+app.localization.e('undefinedLink')+'</b></div>')
+                }
+
+                
             }
 
             else{
@@ -3087,7 +3118,7 @@ Platform = function (app, listofnodes) {
             if(clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p){
+        channel : function(id, el, clbk, p, a){
 
             var r = false
 
@@ -3128,7 +3159,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 if(f){
-                    self.papi.route(f.href, el, clbk, p)
+                    self.papi.route(f.href, el, clbk, p, a)
                 }
                 else{
 
@@ -3156,7 +3187,8 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
                     txid : txid,
-                    node : additional.node
+                    node : additional.node,
+                    verify : additional.verify
                 }
             })
         },
@@ -4518,11 +4550,13 @@ Platform = function (app, listofnodes) {
                 })
 
             }, {
-                text : 'external_paymentlink_reg',
+                text : 'external_'+ps.action+'link_reg',
                 success : 'rcontinue',
                 cancel : 'dcancel'
             })
         },
+
+        
 
         externalFromCurrentUrl : function(){
             var p = parameters()
@@ -4799,7 +4833,7 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-                    /*window.requestAnimationFrame(() => {
+                    /*window.rifticker.add(() => {
 
                     })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
@@ -6057,7 +6091,7 @@ Platform = function (app, listofnodes) {
                 if (json.paymentHash) eExt.paymentHash = json.paymentHash
                 
     
-                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
                 if (json.ad)    eExt.address = json.ad
                 if (json.s)     eExt.s_url = json.s
                 if (json.sv)    eExt.shipmentValue = json.shipmentValue
@@ -6105,6 +6139,13 @@ Platform = function (app, listofnodes) {
                
                 return eExt
             },
+            type : function(ext){
+
+                var ps = self.sdk.external.getFromHash(ext)
+                    
+                return ps.action            
+            },
+
             getFromHash : function(ext){
                 var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
 
@@ -6112,6 +6153,25 @@ Platform = function (app, listofnodes) {
 
                 if(!ps.action){
                     throw 'missing:action'
+                }
+
+                if (ps.action == 'auth'){
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+
+                    if(!ps.c_url){
+                        throw 'missing:c_url'
+                    }
+
+                    try{
+                        var url = new URL(ps.c_url)
+
+                        ps.host = clearStringXss(url.hostname)
+
+                    }catch(e){
+                        throw 'wrong:c_url:notvalid'
+                    }
+
+                    
                 }
     
                 if (ps.action == 'pay'){
@@ -6133,7 +6193,7 @@ Platform = function (app, listofnodes) {
                     }
                     
                     if(!ps.c_url_type) ps.c_url_type = 'fetch'
-                    if(!ps.payload) ps.payload = {}
+                    //if(!ps.payload) ps.payload = {}
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
     
@@ -6293,7 +6353,7 @@ Platform = function (app, listofnodes) {
 
 
 					return _.sortBy(allpays, (pay) => {
-                        return pay.updated
+                        return -pay.updated
                     })
 
 				}
@@ -8489,7 +8549,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.uiScale.set(zoomNewName);
                 }
 
-                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
                      * Minus - 189
                      * Minus Numpad - 109
@@ -8507,7 +8567,7 @@ Platform = function (app, listofnodes) {
                     return 0;
                 }));
 
-                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                self.app.el.window.on('wheel', (e) => scaleUi(e, true, (e) => {
                     if(!wheelLock) {
                         $('html').addClass('scroll-lock');
                         wheelLock = true;
@@ -10216,7 +10276,6 @@ Platform = function (app, listofnodes) {
                 if(!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
                     if(!d || !d.length){
@@ -10545,8 +10604,6 @@ Platform = function (app, listofnodes) {
                         return 
 
                     }
-
-                    
 
                     if (lf) {
                         if (clbk) clbk(lf.address)
@@ -11243,7 +11300,7 @@ Platform = function (app, listofnodes) {
                 var total = balance.actual
                 var amount = balance.actual - balance.tempbalance
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (total > 0 && amount < total) {
 
                         if (!el.find('.spendLine').length) {
@@ -11641,6 +11698,15 @@ Platform = function (app, listofnodes) {
                     _.each(og, (o, i) => {
                         og[i] = superXSS(o)
                     })
+
+
+                    if (d.video){
+                        og.video = {}
+
+                        _.each(d.video, (o, i) => {
+                            og.video[i] = superXSS(o)
+                        })
+                    }
 
                     s[url] = og
 
@@ -12142,12 +12208,9 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                console.log('recommendations, save')
             },
 
             load: function () {
-
-                console.log("recommendations load")
 
                 var p = {};
 
@@ -12197,7 +12260,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.recommendations.scheduler()
 
                     app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
-                        console.log('recommendations, syncStorage')
                         self.sdk.recommendations.load()
                     });
 
@@ -16240,59 +16302,6 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                /*
-                setUnspentoptimizationInterval : function(){
-
-                    if(!unspentoptimizationInterval){
-
-                        self.sdk.node.transactions.unspentOptimization()
-
-                        unspentoptimizationInterval = setInterval(function(){
-                            self.sdk.node.transactions.unspentOptimization()
-                        }, 300000)
-                    }
-
-
-                },
-
-                clearUnspentoptimizationInterval : function(){
-
-                    if (unspentoptimizationInterval){
-                        clearInterval(unspentoptimizationInterval)
-                        unspentoptimizationInterval = null
-                    }
-
-                },
-
-                unspentOptimization : function(){
-
-                    var s = self.sdk.node.transactions;
-                    var pnet = self.sdk.address.pnet();
-
-                    if (pnet && s.unspent){
-
-                        var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
-                            return self.sdk.node.transactions.canSpend(u) && u.amount
-                        })
-
-                        if (unspents.length > 200){
-                            unspents = _.filter(unspents, function(u, i){
-                                return i < 180
-                            })
-
-                            var keyPair = self.app.user.keys()
-
-                            self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
-                            })
-
-                        }
-                    }
-
-                },
-                
-                */
-
-
                 get: {
 
                     tx: function (id, clbk, p) {
@@ -17892,28 +17901,22 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            $.ajax({
-                                url : 'https://pocketnet.app:8888/bitchute',
-                                data : {
-                                    url : hexEncode(link)
-                                },
-                                type : 'POST',
-                                timeout : 5000,
-                                success : function(response){
+                            console.log('link', link)
 
-                                    if (response.data.video && response.data.video.as) {
+                            self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
-                                        return resolve(response.data.video)
+                                if (og.video && og.video.as) {
 
-                                    } else {
-                                        reject()
-                                    }
+                                    return resolve(og.video)
 
-                                },
-                                error : function(){
+                                } else {
                                     reject()
                                 }
-                            });
+
+                                
+                            }).catch(reject)
+
+
 
                         }).then(r => {
 
@@ -19785,7 +19788,7 @@ Platform = function (app, listofnodes) {
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
-                                    if (data.opmessage) {
+                                    if (data.opmessage && data.opmessage.indexOf('pay_') > -1) {
                                         n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
                                     }
                                     else {
@@ -20354,9 +20357,6 @@ Platform = function (app, listofnodes) {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
 
-                            console.log('data', data, wa)
-                            
-
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
@@ -20876,38 +20876,58 @@ Platform = function (app, listofnodes) {
 
             })
 
+        }
 
-
+        var rmmessagesDestroy = function(){
+            _.each(self.fastMessages, function (message, i) {
+                if (message.timeout) clearTimeout(message.timeout);
+            })
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
+            var rmfu = function () {
+
+                if(!time){
+                    rmfu2()
+                }
+                else{
+                    message.el.addClass('willhidden')
+
+                    setTimeout(rmfu2, 200)
+                }
+
+            }
+
+            var rmfu2 = function(){
+
+                message.el.remove();
+
+                removeEqual(self.fastMessages, {
+                    id: message.id
+                })
+
+                if (message.destroyclbk && destroyUser) {
+                    message.destroyclbk()
+                }
+
+                if (!noarrange)
+                    tArrangeMessages()
+
+            }
+
+            console.log('destroyMessage', message, self.fastMessages, destroyMessage.caller)
 
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
 
-                message.timeout = setTimeout(function () {
-
-                    message.el.fadeOut(300)
-
-                    setTimeout(function () {
-
-                        message.el.remove();
-
-                        removeEqual(self.fastMessages, {
-                            id: message.id
-                        })
-
-                        if (message.destroyclbk && destroyUser) {
-                            message.destroyclbk()
-                        }
-
-                        if (!noarrange)
-                            tArrangeMessages()
-
-                    }, 300)
-
-                }, time)
+                if(time){
+                    message.timeout = setTimeout(rmfu, time)
+                }
+                else{
+                    rmfu()
+                }
+               
             }
 
             else {
@@ -20925,16 +20945,23 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotificationselement = function(show){
+            
             if(self.hideallnotificationsel){
+                window.rifticker.add(() => {
+                    if(show){
+                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
 
-                if(show){
-                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+                    }
+                    else{
+                        self.hideallnotificationsel.addClass('willhidden')
 
-                }
-                else{
-                    self.hideallnotificationsel.html('')
-                }
+                        setTimeout(function () {
+                            self.hideallnotificationsel.html('')
+                            self.hideallnotificationsel.removeClass('willhidden')
+                        }, 200)
+                    }
+                })
 
             }
         }
@@ -20951,8 +20978,8 @@ Platform = function (app, listofnodes) {
             var mtbl = platform.app.mobileview
 
 			if (mtbl){
-				maxCount = 1;
-                showremove = 0;
+				maxCount = 2;
+                showremove = 2;
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -20962,16 +20989,33 @@ Platform = function (app, listofnodes) {
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
+					if(!m.expanded && !m.el.hasClass('smallsize')){
 						m.el.addClass('smallsize');
 						s = true
 					}
 
 				})
 			}
+            else{
+                _.each(self.fastMessages, function(m, i){
+					if (m.el.hasClass('smallsize')){
+						m.el.removeClass('smallsize');
+					}
+				})
+            }
+
+            if (mtbl){
+                boffset = platform.app.margintop
+            }
+
+            console.log('self.fastMessages.length', self.fastMessages.length)
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
+
+                if (mtbl){
+                    boffset += platform.app.margintop
+                }
 
                 hideallnotificationselement(true)
             }
@@ -20982,27 +21026,36 @@ Platform = function (app, listofnodes) {
 
             offset = offset + boffset
 
-            _.each(self.fastMessages, function(m, i){
+            _.each(_.clone(self.fastMessages), function(m, i){
 
                 if(i < remove){
-                    destroyMessage(m, 1, true)
+                    if(!isMobile()) {
+                        destroyMessage(m, 0, true)
+                    }
+                    else {
+                        m.el.addClass('hidden')
+                    }
                 }
 
                 else
                 {
-                    if(!mtbl){
-                        offset += 5;
-                    }
 
-                    if(!mtbl){
-                        var r = offset
-                        window.requestAnimationFrame(() => {
+                    if (m.el.hasClass('hidden')){
+                        m.el.removeClass('hidden')
+                    }
+                    
+                    offset += 5;
+                
+                    var r = offset
+
+                    window.rifticker.add(() => {
+                        if(!mtbl){
                             m.el.css('bottom', r + 'px');
-                        })
+                        }else{
+                            m.el.css('top', r + 'px');
+                        }
+                    })
                         
-                    }
-                        
-
                     offset += m.el.outerHeight();
                 }
 
@@ -21011,7 +21064,7 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        var tArrangeMessages = _.debounce(arrangeMessages, 300)
+        var tArrangeMessages = _.debounce(arrangeMessages, 200)
 
         self.getMissed = function (initial) {
 
@@ -21060,13 +21113,12 @@ Platform = function (app, listofnodes) {
 
         self.destroyMessages = function () {
 
-            _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1, true)
+            _.each(_.clone(self.fastMessages), function (message, i) {
+                console.log('destroyMessage 1', message)
+                destroyMessage(message, 0, true)
             })
 
-            setTimeout(function(){
-                tArrangeMessages()
-            }, 301)
+            tArrangeMessages()
         }
 
         self.fastMessageByJson = function(json, destroyclbk, p = {}){
@@ -21128,6 +21180,13 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
+                    if(!p.click)
+                        destroyMessage(message, 1)
+
+                    setTimeout(() => {
+                        rmmessagesDestroy()
+                    }, 50)
+
                 }
                 else{
                     if(!message.expanded){
@@ -21140,13 +21199,13 @@ Platform = function (app, listofnodes) {
 
                         setTimeout(function(){
                             tArrangeMessages();
-                        }, 300)
+                        }, 200)
                     }
                 }
 
 
 
-			})
+            })
 
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
@@ -21163,24 +21222,22 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
-                var d = 25
+                var d = 60
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     allowPageScroll : false,
                     directions: {
-                        up : {
+                        left : {
                             //endmove : true,
-                            trueshold: 1,
+                            trueshold: 15,
                             distance : d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
-                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
-                                message.el.remove()
-                                destroyMessage(message, 1, false, true);
+                                destroyMessage(message, 0)
                             }
 
                         }
@@ -21190,6 +21247,7 @@ Platform = function (app, listofnodes) {
             }
 
             tArrangeMessages();
+
 
             return message
         }
@@ -21691,9 +21749,9 @@ Platform = function (app, listofnodes) {
                 reason: "post",
                 time: "1619694710",
                 txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 mesType: "subscribe",
@@ -21701,9 +21759,9 @@ Platform = function (app, listofnodes) {
                 node: "135.181.196.243:38081:8087",
                 time: 1625762423,
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
-            })*/
+            })
 
-			/*self.messageHandler({
+			self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -22642,8 +22700,6 @@ Platform = function (app, listofnodes) {
         self.sdk.ustate.clbks = {};
 
         self.sdk.registrations.clbks = {};
-
-        console.log("DESTROY")
         self.sdk.sharesObserver.destroy()
         self.sdk.recommendations.destroy()
 
@@ -23150,7 +23206,7 @@ Platform = function (app, listofnodes) {
                             actionSubType: 'AUTHORIZED_SESSION',
                         });
     
-                        setTimeout(() => {
+                        ricfbl(() => {
                             self.matrixchat.init()
                         }, 10)
                         
@@ -23161,7 +23217,7 @@ Platform = function (app, listofnodes) {
     
                         setTimeout(self.acceptterms, 5000)
     
-                        setTimeout(function(){
+                        ricfbl(function(){
     
                             self.app.peertubeHandler.init()
     
@@ -23356,7 +23412,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                    self.matrixchat.import(clbk)
+                self.matrixchat.import(clbk)
             })
         },
 
@@ -23422,7 +23478,7 @@ Platform = function (app, listofnodes) {
                                 </matrix-element>
                             </div>`
 
-                            window.requestAnimationFrame(() => {
+                            window.rifticker.add(() => {
                                 $('#matrix').html(matrix);
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
@@ -23825,7 +23881,7 @@ Platform = function (app, listofnodes) {
                 var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (value){
                         wnds.css('z-index', 999)
                     }else{
@@ -24224,8 +24280,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).on('focus', f);
-            $(window).on('blur', uf);
+            self.app.el.window.on('focus', f);
+            self.app.el.window.on('blur', uf);
 
         }
 
@@ -24254,8 +24310,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).off('focus', f);
-            $(window).off('blur', uf);
+            self.app.el.window.off('focus', f);
+            self.app.el.window.off('blur', uf);
 
 
         }

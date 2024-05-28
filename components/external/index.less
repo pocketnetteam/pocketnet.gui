@@ -16,6 +16,19 @@
 #external{
     padding-bottom: 77px;
 
+    .getqrcode{
+        margin-top: 2 * @rhythm;
+        padding : 2 * @rhythm;
+        text-align: center;
+        cursor: pointer;
+
+        span{
+            color : rgb(var(--neutral-grad-4));
+            text-decoration: underline;
+            font-size: 0.8em;
+        }
+    }
+
     .loading{
         display: none;
         background: rgb(var(--background-secondary-theme));
@@ -56,6 +69,15 @@
                 -o-animation: changebg 2s infinite;
                 .transition(1s)
             }
+        }
+    }
+
+    .myaddresstext{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        span{
+            font-weight: 700;
         }
     }
 
@@ -226,9 +248,16 @@
     }
 
     .pay{
-
+      
         .description{
             padding : 2 * @rhythm;
+
+            .dcaption{
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
         }
 
         .linkWillExpired{
@@ -259,6 +288,7 @@
                 width: 3 * @rhythm;
                 height: 3 * @rhythm;
                 line-height: 3 * @rhythm;
+                margin-right: 0.5 * @rhythm;
             }
         }
 
@@ -311,7 +341,7 @@
                 padding-bottom: 3 * @rhythm;
             }
 
-            .info{
+            .einfo{
                 width: 100%;
                 display: flex;
                 align-items: center;
@@ -372,6 +402,49 @@
             }
         }
     }
+    
+    .empty,
+    .auth{
+        text-align: center;
+        .caption{
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 8 * @rhythm ;
+            max-width: 80%;
+
+            span{
+                font-weight: 700;
+                font-size: 1.2em;
+            }
+        }
+
+        .host{
+            font-size: 2em;
+            font-weight: 100;
+            max-width: 80%;
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 3 * @rhythm ;
+        }
+
+        .buttonsWrapper{
+            margin-left : auto;
+            margin-right : auto;
+            margin-top: 8 * @rhythm;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+
+            button{
+                max-width: 80%;
+
+                &.cancel{
+                    margin-top: 2 * @rhythm;
+                }
+            }
+        }
+    }
 
     .value{
         white-space: nowrap;
@@ -386,10 +459,18 @@
         padding: @rhythm;
         padding-bottom: 3 * @rhythm;
 
-        button{
+        .btns{
             max-width: 550px;
             width: 75%;
-            
+            margin : 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-gap: 0.5 * @rhythm;
+        }
+
+        button{
+            flex-grow: 2;
 
             &[disabled]{
                 border-color : rgb(var(--neutral-grad-3));

@@ -467,8 +467,6 @@ var Peertube = function (settings) {
 						return inited
 					}).then(() => {
 
-						console.log("INITED")
-
 						return fu(data, cache)
 					}).then((r) => {
 						return Promise.resolve({

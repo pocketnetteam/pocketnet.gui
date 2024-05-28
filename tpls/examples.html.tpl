@@ -244,6 +244,73 @@
         </script>
         <!-- example 2: PaymentLink: end -->
 
-        <script src="https://__VAR__.domain/external.js"></script>
+
+        <!-- example 3: Auth: begin -->
+        <div>
+            <h2>__VAR__.name auth button</h2>
+        </div>
+        <div class="example" >
+            <div class="example" id="authButton">
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var auth = window.bastyonLib.auth({
+                    auth : {
+                        
+
+                        /*
+                        
+                            Server url
+
+                            If specified, the buyer will need to fill out a delivery form
+
+                            The server must process a request like
+
+                            {
+                                signature : {
+                                    "nonce": "",
+                                    "signature": "",
+                                    "pubkey": "",
+                                    "address": "",
+                                    "v": 1
+                                }
+                            }
+
+                            And return the answer
+
+                            {
+                                redirect_url : ''
+                            }
+
+                            Or
+
+                            {
+                                error : {
+                                    text : 'Signature check failed'
+                                }
+                            }
+                        
+                        */
+
+                        "c_url": "https://6.pocketnet.app:8899/ping",
+
+                        
+                    }
+                })
+
+                var button = auth.makeButton()
+
+                var elem = document.getElementById('authButton');
+                    elem.append(button)
+            });
+        </script>
+        <!-- example 2: PaymentLink: end -->
+
+        <script src="https://localhost/pocketnet/external.js"></script>
+        
+        <!-- <script src="https://__VAR__.domain/external.js"></script> -->
     </body>
 </html>

@@ -143,10 +143,11 @@ var nodecontrol = (function(){
 				}
 
 				if (rif){
-                    cancelAnimationFrame(rif)
+					rifticker.cancel(rif)
+                    ///cancelAnimationFrame(rif)
                 }
 
-				rif = window.requestAnimationFrame(() => {
+				rif = rifticker.add(() => {
 					rif = null
 					renders.all()
 				})
@@ -857,7 +858,7 @@ var nodecontrol = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 
