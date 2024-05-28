@@ -350,8 +350,10 @@ Platform = function (app, listofnodes) {
         'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
         'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
         'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf' : true,
-        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true
-        
+        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
+        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
+        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true
 
 
     } 
