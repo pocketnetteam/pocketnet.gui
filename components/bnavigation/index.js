@@ -1,4 +1,4 @@
-var navigation = (function(){
+var bnavigation = (function(){
 
 	var self = new nModule();
 
@@ -299,11 +299,11 @@ var navigation = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = navigation;
+	module.exports = bnavigation;
 }
 else{
 
-	app.modules.navigation = {};
-	app.modules.navigation.module = navigation;
+	app.modules.bnavigation = {};
+	app.modules.bnavigation.module = bnavigation;
 
 }

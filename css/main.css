@@ -6067,7 +6067,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6080,10 +6080,10 @@ html.mobileview.scrollmodedown #panelWrapper {
 html.mobileview.scrollmodedown #comments .captionfwrapper {
   transform: translateY(calc(-65px - var(--app-margin-top)));
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6091,7 +6091,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: calc(var(--app-margin-bottom, 0) + 60px);
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 html.mobileview.openapipnet .contentWrapper {
@@ -6130,7 +6130,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6140,10 +6140,10 @@ html.mobileview.scrollmodedown #menu .menuWrapper {
 html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6151,7 +6151,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: 70px;
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 /*t*/

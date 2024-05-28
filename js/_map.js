@@ -156,11 +156,11 @@ __map =  {
 	},
 	
 	__templates : [
-		{ c : 'navigation', n : 'menu' },
+		{ c : 'bnavigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'menu', n : 'userinfo' },
 		
-		{ c : 'navigation', n : 'index' },
+		{ c : 'bnavigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
@@ -954,9 +954,9 @@ __map =  {
 	
 	
 
-	navigation : {
-		uri : "navigation",
-		href : "navigation",
+	bnavigation : {
+		uri : "bnavigation",
+		href : "bnavigation",
 		add : {
 			el : 'navigation'
 		},

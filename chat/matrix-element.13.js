@@ -1059,7 +1059,9 @@ var functions = __webpack_require__("3139");
               icon: "success",
               message: ""
             });
-            this.$router.push(_share.route || "chat?id=" + chat.roomId).catch(e => {});
+            setTimeout(() => {
+              this.$router.push(_share.route || "chat?id=" + chat.roomId).catch(e => {});
+            }, 2000);
           }).catch(e => {
             console.error(e);
             this.$store.commit("icon", {
