@@ -1,8 +1,8 @@
 <div class="pay">
 
-    <% if(!expired || expiredIn > 0) {%>
+    <% if(!expired || expiredIn > 0 || myaddress) {%>
 
-        <% if(expired) {%>
+        <% if(expired && !myaddress) {%>
             <div class="linkWillExpired">
                 <span><%-e('external_linkWillExpired')%></span>
                 <span class="expiredIn"></span>
@@ -68,7 +68,7 @@
                 <div class="items">
                     <% _.each(parameters.items, function(item){ %>
                         <div class="row forinfo">
-                            <div class="info">
+                            <div class="einfo">
                                 <div class="imageWrapper">
                                     <div class="image" image="<%-item.image || ''%>">
                                             
@@ -92,14 +92,16 @@
             <% } %>
 
             <% if(parameters.description) {%>
+      
                 <div class="description">
-                    <span><%-parameters.description%></span>
+                    <div class="dcaption"><span><%-e('description')%>:</span></div>
+                    <div class="dtext"><span><%-parameters.description%></span></div>
                 </div>
             <% } %>
             
             <% if(!lsdata.txid) { %>
 
-                <% if(balanceModeParameter.possibleValues.length > 1) {%>
+                <% if(!myaddress && balanceModeParameter.possibleValues.length > 1) {%>
 
                     <div class="balanceModeWrapper">
                     
@@ -205,9 +207,18 @@
                 
 
             <% } %>
+            
+        <% if(myaddress && !lsdata.txid) {%>
+            <div class="myaddresstext">
+                <span><%=e('payment_myaddress')%></span>
+            </div>
+        <% } %>
 
-        </div>
-
+        <% if(!lsdata.txid) { %>
+            <div class="getqrcode">
+                <span><%=e('getqrcode')%></span>
+            </div>
+        <% } %>
         <% if(lsdata.txid) { %>
 
             <div class="txWrapper">
@@ -221,7 +232,10 @@
             </div>
 
             <div class="actionButtonWrapper buttonWrapper">
-                <button class="button close"><span><%=e('close')%></span></button>
+                <div class="btns">
+                    <button class="button close"><span><%=e('close')%></span></button>
+                    <button class="button share"><span><%=e('share')%></span></button>
+                </div>
             </div>
 
         <% } else { %> 
@@ -233,18 +247,23 @@
                     </span>
                 </div>
             <% } %>
-        
-            <div class="actionButtonWrapper buttonWrapper">
-                <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
-            </div>
+                
+            <% if(!myaddress) {%>
+                <div class="actionButtonWrapper buttonWrapper">
+                    <div class="btns">
+                        <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
+                    </div>
+                </div>
+            <% } %>
             
         <% } %>
 
     <% } else { %> 
-        <div class="linkExpired">
-            <span><%-e('external_linkExpired')%></span>
-        </div>
+        
+            <div class="linkExpired">
+                <span><%-e('external_linkExpired')%></span>
+            </div>
+
     <% } %>
-    
    
 </div>

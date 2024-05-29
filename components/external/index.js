@@ -258,7 +258,7 @@ var external = (function(){
 
 					/// saveHashInfo
 
-					if(cbpw == 'redirect'){
+					if (cbpw == 'redirect'){
 						renders.loading('external_paySucc_redirect')
 
 						helpers.callbackPay(parameters, txid, lsdata).then((w) => {
@@ -311,6 +311,7 @@ var external = (function(){
 					}
 				}
 
+				
 				var balanceModeParameter = new Parameter({
 					type : "VALUES",
 					name : self.app.localization.e("external_source"),
@@ -322,6 +323,13 @@ var external = (function(){
 					value : balanceMode
 				})
 
+				var alladdresses = (self.app.platform.sdk.addresses.storage.addresses || []).concat(self.app.user.address.value)
+				var myaddress = false
+
+				if(alladdresses.indexOf(parameters.address) > -1){
+					myaddress = true
+				}
+
 				self.shell({
 					name :  'pay',
 					data : {
@@ -330,7 +338,8 @@ var external = (function(){
 						inputs : hp,
 						balanceModeParameter,
 						expired,
-						expiredIn : expiredIn()
+						expiredIn : expiredIn(),
+						myaddress
 					},
 
 					insertimmediately : parameters.s_url ? true : false,
@@ -350,7 +359,7 @@ var external = (function(){
 						}
 					}
 
-					if (expired && expiredIn() > 0){
+					if (expired && expiredIn() > 0 && !myaddress){
 
 						expfunc()
 
@@ -379,8 +388,53 @@ var external = (function(){
 						make()
 					}
 
+					_p.el.find('.getqrcode').on('click', function(){
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+							}
+						})
+
+						console.log("ASD")
+
+						payment.makeQR().then(q => {
+							console.log(q)
+
+							self.app.nav.api.load({
+								open : true,
+								href : 'imagegallery',
+								inWnd : true,
+								essenseData : {
+									idName : 'src',
+									images : [{src : q}]
+								},
+			
+								clbk : function(){
+								
+								}
+							})
+
+						})
+					})
+
 					_p.el.find('.close').on('click', function(){
 						self.closeContainer()
+					})
+
+					_p.el.find('.share').on('click', function(){
+
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+								shipmentValue : lsdata.shipmentValue
+							}
+						}) 
+
+						var hash = payment.makeURLHash()
+
+						var l = 'index?ext=' + hash + (lsdata.txid ? '&etxid='+lsdata.txid : '')
+
+						self.app.platform.ui.socialshare(l)
 					})
 
 					if(parameters.tx){
@@ -425,7 +479,38 @@ var external = (function(){
 					}
 
 					if (lsdata.txid){
-						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'))
+						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'), null, null, {verify : (tx) => {
+
+							if(!ed.completedTransaction){
+								return true
+							}
+
+							var opr = self.app.platform.sdk.node.transactions.getOpreturn(tx)
+
+							var payment = self.app.platform.sdk.payments.make({payment : parameters})
+
+							//parameters.address
+
+							var amount = _.reduce(tx.vout, (m, out) => {
+								var as = deep(out, 'scriptPubKey.addresses')
+
+								if (as && as.length == 1 && as[0] == parameters.address){
+									return m + out.value
+								}
+
+								return m
+							}, 0)
+
+							console.log("VERIFY", amount, tx, parameters.paymentHash, opr, payment, payment.getHash(), parameters)
+
+							if (amount = (parameters.value || 0) + (parameters.shipmentValue || 0)){
+								if (opr.replace('pay_', '') == payment.getHash()){
+									return true
+								}
+							}
+
+							return false
+						}})
 					}
 					
 					if (lsdata.txid && !lsdata.customersend){
@@ -475,6 +560,60 @@ var external = (function(){
 
 					
 				})
+			},
+
+			auth : function(_el, parameters, clbk){
+				self.shell({
+					name :  'auth',
+					data : {
+						parameters
+					},
+
+					el : _el
+
+				}, function(_p){
+
+					_p.el.find('.allow').on('click', function(){
+						var signature = self.app.user.signature('auth:' + parameters.host)
+
+						renders.loading('external_loading')
+
+						helpers.callbackAuth(parameters, signature).then(() => {
+							self.closeContainer()
+
+							successCheck()
+					
+						}).catch(e => {
+							sitemessage(e)
+						}).finally(() => {
+							renders.loading(null)
+						})
+					})
+
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+
+					if(clbk) clbk()
+				})
+			},
+
+			emptyAction : function(_el, clbk){
+				self.shell({
+					name :  'empty',
+					data : {
+						
+					},
+
+					el : _el
+
+				}, function(_p){
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+					
+					if(clbk) clbk()
+				})
 			}
 		}
 
@@ -500,19 +639,28 @@ var external = (function(){
 
 				var lsdata = state.load(ed.parameters.hash)
 
+				if(!lsdata.txid && ed.completedTransaction) {
+					lsdata.txid = ed.completedTransaction
+					lsdata.customersend = true
+				}
+
+				if (lsdata.txid){
+					renders.pay(el.cnt, {...ed.parameters}, lsdata, clbk)
+					return
+				}
+
+
 				if (ed.parameters.s_url){
 					if(!lsdata.shipment){
 						lsdata.shipment = state.getLastShipment()
 					}
 				}
+
+				
+
 				
 
 				renders.loading('external_loading')
-
-
-
-
-				
 
 				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
 
@@ -530,6 +678,8 @@ var external = (function(){
 
 					}
 					
+					console.log("VER", tx)
+
 					helpers.getFees(tx).then(fees => {
 
 						renders.pay(el.cnt, {...ed.parameters, tx, fees, shipmentValue}, lsdata, clbk)
@@ -542,13 +692,14 @@ var external = (function(){
 					renders.pay(el.cnt, {...ed.parameters, error : e}, lsdata, clbk)
 
 				}).finally(() => {
-
 					renders.loading(null)
-
 				})
 				
-				
 			},
+
+			auth : function(clbk){
+				renders.auth(el.cnt, {...ed.parameters}, clbk)
+			}
 		}
 
 		var helpers = {
@@ -588,7 +739,7 @@ var external = (function(){
 
 			getShipment : function(parameters, shipment){
 				
-				if (parameters.shipmentValue) return Promise.resolve(shipmentValue)
+				if(parameters.shipmentValue) return Promise.resolve(shipmentValue)
 				if(!parameters.s_url) return Promise.resolve()
 
 				shipment = helpers.getShipmentFields(shipment)
@@ -686,6 +837,58 @@ var external = (function(){
 				return 'fetch'
 			},
 
+			redirect : function(url){
+
+				if (window.cordova){
+
+					cordova.InAppBrowser.open(url, '_system');
+
+					return Promise.resolve()
+				}
+
+				if (typeof _Electron != 'undefined'){
+
+					electron = require('electron');
+					electron.shell().openExternal(url);
+
+					return Promise.resolve()
+				}
+
+				window.open(url)
+
+				return Promise.resolve('redirect')
+			},
+
+			fetch : function(url, data){
+
+				var headers = _.extend({
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8'
+				})
+
+				try{
+					return fetch(url, {
+
+						method: 'POST',
+						mode: 'cors',
+						headers: headers,
+						body: JSON.stringify(data)
+
+					}).then(r => {
+						if(!r.ok){
+							return Promise.reject(r.status)
+						}
+
+						///// TODO: save response
+
+						return r.json()
+					})
+				}
+				catch(e){
+					return Promise.reject(e)
+				}
+			},
+
 			callbackPay : function(parameters, tx, lsdata){
 				var way = helpers.callbackPayWay(parameters)
 
@@ -695,7 +898,7 @@ var external = (function(){
 
 					Url.searchParams.append('tx', tx);
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -711,33 +914,15 @@ var external = (function(){
 						})
 					}
 
-					var url = Url.toString()
 
-					if (window.cordova){
-
-						cordova.InAppBrowser.open(url, '_system');
-
-						return Promise.resolve()
-					}
-
-					if (typeof _Electron != 'undefined'){
-
-						electron = require('electron');
-						electron.shell().openExternal(url);
-
-						return Promise.resolve()
-					}
-
-					window.open(url)
-
-					return Promise.resolve('redirect')
+					return helpers.redirect(Url.toString())
 				}
 
 				if (way == 'fetch'){
 
 					var data = {tx : tx}
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -751,32 +936,42 @@ var external = (function(){
 					if(!parameters.anonimus)
 						data.account = self.app.user.address.value
 
-					var headers = _.extend({
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8'
+					return helpers.fetch(parameters.c_url, data)
+
+					
+
+				}
+
+				return Promise.resolve('noway')
+			},
+
+			
+
+			callbackAuth : function(parameters, signature){
+				var way = helpers.callbackPayWay(parameters)
+
+				if (way == 'redirect'){
+
+					var Url = new URL(parameters.c_url)
+
+					_.each(signature, (d, i) => {
+						Url.searchParams.append(i, d);
 					})
 
-					try{
-						return fetch(parameters.c_url, {
+					return helpers.redirect(Url.toString())
+				}
 
-							method: 'POST',
-							mode: 'cors',
-							headers: headers,
-							body: JSON.stringify(data)
-	
-						}).then(r => {
-							if(!r.ok){
-								return Promise.reject(r.status)
-							}
+				if (way == 'fetch'){
 
-							///// TODO: save response
+					var data = {signature}
 
-							return Promise.resolve('fetch')
-						})
-					}
-					catch(e){
-						return Promise.reject(e)
-					}
+					return helpers.fetch(parameters.c_url, data).then(result => {
+						if (result.redirect){
+							return helpers.redirect(Url.toString())
+						}
+
+						return Promise.reject('noredirect')
+					})
 
 				}
 
@@ -855,7 +1050,6 @@ var external = (function(){
 		}
 
 		var actions = {
-			
 
 			balance : function(){
 				var account = self.app.platform.actions.getCurrentAccount()
@@ -883,6 +1077,10 @@ var external = (function(){
 			if (ways[ed.action]){
 				ways[ed.action](clbk)
 			}
+
+			else{
+				renders.emptyAction(el.cnt, clbk)
+			}
 		}
 
 		return {
@@ -890,7 +1088,9 @@ var external = (function(){
 
 			getdata : function(clbk, p){
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {}
+
+				ed.completedTransaction = parameters().etxid
 
 				var userinfo = self.psdk.userInfo.getmy()
 
@@ -914,7 +1114,7 @@ var external = (function(){
 				ed = {}
 				el = {};
 
-				self.nav.api.history.removeParameters(['ext'])
+				self.nav.api.history.removeParameters(['ext', 'etxid'])
 
 				self.app.platform.actions.clbk('change', 'external', null)
 
@@ -959,7 +1159,7 @@ var external = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -82,7 +82,7 @@ var faq = (function(){
 				//vt = slowMade(function(){
 
 					
-					var h = $(window).height() / 4
+					var h = self.app.el.window.height() / 4
 
 					var inv = inView(el.c.find('.faqcnt .group'), {
 						offsetTop : h,
@@ -244,7 +244,7 @@ var faq = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

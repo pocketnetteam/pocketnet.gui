@@ -406,7 +406,7 @@ var Proxy16 = function(meta, app, api){
 
     self.api = {
         peertubeserversList : () => {
-            if(peertubeserversListRecieved) return peertubeserversListRecieved
+            if(peertubeserversListRecieved) return Promise.resolve(peertubeserversListRecieved)
             if(peertubeserversListRecieving) return peertubeserversListRecieving
 
             peertubeserversListRecieving = self.fetch('peertubeserversList', {}).then(r => {
@@ -1573,8 +1573,6 @@ var Api = function(app){
 
     self.getPeertubeserversList = function(){
         return internal.proxy.api.peertubeserversList().then(result => {
-
-            console.log('result', result)
 
             if (result)
                 window.project_config.archivedPeertubeServers = result 

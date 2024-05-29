@@ -21,8 +21,6 @@ Localization = function(app){
 			key : 'en'
 		},
 
-	
-
 		ru : {
 			name : "Русский",
 			key : 'ru'

@@ -1,3 +1,81 @@
+RifTicker = function(){
+    var self = this
+    var queue = []
+    var rif = null
+    var empty = 0
+
+
+    self.add = function(f){
+        var i = queue.push(f) - 1
+        return i
+    }
+
+    self.cancel = function(index){
+        if (queue.length > index){
+            queue[index] = null
+        }
+        
+    }
+
+    var qlength = function(){
+        return queue.filter(v => {return v}).length
+    }
+
+    var exe = function(){
+        var ql = qlength()
+        if (ql && !rif){
+            rif = requestAnimationFrame(() => {
+
+                while(qlength()){
+                    queue.forEach((f, i) => {
+                        if (f){
+                            try{
+                                f.call(window)
+                            }catch(e){
+                                console.error(e)
+                            }
+
+                            queue[i] = null
+                        }
+                            
+                    })
+                }
+                
+                //queue.splice(0, queue.length);
+                    
+                rif = null
+
+            })
+        }
+
+        if(!ql && rif){
+            cancelAnimationFrame(rif)
+        }
+
+        if(!ql && !rif){
+            empty++
+
+            if (empty == 500){
+                queue.splice(0, queue.length);
+                empty = 0
+            }
+        }
+    }
+
+    setInterval(() => {
+        exe()
+    }, 10)
+
+    return self
+}
+
+rifticker = new RifTicker()
+
+ricfbl = function(f){
+    if(window.requestIdleCallback) window.requestIdleCallback(f)
+    else setTimeout(f, 10)
+}
+
 deep = function(obj, key){
 
     var tkey = ''
@@ -587,7 +665,7 @@ topPreloader2 = function(percent, text){
         
     }
 
-    window.requestAnimationFrame(() => {
+    window.rifticker.add(() => {
         el.removeClass('complete');
         el.attr('percent', percent); 
         div.width((percent) + "%")
@@ -595,7 +673,7 @@ topPreloader2 = function(percent, text){
     
 
     if(percent <= 0 || percent >= 100){
-        window.requestAnimationFrame(() => {
+        window.rifticker.add(() => {
 
             el.addClass('complete');
             el.attr('percent', 0);  
@@ -677,25 +755,40 @@ retry = function(_function, clbk, time, totaltime){
 
     var totalTimeCounter = 0 
     var rif = null
+    var userif = false
 
     var interval = setInterval(function(){
 
-        if (rif){
-            cancelAnimationFrame(rif)
+        if(userif){
+            if (rif){
+                window.rifticker.cancel(rif)
+                rif = null
+            }
+    
+            rif = window.rifticker.add(() => {
+                rif = null
+    
+                if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+    
+                    clearInterval(interval);
+    
+                    if(clbk) clbk();
+    
+                }
+    
+            })
         }
-
-        rif = window.requestAnimationFrame(() => {
-            rif = null
-
+        else{
+            
             if(_function() || (totaltime && totaltime <= totalTimeCounter)){
-
+    
                 clearInterval(interval);
 
                 if(clbk) clbk();
 
             }
-
-        })
+        }
+        
 
         totalTimeCounter += time
 
@@ -923,8 +1016,6 @@ thislink = function (_url = '') {
     var groups = {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
-
-    console.log('_url', _url)
 
     if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
         return false;

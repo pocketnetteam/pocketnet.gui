@@ -331,7 +331,7 @@ Application = function (p) {
 
 		self.mobileview = istouchstylecalculate()
 
-		window.requestAnimationFrame(() => {
+		var id = window.rifticker.add(() => {
 
 			if (self.mobileview) {
 				self.el.html.addClass('mobileview').removeClass('wsview')
@@ -341,6 +341,7 @@ Application = function (p) {
 			}
 
 		})
+
 	}
 
 	var checkTouchStyle = function () {
@@ -911,10 +912,6 @@ Application = function (p) {
 
 	}
 
-	if (self.curation()) {
-		delete self.backmap.index
-	}
-
 	self.options.backmap = self.backMap
 
 	var prepareMap = function () {
@@ -935,6 +932,8 @@ Application = function (p) {
 			var canuse = self.api.ready.use()
 
 			if (canuse) {
+
+				self.api.getPeertubeserversList()
 
 				var stateAdresses = []
 				var infoAdresses = []
@@ -982,8 +981,6 @@ Application = function (p) {
 
 				}
 
-
-
 			}
 		})
 	}
@@ -995,8 +992,8 @@ Application = function (p) {
 
 		self.api = new Api(self)
 		self.api.initIf(() => {
-			/// acceleration
 			acceleration()
+			
 		}).then(() => {
 
 		})
@@ -2397,7 +2394,7 @@ Application = function (p) {
 		safearea: function () {
 			if (window.cordova) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
-				margintop = 20
+				self.margintop = 25
 			}
 			else {
 				document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
@@ -2876,7 +2873,7 @@ Application = function (p) {
 			initdestroyparallaxAuto : function(){
 				var scrollTop = self.actions.getScroll()
 
-				if (!scrollTop) {
+				if (!scrollTop && _.isEmpty(self.nav.wnds)) {
 					self.mobile.reload.initparallax()
 				}
 				else {
@@ -2947,6 +2944,9 @@ Application = function (p) {
 									self.mobile.reload.reloading = true
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
+
+									self.psdk.clearStorageAndObjects()
+        							self.psdk.clearIdCacheAll()
 
 									globalpreloader(true)
 
@@ -3213,31 +3213,27 @@ Application = function (p) {
 	self.ref = null;
 
 	try {
-		self.Logger.info({
-			actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
-			actionSubType: 'USER_FROM_EXTERNAL_SESSION',
-		});
-
+		
 		self.ref = parameters().ref || localStorage['ref'];
 		self.dsubref = parameters().dsubref || localStorage['dsubref'];
-
 		localStorage['dsubref'] = self.dsubref
-	} catch (e) { }
+	} catch (e) { 
+	}
 
 
-	self.options.device = localStorage['device'] || makeid();
+	
 	try {
+		
+		self.options.device = localStorage['device'] || self.id;
 		localStorage['device'] = self.options.device
+
 	} catch (e) { }
 
-	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
 
 	edjsHTML = edjsHTMLCnt(null, self)
 
 	return self;
 }
-
-topPreloader(85);
 
 if (typeof module != "undefined") {
 	module.exports = Application;

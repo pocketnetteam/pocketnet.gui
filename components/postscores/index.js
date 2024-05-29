@@ -343,8 +343,6 @@ var postscores = (function(){
 									}
 								})
 
-								console.log('scores', scores, tempScores)
-
 								scores = scores.concat(tempScores)
 
 							}
@@ -412,7 +410,7 @@ var postscores = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 
