@@ -23789,6 +23789,8 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                console.log('link', link)
+
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
@@ -23821,10 +23823,15 @@ Platform = function (app, listofnodes) {
                             })
 
                             self.app.platform.ui.externalFromCurrentUrl()
+
+                            return false;
                         }
         
-                        return false;
+                        
                     }
+
+                    console.log('link2', link)
+
 
                     self.app.nav.api.load({
                         open: true,
@@ -23906,6 +23913,15 @@ Platform = function (app, listofnodes) {
                 else{
                     app.mobile.reload.destroyparallax()
                 }
+
+
+                if(!value){
+                    self.app.mobile.unsleep(false)
+                }
+                else{
+                    self.app.mobile.unsleep(true)
+                }
+                
 
 
             }
