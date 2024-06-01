@@ -884,7 +884,7 @@ _l.aboutServices10 = 'De plus, les pirates informatiques ne peuvent pas entrer d
 
 _l.aboutServices11 = 'Gagnez avec "+appname +"';
 _l.aboutServices12 = 'Vous pouvez être payé 1,000 USD';
-_l.aboutServices13 = 'Il existe de nombreuses façons de monétiser votre contenu en utilisant Pocketcoin (PKOIN). Contrairement à You earn PKOIN pour le contenu populaire, les utilisateurs peuvent joindre PKOIN aux commentaires en vedette. Un marché de l’annonce décentralisé dont les recettes sont reversées à 100% aux blogueurs devrait être lancé en décembre 2021.  ';
+_l.aboutServices13 = 'Il existe de nombreuses façons de monétiser votre contenu en utilisant Pocketcoin (PKOIN). Contrairement à You earn PKOIN pour le contenu populaire, les utilisateurs peuvent joindre PKOIN aux commentaires en vedette. Dans le développement d’un marché publicitaire décentralisé, dont les revenus sont transférés à 100% aux blogueurs.  ';
 
 _l.aboutServices14 = 'Téléchargez vos vidéos';
 _l.aboutServices15 = '"+appname +" vous permet';
@@ -903,7 +903,7 @@ _l.aboutNewBlock2 = 'Vous gagnez des PKOIN pour les votes des utilisateurs actif
 _l.aboutNewBlock3 = 'Programme de bonus';
 _l.aboutNewBlock4 = '"+appname +" a un programme de bonus à durée limitée pour les blogueurs vidéo avec des gains de 1 000 USD pour chaque 15k vues de vidéos, 1000 utilisateurs invités et 1 250 interactions. Le bonus est payé en Bitcoin ou PKOIN, selon la préférence du blogueur. Il s’agit d’un programme à durée limitée.';
 _l.aboutNewBlock5 = 'Annonces décentralisées';
-_l.aboutNewBlock6 = 'Un marché publicitaire décentralisé dont la sortie est prévue pour décembre 2021 permettra aux annonceurs de créer des publications et de les proposer aux blogueurs. Un blogueur peut examiner la publication de l’annonce et la republier, le cas échéant. Toutes les interactions sur le canal des blogueurs iront directement au portefeuille du blogueur, 100% du produit de l’annonce.';
+_l.aboutNewBlock6 = 'Un marché publicitaire décentralisé permettra aux annonceurs de créer des publications et de les proposer aux blogueurs. Un blogueur peut examiner la publication de l’annonce et la republier, le cas échéant. Toutes les interactions sur le canal des blogueurs iront directement au portefeuille du blogueur, 100% du produit de l’annonce.';
 
 
 

@@ -1499,7 +1499,7 @@ _l.aboutServices10 = 'In addition, hackers cannot enter your account and change 
 
 _l.aboutServices11 = "Earn with "+appname+"";
 _l.aboutServices12 = 'You can get paid 1,000 USD';
-_l.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace with 100% proceeds going to bloggers is set to be released in December 2021.  ';
+_l.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace is under development, 100% of the revenue from which goes to bloggers.  ';
 
 _l.aboutServices14 = 'Upload your videos';
 _l.aboutServices15 = ""+appname+" lets you";
@@ -1519,7 +1519,7 @@ _l.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the 
 _l.aboutNewBlock3 = 'Bonus Program';
 _l.aboutNewBlock4 = ""+appname+" has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.";
 _l.aboutNewBlock5 = 'Decentralized Ads ';
-_l.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
+_l.aboutNewBlock6 = 'A decentralized ad marketplace will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
 
 
 
