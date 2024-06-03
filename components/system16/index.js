@@ -401,10 +401,11 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 					if (rif){
-						cancelAnimationFrame(rif)
+						//cancelAnimationFrame(rif)
+						rifticker.cancel(rif)
 					}
 	
-					rif = window.requestAnimationFrame(() => {
+					rif = rifticker.add(() => {
 						rif = null
 						
 						if (el.c){
@@ -4615,7 +4616,7 @@ var system16 = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

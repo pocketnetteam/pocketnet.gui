@@ -156,11 +156,11 @@ __map =  {
 	},
 	
 	__templates : [
-		{ c : 'navigation', n : 'menu' },
+		{ c : 'bnavigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
+		{ c : 'menu', n : 'userinfo' },
 		
-		//{ c : 'toppanel', n : 'index' },
-		{ c : 'navigation', n : 'index' },
+		{ c : 'bnavigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
@@ -394,7 +394,8 @@ __map =  {
 		anonimus : true,
 		electronDontOpen : true,
 
-		ignoreMinimize : true
+		ignoreMinimize : true,
+		insearch : true
 
 	},
 
@@ -699,6 +700,7 @@ __map =  {
 			href : "home",
 			add : insertingfunc,
 			anonimus : true,
+			insearch : true
 		},
 
 
@@ -952,9 +954,9 @@ __map =  {
 	
 	
 
-	navigation : {
-		uri : "navigation",
-		href : "navigation",
+	bnavigation : {
+		uri : "bnavigation",
+		href : "bnavigation",
 		add : {
 			el : 'navigation'
 		},

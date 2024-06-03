@@ -2798,7 +2798,7 @@ _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'
 _l.external_paySucc_nocbpw = 'Payment has been made, the window will be closed'
-_l.external_paySucc_fetch = 'Payment has been made, we transfer the data to the seller'
+_l.external_paySucc_fetch = 'Payment has been made, we are transfering the data to the seller'
 _l.external_paySucc_redirect = "Payment has been made, go to the seller's page"
 _l.external_email_required = 'Enter your email address'
 _l.external_phone_required = 'Enter your phone number'
@@ -2825,13 +2825,25 @@ _l.shipment = "Shipment"
 _l.external_linkWillExpired = "Payment link expires"
 _l.external_linkExpired = "Payment link has expired"
 
-_l.paymentLink = "Payment link"
-_l.receiver_address = "Reciever Address"
+_l.payLink = "Payment link"
+_l.authLink = "Authorization link"
+_l.undefinedLink = "Unknown link"
+_l.receiver_address = "Reciever"
+
+_l.authText = "Are you sure you want to log in to the site via "+appname+"?"
+_l.authAllow = "Log in via "+appname
 
 _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
 
 _l.free = "Free"
 _l.discount = "Discount"
+_l.tax = "Taxes"
 
-_l.external_paymentlink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
+_l.external_paylink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
+
+_l.payment_myaddress = "This is a payment link that specifies your user as the payee. Select another user to use it"
+_l.external_source = "Where to send PKOIN from"
+_l.external_tTotal = "Account or wallet"
+_l.description = 'Description'
+_l.getqrcode = 'Show QR code'

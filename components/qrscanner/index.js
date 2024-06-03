@@ -29,7 +29,6 @@ var qrscanner = (function(){
 			success : function(result){
 
 				var decodedText = result.data
-				console.log('decodedText', decodedText)
 
 				try{
 					if (ed.success){
@@ -185,7 +184,7 @@ var qrscanner = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -256,8 +256,6 @@ var activities = (function () {
 
 					activitiesByGroup['video'] = _.sortBy(activitiesByGroup['video'], (v) => {return -v.date}) 
 
-					console.log('activitiesByGroup', activitiesByGroup)
-					
 					actions.setloading(false)
 
 					return Promise.resolve(videos)
@@ -404,7 +402,8 @@ var activities = (function () {
 
 
 			loadmorescroll: function () {
-				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight : false;
+				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight - 500 : false;
+
 				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 					actions.getdata().then(data => {
 
@@ -607,7 +606,7 @@ var activities = (function () {
 
 				scnt = el.c.closest('.customscroll:not(body)')
 				
-				if (!scnt.length) scnt = $(window);
+				if (!scnt.length) scnt = self.app.el.window;
 
 				actions.applyFilter()
 

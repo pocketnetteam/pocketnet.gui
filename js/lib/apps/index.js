@@ -1365,6 +1365,8 @@ var BastyonApps = function(app){
 
     self.init = function(){
 
+        console.log("INIT APPS")
+
         var promises = []
 
         if (app.developapps){

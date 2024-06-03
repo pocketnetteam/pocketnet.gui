@@ -59,7 +59,7 @@ var post = (function () {
 				if(!showMoreStatus && ed.repost) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					_el.find('.sharecaption span').html(c)
 
@@ -250,7 +250,9 @@ var post = (function () {
 
 			},
 
-			
+			gotocomments : function(){
+				_scrollTo(el.c.find('.articleend'), el.c.closest('.customscroll'))
+			},
 			postscores: function (clbk) {
 
 				self.app.platform.sdk.user.stateAction(() => {
@@ -398,7 +400,7 @@ var post = (function () {
 
 				if (share.itisarticle()) return
 
-				var h = $(window).height();
+				var h = self.app.height;
 
 				var wh = el.wr.height();
 
@@ -974,6 +976,10 @@ var post = (function () {
 				actions.postscores()
 			},
 
+			gotocomments : function(){
+				actions.gotocomments()
+			},
+
 			repost: function () {
 				actions.repost(share.txid);
 			},
@@ -1286,8 +1292,9 @@ var post = (function () {
 
 										if(aspectRatio > 1.66) aspectRatio = 1.66
 
-
-										el.height( Math.min( self.app.height / 1.5, images.width() || self.app.width) * aspectRatio)
+										window.rifticker.add(() => {
+											el.height( Math.min( self.app.height / 1.5, images.width() || self.app.width) * aspectRatio)
+										})
 									})
 
 								
@@ -1309,30 +1316,36 @@ var post = (function () {
 										var _w = el.width();
 										var _h = el.height()
 
-										if(_img.width >= _img.height && (!mw && self.app.width > 768 && !ed.openapi)){
+										if(_img.naturalWidth >= _img.naturalHeight && (image.images.length == 1 || ed.openapi)){
 											ac = 'w2'
 
-											var w = _w * (_img.width / _img.height);
+											var w = _w * (_img.naturalWidth / _img.naturalHeight);
 
 											if (w > imageswidth){
 												w = imageswidth
 
-												h = w * ( _img.height / _img.width)
-
-												el.height(h);
+												h = w * ( _img.naturalHeight / _img.naturalWidth)
+												window.rifticker.add(() => {
+													el.height(h);
+												})
 											}
 
-											el.width(w);
+											window.rifticker.add(() => {
+												el.width(w);
+											})
 										}
 
-										if(_img.height >= _img.width || (mw || self.app.width <= 768 || ed.openapi)){
+										if(_img.naturalHeight >= _img.naturalWidth && (image.images.length == 1 || ed.openapi)){
 											ac = 'h2'
-
-											el.height(_w * (_img.height / _img.width))
+											window.rifticker.add(() => {
+												el.height(_w * (_img.naturalHeight / _img.naturalWidth))
+											})
 										}
 
 										if(ac){
-											el.addClass(ac)
+											window.rifticker.add(() => {
+												el.addClass(ac)
+											})
 										}
 										
 									})
@@ -1529,6 +1542,9 @@ var post = (function () {
 										el.share.find('.sharesocial').on('click', events.sharesocial);
 
 										el.share.find('.postscoresshow').on('click', events.postscores);
+										el.share.find('.gotocomments').on('click', events.gotocomments);
+
+										
 
 										el.share.find('.postcontent').on('click', function(){
 											$(this).addClass('allshowed')
@@ -1995,7 +2011,7 @@ var post = (function () {
 			}*/
 
 
-			self.app.platform.actionListeners[eid] = function({type, alias, status}){
+			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
 				if(type == 'upvoteShare'){
 
@@ -2239,6 +2255,7 @@ var post = (function () {
 
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
 				delete self.app.platform.actionListeners[eid]
+				delete self.app.psdk.updatelisteners[eid]
 
 				authblock = false;
 				showMoreStatus = false;
@@ -2355,7 +2372,7 @@ var post = (function () {
 		_.each(essenses, function (essense) {
 
 			if(!essense.pip){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					essense.destroy();
 				})
 			}

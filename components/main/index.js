@@ -487,7 +487,7 @@ var main = (function(){
 				if(!el.searchusers) return
 				
 				if (show){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.searchusers.removeClass('hidden')
 					})
 
@@ -508,7 +508,7 @@ var main = (function(){
 
 							if (!users.length && el.searchusers){
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									el.searchusers.addClass('hidden')
 
 									if (externalsearchusers){
@@ -532,7 +532,7 @@ var main = (function(){
 					}
 
 					if(el.searchusers){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.searchusers.find('.wrpcn').html('')
 							el.searchusers.addClass('hidden')
 						})
@@ -548,7 +548,7 @@ var main = (function(){
 				if(!el.topvideos) return
 				
 				if (show){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.topvideos.removeClass('hidden')
 					})
 
@@ -589,7 +589,7 @@ var main = (function(){
 
 							if (shares.length <= 2 && el.topvideos){
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									el.topvideos.addClass('hidden')
 
 									if(external){
@@ -616,7 +616,7 @@ var main = (function(){
 					}
 
 					if(el.topvideos){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.topvideos.find('.wrpcn').html('')
 							el.topvideos.addClass('hidden')
 						})
@@ -868,7 +868,7 @@ var main = (function(){
 
 								events.up()
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 								
 									el.c.addClass('opensvishowed')
 
@@ -1060,7 +1060,7 @@ var main = (function(){
 						right : {
 							cancellable : true,				
 							basevalue : function(){
-								return - 0.9 * (self.app.width || $(window).width())
+								return - 0.9 * (self.app.width || self.app.el.window.width())
 							},
 
 							positionclbk : function(px){
@@ -1104,13 +1104,13 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.c.find('.bgCaption').removeClass('hidden')
 							})
 						}
 						else
 						{
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.share.html('')
 								el.c.find('.bgCaption').addClass('hidden')
 							})
@@ -1399,7 +1399,6 @@ var main = (function(){
 
 			destroy : function(){
 
-
 				showCategories(false)
 
 				delete self.app.events.scroll.main
@@ -1559,7 +1558,7 @@ var main = (function(){
 				}
 
 				if(videomain && !isMobile()){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('videomain')
 					})
 				}

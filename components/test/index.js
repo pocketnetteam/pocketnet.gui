@@ -290,8 +290,6 @@ var test = (function(){
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
-						console.log('exist2', userInfo.name.v, exist)
-
 						//exist = false
 
 						if(!exist || (exist == self.app.user.address.value)){
@@ -590,8 +588,6 @@ var test = (function(){
 									var n = tempInfo[parameter.id]
 
 									self.app.platform.sdk.users.nameExist(n, function(exist){
-
-										console.log('exist', tempInfo[parameter.id], n)
 
 										if(tempInfo[parameter.id] != n) return
 
@@ -1091,7 +1087,7 @@ var test = (function(){
 
 			renders.icon(() => {
 				renders.options(() => {
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('rendered')
 					})
 				})

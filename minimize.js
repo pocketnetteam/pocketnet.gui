@@ -11,7 +11,7 @@ var ncp = require('ncp').ncp;
 const { execSync } = require('child_process');
 ncp.limit = 16;
 
-var minifyHtml = require('html-minifier').minify;
+var minifyHtml = require('html-minifier-terser').minify;
 
 var args = {
 	test : false,
@@ -703,16 +703,24 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									if(!scripted[i.c]) scripted[i.c] = {}
-
-									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+									minifyHtml(data.toString(), {
 										collapseWhitespace : true,
 										removeComments : true
+									}).then((r) => {
+
+										if(!scripted[i.c]) scripted[i.c] = {}
+										
+										scripted[i.c][i.n] = r
+
+									}).catch(e => {
+
+									}).finally(() => {
+										p.success();
 									})
 
-									//var uglified = htmlUglify.process(htmlString);
+									
 
-									p.success();
+									
 								});
 
 							}
@@ -1144,7 +1152,7 @@ var helpers = {
 	clearfolder : function(directory, clbk){
 
 		try{
-			fs.rmdirSync(directory, {
+			fs.rmSync(directory, {
 				recursive : true
 			})
 		}

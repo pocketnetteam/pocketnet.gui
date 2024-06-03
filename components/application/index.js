@@ -331,7 +331,7 @@ var application = (function(){
 
 			getdata : function(clbk, p){
 				
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent_application')
 					self.app.mobile.reload.destroyparallax()
 				})
@@ -388,7 +388,7 @@ var application = (function(){
 				ed = {}
 				el = {};
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.el.html.removeClass('allcontent_application')
 					self.app.mobile.reload.initparallax()
 				})
@@ -434,7 +434,7 @@ var application = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

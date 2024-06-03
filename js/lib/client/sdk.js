@@ -1349,6 +1349,7 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['share'][exp.postid], exp)
 
                 clearallfromdb('commentRequest')
+                clearfromdb('share', [exp.postid])
             }
         },
         applyAction: function (object, exp) {
@@ -1457,16 +1458,11 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('comment'), filter)
 
-
                 _.each(actions, (a) => {
 
                     if (a.optype == 'comment'){
                         objects.unshift(a)
                     }
-
-                    /*if(a.optype == 'commentDelete'){
-                        objects = _.filter(objects)
-                    }*/
                 })
             })
 
@@ -1576,8 +1572,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         insertFromResponseEx: function (response) {
-
-            console.log('response.users', response.users)
 
             self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
 
@@ -2158,9 +2152,10 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 clearfromdb('postScores', [exp.share.v])
-
+                clearfromdb('share', [exp.share.v])
                 //// long like cache
 
+                
                 if(exp.actor == app.user.address.value){
                     settodb('myScore', [result]).then(() => {
                     }).catch(e => {
@@ -2184,7 +2179,24 @@ var pSDK = function ({ app, api, actions }) {
             }
 
             return share
-        }
+        },
+
+        tempGet: function (filter) {
+
+            var objects = []
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('upvoteShare'), filter)
+
+                _.each(actions, (a) => {
+
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+
+        },
     }
 
     /// requests
@@ -2670,7 +2682,6 @@ var pSDK = function ({ app, api, actions }) {
 
     self.ws = {
         update : function(type, wsdata){
-            console.log('type, wsdata', type, wsdata)
 
             var status = 'completed'
             var alias = null

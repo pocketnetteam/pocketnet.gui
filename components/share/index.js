@@ -1600,8 +1600,6 @@ var share = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					console.log('_mestate' , _mestate)
-
 					self.shell({
 						name :  'postline',
 						el : el.postline,
@@ -2685,10 +2683,22 @@ var share = (function(){
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				try{
-					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+					if (el.eMessage) {
+		
+						el.eMessage[0].emojioneArea.destroy();
+
+						el.eMessage.remove()
+
+						delete el.eMessage[0].emojioneArea
+
+
+						console.log('destroy')
+					}
+
+					
 				}
 				catch(e){
-
+					console.error(e)
 				}
 				
 
@@ -2728,6 +2738,8 @@ var share = (function(){
 					sortable.destroy()
 					sortable = null
 				}
+
+				if(el.c) el.c.empty()
 
 				el = {};
 					
@@ -2835,7 +2847,7 @@ var share = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

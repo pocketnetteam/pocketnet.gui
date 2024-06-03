@@ -1700,9 +1700,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function ({ url }) {
 
 
-					return Promise.reject({
-						error : 'deprecated'
-					})
+					return new Promise((resolve, reject) => {
+						remote.nmake(url, function (err, data) {
+							if (!err) {
+								resolve({
+									data: data,
+								});
+							} else {
+								reject(err);
+							}
+						}, {
+							bitchute : true
+						});
+					});
 
 				},
 			},

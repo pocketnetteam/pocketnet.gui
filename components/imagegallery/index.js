@@ -262,7 +262,7 @@ var imagegallery = (function(){
 
 				action = 'next'
 
-				if(e.pageX < $(window).width() / 2) action = 'back'
+				if(e.pageX < self.app.el.window.width() / 2) action = 'back'
 
 				actions[action]();
 			},
@@ -693,7 +693,7 @@ var imagegallery = (function(){
 				//self.app.nav.api.history.removeParameters(['num'])
 
 				if (el.c)
-					el.c.detach()
+					el.c.remove()
 
 				el = {};
 
@@ -751,7 +751,7 @@ var imagegallery = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

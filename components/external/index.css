@@ -12,6 +12,17 @@
 #external {
   padding-bottom: 77px;
 }
+#external .getqrcode {
+  margin-top: 1em;
+  padding: 1em;
+  text-align: center;
+  cursor: pointer;
+}
+#external .getqrcode span {
+  color: rgb(var(--neutral-grad-4));
+  text-decoration: underline;
+  font-size: 0.8em;
+}
 #external .loading {
   display: none;
   background: rgb(var(--background-secondary-theme));
@@ -48,6 +59,13 @@
   -o-transition: 1s;
   -webkit-transition: 1s;
   transition: 1s;
+}
+#external .myaddresstext {
+  padding: 2em;
+  text-align: center;
+}
+#external .myaddresstext span {
+  font-weight: 700;
 }
 #external .captionRowExt {
   position: sticky;
@@ -184,6 +202,10 @@
 #external .pay .description {
   padding: 1em;
 }
+#external .pay .description .dcaption span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
 #external .pay .linkWillExpired {
   background: rgb(var(--background-secondary-theme));
   text-align: center;
@@ -197,6 +219,9 @@
   padding: 2em;
   text-align: center;
 }
+#external .pay .recieverrow {
+  cursor: pointer;
+}
 #external .pay .forReciever {
   display: flex;
   align-items: center;
@@ -206,7 +231,7 @@
   width: 1.5em;
   height: 1.5em;
   line-height: 1.5em;
-  margin-right: 0.5em;
+  margin-right: 0.25em;
 }
 #external .pay .txWrapper {
   margin-top: 1.5em;
@@ -225,7 +250,8 @@
 #external .pay .store span,
 #external .pay .store a {
   color: rgb(var(--neutral-grad-2));
-  font-size: 0.7em;
+  font-size: 0.8em;
+  font-weight: 700;
 }
 #external .pay .form .row {
   padding: 1em;
@@ -240,29 +266,29 @@
   padding-bottom: 0.5em;
   border-bottom: 1px dashed rgb(var(--neutral-grad-1));
 }
-#external .pay .form .row.forinfo:nth-last-child(1) {
-  border-bottom: 0;
+#external .pay .form .row.forinfo:nth-child(1) {
+  border-top: 1px dashed rgb(var(--neutral-grad-1));
 }
 #external .pay .form .items {
   margin-top: 0.5em;
   padding-bottom: 1.5em;
 }
-#external .pay .form .info {
+#external .pay .form .einfo {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-#external .pay .form .info .image {
+#external .pay .form .einfo .image {
   width: 60px;
   height: 60px;
   border-radius: 1em;
   background: rgb(var(--neutral-grad-1));
 }
-#external .pay .form .info .imageWrapper {
+#external .pay .form .einfo .imageWrapper {
   position: relative;
 }
-#external .pay .form .info .imageWrapper .count {
+#external .pay .form .einfo .imageWrapper .count {
   position: absolute;
   right: -6px;
   top: -6px;
@@ -277,7 +303,7 @@
   border-radius: 15px;
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
-#external .pay .form .info .name {
+#external .pay .form .einfo .name {
   margin-left: 1em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -288,10 +314,10 @@
   font-size: 0.8em;
   margin-right: 6em;
 }
-#external .pay .form .info .count {
+#external .pay .form .einfo .count {
   margin-left: auto;
 }
-#external .pay .form .info .value {
+#external .pay .form .einfo .value {
   margin-left: auto;
 }
 #external .pay .form .label {
@@ -299,6 +325,49 @@
 }
 #external .pay .form .value {
   font-size: 0.9em;
+}
+#external .empty,
+#external .auth {
+  text-align: center;
+}
+#external .empty .caption,
+#external .auth .caption {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4em;
+  max-width: 80%;
+}
+#external .empty .caption span,
+#external .auth .caption span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+#external .empty .host,
+#external .auth .host {
+  font-size: 2em;
+  font-weight: 100;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5em;
+}
+#external .empty .buttonsWrapper,
+#external .auth .buttonsWrapper {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4em;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+#external .empty .buttonsWrapper button,
+#external .auth .buttonsWrapper button {
+  max-width: 80%;
+}
+#external .empty .buttonsWrapper button.cancel,
+#external .auth .buttonsWrapper button.cancel {
+  margin-top: 1em;
 }
 #external .value {
   white-space: nowrap;
@@ -312,9 +381,17 @@
   padding: 0.5em;
   padding-bottom: 1.5em;
 }
-#external .actionButtonWrapper button {
+#external .actionButtonWrapper .btns {
   max-width: 550px;
   width: 75%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 0.25em;
+}
+#external .actionButtonWrapper button {
+  flex-grow: 2;
 }
 #external .actionButtonWrapper button[disabled] {
   border-color: rgb(var(--neutral-grad-3));

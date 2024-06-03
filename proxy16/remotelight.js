@@ -32,7 +32,7 @@ var Remote = function(app){
 
 	var load = {
 		
-		ogcache : function(uri, clbk){
+		ogcache : function(uri, clbk, p){
 			if(errors[uri]){
 
 				if (clbk)
@@ -70,42 +70,23 @@ var Remote = function(app){
 				ogloading[uri] = true
 
 				load.ogs(uri, function(og){
-					if(_.isEmpty(og)){
-						load.ogf(uri, function(og){
+					
 
-							if (ogcache.length > 3500){
-								ogcache = _.last(ogcache, 3000)
-							}
-		
-							delete ogloading[uri]
-		
-							ogcache.push({
-								url : uri,
-								og : og
-							})
-		
-							if (clbk)
-								clbk(og)	
-						})
+					if (ogcache.length > 3500){
+						ogcache = _.last(ogcache, 3000)
 					}
-					else{
-
-						if (ogcache.length > 3500){
-							ogcache = _.last(ogcache, 3000)
-						}
-		
-						delete ogloading[uri]
 	
-						ogcache.push({
-							url : uri,
-							og : og
-						})
+					delete ogloading[uri]
 
-						
-						if (clbk)
-							clbk(og)
-					}
-				})
+					ogcache.push({
+						url : uri,
+						og : og
+					})
+
+					
+					if (clbk)
+						clbk(og)
+				}, p)
 
 				
 			}
@@ -117,7 +98,7 @@ var Remote = function(app){
 			})
 		},
 
-		ogs : function(uri, clbk){
+		ogs : function(uri, clbk, p = {}){
 
 			if(!uri){
 				
@@ -129,7 +110,7 @@ var Remote = function(app){
 			}
 
 			request({
-				uri : nremotelink + '?url=' + uri + '&validate=false',
+				uri : nremotelink + '?url=' + uri + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
 				timeout : 30000,
 				type : "POST"
 			}, function(error, response, body){
@@ -176,14 +157,15 @@ var Remote = function(app){
 
 		ogf : function(uri, clbk){
 
-			if(!uri){
+			//if(!uri){
 
-				if (clbk){
-					clbk({})
-				}
 
-				return
+			if (clbk){
+				clbk({})
 			}
+
+			return
+			//}
 
 
 			request({
@@ -221,14 +203,14 @@ var Remote = function(app){
 	}
 
 
-	self.nmake = function(url, clbk){
+	self.nmake = function(url, clbk, p){
 		load.ogcache(url, function(og){
 
 			if (clbk){
 				clbk(null, og)
 			}
 
-		})
+		}, p)
 	}
 
 	self.clear = function(){

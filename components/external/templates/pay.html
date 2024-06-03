@@ -1,8 +1,8 @@
 <div class="pay">
 
-    <% if(!expired || expiredIn > 0) {%>
+    <% if(!expired || expiredIn > 0 || myaddress) {%>
 
-        <% if(expired) {%>
+        <% if(expired && !myaddress) {%>
             <div class="linkWillExpired">
                 <span><%-e('external_linkWillExpired')%></span>
                 <span class="expiredIn"></span>
@@ -68,7 +68,7 @@
                 <div class="items">
                     <% _.each(parameters.items, function(item){ %>
                         <div class="row forinfo">
-                            <div class="info">
+                            <div class="einfo">
                                 <div class="imageWrapper">
                                     <div class="image" image="<%-item.image || ''%>">
                                             
@@ -92,79 +92,16 @@
             <% } %>
 
             <% if(parameters.description) {%>
+      
                 <div class="description">
-                    <span><%-parameters.description%></span>
+                    <div class="dcaption"><span><%-e('description')%>:</span></div>
+                    <div class="dtext"><span><%-parameters.description%></span></div>
                 </div>
             <% } %>
             
             <% if(!lsdata.txid) { %>
 
-                <div class="row">
-                    <div class="label">
-                        <span><%-e('receiver_address')%></span>
-                    </div>
-                    
-                    <div class="value forReciever">
-                        <div class="profileWrapper">
-
-                        </div>
-                        <div class="addressWrapper">
-                            <span><%-parameters.address%></span>
-                        </div>
-                    </div>
-                </div>
-
-                <% if(parameters.fees) {%>
-                    <div class="row">
-                        <div class="label">
-                            <span><%-e('wsfees')%></span>
-                        </div>
-
-                        <div class="value">
-                            <span><%-app.platform.mp.coin(parameters.fees)%></span> <span>PKOIN</span>
-                        </div>
-                    </div>
-                <% } %>
-
-                <% if(typeof parameters.shipmentValue != 'undefined') {%>
-                    <div class="row">
-                        <div class="label">
-                            <span><%- e('shipment') %></span>
-                        </div>
-
-                        <div class="value">
-                            <% if(!parameters.shipmentValue) {%>
-                                <span><%- e('free') %></span>
-                            <% } else { %> 
-                                <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
-                            <% } %>
-                        </div>
-                    </div>
-                <% } %>
-
-                <% if(parameters.discount) {%>
-                    <div class="row">
-                        <div class="label">
-                            <span><%- e('discount') %></span>
-                        </div>
-
-                        <div class="value">
-                            <span>-<%-app.platform.mp.coin(parameters.discount)%></span> <span>PKOIN</span>
-                        </div>
-                    </div>
-                <% } %>
-
-                <div class="row">
-                    <div class="label">
-                        <span><b><%-e('total')%></b></span>
-                    </div>
-
-                    <div class="value">
-                        <span><b><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0), {precision : parameters.fees ? 4 : undefined})%></b></span> <span>PKOIN</span>
-                    </div>
-                </div>
-
-                <% if(balanceModeParameter.possibleValues.lenght > 1) {%>
+                <% if(!myaddress && balanceModeParameter.possibleValues.length > 1) {%>
 
                     <div class="balanceModeWrapper">
                     
@@ -190,10 +127,98 @@
 
                 <% } %>
 
+                <div class="row recieverrow">
+                    <div class="label">
+                        <span><%-e('receiver_address')%></span>
+                    </div>
+                    
+                    <div class="value forReciever">
+                        <div class="profileWrapper">
+
+                        </div>
+                        <div class="addressWrapper">
+                            <span><%-parameters.address%></span>
+                        </div>
+                    </div>
+                </div>
+
+                <% if(parameters.fees) {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%-e('wsfees')%></span>
+                        </div>
+
+                        <div class="value">
+                            <span><%-app.platform.mp.coin(parameters.fees + ((parameters.saltValue && parameters.saltValue > 0) ? parameters.saltValue : 0))%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if(typeof parameters.shipmentValue != 'undefined') {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%- e('shipment') %></span>
+                        </div>
+
+                        <div class="value">
+                            <% if(!parameters.shipmentValue) {%>
+                                <span><%- e('free') %></span>
+                            <% } else { %> 
+                                <span><%-app.platform.mp.coin(parameters.shipmentValue || 0)%></span> <span>PKOIN</span>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if(parameters.discount || (parameters.saltValue && parameters.saltValue < 0)) { %>
+                    <div class="row">
+                        <div class="label">
+                            <span><%- e('discount') %></span>
+                        </div>
+
+                        <div class="value">
+                            <span>-<%-app.platform.mp.coin((parameters.discount || 0) + ((parameters.saltValue && parameters.saltValue) < 0 ? (-parameters.saltValue) : 0))%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if(parameters.tax) {%>
+                    <div class="row">
+                        <div class="label">
+                            <span><%- e('tax') %></span>
+                        </div>
+
+                        <div class="value">
+                            <span><%-app.platform.mp.coin(parameters.tax)%></span> <span>PKOIN</span>
+                        </div>
+                    </div>
+                <% } %>
+
+                <div class="row">
+                    <div class="label">
+                        <span><b><%-e('total')%></b></span>
+                    </div>
+
+                    <div class="value">
+                        <span><b><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></b></span> <span>PKOIN</span>
+                    </div>
+                </div>
+
+                
+
             <% } %>
+            
+        <% if(myaddress && !lsdata.txid) {%>
+            <div class="myaddresstext">
+                <span><%=e('payment_myaddress')%></span>
+            </div>
+        <% } %>
 
-        </div>
-
+        <% if(!lsdata.txid) { %>
+            <div class="getqrcode">
+                <span><%=e('getqrcode')%></span>
+            </div>
+        <% } %>
         <% if(lsdata.txid) { %>
 
             <div class="txWrapper">
@@ -207,7 +232,10 @@
             </div>
 
             <div class="actionButtonWrapper buttonWrapper">
-                <button class="button close"><span><%=e('close')%></span></button>
+                <div class="btns">
+                    <button class="button close"><span><%=e('close')%></span></button>
+                    <button class="button share"><span><%=e('share')%></span></button>
+                </div>
             </div>
 
         <% } else { %> 
@@ -219,18 +247,23 @@
                     </span>
                 </div>
             <% } %>
-        
-            <div class="actionButtonWrapper buttonWrapper">
-                <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0) - (parameters.discount || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
-            </div>
+                
+            <% if(!myaddress) {%>
+                <div class="actionButtonWrapper buttonWrapper">
+                    <div class="btns">
+                        <button class="button sendtx" <% if(!parameters.tx) {%> disabled="disabled" <% } %>><%=e(parameters.items ? 'pay' : 'send')%> <span><%-app.platform.mp.coin(parameters.value + (parameters.fees || 0) + (parameters.shipmentValue || 0), {precision : parameters.fees ? 4 : undefined})%></span> <span>PKOIN</span></button>
+                    </div>
+                </div>
+            <% } %>
             
         <% } %>
 
     <% } else { %> 
-        <div class="linkExpired">
-            <span><%-e('external_linkExpired')%></span>
-        </div>
+        
+            <div class="linkExpired">
+                <span><%-e('external_linkExpired')%></span>
+            </div>
+
     <% } %>
-    
    
 </div>

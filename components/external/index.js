@@ -9,7 +9,7 @@ var external = (function(){
 		var primary = deep(p, 'history');
 
 		var el, ed, balanceMode, loading = false;
-		var balanceModes = [{id : 'all', label : 'tTotal'}, {id : 'user', label : 'twalletaddresses'}, {id : 'wallet', label : 'twallet'}]
+		var balanceModes = [{id : 'all', label : 'external_tTotal'}, {id : 'user', label : 'tacaddress'}, {id : 'wallet', label : 'twallet'}]
 		var expiredInterval = null;
 		var countryList = {"US": "United States", "RU": "Russia", "BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Barthelemy", "BM": "Bermuda", "BN": "Brunei", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BQ": "Bonaire, Saint Eustatius and Saba ", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "BZ": "Belize", "RW": "Rwanda", "RS": "Serbia", "TL": "East Timor", "RE": "Reunion", "TM": "Turkmenistan", "TJ": "Tajikistan", "RO": "Romania", "TK": "Tokelau", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "PG": "Papua New Guinea", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "EE": "Estonia", "EG": "Egypt", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands", "FM": "Micronesia", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "XK": "Kosovo", "CI": "Ivory Coast", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos Islands", "CA": "Canada", "CG": "Republic of the Congo", "CF": "Central African Republic", "CD": "Democratic Republic of the Congo", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CW": "Curacao", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syria", "SX": "Sint Maarten", "KG": "Kyrgyzstan", "KE": "Kenya", "SS": "South Sudan", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "South Korea", "SI": "Slovenia", "KP": "North Korea", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "British Virgin Islands", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Laos", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "LV": "Latvia", "TO": "Tonga", "LT": "Lithuania", "LU": "Luxembourg", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libya", "VA": "Vatican", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "U.S. Virgin Islands", "IS": "Iceland", "IR": "Iran", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AQ": "Antarctica", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}
 
@@ -232,7 +232,6 @@ var external = (function(){
 			},
 
 			pay : function(_el, parameters, lsdata, clbk){
-				console.log('parameters', parameters)
 
 				helpers.clearExpInterval()
 
@@ -259,7 +258,7 @@ var external = (function(){
 
 					/// saveHashInfo
 
-					if(cbpw == 'redirect'){
+					if (cbpw == 'redirect'){
 						renders.loading('external_paySucc_redirect')
 
 						helpers.callbackPay(parameters, txid, lsdata).then((w) => {
@@ -289,7 +288,6 @@ var external = (function(){
 					if(!lsdata.txid){
 						if (parameters.date && parameters.expired){
 
-
 							return  (parameters.date + Number(parameters.expired * 1000)) - (new Date()).getTime() 
 						}
 					}
@@ -313,16 +311,24 @@ var external = (function(){
 					}
 				}
 
+				
 				var balanceModeParameter = new Parameter({
 					type : "VALUES",
-					name : self.app.localization.e("source"),
-					placeholder : self.app.localization.e('source'),
+					name : self.app.localization.e("external_source"),
+					placeholder : self.app.localization.e('external_source'),
 					id : 'balanceMode',
 					possibleValues : _.map(bms, (bm) => {return bm.id}), 
 					possibleValuesLabels : _.map(bms, (bm) => {return self.app.localization.e(bm.label)}),
 					defaultValue : balanceMode,
 					value : balanceMode
 				})
+
+				var alladdresses = (self.app.platform.sdk.addresses.storage.addresses || []).concat(self.app.user.address.value)
+				var myaddress = false
+
+				if(alladdresses.indexOf(parameters.address) > -1){
+					myaddress = true
+				}
 
 				self.shell({
 					name :  'pay',
@@ -332,7 +338,8 @@ var external = (function(){
 						inputs : hp,
 						balanceModeParameter,
 						expired,
-						expiredIn : expiredIn()
+						expiredIn : expiredIn(),
+						myaddress
 					},
 
 					insertimmediately : parameters.s_url ? true : false,
@@ -352,7 +359,7 @@ var external = (function(){
 						}
 					}
 
-					if (expired && expiredIn() > 0){
+					if (expired && expiredIn() > 0 && !myaddress){
 
 						expfunc()
 
@@ -381,8 +388,53 @@ var external = (function(){
 						make()
 					}
 
+					_p.el.find('.getqrcode').on('click', function(){
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+							}
+						})
+
+						console.log("ASD")
+
+						payment.makeQR().then(q => {
+							console.log(q)
+
+							self.app.nav.api.load({
+								open : true,
+								href : 'imagegallery',
+								inWnd : true,
+								essenseData : {
+									idName : 'src',
+									images : [{src : q}]
+								},
+			
+								clbk : function(){
+								
+								}
+							})
+
+						})
+					})
+
 					_p.el.find('.close').on('click', function(){
 						self.closeContainer()
+					})
+
+					_p.el.find('.share').on('click', function(){
+
+						var payment = self.app.platform.sdk.payments.make({
+							payment : {
+								...parameters, 
+								shipmentValue : lsdata.shipmentValue
+							}
+						}) 
+
+						var hash = payment.makeURLHash()
+
+						var l = 'index?ext=' + hash + (lsdata.txid ? '&etxid='+lsdata.txid : '')
+
+						self.app.platform.ui.socialshare(l)
 					})
 
 					if(parameters.tx){
@@ -412,49 +464,66 @@ var external = (function(){
 
 							helpers.sendTransaction(parameters.tx, parameters.fees).then((txid) => {
 
+								renders.loading()
+
 								txclbk(txid)
 
 							}).catch(e => {
+								renders.loading()
 								console.error(e)
 								sitemessage(e)
 
-							}).finally(() => {
-								renders.loading()
 							})
 
-							/*setTimeout(() => {
-
-								txclbk('e563fa4c9440b81164c0049b324740ef156748607c668b2707551237c75d2591')
-								
-							}, 4300)*/
-
-							/*
-							
-							renders.loading()
-							sitemessage('error')
-							
-							*/
-
-							/*helpers.sendTransaction(parameters.tx, parameters.fees).then(() => {
-
-							}).catch(e => {
-
-							}).finally(() => {
-
-							})*/
-							
 						})
 					}
 
 					if (lsdata.txid){
-						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'))
+						self.app.platform.papi.transaction(lsdata.txid, _p.el.find('.txBody'), null, null, {verify : (tx) => {
+
+							if(!ed.completedTransaction){
+								return true
+							}
+
+							var opr = self.app.platform.sdk.node.transactions.getOpreturn(tx)
+
+							var payment = self.app.platform.sdk.payments.make({payment : parameters})
+
+							//parameters.address
+
+							var amount = _.reduce(tx.vout, (m, out) => {
+								var as = deep(out, 'scriptPubKey.addresses')
+
+								if (as && as.length == 1 && as[0] == parameters.address){
+									return m + out.value
+								}
+
+								return m
+							}, 0)
+
+							console.log("VERIFY", amount, tx, parameters.paymentHash, opr, payment, payment.getHash(), parameters)
+
+							if (amount = (parameters.value || 0) + (parameters.shipmentValue || 0)){
+								if (opr.replace('pay_', '') == payment.getHash()){
+									return true
+								}
+							}
+
+							return false
+						}})
 					}
 					
 					if (lsdata.txid && !lsdata.customersend){
 						txclbk(lsdata.txid)
 					}
 
-					renders.recieverProfile(_p.el.find('.profileWrapper'), parameters.address)
+					_p.el.find('.recieverrow').on('click', () => {
+						copycleartext(parameters.address)
+
+						sitemessage(self.app.localization.e('waddresswascop'))
+					})
+
+					renders.recieverProfile(_p.el.find('.forReciever'), parameters.address)
 
 					if (parameters.s_url){
 						renders.shipment(_el.find('.shipmentWrapper'), parameters, lsdata, () => {
@@ -475,17 +544,75 @@ var external = (function(){
 				self.sdk.users.get(address, function(){
 					var profile = self.psdk.userInfo.get(address)
 
-					self.shell({
-						name :  'recieverProfile',
-						data : {
-							profile
-						},
+					if (profile){
+						self.shell({
+							name :  'recieverProfile',
+							data : {
+								profile
+							},
+		
+							el : el
+		
+						}, function(_p){
 	
-						el : el
-	
-					}, function(_p){
+						})
+					}
 
+					
+				})
+			},
+
+			auth : function(_el, parameters, clbk){
+				self.shell({
+					name :  'auth',
+					data : {
+						parameters
+					},
+
+					el : _el
+
+				}, function(_p){
+
+					_p.el.find('.allow').on('click', function(){
+						var signature = self.app.user.signature('auth:' + parameters.host)
+
+						renders.loading('external_loading')
+
+						helpers.callbackAuth(parameters, signature).then(() => {
+							self.closeContainer()
+
+							successCheck()
+					
+						}).catch(e => {
+							sitemessage(e)
+						}).finally(() => {
+							renders.loading(null)
+						})
 					})
+
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+
+					if(clbk) clbk()
+				})
+			},
+
+			emptyAction : function(_el, clbk){
+				self.shell({
+					name :  'empty',
+					data : {
+						
+					},
+
+					el : _el
+
+				}, function(_p){
+					_p.el.find('.cancel').on('click', function(){
+						self.closeContainer()
+					})
+					
+					if(clbk) clbk()
 				})
 			}
 		}
@@ -512,19 +639,28 @@ var external = (function(){
 
 				var lsdata = state.load(ed.parameters.hash)
 
+				if(!lsdata.txid && ed.completedTransaction) {
+					lsdata.txid = ed.completedTransaction
+					lsdata.customersend = true
+				}
+
+				if (lsdata.txid){
+					renders.pay(el.cnt, {...ed.parameters}, lsdata, clbk)
+					return
+				}
+
+
 				if (ed.parameters.s_url){
 					if(!lsdata.shipment){
 						lsdata.shipment = state.getLastShipment()
 					}
 				}
+
+				
+
 				
 
 				renders.loading('external_loading')
-
-
-
-
-				
 
 				helpers.getShipment(ed.parameters, lsdata.shipment).then(shipmentValue => {
 
@@ -536,13 +672,16 @@ var external = (function(){
 					var tx = null
 
 					try{
-						tx = helpers.getTransaction(ed.parameters.value + (shipmentValue || 0) - (ed.parameters.discount || 0), ed.parameters.address, ed.parameters)
+						tx = helpers.getTransaction(ed.parameters.value + (shipmentValue || 0) /*- (ed.parameters.discount || 0)*/, ed.parameters.address, ed.parameters)
 					}
 					catch(e){
 
 					}
 					
+					console.log("VER", tx)
+
 					helpers.getFees(tx).then(fees => {
+
 						renders.pay(el.cnt, {...ed.parameters, tx, fees, shipmentValue}, lsdata, clbk)
 					}).catch(e => {
 						renders.pay(el.cnt, {...ed.parameters, error : e, shipmentValue}, lsdata, clbk)
@@ -553,13 +692,14 @@ var external = (function(){
 					renders.pay(el.cnt, {...ed.parameters, error : e}, lsdata, clbk)
 
 				}).finally(() => {
-
 					renders.loading(null)
-
 				})
 				
-				
 			},
+
+			auth : function(clbk){
+				renders.auth(el.cnt, {...ed.parameters}, clbk)
+			}
 		}
 
 		var helpers = {
@@ -575,6 +715,7 @@ var external = (function(){
 				if(parameters.anonimus) return _.filter(balanceModes, (bm) => {
 					return bm.id == 'wallet'
 				})
+
 
 				return balanceModes
 			},
@@ -598,12 +739,10 @@ var external = (function(){
 
 			getShipment : function(parameters, shipment){
 				
-				if (parameters.shipmentValue) return Promise.resolve(shipmentValue)
+				if(parameters.shipmentValue) return Promise.resolve(shipmentValue)
 				if(!parameters.s_url) return Promise.resolve()
 
 				shipment = helpers.getShipmentFields(shipment)
-
-				console.log("shipment", shipment)
 
 				if(!shipment || !shipment.country || !shipment.city || !shipment.address || !shipment.zipcode){
 					return Promise.reject({
@@ -681,8 +820,6 @@ var external = (function(){
 						delete shipmentsCacheLoading[parameters.hash][datahash]
 					})
 
-					console.log('shipmentsCacheLoading', shipmentsCacheLoading)
-
 					return shipmentsCacheLoading[parameters.hash][datahash]
 				}
 				catch(e){
@@ -700,6 +837,58 @@ var external = (function(){
 				return 'fetch'
 			},
 
+			redirect : function(url){
+
+				if (window.cordova){
+
+					cordova.InAppBrowser.open(url, '_system');
+
+					return Promise.resolve()
+				}
+
+				if (typeof _Electron != 'undefined'){
+
+					electron = require('electron');
+					electron.shell().openExternal(url);
+
+					return Promise.resolve()
+				}
+
+				window.open(url)
+
+				return Promise.resolve('redirect')
+			},
+
+			fetch : function(url, data){
+
+				var headers = _.extend({
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8'
+				})
+
+				try{
+					return fetch(url, {
+
+						method: 'POST',
+						mode: 'cors',
+						headers: headers,
+						body: JSON.stringify(data)
+
+					}).then(r => {
+						if(!r.ok){
+							return Promise.reject(r.status)
+						}
+
+						///// TODO: save response
+
+						return r.json()
+					})
+				}
+				catch(e){
+					return Promise.reject(e)
+				}
+			},
+
 			callbackPay : function(parameters, tx, lsdata){
 				var way = helpers.callbackPayWay(parameters)
 
@@ -709,7 +898,7 @@ var external = (function(){
 
 					Url.searchParams.append('tx', tx);
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -725,33 +914,15 @@ var external = (function(){
 						})
 					}
 
-					var url = Url.toString()
 
-					if (window.cordova){
-
-						cordova.InAppBrowser.open(url, '_system');
-
-						return Promise.resolve()
-					}
-
-					if (typeof _Electron != 'undefined'){
-
-						electron = require('electron');
-						electron.shell().openExternal(url);
-
-						return Promise.resolve()
-					}
-
-					window.open(url)
-
-					return Promise.resolve('redirect')
+					return helpers.redirect(Url.toString())
 				}
 
 				if (way == 'fetch'){
 
 					var data = {tx : tx}
 
-					_.each(parameters.payload, (d, i) => {
+					_.each(parameters.payload || {}, (d, i) => {
 
 						if(i == 'tx') return
 
@@ -765,32 +936,42 @@ var external = (function(){
 					if(!parameters.anonimus)
 						data.account = self.app.user.address.value
 
-					var headers = _.extend({
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=utf-8'
+					return helpers.fetch(parameters.c_url, data)
+
+					
+
+				}
+
+				return Promise.resolve('noway')
+			},
+
+			
+
+			callbackAuth : function(parameters, signature){
+				var way = helpers.callbackPayWay(parameters)
+
+				if (way == 'redirect'){
+
+					var Url = new URL(parameters.c_url)
+
+					_.each(signature, (d, i) => {
+						Url.searchParams.append(i, d);
 					})
 
-					try{
-						return fetch(parameters.c_url, {
+					return helpers.redirect(Url.toString())
+				}
 
-							method: 'POST',
-							mode: 'cors',
-							headers: headers,
-							body: JSON.stringify(data)
-	
-						}).then(r => {
-							if(!r.ok){
-								return Promise.reject(r.status)
-							}
+				if (way == 'fetch'){
 
-							///// TODO: save response
+					var data = {signature}
 
-							return Promise.resolve('fetch')
-						})
-					}
-					catch(e){
-						return Promise.reject(e)
-					}
+					return helpers.fetch(parameters.c_url, data).then(result => {
+						if (result.redirect){
+							return helpers.redirect(Url.toString())
+						}
+
+						return Promise.reject('noredirect')
+					})
 
 				}
 
@@ -869,7 +1050,6 @@ var external = (function(){
 		}
 
 		var actions = {
-			
 
 			balance : function(){
 				var account = self.app.platform.actions.getCurrentAccount()
@@ -892,12 +1072,14 @@ var external = (function(){
 
 		var make = function(clbk){
 
-			console.log('make', make.caller)
-
 			actions.balance()
 
 			if (ways[ed.action]){
 				ways[ed.action](clbk)
+			}
+
+			else{
+				renders.emptyAction(el.cnt, clbk)
 			}
 		}
 
@@ -906,9 +1088,9 @@ var external = (function(){
 
 			getdata : function(clbk, p){
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {}
 
-				console.log("ED", ed)
+				ed.completedTransaction = parameters().etxid
 
 				var userinfo = self.psdk.userInfo.getmy()
 
@@ -932,7 +1114,7 @@ var external = (function(){
 				ed = {}
 				el = {};
 
-				self.nav.api.history.removeParameters(['ext'])
+				self.nav.api.history.removeParameters(['ext', 'etxid'])
 
 				self.app.platform.actions.clbk('change', 'external', null)
 
@@ -977,7 +1159,7 @@ var external = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 
