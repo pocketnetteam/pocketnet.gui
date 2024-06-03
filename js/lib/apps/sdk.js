@@ -41,43 +41,24 @@ var BastyonSdk = function(){
     var listeners = {}
     var currentState = (document.location.pathname + document.location.search).replace('/', '');
 
-    const onChangeState = (state, title, url, isReplace) => { 
+    self.onChangeState = (state, title, url) => { 
 
-        setTimeout(() => {
-            var link = (document.location.pathname + document.location.search).replace('/', '');
+        var link = (document.location.pathname + document.location.search).replace('/', '');
 
-            if(currentState == link && isReplace) return
-    
-            currentState = link
+        if(currentState == link) return
 
-            send({
-                event : 'changestate',
-                data : {
-                    value : currentState,
-                    replace : false
-                }
-            })
+        currentState = link
+
+        send({
+            event : 'changestate',
+            data : {
+                value : currentState,
+                replace : true
+            }
         })
-        
 
     }
     
-    ['pushState', 'replaceState'].forEach((changeState) => {
-        // store original values under underscored keys (`window.history._pushState()` and `window.history._replaceState()`):
-        window.history['_' + changeState] = window.history[changeState]
-        
-        window.history[changeState] = new Proxy(window.history[changeState], {
-            
-            apply (target, thisArg, argList) {
-                console.log('changeState', changeState)
-                const [state, title, url] = argList
-                onChangeState(state, title, url, changeState === 'replaceState')
-                
-                return target.apply(thisArg, argList)
-            },
-        })
-    })
-
     window.addEventListener("message", (event) => {
         if (event.data){
 
