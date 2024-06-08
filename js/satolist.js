@@ -6082,7 +6082,6 @@ Platform = function (app, listofnodes) {
         external : {
             expandLink : function(json = {}){
 
-                console.log('json', json)
                 var eExt = {}
 
                 if (json.address) eExt.address = json.address
@@ -6197,8 +6196,6 @@ Platform = function (app, listofnodes) {
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
     
-                    console.log('ps.items', ps.items)
-    
                     if (ps.items){
     
                         var a = 0
@@ -6276,8 +6273,6 @@ Platform = function (app, listofnodes) {
     
                     if(!ps.value || ps.value <= 0) throw 'missing:value'
 
-                    console.log("JSON, ps.value", ps.value)
-    
                     //ps.hash = p.ext
                 }
 
@@ -17901,8 +17896,6 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            console.log('link', link)
-
                             self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
                                 if (og.video && og.video.as) {
@@ -20915,8 +20908,6 @@ Platform = function (app, listofnodes) {
 
             }
 
-            console.log('destroyMessage', message, self.fastMessages, destroyMessage.caller)
-
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
@@ -21007,8 +20998,6 @@ Platform = function (app, listofnodes) {
             if (mtbl){
                 boffset = platform.app.margintop
             }
-
-            console.log('self.fastMessages.length', self.fastMessages.length)
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
@@ -21114,7 +21103,6 @@ Platform = function (app, listofnodes) {
         self.destroyMessages = function () {
 
             _.each(_.clone(self.fastMessages), function (message, i) {
-                console.log('destroyMessage 1', message)
                 destroyMessage(message, 0, true)
             })
 
@@ -23789,8 +23777,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log('link', link)
-
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
@@ -23829,9 +23815,6 @@ Platform = function (app, listofnodes) {
         
                         
                     }
-
-                    console.log('link2', link)
-
 
                     self.app.nav.api.load({
                         open: true,
