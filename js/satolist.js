@@ -9937,6 +9937,19 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
+                    audio : {
+                        key : 'audio',
+                        vis : 'scale',
+                        name : self.app.localization.e('spa'),
+                        bad : function(remains, limit){
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
+                        }
+                    },
+
                     score : {
                         key : 'score',
                         vis : 'scale',
