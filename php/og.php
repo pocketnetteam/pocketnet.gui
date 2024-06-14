@@ -328,7 +328,7 @@ class OG {
                         }
     
                         if(!$description){
-                            $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . count($a->subscribers);
+                            $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
                         }
     
                         if(isset($a->a) && $a->a != ''){

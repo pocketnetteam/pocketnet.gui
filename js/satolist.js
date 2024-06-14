@@ -353,7 +353,18 @@ Platform = function (app, listofnodes) {
         'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
         'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
         'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
-        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+        'PMtPowJsJtHtXR4tW4PSKgfp8TVAMBAA5e' : true,
+        'PVCZ5fs6nyPpRjiXgM2naBBujzjTM3B1z4' : true, 
+        'PJWmitSptX35i95ZWHzCJdop3XczrVnQNk' : true,
+        'PJCazxTPm2thAWqmwqHsWghK59FjZvZ9ZM' : true,
+        'PExrUqBAyXfdgmegm4uQDj64ukyuiL2XrC' : true,
+        'PCGpniQGTmabMQKAWiE1nCTaFFdHatzNyS' : true,
+        'PPxrS15N1tKoQcc29FcPrBqfmHpyURny5B' : true,
+        'PGEBZf7Q8vNFsS9PfrqvDxaPRXk9Yve9cK' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+
+
 
 
     } 
@@ -6082,7 +6093,6 @@ Platform = function (app, listofnodes) {
         external : {
             expandLink : function(json = {}){
 
-                console.log('json', json)
                 var eExt = {}
 
                 if (json.address) eExt.address = json.address
@@ -6197,8 +6207,6 @@ Platform = function (app, listofnodes) {
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
     
-                    console.log('ps.items', ps.items)
-    
                     if (ps.items){
     
                         var a = 0
@@ -6276,8 +6284,6 @@ Platform = function (app, listofnodes) {
     
                     if(!ps.value || ps.value <= 0) throw 'missing:value'
 
-                    console.log("JSON, ps.value", ps.value)
-    
                     //ps.hash = p.ext
                 }
 
@@ -9922,6 +9928,19 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
+                        bad : function(remains, limit){
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
+                        }
+                    },
+
+                    audio : {
+                        key : 'audio',
+                        vis : 'scale',
+                        name : self.app.localization.e('spa'),
                         bad : function(remains, limit){
                             if (limit <= 3) return false
 							
@@ -17901,8 +17920,6 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            console.log('link', link)
-
                             self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
                                 if (og.video && og.video.as) {
@@ -20915,8 +20932,6 @@ Platform = function (app, listofnodes) {
 
             }
 
-            console.log('destroyMessage', message, self.fastMessages, destroyMessage.caller)
-
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
@@ -21007,8 +21022,6 @@ Platform = function (app, listofnodes) {
             if (mtbl){
                 boffset = platform.app.margintop
             }
-
-            console.log('self.fastMessages.length', self.fastMessages.length)
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
@@ -21114,7 +21127,6 @@ Platform = function (app, listofnodes) {
         self.destroyMessages = function () {
 
             _.each(_.clone(self.fastMessages), function (message, i) {
-                console.log('destroyMessage 1', message)
                 destroyMessage(message, 0, true)
             })
 
@@ -23821,9 +23833,11 @@ Platform = function (app, listofnodes) {
                             })
 
                             self.app.platform.ui.externalFromCurrentUrl()
+
+                            return false;
                         }
         
-                        return false;
+                        
                     }
 
                     self.app.nav.api.load({
@@ -23906,6 +23920,15 @@ Platform = function (app, listofnodes) {
                 else{
                     app.mobile.reload.destroyparallax()
                 }
+
+
+                if(!value){
+                    self.app.mobile.unsleep(false)
+                }
+                else{
+                    self.app.mobile.unsleep(true)
+                }
+                
 
 
             }

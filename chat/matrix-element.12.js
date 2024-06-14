@@ -2446,9 +2446,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         if (functions["a" /* default */].isios()) path = "cdvfile://localhost/temporary/recording.m4a";
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
-
-        //var startedTime = (new Date()).getTime() / 1000
-
         var media = this.cordovaMediaRecorder = new Media(path, () => {
           this.recordTime = 0;
           media.release();
@@ -2465,24 +2462,11 @@ var CancelablePromise = __webpack_require__("0bb9");
               data: blob
             });
           });
-
-          /*}
-          else{
-          fu = f.fetchLocal(path)
-          }*/
-
           fu.then(r => {
-            ///temp
-            /*if (f.isios())
-            r.duration = (new Date()).getTime() / 1000 - startedTime
-            		/*var e = {
-            data : r.data
-            }*/
-
             if (media.duration && media.duration > 0) {
               r.duration = media.duration;
             }
-            this.createVoiceMessage(r, true);
+            this.createVoiceMessage(r, false);
             return Promise.resolve();
           }).catch(e => {
             this.clear();

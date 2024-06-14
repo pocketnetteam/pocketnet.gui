@@ -250,6 +250,7 @@ _l.suseractivation = "User Activation";
 _l.sprofile = "Profile";
 _l.spc = "Post count";
 _l.spv = "Video Post count";
+_l.spa = "Audio Post count";
 _l.ssc = "Stars count";
 _l.ccc = "Comments count";
 _l.crc = "Comment Rate count";

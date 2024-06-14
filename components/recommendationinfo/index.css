@@ -4,14 +4,14 @@
 #recommendationinfo .caption span {
   font-size: 1.2em;
   font-weight: 700;
-  color: srgb(var(--neutral-grad-4));
+  color: rgb(var(--neutral-grad-4));
 }
 #recommendationinfo .subcaption {
   margin-bottom: 1em;
 }
 #recommendationinfo .subcaption span {
   font-size: 0.8em;
-  color: srgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-4));
 }
 #recommendationinfo .subcaptiontable {
   margin-bottom: 1em;
@@ -19,7 +19,7 @@
 }
 #recommendationinfo .subcaptiontable span {
   font-size: 0.9em;
-  color: srgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-4));
 }
 #recommendationinfo .tags {
   margin-bottom: 1em;
@@ -57,7 +57,7 @@
   margin-left: auto;
 }
 #recommendationinfo .task .lastdate span {
-  color: rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-4));
 }
 #recommendationinfo .taginfo {
   display: flex;
@@ -93,7 +93,7 @@
   margin-left: auto;
 }
 #recommendationinfo .taginfo .lastdate span {
-  color: rgb(var(--neutral-grad-2));
+  color: rgb(var(--neutral-grad-4));
 }
 #recommendationinfo .probtags.showall .showmorewrapper {
   display: none;

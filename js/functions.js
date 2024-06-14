@@ -6974,13 +6974,19 @@ AJAX = function(p) {
 
 					if (r.responseText) {
 
-						data = JSON.parse(r.responseText);
+						try{
+							data = JSON.parse(r.responseText);
 
-						if(typeof p.errors == 'undefined' || p.errors == true)
-						{
-							e = error(data.status, p, data.data);
-
+							if(typeof p.errors == 'undefined' || p.errors == true)
+							{
+								e = error(data.status, p, data.data);
+							}
+							
+						}catch(e){
+							e = error(null, p);
 						}
+
+						
 
 					}
 					else
