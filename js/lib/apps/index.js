@@ -197,6 +197,12 @@ var BastyonApps = function(app){
             uniq : false,
             session : true
         },
+
+        'zaddress' : {
+            name : 'permissions_name_zaddress',
+            description : 'permissions_descriptions_zaddress',
+            level : 4
+        },
     }
 
     var actions = {
@@ -252,6 +258,22 @@ var BastyonApps = function(app){
                 if (account){
                     var balance = account.actualBalance([account.address])
                     return Promise.resolve(balance)
+                }
+                else{
+                    return Promise.resolve({})
+                }
+            }
+        },
+
+        balance : {
+            permissions : ['zaddress'],
+            authorization : true,
+            action : function(){
+                var account = app.platform.actions.getCurrentAccount()
+
+                if (account){
+                    
+                    return Promise.resolve('s')
                 }
                 else{
                     return Promise.resolve({})

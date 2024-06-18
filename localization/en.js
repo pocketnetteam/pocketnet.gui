@@ -2608,6 +2608,8 @@ _l.permissions_descriptions_messaging = "Give the app permission to display an i
 _l.permissions_name_mobilecamera = "Possibility to upload a photo"
 _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
 
+_l.permissions_name_zaddress = "Get one of the wallet addresses"
+_l.permissions_descriptions_zaddress = "Shows the widget one of your wallet addresses"
 
 
 _l.permissions_ask = "asks for permission"
