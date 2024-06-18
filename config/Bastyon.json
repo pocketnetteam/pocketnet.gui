@@ -3,7 +3,13 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    "developapps" : [],
+    "developapps" : [{
+		"id" : "swipelux.app",
+		"version": "0.0.1",
+		"scope" : "app.swipelux.pocketnet.app",
+		"cantdelete" : true,
+		"name" : "Swipelux"
+	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
