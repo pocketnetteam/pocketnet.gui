@@ -285,7 +285,7 @@ var Action = function(account, object, priority, settings){
 
     self.import = function(e){
 
-        if(e.updated){
+        if (e.updated){
             var updated = new Date(e.updated)
 
             if (updated < self.updated) return
@@ -777,8 +777,6 @@ var Action = function(account, object, priority, settings){
             delete self.outputs
             delete self.sending
 
-            
-
             if((code == -26 || code == -25 || code == 16 || code == 261)){
 
                 if(!retry){
@@ -984,7 +982,7 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending && (new Date()).addSeconds(-365) < self.sending){
+        if (self.sending && (new Date()).addSeconds(-30) < self.sending){
             return Promise.reject('actions_alreadySending')
         }
 
@@ -2420,13 +2418,28 @@ var Account = function(address, parent){
         }
 
 
-        if(!self.unspents.value.length) return balance
+        //if(!self.unspents.value.length) return balance
 
         var tempbalance = _.reduce(self.actions.value, (m, action) => {
 
             if(action.completed || action.rejected) return m
 
+            var validInput = true
+
+            if( _.find(action.inputs, (i) => {
+
+                if(! _.find(self.unspents.value, (u) => {
+                    return u.txid == i.txid && u.vout == i.vout
+                })) return true
+
+            })) validInput = false
+
+            console.log('validInput', validInput)
+
+            if(!validInput) return m
+
             var toThisAddress = _.reduce(action.outputs, (m, output) => {
+                
                 
                 if(_.find(adresses, (a) => {return a == output.address})){
                     return m + output.amount
