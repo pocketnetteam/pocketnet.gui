@@ -16,10 +16,11 @@ ImageUploader = function(app) {
                 
                 return self.uploadImage({ base64 }, 'peertube').catch(err => {
                     console.error(err)
-                    return self.uploadImage({ base64 }, 'imgur')
+                    return self.uploadImage({ base64 }, 'up1')
+                    
                 }).catch(err => {
                     console.error(err)
-                    return self.uploadImage({ base64 }, 'up1')
+                    return self.uploadImage({ base64 }, 'imgur')
                 }).then(url => {
                     return Promise.resolve(url)
                 }).catch(err => {

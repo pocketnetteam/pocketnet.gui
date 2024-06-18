@@ -2948,68 +2948,82 @@ Application = function (p) {
 									self.psdk.clearStorageAndObjects()
         							self.psdk.clearIdCacheAll()
 
+									self.platform.sdk.recommendations.init()
+
 									globalpreloader(true)
 
-									_.each(self.modules, (m) => {
-										if(!m.module) return
-										_.each(m.module.essenses, (mm) => {
-											if(mm.willreload) mm.willreload()
+
+									lazyActions([
+                
+										self.platform.sdk.ustate.me,
+										self.platform.sdk.user.get,
+										self.platform.sdk.usersettings.init
+					
+									], function () {
+										_.each(self.modules, (m) => {
+											if(!m.module) return
+											_.each(m.module.essenses, (mm) => {
+												if(mm.willreload) mm.willreload()
+											})
 										})
-									})
-
-									setTimeout(function () {
-
-										if (self.platform.loadingWithErrors) {
-
-											self.platform.appstate(function () {
-
+	
+										setTimeout(function () {
+	
+											if (self.platform.loadingWithErrors) {
+	
+												self.platform.appstate(function () {
+	
+													setTimeout(function () {
+														globalpreloader(false)
+	
+														self.mobile.reload.reloading = false
+	
+													}, 200)
+	
+												})
+	
+											}
+											else {
+	
+												self.user.isState(function (state) {
+	
+													if (state) {
+	
+														var account = self.platform.actions.getCurrentAccount()
+	
+														if (account) {
+															account.updateUnspents()
+															account.releaseCheckInAnotherSession()
+														}
+	
+														self.platform.ws.getMissed()
+													}
+	
+												})
+	
+												if (self.nav.current.module) {
+	
+													self.nav.current.module.restart({
+														essenseData: self.nav.current.essenseData || {},
+														primary: true
+													})
+												}
+	
+	
 												setTimeout(function () {
 													globalpreloader(false)
-
+	
 													self.mobile.reload.reloading = false
-
 												}, 200)
-
-											})
-
-										}
-										else {
-
-											self.user.isState(function (state) {
-
-												if (state) {
-
-													var account = self.platform.actions.getCurrentAccount()
-
-													if (account) {
-														account.updateUnspents()
-														account.releaseCheckInAnotherSession()
-													}
-
-													self.platform.ws.getMissed()
-												}
-
-											})
-
-											if (self.nav.current.module) {
-
-												self.nav.current.module.restart({
-													essenseData: self.nav.current.essenseData || {},
-													primary: true
-												})
+	
 											}
+	
+	
+										}, 100)
+									})
 
-
-											setTimeout(function () {
-												globalpreloader(false)
-
-												self.mobile.reload.reloading = false
-											}, 200)
-
-										}
-
-
-									}, 100)
+									
+									
 
 
 								}

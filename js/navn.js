@@ -66,7 +66,7 @@ Nav = function(app)
 	self.wnds = {};
 	self.prepared = false
 
-	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs', 'pocketnet-crypto-challenge']
+	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs/', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){
@@ -1045,6 +1045,8 @@ Nav = function(app)
 			var ex = _.find(externalexclusions, function(ex){
 				return href.indexOf(ex) != -1
 			})
+
+			console.log('href', href, ex)
 			
 			
 			var e = _OpenApi || external || (

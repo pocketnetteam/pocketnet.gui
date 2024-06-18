@@ -1911,7 +1911,7 @@ var request_component = Object(componentNormalizer["a" /* default */])(
     },
     menucopy: function () {
       var txt = this.replacedmintionsbody;
-      if (window.findAndReplaceLinkClearReverse && (typeof txt === 'string' || txt instanceof String)) txt = window.findAndReplaceLinkClearReverse(txt);
+      if (window.findAndReplaceLinkClear && (typeof txt === 'string' || txt instanceof String)) txt = window.findAndReplaceLinkClear(txt);
       this.$f.copytext(txt);
       return Promise.resolve();
     },

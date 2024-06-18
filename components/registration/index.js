@@ -779,7 +779,7 @@ var registration = (function(){
 
 				grayscaleImage(src, function(image){
 
-					qrscanner.q.callback = function(data){
+					bfqrscanner.q.callback = function(data){
 
 						if(data == 'error decoding QR Code'){
 
@@ -795,7 +795,7 @@ var registration = (function(){
 						}
 					}
 
-					qrscanner.q.decode(image)
+					bfqrscanner.q.decode(image)
 					
 				})
 

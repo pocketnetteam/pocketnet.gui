@@ -230,9 +230,9 @@ var authorization = (function(){
 						
 
 						grayscaleImage(file.base64, function(image){
-							qrscanner.q.debug = true
+							bfqrscanner.q.debug = true
 
-							qrscanner.q.callback = function(data){
+							bfqrscanner.q.callback = function(data){
 
 
 								if(data == 'error decoding QR Code'){
@@ -246,7 +246,7 @@ var authorization = (function(){
 								}
 							}
 
-							qrscanner.q.decode(image)
+							bfqrscanner.q.decode(image)
 						})
 
 						
