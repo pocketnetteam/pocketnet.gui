@@ -10067,6 +10067,16 @@ resizeGif = function (app) {
 	return self
 }
 
+strToNumHash = function(str = '', max = 1){
+	var r = 0
+
+	for(var i = 0; i < str.length; i++){
+		r += str[i].charCodeAt(0) % max
+	}
+
+	return r % max
+}
+
 class LoadingBar {
 	constructor(barElem, styles) {
 		const self = this;

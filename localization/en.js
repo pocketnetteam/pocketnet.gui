@@ -2619,6 +2619,8 @@ _l.permissions_forbid = "Forbid"
 _l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
+_l.installpplication = "Install application"
+
 _l.complainapplication = "Complain application"
 
 _l.searchbyapplications = "Find an app"

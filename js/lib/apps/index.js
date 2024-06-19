@@ -84,8 +84,10 @@ var importManifest = function(application){
             return Promise.reject(e)
         }
 
+        console.log('application', application, manifest)
+
         if(manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
-        if(manifest.develop != application.develop) return Promise.reject(appsError('discrepancy:develop'))
+        if(manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
         
         if(manifest.version < application.version) {
             return Promise.reject(appsError('version'))
@@ -268,12 +270,20 @@ var BastyonApps = function(app){
         balance : {
             permissions : ['zaddress'],
             authorization : true,
-            action : function(){
+            action : function({data, application}){
                 var account = app.platform.actions.getCurrentAccount()
 
                 if (account){
+
+                    var ads = self.app.platform.sdk.addresses.storage.addresses || []
+
+                    if (ads.length){
+                        Promise.resolve(ads[strToNumHash(application.manifest.id, ads.length - 1)])
+                    }
+                    else{
+                        return Promise.reject(appsError('broken:zaddresses'))
+                    }
                     
-                    return Promise.resolve('s')
                 }
                 else{
                     return Promise.resolve({})
@@ -285,7 +295,10 @@ var BastyonApps = function(app){
             permissions : ['sign'],
             authorization : true,
             action : function({data, application}){
-                return Promise.reject(appsError('todo:action:sign'))
+
+                var signature = app.user.signature(data.string + '/' + application.manifest.id)
+
+                return Promise.resolve(signature)
             }
         },
 
@@ -931,11 +944,15 @@ var BastyonApps = function(app){
 
         installing[application.id] = {promise : resources(application, cached).then((resourses) => {
             result.path = application.path
+            result.installed = true
 
             installed[application.id] = {...result, ...resourses}
 
             registerLocal(application)
 
+            trigger('installed', {
+                application
+            })
 
             return installed[application.id]
 
@@ -947,16 +964,26 @@ var BastyonApps = function(app){
         
     }
 
+    
+
     var remove = function(id){
 
-        self.get.application(id).then(({application}) => {
+        return self.get.application(id).then(({application}) => {
+
+            delete application.installed
 
             self.emit('removed', {}, application)
+
+            trigger('removed', {
+                application
+            })
 
             unregisterApplication(application)
 
             delete localdata[application.manifest.id]
             delete installed[application.manifest.id]
+
+            savelocaldata()
     
             return Promise.resolve()
         })
@@ -976,7 +1003,7 @@ var BastyonApps = function(app){
             }
 
             _.each(appfiles, (file) => {
-                if(file.cache){
+                if (file.cache){
                     saving.cached[file.id] = (installed[id] ? installed[id][file.id] : null) || info.cached[file.id] || null
                 }
             })
@@ -990,6 +1017,18 @@ var BastyonApps = function(app){
 
         }
         
+    }
+
+    var getlocaldata = function(){
+        var apps = {}
+
+        try{
+            apps = JSON.parse(localStorage['apps_' + key])
+        }catch(e){
+
+        }
+
+        return apps
     }
 
     var unregisterApplication = function(application){
@@ -1306,6 +1345,7 @@ var BastyonApps = function(app){
         
     }
 
+
     var send = function(message, application){
         if(!application) return
 
@@ -1375,22 +1415,53 @@ var BastyonApps = function(app){
 
     self.init = function(){
 
-        console.log("INIT APPS")
-
         var promises = []
 
         if (app.developapps){
 
             promises.push(Promise.all(_.map(app.developapps, (application) => {
 
-                if (application.access && _.isArray(application.access)){
-                    if(_.indexOf(application.access, app.user.address.value) == -1) return Promise.resolve()
+                if (application.install){
+
+                    application.cantdelete = true
+
+                    if (application.access && _.isArray(application.access)){
+                        if(_.indexOf(application.access, app.user.address.value) == -1) return Promise.resolve()
+                    }
+    
+                    return install({...application, develop : true, version : numfromreleasestring(application.version)})
                 }
 
-                return install({...application, develop : true, version : numfromreleasestring(application.version)})
+                return Promise.resolve()
+
+                
             })))
 
         }
+
+        var installed = getlocaldata()
+
+        promises.push(Promise.all(_.map(installed, (info) => {
+
+            self.get.applicationall(info.id, info.cached).then(({application}) => {
+
+                return install({...application, version : numfromreleasestring(application.version)}, info.cached)
+                
+            }).then(() => {
+
+                localdata[info.id] = {
+                    permissions : info.permissions,
+                    data : info.data,
+                    cached : info.cached
+                }
+
+            }).catch(e => {
+                return Promise.resolve()
+            })
+            
+        })))
+
+        
 
         try{
             setlocaldata(localStorage['apps_' + key])
@@ -1447,6 +1518,7 @@ var BastyonApps = function(app){
                 })
             }
 
+
             return Promise.reject(appsError("missing:application"))
         },
 
@@ -1457,17 +1529,6 @@ var BastyonApps = function(app){
         resourcesForApplications : function(appsmeta){
 
             var results = {}
-
-            /*
-
-                [{
-                    "id" : 'demo2.pocketnet.app',
-                    "version": "0.0.1",
-                    "scope" : "localhost:8081",
-                    "cantdelete" : true
-                }]
-
-            */
 
             return Promise.all(_.map(appsmeta, (appmeta) => {
 
@@ -1509,9 +1570,7 @@ var BastyonApps = function(app){
             return result
         },
 
-        applicationAny : function({id, path}){
-
-            var result = {}
+        applicationall : function(id, cached){
 
             return self.get.application(id).catch(e => {
                 return null
@@ -1519,6 +1578,18 @@ var BastyonApps = function(app){
 
 
                 if(!application){
+
+                    var a = _.find(app.developapps, (dapp) => {
+                        return dapp.id == id
+                    })
+
+                    if(a) return resources(a, cached).then((resourses) => {
+                        return Promise.resolve({
+                            application : {...a, ...resourses},
+                            appdata : {}
+                        })
+                    })
+
                     //search in blockchain
                     // in search == true --- result.application = application result.notinstalled = true
                 }
@@ -1529,9 +1600,14 @@ var BastyonApps = function(app){
 
                 return Promise.resolve(application)
 
-            }).then(a => {
+            })
+        },
 
+        applicationAny : function({id, path}){
 
+            var result = {}
+
+            return self.get.applicationall(id).then(a => {
 
                 result = {...result, ...a}
 

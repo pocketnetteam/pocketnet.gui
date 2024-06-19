@@ -2404,6 +2404,7 @@ _l.permissions_forbid = "Запретить"
 _l.permissions = "Разрешения"
 
 _l.deleteapplication = "Удалить приложение"
+_l.installpplication = "Установить приложение"
 _l.complainapplication = "Пожаловаться на приложение"
 
 _l.searchbyapplications = "Поиск приложений"
