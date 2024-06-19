@@ -307,10 +307,43 @@
                     elem.append(button)
             });
         </script>
-        <!-- example 2: PaymentLink: end -->
+        <!-- example 3: Auth: end -->
 
-        <script src="https://localhost/pocketnet/external.js"></script>
+
+        <!-- example 4: Share: begin -->
+        <div>
+            <h2>__VAR__.name share button</h2>
+        </div>
+        <div class="example" >
+            <div class="example" id="shareButton">
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var share = window.bastyonLib.share({
+                    share : {
+                        
+
+                        description : "test info",
+                        url : 'https://github.com/pocketnetteam/pocketnet.gui',
+                        tags : ['bastyon', 'test']
+
+                        
+                    }
+                })
+
+                var button = share.makeButton()
+
+                var elem = document.getElementById('shareButton');
+                    elem.append(button)
+            });
+        </script>
+        <!-- example 3: Auth: end -->
+
+        <!-- <script src="https://localhost/pocketnet/external.js"></script> -->
         
-        <!-- <script src="https://__VAR__.domain/external.js"></script> -->
+        <script src="https://__VAR__.domain/external.js"></script>
     </body>
 </html>

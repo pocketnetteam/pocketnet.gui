@@ -132,6 +132,21 @@
   transition-delay: 0s;
   opacity: 0;
 }
+#application .installwrapper {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+#application .installwrapper .appicon {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 48px;
+}
+#application .installwrapper .installButton button {
+  min-width: 160px;
+}
 #application .iframewrapper {
   position: fixed;
   left: 0;

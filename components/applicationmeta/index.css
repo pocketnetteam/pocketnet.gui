@@ -13,6 +13,17 @@
 #applicationmeta .applicationInfo .appname {
   margin-left: 0.5em;
 }
+#applicationmeta .forReciever {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5em;
+}
+#applicationmeta .forReciever .usericon {
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+  margin-right: 0.25em;
+}
 #applicationmeta .version {
   opacity: 0.7;
   margin-top: 1em;

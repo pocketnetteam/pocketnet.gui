@@ -2646,10 +2646,9 @@ var share = (function(){
 
 				currentShare.app = self.app
 
-				if(!essenseData.share){
+				if(!essenseData.share && !essenseData.dontsave){
 
 					state.load()
-
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2729,6 +2728,7 @@ var share = (function(){
 				}
 
 				
+				
 
 				$('html').off('click', events.unfocus);
 
@@ -2773,10 +2773,14 @@ var share = (function(){
 					currentShare.caption.set('');
 					currentShare.images.set();
 					currentShare.repost.set();
+
+					if (essenseData.name) {
+						currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
+					}
 				}
 
-				if (essenseData.name) {
-					currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
+				if (essenseData.url) {
+					currentShare.url.set(essenseData.url);
 				}
 
 				if (essenseData.description) {
@@ -2818,7 +2822,7 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
-	
+					self.nav.api.history.removeParameters(['ext'])
 					
 					if (essenseData.close){
 						essenseData.close()
