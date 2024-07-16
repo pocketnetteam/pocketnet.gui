@@ -232,6 +232,8 @@ class VideoUploader {
         }
 
       }
+
+      throw e
     }
 
     return r
