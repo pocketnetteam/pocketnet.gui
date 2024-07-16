@@ -41,12 +41,18 @@ var BastyonSdk = function(){
     var listeners = {}
     var currentState = (document.location.pathname + document.location.search).replace('/', '');
 
+    const popstateEventHandler = function() {
+        onChangeState()
+    }
+
+    window.addEventListener('popstate', popstateEventHandler);
+
     const onChangeState = (state, title, url, isReplace) => { 
 
         setTimeout(() => {
             var link = (document.location.pathname + document.location.search).replace('/', '');
 
-            if(currentState == link && isReplace) return
+            if(currentState == link) return
     
             currentState = link
 
@@ -54,7 +60,7 @@ var BastyonSdk = function(){
                 event : 'changestate',
                 data : {
                     value : currentState,
-                    replace : false
+                    replace : true
                 }
             })
         })
