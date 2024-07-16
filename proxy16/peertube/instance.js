@@ -174,7 +174,7 @@ var instance = function (host, ip, Roy) {
 					console.log(`http://${host}${url}`, err)
 					resultStr = {};
 
-					return Promise.reject(err)
+					return Promise.reject({})
 				}
 
 				return Promise.resolve({
@@ -199,7 +199,7 @@ var instance = function (host, ip, Roy) {
 
 			statistic.add(meta);
 
-			return Promise.reject(error || {}).response || {};
+			return Promise.reject(error || {});
 		}
 	};
 
