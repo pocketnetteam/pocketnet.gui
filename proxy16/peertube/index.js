@@ -15,6 +15,8 @@ var Peertube = function (settings) {
 
 	var roys = {};
 	var statistic = new Statistic();
+	
+	self.instanses = {}
 
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
@@ -84,6 +86,7 @@ var Peertube = function (settings) {
 				return Promise.resolve(r);
 			})
 			.catch((e) => {
+				console.log(e)
 				statistic.add({
 					code: e == 'failed' ? 501 : (e || {}).code || 500,
 					difference: performance.now() - responseTime,

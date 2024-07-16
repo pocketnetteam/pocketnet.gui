@@ -3,6 +3,7 @@ var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
 var instance = function (host, ip, Roy) {
+	console.log('new instance', host)
 	var self = this;
 
 	self.host = host;
@@ -145,6 +146,8 @@ var instance = function (host, ip, Roy) {
 
 		//Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
 
+		console.log('make request', `http://${host}${url}`)
+
 		if (self.offline) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
@@ -154,8 +157,6 @@ var instance = function (host, ip, Roy) {
 				method: p.type || 'get',
 				timeout,
 			}).then(async (result) => {
-
-
 
 				const meta = {
 					code: 200,
@@ -170,8 +171,10 @@ var instance = function (host, ip, Roy) {
 				try {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
-					console.log(err)
+					console.log(`http://${host}${url}`, err)
 					resultStr = {};
+
+					return Promise.reject(err)
 				}
 
 				return Promise.resolve({

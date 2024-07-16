@@ -1549,7 +1549,7 @@ var BastyonApps = function(app){
             })
         },
 
-        installedAndInstalling : function(){
+        installedAndInstalling : function({search = ''}){
             var result = {}
 
             _.each(installing, (ins, id) => {
@@ -1627,6 +1627,24 @@ var BastyonApps = function(app){
 
             }).then(() => {
                 return Promise.resolve(result)
+            })
+
+        },
+
+        applications : function({search = ''}){
+            var insapplications = self.app.apps.get.installedAndInstalling({search})
+            var nodeApps = []
+            var devapps = []
+
+            var sorted = _.sortBy(_.uniq(insapplications.concat(nodeApps, devapps), (app) => {
+
+                return app.application?.id || app.manifest?.id || app.id
+
+            }), function(ins){
+                if(ins.installing) return 1
+                if(ins.installed) return 2
+
+                return 3
             })
 
         }

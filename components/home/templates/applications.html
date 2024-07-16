@@ -1,4 +1,3 @@
-<div class="list">
     <% 
     
     var sorted = _.sortBy(applications, function(ins){
@@ -6,40 +5,23 @@
         if(ins.installed) return 2
     })
     
-    _.each(sorted, function(ins){ %> 
+    _.each(sorted, function(ins){ 
+        
+        var cl = ''
 
-        <% if(ins.installed) {%>
-            <div class="application installed" application="<%- ins.manifest.id %>">
-                <div class="icon" image="<%-ins.icon%>">
-                </div>
-                <div class="name">
-                    <span><%- ins.manifest.name %></span>
-                </div>
-                <div class="badge" num="0">
-                </div>
-            </div>
-        <% } %>
+        if(ins.installed) cl = 'installed'
+        if(ins.installing) cl = 'installing'
+        
+        %> 
 
-        <% if(ins.installing) {%>
-            <div class="application installing" application="<%- ins.application.id %>">
-                <div class="icon">
-                </div>
-                <div class="name">
-                    <span><%- ins.application.name %></span>
-                </div>
-                <div class="badge installing">
-                </div>
+        <div class="application <%-cl%>" application="<%- ins.application.id %>">
+            <div class="icon" image="<%-ins.icon%>">
             </div>
-        <% } %>
+            <div class="name">
+                <span><%- ins.application.name %></span>
+            </div>
+            <div class="badge" num="0">
+            </div>
+        </div>
 
-        <% if(!ins.installing && !ins.installed) {%>
-            <div class="application" application="<%- ins.manifest.id %>">
-                <div class="icon" image="<%-ins.icon%>">
-                </div>
-                <div class="name">
-                    <span><%- ins.manifest.name %></span>
-                </div>
-            </div>
-        <% } %>
     <% }) %>
-</div>

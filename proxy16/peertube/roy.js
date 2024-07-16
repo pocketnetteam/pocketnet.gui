@@ -56,6 +56,15 @@ var Roy = function (parent) {
 		if (!url) return;
 		if (!options) options = {};
 
+		if (parent.instanses[url]){
+
+			parent.instanses[url].counter++ 
+
+			instances.push(parent.instanses[url].instance);
+
+			return parent.instanses[url].instance
+		}
+
 		var instance = new Instance(url, options.ip, self);
 
 		if (options.cantuploading) instance.cantuploading = true;
@@ -69,6 +78,11 @@ var Roy = function (parent) {
 
 		instances.push(instance);
 
+		parent.instanses[url] = {
+			instance,
+			counter : 1
+		}
+
 		return instance;
 	};
 
@@ -78,7 +92,22 @@ var Roy = function (parent) {
 		var instance = self.find(host);
 
 		if (instance) {
-			instance.destroy();
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
+			
+
+			
 		}
 
 		instances = _.filter(instances, function (instance) {
@@ -112,7 +141,22 @@ var Roy = function (parent) {
 
 	self.destroy = function () {
 		_.each(instances, function (instance) {
-			instance.destroy();
+			//instance.destroy();
+
+			var host = instance.host
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
 		});
 
 		instances = [];
@@ -211,6 +255,10 @@ var Roy = function (parent) {
 		var index = 0;
 		var error = null;
 
+		console.log('list', _.map(list, (l) => {
+			return l.host
+		}))
+
 		var request = function (instance) {
 			return instance
 				.request(method, data, p)
@@ -225,6 +273,8 @@ var Roy = function (parent) {
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
+
+					console.log('e', e)
 
 					if (e && e.status) {
 						if (e.status != 500) {

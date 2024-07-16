@@ -8,12 +8,10 @@ var home = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, applicationSearch;
+		var el, ed, acsearch, svalue = '';
 
 		var actions = {
-			applicationSearchClear : function(){
-				renders.applications()
-			},
+			
 			applicationSearch : function(){
 				acsearch = new search(el.c.find('.applicationSearch'), {
 					placeholder : self.app.localization.e('searchbyapplications'),
@@ -36,11 +34,13 @@ var home = (function(){
 
 					events : {							
 						search : function(value, clbk, e, helpers){
-
+							svalue = value
 						},
 
 						clear : function(fs){
-							actions.applicationSearchClear()
+							svalue = ''
+							renders.clear()
+							actions.makeApplicationList()
 						}
 					}
 					
@@ -48,78 +48,59 @@ var home = (function(){
 			},
 
 			applicationClick : function(applicationId){
-				var applications = self.app.apps.get.installedAndInstalling()
 
-				var application = applications[applicationId]
+				self.nav.api.go({
+					href : 'application?id=' + applicationId,
+					history : true,
+					open : true
+				})
 
-				if(!application){
-					//// not installed application from search, to app page
+			},
 
-					return
-				}
-
-				if(application.installing){
-
-					//// not installed application, to app page with installing bar 
-
-					return
-				}
-
-				if(application.installed){
-
-					self.nav.api.go({
-						href : 'application?id=' + applicationId,
-						history : true,
-						open : true
-					})	
-
-					//// not installed application, to app page with installing bar 
-
-					return
-				}
+			makeApplicationList : function(){
+				self.app.apps.get.applications({search : svalue}).then((applications) => {
+					renders.applications(applications)
+				})
 			}
 		}
 
 		var events = {
-			
+			installed : function(p = {}){
+				el.c.find('.application[application="'+p.application.manifest.id+'"]').addClass('installed').removeClass('installing')
+			},
+
+			removed : function(p = {}){
+				el.c.find('.application[application="'+p.application.manifest.id+'"]').removeClass('installed').removeClass('installing')
+			},
 		}
 
 		var renders = {
-			applications : function(applications, clbk){
+			/*applicationsInstalled : function(clbk){
+				var applications = self.app.apps.get.installedAndInstalling()
 
-				if(!applications){
-					applications = self.app.apps.get.installedAndInstalling()
-				}
+				renders.applications()
+			},*/
+			applications : function(applications, clbk){
 
 				self.shell({
 
 					name :  'applications',
-					el :   el.c.find('.applicationsList'),
+					el :   el.c.find('.applicationsList .list'),
+					inner : append,
 					data : {
 						applications
 					},
 
 				}, function(p){
-
-					p.el.find('.application').on('click', function(){
-
-						var application = $(this).attr('application')
-
-							actions.applicationClick(application)
-					})
-
 					if (clbk)
 						clbk()
 
 				})
+				
+			},
 
-				_.each(applications, (ins) => {
-					if (ins.installing){
-						ins.promise.then(() => {
-							renders.applications()
-						})
-					}
-				})
+			clear : function(){
+				el.c.find('.applicationsList .list').html('')
 			}
 		}
 
@@ -133,14 +114,19 @@ var home = (function(){
 		}
 
 		var initEvents = function(){
-			
+			el.c.on('click', '.application', function(){
+				var application = $(this).attr('application')
 
+				actions.applicationClick(application)
+			})
+
+			self.app.apps.on('installed', events.installed)
+			self.app.apps.on('removed', events.removed)
 		}
 
 		var make = function(){
-			applicationSearch = actions.applicationSearch()
-
-			renders.applications()
+			actions.applicationSearch()
+			actions.makeApplicationList()
 		}
 
 		return {
@@ -161,6 +147,9 @@ var home = (function(){
 			destroy : function(){
 				ed = {}
 				el = {};
+
+				self.app.apps.off('installed', events.installed)
+				self.app.apps.off('removed', events.removed)
 			},
 			
 			init : function(p){

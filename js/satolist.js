@@ -23499,6 +23499,7 @@ Platform = function (app, listofnodes) {
 
                             if(typeof _Electron != 'undefined') path = './'
 
+                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -23511,6 +23512,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    viewtype="`+(isTablet() ? "split" : "single")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
