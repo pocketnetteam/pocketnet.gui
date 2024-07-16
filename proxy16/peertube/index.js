@@ -42,6 +42,7 @@ var Peertube = function (settings) {
 		}
 
 		if (!roy && host) {
+			console.log("ADD NEW AUTO ROY", host)
 			roy = self.addroy([host], host, true);
 
 			roy.useall = true;
@@ -400,6 +401,8 @@ var Peertube = function (settings) {
 		if (!urls.length) return;
 
 		var roy = new Roy(self);
+
+		console.log("URLS", urls)
 
 		roy.init(urls);
 

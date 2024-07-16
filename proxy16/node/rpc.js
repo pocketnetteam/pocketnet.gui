@@ -257,8 +257,6 @@ function rpc(request, callback, obj) {
 
     const url = self.http + '://' + options.host + ':' + options.port + options.path;
 
-    console.log('url', url)
-
     const config = {
         headers: {
             'Content-Type': 'application/json',

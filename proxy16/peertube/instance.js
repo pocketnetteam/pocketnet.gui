@@ -146,11 +146,11 @@ var instance = function (host, ip, Roy) {
 
 		//Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
 
-		console.log('make request', `http://${host}${url}`)
-
 		if (self.offline) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
+
+		console.log('req', `http://${host}${url}`)
 
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
@@ -171,7 +171,6 @@ var instance = function (host, ip, Roy) {
 				try {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
-					console.log(`http://${host}${url}`, err)
 					resultStr = {};
 
 					return Promise.reject({})
