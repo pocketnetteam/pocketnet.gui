@@ -66,6 +66,7 @@ var home = (function(){
 
 		var events = {
 			installed : function(p = {}){
+				console.log("P", p)
 				el.c.find('.application[application="'+p.application.manifest.id+'"]').addClass('installed').removeClass('installing')
 			},
 
@@ -140,7 +141,18 @@ var home = (function(){
 					ed
 				};
 
-				clbk(data);
+				console.log("APPS wait")
+
+
+				pretry(function(){
+                    return self.app.apps.inited
+                }).then(r => {
+					console.log("APPS CLBK")
+					clbk(data);
+                })
+
+
+				
 
 			},
 

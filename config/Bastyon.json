@@ -9,7 +9,8 @@
 		"scope" : "localhost:8081",
 		"name" : "Swipelux",
         "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
-        "installed" : true
+        "install" : true,
+        "develop" : true
 	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",

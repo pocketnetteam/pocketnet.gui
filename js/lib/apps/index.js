@@ -136,6 +136,8 @@ var BastyonApps = function(app){
 
     var key = app.user.address.value || ''
 
+    self.inited = false
+
     self.info = function(){
         return {
             permissions,
@@ -1479,6 +1481,10 @@ var BastyonApps = function(app){
 
 
         return Promise.all(promises).then(() => {
+
+            console.log("APPS INITED")
+
+            self.inited = true
             
             window.addEventListener("message", listener)
 
@@ -1632,9 +1638,9 @@ var BastyonApps = function(app){
         },
 
         applications : function({search = ''}){
-            var insapplications = self.app.apps.get.installedAndInstalling({search})
+            var insapplications = _.toArray(self.get.installedAndInstalling({search}))
             var nodeApps = []
-            var devapps = []
+            var devapps = []//_.filter(app.developapps, ())
 
             var sorted = _.sortBy(_.uniq(insapplications.concat(nodeApps, devapps), (app) => {
 
@@ -1646,6 +1652,9 @@ var BastyonApps = function(app){
 
                 return 3
             })
+
+
+            return Promise.resolve(sorted)
 
         }
     }
