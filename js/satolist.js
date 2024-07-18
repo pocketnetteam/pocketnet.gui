@@ -2678,9 +2678,13 @@ Platform = function (app, listofnodes) {
 
             graph.destroy = function () {
 
-                graph.chart.destroy();
+                if(graph.chart)
+                    graph.chart.destroy();
 
-                graph.el.remove()
+                if (graph.el){
+                    graph.el.remove()
+                }
+                
 
                 graph.el = null;
 
