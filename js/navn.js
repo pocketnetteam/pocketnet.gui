@@ -1046,9 +1046,6 @@ Nav = function(app)
 				return href.indexOf(ex) != -1
 			})
 
-			console.log('href', href, ex)
-			
-			
 			var e = _OpenApi || external || (
 				
 			(!href 

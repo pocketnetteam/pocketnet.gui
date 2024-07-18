@@ -103,7 +103,9 @@ var menu = (function(){
 
 		var searchlickaction = function(link){
 			
-			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
+			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('https//', '').replace('http//', '').replace('bastyon//', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
+
+			console.log('href', href, link)
 
 			var p = {
 				href : href,
