@@ -929,6 +929,32 @@ var functions = __webpack_require__("3139");
       var self = this;
       var chats = [];
       _.each(state.chats, chat => {
+        /* Remove streams that last time modified >= 3 days ago */
+        if (chat.stream) {
+          const m_chat = this.core.mtrx.client.getRoom(chat.roomId),
+            current = Date.now(),
+            expire = (() => {
+              const id = this.$store._vm.core.user.myMatrixId(),
+                last = new Date(() => {
+                  if (m_chat.getLastActiveTimestamp() === -9007199254740991) {
+                    if (m_chat.getMember(id)) {
+                      return m_chat.getMember(id).events.member.event.origin_server_ts;
+                    }
+                  } else {
+                    return m_chat.getLastActiveTimestamp();
+                  }
+                });
+              last.setDate(last.getDate() + 3);
+              return last.getTime();
+            })(),
+            outdated = current > expire;
+          if (outdated) {
+            this.core.mtrx.client.leave(chat.roomId).then(() => {
+              this.core.mtrx.client.forget(chat.roomId, true).catch(() => {});
+              commit("DELETE_ROOM", chat.roomId);
+            });
+          }
+        }
         if (this.deletedrooms[chat.roomId] || chat.stream) return;
         this.core.mtrx.kit.tetatetchat(this.m_chat);
         var users = this.core.mtrx.chatUsersInfo(chat.roomId, "anotherChatUsers");
