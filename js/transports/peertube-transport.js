@@ -23,8 +23,8 @@ function peertubeTransport(ipcRenderer, localVideo) {
             return fsFetch(input, init);
         }
         // @ts-ignore
-        const proxy = await app.api.get.directpr();
-        const info = await proxy.get.info();
+        //const proxy = await app.api.get.directpr();
+        //const info = await proxy.get.info();
         return fetch(input, init);
     }
     return (input, init) => fetchRouter(input, init);

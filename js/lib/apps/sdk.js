@@ -114,7 +114,10 @@ var BastyonSdk = function(){
     }
 
     var send = function(message){
-        window.parent.postMessage(message, "*")
+        
+        window.parent.postMessage(message, "*") 
+
+        
     }
 
     var action = function(action, data){
