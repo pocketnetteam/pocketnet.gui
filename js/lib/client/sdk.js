@@ -2746,7 +2746,12 @@ var pSDK = function ({ app, api, actions }) {
 
             if (alias){
                 _.each(self.updatelisteners, (l) => {
-                    l({type, alias, status}, 'updateListener')
+                    try{
+                       l({type, alias, status}, 'updateListener')
+                    }catch(e){
+                        
+                    }
+                   
                 })
             }
             
