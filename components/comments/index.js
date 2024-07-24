@@ -607,15 +607,38 @@ var comments = (function(){
 
 					app.platform.ui.uploadImage({
 						multiple : true,
-						
-						onSuccess : function(imgs){
+						action : (image, clbk) => {
 
-							Promise.all(_.map(imgs, (img) => {
-								return resizePromise(img, 1080, 1080)
-							})).then(imgs => {
-								_.each(imgs, added)
-							})
+							var ext = fkit.extensionBase64(image.base64)
+
+							console.log("EXT", ext)
+
+							if (ext == 'gif'){
+								added(image.base64)
+
+								clbk()
+							}
+							else{
+								resizePromise(image.base64, 1080, 1080).then((img) => {
+									added(img)
+
+									clbk()
+								})
+							}
+
 							
+
+							
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
 						}
 					})
 
