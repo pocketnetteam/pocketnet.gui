@@ -5825,6 +5825,7 @@ html.allcontent_application #footerWrapper {
 }
 .article_body .article_carousel .img {
   background-size: contain!important;
+  cursor: pointer;
 }
 .article_body .article_this_embed {
   padding: 1.5em;
