@@ -158,9 +158,6 @@
 #postscores.rndr .fordetailsusers {
   display: block;
 }
-.postscoreswnd.wnd {
-  z-index: 2005;
-}
 .postscoreswnd.wnd .wndinner {
   max-width: 370px;
   max-height: 610px;

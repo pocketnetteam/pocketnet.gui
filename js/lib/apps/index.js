@@ -455,10 +455,12 @@ var BastyonApps = function(app){
                         var images = []
 
                         app.platform.ui.uploadImage({
-                            action : (image) => {
+                            action : (image, clbk) => {
                                 images.push({
                                     image : image.base64
                                 })
+
+                                clbk()
                             },
                             onSuccess : () => {
                                 return resolve({images})
