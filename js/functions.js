@@ -2082,6 +2082,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 }
 
 resize = function (srcData, width, height, clbk, format) {
+
+	/**/
+
 	var imageObj = new Image(),
 		canvas = document.createElement("canvas"),
 		ctx = canvas.getContext('2d'),
@@ -7886,6 +7889,10 @@ initUpload = function (p) {
 			}
 
 		})(file);
+
+		reader.onerror = function(e){
+			error(e)
+		}
 	}
 
 	var errorHandler = function (file, clbk) {
@@ -8086,11 +8093,15 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
+		console.log('files', files)
+
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
+
+					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8099,6 +8110,9 @@ initUpload = function (p) {
 				fail: function () {
 					end();
 
+					console.log('failed')
+
+
 					if (p.onFail)
 						p.onFail()
 				}
@@ -8106,6 +8120,8 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
+
+				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8140,13 +8156,18 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
+						console.log("read")
+
 
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
+							console.log("resize")
 
 							autorotation(file, fileObject.base64, function (base64) {
+
+								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -8158,30 +8179,33 @@ initUpload = function (p) {
 									_p.fail();
 								}
 								else {
-									var fd = new FormData();
-									fd.append('file', file);
-
-									_.each(p.data, function (data, key) {
-
-										if (typeof data == 'function') data = data();
-
-										if (key == 'data') {
-											if (p.user) {
-												p.user.extendAjaxData(data);
-											}
-										}
-
-										if (_.isArray(data) || _.isObject(data))
-											data = JSON.stringify(data);
-
-										fd.append(key, data);
-									})
+									
 
 									if (p.beforeUpload) {
 										p.beforeUpload(fileObject, processId)
 									}
 
 									if (p.server) {
+
+										var fd = new FormData();
+											fd.append('file', file);
+
+											_.each(p.data, function (data, key) {
+
+												if (typeof data == 'function') data = data();
+
+												if (key == 'data') {
+													if (p.user) {
+														p.user.extendAjaxData(data);
+													}
+												}
+
+												if (_.isArray(data) || _.isObject(data))
+													data = JSON.stringify(data);
+
+												fd.append(key, data);
+											})
+											
 										var xhr = new XMLHttpRequest();
 
 										xhr.onreadystatechange = function (e) {
@@ -8224,9 +8248,11 @@ initUpload = function (p) {
 										if (p.action) {
 											p.action(fileObject, _p.success)
 										}
-										else
-
+										else{
 											_p.success();
+										}
+
+											
 									}
 
 
