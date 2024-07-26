@@ -5784,6 +5784,7 @@ html.allcontent_application #footerWrapper {
 .article_body .article_image img {
   border-radius: 5px;
   display: block;
+  cursor: pointer;
 }
 .article_body .article_image .article_image_caption {
   text-align: center;
@@ -5824,6 +5825,7 @@ html.allcontent_application #footerWrapper {
 }
 .article_body .article_carousel .img {
   background-size: contain!important;
+  cursor: pointer;
 }
 .article_body .article_this_embed {
   padding: 1.5em;

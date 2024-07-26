@@ -174,6 +174,26 @@ edjsHTMLCnt = function (a, app) {
 		return ftext
 	}
 
+    var im = {
+        image: function (e) {
+
+            var t = e.data
+
+			var src = checkIfAllowedImageApply(trydecode(_.escape(replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file))))
+
+            if(src) return [src]
+
+            return []
+
+		},
+
+        carousel : function(e){
+            return _.map(e.data, function (i) {
+				return _.escape(trydecode(i.url))
+			})
+        }
+    }
+
 	var e = {
 		delimiter: function () {
 			return '<div class="article_delimiter"><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i></div>'
@@ -462,6 +482,7 @@ edjsHTMLCnt = function (a, app) {
 		void 0 === n && (n = {});
 
 		var i = Object.assign({}, e, n);
+        var iim = Object.assign({}, im, n);
 
 		return {
 
@@ -558,7 +579,21 @@ edjsHTMLCnt = function (a, app) {
 				return t.filter((function (e) {
 					return !r.includes(e)
 				}))
-			}
+			},
+
+            getallimages : function(e){
+                var result = []
+
+                e.blocks.map((function (e) {
+					var ims = iim[e.type] ? iim[e.type](e) : []
+
+                    console.log('ims images', ims, iim, e)
+
+                    result = result.concat(ims)
+				}))
+
+                return result
+            }
 		}
 	};
 	return r

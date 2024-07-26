@@ -11,6 +11,26 @@ var application = (function(){
 		var el, ed, application, appdata;
 
 		var actions = {
+			install : function(){
+				
+
+				globalpreloader(true)
+
+				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
+				
+				
+				pr.promise.then(() => {
+					successCheck()
+				}).catch(e => {
+
+					console.error(e)
+
+					sitemessage(JSON.stringify(e), null, 5000)
+				}).finally(() => {
+					globalpreloader(false)
+				})
+	
+			},
 			gotohome : function(){
 				self.app.nav.api.load({
 					open : true,
@@ -27,9 +47,9 @@ var application = (function(){
                     essenseData : {
                         application : application.manifest.id,
 
-						onremove : function(){
+						/*onremove : function(){
 							actions.gotohome()
-						}
+						}*/
                     }
                 })
 			},
@@ -55,8 +75,13 @@ var application = (function(){
 		}
 
 		var events = {
-			pageevents : function(p){
-				p.el.find('.settings .icon').on('click', function(){
+			pageevents : function(p, s){
+
+				var sl = '.settings .icon'
+
+				if(isMobile() && !s) sl = '.abssettings .icon'
+
+				p.el.find(sl).on('click', function(){
 					renders.menu($(this))
 				})
 
@@ -90,6 +115,19 @@ var application = (function(){
 						replaceState: p.data.replace
 					})
 					
+				}
+			},
+
+			installed : function(p = {}){
+				if (p.application.manifest.id == application.manifest.id){
+					remake(p.application.manifest.id)
+				}
+			},
+
+			removed : function(p = {}){
+
+				if (p.application.manifest.id == application.manifest.id){
+					remake(p.application.manifest.id)
 				}
 			},
 
@@ -161,6 +199,30 @@ var application = (function(){
 				
 			},
 
+			install : function(clbk){
+
+				self.shell({
+
+					name :  'install',
+					el :   el.c,
+					data : {
+						application
+					},
+
+				}, function(p){
+
+
+					p.el.find('.installButton button').on('click', function(){
+						actions.install()
+					})
+
+					events.pageevents(p, true)
+					
+					if (clbk)
+						clbk();
+				})
+			},
+
 			error : function(error, clbk){
 
 				self.shell({
@@ -174,7 +236,7 @@ var application = (function(){
 
 				}, function(p){
 
-					events.pageevents(p)
+					events.pageevents(p, true)
 					
 					if (clbk)
 						clbk();
@@ -252,12 +314,41 @@ var application = (function(){
 		var initEvents = function(){
 			self.app.apps.on('loaded', events.loaded)
 			self.app.apps.on('changestate', events.changestate)
+
+			self.app.apps.on('installed', events.installed)
+			self.app.apps.on('removed', events.removed)
+
+			
+		}
+
+		var remake = function(id){
+
+			application = null
+			appdata = null
+
+			self.app.apps.get.application(id).then((f) => {
+
+				if (f){
+					application = f.application
+					appdata = f.appdata
+				}
+
+				make()
+
+			}).catch(e => {
+				make()
+			})
 		}
 
 		var make = function(){
 
 			if(!application || !appdata){
 				renders.error('application_notexist')
+				return
+			}
+
+			if(!application.installed){
+				renders.install()
 				return
 			}
 
@@ -290,21 +381,7 @@ var application = (function(){
 
 				if (id && (!application || application.manifest.id !== id)){
 
-					application = null
-					appdata = null
-
-					self.app.apps.get.application(id).then((f) => {
-
-						if (f){
-							application = f.application
-							appdata = f.appdata
-						}
-
-						make()
-
-					}).catch(e => {
-						make()
-					})
+					remake(id)
 
 					return
 				}
@@ -335,7 +412,7 @@ var application = (function(){
 				application = null
 				appdata = null
 
-				self.app.apps.get.application(id).then((f) => {
+				self.app.apps.get.applicationall(id).then((f) => {
 
 					if (f){
 						application = f.application
@@ -353,6 +430,12 @@ var application = (function(){
 
 				}).catch(e => {
 
+					if(e == 'missing:application'){
+
+					}
+
+					console.error(e)
+
 					ed = p.settings.essenseData
 
 					var data = {
@@ -360,20 +443,7 @@ var application = (function(){
 					};
 	
 					clbk(data);
-
-					/*console.error(e)
-
-					setTimeout(() => {
-
-						self.app.nav.api.load({
-							open : true,
-							href : 'page404',
-							history : true,
-							replaceState : true,
-							fade : self.app.el.content
-						})
-
-					}, 200)*/
+					
 				})
 
 			},
@@ -389,6 +459,9 @@ var application = (function(){
 
 				self.app.apps.off('loaded', events.loaded)
 				self.app.apps.off('changestate', events.changestate)
+
+				self.app.apps.off('installed', events.installed)
+				self.app.apps.off('removed', events.removed)
 
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application
 

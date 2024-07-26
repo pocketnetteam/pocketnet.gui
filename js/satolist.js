@@ -2678,9 +2678,13 @@ Platform = function (app, listofnodes) {
 
             graph.destroy = function () {
 
-                graph.chart.destroy();
+                if(graph.chart)
+                    graph.chart.destroy();
 
-                graph.el.remove()
+                if (graph.el){
+                    graph.el.remove()
+                }
+                
 
                 graph.el = null;
 
@@ -3495,10 +3499,22 @@ Platform = function (app, listofnodes) {
         articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
+            var edjs = new edjsHTML(null, app)
 
+            var images = edjs.getallimages(share.message)
+
+            console.log('images', images)
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            var opengallery = function(src){
+
+                console.log('iamges opengallery', src)
+
+                self.app.platform.ui.images(images, src)
+
+            }
 
             caption.addClass(capiontextclass)
 
@@ -3528,6 +3544,14 @@ Platform = function (app, listofnodes) {
 
                     })
 
+                    _el.find(".img").on('click', function(){
+                        var src = $(this).attr('i')
+
+                        if (src){
+                            opengallery(src)
+                        }
+                    })
+
                     //self.app.platform.ui.carousel($(this))
                 })
 
@@ -3536,6 +3560,16 @@ Platform = function (app, listofnodes) {
                         self.app.platform.ui.embeding($(this))
                     }catch(e){
                         
+                    }
+                    
+                })
+
+                wr.find('.article_image img').on('click', function(){
+
+                    var src = $(this).attr('src')
+
+                    if (src){
+                        opengallery(src)
                     }
                     
                 })
@@ -4094,7 +4128,9 @@ Platform = function (app, listofnodes) {
 
             globalpreloader(true, true)
 
-            const { name, description, tags } = p;
+            const { name, description, tags, url } = p;
+
+            console.log("SHARE", p)
 
             setTimeout(function(){
                 app.nav.api.load({
@@ -4120,8 +4156,8 @@ Platform = function (app, listofnodes) {
                         name,
                         description,
                         tags,
-
-                        dontsave : (p.repost || p.videoLink) ? true : false
+                        url,
+                        dontsave : (p.repost || p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
@@ -4550,15 +4586,29 @@ Platform = function (app, listofnodes) {
 
             self.app.platform.sdk.user.stateAction(() => {
 
-                self.app.nav.api.load({
-                    open : true,
-                    href : 'external',
-                    inWnd : true,
-                    essenseData : {
-                        action : ps.action, 
-                        parameters : ps
-                    }
-                })
+                if (ps.action == 'share'){
+
+                    self.app.platform.ui.share({
+						tags : ps.tags,
+                        description : ps.description,
+                        url : ps.url,
+                        dontsave : true
+					})
+
+                }
+                else{
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'external',
+                        inWnd : true,
+                        essenseData : {
+                            action : ps.action, 
+                            parameters : ps
+                        }
+                    })
+                }
+
+                
 
             }, {
                 text : 'external_'+ps.action+'link_reg',
@@ -6119,6 +6169,10 @@ Platform = function (app, listofnodes) {
                 if (json.sv)    eExt.saltValue = json.sv
                 if (json.di)    eExt.discount = json.di
                 if (json.ta)    eExt.tax = json.ta
+
+
+                if (json.tg)    eExt.tags = json.tg
+                if (json.u)     eExt.url = json.u
     
                 if (json.st) {
                     eExt.store = {}
@@ -6180,8 +6234,18 @@ Platform = function (app, listofnodes) {
                     }catch(e){
                         throw 'wrong:c_url:notvalid'
                     }
+                }
 
-                    
+                if (ps.action == 'share'){
+                    if(ps.description) ps.description = clearStringXss(ps.description)
+                    if(ps.url) ps.url = clearStringXss(ps.url)
+                    if(ps.tags) {
+                        if(!_.isArray(ps.tags)) throw 'tags:array'
+
+                        ps.tags = _.map(ps.tags, (tag) => {
+                            return clearStringXss(tag)
+                        })
+                    }
                 }
     
                 if (ps.action == 'pay'){
@@ -23469,6 +23533,7 @@ Platform = function (app, listofnodes) {
 
                             if(typeof _Electron != 'undefined') path = './'
 
+                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -23481,6 +23546,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    viewtype="`+(isTablet() ? "split" : "single")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"

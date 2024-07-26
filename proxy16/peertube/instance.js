@@ -3,6 +3,7 @@ var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
 var instance = function (host, ip, Roy) {
+	console.log('new instance', host)
 	var self = this;
 
 	self.host = host;
@@ -149,13 +150,13 @@ var instance = function (host, ip, Roy) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
 
+		console.log('req', `http://${host}${url}`)
+
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
 				method: p.type || 'get',
 				timeout,
 			}).then(async (result) => {
-
-
 
 				const meta = {
 					code: 200,
@@ -170,8 +171,9 @@ var instance = function (host, ip, Roy) {
 				try {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
-					console.log(err)
 					resultStr = {};
+
+					return Promise.reject({})
 				}
 
 				return Promise.resolve({
@@ -196,7 +198,7 @@ var instance = function (host, ip, Roy) {
 
 			statistic.add(meta);
 
-			return Promise.reject(error || {}).response || {};
+			return Promise.reject(error || {});
 		}
 	};
 

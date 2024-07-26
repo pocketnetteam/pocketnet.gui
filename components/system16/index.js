@@ -166,7 +166,7 @@ var system16 = (function(){
 				renders.webserveradmin(el.c)
 			},
 			'hexCaptcha' : function(_el){
-				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
+				changes.server.hexCaptcha = !JSON.parse(_el.attr('value'))
 				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
 
 				renders.webserveradmin(el.c)
