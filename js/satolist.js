@@ -3499,10 +3499,22 @@ Platform = function (app, listofnodes) {
         articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
+            var edjs = new edjsHTML(null, app)
 
+            var images = edjs.getallimages(share.message)
+
+            console.log('images', images)
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            var opengallery = function(src){
+
+                console.log('iamges opengallery', src)
+
+                self.app.platform.ui.images(images, src)
+
+            }
 
             caption.addClass(capiontextclass)
 
@@ -3532,6 +3544,14 @@ Platform = function (app, listofnodes) {
 
                     })
 
+                    _el.find(".img").on('click', function(){
+                        var src = $(this).attr('i')
+
+                        if (src){
+                            opengallery(src)
+                        }
+                    })
+
                     //self.app.platform.ui.carousel($(this))
                 })
 
@@ -3540,6 +3560,16 @@ Platform = function (app, listofnodes) {
                         self.app.platform.ui.embeding($(this))
                     }catch(e){
                         
+                    }
+                    
+                })
+
+                wr.find('.article_image img').on('click', function(){
+
+                    var src = $(this).attr('src')
+
+                    if (src){
+                        opengallery(src)
                     }
                     
                 })

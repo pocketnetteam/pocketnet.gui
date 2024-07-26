@@ -10285,6 +10285,8 @@ var connectionSpeed = function()
 };
 
 replaceArchiveInImage = function(src) {
+	if(!src) return ''
+
 	var srcNew = src;
 
 	window.project_config.archivedPeertubeServers.map(server => {
