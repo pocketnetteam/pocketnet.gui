@@ -905,6 +905,7 @@ var component = Object(componentNormalizer["a" /* default */])(
             if (e.event.content.accepted !== null) {
               return false;
             } else {
+              return true;
               if (this.core.mtrx.me(e.event.sender)) {
                 return false;
               } else {
