@@ -34,7 +34,9 @@ var application = (function(){
 			gotohome : function(){
 				self.app.nav.api.load({
 					open : true,
-					href : 'home',
+					href : 'index',
+
+					///href : 'home',
 					history : true,
 				})
 			},

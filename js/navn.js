@@ -1053,7 +1053,7 @@ Nav = function(app)
 				|| href.indexOf("mailto") > -1
 				|| href.indexOf("skype:") > -1 
 				|| href.indexOf('/') > -1 
-				|| href.indexOf('.') > -1
+				//|| href.indexOf('.') > -1
 				|| href == "#")
 				
 				

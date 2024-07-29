@@ -8,7 +8,9 @@
 		"version": "0.0.1",
 		"scope" : "app.swipelux.pocketnet.app",
 		"cantdelete" : true,
-		"name" : "Swipelux"
+		"name" : "Swipelux",
+        "develop" : true,
+        "install" : true
 	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
