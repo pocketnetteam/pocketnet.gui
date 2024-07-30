@@ -4065,7 +4065,7 @@ Platform = function (app, listofnodes) {
             app.nav.api.load({
                 open : true,
                 href : 'socialshare2',
-                history : true,
+                history : false,
                 inWnd : true,
 
                 essenseData : {
