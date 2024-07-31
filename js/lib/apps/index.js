@@ -724,11 +724,23 @@ var BastyonApps = function(app){
                 permissions : ['account'],
                 authorization : true,
                 action : function({data, application}){
-                    var comment = new brtComment();
+                    var comment = new Comment();
 
                     comment.import(data);
 
                     return makeAction(comment, application)
+                }
+            },
+
+            vote : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var vote = new UpvoteShare();
+
+                    vote.import(data);
+
+                    return makeAction(vote, application)
                 }
             }
         }
