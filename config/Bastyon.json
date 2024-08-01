@@ -3,7 +3,16 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    "developapps" : [],
+    "developapps" : [
+        {
+            "id" : "barteron.pocketnet.app",
+            "version": "1.0.0",
+            "scope" : "test.barter.pocketnet.app",
+            "cantdelete" : true,
+            "name" : "Barteron",
+            "grantedPermissions" : ["account", "chat"]
+        }
+    ],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
