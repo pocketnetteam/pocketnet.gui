@@ -355,12 +355,12 @@ var comments = (function(){
 					return Promise.resolve(null)
 				}
 
-				var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
+				//var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
 				var authors = [share.address]
 
-				_.each(cmtsTo, (c) => {
+				/*_.each(cmtsTo, (c) => {
 					authors.push(c.address)
-				})
+				})*/
 
 
 				return self.psdk.userInfo.load(authors).then(() => {
@@ -1499,6 +1499,47 @@ var comments = (function(){
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
+
+				/*var answerOrderedComments = []
+
+				for(var i = 0; i < comments.length; i++){
+					var c = comments[i]
+
+					if (c.answerid){
+
+						var i = _.findIndex(comments, (cc) => {
+							return c.answerid == cc.id
+						})
+
+						if (i == -1){
+							answerOrderedComments.push(c)
+						}
+						else{
+							var j = _.findIndex(answerOrderedComments, (cc) => {
+								return c.id == cc.id
+							})
+
+							if (j > -1){
+								answerOrderedComments.splice(j + 1, 0, c)
+							}
+							else{
+								var k = _.findIndex(answerOrderedComments, (cc) => {
+									return c.answerid == cc.id
+								})
+
+								if (k > -1){
+									answerOrderedComments.splice(k, 0, c)
+								}
+								else{
+									answerOrderedComments.push(c)
+								}
+							}
+						}
+					}
+					else{
+						answerOrderedComments.push(c)
+					}
+				}*/
 
 				return comments
 			}
