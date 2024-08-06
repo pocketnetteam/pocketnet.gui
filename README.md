@@ -40,9 +40,10 @@ The "Pocketnet GUI" software is the Social Network application for end users. It
 
 # Usage
 At the moment, users can connect to the social network in three ways:
-- From the official Website [https://bastyon.com/](https://bastyon.com/)
-- Using the Desktop application [https://github.com/pocketnetteam/pocketnet.gui/releases/latest](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
-- Using the Android mobile app https://play.google.com/store/apps/details?id=pocketnet.app
+- From the official website [bastyon.com](https://bastyon.com/)
+- Using the Desktop application from our GitHub repository. [Latest GitHub Release](https://github.com/pocketnetteam/pocketnet.gui/releases/latest)
+- Using the Android mobile app from Play Market. [Visit Play Market](https://play.google.com/store/apps/details?id=pocketnet.app)
+- Using the Android mobile app from our GitHub repository: [Google Free Version](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/BastyonGF.apk) or [Standard](https://github.com/pocketnetteam/pocketnet.gui/releases/latest/download/Bastyon.apk)
 
 ## Account creation
 The first time you access Bastyon you should create your own account.
