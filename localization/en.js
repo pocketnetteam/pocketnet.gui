@@ -2852,3 +2852,7 @@ _l.external_source = "Where to send PKOIN from"
 _l.external_tTotal = "Account or wallet"
 _l.description = 'Description'
 _l.getqrcode = 'Show QR code'
+
+
+_l.pkoin_application_info = "Buy via Swipelux mini-application"
+_l.buyswipelux = "Swipelux"
