@@ -2855,4 +2855,8 @@ _l.getqrcode = 'Show QR code'
 
 
 _l.pkoin_application_info = "Buy via Swipelux mini-application"
-_l.buyswipelux = "Swipelux"
+_l.buyswipelux = "Buy via Swipelux"
+_l.buycard = "VISA/Mastercard"
+_l.buyusers = "Buy from users"
+_l.buyviacrypto = "Buy via cryptocurrency"
+

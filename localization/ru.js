@@ -2643,4 +2643,7 @@ _l.getqrcode = 'Показать QR код'
 
 
 _l.pkoin_application_info = "Купить через миниприложение Swipelux"
-_l.buyswipelux = "Swipelux"
+_l.buyswipelux = "Купить через Swipelux"
+_l.buycard = "Купить с помощью карты VISA/Mastercard"
+_l.buyusers = "Купить у пользователей"
+_l.buyviacrypto = "Купить с помощью криптовалюты"
