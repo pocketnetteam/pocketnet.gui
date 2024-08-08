@@ -527,14 +527,14 @@ var BastyonApps = function(app){
                 authorization : true,
                 action : function({data, application}){
 
-                    var chatLink = 'chat?id=' + data.roomid;
+                    var chatLink = '/chat?id=' + data.roomid;
 
 
                     return app.platform.matrixchat.wait().then((core) => {
                         if (app.mobileview){
                             core.apptochat(chatLink)
                         } else {
-                            core.gotoRoute(chatLink)
+                            core.gopage(chatLink)
                         }
 
                         return Promise.resolve()
@@ -724,11 +724,23 @@ var BastyonApps = function(app){
                 permissions : ['account'],
                 authorization : true,
                 action : function({data, application}){
-                    var comment = new brtComment();
+                    var comment = new Comment();
 
                     comment.import(data);
 
                     return makeAction(comment, application)
+                }
+            },
+
+            vote : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var vote = new UpvoteShare();
+
+                    vote.import(data);
+
+                    return makeAction(vote, application)
                 }
             }
         }
@@ -1624,6 +1636,16 @@ var BastyonApps = function(app){
                 if (path){
                     url = url + '/' + path
                 }
+
+                /*try{
+                    var u = new URL(url)
+
+                    u.searchParams.set('l', app.localization.key)
+
+                    url = u.toString()
+                }catch(e){
+                    
+                }*/
 
                 return app.platform.sdk.remote.getnew(url).catch(e => {
                     return {}

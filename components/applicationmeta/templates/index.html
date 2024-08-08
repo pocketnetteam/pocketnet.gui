@@ -24,24 +24,25 @@
 
 		
 		<% if(!application.cantdelete) {%>
-		<% } %>
 
-		<% if(!application.installed) {%>
+			<% if(!application.installed) {%>
 
-			<div class="panel">
-				<button class="button install">
-					<%- e('installpplication')%>
-				</button>
-			</div>
+				<div class="panel">
+					<button class="button install">
+						<%- e('installpplication')%>
+					</button>
+				</div>
 
-		<% } else { %> 
+			<% } else { %> 
 
-			<div class="panel">
-				<button class="button remove">
-					<%- e('deleteapplication')%>
-				</button>
-			</div>
-			
+				<div class="panel">
+					<button class="button remove">
+						<%- e('deleteapplication')%>
+					</button>
+				</div>
+				
+			<% } %>
+
 		<% } %>
 
 		

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.util.Base64;
 import android.webkit.WebResourceResponse;
 import android.os.Build;
-
+import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -195,9 +195,9 @@ public class PhotoLibrary extends CordovaPlugin {
 
           if (
             
-            read && !checkReadPermissions()
+            (read && !checkReadPermissions())
 
-            || write && !cordova.hasPermission(WRITE_EXTERNAL_STORAGE)) {
+            || (write && !checkWritePermissions())) {
             requestAuthorization(read, write);
           } else {
             callbackContext.success();
@@ -216,7 +216,7 @@ public class PhotoLibrary extends CordovaPlugin {
               final String url = args.getString(0);
               final String album = args.getString(1);
 
-              if (!cordova.hasPermission(WRITE_EXTERNAL_STORAGE)) {
+              if (!checkWritePermissions()) {
                 callbackContext.error(service.PERMISSION_ERROR);
                 return;
               }
@@ -244,7 +244,7 @@ public class PhotoLibrary extends CordovaPlugin {
               final String url = args.getString(0);
               final String album = args.getString(1);
 
-              if (!cordova.hasPermission(WRITE_EXTERNAL_STORAGE)) {
+              if (!checkWritePermissions()) {
                 callbackContext.error(service.PERMISSION_ERROR);
                 return;
               }
@@ -460,10 +460,24 @@ public class PhotoLibrary extends CordovaPlugin {
   }
 
   private boolean checkReadPermissions(){
-
     return (Build.VERSION.SDK_INT <= 32 && cordova.hasPermission(READ_EXTERNAL_STORAGE)) || 
     (Build.VERSION.SDK_INT > 32 && cordova.hasPermission(READ_MEDIA_IMAGES));
 
   }
+
+  private boolean checkWritePermissions(){
+
+    int version = Build.VERSION.SDK_INT;
+
+    if( version <= 32 ) {
+        boolean isAllowPermissionApi28 = cordova.hasPermission(WRITE_EXTERNAL_STORAGE);
+        return  isAllowPermissionApi28;
+    } else {
+        boolean isAllowPermissionApi33 = Environment.isExternalStorageManager();
+
+        return true;
+    }
+  }
+  
 
 }

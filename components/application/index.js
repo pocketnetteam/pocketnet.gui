@@ -8,7 +8,7 @@ var application = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, application, appdata;
+		var el, ed, application, appdata, curpath;
 
 		var actions = {
 			install : function(){
@@ -34,7 +34,9 @@ var application = (function(){
 			gotohome : function(){
 				self.app.nav.api.load({
 					open : true,
-					href : 'home',
+					href : 'index',
+
+					///href : 'home',
 					history : true,
 				})
 			},
@@ -107,13 +109,16 @@ var application = (function(){
 				if(!p.data) return
 				if(!application) return
 
-				if (p.application == application.manifest.id && p.data.encoded){
+
+				if (p.application == application.manifest.id/* && p.data.encoded*/){
 
 					self.app.nav.api.history.addRemoveParameters([], {
 						p: p.data.encoded
 					}, {
 						replaceState: p.data.replace
 					})
+
+					curpath = actions.getpath()
 					
 				}
 			},
@@ -277,6 +282,7 @@ var application = (function(){
 			},
 			frameremote : function(clbk){
 				var src = application.manifest.scope + '/' + (actions.getpath() || application.manifest.start || '')
+				curpath = actions.getpath()
 
 				/*if(window.testpocketnet){
 					src = src + '?testnetwork=true'
@@ -386,15 +392,17 @@ var application = (function(){
 					return
 				}
 
-				if (p && application && application.manifest.id == id) {
+				if (application && application.manifest.id == id) {
 
 					var decoded = actions.getpath()
 
-					if (decoded){
+					if (decoded == curpath) return
+
+						curpath = decoded
+
 						self.app.apps.emit('changestate', {
 							route : decoded
 						}, application.manifest.id)
-					}
 
 				
 				}
@@ -470,6 +478,8 @@ var application = (function(){
 			init : function(p){
 
 				state.load();
+
+				curpath = ''
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

@@ -2640,3 +2640,7 @@ _l.external_source = "Откуда отправить PKOIN"
 _l.external_tTotal = "Аккаунт или кошелёк"
 _l.description = 'Описание'
 _l.getqrcode = 'Показать QR код'
+
+
+_l.pkoin_application_info = "Купить через миниприложение Swipelux"
+_l.buyswipelux = "Swipelux"
