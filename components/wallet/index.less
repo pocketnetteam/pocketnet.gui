@@ -802,11 +802,28 @@
 		.ways{
 			display : flex;
 			align-items: flex-start;
+			margin-bottom: 2 * @rhythm;
+
+			.subcaption{
+				color: rgb(var(--color-txt-ac));
+			}
+			
+
+			&:nth-child(2n){
+				background: rgba(var(--color-medium-theme), 0.3);
+				padding-top: 2 * @rhythm;
+				padding-bottom: 2 * @rhythm;
+			}
 
 			>div{
 				flex-shrink: 1;
   				flex-basis: 0;
 				flex-grow: 1;
+			}
+
+			.actionbutton{
+				margin-top : 2 * @rhythm;
+				margin-bottom: 2 * @rhythm;
 			}
 
 			
@@ -857,7 +874,6 @@
 			>div{
 				
 				padding : @rhythm 2 * @rhythm;
-				text-align: center;
 				min-width: 60px;
 				
 				.clogo{
@@ -1513,6 +1529,8 @@
 		.buypkoin{
 			padding : @rhythm;
 			border-top: 0;
+
+			
 	
 			.ways{
 				display : flex;
@@ -1521,10 +1539,12 @@
 	
 				>div{
 					flex-shrink: 1;
-					  flex-basis: content;
+					flex-basis: content;
 					flex-grow: 1;
 					padding-bottom: 6 * @rhythm;
 				}
+
+				
 			}
 			
 			.row{
@@ -1574,6 +1594,8 @@
 						margin-top : 2 * @rhythm;
 					}
 				}
+
+				
 	
 				&.table{
 					display: block;
