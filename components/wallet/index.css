@@ -1544,6 +1544,12 @@
     flex-grow: 1;
     padding-bottom: 3em;
   }
+  #wallet .buypkoin .ways .subcaption {
+    text-align: center;
+  }
+  #wallet .buypkoin .ways .wrp {
+    width: 100%;
+  }
   #wallet .buypkoin .row {
     padding: 0;
   }

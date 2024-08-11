@@ -511,6 +511,8 @@ var uploadpeertube = (function () {
 				initCancelListener(() => {
 					uploader.cancel(); processing(false)
 				});
+
+				self.app.mobile.backgroundMode(true)
 				
 				uploader.uploadChunked().then((response) => {
 
@@ -556,6 +558,8 @@ var uploadpeertube = (function () {
 					}
 
 				}).finally(() => {
+
+					self.app.mobile.backgroundMode(false)
 
 					if (el.videoInput)
 						el.videoInput.val('');
@@ -751,7 +755,7 @@ var uploadpeertube = (function () {
 				cancel = null
 
 				self.app.mobile.unsleep(false)
-
+				self.app.mobile.backgroundMode(false)
 
 			},
 
@@ -795,6 +799,7 @@ var uploadpeertube = (function () {
 				p.clbk(null, p);
 
 				self.app.mobile.unsleep(true)
+				
 
 			},
 

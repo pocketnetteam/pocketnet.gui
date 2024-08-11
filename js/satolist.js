@@ -24250,7 +24250,7 @@ Platform = function (app, listofnodes) {
                 }
                     
                 
-                self.app.mobile.backgroundMode(false)
+                //self.app.mobile.backgroundMode(false)
 
             }
 
