@@ -164,7 +164,7 @@ PeerTubePocketnet = function (app) {
 			var result = r[url]
 
 			if(!result || !result.state){
-				return true;
+				return false;
 			}
 			else{
 				return result.state.id != 2 && result.state.id != 3;

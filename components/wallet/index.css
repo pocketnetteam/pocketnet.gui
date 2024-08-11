@@ -701,11 +701,24 @@
 #wallet .buypkoin .ways {
   display: flex;
   align-items: flex-start;
+  margin-bottom: 1em;
+}
+#wallet .buypkoin .ways .subcaption {
+  color: rgb(var(--color-txt-ac));
+}
+#wallet .buypkoin .ways:nth-child(2n) {
+  background: rgba(var(--color-medium-theme), 0.3);
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 #wallet .buypkoin .ways > div {
   flex-shrink: 1;
   flex-basis: 0;
   flex-grow: 1;
+}
+#wallet .buypkoin .ways .actionbutton {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 #wallet .buypkoin .row {
   display: flex;
@@ -744,7 +757,6 @@
 }
 #wallet .buypkoin .row > div {
   padding: 0.5em 1em;
-  text-align: center;
   min-width: 60px;
 }
 #wallet .buypkoin .row > div .clogo {
@@ -1531,6 +1543,12 @@
     flex-basis: content;
     flex-grow: 1;
     padding-bottom: 3em;
+  }
+  #wallet .buypkoin .ways .subcaption {
+    text-align: center;
+  }
+  #wallet .buypkoin .ways .wrp {
+    width: 100%;
   }
   #wallet .buypkoin .row {
     padding: 0;
