@@ -770,13 +770,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							// FIXME: This is a temporary solution. Archive servers must be checked by order
 							if (s.archived.length === 2) {
+
+								var archiveS = {...list.archive[s.archived[0]], archiveDouble: true, cantuploading : true}
+
 								serversList.push({
 									...list.archive[s.archived[0]],
 									archiveDouble: true,
 								});
 								serversList.push(list.archive[s.archived[1]]);
 							} else {
-								serversList.push(list.archive[s.archived[0]]);
+								serversList.push({...list.archive[s.archived[0]], cantuploading : true});
 							}
 						}
 

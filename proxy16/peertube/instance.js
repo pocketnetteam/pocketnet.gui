@@ -3,7 +3,6 @@ var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
 var instance = function (host, ip, Roy) {
-	console.log('new instance', host)
 	var self = this;
 
 	self.host = host;
@@ -101,8 +100,6 @@ var instance = function (host, ip, Roy) {
 
 		}).catch(e => {
 
-			//console.log("E", self.host, e)
-
 			return Promise.resolve()
 
 		})
@@ -149,8 +146,6 @@ var instance = function (host, ip, Roy) {
 		if (self.offline) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
-
-		console.log('req', `http://${host}${url}`)
 
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
