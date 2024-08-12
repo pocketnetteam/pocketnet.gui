@@ -56,15 +56,11 @@ var Roy = function (parent) {
 		if (!url) return;
 		if (!options) options = {};
 
-		console.log('add instance', url)
-
 		if (parent.instanses[url]){
 
 			parent.instanses[url].counter++ 
 
 			instances.push(parent.instanses[url].instance);
-
-			console.log('instances', instances.length)
 
 			return parent.instanses[url].instance
 		}
@@ -82,7 +78,6 @@ var Roy = function (parent) {
 
 		instances.push(instance);
 
-		console.log('instances2', instances.length)
 
 
 		parent.instanses[url] = {
@@ -98,7 +93,6 @@ var Roy = function (parent) {
 	self.removeInstance = function (host) {
 		var instance = self.find(host);
 
-		console.log('removeInstance', host)
 
 		if (instance) {
 
@@ -129,7 +123,6 @@ var Roy = function (parent) {
 	self.init = function (urls) {
 		inited = true;
 
-		console.log('init', urls)
 
 		_.each(urls, function (ins) {
 			var host = ins;
@@ -183,14 +176,6 @@ var Roy = function (parent) {
 		var _instances = _.filter(instances, function (instance) {
 			return instance.canuse() || self.useall;
 		});
-
-		console.log("_beset", _.map(_instances, (i) => {
-			return i.host
-		}))
-
-		console.log("total", _.map(instances, (i) => {
-			return i.host
-		}))
 
 
 		return _.sortBy(_instances, (instance) => {
@@ -261,13 +246,11 @@ var Roy = function (parent) {
 			var list = [];
 
 			if (p.host) {
-				console.log('get  host', p.host)
 				var instance = self.findInstanceByName(p.host);
 
 				if (instance) list = [instance];
 			} else {
 				list = self.bestlist();
-				console.log('get best list')
 				
 			}
 		}
@@ -277,9 +260,7 @@ var Roy = function (parent) {
 		var index = 0;
 		var error = null;
 		
-		console.log('list', _.map(list, (l) => {
-			return l.host
-		}))
+	
 
 		var request = function (instance) {
 			return instance
