@@ -22,17 +22,28 @@
 		<div class="ways">
 			<div class="wayf">
 
-				<div class="row one">
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buyusers')%></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row table">
 					<div class="wrp">
 						<div class="flxbtn">
-							<div>
+
+							<div class="flxbtnlbk">
+								<span><%- e('pkoin_commerce_info') %></span>
+							</div>
+
+							<div class="actionbutton">
 								<a href="index?sst=pkoin_commerce">
 									<button class="button medium orange"><i class="fas fa-hashtag"></i> <%=e('buypeertopeer')%></button>
 								</a>
 							</div>
-							<div class="flxbtnlbk">
-								<span><%- e('pkoin_commerce_info') %></span>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -46,6 +57,14 @@
 			
 
 			<div class="wayf">
+
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buyviacrypto')%></span>
+						</div>
+					</div>
+				</div>
 
 				<div class="row flx">
 					<% _.each(coins, function(coin){ %>
@@ -82,18 +101,27 @@
 
 		<div class="ways">
 			<div class="wayf">
-
-				<div class="row one">
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buycard')%></span>
+						</div>
+					</div>
+				</div>
+				<div class="row table">
 					<div class="wrp">
 						<div class="flxbtn">
-							<div>
+
+							<div class="flxbtnlbk">
+								<span><%- e('pkoin_application_info') %></span>
+							</div>
+
+							<div class="actionbutton">
 								<a href="application?id=swipelux.app">
 									<button class="button medium orange"><i class="fas fa-tools"></i> <%=e('buyswipelux')%></button>
 								</a>
 							</div>
-							<div class="flxbtnlbk">
-								<span><%- e('pkoin_application_info') %></span>
-							</div>
+							
 						</div>
 					</div>
 				</div>

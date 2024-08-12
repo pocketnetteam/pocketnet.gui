@@ -1610,7 +1610,7 @@ Share = function(lang){
 	}
 
 	self.canSend = function(app, clbk) {
-		if (self.itisvideo() && !self.aliasid) {
+		if (self.itisvideo()) {
 			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
 		}
 
