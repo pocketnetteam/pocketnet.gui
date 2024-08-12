@@ -1155,7 +1155,7 @@ _l.sortByDuration = "Длительности";
 _l.sortByViews = "Количеству просмотров";
 
 _l.unableToAuthorize = "Ошибка авторизации";
-_l.unableToAuthorizeBody = "К сожалению, пока вы не можете загружать видео на "+appname +". Для загрузки видео необходима репутация 100 или 5 PKOIN на счету. До этого времени вы можете публиковать видео из YouTube - просто вставляйте ссылку в ваш пост.";
+_l.unableToAuthorizeBody = "К сожалению, пока вы не можете загружать видео через сайт на "+appname +". Для загрузки видео необходима репутация 100 или 5 PKOIN на счету. Или вы можете использовать приложение "+appname +"";
 
 
 _l.unableToAuthorizeConnection = "Ошибка авторизации";
@@ -2040,7 +2040,7 @@ _l.submitapplication = "Отправить заявку"
 _l.submitapplicationVideo = "Запросить PKOIN для Загрузки Видео"
 _l.submitapplicationVideoSmall = "Послать и запросить PKOIN"
 
-_l.videobloggerRequest = "Если вы блогер с существующей аудиторией то вы можете запросить PKOIN, чтобы грузить видео. Нажмите кнопку ниже, чтобы запросить PKOIN для загрузки видео:"
+_l.videobloggerRequest = "Если вы блогер с существующей аудиторией то вы можете запросить PKOIN, чтобы грузить видео"
 
 
 _l.videobloggerRequest_pl1 = "Ссылка на существующий канал 1"
@@ -2647,3 +2647,5 @@ _l.buyswipelux = "Купить через Swipelux"
 _l.buycard = "Купить с помощью карты VISA/Mastercard"
 _l.buyusers = "Купить у пользователей"
 _l.buyviacrypto = "Купить с помощью криптовалюты"
+
+_l.installApplication = "Установите приложение "+appname+" чтобы загружать видео"

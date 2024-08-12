@@ -1351,7 +1351,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos via website to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Or you can use the app "+appname+"";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2237,7 +2237,7 @@ _l.submitapplication = "Submit your application"
 _l.submitapplicationVideo = "Request PKOIN for video"
 _l.submitapplicationVideoSmall = "Send & request PKOIN"
 
-_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video"
 
 
 _l.videobloggerRequest_pl1 = "Link to existing channel 1"
@@ -2860,3 +2860,5 @@ _l.buycard = "VISA/Mastercard"
 _l.buyusers = "Buy from users"
 _l.buyviacrypto = "Buy via cryptocurrency"
 
+
+_l.installApplication = "Install the app "+appname+" to upload videos"

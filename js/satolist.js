@@ -9975,6 +9975,10 @@ Platform = function (app, listofnodes) {
                     else
                     if(p.trial && !info.trial) result.trial = true
 
+                    if (result.balance || result.reputation) {
+                        result.canuseapplacation = (!window.cordova && typeof _Electron == 'undefined')
+                    }
+
                     clbk(result)
                 })
             },

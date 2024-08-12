@@ -18,6 +18,8 @@ function RpcClient(opts) {
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
 
+    this.transports = opts.transports
+
     var isRejectUnauthorized = typeof opts.rejectUnauthorized !== 'undefined';
     this.rejectUnauthorized = isRejectUnauthorized ? opts.rejectUnauthorized : true;
 
@@ -282,8 +284,10 @@ function rpc(request, callback, obj) {
         }
     }
 
+    var reqf = /*self.transports?.axios || */axios
 
-    axios.post(url, request, config).then((res) => {
+
+    reqf.post(url, request, config).then((res) => {
 
         var exceededError = null
 
@@ -338,7 +342,9 @@ function rpc(request, callback, obj) {
 
     })
     .catch(err => {
+        
 
+        console.log("AXIOS ERROR", err)
         called = true;
 
 
