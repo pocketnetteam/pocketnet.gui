@@ -207,20 +207,7 @@ function rpc(request, callback, obj) {
     }
 
 
-    try{
-
-        request = JSON.stringify(request);
-        // Buffer.from(request).toString('base64');
-
-    }
-    catch(e){
-
-        callback({
-            code : 499
-        });
-
-        return
-    }
+    
 
     
     var signal = null
@@ -284,10 +271,17 @@ function rpc(request, callback, obj) {
         }
     }
 
-    var reqf = /*self.transports?.axios || */axios
+    var reqf = self.transports?.axios || axios
 
+    config.method = 'post'
 
-    reqf.post(url, request, config).then((res) => {
+    reqf({
+        
+        url, 
+        ...config, 
+        data : request
+
+    }).then((res) => {
 
         var exceededError = null
 
@@ -342,14 +336,10 @@ function rpc(request, callback, obj) {
 
     })
     .catch(err => {
-        
 
-        console.log("AXIOS ERROR", err)
         called = true;
 
-
         var error = err.response?.data?.error;
-
 
         if(!error && err){
 
@@ -367,6 +357,8 @@ function rpc(request, callback, obj) {
             error : bytimeout ? 'timeout' : 'requesterror'
         });
     })
+
+    
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
