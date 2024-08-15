@@ -15948,7 +15948,7 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 300 : p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             s.getex(parameters, function (data, error) {
 

@@ -2780,8 +2780,11 @@ const SendStatus = {
         if (functions["a" /* default */].isios()) path = "cdvfile://localhost/temporary/recording.m4a";
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
+        var unsleep = functions["a" /* default */].deep(window, "POCKETNETINSTANCE.mobile.unsleep");
+        if (unsleep) unsleep(true);
         var media = this.cordovaMediaRecorder = new Media(path, () => {
           this.recordTime = 0;
+          if (unsleep) unsleep(false);
           media.release();
           if (this.cancelledCordovaMediaRecorder) {
             this.cancelledCordovaMediaRecorder = false;
@@ -2810,6 +2813,7 @@ const SendStatus = {
           console.error(e);
           this.isRecording = false;
           this.clear();
+          if (unsleep) unsleep(false);
         });
         var rmsdata = [];
         let currentPlaying = this.$store.state.currentPlayingVoiceMessage;
