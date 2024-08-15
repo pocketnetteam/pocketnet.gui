@@ -30,6 +30,7 @@
 #staking .wrp.hide .lastpriceCnts,
 #staking .wrp.hide .buycoin,
 #staking .wrp.hide .earnlabel,
+#staking .wrp.hide .boostlabel,
 #staking .wrp.hide .pcoin {
   display: none;
 }
@@ -101,6 +102,7 @@
   border-radius: 12px;
   position: relative;
 }
+#staking .boostlabel,
 #staking .earnlabel {
   padding: 0.75em 1em;
   padding-top: 0;
@@ -108,6 +110,7 @@
   color: rgb(var(--color-txt-orange));
   cursor: pointer;
 }
+#staking .boostlabel span,
 #staking .earnlabel span {
   font-size: 0.8em;
 }
@@ -309,9 +312,11 @@
   #staking .totalNumbers .totalRow .value span.cur {
     font-size: 0.9em;
   }
+  #staking .boostlabel,
   #staking .earnlabel {
     padding: 2em 1em;
   }
+  #staking .boostlabel span,
   #staking .earnlabel span {
     font-size: 0.9em;
   }

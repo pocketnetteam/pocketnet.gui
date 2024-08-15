@@ -1197,6 +1197,12 @@ PeerTubePocketnet = function (app) {
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
 
+					console.log('video options', options)
+
+					data.session = sessions[options.host]
+
+					data.isNewUser = deep(data, 'session.isNewUser')
+
 					return Promise.resolve(data);
 				});
 			},
@@ -1222,6 +1228,8 @@ PeerTubePocketnet = function (app) {
 					if (currentTime > userToken.expires_in) {
 						return this.auth(host, renew);
 					}
+
+					sessions[host] = userToken;
 
 					return userToken;
 				}
@@ -1281,6 +1289,7 @@ PeerTubePocketnet = function (app) {
 
 						data.externalAuthToken = result.externalAuthToken;
 						data.username = result.username;
+						data.isNewUser = result.isNewUser || false
 
 						return Promise.resolve(data);
 					})
@@ -1297,8 +1306,12 @@ PeerTubePocketnet = function (app) {
 				if (data.refresh_token) data.grant_type = 'refresh_token';
 				else data.grant_type = 'password';
 
+				console.log('video 23', data)
+
+
 				return request('getToken', data, options)
 					.then((res) => {
+						console.log('video 2', res)
 						if (!res.access_token || !res.refresh_token) {
 							return Promise.reject(error('getToken'));
 						}
@@ -1314,6 +1327,7 @@ PeerTubePocketnet = function (app) {
 							refresh_token: res.refresh_token,
 							expires_in: currentTime + res.expires_in - 60,
 							refresh_token_expires_in: currentTime + res.refresh_token_expires_in - 60,
+							isNewUser : data.isNewUser
 						};
 
 						const userAddress = app.user.address.value;
@@ -1324,7 +1338,9 @@ PeerTubePocketnet = function (app) {
 					.then((data) => {
 						data.date = utcnow();
 
+
 						sessions[options.host] = data;
+
 
 						return Promise.resolve(data);
 					});

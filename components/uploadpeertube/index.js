@@ -697,7 +697,15 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
+						
+
+						if(res.isNewUser && (!window.cordova && typeof _Electron == 'undefined')){
+							return Promise.reject('onlyapplication')
+						}
+
 						data.hasAccess = true;
+
+						console.log('video', res)
 
 						clbk(data);
 					})
@@ -712,7 +720,9 @@ var uploadpeertube = (function () {
 						data.e = e.response || e;
 						error = true;
 
-						self.app.platform.sdk.ustate.canincrease(
+						clbk(data);
+
+						/*self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
 
@@ -731,7 +741,7 @@ var uploadpeertube = (function () {
 									});
 								}
 							},
-						);
+						);*/
 					})
 					.then(() => {
 						globalpreloader(false);

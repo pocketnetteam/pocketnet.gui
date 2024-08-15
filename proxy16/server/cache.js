@@ -162,8 +162,7 @@ var Cache = function(p){
             },  
 
             getboostfeed: {
-                time : 460,
-                block : 0,
+                time : 1460,
             }, 
 
             getprofilefeed: {
