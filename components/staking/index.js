@@ -490,19 +490,19 @@ var staking = (function(){
 
 			el.c.find('.earnlabel').on('click', function(){
 
-				var url = 'https://'+self.app.options.url+''
-
-				var r = ''
-
-				if (self.app.user.address.value){
-					r = '?&ref=' + self.app.user.address.value
-					url = url + r
-				}
-				
-
 				self.nav.api.load({
 					open : true,
 					href : 'easynode',
+					history : true,
+					inWnd : true
+				})
+			})
+
+			el.c.find('.boostlabel').on('click', function(){
+
+				self.nav.api.load({
+					open : true,
+					href : 'boost',
 					history : true,
 					inWnd : true
 				})

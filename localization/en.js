@@ -2862,3 +2862,4 @@ _l.buyviacrypto = "Buy via cryptocurrency"
 
 
 _l.installApplication = "Install the app "+appname+" to upload videos"
+_l.boostlabel= "How to advertise on Bastyon"
