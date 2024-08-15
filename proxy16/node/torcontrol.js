@@ -412,6 +412,8 @@ class TorControl {
             }
         })
 
+        console.log('this.getpath()', this.getpath(), this.getsettingspath())
+
         this.instance.on("error", (error) => this.log({ error }));
 
         this.instance.on("exit", async (code) => {

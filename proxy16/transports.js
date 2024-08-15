@@ -38,18 +38,25 @@ class WrappedAxios {
         return axiosMethods;
     }
 
-    static prepareArguments(arg1, arg2) {
+    static prepareArguments(arg1, arg2, arg3) {
         if (!arg1) {
             return Promise.reject('AXIOS_INVALID_ARG_TYPE');
         }
 
         if (typeof arg1 === 'string') {
-            const preparedOpts = {};
+            var preparedOpts = {};
 
             preparedOpts.url = arg1;
 
-            if (typeof arg2 === 'object') {
-                return { ...preparedOpts, ...arg2 };
+            
+
+            if (typeof arg2 === 'object' || typeof arg2 === 'string') {
+                preparedOpts.data = arg2;
+
+            }
+
+            if (typeof arg3 === 'object') {
+                preparedOpts = {...preparedOpts, ...arg3}
             }
 
             return preparedOpts;
@@ -89,9 +96,11 @@ class WrappedAxios {
             return Promise.reject(failedFetch);
         }
 
+
         return axios(preparedArgs)
             .then(WrappedAxios.handleSuccess)
             .catch(async (error) => {
+                console.log('error', error)
                 const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
                 const isAgentError = this.transports.checkForAgentError(error);
 

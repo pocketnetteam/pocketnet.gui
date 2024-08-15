@@ -18,6 +18,8 @@ function RpcClient(opts) {
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
 
+    this.transports = opts.transports
+
     var isRejectUnauthorized = typeof opts.rejectUnauthorized !== 'undefined';
     this.rejectUnauthorized = isRejectUnauthorized ? opts.rejectUnauthorized : true;
 
@@ -205,20 +207,7 @@ function rpc(request, callback, obj) {
     }
 
 
-    try{
-
-        request = JSON.stringify(request);
-        // Buffer.from(request).toString('base64');
-
-    }
-    catch(e){
-
-        callback({
-            code : 499
-        });
-
-        return
-    }
+    
 
     
     var signal = null
@@ -282,8 +271,17 @@ function rpc(request, callback, obj) {
         }
     }
 
+    var reqf = self.transports?.axios || axios
 
-    axios.post(url, request, config).then((res) => {
+    config.method = 'post'
+
+    reqf({
+        
+        url, 
+        ...config, 
+        data : request
+
+    }).then((res) => {
 
         var exceededError = null
 
@@ -341,9 +339,7 @@ function rpc(request, callback, obj) {
 
         called = true;
 
-
         var error = err.response?.data?.error;
-
 
         if(!error && err){
 
@@ -361,6 +357,8 @@ function rpc(request, callback, obj) {
             error : bytimeout ? 'timeout' : 'requesterror'
         });
     })
+
+    
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {

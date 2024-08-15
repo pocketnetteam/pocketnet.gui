@@ -829,6 +829,8 @@ var lenta = (function(){
 								return true
 							}
 						})
+
+						console.log('boost position', position)
 	
 						if(position){
 	
@@ -861,8 +863,18 @@ var lenta = (function(){
 							
 											}
 											else{
+
+												var elBst = null
+												
+												if (essenseData.author){
+													elBst = el.share[share.txid]
+												}
+												else{
+													elBst = el.share[share.txid].closest('.authorgroup')
+												}
+
 												var _el = $("<div/>", {'class' : 'boosted'})
-													_el.insertAfter(el.share[share.txid].closest('.authorgroup'))
+													_el.insertAfter(elBst)
 													_el.html(html)
 											}
 
@@ -5262,6 +5274,8 @@ var lenta = (function(){
 
 				load.boosted(function(shares){
 					boosted = shares
+
+					console.log('boosted', boosted)
 
 
 					actions.includeboost()

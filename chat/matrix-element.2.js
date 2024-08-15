@@ -550,7 +550,8 @@ var vuex_common = __webpack_require__("d7a6");
       });
     },
     saveScrollPosition() {
-      this.lastScrollPosition = this.lscroll.scrollTop;
+      var _this$lscroll;
+      this.lastScrollPosition = (_this$lscroll = this.lscroll) === null || _this$lscroll === void 0 ? void 0 : _this$lscroll.scrollTop;
     },
     scrollToReadMessages: function () {
       /*if(this.notificationCount > 0) {

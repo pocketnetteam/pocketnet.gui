@@ -1132,6 +1132,8 @@ var authorn = (function(){
 
 						return true
 					},
+
+					includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
 				}
 
 				var method = currentLenta()
@@ -1139,6 +1141,10 @@ var authorn = (function(){
 				if (method.extend){
 					method.extend(params)
 				}
+
+				var subcount = author.data?.subscribes_count || 0
+
+				params.includeboost = !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video && subcount > 500
 
 				el.lenta.html('')
 

@@ -314,6 +314,7 @@ var Node = function(options, manager){
         host: self.host,
         port: webport,
         portPrivate: self.portPrivate,
+        transports : manager ? manager.transports : null
     })
 
     self.rpcs = function(method, parsed){
