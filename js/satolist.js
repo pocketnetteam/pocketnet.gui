@@ -10545,6 +10545,17 @@ Platform = function (app, listofnodes) {
 
             nameaddressstorage : {},
 
+            checkMonetization : function(address){
+                if(!address) return false
+                var userinfo = self.psdk.userInfo.get(address)
+
+                if(!userinfo) return false
+
+                var subcount = userinfo.subscribes_count || 0
+
+				return self.app.boost && !self.app.pkoindisable && subcount > 500 && self.real[address]
+            },
+
             getone: function (address, clbk, light, reload) {
 
                 self.sdk.users.get([address], function(data = {}, error){
