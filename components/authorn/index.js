@@ -1133,7 +1133,7 @@ var authorn = (function(){
 						return true
 					},
 
-					includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
+					//includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
 				}
 
 				var method = currentLenta()
@@ -1143,7 +1143,7 @@ var authorn = (function(){
 				}
 
 
-				/*params.includeboost = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video && self.app.platform.sdk.users.checkMonetization(self.app.user.address.value) */
+				params.includeboost = false && !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video && self.app.platform.sdk.users.checkMonetization(self.app.user.address.value) 
 
 				el.lenta.html('')
 
