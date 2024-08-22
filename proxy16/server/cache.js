@@ -608,11 +608,13 @@ var Cache = function(p){
 
                 if (k.block && k.block < block.height){
                     storage[key] = {}
+                    
 
                     if (k.smart){
                         smart[key] = {}
                     }
-                    //console.log("Invalidate cache", key, k.block, block.height)
+
+                    k.block = block.height
                 }
                     
             }
