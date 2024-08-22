@@ -1133,7 +1133,7 @@ var authorn = (function(){
 						return true
 					},
 
-					includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
+					//includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
 				}
 
 				var method = currentLenta()
