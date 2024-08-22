@@ -100,7 +100,6 @@ class WrappedAxios {
         return axios(preparedArgs)
             .then(WrappedAxios.handleSuccess)
             .catch(async (error) => {
-                console.log('error', error)
                 const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
                 const isAgentError = this.transports.checkForAgentError(error);
 
