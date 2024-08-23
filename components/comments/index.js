@@ -97,6 +97,8 @@ var comments = (function(){
 					//newcomments : 'newcomments'
 				}
 
+				console.log('comment, optype', comment, optype)
+
 				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
 					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
@@ -676,6 +678,8 @@ var comments = (function(){
 				delete areas[id]
 				delete currents[id]
 
+				console.log('removeForm')
+
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
 			},
@@ -685,8 +689,12 @@ var comments = (function(){
 
 				var current = currents[id];
 
+				console.log('currents', currents)
+
 				if (current){
 					var e = current.validation();
+
+					console.log('comment', e, current)
 
 					if (e){
 						actions.removeSending(wrapper)
@@ -749,14 +757,11 @@ var comments = (function(){
 							}
 
 							if(!error){
-
-								
-
 								successCheck()
 							}
 							else{
 
-								delete currents[id]
+								currents[id] = fxc
 
 								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
 
@@ -770,6 +775,8 @@ var comments = (function(){
 								actions.removeSending(wrapper)
 
 								if(!error){
+
+									delete currents[id]
 	
 									wrapper.find('.newcommentimages').html('');
 									wrapper.find('.newcommentdonate').html('');
@@ -1484,7 +1491,7 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if(c.temp || c.relay) return 10000000000
+					if(c.temp || c.relay) return 10000000000 * 100
 
 					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0

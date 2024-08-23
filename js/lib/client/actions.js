@@ -171,6 +171,8 @@ var ActionOptions = {
 
             collision : function(obj, obj2){
 
+                console.log('obj collision', obj, obj2)
+
                 if (obj.object.typeop() == obj2.object.typeop() && obj.object.typeop() == 'commentEdit' && obj2.object.id == obj.object.id){
 
                     if(obj2.added < obj.added) {
@@ -2240,6 +2242,10 @@ var Account = function(address, parent){
         if (action.options.collision){
 
             _.each(self.actions.value, (obj2) => {
+
+                if(action.object.type != obj2.object.type) {
+                    return
+                }
 
                 if(!obj2.transaction && !obj2.sent && !obj2.completed && (!obj2.rejected && !obj2.rejectWait)){
                     if(!action.options.collision(action, obj2)){
