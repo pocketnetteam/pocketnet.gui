@@ -11,7 +11,7 @@ global.fetch = (...args) => {
         return Promise.reject(err);
     }
 }
-const axios = require('redaxios');
+const axios = require('axios');
 const { SocksProxyAgent } = require('socks-proxy-agent');
 
 const checkIfLocalhost = require('is-localhost-ip');
