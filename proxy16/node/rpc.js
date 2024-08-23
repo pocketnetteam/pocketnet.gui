@@ -275,6 +275,22 @@ function rpc(request, callback, obj) {
 
     config.method = 'post'
 
+    
+
+    try{
+
+        request = JSON.stringify(request);
+
+    }
+    catch(e){
+
+        callback({
+            code : 499
+        });
+
+        return
+    }
+
     reqf({
         
         url, 
@@ -282,7 +298,6 @@ function rpc(request, callback, obj) {
         data : request
 
     }).then((res) => {
-
         var exceededError = null
 
         if (res.status === 401) {
