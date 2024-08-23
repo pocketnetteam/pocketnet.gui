@@ -1,5 +1,5 @@
 var f = require('./functions');
-
+var axios = require('axios');
 var Exchanges = function(){
     var self = this
 
@@ -83,7 +83,7 @@ var Exchanges = function(){
             },*/
 
             digifinex : function(){
-                return self.transports.axios.get(apis.digifinex).then(function(response) {
+                return axios.get(apis.digifinex).then(function(response) {
 
                     var converted = {}
 
@@ -96,7 +96,7 @@ var Exchanges = function(){
 
                 }).catch(e => {
 
-                    //console.log('digifinex error', e)
+                    console.log('digifinex error', e)
 
                     return Promise.reject('notfound')
                 })
@@ -120,7 +120,7 @@ var Exchanges = function(){
                     return Math.floor(totalPrice / totalVolume * 1e6) / 1e6;
                 }
 
-                return self.transports.fetch(apis.coingecko).then(async function(response) {
+                return fetch(apis.coingecko).then(async function(response) {
                     const currency = 'usd'
                     const data = await response.json()
 
@@ -139,6 +139,9 @@ var Exchanges = function(){
 
                     return f.getPkoinPrice(prepared, 'price')
                 }).catch(e => {
+
+                    console.log('coingecko error', e)
+
                     return Promise.reject('notfound')
                 })
             },
