@@ -274,7 +274,7 @@ function rpc(request, callback, obj) {
     var reqf = self.transports?.axios || axios
 
     config.method = 'post'
-
+    //config.signal = signal
     
 
     try{
@@ -290,6 +290,8 @@ function rpc(request, callback, obj) {
 
         return
     }
+
+
 
     reqf({
         
