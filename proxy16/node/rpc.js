@@ -18,6 +18,8 @@ function RpcClient(opts) {
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
 
+    this.transports = opts.transports
+
     var isRejectUnauthorized = typeof opts.rejectUnauthorized !== 'undefined';
     this.rejectUnauthorized = isRejectUnauthorized ? opts.rejectUnauthorized : true;
 
@@ -144,6 +146,14 @@ const publics = {
 
     getaccountearning : true,
 
+    // Barteron
+    getbarteronaccounts: true,
+    getbarteronoffersbyaddress: true,
+    getbarteronoffersbyroottxhashes: true,
+    getbarteronfeed: true,
+    getbarterondeals: true,
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true,
     // Jury
     getalljury: true,
     getjuryassigned: true,
@@ -197,20 +207,7 @@ function rpc(request, callback, obj) {
     }
 
 
-    try{
-
-        request = JSON.stringify(request);
-        // Buffer.from(request).toString('base64');
-
-    }
-    catch(e){
-
-        callback({
-            code : 499
-        });
-
-        return
-    }
+    
 
     
     var signal = null
@@ -274,9 +271,35 @@ function rpc(request, callback, obj) {
         }
     }
 
+    var reqf = self.transports?.axios || axios
 
-    axios.post(url, request, config).then((res) => {
+    config.method = 'post'
+    //config.signal = signal
+    
 
+    try{
+
+        request = JSON.stringify(request);
+
+    }
+    catch(e){
+
+        callback({
+            code : 499
+        });
+
+        return
+    }
+
+
+
+    reqf({
+        
+        url, 
+        ...config, 
+        data : request
+
+    }).then((res) => {
         var exceededError = null
 
         if (res.status === 401) {
@@ -333,9 +356,7 @@ function rpc(request, callback, obj) {
 
         called = true;
 
-
         var error = err.response?.data?.error;
-
 
         if(!error && err){
 
@@ -353,6 +374,8 @@ function rpc(request, callback, obj) {
             error : bytimeout ? 'timeout' : 'requesterror'
         });
     })
+
+    
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
@@ -516,6 +539,14 @@ RpcClient.callspec = {
 
     getaccountearning : 'str int int',
 
+    // Barteron
+    getbarteronaccounts: 'obj',
+    getbarteronoffersbyaddress: 'str',
+    getbarteronoffersbyroottxhashes: 'obj',
+    getbarteronfeed: 'obj',
+    getbarterondeals: 'obj',
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj',
     // Jury
     getalljury: '',
     getjuryassigned: 'str',

@@ -11,7 +11,7 @@ global.fetch = (...args) => {
         return Promise.reject(err);
     }
 }
-const axios = require('redaxios');
+const axios = require('axios');
 const { SocksProxyAgent } = require('socks-proxy-agent');
 
 const checkIfLocalhost = require('is-localhost-ip');
@@ -38,18 +38,25 @@ class WrappedAxios {
         return axiosMethods;
     }
 
-    static prepareArguments(arg1, arg2) {
+    static prepareArguments(arg1, arg2, arg3) {
         if (!arg1) {
             return Promise.reject('AXIOS_INVALID_ARG_TYPE');
         }
 
         if (typeof arg1 === 'string') {
-            const preparedOpts = {};
+            var preparedOpts = {};
 
             preparedOpts.url = arg1;
 
-            if (typeof arg2 === 'object') {
-                return { ...preparedOpts, ...arg2 };
+            
+
+            if (typeof arg2 === 'object' || typeof arg2 === 'string') {
+                preparedOpts.data = arg2;
+
+            }
+
+            if (typeof arg3 === 'object') {
+                preparedOpts = {...preparedOpts, ...arg3}
             }
 
             return preparedOpts;
@@ -89,22 +96,35 @@ class WrappedAxios {
             return Promise.reject(failedFetch);
         }
 
+
         return axios(preparedArgs)
             .then(WrappedAxios.handleSuccess)
             .catch(async (error) => {
+
                 const isAgentAttached = WrappedAxios.isAgentAttached(preparedArgs);
                 const isAgentError = this.transports.checkForAgentError(error);
 
                 if (isAgentAttached && isAgentError) {
                     return WrappedAxios.handleError(error);
                 }
+                
+                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                    return Promise.reject(error)
+                }
 
-                const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-                const isTorReady = await this.transports.waitTorReady();
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+            
+                var hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+                var isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                var useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+                let isTorReady = this.transports.isTorReady();
+
+                if (isDirectAccessRestricted) {
+                    isTorReady = await this.transports.waitTorReady();
+                }
+
+                var isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
+                var useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+
 
                 if (useTor) {
                     const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
@@ -204,11 +224,16 @@ class WrappedFetch {
                 });
             })
             .catch(async (error) => {
+
                 const isAgentAttached = WrappedFetch.isAgentAttached(preparedArgs);
                 const isAgentError = this.transports.checkForAgentError(error);
 
                 if (isAgentAttached && isAgentError) {
                     return WrappedFetch.handleError(error);
+                }
+
+                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                    return Promise.reject(error)
                 }
 
                 const hasDirectAccess = await this.transports.hasDirectAccess(url);
@@ -333,7 +358,13 @@ class WrappedRequest {
                 const hasDirectAccess = await this.transports.hasDirectAccess(url);
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
                 const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-                const isTorReady = await this.transports.waitTorReady();
+
+                let isTorReady = this.transports.isTorReady();
+
+                if (isDirectAccessRestricted) {
+                    isTorReady = await this.transports.waitTorReady();
+                }
+                
                 const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 

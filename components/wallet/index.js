@@ -650,7 +650,8 @@ var wallet = (function(){
 
 			linkValidation : function(){
 
-				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value) && trim(deposit.parameters.label.value)
+				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value) 
+				/*&& trim(deposit.parameters.label.value)*/
 			},
 
 			linkValidationQr : function(){
@@ -1083,17 +1084,29 @@ var wallet = (function(){
 
 					animation : 'fadeIn',
 
-				}, function(){
+				}, function(_p){
 
 					el.total = el.c.find('.total .tttl');
 					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
+					el.payments = el.c.find('.payments')
 					el.buy = el.c.find('.buy');
 					
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
 					el.htls = el.c.find('.htls')
+
+					_p.el.find('.qrcodescannericon').on('click', function(){
+						app.nav.api.load({
+							open : true,
+							id : 'qrscanner',
+							inWnd : true,
+			
+							essenseData : {
+							}
+						})
+					})
 
 					self.iclbks.main = function(){
 
@@ -1146,7 +1159,9 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, w, 50, -70)
+						console.log('_scrollToTop', el.step, w)
+
+						_scrollTop(el.step, w, 50)
 
 						self.shell({
 
@@ -1649,7 +1664,7 @@ var wallet = (function(){
 
 						var createLink = _p.el.find('.getlink')
 
-						var ps = [deposit.parameters.depositamount, deposit.parameters.message, deposit.parameters.label]
+						var ps = [deposit.parameters.depositamount, deposit.parameters.message/*, deposit.parameters.label*/]
 
 						ParametersLive(ps, _p.el)
 
@@ -1671,8 +1686,24 @@ var wallet = (function(){
 
 						createLink.on('click', function(){
 
-							if (actions.linkValidation())
-								actions.showDepositInStep('showLinkResult', 3, self.app.localization.e('linkCreated'))
+							if (actions.linkValidation()){
+
+
+								var payment = self.app.platform.sdk.payments.make({
+									payment : {
+										address : address,
+										value : deposit.parameters.depositamount.value,
+										description : deposit.parameters.message.value
+									}
+								})
+
+								var hash = payment.makeURLHash()
+
+								self.app.platform.ui.socialshare('index?ext=' + hash)
+
+								//actions.showDepositInStep('showLinkResult', 3, self.app.localization.e('linkCreated'))
+							}
+								
 
 						});
 
@@ -1695,7 +1726,7 @@ var wallet = (function(){
 
 						var createLink = _p.el.find('.getlink')
 
-						var ps = [deposit.parameters.depositamount, deposit.parameters.message, deposit.parameters.label]
+						var ps = [deposit.parameters.depositamount, deposit.parameters.message/*, deposit.parameters.label*/]
 
 						ParametersLive(ps, _p.el)
 
@@ -2281,6 +2312,70 @@ var wallet = (function(){
 				})
 				
 			},
+			payments : function(clbk){
+				var payments = self.app.platform.sdk.payments.get()
+
+				if(!payments.length){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+
+					name :  'payments',
+					el :   el.payments,
+					data : {
+						payments
+					},
+
+				}, function(_p){
+
+					_p.el.find('.removePayment').on('click', function(){
+						var pindex = $(this).closest('.payment').attr('vid')
+
+						
+
+						var payment = _.find(payments, (p) => {
+							return p.vid == pindex
+						})
+
+						payments = _.filter(payments, (p) => {
+							return p.vid != pindex
+						})
+
+						self.app.platform.sdk.payments.remove(payment.hash)
+
+						$(this).closest('.payment').remove()
+
+						if(!payments.length){
+							renders.payments()
+						}
+
+						return false
+						
+					})
+				
+					_p.el.find('.payment').on('click', function(){
+						var pindex = $(this).closest('.payment').attr('vid')
+						var payment = _.find(payments, (p) => {
+							return p.vid == pindex
+						})
+
+						self.app.nav.api.history.addRemoveParameters([], {
+							ext : payment.hash
+						}, {
+							replaceState : true
+						})
+
+						self.app.platform.ui.externalFromCurrentUrl()
+					})
+
+					if (clbk)
+						clbk()
+
+				})
+			},
 			
 			addresses : function(clbk){
 
@@ -2482,8 +2577,10 @@ var wallet = (function(){
 			})
 
 			self.app.events.resize['wallet'] = function(){
+
 				if (el.total)
 					el.total.html('')
+				
 			 	drawCircles(null)
 				
 				
@@ -2623,17 +2720,27 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses/*, renders.htls*/]
+				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 
-				self.app.platform.sdk.node.transactions.clbks.circles = function(){
+				/*self.app.platform.sdk.node.transactions.clbks.circles = function(){
 					drawCircles(null, true)
 				};
 
 
 				self.app.platform.sdk.node.transactions.clbks.walletaddresses = function(){
 					renders.addresses()
+				}*/
+
+
+				self.app.platform.actionListeners['wallet'] = function({type, alias, status}){
+
+					if (type == 'transaction'){
+						drawCircles(null, true)
+						renders.addresses()
+					}
+					
 				}
 
 			})
@@ -2670,8 +2777,10 @@ var wallet = (function(){
 
 			destroy : function(){
 
-				delete self.app.platform.sdk.node.transactions.clbks.circles
-				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses 
+				/*delete self.app.platform.sdk.node.transactions.clbks.circles
+				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses */
+
+				delete self.app.platform.actionListeners['wallet']
 
 				delete self.app.events.resize['wallet']
 
@@ -2699,7 +2808,8 @@ var wallet = (function(){
 
 				w = el.c.closest('.customscroll')
 
-				initEvents();
+				if(!_p.api)
+					initEvents();
 
 				var executor = make
 
@@ -2786,7 +2896,7 @@ var wallet = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

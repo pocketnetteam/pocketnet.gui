@@ -16,18 +16,36 @@
 			<%- application.manifest.descriptions[app.localization.current().key] || application.manifest.descriptions['en'] || "" %>
 		</div>
 
+		<div class="author"></div>
+
 		<div class="permissions">
 
 		</div>
 
 		
 		<% if(!application.cantdelete) {%>
+
+			<% if(!application.installed) {%>
+
+				<div class="panel">
+					<button class="button install">
+						<%- e('installpplication')%>
+					</button>
+				</div>
+
+			<% } else { %> 
+
+				<div class="panel">
+					<button class="button remove">
+						<%- e('deleteapplication')%>
+					</button>
+				</div>
+				
 			<% } %>
-			<div class="panel">
-				<button class="button remove">
-					<%- e('deleteapplication')%>
-				</button>
-			</div>
+
+		<% } %>
+
+		
 		
 	</div>
 </div>

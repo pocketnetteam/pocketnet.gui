@@ -171,6 +171,8 @@ var ActionOptions = {
 
             collision : function(obj, obj2){
 
+                console.log('obj collision', obj, obj2)
+
                 if (obj.object.typeop() == obj2.object.typeop() && obj.object.typeop() == 'commentEdit' && obj2.object.id == obj.object.id){
 
                     if(obj2.added < obj.added) {
@@ -285,7 +287,7 @@ var Action = function(account, object, priority, settings){
 
     self.import = function(e){
 
-        if(e.updated){
+        if (e.updated){
             var updated = new Date(e.updated)
 
             if (updated < self.updated) return
@@ -678,19 +680,6 @@ var Action = function(account, object, priority, settings){
                     
                 }
 
-
-                /*var divi = totalInputAmount / 2
-
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : divi
-                })
-                
-                outputs.push({
-                    address : changeAddresses[0],
-                    amount : totalInputAmount - divi
-                })*/
-
             }
             else{
                 outputs.push({
@@ -789,8 +778,6 @@ var Action = function(account, object, priority, settings){
             delete self.inputs
             delete self.outputs
             delete self.sending
-
-            
 
             if((code == -26 || code == -25 || code == 16 || code == 261)){
 
@@ -997,7 +984,7 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending && (new Date()).addSeconds(-365) < self.sending){
+        if (self.sending && (new Date()).addSeconds(-120) < self.sending){
             return Promise.reject('actions_alreadySending')
         }
 
@@ -1896,11 +1883,15 @@ var Account = function(address, parent){
     self.import = function(e, flag){
         
         self.status = e.status
-        self.unspents = e.unspents
 
-        e.unspents.updated ? self.unspents.updated = new Date(e.unspents.updated) : null
+        if(e.unspents.updated && (self.unspents.updated || !self.unspents.updated)){
+            if(!self.unspents.updated || (new Date(e.unspents.updated) > self.unspents.updated)){
+                self.unspents = e.unspents
+                self.unspents.updated = new Date(e.unspents.updated)
+            }
+        }
+
         e.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
-
         
         self.waitUserAction = e.waitUserAction || null
 
@@ -2252,6 +2243,10 @@ var Account = function(address, parent){
 
             _.each(self.actions.value, (obj2) => {
 
+                if(action.object.type != obj2.object.type) {
+                    return
+                }
+
                 if(!obj2.transaction && !obj2.sent && !obj2.completed && (!obj2.rejected && !obj2.rejectWait)){
                     if(!action.options.collision(action, obj2)){
                         obj2.rejected = 'actions_collision'
@@ -2429,13 +2424,28 @@ var Account = function(address, parent){
         }
 
 
-        if(!self.unspents.value.length) return balance
+        //if(!self.unspents.value.length) return balance
 
         var tempbalance = _.reduce(self.actions.value, (m, action) => {
 
             if(action.completed || action.rejected) return m
 
+            var validInput = true
+
+            if( _.find(action.inputs, (i) => {
+
+                if(! _.find(self.unspents.value, (u) => {
+                    return u.txid == i.txid && u.vout == i.vout
+                })) return true
+
+            })) validInput = false
+
+            console.log('validInput', validInput)
+
+            if(!validInput) return m
+
             var toThisAddress = _.reduce(action.outputs, (m, output) => {
+                
                 
                 if(_.find(adresses, (a) => {return a == output.address})){
                     return m + output.amount

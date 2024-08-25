@@ -76,7 +76,7 @@ var help = (function () {
       },
       {
         d: 'March 2021',
-        n: 'PKOIN listed on Bilaxy, Digifinex, Bitforex',
+        n: 'PKOIN listed on Digifinex, Tapbit',
         r: true,
       },
 
@@ -446,7 +446,7 @@ var help = (function () {
 
   self.stop = function () {
     _.each(essenses, function (essense) {
-      window.requestAnimationFrame(() => {
+      window.rifticker.add(() => {
 				essense.destroy();
 			})
     });

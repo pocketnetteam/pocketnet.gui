@@ -45,13 +45,11 @@ const TestWsPort = 6067;
 const TestSecureWsPort = 6667;
 
 var testnodes = [
-	{
-		host : '78.37.233.202',
-		port : TestWebPort,
-		ws : TestWsPort,
-		sport : TestSecureWebPort,
-		sws : TestSecureWsPort,
-		name : 'test.v.pocketnet.app',
+	/*{
+		host : '65.21.252.135',
+		port : 39091,
+		ws : 6067,
+		name : 'pnettool.pocketnet.app',
 		stable : true
 	},
 
@@ -63,7 +61,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.1.pocketnet.app',
 		stable : true
-	},
+	},*/
 	{
 		host : '157.90.228.34',
 		port : TestWebPort,
@@ -81,7 +79,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'test.pocketnet.app',
 		stable : true
-	},
+	}/*,
 	{
 		host : 'pnettool.pocketnet.app',
 		port : TestWebPort,
@@ -99,7 +97,7 @@ var testnodes = [
 		sws : TestSecureWsPort,
 		name : 'lostystyg',
 		stable : false
-	}
+	}*/
 ]
 
 
@@ -124,27 +122,6 @@ var activenodes = [
 		name : '202.61.253.55',
 		stable : true
 	},
-
-	{
-		host : '140.99.153.138',
-		port : WebPort,
-		ws : WsPort,
-		sport : SecureWebPort,
-		sws : SecureWsPort,
-		name : '140.99.153.138',
-		stable : true
-	},
-
-	{
-		host : '172.83.108.41',
-		port : WebPort,
-		ws : WsPort,
-		sport : SecureWebPort,
-		sws : SecureWsPort,
-		name : '172.83.108.41',
-		stable : true
-	},
-
 	{
 		host : '207.180.201.246', ///
 		port : WebPort,
@@ -174,14 +151,59 @@ var activenodes = [
 		stable : true
 	},
 	{
-		host : '172.83.108.40',
+		host : '95.31.45.162',
 		port : WebPort,
 		ws : WsPort,
 		sport : SecureWebPort,
 		sws : SecureWsPort,
-		name : '172.83.108.40',
+		name : '95.31.45.162',
 		stable : true
-	}
+	},
+	{
+		host : '79.143.35.233',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '79.143.35.233',
+		stable : true
+	},
+	{
+		host : '109.197.196.106',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '109.197.196.106',
+		stable : true
+	},
+	{
+		host : '65.21.252.135',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.252.135',
+		stable : true
+	},
+	{
+		host : '178.217.159.221',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '178.217.159.221',
+		stable : true
+	},
+	{
+		host : '65.21.56.203',
+		port : WebPort,
+		ws : WsPort,
+		sport : SecureWebPort,
+		sws : SecureWsPort,
+		name : '65.21.56.203',
+		stable : true
+	},
 ]
 
 var nodes = activenodes
@@ -272,6 +294,10 @@ var defaultSettings = {
 	
 	bots : {
 		dbpath : 'data/bots',
+	},
+
+	atransactions : {
+		dbpath : 'data/atransactions',
 	},
 
 	proxies : {
@@ -1234,6 +1260,39 @@ const kit = {
 				rec(kit.manage)
 
 				return Promise.resolve(list.join("\n"))
+			}
+		},
+
+		atransactions: {
+			get: function () {
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						atransactions: proxy.aTransactions.get()
+					})
+				})
+			},
+
+			add: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.add(txid)
+				})
+			},
+
+			addlist: function ({txids}) {
+				return kit.proxy().then(proxy => {
+
+					var promises = _.map(txids, function (txid) {
+						return proxy.aTransactions.add(txid)
+					})
+
+					return Promise.all(promises)
+				})
+			},
+
+			remove: function ({txid}) {
+				return kit.proxy().then(proxy => {
+					return proxy.aTransactions.remove(txid)
+				})
 			}
 		},
 

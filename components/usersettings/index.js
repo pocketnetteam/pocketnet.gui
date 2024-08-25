@@ -378,7 +378,11 @@ var usersettings = (function(){
 			renders.diagnostics()
 			renders.downloadedvideoscontent()
 
-			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
+			self.app.platform.actionListeners['settings'] = function(){
+				renders.cache()
+			}
+
+			//self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
 
 
 		}
@@ -432,8 +436,9 @@ var usersettings = (function(){
 			destroy : function(){
 				el = {};
 
+				delete self.app.platform.actionListeners['settings']
 
-				delete self.app.platform.sdk.node.transactions.clbks.settings
+				//delete self.app.platform.sdk.node.transactions.clbks.settings
 
 				/*if (self.app.user.features.telegram){
 
@@ -486,7 +491,7 @@ var usersettings = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

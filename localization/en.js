@@ -159,7 +159,7 @@ _l.waddaddress = "Explore a new Wallet address";
 _l.wrecieve = "Receive";
 _l.wrecieveon = "Receive on";
 _l.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
-_l.wdgetlink = "Get Link";
+_l.wdgetlink = "Share Link";
 _l.wdqrcode = "Qr code";
 _l.wdcopyaddress = "Copy Address";
 _l.wdpleasefill = "Please fill in these fields";
@@ -250,6 +250,7 @@ _l.suseractivation = "User Activation";
 _l.sprofile = "Profile";
 _l.spc = "Post count";
 _l.spv = "Video Post count";
+_l.spa = "Audio Post count";
 _l.ssc = "Stars count";
 _l.ccc = "Comments count";
 _l.crc = "Comment Rate count";
@@ -1217,8 +1218,8 @@ _l.settingsTranscoding = "On video upload transcode it on my device"
 _l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 _l.videoTranscodingError = "There was an error with processing your video"
 _l.videoUploadingFinish = "Finishing uploading..."
-_l.uploadNewVideo = "Upload New Pocketvideo"
-_l.uploadNewAudio = "Upload New Pocketaudio"
+_l.uploadNewVideo = "Upload New video"
+_l.uploadNewAudio = "Upload New audio"
 _l.selectVideoFile = "Select video file"
 _l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
@@ -1350,7 +1351,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos via website to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Or you can use the app "+appname+"";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -1427,7 +1428,7 @@ _l.lockedaccount = "Your account has been blocked due to a decrease in reputatio
 _l.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
 _l.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
-_l.hiddenCommentLabel = "Comment hidden due to low rating"
+_l.hiddenCommentLabel = "The comment is hidden due to a low rating or because the author has blocked the user"
 
 _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
 _l.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
@@ -2236,7 +2237,7 @@ _l.submitapplication = "Submit your application"
 _l.submitapplicationVideo = "Request PKOIN for video"
 _l.submitapplicationVideoSmall = "Send & request PKOIN"
 
-_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video"
 
 
 _l.videobloggerRequest_pl1 = "Link to existing channel 1"
@@ -2607,6 +2608,8 @@ _l.permissions_descriptions_messaging = "Give the app permission to display an i
 _l.permissions_name_mobilecamera = "Possibility to upload a photo"
 _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
 
+_l.permissions_name_zaddress = "Get one of the wallet addresses"
+_l.permissions_descriptions_zaddress = "Shows the widget one of your wallet addresses"
 
 
 _l.permissions_ask = "asks for permission"
@@ -2616,6 +2619,8 @@ _l.permissions_forbid = "Forbid"
 _l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
+_l.installpplication = "Install application"
+
 _l.complainapplication = "Complain application"
 
 _l.searchbyapplications = "Find an app"
@@ -2793,3 +2798,68 @@ _l.permissions_name_chat = appname + " chat"
 
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
+
+_l.limits = "Limits"
+_l.pay = "Pay"
+_l.external_prepareTransaction = 'Payment is being processed'
+_l.external_paySucc_nocbpw = 'Payment has been made, the window will be closed'
+_l.external_paySucc_fetch = 'Payment has been made, we are transfering the data to the seller'
+_l.external_paySucc_redirect = "Payment has been made, go to the seller's page"
+_l.external_email_required = 'Enter your email address'
+_l.external_phone_required = 'Enter your phone number'
+_l.external_shipmentValueEmpty = 'Shipping cost has not been calculated. Check that the fields are filled in correctly or contact the seller'
+_l.external_fill_shipment = 'Fill in all the fields required to calculate the shipping cost'
+_l.anonymous_purchase = "Anonymous purchase"
+_l.anonymous_purchase_text = "In this case, the seller does not require information about the account and account holder for payment, but you cannot pay for the purchase from the account address, only from wallet addresses."
+
+
+_l.phone="Phone"
+_l.country="Country"
+_l.name="Name"
+_l.city="City"
+_l.state="State"
+_l.zipcode="ZIP"
+_l.external_loading = "Loading"
+_l.external_paySucc_details = "Payment has been made. Transaction Details"
+
+_l.address2 = "Second line address"
+
+_l.total = "Total"
+_l.shipment = "Shipment"
+
+_l.external_linkWillExpired = "Payment link expires"
+_l.external_linkExpired = "Payment link has expired"
+
+_l.payLink = "Payment link"
+_l.authLink = "Authorization link"
+_l.undefinedLink = "Unknown link"
+_l.receiver_address = "Reciever"
+
+_l.authText = "Are you sure you want to log in to the site via "+appname+"?"
+_l.authAllow = "Log in via "+appname
+
+_l.paymentsOnDevice = "Payments"
+_l.scanqrcode = "Scan QR code"
+
+_l.free = "Free"
+_l.discount = "Discount"
+_l.tax = "Taxes"
+
+_l.external_paylink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
+
+_l.payment_myaddress = "This is a payment link that specifies your user as the payee. Select another user to use it"
+_l.external_source = "Where to send PKOIN from"
+_l.external_tTotal = "Account or wallet"
+_l.description = 'Description'
+_l.getqrcode = 'Show QR code'
+
+
+_l.pkoin_application_info = "Buy via Swipelux mini-application"
+_l.buyswipelux = "Buy via Swipelux"
+_l.buycard = "VISA/Mastercard"
+_l.buyusers = "Buy from users"
+_l.buyviacrypto = "Buy via cryptocurrency"
+
+
+_l.installApplication = "Install the app "+appname+" to upload videos"
+_l.boostlabel= "How to advertise on Bastyon"

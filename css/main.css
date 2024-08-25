@@ -4131,6 +4131,17 @@ html.mobileview.android .wnd .wndback {
 .vc_valuecustom .vc_textInput > div {
   vertical-align: middle;
 }
+.vc_valuecustom .vc_textInput .vc_inputWrapper {
+  position: relative;
+}
+.vc_valuecustom .vc_textInput .vc_inputWrapper .displaceholder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
 .vc_valuecustom .vc_textInput .vc_inputWrapper input {
   background: transparent;
   border: 0;
@@ -4492,8 +4503,7 @@ html.mobileview .matrixchatwrapper.active {
 html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(var(--color-shadow-var), 0.96);
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
@@ -4933,6 +4943,24 @@ html.allcontent_application #footerWrapper {
 .registrationProgressIcon.blocked i {
   color: rgb(var(--color-bad)) !important;
 }
+.realperson {
+  line-height: 0.25em;
+  font-size: 0.25em;
+  opacity: 1;
+}
+.realperson .real .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.realperson .real .fa-check {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+}
+.realperson .dev .fa-certificate {
+  color: rgb(var(--color-bg-orange));
+}
+.realperson .dev .fa-code {
+  color: rgb(var(--text-on-bg-ac-color));
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -4950,22 +4978,6 @@ html.allcontent_application #footerWrapper {
   bottom: -4%;
   right: -4%;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
-  line-height: 0.25em;
-  font-size: 0.25em;
-  opacity: 1;
-}
-.usericon .realperson .real .fa-certificate {
-  color: rgb(var(--color-bg-ac-bright));
-}
-.usericon .realperson .real .fa-check {
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: none;
-}
-.usericon .realperson .dev .fa-certificate {
-  color: rgb(var(--color-bg-orange));
-}
-.usericon .realperson .dev .fa-code {
-  color: rgb(var(--text-on-bg-ac-color));
 }
 .usericon .letter {
   font-size: 1.5em;
@@ -5327,18 +5339,27 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage {
   border-radius: 12px;
-  -moz-transition: bottom 0.3s;
-  -o-transition: bottom 0.3s;
-  -webkit-transition: bottom 0.3s;
-  transition: bottom 0.3s;
+  -moz-transition: bottom 0.2s;
+  -o-transition: bottom 0.2s;
+  -webkit-transition: bottom 0.2s;
+  transition: bottom 0.2s;
+}
+.fastMessage.willhidden {
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  opacity: 0;
 }
 .fastMessage.smallsize {
   padding: 0.5em;
   width: 390px;
   cursor: pointer;
 }
-.fastMessage.smallsize:hover {
-  background: rgba(var(--color-shadow-base), 0.8);
+@media (pointer: hover) {
+  .fastMessage.smallsize:hover {
+    background: rgba(var(--color-shadow-base), 0.8);
+  }
 }
 .fastMessage.smallsize .cwrapper > div.cellforimage {
   display: none;
@@ -5364,7 +5385,7 @@ html.allcontent_application #footerWrapper {
   width: 390px;
   background: rgba(var(--color-shadow-base), 0.98);
   color: rgb(var(--color-txt-ac-1));
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
   padding: 1em;
   text-align: center;
@@ -5374,13 +5395,16 @@ html.allcontent_application #footerWrapper {
   justify-content: center;
   border-radius: 12px;
   cursor: pointer;
-  -moz-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 #hideallnotificationsel .hidenf:hover {
   opacity: 0.8;
+}
+#hideallnotificationsel.willhidden .hidenf {
+  opacity: 0;
 }
 .closecsscross {
   position: relative;
@@ -5433,7 +5457,7 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--text-on-bg-shadow-color));
   text-align: center;
   font-size: 0.9em;
-  z-index: 140;
+  z-index: 1400;
   cursor: pointer;
 }
 #hideallnotifications .hidenf:hover {
@@ -5450,7 +5474,7 @@ html.allcontent_application #footerWrapper {
   padding: 0.75em;
   padding-left: 1em;
   font-size: 1em;
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
 }
 .fastMessage button {
@@ -5503,8 +5527,10 @@ html.allcontent_application #footerWrapper {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.fastMessage .close:hover {
-  color: rgb(var(--neutral-grad-3));
+@media (pointer: hover) {
+  .fastMessage .close:hover {
+    color: rgb(var(--neutral-grad-3));
+  }
 }
 .fastMessage .fastMessageChat .user {
   font-weight: 700;
@@ -5758,6 +5784,7 @@ html.allcontent_application #footerWrapper {
 .article_body .article_image img {
   border-radius: 5px;
   display: block;
+  cursor: pointer;
 }
 .article_body .article_image .article_image_caption {
   text-align: center;
@@ -5798,6 +5825,7 @@ html.allcontent_application #footerWrapper {
 }
 .article_body .article_carousel .img {
   background-size: contain!important;
+  cursor: pointer;
 }
 .article_body .article_this_embed {
   padding: 1.5em;
@@ -5992,8 +6020,16 @@ html.mobileview .plyr__volume {
 html.mobileview .plyr__volume input {
   display: none;
 }
-html.mobileview #hideallnotificationsel {
-  display: none;
+html.mobileview #hideallnotificationsel .hidenf {
+  position: fixed;
+  top: calc(5px + var(--app-margin-top));
+  left: 0.25em;
+  right: 0.25em;
+  bottom: auto;
+  width: auto;
+}
+html.mobileview #hideallnotificationsel .hidenf:hover {
+  opacity: 0.8;
 }
 html.mobileview #panelWrapper {
   position: fixed;
@@ -6033,7 +6069,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6046,10 +6082,10 @@ html.mobileview.scrollmodedown #panelWrapper {
 html.mobileview.scrollmodedown #comments .captionfwrapper {
   transform: translateY(calc(-65px - var(--app-margin-top)));
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6057,7 +6093,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: calc(var(--app-margin-bottom, 0) + 60px);
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 html.mobileview.openapipnet .contentWrapper {
@@ -6096,7 +6132,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6106,10 +6142,10 @@ html.mobileview.scrollmodedown #menu .menuWrapper {
 html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6117,7 +6153,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: 70px;
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 /*t*/
@@ -6669,8 +6705,12 @@ html.mobileview .fastMessage {
   width: auto;
   min-width: 0;
   max-width: none;
-  border-radius: 6px;
+  border-radius: 12px;
   bottom: auto;
+  -moz-transition: top 0.3s;
+  -o-transition: top 0.3s;
+  -webkit-transition: top 0.3s;
+  transition: top 0.3s;
 }
 html.mobileview .fastMessage .fmCnt {
   width: 100%;
@@ -6705,6 +6745,13 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 }
 html.mobileview .fastMessage .foramount {
   width: auto!important;
+}
+html.mobileview .fastMessage.smallsize .close {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 html.mobileview .fastMessage .foranswer,
 html.mobileview .notification .foranswer {
@@ -7647,4 +7694,7 @@ div#bc-root.pipped {
 }
 div#bc-root.pipped .bc-video-container {
   max-width: none!important;
+}
+.onlylight {
+  color-scheme: only light;
 }

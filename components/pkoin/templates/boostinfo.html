@@ -4,7 +4,7 @@
 
         <% if(app.localization.available[language]) {%>
             <div class="label">
-                <span><%= e('probability') %></span>
+                <span><%- e('probability') %></span>
             </div>
             
             <div class="probability">
@@ -17,7 +17,7 @@
     
         <% } else { %> 
             <div class="text">
-                <span><%= e('probabilitytexterror') %></span>
+                <span><%- e('probabilitytexterror') %></span>
             </div>
         <% } %>
     </div>
@@ -30,7 +30,7 @@
     
         <% if(app.localization.available[language]) {%>
             <div class="label">
-                <span><%= e('reach') %></span>
+                <span><%- e('reach') %></span>
             </div>
             
             <div class="probability">
@@ -38,12 +38,12 @@
             </div>
             
             <div class="text">
-                <span><%= e('reachAudience') %></span>
+                <span><%- e('reachAudience') %></span>
             </div>
     
         <% } else { %> 
             <div class="text">
-                <span><%= e('reachtexterror') %></span>
+                <span><%- e('reachtexterror') %></span>
             </div>
         <% } %>
     </div>

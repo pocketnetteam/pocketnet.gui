@@ -52,9 +52,14 @@ User = function(app, p) {
 		}
 	}
 
-	self.signature = function(str, exp, old){
+	var sigcache = {}
+ 
+	//TODO SIG CACHE expirationShift
+
+	self.signature = function(str, exp, old, expirationShift){
 		if(!str) str = 'pocketnetproxy'
 		if(!exp) exp = 360
+		if(!expirationShift) expirationShift = 160
 
 		var keyPair = self.keys()
 

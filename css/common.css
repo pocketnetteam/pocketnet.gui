@@ -1132,7 +1132,7 @@
 }
 .share_common.fullScreenVideo .work {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 960px!important;
   background: rgb(var(--background-total-theme));
   padding: 0;
 }
@@ -1934,6 +1934,17 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   .common_share_article_wrapper .shares .sharearticle .shareBgCaption .starstoppanel,
   .common_share_article_wrapper .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
     padding-right: 0.5em;
+  }
+  .share_common .sbtnxs,
+  .share_common .adr {
+    max-width: 60vw;
+  }
+  .share_common .sbtnxs {
+    display: none;
+  }
+  .share_common .subscribed .authorCell .spsp,
+  .share_common .subscribed .authorCell .adr {
+    color: rgb(var(--color-txt-ac));
   }
 }
 .loading-bar {

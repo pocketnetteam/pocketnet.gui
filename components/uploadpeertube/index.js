@@ -511,6 +511,8 @@ var uploadpeertube = (function () {
 				initCancelListener(() => {
 					uploader.cancel(); processing(false)
 				});
+
+				self.app.mobile.backgroundMode(true)
 				
 				uploader.uploadChunked().then((response) => {
 
@@ -556,6 +558,8 @@ var uploadpeertube = (function () {
 					}
 
 				}).finally(() => {
+
+					self.app.mobile.backgroundMode(false)
 
 					if (el.videoInput)
 						el.videoInput.val('');
@@ -693,7 +697,15 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
+						
+
+						if(res.isNewUser && (!window.cordova && typeof _Electron == 'undefined')){
+							return Promise.reject('onlyapplication')
+						}
+
 						data.hasAccess = true;
+
+						console.log('video', res)
 
 						clbk(data);
 					})
@@ -708,7 +720,9 @@ var uploadpeertube = (function () {
 						data.e = e.response || e;
 						error = true;
 
-						self.app.platform.sdk.ustate.canincrease(
+						clbk(data);
+
+						/*self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
 
@@ -727,7 +741,7 @@ var uploadpeertube = (function () {
 									});
 								}
 							},
-						);
+						);*/
 					})
 					.then(() => {
 						globalpreloader(false);
@@ -751,7 +765,7 @@ var uploadpeertube = (function () {
 				cancel = null
 
 				self.app.mobile.unsleep(false)
-
+				self.app.mobile.backgroundMode(false)
 
 			},
 
@@ -795,6 +809,7 @@ var uploadpeertube = (function () {
 				p.clbk(null, p);
 
 				self.app.mobile.unsleep(true)
+				
 
 			},
 
@@ -836,7 +851,7 @@ var uploadpeertube = (function () {
 
 	self.stop = function () {
 		_.each(essenses, function (essense) {
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		});

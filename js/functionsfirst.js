@@ -1,3 +1,81 @@
+RifTicker = function(){
+    var self = this
+    var queue = []
+    var rif = null
+    var empty = 0
+
+
+    self.add = function(f){
+        var i = queue.push(f) - 1
+        return i
+    }
+
+    self.cancel = function(index){
+        if (queue.length > index){
+            queue[index] = null
+        }
+        
+    }
+
+    var qlength = function(){
+        return queue.filter(v => {return v}).length
+    }
+
+    var exe = function(){
+        var ql = qlength()
+        if (ql && !rif){
+            rif = requestAnimationFrame(() => {
+
+                while(qlength()){
+                    queue.forEach((f, i) => {
+                        if (f){
+                            try{
+                                f.call(window)
+                            }catch(e){
+                                console.error(e)
+                            }
+
+                            queue[i] = null
+                        }
+                            
+                    })
+                }
+                
+                //queue.splice(0, queue.length);
+                    
+                rif = null
+
+            })
+        }
+
+        if(!ql && rif){
+            cancelAnimationFrame(rif)
+        }
+
+        if(!ql && !rif){
+            empty++
+
+            if (empty == 500){
+                queue.splice(0, queue.length);
+                empty = 0
+            }
+        }
+    }
+
+    setInterval(() => {
+        exe()
+    }, 10)
+
+    return self
+}
+
+rifticker = new RifTicker()
+
+ricfbl = function(f){
+    if(window.requestIdleCallback) window.requestIdleCallback(f)
+    else setTimeout(f, 10)
+}
+
 deep = function(obj, key){
 
     var tkey = ''
@@ -95,6 +173,26 @@ edjsHTMLCnt = function (a, app) {
 
 		return ftext
 	}
+
+    var im = {
+        image: function (e) {
+
+            var t = e.data
+
+			var src = checkIfAllowedImageApply(trydecode(_.escape(replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file))))
+
+            if(src) return [src]
+
+            return []
+
+		},
+
+        carousel : function(e){
+            return _.map(e.data, function (i) {
+				return _.escape(trydecode(i.url))
+			})
+        }
+    }
 
 	var e = {
 		delimiter: function () {
@@ -384,6 +482,7 @@ edjsHTMLCnt = function (a, app) {
 		void 0 === n && (n = {});
 
 		var i = Object.assign({}, e, n);
+        var iim = Object.assign({}, im, n);
 
 		return {
 
@@ -480,7 +579,21 @@ edjsHTMLCnt = function (a, app) {
 				return t.filter((function (e) {
 					return !r.includes(e)
 				}))
-			}
+			},
+
+            getallimages : function(e){
+                var result = []
+
+                e.blocks.map((function (e) {
+					var ims = iim[e.type] ? iim[e.type](e) : []
+
+                    console.log('ims images', ims, iim, e)
+
+                    result = result.concat(ims)
+				}))
+
+                return result
+            }
 		}
 	};
 	return r
@@ -587,7 +700,7 @@ topPreloader2 = function(percent, text){
         
     }
 
-    window.requestAnimationFrame(() => {
+    window.rifticker.add(() => {
         el.removeClass('complete');
         el.attr('percent', percent); 
         div.width((percent) + "%")
@@ -595,7 +708,7 @@ topPreloader2 = function(percent, text){
     
 
     if(percent <= 0 || percent >= 100){
-        window.requestAnimationFrame(() => {
+        window.rifticker.add(() => {
 
             el.addClass('complete');
             el.attr('percent', 0);  
@@ -677,25 +790,40 @@ retry = function(_function, clbk, time, totaltime){
 
     var totalTimeCounter = 0 
     var rif = null
+    var userif = false
 
     var interval = setInterval(function(){
 
-        if (rif){
-            cancelAnimationFrame(rif)
+        if(userif){
+            if (rif){
+                window.rifticker.cancel(rif)
+                rif = null
+            }
+    
+            rif = window.rifticker.add(() => {
+                rif = null
+    
+                if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+    
+                    clearInterval(interval);
+    
+                    if(clbk) clbk();
+    
+                }
+    
+            })
         }
-
-        rif = window.requestAnimationFrame(() => {
-            rif = null
-
+        else{
+            
             if(_function() || (totaltime && totaltime <= totalTimeCounter)){
-
+    
                 clearInterval(interval);
 
                 if(clbk) clbk();
 
             }
-
-        })
+        }
+        
 
         totalTimeCounter += time
 
@@ -832,8 +960,18 @@ formatInternalLinkReverse = function(value){
     if(thislink(value)){
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
+        var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-        value = protocol + '://' + value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url)) + '/', '')
+        var cleared = value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
+
+        if(cleared == url || cleared == '') {
+
+        }
+        else{
+            value = protocol + '://' + cleared
+        }
+
+        
     }
     else{
     }
@@ -914,6 +1052,10 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
+    if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
+        return false;
+    }
+
     if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
 
     var domain = (window.project_config || {}).url || 'localhost'
@@ -923,7 +1065,7 @@ thislink = function (_url = '') {
         return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
 
-    if (m && _url.indexOf("embedVideo.php") == -1 && _url.indexOf("docs/") == -1 && _url.indexOf("/blockexplorer") == -1) {
+    if (m) {
         return true;
     }
 

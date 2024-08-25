@@ -122,7 +122,7 @@ var Nodemanager = function(p){
                 node.statistic.clear()
                 
                 return new Promise((resolve, reject) => {
-                    db.update({ key: unode.key }, { $set: { data: updated } }, {}, function (err) {
+                    db.update({ key: unode.key }, { $set: { ...updated } }, {}, function (err) {
                         if(err) return reject(err)
                         resolve(node)
                     });
@@ -425,7 +425,8 @@ var Nodemanager = function(p){
                                 var nd = docs[0]
 
                                 if (nd.version != exp.version || !nd.vcode){
-                                    db.update({ key: exp.key }, { $set: { data: {version : exp.version, vcode : exp.vcode} } }, {}, function (err) {
+
+                                    db.update({ key: exp.key }, { $set: { version : exp.version, vcode : exp.vcode } }, {}, function (err) {
 
 
                                         if(err){
@@ -827,17 +828,22 @@ var Nodemanager = function(p){
             countuse : _.filter(self.nodes, function(node){
                 return node.inited && node.export().canuse
             }).length,
-
-            nodes : self.getnodes(function(n){
-                return n.inited
-            }),
-
             chain : _ch,
-            peers : self.askedpeers,
-            tmp : self.getnodes(function(n){
-                return !n.inited
-            }),
+            
 
+        }
+
+        stats.nodes = self.getnodes(function(n){
+            return n.inited
+        })
+
+        if(!compact){
+
+            stats.tmp = self.getnodes(function(n){
+                return !n.inited
+            })
+
+            stats.peers = self.askedpeers
         }
 
         return stats
@@ -849,7 +855,7 @@ var Nodemanager = function(p){
 
         return new Promise((resolve, reject) => {
 
-            db.remove({ version: {$in : ['0.21.1', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
+            db.remove({ version: {$in : ['0.22.0', '0.22.1', '0.21.1', '0.21.2', '0.21.3', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
 
                 if(err) return reject(err)
                 

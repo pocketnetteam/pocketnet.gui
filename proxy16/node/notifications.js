@@ -1,6 +1,6 @@
 var f = require('../functions');
 const dictionary = require("./notificationsDictionary");
-
+var _ = require('underscore');
 
 class NotificationBlock{
     constructor() {
@@ -134,13 +134,13 @@ class Notifications{
         const notifications = await node.rpcs("getnotifications", [data.height])
         var block = new NotificationBlock()
 
-
         block.height = data.height
         block.time = new Date(Date.now()).toISOString()
         block.eventsCount = notifications.data.length
         block.nodeVersion = node.version
         block.nodeAddress = node.host
-        this.stats.addBlock(block)
+        this.stats.addBlock(_.clone(block))
+
         for (const address of Object.keys(notifications?.notifiers)) {
             const notifier = notifications?.notifiers?.[address]
             for (const type of Object.keys(notifier?.e || [])) {

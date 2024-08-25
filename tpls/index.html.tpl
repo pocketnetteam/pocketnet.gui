@@ -13,7 +13,7 @@
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
-        <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network, bastyon, bastion, bastyon pocketnet, pocketnet, Donald Trump, election 2020, Trump, PKOIN, PKOIN digifinex, BTCPOP PKOIN , Bitforex PKOIN, facebook, linkedin, instagram, telegram, whatsapp" />
+        <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network, bastyon, bastion, bastyon pocketnet, pocketnet, Donald Trump, election 2020, Trump, PKOIN, PKOIN digifinex, BTCPOP PKOIN , Tapbit PKOIN, facebook, linkedin, instagram, telegram, whatsapp" />
 
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
@@ -21,7 +21,7 @@
         connect-src blob: data: 'self' http: ws: https: wss:;
         img-src 'self' blob: data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' player.vimeo.com www.youtube.com www.brighteon.com stream.brighteon.com;
+        frame-src 'self' https:;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src data: blob: *">

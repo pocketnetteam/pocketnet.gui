@@ -11,7 +11,7 @@ var ncp = require('ncp').ncp;
 const { execSync } = require('child_process');
 ncp.limit = 16;
 
-var minifyHtml = require('html-minifier').minify;
+var minifyHtml = require('html-minifier-terser').minify;
 
 var args = {
 	test : false,
@@ -83,6 +83,7 @@ var tpls = [
 	'index_el.html', 
 	'index.html', 
 	'index.php', 
+	'external.js',
 	'indexcordova.html', 
 	{
 		name : 'config.xml', 
@@ -107,7 +108,9 @@ var tpls = [
 	{
 		name : 'terms.html', 
 		path : 'dcs/'
-	}
+	},
+
+	'examples.html'
 ]
 
 if (!args.sha) {
@@ -149,7 +152,9 @@ var vars = {
 		run : args.run || false,
 		lname : config.lname || config.name,
 		support : config.support,
-		config
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	},
 	prod : {
 		proxypath : '"http://pocketnet.app:8898/"',
@@ -166,7 +171,9 @@ var vars = {
 		sha : args.sha || false,
 		run : args.run || false,
 		support : config.support,
-		config
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	}
 }
 
@@ -174,7 +181,6 @@ var vars = {
 var VARS = args.test ? vars.test : vars.prod
 
 console.log('VARS', VARS)
-
 
 var babelifycode = function(code){
 	var c = bablecore.transformSync(code, {
@@ -697,16 +703,24 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									if(!scripted[i.c]) scripted[i.c] = {}
-
-									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+									minifyHtml(data.toString(), {
 										collapseWhitespace : true,
 										removeComments : true
+									}).then((r) => {
+
+										if(!scripted[i.c]) scripted[i.c] = {}
+										
+										scripted[i.c][i.n] = r
+
+									}).catch(e => {
+
+									}).finally(() => {
+										p.success();
 									})
 
-									//var uglified = htmlUglify.process(htmlString);
+									
 
-									p.success();
+									
 								});
 
 							}
@@ -1138,7 +1152,7 @@ var helpers = {
 	clearfolder : function(directory, clbk){
 
 		try{
-			fs.rmdirSync(directory, {
+			fs.rmSync(directory, {
 				recursive : true
 			})
 		}

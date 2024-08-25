@@ -32,6 +32,9 @@ var mobilesearch = (function(){
 				}
 			},
 			fastsearch : function(e, element){
+
+				if(!el.c) return
+				
 				var value = element.val()
 
 				if(currentFastId == value) return
@@ -43,6 +46,7 @@ var mobilesearch = (function(){
 					renders.last()
 					return
 				}
+
 
 				el.c.addClass('active')
 
@@ -117,6 +121,8 @@ var mobilesearch = (function(){
 		var initEvents = function(){
 
 			var dfastsearch = _.debounce(events.fastsearch, 450)
+
+			
 
 			el.c.find('.cancelWrapper').on('click', () => {
 				self.closeContainer()
@@ -239,7 +245,7 @@ var mobilesearch = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

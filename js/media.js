@@ -165,6 +165,7 @@ window.BSTMediaCs = function () {
 		return new Promise((resolve, reject) => {
 			initPermissions(mediasettings)
 				.then(() => {
+			
 					if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 						navigator.mediaDevices
 							.getUserMedia(mediasettings)

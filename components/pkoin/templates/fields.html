@@ -14,7 +14,7 @@
             <div class="notion">
                 <div class="balance">
                     <div class="text">
-                        <%= e('totalBalance') %>:
+                        <%- e('totalBalance') %>:
                     </div>
                     <div class="amount">
                         <%-total%>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="balance">
                     <div class="text">
-                        <%= e('e130962') %>
+                        <%- e('e130962') %>
                     </div>
                     <div class="amount">
                         <%-balance%>
@@ -56,7 +56,7 @@
                 <%= e('comment') %>
             </div>
             <div class="inputWrapper">
-                <textarea type="text" id="textareaComment" class="textareaComment" placeholder="<%= e('e13038') %>"><%= valComment %></textarea>
+                <textarea type="text" id="textareaComment" class="textareaComment" placeholder="<%= e('e13038') %>"><%- valComment %></textarea>
             </div>
         </div>
 

@@ -22,17 +22,28 @@
 		<div class="ways">
 			<div class="wayf">
 
-				<div class="row one">
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buyusers')%></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row table">
 					<div class="wrp">
 						<div class="flxbtn">
-							<div>
+
+							<div class="flxbtnlbk">
+								<span><%- e('pkoin_commerce_info') %></span>
+							</div>
+
+							<div class="actionbutton">
 								<a href="index?sst=pkoin_commerce">
 									<button class="button medium orange"><i class="fas fa-hashtag"></i> <%=e('buypeertopeer')%></button>
 								</a>
 							</div>
-							<div class="flxbtnlbk">
-								<span><%- e('pkoin_commerce_info') %></span>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -43,52 +54,17 @@
 
 		<div class="ways">
 
-			<% if(!app.curation() && 1 == 0) {%>
-				<div class="wayf">
-					<div class="row flx forfiats">
-
-						<div class="fiat">
-							<div class="clogo">
-								<img class="wh2" src="./img/mc_symbol.svg">
-							</div>
-							<div class="label">
-								Mastercard
-							</div>
-						</div>
-
-						<div class="fiat">
-							<div class="clogo">
-								<img class="wh3" src="./img/visa.svg">
-							</div>
-							<div class="label">
-								Visa
-							</div>
-						</div>
-
-						<div class="fiat">
-							<div class="clogo">
-								<img class="wh" src="./img/6ff9233688ba95fe3e02f381443539fc.svg">
-							</div>
-							<div class="label">
-								Indacoin
-							</div>
-						</div>
-						
-						
-					</div>
-
-					<div class="row table">
-						<div class="reciever">
-							<a elementsid="https://buy.pkoin.indacoin.io" href="https://buy.pkoin.indacoin.io/index?address=<%-address || ''%>">
-								<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buywithcreditcard')%></button>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			<% } %>
+			
 
 			<div class="wayf">
+
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buyviacrypto')%></span>
+						</div>
+					</div>
+				</div>
 
 				<div class="row flx">
 					<% _.each(coins, function(coin){ %>
@@ -108,9 +84,6 @@
 
 				<div class="row table">
 
-					
-
-
 					<div class="reciever">
 						<a elementsid="https://pkoin.net" href="https://pkoin.net/?address=<%-address || ''%>">
 							<button class="button medium black"><i class="fas fa-chevron-circle-right"></i> <%=e('buyforcrypto')%></button>
@@ -122,6 +95,38 @@
 
 
 			
+
+		</div>
+
+
+		<div class="ways">
+			<div class="wayf">
+				<div class="row ">
+					<div class="wrp">
+						<div class="subcaption">
+							<span><%=e('buycard')%></span>
+						</div>
+					</div>
+				</div>
+				<div class="row table">
+					<div class="wrp">
+						<div class="flxbtn">
+
+							<div class="flxbtnlbk">
+								<span><%- e('pkoin_application_info') %></span>
+							</div>
+
+							<div class="actionbutton">
+								<a href="application?id=swipelux.app">
+									<button class="button medium orange"><i class="fas fa-tools"></i> <%=e('buyswipelux')%></button>
+								</a>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
 
 		</div>
 	

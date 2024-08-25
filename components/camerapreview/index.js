@@ -722,6 +722,7 @@ var camerapreview = (function(){
 				actions.stopcamera()
 			}
 
+			console.log(ed)
 
 			initUpload({
 				el : el.openexternal,
@@ -733,9 +734,16 @@ var camerapreview = (function(){
 				onError : ed.onError,
 				onSuccess : function(){
 
+					console.log("SA")
+
 					if(ed.onSuccess) ed.onSuccess()
 
+					console.log("STOP")
+
 					self.stop()
+				},
+				onFail : function(){
+					console.error('fail')
 				}
 			})
 
@@ -766,7 +774,7 @@ var camerapreview = (function(){
 				self.app.mobile.unsleep(false)
 
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.mobile.statusbar.background()
 					app.el.html.addClass('cameraenabledend')
 					app.el.html.removeClass('cameraenabled')
@@ -789,7 +797,7 @@ var camerapreview = (function(){
 
 					actions.stopcamera()
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						app.el.html.removeClass('cameraenabledend')
 						
@@ -809,7 +817,7 @@ var camerapreview = (function(){
 				imagesadding = false
 				photos = []
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 			
 					app.el.html.addClass('cameraenabledrun')
 					self.app.mobile.statusbar.gallerybackground()
@@ -817,7 +825,7 @@ var camerapreview = (function(){
 
 				setTimeout(() => {
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						app.el.html.addClass('cameraenabled')
 						app.el.html.removeClass('cameraenabledrun')

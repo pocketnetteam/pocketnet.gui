@@ -10,7 +10,7 @@ if(share.address){
 
 	var userInfo = psdk.userInfo.get(share.address) || {}
 
-	var name = app.platform.api.clearname(userInfo.name || share.address)
+	var name = app.platform.api.clearname(userInfo.name || share.address, true)
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
 	var subscribed = '';

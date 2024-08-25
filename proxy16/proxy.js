@@ -28,6 +28,7 @@ var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
+var ATransactions = require('./atransactions.js');
 var SystemNotify = require('./systemnotify.js');
 var Notifications = require('./node/notifications')
 var Transports = require("./transports")
@@ -36,6 +37,9 @@ var bitcoin = require('./lib/btc16.js');
 var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
+
+const config = require('./config.json');
+const offlinePeertubeList = require('./peertube-servers.json');
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
@@ -46,6 +50,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		self.test = test
 		self.reverseproxy = reverseproxy
+
 
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
@@ -60,6 +65,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var exchanges = new Exchanges()
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
+	var aTransactions = new ATransactions(settings.atransactions)
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var slidemodule = new Slidemodule(settings.slide)
 	slidemodule.init()
@@ -81,6 +87,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
+		aTransactions,
 		systemnotify, notifications,
 		logger,
 		translateapi,
@@ -88,7 +95,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	})
 
 	var stats = [];
-	var statcount = 100;
+	var statcount = 60;
 	var statInterval = null;
 
 	var captchas = {};
@@ -96,9 +103,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
+		var info = self.kit.info(true)
+		var nn = {}
+
+		_.each(info.nodeManager.nodes, (n, k) => {
+			if (n.rating){
+				nn[k] = n
+			} 
+		})
+
+		info.nodeManager.nodes = nn
+
+		delete info.wallet.addresses
+		delete info.admins
+		delete info.nodeControl
+
 		var data = {
 			time: f.now(),
-			info: self.kit.info(true)
+			info: info
 		}
 
 		stats.push(data)
@@ -327,6 +349,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
+	self.aTransactions = {
+		add: function (txid) {
+			return aTransactions.add(txid)
+		},
+		remove: function (txid) {
+			return aTransactions.remove(txid)
+		},
+		check: function (txid) {
+			return aTransactions.check(txid)
+		},
+		init: function () {
+			return aTransactions.init()
+		},
+		get: function () {
+			return aTransactions.get()
+		},
+	}
+
 	self.bots = {
 		add: function (address) {
 			return bots.add(address)
@@ -406,8 +446,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		info: function () {
-			return wallet.info()
+		info: function (compact) {
+			return wallet.info(compact)
 		},
 
 
@@ -544,8 +584,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return nodeControl.kit
 		},
 
-		info: function () {
-			return nodeControl.info()
+		info: function (compact) {
+			return nodeControl.info(compact)
 		},
 
 
@@ -690,564 +730,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var trustpeertube = []
 
 	self.peertube = {
-		init: function () {
+		init: async function () {
 
 			trustpeertube = []
 
-			var ins = {
-				1: [
-				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120', offline: true },
-					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24', offline: true },
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-				5: [
-				  {
-					host: 'pocketnetpeertube5.nohost.me',
-					cantuploading: true,
-					ip: '95.217.209.217',
-					offline: true,
-				  },
-				  {
-					host: 'pocketnetpeertube7.nohost.me',
-					cantuploading: true,
-					ip: '188.187.45.218',
-					offline: true,
-				  },
-				  { 
-					host: 'peertube.archive.pocketnet.app',
-					cantuploading: true,
-					ip: '178.217.159.221'
-				  },
+			const targetNetwork = (test) ? "testnet" : "mainnet";
 
-				],
-				6: [
-				  {
-					host: 'pocketnetpeertube4.nohost.me',
-					cantuploading: true,
-					ip: '135.181.108.193',
-					offline: true,
-				  },
-				  {
-					host: 'pocketnetpeertube6.nohost.me',
-					cantuploading: true,
-					ip: '159.69.127.9',
-					offline: true,
-				  },
-				  { 
-					host: 'peertube.archive.pocketnet.app',
-					cantuploading: true,
-					ip: '178.217.159.221'
-				  },
-				],
-				8: [
-				  {
-					host: 'pocketnetpeertube8.nohost.me',
-				    offline: true,
-					cantuploading: true,
-					old : true,
-
-					ip: '192.236.161.131',
-				  },
-				  {
-					host: 'pocketnetpeertube9.nohost.me',
-					cantuploading: true,
-					ip: '178.154.200.50',
-					offline: true,					
-				  },
-				  { 
-					host: 'peertube.archive.pocketnet.app',
-					cantuploading: true,
-					ip: '178.217.159.221'
-				  },
-				],
-
-				10: [
-				  {
-					host: 'pocketnetpeertube10.nohost.me',
-					cantuploading: true,
-					offline: true,					
-					ip: '23.254.226.253',
-				  },
-				  {
-					host: 'pocketnetpeertube11.nohost.me',
-					cantuploading: true,
-					ip: '84.252.138.108',
-					offline: true,					
-				  },
-				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				12: [
-				  {
-					host: 'bastyonmma.pocketnet.app',
-					cantuploading: true,
-					ip: '88.99.34.74',
-					offline: true,					
-				  },
-				  {
-					host: 'bastyonmma.nohost.me',
-					cantuploading: true,
-					ip: '49.12.231.72',
-					offline: true,
-				  },
-				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				13: [
-				  { 
-					host: '01rus.nohost.me',
-					ip: '178.217.159.227',
-					offline: true,
-				  },
-				  { 
-					host: '02rus.pocketnet.app',
-					ip: '31.184.215.67',
-					offline: true,
-				  },
-				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				14: [
-				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113', offline: true, },
-				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93', offline: true, },
-				  { host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				15: [
-					{
-						host: 'peertube14.pocketnet.app',
-						ip: '178.154.251.235',
-						offline: true,
-					},
-					{
-						host: 'peertube15.pocketnet.app',
-						ip: '192.236.199.174',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				16: [
-					{
-						host : 'poketnetpeertube.space',
-						cantuploading: true,
-
-						old : true,
-						ip: '178.217.155.168',
-						offline: true,
-					},
-					{
-						host : 'poketnetpeertube.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '178.217.159.224',
-						offline: true,
-					}
-				],
-
-
-				17: [
-					{
-						host : 'bastynode.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '81.23.152.91',
-						offline: true,
-					},
-					{
-						host : 'storemi.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '93.100.117.108',
-						offline: true,
-					},
-				],
-
-				18: [
-					{
-						host : 'bastynode1.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '81.23.151.94',
-						offline: true,
-					},
-					{
-						host : 'gf110.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '46.175.123.16',
-						offline: true,
-					},
-				],
-
-				19: [
-					{
-						host : 'bastyonpeertube.ru',
-						cantuploading: true,
-						ip: '178.217.155.169',
-						offline: true,
-					},
-					{
-						host : 'bastyonpeertube.site',
-						cantuploading: true,
-						ip: '178.217.155.170',
-						offline: true,
-					},
-
-				],
-
-				20: [
-					{
-						host : 'peertube17.pocketnet.app',
-						ip: '51.250.104.218',
-						offline: true,
-						cantuploading: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				21: [
-					{
-						host : 'peertube18.pocketnet.app',
-						ip: '51.250.41.252',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				22: [
-					{
-						host : 'peertube19.pocketnet.app',
-						ip: '51.250.73.97',
-						offline: true,
-						cantuploading: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				23: [
-					{
-						host : 'peertube17mirror.pocketnet.app',
-						ip: '64.235.40.47',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				24: [
-					{
-						host : 'peertube18mirror.pocketnet.app',
-						ip: '64.235.42.75 ',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				25: [
-					{
-						host : 'peertube19mirror.pocketnet.app',
-						ip: '64.235.50.17',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				26: [
-					{
-						host : 'peertube20.pocketnet.app',
-						ip: '157.90.240.231',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				27: [
-					{
-						host : 'peertube21.pocketnet.app',
-						ip: '116.203.16.185',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				28: [
-					{
-						host : 'peertube22.pocketnet.app',
-						ip: '104.168.136.179',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				29: [
-					{
-						host : 'peertube23.pocketnet.app',
-						ip: '23.254.201.237',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				30: [
-					{
-						host : 'peertube24.pocketnet.app',
-						ip: '23.254.224.63',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				31: [
-					{
-						host : 'peertube25.pocketnet.app',
-						ip: '95.217.212.144',
-						cantuploading: true,
-						offline: true,
-					},
-					{
-						host : 'peertube25mirror.pocketnet.app',
-						ip: '94.72.140.118',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				32: [
-					{
-						host : 'peertube26.pocketnet.app',
-						ip: '49.12.106.120',
-						cantuploading: true,
-						offline: true,
-					},
-					{
-						host : 'peertube26mirror.pocketnet.app',
-						ip: '94.72.140.117',
-						cantuploading: true,
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-				
-				33: [
-					{
-						host : 'peertube27.pocketnet.app',
-						ip: '49.12.102.26',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				34: [
-					{
-						host : 'peertube28.pocketnet.app',
-						ip: '138.201.91.156',
-					}
-				],
-
-				35: [
-					{
-						host : 'peertube29.pocketnet.app',
-						ip: '157.90.171.8',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				36: [
-					{
-						host : 'peertube30.pocketnet.app',
-						ip: '95.217.165.102',
-						offline: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				37: [
-					{
-						host: 'peertube5new.pocketnet.app',
-						ip: '95.217.209.217',
-						offline: true,
-						cantuploading: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-					{
-						host: 'peertube51.pocketnet.app',
-						ip: '95.217.209.217',
-						cantuploading: true,
-						archiveDouble: true,
-					},
-				],
-
-				38: [
-					{
-						host: 'peertube4new.pocketnet.app',
-						ip: '135.181.108.193',
-					},
-					{
-						host: 'peertube41.pocketnet.app',
-						ip: '135.181.108.193',
-						cantuploading: true,
-						archiveDouble: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				39: [
-					{
-						host: 'peertube6new.pocketnet.app',
-						ip: '159.69.127.9',
-						cantuploading: true,
-					}
-				],
-
-				40: [
-					{
-						host: 'peertube32.pocketnet.app',
-						ip: '185.141.60.101',
-						cantuploading: true,
-						offline: true,
-					},
-					{
-						host: 'peertube321.pocketnet.app',
-						ip: '185.141.60.101',
-						cantuploading: true,
-						archiveDouble: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-				
-				41: [
-					{
-						host: 'peertube33.pocketnet.app',
-						ip: '185.141.60.118',
-					}
-				],
-				
-				42: [
-					{
-						host: 'peertube34.pocketnet.app',
-						ip: '185.141.60.119',
-						offline: true,
-					},
-					{
-						host: 'peertube341.pocketnet.app',
-						ip: '185.141.60.119',
-						cantuploading: true,
-						archiveDouble: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				43: [
-					{
-						host : 'peertube35.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-						cantuploading: true,
-						offline: true,
-					},
-					{
-						host : 'peertube351.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-						cantuploading: true,
-						archiveDouble: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				44: [
-					{
-						host : 'peertube31.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-						cantuploading: true,
-					},
-					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
-				],
-
-				45: [
-					{
-						host: 'peertube51.pocketnet.app',
-						ip: '95.217.209.217',
-					},
-				],
-
-				46: [
-					{
-						host: 'peertube41.pocketnet.app',
-						ip: '135.181.108.193',
-					},
-				],
-
-				47: [
-					{
-						host : 'peertube70.pocketnet.app',
-						ip: '37.27.11.93',
-					},
-				],
-
-				48: [
-					{
-						host : 'peertube80.pocketnet.app',
-						ip: '65.21.249.150',
-					},
-				],
-				49: [
-					{
-						host : 'peertube90.pocketnet.app',
-						ip: '135.181.107.25',
-					},
-				],
-				50: [
-					{
-						host : 'peertube100.pocketnet.app',
-						ip: '135.181.158.64',
-					},
-				],
-				51: [
-					{
-						host: 'peertube321.pocketnet.app',
-						ip: '185.141.60.101',
-					},
-				],
-				52: [
-					{
-						host: 'peertube341.pocketnet.app',
-						ip: '185.141.60.119',
-					},
-				],
-				53: [
-					{
-						host : 'peertube351.pocketnet.app',
-						ip: '185.148.146.11',
-						special: true,
-					},
-				],
-      		};
-
-			if (test){
-				ins = {0 : [
-					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					// { host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-				]}
-			}
+			const ins = await this.syncAndReadList(targetNetwork);
 
 			_.each(ins, function(r){
 				_.each(r, function(p){
-					if(!p.old){
+					if(!p.old && !p.offline){
 						trustpeertube.push(p.host)
 					}
 				})
@@ -1256,6 +749,63 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return peertube.init({
 				roys : ins
 			})
+		},
+
+		syncAndReadList: async function (network) {
+			function toLegacyList(list) {
+				const testnet = (network === "testnet");
+
+				return Object.values(list.swarms)
+					.filter(s => !!s.testnet === testnet)
+					.map(s => {
+						const serversList = [...s.list];
+
+						serversList.forEach(s => {
+							s.offline = !s.online
+							s.cantuploading = !s.upload
+						});
+
+						if (s.archived) {
+							serversList.forEach(s => s.archived = true);
+
+							// FIXME: This is a temporary solution. Archive servers must be checked by order
+							if (s.archived.length === 2) {
+
+								var archiveS = {...list.archive[s.archived[0]], archiveDouble: true, cantuploading : true}
+
+								serversList.push({
+									...list.archive[s.archived[0]],
+									archiveDouble: true,
+								});
+								serversList.push(list.archive[s.archived[1]]);
+							} else {
+								serversList.push({...list.archive[s.archived[0]], cantuploading : true});
+							}
+						}
+
+						return serversList;
+					});
+			}
+
+			let fileRead = offlinePeertubeList;
+
+			try {
+				const res = await fetch(config.peertubesListLink);
+				fileRead = await res.json();
+			} catch (e) {
+				console.error('No peertube servers list!');
+			}
+
+			return toLegacyList(fileRead);
+		},
+
+		getArchivedServers: function() {
+			const peertubesData = peertube.info();
+			const peertubeList = peertubesData.instances;
+
+			return Object.values(peertubeList)
+				.filter(h => !!h.archived)
+				.map(h => h.host);
 		},
 
 		destroy: function () {
@@ -1271,6 +821,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		info: function (compact) {
 			return peertube.info(compact)
 		},
+
 
 		get kit() {
 			return peertube.kit
@@ -1341,20 +892,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				translateapi : translateapi.info(compact)
 			}
+
 		},
 
 		initlist: function (list) {
 			var catchError = function (key) {
 				return (e) => {
 
+					console.log('error', key, e)
+
 					return Promise.resolve()
 				}
 			}
 
+
 			var promises = _.map(list, (i) => {
 				return self[i].init().catch(catchError(i)).then(() => {
+					console.log('ini', i)
 					return Promise.resolve()
 				})
+
 			})
 
 			return Promise.all(promises)
@@ -1383,12 +940,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions', 'notifications']).then(r => {
 
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 30000)
+					statInterval = setInterval(addStats, 60000)
 
 				return Promise.resolve()
 			})
@@ -1431,7 +988,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
-			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions'], (i) => {
 				
 				return new Promise((resolve, reject) => {
 					try{
@@ -1552,7 +1109,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					result = r
 
 				posts = _.filter(posts, p => {
-					return p
+					return p && p.txid
+				})
+				/// for brighteon not bastyon
+				_.each(posts, (p) => {
+					if(!self.aTransactions.check(p.txid)){
+						p.deleted = true
+					}
 				})
 
 				var withvideos = _.filter(posts, p => {
@@ -1864,14 +1427,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							 * Added in context of disappearing
 							 * comments investigation.
 							 */
-							if (method === 'sendrawtransactionwithmessage') {
+							/*if (method === 'sendrawtransactionwithmessage') {
 								const type = cparameters[2];
 								const txid = data;
 								const nodeHost = node.host;
 								const block = node.height();
 
 								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
-							}
+							}*/
 
 							return Promise.resolve({
 								data: data,
@@ -2140,9 +1703,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function ({ url }) {
 
 
-					return Promise.reject({
-						error : 'deprecated'
-					})
+					return new Promise((resolve, reject) => {
+						remote.nmake(url, function (err, data) {
+							if (!err) {
+								resolve({
+									data: data,
+								});
+							} else {
+								reject(err);
+							}
+						}, {
+							bitchute : true
+						});
+					});
 
 				},
 			},
@@ -2254,7 +1827,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				action: function (message) {
 
-					if (!message.A)
+					return Promise.reject({ error: 'deprecated', code: 401 })
+
+					/*if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
 
 					var dumpdata = _.clone(dump)
@@ -2334,7 +1909,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							result : 'error',
 							error :  err.toString ? err.toString() : err
 						});
-					}
+					}*/
 
 
 
@@ -2429,6 +2004,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						},
 					});
 				},
+			},
+
+			peertubeserversList: {
+				path: '/peertubeserversList',
+				action: async () => ({
+					data: {
+						archivedPeertubeServers: self.peertube.getArchivedServers(),
+					}
+				}),
 			},
 
 			nodes: {

@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [];
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], aTransactions = [];
 
 		var graphs = {}
 
@@ -166,7 +166,7 @@ var system16 = (function(){
 				renders.webserveradmin(el.c)
 			},
 			'hexCaptcha' : function(_el){
-				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
+				changes.server.hexCaptcha = !JSON.parse(_el.attr('value'))
 				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
 
 				renders.webserveradmin(el.c)
@@ -230,6 +230,22 @@ var system16 = (function(){
 		var rif = null
 
 		var actions = {
+			getTxidFromString : function(txidString){
+				if (txidString.length == 16 * 4){
+					return txidString
+				}
+
+				try{
+					var u = new URL(txidString)
+
+					var ps = parameters(u.search, true)
+
+					return ps.s || ps.v || ''
+				}
+				catch(e){
+					return ''
+				}
+			},
 			convertTime : function(stats){
 				_.each(stats, function(s){
 					s.time = fromutc(new Date(s.time))
@@ -266,6 +282,34 @@ var system16 = (function(){
 					})
 
 					renders.botscontent(el.c)
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					topPreloader(100);
+
+				})
+			},
+
+			removeATransaction : function(txid){
+				topPreloader(30);
+
+				proxy.fetchauth('manage', {
+					action : 'atransactions.remove',
+					data : {
+						txid : txid
+					}
+				}).then(r => {
+
+					aTransactions = _.filter(aTransactions, function(b){
+						return b != txid
+					})
+
+					renders.aTransactionsContent(el.c)
 
 					topPreloader(100);
 
@@ -357,15 +401,16 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 					if (rif){
-						cancelAnimationFrame(rif)
+						//cancelAnimationFrame(rif)
+						rifticker.cancel(rif)
 					}
 	
-					rif = window.requestAnimationFrame(() => {
+					rif = rifticker.add(() => {
 						rif = null
 						
 						if (el.c){
 							renders.nodescontenttable(el.c)
-							renders.notificationcontenttable(el.c)
+							//renders.notificationcontenttable(el.c)
 							//renders.notificationuserstable(el.c)
 							renders.peertubeinstancestable(el.c)
 							renders.webadminscontent(el.c)
@@ -2393,6 +2438,118 @@ var system16 = (function(){
 
 				
 			},
+
+			///
+
+			addATransactionslist: function(){
+				var d = inputDialogNew({
+					caption : "Add TXIDs to Proxy ATransactions List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : ""+self.app.meta.fullname+" TXIDs",
+	        			label : "Transactions",
+						text : true
+	        		}],
+
+	        		success : function(v){
+
+						var txids = v[0].split(/[ \t\n\r]+/g)
+
+						txids = _.map(txids, (tx) => {
+							return actions.getTxidFromString(tx)
+						})
+
+						if(!txids.length){
+							sitemessage("TXID is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetchauth('manage', {
+							action : 'atransactions.addlist',
+							data : {
+								txids : txids
+							}
+						}).then(r => {
+							_.each(txids, function(txid){
+								aTransactions.push(txid)
+							})
+
+							renders.aTransactionsContent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
+			addATransaction : function(){
+				var d = inputDialogNew({
+					caption : "Add TXID to ATransaction List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : ""+self.app.meta.fullname+" TXID",
+	        			label : "Transaction"
+	        		}],
+
+	        		success : function(v){
+
+						var txid = actions.getTxidFromString(v[0])
+
+						if(!txid){
+							sitemessage("TXID is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetchauth('manage', {
+							action : 'atransactions.add',
+							data : {
+								txid : txid
+							}
+						}).then(r => {
+
+							aTransactions.push(txid)
+
+							renders.aTransactionsContent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
+
+
+			///
 			addbotlist: function(){
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
@@ -2667,11 +2824,91 @@ var system16 = (function(){
 
 				
 			},
+
+			///
+
+			aTransactions : function(elc, clbk){
+
+				if (actions.admin() && window.project_config.adminTools){
+				
+					self.shell({
+						inner : html,
+						name : 'webatransactions',
+						data : {
+							admin : actions.admin()
+						},
+						el : elc.find('.aTransactionsWrapper'),
+						insertimmediately : true,
+					},
+					function(p){
+
+						p.el.find('.addATransaction').on('click', windows.addATransaction)
+						p.el.find('.addATransactions').on('click', windows.addATransactionslist)
+
+						renders.aTransactionsContent(elc)
+
+						if (clbk)
+							clbk()
+					})
+
+				}
+			},
+			
+			aTransactionsContent : function(elc, clbk){
+
+
+				self.shell({
+					inner : html,
+					name : 'webATransactionsContent',
+					data : {
+						admin : actions.admin(),
+						aTransactions : aTransactions
+					},
+					insertimmediately : true,
+					el : elc.find('.webATransactionsContentWrapper')
+
+				},
+				function(p){
+
+					p.el.find('.exportlist').on('click', function(){
+
+						text = aTransactions.join('\r\n')
+
+						copycleartext(text)
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
+					p.el.find('.removefromlist').on('click', function(){
+						var txid = $(this).attr('aTransaction')
+
+						if (txid){
+
+							var t = 'Do you really want to remove selected TXID from Proxy server aTransactions list?'
+
+							new dialog({
+								class : 'zindex',
+								html : t,
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+									actions.removeATransaction(txid)
+								}
+							})
+							
+						}
+					})
+
+					if (clbk)
+						clbk()
+				})
+
+			},
+
+			///
 			bots : function(elc, clbk){
 
-				if(actions.admin()){
-
-				
+				if(actions.admin() && window.project_config.adminTools){
 				
 					self.shell({
 						inner : html,
@@ -2695,6 +2932,7 @@ var system16 = (function(){
 
 				}
 			},
+
 			botscontent : function(elc, clbk){
 
 				self.app.platform.sdk.users.get(bots || [], function(){
@@ -3774,28 +4012,28 @@ var system16 = (function(){
 				const stats = await proxy.fetchauth('notifications/stats')
 
 				self.shell({
-						inner : html,
-						name : 'notificationcontenttable',
-						data : {
-							info : info,
-							stats : stats,
-							proxy : proxy,
-							admin : actions.admin(),
-						},
-						insertimmediately : true,
-						el : elc.find('.notificationsWrapper .notifications')
-
+					inner : html,
+					name : 'notificationcontenttable',
+					data : {
+						info : info,
+						stats : stats,
+						proxy : proxy,
+						admin : actions.admin(),
 					},
-					function(p){
+					insertimmediately : true,
+					el : elc.find('.notificationsWrapper .notifications')
 
-						p.el.find('.button').on('click', function(){
-							var href = $(this).attr('href')
-							$(this).attr('href', href.replaceAll("https://", ""))
-						})
+				},
+				function(p){
 
-						if (clbk)
-							clbk()
+					p.el.find('.button').on('click', function(){
+						var href = $(this).attr('href')
+						$(this).attr('href', href.replaceAll("https://", ""))
 					})
+
+					if (clbk)
+						clbk()
+				})
 			},
 
 			notificationuserstable : async function(elc, clbk){
@@ -4132,7 +4370,7 @@ var system16 = (function(){
 			panel : function(){
 				if(el.c){
 					renders.nodescontenttable(el.c)
-					renders.notificationcontenttable(el.c)
+					//renders.notificationcontenttable(el.c)
 					renders.peertubeinstancestable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)
@@ -4192,6 +4430,7 @@ var system16 = (function(){
 			info = null
 			stats = []
 			bots = []
+			aTransactions = []
 
 			graphs = {}
 
@@ -4277,14 +4516,18 @@ var system16 = (function(){
 						  return proxy.system.request('bots.get');
 						})
 						.then((r) => {
-							
+
 						  bots = r.bots || [];
 						  renders.bots(el.c);
 
-						  /*el.c.find('.collapsepart').each(function (i) {
-							if (expanded[i]) $(this).addClass('expanded');
-						  });*/
-						  
+						}).then((r) => {
+							return proxy.system.request('atransactions.get');
+						})
+						.then((r) => {
+
+							aTransactions = r.atransactions || [];
+							renders.aTransactions(el.c);
+
 						}).catch(e => {
 							console.error(e)
 						});
@@ -4373,7 +4616,7 @@ var system16 = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

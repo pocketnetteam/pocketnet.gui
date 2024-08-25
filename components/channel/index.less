@@ -87,6 +87,41 @@
             padding : 2 * @rhythm;
             text-align: center;
         }
+
+        .userinfo{
+            .blockWrapper{
+                margin-top: 2 * @rhythm;
+    
+                span{
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+    
+                .block{
+                    color : rgb(var(--color-bad))
+                }
+    
+                .unblock{
+                    display: none;
+                    color : rgb(var(--neutral-grad-4));
+                }
+            }
+    
+            &.blocked{
+                .blockWrapper{
+                    .block{
+                        display: none;
+                    }
+    
+                    .unblock{
+                        display: inline;
+                    }
+                }
+            }
+        }
+
+        
+        
     }
 }
 

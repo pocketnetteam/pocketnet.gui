@@ -67,23 +67,7 @@ FAQLANGS = function(app){
                         a : '<div>Definitely no. '+app.meta.fullname+' is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, '+app.meta.fullname+' will include a marketplace where goods and services will be sold directly for Pocketcoin</div>',
                     },
 
-                    {
-                        id : 'pocketcoinbuy',
-                        q : 'Can I buy additional Pocketcoin?',
-                        a : '<div>Yes, currently you can buy Pocketcoin on the following exchanges: DigiFinex, Bitforex, Mercatox. You can also buy it for 19 different cryptos at <a href="https://pkoin.net/">pkoin.net</a> and there is a Category within Bastyon called PKOIN/Peer-to-Peer where you can buy and sell it with other users. </div>',
-                    },
-
-                    {
-                        id : 'pocketcoinbuyfiat',
-                        q : 'Can I buy Pocketcoin for US Dollars or other fiat currency?',
-                        a : '<div>Yes, you can buy it under the category PKOIN/Peer-to-Peer or through a company called Indacoin at <a href="https://buy.pkoin.indacoin.io/">indacoin.io</a>. Indacoin has nothing to do with Bastyon, they are just selling PKOIN for credit cards after buying it on exchanges.</div>',
-                    },
-
-                    {
-                        id : 'pocketcoinbuyfiat',
-                        q : 'Why do I need to buy Pocketcoin?',
-                        a : "<div>Bastyon has no backing by bankers or venture capitalists, it is a decentralized social platform that is supported by PKOIN. When you use Bastyon, you are using users' nodes, video nodes, they all have to pay for computers, internet and electricity. Bloggers need to earn for content. The only way Bastyon can function is if users own and support PKOIN. So, buying PKOIN is a way to support decentralization and freedom. However, there is one other important reason to own Pocketcoin. Soon it is very possible that even having a bank account will be tied to submitting your freedom, to some QR code. Pocketcoin is not tied to your name or passport, it is a way to do commerce in a world where financial censorship reigns, it might be the only way to buy food soon without a certain certificate or a QR code. So, buy some PKOIN for freedom. </div>",
-                    }
+                    
                 ]
             },
             {
@@ -99,12 +83,7 @@ FAQLANGS = function(app){
                         a : 'Select PKOIN/Peer-to-Peer Category on the right and look for ads, then connect in chat <br> ',
                         img: '<img src="img/per-to-per2.jpg" alt="" />'
                     },
-                    {
-                        id : 'buy-pkoin2',
-                        q : 'You can buy PKOIN in the following ways:',
-                        a : 'You can buy PKOIN for cryptocurrencies: <br /><a target="_blank" href="https://pkoin.net/">pkoin.net</a><br>	<a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">www.bitforex.com</a> <br> <a target="_blank" href="www.digifinex.com/en-ww/trade/USDT/PKOIN">www.digifinex.com</a> <br><a target="_blank" href="https://buy.pkoin.indacoin.io/">indacoin.io</a> - you can buy PKOIN for credit cards.',
-                        img: ''
-                    },
+                    
                     {
                         id : 'buy-pkoin23',
                         q : 'Pkoin.net  ',
@@ -135,38 +114,7 @@ FAQLANGS = function(app){
                         a : 'After that you should to send your BTC (or another crypto which was chosen) to this address',
                         img: '<img src="img/buy-pkoin6.jpg" alt="" />'
                     },
-                    {
-                        id : 'buy-pkoin7',
-                        q : ' <a href="Buy.pkoin.indacoin.io">Buy.pkoin.indacoin.io</a>     ',
-                        a : 'First step – choose currency, enter amount, your email address and PKOIN address.  Then click “Buy PKOIN ” button.',
-                        img: '<img src="img/buy-pkoin7.jpg" alt="" />'
-                    },
-                    {
-                        id : 'buy-pkoin8',
-                        q : '  ',
-                        a : 'Then you can see “Buy PKOIN with credit or debit card” window. Click “Continue” button',
-                        img: '<img src="img/buy-pkoin8.jpg" alt="" />'
-                    },
-                    {
-                        id : 'buy-pkoin9',
-                        q : '  ',
-                        a : 'Then, enter your Address, ZIP and your Country',
-                        img: '<img src="img/buy-pkoin9.jpg" alt="" />'
-                    },
-                    {
-                        id : 'buy-pkoin10',
-                        q : '  ',
-                        a : 'Then enter your Full Name, Country, Date of berth',
-                        img: '<img src="img/buy-pkoin10.jpg" alt="" />'
-                    },
-                    {
-                        id : 'buy-pkoin11',
-                        q : '  ',
-                        a : 'Then, enter your card data and click “Continue” button',
-                        img: '<img src="img/buy-pkoin11.jpg" alt="" />'
-                    },
-
-
+                    
 
 
                 ]
@@ -230,7 +178,7 @@ FAQLANGS = function(app){
                     {
                         id : 'earnbastyon9en',
                         q : '',
-                        a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Bitforex exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
+                        a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Tapbit exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
                         img: '<img src="img/per-to-per2.jpg" alt="" />'
                     },
                     {
@@ -819,23 +767,9 @@ FAQLANGS = function(app){
                 a : '<div>Нет, это не так. '+app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
                 },
 
-                // {
-                // id : 'pocketcoinbuy',
-                // q : 'Могу ли я купить дополнительный Pocketcoin?',
-                // a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
-                // },
+                
 
-                // {
-                // id : 'pocketcoinbuyfiat',
-                // q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
-                // a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
-                // },
-
-                {
-                id : 'pocketcoinbuyfiat',
-                q : 'Зачем мне покупать Pocketcoin?',
-                a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вполне возможно, что скоро доступ к вашему банковскому счету будет ограничен без наличия у вас QR-кода.  Pocketcoin не привязан к вашему имени или паспорту и является одним из способ заниматься коммерцией в мире, где царит финансовая цензура. Не исключено, что PKOIN может стать одним из немногих способов покупки еды без определенного сертификата или QR-кода. Покупка PKOIN - отличный способ противостояния цензуре и ограничениям </div>',
-                },
+                
                 ]
                 },
 
@@ -855,7 +789,7 @@ FAQLANGS = function(app){
                         {
                             id : 'buy-pkoin21',
                             q : '',
-                            a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
+                            a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.tapbit.com/spot/exchange/PKOIN_USDT">https://www.tapbit.com/spot/exchange/PKOIN_USDT</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты.',
                             img: ''
                         },
                         {
@@ -887,39 +821,7 @@ FAQLANGS = function(app){
                             q : '  ',
                             a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
                             img: '<img src="img/buy-pkoin6.jpg" alt="" />'
-                        },
-                        {
-                            id : 'buy-pkoin7',
-                            q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
-                            a : 'Для начала, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
-                            img: '<img src="img/buy-pkoin7.jpg" alt="" />'
-                        },
-                        {
-                            id : 'buy-pkoin8',
-                            q : '  ',
-                            a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
-                            img: '<img src="img/buy-pkoin8.jpg" alt="" />'
-                        },
-                        {
-                            id : 'buy-pkoin9',
-                            q : '  ',
-                            a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
-                            img: '<img src="img/buy-pkoin9.jpg" alt="" />'
-                        },
-                        {
-                            id : 'buy-pkoin10',
-                            q : '  ',
-                            a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
-                            img: '<img src="img/buy-pkoin10.jpg" alt="" />'
-                        },
-                        {
-                            id : 'buy-pkoin11',
-                            q : '  ',
-                            a : 'Введите номер вашей карты и нажмите «Далее».',
-                            img: '<img src="img/buy-pkoin11.jpg" alt="" />'
-                        },
-
-
+                        }
 
 
                     ]
@@ -1597,23 +1499,7 @@ FAQLANGS = function(app){
                         a : "<div>Définitivement non. "+app.meta.fullname+" n`est même pas une société et n`a aucun droit de propriété. C`est un code open source que n`importe qui peut copier et exécuter. Pocketcoin est un jeton qui facilite l`échange de valeur, en particulier les transactions publicitaires. De plus, "+app.meta.fullname+" inclura un marché où les biens et services seront vendus directement pour Pocketcoin</div>",
                     },
 
-                    {
-                        id : "pocketcoinbuy",
-                        q : "Est-ce que je peux acheter des Pocketcoin additionnels?",
-                        a : "<div>Oui, actuellement, vous pouvez acheter des Pocketcoin sur les bourses suivantes : DigiFinex, Bitforex, Mercatox. Vous pouvez également l`acheter pour 19 cryptos différents sur https://pkoin.net/ et il existe une catégorie au sein de Bastyon appelée PKOIN/Peer-to-Peer où vous pouvez l`acheter et le vendre avec d`autres utilisateurs. </div>",
-                    },
-
-                    {
-                        id : "pocketcoinbuyfiat",
-                        q : "Est-ce que je peux acheter des Pocketcoin pour des Dollars US ou d`autres devises?",
-                        a : "<div>Oui, vous pouvez l`acheter dans la catégorie PKOIN/Peer-to-Peer ou via une société appelée Indacoin à l`adresse https://buy.pkoin.indacoin.io/ Indacoin n`a rien à voir avec Bastyon, ils vendent simplement du PKOIN à crédit cartes après l`avoir acheté sur les échanges.</div>",
-                    },
-
-                    {
-                        id : "pocketcoinbuyfiat",
-                        q : "Pourquoi dois-je acheter des Pocketcoin?",
-                        a : "<div>Bastyon n`a aucun soutien de banquiers ou de capital-risqueurs, c`est une plate-forme sociale décentralisée qui est soutenue par PKOIN. Lorsque vous utilisez Bastyon, vous utilisez des nœuds d`utilisateurs, des nœuds vidéo, ils doivent tous payer pour les ordinateurs, Internet et l`électricité. Les blogueurs doivent gagner pour le contenu. Bastyon ne peut fonctionner que si les utilisateurs possèdent et prennent en charge PKOIN. Ainsi, acheter PKOIN est un moyen de soutenir la décentralisation et la liberté. Cependant, il existe une autre raison importante de posséder Pocketcoin. Bientôt, il est très possible que même avoir un compte bancaire soit lié à la soumission de votre liberté, à un code QR. Pocketcoin n`est pas lié à votre nom ou à votre passeport, c`est un moyen de faire du commerce dans un monde où règne la censure financière, c`est peut-être le seul moyen d`acheter de la nourriture bientôt sans un certain certificat ou un code QR. Alors, achetez du PKOIN pour la liberté. </div>",
-                    },
+                    
                 ]
             },
 

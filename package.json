@@ -2,10 +2,11 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.8.82",
-    "versionsuffix": "1",
-    "cordovaversion": "1.8.82",
-    "cordovaversioncode": "180821",
+    "version": "0.8.97",
+
+    "versionsuffix": "8",
+    "cordovaversion": "1.8.97",
+    "cordovaversioncode": "180978",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -17,7 +18,8 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
-        "build": "npm run dev:bastyon",
+        "build": "npm run build:proxy16 && npm run dev:bastyon",
+        "build:proxy16": "cd proxy16 && npm run build",
         "dist": "electron-builder -w --x64 --ia32 -p never",
         "distl": "electron-builder -l --x64 -p never",
         "distm": "electron-builder -m --x64 -p never",
@@ -41,12 +43,14 @@
     "devDependencies": {
         "@babel/core": "^7.23.7",
         "@babel/preset-env": "^7.23.8",
+        "@types/grunt": "^0.4.31",
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^22.3.27",
         "electron-builder": "^24.9.1",
         "electron-builder-notarize": "^1.5.1",
         "electron-notarize": "",
-        "html-minifier": "^4.0.0",
+        "grunt": "^1.6.1",
+        "grunt-cli": "^1.4.3",
         "ncp": "^2.0.0",
         "uglify-js": "^3.17.4",
         "uglifycss": "^0.0.29"
@@ -73,6 +77,7 @@
         "ffbinaries": "^1.1.5",
         "firebase-admin": "^12.0.0",
         "fluent-ffmpeg": "^2.1.2",
+        "html-minifier-terser": "^7.2.0",
         "imagesloaded": "^4.1.4",
         "is-localhost-ip": "^2.0.0",
         "isotope-layout": "^3.0.6",
@@ -114,7 +119,8 @@
             "!proxy16/data${/*}",
             "!proxy16/pocketcoin${/*}",
             "!proxy16/pocketcoind${/*}",
-            "!proxy16/downloads${/*}"
+            "!proxy16/downloads${/*}",
+            "!proxy16/node_modules${/*}"
         ],
         "extraFiles": [
             {
@@ -123,13 +129,6 @@
                 "filter": [
                     "**/cert.pem",
                     "**/key.pem"
-                ]
-            },
-            {
-                "from": "proxy16/tor",
-                "to": "tor",
-                "filter": [
-                    "**/*"
                 ]
             },
             {
@@ -147,12 +146,22 @@
             ]
         },
         "mac": {
-            "target": "dmg",
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "universal"
+                    ]
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
-            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
+            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
+            "notarize": {
+                "teamId": "Y5JW9JU787"
+            }
         },
         "linux": {
             "target": [

@@ -10,17 +10,22 @@
 				</span>
 			</div>-->
 
-			<% if(app.thislink(value)) {%>
+			<% if(app.thislink(value) || value.indexOf(":") == 0) {%>
 
-				<div class="searchby gotopage" link="<%-value%>">
+				<div class="searchby gotopage" link="<%-value.replace(":", "")%>">
 					<div class="swrp managebutton">
 						<div class="rsicon">
 							<i class="fas fa-link"></i>
 						</div>
 						<div class="label">
 							<span>
-								<%=e('gotopage')%>
+								<%- e('gotopage')%>
 							</span>
+							<% if(value.indexOf(":") == 0) {%>
+							<span>
+								<%- value.replace(":", "") %>
+							</span>
+							<% } %>
 						</div>
 					</div>
 				</div>
@@ -168,7 +173,7 @@
 								</div>
 
 								<div class="label">
-									<%- decodeURIComponent(user.name || user.address) %>
+									<%- app.platform.api.clearname(decodeURIComponent(user.name || user.address), true) %>
 								</div>
 							</div>
 						</div>

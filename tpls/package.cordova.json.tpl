@@ -5,7 +5,7 @@
     "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
     "main": "index.js",
     "scripts": {
-        "android-add": "cordova platform add android@12.0.1",
+        "android-add": "cordova platform add android@13.0.0",
         "ios-add": "cordova platform add ios@6.3.0",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",
@@ -72,7 +72,7 @@
         "cordova-plugin-webview-checker": "^1.0.1",
         "cordova-plugin-x-socialsharing": "^6.0.4",
         "cordova-plugin-file-opener2":"^4.0.0",
-        "cordova-universal-links-plugin": "file:cordova-universal-links-plugin",
+        "cordova-plugin-deeplinks": "file:cordova-plugin-deeplinks",
 
         <% if(!store) {%>
             "cordova-plugin-apkupdater": "~4.0.0",
@@ -102,7 +102,7 @@
             },
             "cordova-plugin-contacts-x": {},
             "cordova-plugin-ionic-keyboard": {},
-            "cordova-universal-links-plugin": {},
+            "cordova-plugin-deeplinks": {},
             "cordova-plugin-file-opener2" : {},
             "cc.fovea.cordova.openwith": {
                 "ANDROID_MIME_TYPE": "*",

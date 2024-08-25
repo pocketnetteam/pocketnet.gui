@@ -66,7 +66,7 @@ Nav = function(app)
 	self.wnds = {};
 	self.prepared = false
 
-	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
+	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs/', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){
@@ -94,10 +94,6 @@ Nav = function(app)
 	}
 
 	var indexpage = 'index'
-
-	if (app.curation()){
-		indexpage = 'userpage'
-	}
 
 	var backManager = {
 
@@ -179,15 +175,17 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.read && !np.r){
+				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
 					//// 
 					backManager.clearAll()
 				}
 				else{
 
+
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
+
 	
 					if (needadd){
 	
@@ -241,8 +239,22 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
+			/*if(!bp){
+
+				if (self.dynamic && !module.find(lhref)){
+					bp = deep(app, 'backmap.authorn') 
+				}
+			}*/
+
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
+
+				/*if (self.dynamic && !module.find(href)){
+					if(bp.childrens.indexOf('authorn') > -1) return true
+				}*/
+			}
+			else{
+				
 			}
 		}
 
@@ -367,6 +379,8 @@ Nav = function(app)
 				historyManager.addParameters(pa)
 
 				self.wnds[p.id] = p
+
+				app.mobile.reload.initdestroyparallaxAuto()
 			
 
 				return
@@ -512,6 +526,8 @@ Nav = function(app)
 			_.each(deleted, function(id){
 				delete self.wnds[id]
 			})
+
+			app.mobile.reload.initdestroyparallaxAuto()
 
 			
 		},
@@ -676,75 +692,67 @@ Nav = function(app)
 
 			var cashed = app.module(map.id);
 
-			var importScriptClbk = function(){
-				topPreloader(50)
-
-				core.loadTemplates(map, function(){
-
-					topPreloader(100)
-
-					loading[map.id] = false;
-
-					clbk(app.module(map.id));
-
-				})
-			}
-
+			
 			if(loading[map.id]) {
 
-				retry(
-					function(){
-						return !loading[map.id];
-					},
-					function(){
-						core.loadSource(map, clbk)
-					}
-				)
-			
-				return;
+				return loading[map.id].then(() => {
+					clbk(app.module(map.id));
+				})
+				
 			}
 
-			loading[map.id] = true;
+			//loading[map.id] = true;
 
 			var path = map.path || "";
 
 			var src =  path + options.path + map.uri + "/index.js"; 
 
-			topPreloader(20)
-			
 
-			core.loadRelations(map, function(){
+			loading[map.id] = new Promise((resolve, reject) => {
 
-				topPreloader(40)
+				core.loadRelations(map, function(){
 
-				if (window.design || map.ignoreMinimize)
-				{
-
-					if(!cssimported[map.uri])
+					if (window.design || map.ignoreMinimize)
 					{
-						importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
-						cssimported[map.uri] = true
+	
+						if(!cssimported[map.uri])
+						{
+							importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
+							cssimported[map.uri] = true
+						}
 					}
-				}
-				
+					
+	
+					if(options.cashe && cashed)
+					{
 
-				if(options.cashe && cashed)
-				{
-					importScriptClbk()
-				}
-				else
-				{
+						core.loadTemplates(map, function(){
+							clbk(app.module(map.id));
+							resolve()
+						})
+					}
+					else
+					{
+	
+						importScript(src, function(){
 
-					importScript(src, function(){
+							core.loadTemplates(map, function(){
+								clbk(app.module(map.id));
+								resolve()
+							})
+	
+						}, null, app, map.id);
+					}
+	
+					
+	
+				})
 
-						importScriptClbk()
-
-					}, null, app, map.id);
-				}
-
-				
-
+			}).finally(() => {
+				delete loading[map.id]
 			})
+			
+			
 
 				
 		},
@@ -1037,8 +1045,7 @@ Nav = function(app)
 			var ex = _.find(externalexclusions, function(ex){
 				return href.indexOf(ex) != -1
 			})
-			
-			
+
 			var e = _OpenApi || external || (
 				
 			(!href 
@@ -1046,7 +1053,7 @@ Nav = function(app)
 				|| href.indexOf("mailto") > -1
 				|| href.indexOf("skype:") > -1 
 				|| href.indexOf('/') > -1 
-				|| href.indexOf('.') > -1
+				//|| href.indexOf('.') > -1
 				|| href == "#")
 				
 				
@@ -1089,6 +1096,18 @@ Nav = function(app)
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
 					
+					return false
+					
+				})
+
+			}
+
+			if(typeof _Electron != 'undefined' && electron && electron.shell && electron.shell.openExternal){
+
+				link.off('click').on('click', function(event){
+					event.preventDefault();
+					
+					electron.shell.openExternal(this.href);
 
 					return false
 					
@@ -1213,6 +1232,20 @@ Nav = function(app)
 							app.platform.matrixchat.connect();
 			
 							return false;
+						}
+
+
+						if (arrHref && arrHref[0] === 'index'){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							var ext = params.get('ext');
+
+							if (ext){
+								app.platform.ui.externalFromCurrentUrl()
+								return false;
+							}
+							
 						}
 
 						if (mobilepreview && app.mobileview){
@@ -1632,7 +1665,7 @@ Nav = function(app)
 
 					var electronDontOpen = false
 
-					if (mpobj.electronDontOpen) {
+					if (mpobj.electronDontOpen && !parameters().ext) {
 
 						if(typeof mpobj.electronDontOpen == 'function'){
 							electronDontOpen = mpobj.electronDontOpen()
@@ -1701,6 +1734,3 @@ if(typeof module != "undefined")
 	module.exports = Nav;
 }
 
-
-topPreloader(45);
-	

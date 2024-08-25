@@ -1,0 +1,44 @@
+<% 
+    var address = profile.address;
+    var src = profile.image;
+    var about = findAndReplaceLink(profile.about, true);
+
+    var _d = profile.regdate
+    var  d = null;
+
+    if (_d) {
+        d = new Date();
+        d.setTime(_d * 1000);	
+    }
+
+    var dev = profile.dev;
+    var authorlink = app.platform.api.authorlink(address);
+%>
+
+    <div class="usericon" image="<%-src || '*'%>">
+
+        <% if(!src && profile.letter) { %>
+
+            <span 
+                class="letter"
+            >
+                <%-profile.letter%>
+            </span>
+
+        <% } else if (!src) { %>
+
+            <svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+        <% } %>
+
+       
+
+    </div>
+    <div class="markuserinline">
+        <% if(app.platform.ui.markUser) {%>
+
+            <%= app.platform.ui.markUser(address)%>
+
+        <% } %>
+    </div>
+
+    <div class="name"><b><%- profile.name %></b></div>

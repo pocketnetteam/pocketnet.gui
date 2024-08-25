@@ -265,7 +265,7 @@ var Server = function(settings, admins, manage){
         return {
             iplimiter : iplimiter.info(),
             middle : middle.info(compact),
-            cache : self.cache.info(),
+            cache : self.cache.info(compact),
             listening : self.listening,
             httplistening : self.httplistening,
             startedDate

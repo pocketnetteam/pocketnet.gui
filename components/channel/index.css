@@ -66,6 +66,26 @@
   padding: 1em;
   text-align: center;
 }
+#channel .channel .userinfo .blockWrapper {
+  margin-top: 1em;
+}
+#channel .channel .userinfo .blockWrapper span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#channel .channel .userinfo .blockWrapper .block {
+  color: rgb(var(--color-bad));
+}
+#channel .channel .userinfo .blockWrapper .unblock {
+  display: none;
+  color: rgb(var(--neutral-grad-4));
+}
+#channel .channel .userinfo.blocked .blockWrapper .block {
+  display: none;
+}
+#channel .channel .userinfo.blocked .blockWrapper .unblock {
+  display: inline;
+}
 .wnd #channel {
   padding-bottom: 3em;
   padding-left: 0.5em;

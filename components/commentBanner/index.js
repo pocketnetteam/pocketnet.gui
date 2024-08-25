@@ -235,7 +235,7 @@ const commentBanner = (function() {
 
 	self.stop = function() {
 		essenses.forEach((essense) => {
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		});

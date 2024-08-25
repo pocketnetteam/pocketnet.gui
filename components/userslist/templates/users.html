@@ -60,9 +60,10 @@ _.each(addresses, function(address){
 		<div class="user <%-_class%>" address="<%-address%>">
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
-					
+					<% if(!app.mobileview) {%>
 					<a elementsid="<%-app.platform.api.authorlink(address)%>" href="<%-app.platform.api.authorlink(address)%>">
-						<div class="icon">
+					<% } %>
+						<div class="icon" profile="<%-address%>">
 
 							<% 
 
@@ -86,25 +87,31 @@ _.each(addresses, function(address){
 								<%= app.platform.ui.markUser(address)%>
 							</div>
 						</div>
+					<% if(!app.mobileview) {%>
 					</a>
+					<% } %>
 				</div>
 
 				<div class="label">
+					<% if(!app.mobileview) {%>
 					<a elementsid="userlistauthorlink" href="<%-app.platform.api.authorlink(address)%>">
+					<% } %>
 
-						<div class="name">						
-							<%- sUserInfo.name %>							
+						<div class="name" profile="<%-address%>">						
+							<%- app.platform.api.clearname(sUserInfo.name, true) %>							
 						</div>
 
-						<% if (sUserInfo.reputation) {%>
+						<% if (sUserInfo.reputation && (sUserInfo.reputation > 1 || sUserInfo.reputation < -1)) {%>
 
-							<div class="light">						
+							<div class="light" profile="<%-address%>">						
 								Reputation: <span class="reputation"> <%- Number(sUserInfo.reputation).toFixed(0)  %> </span>						
 							</div>
 
 						<% } %>
 
-					</a>			
+					<% if(!app.mobileview) {%>
+					</a>
+					<% } %>			
 
 				</div>
 

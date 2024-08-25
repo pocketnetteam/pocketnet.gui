@@ -11,8 +11,12 @@ var Peertube = function (settings) {
 	const PEERTUBE_ID = 'peertube://';
 	const SLASH = '/';
 
+	var inited = false
+
 	var roys = {};
 	var statistic = new Statistic();
+	
+	self.instanses = {}
 
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
@@ -432,6 +436,7 @@ var Peertube = function (settings) {
 	}
 
 	self.init = function ({ urls, roys }) {
+		
 		if (roys) {
 			_.each(roys, function (urls, i) {
 				self.addroy(urls, i);
@@ -444,6 +449,8 @@ var Peertube = function (settings) {
 
 		self.logger.w('peertube', 'info', `peertube initing`)
 
+		inited = true
+
 		return Promise.resolve();
 	};
 
@@ -452,26 +459,31 @@ var Peertube = function (settings) {
 	};
 
 	self.extendApi = function (api, cache) {
-		_.each(self.api, function (f, i) {
+		_.each(self.api, function (fu, i) {
 			api[i] = {
 				path: '/peertube/' + i,
 
 				action: function (data) {
-					return f(data, cache)
-						.then((r) => {
-							return Promise.resolve({
-								data: r,
-								code: 200,
-							});
-						})
-						.catch((e) => {
-							if (!e) e = {};
 
-							return Promise.reject({
-								error: e,
-								code: e.code || 500,
-							});
+					return f.pretry(() => {
+						return inited
+					}).then(() => {
+
+						return fu(data, cache)
+					}).then((r) => {
+						return Promise.resolve({
+							data: r,
+							code: 200,
 						});
+					})
+					.catch((e) => {
+						if (!e) e = {};
+
+						return Promise.reject({
+							error: e,
+							code: e.code || 500,
+						});
+					});
 				},
 			};
 		});

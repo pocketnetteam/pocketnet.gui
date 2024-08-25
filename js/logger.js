@@ -132,7 +132,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action/v2', logsBatch.join(','));
+      instance.post('front/action/v2', logsBatch.join(','))
     }
 
     if (errorsBatch.length) {

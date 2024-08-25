@@ -328,7 +328,28 @@ var postscores = (function(){
 						self.app.platform.sdk.postscores.get(shareid, function(){
 
 							scores = self.psdk.postScores.get(shareid) 
+
+							try{
+
 							
+
+								var tempScores = _.map(self.psdk.upvoteShare.tempGet((us) => {
+									return us.share && us.share.v == shareid
+								}), (us) => {
+									return {
+										address : us.actor,
+										posttxid : us.share.v,
+										value : us.value.v
+									}
+								})
+
+								scores = scores.concat(tempScores)
+
+							}
+							catch(e){
+								
+							}	
+
 							// self.sdk.postscores.storage[shareid] || []
 
 							var data = {
@@ -389,7 +410,7 @@ var postscores = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

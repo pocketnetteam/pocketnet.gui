@@ -77,7 +77,7 @@ var userpage = (function(){
 
 
 			reports.push({
-				name :  self.app.localization.e('rstate'),
+				name :  self.app.localization.e('limits'),
 				id : 'ustate',
 				report : 'ustate',
 				mobile : true,
@@ -522,7 +522,7 @@ var userpage = (function(){
 			},*/
 
 			closeReport : function(){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.report.html('')
 					el.c.removeClass('reportshowed')
 				})
@@ -570,7 +570,7 @@ var userpage = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.c.addClass('reportshowed')
 				})
 				
@@ -1273,7 +1273,7 @@ var userpage = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -31,7 +31,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     
-    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3"], (s) => {return s.toLowerCase()})
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3", "COCET", "OTCOC", "OTCOCAC", "OTCAC", "COCATb", "O4KO", "B_POT", "XYI", "O4KE", "O4KYET", "CYHYTb"], (s) => {return s.toLowerCase()})
 
     self.real = {
         'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
@@ -264,7 +264,6 @@ Platform = function (app, listofnodes) {
         'PVcMixqr6FkarzUjskvLL8MXuExAbEmRHT': true,
         'PCf2FqtB4p6APE3c5Avkrg3yk8dBq9ijRN': true,
         'PW5TQSyz3jWEx9k2S7icQXwKJLEBGRUtho': true,
-        'PRtyDsM3wL4Y7baAGRULkGmnpkmQYXcpkH': true,
         'PHVjfPM6bxy84AmWqw7hjBWYk7KVjpdsD2': true,
         'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF': true,
         'PRjux87PZdqHNdHcNMTjaVBVxfbWfDos32': true,
@@ -327,6 +326,60 @@ Platform = function (app, listofnodes) {
         'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
         'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
         'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
+        'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop' : true,
+        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true,
+        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
+        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true,
+        'PNAez3KW8mcQdaVJDzTdv5WSGddcoDwBH2' : true,
+        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG' : true,
+        'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s' : true,
+        'PRYXTN9A3JF53fvgdk7f9AJDafGnCvTTNv' : true,
+        'PLYWB4GzSWKjJQoqHyEgR3CEDnCHFySB21' : true,
+        'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ' : true,
+        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN' : true,
+        'PV8nA6h5DRznTypDVDVxoHwLHqueh35gpp' : true,
+        'PKBx48sYjn7DyQrAKBLsHSugZAZXiGKR1u' : true,
+        'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX' : true,
+        'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
+        'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
+        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true,
+        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX' : true,
+        'PQuQNJExGz9hdQFSaQw36CHSXHVTAivVUx' : true,
+        'PFhnjDAk3yNCXhgVaaT3kHYzShNF6C9zff' : true,
+        'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7' : true,
+        'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
+        'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
+        'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf' : true,
+        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
+        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
+        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+        'PMtPowJsJtHtXR4tW4PSKgfp8TVAMBAA5e' : true,
+        'PVCZ5fs6nyPpRjiXgM2naBBujzjTM3B1z4' : true, 
+        'PJWmitSptX35i95ZWHzCJdop3XczrVnQNk' : true,
+        'PJCazxTPm2thAWqmwqHsWghK59FjZvZ9ZM' : true,
+        'PExrUqBAyXfdgmegm4uQDj64ukyuiL2XrC' : true,
+        'PCGpniQGTmabMQKAWiE1nCTaFFdHatzNyS' : true,
+        'PPxrS15N1tKoQcc29FcPrBqfmHpyURny5B' : true,
+        'PGEBZf7Q8vNFsS9PfrqvDxaPRXk9Yve9cK' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+        'PHZReox7mFtCW3otDDfZ3pZMgkuRS2MJsS' : true,
+        'PAzs51m8yNxK3y5Km6mmmGtGDcXGB8kCz4' : true,
+        'P9QksuZXdA9bhxhNEeXgjtEJrQR3LWi9V7' : true,
+        'PRtwPBwazZM7U9BZQKFvF9N1uK3Tro5gAC' : true,
+        'PGuPFzGiuuEg5ERzW1dF47raA6vefftP3u' : true,
+        'PC5ZyNr9uMG5ytpTvrCXxgp5Pb6JexqkJ7' : true,
+        'PLLpzbNshW1pRoZe6KbZRuKLhm3mgzCHEn' : true,
+        'PNzUT7RSRMQfXxuxwL8XRXQcmnu1mA4kbY' : true,
+        'PVKBpAURkwhZhnSQktndTHQJhnkuNfq2bY' : true,
+        'PDb83yK1KMq9putBFaGuBCfpksUVVDVZcc' : true,
+        'PGmCWzgCW1CNLkgGSHmgCMKDbuZJia1Bpp' : true,
+        'PDtHcn5AM7kkx1h7nKZ818vBgxMqojjxup' : true,
+        'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7' : true,
+        'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo' : true,
+        'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw' : true,
+        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true
+
     } 
 
     self.bch = {
@@ -388,7 +441,7 @@ Platform = function (app, listofnodes) {
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.archivedServers = window.project_config.archivedPeertubeServers || []
+    //self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
     
@@ -437,6 +490,8 @@ Platform = function (app, listofnodes) {
     self.actions = app.Actions
     self.psdk = app.psdk
 
+    self.actionListeners = {}
+
     self.actions.on('change', ({account}) => {
         if (account.address == app.user.address.value){
             
@@ -455,7 +510,7 @@ Platform = function (app, listofnodes) {
 
             listener(alias, status)
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
                 _.each(self.actionListeners, (c, i) => {
                     if (c)
                         c({type : action.object.type, alias, status})
@@ -463,8 +518,6 @@ Platform = function (app, listofnodes) {
             })
 
         }
-
-        
 
     })
 
@@ -516,10 +569,11 @@ Platform = function (app, listofnodes) {
         userInfo: function(alias, status){},
         contentDelete : function(alias, status){},
         accSet : function(){},
-        accDel : function(){}
+        accDel : function(){},
+        transaction : function(){}
     }
 
-    self.actionListeners = {}
+    
 
     
 
@@ -632,8 +686,8 @@ Platform = function (app, listofnodes) {
 
             var fp = maskValue(p)
 
-            var html = '<div class="table coinwithsmall"><div class="bignum">' + fp +
-                '</div><div class="svlwr"><div><div div class="smallvalue">' + value + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
+            var html = '<div class="table coinwithsmall"><div class="bignum">' + clearStringXss(fp) +
+                '</div><div class="svlwr"><div><div div class="smallvalue">' + clearStringXss(value) + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
 
             return html;
         }
@@ -1738,23 +1792,33 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'youtube') {
 
-                if (url.indexOf("watch") > -1) {
+                if(url.indexOf('@') == -1){
 
-                    var s = url.split("?");
+                    if (url.indexOf("watch") > -1) {
 
-                    if (s[1]) {
-
-
-                        var v = parameters(s[1]);
-
-                        if (v.v) {
-                            _url = 'https://youtu.be/' + v.v //'https://www.youtube.com/embed/' + v.v;
-
-                            meta.id = v.v
+                        var s = url.split("?");
+    
+                        if (s[1]) {
+    
+    
+                            var v = parameters(s[1]);
+    
+                            if (v.v) {
+                                _url = 'https://youtu.be/' + v.v
+    
+                                meta.id = v.v
+                            }
+    
                         }
-
                     }
+
+                    if (url.indexOf("youtu.be") > -1) {
+                        //_url = 'https://youtu.be/' + v.v
+                    }
+
                 }
+
+                
             }
 
             if (meta.type == 'vimeo' && url.indexOf("player") == -1) {
@@ -1826,6 +1890,7 @@ Platform = function (app, listofnodes) {
         else {
 
         }
+
         return meta;
     }
 
@@ -2626,9 +2691,21 @@ Platform = function (app, listofnodes) {
 
             graph.destroy = function () {
 
-                graph.chart.destroy();
+                if(graph.chart)
+                    graph.chart.destroy();
 
-                graph.el.html('')
+                if (graph.el){
+                    graph.el.remove()
+                }
+                
+
+                graph.el = null;
+
+                graph.series = [];
+
+                delete graph.shell;
+
+                delete graph.stock;
             }
 
             return graph;
@@ -2701,7 +2778,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -2770,7 +2847,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -3034,15 +3111,42 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        route : function(href, el, clbk, p){
-            el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+        route : function(href, el, clbk, p = {}, a = {}){
+
+            if(a.url && a.url.indexOf('ext=') > -1){
+
+                var type = 'undefined'
+
+                
+                try{
+                    var type = self.sdk.external.type(parameters(a.url, true).ext)
+
+                    var icon = ''
+
+                    if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
+                    if(type == 'auth') icon = '<i class="fas fa-user"></i>'
+
+                    el.html('<div class="internalpocketnetlink"><b>'+icon+' '+app.localization.e(type + 'Link')+'</b></div>')
+                }
+                catch(e){
+                    console.error('e', e)
+                    el.html('<div class="internalpocketnetlink"><b>'+app.localization.e('undefinedLink')+'</b></div>')
+                }
+
+                
+            }
+
+            else{
+                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+            }
+
 
             app.nav.api.links(null, el);
 
             if(clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p){
+        channel : function(id, el, clbk, p, a){
 
             var r = false
 
@@ -3083,7 +3187,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 if(f){
-                    self.papi.route(f.href, el, clbk, p)
+                    self.papi.route(f.href, el, clbk, p, a)
                 }
                 else{
 
@@ -3111,7 +3215,8 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
                     txid : txid,
-                    node : additional.node
+                    node : additional.node,
+                    verify : additional.verify
                 }
             })
         },
@@ -3407,10 +3512,22 @@ Platform = function (app, listofnodes) {
         articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
+            var edjs = new edjsHTML(null, app)
 
+            var images = edjs.getallimages(share.message)
+
+            console.log('images', images)
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            var opengallery = function(src){
+
+                console.log('iamges opengallery', src)
+
+                self.app.platform.ui.images(images, src)
+
+            }
 
             caption.addClass(capiontextclass)
 
@@ -3440,6 +3557,14 @@ Platform = function (app, listofnodes) {
 
                     })
 
+                    _el.find(".img").on('click', function(){
+                        var src = $(this).attr('i')
+
+                        if (src){
+                            opengallery(src)
+                        }
+                    })
+
                     //self.app.platform.ui.carousel($(this))
                 })
 
@@ -3448,6 +3573,16 @@ Platform = function (app, listofnodes) {
                         self.app.platform.ui.embeding($(this))
                     }catch(e){
                         
+                    }
+                    
+                })
+
+                wr.find('.article_image img').on('click', function(){
+
+                    var src = $(this).attr('src')
+
+                    if (src){
+                        opengallery(src)
                     }
                     
                 })
@@ -4006,7 +4141,9 @@ Platform = function (app, listofnodes) {
 
             globalpreloader(true, true)
 
-            const { name, description, tags } = p;
+            const { name, description, tags, url } = p;
+
+            console.log("SHARE", p)
 
             setTimeout(function(){
                 app.nav.api.load({
@@ -4032,8 +4169,8 @@ Platform = function (app, listofnodes) {
                         name,
                         description,
                         tags,
-
-                        dontsave : (p.repost || p.videoLink) ? true : false
+                        url,
+                        dontsave : (p.repost || p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
@@ -4126,7 +4263,6 @@ Platform = function (app, listofnodes) {
                     if (needshowkey){
                         if (isMobile()){
                             self.ui.showmykey({
-                                //afterregistration : true,
                                 showsavelabel : true
                             })
                         }
@@ -4457,8 +4593,71 @@ Platform = function (app, listofnodes) {
         
 
 
+        },
+
+        external : function(ps){
+
+            self.app.platform.sdk.user.stateAction(() => {
+
+                if (ps.action == 'share'){
+
+                    self.app.platform.ui.share({
+						tags : ps.tags,
+                        description : ps.description,
+                        url : ps.url,
+                        dontsave : true
+					})
+
+                }
+                else{
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'external',
+                        inWnd : true,
+                        essenseData : {
+                            action : ps.action, 
+                            parameters : ps
+                        }
+                    })
+                }
+
+                
+
+            }, {
+                text : 'external_'+ps.action+'link_reg',
+                success : 'rcontinue',
+                cancel : 'dcancel'
+            })
+        },
+
+        
+
+        externalFromCurrentUrl : function(){
+            var p = parameters()
+
+            if (p.ext){
+
+                try{
+
+                    var ps = self.sdk.external.getFromHash(p.ext)
+                    
+                    self.ui.external(ps)
+
+                    return true
+                }
+                catch(e){
+                    console.error(e)
+
+                    sitemessage(e)
+                }
+                
+
+
+            }
         }
+
     }
+    
 
     self.effects = {
         manager : null,
@@ -4561,6 +4760,7 @@ Platform = function (app, listofnodes) {
 
     self.api = {
 
+
         keypair: function (m) {
             let keyPair;
 
@@ -4586,8 +4786,12 @@ Platform = function (app, listofnodes) {
             return keyPair
         },
 
-        clearname: function (n) {
-            return (n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. ]/g, "") : n
+        clearname: function (n, t) {
+            var  fb =  ((n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. *]/g, "") : n)
+
+            if (t) return self.sdk.user.maskNotAllowedName(fb)
+
+            return fb
         },
 
         name: function (address) {
@@ -4703,7 +4907,7 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-                    /*window.requestAnimationFrame(() => {
+                    /*window.rifticker.add(() => {
 
                     })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
@@ -5949,6 +6153,378 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+        external : {
+            expandLink : function(json = {}){
+
+                var eExt = {}
+
+                if (json.address) eExt.address = json.address
+                if (json.description) eExt.description = json.description
+                if (json.value) eExt.value = json.value
+                if (json.paymentHash) eExt.paymentHash = json.paymentHash
+                
+    
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
+                if (json.ad)    eExt.address = json.ad
+                if (json.s)     eExt.s_url = json.s
+                if (json.sv)    eExt.shipmentValue = json.shipmentValue
+                if (json.c)     eExt.c_url = json.c
+                if (json.ct)    eExt.c_url_type = json.ct
+                if (json.e)     eExt.email = true
+                if (json.p)     eExt.phone = true
+                if (json.an)    eExt.anonimus = true
+                if (json.pl)    eExt.payload = json.pl
+                if (json.ex)    eExt.expired = json.ex
+                if (json.d)     eExt.date = json.d
+                if (json.h)     eExt.paymentHash = json.h
+                if (json.de)    eExt.description = json.de
+                if (json.v)     eExt.value = json.v
+                if (json.sv)    eExt.saltValue = json.sv
+                if (json.di)    eExt.discount = json.di
+                if (json.ta)    eExt.tax = json.ta
+
+
+                if (json.tg)    eExt.tags = json.tg
+                if (json.u)     eExt.url = json.u
+    
+                if (json.st) {
+                    eExt.store = {}
+    
+                    if(json.st.n) eExt.store.name = json.st.n
+                    if(json.st.s) eExt.store.site = json.st.s
+                }
+    
+                if (json.i){
+                    eExt.items = []
+    
+                    _.each(json.i, (it) => {
+                        var item = {}
+
+                        if (it.i) item.image = it.i
+                        if (it.n) item.name = it.n
+                        if (it.v) item.value = it.v
+                        if (it.c) item.count = it.c
+
+    
+                        eExt.items.push(item)
+                    })
+                }
+
+                if(!eExt.action) eExt.action = 'pay'
+
+
+               
+                return eExt
+            },
+            type : function(ext){
+
+                var ps = self.sdk.external.getFromHash(ext)
+                    
+                return ps.action            
+            },
+
+            getFromHash : function(ext){
+                var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
+
+                ps.hash = ext
+
+                if(!ps.action){
+                    throw 'missing:action'
+                }
+
+                if (ps.action == 'auth'){
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+
+                    if(!ps.c_url){
+                        throw 'missing:c_url'
+                    }
+
+                    try{
+                        var url = new URL(ps.c_url)
+
+                        ps.host = clearStringXss(url.hostname)
+
+                    }catch(e){
+                        throw 'wrong:c_url:notvalid'
+                    }
+                }
+
+                if (ps.action == 'share'){
+                    if(ps.description) ps.description = clearStringXss(ps.description)
+                    if(ps.url) ps.url = clearStringXss(ps.url)
+                    if(ps.tags) {
+                        if(!_.isArray(ps.tags)) throw 'tags:array'
+
+                        ps.tags = _.map(ps.tags, (tag) => {
+                            return clearStringXss(tag)
+                        })
+                    }
+                }
+    
+                if (ps.action == 'pay'){
+    
+                    if(!ps.address) throw 'missing:address'
+    
+                    if (ps.anonimus){
+                        delete ps.email
+                        delete ps.phone
+                        delete ps.s_url
+                    }
+    
+                    try{
+                        bitcoin.address.fromBase58Check(ps.address)
+                    }
+    
+                    catch (e){
+                        throw 'wrong:address:notvalid'
+                    }
+                    
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+                    //if(!ps.payload) ps.payload = {}
+    
+                    if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
+    
+                    if (ps.items){
+    
+                        var a = 0
+    
+                        _.each(ps.items, (item, i) => {
+                            if(!item.name) throw 'missing:items:'+i+':name'
+                            if(!item.value) throw 'missing:items:'+i+':value'
+        
+                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
+                            if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
+
+                            if(item.count && !_.isNumber(item.count)) throw 'wrong:items:'+i+':count:nan'
+        
+                            a += (item.count || 1) * item.value
+                            
+                            item.image = clearStringXss(item.image || '')
+                            item.name = clearStringXss(item.name)
+                            //item.formattedAmount = self.mp.coin(item.value)
+                        })
+    
+                        ps.value = a
+                    }
+                    else{
+                        if(!_.isNumber(ps.value)) throw 'wrong:value:nan'
+                    }
+
+                    if (ps.saltValue){
+                        if(!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
+                        if(ps.saltValue >= 1) throw 'wrong:saltValue:morethan:1'
+                        if(ps.saltValue <= -1) throw 'wrong:saltValue:lessthan:-1'
+                        if(ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
+
+                        ps.value = ps.value + ps.saltValue
+                    }
+
+                    if (ps.discount){
+                        if(!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
+                        if(ps.discount < 0) throw 'wrong:discount:lessthan:0'
+
+                        ps.value = ps.value - ps.discount
+                    }
+
+                    if (ps.tax){
+                        if(!_.isNumber(ps.tax)) throw 'wrong:tax:nan'
+                        if(ps.tax < 0) throw 'wrong:tax:lessthan:0'
+
+                        ps.value = ps.value + ps.tax
+                    }
+
+                    if (typeof ps.shipmentValue != 'undefined'){
+                        if(!_.isNumber(ps.shipmentValue)) throw 'wrong:shipmentValue:nan'
+                        if(ps.shipmentValue < 0) throw 'wrong:shipmentValue:lessthan:0'
+                    }
+                    
+    
+                    if (ps.store){
+                        if(!ps.store.name) throw 'missing:store.name'
+                        //if(!ps.store.site) throw 'missing:store.site'
+    
+                        ps.store.name = clearStringXss(ps.store.name)
+                        
+                        if (ps.store.site)
+                            ps.store.site = clearStringXss(ps.store.site)
+                        
+                    }
+    
+                    if (ps.expired){
+                        if(!ps.date) throw 'missing:date'
+    
+                        if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
+                    }
+    
+                    if (ps.description) ps.description = clearStringXss(ps.description)
+                    
+    
+                    if(!ps.value || ps.value <= 0) throw 'missing:value'
+
+                    //ps.hash = p.ext
+                }
+
+                return ps
+            },
+
+            getObjectFromHash : function(hash){
+
+
+                var eExt = self.sdk.external.getFromHash(hash)
+
+
+                if(eExt.action == 'pay'){
+                    var payment = self.app.platform.sdk.payments.make({payment : eExt})
+
+                    /*payment.makeQR().then(q => {
+                        console.log(q)
+                    })*/
+
+                    return payment
+                }
+
+                return null
+
+                
+            }
+        },
+        payments : {
+       
+            save : function(lsdata, hash){
+				lsdata.updated = new Date()
+					
+				try{
+					localStorage['pays_' + hash] = JSON.stringify(lsdata) || {}
+				}catch(e){
+					console.error(e)
+				}
+				
+			},
+			load : function(hash){
+				var lsdata = {}
+
+				try{
+					lsdata = JSON.parse(localStorage['pays_' + hash] || "{}") || {}
+					lsdata.updated = new Date(lsdata.updated)
+				}catch(e){
+					console.error(e)
+				}
+
+				return lsdata
+			},
+            
+
+            get : function(){
+                try{
+
+					var allpays = []
+
+					Object.keys(localStorage).forEach(key => {
+						if (key.indexOf('pays_') == 0){
+							var parsed = JSON.parse(localStorage[key])
+
+							if (parsed.txid && parsed.account == self.app.user.address.value){
+								parsed.updated = new Date(parsed.updated)
+                                parsed.hash = key.replace('pays_', '')
+                                parsed.info = self.sdk.external.getFromHash(parsed.hash)
+                                parsed.vid = makeid()
+								allpays.push(parsed)
+							}
+							
+						}
+					});
+
+
+					return _.sortBy(allpays, (pay) => {
+                        return -pay.updated
+                    })
+
+				}
+
+				catch(e){
+                    console.error(e)
+					return []
+				}
+            },
+
+			getLastShipment: function(){
+				try{
+
+					var allpays = []
+
+					Object.keys(localStorage).forEach(key => {
+						if (key.indexOf('pays_') == 0){
+							var parsed = JSON.parse(localStorage[key])
+
+							if (parsed.shipment && parsed.account == self.app.user.address.value){
+								parsed.updated = new Date(parsed.updated)
+								allpays.push(parsed)
+							}
+							
+						}
+					});
+
+					if(!allpays.length){
+						return null
+					}
+
+					var m = _.max(allpays, (p) => {
+						return p.updated
+					})
+
+					return m.shipment
+
+				}
+
+				catch(e){
+					return null
+				}
+				
+			},
+
+            remove : function(hash){
+                try{
+                    localStorage.removeItem('pays_' + hash);
+                }catch(e){
+
+                }
+                
+            },
+
+            prepare : function(clbk){
+                var removeKeys = []
+
+                try{
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.indexOf('pays_') == 0){
+                            var parsed = JSON.parse(localStorage[key])
+    
+                            if (!parsed.txid && (parsed.updated || parsed.date)){
+                                var upd = new Date(parsed.updated || parsed.date)
+    
+                                if(upd.addDays(3) < (new Date())){
+                                    removeKeys.push(key)
+                                }
+                            }
+                            
+                        }
+                    });
+    
+                    _.each(removeKeys, (key) => {
+                        localStorage.removeItem(key);
+                    })
+                }catch(e){
+
+                }
+
+                if(clbk) clbk()
+
+                
+
+
+            }
+        },
+        
         geolocation : {
             get : function(options){
                 return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
@@ -6268,7 +6844,7 @@ Platform = function (app, listofnodes) {
                         id : share.txid,
                         share: exported,
                         user: user.export(),
-                        timestamp: new Date()
+                        timestamp: new Date(),
                     },
                 };
 
@@ -7656,11 +8232,9 @@ Platform = function (app, listofnodes) {
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-
                 if (block){
 
                     if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
-
 
                         return true
                     }
@@ -7710,6 +8284,7 @@ Platform = function (app, listofnodes) {
                     localStorage[self.sdk.sharesObserver.key()] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
                 }
                 catch(e){
+                    console.error('observer', e)
                 }
 
             },
@@ -7718,8 +8293,9 @@ Platform = function (app, listofnodes) {
                 self.app.user.isState(function (state) {
                     if(state){
                         self.sdk.sharesObserver.load(clbk)
-
-                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), this.load);
+                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), () => {
+                            self.sdk.sharesObserver.load()
+                        });
                     }
                     else{
                         if(clbk) clbk()
@@ -7735,6 +8311,7 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
+
                 try{
                     self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage[self.sdk.sharesObserver.key()] || "{}") || {}
                 }
@@ -8055,7 +8632,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.uiScale.set(zoomNewName);
                 }
 
-                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
                      * Minus - 189
                      * Minus Numpad - 109
@@ -8073,7 +8650,7 @@ Platform = function (app, listofnodes) {
                     return 0;
                 }));
 
-                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                self.app.el.window.on('wheel', (e) => scaleUi(e, true, (e) => {
                     if(!wheelLock) {
                         $('html').addClass('scroll-lock');
                         wheelLock = true;
@@ -8508,7 +9085,7 @@ Platform = function (app, listofnodes) {
             storage: {
             },
             
-            stateAction : function(clbk){
+            stateAction : function(clbk, messages){
                 app.user.isState(function(state){
 
 					if(state){
@@ -8531,26 +9108,50 @@ Platform = function (app, listofnodes) {
 							return
 						}
 
-						app.nav.api.load({
-							open : true,
-							id : 'registration',
-							inWnd : true,
-
-							essenseData : {
-
-								successHref : '_this',
-								signInClbk : function(){
-
-                                    if (app.platform.sdk.user.myaccauntdeleted()){
-                                        return
+                        var openreg = function(){
+                            app.nav.api.load({
+                                open : true,
+                                id : 'registration',
+                                inWnd : true,
+    
+                                essenseData : {
+    
+                                    successHref : '_this',
+                                    signInClbk : function(){
+    
+                                        if (app.platform.sdk.user.myaccauntdeleted()){
+                                            return
+                                        }
+                                        
+                                        if (clbk)
+                                            clbk()
+                                        
                                     }
-									
-                                    if (clbk)
-                                        clbk()
-									
-								}
-							}
-						})
+                                }
+                            })
+                        }
+
+                        if(!messages){
+                            openreg()
+                        }
+                        else{
+                            new dialog({
+                                html: self.app.localization.e(messages.text),
+                                btn1text: self.app.localization.e(messages.success),
+                                btn2text: self.app.localization.e(messages.cancel),
+                
+                                class: 'zindex accepting accepting2',
+                
+                                success: function () {
+                                    openreg()
+                                },
+                
+                                fail: function () {
+                                }
+                            })
+                        }
+
+						
 					}
 
 				})
@@ -8816,6 +9417,7 @@ Platform = function (app, listofnodes) {
                 if(!address) return false
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+                var uinfo = self.psdk.userInfo.get(address)
                 
                 if(!ustate || _.isEmpty(ustate)) return false
 
@@ -8857,9 +9459,24 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
-                if(this.isNotAllowedName(ustate)) {
+                if(this.isNotAllowedName(uinfo)) {
                     return true
                 }
+            },
+
+            isNotAllowedNameStr : function(name){
+                return self.sdk.user.isNotAllowedName({name})
+            },
+
+            maskNotAllowedName : function(name = ''){
+
+                if(!name || name.length <= 1) return name
+
+                if(self.sdk.user.isNotAllowedNameStr(name)){
+                    return name[0] + (name.substring(1).substring(0, name.length - 2)).replace(/[a-zA-Z]/g, '*') + name[name.length - 1]
+                }
+
+                return name
             },
 
             isNotAllowedName : function (user = {}) {
@@ -8888,6 +9505,8 @@ Platform = function (app, listofnodes) {
                 
                 if(bwf) return true
 
+                if(!address) return
+
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
                     if(self.whiteList.includes(address)){
                         return false
@@ -8898,10 +9517,14 @@ Platform = function (app, listofnodes) {
             },
 
             hiddenComment : function(comment){
+
+                if(comment.blck_cnt_cmt) return true
+
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (self.app.platform.sdk.user.itisme(address)) return false
+
 
                 if (ustate && ustate.reputation <= -0.5){
                     if(comment.scoreDown >= 5){
@@ -9362,6 +9985,10 @@ Platform = function (app, listofnodes) {
                     else
                     if(p.trial && !info.trial) result.trial = true
 
+                    if (result.balance || result.reputation) {
+                        result.canuseapplacation = (!window.cordova && typeof _Electron == 'undefined')
+                    }
+
                     clbk(result)
                 })
             },
@@ -9382,6 +10009,19 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
+                        bad : function(remains, limit){
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
+                        }
+                    },
+
+                    audio : {
+                        key : 'audio',
+                        vis : 'scale',
+                        name : self.app.localization.e('spa'),
                         bad : function(remains, limit){
                             if (limit <= 3) return false
 							
@@ -9736,7 +10376,6 @@ Platform = function (app, listofnodes) {
                 if(!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
                     if(!d || !d.length){
@@ -10066,8 +10705,6 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    
-
                     if (lf) {
                         if (clbk) clbk(lf.address)
                     }
@@ -10094,7 +10731,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            nameExist: function (name, clbk) {
+            nameExist: function (name, clbk, reload) {
 
                 var map = self.app.map;
 
@@ -10111,26 +10748,11 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress.load((name)).then((data) => {
+                self.psdk.nameAddress.load(name, reload).then((data) => {
 
                     if (clbk) {
                         clbk(data)
                     }
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(false)
-                    }
-                })
-
-                return
-
-                self.app.api.rpc('getuseraddress', [(name)]).then(d => {
-                    var r = deep(d, '0.address');
-
-                    if (clbk)
-                        clbk(r || false)
-
-
                 }).catch(e => {
                     if (clbk) {
                         clbk(false)
@@ -10778,7 +11400,7 @@ Platform = function (app, listofnodes) {
                 var total = balance.actual
                 var amount = balance.actual - balance.tempbalance
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (total > 0 && amount < total) {
 
                         if (!el.find('.spendLine').length) {
@@ -11176,6 +11798,15 @@ Platform = function (app, listofnodes) {
                     _.each(og, (o, i) => {
                         og[i] = superXSS(o)
                     })
+
+
+                    if (d.video){
+                        og.video = {}
+
+                        _.each(d.video, (o, i) => {
+                            og.video[i] = superXSS(o)
+                        })
+                    }
 
                     s[url] = og
 
@@ -11644,8 +12275,6 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-
-
                 try{
 
                     localStorage[self.sdk.recommendations.lskey()] = JSON.stringify({
@@ -11679,10 +12308,9 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                
             },
 
-            load: function (clbk) {
+            load: function () {
 
                 var p = {};
 
@@ -11702,7 +12330,7 @@ Platform = function (app, listofnodes) {
                     return {...us, ...{ ___temp : true }}
                 })
 
-                self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
+                return self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
 
                     if (self.psdk.share.get(sd.share.txid)) return false
 
@@ -11721,15 +12349,29 @@ Platform = function (app, listofnodes) {
                         return key
                     })), v => v)
 
+                    return Promise.resolve()
+                })
+
+            },
+
+            init : function(clbk){
+                
+                self.sdk.recommendations.load().then(() => {
                     self.sdk.recommendations.scheduler()
+
+                    app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
+                        self.sdk.recommendations.load()
+                    });
 
                     if(clbk) clbk()
                 })
 
                 
-
-              
             },
+
+            destroy : function(){
+                app.platform.sdk.syncStorage.off('change', self.sdk.recommendations.lskey());
+            }
         },
 
         activity : {
@@ -14368,7 +15010,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getbyid: function (ids, clbk) {
+            getbyid: function (ids, clbk, update) {
 
                 if (!_.isArray(ids)) ids = [ids]
 
@@ -14383,7 +15025,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                }).catch(e => {
+                }, update).catch(e => {
                     if (clbk)
                         clbk(e)
                 })
@@ -15316,7 +15958,7 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 300 : p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             s.getex(parameters, function (data, error) {
 
@@ -15759,59 +16401,6 @@ Platform = function (app, listofnodes) {
                     return outs
 
                 },
-
-                /*
-                setUnspentoptimizationInterval : function(){
-
-                    if(!unspentoptimizationInterval){
-
-                        self.sdk.node.transactions.unspentOptimization()
-
-                        unspentoptimizationInterval = setInterval(function(){
-                            self.sdk.node.transactions.unspentOptimization()
-                        }, 300000)
-                    }
-
-
-                },
-
-                clearUnspentoptimizationInterval : function(){
-
-                    if (unspentoptimizationInterval){
-                        clearInterval(unspentoptimizationInterval)
-                        unspentoptimizationInterval = null
-                    }
-
-                },
-
-                unspentOptimization : function(){
-
-                    var s = self.sdk.node.transactions;
-                    var pnet = self.sdk.address.pnet();
-
-                    if (pnet && s.unspent){
-
-                        var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
-                            return self.sdk.node.transactions.canSpend(u) && u.amount
-                        })
-
-                        if (unspents.length > 200){
-                            unspents = _.filter(unspents, function(u, i){
-                                return i < 180
-                            })
-
-                            var keyPair = self.app.user.keys()
-
-                            self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
-                            })
-
-                        }
-                    }
-
-                },
-                
-                */
-
 
                 get: {
 
@@ -17412,28 +18001,20 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            $.ajax({
-                                url : 'https://pocketnet.app:8888/bitchute',
-                                data : {
-                                    url : hexEncode(link)
-                                },
-                                type : 'POST',
-                                timeout : 5000,
-                                success : function(response){
+                            self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
-                                    if (response.data.video && response.data.video.as) {
+                                if (og.video && og.video.as) {
 
-                                        return resolve(response.data.video)
+                                    return resolve(og.video)
 
-                                    } else {
-                                        reject()
-                                    }
-
-                                },
-                                error : function(){
+                                } else {
                                     reject()
                                 }
-                            });
+
+                                
+                            }).catch(reject)
+
+
 
                         }).then(r => {
 
@@ -17512,11 +18093,14 @@ Platform = function (app, listofnodes) {
                 this.eventListeners[lStorageProp][eventType] = callback;
             },
             off(eventType, lStorageProp) {
-                delete this.eventListeners[lStorageProp][eventType];
+                if(this.eventListeners[lStorageProp]){
+                    delete this.eventListeners[lStorageProp][eventType];
 
-                if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
-                    delete this.eventListeners[lStorageProp];
+                    if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
+                        delete this.eventListeners[lStorageProp];
+                    }
                 }
+                
             },
             init() {
                 window.storage_tab = makeid()
@@ -17851,10 +18435,31 @@ Platform = function (app, listofnodes) {
         self.getSettings = function (){
             const data = {}
             const settings = platform.sdk.usersettings.meta;
-            for(const key in settings){
-                data[key] = settings[key].value;
+
+            var keys = {
+                transactions: 't',
+                upvotes: 'u',
+                downvotes: 'd',
+                comments: 'c',
+                answers: 'a',
+                followers: 'f',
+                commentScore:'cs',
+                win : 'w'
             }
+
+            _.each(keys, (key, i) => {
+                if(settings[i]){
+                    data[key] = settings[i].value
+                }
+                
+            })
+
+            /*for(const key in settings){
+                data[key] = settings[key].value;
+            }*/
+
             data['web'] = Boolean(!window.cordova)
+            
             return data;
         }
 
@@ -18213,7 +18818,7 @@ Platform = function (app, listofnodes) {
 
                 if(!m) m = share.renders.text()
 
-                var symbols = extendedpreview ? 180 : 20;
+                var symbols = extendedpreview ? (platform.app.mobileview ? 80 : 180) : 20;
 
                 var nm = trimHtml(m, symbols)
 
@@ -18387,7 +18992,7 @@ Platform = function (app, listofnodes) {
                     _.each(comment.images, function (image) {
 
                         h += '<div class="imagesWrapper">'
-                        h += '<div class="image imageCommentOpen" image="' + image + '" i="' + image + '">'
+                        h += '<div class="image imageCommentOpen" image="' + (image) + '" i="' + (image) + '">'
                         h += '</div>'
                         h += '</div>'
 
@@ -18458,6 +19063,8 @@ Platform = function (app, listofnodes) {
 
             star: function (count) {
 
+                count = clearStringXss(count)
+
                 var _star = '<i class="fas fa-star"></i>';
                 if (electron) _star = '★';
                 return '<div class="messagestar" count="' + count + '">' + count + '' + _star + '</div>'
@@ -18482,7 +19089,7 @@ Platform = function (app, listofnodes) {
             },
 
             _user: function (author) {
-                return filterXSS(deep(author, 'name') || author.address)
+                return platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true)
             },
 
             user: function (author, html, gotoprofile, caption, extra, time, donation) {
@@ -18497,7 +19104,7 @@ Platform = function (app, listofnodes) {
                 var name = deep(author, 'name');
                 var letter = name ? name[0] : '';
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 /*if (app.curation()) {
@@ -18541,7 +19148,7 @@ Platform = function (app, listofnodes) {
                 if (author.address != platform.sdk.address.pnet().address) {
 
                     if (gotoprofile) h += link
-                    h += '<b class="adr">' + filterXSS(deep(author, 'name') || author.address) + '</b>'
+                    h += '<b class="adr">' + platform.api.clearname(filterXSS(deep(author, 'name') || author.address), true) + '</b>'
                     if (gotoprofile) h += clink
 
                 }
@@ -18610,7 +19217,7 @@ Platform = function (app, listofnodes) {
                     d = 'disabled'
                 }
 
-                var link = '<a elementsid="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '" href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
+                var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
                 var h = '<div class="subscribeWrapper ">'
@@ -18643,7 +19250,7 @@ Platform = function (app, listofnodes) {
                                 }
 
                 h +=            '</div>\
-                                <div class="tips">' + (json.text) + '\
+                                <div class="tips">' + clearStringXss(json.text) + '\
                                 </div>\
                             </div>'
 
@@ -18719,8 +19326,10 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk, wa) {
 
-                    platform.sdk.users.get([data.addrFrom], function () {
+                    platform.psdk.ws.update('cScore', data)
 
+                    platform.sdk.users.get([data.addrFrom], function () {
+                        
 
                         data.user = platform.psdk.userInfo.get(data.addrFrom)
                         
@@ -18745,6 +19354,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             clbk()
+
                         })
 
                     }, true)
@@ -18794,7 +19404,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
+                    if (data.comment && !data.comment.deleted && (data.upvoteVal > 0 || platform.sdk.usersettings.meta.downvotes.value)) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
                             text = self.tempates.commentScore(data.comment)
@@ -18863,7 +19473,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13330')
-                        n.text = self.tempates._share(data.shareReposted, 100)
+                        n.text = self.tempates._share(data.shareReposted, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -18940,9 +19550,11 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.get(data.addrFrom)
-                            
+
 
                             if (data.txids && !data.txid) data.txid = data.txids
+
+                            platform.psdk.ws.update('share', data)
 
                             platform.sdk.node.shares.getbyid(data.txid, function (s, fromcashe) {
 
@@ -18983,7 +19595,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13332')
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19121,7 +19733,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.user && data.share) {
                         n.caption = self.tempates._user(data.user)
-                        n.text = self.tempates._share(data.share, 100)
+                        n.text = self.tempates._share(data.share, platform.app.mobileview ? 50 : 100)
                     }
 
                     if (_.isEmpty(n))
@@ -19274,7 +19886,7 @@ Platform = function (app, listofnodes) {
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
-                                    if (data.opmessage) {
+                                    if (data.opmessage && data.opmessage.indexOf('pay_') > -1) {
                                         n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
                                     }
                                     else {
@@ -19519,7 +20131,7 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk) {
 
                     if (data.height <= platform.currentBlock) {
-                        platform.sdk.notifications.wsBlock(data.data.height)
+                        platform.sdk.notifications.wsBlock(data.height)
                         return
                     }
 
@@ -19681,10 +20293,15 @@ Platform = function (app, listofnodes) {
 
                         data.txid = data.commentid
 
+
                         platform.sdk.comments.getbyid(ids, function (comments) {
 
-
+                            
                             data.comment = comments[0]
+
+                            platform.psdk.ws.update('comment', data)
+
+                            // TODO WS EVENT
 
                             /*if (data.comment) {
                                 platform.sdk.comments.storage[data.comment.postid] ||
@@ -19699,7 +20316,7 @@ Platform = function (app, listofnodes) {
 
 
                             clbk()
-                        })
+                        }, true)
 
 
                     }, true)
@@ -19830,17 +20447,20 @@ Platform = function (app, listofnodes) {
                 },
                 loadMore: function (data, clbk, wa) {
 
+                    
 
                     if (data.addrFrom) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
-                            
 
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
+
+                                platform.psdk.ws.update('userInfo', data)
+
                                 var me = platform.psdk.userInfo.getmy()
                                 
                                 //platform.sdk.users.storage[platform.sdk.address.pnet().address];
@@ -19859,14 +20479,13 @@ Platform = function (app, listofnodes) {
 
                                     if (c) c()
 
-
-
-
                                     me.rc++
                                 }
                             }
 
                             if (data.mesType == 'upvoteShare') {
+
+                                platform.psdk.ws.update('upvoteShare', data)
 
                                 platform.sdk.node.shares.getbyid(data.posttxid, function (s, fromcashe) {
 
@@ -19880,7 +20499,10 @@ Platform = function (app, listofnodes) {
                                             data.share.score = Number(data.share.score) + Number(data.upvoteVal)
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
+
                                     }
+
+                                    
                                     if(!data.electronSettings) data.electronSettings = {}
                                     data.electronSettings.size = 'medium'
 
@@ -19889,17 +20511,23 @@ Platform = function (app, listofnodes) {
                             }
                             else {
 
-                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
-                                    var u = platform.psdk.userInfo.get(data.addrFrom)
+                                if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe' || data.mesType == 'subscribePrivate') && !wa) {
+
+
+                                    platform.psdk.ws.update(data.mesType, data)
+
+                                    //var u = platform.psdk.userInfo.get(data.addrFrom)
                                     
                                     ///platform.sdk.users.storage[data.addrFrom];
 
-                                    var me = platform.psdk.userInfo.getmy() 
+                                    //var me = platform.psdk.userInfo.getmy() 
+
+                                    
                                     
                                     //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
-                                    if (me) {
+                                    /*if (me) {
 
                                         if (data.mesType == 'subscribe') {
                                             me.addRelation(data.addrFrom, 'subscribers')
@@ -19928,7 +20556,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                    }
+                                    }*/
                                 }
 
                                 clbk()
@@ -20089,16 +20717,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if (data.mesType == 'userInfo') {
-
-                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
-
-                            //text = platform.app.localization.e('refferalUserMessage')
-
-                            /*text = ''
-                            caption = platform.app.localization.e('refferalUserMessage')
-                            extra = self.tempates.subscribe(data.user)*/
-
-                        //}
+                       
                     }
 
 
@@ -20355,38 +20974,56 @@ Platform = function (app, listofnodes) {
 
             })
 
+        }
 
-
+        var rmmessagesDestroy = function(){
+            _.each(self.fastMessages, function (message, i) {
+                if (message.timeout) clearTimeout(message.timeout);
+            })
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
+            var rmfu = function () {
+
+                if(!time){
+                    rmfu2()
+                }
+                else{
+                    message.el.addClass('willhidden')
+
+                    setTimeout(rmfu2, 200)
+                }
+
+            }
+
+            var rmfu2 = function(){
+
+                message.el.remove();
+
+                removeEqual(self.fastMessages, {
+                    id: message.id
+                })
+
+                if (message.destroyclbk && destroyUser) {
+                    message.destroyclbk()
+                }
+
+                if (!noarrange)
+                    tArrangeMessages()
+
+            }
 
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
 
-                message.timeout = setTimeout(function () {
-
-                    message.el.fadeOut(300)
-
-                    setTimeout(function () {
-
-                        message.el.remove();
-
-                        removeEqual(self.fastMessages, {
-                            id: message.id
-                        })
-
-                        if (message.destroyclbk && destroyUser) {
-                            message.destroyclbk()
-                        }
-
-                        if (!noarrange)
-                            tArrangeMessages()
-
-                    }, 300)
-
-                }, time)
+                if(time){
+                    message.timeout = setTimeout(rmfu, time)
+                }
+                else{
+                    rmfu()
+                }
+               
             }
 
             else {
@@ -20404,16 +21041,23 @@ Platform = function (app, listofnodes) {
         }
 
         var hideallnotificationselement = function(show){
+            
             if(self.hideallnotificationsel){
+                window.rifticker.add(() => {
+                    if(show){
+                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
 
-                if(show){
-                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+                    }
+                    else{
+                        self.hideallnotificationsel.addClass('willhidden')
 
-                }
-                else{
-                    self.hideallnotificationsel.html('')
-                }
+                        setTimeout(function () {
+                            self.hideallnotificationsel.html('')
+                            self.hideallnotificationsel.removeClass('willhidden')
+                        }, 200)
+                    }
+                })
 
             }
         }
@@ -20430,8 +21074,8 @@ Platform = function (app, listofnodes) {
             var mtbl = platform.app.mobileview
 
 			if (mtbl){
-				maxCount = 1;
-                showremove = 0;
+				maxCount = 2;
+                showremove = 2;
 			}
 
 			var remove = self.fastMessages.length - maxCount;
@@ -20441,16 +21085,31 @@ Platform = function (app, listofnodes) {
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
+					if(!m.expanded && !m.el.hasClass('smallsize')){
 						m.el.addClass('smallsize');
 						s = true
 					}
 
 				})
 			}
+            else{
+                _.each(self.fastMessages, function(m, i){
+					if (m.el.hasClass('smallsize')){
+						m.el.removeClass('smallsize');
+					}
+				})
+            }
+
+            if (mtbl){
+                boffset = platform.app.margintop
+            }
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
+
+                if (mtbl){
+                    boffset += platform.app.margintop
+                }
 
                 hideallnotificationselement(true)
             }
@@ -20461,27 +21120,36 @@ Platform = function (app, listofnodes) {
 
             offset = offset + boffset
 
-            _.each(self.fastMessages, function(m, i){
+            _.each(_.clone(self.fastMessages), function(m, i){
 
                 if(i < remove){
-                    destroyMessage(m, 1, true)
+                    if(!isMobile()) {
+                        destroyMessage(m, 0, true)
+                    }
+                    else {
+                        m.el.addClass('hidden')
+                    }
                 }
 
                 else
                 {
-                    if(!mtbl){
-                        offset += 5;
-                    }
 
-                    if(!mtbl){
-                        var r = offset
-                        window.requestAnimationFrame(() => {
+                    if (m.el.hasClass('hidden')){
+                        m.el.removeClass('hidden')
+                    }
+                    
+                    offset += 5;
+                
+                    var r = offset
+
+                    window.rifticker.add(() => {
+                        if(!mtbl){
                             m.el.css('bottom', r + 'px');
-                        })
+                        }else{
+                            m.el.css('top', r + 'px');
+                        }
+                    })
                         
-                    }
-                        
-
                     offset += m.el.outerHeight();
                 }
 
@@ -20490,7 +21158,7 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        var tArrangeMessages = _.debounce(arrangeMessages, 300)
+        var tArrangeMessages = _.debounce(arrangeMessages, 200)
 
         self.getMissed = function (initial) {
 
@@ -20539,13 +21207,11 @@ Platform = function (app, listofnodes) {
 
         self.destroyMessages = function () {
 
-            _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1, true)
+            _.each(_.clone(self.fastMessages), function (message, i) {
+                destroyMessage(message, 0, true)
             })
 
-            setTimeout(function(){
-                tArrangeMessages()
-            }, 301)
+            tArrangeMessages()
         }
 
         self.fastMessageByJson = function(json, destroyclbk, p = {}){
@@ -20607,6 +21273,13 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
+                    if(!p.click)
+                        destroyMessage(message, 1)
+
+                    setTimeout(() => {
+                        rmmessagesDestroy()
+                    }, 50)
+
                 }
                 else{
                     if(!message.expanded){
@@ -20619,13 +21292,13 @@ Platform = function (app, listofnodes) {
 
                         setTimeout(function(){
                             tArrangeMessages();
-                        }, 300)
+                        }, 200)
                     }
                 }
 
 
 
-			})
+            })
 
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
@@ -20642,24 +21315,22 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
-                var d = 25
+                var d = 60
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     allowPageScroll : false,
                     directions: {
-                        up : {
+                        left : {
                             //endmove : true,
-                            trueshold: 1,
+                            trueshold: 15,
                             distance : d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
-                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
-                                message.el.remove()
-                                destroyMessage(message, 1, false, true);
+                                destroyMessage(message, 0)
                             }
 
                         }
@@ -20669,6 +21340,7 @@ Platform = function (app, listofnodes) {
             }
 
             tArrangeMessages();
+
 
             return message
         }
@@ -21170,9 +21842,9 @@ Platform = function (app, listofnodes) {
                 reason: "post",
                 time: "1619694710",
                 txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 mesType: "subscribe",
@@ -21180,9 +21852,9 @@ Platform = function (app, listofnodes) {
                 node: "135.181.196.243:38081:8087",
                 time: 1625762423,
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
-            })*/
+            })
 
-			/*self.messageHandler({
+			self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -21210,7 +21882,6 @@ Platform = function (app, listofnodes) {
 
 		}, 3000)
     }
-
     
     self.convertUTCSS = function (str) {
 
@@ -22122,6 +22793,8 @@ Platform = function (app, listofnodes) {
         self.sdk.ustate.clbks = {};
 
         self.sdk.registrations.clbks = {};
+        self.sdk.sharesObserver.destroy()
+        self.sdk.recommendations.destroy()
 
         //self.sdk.node.storage = { balance: {} }
 
@@ -22325,7 +22998,6 @@ Platform = function (app, listofnodes) {
 
         self.app.api.wait.ready('use', 6000).then(r => {
 
-
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
 
@@ -22350,6 +23022,8 @@ Platform = function (app, listofnodes) {
                 }, 50)
             })
 
+        }).then(() => {
+            return self.app.api.getPeertubeserversList()
         }).then(r => {
 
 
@@ -22419,6 +23093,8 @@ Platform = function (app, listofnodes) {
 
             self.prepareUser(function() {
 
+                self.ui.externalFromCurrentUrl()
+
                 self.sdk.theme.load()
 
                 clbk();
@@ -22428,6 +23104,8 @@ Platform = function (app, listofnodes) {
         }).catch(e => {
             console.log("ERROR", e)
         })
+
+        self.sdk.payments.make = (new window.__BastyonLib(window.project_config)).payments
 
 
     }
@@ -22549,6 +23227,9 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
+        self.psdk.clearStorageAndObjects()
+        self.psdk.clearIdCacheAll()
+
         app.user.isState(function(state){
 
 
@@ -22572,11 +23253,12 @@ Platform = function (app, listofnodes) {
                         self.sdk.categories.load,
                         self.sdk.activity.load,
                         self.sdk.memtags.load,
-                        self.sdk.recommendations.load,
+                        self.sdk.recommendations.init,
                         self.sdk.node.shares.parameters.load,
                         self.sdk.sharesObserver.init,
                         self.sdk.comments.loadblocked,
-                        self.sdk.notifications.initcl
+                        self.sdk.notifications.initcl,
+                        self.sdk.payments.prepare
     
                     ], function () {
     
@@ -22617,7 +23299,7 @@ Platform = function (app, listofnodes) {
                             actionSubType: 'AUTHORIZED_SESSION',
                         });
     
-                        setTimeout(() => {
+                        ricfbl(() => {
                             self.matrixchat.init()
                         }, 10)
                         
@@ -22628,7 +23310,7 @@ Platform = function (app, listofnodes) {
     
                         setTimeout(self.acceptterms, 5000)
     
-                        setTimeout(function(){
+                        ricfbl(function(){
     
                             self.app.peertubeHandler.init()
     
@@ -22823,7 +23505,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                    self.matrixchat.import(clbk)
+                self.matrixchat.import(clbk)
             })
         },
 
@@ -22868,6 +23550,7 @@ Platform = function (app, listofnodes) {
 
                             if(typeof _Electron != 'undefined') path = './'
 
+                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -22880,6 +23563,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    viewtype="`+(isTablet() ? "split" : "single")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
@@ -22889,7 +23573,7 @@ Platform = function (app, listofnodes) {
                                 </matrix-element>
                             </div>`
 
-                            window.requestAnimationFrame(() => {
+                            window.rifticker.add(() => {
                                 $('#matrix').html(matrix);
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
@@ -23214,6 +23898,31 @@ Platform = function (app, listofnodes) {
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
                         link = link.replace('index', 'post')
 
+
+                    if (link.indexOf('index') == '0'){
+
+                        var arrHref = link.split("?");
+
+                        const params = new URLSearchParams('?' + arrHref[1]);
+
+                        var ext = params.get('ext');
+
+                        if (ext){
+
+                            self.app.nav.api.history.addRemoveParameters([], {
+                                ext : ext
+                            }, {
+                                replaceState : true
+                            })
+
+                            self.app.platform.ui.externalFromCurrentUrl()
+
+                            return false;
+                        }
+        
+                        
+                    }
+
                     self.app.nav.api.load({
                         open: true,
                         href: link,
@@ -23269,7 +23978,7 @@ Platform = function (app, listofnodes) {
                 var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (value){
                         wnds.css('z-index', 999)
                     }else{
@@ -23294,6 +24003,15 @@ Platform = function (app, listofnodes) {
                 else{
                     app.mobile.reload.destroyparallax()
                 }
+
+
+                if(!value){
+                    self.app.mobile.unsleep(false)
+                }
+                else{
+                    self.app.mobile.unsleep(true)
+                }
+                
 
 
             }
@@ -23546,7 +24264,7 @@ Platform = function (app, listofnodes) {
                 }
                     
                 
-                self.app.mobile.backgroundMode(false)
+                //self.app.mobile.backgroundMode(false)
 
             }
 
@@ -23668,8 +24386,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).on('focus', f);
-            $(window).on('blur', uf);
+            self.app.el.window.on('focus', f);
+            self.app.el.window.on('blur', uf);
 
         }
 
@@ -23698,8 +24416,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).off('focus', f);
-            $(window).off('blur', uf);
+            self.app.el.window.off('focus', f);
+            self.app.el.window.off('blur', uf);
 
 
         }
@@ -23998,13 +24716,19 @@ Platform = function (app, listofnodes) {
 
                         if (route){
 
-                            if(!state || route.indexOf('welcome?') == -1){
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: route,
-                                    history: true
-                                })
+                            if(!self.ui.externalFromCurrentUrl()){
+
+                                if(!state || route.indexOf('welcome?') == -1){
+                                    self.app.nav.api.load({
+                                        open: true,
+                                        href: route,
+                                        history: true
+                                    })
+                                }
+
                             }
+
+                            
                         }
 
                         /////////////

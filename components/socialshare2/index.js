@@ -658,7 +658,7 @@ var socialshare2 = (function(){
 						var info = self.psdk.userInfo.getmy()
 
 						if (info && info.name){
-							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + self.app.platform.api.clearname(info.name)
+							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + self.app.platform.api.clearname(info.name, true)
 						}
 
 						var m = '';
@@ -991,7 +991,7 @@ var socialshare2 = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

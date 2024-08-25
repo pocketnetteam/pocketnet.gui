@@ -32,7 +32,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 var userInfo = psdk.userInfo.get(share.address) || {}
 
-var name = app.platform.api.clearname(userInfo.name || share.address)
+var name = app.platform.api.clearname(userInfo.name || share.address, true)
 
 var translates = app.platform.sdk.translate.share.needtranslate(share.txid)
 var lang = app.platform.sdk.translate.share.lang(share.txid)
@@ -155,7 +155,7 @@ var cc = share.renders.captionclear(translated.c);
 
         <div class="author">
 
-                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(userInfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name) %></span></b>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
@@ -223,7 +223,7 @@ var cc = share.renders.captionclear(translated.c);
                     <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
                 </div>	
 
-                <div class="iconwrapper">
+                <div class="iconwrapper gotocomments">
                     <span><%-compressedNumber(share.comments || 0)%></span> <i class="fas fa-comments"></i>
                 </div>
 

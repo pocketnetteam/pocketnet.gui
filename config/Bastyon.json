@@ -3,7 +3,15 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    "developapps" : [],
+    "developapps" : [{
+		"id" : "swipelux.app",
+		"version": "0.0.1",
+		"scope" : "app.swipelux.pocketnet.app",
+		"cantdelete" : true,
+		"name" : "Swipelux",
+        "develop" : true,
+        "install" : true
+	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
@@ -25,6 +33,16 @@
                 
                 {
                     "host" : "3.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "4.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "5.pocketnet.app",
                     "port" : 8899,
                     "wss" : 8099
                 },
@@ -127,8 +145,8 @@
 
     "electron" : {
         "protocol" : "bastyon"
-    }
+    },
 
-    
-    
+    "regAccounts" : ["PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd"],
+    "adminTools" : false
 }

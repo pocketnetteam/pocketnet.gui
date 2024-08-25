@@ -255,7 +255,7 @@ nModule = function(){
 					c()
 				}
 				else{
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c()
 					})
 				}
@@ -416,6 +416,7 @@ nModule = function(){
 
 						catch(e){
 							console.error(e)
+							console.log(p)
 
 							if (p.fail){
 								p.fail()
@@ -509,7 +510,7 @@ nModule = function(){
 		}
 		else{
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 
 				if (clbk)
 					clbk()
@@ -553,8 +554,9 @@ nModule = function(){
 
 		beforegetdata(settings, function(){
 
-			if (settings.fade && !settings.waspreshell){
-				window.requestAnimationFrame(() => {
+
+			if (settings.fade && (!settings.waspreshell || settings.replaceState)){
+				window.rifticker.add(() => {
 					settings.fade.addClass('shell_fadefast')
 				})
 			}
@@ -567,7 +569,7 @@ nModule = function(){
 
 					rmpreloader()
 
-					if(err){
+					if (err){
 						return
 					}
 
@@ -598,15 +600,17 @@ nModule = function(){
 						if (settings.init)
 							settings.init(p)
 
-						if (settings.fade && !settings.waspreshell){
+
+
+						if (settings.fade && (!settings.waspreshell || settings.replaceState)){
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									settings.fade.addClass('shell_fadein')
 								})
 							}, 100)
 
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									settings.fade.removeClass('shell_fadefast')
 									settings.fade.removeClass('shell_fadein')
 								})

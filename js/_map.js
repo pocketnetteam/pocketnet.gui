@@ -118,6 +118,8 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/apps/index.js", babelify : true},
+		{path : "js/lib/external/index.min.js"},
+
 		{path : "js/satolist.js", babelify : true},
 		"js/bastyonCalls/bastyonCalls.min.js",
 		{path : "js/lib/client/p2pvideo.js", babelify : true},
@@ -154,11 +156,11 @@ __map =  {
 	},
 	
 	__templates : [
-		{ c : 'navigation', n : 'menu' },
+		{ c : 'bnavigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
+		{ c : 'menu', n : 'userinfo' },
 		
-		//{ c : 'toppanel', n : 'index' },
-		{ c : 'navigation', n : 'index' },
+		{ c : 'bnavigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
@@ -392,7 +394,8 @@ __map =  {
 		anonimus : true,
 		electronDontOpen : true,
 
-		ignoreMinimize : true
+		ignoreMinimize : true,
+		insearch : true
 
 	},
 
@@ -697,6 +700,7 @@ __map =  {
 			href : "home",
 			add : insertingfunc,
 			anonimus : true,
+			insearch : true
 		},
 
 
@@ -813,8 +817,22 @@ __map =  {
 			electronDontOpen : true
 			
 		},
-	
 
+		qrscanner : {
+			uri : "qrscanner",
+			href : "qrscanner",
+			add : insertingfunc,
+
+			relations : [
+				{src : 'js/vendor/qr-scanner.umd.min.js',			   f : 'js'}
+			],
+		},
+	
+		external : {
+			uri : "external",
+			href : "external",
+			add : insertingfunc
+		},
 		wallet : {
 			uri : "wallet",
 			href : "wallet",
@@ -936,9 +954,9 @@ __map =  {
 	
 	
 
-	navigation : {
-		uri : "navigation",
-		href : "navigation",
+	bnavigation : {
+		uri : "bnavigation",
+		href : "bnavigation",
 		add : {
 			el : 'navigation'
 		},

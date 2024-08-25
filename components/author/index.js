@@ -1253,7 +1253,7 @@ var author = (function(){
 
 			if(address == author.address || author.address == self.app.user.address.value){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					if(!el.c) return
 
@@ -1709,7 +1709,7 @@ var author = (function(){
 				
 
 				el.up = el.c.find('.upbuttonwrapper');
-				el.w = $(window);
+				el.w = self.app.el.window;
 				el.contents = el.c.find('.contentswrapper')
 				el.info = el.c.find('.authorinfoWrapper')
 				el.authorcaption = el.c.find('.bgCaptionWrapper')
@@ -1740,7 +1740,7 @@ var author = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy(href, p);
 			})
 

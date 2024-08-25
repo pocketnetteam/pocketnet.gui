@@ -100,8 +100,6 @@ var instance = function (host, ip, Roy) {
 
 		}).catch(e => {
 
-			//console.log("E", self.host, e)
-
 			return Promise.resolve()
 
 		})
@@ -149,14 +147,11 @@ var instance = function (host, ip, Roy) {
 			return Promise.reject('HOST_OFFLINE_MARKER');
 		}
 
-
 		try {
 			return Roy.parent.transports.fetch(`http://${host}${url}`, {
 				method: p.type || 'get',
 				timeout,
 			}).then(async (result) => {
-
-
 
 				const meta = {
 					code: 200,
@@ -172,6 +167,8 @@ var instance = function (host, ip, Roy) {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
 					resultStr = {};
+
+					return Promise.reject({})
 				}
 
 				return Promise.resolve({
@@ -181,7 +178,6 @@ var instance = function (host, ip, Roy) {
 				});
 			});
 		} catch(error) {
-
 
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
@@ -197,7 +193,7 @@ var instance = function (host, ip, Roy) {
 
 			statistic.add(meta);
 
-			return Promise.reject(error || {}).response || {};
+			return Promise.reject(error || {});
 		}
 	};
 

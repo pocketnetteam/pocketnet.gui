@@ -24,7 +24,24 @@ var abilityincrease = (function(){
 
 		var meta = {
 			video : function(increase){
-				if (increase.balance && increase.reputation) {
+
+				console.log('increase', increase)
+
+				if (increase.balance || increase.reputation) {
+
+					if(increase.canuseapplacation){
+						return {
+							icon : 'fas fa-exclamation-circle',
+							header : 'unableToAuthorize',
+							body : 'unableToAuthorizeBody',
+							additional : 'installApplication',
+							application : {
+								template : 'application',
+								text : 'e13120'
+							}
+						}
+					}
+
 					return {
 						icon : 'fas fa-exclamation-circle',
 						header : 'unableToAuthorize',
@@ -35,6 +52,7 @@ var abilityincrease = (function(){
 							text : 'submitapplicationVideo'
 						}
 					}
+
 				} else {
 					return {
 						icon : 'fas fa-wifi',
@@ -102,6 +120,8 @@ var abilityincrease = (function(){
 
 				template = deep(p, 'settings.essenseData.template') || 'video'
 
+				console.log('video template', template)
+
 
 				self.app.platform.sdk.ustate.canincrease(
 
@@ -114,6 +134,8 @@ var abilityincrease = (function(){
 						data.increase = _increase
 						data.template = template
 						data.meta = meta[template](increase)
+
+						console.log('video data', data)
 
 						clbk(data);
 
@@ -154,7 +176,7 @@ var abilityincrease = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

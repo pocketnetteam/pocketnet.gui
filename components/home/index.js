@@ -48,7 +48,7 @@ var home = (function(){
 			},
 
 			applicationClick : function(applicationId){
-				var applications = self.app.apps.get.installedAndInstalling()
+				var applications = self.app.apps.get.installedAndInstalling({})
 
 				var application = applications[applicationId]
 
@@ -88,7 +88,7 @@ var home = (function(){
 			applications : function(applications, clbk){
 
 				if(!applications){
-					applications = self.app.apps.get.installedAndInstalling()
+					applications = self.app.apps.get.installedAndInstalling({})
 				}
 
 				self.shell({
@@ -192,7 +192,7 @@ var home = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

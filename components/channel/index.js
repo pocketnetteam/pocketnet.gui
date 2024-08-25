@@ -64,7 +64,44 @@ var channel = (function(){
 		}
 
 		var renders = {
-			
+			blocking : function(){
+				var _el = el.c.find('.userinfo')
+
+				var me = self.app.psdk.userInfo.getmy()
+
+				blocking = me.relation(author.address, 'blocking')
+
+				if(blocking){
+					_el.addClass('blocked')
+				}
+				else{
+					_el.removeClass('blocked')
+				}
+			}
+		}
+
+		var actions = {
+			blocking : function(){
+				self.app.mobile.vibration.small()
+
+				var me = self.app.psdk.userInfo.getmy()
+				if(!me) return 
+
+				var blocking = me.relation(author.address, 'blocking')
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.api.actions[blocking ? 'unblocking' : 'blocking'](author.address, function(tx, error){
+						if(!tx){
+							self.app.platform.errorHandler(error, true)	
+
+							return 
+						}
+
+						
+
+					})
+				})
+			},
 		}
 
 		var state = {
@@ -77,6 +114,10 @@ var channel = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.c.find('.blockWrapper').on('click', function(){
+				actions.blocking()
+			})
 			
 			_.each(reports, function(r, j){
 				if(r.events){
@@ -102,6 +143,17 @@ var channel = (function(){
 
 				}
 			})
+
+			self.app.platform.actionListeners.authorn = function({type, alias, status}){
+
+				if(type == 'blocking' || type == 'unblocking'){
+
+					author.data = self.psdk.userInfo.get(author.address)
+					
+					renders.blocking()
+				}
+				
+			}
 
 		}
 
@@ -130,6 +182,7 @@ var channel = (function(){
 						var me = self.psdk.userInfo.getmy()
 							
 						author.following = me && me.relation(author.address, 'subscribes');
+						author.me = self.app.user.isItMe(author.address)
 
 						var data = {
 							author : author,
@@ -143,7 +196,7 @@ var channel = (function(){
 
 					})
 
-				})
+				}, true)
 
 				
 
@@ -185,7 +238,7 @@ var channel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

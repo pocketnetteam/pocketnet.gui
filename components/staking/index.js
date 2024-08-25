@@ -490,19 +490,19 @@ var staking = (function(){
 
 			el.c.find('.earnlabel').on('click', function(){
 
-				var url = 'https://'+self.app.options.url+''
-
-				var r = ''
-
-				if (self.app.user.address.value){
-					r = '?&ref=' + self.app.user.address.value
-					url = url + r
-				}
-				
-
 				self.nav.api.load({
 					open : true,
 					href : 'easynode',
+					history : true,
+					inWnd : true
+				})
+			})
+
+			el.c.find('.boostlabel').on('click', function(){
+
+				self.nav.api.load({
+					open : true,
+					href : 'boost',
 					history : true,
 					inWnd : true
 				})
@@ -610,7 +610,10 @@ var staking = (function(){
 
 			destroy : function(){
 				delete self.iclbks.mainstacking;
-				graph.destroy()
+				if (graph){
+					graph.destroy()
+				}
+				
 				graph = null
 				charts = {}
 				el = {};
@@ -653,7 +656,7 @@ var staking = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

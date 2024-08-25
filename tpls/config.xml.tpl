@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="33" />
+    <preference name="android-targetSdkVersion" value="34" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -221,6 +221,10 @@
         <% } %>
 
         <host name="<%-domain%>" scheme="https">
+            <path url="*" event="nav-message" />
+        </host>
+
+        <host name="*" scheme="__VAR__.protocol">
             <path url="*" event="nav-message" />
         </host>
 

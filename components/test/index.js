@@ -388,7 +388,7 @@ var test = (function(){
 							
 							sitemessage(txt)
 						}
-					})
+					}, true)
 
 					
 				})
@@ -583,9 +583,13 @@ var test = (function(){
 							else
 							{
 
-								checkusernameTimer =  slowMade(function(){
+								checkusernameTimer = slowMade(function(){
 
-									self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
+									var n = tempInfo[parameter.id]
+
+									self.app.platform.sdk.users.nameExist(n, function(exist){
+
+										if(tempInfo[parameter.id] != n) return
 
 										if(!el.c) return
 	
@@ -1083,7 +1087,7 @@ var test = (function(){
 
 			renders.icon(() => {
 				renders.options(() => {
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('rendered')
 					})
 				})

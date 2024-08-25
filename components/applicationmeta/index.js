@@ -72,10 +72,58 @@ var applicationmeta = (function(){
 		}
 
 		var events = {
-			
+			installed : function(p = {}){
+				if (p.application.manifest.id == application.manifest.id){
+					self.closeContainer()
+				}
+			},
+
+			removed : function(p = {}){
+				if (p.application.manifest.id == application.manifest.id){
+					self.closeContainer()
+				}
+			},
 		}
 
 		var renders = {
+			author: function(clbk){
+
+				if(!application.author){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.sdk.users.get([application.author], function () {
+
+                    var user = self.psdk.userInfo.get(application.author)
+                    
+                    if (user){
+
+                        self.shell({
+
+							name :  'author',
+							el :   el.c.find('.author'),
+							data : {
+								application,
+								profile : user
+							},
+		
+						}, function(p){
+							if(clbk) clbk()
+						})
+
+                    }
+					else{
+						if(clbk) clbk()
+						
+						return
+					}
+
+                })
+
+				
+			},
 			permissions : function(clbk){
 
 				if(!appdata || !application){
@@ -135,6 +183,30 @@ var applicationmeta = (function(){
 		}
 
 		var initEvents = function(){
+
+			self.app.apps.on('installed', events.installed)
+			self.app.apps.on('removed', events.removed)
+
+			el.c.find('.install').on('click', () => {
+
+				globalpreloader(true)
+
+				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
+				
+				console.log("PR", pr)
+				
+				pr.promise.then(() => {
+					successCheck()
+				}).catch(e => {
+
+					console.error(e)
+
+					sitemessage(JSON.stringify(e), null, 5000)
+				}).finally(() => {
+					globalpreloader(false)
+				})
+
+			})
 			
 			el.c.find('.remove').on('click', () => {
 
@@ -171,6 +243,8 @@ var applicationmeta = (function(){
 			renders.permissions(() => {
 				el.c.addClass('permissionsRendered')
 			})
+
+			renders.author()
 		}
 
 		return {
@@ -180,11 +254,9 @@ var applicationmeta = (function(){
 
 				ed = p.settings.essenseData || {}
 
-				var installed = false
 
-				self.app.apps.get.application(ed.application).then(f => {
+				self.app.apps.get.applicationall(ed.application).then(f => {
 					if(f) {
-						installed = true
 						return Promise.resolve(f)
 					}
 
@@ -201,8 +273,7 @@ var applicationmeta = (function(){
 	
 					var data = {
 						application,
-						appdata,
-						installed
+						appdata
 					};
 	
 					clbk(data);
@@ -216,6 +287,9 @@ var applicationmeta = (function(){
 			destroy : function(){
 				ed = {}
 				el = {};
+
+				self.app.apps.off('installed', events.installed)
+				self.app.apps.off('removed', events.removed)
 			},
 			
 			init : function(p){
@@ -252,7 +326,7 @@ var applicationmeta = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

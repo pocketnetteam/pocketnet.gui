@@ -179,7 +179,6 @@ var pSDK = function ({ app, api, actions }) {
 
         if (!dbname || !dbmeta[dbname]) return Promise.resolve()
         
-        
         return self.db.clearAll(dbname)
     }
 
@@ -221,15 +220,18 @@ var pSDK = function ({ app, api, actions }) {
 
 
         return Promise.all(_.map(ids, id => {
-            return self.db.get(dbname, id, getold).then(data => {
+            return self.db.get(dbname, id, getold).then(({data, date}) => {
 
                 if (dbmeta[dbname].authorized) {
                     id = id.replace('_' + app.user.address.value, '')
                 }
 
+                ///// 
+
                 result.push({
                     key: id,
-                    data: data
+                    data,
+                    date
                 })
 
             }).catch(e => { 
@@ -403,9 +405,12 @@ var pSDK = function ({ app, api, actions }) {
             load.push(k)
         })
 
+        var fixload = _.clone(load)
+
+
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
-            getfromdb(p.indexedDb, load).then(dbr => {
+            (p.update ? Promise.resolve([]) : getfromdb(p.indexedDb, load)).then(dbr => {
 
                 load = _.filter(load, (k) => {
 
@@ -527,11 +532,11 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
                     else{
-                        if(r && r.key){
+                        if (r && r.key){
                             baddata[key][r.key] = true
                         }
                         
@@ -559,13 +564,14 @@ var pSDK = function ({ app, api, actions }) {
 
         }).finally(() => {
 
-            _.each(load, (k) => {
+
+            _.each(fixload, (k) => {
                 delete temp[key][k]
             })
 
         })
 
-        _.each(load, (k) => {
+        _.each(fixload, (k) => {
             temp[key][k] = promise
         })
 
@@ -657,6 +663,11 @@ var pSDK = function ({ app, api, actions }) {
         })
     }   
 
+    self.clearIdCacheAll = function(){
+        extendCache = {}
+        self.extendCache = extendCache
+    }
+
     var extendFromActions = function(type, temps, object, helpId){
 
         var cacheId = type + ":" + (helpId || "") + ":" + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
@@ -731,6 +742,8 @@ var pSDK = function ({ app, api, actions }) {
                     c.l = clearStringXss(trydecode(c.l || ''));
                     c.a = clearStringXss(trydecode(c.a || ''));
 
+                    c.address = clearStringXss(c.address);
+
                 }
                 catch (e) {
                     console.error(e)
@@ -799,7 +812,7 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
 
@@ -839,7 +852,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key])
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
 
                 var object = this.transform(r)
 
@@ -1059,7 +1072,7 @@ var pSDK = function ({ app, api, actions }) {
         change: function (address, state) {
             this.clear.all('userState', address)
 
-            storage['userState'][address] = state
+            storage['userState'][address] = state // ADD STORAGE
         }
     }
 
@@ -1177,6 +1190,10 @@ var pSDK = function ({ app, api, actions }) {
         cleanData: function (rawcomments) {
 
             return _.filter(_.map(rawcomments, (c) => {
+                
+                //if(c.deleted) return
+
+                if(!c.msgparsed && !c.msg) return null
 
                 try {
 
@@ -1185,7 +1202,7 @@ var pSDK = function ({ app, api, actions }) {
                     if(_.isObject(c.msgparsed)){
                         c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
 
-                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
     
                         c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
     
@@ -1202,6 +1219,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
                 catch (e) {
                     console.error(e)
+                    console.log(c)
                     return null
                 }
 
@@ -1269,7 +1287,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (r && r.key && r.data) {
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
                     filtered.push(r)
                 }
 
@@ -1303,7 +1321,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key]) {
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
                 }
 
                 var object = this.transform(r)
@@ -1331,6 +1349,7 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['share'][exp.postid], exp)
 
                 clearallfromdb('commentRequest')
+                clearfromdb('share', [exp.postid])
             }
         },
         applyAction: function (object, exp) {
@@ -1439,16 +1458,11 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('comment'), filter)
 
-
                 _.each(actions, (a) => {
 
                     if (a.optype == 'comment'){
                         objects.unshift(a)
                     }
-
-                    /*if(a.optype == 'commentDelete'){
-                        objects = _.filter(objects)
-                    }*/
                 })
             })
 
@@ -1483,20 +1497,25 @@ var pSDK = function ({ app, api, actions }) {
                     }
                 }
 
-                settodb('myScore', [result]).then(() => {
-                }).catch(e => {
-                    console.error(e)
-                })
+                if(exp.actor == app.user.address.value){
+                    settodb('myScore', [result]).then(() => {
+                    }).catch(e => {
+                        console.error(e)
+                    })
+                }
             }
         },
         applyAction: function (comment, exp) {
 
             if (comment) {
-                if (comment.id == exp.comment.v && exp.actor == app.user.address.value) {
-                    
+                if (comment.id == exp.comment.v) {
+
                     var v = Number(exp.value.v)
-                    /// for me
-                    comment.myScore = v
+                    
+                    if(exp.actor == app.user.address.value){
+                        comment.myScore = v
+                    }
+                   
                     
                     if(v > 0){
                         comment.scoreUp = (comment.scoreUp || 0) + 1
@@ -1554,7 +1573,7 @@ var pSDK = function ({ app, api, actions }) {
 
         insertFromResponseEx: function (response) {
 
-            self.userInfo.insertFromResponse(response.users, true)
+            self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
 
             app.platform.sdk.videos.getVideoResponse(response.videos)
 
@@ -1583,11 +1602,11 @@ var pSDK = function ({ app, api, actions }) {
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
-                        storage[key][r.key] = r.data
+                        storage[key][r.key] = r.data // ADD STORAGE
                         filtered.push(r)
                     }
 
-                    var object = this.transform(r)
+                    var object = this.transform(r)  // ADD STORAGE (TR)
 
                     if (object) {
                         objects[key][r.key] = object
@@ -1624,7 +1643,7 @@ var pSDK = function ({ app, api, actions }) {
             _.each(result, (r) => {
 
                 if (!storage[key][r.key] || (storage[key][r.key] && storage[key][r.key].___temp))
-                    storage[key][r.key] = r.data
+                    storage[key][r.key] = r.data // ADD STORAGE
 
                 var object = this.transform(r, true)
 
@@ -1710,7 +1729,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 try {
                     c.u = clearStringXss(trydecode(c.u || ''));
-                    c.c = clearStringXss(trydecode(c.c || '').replace(/\+/g, " ")).replace(/&nbsp;/g, ' ');
+                    c.c = clearStringXss(trydecode(c.c || '')).replace(/&nbsp;/g, ' ');
 
                     if (c.s && c.s.v == 'a') {
 
@@ -1965,6 +1984,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -1984,7 +2004,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
-                    object.addRelation(exp.address.v, 'subscribers')
+                    object.addRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2036,6 +2056,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -2055,7 +2076,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (object.address == exp.address.v) {
 
-                    object.addRelation(exp.address.v, 'subscribers')
+                    object.addRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2075,6 +2096,7 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo.cleardb(exp.address.v)
 
                 clearfromdb('subscribes', [exp.actor])
+                clearfromdb('subscribers', [exp.address.v])
             }
         },
         applyAction: function (object, exp) {
@@ -2087,7 +2109,7 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 if (object.address == exp.address.v) {
-                    object.removeRelation(exp.address.v, 'subscribers')
+                    object.removeRelation(exp.actor, 'subscribers')
                 }
             }
 
@@ -2129,27 +2151,52 @@ var pSDK = function ({ app, api, actions }) {
                     }
                 }
 
-
+                clearfromdb('postScores', [exp.share.v])
+                clearfromdb('share', [exp.share.v])
                 //// long like cache
 
-                settodb('myScore', [result]).then(() => {
-                }).catch(e => {
-                    console.error(e)
-                })
+                
+                if(exp.actor == app.user.address.value){
+                    settodb('myScore', [result]).then(() => {
+                    }).catch(e => {
+                        console.error(e)
+                    })
+                }
             }
         },
         applyAction: function (share, exp) {
 
             if (share) {
-                if (share.txid == exp.share.v && exp.actor == app.user.address.value) { /// for me
-                    share.myVal = Number(exp.value.v)
+                if (share.txid == exp.share.v) { /// for me
+                    
+                    if(exp.actor == app.user.address.value){
+                        share.myVal = Number(exp.value.v)
+                    }
+                    
                     share.scnt = (share.scnt || 0) + 1
                     share.score = (share.score || 0) + Number(exp.value.v)
                 }
             }
 
             return share
-        }
+        },
+
+        tempGet: function (filter) {
+
+            var objects = []
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('upvoteShare'), filter)
+
+                _.each(actions, (a) => {
+
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+
+        },
     }
 
     /// requests
@@ -2288,7 +2335,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (txid) {
-            return storage['postScores'][txid] || []
+            return storage['postScores'][txid] || [] 
         },
 
     }
@@ -2362,7 +2409,7 @@ var pSDK = function ({ app, api, actions }) {
 
             return loadone('blocking', address, (ids) => {
 
-                return api.rpc('getuserblockings', [ids[0], '1', '', '', '', '5000'], {
+                return api.rpc('getuserblockings', [ids[0], '1', '', '', 0, 5000], {
                     rpc : {
                         fnode : '65.21.56.203:38081'
                     }
@@ -2400,7 +2447,7 @@ var pSDK = function ({ app, api, actions }) {
         load: function (address, update) {
 
             return loadone('subscribers', address, (ids) => {
-                return api.rpc('getusersubscribers', [ids[0], '', '', '', '5000']).then(r => {
+                return api.rpc('getusersubscribers', [ids[0], '', '', 0, 5000]).then(r => {
 
                     r = _.map(r, (v) => {
                         return v.address
@@ -2434,7 +2481,7 @@ var pSDK = function ({ app, api, actions }) {
         load: function (address, update) {
 
             return loadone('subscribes', address, (ids) => {
-                return api.rpc('getusersubscribes', [ids[0], '', '', '', '5000']).then(r => {
+                return api.rpc('getusersubscribes', [ids[0], '', '', 0, 5000]).then(r => {
 
                     r = _.map(r, (v) => {
                         return {
@@ -2615,6 +2662,108 @@ var pSDK = function ({ app, api, actions }) {
 
     self. storage = storage
     self. objects = objects
+
+    var prepareStorages = function(){
+        _.each(self, (v) => {
+            if (v && _.isObject(v) && v.keys) {
+                _.each(v.keys, (i) => {
+                    prepareStorage(i)
+                })
+            }
+        })
+    }
+
+    self.clearStorageAndObjects = function(){
+        self.storage = storage = {}
+        self.objects = objects = {}
+
+        prepareStorages()
+    }
+
+    self.ws = {
+        update : function(type, wsdata){
+
+            var status = 'completed'
+            var alias = null
+
+            if (type == 'comment'){
+
+                if(!wsdata.comment) return
+
+                alias = wsdata.comment
+
+                alias.transaction = wsdata.comment.id
+                alias.actor = wsdata.comment.address
+                alias.optype || (alias.optype = wsdata.comment.type)
+
+                self.comment.listener(alias, wsdata.addrFrom, status)
+              
+            }
+
+            if(type == 'cScore'){
+                alias = {
+                    actor : wsdata.addrFrom,
+                    comment : {
+                        v : wsdata.commentid,
+                    },
+                    value : {
+                        v : wsdata.upvoteVal
+                    }
+                }
+
+                self.cScore.listener(alias, wsdata.addrFrom, status)
+                
+            }
+
+            if (type == 'upvoteShare'){
+
+                alias = {
+                    actor : wsdata.addrFrom,
+                    share : {
+                        v : wsdata.posttxid,
+                    },
+                    value : {
+                        v : wsdata.upvoteVal
+                    }
+                }
+
+                self.upvoteShare.listener(alias, wsdata.addrFrom, status)
+
+            }
+
+            if (type == 'subscribe' || type == 'subscribePrivate' || type == 'unsubscribe'){
+
+                alias = {
+                    actor : wsdata.addrFrom,
+                    address : {
+                        v : wsdata.addr,
+                    }
+                }
+
+                self[type].listener(alias, wsdata.addrFrom, status)
+
+            }
+
+            if (alias){
+                _.each(self.updatelisteners, (l) => {
+                    try{
+                       l({type, alias, status}, 'updateListener')
+                    }catch(e){
+                        
+                    }
+                   
+                })
+            }
+            
+
+            return
+        }
+    }
+
+    self.clearfromdb = clearfromdb
+    self.clearallfromdb = clearallfromdb
+
+    self.updatelisteners = {}
 
     return self
 }

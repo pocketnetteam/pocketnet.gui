@@ -19,7 +19,7 @@
         connect-src https: data: wss: http: ws: file: data: blob:;
         img-src 'self' blob: data: http: https: file:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ https://cdnjs.cloudflare.com/ajax/libs/lamejs/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://www.brighteon.com  https://stream.brighteon.com;
+        frame-src 'self' https:;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src data: blob: *">
@@ -232,6 +232,7 @@
         <script join src="js/validation.js?v=325793338940"></script>
         <script join src="js/_map.js?v=147657511756"></script>
         <script join src="js/localization.js?v=439731354592"></script>
+        <script join src="js/lib/external/index.min.js?v=439731354592"></script>
         <script join src="js/satolist.js?v=439731354592"></script>
         <script join src="js/bastyonCalls/bastyonCalls.min.js"></script>
         <script join src="peertube/video-embed.bundle.js"></script>

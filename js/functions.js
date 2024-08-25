@@ -267,7 +267,7 @@ successCheck = function (p) {
 
 	var self = this,
 		el = p.el || $('body');
-	var _w = $(window);
+
 	var ch = null;
 
 
@@ -284,23 +284,23 @@ successCheck = function (p) {
 			"html": h
 		});
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			el.append(ch);
 			ch.find('svg')[0].classList.add('animate')
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.addClass('active')
 			})
 		})
 
 		setTimeout(function () {
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.removeClass('active')
 			})
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					ch.remove()
 				})
 				
@@ -448,7 +448,7 @@ wnd = function (p) {
 			app.actions.offScroll(wnd);
 		}
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (hiddenState.length) {
 				hiddenState.before(wnd)
@@ -499,7 +499,7 @@ wnd = function (p) {
 
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					wnd.addClass('sette')
 				})
 
@@ -507,7 +507,7 @@ wnd = function (p) {
 			}, 20)
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (wnd)
 						wnd.removeClass('asette')
 				})
@@ -523,7 +523,7 @@ wnd = function (p) {
 
 
 						setTimeout(function () {
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 
 
 								if (wnd)
@@ -771,7 +771,7 @@ wnd = function (p) {
 			delete app.events.resize[id]
 			delete app.events.scroll[id]
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				destroySwipable()
 
 				wnd.addClass('asette')
@@ -787,7 +787,7 @@ wnd = function (p) {
 			var cl = function () {
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					wnd.remove();
 
@@ -1675,7 +1675,8 @@ tooltip = function (p) {
 
 sitemessage = function (message, func, delay = 5000, p = {}) {
 
-	var m = "<div>" + message + "</div>"
+	
+	var m = "<div>" + clearStringXss(message) + "</div>"
 
 	if (p.action) {
 		m += '<div class="action"><button class="black">' + p.action.text + '</button></div>'
@@ -1699,7 +1700,7 @@ sitemessage = function (message, func, delay = 5000, p = {}) {
 
 		setTimeout(function () {
 
-			messageel.detach();
+			messageel.remove();
 
 			messageel = null
 
@@ -1786,7 +1787,7 @@ bgImagesClApply = function (el, src) {
 
 bgImagesClApplyTemplate = function (src) {
 
-	src = (src || "");
+	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
 	
@@ -1819,7 +1820,7 @@ bgImagesCl = function (el, p) {
 			var src = el.getAttribute('image')
 
 			if (!src || src == '*') {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.setAttribute('imageloaded', 'true')
 				})
 				return Promise.resolve()
@@ -1840,7 +1841,9 @@ bgImagesCl = function (el, p) {
 			image.src = src
 
 			if (imagesLoadedCache[src]) {
+				window.rifticker.add(() => {
 				bgImagesClApply(el, src)
+				})
 				resolve()
 			}
 			else {
@@ -1848,7 +1851,7 @@ bgImagesCl = function (el, p) {
 
 					imagesLoadedCache[src] = true
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						bgImagesClApply(el, src)
 
@@ -1861,9 +1864,9 @@ bgImagesCl = function (el, p) {
 
 
 			image.onerror = (e) => {
-				console.error(e)
+				console.error(src, e)
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.setAttribute('image', '*')
 				})
 
@@ -1890,7 +1893,7 @@ carousel = function (el, _items, _container) {
 	var currentscroll = 0
 	var currentitem = 0
 
-	window.requestAnimationFrame(() => {
+	window.rifticker.add(() => {
 		if (!container.hasClass('carousel')) container.addClass('carousel')
 
 		for (var i = 0; i < items.length; i++) {
@@ -1941,7 +1944,7 @@ carousel = function (el, _items, _container) {
 	}
 
 	var gotoslide = function (index) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			container[0].scrollLeft = items[index].offsetLeft
 
@@ -1955,7 +1958,7 @@ carousel = function (el, _items, _container) {
 
 		currentscroll = el.scrollLeft
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			var activeindex = findactive()
 
 			if (activeindex > -1) {
@@ -2067,7 +2070,7 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
@@ -2079,6 +2082,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 }
 
 resize = function (srcData, width, height, clbk, format) {
+
+	/**/
+
 	var imageObj = new Image(),
 		canvas = document.createElement("canvas"),
 		ctx = canvas.getContext('2d'),
@@ -2121,7 +2127,7 @@ resize = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.75);
+		var url = canvas.toDataURL("image/" + format, 0.85);
 
 		$(canvas).remove();
 
@@ -3515,6 +3521,10 @@ ParametersLive = function (parameters, el, p) {
 							}
 						})
 
+						_el.find('.vc_inputWrapperClick').on(clickAction(), function () {
+							open()
+						})
+
 						_el.find('input').on('focus', function () {
 							$(this).select();
 						})
@@ -4739,8 +4749,11 @@ Parameter = function (p) {
 				if (self.format.right)
 					input += caret;
 
-				input += '<div class="vc_inputWrapper">';
+				input += '<div class="vc_inputWrapper '+(disabled ? 'vc_inputWrapperClick' : '')+'">';
 				input += '<input elementsid="vs_input" ' + disabled + '  type="text" value="' + displayValue + '" placeholder="' + self.placeholder + '">';
+				if(disabled){
+					input += '<div class="displaceholder"></div>'
+				}
 				input += '</div>';
 
 				if (!self.format.right)
@@ -6008,6 +6021,8 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
+	console.log('scr ofssetObj', ofssetObj)
+
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6018,6 +6033,8 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
+
+		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -6960,13 +6977,19 @@ AJAX = function(p) {
 
 					if (r.responseText) {
 
-						data = JSON.parse(r.responseText);
+						try{
+							data = JSON.parse(r.responseText);
 
-						if(typeof p.errors == 'undefined' || p.errors == true)
-						{
-							e = error(data.status, p, data.data);
-
+							if(typeof p.errors == 'undefined' || p.errors == true)
+							{
+								e = error(data.status, p, data.data);
+							}
+							
+						}catch(e){
+							e = error(null, p);
 						}
+
+						
 
 					}
 					else
@@ -7394,7 +7417,7 @@ fastars = function (el) {
 mobsearch = function (el, p) {
 
 	if (p.mobileSearch && p.app) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
@@ -7711,6 +7734,12 @@ search = function (el, p) {
 
 				}
 			}
+			else{
+				events.search(searchInput)
+				e.stopPropagation()
+				e.preventDefault()
+				return false
+			}
 
 		});
 
@@ -7735,13 +7764,13 @@ search = function (el, p) {
 			}, 300)*/
 		})
 
-		searchInput.on('keypress', function (e) {
+		/*searchInput.on('keypress', function (e) {
 
 			if ((e.keyCode || e.which) == 13) {
 				events.search(searchInput)
 			}
 
-		});
+		});*/
 
 		searchEl.find('.searchIconLabel').on('click', function () {
 
@@ -7860,6 +7889,10 @@ initUpload = function (p) {
 			}
 
 		})(file);
+
+		reader.onerror = function(e){
+			error(e)
+		}
 	}
 
 	var errorHandler = function (file, clbk) {
@@ -8060,11 +8093,15 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
+		console.log('files', files)
+
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
+
+					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8073,6 +8110,9 @@ initUpload = function (p) {
 				fail: function () {
 					end();
 
+					console.log('failed')
+
+
 					if (p.onFail)
 						p.onFail()
 				}
@@ -8080,6 +8120,8 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
+
+				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8114,13 +8156,18 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
+						console.log("read")
+
 
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
+							console.log("resize")
 
 							autorotation(file, fileObject.base64, function (base64) {
+
+								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -8132,30 +8179,33 @@ initUpload = function (p) {
 									_p.fail();
 								}
 								else {
-									var fd = new FormData();
-									fd.append('file', file);
-
-									_.each(p.data, function (data, key) {
-
-										if (typeof data == 'function') data = data();
-
-										if (key == 'data') {
-											if (p.user) {
-												p.user.extendAjaxData(data);
-											}
-										}
-
-										if (_.isArray(data) || _.isObject(data))
-											data = JSON.stringify(data);
-
-										fd.append(key, data);
-									})
+									
 
 									if (p.beforeUpload) {
 										p.beforeUpload(fileObject, processId)
 									}
 
 									if (p.server) {
+
+										var fd = new FormData();
+											fd.append('file', file);
+
+											_.each(p.data, function (data, key) {
+
+												if (typeof data == 'function') data = data();
+
+												if (key == 'data') {
+													if (p.user) {
+														p.user.extendAjaxData(data);
+													}
+												}
+
+												if (_.isArray(data) || _.isObject(data))
+													data = JSON.stringify(data);
+
+												fd.append(key, data);
+											})
+											
 										var xhr = new XMLHttpRequest();
 
 										xhr.onreadystatechange = function (e) {
@@ -8198,9 +8248,11 @@ initUpload = function (p) {
 										if (p.action) {
 											p.action(fileObject, _p.success)
 										}
-										else
-
+										else{
 											_p.success();
+										}
+
+											
 									}
 
 
@@ -8307,7 +8359,7 @@ initUpload = function (p) {
 		var thisid = makeid()
 
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (dark){
 				el.addClass('dark')
@@ -8667,7 +8719,11 @@ pluralform = function (n, w) {
 decodeEntities = function (s) {
 	const temp = document.createElement('p');
 	temp.innerHTML = s;
-	return temp.textContent || temp.innerText;
+	var v = temp.textContent || temp.innerText;
+
+	temp.remove()
+
+	return v
 }
 
 truncateString = function (str, n, useWordBoundary) {
@@ -8765,10 +8821,23 @@ parseVideo = function(url) {
 		}
 	} else if (hostname.includes('bitchute.com')) {
 		type = 'bitchute';
+
+		
+
 		id = pathParts[1];
 	} else if (hostname.includes('brighteon.com')) {
 		type = 'brighteon';
-		id = path;
+
+		var ps = (path || "").split('?')[0]
+
+		var pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+		if(!pattern.test(ps)){
+			return {}
+		}
+
+
+		id = ps;
 	} else if (pathname.includes('/ipfs/')) {
 		const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
 		const ipfsId = path.match(ipfsIdRegex)[1];
@@ -9245,7 +9314,7 @@ Base64Helper = {
 	_utf8_decode: function (utftext) {
 		var string = "";
 		var i = 0;
-		var c = 0, c1 = 0, c2 = 0;
+		var c = 0, c1 = 0, c2 = 0, c3 = 0;
 
 		while (i < utftext.length) {
 
@@ -10024,6 +10093,16 @@ resizeGif = function (app) {
 	return self
 }
 
+strToNumHash = function(str = '', max = 1){
+	var r = 0
+
+	for(var i = 0; i < str.length; i++){
+		r += str[i].charCodeAt(0) % max
+	}
+
+	return r % max
+}
+
 class LoadingBar {
 	constructor(barElem, styles) {
 		const self = this;
@@ -10206,9 +10285,11 @@ var connectionSpeed = function()
 };
 
 replaceArchiveInImage = function(src) {
+	if(!src) return ''
+
 	var srcNew = src;
 
-	app.platform.archivedServers.map(server => {
+	window.project_config.archivedPeertubeServers.map(server => {
 		if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
 	});
 

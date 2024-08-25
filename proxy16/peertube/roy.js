@@ -56,6 +56,15 @@ var Roy = function (parent) {
 		if (!url) return;
 		if (!options) options = {};
 
+		if (parent.instanses[url]){
+
+			parent.instanses[url].counter++ 
+
+			instances.push(parent.instanses[url].instance);
+
+			return parent.instanses[url].instance
+		}
+
 		var instance = new Instance(url, options.ip, self);
 
 		if (options.cantuploading) instance.cantuploading = true;
@@ -63,10 +72,18 @@ var Roy = function (parent) {
 		if (options.old) instance.old = true;
 		if (options.offline) instance.offline = true;
 		if (options.archiveDouble) instance.archiveDouble = true;
+		if (options.archived) instance.archived = true;
 
 		instance.init();
 
 		instances.push(instance);
+
+
+
+		parent.instanses[url] = {
+			instance,
+			counter : 1
+		}
 
 		return instance;
 	};
@@ -76,8 +93,24 @@ var Roy = function (parent) {
 	self.removeInstance = function (host) {
 		var instance = self.find(host);
 
+
 		if (instance) {
-			instance.destroy();
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
+			
+
+			
 		}
 
 		instances = _.filter(instances, function (instance) {
@@ -89,6 +122,7 @@ var Roy = function (parent) {
 
 	self.init = function (urls) {
 		inited = true;
+
 
 		_.each(urls, function (ins) {
 			var host = ins;
@@ -111,7 +145,22 @@ var Roy = function (parent) {
 
 	self.destroy = function () {
 		_.each(instances, function (instance) {
-			instance.destroy();
+			//instance.destroy();
+
+			var host = instance.host
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
 		});
 
 		instances = [];
@@ -202,6 +251,7 @@ var Roy = function (parent) {
 				if (instance) list = [instance];
 			} else {
 				list = self.bestlist();
+				
 			}
 		}
 
@@ -209,6 +259,8 @@ var Roy = function (parent) {
 
 		var index = 0;
 		var error = null;
+		
+	
 
 		var request = function (instance) {
 			return instance
@@ -253,21 +305,28 @@ var Roy = function (parent) {
 
 	self.find = function (host) {
 		return _.find(instances, function (instance) {
-			return instance.host == host && !instance.archiveDouble;
+			return instance.host == host;
 		});
 	};
 
-	self.info = function () {
+	self.info = function (compact) {
 		var info = {};
 
 		_.each(instances, function (instance) {
+
+			if (compact && (!instance.canuse() || !instance.info().canuploading || instance.cantuploading)){
+				return
+			}
+
 			var stats = instance.stats();
 
 			info[instance.host] = {
 				host: instance.host,
 				ip : instance.ip,
+				archived: !!instance.archived,
 				canuse: instance.canuse(),
-				stats
+				stats,
+				auto : self.auto
 			};
 			
 		});
