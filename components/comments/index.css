@@ -833,6 +833,11 @@
   padding-left: 0;
   padding-right: 0;
 }
+#comments .edit .posttable > div .preloader5,
+#comments .answer .posttable > div .preloader5,
+#comments .post .posttable > div .preloader5 {
+  height: 40px;
+}
 #comments .edit .posttable > div.closeWrapper,
 #comments .answer .posttable > div.closeWrapper,
 #comments .post .posttable > div.closeWrapper,

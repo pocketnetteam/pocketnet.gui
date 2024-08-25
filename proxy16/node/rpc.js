@@ -274,6 +274,24 @@ function rpc(request, callback, obj) {
     var reqf = self.transports?.axios || axios
 
     config.method = 'post'
+    //config.signal = signal
+    
+
+    try{
+
+        request = JSON.stringify(request);
+
+    }
+    catch(e){
+
+        callback({
+            code : 499
+        });
+
+        return
+    }
+
+
 
     reqf({
         
@@ -282,7 +300,6 @@ function rpc(request, callback, obj) {
         data : request
 
     }).then((res) => {
-
         var exceededError = null
 
         if (res.status === 401) {
