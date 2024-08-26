@@ -51,12 +51,14 @@ var Monetization = function(app, {url, auth}){
 
     self.contentperformance = function({addresses, start, end}){
 
+        console.log('addresses, start, end', addresses, start, end)
+
         if(!_.isArray(addresses)) addresses = [addresses]
 
-        return request('contentperformance', {
+        return request('monetization/contentperformance', {
             Addresses : addresses,
-            StartDate : start,
-            EndDate : end
+            //StartDate : start,
+            //EndDate : end
         })
     }
 

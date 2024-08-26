@@ -16,10 +16,29 @@ var earnings = (function () {
 			to: {}
 		}
 
+		var monetizationParameters = {
+			currentYear : 2024,
+			startPeriod : 1725148800
+		}
+
 		var stats = []
 		var monetizationOpportunity = false
 
 		var loading = false
+
+		var helpers = {
+			getYearPeriod : function(year){
+
+				console.log('year', year)
+
+				var start = Math.max(Number((new Date(year, 0, 1).getTime() / 1000).toFixed(0)), monetizationParameters.startPeriod)
+				var end = Math.max(Number((new Date(year + 1, 0, 1).getTime() / 1000).toFixed(0)), monetizationParameters.startPeriod + 31536000)
+
+				return {
+					start, end
+				}
+			}
+		}
 
 		var actions = {
 
@@ -97,10 +116,13 @@ var earnings = (function () {
 
 				self.app.platform.sdk.users.checkMonetization(self.app.user.address.value).then((monetization) => {
 
-					console.log("??????????")
+					console.log("??????????", helpers.getYearPeriod(monetization.currentYear))
 
 					try{
-						self.app.monetization.test_getauthorsmonetizationearns().then(result => {
+						self.app.monetization.contentperformance({
+							addresses : [self.app.user.address.value],
+							...helpers.getYearPeriod(monetizationParameters.currentYear)
+						}).then(result => {
 							console.log('result', result)
 						}).catch(e => {
 							console.error(e)
