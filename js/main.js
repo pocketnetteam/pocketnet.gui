@@ -48,7 +48,8 @@ if(!_Node)
 		listofproxies : _listofproxies,
 		matrix : matrix,
 		developapps,
-		translateApiProxy
+		translateApiProxy,
+		monetization : servers.monetization
 	});
 
 	app.preapi()

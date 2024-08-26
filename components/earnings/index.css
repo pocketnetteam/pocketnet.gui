@@ -1,3 +1,14 @@
+#earnings .monetizationEnablePreview {
+  text-align: center;
+  padding: 2em;
+  margin-bottom: 2em;
+}
+#earnings .monetizationEnablePreview .monetizationCaption span {
+  font-size: 2em;
+}
+#earnings .monetizationEnablePreview .monetizationAction {
+  margin-top: 1em;
+}
 #earnings .earnings {
   background: rgb(var(--background-secondary-theme));
   min-height: 600px;

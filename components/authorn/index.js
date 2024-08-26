@@ -1143,28 +1143,46 @@ var authorn = (function(){
 				}
 
 
-				params.includeboost = false && !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video && self.app.platform.sdk.users.checkMonetization(self.app.user.address.value) 
+				
+
+				
 
 				el.lenta.html('')
 
 				if(!author.reputationBlocked && !author.deleted){
-					self.nav.api.load({
 
-						open : true,
-						id : 'lenta',
-						el : el.lenta,
-						animation : false,
-	
-						mid : author.address,
-						insertimmediately : true,
-						essenseData : params,
-						fade : el.lenta,
-						
-						clbk : function(e, p){
-							modules.lenta = p;
-						}
-	
+					var monetizationPromise = (() => {return Promise.resolve(false)})()
+
+					var monetizationStatic = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
+
+					if (monetizationStatic) 
+						monetizationPromise = self.app.platform.sdk.users.checkMonetization(self.app.user.address.value)
+
+
+					monetizationPromise.then((m) => {
+
+						params.includeboost = monetizationStatic && m
+
+						self.nav.api.load({
+
+							open : true,
+							id : 'lenta',
+							el : el.lenta,
+							animation : false,
+		
+							mid : author.address,
+							insertimmediately : true,
+							essenseData : params,
+							fade : el.lenta,
+							
+							clbk : function(e, p){
+								modules.lenta = p;
+							}
+		
+						})
+
 					})
+					
 				}
 				else{
 					el.lenta.html('<div class="dummylenta"><i class="fas fa-dot-circle"></i></div>')

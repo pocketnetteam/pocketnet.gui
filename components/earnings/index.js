@@ -17,7 +17,7 @@ var earnings = (function () {
 		}
 
 		var stats = []
-		var monetization = false
+		var monetizationOpportunity = false
 
 		var loading = false
 
@@ -83,6 +83,66 @@ var earnings = (function () {
 
 				})
 
+			},
+
+			monetizationWrapper(clbk){
+
+				console.log('monetizationOpportunity', monetizationOpportunity)
+
+				if(!monetizationOpportunity){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.app.platform.sdk.users.checkMonetization(self.app.user.address.value).then((monetization) => {
+
+					console.log("??????????")
+
+					try{
+						self.app.monetization.test_getauthorsmonetizationearns().then(result => {
+							console.log('result', result)
+						}).catch(e => {
+							console.error(e)
+	
+						})
+					}catch(e){
+						console.error(e)
+					}
+					
+
+					self.shell({
+
+						name: 'monetizationwrapper',
+						el: el.c.find('.monetizationOpportunity'),
+						data: {
+							monetization
+						},
+	
+					}, function (_p) {
+
+						_p.el.find('.monetizationEnable').on('click', function(){
+
+							globalpreloader(true)
+
+							setTimeout(() => {
+
+								renders.monetizationWrapper(() => {
+									globalpreloader(false)
+								})
+
+							}, 500)
+						})
+						
+						if(clbk) clbk()
+	
+					})
+
+				}).catch(e => {
+					if(clbk) clbk()
+				})
+
+				
 			}
 		}
 
@@ -101,6 +161,14 @@ var earnings = (function () {
 
 		}
 
+		var make = function(){
+			
+			renders.monetizationWrapper(() => {
+				actions.getStat()
+			})
+
+		}
+
 		return {
 			primary: primary,
 
@@ -109,15 +177,14 @@ var earnings = (function () {
 
 				
 
-					monetization = self.app.platform.sdk.users.checkMonetization(self.app.user.address.value) 
+					monetizationOpportunity = self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value) 
 					
 					var data = {
 						period: selectedPeriod,
-						monetization
+						monetizationOpportunity
 					};
 
 					clbk(data);
-				})
 
 			},
 
@@ -153,7 +220,10 @@ var earnings = (function () {
 
 				initEvents();
 
-				actions.getStat()
+				make()
+
+				
+
 				p.clbk(null, p);
 			}
 		}

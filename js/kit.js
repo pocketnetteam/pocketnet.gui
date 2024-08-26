@@ -3640,9 +3640,32 @@ Settings = function(){
 		v : ''
 	};
 
+	self.monetization = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('monetization', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
 	self.clear = function(){
 
 		self.pin.set()
+		self.monetization.set()
 
 	}
 
@@ -3671,7 +3694,8 @@ Settings = function(){
 	self.serialize = function(){
 
         return JSON.stringify({
-			pin: self.pin.v
+			pin: self.pin.v,
+			monetization : self.monetization.v
 		})
 
 	}
@@ -3687,6 +3711,7 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
+					monetization : self.monetization.v || ""
 				})
 			} 
 		}
@@ -3694,6 +3719,7 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
+				monetization : self.monetization.v || ""
 			})
 		}
 
@@ -3717,6 +3743,7 @@ Settings = function(){
 		}
 
 		self.pin.set(parsed.pin || ""); 
+		self.monetization.set(parsed.monetization || ""); 
 
 	}
 

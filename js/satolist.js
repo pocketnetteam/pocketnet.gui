@@ -5582,10 +5582,8 @@ Platform = function (app, listofnodes) {
 
                         var pinPost = function (share, clbk, unpin){
 
-                            var ct = new Settings();
-                            ct.pin.set(unpin ? '' : share.txid);
 
-                            self.app.platform.sdk.user.accSet(ct, function(err, alias){
+                            self.app.platform.sdk.user.accSetMy({pin : unpin ? '' : share.txid}, function(err, alias){
 
                                 if(!err){
 
@@ -9237,6 +9235,37 @@ Platform = function (app, listofnodes) {
 
             },
 
+            accSetMy: function (settingsObj, clbk) {
+
+                if(!settingsObj) settingsObj = {}
+
+                self.psdk.accSet.load(self.app.user.address.value).then(() => {
+
+                    var settings = self.psdk.accSet.get(author) || {}
+
+                    var ct = new Settings();
+
+                    ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? (settings.monetization || '') : settingsObj.monetization);
+
+                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+
+                }).then(action => {
+
+                    var alias = action.get()
+                
+                    if (clbk) clbk(null, alias)
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(e)
+
+                })
+                
+
+            },
+
             subscribeRef: function (clbk) {
 
                 var adr = self.app.user.address.value;
@@ -10555,7 +10584,10 @@ Platform = function (app, listofnodes) {
 
             nameaddressstorage : {},
 
-            checkMonetization : function(address){
+            checkMonetizationOpportunity : function(address){
+
+                return true //// temp
+
                 if(!address) return false
                 var userinfo = self.psdk.userInfo.get(address)
 
@@ -10563,7 +10595,26 @@ Platform = function (app, listofnodes) {
 
                 var subcount = userinfo.subscribes_count || 0
 
-				return self.app.boost && !self.app.pkoindisable && subcount > 500 && self.real[address]
+                
+
+				return self.app.monetization && self.app.boost && !self.app.pkoindisable && subcount > 500 && self.real[address]
+            },
+
+            checkMonetization : function(address){
+                if (self.sdk.users.checkMonetizationOpportunity(address)){
+
+                    return self.psdk.accSet.load(address).then(setting => {
+
+                        var settings = self.psdk.accSet.get(address) || {}
+
+                        return Promise.resolve(settings.monetization || false)
+
+                    })
+
+                }
+                else{
+                    return Promise.resolve(false)
+                }
             },
 
             getone: function (address, clbk, light, reload) {
