@@ -3519,14 +3519,12 @@ Platform = function (app, listofnodes) {
 
             var images = edjs.getallimages(share.message)
 
-            console.log('images', images)
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
 
             var opengallery = function(src){
 
-                console.log('iamges opengallery', src)
 
                 self.app.platform.ui.images(images, src)
 
