@@ -51,12 +51,10 @@ var Monetization = function(app, {url, auth}){
 
     self.contentperformance = function({addresses, start, end}){
 
-        console.log('addresses, start, end', addresses, start, end)
-
         if(!_.isArray(addresses)) addresses = [addresses]
 
 
-        var r = [
+        /*var r = [
             {
                 "id": 99,
                 "hash": "9b56be698bf7e4d8eea6ac07ef35a0f496863cac1fc03f336e059d2d6788f045",
@@ -347,7 +345,7 @@ var Monetization = function(app, {url, auth}){
 
         return Promise.resolve(group(r, (f) => {
             return f.addressHash
-        }))
+        }))*/
 
         return request('monetization/contentperformance', {
             Addresses : addresses,

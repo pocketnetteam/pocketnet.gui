@@ -378,7 +378,7 @@ Platform = function (app, listofnodes) {
         'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7' : true,
         'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo' : true,
         'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw' : true,
-        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true
+        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
 
     } 
 
@@ -10586,16 +10586,12 @@ Platform = function (app, listofnodes) {
 
             checkMonetizationOpportunity : function(address){
 
-                return true //// temp
-
                 if(!address) return false
                 var userinfo = self.psdk.userInfo.get(address)
 
                 if(!userinfo) return false
 
                 var subcount = userinfo.subscribes_count || 0
-
-                
 
 				return self.app.monetization && self.app.boost && !self.app.pkoindisable && subcount > 500 && self.real[address]
             },
@@ -10607,7 +10603,7 @@ Platform = function (app, listofnodes) {
 
                         var settings = self.psdk.accSet.get(address) || {}
 
-                        return Promise.resolve(true /*settings.monetization || false*/)
+                        return Promise.resolve(settings.monetization || false)
 
                     })
 
