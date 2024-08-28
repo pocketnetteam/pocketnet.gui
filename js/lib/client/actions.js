@@ -731,7 +731,7 @@ var Action = function(account, object, priority, settings){
         if ((options.calculateFee && options.calculateFee(self)) && !calculatedFee){
             var feerate = await account.parent.estimateFee()
 
-            return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999), send)
+            return makeTransaction(false, Math.min(tx.virtualSize() * Math.min(feerate, 0.00002499 / 2), 0.0999), send)
         }
 
         var hex = tx.toHex();
