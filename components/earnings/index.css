@@ -85,6 +85,7 @@
 }
 #earnings .monetization .monetizationTable .postsTable .sharepreview {
   padding-top: 0;
+  font-size: 1.1em;
 }
 #earnings .monetization .monetizationTable .beforeprogram {
   color: rgb(var(--neutral-grad-2));
@@ -99,7 +100,7 @@
 #earnings .monetization .monetizationTable .week.expanded .postsTable {
   display: block;
 }
-#earnings .monetization .monetizationTable .expanded i.expandicon {
+#earnings .monetization .monetizationTable .expanded > div > div > i.expandicon {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
