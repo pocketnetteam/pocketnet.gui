@@ -1,0 +1,15 @@
+<% _.each(postTable, function(post){ %>
+
+    <div class="postTable table">
+        <div class="period"><% if(post.share) {%>
+            <div class="notification">
+                <%= tpl(post.share, null, true) %>
+            </div>
+            
+        <% } %></div>
+        <div class="posts"></div>
+        <div class="ratings"><span><%- (post.scoresCount || 0) + (post.scoresCountFromSharks || 0) %></span></div>
+        <div class="comments"><span><%- (post.commentsCount || 0) + (post.commentsFromSharks || 0) %></span></div>
+        <div class="reward"><span><%- app.platform.mp.coin(post.reward || 0) %></span></div>
+    </div>
+<% }) %>

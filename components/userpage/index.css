@@ -156,9 +156,6 @@
 #userpage #nodecontrol .maincaption {
   display: block;
 }
-#userpage .maketsWrapper {
-  overflow: hidden;
-}
 #userpage .maketsWrapper .maket.left {
   float: left;
   width: 150px;

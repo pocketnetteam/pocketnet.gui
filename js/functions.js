@@ -3,6 +3,11 @@
 /* DATE */
 
 
+getWeek = function(date){
+	var onejan = new Date(date.getFullYear(), 0, 1);
+	return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+}
+
 secInTime = function (sec) {
 
 	var h = sec / 3600 ^ 0;
@@ -21,6 +26,54 @@ secInTime = function (sec) {
 	return result.join(":")
 }
 
+getWeekNumber = function(d){
+	// Copy date so don't modify original
+	d = new Date(+d);
+	d.setHours(0, 0, 0, 0);
+	// Set to nearest Thursday: current date + 4 - current day number
+	// Make Sunday's day number 7
+	d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+	// Get first day of year
+	var yearStart = new Date(d.getFullYear(), 0, 1);
+	// Calculate full weeks to nearest Thursday
+	var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+	// Return array of year and week number
+	return [d.getFullYear(), weekNo];
+}
+  
+weeksInYear = function(year){
+	var month = 11,
+	  day = 31,
+	  week;
+
+	var result = []
+	var end = moment.utc(new Date(year + 1, 0, 1)).unix();
+  
+	// Find week that 31 Dec is in. If is first week, reduce date until
+	// get previous week.
+	do {
+	  var d = new Date(year, month, day--);
+
+	  week = getWeekNumber(d)[1];
+
+	} while (week == 1);
+
+	for(var i = 1; i <= week; i++){
+
+		var ds = moment.utc(year + "W" + addZero(i))
+		var de = moment(ds).add(7, 'days').unix()
+
+		if (de > end) de = end
+
+		result.push({
+			n : i,
+			date : ds.unix(),
+			end : de
+		})
+	}
+  
+	return result;
+}
 
 
 addZero = function (n) {

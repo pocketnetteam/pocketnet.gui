@@ -2863,3 +2863,13 @@ _l.buyviacrypto = "Buy via cryptocurrency"
 
 _l.installApplication = "Install the app "+appname+" to upload videos"
 _l.boostlabel= "How to advertise on Bastyon"
+
+_l.monetization_Period = "Period"
+_l.monetization_Publications = "Publications"
+_l.monetization_Ratings = "Ratings"
+_l.monetization_Comments = "Comments"
+_l.monetization_Reward = "Reward"
+_l.monetization_start = "Start monetization program"
+_l.monetization_Monetization = "Monetization"
+_l.monetization_enable = "Enable monetization"
+_l.monetization_monetizationText = "Enable monetization and earn income every week"

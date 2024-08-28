@@ -2650,3 +2650,14 @@ _l.buyviacrypto = "Купить с помощью криптовалюты"
 
 _l.installApplication = "Установите приложение "+appname+" чтобы загружать видео"
 _l.boostlabel= "Как рекламировать на Бастионе"
+
+
+_l.monetization_Period = "Период"
+_l.monetization_Publications = "Публикации"
+_l.monetization_Ratings = "Оценки"
+_l.monetization_Comments = "Комментарии"
+_l.monetization_Reward = "Вознаграждение"
+_l.monetization_start = "Начало программы монетизации"
+_l.monetization_Monetization = "Монетизация"
+_l.monetization_enable = "Включить монетизацию"
+_l.monetization_monetizationText = "Включите монетизацию и получайте доход каждую неделю"

@@ -2276,7 +2276,7 @@ var comments = (function(){
 
 			limits : function(el, message){
 
-				var l = 2000 - message.length;
+				var l = 915 - message.length;
 
 				el.find('.limits').removeClass('bad')
 
