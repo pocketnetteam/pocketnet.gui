@@ -1,6 +1,6 @@
 <% _.each(postTable, function(post){ %>
 
-    <div class="postTable table">
+    <div class="postTable table" share="<%-post.rootTxHash%>">
         <div class="period"><% if(post.share) {%>
             <div class="notification">
                 <%= tpl(post.share, null, true) %>

@@ -791,6 +791,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			try {
 				const res = await fetch(config.peertubesListLink);
 				fileRead = await res.json();
+				console.log("SUCCESS PREPARED LIST")
 			} catch (e) {
 				console.error('No peertube servers list!');
 			}
@@ -813,7 +814,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		re: function () {
 			return this.destroy().then(r => {
-				this.init()
+				return this.init()
 			})
 		},
 
@@ -2150,7 +2151,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		peertube: {
+			restart : {
+				authorization: 'signature',
+				path : '/peertube/restart',
+				action: function ({ A }) {
 
+					if(!A) return Promise.reject('none')
+
+					return self.peertube.re().then(() => {
+						return Promise.resolve({
+							data: 'success'
+						});
+					}).catch(e => {
+						return Promise.reject(e);
+					})
+				}
+			},
 		},
 
 		translate : {

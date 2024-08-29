@@ -28,6 +28,29 @@
 			}
 		}
 
+		.monetizationPanel{
+			.work{
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		.disableMonetization{
+			margin-left: auto;
+			cursor: pointer;
+
+			span{
+				font-size: 0.8em;
+				color : rgb(var(--neutral-grad-3));
+			}
+
+			&:hover{
+				span{
+					color : rgb(var(--color-bad));
+				}
+			}
+		}
+
 		.year{
 			padding-left: @rhythm;
 

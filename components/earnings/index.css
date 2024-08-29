@@ -19,6 +19,21 @@
 #earnings .monetization .monetizationCaption span {
   font-size: 2em;
 }
+#earnings .monetization .monetizationPanel .work {
+  display: flex;
+  align-items: center;
+}
+#earnings .monetization .disableMonetization {
+  margin-left: auto;
+  cursor: pointer;
+}
+#earnings .monetization .disableMonetization span {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+}
+#earnings .monetization .disableMonetization:hover span {
+  color: rgb(var(--color-bad));
+}
 #earnings .monetization .year {
   padding-left: 0.5em;
   margin-top: 1em;

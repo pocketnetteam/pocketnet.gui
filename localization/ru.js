@@ -2661,3 +2661,6 @@ _l.monetization_start = "Начало программы монетизации"
 _l.monetization_Monetization = "Монетизация"
 _l.monetization_enable = "Включить монетизацию"
 _l.monetization_monetizationText = "Включите монетизацию и получайте доход каждую неделю"
+_l.monetization_disable =  "Отключить программу"
+_l.monetization_disable_question = "Вы действительно хотите остановить своё участие в программе монетизации?"
+

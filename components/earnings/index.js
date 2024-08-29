@@ -236,7 +236,18 @@ var earnings = (function () {
 		
 						}, function (_p) {
 		
-		
+							_p.el.find('.postTable').on('click', function() {
+								var txid = $(this).attr('share')
+
+								self.app.nav.api.load({
+									open : true,
+									href : 'post?s=' + txid,
+									history : true,
+									inWnd: true,
+								})
+
+
+							})	
 						})
 
 					})
@@ -405,6 +416,38 @@ var earnings = (function () {
 							})
 
 						})
+
+
+						_p.el.find('.disableMonetization').on('click', function(){
+
+							new dialog({
+								html:  self.app.localization.e('monetization_disable_question'),
+								btn1text: self.app.localization.e('dyes'),
+								btn2text: self.app.localization.e('dno'),
+					
+								success: function () {
+									globalpreloader(true)
+
+									self.app.platform.sdk.users.setMonetization(false, (err, alias) => {
+										renders.monetizationWrapper(() => {
+											globalpreloader(false)
+										})
+									})
+								},
+					
+								fail: function () {
+			
+								},
+				
+								class : 'zindex'
+							})
+
+							
+
+						})
+
+
+						
 
 						if (monetization){
 
