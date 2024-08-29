@@ -1119,6 +1119,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object.address == exp.actor) {
                 object.pin = exp.pin
+                object.monetization = exp.monetization
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true

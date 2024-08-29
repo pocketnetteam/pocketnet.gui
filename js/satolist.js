@@ -9242,7 +9242,7 @@ Platform = function (app, listofnodes) {
 
                 self.psdk.accSet.load(self.app.user.address.value).then(() => {
 
-                    var settings = self.psdk.accSet.get(author) || {}
+                    var settings = self.psdk.accSet.get(self.app.user.address.value) || {}
 
                     var ct = new Settings();
 
@@ -10585,6 +10585,27 @@ Platform = function (app, listofnodes) {
 
             nameaddressstorage : {},
 
+            setMonetization : function(monetization, clbk){
+                self.app.platform.sdk.user.accSetMy({monetization : monetization || false}, function(err, alias){
+
+                    console.log("ERROR", err)
+
+                    if(!err){
+
+                        if (clbk){
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
+
             checkMonetizationOpportunity : function(address){
 
                 if(!address) return false
@@ -10603,6 +10624,8 @@ Platform = function (app, listofnodes) {
                     return self.psdk.accSet.load(address).then(setting => {
 
                         var settings = self.psdk.accSet.get(address) || {}
+
+                        console.log("USERSETTINGS", settings)
 
                         return Promise.resolve(settings.monetization || false)
 

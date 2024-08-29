@@ -3774,6 +3774,7 @@ pSettings = function(){
 	var self = this;
 
 	self.pin = '';
+	self.monetization = ''
 	self.address = ''
 
 	self._import = function(dv = {}){
@@ -3781,6 +3782,7 @@ pSettings = function(){
 		var v = dv.d
 
 		self.pin = (v || {}).pin || ""
+		self.monetization = (v || {}).monetization || ""
 		self.address = (v || {}).address || ""
 	}
 
@@ -3824,7 +3826,8 @@ pSettings = function(){
 
 		s.import({
 			d : {
-				pin : self.pin
+				pin : self.pin,
+				monetization : self.monetization
 			}
 		})
 

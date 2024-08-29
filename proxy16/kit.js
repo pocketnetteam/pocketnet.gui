@@ -274,7 +274,7 @@ var defaultSettings = {
 				privatekey : "",
 				amount : 0.0002,
 				outs : 10,
-				check : 'ipAndUniqAddress' //// ipAndUniqAddress4m 
+				check : 'ipAndUniqAddress'
 			}
 		}
 	},

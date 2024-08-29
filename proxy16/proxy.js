@@ -417,10 +417,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return wallet.init()
 		},
 
-		addqueue: function (key, address, ip) {
-			return wallet.kit.addqueue(key, address, ip)
+		addqueue: function (key, address, ip, amount) {
+			return wallet.kit.addqueue(key, address, ip, amount)
 		},
-
 
 		destroy: function () {
 			return wallet.destroy()

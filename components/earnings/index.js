@@ -398,13 +398,12 @@ var earnings = (function () {
 
 							globalpreloader(true)
 
-							setTimeout(() => {
-
+							self.app.platform.sdk.users.setMonetization(true, (err, alias) => {
 								renders.monetizationWrapper(() => {
 									globalpreloader(false)
 								})
+							})
 
-							}, 500)
 						})
 
 						if (monetization){
@@ -428,7 +427,7 @@ var earnings = (function () {
 							})
 						}
 						
-						if(clbk) clbk()
+						if(clbk) clbk(monetization)
 	
 					})
 
