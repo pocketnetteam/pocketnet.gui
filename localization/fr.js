@@ -901,7 +901,7 @@ _l.aboutNewBlock = 'Comment gagner avec "+appname +"';
 _l.aboutNewBlock1 = 'Contenu populaire et commentaires en vedette';
 _l.aboutNewBlock2 = 'Vous gagnez des PKOIN pour les votes des utilisateurs actifs sur la plateforme. Ainsi, si vous amenez votre public, vous serez protégé de la censure, tout en gagnant pour leur interaction avec votre contenu. Vos abonnés peuvent également ajouter des PKOIN à leurs commentaires pour les présenter sous votre message, 100% des recettes vous reviennent, car il n’y a pas d’entité corporative.';
 _l.aboutNewBlock3 = 'Programme de bonus';
-_l.aboutNewBlock4 = '"+appname +" a un programme de bonus à durée limitée pour les blogueurs vidéo avec des gains de 1 000 USD pour chaque 15k vues de vidéos, 1000 utilisateurs invités et 1 250 interactions. Le bonus est payé en Bitcoin ou PKOIN, selon la préférence du blogueur. Il s’agit d’un programme à durée limitée.';
+_l.aboutNewBlock4 = '';
 _l.aboutNewBlock5 = 'Annonces décentralisées';
 _l.aboutNewBlock6 = 'Un marché publicitaire décentralisé dont la sortie est prévue pour décembre 2021 permettra aux annonceurs de créer des publications et de les proposer aux blogueurs. Un blogueur peut examiner la publication de l’annonce et la republier, le cas échéant. Toutes les interactions sur le canal des blogueurs iront directement au portefeuille du blogueur, 100% du produit de l’annonce.';
 
@@ -934,14 +934,14 @@ _l.aboutYoutubeThreeColumn7 = 'Vous avez perdu l’accès à vos vidéos si vous
 _l.aboutYoutubeThreeColumn8 = 'Le pire, c’est que les décisions de YouTube sont arbitraires et sont généralement finales';
 _l.aboutYoutubeThreeColumn9 = 'Le pire, c’est que les décisions de YouTube sont généralement finales.';
 _l.aboutYoutubeThreeColumn10 = 'Vous n’avez aucun moyen de récupérer votre chaîne, vos abonnés et votre argent. Ils sont partis, pour toujours.' ;
-_l.aboutYoutubeThreeColumn11 = 'Déplacez-vous vers "+appname +" avant qu’il ne soit trop tard. Nous pouvons importer vos vidéos sans effort, et vous pouvez être payé 1 000 $ pour chaque 15 000 visionnements ! (Plus de 1 250 interactions et 1 000 utilisateurs invités sur votre chaîne) ' ;
+_l.aboutYoutubeThreeColumn11 = ' ' ;
 _l.aboutYoutubeThreeColumn12 = 'Qu’attendez-vous?!';
 
 _l.aboutYoutubeH3Section = 'Construire une communauté d’abonnés sur YouTube, c’est comme construire une maison sur un terrain que vous ne possédez pas.';
 
 _l.aboutYoutubeImgAndText1 = 'GAGNEZ AVEC "+appname +" PAS DE DÉMONÉTISATION';
 
-_l.aboutYoutubeImgAndText2 =  '"+appname +" vous paie pour poster des vidéos et pour chaque interaction (like/commentaire) que vous obtenez. À l’heure actuelle, "+appname +" a un programme de bonus qui vous donne 1 000 $ (en crypto-monnaie) pour chaque 15 000 vues + 1 250 interactions + 1 000 utilisateurs invités sur votre chaîne';
+_l.aboutYoutubeImgAndText2 =  '';
 _l.aboutYoutubeImgAndText3 = 'Et vous pouvez parler de sujets « sensibles ». Vous ne serez jamais bloqué ou démonétisé, si vous ne publiez pas de pornographie ou de contenu illégal qui sera modéré par la communauté. De plus, si vous amenez vos abonnés, vous obtenez également des références.'
 _l.aboutYoutubeImgAndText4 = 'Zone de liberté d’expression – Modéré par la communauté';
 _l.aboutYoutubeImgAndText5 = 'Sur "+appname +", vous pouvez parler de sujets sensibles (et ils se multiplient de jour en jour): COVID, politique, changement climatique, premier et deuxième amendement. La communauté d’utilisateurs modère "+appname +" et les seuls sujets bloqués sont la pornographie et les contenus illicites.' ;
@@ -1011,7 +1011,7 @@ _l.aboutYoutubeThirdBoard25 = '"+appname +" vous paie beaucoup plus que YouTube!
 _l.aboutYoutubeThirdBoard26 = 'Vous pouvez gagner de l’argent avec "+appname +".';
 _l.aboutYoutubeThirdBoard27 = '"+appname +" utilise sa propre crypto-monnaie:';
 _l.aboutYoutubeThirdBoard28 = 'Chaque fois que vos publications et vidéos reçoivent des commentaires et des likes, vous obtenez PKOIN.';
-_l.aboutYoutubeThirdBoard29 = 'Chaque fois qu’une de vos vidéos obtient 15k vues, plus 1250 réactions et 1000 utilisateurs référents, vous obtenez 1 000 $ en PKOIN (vous pouvez les convertir en USD!). IL S’AGIT D’UNE OFFRE À DURÉE LIMITÉE !!!';
+_l.aboutYoutubeThirdBoard29 = '';
 _l.aboutYoutubeThirdBoard30 = 'Chaque fois que quelqu’un rejoint "+appname +" avec votre lien de parrainage, vous obtenez PKOIN.';
 _l.aboutYoutubeThirdBoard31 = 'Contactez-nous pour en savoir plus et activer votre compte en tant que « CRÉATEUR » afin que vous puissiez publier un nombre illimité de vidéos et être payé!';
 
@@ -1122,7 +1122,7 @@ _l.aboutTitterMainBoard31 = 'Et il y a plus! "+appname +" vous paie. »';
 _l.aboutTitterMainBoard32 = 'Vous pouvez gagner de l’argent avec "+appname +".';
 _l.aboutTitterMainBoard33 = '"+appname +" utilise sa propre crypto-monnaie:';
 _l.aboutTitterMainBoard34 = 'Chaque fois que vos publications et vidéos reçoivent des commentaires et des likes, vous obtenez PKOIN.';
-_l.aboutTitterMainBoard35 = 'Chaque fois qu’une de vos vidéos obtient 15 000 vues + 1 250 réactions, vous obtenez 1 000 $ en PKOIN (vous pouvez les convertir en USD!). IL S’AGIT D’UNE OFFRE À DURÉE LIMITÉE !!! »';
+_l.aboutTitterMainBoard35 = '';
 _l.aboutTitterMainBoard36 = 'Chaque fois que quelqu’un rejoint "+appname +" avec votre lien de parrainage, vous obtenez PKOIN.';
 _l.aboutTitterMainBoard37 = 'Contactez-nous pour en savoir plus et pour activer votre compte en tant que « CRÉATEUR » afin que vous puissiez publier un nombre illimité de vidéos et être payé!';
 
@@ -1212,7 +1212,7 @@ _l.aboutFbMainBoard3 = 'Et il y a plus! "+appname +" vous paie.' ;
 _l.aboutFbMainBoard31 = 'Vous pouvez gagner de l’argent avec "+appname +".';
 _l.aboutFbMainBoard32 = '"+appname +" utilise sa propre crypto-monnaie: ';
 _l.aboutFbMainBoard33 = 'Chaque fois que vos publications et vidéos reçoivent des commentaires et des likes, vous obtenez PKOIN.';
-_l.aboutFbMainBoard34 = 'Chaque fois qu’une de vos vidéos obtient 15 000 vues + 1 250 réactions, vous obtenez 1 000 $ en PKOIN (vous pouvez les convertir en USD!). IL S’AGIT D’UNE OFFRE À DURÉE LIMITÉE !!! ';
+_l.aboutFbMainBoard34 = '';
 _l.aboutFbMainBoard34 = 'Chaque fois que quelqu’un rejoint "+appname +" avec votre lien de parrainage, vous obtenez PKOIN.';
 _l.aboutFbMainBoard35 = 'Contactez-nous pour en savoir plus et activer votre compte en tant que « CRÉATEUR » afin que vous puissiez poster un nombre illimité de vidéos et être payé!';
 
@@ -1309,7 +1309,7 @@ _l.aboutHowItWImgAndText33 = '"+appname +" vous paie';
 _l.aboutHowItWImgAndText34 = 'Vous pouvez gagner de l’argent avec "+appname +".';
 _l.aboutHowItWImgAndText35 = '"+appname +" utilise sa propre crypto-monnaie:';
 _l.aboutHowItWImgAndText36 = 'Chaque fois que vos messages reçoivent des commentaires et des likes, vous obtenez PKOIN.';
-_l.aboutHowItWImgAndText37 = 'Chaque fois que votre vidéo obtient 15 000 vues + 750 réactions « 5 étoiles », vous obtenez 1 000 $ en PKOIN (vous pouvez les convertir en USD!). IL S’AGIT D’UNE OFFRE D’UNE DURÉE LIMITÉE!!! ';
+_l.aboutHowItWImgAndText37 = ' ';
 _l.aboutHowItWImgAndText38 = 'Chaque fois que quelqu’un rejoint "+appname +" avec votre lien de parrainage, vous obtenez PKOIN.';
 _l.aboutHowItWImgAndText39 = 'Contactez-nous pour en savoir plus et activer votre compte en tant que « CRÉATEUR » afin que vous puissiez publier un nombre illimité de vidéos et être payé!';
 _l.aboutHowItWImgAndText40 = 'Prochaine étape: contactez-nous pour faire vérifier votre compte "+appname +" et accéder au programme de bonus.';
@@ -1331,8 +1331,8 @@ _l.ContentCreatorsMainBoard1 = '"Il existe de nombreuses façons de gagner de l�
 
 _l.ContentCreatorsImgAndText = 'Publiez vos vidéos';
 _l.ContentCreatorsImgAndText1 = 'Publiez vos vidéos sur "+appname +"';
-_l.ContentCreatorsImgAndText2 = '15 000 vides, 1250 réactions de différents utilisateurs et 1000 utilisateurs invités sur votre chaîne';
-_l.ContentCreatorsImgAndText3 = 'Vous rapporte 1 000 $ payés en Bitcoin ou PKOIN';
+_l.ContentCreatorsImgAndText2 = '';
+_l.ContentCreatorsImgAndText3 = '';
 _l.ContentCreatorsImgAndText4 = 'Prochaine étape: contactez-nous pour faire vérifier votre compte "+appname +" et accéder au programme de bonus.';
 _l.ContentCreatorsImgAndText5 = 'Contactez-nous maintenant!';
 _l.ContentCreatorsImgAndText6 = 'Invitez vos abonnés';
