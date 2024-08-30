@@ -1790,10 +1790,19 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
       encrypting: false,
       showInput: true,
       showShareMessages: false,
-      selectedMessages: []
+      selectedMessages: [],
+      activated: false
     };
   },
-  created() {},
+  created() {
+    this.activated = true;
+  },
+  activated() {
+    this.activated = true;
+  },
+  deactivated() {
+    this.activated = false;
+  },
   mounted() {
     if (!this.streamMode) {
       this.getuserinfo();
@@ -1805,6 +1814,7 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
     }
     this.membershipReactivity = setInterval(() => {
       var _this$m_chat2, _this$m_chat2$current;
+      if (!this.activated) return;
       if (this.m_chat && !this.streamMode) {
         if (this.m_chat.timeline.length > 0) {
           const id = this.core.mtrx.client.credentials.userId,

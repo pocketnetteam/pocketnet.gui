@@ -393,6 +393,12 @@
   font-size: 0.7em;
   font-weight: 700;
 }
+.wnd #earnings .monetization .monetizationTable .tableCaption {
+  position: static;
+}
+.wnd #earnings .monetization .monetizationTable .totalWrapper {
+  position: static;
+}
 /*t*/
 @media only screen and (max-width: 1024px) {
   #earnings .earnings .content .totalItem .metricablock .vidgetIconWrapper .vidgetIcon .repv {

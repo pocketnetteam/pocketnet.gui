@@ -511,7 +511,7 @@ var earnings = (function () {
 			getdata: async function (clbk) {
 
 
-				
+					monetizationParameters.startPeriod = self.app.monetization.start
 
 					monetizationOpportunity = self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value) 
 					

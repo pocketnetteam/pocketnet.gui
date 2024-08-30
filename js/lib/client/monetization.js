@@ -49,6 +49,8 @@ var Monetization = function(app, {url, auth}){
 
     }
 
+    self.start = 1725235200
+
     self.contentperformance = function({addresses, start, end}){
 
         if(!_.isArray(addresses)) addresses = [addresses]
