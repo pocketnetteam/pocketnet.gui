@@ -829,7 +829,8 @@ var component = Object(componentNormalizer["a" /* default */])(
       updateInterval: null,
       events: [],
       firstPaginate: true,
-      readPromise: null
+      readPromise: null,
+      activated: false
     };
   },
   mounted: function () {
@@ -888,12 +889,19 @@ var component = Object(componentNormalizer["a" /* default */])(
   }),
   created() {
     this.updateInterval = setInterval(this.update, 300);
+    this.activated = true;
   },
   destroyed() {
     if (this.timeline) {
       this.timeline.unpaginate(this.timeline._eventCount, true);
     }
     clearInterval(this.updateInterval);
+  },
+  activated() {
+    this.activated = true;
+  },
+  deactivated() {
+    this.activated = false;
   },
   methods: {
     editingEvent: function ({
@@ -1320,6 +1328,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       this.esize = size;
     },
     update: function (e) {
+      if (!this.activated) return;
       if (!this.scrolling) {
         this.autoPaginateAll();
       } else {

@@ -217,6 +217,12 @@ var BastyonSdk = function(){
             return action('balance', {})
         },
 
+        zaddress : function() {
+            return action('zaddress', {}).then(R => {
+                return Promise.resolve(R)
+            })
+        },
+
         geolocation : function(){
             return action('geolocation', {})
         },

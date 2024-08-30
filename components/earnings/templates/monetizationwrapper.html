@@ -1,0 +1,47 @@
+<% if(!monetization) {%>
+    <div class="monetizationEnablePreview">
+        <div class="work">
+            <div class="monetizationCaption">
+                <span><%=e('monetization_Monetization')%></span>
+            </div>
+
+            <div class="monetizationText">
+                <span><%=e('monetization_monetizationText')%></span>
+            </div>
+
+            <div class="monetizationAction">
+                <button class="button orange monetizationEnable"><%=e('monetization_enable')%></button>
+            </div>
+        </div>
+    </div>
+<% } else { %> 
+    <div class="monetization">
+        <div class="monetizationCaption">
+            <div class="work">
+                <span><%=e('monetization_Monetization')%></span>
+            </div>
+        </div>
+
+        <div class="monetizationPanel">
+            <div class="work">
+                <div class="year">
+                    <span><%- monetizationParameters.currentYear %></span> 
+                    <% if(monetizationParameters.currentYear > monetizationParameters.years[0]) {%>
+                    <i class="fas fa-angle-left yearleft"></i> 
+                    <% } %>
+
+                    <% if(monetizationParameters.currentYear < monetizationParameters.years[1]) {%>
+                        <i class="fas fa-angle-right yearright"></i>
+                    <% } %>
+                </div>
+
+                <div class="disableMonetization">
+                    <span><%=e('monetization_disable')%></span>
+                </div>
+            </div>
+        </div>
+        <div class="monetizationEarnings">
+            
+        </div>
+    </div>
+<% }%>

@@ -378,7 +378,10 @@ Platform = function (app, listofnodes) {
         'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7' : true,
         'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo' : true,
         'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw' : true,
-        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true
+        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
+        'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
+        'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true
 
     } 
 
@@ -3516,14 +3519,12 @@ Platform = function (app, listofnodes) {
 
             var images = edjs.getallimages(share.message)
 
-            console.log('images', images)
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
 
             var opengallery = function(src){
 
-                console.log('iamges opengallery', src)
 
                 self.app.platform.ui.images(images, src)
 
@@ -5582,10 +5583,8 @@ Platform = function (app, listofnodes) {
 
                         var pinPost = function (share, clbk, unpin){
 
-                            var ct = new Settings();
-                            ct.pin.set(unpin ? '' : share.txid);
 
-                            self.app.platform.sdk.user.accSet(ct, function(err, alias){
+                            self.app.platform.sdk.user.accSetMy({pin : unpin ? '' : share.txid}, function(err, alias){
 
                                 if(!err){
 
@@ -9237,6 +9236,37 @@ Platform = function (app, listofnodes) {
 
             },
 
+            accSetMy: function (settingsObj, clbk) {
+
+                if(!settingsObj) settingsObj = {}
+
+                self.psdk.accSet.load(self.app.user.address.value).then(() => {
+
+                    var settings = self.psdk.accSet.get(self.app.user.address.value) || {}
+
+                    var ct = new Settings();
+
+                    ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? (settings.monetization || '') : settingsObj.monetization);
+
+                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+
+                }).then(action => {
+
+                    var alias = action.get()
+                
+                    if (clbk) clbk(null, alias)
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(e)
+
+                })
+                
+
+            },
+
             subscribeRef: function (clbk) {
 
                 var adr = self.app.user.address.value;
@@ -10554,6 +10584,58 @@ Platform = function (app, listofnodes) {
             storage: {},
 
             nameaddressstorage : {},
+
+            setMonetization : function(monetization, clbk){
+                self.app.platform.sdk.user.accSetMy({monetization : monetization || false}, function(err, alias){
+
+                    console.log("ERROR", err)
+
+                    if(!err){
+
+                        if (clbk){
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
+
+            checkMonetizationOpportunity : function(address){
+
+                if(!address) return false
+                var userinfo = self.psdk.userInfo.get(address)
+
+                if(!userinfo) return false
+
+                var subcount = userinfo.subscribes_count || 0
+
+				return self.app.monetization && /*self.app.monetization.start <= moment.utc().unix() &&*/ self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
+            },
+
+            checkMonetization : function(address){
+                if (self.sdk.users.checkMonetizationOpportunity(address)){
+
+                    return self.psdk.accSet.load(address).then(setting => {
+
+                        var settings = self.psdk.accSet.get(address) || {}
+
+                        console.log("USERSETTINGS", settings)
+
+                        return Promise.resolve(settings.monetization || false)
+
+                    })
+
+                }
+                else{
+                    return Promise.resolve(false)
+                }
+            },
 
             getone: function (address, clbk, light, reload) {
 

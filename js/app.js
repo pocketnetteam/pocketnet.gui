@@ -110,6 +110,12 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
+	console.log('monet', p)
+
+	if (p.monetization && typeof window.Monetization != 'undefined'){
+		self.monetization = new window.Monetization(self, p.monetization)
+	}
+	
 	//self._meta = window.projects_meta
 	self.meta = window.project_config || {}
 	

@@ -1,6 +1,251 @@
 @import "../../css/__cssvar";
 
 #earnings {
+	.monetizationEnablePreview{
+		text-align: center;
+		padding : 4 * @rhythm;
+		margin-bottom: 4 * @rhythm;
+
+		.monetizationCaption{
+			span{
+				font-size: 2em;
+			}
+		}
+
+		.monetizationAction{
+			margin-top: 2 * @rhythm;
+		}
+	}
+
+	.monetization{
+		margin-top: 2 * @rhythm;
+		margin-bottom: 4 * @rhythm;
+
+		.monetizationCaption{
+			padding-left: @rhythm;
+			span{
+				font-size: 2em;
+			}
+		}
+
+		.monetizationPanel{
+			.work{
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		.disableMonetization{
+			margin-left: auto;
+			cursor: pointer;
+
+			span{
+				font-size: 0.8em;
+				color : rgb(var(--neutral-grad-3));
+			}
+
+			&:hover{
+				span{
+					color : rgb(var(--color-bad));
+				}
+			}
+		}
+
+		.year{
+			padding-left: @rhythm;
+
+			margin-top: 2 * @rhythm;
+			margin-bottom: 2 * @rhythm;
+			span{
+				font-size: 2em;
+				font-weight: 700;
+			}
+
+			i{
+				margin-bottom: 6px;
+				width: 33px;
+				text-align: center;
+				color : rgb(var(--neutral-grad-2));
+				cursor: pointer;
+				.transition(0.3s);
+				&:hover{
+					color : rgb(var(--neutral-grad-4));
+				}
+			}
+		}
+		
+		.error,
+		.startof{
+			margin-top: 2 * @rhythm;
+			margin-bottom: 2 * @rhythm;
+			padding : 4 * @rhythm;
+			text-align: center;
+			background: rgba(var(--background-main),0.5);
+		}
+
+		.error{
+			margin-left: 2 * @rhythm;
+			margin-right: 2 * @rhythm;
+		}
+
+
+		.monetizationTable{
+
+			position: relative;
+
+			.tableCaption{
+				border-bottom: 1px solid rgb(var(--neutral-grad-0));
+				z-index: 2;
+				position: sticky;
+				top: calc(65px + var(--app-margin-top));
+				left: 0;
+				right: 0;
+				>div{
+					span{
+						font-size: 0.8em;
+						font-weight: 700;
+					}
+				}
+			}
+
+			.totalWrapper{
+				position: sticky;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 2;
+			}
+
+			.tableTotal{
+				
+				border-top: 2px solid rgb(var(--neutral-grad-3));
+
+				.reward{
+					span{
+						font-weight: 700;
+						color : rgb(var(--color-txt-ac-1));
+					}
+				}
+			}
+
+			.postsTable{
+				.sharepreview{
+					padding-top: 0;
+					font-size: 1.1em;
+				}
+			}
+
+			.beforeprogram{
+				color : rgb(var(--neutral-grad-2));
+			}
+
+			.postsTable,
+			.weeks{
+				display: none;
+			}
+
+			.month.expanded{
+				.weeks{
+					display: block;
+				}
+			}
+
+			.week.expanded{
+				.postsTable{
+					display: block;
+				}
+			}
+
+			.expanded{
+				>div>div>i.expandicon{
+					-webkit-transform: rotate(180deg);
+					-moz-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+					transform: rotate(180deg);
+				}
+				
+			}
+
+			.table{
+
+				background: rgb(var(--background-total-theme));
+
+				&:nth-child(2n){
+					background: rgba(var(--neutral-grad-0), 0.3);
+				}
+
+				&.monthTable{
+					border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.3);
+				}
+
+				&.canexpand{
+					cursor: pointer;
+					.transition(0.3s);
+
+					&:hover{
+						opacity: 0.8;
+
+						>div{
+							i.expandicon{
+								color : rgb(var(--neutral-grad-4));
+							}
+						}
+						
+					}
+				}
+
+				
+				
+				.period{
+					width: 50%;
+				}
+
+				.reward{
+					width: 100px;
+				}
+
+				>div{
+					padding : 2 * @rhythm @rhythm;
+					border-right: 1px solid rgb(var(--neutral-grad-0));
+					text-align: center;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					
+
+					i{
+						width: 33px;
+						text-align: center;
+						color : rgb(var(--neutral-grad-2));
+					}
+
+					&:nth-child(1){
+						text-align: left;
+					}
+
+					&:nth-last-child(1){
+						border-right: 0;
+						text-align: right;
+					}
+				}
+
+				.openpostsmonth,
+				.openpostsweek{
+					width: auto;
+					cursor: pointer;
+					font-size: 0.7em;
+					.transition(0.3s);
+					&:hover{
+						color : rgb(var(--neutral-grad-4));
+					}
+				}
+				
+			}
+		}
+
+	}
+
 	.earnings {
 
 		background: rgb(var(--background-secondary-theme));
@@ -270,6 +515,27 @@
 	}
 }
 
+.wnd{
+	#earnings{
+		.monetization{
+	
+			.monetizationTable{
+	
+	
+				.tableCaption{
+					
+					position: static;
+					
+				}
+	
+				.totalWrapper{
+					position: static;
+				}
+			}
+		}
+	}
+}
+
 /*t*/ @media only screen and (max-width: 1024px){
 	#earnings{
 		.earnings{
@@ -286,6 +552,27 @@
 /*t*/ @media only screen and (max-width: 768px){
 	#earnings{
 		min-height: none;
+
+		.monetization{
+	
+			.monetizationTable{
+	
+	
+				.table{
+					
+					
+					.period{
+						width: 40%;
+					}
+	
+					.reward{
+						width: 80px;
+					}
+					
+				}
+			}
+	
+		}
 	
 	
 		.earnings{

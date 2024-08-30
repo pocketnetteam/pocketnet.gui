@@ -84,8 +84,6 @@ var importManifest = function(application){
             return Promise.reject(e)
         }
 
-        console.log('application', application, manifest)
-
         if(manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
         if(manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
         
@@ -269,7 +267,7 @@ var BastyonApps = function(app){
             }
         },
 
-        balance : {
+        zaddress : {
             permissions : ['zaddress'],
             authorization : true,
             action : function({data, application}){
@@ -277,10 +275,13 @@ var BastyonApps = function(app){
 
                 if (account){
 
-                    var ads = self.app.platform.sdk.addresses.storage.addresses || []
+                    var ads = app.platform.sdk.addresses.storage.addresses || []
 
                     if (ads.length){
-                        Promise.resolve(ads[strToNumHash(application.manifest.id, ads.length - 1)])
+
+                        var address = ads[strToNumHash(application.manifest.id, ads.length - 1)]
+
+                        return Promise.resolve(address)
                     }
                     else{
                         return Promise.reject(appsError('broken:zaddresses'))
@@ -288,7 +289,7 @@ var BastyonApps = function(app){
                     
                 }
                 else{
-                    return Promise.resolve({})
+                    return Promise.reject(appsError('broken:zaddresses'))
                 }
             }
         },
@@ -1495,8 +1496,6 @@ var BastyonApps = function(app){
 
 
         return Promise.all(promises).then(() => {
-
-            console.log("APPS INITED")
 
             self.inited = true
             

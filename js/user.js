@@ -687,7 +687,6 @@ User = function(app, p) {
 	}
 
 	
-
 	//if(typeof localStorage['stay'] == 'undefined') self.stay = 1;
 
 	return self;
