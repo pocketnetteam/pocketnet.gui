@@ -3775,10 +3775,56 @@ var system16 = (function(){
 					el : elc.find('.peertubeWrapper')
 
 				},
-				function(){
+				function(_p){
 
 
 					renders.peertubeinstancestable(elc)
+
+					if(actions.admin()){
+						_p.el.find('.restartcomponent').on('click', function(){
+							new dialog({
+								class : 'zindex',
+								html : "Do you really want to restart peertube component?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									globalpreloader(true)
+									proxy.fetchauth('peertube/restart', {
+									
+										data : {}
+		
+									}).catch(e => {
+										
+										return Promise.resolve()
+			
+									}).then(r => {
+
+										topPreloader(100);
+
+										setTimeout(() => {
+											globalpreloader(false)
+
+											actions.refresh()
+										}, 4000)
+										
+
+										//renders.peertubecontent(el.c)
+					
+										
+			
+									})
+
+									
+															
+								}
+							})
+						})
+					}
+
+						
+
+					
 
 					if (clbk)
 						clbk()

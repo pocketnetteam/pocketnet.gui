@@ -456,6 +456,14 @@ var Peertube = function (settings) {
 
 	self.destroy = function () {
 		statistic.destroy();
+
+		_.each(roys, (roy) => {
+			roy.destroy()
+		})
+
+		roys = {}
+
+		return Promise.resolve()
 	};
 
 	self.extendApi = function (api, cache) {

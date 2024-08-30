@@ -1,0 +1,82 @@
+<div class="work">
+    <div class="monetizationTable">
+        <div class="tableCaption table">
+            <div class="period"><span><%=e('monetization_Period')%></span></div>
+            <div class="posts"><span><%=e('monetization_Publications')%></span></div>
+            <div class="ratings"><span><%=e('monetization_Ratings')%></span></div>
+            <div class="comments"><span><%=e('monetization_Comments')%></span></div>
+            <div class="reward"><span><%=e('monetization_Reward')%></span></div>
+        </div>
+
+        <% _.each(earnings.months, (m, i) => {
+
+            if(m.notIncluded) return 
+            
+        %>
+
+            <div class="month <% if(m.beforeProgram) {%> beforeprogram <% } %> <% if(m.current) {%> expanded <% } %>">
+                <div class="monthTable table canexpand" type="month">
+
+                    <div class="period">
+                        
+                        <span><%-  m.start.toLocaleString('default', { month: 'long' }) %></span>
+                        <% if(m.total.postsCount) {%>
+                        <i class="fas fa-angle-down expandicon"></i>
+                        <% } %>
+                    
+                    </div>
+                    <div class="posts"><span><%- m.total.postsCount || 0 %></span></div>
+                    <div class="ratings"><span><%- m.total.scores || 0 %></span></div>
+                    <div class="comments"><span><%- m.total.comments || 0 %></span></div>
+                    <div class="reward"><span><%- app.platform.mp.coin(m.total.reward || 0) %></span></div>
+                </div>
+
+                <div class="weeks">
+                    <% _.each(m.weeks, (w, j) => { 
+                        
+                        if(w.notIncluded) return 
+
+                        %>
+
+                        <div class="week" index="<%-j%>" month="<%-i%>">
+                            <div class="weekTable table <% if(w.posts.length) {%> canexpand <% } %>">
+                                <div class="period"><span><%- moment(new Date(w.date * 1000)).format("L") %> &mdash; <%- moment(new Date(w.end * 1000)).format("L") %></span> <% if(w.posts.length) {%><i class="fas fa-angle-down expandicon"></i><% } %></div>
+                                <div class="posts"><span><%- w.posts.length || 0 %></span></div>
+                                <div class="ratings"><span><%- w.total.scores || 0 %></span></div>
+                                <div class="comments"><span><%- w.total.comments || 0 %></span></div>
+                                <div class="reward"><span><%- app.platform.mp.coin(w.total.reward || 0) %></span></div>
+                            </div>
+
+                            <div class="postsTable">
+
+                            </div>
+                        </div>
+
+                       
+
+                    <% }) %>
+                </div>
+
+                <% if(m.startof) {%>
+                <div class="startof">
+                    <span><%=e('monetization_start')%></span>
+                </div>
+                <% } %>
+            </div>
+
+        <% }) %>
+
+        <div class="totalWrapper">
+            <div class="tableTotal table">
+                <div class="period"><span></span></div>
+                <div class="posts"><span><%- earnings.total.postsCount || '' %></span></div>
+                <div class="ratings"><span><%- earnings.total.scores || '' %></span></div>
+                <div class="comments"><span><%- earnings.total.comments || '' %></span></div>
+                <div class="reward"><span><%- app.platform.mp.coin(earnings.total.reward || 0) %></span></div>
+            </div>
+        </div>
+
+    </div>
+
+   
+</div>

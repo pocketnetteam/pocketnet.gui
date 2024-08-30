@@ -1788,8 +1788,9 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       handler: function () {
         if (this.m_chat && !_.isEmpty(this.m_chat)) {
           this.core.mtrx.kit.prepareChat(this.m_chat).then(r => {
+            var _this$m_chat$pcrypto;
             this.ready = true;
-            this.encrypted = this.m_chat.pcrypto.canBeEncrypt();
+            this.encrypted = (_this$m_chat$pcrypto = this.m_chat.pcrypto) === null || _this$m_chat$pcrypto === void 0 ? void 0 : _this$m_chat$pcrypto.canBeEncrypt();
           });
         }
       }

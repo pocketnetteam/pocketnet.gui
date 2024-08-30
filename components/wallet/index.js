@@ -2416,7 +2416,7 @@ var wallet = (function(){
 					el :   el.addresses,
 					data : {
 						addressesGroup : _addressesGroup,
-						total : account.actualBalance().actual
+						total : account.actualBalance(account.allAddresses()).actual
 					},
 
 				}, function(_p){

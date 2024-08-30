@@ -417,10 +417,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return wallet.init()
 		},
 
-		addqueue: function (key, address, ip) {
-			return wallet.kit.addqueue(key, address, ip)
+		addqueue: function (key, address, ip, amount) {
+			return wallet.kit.addqueue(key, address, ip, amount)
 		},
-
 
 		destroy: function () {
 			return wallet.destroy()
@@ -814,7 +813,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		re: function () {
 			return this.destroy().then(r => {
-				this.init()
+				return this.init()
 			})
 		},
 
@@ -2151,7 +2150,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		peertube: {
+			restart : {
+				authorization: 'signature',
+				path : '/peertube/restart',
+				action: function ({ A }) {
 
+					if(!A) return Promise.reject('none')
+
+					return self.peertube.re().then(() => {
+						return Promise.resolve({
+							data: 'success'
+						});
+					}).catch(e => {
+						return Promise.reject(e);
+					})
+				}
+			},
 		},
 
 		translate : {

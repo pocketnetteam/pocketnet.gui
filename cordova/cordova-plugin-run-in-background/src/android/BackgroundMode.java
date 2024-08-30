@@ -25,14 +25,14 @@ import android.app.Activity;
 import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
-
+import android.os.Build;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import android.content.Context;
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -83,7 +83,13 @@ public class BackgroundMode extends CordovaPlugin {
         super.initialize(cordova, webView);
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.backgroundmode.close" + cordova.getContext().getPackageName());
-        cordova.getActivity().registerReceiver(receiver, filter);
+        
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            cordova.getActivity().registerReceiver(receiver, filter, Context.RECEIVER_EXPORTED);
+        }else {
+            cordova.getActivity().registerReceiver(receiver, filter);
+        }
 
     }
 

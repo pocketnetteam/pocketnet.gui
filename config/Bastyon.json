@@ -3,6 +3,7 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
+    
     "developapps" : [{
 		"id" : "swipelux.app",
 		"version": "0.0.1",
@@ -59,7 +60,12 @@
                 "wss" : 8099
             },
             
-            "matrix" : "matrix.pocketnet.app"
+            "matrix" : "matrix.pocketnet.app",
+
+            "monetization" : {
+                "url" : "pnettool.pocketnet.app",
+                "auth" : "dXNlcjE6R2ZoamttIDQuLg=="
+            }
         },
 
         "test" : {

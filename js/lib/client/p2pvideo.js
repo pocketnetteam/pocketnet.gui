@@ -248,6 +248,8 @@ class P2Pvideo {
     initlocalsvideo = function(){
         var videos = app.platform.sdk.localshares.getAllVideos()
 
+        console.log('videos', videos)
+
         _.each(videos, (v) => {
             this.initlocalvideo(v.infos)
         })

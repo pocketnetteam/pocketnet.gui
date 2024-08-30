@@ -2588,8 +2588,9 @@ const SendStatus = {
       //}, 5000)
     },
     canencryptfilesize: function (file) {
+      var _this$chat$pcrypto;
       var s = 10 * 1024 * 1024;
-      if (!this.chat.pcrypto.canBeEncrypt()) {
+      if (!((_this$chat$pcrypto = this.chat.pcrypto) !== null && _this$chat$pcrypto !== void 0 && _this$chat$pcrypto.canBeEncrypt())) {
         return Promise.resolve(false);
       }
       if (file.size > s) {
