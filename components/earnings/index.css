@@ -410,6 +410,12 @@
   #earnings {
     min-height: none;
   }
+  #earnings .monetization .monetizationTable .table .period {
+    width: 40%;
+  }
+  #earnings .monetization .monetizationTable .table .reward {
+    width: 80px;
+  }
   #earnings .earnings {
     background: rgb(var(--background-secondary-theme));
     padding: 0;

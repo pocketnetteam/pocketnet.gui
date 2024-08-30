@@ -10615,7 +10615,7 @@ Platform = function (app, listofnodes) {
 
                 var subcount = userinfo.subscribes_count || 0
 
-				return self.app.monetization && self.app.monetization.start <= moment.utc().unix() && self.app.boost && !self.app.pkoindisable && subcount > 500 && self.real[address]
+				return self.app.monetization && /*self.app.monetization.start <= moment.utc().unix() &&*/ self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
             },
 
             checkMonetization : function(address){
