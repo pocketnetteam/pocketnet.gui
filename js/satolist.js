@@ -15710,7 +15710,7 @@ Platform = function (app, listofnodes) {
                     }, {
                         method,
                         parameters
-                    }).then(d => {
+                    }, method == 'getboostfeed' ? 'getboostfeed' : null).then(d => {
 
                         var shares = self.psdk.share.gets(_.map(d.contents, (s) => {
                             return s.txid

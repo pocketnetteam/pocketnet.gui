@@ -57,6 +57,10 @@ var pSDK = function ({ app, api, actions }) {
             time: 60 // temp
         },
 
+        getboostfeed : {
+            time : 60 * 15
+        },
+
         share: {
             time: 240
         },
