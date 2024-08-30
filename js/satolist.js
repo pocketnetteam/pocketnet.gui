@@ -24762,9 +24762,9 @@ Platform = function (app, listofnodes) {
             if (typeof _Electron != 'undefined') {
                 self.p2pvideo = new window.P2Pvideo(app)
 
-                setTimeout(() => {
+                /*setTimeout(() => {
                     self.p2pvideo.initlocalsvideo()
-                }, 3000)
+                }, 3000)*/
                 
 
             }
