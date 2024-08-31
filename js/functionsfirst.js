@@ -587,8 +587,6 @@ edjsHTMLCnt = function (a, app) {
                 e.blocks.map((function (e) {
 					var ims = iim[e.type] ? iim[e.type](e) : []
 
-                    console.log('ims images', ims, iim, e)
-
                     result = result.concat(ims)
 				}))
 
