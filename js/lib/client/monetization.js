@@ -351,8 +351,8 @@ var Monetization = function(app, {url, auth}){
 
         return request('monetization/contentperformance', {
             Addresses : addresses,
-            //StartDate : start,
-            //EndDate : end
+            StartDate : start,
+            EndDate : end
         }).then(r => {
 
 
