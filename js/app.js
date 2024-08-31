@@ -2107,7 +2107,7 @@ Application = function (p) {
 		var today = moment()
 
 
-		if ((today.diff(value, 'days')) === 0) {
+		if ((today.diff(value, 'days')) === 0 && moment(value).day() != today.day()) {
 
 			if ((today.diff(value, 'hours') < 12)) return moment(moment.utc(value).toDate()).local().fromNow();
 
@@ -2117,7 +2117,7 @@ Application = function (p) {
 		var mvalue = moment(value)
 
 		if (today.year() === mvalue.year())
-			return mvalue.local().format('D MMMM')
+			return mvalue.local().format('D MMMM, hh:mm')
 
 		return mvalue.local().format('D MMMM YYYY')
 	}
