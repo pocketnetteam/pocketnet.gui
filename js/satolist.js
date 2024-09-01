@@ -24377,21 +24377,6 @@ Platform = function (app, listofnodes) {
     
                         else{
 
-
-                            self.app.mobile.backgroundMode(true)
-
-                            /*
-                            var r = $(self.activecall.ui.root)
-    
-                            var video = r.find('#remote')[0]
-
-                            self.app.mobile.backgroundMode(true)
-    
-                            video.requestPictureInPicture().then(() => {
-                                haspip = true
-                            }).catch(e => {
-                                console.error(e)
-                            })*/
     
                             
                         }
@@ -24946,6 +24931,15 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.unsleep(false)
 
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(false)
+                        }
+                        
+                    })
+
                     clbks.view()
 				},
 				onConnected:(call, ui)=> {
@@ -24957,6 +24951,15 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.mobile.unsleep(true)
+
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(true)
+                        }
+
+                    })
 
                     self.activecall = {
                         call, ui
