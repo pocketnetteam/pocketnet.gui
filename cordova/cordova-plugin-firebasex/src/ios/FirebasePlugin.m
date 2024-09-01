@@ -30,6 +30,13 @@ static NSString*const FIREBASE_CRASHLYTICS_COLLECTION_ENABLED = @"FIREBASE_CRASH
 static NSString*const FirebaseCrashlyticsCollectionEnabled = @"FirebaseCrashlyticsCollectionEnabled"; //plist
 static NSString*const FIREBASE_ANALYTICS_COLLECTION_ENABLED = @"FIREBASE_ANALYTICS_COLLECTION_ENABLED";
 static NSString*const FIREBASE_PERFORMANCE_COLLECTION_ENABLED = @"FIREBASE_PERFORMANCE_COLLECTION_ENABLED";
+
+static NSString*const GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED = @"GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED";
+static NSString*const GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE = @"GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE";
+static NSString*const GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE = @"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE";
+static NSString*const GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA = @"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA";
+static NSString*const GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS = @"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS";
+
 static NSString*const FIREBASEX_IOS_FCM_ENABLED = @"FIREBASEX_IOS_FCM_ENABLED";
 
 static FirebasePlugin* firebasePlugin;
@@ -43,8 +50,8 @@ static NSDictionary* googlePlist;
 static NSMutableDictionary* firestoreListeners;
 static NSString* currentInstallationId;
 static NSMutableDictionary* traces;
-static FIROAuthProvider* oauthProvider;
 static FIRMultiFactorResolver* multiFactorResolver;
+static FIROAuthProvider* oauthProvider;
 
 
 + (FirebasePlugin*) firebasePlugin {
@@ -76,10 +83,6 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationLaunchedWithUrl:) name:CDVPluginHandleOpenURLNotification object:nil];
 
-        if([self getGooglePlistFlagWithDefaultValue:FirebaseCrashlyticsCollectionEnabled defaultValue:YES]){
-            [self setPreferenceFlag:FIREBASE_CRASHLYTICS_COLLECTION_ENABLED flag:YES];
-        }
-
         if([self getGooglePlistFlagWithDefaultValue:FIREBASE_ANALYTICS_COLLECTION_ENABLED defaultValue:YES]){
             [self setPreferenceFlag:FIREBASE_ANALYTICS_COLLECTION_ENABLED flag:YES];
         }
@@ -87,7 +90,32 @@ static FIRMultiFactorResolver* multiFactorResolver;
         if([self getGooglePlistFlagWithDefaultValue:FIREBASE_PERFORMANCE_COLLECTION_ENABLED defaultValue:YES]){
             [self setPreferenceFlag:FIREBASE_PERFORMANCE_COLLECTION_ENABLED flag:YES];
         }
-        
+
+        if([self getGooglePlistFlagWithDefaultValue:FirebaseCrashlyticsCollectionEnabled defaultValue:YES]){
+            [self setPreferenceFlag:FIREBASE_CRASHLYTICS_COLLECTION_ENABLED flag:YES];
+        }
+
+        if([self getGooglePlistFlagWithDefaultValue:GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED defaultValue:YES]){
+            [self setPreferenceFlag:GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED flag:YES];
+        }
+
+        if([self getGooglePlistFlagWithDefaultValue:GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE defaultValue:YES]){
+            [self setPreferenceFlag:GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE flag:YES];
+        }
+
+        if([self getGooglePlistFlagWithDefaultValue:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE defaultValue:YES]){
+            [self setPreferenceFlag:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE flag:YES];
+        }
+
+        if([self getGooglePlistFlagWithDefaultValue:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA defaultValue:YES]){
+            [self setPreferenceFlag:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA flag:YES];
+        }
+
+        if([self getGooglePlistFlagWithDefaultValue:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS defaultValue:YES]){
+            [self setPreferenceFlag:GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS flag:YES];
+        }
+
+
         // We don't need `setPreferenceFlag` here as we don't allow to change this at runtime.
         _isFCMEnabled = [self getGooglePlistFlagWithDefaultValue:FIREBASEX_IOS_FCM_ENABLED defaultValue:YES];
         if (!self.isFCMEnabled) {
@@ -169,7 +197,7 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
         // Initialize categories
         [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:categories];
-        
+
     }@catch (NSException *exception) {
         [self handlePluginExceptionWithoutContext:exception];
     }
@@ -432,7 +460,7 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
 - (void)registerForRemoteNotifications {
     NSLog(@"registerForRemoteNotifications");
-    
+
     if(registeredForRemoteNotifications) return;
 
     [self runOnMainThread:^{
@@ -1017,7 +1045,7 @@ static FIRMultiFactorResolver* multiFactorResolver;
                     [result setValue:idToken forKey:@"idToken"];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
                 } else {
-                  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
+                    pluginResult = [self createAuthErrorResult:error];
                 }
                 [[FirebasePlugin firebasePlugin].commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             }@catch (NSException *exception) {
@@ -1052,26 +1080,63 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
 - (void)authenticateUserWithMicrosoft:(CDVInvokedUrlCommand*)command{
     @try {
-        oauthProvider = [FIROAuthProvider providerWithProviderID:@"microsoft.com"];
-        [oauthProvider setCustomParameters:@{@"prompt": @"consent"}];
-        [oauthProvider getCredentialWithUIDelegate:nil
-                            completion:^(FIRAuthCredential *_Nullable credential, NSError *_Nullable error) {
-            if (error) {
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-                @throw([NSException exceptionWithName:@"Error" reason:error.localizedDescription userInfo:nil]);
-            }
-            if (credential) {
-                NSNumber* key = [self saveAuthCredential:credential];
-                NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
-                [result setValue:@"true" forKey:@"instantVerification"];
-                [result setValue:key forKey:@"id"];
-                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
-                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            }
-        }];
+        NSString* providerId = @"microsoft.com";
+        NSMutableDictionary* customParameters = [[NSMutableDictionary alloc] init];
+        [customParameters setValue:@"consent" forKey:@"prompt"];
+
+        NSString* locale = [command.arguments objectAtIndex:0];
+        if(locale != nil){
+            [customParameters setValue:locale forKey:@"locale"];
+        }
+
+        [self authenticateWithOAuth:command providerId:providerId customParameters:customParameters scopes:nil];
     }@catch (NSException *exception) {
         [self handlePluginExceptionWithContext:exception :command];
     }
+}
+
+- (void)authenticateUserWithOAuth:(CDVInvokedUrlCommand*)command{
+    @try {
+        NSString* providerId = [command.arguments objectAtIndex:0];
+        NSDictionary* customParameters = [command.arguments objectAtIndex:1];
+        NSArray* scopes = [command.arguments objectAtIndex:2];
+
+        [self authenticateWithOAuth:command providerId:providerId customParameters:customParameters scopes:scopes];
+    }@catch (NSException *exception) {
+        [self handlePluginExceptionWithContext:exception :command];
+    }
+}
+
+-(void)authenticateWithOAuth:(CDVInvokedUrlCommand*)command providerId:(NSString*)providerId customParameters:(NSDictionary*)customParameters scopes:(NSArray*)scopes {
+    oauthProvider = [FIROAuthProvider providerWithProviderID:providerId];
+
+    if(customParameters != nil){
+        for(id key in customParameters){
+            id value = [customParameters objectForKey:key];
+            [oauthProvider setCustomParameters:@{key: value}];
+        }
+    }
+
+    if(scopes != nil){
+        [oauthProvider setScopes:scopes];
+    }
+
+
+    [oauthProvider getCredentialWithUIDelegate:nil
+                        completion:^(FIRAuthCredential *_Nullable credential, NSError *_Nullable error) {
+
+        CDVPluginResult* pluginResult;
+        if (error) {
+            pluginResult = [self createAuthErrorResult:error];
+        } else if (credential) {
+            NSNumber* key = [self saveAuthCredential:credential];
+            NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
+            [result setValue:@"true" forKey:@"instantVerification"];
+            [result setValue:key forKey:@"id"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+        }
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
 }
 
 - (void)authenticateUserWithFacebook:(CDVInvokedUrlCommand*)command{
@@ -1131,6 +1196,22 @@ static FIRMultiFactorResolver* multiFactorResolver;
             [self handleAuthResult:authResult error:error command:command];
         }];
 
+    }@catch (NSException *exception) {
+        [self handlePluginExceptionWithContext:exception :command];
+    }
+}
+
+- (void)unlinkUserWithProvider:(CDVInvokedUrlCommand*)command {
+    @try {
+        if([self userNotSignedInError:command]) return;
+        FIRUser* user = [FIRAuth auth].currentUser;
+
+        NSString* providerId = [command.arguments objectAtIndex:0];
+
+        [user unlinkFromProvider:providerId
+                                            completion:^(FIRUser *_Nullable user, NSError *_Nullable error) {
+            [self handleEmptyResultWithPotentialError:error command:command];
+        }];
     }@catch (NSException *exception) {
         [self handlePluginExceptionWithContext:exception :command];
     }
@@ -1537,6 +1618,52 @@ static FIRMultiFactorResolver* multiFactorResolver;
     }];
 }
 
+- (void)setAnalyticsConsentMode:(CDVInvokedUrlCommand*)command {
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult* pluginResult = nil;
+        NSDictionary* consentObject = [command.arguments objectAtIndex:0];
+
+        NSMutableDictionary* consentSettings = [[NSMutableDictionary alloc] init];
+
+        NSEnumerator *enumerator = [consentObject keyEnumerator];
+        id key;
+        while ((key = [enumerator nextObject])) {
+            NSString* consentType = [self consentTypeFromString:key];
+            NSString* consentStatus = [self consentStatusFromString:[consentObject objectForKey:key]];
+            [consentSettings setObject:consentStatus forKey:consentType];
+        }
+
+        [FIRAnalytics setConsent:consentSettings];
+
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+}
+
+- (NSString*)consentTypeFromString:(NSString*)consentTypeString {
+    if ([consentTypeString isEqualToString:@"ANALYTICS_STORAGE"]) {
+        return FIRConsentTypeAnalyticsStorage;
+    } else if ([consentTypeString isEqualToString:@"AD_STORAGE"]) {
+        return FIRConsentTypeAdStorage;
+    } else if ([consentTypeString isEqualToString:@"AD_PERSONALIZATION"]) {
+        return FIRConsentTypeAdPersonalization;
+    } else if ([consentTypeString isEqualToString:@"AD_USER_DATA"]) {
+        return FIRConsentTypeAdUserData;
+    } else {
+        return nil;
+    }
+}
+
+- (NSString*)consentStatusFromString:(NSString*)consentStatusString {
+    if ([consentStatusString isEqualToString:@"GRANTED"]) {
+        return FIRConsentStatusGranted;
+    } else if ([consentStatusString isEqualToString:@"DENIED"]) {
+        return FIRConsentStatusDenied;
+    } else {
+        return nil;
+    }
+}
+
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
     [self.commandDelegate runInBackground:^{
         @try {
@@ -1589,6 +1716,23 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }@catch (NSException *exception) {
+            [self handlePluginExceptionWithContext:exception :command];
+        }
+    }];
+}
+
+- (void) initiateOnDeviceConversionMeasurement:(CDVInvokedUrlCommand*)command {
+    [self.commandDelegate runInBackground:^{
+        @try {
+            NSDictionary* userIdentifier = [command.arguments objectAtIndex:0];
+            if([userIdentifier objectForKey:@"emailAddress"] != nil){
+                [FIRAnalytics initiateOnDeviceConversionMeasurementWithEmailAddress:[userIdentifier objectForKey:@"emailAddress"]];
+            }else if([userIdentifier objectForKey:@"phoneNumber"] != nil){
+                [FIRAnalytics initiateOnDeviceConversionMeasurementWithPhoneNumber:[userIdentifier objectForKey:@"phoneNumber"]];
+            }
+
+            [self sendPluginSuccess:command];
         }@catch (NSException *exception) {
             [self handlePluginExceptionWithContext:exception :command];
         }
@@ -2765,31 +2909,39 @@ static FIRMultiFactorResolver* multiFactorResolver;
 
 - (void) handleAuthResult:(FIRAuthDataResult*) authResult error:(NSError*) error command:(CDVInvokedUrlCommand*)command {
     @try {
-           CDVPluginResult* pluginResult;
+        CDVPluginResult* pluginResult;
          if (error) {
-             if(error.code == FIRAuthErrorCodeSecondFactorRequired){
-                 // The user is a multi-factor user. Second factor challenge is required.
-                 multiFactorResolver = (FIRMultiFactorResolver*) error.userInfo[FIRAuthErrorUserInfoMultiFactorResolverKey];
-                 NSMutableArray* secondFactors  = [self parseEnrolledSecondFactorsToJson:multiFactorResolver.hints];
-                 NSString* errMessage = @"Second factor required";
-
-                 NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
-                 [result setValue:errMessage forKey:@"errorMessage"];
-                 [result setValue:secondFactors forKey:@"secondFactors"];
-
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:result];
-             }else{
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
-             }
+             pluginResult = [self createAuthErrorResult:error];
          }else if (authResult == nil) {
              pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"User not signed in"];
          }else{
              pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
          }
-         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
      }@catch (NSException *exception) {
          [self handlePluginExceptionWithContext:exception :command];
      }
+}
+
+
+- (CDVPluginResult*) createAuthErrorResult:(NSError*) error{
+    CDVPluginResult* pluginResult;
+    if(error.code == FIRAuthErrorCodeSecondFactorRequired){
+        // The user is a multi-factor user. Second factor challenge is required.
+        multiFactorResolver = (FIRMultiFactorResolver*) error.userInfo[FIRAuthErrorUserInfoMultiFactorResolverKey];
+        NSMutableArray* secondFactors  = [self parseEnrolledSecondFactorsToJson:multiFactorResolver.hints];
+        NSString* errMessage = @"Second factor required";
+
+        NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
+        [result setValue:errMessage forKey:@"errorMessage"];
+        [result setValue:secondFactors forKey:@"secondFactors"];
+
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:result];
+    }else{
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
+    }
+    return pluginResult;
 }
 
 - (NSNumber*) saveAuthCredential: (FIRAuthCredential*) authCredential {
