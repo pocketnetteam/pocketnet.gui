@@ -78,7 +78,7 @@ var icondisplay = function(){ %>
 					</div>		
 
 					<div class="datetime">
-						<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
+						<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> <%-e('boosted')%></span> <% } %>
 					</div>
 				<% } %>
 

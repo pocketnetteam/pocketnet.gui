@@ -57,6 +57,10 @@ var pSDK = function ({ app, api, actions }) {
             time: 60 // temp
         },
 
+        getboostfeed : {
+            time : 60 * 15
+        },
+
         share: {
             time: 240
         },
@@ -1535,7 +1539,7 @@ var pSDK = function ({ app, api, actions }) {
     self.share = {
         keys: ['share'],
 
-        request: function (executor, hash) {
+        request: function (executor, hash, cacheIndex) {
 
 
             return request('share', hash, (data) => {
@@ -1566,7 +1570,7 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
-                requestIndexedDb: 'shareRequest',
+                requestIndexedDb: cacheIndex || 'shareRequest',
 
                 insertFromResponse: (r) => this.insertFromResponseEx(r)
             })

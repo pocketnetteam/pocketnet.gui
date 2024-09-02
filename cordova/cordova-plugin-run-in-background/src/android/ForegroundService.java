@@ -53,7 +53,7 @@ public class ForegroundService extends Service {
 
     // Default text of the background notification
     private static final String NOTIFICATION_TEXT =
-            "Doing heavy tasks.";
+            "This allows you to download videos in stealth mode, or listen to videos with the screen off";
 
     // Default icon of the background notification
     private static final String NOTIFICATION_ICON = "icon";

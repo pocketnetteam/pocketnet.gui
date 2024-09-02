@@ -410,6 +410,9 @@
   #earnings {
     min-height: none;
   }
+  #earnings .monetization .disableMonetization {
+    margin-right: 0.5em;
+  }
   #earnings .monetization .monetizationTable .table .period {
     width: 40%;
   }

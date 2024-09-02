@@ -15710,7 +15710,7 @@ Platform = function (app, listofnodes) {
                     }, {
                         method,
                         parameters
-                    }).then(d => {
+                    }, method == 'getboostfeed' ? 'getboostfeed' : null).then(d => {
 
                         var shares = self.psdk.share.gets(_.map(d.contents, (s) => {
                             return s.txid
@@ -16040,7 +16040,7 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 300 : p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             s.getex(parameters, function (data, error) {
 
@@ -24377,21 +24377,6 @@ Platform = function (app, listofnodes) {
     
                         else{
 
-
-                            self.app.mobile.backgroundMode(true)
-
-                            /*
-                            var r = $(self.activecall.ui.root)
-    
-                            var video = r.find('#remote')[0]
-
-                            self.app.mobile.backgroundMode(true)
-    
-                            video.requestPictureInPicture().then(() => {
-                                haspip = true
-                            }).catch(e => {
-                                console.error(e)
-                            })*/
     
                             
                         }
@@ -24946,6 +24931,15 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.unsleep(false)
 
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(false)
+                        }
+                        
+                    })
+
                     clbks.view()
 				},
 				onConnected:(call, ui)=> {
@@ -24957,6 +24951,15 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.mobile.unsleep(true)
+
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(true)
+                        }
+
+                    })
 
                     self.activecall = {
                         call, ui
