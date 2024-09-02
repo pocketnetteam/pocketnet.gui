@@ -134,6 +134,7 @@ class Notifications{
         const notifications = await node.rpcs("getnotifications", [data.height])
         var block = new NotificationBlock()
 
+
         block.height = data.height
         block.time = new Date(Date.now()).toISOString()
         block.eventsCount = notifications.data.length
@@ -342,9 +343,13 @@ class Notifications{
     transaction(notification, address){
         switch (notification.type) {
             case 'money':
-                if (notification.outputs.length && !notification.outputs?.[0]?.addresshash)
+                if (notification.outputs.length && !notification.outputs?.[0]?.addresshash){
                     notification.cointype = this.proxy.pocketnet.kit.getCoibaseType(notification.outputs[0])
+                }
+                    
+
                 let amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
+
                 notification.amount = amount ? amount / 100000000 : 0
 
                 if(notification?.inputs?.find(el=>el.addresshash === address)){
