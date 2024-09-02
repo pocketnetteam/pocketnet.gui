@@ -10615,17 +10615,18 @@ Platform = function (app, listofnodes) {
 
                 var subcount = userinfo.subscribes_count || 0
 
-				return self.app.monetization && /*self.app.monetization.start <= moment.utc().unix() &&*/ self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
+				return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
             },
 
             checkMonetization : function(address){
+
+
                 if (self.sdk.users.checkMonetizationOpportunity(address)){
 
-                    return self.psdk.accSet.load(address).then(setting => {
+                    return self.psdk.accSet.load(address).then(s => {
 
                         var settings = self.psdk.accSet.get(address) || {}
 
-                        console.log("USERSETTINGS", settings)
 
                         return Promise.resolve(settings.monetization || false)
 
