@@ -1156,12 +1156,14 @@ var authorn = (function(){
 					var monetizationStatic = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
 
 					if (monetizationStatic) 
-						monetizationPromise = self.app.platform.sdk.users.checkMonetization(self.app.user.address.value)
+						monetizationPromise = self.app.platform.sdk.users.checkMonetization(author.address)
 
 
 					monetizationPromise.then((m) => {
 
 						params.includeboost = monetizationStatic && m
+
+
 
 						self.nav.api.load({
 
