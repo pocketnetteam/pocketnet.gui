@@ -1133,6 +1133,7 @@ var lenta = (function(){
 							}
 						},
 
+
 						pause : function(){
 
 							videopaused = true
@@ -5201,11 +5202,11 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus[mid] = function(time){
 
-					if(self.app.mobileview && !fullscreenvideoShowed){
+					/*if(self.app.mobileview && !fullscreenvideoShowed){
 						videosVolume = 0
 						self.sdk.videos.volume = videosVolume 
 						self.sdk.videos.save()
-					}
+					}*/
 
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
@@ -5753,7 +5754,7 @@ var lenta = (function(){
 					if (p.p){
 
 						if (p.p.playing){
-							p.p.pause()
+							self.app.actions.playingvideo(null, p.p)
 						}
 
 						p.p.destroy()

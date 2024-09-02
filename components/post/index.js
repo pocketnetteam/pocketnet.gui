@@ -488,6 +488,8 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
+							console.log('videosVolume', videosVolume)
+
 							self.sdk.videos.volume = videosVolume
 
 							self.sdk.videos.save()
@@ -518,6 +520,8 @@ var post = (function () {
 							}, 300)
 							
 						},
+
+						
 
 						pause : function(){
 							self.app.actions.playingvideo(null, player)
@@ -606,8 +610,12 @@ var post = (function () {
 
 									player.play()
 	
-									if (player.setVolume)
-										player.setVolume(1/*self.sdk.videos.volume*/)
+									if (player.setVolume){
+
+										player.setVolume(window.cordova ? self.sdk.videos.volume : 1)
+										
+									}
+										
 									else{
 										player.muted = false
 									}
@@ -2075,7 +2083,12 @@ var post = (function () {
 
 			if (player) {
 
-				if (player.destroy) player.destroy()
+				if (player.playing){
+					self.app.actions.playingvideo(null, player)
+				}
+
+				if (player.destroy) 
+					player.destroy()
 
 				player = null
 			}
@@ -2263,12 +2276,15 @@ var post = (function () {
 				if (player) {
 
 					if (player.playing){
-						player.pause()
+						self.app.actions.playingvideo(null, player)
 					}
 
-					if (player.destroy) player.destroy()
+					if (player.destroy) {
+						player.destroy()
+					}
 
 					player = null
+					
 				}
 
 

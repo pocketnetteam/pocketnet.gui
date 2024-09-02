@@ -9308,7 +9308,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           pictureInPictureRequest: options.pictureInPictureRequest,
           play : options.play,
           pause : options.pause,
-          
+          ondestroy : options.ondestroy
 
   
         }).then(function(embed){
