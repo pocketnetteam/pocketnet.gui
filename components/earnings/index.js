@@ -21,10 +21,11 @@ var earnings = (function () {
 			startPeriod : 1725235200,
 			periodDuration : 'w',
 			groupDuration : 'm',
-			years : [2023, new Date().getFullYear()]
+			years : [2023, new Date().getFullYear()],
+			exchanges : ['PMZ3DiGWKGybLb5oCz9ojwxuTBA6GcYAKq', 'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK']
 		}
 
-		console.log('monetizationParameters', monetizationParameters)
+		var address = ''
 
 		var stats = []
 		var monetizationOpportunity = false
@@ -73,11 +74,11 @@ var earnings = (function () {
 			},
 			getEarnings : function(){
 				return self.app.monetization.contentperformance({
-					addresses : [self.app.user.address.value],
+					addresses : [address],
 					...helpers.getYearPeriod(monetizationParameters.currentYear)
 				}).then((result = {}) => {
 
-					var r = result[self.app.user.address.value] || []
+					var r = result[address] || []
 
 					var weeks = _.sortBy(weeksInYear(monetizationParameters.currentYear), (w) => {
 						return -w.n
@@ -86,9 +87,6 @@ var earnings = (function () {
 					var weeksResult = _.map(weeks, (w) => {
 
 						var posts = _.filter(r, (f) => {
-
-							console.log('getWeekNumber(moment.utc(f.time).toDate())[1]', moment.utc(f.time).toDate(), getWeekNumber(moment.utc(f.time).toDate())[1])
-
 							return getWeekNumber(new Date(moment.utc(f.time * 1000).toDate()))[1] == w.n
 						})
 
@@ -162,7 +160,14 @@ var earnings = (function () {
 
 			getStat: async function () {
 
-				return self.app.api.rpc('getaccountearning', [self.user.address.value, 0, 1627534]).then(function (r) {
+				if(address != self.user.address.value){
+
+					el.content.empty();
+
+					return Promise.resolve()
+				}
+
+				return self.app.api.rpc('getaccountearning', [address, 0, 1627534]).then(function (r) {
 
 					el.content.empty();
 
@@ -370,7 +375,39 @@ var earnings = (function () {
 				})
 			},
 
+			exchanges(el, clbk){
+
+				_.each(monetizationParameters.exchanges, (address) => {
+
+					var cel = el.find('.exchange[address="'+address+'"]')
+
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						el : cel,
+						eid : 'earnings_' + address,
+						essenseData : {
+							id : address,
+							customaction : {
+								label : 'monetization_buychat',
+								action : function(profile){
+									console.log('profile', profile)
+
+									self.app.platform.matrixchat.startchat(profile.address)
+								}
+							}
+						},
+
+						clbk : function(){
+							cel.addClass('loaded')
+						}
+					})
+				})
+			},
+
 			monetizationWrapper(clbk){
+
+				console.log('monetizationOpportunity', monetizationOpportunity, address)
 
 				if(!monetizationOpportunity){
 					if(clbk) clbk()
@@ -378,8 +415,9 @@ var earnings = (function () {
 					return
 				}
 
-				self.app.platform.sdk.users.checkMonetization(self.app.user.address.value).then((monetization) => {
+				self.app.platform.sdk.users.checkMonetization(address).then((monetization) => {
 
+				console.log('monetizationOpportunity2', monetization, address)
 					
 
 					self.shell({
@@ -392,6 +430,8 @@ var earnings = (function () {
 						},
 	
 					}, function (_p) {
+
+						renders.exchanges(_p.el.find('.exchangesProfiles'))
 
 						_p.el.find('.yearleft').on('click', function(){
 							monetizationParameters.currentYear -- 
@@ -417,7 +457,6 @@ var earnings = (function () {
 
 						})
 
-
 						_p.el.find('.disableMonetization').on('click', function(){
 
 							new dialog({
@@ -442,12 +481,8 @@ var earnings = (function () {
 								class : 'zindex'
 							})
 
-							
-
 						})
 
-
-						
 
 						if (monetization){
 
@@ -469,6 +504,8 @@ var earnings = (function () {
 								renders.error(elm)
 							})
 						}
+
+						
 						
 						if(clbk) clbk(monetization)
 	
@@ -510,17 +547,23 @@ var earnings = (function () {
 
 			getdata: async function (clbk) {
 
+					address	= parameters().address || self.app.user.address.value
 
-					monetizationParameters.startPeriod = self.app.monetization.start
+					self.sdk.users.get(address, function(){
 
-					monetizationOpportunity = self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value) 
-					
-					var data = {
-						period: selectedPeriod,
-						monetizationOpportunity
-					};
+						monetizationParameters.startPeriod = self.app.monetization.start
 
-					clbk(data);
+						monetizationOpportunity = self.app.platform.sdk.users.checkMonetizationOpportunity(address) 
+						
+						var data = {
+							period: selectedPeriod,
+							monetizationOpportunity,
+							my : address == self.app.user.address.value
+						};
+
+						clbk(data);
+
+					})
 
 			},
 

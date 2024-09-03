@@ -43,5 +43,20 @@
         <div class="monetizationEarnings">
             
         </div>
+        <div class="monetizationChange">
+            <div class="monetizationCaption">
+                <div class="work">
+                    <span><%=e('monetization_exchange')%></span>
+                </div>
+            </div>
+
+            <div class="exchangesProfiles">
+                <% _.each(monetizationParameters.exchanges, function(address){ %> 
+                    <div class="exchange" address="<%-address%>">
+
+                    </div>
+                <% }) %>
+            </div>
+        </div>
     </div>
 <% }%>

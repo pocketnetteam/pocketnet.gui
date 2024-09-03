@@ -1,6 +1,75 @@
 @import "../../css/__cssvar";
 
 #earnings {
+
+	.monetizationChange{
+		padding-top: 2 * @rhythm;
+		.exchangesProfiles{
+			display: flex;
+			padding : 2 * @rhythm;
+			
+		}
+
+		.exchange{
+			padding: @rhythm;
+			background: rgba(var(--background-main),0.5);
+			max-width: 300px;
+			margin-right: @rhythm;
+			opacity: 0;
+			.transition(0.3s);
+
+			&.loaded{
+				opacity: 1;
+			}
+
+			#channel{
+
+				.channel{
+					position: relative;
+					background: transparent;
+
+					.icon{
+						position: absolute;
+						right: 0;
+						top : 0;
+						.usericon{
+							width: 22px;
+							height: 22px;
+							line-height: 22px;
+						}
+						
+					}
+
+					.usericon{
+						margin-left: 0;
+					}
+
+					.userinfo{
+						flex-flow: column;
+
+						.openprofilebutton{
+							min-width: 0;
+						}
+					}
+				}
+	
+				
+			}
+
+			.panel{
+				[menuitem="posts"],
+				[menuitem="followers"],
+				[menuitem="following"]{
+					display: none;
+				}
+				
+			}
+
+			.blockWrapper{
+				display: none;
+			}
+		}
+	}
 	.monetizationEnablePreview{
 		text-align: center;
 		padding : 4 * @rhythm;
@@ -554,6 +623,19 @@
 		min-height: none;
 
 		.monetization{
+
+			.monetizationChange{
+				.exchangesProfiles{
+					display: flex;
+					flex-flow: column;
+					padding : 2 * @rhythm;
+					.exchange{
+						max-width: none;
+						margin-right: 0;
+						margin-bottom: 2 * @rhythm;
+					}
+				}
+			}
 
 			.disableMonetization{
 				margin-right: @rhythm;

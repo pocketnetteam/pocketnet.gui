@@ -3,7 +3,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         repost : {
             ru: {
                 title: `Был сделан репост вашей публикации`,
-                body: `Пользователь ${data.user}`
+                body: `${data.user}`
             },
             en: {
                 title: `Your post has been reposted`,
@@ -72,12 +72,12 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         comment: {
             ru: {
-                title: `${data.user} оставил Вам новый комментарий`,
-                body: ``
+                title: `Комментарий`,
+                body: `${data.user} оставил Вам новый комментарий`
             },
             en: {
-                title: `You have a new comment by ${data.user}`,
-                body: ``
+                title: `Comment`,
+                body: `You have a new comment by ${data.user}`
             }
         },
         privatecontent: {
@@ -92,7 +92,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentDonate: {
             ru: {
-                title: `Ваш комментарий вознаградил пользователь ${data.user}`,
+                title: `Ваш комментарий вознаградил ${data.user}`,
                 body: `Сумма ${data.amount}`
             },
             en: {
@@ -102,17 +102,17 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         answer: {
             ru: {
-                title: `${data.user} оставил ответ на ваш комментарий`,
-                body: ``
+                title: `Ответ`,
+                body: `${data.user} оставил ответ на ваш комментарий`
             },
             en: {
-                title: `Reply to your comment by ${data.user}`,
-                body: ``
+                title: `Reply`,
+                body: `Reply to your comment by ${data.user}`
             }
         },
         answerDonate: {
             ru: {
-                title: `Ваш ответ на комментарий вознаградил пользователь ${data.user}`,
+                title: `Ваш ответ на комментарий вознаградил ${data.user}`,
                 body: `Сумма ${data.amount}`
             },
             en: {
@@ -123,7 +123,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         subscriber: {
             ru: {
                 title: `У вас новый подписчик`,
-                body: `Пользователь ${data.user}`
+                body: `${data.user}`
             },
             en: {
                 title: `You have a new subscriber`,
@@ -132,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} оценил вашу публикацию`,
+                title: `${data.user} оценил вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -142,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} оценил ваш комментарий`,
+                title: `${data.user} оценил ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -163,7 +163,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         referal: {
             ru: {
                 title: `У вас новый реферал`,
-                body: `Пользователь ${data.user}`
+                body: `${data.user}`
             },
             en: {
                 title: `You have a new referral`,

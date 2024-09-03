@@ -1,3 +1,55 @@
+#earnings .monetizationChange {
+  padding-top: 1em;
+}
+#earnings .monetizationChange .exchangesProfiles {
+  display: flex;
+  padding: 1em;
+}
+#earnings .monetizationChange .exchange {
+  padding: 0.5em;
+  background: rgba(var(--background-main), 0.5);
+  max-width: 300px;
+  margin-right: 0.5em;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#earnings .monetizationChange .exchange.loaded {
+  opacity: 1;
+}
+#earnings .monetizationChange .exchange #channel .channel {
+  position: relative;
+  background: transparent;
+}
+#earnings .monetizationChange .exchange #channel .channel .icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#earnings .monetizationChange .exchange #channel .channel .icon .usericon {
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+}
+#earnings .monetizationChange .exchange #channel .channel .usericon {
+  margin-left: 0;
+}
+#earnings .monetizationChange .exchange #channel .channel .userinfo {
+  flex-flow: column;
+}
+#earnings .monetizationChange .exchange #channel .channel .userinfo .openprofilebutton {
+  min-width: 0;
+}
+#earnings .monetizationChange .exchange .panel [menuitem="posts"],
+#earnings .monetizationChange .exchange .panel [menuitem="followers"],
+#earnings .monetizationChange .exchange .panel [menuitem="following"] {
+  display: none;
+}
+#earnings .monetizationChange .exchange .blockWrapper {
+  display: none;
+}
 #earnings .monetizationEnablePreview {
   text-align: center;
   padding: 2em;
@@ -409,6 +461,16 @@
 @media only screen and (max-width: 768px) {
   #earnings {
     min-height: none;
+  }
+  #earnings .monetization .monetizationChange .exchangesProfiles {
+    display: flex;
+    flex-flow: column;
+    padding: 1em;
+  }
+  #earnings .monetization .monetizationChange .exchangesProfiles .exchange {
+    max-width: none;
+    margin-right: 0;
+    margin-bottom: 1em;
   }
   #earnings .monetization .disableMonetization {
     margin-right: 0.5em;

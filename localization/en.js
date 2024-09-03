@@ -2875,3 +2875,6 @@ _l.monetization_enable = "Enable monetization"
 _l.monetization_monetizationText = "Enable monetization and earn income every week"
 _l.monetization_disable =  "Disable the program"
 _l.monetization_disable_question = "Are you sure you want to stop participating in the monetization program?"
+
+_l.monetization_exchange = "Exchange PKOIN"
+_l.monetization_buychat = "Contact via chat"

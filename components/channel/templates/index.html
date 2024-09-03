@@ -85,6 +85,14 @@
 
 					<% } %>
 
+					<% if(ed.customaction) {%>
+						<div class="openprofilebuttonwrapper">
+							<button class="button openprofilebutton customaction">
+								<%- e(ed.customaction.label) %>
+							</button>
+						</div>
+					<% } %>
+
 					
 					<% if(ed.followbutton && !app.curation()) { %>
 
