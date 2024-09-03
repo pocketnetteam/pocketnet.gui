@@ -1684,6 +1684,7 @@ Application = function (p) {
 
 		playingvideo: function (v, from) {
 
+			console.log("PLAYING", v ,from)
 			
 
 			if(from && from.player_id){
@@ -1698,8 +1699,17 @@ Application = function (p) {
 				try {
 					self.playingvideo.pause()
 
-					if (self.playingvideo.player_id)
-						self.playingvideocollisions[self.playingvideo.player_id] = true
+					if (self.playingvideo.player_id){
+						var i = self.playingvideo.player_id
+
+						self.playingvideocollisions[i] = true
+
+						setTimeout(() => {
+							delete self.playingvideocollisions[i]
+						}, 20)
+					}
+
+					
 				}
 				catch (e) {
 				}
@@ -2815,6 +2825,8 @@ Application = function (p) {
 
 			if (window.cordova) {
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
+
+					console.log('playing set backgroundMode', t)
 
 					if (t) {
 						cordova.plugins.backgroundMode.enable()

@@ -1051,6 +1051,9 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding-left: 0.5em;
     padding-right: 0;
   }
+  #post .eventMember .iconWrapper {
+    width: 33px;
+  }
   #post .openoriginallabel {
     display: none;
   }
