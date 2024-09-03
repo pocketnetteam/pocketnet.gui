@@ -118,6 +118,13 @@ var channel = (function(){
 			el.c.find('.blockWrapper').on('click', function(){
 				actions.blocking()
 			})
+
+			if(ed.customaction){
+				el.c.find('.customaction').on('click', function(){
+					ed.customaction.action(author.data)
+				})
+			}
+			
 			
 			_.each(reports, function(r, j){
 				if(r.events){
