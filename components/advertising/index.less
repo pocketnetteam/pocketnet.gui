@@ -233,7 +233,11 @@
 
 				.posts{
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
+
+					.notification{
+						max-width: 50%;
+					}
 
 					.poststats{
 						margin-left: auto;
@@ -365,7 +369,6 @@
 					padding : 2 * @rhythm @rhythm;
 					border-right: 1px solid rgb(var(--neutral-grad-0));
 					text-align: center;
-					white-space: nowrap;
 					text-overflow: ellipsis;
 					overflow: hidden;
 					

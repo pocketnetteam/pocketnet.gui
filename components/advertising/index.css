@@ -180,7 +180,10 @@
 }
 #advertising .advertising .advertisingTable .postsTable .posts {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+}
+#advertising .advertising .advertisingTable .postsTable .posts .notification {
+  max-width: 50%;
 }
 #advertising .advertising .advertisingTable .postsTable .posts .poststats {
   margin-left: auto;
@@ -277,7 +280,6 @@
   padding: 1em 0.5em;
   border-right: 1px solid rgb(var(--neutral-grad-0));
   text-align: center;
-  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
