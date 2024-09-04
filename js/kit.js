@@ -3643,7 +3643,7 @@ Settings = function(){
 	self.monetization = {
 		set : function(_v){
 
-			if(!_v){
+			if (_v !== '' && _v !== false && _v !== true){
 				this.v = ''
 			}
 			else
@@ -3711,7 +3711,7 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
-					monetization : self.monetization.v || ""
+					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 				})
 			} 
 		}
@@ -3719,7 +3719,7 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
-				monetization : self.monetization.v || ""
+				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 			})
 		}
 
@@ -3743,7 +3743,7 @@ Settings = function(){
 		}
 
 		self.pin.set(parsed.pin || ""); 
-		self.monetization.set(parsed.monetization || ""); 
+		self.monetization.set(parsed.monetization); 
 
 	}
 
@@ -3781,9 +3781,11 @@ pSettings = function(){
 
 		var v = dv.d
 
-		self.pin = (v || {}).pin || ""
-		self.monetization = (v || {}).monetization || ""
-		self.address = (v || {}).address || ""
+		if(!v) v = {}
+
+		self.pin = v.pin || ""
+		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
+		self.address = v.address || ""
 	}
 
 	self.export = function(){

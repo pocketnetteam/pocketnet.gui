@@ -1153,7 +1153,7 @@ var authorn = (function(){
 
 					var monetizationPromise = (() => {return Promise.resolve(false)})()
 
-					var monetizationStatic = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
+					var monetizationStatic = /*!self.user.isItMe(author.address) && */!params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
 
 					if (monetizationStatic) 
 						monetizationPromise = self.app.platform.sdk.users.checkMonetization(author.address)

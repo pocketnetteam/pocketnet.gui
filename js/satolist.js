@@ -381,7 +381,7 @@ Platform = function (app, listofnodes) {
         'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
         'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
         'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
-        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
 
     } 
 
@@ -9247,7 +9247,8 @@ Platform = function (app, listofnodes) {
                     var ct = new Settings();
 
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
-                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? (settings.monetization || '') : settingsObj.monetization);
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? 
+                        ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
                     return self.app.platform.actions.addActionAndSendIfCan(ct)
 
@@ -10613,8 +10614,6 @@ Platform = function (app, listofnodes) {
 
                 if(!userinfo) return false
 
-                var subcount = userinfo.subscribes_count || 0
-
 				return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
             },
 
@@ -10627,8 +10626,7 @@ Platform = function (app, listofnodes) {
 
                         var settings = self.psdk.accSet.get(address) || {}
 
-
-                        return Promise.resolve(settings.monetization || false)
+                        return Promise.resolve(settings.monetization === true || settings.monetization === "" ? true : false)
 
                     })
 
@@ -15990,7 +15988,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
                         method : 'getboostfeed',
                         rpc : {
-                            fnode : '65.21.252.135'
+                            fnode : '65.21.252.135:38081'
                         }
                     })
                 },

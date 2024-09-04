@@ -2876,7 +2876,7 @@ _l.monetization_monetizationText = "Enable monetization and earn income every we
 _l.monetization_disable =  "Disable the program"
 _l.monetization_disable_question = "Are you sure you want to stop participating in the monetization program?"
 
-_l.monetization_exchange = "Sell cryptocurrency"
+_l.monetization_exchange = "Exchange pocketcoin"
 _l.monetization_buychat = "Contact via chat"
 
 
@@ -2886,7 +2886,7 @@ _l.advertising_Boostscount = "Boosts"
 
 _l.advertising_Ratings = "Ratings"
 _l.advertising_Comments = "Comments"
-_l.advertising_Amount = "Amoutn"
+_l.advertising_Amount = "Spent"
 _l.advertising_Advertising = "Advertising"
 _l.advertising_exchange = "Buy cryptocurrency"
 _l.advertising_buychat = "Contact via chat"
@@ -2896,3 +2896,4 @@ _l.advertising_Date = "Date"
 _l.grouping = "Group by"
 _l.groupBy_shares = "shares"
 _l.groupBy_months = "months"
+_l.monetization_disable_time = "You will be disconnected from the monetization program within twenty minutes."

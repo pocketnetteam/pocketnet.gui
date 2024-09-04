@@ -298,7 +298,30 @@ var earnings = (function () {
 								success: function () {
 									globalpreloader(true)
 
+									
+
 									self.app.platform.sdk.users.setMonetization(false, (err, alias) => {
+
+										if(!err){
+											new dialog({
+												html:  self.app.localization.e('monetization_disable_time'),
+												btn1text: self.app.localization.e('ok'),
+												btn2text: self.app.localization.e('dno'),
+									
+												success: function () {
+													
+												},
+									
+												fail: function () {
+							
+												},
+								
+												class : 'zindex one'
+											})
+										}
+
+										
+
 										renders.monetizationWrapper(() => {
 											globalpreloader(false)
 										})
@@ -376,7 +399,7 @@ var earnings = (function () {
 
 			getdata: async function (clbk) {
 
-					address	= parameters().address || self.app.user.address.value
+					address	= self.app.user.address.value //parameters().address || self.app.user.address.value
 
 					self.sdk.users.get(address, function(){
 

@@ -610,6 +610,8 @@ var Action = function(account, object, priority, settings){
         var opreturnData = null
         var method = 'sendrawtransaction'
 
+        //return Promise.reject('deprecated')
+
         //////////////
 
         if (self.object.serialize){
