@@ -75,6 +75,25 @@ weeksInYear = function(year){
 	return result;
 }
 
+monthsInYear = function(year){
+
+	var result = []
+	var end = moment.utc(new Date(year + 1, 0, 1)).unix();
+
+	for (var i = 0; i < 12; i++){
+		var d = moment.utc(new Date(year, i, 1))
+		var e = moment.utc(new Date(year, i + 1, 1))
+
+		result.push({
+			n : i + 1,
+			date : d.unix(),
+			end : e.unix()
+		})
+	}
+  
+	return result;
+}
+
 
 addZero = function (n) {
 	if (Number(n) < 10) {

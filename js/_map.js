@@ -1142,16 +1142,16 @@ __map =  {
 		
 	},
 
+	advertising : {
+		uri : "advertising",
+		href : "advertising",
+		add : insertingfunc
+	},
+
 	earnings : {
 		uri : "earnings",
 		href : "earnings",
-		add : insertingfunc,
-
-		relations : [
-			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-				Chart = require('./js/vendor/chart.min.js')
-			}},	
-		]
+		add : insertingfunc
 	},
 
 	videoCabinet : {

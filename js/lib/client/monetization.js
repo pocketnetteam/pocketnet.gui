@@ -1,60 +1,346 @@
 var Monetization = function(app, {url, auth}){
     var self = this
 
+    self.start = 1725235200
+
+    var helpers = {
+        getYearPeriod : function(year){
+
+            var start = moment.utc([year, 0, 1]).unix()
+
+            var end = moment.utc([year + 1, 0, 1]).unix()
+
+            return {
+                start, end
+            }
+        },
+
+        totalEarnings : function(ar, f){
+
+            var total = {}
+
+            _.each(ar, (o) => {
+
+                var p = f(o)
+
+                total.commentsCount = (total.commentsCount || 0) + (p.commentsCount || 0)
+                total.commentsCountFromSharks = (total.commentsCountFromSharks || 0) + (p.commentsCountFromSharks || 0)
+                total.reward = (total.reward || 0) + (p.reward || 0)
+                total.scoresCount = (total.scoresCount || 0) + (p.scoresCount || 0)
+                total.scoresCountFromSharks = (total.scoresCountFromSharks || 0) + (p.scoresCountFromSharks || 0)
+            })
+
+
+            total.comments = (total.commentsCount || 0) + (total.commentsCountFromSharks || 0)
+            total.scores = (total.scoresCount || 0) + (total.scoresCountFromSharks || 0)
+
+            return total
+
+        },
+        
+        totalBoosts : function(ar, f){
+
+            var total = {}
+
+            _.each(ar, (o) => {
+
+                var p = f(o)
+
+                total.amountBoost = (total.amountBoost || 0) + (p.amountBoost || 0)
+            })
+
+            return total
+
+        },
+       
+    } 
+
+    var groupping = {
+        common  : {
+            groupByWeekYear : function(r, year, {totalFunction}){
+                var weeks = _.sortBy(weeksInYear(year), (w) => {
+                    return -w.n
+                })
+    
+                var weeksResult = _.map(weeks, (w) => {
+    
+                    var posts = _.sortBy(_.filter(r, (f) => {
+                        return getWeekNumber(new Date(moment.utc(f.time * 1000).toDate()))[1] == w.n
+                    }), (f) => {
+                        return -f.time
+                    })
+    
+                    w.notIncluded = w.date > moment.utc().unix()
+    
+                    w.beforeProgram = w.date < self.start
+    
+                    return {
+                        ...w, posts, total : totalFunction(posts, (r) => {return r}), startof : w.date == self.start
+                    }
+                })
+    
+                var byMonth = _.sortBy(_.map(group(weeksResult, (w) => {
+                    return (new Date(w.end * 1000)).getMonth() + 1
+                }), (bm, i) => {
+    
+                    var postsCount = _.reduce(bm, (m, p) => {
+                        return m + p.posts.length
+                    }, 0)
+    
+                    var start = new Date(year, i - 1, 1)
+                    var end = new Date(year, i, 1)
+                    var current = new Date()
+    
+                    return {
+                        end,
+                        start,
+                        current : current.getTime() > start.getTime() && current.getTime() <= end.getTime(),
+                        weeks : bm,
+                        total : {postsCount, ...totalFunction(bm, (r) => {return r.total})},
+                        notIncluded : !_.find(bm, (w) => {
+                            return !w.notIncluded
+                        }),
+                        beforeProgram : !_.find(bm, (w) => {
+                            return !w.beforeProgram
+                        }),
+    
+                        startof : _.find(bm, (w) => {
+                            return w.startof
+                        })
+                    }
+                }), (m) => {
+                    return -(new Date(m.start)).getTime()
+                })
+    
+                var postsCount = _.reduce(byMonth, (m, p) => {
+                    return m + p.total.postsCount
+                }, 0)
+    
+                var year = {
+                    months : byMonth,
+                    total : {postsCount, ...totalFunction(byMonth, (r) => {return r.total})}
+                }
+    
+                return year
+            },
+    
+            groupByMonthYear : function(r, year, {totalFunction}){
+                var monts = _.sortBy(monthsInYear(year), (w) => {
+                    return -w.n
+                })
+    
+                var current = new Date()
+    
+                var byMonth = _.map(monts, (w) => {
+    
+                    var posts = _.sortBy(_.filter(r, (f) => {
+                        return moment.utc(f.time * 1000).month() + 1 == w.n 
+                    }), (f) => {
+                        return -f.time
+                    })
+    
+                    w.notIncluded = w.date > moment.utc().unix()
+    
+                    var start = new Date(year, w.n - 1, 1)
+                    var end = new Date(year, w.n, 1)
+    
+                    return {
+                        ...w, 
+                        posts, 
+                        current : current.getTime() > start.getTime() && current.getTime() <= end.getTime(),
+                        total : {...totalFunction(posts, (r) => {return r}), postsCount : posts.length},
+                        start
+                    }
+    
+                })
+    
+                var postsCount = _.reduce(byMonth, (m, p) => {
+                    return m + p.total.postsCount
+                }, 0)
+    
+                var year = {
+                    months : byMonth,
+                    total : {postsCount, ...totalFunction(byMonth, (r) => {return r.total})}
+                }
+    
+                return year
+            }
+        },
+        earnings : {
+            groupByWeekYear : function(r, year){
+                
+                return groupping.common.groupByWeekYear(r, year, {totalFunction : helpers.totalEarnings})
+    
+            },
+    
+            groupByMonthYear : function(r, year){
+
+                return groupping.common.groupByMonthYear(r, year, {totalFunction : helpers.totalEarnings})
+               
+            }
+        },
+
+        boosts : {
+            groupByWeekYear : function(r, year){
+                
+                return groupping.common.groupByWeekYear(r, year, {totalFunction : helpers.totalBoosts})
+    
+            },
+    
+            groupByMonthYear : function(r, year){
+
+                return groupping.common.groupByMonthYear(r, year, {totalFunction : helpers.totalBoosts})
+               
+            },
+
+            groupByPostsYear : function(r, year){
+
+
+                var posts = _.map(group(_.sortBy(r, (f) => {
+                    return -f.time
+                }), (p) => {
+                    return p.contentRootTxHash
+                }), (r, contentRootTxHash) => {
+
+                    var post = r[0]
+
+                    var groupresult = {
+                        time : post.contentTime || 0,
+                        contentRootTxHash,
+                        ...helpers.totalBoosts(r, (r) => {return r}),
+                        boosts : r
+                    }
+
+
+                    return groupresult
+                })
+
+                return {
+                    posts,
+                    total :  {postsCount : posts.length, ...helpers.totalBoosts(posts, (r) => {return r})}
+                }
+
+            },
+        }
+    }
+
     var request = function(path, data = {}, p = {}){
 
         var er = false
 
-        var headers = _.extend({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': 'Basic ' + auth
-        }, p.headers || {})
+        var hash = path + JSON.stringify(data)
 
+        return app.psdk.monetization.request(() => {
 
-        return fetch('https://' + url + '/api/' + path, {
-
-            method: p.method || 'POST',
-            mode: 'cors',
-            headers: headers,
-            body: JSON.stringify(data)
-
-        }).then(r => {
-
-            if(!r.ok){
-                er = true
-            }
-
-            if (r.status){
-
-                if (r.status == 261){
-                    return Promise.reject({
-                        code : r.status
-                    })
+            var headers = _.extend({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Basic ' + auth
+            }, p.headers || {})
+    
+    
+            return fetch('https://' + url + '/api/' + path, {
+    
+                method: p.method || 'POST',
+                mode: 'cors',
+                headers: headers,
+                body: JSON.stringify(data)
+    
+            }).then(r => {
+    
+                if(!r.ok){
+                    er = true
                 }
+    
+                if (r.status){
+    
+                    if (r.status == 261){
+                        return Promise.reject({
+                            code : r.status
+                        })
+                    }
+    
+                }
+    
+                return r.json()
+    
+            }).then(result => {
+    
+                if (er){
+                    return Promise.reject(result.error)
+                }
+    
+                return Promise.resolve(result)
+    
+            })
 
-            }
+        }, hash)
 
-            return r.json()
-
-        }).then(result => {
-
-            if (er){
-                return Promise.reject(result.error)
-            }
-
-            return Promise.resolve(result)
-
-        })
+        
 
     }
 
-    self.start = 1725235200
+    self.boostperformance = function({addresses, start, end}){
+
+        if(!_.isArray(addresses)) addresses = [addresses]
+
+        /*var r = [
+            {
+                "id": 17160474,
+                "contentHash": "d8d1dd9bb8c9744f53d1eaaa0718373e4a0468f632e4a7bc66dda2aca7b975af",
+                "contentRootTxHash": "d8d1dd9bb8c9744f53d1eaaa0718373e4a0468f632e4a7bc66dda2aca7b975af",
+                "contentAddressHash": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5",
+                "boostAddressHash": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                "height": 2922052,
+                "time": 1725436121,
+                "amountBoost": 200000001
+            },
+            {
+                "id": 17160474,
+                "contentHash": "d8d1dd9bb8c9744f53d1eaaa0718373e4a0468f632e4a7bc66dda2aca7b975af",
+                "contentRootTxHash": "d8d1dd9bb8c9744f53d1eaaa0718373e4a0468f632e4a7bc66dda2aca7b975af",
+                "contentAddressHash": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5",
+                "boostAddressHash": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                "height": 2922103,
+                "time": 1725439113,
+                "amountBoost": 300000001
+            },
+            {
+                "id": 17403095,
+                "contentHash": "dbf0e5dcc839f0c634a90ccb660149f96c4a5ecb38bf59dd26e6b61a6f2fa38b",
+                "contentRootTxHash": "dbf0e5dcc839f0c634a90ccb660149f96c4a5ecb38bf59dd26e6b61a6f2fa38b",
+                "contentAddressHash": "PXYhCbTwPaUHrP6spJM5NY84TBpLQJtZi5",
+                "boostAddressHash": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                "height": 2922051,
+                "time": 1725436000,
+                "amountBoost": 300000001
+            }
+            ]
+
+        return Promise.resolve(group(r, (f) => {
+            return f.boostAddressHash
+        }))*/
+
+        return request('monetization/boostperformance', {
+            Addresses : addresses,
+            StartDate : start,
+            EndDate : end
+        }).then(r => {
+
+            console.log("CLEAR RESULT ", r)
+
+
+            return group(r, (f) => {
+                return f.boostAddressHash
+            })
+        })
+         
+    }
+
 
     self.contentperformance = function({addresses, start, end}){
 
         if(!_.isArray(addresses)) addresses = [addresses]
-
 
         /*var r = [
             {
@@ -359,6 +645,48 @@ var Monetization = function(app, {url, auth}){
             return group(r, (f) => {
                 return f.addressHash
             })
+        })
+    }
+
+    self.getBoosts = function(address, year, group = 'groupByWeekYear'){
+        return self.boostperformance({
+            addresses : [address],
+            ...helpers.getYearPeriod(year)
+        }).then((result = {}) => {
+
+            var r = result[address] || []
+
+            _.each(r, (r) => {
+                r.amountBoost = ((r.amountBoost - 1) / 100000000)
+            })
+
+            console.log('groupping.boosts[group](r, year)', groupping.boosts[group](r, year))
+
+            return groupping.boosts[group](r, year)
+
+        }).catch(e => {
+            console.error(e)
+
+            return Promise.reject(e)
+
+        })
+    }
+
+    self.getEarnings = function(address, year, group = 'groupByWeekYear'){
+        return self.contentperformance({
+            addresses : [address],
+            ...helpers.getYearPeriod(year)
+        }).then((result = {}) => {
+
+            var r = result[address] || []
+
+            return groupping.earnings[group](r, year)
+
+        }).catch(e => {
+            console.error(e)
+
+            return Promise.reject(e)
+
         })
     }
 

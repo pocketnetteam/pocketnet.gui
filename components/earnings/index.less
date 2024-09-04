@@ -3,10 +3,11 @@
 #earnings {
 
 	.monetizationChange{
-		padding-top: 2 * @rhythm;
+		padding-top: 8 * @rhythm;
+		padding-bottom: 8 * @rhythm;
 		.exchangesProfiles{
 			display: flex;
-			padding : 2 * @rhythm;
+			padding : 2 * @rhythm 0;
 			
 		}
 
@@ -201,6 +202,10 @@
 				.sharepreview{
 					padding-top: 0;
 					font-size: 1.1em;
+
+					i{
+						width: auto;
+					}
 				}
 			}
 
@@ -689,238 +694,6 @@
 	
 		}
 
-		.buypkoin{
-			padding : @rhythm;
-	
-			.ways{
-				display : flex;
-				align-items: flex-start;
-				flex-wrap: wrap;
-	
-				>div{
-					flex-shrink: 1;
-					  flex-basis: content;
-					flex-grow: 1;
-					padding-bottom: 6 * @rhythm;
-				}
-			}
-			
-			.row{
-				padding : 0;
-	
-				.button{
-					min-width: 310px;
-				}
-	
-				&.flx{
-					justify-content: center;
-					>div{
-						width: 12.5%;
-						padding : @rhythm @rhythm;
-						text-align: center;
-					}
-				}
-	
-				&.forfiats{
-					justify-content: center;
-	
-					>div{
-						width: 25%;
-					}
-				}
-	
-				&.one{
-					display: block;
-					padding : @rhythm 0;
-					margin-bottom: 3 * @rhythm;
-	
-					.wrp{
-						padding : 4 * @rhythm 2 * @rhythm;
-					}
-	
-					.flxbtn{
-						flex-direction: column;
-						text-align: center;
-						justify-content: center;
-	
-						div{
-							margin-right: 0;
-						}
-					}
-	
-					.flxbtnlbk{
-						margin-top : 2 * @rhythm;
-					}
-				}
-	
-				&.table{
-					display: block;
-					text-align: center;
-	
-					>div{
-						display: block;
-					}
-	
-					.reciever{
-						margin : 0 auto;
-					}
-				}
-				
-			}
-	
-		}
-	
-		.htls,
-		.crowdfunding,
-		.deposit,
-		.send{
-	
-			border :0;
-	
-			.linkForDepositReady,
-			.linkForDeposit,
-			.addressForDeposit,
-			.action{
-				margin-top: @rhythm;
-				padding :  @rhythm 0;
-			}
-	
-			.linkparams{
-				padding : 2 * @rhythm 0;
-	
-				.value{
-					font-size: 0.9em;
-				}
-	
-	
-			}
-	
-			button{
-				min-width : 0;
-				width: 100%;
-				max-width: none!important;
-			}
-	
-			.row{
-				display: block;
-	
-				>div{
-					display: block;
-					width: 100%;
-	
-					&.changer{
-						display: none;
-	
-					}
-	
-					&.address{
-						width: 100%;
-					}
-	
-					&.label{
-						width: 100%;
-					}
-				}
-			}
-		}
-	
-		.crowdfunding{
-			border : 0;
-			background: rgb(var(--background-secondary-theme));
-		}
-	
-		.deposit{
-			border : 0;
-			background: rgb(var(--background-secondary-theme));
-	
-			
-	
-			.qrcoderesult{
-				.imageqr{
-					width: 225px;
-					height: 225px;
-					margin : 0 auto;
-				}
-			}
-	
-			.depositaddress{
-				.adrwrapper{
-					padding : 2 * @rhythm 0;
-	
-					.adr{
-						font-size: 0.9em;
-					}
-				}
-			}
-	
-			.actionbody{
-			
-				textarea{
-					padding : @rhythm;
-					height: 150px;
-				}
-	
-				button{
-					width: 100%;
-					min-width : 0;
-				}
-	
-				
-			}
-		}
-	
-		.addresses{
-			.addressesGroupCaption{
-				padding : @rhythm;
-			}
-	
-			.adressesTable{
-				border-bottom: 1px solid rgb(var(--color-medium-theme));
-				padding : 0 @rhythm;
-	
-				>div{
-					vertical-align: top;
-					padding : 3 * @rhythm 0;
-	
-					&.name{
-						padding-left: 0;
-						font-weight: 500;
-						overflow: hidden;
-						text-overflow: ellipsis;
-	
-						
-					}
-	
-					&.panel{
-						display: none;
-					}
-	
-	
-					&.balance{
-						padding-left: 2 * @rhythm;
-						width: 31%;
-						font-weight: 700;
-					}
-	
-					&.percent{
-						font-weight: 700;
-						width: 22%;
-					}
-	
-					a{
-						display: none;
-					}
-	
-					&:nth-last-child(1){
-						padding-right: 0;
-					}
-				}
-			}
-	
-			
-		}
-	
-		
 	}
 
 }

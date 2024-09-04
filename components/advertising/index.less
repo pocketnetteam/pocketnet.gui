@@ -1,0 +1,473 @@
+@import "../../css/__cssvar";
+
+#advertising {
+
+	&.making{
+		.advertisingTable,
+		.advertisingChange{
+			opacity: 0;
+		}
+	}
+	.advertisingTable,
+	.advertisingChange{
+		.transition(opacity, 0.15);
+	}
+
+	.advertisingChange{
+		
+		padding-top: 8 * @rhythm;
+		padding-bottom: 8 * @rhythm;
+		.exchangesProfiles{
+			display: flex;
+			padding : 2 * @rhythm 0;
+			
+		}
+
+		.exchange{
+			padding: @rhythm;
+			background: rgba(var(--background-main),0.5);
+			max-width: 300px;
+			margin-right: @rhythm;
+			opacity: 0;
+			.transition(0.3s);
+
+			&.loaded{
+				opacity: 1;
+			}
+
+			#channel{
+
+				.channel{
+					position: relative;
+					background: transparent;
+
+					.icon{
+						position: absolute;
+						right: 0;
+						top : 0;
+						.usericon{
+							width: 22px;
+							height: 22px;
+							line-height: 22px;
+						}
+						
+					}
+
+					.usericon{
+						margin-left: 0;
+					}
+
+					.userinfo{
+						flex-flow: column;
+
+						.openprofilebutton{
+							min-width: 0;
+						}
+					}
+				}
+	
+				
+			}
+
+			.panel{
+				[menuitem="posts"],
+				[menuitem="followers"],
+				[menuitem="following"]{
+					display: none;
+				}
+				
+			}
+
+			.blockWrapper{
+				display: none;
+			}
+		}
+	}
+	.advertisingEnablePreview{
+		text-align: center;
+		padding : 4 * @rhythm;
+		margin-bottom: 4 * @rhythm;
+
+		.advertisingCaption{
+			span{
+				font-size: 2em;
+			}
+		}
+
+		.advertisingAction{
+			margin-top: 2 * @rhythm;
+		}
+	}
+
+	.advertising{
+		margin-top: 2 * @rhythm;
+		margin-bottom: 4 * @rhythm;
+
+		.advertisingCaption{
+			padding-left: @rhythm;
+			span{
+				font-size: 2em;
+			}
+		}
+
+		.advertisingPanel{
+			.work{
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		.groupping{
+			margin-left: auto;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+
+			label,span{
+				margin-right: 0.5 * @rhythm;
+			}
+
+			span{
+				font-weight: 700;
+				color : rgb(var(--neutral-grad-4));
+			}
+
+			&:hover{
+				i,
+				span{
+					color : rgb(var(--color-good));
+				}
+			}
+		}
+
+		.year{
+			padding-left: @rhythm;
+
+			margin-top: 2 * @rhythm;
+			margin-bottom: 2 * @rhythm;
+			span{
+				font-size: 2em;
+				font-weight: 700;
+			}
+
+			i{
+				margin-bottom: 6px;
+				width: 33px;
+				text-align: center;
+				color : rgb(var(--neutral-grad-2));
+				cursor: pointer;
+				.transition(0.3s);
+				&:hover{
+					color : rgb(var(--neutral-grad-4));
+				}
+			}
+		}
+		
+		.error,
+		.startof{
+			margin-top: 2 * @rhythm;
+			margin-bottom: 2 * @rhythm;
+			padding : 4 * @rhythm;
+			text-align: center;
+			background: rgba(var(--background-main),0.5);
+		}
+
+		.error{
+			margin-left: 2 * @rhythm;
+			margin-right: 2 * @rhythm;
+		}
+
+
+		.advertisingTable{
+
+			position: relative;
+
+			.tableCaption{
+				border-bottom: 1px solid rgb(var(--neutral-grad-0));
+				z-index: 2;
+				position: sticky;
+				top: calc(65px + var(--app-margin-top));
+				left: 0;
+				right: 0;
+				>div{
+					span{
+						font-size: 0.8em;
+						font-weight: 700;
+					}
+				}
+			}
+
+			.totalWrapper{
+				position: sticky;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 2;
+			}
+
+			.tableTotal{
+				
+				border-top: 2px solid rgb(var(--neutral-grad-3));
+
+				.reward{
+					span{
+						font-weight: 700;
+						color : rgb(var(--color-txt-ac-1));
+					}
+				}
+			}
+
+			.postsTable{
+				.sharepreview{
+					padding-top: 0;
+					//font-size: 1.1em;
+
+					i{
+						width: auto;
+					}
+
+					.shareprwrapper > div.fortext span{
+						font-size: 1em;
+					}
+				}
+
+				.posts{
+					display: flex;
+					align-items: flex-start;
+
+					.notification{
+						max-width: 50%;
+					}
+
+					.poststats{
+						margin-left: auto;
+						display: flex;
+						align-items: center;
+
+						.comments,
+						.likes{
+							padding : 0.5 * @rhythm;
+							padding-left: 16px;
+							border-radius: 16px;
+							background: rgba(var(--background-main),0.7);
+							i{
+								text-align: center;
+								color : rgb(var(--neutral-grad-2));
+							}
+						}
+
+						>div{
+							display: flex;
+							align-items: center;
+							
+							margin-right: @rhythm;
+							
+							
+
+							i{
+								width: 33px;
+								text-align: center;
+
+								&.fa-star{
+									color : rgb(var(--color-star-yellow));
+								}
+							}
+
+							&.usericonWrapper{
+								.usericon{
+									font-size: 0.75em;
+									width: 24px;
+									height: 24px;
+									line-height: 24px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			
+
+			.beforeprogram{
+				color : rgb(var(--neutral-grad-2));
+			}
+
+			.postsTable{
+				display: none;
+
+				&.expanded{
+					display: block;
+				}
+			}
+
+			.month.expanded{
+				.postsTable{
+					display: block;
+				}
+			}
+
+
+			.expanded{
+				>div>div>i.expandicon{
+					-webkit-transform: rotate(180deg);
+					-moz-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+					transform: rotate(180deg);
+				}
+				
+			}
+
+			.table{
+
+				background: rgb(var(--background-total-theme));
+
+				&:nth-child(2n){
+					background: rgba(var(--neutral-grad-0), 0.3);
+				}
+
+				&.monthTable{
+					border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.3);
+				}
+
+				&.canexpand{
+					cursor: pointer;
+					.transition(0.3s);
+
+					&:hover{
+						opacity: 0.8;
+
+						>div{
+							i.expandicon{
+								color : rgb(var(--neutral-grad-4));
+							}
+						}
+						
+					}
+				}
+
+				
+				.posts{
+					width: 100%;
+					text-align: left;
+				}
+				.period{
+					width: 160px;
+
+					i{
+						width: 33px;
+						text-align: center;
+						color : rgb(var(--neutral-grad-2));
+					}
+				}
+
+				.reward{
+					width: 100px;
+				}
+
+				>div{
+					padding : 2 * @rhythm @rhythm;
+					border-right: 1px solid rgb(var(--neutral-grad-0));
+					text-align: center;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					
+
+					
+
+					&:nth-child(1){
+						text-align: left;
+					}
+
+					&:nth-last-child(1){
+						border-right: 0;
+						text-align: right;
+					}
+				}
+
+				.openpostsmonth,
+				.openpostsweek{
+					width: auto;
+					cursor: pointer;
+					font-size: 0.7em;
+					.transition(0.3s);
+					&:hover{
+						color : rgb(var(--neutral-grad-4));
+					}
+				}
+				
+			}
+		}
+
+	}
+
+}
+
+.wnd{
+	#advertising{
+		.advertising{
+	
+			.advertisingTable{
+	
+	
+				.tableCaption{
+					
+					position: static;
+					
+				}
+	
+				.totalWrapper{
+					position: static;
+				}
+			}
+		}
+	}
+}
+
+
+
+/*t*/ @media only screen and (max-width: 768px){
+	#advertising{
+		min-height: none;
+
+		.advertising{
+
+			.advertisingChange{
+				.exchangesProfiles{
+					display: flex;
+					flex-flow: column;
+					padding : 2 * @rhythm;
+					.exchange{
+						max-width: none;
+						margin-right: 0;
+						margin-bottom: 2 * @rhythm;
+					}
+				}
+			}
+
+			.disableAdvertising{
+				margin-right: @rhythm;
+			}
+	
+			.advertisingTable{
+	
+	
+				.table{
+					
+					
+					.period{
+						width: 40%;
+					}
+	
+					.reward{
+						width: 80px;
+					}
+					
+				}
+			}
+	
+		}
+	
+	}
+
+}

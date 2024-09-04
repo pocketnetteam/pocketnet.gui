@@ -1,0 +1,10 @@
+<div ban=".gif" class="usericon" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
+    <% if(!sUserInfo.image && sUserInfo.letter) {%>
+        <span class="letter">
+            <%-sUserInfo.letter.toUpperCase()%>
+        </span>
+    <% } else if (!sUserInfo.image) { %>
+        <i class="far fa-user"></i>
+    <% } %>
+    <%= app.platform.ui.markUser(sUserInfo.address)%>
+</div>
