@@ -14,7 +14,7 @@ var advertising = (function () {
 
 		var advertisingParameters = {
 			currentYear : new Date().getFullYear(),
-			years : [2023, new Date().getFullYear()],
+			years : [2022, new Date().getFullYear()],
 			exchanges : ['PMZ3DiGWKGybLb5oCz9ojwxuTBA6GcYAKq', 'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK'],
 			groupBy : 'shares',
 			groupByOptions : ['shares', 'months']
