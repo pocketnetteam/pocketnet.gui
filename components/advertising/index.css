@@ -1,0 +1,335 @@
+#advertising.making .advertisingTable,
+#advertising.making .advertisingChange {
+  opacity: 0;
+}
+#advertising .advertisingTable,
+#advertising .advertisingChange {
+  -moz-transition: 0.15 opacity;
+  -o-transition: 0.15 opacity;
+  -webkit-transition: 0.15 opacity;
+  transition: 0.15 opacity;
+}
+#advertising .advertisingChange {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+#advertising .advertisingChange .exchangesProfiles {
+  display: flex;
+  padding: 1em 0;
+}
+#advertising .advertisingChange .exchange {
+  padding: 0.5em;
+  background: rgba(var(--background-main), 0.5);
+  max-width: 300px;
+  margin-right: 0.5em;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#advertising .advertisingChange .exchange.loaded {
+  opacity: 1;
+}
+#advertising .advertisingChange .exchange #channel .channel {
+  position: relative;
+  background: transparent;
+}
+#advertising .advertisingChange .exchange #channel .channel .icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#advertising .advertisingChange .exchange #channel .channel .icon .usericon {
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+}
+#advertising .advertisingChange .exchange #channel .channel .usericon {
+  margin-left: 0;
+}
+#advertising .advertisingChange .exchange #channel .channel .userinfo {
+  flex-flow: column;
+}
+#advertising .advertisingChange .exchange #channel .channel .userinfo .openprofilebutton {
+  min-width: 0;
+}
+#advertising .advertisingChange .exchange .panel [menuitem="posts"],
+#advertising .advertisingChange .exchange .panel [menuitem="followers"],
+#advertising .advertisingChange .exchange .panel [menuitem="following"] {
+  display: none;
+}
+#advertising .advertisingChange .exchange .blockWrapper {
+  display: none;
+}
+#advertising .advertisingEnablePreview {
+  text-align: center;
+  padding: 2em;
+  margin-bottom: 2em;
+}
+#advertising .advertisingEnablePreview .advertisingCaption span {
+  font-size: 2em;
+}
+#advertising .advertisingEnablePreview .advertisingAction {
+  margin-top: 1em;
+}
+#advertising .advertising {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+#advertising .advertising .advertisingCaption {
+  padding-left: 0.5em;
+}
+#advertising .advertising .advertisingCaption span {
+  font-size: 2em;
+}
+#advertising .advertising .advertisingPanel .work {
+  display: flex;
+  align-items: center;
+}
+#advertising .advertising .groupping {
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+#advertising .advertising .groupping label,
+#advertising .advertising .groupping span {
+  margin-right: 0.25em;
+}
+#advertising .advertising .groupping span {
+  font-weight: 700;
+  color: rgb(var(--neutral-grad-4));
+}
+#advertising .advertising .groupping:hover i,
+#advertising .advertising .groupping:hover span {
+  color: rgb(var(--color-good));
+}
+#advertising .advertising .year {
+  padding-left: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#advertising .advertising .year span {
+  font-size: 2em;
+  font-weight: 700;
+}
+#advertising .advertising .year i {
+  margin-bottom: 6px;
+  width: 33px;
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#advertising .advertising .year i:hover {
+  color: rgb(var(--neutral-grad-4));
+}
+#advertising .advertising .error,
+#advertising .advertising .startof {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 2em;
+  text-align: center;
+  background: rgba(var(--background-main), 0.5);
+}
+#advertising .advertising .error {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#advertising .advertising .advertisingTable {
+  position: relative;
+}
+#advertising .advertising .advertisingTable .tableCaption {
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  z-index: 2;
+  position: sticky;
+  top: calc(65px + var(--app-margin-top));
+  left: 0;
+  right: 0;
+}
+#advertising .advertising .advertisingTable .tableCaption > div span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#advertising .advertising .advertisingTable .totalWrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+#advertising .advertising .advertisingTable .tableTotal {
+  border-top: 2px solid rgb(var(--neutral-grad-3));
+}
+#advertising .advertising .advertisingTable .tableTotal .reward span {
+  font-weight: 700;
+  color: rgb(var(--color-txt-ac-1));
+}
+#advertising .advertising .advertisingTable .postsTable .sharepreview {
+  padding-top: 0;
+}
+#advertising .advertising .advertisingTable .postsTable .sharepreview i {
+  width: auto;
+}
+#advertising .advertising .advertisingTable .postsTable .sharepreview .shareprwrapper > div.fortext span {
+  font-size: 1em;
+}
+#advertising .advertising .advertisingTable .postsTable .posts {
+  display: flex;
+  align-items: center;
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats .comments,
+#advertising .advertising .advertisingTable .postsTable .posts .poststats .likes {
+  padding: 0.25em;
+  padding-left: 16px;
+  border-radius: 16px;
+  background: rgba(var(--background-main), 0.7);
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats .comments i,
+#advertising .advertising .advertisingTable .postsTable .posts .poststats .likes i {
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats > div {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5em;
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats > div i {
+  width: 33px;
+  text-align: center;
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats > div i.fa-star {
+  color: rgb(var(--color-star-yellow));
+}
+#advertising .advertising .advertisingTable .postsTable .posts .poststats > div.usericonWrapper .usericon {
+  font-size: 0.75em;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+#advertising .advertising .advertisingTable .beforeprogram {
+  color: rgb(var(--neutral-grad-2));
+}
+#advertising .advertising .advertisingTable .postsTable {
+  display: none;
+}
+#advertising .advertising .advertisingTable .postsTable.expanded {
+  display: block;
+}
+#advertising .advertising .advertisingTable .month.expanded .postsTable {
+  display: block;
+}
+#advertising .advertising .advertisingTable .expanded > div > div > i.expandicon {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#advertising .advertising .advertisingTable .table {
+  background: rgb(var(--background-total-theme));
+}
+#advertising .advertising .advertisingTable .table:nth-child(2n) {
+  background: rgba(var(--neutral-grad-0), 0.3);
+}
+#advertising .advertising .advertisingTable .table.monthTable {
+  border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.3);
+}
+#advertising .advertising .advertisingTable .table.canexpand {
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#advertising .advertising .advertisingTable .table.canexpand:hover {
+  opacity: 0.8;
+}
+#advertising .advertising .advertisingTable .table.canexpand:hover > div i.expandicon {
+  color: rgb(var(--neutral-grad-4));
+}
+#advertising .advertising .advertisingTable .table .posts {
+  width: 100%;
+  text-align: left;
+}
+#advertising .advertising .advertisingTable .table .period {
+  width: 160px;
+}
+#advertising .advertising .advertisingTable .table .period i {
+  width: 33px;
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+}
+#advertising .advertising .advertisingTable .table .reward {
+  width: 100px;
+}
+#advertising .advertising .advertisingTable .table > div {
+  padding: 1em 0.5em;
+  border-right: 1px solid rgb(var(--neutral-grad-0));
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#advertising .advertising .advertisingTable .table > div:nth-child(1) {
+  text-align: left;
+}
+#advertising .advertising .advertisingTable .table > div:nth-last-child(1) {
+  border-right: 0;
+  text-align: right;
+}
+#advertising .advertising .advertisingTable .table .openpostsmonth,
+#advertising .advertising .advertisingTable .table .openpostsweek {
+  width: auto;
+  cursor: pointer;
+  font-size: 0.7em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#advertising .advertising .advertisingTable .table .openpostsmonth:hover,
+#advertising .advertising .advertisingTable .table .openpostsweek:hover {
+  color: rgb(var(--neutral-grad-4));
+}
+.wnd #advertising .advertising .advertisingTable .tableCaption {
+  position: static;
+}
+.wnd #advertising .advertising .advertisingTable .totalWrapper {
+  position: static;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #advertising {
+    min-height: none;
+  }
+  #advertising .advertising .advertisingChange .exchangesProfiles {
+    display: flex;
+    flex-flow: column;
+    padding: 1em;
+  }
+  #advertising .advertising .advertisingChange .exchangesProfiles .exchange {
+    max-width: none;
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+  #advertising .advertising .disableAdvertising {
+    margin-right: 0.5em;
+  }
+  #advertising .advertising .advertisingTable .table .period {
+    width: 40%;
+  }
+  #advertising .advertising .advertisingTable .table .reward {
+    width: 80px;
+  }
+}

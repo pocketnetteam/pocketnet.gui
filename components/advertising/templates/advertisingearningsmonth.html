@@ -1,0 +1,50 @@
+<div class="work">
+    <div class="advertisingTable">
+        <div class="tableCaption table">
+            <div class="period"><span><%=e('advertising_Period')%></span></div>
+            <div class="posts"><span><%=e('advertising_Boostscount')%></span></div>
+            <div class="reward"><span><%=e('advertising_Amount')%></span></div>
+        </div>
+
+        <% _.each(earnings.months, (m, i) => {
+
+            if(m.notIncluded) return 
+            
+        %>
+
+            <div class="month <% if(m.beforeProgram) {%> beforeprogram <% } %>" month="<%-i%>">
+                <div class="monthTable table canexpand" type="month" >
+
+                    <div class="period">
+                        
+                        <span><%-  m.start.toLocaleString('default', { month: 'long' }) %></span>
+                        <% if(m.total.postsCount) {%>
+                        <i class="fas fa-angle-down expandicon"></i>
+                        <% } %>
+                    
+                    </div>
+                    <div class="posts"><span><%- m.total.postsCount || 0 %></span></div>
+                    <div class="reward"><span><%- app.platform.mp.coin(m.total.amountBoost || 0) %></span></div>
+                </div>
+
+                <div class="postsTable">
+
+                </div>
+
+               
+            </div>
+
+        <% }) %>
+
+        <div class="totalWrapper">
+            <div class="tableTotal table">
+                <div class="period"><span></span></div>
+                <div class="posts"><span><%- earnings.total.postsCount || '' %></span></div>
+                <div class="reward"><span><%- app.platform.mp.coin(earnings.total.amountBoost || 0) %></span></div>
+            </div>
+        </div>
+
+    </div>
+
+   
+</div>

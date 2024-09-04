@@ -2663,6 +2663,22 @@ _l.monetization_enable = "Включить монетизацию"
 _l.monetization_monetizationText = "Включите монетизацию и получайте доход каждую неделю"
 _l.monetization_disable =  "Отключить программу"
 _l.monetization_disable_question = "Вы действительно хотите остановить своё участие в программе монетизации?"
-
-_l.monetization_exchange = "Обменять PKOIN"
+_l.monetization_exchange = "Продать криптовалюту"
 _l.monetization_buychat = "Связаться в чате"
+
+
+
+_l.advertising_Period = "Период/Дата"
+_l.advertising_Publications = "Публикации"
+_l.advertising_Boostscount = "Продвижения"
+_l.advertising_Ratings = "Оценки"
+_l.advertising_Comments = "Комментарии"
+_l.advertising_Amount = "Сумма"
+_l.advertising_Advertising = "Реклама"
+_l.advertising_exchange = "Купить криптовалюту"
+_l.advertising_buychat = "Связаться в чате"
+_l.advertising_Date = "Дата"
+
+_l.grouping = "Группировка"
+_l.groupBy_shares = "по публикациям"
+_l.groupBy_months = "по месяцам"

@@ -18,9 +18,6 @@ var earnings = (function () {
 
 		var monetizationParameters = {
 			currentYear : new Date().getFullYear(),
-			startPeriod : 1725235200,
-			periodDuration : 'w',
-			groupDuration : 'm',
 			years : [2023, new Date().getFullYear()],
 			exchanges : ['PMZ3DiGWKGybLb5oCz9ojwxuTBA6GcYAKq', 'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK']
 		}
@@ -30,134 +27,10 @@ var earnings = (function () {
 		var stats = []
 		var monetizationOpportunity = false
 
-		var loading = false
-
-		var helpers = {
-			getYearPeriod : function(year){
-
-				var start = moment.utc([year, 0, 1]).unix()
-
-				var end = moment.utc([year + 1, 0, 1]).unix()
-
-				return {
-					start, end
-				}
-			},
-			
-			total : function(ar, f){
-
-				var total = {}
-
-				_.each(ar, (o) => {
-
-					var p = f(o)
-
-					total.commentsCount = (total.commentsCount || 0) + (p.commentsCount || 0)
-					total.commentsFromSharks = (total.commentsFromSharks || 0) + (p.commentsFromSharks || 0)
-					total.reward = (total.reward || 0) + (p.reward || 0)
-					total.scoresCount = (total.scoresCount || 0) + (p.scoresCount || 0)
-					total.scoresCountFromSharks = (total.scoresCountFromSharks || 0) + (p.scoresCountFromSharks || 0)
-				})
-
-
-				total.comments = (total.commentsCount || 0) + (total.commentsFromSharks || 0)
-				total.scores = (total.scoresCount || 0) + (total.scoresCountFromSharks || 0)
-
-				return total
-
-			}
-		}
-
 		var actions = {
-			openposts : function(txids){
-				console.log('txids', txids)
-			},
 			getEarnings : function(){
-				return self.app.monetization.contentperformance({
-					addresses : [address],
-					...helpers.getYearPeriod(monetizationParameters.currentYear)
-				}).then((result = {}) => {
-
-					var r = result[address] || []
-
-					var weeks = _.sortBy(weeksInYear(monetizationParameters.currentYear), (w) => {
-						return -w.n
-					})
-
-					var weeksResult = _.map(weeks, (w) => {
-
-						var posts = _.filter(r, (f) => {
-							return getWeekNumber(new Date(moment.utc(f.time * 1000).toDate()))[1] == w.n
-						})
-
-						w.notIncluded = w.date > moment.utc().unix()
-
-						w.beforeProgram = w.date < monetizationParameters.startPeriod
-
-						return {
-							...w, posts, total : helpers.total(posts, (r) => {return r}), startof : w.date == monetizationParameters.startPeriod
-						}
-					})
-
-					var byMonth = _.sortBy(_.map(group(weeksResult, (w) => {
-						return (new Date(w.end * 1000)).getMonth() + 1
-					}), (bm, i) => {
-
-						var postsCount = _.reduce(bm, (m, p) => {
-							return m + p.posts.length
-						}, 0)
-
-						var start = new Date(monetizationParameters.currentYear, i - 1, 1)
-						var end = new Date(monetizationParameters.currentYear, i, 1)
-						var current = new Date()
-
-						return {
-							end,
-							start,
-							current : current.getTime() > start.getTime() && current.getTime() <= end.getTime(),
-							weeks : bm,
-							total : {postsCount, ...helpers.total(bm, (r) => {return r.total})},
-							notIncluded : !_.find(bm, (w) => {
-								return !w.notIncluded
-							}),
-							beforeProgram : !_.find(bm, (w) => {
-								return !w.beforeProgram
-							}),
-
-							startof : _.find(bm, (w) => {
-								return w.startof
-							})
-						}
-					}), (m) => {
-						return -(new Date(m.start)).getTime()
-					})
-
-					var postsCount = _.reduce(byMonth, (m, p) => {
-						return m + p.total.postsCount
-					}, 0)
-
-					var year = {
-						months : byMonth,
-						total : {postsCount, ...helpers.total(byMonth, (r) => {return r.total})}
-					}
-
-					console.log('year', year)
-
-					return Promise.resolve(year)
-
-				}).catch(e => {
-					console.error(e)
-
-					return Promise.reject(e)
-
-				})
+				return self.app.monetization.getEarnings(address, monetizationParameters.currentYear)
 			},
-
-			loading: function (sh) {
-				loading = sh
-				renders.block()
-			},
-
 			getStat: async function () {
 
 				if(address != self.user.address.value){
@@ -215,8 +88,6 @@ var earnings = (function () {
 
 					self.app.platform.sdk.node.shares.getbyid(txids, function(shares){
 
-						console.log('shares', shares)
-
 						var postTable = _.map(posts, (p) => {
 							return {
 								...p,
@@ -241,7 +112,7 @@ var earnings = (function () {
 		
 						}, function (_p) {
 		
-							_p.el.find('.postTable').on('click', function() {
+							_p.el.find('.postTable .notification').on('click', function() {
 								var txid = $(this).attr('share')
 
 								self.app.nav.api.load({
@@ -300,8 +171,6 @@ var earnings = (function () {
 
 			monetizationEarnings(data, _el, clbk){
 
-				console.log('monetizationEarnings', data, _el)
-				
 				self.shell({
 
 					name: 'monetizationearnings',
@@ -336,39 +205,6 @@ var earnings = (function () {
 						}
 					})
 
-					_p.el.find('.openpostsweek').on('click', function(){
-
-						var i = $(this).attr('index')
-						var m = $(this).attr('month')
-
-						var w = data.months[m].weeks[i]
-
-						var txids = _.map(w.posts, (p) => {
-							return p.rootTxHash
-						})
-
-						actions.openposts(txids)
-
-						return false
-
-					})
-
-					_p.el.find('.openpostsmonth').on('click', function(){
-						var i = $(this).attr('index')
-
-						var posts = _.reduce(data.months[i].weeks, (m, w) => {
-							return m.concat(w.posts)
-						}, [])
-
-						var txids = _.map(posts, (p) => {
-							return p.rootTxHash
-						})
-
-						actions.openposts(txids)
-
-						return false
-
-					})
 					
 					if(clbk) clbk()
 
@@ -407,8 +243,6 @@ var earnings = (function () {
 
 			monetizationWrapper(clbk){
 
-				console.log('monetizationOpportunity', monetizationOpportunity, address)
-
 				if(!monetizationOpportunity){
 					if(clbk) clbk()
 
@@ -416,9 +250,6 @@ var earnings = (function () {
 				}
 
 				self.app.platform.sdk.users.checkMonetization(address).then((monetization) => {
-
-				console.log('monetizationOpportunity2', monetization, address)
-					
 
 					self.shell({
 
@@ -434,7 +265,7 @@ var earnings = (function () {
 						renders.exchanges(_p.el.find('.exchangesProfiles'))
 
 						_p.el.find('.yearleft').on('click', function(){
-							monetizationParameters.currentYear -- 
+							monetizationParameters.currentYear-- 
 
 							renders.monetizationWrapper()
 						})
@@ -505,8 +336,6 @@ var earnings = (function () {
 							})
 						}
 
-						
-						
 						if(clbk) clbk(monetization)
 	
 					})
@@ -551,7 +380,6 @@ var earnings = (function () {
 
 					self.sdk.users.get(address, function(){
 
-						monetizationParameters.startPeriod = self.app.monetization.start
 
 						monetizationOpportunity = self.app.platform.sdk.users.checkMonetizationOpportunity(address) 
 						

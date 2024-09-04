@@ -15988,9 +15988,11 @@ Platform = function (app, listofnodes) {
                 getboost : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
-                        method : 'getboostfeed'
+                        method : 'getboostfeed',
+                        rpc : {
+                            fnode : '65.21.252.135'
+                        }
                     })
-
                 },
 
                 lightsid : function(p, clbk, cache, methodparams){
@@ -16041,7 +16043,10 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, mtd == 'getboostfeed' ? [] : p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
+
+                            console.log('methodparams', methodparams)
 
                             s.getex(parameters, function (data, error) {
 
@@ -16055,7 +16060,7 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(shares, error, p)
 
-                            }, mtd)
+                            }, mtd, methodparams.rpc)
 
 
                         }

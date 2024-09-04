@@ -1,0 +1,72 @@
+<% 
+
+var prevhash = ''
+_.each(postTable, function(post){ %>
+
+    <div class="postTableWrapper">
+        <div class="postTable table" >
+            <div class="period"><% if(post.time) {%><%- (new Date(post.time * 1000)).toLocaleString('default', {
+                month: "numeric",
+                day: "numeric",
+                hour12: false,
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric'
+            }) %><% } else {%>&mdash;<% } %></div>
+            <div class="posts"><% if(post.share) {
+                
+                %>
+
+                <div class="notification" share="<%-post.contentRootTxHash%>">
+                    <%= tpl(post.share, null, true) %>
+                </div>
+
+                <div class="poststats">
+                    <% if(post.contentRootTxHash != prevhash) {%>
+
+                    <div class="likes"><span><%- post.share.scnt %></span> <i class="fas fa-star"></i></div>
+                    <div class="comments"><span><%- post.share.comments %></span> <i class="fas fa-comment"></i></div>
+                    <div class="usericonWrapper" address="<%-post.share.address%>"></div>
+                    <% } else { %> 
+                    
+                        <div class="spacer"><span>&mdash;</span></div>
+                    <% }%>
+                </div>
+                
+                
+            <% } %></div>
+            <div class="reward"><span><%- app.platform.mp.coin(post.amountBoost || 0) %></span></div>
+        </div>
+
+        <% if(post.boosts && 1 == 2) {%>
+
+            <div class="boostTableWrapper">
+
+                <% _.each(post.boosts, function(boost){ %> 
+
+                    <div class="boostTable table">
+
+                        <div class="period"><% if(boost.time) {%><%- (new Date(boost.time * 1000)).toLocaleString('default', {
+                            month: "numeric",
+                            day: "numeric",
+                            hour12: false,
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric'
+                        }) %><% } else {%>&mdash;<% } %></div>
+
+                        <div class="posts"><div class="spacer"><span>&mdash;</span></div></div>
+
+                        <div class="reward"><span><%- app.platform.mp.coin(boost.amountBoost || 0) %></span></div>
+                    </div>
+                    
+                <%}) %>
+
+                
+            </div>
+        <% } %>
+    </div>
+<% 
+prevhash = post.contentRootTxHash
+
+}) %>

@@ -97,6 +97,10 @@ var pSDK = function ({ app, api, actions }) {
 
         postScores : {
             time : 240
+        },
+
+        monetization : {
+            time : 60 * 15
         }
     }
 
@@ -1536,6 +1540,22 @@ var pSDK = function ({ app, api, actions }) {
         }
     }
 
+    self.monetization = {
+        keys : ['monetization'],
+
+        request: function (executor, hash) {
+
+            return request('monetization', hash, (data) => {
+                
+                return executor(data)
+
+            }, {
+                requestIndexedDb: 'monetization'
+            })
+        },
+
+    }
+
     self.share = {
         keys: ['share'],
 
@@ -2415,9 +2435,9 @@ var pSDK = function ({ app, api, actions }) {
             return loadone('blocking', address, (ids) => {
 
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', 0, 5000], {
-                    rpc : {
+                    /*rpc : {
                         fnode : '65.21.56.203:38081'
-                    }
+                    }*/
                 }).then(r => {
 
                     /*r = _.map(r, (v) => {

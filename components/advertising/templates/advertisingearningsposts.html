@@ -1,0 +1,24 @@
+<div class="work">
+    <div class="advertisingTable">
+        <div class="tableCaption table">
+            <div class="period"><span><%=e('advertising_Date')%></span></div>
+            <div class="posts"><span><%=e('advertising_Publications')%></span></div>
+            <div class="reward"><span><%=e('advertising_Amount')%></span></div>
+        </div>
+
+        <div class="postsTable expanded">
+
+        </div>
+
+        <div class="totalWrapper">
+            <div class="tableTotal table">
+                <div class="period"><span></span></div>
+                <div class="posts"><span></span></div>
+                <div class="reward"><span><%- app.platform.mp.coin(earnings.total.amountBoost || 0) %></span></div>
+            </div>
+        </div>
+
+    </div>
+
+   
+</div>
