@@ -397,7 +397,7 @@ var test = (function(){
 			},
 			upload	: function(file, clbk){
 
-				if(file.ext == 'gif' && 1 == 2){
+				if(file.ext == 'gif' && self.app.platform.real[self.app.user.address.value]){
 
 					globalpreloader(true)
 
