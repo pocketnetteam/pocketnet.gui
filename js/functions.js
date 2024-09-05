@@ -1862,7 +1862,11 @@ bgImagesClApplyTemplate = function (src) {
 	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
-	
+	if (src.includes('www.youtube.com')) {
+		const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+		src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+	}
 
 	if (src && imagesLoadedCache[src]) {
 		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'

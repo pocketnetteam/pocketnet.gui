@@ -407,6 +407,8 @@ var test = (function(){
 						self.app.gifResizer.resize(file.base64, {width : 150, height : 150}).then((base64) => {
 							globalpreloader(false)
 
+							
+
 							tempInfo.image = base64;
 
 							renders.icon()
@@ -986,7 +988,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg', 'webp', /*'gif', */'jfif'],
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'gif', 'jfif', 'avif'],
 
 						dropZone : el.c,
 
