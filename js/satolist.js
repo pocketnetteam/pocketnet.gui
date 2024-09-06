@@ -4309,6 +4309,7 @@ Platform = function (app, listofnodes) {
                                 sender: sender, 
                                 receiver: receiver,
                                 send : p.send ?? true,
+                                donatemode : p.donatemode,
                                 value : 1,
                                 min : 0.5,
                                 clbk  : function(value, action, txid, _p = {}){
@@ -20125,6 +20126,10 @@ Platform = function (app, listofnodes) {
 
                                             if(data.opmessage == 'a:monetization'){
                                                 txt += ' '+self.app.localization.e('fastmessagemonetization')
+                                            }
+
+                                            if(data.opmessage == 'a:donate'){
+                                                txt += ' '+self.app.localization.e('fastmessagedonate')
                                             }
 
                                             

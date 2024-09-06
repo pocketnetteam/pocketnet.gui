@@ -106,6 +106,12 @@
   font-size: 0.7em;
   opacity: 0.7;
 }
+#donate .heartwrapper {
+  position: absolute;
+  color: #ed1f1f;
+  bottom: 1em;
+  right: 1em;
+}
 #windowsContainer .wnd.donationWindow .wndinner {
   height: 350px;
   width: 450px;

@@ -470,7 +470,19 @@ var authorn = (function(){
 
 			sendcoins : function(){
 				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.ui.wallet.send({address : author.address}).catch(e => {})
+				})
+			},
+
+			donate : function(){
+				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+				})
+			},
+
+			donatetrue : function(){
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.ui.wallet.donate({receiver : author.address, donatemode : true}).catch(e => {})
 				})
 			},
 
@@ -883,6 +895,7 @@ var authorn = (function(){
 					p.el.find('.openwallet').on('click', events.openwallet)
 					p.el.find('.videoCabinet').on('click', events.videoCabinet)
 					p.el.find('.sendcoins').on('click', events.sendcoins)
+					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
 
 					p.el.find('.follow').on('click', events.subscribe)
@@ -1077,7 +1090,7 @@ var authorn = (function(){
 						})
 
 						el.find('.donate').on('click', function(){
-							events.sendcoins()
+							events.donatetrue()
 							close()
 						})
 

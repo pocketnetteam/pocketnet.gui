@@ -2287,7 +2287,7 @@ _l.boosted = "Boosted";
 _l.probability = "Probability";
 
 _l.probabilitytext = function(lang){
-	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>1</b> day"
 };
 
 _l.probabilitytexterror = "Unable to calculate promotion probability";
@@ -2778,6 +2778,7 @@ _l.registration_blocked = _l.lockedaccount
 _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
+
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
 _l.showblockedusers = "Show blocked users";
 
@@ -2899,4 +2900,7 @@ _l.groupBy_months = "months"
 _l.monetization_disable_time = "You will be disconnected from the monetization program within twenty minutes."
 
 _l.fastmessagemonetization = "as a reward under the monetization program"
+_l.fastmessagemonetization = "as a donate"
 
+_l.sendcoinssm = "Send"
+_l.e130961donate = "How much PKOIN do you want to donate?"

@@ -2948,7 +2948,7 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "b215e":
+/***/ "b215":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -3004,7 +3004,7 @@ module.exports.__inject__ = function (shadowRoot) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("b215e");
+var content = __webpack_require__("b215");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;

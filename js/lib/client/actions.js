@@ -2748,7 +2748,7 @@ var Actions = function(app, api, storage = localStorage){
         if(!account) return actions
 
         _.each(account.actions.value, (a) => {
-            if(a.settings.application == application) actions.push(application)
+            if(a.settings.application == application) actions.push(a)
         })
 
         return actions

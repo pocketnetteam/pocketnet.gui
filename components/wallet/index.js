@@ -2122,7 +2122,7 @@ var wallet = (function(){
 					act()
 
 				},
-				send : function(clbk, _el, nsp){
+				send : function(clbk, _el, nsp, calcnow){
 
 
 					if(!nsp){
@@ -2174,7 +2174,7 @@ var wallet = (function(){
 
 							ParametersLive([send.parameters.amount], _p.el)
 
-							if (mode == 1){
+							if (mode == 1 || calcnow){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 							}
 
@@ -2259,8 +2259,7 @@ var wallet = (function(){
 							}
 						})
 
-						_p.el.find('.calculateFee').on('click', function(){
-							
+						var calcfee = function(){
 							if (actions.validSend()){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 
@@ -2270,11 +2269,11 @@ var wallet = (function(){
 							{
 								_p.el.find('.required').removeClass('hidden')
 							}
+						}
 
-							
-						})
+						_p.el.find('.calculateFee').on('click', calcfee)
 
-					
+						if(calcnow) calcfee()
 
 						changerActive()
 
@@ -2840,7 +2839,13 @@ var wallet = (function(){
 								if (send.parameters.amount._onChange)
 									send.parameters.amount._onChange();
 
-								renders.send(null, null, true)
+								if (send.parameters.reciever._onChange)
+									send.parameters.reciever._onChange();
+
+								if (send.parameters.message._onChange)
+									send.parameters.message._onChange();
+
+								renders.send(null, null, true, true)
 								
 
 							}

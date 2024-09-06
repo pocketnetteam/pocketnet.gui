@@ -1,4 +1,4 @@
-(window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[8,23],{
+(window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[8,24],{
 
 /***/ "029c":
 /***/ (function(module, exports, __webpack_require__) {
@@ -2338,7 +2338,8 @@ const SendStatus = {
         roomid: this.chat.roomId,
         receiver: user.source.address,
         send: !this.streamMode,
-        share: !this.streamMode
+        share: !this.streamMode,
+        donatemode: this.streamMode ? true : false
       }).then(transaction => {
         if (this.streamMode) {
           this.donate = transaction;
@@ -2509,6 +2510,7 @@ const SendStatus = {
                 _this.core.store.dispatch("FETCH_EVENTS");
                 _this.$emit("clearRelationEvent");
                 _this.$emit("force");
+                _this.setSendStatus(SendStatus.Sent);
                 return Promise.resolve();
               }).catch(e => {
                 console.error(e);

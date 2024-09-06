@@ -1032,6 +1032,9 @@
 #wallet.simple ._stepback {
   display: none!important;
 }
+#wallet.simple .qrcodescannericon {
+  display: none;
+}
 #wallet.loading .ntf {
   display: none;
 }

@@ -808,6 +808,10 @@ button.nopadding {
   padding-left: 0;
   padding-right: 0;
 }
+button .logo20 {
+  width: 15px;
+  display: inline;
+}
 @media (pointer: hover) {
   button:hover {
     background: transparent;
@@ -4424,6 +4428,9 @@ html.mobileview.android .wnd .wndback {
 .sharepostmenu .menuitem.complain:hover > div {
   color: rgb(var(--color-text-ac-2));
   border-color: rgb(var(--color-text-ac-2));
+}
+.sharepostmenu .menuitem.donate .fa-heart {
+  color: #ed1f1f;
 }
 .sharepostmenu.downloadMenu h2 {
   margin-top: 0px;
