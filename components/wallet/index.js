@@ -1090,6 +1090,7 @@ var wallet = (function(){
 					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
 					el.payments = el.c.find('.payments')
+					el.stats = el.c.find('.stats')
 					el.buy = el.c.find('.buy');
 					
 					el.send = el.c.find('.send');
@@ -2375,6 +2376,71 @@ var wallet = (function(){
 
 				})
 			},
+
+
+			stats : function(clbk){
+
+				self.app.platform.sdk.user.getaccountearning(self.app.user.address.value).then(stats => {
+					self.shell({
+
+						name :  'stats',
+						el :   el.stats,
+						data : {
+							stats
+						},
+	
+					}, function(_p){
+
+						_p.el.find('.transactionhistory').on('click', function(){
+							app.nav.api.load({
+								open : true,
+								id : 'transactionslist',
+								inWnd : true,
+				
+								essenseData : {
+									addresses : [self.app.user.address.value]
+								}
+							})
+						})
+	
+						if(clbk) clbk()
+	
+					})
+				}).catch(e => {
+					if(clbk) clbk()
+
+				})
+
+				/*self.app.api.rpc('getaccountearning', [self.app.user.address.value, 0, 1627534]).then(function (s) {
+
+					console.log("STATS", s)
+					
+					var stats = {...s[0]}
+
+					delete stats.address
+
+					_.each(stats, (v, i) => {
+						stats[i] = v / 100000000
+					})
+
+					self.shell({
+
+						name :  'stats',
+						el :   el.stats,
+						data : {
+							stats
+						},
+	
+					}, function(_p){
+	
+						if(clbk) clbk()
+	
+					})
+				})*/
+
+
+				
+			},
 			
 			addresses : function(clbk){
 
@@ -2719,7 +2785,7 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments/*, renders.htls*/]
+				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments, renders.stats/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 

@@ -811,6 +811,43 @@
   width: 100%;
   min-width: 0;
 }
+#wallet .stats .captionTable > div {
+  padding: 1em 0.5em;
+}
+#wallet .stats .captionTable > div span {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+#wallet .stats .statsTable {
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+  cursor: pointer;
+}
+#wallet .stats .statsTable > div {
+  vertical-align: top;
+  padding: 1.5em 0.5em;
+}
+#wallet .stats .statsTable > div.name {
+  padding-left: 2em;
+  white-space: nowrap;
+}
+#wallet .stats .statsTable > div.value {
+  width: 200px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-align: right;
+}
+#wallet .stats .statsTable > div span {
+  font-size: 0.9em;
+}
+#wallet .stats .showtransactionhistoryWrapper {
+  padding-left: 2em;
+  padding-top: 1em;
+}
+#wallet .stats .showtransactionhistoryWrapper .transactionhistory {
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgb(var(--color-txt-ac));
+}
 #wallet .payments .captionTable > div {
   padding: 1em 0.5em;
 }
@@ -1704,6 +1741,23 @@
   #wallet .deposit .actionbody button {
     width: 100%;
     min-width: 0;
+  }
+  #wallet .stats .statsTable > div {
+    vertical-align: top;
+    padding: 1.5em 0.5em;
+  }
+  #wallet .stats .statsTable > div.name {
+    padding-left: 0.5em;
+  }
+  #wallet .stats .statsTable > div.value {
+    width: 33%;
+    font-weight: 700;
+  }
+  #wallet .stats .statsTable > div:nth-last-child(1) {
+    padding-right: 0.5em;
+  }
+  #wallet .stats .showtransactionhistoryWrapper {
+    padding-left: 0.5em;
   }
   #wallet .payments .paymentTable > div {
     vertical-align: top;

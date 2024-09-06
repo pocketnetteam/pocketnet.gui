@@ -9275,6 +9275,28 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getaccountearning: function (address) {
+
+                return app.psdk.monetization.request(() => {
+
+                    return self.app.api.rpc('getaccountearning', [address, 0, 1627534])
+
+                }, address).then(function (s) {
+
+                    var stats = {...s[0]}
+
+					delete stats.address
+
+					_.each(stats, (v, i) => {
+						stats[i] = v / 100000000
+					})
+
+                    return stats
+                })
+
+
+            },
+
             accSet: function (settings, clbk) {
 
                 self.app.platform.actions.addActionAndSendIfCan(settings).then(action => {
@@ -20210,9 +20232,6 @@ Platform = function (app, listofnodes) {
                             
                         })
                     }
-
-                    
-
                 },
             },
 
@@ -20611,7 +20630,18 @@ Platform = function (app, listofnodes) {
                 },
 
                 clbks: {
-                }
+                },
+
+                fastMessageEventsFst : function (data, message, close) {
+
+                    if (data.donation && data.amount){
+                        message.el.addClass('dnt')
+
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
+                            
+                        })
+                    }
+                },
             },
 
             event: {

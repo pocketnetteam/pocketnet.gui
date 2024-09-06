@@ -5313,7 +5313,7 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
-  color: rgb(var(--color-good));
+  font-weight: 700;
 }
 .fastMessage .gotoprofileWrapper,
 .notification .gotoprofileWrapper {

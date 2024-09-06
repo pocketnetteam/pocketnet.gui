@@ -2352,9 +2352,9 @@ _l.connectingTo = "Проверка";
 _l.earnings = "Всего заработано";
 _l.earnings2 = "Заработок";
 
-_l.amountLottery = "Лотерея";
-_l.amountDonation = "Пожертвования";
-_l.amountTransfer = "Переводы";
+_l.amountLottery = "Получено из blockchain лотереи";
+_l.amountDonation = "Получено пожертвований";
+_l.amountTransfer = "Совершено переводов";
 
 _l.copybuiltfrom = "Номер сборки скопирован"
 
@@ -2689,3 +2689,11 @@ _l.fastmessagedonate = "в качестве пожертвования"
 _l.sendcoinssm = "Отправить"
 _l.e130961donate = "Сколько PKOIN вы хотите пожертвовать?"
 
+
+
+_l.statsWallet = "Информация о кошельке"
+
+_l.paymentsDate = "Дата"
+_l.paymentsValue = "Стоимость"
+_l.paymentsInformation = "Описания"
+_l.showtransactionhistory = "История транзакций"

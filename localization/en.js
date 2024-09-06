@@ -2560,9 +2560,9 @@ _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 _l.earnings2 = "Total earnings";
 
-_l.amountLottery = "Lottery";
-_l.amountDonation = "Donations";
-_l.amountTransfer = "Transfers";
+_l.amountLottery = "Received from blockchain lottery";
+_l.amountDonation = "Donations received";
+_l.amountTransfer = "Transfers completed";
 
 
 _l.copybuiltfrom = "Application build version copied"
@@ -2904,3 +2904,8 @@ _l.fastmessagemonetization = "as a donate"
 
 _l.sendcoinssm = "Send"
 _l.e130961donate = "How much PKOIN do you want to donate?"
+_l.statsWallet = "Wallet information"
+_l.paymentsDate = "Date"
+_l.paymentsValue = "Value"
+_l.paymentsInformation = "Description"
+_l.showtransactionhistory = "Transactions history"

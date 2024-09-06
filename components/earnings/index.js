@@ -31,46 +31,7 @@ var earnings = (function () {
 			getEarnings : function(){
 				return self.app.monetization.getEarnings(address, monetizationParameters.currentYear)
 			},
-			getStat: async function () {
-
-				if(address != self.user.address.value){
-
-					el.content.empty();
-
-					return Promise.resolve()
-				}
-
-				return self.app.api.rpc('getaccountearning', [address, 0, 1627534]).then(function (r) {
-
-					el.content.empty();
-
-					var statValues = r && r[0];
-
-					if (statValues) {
-
-						for (var key in statValues) {
-
-							if (key !== 'address') {
-
-								var stat = stats.find(function (s) {
-									return s.id === key;
-								})
-
-								if (stat) {
-
-									stat.balance = statValues[key] / 100000000;
-
-									renders.total(stat);
-
-								}
-
-							}
-						}
-					}
-					return Promise.resolve()
-				})
-
-			},
+			
 
 		}
 
@@ -389,7 +350,7 @@ var earnings = (function () {
 		var make = function(){
 			
 			renders.monetizationWrapper(() => {
-				actions.getStat()
+				//actions.getStat()
 			})
 
 		}

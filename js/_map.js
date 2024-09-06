@@ -762,7 +762,6 @@ __map =  {
 			anonimus : true,
 		},
 
-		
 	
 		embeding : {
 			uri : "embeding",
@@ -905,11 +904,15 @@ __map =  {
 		transactionview : {
 			uri : "transactionview",
 			href : "transactionview",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			exportcss : true,
 			anonimus : true,
+		},	
+
+		transactionslist : {
+			uri : "transactionslist",
+			href : "transactionslist",
+			add : insertingfunc,
 		},	
 
 	

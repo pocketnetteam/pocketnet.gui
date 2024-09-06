@@ -284,6 +284,12 @@ var transactionview = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+			wnd : {
+				showbetter : true,
+			
+				class: 'transactionviewwnd normalizedmobile withoutButtons',
+				
 			}
 		}
 	};

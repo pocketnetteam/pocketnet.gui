@@ -121,3 +121,7 @@
 #transactionview .output > div.amount {
   padding-left: 1em;
 }
+#windowsContainer .wnd.transactionviewwnd .wndinner {
+  height: 350px;
+  width: 450px;
+}
