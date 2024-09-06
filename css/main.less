@@ -1320,6 +1320,8 @@ l{
         }
 
     }
+
+
 }
 @media only screen and (max-width: 1640px) {
 
@@ -6507,6 +6509,7 @@ html.allcontent_application{
 
 .fastMessage{
     border-radius: 12px;
+    
     .transition(0.2s, bottom);
     &.willhidden{
         .transition(0.2s, opacity);
@@ -6673,9 +6676,15 @@ html.allcontent_application{
     color : rgb(var(--text-on-bg-shadow-color));
     padding : 1.5 * @rhythm;
     padding-left : 2 * @rhythm;
+    padding-right: 4 * @rhythm;
     font-size: 1em;
     z-index: 1400;
     overflow: hidden;
+
+    &.smallsize{
+        padding-right : 4 * @rhythm;
+    }
+
     button{
         padding-right: 0;
     }
@@ -6704,6 +6713,10 @@ html.allcontent_application{
                 }
             }
         }
+    }
+
+    .cwrapper{
+        align-items: center;
     }
 
     .commentmessagewrapper{
@@ -6858,6 +6871,21 @@ html.allcontent_application{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.dnt{
+
+        background: #ed1f1f;
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
+        
     }
 
     &.bright{
@@ -8279,7 +8307,13 @@ html.mobileview{
         max-width: none;
         border-radius: 12px;
         bottom : auto;
+        padding-right: 2 * @rhythm;
         .transition(0.3s, top);
+
+        &.willhidden{
+            .transition(0.2s, opacity);
+            opacity: 0;
+        }
 
         .fmCnt{
             width: 100%;
@@ -8330,6 +8364,9 @@ html.mobileview{
         
 
         &.smallsize{
+
+            padding-right: 4 * @rhythm;
+
             .close{
                 padding-top: 0;
                 padding-bottom: 0;

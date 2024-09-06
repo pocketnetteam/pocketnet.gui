@@ -2897,3 +2897,6 @@ _l.grouping = "Group by"
 _l.groupBy_shares = "shares"
 _l.groupBy_months = "months"
 _l.monetization_disable_time = "You will be disconnected from the monetization program within twenty minutes."
+
+_l.fastmessagemonetization = "as a reward under the monetization program"
+

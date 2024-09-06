@@ -1923,7 +1923,6 @@ bgImagesCl = function (el, p) {
 			}
 
 			var rclbk = function(){
-				console.log('rclbk', src, imagesLoadedCache[src])
 				if(!imagesLoadedCache[src] || imagesLoadedCache[src] == '*'){
 					window.rifticker.add(() => {
 						el.setAttribute('image', '*')
@@ -1993,7 +1992,6 @@ bgImagesCl = function (el, p) {
 				
 				imagesLoadingCache[src] = new Promise((resolve) => {
 
-					console.log('go here', src)
 					
 					if(disablegifplay){
 

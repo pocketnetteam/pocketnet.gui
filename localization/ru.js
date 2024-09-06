@@ -2683,3 +2683,5 @@ _l.grouping = "Группировка"
 _l.groupBy_shares = "по публикациям"
 _l.groupBy_months = "по месяцам"
 _l.monetization_disable_time = "Вы будете отключены от программы монетизации в течение двадцати минут"
+
+_l.fastmessagemonetization = "в качестве вознаграждения по программе монетизации"
