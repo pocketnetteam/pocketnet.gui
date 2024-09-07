@@ -2909,3 +2909,7 @@ _l.paymentsDate = "Date"
 _l.paymentsValue = "Value"
 _l.paymentsInformation = "Description"
 _l.showtransactionhistory = "Transactions history"
+
+_l.transactionloading = "Awaiting transaction confirmation";
+
+_l.gototransaction = "Show transaction"

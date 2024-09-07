@@ -12539,6 +12539,23 @@ Platform = function (app, listofnodes) {
             latest : {},
             allowRequestAfterFive : true,
 
+            getlatest : function(keys, type, count){
+                var r = []
+
+                _.each(keys, (k) => {
+                    r = r.concat(self.sdk.activity.latest[k] || [])
+                })
+
+                r = _.filter(r, (r) => {return r.type == type})
+
+                r = _.sortBy(r, (r) => {return -r.date})
+
+                r = _.uniq(r, (r) => {return r.index})
+
+
+                return _.first(r, count)
+            },
+
             getbestaddress : function(){
 
                 if (this.latest && this.latest.like){
@@ -12583,7 +12600,7 @@ Platform = function (app, listofnodes) {
                 
                     _.each(s.latest || [], (a, i) => {
 
-                        if(i == 'visited' || i == 'search') return
+                        if(i == 'visited' || i == 'search' || i == 'transaction') return
 
                         _.each(a, (o) => {
                             if(o.type == 'user'){
@@ -12676,6 +12693,7 @@ Platform = function (app, listofnodes) {
                     search : 30,
                     subscribe : 100,
                     visited : 20,
+                    transaction : 20,
                     video : 30
                 }
             },
@@ -12824,7 +12842,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if(type == 'user' && (key != 'visited' && key == 'search')){
+                if(type == 'user' && (key != 'visited' && key != 'search' && key != 'transaction')){
                     self.sdk.recommendations.scheduler()
                 }
 

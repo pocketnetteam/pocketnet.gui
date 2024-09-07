@@ -2697,3 +2697,6 @@ _l.paymentsDate = "Дата"
 _l.paymentsValue = "Стоимость"
 _l.paymentsInformation = "Описания"
 _l.showtransactionhistory = "История транзакций"
+
+_l.transactionloading = "Ожидается подтверждение транзакции";
+_l.gototransaction = "Посмотреть транзакцию"

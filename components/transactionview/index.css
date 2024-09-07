@@ -1,6 +1,8 @@
 #transactionview .workd {
   background: rgb(var(--background-secondary-theme));
   border-radius: 10px;
+  max-width: 640px;
+  margin: 0 auto;
   padding: 1em;
 }
 #transactionview .scaption {
@@ -14,6 +16,21 @@
   width: 1.5em;
   height: 1.5em;
   line-height: 1.5em;
+}
+#transactionview .shareWrapper {
+  background: rgb(var(--background-secondary-theme));
+  margin-top: 1em;
+  padding: 1em 0;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  cursor: pointer;
+  color: rgb(var(--color-txt-orange));
+}
+#transactionview .shareWrapper span {
+  text-decoration: underline;
 }
 #transactionview .line {
   display: flex;
@@ -121,7 +138,16 @@
 #transactionview .output > div.amount {
   padding-left: 1em;
 }
+#content #transactionview {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+}
 #windowsContainer .wnd.transactionviewwnd .wndinner {
-  height: 350px;
+  height: 400px;
   width: 450px;
+}
+#windowsContainer .wnd.transactionviewwnd .wndcontent {
+  padding: 0;
+  background: rgb(var(--background-secondary-theme));
 }

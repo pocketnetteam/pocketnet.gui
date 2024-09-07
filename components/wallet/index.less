@@ -12,6 +12,20 @@
 		padding : 2 * @rhythm;
 		cursor: pointer;
 		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+
+	.transactionsHistoryIcon{
+		position: absolute;
+		right: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
 
 		&:hover{
 			color : rgb(var(--color-txt-ac));
@@ -1297,6 +1311,10 @@
 		}
 
 		.qrcodescannericon{
+			display: none;
+		}
+
+		.transactionsHistoryIcon{
 			display: none;
 		}
 	}

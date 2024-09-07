@@ -587,9 +587,17 @@ var wallet = (function(){
 					
 				}
 
-				var c = 0
 
-				_.each(self.sdk.activity.latest, function(c, k){
+				var r = self.sdk.activity.getlatest(['visited', 'transaction'], 'user', 7) || []
+
+				_.each(r, (v) => {
+					if(v.id != self.app.user.address.value){
+						send.parameters.reciever.possibleValues.push(v.id)
+						send.parameters.reciever.possibleValuesLabels.push(v.data)
+					}
+				})
+
+				/*_.each(self.sdk.activity.getlatest(), function(c, k){
 
 					_.each(c, function(v){
 
@@ -609,7 +617,7 @@ var wallet = (function(){
 
 					})
 					
-				})
+				})*/
 
 				if (send.parameters.reciever.value == v || send.parameters.reciever.value == recv[v]){
 					send.parameters.reciever.value = send.parameters.reciever.possibleValuesLabels[0];
@@ -935,6 +943,9 @@ var wallet = (function(){
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 					calculatedFee
 				}).then((txdata) => {
+					
+
+					
 
 					if(clbk) clbk(txdata)
 
@@ -1105,6 +1116,18 @@ var wallet = (function(){
 							inWnd : true,
 			
 							essenseData : {
+							}
+						})
+					})
+
+					_p.el.find('.transactionsHistoryIcon').on('click', function(){
+						app.nav.api.load({
+							open : true,
+							id : 'transactionslist',
+							inWnd : true,
+			
+							essenseData : {
+								addresses : [self.app.user.address.value]
 							}
 						})
 					})
@@ -2075,8 +2098,6 @@ var wallet = (function(){
 
 									actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
 
-										console.error('e', err)
-
 										sendpreloader(false)
 
 										if (err){
@@ -2087,8 +2108,41 @@ var wallet = (function(){
 
 										renders.mainWithClear()
 
-										sitemessage(self.app.localization.e('wssuccessfully'))
+										if(reciever.indexOf('P') == 0){
+											console.log('reciever', reciever)
+											self.sdk.users.get(reciever, function(){
+												if(self.psdk.userInfo.get(reciever)){
+													self.sdk.activity.adduser('transaction', reciever)
+													console.log("adduser")
+												}
+											})
+										}
+										
 
+										
+
+
+										sitemessage(self.app.localization.e('wssuccessfully'), null, 5000, {
+											action : {
+												text : self.app.localization.e('gototransaction'),
+												do : function(){
+
+													app.nav.api.load({
+														open : true,
+														id : 'transactionview',
+														inWnd : true,
+										
+														essenseData : {
+															txid : txdata.transaction,
+															share : true,
+															checkauto : true
+														}
+													})
+
+												}
+											}
+										})
+										
 
 										//// TODO_REF_ACTIONS
 

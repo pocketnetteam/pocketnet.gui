@@ -37,7 +37,7 @@ var earnings = (function () {
 
 		var renders = {
 
-			posts: function (posts, els, show, clbk) {
+			posts: function (posts, els, show, clbk, current) {
 
 				if(show){
 
@@ -67,7 +67,8 @@ var earnings = (function () {
 							inner: html,
 							data: {
 								tpl : self.app.platform.ws.tempates.share,
-								postTable
+								postTable,
+								current
 
 							},
 		
@@ -132,13 +133,18 @@ var earnings = (function () {
 
 			monetizationEarnings(data, _el, clbk){
 
+				var hascurrent = _.find(data.months, (r) => {
+					return r.current
+				})
+
 				self.shell({
 
 					name: 'monetizationearnings',
 					el: _el,
 					data: {
 						earnings : data,
-						monetization : monetizationParameters
+						monetization : monetizationParameters,
+						hascurrent
 					},
 
 				}, function (_p) {
@@ -162,7 +168,7 @@ var earnings = (function () {
 
 							console.log("WWW", w)
 
-							renders.posts(w.posts, weekel.find('.postsTable'), exp)
+							renders.posts(w.posts, weekel.find('.postsTable'), exp, null, w.current)
 						}
 					})
 

@@ -8,7 +8,7 @@ var transactionslist = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, page = 0, end = false, loading = false, block = 0, pagesize = 20, addresses;
+		var el, ed, page = 0, end = false, loading = false, block = 0, pagesize = 20, addresses, scnt;
 
 		var helpers = {
 			getvoutaddress : function(vout){
@@ -96,12 +96,15 @@ var transactionslist = (function(){
 
 			makepage : function(clbk){
 
-				if(this.loading) return
-				if(this.end) return
+				console.log('makepage', page)
+
+				if(loading) return
+				if(end) return
 
 				renders.loading()
 
 				actions.gettransactions().then((r) => {
+					page++
 					renders.list(r)
 				}).catch(e => {
 					renders.error(e)
@@ -120,10 +123,19 @@ var transactionslist = (function(){
 					inWnd : true,
 	
 					essenseData : {
-						txid
+						txid,
+						share : true,
 					}
 				})
-			}
+			},
+
+			loadmorescroll: function () {
+				let end = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight - 500 : false;
+
+				if (end && !loading) {
+					actions.makepage()
+				}
+			},
 		}
 
 		var renders = {
@@ -187,6 +199,13 @@ var transactionslist = (function(){
 				events.opentransaction(txid)
 			})
 
+			if (scnt.hasClass('applicationhtml')) {
+				self.app.events.scroll['transactionslist'] = events.loadmorescroll
+			}
+			else {
+				scnt.on('scroll', events.loadmorescroll)
+			}
+
 		}
 
 		var make = function(){
@@ -223,6 +242,9 @@ var transactionslist = (function(){
 			destroy : function(){
 				ed = {}
 				el = {};
+
+				scnt.off('scroll', events.loadmorescroll)
+				delete self.app.events.scroll['transactionslist']
 			},
 			
 			init : function(p){
@@ -232,6 +254,10 @@ var transactionslist = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.list = el.c.find('.listwrapper')
+
+				scnt = el.c.closest('.customscroll:not(body)')
+				
+				if (!scnt.length) scnt = self.app.el.window;
 
 				make()
 

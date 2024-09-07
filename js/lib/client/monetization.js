@@ -69,13 +69,20 @@ var Monetization = function(app, {url, auth}){
                     }), (f) => {
                         return -f.time
                     })
+
+                    var current = moment.utc().unix()
     
                     w.notIncluded = w.date > moment.utc().unix()
     
                     w.beforeProgram = w.date < self.start
+
     
                     return {
-                        ...w, posts, total : totalFunction(posts, (r) => {return r}), startof : w.date == self.start
+                        ...w, 
+                        posts, 
+                        total : totalFunction(posts, (r) => {return r}), 
+                        startof : w.date == self.start,
+                        current : w.date < current && w.end > current
                     }
                 })
     
