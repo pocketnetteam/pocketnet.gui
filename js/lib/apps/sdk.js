@@ -250,8 +250,8 @@ var BastyonSdk = function(){
             return action('getaction', {})
         },
         
-        actions : function(){
-            return action('getactions', {})
+        actions : function(data){
+            return action('getactions', data || {})
         }
     }
 
