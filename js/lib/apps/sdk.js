@@ -246,12 +246,12 @@ var BastyonSdk = function(){
             return self.project.protocol + "://application?id=" + self.applicationInfo.id + (path ? (path ? '&p=' + hexEncode(path) : '') :  (currentState ? '&p=' + hexEncode(currentState) : ''))
         },
 
-        action : function(){
-            return action('getaction', {})
+        action : function(data){
+            return action('getaction', data || {})
         },
         
-        actions : function(data){
-            return action('getactions', data || {})
+        actions : function(){
+            return action('getactions', {})
         }
     }
 
