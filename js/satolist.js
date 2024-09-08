@@ -16376,6 +16376,19 @@ Platform = function (app, listofnodes) {
 
                         //// filter viewed
 
+                        boostinfo = _.filter(boostinfo, (bi) => {
+                            var cf = _.reduce(bi.flags, (m, c) => {
+                                return m + c
+                            }, 0)
+
+                            if(cf < 10){
+                                return true
+                            }
+
+                            return false
+                        })
+                        //flags
+
                         var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
                             return v.txid
                         })
