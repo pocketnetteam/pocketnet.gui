@@ -397,7 +397,7 @@ var test = (function(){
 			},
 			upload	: function(file, clbk){
 
-				if(file.ext == 'gif' && 1 == 2){
+				if(file.ext == 'gif' && self.app.platform.real[self.app.user.address.value]){
 
 					globalpreloader(true)
 
@@ -406,6 +406,8 @@ var test = (function(){
 
 						self.app.gifResizer.resize(file.base64, {width : 150, height : 150}).then((base64) => {
 							globalpreloader(false)
+
+							
 
 							tempInfo.image = base64;
 
@@ -986,7 +988,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg', 'webp', /*'gif', */'jfif'],
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'gif', 'jfif', 'avif'],
 
 						dropZone : el.c,
 

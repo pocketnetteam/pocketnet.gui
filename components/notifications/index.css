@@ -6,10 +6,6 @@
 #notifications .closentooltip {
   display: none;
 }
-#notifications ._wrp .commenttext,
-#notifications ._wrp .data {
-  overflow: hidden;
-}
 #notifications .error,
 #notifications .loader {
   padding: 3em;

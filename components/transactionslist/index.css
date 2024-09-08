@@ -1,0 +1,90 @@
+#transactionslist .caption {
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 1em;
+  padding-top: 2em;
+  background: rgb(var(--background-total-theme));
+}
+#transactionslist .caption span {
+  font-weight: 700;
+}
+#transactionslist .loadingwrapper {
+  display: none;
+}
+#transactionslist.loading .loadingwrapper {
+  display: block;
+}
+#transactionslist .txtable {
+  display: flex;
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+  align-items: center;
+  cursor: pointer;
+}
+#transactionslist .txtable:nth-last-child(1) {
+  border-bottom: 0;
+}
+#transactionslist .txtable > div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 1.5em 0.5em;
+}
+#transactionslist .txtable .direction {
+  text-align: center;
+}
+#transactionslist .txtable .direction .fa-exchange-alt {
+  color: rgb(var(--neutral-grad-2));
+}
+#transactionslist .txtable .direction .fa-arrow-right {
+  color: rgb(var(--color-bad));
+}
+#transactionslist .txtable .direction .fa-arrow-left {
+  color: rgb(var(--color-good));
+}
+#transactionslist .txtable .value {
+  width: 100px;
+}
+#transactionslist .txtable .value .fa-minus {
+  color: rgb(var(--color-bad));
+}
+#transactionslist .txtable .value .fa-plus {
+  color: rgb(var(--color-good));
+}
+#transactionslist .txtable .txid {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+#transactionslist .txtable .txid i {
+  color: rgb(var(--neutral-grad-2));
+}
+#transactionslist .txtable .txid span {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  font-size: 0.8em;
+}
+#transactionslist .txtable span,
+#transactionslist .txtable i {
+  font-size: 0.8em;
+}
+#windowsContainer .wnd.transactionlistwnd .wndinner {
+  height: 80%;
+  width: 750px;
+}
+#windowsContainer .wnd.transactionlistwnd .wndinner .wndcontent {
+  padding-top: 0;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #transactionslist .txtable .txid .fa-hashtag {
+    display: none;
+  }
+  #transactionslist .txtable .txid span {
+    display: none;
+  }
+  #transactionslist .txtable span,
+  #transactionslist .txtable i {
+    font-size: 1em;
+  }
+}

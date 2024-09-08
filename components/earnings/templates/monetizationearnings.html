@@ -1,3 +1,16 @@
+<% if(hascurrent) {%>
+
+    <div class="work">
+        <div class="monetizationInfo">
+            <div class="smalltip">
+                <i class="fas fa-question-circle"></i> <label>Вознаграждение за текущий период будет рассчитано в конце периода</label>
+            </div>
+        </div>
+    </div>
+
+<% } %>
+
+
 <div class="work">
     <div class="monetizationTable">
         <div class="tableCaption table">
@@ -28,7 +41,7 @@
                     <div class="posts"><span><%- m.total.postsCount || 0 %></span></div>
                     <div class="ratings"><span><%- m.total.scores || 0 %></span></div>
                     <div class="comments"><span><%- m.total.comments || 0 %></span></div>
-                    <div class="reward"><span><%- app.platform.mp.coin(m.total.reward || 0) %></span></div>
+                    <div class="reward"><span><%- app.platform.mp.coin(m.total.reward || 0) %></span> <% if(m.current) {%><i class="fas fa-question-circle"></i><% } %></div>
                 </div>
 
                 <div class="weeks">
@@ -44,7 +57,15 @@
                                 <div class="posts"><span><%- w.posts.length || 0 %></span></div>
                                 <div class="ratings"><span><%- w.total.scores || 0 %></span></div>
                                 <div class="comments"><span><%- w.total.comments || 0 %></span></div>
-                                <div class="reward"><span><%- app.platform.mp.coin(w.total.reward || 0) %></span></div>
+                                <div class="reward">
+                                    <% if(w.current) {%>
+                                        <% if(w.total.reward) {%><span><%- app.platform.mp.coin(w.total.reward) %></span><% } else { %> 
+                                            <i class="fas fa-question-circle"></i>
+                                        <% } %>
+                                    <% } else { %> 
+                                        <span><%- app.platform.mp.coin(w.total.reward || 0) %></span>
+                                    <% } %>
+                                </div>
                             </div>
 
                             <div class="postsTable">
