@@ -2085,7 +2085,7 @@ _l.easyNode_e10020 = "Wallet"
 _l.easyNode_e10021 = "Status"
 _l.easyNode_e10022 = "Requesting..."
 _l.easyNode_e10023 = "Staking"
-_l.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+_l.easyNode_e10024 = "Wait until the Node height synchronization is complete to display the balance"
 _l.easyNode_e10025 = "Balance"
 _l.easyNode_e10026 = "Control"
 _l.easyNode_e10027 = "Deposit"
@@ -2124,6 +2124,7 @@ _l.easyNode_e10060 = "SSD drive"
 _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
+_l.easyNode_e10064 = "Support"
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
