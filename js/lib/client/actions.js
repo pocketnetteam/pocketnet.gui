@@ -41,6 +41,8 @@ var ActionOptions = {
                 }
             },
 
+            //saveTxToStorage : true
+
          
         },
         upvoteShare : {
@@ -170,8 +172,6 @@ var ActionOptions = {
             },
 
             collision : function(obj, obj2){
-
-                console.log('obj collision', obj, obj2)
 
                 if (obj.object.typeop() == obj2.object.typeop() && obj.object.typeop() == 'commentEdit' && obj2.object.id == obj.object.id){
 
@@ -610,6 +610,8 @@ var Action = function(account, object, priority, settings){
         var opreturnData = null
         var method = 'sendrawtransaction'
 
+        //return Promise.reject('deprecated')
+
         //////////////
 
         if (self.object.serialize){
@@ -759,6 +761,10 @@ var Action = function(account, object, priority, settings){
         return account.parent.api.rpc(method, parameters).then(transaction => {
 
             self.transaction = transaction
+
+            if (options.saveTxToStorage){
+                account.parent.saveTxToStorage(transaction, tx)
+            }
 
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
 
@@ -2440,7 +2446,6 @@ var Account = function(address, parent){
 
             })) validInput = false
 
-            console.log('validInput', validInput)
 
             if(!validInput) return m
 
@@ -2577,6 +2582,12 @@ var Actions = function(app, api, storage = localStorage){
         events[key] = _.filter(events[key], function(k){
             return k != f
         })
+    }
+
+    self.txStorage = {}
+
+    self.saveTxToStorage = function(hash, tx){
+        self.txStorage[hash] = tx
     }
 
     self.estimateFee = function(){
@@ -2746,7 +2757,7 @@ var Actions = function(app, api, storage = localStorage){
         if(!account) return actions
 
         _.each(account.actions.value, (a) => {
-            if(a.settings.application == application) actions.push(application)
+            if(a.settings.application == application) actions.push(a)
         })
 
         return actions

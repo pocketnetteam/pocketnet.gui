@@ -381,7 +381,7 @@ Platform = function (app, listofnodes) {
         'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
         'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
         'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
-        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
 
     } 
 
@@ -4309,6 +4309,7 @@ Platform = function (app, listofnodes) {
                                 sender: sender, 
                                 receiver: receiver,
                                 send : p.send ?? true,
+                                donatemode : p.donatemode,
                                 value : 1,
                                 min : 0.5,
                                 clbk  : function(value, action, txid, _p = {}){
@@ -4671,7 +4672,9 @@ Platform = function (app, listofnodes) {
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
             var e = function(){
-                self.effects.manager.effect(el, name, parameters, clbk)
+                window.rifticker.add(() => {
+                    self.effects.manager.effect(el, name, parameters, clbk)
+                })
             }
 
             if(!self.effects.manager){
@@ -4695,14 +4698,32 @@ Platform = function (app, listofnodes) {
                 parameters.color || (parameters.color = '#ffa000')
 
                 self.effects.effectinternal(el, 'stars', parameters, clbk)
-            }
+            },
+
+            hearts: function(el, parameters, clbk){
+
+                if(!parameters) parameters = {}
+
+                parameters.opacity = 0.9
+                parameters.scatter = 150
+                parameters.duration = 1800
+                parameters.size = 20
+
+                if(self.app.mobileview){
+                    parameters.duration = 1400
+                }
+
+                parameters.color || (parameters.color = '#a10000')
+
+                self.effects.effectinternal(el, 'hearts', parameters, clbk)
+            },
         },
 
         container : function(place){
 
             var container = $("<div/>", {
                 "class": "effect",
-                "style" : "z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
+                "style" : "pointer-events: none; z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
             })
 
             container.appendTo(self.app.el.app)
@@ -4725,10 +4746,17 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        breakeffect : function(el, clbk){
+            if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+                if(clbk) clbk()
+                return true
+            }
+        },
+
         templates : {
             commentstars : function(el, value, clbk){
-                if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
-                    if(clbk) clbk()
+
+                if(self.effects.breakeffect(el, clbk)){
                     return
                 }
 
@@ -4755,6 +4783,36 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk()
                 })
+            },
+
+            donatehearts : function(el, clbk){
+                if(self.effects.breakeffect(el, clbk)){
+                    return
+                }
+
+                self.effects.animation = true
+
+                var parameters = {}
+
+                parameters.color = '#ed1f1f'
+
+                if(self.app.mobileview){
+                    parameters.from = {x : 'center', y : 'top'}
+                    parameters.to = {x : 'right', y : 'bottom'}
+                }
+                else{
+                    parameters.from = {x : 'left', y : 'bottom'}
+                    parameters.to = {x : 'center', y : 'center'}
+                }
+
+                self.effects.make({top : 0, left : 0, width : self.app.width, height : self.app.height}, 'hearts', parameters, function(){
+
+                    self.effects.animation = false
+
+                    if(clbk) clbk()
+                })
+
+                
             }
         }
     }
@@ -9217,6 +9275,28 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getaccountearning: function (address) {
+
+                return app.psdk.monetization.request(() => {
+
+                    return self.app.api.rpc('getaccountearning', [address, 0, 1627534])
+
+                }, address).then(function (s) {
+
+                    var stats = {...s[0]}
+
+					delete stats.address
+
+					_.each(stats, (v, i) => {
+						stats[i] = v / 100000000
+					})
+
+                    return stats
+                })
+
+
+            },
+
             accSet: function (settings, clbk) {
 
                 self.app.platform.actions.addActionAndSendIfCan(settings).then(action => {
@@ -9247,7 +9327,8 @@ Platform = function (app, listofnodes) {
                     var ct = new Settings();
 
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
-                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? (settings.monetization || '') : settingsObj.monetization);
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? 
+                        ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
                     return self.app.platform.actions.addActionAndSendIfCan(ct)
 
@@ -10613,8 +10694,6 @@ Platform = function (app, listofnodes) {
 
                 if(!userinfo) return false
 
-                var subcount = userinfo.subscribes_count || 0
-
 				return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
             },
 
@@ -10627,8 +10706,7 @@ Platform = function (app, listofnodes) {
 
                         var settings = self.psdk.accSet.get(address) || {}
 
-
-                        return Promise.resolve(settings.monetization || false)
+                        return Promise.resolve(settings.monetization === true || settings.monetization === "" ? true : false)
 
                     })
 
@@ -12461,6 +12539,23 @@ Platform = function (app, listofnodes) {
             latest : {},
             allowRequestAfterFive : true,
 
+            getlatest : function(keys, type, count){
+                var r = []
+
+                _.each(keys, (k) => {
+                    r = r.concat(self.sdk.activity.latest[k] || [])
+                })
+
+                r = _.filter(r, (r) => {return r.type == type})
+
+                r = _.sortBy(r, (r) => {return -r.date})
+
+                r = _.uniq(r, (r) => {return r.index})
+
+
+                return _.first(r, count)
+            },
+
             getbestaddress : function(){
 
                 if (this.latest && this.latest.like){
@@ -12505,7 +12600,7 @@ Platform = function (app, listofnodes) {
                 
                     _.each(s.latest || [], (a, i) => {
 
-                        if(i == 'visited' || i == 'search') return
+                        if(i == 'visited' || i == 'search' || i == 'transaction') return
 
                         _.each(a, (o) => {
                             if(o.type == 'user'){
@@ -12598,6 +12693,7 @@ Platform = function (app, listofnodes) {
                     search : 30,
                     subscribe : 100,
                     visited : 20,
+                    transaction : 20,
                     video : 30
                 }
             },
@@ -12746,7 +12842,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if(type == 'user' && (key != 'visited' && key == 'search')){
+                if(type == 'user' && (key != 'visited' && key != 'search' && key != 'transaction')){
                     self.sdk.recommendations.scheduler()
                 }
 
@@ -15990,7 +16086,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
                         method : 'getboostfeed',
                         rpc : {
-                            fnode : '65.21.252.135'
+                            fnode : '65.21.252.135:38081'
                         }
                     })
                 },
@@ -16279,6 +16375,19 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.node.shares.getboost(p, function(boostinfo, error){
 
                         //// filter viewed
+
+                        boostinfo = _.filter(boostinfo, (bi) => {
+                            var cf = _.reduce(bi.flags, (m, c) => {
+                                return m + c
+                            }, 0)
+
+                            if(cf < 10){
+                                return true
+                            }
+
+                            return false
+                        })
+                        //flags
 
                         var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
                             return v.txid
@@ -20063,7 +20172,20 @@ Platform = function (app, listofnodes) {
                                         var txt = platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount))
 
                                         if (data.opmessage) {
-                                            txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+
+                                            if(data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization'){
+                                                txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+                                            }
+
+                                            if(data.opmessage == 'a:monetization'){
+                                                txt += ' '+self.app.localization.e('fastmessagemonetization')
+                                            }
+
+                                            if(data.opmessage == 'a:donate'){
+                                                txt += ' '+self.app.localization.e('fastmessagedonate')
+                                            }
+
+                                            
                                         }
 
                                         html += self.tempates.user(data.user, '', true, txt, self.tempates.transaction(data), data.time)
@@ -20126,9 +20248,22 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
+                    ///data.opmessage
+
                     //message.el.addClass('bright')
 
-                }
+                },
+
+                fastMessageEventsFst : function (data, message, close) {
+
+                    if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+                        message.el.addClass('dnt')
+
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
+                            
+                        })
+                    }
+                },
             },
 
             'newblocks': {
@@ -20526,7 +20661,18 @@ Platform = function (app, listofnodes) {
                 },
 
                 clbks: {
-                }
+                },
+
+                fastMessageEventsFst : function (data, message, close) {
+
+                    if (data.donation && data.amount){
+                        message.el.addClass('dnt')
+
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
+                            
+                        })
+                    }
+                },
             },
 
             event: {
@@ -21064,14 +21210,35 @@ Platform = function (app, listofnodes) {
 
         }
 
+        var rmmessageDestroy = function(message){
+            if (message.timeout) {
+                clearTimeout(message.timeout);
+                message.timeout = null
+            }
+        }
+
         var rmmessagesDestroy = function(){
             _.each(self.fastMessages, function (message, i) {
-                if (message.timeout) clearTimeout(message.timeout);
+                rmmessageDestroy(message)
             })
         }
 
+        var addmessagesTime = function(time = 5000){
+
+            _.each(self.fastMessages, function (message, i) {
+                destroyMessage(message, time, false, true);
+            })
+
+            
+        }
+
         var destroyMessage = function (message, time, noarrange, destroyUser) {
+
+
             var rmfu = function () {
+
+                
+                
 
                 if(!time){
                     rmfu2()
@@ -21085,6 +21252,8 @@ Platform = function (app, listofnodes) {
             }
 
             var rmfu2 = function(){
+
+                console.log('destroyMessage', message, time)
 
                 message.el.remove();
 
@@ -21128,7 +21297,11 @@ Platform = function (app, listofnodes) {
 
         }
 
+        var hideallnotificationselementShowed = false
+
         var hideallnotificationselement = function(show){
+
+            hideallnotificationselementShowed = show
             
             if(self.hideallnotificationsel){
                 window.rifticker.add(() => {
@@ -21141,6 +21314,9 @@ Platform = function (app, listofnodes) {
                         self.hideallnotificationsel.addClass('willhidden')
 
                         setTimeout(function () {
+                            if (hideallnotificationselementShowed){
+                                return
+                            }
                             self.hideallnotificationsel.html('')
                             self.hideallnotificationsel.removeClass('willhidden')
                         }, 200)
@@ -21169,6 +21345,8 @@ Platform = function (app, listofnodes) {
 			var remove = self.fastMessages.length - maxCount;
 
 			var s = false;
+
+            console.log('self.fastMessages.length', self.fastMessages.length)
 
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
@@ -21208,15 +21386,18 @@ Platform = function (app, listofnodes) {
 
             offset = offset + boffset
 
-            _.each(_.clone(self.fastMessages), function(m, i){
+            _.each(self.fastMessages, function(m, i){
 
                 if(i < remove){
-                    if(!isMobile()) {
+                    /*if(!isMobile()) {
                         destroyMessage(m, 0, true)
                     }
-                    else {
+                    else {*/
                         m.el.addClass('hidden')
-                    }
+
+                        rmmessageDestroy(m)
+                        
+                    //}
                 }
 
                 else
@@ -21224,6 +21405,7 @@ Platform = function (app, listofnodes) {
 
                     if (m.el.hasClass('hidden')){
                         m.el.removeClass('hidden')
+                        destroyMessage(m, 5000, false, true)
                     }
                     
                     offset += 5;
@@ -21347,10 +21529,14 @@ Platform = function (app, listofnodes) {
                     p.click() 
                     destroyMessage(message, 1)
 
+                    setTimeout(() => {
+                        addmessagesTime(15000)
+                    }, 50)
+
                     return
                 }
 
-                if (platform.app.mobileview){
+                /*if (platform.app.mobileview){
 
                     platform.app.nav.api.go({
                         open : true,
@@ -21369,8 +21555,12 @@ Platform = function (app, listofnodes) {
                     }, 50)
 
                 }
-                else{
+                else{*/
                     if(!message.expanded){
+                        
+                        setTimeout(() => {
+                            addmessagesTime(15000)
+                        }, 50)
 
                         message.el.removeClass('smallsize');
 
@@ -21382,7 +21572,7 @@ Platform = function (app, listofnodes) {
                             tArrangeMessages();
                         }, 200)
                     }
-                }
+                //}
 
 
 
@@ -21419,6 +21609,10 @@ Platform = function (app, listofnodes) {
 
                             clbk: function () {
                                 destroyMessage(message, 0)
+
+                                setTimeout(() => {
+                                    rmmessagesDestroy()
+                                }, 50)
                             }
 
                         }
@@ -21434,6 +21628,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
+
 
             data || (data = {})
 
@@ -21452,12 +21647,6 @@ Platform = function (app, listofnodes) {
 
                 if (!m) m = {}
 
-
-                if (m.checkHandler) {
-                    if (!m.checkHandler(data, m)) {
-                        return
-                    }
-                }
 
                 if (data.txid) {
 
@@ -21520,6 +21709,12 @@ Platform = function (app, listofnodes) {
 
                                     if (m.fastMessageEvents) {
                                         m.fastMessageEvents(data, message, () => {
+                                            destroyMessage(message, 1)
+                                        })
+                                    }
+
+                                    if (m.fastMessageEventsFst) {
+                                        m.fastMessageEventsFst(data, message, () => {
                                             destroyMessage(message, 1)
                                         })
                                     }
@@ -21871,6 +22066,16 @@ Platform = function (app, listofnodes) {
             })*/
 
             /*self.messageHandler({
+                "addr": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                "msg": "transaction",
+                "txid": "8b1b924b74d5231fc180b62af879be656a2c3659fbbd94212e65325a8b4b387f",
+                "time": 1725542676,
+                "amount": "200000000",
+                "nout": "1",
+                "node": "95.31.30.84:38081:8087"
+            })
+
+            self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 amount: "166666",
                 msg: "transaction",
@@ -21878,6 +22083,31 @@ Platform = function (app, listofnodes) {
                 nout: "7",
                 time: 1629883584,
                 txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
+            })
+
+
+                
+            self.messageHandler({
+                "txid": "87cf9a5c0da04779e21a2100cc0c4f209e93c1ce4ed9b59b29ccb95b435e4f0b",
+                "time": 1725569767,
+                "nblock": 2924284,
+                "addrFrom": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5",
+                "nameFrom": "Daniel_Satchkov",
+                "avatarFrom": "https://i.imgur.com/5kkmKpS.jpg",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 1
+            })
+            self.messageHandler({
+                "txid": "e4598a0838a16cbc222757212f2b439b3971e4df808930fb9c80e9f6968329e3",
+                "time": 1725564976,
+                "nblock": 2924201,
+                "addrFrom": "PL8nRqbUwALzoAxuukpgujZnsvsRdxhDgZ",
+                "nameFrom": "Lornet",
+                "avatarFrom": "https://bastyon.com:8092/i/JIUHlCHyfdksewIyPyBhjt.jfif",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 1
             })*/
 
             
@@ -21918,9 +22148,9 @@ Platform = function (app, listofnodes) {
                 nout: "3",
                 time: 1640237360,
                 txid: "acbd05c9ac81fe9ca2b12bdb7c2fe1127270a9b94fed872d71c7d079004243e9",
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
                 mesType: "post",
@@ -21964,12 +22194,15 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
+            
+
             // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
 		}, 3000)
     }
+    
     
     self.convertUTCSS = function (str) {
 

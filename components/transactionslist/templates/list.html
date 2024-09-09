@@ -1,0 +1,19 @@
+<% _.each(transactions, function(trx){%> 
+
+    <div class="txtable <%- trx.direction %>" txid="<%-trx.txid%>">
+        <div class="direction">
+            <% if(trx.direction == 'out') {%><i class="fas fa-arrow-right"></i><% } %>
+            <% if(trx.direction == 'in') {%><i class="fas fa-arrow-left"></i><% } %>
+            <% if(trx.direction == 'change') {%><i class="fas fa-exchange-alt"></i><% } %>
+        </div>
+        <div class="date"><span><%-trx.date.format('YYYY-MM-DD, HH:mm')%></span></div>
+        <div class="value">
+            <% if(trx.direction == 'out') {%><i class="fas fa-minus"></i><% } %> 
+            <% if(trx.direction == 'in') {%><i class="fas fa-plus"></i><% } %> 
+            <span><%-app.platform.mp.coin(trx.amount)%></span>
+        </div>
+        <div class="txid"><i class="fas fa-hashtag"></i> <span><%-trx.txid%></span> <a elementsid="https://pocketnet.app/blockexplorer/transaction/<%- trx.txid %>" href="https://pocketnet.app/blockexplorer/transaction/<%- trx.txid %>" target="_blank"><i class="fas fa-th"></i></a></div>
+    </div>
+<% }) %>
+
+            

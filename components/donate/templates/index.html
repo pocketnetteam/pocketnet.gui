@@ -6,10 +6,10 @@ var receiverLetter = receiver.name ? receiver.name[0] : '';
 %>
 
 
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<% if(ed.donatemode) {%>donatemode<% } %>">
 
 	<div class="caption">
-		<span><%=e('e130961')%></span>
+		<span><%=e(ed.donatemode ? 'e130961donate' : 'e130961')%></span>
 	</div>
 	<% if(error) {%>
 
@@ -65,10 +65,23 @@ var receiverLetter = receiver.name ? receiver.name[0] : '';
 
 			<div class="buttonWrapper">
 				<button class="button black apply">
-					<%=e('applydonate')%>
+
+					<% if(ed.donatemode) {%>
+
+						<%=e('applydonate')%>
+
+					<% } else { %> 
+						<%=e('wsend')%>
+					<% } %>
 				</button>
 			</div>
 		</div>
 
+	<% } %>
+
+	<% if(ed.donatemode) {%>
+		<div class="heartwrapper">
+			<i class="fas fa-heart"></i>
+		</div>
 	<% } %>
 </div>

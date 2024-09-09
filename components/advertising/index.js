@@ -371,7 +371,7 @@ var advertising = (function () {
 
 			getdata: async function (clbk) {
 
-				address	= parameters().address || self.app.user.address.value
+				address	= self.app.user.address.value //parameters().address || self.app.user.address.value
 
 				try{
 					var prevgroup = localStorage['advertising_groupBy']

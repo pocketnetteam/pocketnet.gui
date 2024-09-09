@@ -808,6 +808,10 @@ button.nopadding {
   padding-left: 0;
   padding-right: 0;
 }
+button .logo20 {
+  width: 15px;
+  display: inline;
+}
 @media (pointer: hover) {
   button:hover {
     background: transparent;
@@ -4425,6 +4429,9 @@ html.mobileview.android .wnd .wndback {
   color: rgb(var(--color-text-ac-2));
   border-color: rgb(var(--color-text-ac-2));
 }
+.sharepostmenu .menuitem.donate .fa-heart {
+  color: #ed1f1f;
+}
 .sharepostmenu.downloadMenu h2 {
   margin-top: 0px;
   font-size: 20px;
@@ -5306,7 +5313,7 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
-  color: rgb(var(--color-good));
+  font-weight: 700;
 }
 .fastMessage .gotoprofileWrapper,
 .notification .gotoprofileWrapper {
@@ -5473,9 +5480,13 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--text-on-bg-shadow-color));
   padding: 0.75em;
   padding-left: 1em;
+  padding-right: 2em;
   font-size: 1em;
   z-index: 1400;
   overflow: hidden;
+}
+.fastMessage.smallsize {
+  padding-right: 2em;
 }
 .fastMessage button {
   padding-right: 0;
@@ -5497,6 +5508,9 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button {
   color: rgb(var(--color-text-ac));
+}
+.fastMessage .cwrapper {
+  align-items: center;
 }
 .fastMessage .commentmessagewrapper > div.foranswer button {
   color: rgb(var(--color-text-ac));
@@ -5597,6 +5611,12 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .ghost {
   color: rgb(var(--color-bg-ac));
+}
+.fastMessage.dnt {
+  background: #ed1f1f;
+}
+.fastMessage.dnt .transactionmessagewrapper > div.foramount {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .fastMessage.bright {
   background: rgba(var(--color-bg-ac-bright), 0.98);
@@ -6707,10 +6727,18 @@ html.mobileview .fastMessage {
   max-width: none;
   border-radius: 12px;
   bottom: auto;
+  padding-right: 1em;
   -moz-transition: top 0.3s;
   -o-transition: top 0.3s;
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
+}
+html.mobileview .fastMessage.willhidden {
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  opacity: 0;
 }
 html.mobileview .fastMessage .fmCnt {
   width: 100%;
@@ -6745,6 +6773,9 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 }
 html.mobileview .fastMessage .foramount {
   width: auto!important;
+}
+html.mobileview .fastMessage.smallsize {
+  padding-right: 2em;
 }
 html.mobileview .fastMessage.smallsize .close {
   padding-top: 0;

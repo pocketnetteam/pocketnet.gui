@@ -101,7 +101,11 @@ var pSDK = function ({ app, api, actions }) {
 
         monetization : {
             time : 60 * 15
-        }
+        },
+
+        transactionsRequest : {
+            time : 60
+        },
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -2326,6 +2330,27 @@ var pSDK = function ({ app, api, actions }) {
             })
 
 
+        },
+
+        loadAddressesList : function({addresses, block, page = 0, pagesize = 10}, update){
+ 
+            if(!block || !addresses) return Promise.reject('payload')
+            if(!_.isArray(addresses)) addresses = [addresses]
+
+            var hash = JSON.stringify(addresses) + '_' + block + '_' + page + '_' + pagesize
+
+            return request('transaction', hash, (data) => {
+
+                return api.rpc('getaddresstransactions', [addresses[0], block, page * pagesize, pagesize, 0, [1, 2, 3]]).catch(e => {
+
+                    return Promise.reject(e)
+                })
+                
+            }, {
+                update,
+                requestIndexedDb: 'transactionsRequest'
+            })
+            
         }
     }
 

@@ -3,12 +3,21 @@
     <div class="empty">
         <div class="table">
             <div>
-                <div class="label"><%=e('transactionnotfound')%></div>
-                <div class="remakewr">
-                    <button class="button orange remake small">
-                        <i class="fas fa-redo"></i> Reload
-                    </button>
-                </div>
+                <% if(checkauto && checkautoCounter < 10 ) {%>
+
+                    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                    <div class="label"><%=e('transactionloading')%></div>
+
+                <% } else { %> 
+                    
+                    <div class="label"><%=e('transactionnotfound')%></div>
+                    <div class="remakewr">
+                        <button class="button orange remake small">
+                            <i class="fas fa-redo"></i> Reload
+                        </button>
+                    </div>
+                    
+                <% }%>
             </div>
         </div>
     </div>
@@ -50,12 +59,18 @@
             </div>
         </div>
 
-        
-
         <div class="txid">
             <i class="fas fa-hashtag"></i> <span elementsid="becopytext" class="copytext"><%- tx.txid %></span> 
             <a elementsid="https://pocketnet.app/blockexplorer/transaction/<%- tx.txid %>" href="https://pocketnet.app/blockexplorer/transaction/<%- tx.txid %>" target="_blank"><i class="fas fa-th"></i></a>
         </div>
+
+        <% if(ed.share) {%>
+
+            <div class="shareWrapper">
+                <i class="fas fa-share-alt"></i> <span><%-e('share')%></span>
+            </div>
+
+        <% } %>
 
     </div>
     

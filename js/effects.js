@@ -251,7 +251,7 @@ FX_Effects = function(el){
             },
 
             center : function(scatter, size = 0){
-                return (places.x.left(scatter) - places.x.left(scatter)) / 2
+                return (places.x.right(scatter) - places.x.left(scatter)) / 2
             }
         },
 
@@ -265,7 +265,7 @@ FX_Effects = function(el){
             },
 
             center : function(scatter, size = 0){
-                return (places.x.bottom(scatter) - places.x.top(scatter)) / 2
+                return (places.y.bottom(scatter) - places.y.top(scatter)) / 2
             }
         },
 
@@ -274,8 +274,8 @@ FX_Effects = function(el){
         }
     }
 
-    var effects = {
-        stars : function(parameters, clbk){
+    var internaleffects = {
+        particles : function(construct, parameters, clbk){
 
             if(!parameters) parameters = {}
 
@@ -294,7 +294,7 @@ FX_Effects = function(el){
                     var to = places.xy(parameters.to, parameters.scatter, parameters.size)
 
 
-                    var h = new FX_Star({
+                    var h = new construct({
                         to : app.stage,
 
                         x : from.x,
@@ -333,6 +333,20 @@ FX_Effects = function(el){
             }
            
         }
+    }
+
+    var effects = {
+        stars : function(parameters, clbk){
+
+            internaleffects.particles(FX_Star, parameters, clbk)
+           
+        },
+
+        hearts : function(parameters, clbk){
+
+            internaleffects.particles(FX_Heart, parameters, clbk)
+           
+        },
     }
 
     var initTicker = function(){
