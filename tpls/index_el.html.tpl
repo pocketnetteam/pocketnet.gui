@@ -201,6 +201,9 @@
         <script join src="js/lib/pocketnet/btc17.js?v=4"></script>
         <script join src="js/lib/pocketnet/buffer.js?v=4"></script>
         <script join src="js/lib/client/system16.js?v=4"></script>
+        <script join src="js/lib/client/monetization.js?v=4"></script>
+
+        
         <script join src="js/lib/client/api.js?v=4"></script>       
         <script src="js/vendor/pbkdf2.js"></script>
         <script src="js/vendor/sha1.js"></script>   
