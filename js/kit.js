@@ -2260,6 +2260,7 @@ brtOffer = function(){
 	self.images = [];
 	self.geohash = '';
 	self.price = 0;
+	self.published = 1;
 
 	self.validation = function(){
 		if(!self.address) return 'address';
@@ -2283,7 +2284,8 @@ brtOffer = function(){
 					 JSON.stringify({
 						t: self.tag,
 						a: self.tags,
-						c: self.condition
+						c: self.condition,
+						p: self.published
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2303,7 +2305,8 @@ brtOffer = function(){
 				condition: self.condition,
 				images: self.images,
 				geohash: self.geohash,
-				price: self.price
+				price: self.price,
+				published: self.published
 			};
 		}
 
@@ -2318,6 +2321,7 @@ brtOffer = function(){
 					t: self.tag,
 					a: self.tags,
 					c: self.condition,
+					p: self.published
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2338,6 +2342,7 @@ brtOffer = function(){
 		self.images = d.images;
 		self.geohash = d.geohash;
 		self.price = d.price;
+		self.published = d.published;
 	}
 
 	self.type = 'brtoffer';
