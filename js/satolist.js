@@ -10489,6 +10489,8 @@ Platform = function (app, listofnodes) {
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
+                    console.log("DATA", d)
+
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
                     }
@@ -16542,11 +16544,15 @@ Platform = function (app, listofnodes) {
 
                 toUT: function (tx, address, n) {
 
+
                     var vout = _.find(tx.vout, function (v) {
                         return _.find(v.scriptPubKey.addresses, function (a) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
+
+                    console.log('address', vout, address)
+
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
@@ -19154,6 +19160,11 @@ Platform = function (app, listofnodes) {
 
                     h+= " PKOIN"
 
+                    if(data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+                        h+= ' <i class="fas fa-heart"></i>'
+                    }
+
+
 
                 h += '</div>'
 
@@ -21447,12 +21458,17 @@ Platform = function (app, listofnodes) {
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
+                    console.log('notifications', notifications)
+
                     if(!notifications) return
 
                     lazyEach({
                         array: notifications,
                         action: function (p) {
-                            self.messageHandler(p.item, p.success)
+                            
+                            p.success()
+
+                            self.messageHandler(p.item)
                         },
 
                         all: {
@@ -21631,6 +21647,12 @@ Platform = function (app, listofnodes) {
 
 
             data || (data = {})
+
+            if(!data.msg && !data.mesType){
+                if(data.vin && data.vout){
+                    data.msg = 'transaction'
+                }
+            }
 
             if (data.msg || data.mesType) {
 
