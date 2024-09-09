@@ -10489,6 +10489,8 @@ Platform = function (app, listofnodes) {
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
+                    console.log("DATA", d)
+
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
                     }
@@ -16542,11 +16544,15 @@ Platform = function (app, listofnodes) {
 
                 toUT: function (tx, address, n) {
 
+
                     var vout = _.find(tx.vout, function (v) {
                         return _.find(v.scriptPubKey.addresses, function (a) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
+
+                    console.log('address', vout, address)
+
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
@@ -19154,6 +19160,11 @@ Platform = function (app, listofnodes) {
 
                     h+= " PKOIN"
 
+                    if(data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+                        h+= ' <i class="fas fa-heart"></i>'
+                    }
+
+
 
                 h += '</div>'
 
@@ -20008,6 +20019,8 @@ Platform = function (app, listofnodes) {
 
                         var addr = platform.app.user.address.value
 
+                        if(!data.addr) data.addr = addr
+
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
                         data.amountall = _.reduce(data.txinfo.vout, function (m, v) {
@@ -20248,6 +20261,39 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
+                    if(data.opmessage == 'a:monetization'){
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+
+                            
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : self.app.mobileview ? 'earnings' : 'userpage?id=earnings',
+                                inWnd : self.app.mobileview ? true : false,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+
+                        })
+                    }
+                    else{
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+                            app.nav.api.load({
+                                open : true,
+                                id : 'transactionview',
+                                inWnd : true,
+                
+                                essenseData : {
+                                    txid : data.txid,
+                                    share : true,
+                                }
+                            })
+
+                        })
+                    }
+
                     ///data.opmessage
 
                     //message.el.addClass('bright')
@@ -20257,7 +20303,6 @@ Platform = function (app, listofnodes) {
                 fastMessageEventsFst : function (data, message, close) {
 
                     if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
-                        message.el.addClass('dnt')
 
                         self.app.platform.effects.templates.donatehearts(app.el.html, function(){
                             
@@ -21447,12 +21492,17 @@ Platform = function (app, listofnodes) {
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
+                    console.log('notifications', notifications)
+
                     if(!notifications) return
 
                     lazyEach({
                         array: notifications,
                         action: function (p) {
-                            self.messageHandler(p.item, p.success)
+                            
+                            p.success()
+
+                            self.messageHandler(p.item)
                         },
 
                         all: {
@@ -21631,6 +21681,12 @@ Platform = function (app, listofnodes) {
 
 
             data || (data = {})
+
+            if(!data.msg && !data.mesType){
+                if(data.vin && data.vout){
+                    data.msg = 'transaction'
+                }
+            }
 
             if (data.msg || data.mesType) {
 

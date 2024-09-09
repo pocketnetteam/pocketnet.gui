@@ -1204,36 +1204,51 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawcomments, (c) => {
                 
+                
                 //if(c.deleted) return
 
-                if(!c.msgparsed && !c.msg) return null
-
-                try {
-
-                    c.msgparsed = c.msgparsed || JSON.parse(c.msg)
-
-                    if(_.isObject(c.msgparsed)){
-                        c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
-
-                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
-    
-                        c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
-    
-                            return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
-                        }), function(i){return i});
+                /*if(!c.msgparsed && !c.msg) {
+                    if(!c.deleted){
+                        return null
                     }
+                    
+                }*/
 
-                    else{
+                if(c.msgparsed || c.msg) {
+
+                    try {
+
+                        c.msgparsed = c.msgparsed || JSON.parse(c.msg)
+
+                        if(_.isObject(c.msgparsed)){
+                            c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
+
+                            c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
+        
+                            c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
+        
+                                return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
+                            }), function(i){return i});
+                        }
+
+                        else{
+                            return null
+                        }
+
+                        
+
+                    }
+                    catch (e) {
+                        console.error(e)
+                        console.log(c)
                         return null
                     }
 
-                    
-
                 }
-                catch (e) {
-                    console.error(e)
-                    console.log(c)
-                    return null
+                else{
+                    if(!c.deleted){
+                        return null
+                    }
                 }
 
 
