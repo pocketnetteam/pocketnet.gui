@@ -20268,7 +20268,6 @@ Platform = function (app, listofnodes) {
                 fastMessageEventsFst : function (data, message, close) {
 
                     if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
-                        message.el.addClass('dnt')
 
                         self.app.platform.effects.templates.donatehearts(app.el.html, function(){
                             
