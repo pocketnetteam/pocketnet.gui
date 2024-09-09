@@ -66,6 +66,20 @@
   margin-top: 1em;
   margin-bottom: 2em;
 }
+#earnings .monetization .monetizationInfo {
+  padding-left: 0.5em;
+  padding-bottom: 1em;
+}
+#earnings .monetization .monetizationInfo .smalltip {
+  color: rgb(var(--color-good));
+}
+#earnings .monetization .monetizationInfo .smalltip i {
+  font-size: 0.8em;
+}
+#earnings .monetization .monetizationInfo .smalltip span {
+  font-size: 0.8em;
+  text-decoration: underline;
+}
 #earnings .monetization .monetizationCaption {
   padding-left: 0.5em;
 }
@@ -151,6 +165,9 @@
   font-weight: 700;
   color: rgb(var(--color-txt-ac-1));
 }
+#earnings .monetization .monetizationTable .tableTotal .reward i {
+  width: auto;
+}
 #earnings .monetization .monetizationTable .postsTable .sharepreview {
   padding-top: 0;
   font-size: 1.1em;
@@ -205,6 +222,9 @@
 }
 #earnings .monetization .monetizationTable .table .reward {
   width: 100px;
+}
+#earnings .monetization .monetizationTable .table .reward i {
+  width: auto;
 }
 #earnings .monetization .monetizationTable .table > div {
   padding: 1em 0.5em;

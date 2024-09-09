@@ -510,7 +510,8 @@
   height: 63%;
 }
 #lenta.mainvideo .share .shareTable .boostedlabel {
-  display: none;
+  color: rgb(var(--color-star-yellow));
+  margin-left: 0.25em;
 }
 #lenta.mainvideo .share .shareTable .anothercntswrk {
   position: absolute;

@@ -30,6 +30,7 @@
 
 <div class="htls slide fadeInByElement">
 </div>
+
 <% if(!app.pkoindisable) {%>
     <div class="send slide fadeInByElement">
     </div>
@@ -41,19 +42,27 @@
     </div>
 <% } %>
 
-
 <!--
 <div class="crowdfunding slide fadeInByElement">
 </div> -->
 
+<div class="payments slide fadeInByElement">
+</div>
+
 <div class="addresses slide fadeInByElement">
 </div>
 
-<div class="payments slide fadeInByElement">
-</div>
+<% if(!app.pkoindisable) {%>
+    <div class="stats slide fadeInByElement">
+    </div>
+<% } %>
 
 <% if(isMobile()) {%>
     <div class="qrcodescannericon">
         <i class="fas fa-qrcode"></i>
     </div>
 <% } %>
+
+<div class="transactionsHistoryIcon">
+    <i class="fas fa-history"></i>
+</div>
