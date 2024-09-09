@@ -20019,6 +20019,8 @@ Platform = function (app, listofnodes) {
 
                         var addr = platform.app.user.address.value
 
+                        if(!data.addr) data.addr = addr
+
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
                         data.amountall = _.reduce(data.txinfo.vout, function (m, v) {
@@ -20258,6 +20260,39 @@ Platform = function (app, listofnodes) {
                 },
 
                 fastMessageEvents: function (data, message, close) {
+
+                    if(data.opmessage == 'a:monetization'){
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+
+                            
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : self.app.mobileview ? 'earnings' : 'userpage?id=earnings',
+                                inWnd : self.app.mobileview ? true : false,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+
+                        })
+                    }
+                    else{
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+                            app.nav.api.load({
+                                open : true,
+                                id : 'transactionview',
+                                inWnd : true,
+                
+                                essenseData : {
+                                    txid : data.txid,
+                                    share : true,
+                                }
+                            })
+
+                        })
+                    }
 
                     ///data.opmessage
 
