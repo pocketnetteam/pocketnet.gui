@@ -5026,6 +5026,10 @@ html.allcontent_application #footerWrapper {
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-3));
 }
+.fastMessage .fa-heart,
+.notification .fa-heart {
+  color: #ed1f1f;
+}
 .fastMessage .messagethumbs,
 .notification .messagethumbs {
   width: 44px;
