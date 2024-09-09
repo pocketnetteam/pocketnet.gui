@@ -422,6 +422,12 @@ var earnings = (function () {
 				
 
 				p.clbk(null, p);
+			},
+			wnd : {
+				showbetter : true,
+			
+				class: 'transactionlistwnd normalizedmobile withoutButtons',
+				
 			}
 		}
 	};
