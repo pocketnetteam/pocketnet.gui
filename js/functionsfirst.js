@@ -954,7 +954,10 @@ getcommonlinkProtocol = function(){
     return ((typeof _Electron != 'undefined' && _Electron) || window.cordova) ? 'https:' : window.location.protocol
 }
 
-formatInternalLinkReverse = function(value){
+formatInternalLinkReverse = function(value = ''){
+
+    value = value.toLowerCase()
+
     if(thislink(value)){
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
@@ -977,7 +980,10 @@ formatInternalLinkReverse = function(value){
 	return value
 }
 
-formatInternalLink = function(value){
+formatInternalLink = function(value = ''){
+
+    value = value.toLowerCase()
+
 
     if(thislink(value)){
 
@@ -994,9 +1000,11 @@ formatInternalLink = function(value){
 	return value
 }
 
-formatInternalLinkHref = function(value){
+formatInternalLinkHref = function(value = ''){
 
     if(((typeof _Electron != 'undefined' && _Electron) || window.cordova)) return value
+
+    value = value.toLowerCase()
 
 	try {
 		if(thislink(value)){
@@ -1032,6 +1040,8 @@ formatInternalLinkHref = function(value){
 }
 
 thislink = function (_url = '') {
+
+    _url = _url.toLowerCase()
 
     var host = window.location.host || ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 

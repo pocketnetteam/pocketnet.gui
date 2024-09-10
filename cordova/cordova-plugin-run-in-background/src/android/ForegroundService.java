@@ -131,7 +131,7 @@ public class ForegroundService extends Service {
          
            if (Build.VERSION.SDK_INT >= 34) {
                 //LOG.d("My  debug","if");
-                startForeground(NOTIFICATION_ID,  makeNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                startForeground(NOTIFICATION_ID,  makeNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROCESSING);
             } else {
                 //LOG.d("My  debug","else");
                 startForeground(NOTIFICATION_ID, makeNotification());
