@@ -53,7 +53,12 @@ public class ForegroundService extends Service {
 
     // Default text of the background notification
     private static final String NOTIFICATION_TEXT =
-            "This allows you to download videos in stealth mode, or listen to videos with the screen off";
+            "This allows you to upload videos in stealth mode, or listen videos with the screen off";
+
+    // Default text of the background notification
+    private static final String FOREGROUND_TYPE =
+            "mediaPlayback";
+            
 
     // Default icon of the background notification
     private static final String NOTIFICATION_ICON = "icon";
@@ -124,6 +129,7 @@ public class ForegroundService extends Service {
     {
         JSONObject settings = BackgroundMode.getSettings();
         boolean isSilent    = settings.optBoolean("silent", false);
+        String type    = settings.optString("foregroundType", FOREGROUND_TYPE);
 
         if (!isSilent) {
             //startForeground(notification, FOREGROUND_SERVICE_TYPE_MICROPHONE);
@@ -131,7 +137,19 @@ public class ForegroundService extends Service {
          
            if (Build.VERSION.SDK_INT >= 34) {
                 //LOG.d("My  debug","if");
-                startForeground(NOTIFICATION_ID,  makeNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROCESSING);
+
+                int foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
+
+                if (type == "mediaPlayback"){
+                    foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
+                }
+
+                if (type == "mediaUploading"){
+                    foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+                }
+
+                startForeground(NOTIFICATION_ID,  makeNotification(), foreground_type);
+
             } else {
                 //LOG.d("My  debug","else");
                 startForeground(NOTIFICATION_ID, makeNotification());
@@ -231,9 +249,9 @@ public class ForegroundService extends Service {
             notification.addAction(closeAction.build());
         }
 
-        if (settings.optBoolean("hidden", true)) {
+        /*if (settings.optBoolean("hidden", true)) {
             notification.setPriority(Notification.PRIORITY_MIN);
-        }
+        }*/
 
         if (bigText || text.contains("\n")) {
             notification.setStyle(

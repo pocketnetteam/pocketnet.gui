@@ -25251,7 +25251,7 @@ Platform = function (app, listofnodes) {
 
                         if(r){ }
                         else{
-                            self.app.mobile.backgroundMode(true)
+                            self.app.mobile.backgroundMode('mediaPlayback')
                         }
 
                     })

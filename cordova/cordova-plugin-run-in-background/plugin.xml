@@ -75,7 +75,7 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service
               android:name="de.appplant.cordova.plugin.background.ForegroundService"
-              android:foregroundServiceType="mediaProcessing|mediaPlayback"
+              android:foregroundServiceType="dataSync|mediaPlayback"
               android:exported="false">
             </service>
         </config-file>
@@ -86,7 +86,6 @@
             <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
             <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" />
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
             
