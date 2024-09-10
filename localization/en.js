@@ -2914,3 +2914,7 @@ _l.showtransactionhistory = "Transactions history"
 _l.transactionloading = "Awaiting transaction confirmation";
 
 _l.gototransaction = "Show transaction"
+
+
+_l.external_authlink_reg = "You have opened the auth link. To make a auth via "+appname+" you need to register or log in to your account."
+_l.external_sharelink_reg = "You have opened the share link. To make a share you need to register or log in to your account."
