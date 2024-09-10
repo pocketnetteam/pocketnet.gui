@@ -12,7 +12,17 @@
 		"name" : "Swipelux",
         "develop" : true,
         "install" : true
-	}],
+	},{
+        "id" : "barteron.pocketnet.app",
+        "version": "1.0.0",
+        "scope" : "test.barter.pocketnet.app",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Barteron",
+        "grantedPermissions" : ["account", "chat"],
+        "includeinsearch" : true
+    }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",

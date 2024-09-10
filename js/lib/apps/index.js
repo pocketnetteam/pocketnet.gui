@@ -950,6 +950,10 @@ var BastyonApps = function(app){
             result.cantdelete = true
         }
 
+        if (application.includeinsearch){
+            result.includeinsearch = true
+        }
+
         if (application.production){
             result.production = true
         }
@@ -1508,6 +1512,19 @@ var BastyonApps = function(app){
     }
 
     self.get = {
+        forsearch : function(){
+            return _.map(_.filter(installed, (s) => {
+                return s.includeinsearch
+            }), app => {
+
+                return {
+                    icon : app.icon,
+                    name : app.manifest.name,
+                    url : 'application?id=' + app.manifest.id,
+                    type : 'application'
+                }
+            })
+        },
         installing : function(){
             return installing
         },

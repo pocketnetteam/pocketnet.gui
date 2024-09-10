@@ -777,6 +777,14 @@
 			//padding : 2 * @rhythm @rhythm;
 		}
 
+		.appicon{
+			width: 44px;
+			height: 44px;
+			border-radius: 6px;
+			background: rgb(var(--background-secondary-theme));
+			position: relative;
+		}
+
 		.searchbywrapper{
 			//padding : 2 * @rhythm @rhythm;
 
@@ -794,6 +802,21 @@
 			}
 
 			.searchby{
+				.swra{
+					width: 100%;
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					padding : 0;
+					>div{
+
+	
+						&.label{
+							font-weight: 700;
+							text-align: left;
+						}
+					}
+				}	
 				.swrp{
 					width: 100%;
 					cursor: pointer;
@@ -803,6 +826,7 @@
 					>div{
 						color : rgba(var(--color-txt-gray-dark), 0.8); 
 						.transition(0.3s);
+
 
 						&.rsicon{
 							width: 44px;
