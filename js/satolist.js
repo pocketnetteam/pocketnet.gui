@@ -20261,7 +20261,7 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
-                    if(data.opmessage == 'a:monetization'){
+                    if(data.opmessage == 'a:monetization' && platform.app.monetization){
                         message.el.find('.infomain,.extra').on('click', function(){
 
 
@@ -25251,7 +25251,7 @@ Platform = function (app, listofnodes) {
 
                         if(r){ }
                         else{
-                            self.app.mobile.backgroundMode(true)
+                            self.app.mobile.backgroundMode('mediaPlayback')
                         }
 
                     })
