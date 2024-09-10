@@ -2914,3 +2914,13 @@ _l.showtransactionhistory = "Transactions history"
 _l.transactionloading = "Awaiting transaction confirmation";
 
 _l.gototransaction = "Show transaction"
+
+
+_l.external_authlink_reg = "You have opened the auth link. To make a auth via "+appname+" you need to register or log in to your account."
+_l.external_sharelink_reg = "You have opened the share link. To make a share you need to register or log in to your account."
+
+
+_l.foreground_service_mediaPlayback_title = appname
+_l.foreground_service_mediaPlayback_text = "The "+appname+" is playing a video"
+_l.foreground_service_mediaUploading_title = appname
+_l.foreground_service_mediaUploading_text = "The "+appname+" is uploading video"
