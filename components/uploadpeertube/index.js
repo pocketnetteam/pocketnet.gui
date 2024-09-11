@@ -513,7 +513,7 @@ var uploadpeertube = (function () {
 				});
 
 				self.app.mobile.unsleep(true)
-				self.app.mobile.backgroundMode(true)
+				self.app.mobile.backgroundMode('mediaUploading')
 				
 				uploader.uploadChunked().then((response) => {
 

@@ -2701,3 +2701,13 @@ _l.showtransactionhistory = "История транзакций"
 
 _l.transactionloading = "Ожидается подтверждение транзакции";
 _l.gototransaction = "Посмотреть транзакцию"
+
+
+_l.external_authlink_reg = "Вы открыли ссылку чтобы авторизоваться на вебсайте. Чтобы авторизоваться через "+appname+" вы должны зарегистрироваться или войти в свой аккаунт."
+_l.external_sharelink_reg = "Вы открыли ссылку чтобы поделиться. Чтобы поделиться через "+appname+" вы должны зарегистрироваться или войти в свой аккаунт."
+
+
+_l.foreground_service_mediaPlayback_title = appname
+_l.foreground_service_mediaPlayback_text = "В "+appname+" воспроизводится видео"
+_l.foreground_service_mediaUploading_title = appname
+_l.foreground_service_mediaUploading_text = "В "+appname+" происходит загрузка видео"
