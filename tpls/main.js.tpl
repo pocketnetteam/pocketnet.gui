@@ -352,7 +352,7 @@ function initApp() {
 
         setInterval(() => {
             autoUpdater.checkForUpdates();
-        }, 10 * 60 * 1000);
+        }, 60 * 60 * 1000); // Every 1 hour
     }
 
     powerMonitor.on('suspend', () => {
