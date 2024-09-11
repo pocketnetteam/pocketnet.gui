@@ -19012,6 +19012,10 @@ Platform = function (app, listofnodes) {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
+                if (share.repost){
+                    nm += ' + ' + self.app.localization.e('reposted')
+                }
+
                 return nm
             },
 
@@ -19063,6 +19067,10 @@ Platform = function (app, listofnodes) {
 
                 if(nm.length > 2){
                     h += '<div><span>' + nm + '</span></div>'
+                }
+
+                if (share.repost){
+                    h += '<div><i class="fas fa-share"></i> <span>' + self.app.localization.e('reposted') + '</span></div>'
                 }
 
 
@@ -22087,6 +22095,19 @@ Platform = function (app, listofnodes) {
         setTimeout(function(){
 
             //platform.matrixchat.notify.event()
+
+            
+            
+            /*self.messageHandler({
+                "addr":"PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM","msg":"event",
+                "txid":"170fa3679d10d8aaa9d2ee95240cf7e5e3452f183c8c84d840163adeaa6bafaa","time":1726040005,
+                "addrFrom":"PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5","avatarFrom":"https://i.imgur.com/5kkmKpS.jpg",
+                "mesType":"postfromprivate",
+                "nameFrom":"Daniel_Satchkov",
+                "node":"185.44.127.61:38081:8087"
+            })*/
+            
+            
 
             /*self.messageHandler({
                 "addr": "PXqzCNZjUsCALqiNkhTsgn6gZSQLKicVY3",
