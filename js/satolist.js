@@ -4734,7 +4734,7 @@ Platform = function (app, listofnodes) {
 
         make : function(place, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined') return
+            //if (typeof _Electron != 'undefined') return
 
             var container = self.effects.container(place)
 
@@ -4748,7 +4748,7 @@ Platform = function (app, listofnodes) {
         },
 
         breakeffect : function(el, clbk){
-            if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+            if (!el || self.effects.animation) {
                 if(clbk) clbk()
                 return true
             }

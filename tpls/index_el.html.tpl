@@ -247,6 +247,12 @@
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
+        
+        <script  join src="js/effects.js?v=860709386544"></script>
+        <script src="js/vendor/pixi.min.js"></script>
+        <script src="js/vendor/bezier.js"></script>   
+        <script src="js/vendor/color.min.js"></script> 
+
         <script async src="js/pwa-service-worker.js"></script>
 
         <div id="hideallnotificationsel"></div>
