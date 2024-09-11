@@ -1845,7 +1845,7 @@ var Account = function(address, parent){
             updated : null
         }
 
-        self.actions.value = _.filter(self.actions, (a) => {
+        self.actions.value = _.filter(self.actions.value, (a) => {
             if(a.completed || a.rejected) return false
 
             return true
