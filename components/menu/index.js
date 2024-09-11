@@ -644,7 +644,7 @@ var menu = (function(){
 										})
 										
 									})
-
+									
 									r = _.uniq(r, function(d){
 										return d.type + d.index
 									})
@@ -659,7 +659,7 @@ var menu = (function(){
 
 									var apps = self.app.apps.get.forsearch()
 
-									r = r.concat(apps)
+									r = apps.concat(r)
 
 									console.log('apps', apps)
 

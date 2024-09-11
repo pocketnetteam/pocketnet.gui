@@ -4632,6 +4632,17 @@ html.mobileview .wnd.pipmini ._close {
   margin-left: 0.5em;
   text-align: center;
 }
+.mainsearchresults .swra {
+  font-weight: 700;
+  text-align: left;
+}
+.mainsearchresults .swra .appicon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
+  position: relative;
+}
 html.cameraenabled {
   background: transparent;
 }
