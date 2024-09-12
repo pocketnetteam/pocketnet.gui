@@ -7,9 +7,18 @@
         "id" : "barteron.pocketnet.app",
         "version": "1.0.0",
         "scope" : "localhost:8080",
+        "develop": true,
         "cantdelete" : true,
         "name" : "Barteron",
-        "grantedPermissions" : ["account", "chat"]
+		"grantedPermissions" : ["account", "chat"]
+    },
+    {
+		"id" : "demo.pocketnet.app",
+		"version": "0.0.1",
+		"scope" : "localhost:8081",
+		"cantdelete" : true,
+		"name" : "Demo",
+		"grantedPermissions" : ["account", "notifications", "messaging", "payment", "sign", "camera", "gallery"]
 	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
