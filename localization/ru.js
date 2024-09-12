@@ -2711,3 +2711,6 @@ _l.foreground_service_mediaPlayback_title = appname
 _l.foreground_service_mediaPlayback_text = "В "+appname+" воспроизводится видео"
 _l.foreground_service_mediaUploading_title = appname
 _l.foreground_service_mediaUploading_text = "В "+appname+" происходит загрузка видео"
+
+
+_l.stateactionDefault = "Чтобы совершить действие вы должны зарегистрироваться или войти в свой аккаунт."

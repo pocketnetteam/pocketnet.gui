@@ -232,7 +232,7 @@ var BastyonApps = function(app){
             action : function({data, application}){
 
                 //// TODO CHECK ELECTRON NODE SAFE
-                return app.api.rpc(data.method, data.parameters)
+                return app.api.rpc(data.method, data.parameters, data.options)
             }
         },
 
@@ -1442,7 +1442,22 @@ var BastyonApps = function(app){
 
             promises.push(Promise.all(_.map(app.developapps, (application) => {
 
+                if(!application.store) application.store = {}
+
                 if (application.install){
+
+                    if (window.cordova && window.pocketnetstore){
+                        if(isios()){
+                            if(!application.store['i']){
+                                return Promise.resolve()
+                            }
+                        }
+                        else{
+                            if(!application.store['g']){
+                                return Promise.resolve()
+                            }
+                        }
+                    }
 
                     application.cantdelete = true
 
