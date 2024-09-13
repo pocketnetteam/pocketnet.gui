@@ -2714,3 +2714,7 @@ _l.foreground_service_mediaUploading_text = "В "+appname+" происходит
 
 
 _l.stateactionDefault = "Чтобы совершить действие вы должны зарегистрироваться или войти в свой аккаунт."
+
+
+_l.incomingVideoCall = "Входящий видео звонок"
+_l.incomingAudioCall = "Входящий аудио звонок"

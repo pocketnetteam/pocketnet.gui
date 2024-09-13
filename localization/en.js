@@ -2927,3 +2927,5 @@ _l.foreground_service_mediaUploading_text = "The "+appname+" is uploading video"
 
 _l.stateactionDefault = "To perform the action you must register or log in to your account."
 
+_l.incomingVideoCall = "Incoming video call"
+_l.incomingAudioCall = "Incoming audio call"
