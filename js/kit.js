@@ -2260,6 +2260,7 @@ brtOffer = function(){
 	self.images = [];
 	self.geohash = '';
 	self.price = 0;
+	self.published = 'published';
 
 	self.validation = function(){
 		if(!self.address) return 'address';
