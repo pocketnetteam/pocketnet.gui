@@ -660,7 +660,7 @@ var functions = __webpack_require__("3139");
     searchresults: null,
     focusedevent: null
   },
-  inject: ["matches"],
+  inject: ["matches", "menuState"],
   components: {
     chatName: assets_name["a" /* default */],
     chatIcon: icon["a" /* default */],
@@ -669,14 +669,18 @@ var functions = __webpack_require__("3139");
   },
   data: function () {
     return {
-      menuItems: [{
-        click: "callupVideoHandler",
-        title: this.$i18n.t("caption.videocall"),
-        icon: "fas fa-camera"
+      callMenuItems: [{
+        icon: "fa-phone fa fa-flip-horizontal",
+        action: () => {
+          this.initiateCall("voice");
+        },
+        text: "caption.call"
       }, {
-        click: "callupHandler",
-        title: this.$i18n.t("caption.call"),
-        icon: "fas fa-phone"
+        icon: "fa-video fa",
+        action: () => {
+          this.initiateCall("video");
+        },
+        text: "caption.videocall"
       }],
       menuItemsRoom: [{
         click: "AddMember",
@@ -849,29 +853,35 @@ var functions = __webpack_require__("3139");
   }),
   methods: {
     searchControlKey: function (key) {
-      if (key == 'up') this.tobottomsearch();
-      if (key == 'down') this.toupsearch();
+      if (key == "up") this.tobottomsearch();
+      if (key == "down") this.toupsearch();
+    },
+    openCallModal() {
+      this.menuState.set({
+        fromtop: true,
+        items: this.callMenuItems
+      });
     },
     toupsearch: function () {
       if (!this.searchresults) return;
       var i = this.focusedeventIndex;
       if (i <= this.searchresults.length - 2) {
-        this.$emit('tosearchevent', this.searchresults[this.focusedeventIndex + 1]);
+        this.$emit("tosearchevent", this.searchresults[this.focusedeventIndex + 1]);
       } else {
-        this.$emit('tosearchevent', this.searchresults[0]);
+        this.$emit("tosearchevent", this.searchresults[0]);
       }
     },
     tobottomsearch: function () {
       if (!this.searchresults && this.searchresults.length) return;
       var i = this.focusedeventIndex;
-      if (i > 0) this.$emit('tosearchevent', this.searchresults[this.focusedeventIndex - 1]);else this.$emit('tosearchevent', this.searchresults[this.searchresults.length - 1]);
+      if (i > 0) this.$emit("tosearchevent", this.searchresults[this.focusedeventIndex - 1]);else this.$emit("tosearchevent", this.searchresults[this.searchresults.length - 1]);
     },
     backfromsearch: function () {
       if (this.process) {
         this.$router.push("chats?process=" + this.process).catch(e => {});
       } else {
         this.searchactive = false;
-        this.searching('');
+        this.searching("");
       }
     },
     tosearch: function () {
@@ -881,7 +891,7 @@ var functions = __webpack_require__("3139");
       }, 100);
     },
     searching: function (str) {
-      this.$emit('searching', str);
+      this.$emit("searching", str);
       if (!str) {
         this.searchactive = false;
       }
@@ -903,11 +913,16 @@ var functions = __webpack_require__("3139");
         return;
       }
       let local = document.querySelector("body");
+      this.openCallModal();
+    },
+    /**
+     * @param {'video' || 'voice'} callType
+     */
+    initiateCall(type) {
       if (this.callloading) return;
       this.callloading = true;
       setTimeout(() => {
-        this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local).then(matrixCall => {
-
+        this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, type).then(matrixCall => {
           // if (matrixCall) this.$store.dispatch("CALL", matrixCall);
         }).catch(e => {
           console.log("error", e);

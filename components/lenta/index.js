@@ -865,13 +865,21 @@ var lenta = (function(){
 											else{
 
 												var elBst = null
+
 												
-												if (essenseData.author || recommended == 'best' || recommended == 'recommended'){
+												if (
+													essenseData.author || 
+													recommended == 'best' || 
+													recommended == 'recommended' || 
+													recommended == 'sub'){
+													
 													elBst = el.share[share.txid]
+
 												}
 												else{
 													elBst = el.share[share.txid].closest('.authorgroup')
 												}
+
 
 												var _el = $("<div/>", {'class' : 'boosted'})
 													_el.insertAfter(elBst)

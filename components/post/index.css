@@ -7,6 +7,22 @@
 #post.preshell {
   background: transparent;
 }
+.poctelc .lockedaccount,
+.poctelc .empty {
+  text-align: center;
+  padding: 5em;
+}
+.poctelc .lockedaccount span,
+.poctelc .empty span {
+  font-size: 2em;
+  font-weight: 100;
+}
+.poctelc .lockedaccount.allb,
+.poctelc .empty.allb {
+  background: rgb(var(--background-main));
+  margin: 0 auto;
+  border-radius: 12px;
+}
 #post {
   background: rgb(var(--background-main));
 }
@@ -44,8 +60,6 @@
 #post .empty.allb {
   background: rgb(var(--background-main));
   margin: 0 auto;
-  margin-top: 5em;
-  max-width: 400px;
   border-radius: 12px;
 }
 #post #chatExported .caption {

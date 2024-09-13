@@ -23,7 +23,8 @@ var donations = (function(){
 			'PL7RNWypccYBPsDAygW3H4aKfzGBwMeWyt',
 			'PDUGAwFmRRSnSVTtcAuyVrTLAREm6HN2BC',
 			'PPvPW1sUAA1KPxcwbVKVk2EEp3uWkAKn2U',
-			'PWkUgSod6FEyVq8Ve1dWChWMC8HcXJcLro'
+			'PWkUgSod6FEyVq8Ve1dWChWMC8HcXJcLro',
+			'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw'
 		]
 
 		var thankparameters = {
