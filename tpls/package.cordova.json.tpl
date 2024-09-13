@@ -63,6 +63,7 @@
         "cordova-plugin-file": "git+https://github.com/apache/cordova-plugin-file.git",
         "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
         "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
+        "cordova-plugin-ios-permit-getusermedia" : "file:cordova-plugin-ios-permit-getusermedia",
         "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
         "cordova-plugin-media": "^7.0.0",
         "cordova-plugin-photo-library": "file:cordova-plugin-photo-library",
@@ -145,6 +146,7 @@
                 "CAMERA_USAGE_DESCRIPTION": "",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
             },
+            "cordova-plugin-ios-permit-getusermedia" : {},
         
         <% if(!store) {%>
             "cordova-plugin-apkupdater": {},

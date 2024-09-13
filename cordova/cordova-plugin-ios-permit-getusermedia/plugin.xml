@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="@tokenized/cordova-plugin-ios-permit-getusermedia" version="1.0.0">
+  <name>PermitGetUserMedia</name>
+  <description>Cordova plugin allowing getUserMedia camera view without triggering a permission dialog every time</description>
+  <license>MIT</license>
+  <keywords>cordova,plugin,ios,camera,permissions,webrtc,getusermedia</keywords>
+  <repo>https://github.com/tokenized/cordova-plugin-ios-permit-getusermedia</repo>
+  <issue>https://github.com/tokenized/cordova-plugin-ios-permit-getusermedia/issues</issue>
+
+  <platform name="ios">
+    <header-file src="src/PermitGetUserMedia.h"/>
+    <source-file src="src/PermitGetUserMedia.m"/>
+    <config-file target="config.xml" parent="/*">
+      <feature name="PermitGetUserMedia">
+        <param name="ios-package" value="PermitGetUserMedia"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+  </platform>
+</plugin>

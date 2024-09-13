@@ -1,0 +1,29 @@
+{
+  "name": "@tokenized/cordova-plugin-ios-permit-getusermedia",
+  "version": "1.0.0",
+  "description": "Cordova plugin allowing getUserMedia camera view without triggering a permission dialog every time",
+  "cordova": {
+    "id": "@tokenized/cordova-plugin-ios-permit-getusermedia",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tokenized/cordova-plugin-ios-permit-getusermedia"
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "ios",
+    "camera",
+    "permissions",
+    "webrtc",
+    "getusermedia"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tokenized/cordova-plugin-ios-permit-getusermedia#readme",
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  }
+}
