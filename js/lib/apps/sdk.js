@@ -295,6 +295,10 @@ var BastyonSdk = function(){
             return action('barteron.offer', data)
         },
 
+        removeOffer : function(data){
+            return action('barteron.removeOffer', data)
+        },
+
         comment : function(data){
             return action('barteron.comment', data)
         },
