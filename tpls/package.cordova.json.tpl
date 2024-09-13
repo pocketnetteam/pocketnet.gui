@@ -144,7 +144,7 @@
             "cordova-plugin-gallery-refresh": {
                 "CAMERA_USAGE_DESCRIPTION": "",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
-            }
+            },
         
         <% if(!store) {%>
             "cordova-plugin-apkupdater": {},
