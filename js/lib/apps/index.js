@@ -721,6 +721,18 @@ var BastyonApps = function(app){
                 }
             },
 
+            removeOffer : {
+                permissions : ['account'],
+                authorization : true,
+                action : function({data, application}){
+                    var remove = new Remove();
+
+                    remove.import({ txidEdit: data.hash });
+
+                    return makeAction(remove, application, true);
+                }
+            },
+
             comment : {
                 permissions : ['account'],
                 authorization : true,
