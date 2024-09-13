@@ -1189,7 +1189,6 @@ const kit = {
 					return Promise.resolve(r)
 				})
 			},
-			// TODO (brangr): проверить
 			update: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
@@ -1197,14 +1196,6 @@ const kit = {
 					return Promise.resolve(r)
 				})
 			},
-			// TODO (brangr): почему коммент?
-			/*checkupdate : function(message){
-				return kit.proxy().then(proxy => {
-					return proxy.nodeControl.kit.checkupdate().then(update => {
-						send(message.id, null, update)
-					})
-				})
-			},*/
 			request: function (message) {
 
 				return kit.proxy().then(proxy => {
