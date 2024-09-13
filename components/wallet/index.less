@@ -12,6 +12,20 @@
 		padding : 2 * @rhythm;
 		cursor: pointer;
 		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+
+	.transactionsHistoryIcon{
+		position: absolute;
+		right: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
 
 		&:hover{
 			color : rgb(var(--color-txt-ac));
@@ -956,6 +970,55 @@
 		}
 	}
 
+	.stats{
+		.captionTable{
+			>div{
+				padding : 2 *@rhythm @rhythm;
+				span{
+					font-weight: 700;
+					font-size : 0.8em;
+				}
+			}
+		}
+
+		.statsTable{
+			border-bottom: 1px solid rgb(var(--neutral-grad-2));
+			cursor: pointer;
+
+			>div{
+				vertical-align: top;
+				padding : 3 *@rhythm @rhythm;
+
+				&.name{
+					padding-left: 4 * @rhythm;
+					white-space: nowrap;
+				}
+
+				&.value{
+					width: 200px;
+					font-weight: 700;
+					white-space: nowrap;
+					text-align: right;
+				}
+
+				span{
+					font-size: 0.9em;
+				}
+			}
+		}
+
+		.showtransactionhistoryWrapper{
+			padding-left: 4 * @rhythm;
+			padding-top: 2 * @rhythm;
+
+			.transactionhistory{
+				cursor: pointer;
+				text-decoration: underline;
+				color : rgb(var(--color-txt-ac));
+			}
+		}
+	}
+
 	.payments{
 
 		.captionTable{
@@ -1245,6 +1308,14 @@
 	&.simple{
 		._stepback{
 			display: none!important;
+		}
+
+		.qrcodescannericon{
+			display: none;
+		}
+
+		.transactionsHistoryIcon{
+			display: none;
 		}
 	}
 
@@ -2062,8 +2133,32 @@
 			
 		}
 	}
-	
+	.stats{
+		.statsTable{
+			>div{
+				vertical-align: top;
+				padding : 3 * @rhythm @rhythm;
 
+				&.name{
+					padding-left: @rhythm;
+				}
+
+				&.value{
+					width: 33%;
+					font-weight: 700;
+				}
+
+				&:nth-last-child(1){
+					padding-right: @rhythm;
+				}
+				
+			}
+		}
+
+		.showtransactionhistoryWrapper{
+			padding-left: @rhythm;
+		}
+	}
 	.payments{
 
 

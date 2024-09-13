@@ -2,6 +2,12 @@
 
 #earnings {
 
+	.monetizationOpportunityFail{
+		text-align: center;
+		padding : 4 * @rhythm;
+
+	}
+
 	.monetizationChange{
 		padding-top: 8 * @rhythm;
 		padding-bottom: 8 * @rhythm;
@@ -90,6 +96,26 @@
 	.monetization{
 		margin-top: 2 * @rhythm;
 		margin-bottom: 4 * @rhythm;
+
+		.monetizationInfo{
+			padding-left: @rhythm;
+			padding-bottom: 2 * @rhythm;
+
+			.smalltip{
+				color : rgb(var(--color-good));
+				i{
+					font-size: 0.8em;
+				}
+				span{
+					font-size: 0.8em;
+					text-decoration: underline;
+				}
+
+				
+			}
+		}
+
+		
 
 		.monetizationCaption{
 			padding-left: @rhythm;
@@ -195,6 +221,10 @@
 						font-weight: 700;
 						color : rgb(var(--color-txt-ac-1));
 					}
+
+					i{
+						width: auto;
+					}
 				}
 			}
 
@@ -277,6 +307,10 @@
 
 				.reward{
 					width: 100px;
+
+					i{
+						width: auto;
+					}
 				}
 
 				>div{
@@ -658,6 +692,7 @@
 	
 					.reward{
 						width: 80px;
+
 					}
 					
 				}

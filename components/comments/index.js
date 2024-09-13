@@ -246,6 +246,7 @@ var comments = (function(){
 							receiver: receiver,
 							value : prevdonatevalue,
 							storage,
+							donatemode : true,
 							clbk  : function(value){
 
 								value = Number(value);

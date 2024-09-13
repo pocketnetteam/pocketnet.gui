@@ -101,7 +101,11 @@ var pSDK = function ({ app, api, actions }) {
 
         monetization : {
             time : 60 * 15
-        }
+        },
+
+        transactionsRequest : {
+            time : 60
+        },
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -1200,36 +1204,51 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawcomments, (c) => {
                 
+                
                 //if(c.deleted) return
 
-                if(!c.msgparsed && !c.msg) return null
-
-                try {
-
-                    c.msgparsed = c.msgparsed || JSON.parse(c.msg)
-
-                    if(_.isObject(c.msgparsed)){
-                        c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
-
-                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
-    
-                        c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
-    
-                            return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
-                        }), function(i){return i});
+                /*if(!c.msgparsed && !c.msg) {
+                    if(!c.deleted){
+                        return null
                     }
+                    
+                }*/
 
-                    else{
+                if(c.msgparsed || c.msg) {
+
+                    try {
+
+                        c.msgparsed = c.msgparsed || JSON.parse(c.msg)
+
+                        if(_.isObject(c.msgparsed)){
+                            c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
+
+                            c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
+        
+                            c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
+        
+                                return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
+                            }), function(i){return i});
+                        }
+
+                        else{
+                            return null
+                        }
+
+                        
+
+                    }
+                    catch (e) {
+                        console.error(e)
+                        console.log(c)
                         return null
                     }
 
-                    
-
                 }
-                catch (e) {
-                    console.error(e)
-                    console.log(c)
-                    return null
+                else{
+                    if(!c.deleted){
+                        return null
+                    }
                 }
 
 
@@ -2326,6 +2345,27 @@ var pSDK = function ({ app, api, actions }) {
             })
 
 
+        },
+
+        loadAddressesList : function({addresses, block, page = 0, pagesize = 10}, update){
+ 
+            if(!block || !addresses) return Promise.reject('payload')
+            if(!_.isArray(addresses)) addresses = [addresses]
+
+            var hash = JSON.stringify(addresses) + '_' + block + '_' + page + '_' + pagesize
+
+            return request('transaction', hash, (data) => {
+
+                return api.rpc('getaddresstransactions', [addresses[0], block, page * pagesize, pagesize, 0, [1, 2, 3]]).catch(e => {
+
+                    return Promise.reject(e)
+                })
+                
+            }, {
+                update,
+                requestIndexedDb: 'transactionsRequest'
+            })
+            
         }
     }
 

@@ -41,7 +41,8 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         <% } %>
 
         
-        <button class="button sendcoins"><%= e('sendcoins') %></button>
+        <!--<button class="button sendcoins"><%= e('sendcoinssm') %> <img class="logo logo20" src="img/logo20.svg"></button>-->
+        <button class="button donate"><%= e('sendcoinssm') %> <img class="logo logo20 desaturate" src="img/logo20.svg"></button>
 
 
         <% if(!sUserInfo.deleted) {%>

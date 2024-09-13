@@ -846,7 +846,7 @@ var articlev = (function(){
 			initUpload({
 				el : el.c.find('.uploadcover'),
 	
-				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
+				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp', 'avif'],
 
 				dropZone : el.c.find('.bgwrapper'),
 				app : self.app,

@@ -125,12 +125,12 @@ var userpage = (function(){
 			})
 
 			if(!self.app.pkoindisable){
-				if(self.app.user.validate()) {
+				if(self.app.user.validate() && self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value)) {
 
 					
 
 					reports.push({
-						name : self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value) ? self.app.localization.e('monetization_Monetization') : self.app.localization.e('earnings2'),
+						name :  self.app.localization.e('monetization_Monetization'),
 						id : 'earnings',
 						report : 'earnings',
 						//openReportPageMobile : true,

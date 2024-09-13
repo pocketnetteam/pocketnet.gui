@@ -1847,6 +1847,7 @@ bgImages = function (el, p) {
 }
 
 var imagesLoadedCache = {}
+var imagesLoadingCache = {}
 
 bgImagesClApply = function (el, src) {
 	el.setAttribute('image', '*')
@@ -1862,10 +1863,14 @@ bgImagesClApplyTemplate = function (src) {
 	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
-	
+	if (src.includes('www.youtube.com')) {
+		const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+		src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+	}
 
 	if (src && imagesLoadedCache[src]) {
-		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
+		return 'image="*" imageloaded="true" style="background-image:url(' + imagesLoadedCache[src] + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
 	}
 	else {
 		return 'image="' + (src || "*") + '"'
@@ -1901,6 +1906,9 @@ bgImagesCl = function (el, p) {
 			el.setAttribute('data-image', src)
 
 			var image = new Image()
+			var disablegifplay = false
+
+			
 
 			src = replaceArchiveInImage(src)
 
@@ -1910,40 +1918,107 @@ bgImagesCl = function (el, p) {
 				src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 			}
 
-			image.src = src
+			if (src.indexOf('.gif') > -1 && typeof app != 'undefined' && app.disablegif){
+				disablegifplay = app.disablegif()
+			}
+
+			var rclbk = function(){
+				if(!imagesLoadedCache[src] || imagesLoadedCache[src] == '*'){
+					window.rifticker.add(() => {
+						el.setAttribute('image', '*')
+					})
+				}
+				else{
+					window.rifticker.add(() => {
+
+						bgImagesClApply(el, imagesLoadedCache[src])
+
+					})
+				}
+
+				resolve()
+			}
+
+			var dclbk = function(tsrc){
+
+				return new Promise((resolve, reject) => {
+					
+					image.src = tsrc
+
+					image.onerror = (e) => {
+						console.error(tsrc, e)
+
+						imagesLoadedCache[src] = '*'
+	
+						/*window.rifticker.add(() => {
+							el.setAttribute('image', '*')
+						})*/
+	
+						resolve(false)
+					}
+	
+					image.onload = () => {
+	
+						imagesLoadedCache[src] = tsrc
+	
+						/*window.rifticker.add(() => {
+	
+							bgImagesClApply(el, tsrc)
+	
+						})*/
+	
+						resolve(true)
+					}
+				})
+			
+				
+			}
 
 			if (imagesLoadedCache[src]) {
+
 				window.rifticker.add(() => {
-				bgImagesClApply(el, src)
+					bgImagesClApply(el, imagesLoadedCache[src])
 				})
+
 				resolve()
 			}
 			else {
-				image.onload = () => {
 
-					imagesLoadedCache[src] = true
-
-					window.rifticker.add(() => {
-
-						bgImagesClApply(el, src)
-
+				if (imagesLoadingCache[src]){
+					return imagesLoadingCache[src].then((r) => {
+						rclbk()
 					})
-
-					resolve()
 				}
-			}
+				
+				imagesLoadingCache[src] = new Promise((resolve) => {
 
+					
+					if(disablegifplay){
 
+						return convertimages([src]).then((imgs) => {
+							return dclbk(imgs[0]).then(() => {
+								rclbk()
+								resolve()
+							})
+						})
+	
+					}
+					else{
+						return dclbk(src).then(() => {
+							rclbk()
+							resolve()
+						})
+					}
+				}).then(() => {
+					delete imagesLoadingCache[src]
 
-			image.onerror = (e) => {
-				console.error(src, e)
-
-				window.rifticker.add(() => {
-					el.setAttribute('image', '*')
+					return Promise.resolve()
 				})
+				
 
-				resolve()
 			}
+
+			
 
 		})
 

@@ -2284,7 +2284,8 @@ brtOffer = function(){
 					 JSON.stringify({
 						t: self.tag,
 						a: self.tags,
-						c: self.condition
+						c: self.condition,
+						p: self.published
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2304,7 +2305,8 @@ brtOffer = function(){
 				condition: self.condition,
 				images: self.images,
 				geohash: self.geohash,
-				price: self.price
+				price: self.price,
+				published: self.published
 			};
 		}
 
@@ -2319,6 +2321,7 @@ brtOffer = function(){
 					t: self.tag,
 					a: self.tags,
 					c: self.condition,
+					p: self.published
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2339,6 +2342,7 @@ brtOffer = function(){
 		self.images = d.images;
 		self.geohash = d.geohash;
 		self.price = d.price;
+		self.published = d.published;
 	}
 
 	self.type = 'brtoffer';
@@ -3644,7 +3648,7 @@ Settings = function(){
 	self.monetization = {
 		set : function(_v){
 
-			if(!_v){
+			if (_v !== '' && _v !== false && _v !== true){
 				this.v = ''
 			}
 			else
@@ -3712,7 +3716,7 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
-					monetization : self.monetization.v || ""
+					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 				})
 			} 
 		}
@@ -3720,7 +3724,7 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
-				monetization : self.monetization.v || ""
+				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 			})
 		}
 
@@ -3744,7 +3748,7 @@ Settings = function(){
 		}
 
 		self.pin.set(parsed.pin || ""); 
-		self.monetization.set(parsed.monetization || ""); 
+		self.monetization.set(parsed.monetization); 
 
 	}
 
@@ -3782,9 +3786,11 @@ pSettings = function(){
 
 		var v = dv.d
 
-		self.pin = (v || {}).pin || ""
-		self.monetization = (v || {}).monetization || ""
-		self.address = (v || {}).address || ""
+		if(!v) v = {}
+
+		self.pin = v.pin || ""
+		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
+		self.address = v.address || ""
 	}
 
 	self.export = function(){

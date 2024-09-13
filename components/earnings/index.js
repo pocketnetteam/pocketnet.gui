@@ -31,52 +31,13 @@ var earnings = (function () {
 			getEarnings : function(){
 				return self.app.monetization.getEarnings(address, monetizationParameters.currentYear)
 			},
-			getStat: async function () {
-
-				if(address != self.user.address.value){
-
-					el.content.empty();
-
-					return Promise.resolve()
-				}
-
-				return self.app.api.rpc('getaccountearning', [address, 0, 1627534]).then(function (r) {
-
-					el.content.empty();
-
-					var statValues = r && r[0];
-
-					if (statValues) {
-
-						for (var key in statValues) {
-
-							if (key !== 'address') {
-
-								var stat = stats.find(function (s) {
-									return s.id === key;
-								})
-
-								if (stat) {
-
-									stat.balance = statValues[key] / 100000000;
-
-									renders.total(stat);
-
-								}
-
-							}
-						}
-					}
-					return Promise.resolve()
-				})
-
-			},
+			
 
 		}
 
 		var renders = {
 
-			posts: function (posts, els, show, clbk) {
+			posts: function (posts, els, show, clbk, current) {
 
 				if(show){
 
@@ -106,7 +67,8 @@ var earnings = (function () {
 							inner: html,
 							data: {
 								tpl : self.app.platform.ws.tempates.share,
-								postTable
+								postTable,
+								current
 
 							},
 		
@@ -171,13 +133,18 @@ var earnings = (function () {
 
 			monetizationEarnings(data, _el, clbk){
 
+				var hascurrent = _.find(data.months, (r) => {
+					return r.current
+				})
+
 				self.shell({
 
 					name: 'monetizationearnings',
 					el: _el,
 					data: {
 						earnings : data,
-						monetization : monetizationParameters
+						monetization : monetizationParameters,
+						hascurrent
 					},
 
 				}, function (_p) {
@@ -201,7 +168,7 @@ var earnings = (function () {
 
 							console.log("WWW", w)
 
-							renders.posts(w.posts, weekel.find('.postsTable'), exp)
+							renders.posts(w.posts, weekel.find('.postsTable'), exp, null, w.current)
 						}
 					})
 
@@ -298,7 +265,30 @@ var earnings = (function () {
 								success: function () {
 									globalpreloader(true)
 
+									
+
 									self.app.platform.sdk.users.setMonetization(false, (err, alias) => {
+
+										if(!err){
+											new dialog({
+												html:  self.app.localization.e('monetization_disable_time'),
+												btn1text: self.app.localization.e('ok'),
+												btn2text: self.app.localization.e('dno'),
+									
+												success: function () {
+													
+												},
+									
+												fail: function () {
+							
+												},
+								
+												class : 'zindex one'
+											})
+										}
+
+										
+
 										renders.monetizationWrapper(() => {
 											globalpreloader(false)
 										})
@@ -366,7 +356,7 @@ var earnings = (function () {
 		var make = function(){
 			
 			renders.monetizationWrapper(() => {
-				actions.getStat()
+				//actions.getStat()
 			})
 
 		}
@@ -376,7 +366,7 @@ var earnings = (function () {
 
 			getdata: async function (clbk) {
 
-					address	= parameters().address || self.app.user.address.value
+					address	= self.app.user.address.value //parameters().address || self.app.user.address.value
 
 					self.sdk.users.get(address, function(){
 
@@ -432,6 +422,12 @@ var earnings = (function () {
 				
 
 				p.clbk(null, p);
+			},
+			wnd : {
+				showbetter : true,
+			
+				class: 'transactionlistwnd normalizedmobile withoutButtons',
+				
 			}
 		}
 	};

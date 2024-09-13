@@ -1745,7 +1745,7 @@ Application = function (p) {
 				var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
 				self.mobile.unsleep(unsleep)
-				self.mobile.backgroundMode(unsleep && self.platform.sdk.videos.volume && !self.mobile.pip.element)
+				self.mobile.backgroundMode(unsleep && self.platform.sdk.videos.volume && !self.mobile.pip.element ? 'mediaPlayback' : false)
 
 			}, 1000)
 
@@ -2829,10 +2829,29 @@ Application = function (p) {
 					console.log('playing set backgroundMode', t)
 
 					if (t) {
+
+						if(t == 'mediaPlayback') {
+							cordova.plugins.backgroundMode.setDefaults({
+								foregroundType :    'mediaPlayback',
+								title: self.localization.e('foreground_service_mediaPlayback_title'),
+								text: self.localization.e('foreground_service_mediaPlayback_text'),
+							})
+						}
+
+						if(t == 'mediaUploading') {
+							cordova.plugins.backgroundMode.setDefaults({
+								foregroundType :    'mediaUploading',
+								title: self.localization.e('foreground_service_mediaUploading_title'),
+								text: self.localization.e('foreground_service_mediaUploading_text'),
+							})
+						}
+							
+
 						cordova.plugins.backgroundMode.enable()
 					}
 					else {
 						cordova.plugins.backgroundMode.disable()
+						cordova.plugins.backgroundMode.setDefaults({foregroundType : 'mediaPlayback'})
 					}
 				}
 			}

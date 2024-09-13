@@ -2085,7 +2085,7 @@ _l.easyNode_e10020 = "Wallet"
 _l.easyNode_e10021 = "Status"
 _l.easyNode_e10022 = "Requesting..."
 _l.easyNode_e10023 = "Staking"
-_l.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+_l.easyNode_e10024 = "If you have already added PKOIN to the node, wait for the height to be fully synchronized"
 _l.easyNode_e10025 = "Balance"
 _l.easyNode_e10026 = "Control"
 _l.easyNode_e10027 = "Deposit"
@@ -2124,6 +2124,7 @@ _l.easyNode_e10060 = "SSD drive"
 _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
+_l.easyNode_e10064 = "Support"
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2287,7 +2288,7 @@ _l.boosted = "Boosted";
 _l.probability = "Probability";
 
 _l.probabilitytext = function(lang){
-	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>1</b> day"
 };
 
 _l.probabilitytexterror = "Unable to calculate promotion probability";
@@ -2560,9 +2561,9 @@ _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 _l.earnings2 = "Total earnings";
 
-_l.amountLottery = "Lottery";
-_l.amountDonation = "Donations";
-_l.amountTransfer = "Transfers";
+_l.amountLottery = "Received from blockchain lottery";
+_l.amountDonation = "Donations received";
+_l.amountTransfer = "Transfers completed";
 
 
 _l.copybuiltfrom = "Application build version copied"
@@ -2778,6 +2779,7 @@ _l.registration_blocked = _l.lockedaccount
 _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
+
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
 _l.showblockedusers = "Show blocked users";
 
@@ -2876,7 +2878,7 @@ _l.monetization_monetizationText = "Enable monetization and earn income every we
 _l.monetization_disable =  "Disable the program"
 _l.monetization_disable_question = "Are you sure you want to stop participating in the monetization program?"
 
-_l.monetization_exchange = "Sell cryptocurrency"
+_l.monetization_exchange = "Exchange pocketcoin"
 _l.monetization_buychat = "Contact via chat"
 
 
@@ -2886,7 +2888,7 @@ _l.advertising_Boostscount = "Boosts"
 
 _l.advertising_Ratings = "Ratings"
 _l.advertising_Comments = "Comments"
-_l.advertising_Amount = "Amoutn"
+_l.advertising_Amount = "Spent"
 _l.advertising_Advertising = "Advertising"
 _l.advertising_exchange = "Buy cryptocurrency"
 _l.advertising_buychat = "Contact via chat"
@@ -2896,3 +2898,29 @@ _l.advertising_Date = "Date"
 _l.grouping = "Group by"
 _l.groupBy_shares = "shares"
 _l.groupBy_months = "months"
+_l.monetization_disable_time = "You will be disconnected from the monetization program within twenty minutes."
+
+_l.fastmessagemonetization = "as a reward under the monetization program"
+_l.fastmessagemonetization = "as a donate"
+
+_l.sendcoinssm = "Send"
+_l.e130961donate = "How much PKOIN do you want to donate?"
+_l.statsWallet = "Wallet information"
+_l.paymentsDate = "Date"
+_l.paymentsValue = "Value"
+_l.paymentsInformation = "Description"
+_l.showtransactionhistory = "Transactions history"
+
+_l.transactionloading = "Awaiting transaction confirmation";
+
+_l.gototransaction = "Show transaction"
+
+
+_l.external_authlink_reg = "You have opened the auth link. To make a auth via "+appname+" you need to register or log in to your account."
+_l.external_sharelink_reg = "You have opened the share link. To make a share you need to register or log in to your account."
+
+
+_l.foreground_service_mediaPlayback_title = appname
+_l.foreground_service_mediaPlayback_text = "The "+appname+" is playing a video"
+_l.foreground_service_mediaUploading_title = appname
+_l.foreground_service_mediaUploading_text = "The "+appname+" is uploading video"

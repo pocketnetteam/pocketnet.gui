@@ -1,0 +1,39 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+			<div class="subcaption">
+				<span><%=e('statsWallet').toUpperCase()%></span>
+			</div>
+			<div class="panel">
+				
+			</div>
+		</div>
+	</div>
+
+    <div class="statsGroup">
+
+        <% _.each(stats, function(value, i){%> 
+
+            <div class="statsTable payment table">
+                <div class="name">
+                    <span><%-self.app.localization.e(i)%></span>
+                </div>
+
+                <div class="value">
+                    <span><span><%-app.platform.mp.coin(value)%></span> <span>PKOIN</span></span>
+                </div>
+                
+            </div> 
+
+        <% }) %>
+
+    </div>
+
+    <div class="showtransactionhistoryWrapper">
+        <div class="transactionhistory">
+            <span><%- e('showtransactionhistory') %></span>
+        </div>
+    </div>
+
+</div>

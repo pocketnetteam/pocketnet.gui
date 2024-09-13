@@ -866,7 +866,7 @@ var lenta = (function(){
 
 												var elBst = null
 												
-												if (essenseData.author){
+												if (essenseData.author || recommended == 'best' || recommended == 'recommended'){
 													elBst = el.share[share.txid]
 												}
 												else{

@@ -1637,7 +1637,7 @@ var share = (function(){
 						initUpload({
 							el : p.el.find('.images'),
 				
-							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp', 'avif'],
 		
 							dropZone : el.c,
 							app : self.app,
@@ -2002,7 +2002,7 @@ var share = (function(){
 							initUpload({
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
-								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif', 'avif'],
 								app : self.app,
 								dropZone : el.urlWrapper,
 		
