@@ -1216,11 +1216,11 @@ var PNWIDGETS = function () {
       }, "#pocketnet_iframe_" + seed);
     }
   };
-  self.url = function (url) {
+  self.url = function (url = '') {
     var parsed_url = new URL(url);
     var postid = parsed_url.searchParams.get("s") || parsed_url.searchParams.get("v");
     var action = parsed_url.searchParams.get("commentid") ? "comment" : postid ? "lenta" : "channel";
-    var id = action === "channel" ? parsed_url.pathname.replace(window.pocketnetpublicpath || "/", "") : postid;
+    var id = action === "channel" ? (parsed_url.pathname ? parsed_url.pathname : url.split('//')[1] || '').replace(window.pocketnetpublicpath || "/", "") : postid;
     if (id == "author" && action === "channel") id = parsed_url.searchParams.get("address");
     var connect = parsed_url.searchParams.get("connect");
     var publicroom = parsed_url.searchParams.get("publicroom");
