@@ -6824,6 +6824,9 @@ html.mobileview .fastMessage .foranswer,
 html.mobileview .notification .foranswer {
   display: none;
 }
+html.mobileview .wnd.normalizedmobile .customscroll {
+  overscroll-behavior: none;
+}
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;
   /*.hideButton{

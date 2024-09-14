@@ -8443,6 +8443,11 @@ html.mobileview{
 
 
     .wnd{
+        &.normalizedmobile{
+            .customscroll{
+                overscroll-behavior: none;
+            }
+        }
         &.normalizedmobile:not(.hiddenState){
             contain: strict;
 
