@@ -4876,6 +4876,8 @@ Platform = function (app, listofnodes) {
 
         upbutton: function (el, p) {
 
+            console.log('upbutton', el, p)
+
             if (typeof window == 'undefined') return;
 
             if (!p) p = {};

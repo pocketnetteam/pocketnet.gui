@@ -2234,6 +2234,16 @@ const SendStatus = {
       this.$refs["newinput"].inserttip(name);
     },
     tipBySearch: function (value) {
+      console.log('tip value', value);
+      if (value !== null) {
+        let m_chat = this.core.mtrx.client.getRoom(this.chat.roomId);
+        if (m_chat) {
+          return this.core.mtrx.kit.usersInfoForChatsStore([m_chat]).then(r => {
+            console.log("THIS USERS", value, r);
+            this.tipvalue = value;
+          });
+        }
+      }
       this.tipvalue = value;
     },
     getSharedUserNames() {

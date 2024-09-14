@@ -1831,12 +1831,20 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
       immediate: true,
       handler: function () {
         if (this.m_chat && !_.isEmpty(this.m_chat)) {
-          this.core.mtrx.kit.allchatmembers([this.m_chat], false, true).then(r => {
-            return this.core.mtrx.kit.prepareChat(this.m_chat);
-          }).then(r => {
+          this.core.mtrx.kit.prepareChatWithUsers(this.m_chat).then(r => {
             this.ready = true;
             this.checkcrypto();
           });
+
+          /*this.core.mtrx.kit
+          	.allchatmembers([this.m_chat], false, true)
+          	.then((r) => {
+          		return this.core.mtrx.kit.prepareChat(this.m_chat);
+          	})
+          	.then((r) => {
+          		this.ready = true;
+          				this.checkcrypto();
+          	});*/
         }
       }
     },
