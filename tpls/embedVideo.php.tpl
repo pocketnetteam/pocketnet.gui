@@ -70,13 +70,8 @@
         }
       })
       
-      console.log("here1")
-      api.initIf(() => {
-
+      api.initIf().then(() => {
         return api.getPeertubeserversList()
-
-        console.log("here")
-
       }).catch(e => {
         console.error(e)
       }).then(() => {
