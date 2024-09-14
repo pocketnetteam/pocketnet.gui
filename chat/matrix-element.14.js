@@ -944,7 +944,6 @@ var functions = __webpack_require__("3139");
     minimized: {
       immediate: true,
       handler: function () {
-        console.log("////");
         this.globalsearch = "";
       }
     }

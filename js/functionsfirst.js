@@ -1045,6 +1045,11 @@ thislink = function (_url = '') {
 
     var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
+    if (_url.indexOf("/embedvideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
+        return false;
+    }
+
+
     if(_url.indexOf(getcommonlinkProtocol() + '//' + window.location.host + window.pocketnetpublicpath) == 0) return true
     if(_url.indexOf(getcommonlinkProtocol() + '//' + host) == 0) return true
 
@@ -1063,9 +1068,6 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
-    if (_url.indexOf("/embedvideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
-        return false;
-    }
 
     if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
 

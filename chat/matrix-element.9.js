@@ -2234,12 +2234,10 @@ const SendStatus = {
       this.$refs["newinput"].inserttip(name);
     },
     tipBySearch: function (value) {
-      console.log('tip value', value);
       if (value !== null) {
         let m_chat = this.core.mtrx.client.getRoom(this.chat.roomId);
         if (m_chat) {
           return this.core.mtrx.kit.usersInfoForChatsStore([m_chat]).then(r => {
-            console.log("THIS USERS", value, r);
             this.tipvalue = value;
           });
         }
@@ -2867,12 +2865,10 @@ const SendStatus = {
       });
     },
     initRecording() {
-      console.log("initRecording");
       if (this.prepareRecording || this.isRecording || this.cordovaMediaRecorder) return;
       if (window.cordova && !functions["a" /* default */].isios()) {
         return this.initRecordingCordova();
       }
-      console.log("dasda");
       this.prepareRecording = Object(CancelablePromise["cancelable"])(this.core.initMediaRecorder().then(recorder => {
         this.microphoneDisabled = false;
         if (this.prepareRecording) {

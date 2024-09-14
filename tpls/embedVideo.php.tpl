@@ -17,6 +17,8 @@
             $og->echotags();
         ?>
 
+    <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+
   </head>
   <body id="custom-css" class="standalone-video-embed">
     <div id="error-block">

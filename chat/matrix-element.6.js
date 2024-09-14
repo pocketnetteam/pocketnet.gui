@@ -1790,7 +1790,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
             return this.core.mtrx.kit.usersInfoForChatsStore([this.m_chat]);
           }).then(r => {
             var _this$m_chat$pcrypto;
-            console.log("ALL CHAT MEMBERS", r);
             this.ready = true;
             this.encrypted = (_this$m_chat$pcrypto = this.m_chat.pcrypto) === null || _this$m_chat$pcrypto === void 0 ? void 0 : _this$m_chat$pcrypto.canBeEncrypt();
           });
@@ -2089,7 +2088,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       this.$emit("showRoomInfo", room);
     },
     modalInviteUser() {
-      console.log("AS#");
       this.$emit("addMember");
       //this.inviteUserOpened = true;
     },
