@@ -18882,11 +18882,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    
-
-
-            });
-
+                });
 
                 // When token is refreshed, update the matrix element for the Vue app
                 FirebasePlugin?.onTokenRefresh(function (token) {
@@ -18900,6 +18896,7 @@ Platform = function (app, listofnodes) {
                 }, function (error) {
                     console.error(error);
                 });
+                
             }
         }
 

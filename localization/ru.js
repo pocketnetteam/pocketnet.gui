@@ -1170,6 +1170,7 @@ _l.editVideoDescription = "Изменить название/описание в
 _l.errorChangingDescription = "Ошибка изменения видео";
 _l.downloadVideo = "Скачать видео в сохранённые";
 _l.deleteSavedVideo = "Удалить видео из сохранённых";
+_l.downloadingVideo = "Сохранение видео";
 _l.selectQuality = "Выберите качество загружаемого видео";
 _l.downloadedVideos = "Сохранённые видео";
 _l.deleteAllDownloadedVideos = "Удалить все видео из сохранённых";
