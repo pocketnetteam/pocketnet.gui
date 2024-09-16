@@ -2814,10 +2814,11 @@ const SendStatus = {
             if (media.duration && media.duration > 0) {
               r.duration = media.duration;
             }
-            this.createVoiceMessage(r, false);
+            this.createVoiceMessage(r, true);
             return Promise.resolve();
           }).catch(e => {
             this.clear();
+            if (unsleep) unsleep(false);
             console.error(e);
           }).finally(() => {});
         }, e => {
