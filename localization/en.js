@@ -2930,3 +2930,8 @@ _l.stateactionDefault = "To perform the action you must register or log in to yo
 _l.incomingVideoCall = "Incoming video call"
 _l.incomingAudioCall = "Incoming audio call"
 _l.connecting = "Connecting"
+
+
+_l.quotanow = function(v){
+	return "You can upload a video no larger than"
+}

@@ -121,7 +121,7 @@ var PeertubeRequest = function (app = {}) {
 PeerTubePocketnet = function (app) {
 	var self = this;
 
-	var VIDEO_QUOTA_CORRECTION = 100 * 1024 * 1024;
+	var VIDEO_QUOTA_CORRECTION = 0 * 1024 * 1024;
 	var PEERTUBE_ID = 'peertube://';
 	var SLASH = '/';
 
@@ -1094,7 +1094,16 @@ PeerTubePocketnet = function (app) {
 						const videoQuota = Number(rme.videoQuota) || 0;
 						const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
 
+						rme.videoQuotaUsedDaily = videoQuotaUsedDaily 
+						rme.videoQuotaUsed = videoQuotaUsed 
+
+
+						rme.quotanow =  videoQuotaDaily - videoQuotaUsedDaily + VIDEO_QUOTA_CORRECTION
+						
+						//Math.min() 
+
 						if (!sizeNumbered || !videoQuotaDaily || !videoQuota) {
+							
 							return Promise.resolve(rme);
 						}
 
