@@ -98,9 +98,9 @@ var pkoin = (function(){
 								disabled = true;
 								el.send.addClass('disabled');
 
-							} else if (valSum < 0.5){
+							} else if (valSum < 2.5){
 
-								errorWrapper.text(self.app.localization.e('minPkoin', 0.5));
+								errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
 								disabled = true;
 								el.send.addClass('disabled');
 

@@ -1207,12 +1207,12 @@ var pSDK = function ({ app, api, actions }) {
                 
                 //if(c.deleted) return
 
-                /*if(!c.msgparsed && !c.msg) {
-                    if(!c.deleted){
-                        return null
-                    }
-                    
-                }*/
+                //// TODO
+                if(!c.msgparsed && !c.msg) {
+                
+                    return null
+                  
+                }
 
                 if(c.msgparsed || c.msg) {
 

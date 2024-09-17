@@ -11,7 +11,8 @@
 		"cantdelete" : true,
 		"name" : "Swipelux",
         "develop" : true,
-        "install" : true
+        "install" : true,
+        "store" : {"g" : true}
 	}],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",

@@ -884,7 +884,6 @@ var main = (function(){
 								
 									if (upbackbutton) upbackbutton.destroy()
 
-									if(typeof _Electron == 'undefined' || !_Electron){
 										setTimeout(function(){
 										
 											upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
@@ -906,7 +905,6 @@ var main = (function(){
 										setTimeout(function(){
 											upbackbutton.apply()
 										},300)
-									}
 
 									renders.post(id)
 

@@ -1071,6 +1071,9 @@ var wallet = (function(){
 			},
 
 			mainWithClear : function(clbk){
+
+				prepareOptions()
+
 				history = [];
 				historyp = [];
 
@@ -2743,7 +2746,9 @@ var wallet = (function(){
 			send.parameters.source.value = self.app.settings.get(self.map.uri, 'source') || send.parameters.source.defaultValue
 
 			send.parameters.reciever.value = ''
+			send.parameters.amount.value = 0
 			send.parameters.reciever.disabled = false
+			send.parameters.message.value = ''
 
 			send.parameters.fees.value = self.app.settings.get(self.map.uri, 'feesMode') || send.parameters.fees.defaultValue
 

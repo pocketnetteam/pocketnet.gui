@@ -282,7 +282,7 @@ var userpage = (function(){
 			}
 
 
-			if(self.app.user.validate() && !self.app.pkoindisable) {
+			if(self.app.user.validate()) {
 
 				reports.push({
 					name : self.app.localization.e('videoCabinet'),
@@ -292,9 +292,7 @@ var userpage = (function(){
 					openReportPageMobileInWindow : true,
 					if : function(){
 
-
-
-						if (self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()) return false
+						if (self.app.platform.sdk.user.myaccauntdeleted()) return false
 
 						if (window.testpocketnet) return true
 
