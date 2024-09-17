@@ -232,7 +232,7 @@ var BastyonApps = function(app){
             action : function({data, application}){
 
                 //// TODO CHECK ELECTRON NODE SAFE
-                return app.api.rpc(data.method, data.parameters)
+                return app.api.rpc(data.method, data.parameters, data.options)
             }
         },
 
@@ -962,6 +962,10 @@ var BastyonApps = function(app){
             result.cantdelete = true
         }
 
+        if (application.includeinsearch){
+            result.includeinsearch = true
+        }
+
         if (application.production){
             result.production = true
         }
@@ -1450,7 +1454,22 @@ var BastyonApps = function(app){
 
             promises.push(Promise.all(_.map(app.developapps, (application) => {
 
+                if(!application.store) application.store = {}
+
                 if (application.install){
+
+                    if (window.cordova && window.pocketnetstore){
+                        if(isios()){
+                            if(!application.store['i']){
+                                return Promise.resolve()
+                            }
+                        }
+                        else{
+                            if(!application.store['g']){
+                                return Promise.resolve()
+                            }
+                        }
+                    }
 
                     application.cantdelete = true
 
@@ -1520,6 +1539,19 @@ var BastyonApps = function(app){
     }
 
     self.get = {
+        forsearch : function(){
+            return _.map(_.filter(installed, (s) => {
+                return s.includeinsearch
+            }), app => {
+
+                return {
+                    icon : app.icon,
+                    name : app.manifest.name,
+                    url : 'application?id=' + app.manifest.id,
+                    type : 'application'
+                }
+            })
+        },
         installing : function(){
             return installing
         },

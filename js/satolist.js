@@ -250,7 +250,7 @@ Platform = function (app, listofnodes) {
         'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true,
         'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
         'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
-        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
+        'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55': true,
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
         'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
@@ -382,7 +382,10 @@ Platform = function (app, listofnodes) {
         'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
         'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
         'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
-
+        'PJw76ZEdMHgp8NfLuvacjF2cP2sGrAGGoe' : true,
+        'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55' : true,
+        'PKwc6u5ZFZVJWwZyLPh5bTgbpvADaH74g7' : true,
+        'PKXtnTBkpvo9U5atc5PTSxbdXpoiaYYUKj' : true
     } 
 
     self.bch = {
@@ -4733,7 +4736,7 @@ Platform = function (app, listofnodes) {
 
         make : function(place, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined') return
+            //if (typeof _Electron != 'undefined') return
 
             var container = self.effects.container(place)
 
@@ -4747,7 +4750,7 @@ Platform = function (app, listofnodes) {
         },
 
         breakeffect : function(el, clbk){
-            if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+            if (!el || self.effects.animation) {
                 if(clbk) clbk()
                 return true
             }
@@ -4874,6 +4877,8 @@ Platform = function (app, listofnodes) {
         },
 
         upbutton: function (el, p) {
+
+            console.log('upbutton', el, p)
 
             if (typeof window == 'undefined') return;
 
@@ -9193,9 +9198,9 @@ Platform = function (app, listofnodes) {
                         }
                         else{
                             new dialog({
-                                html: self.app.localization.e(messages.text),
-                                btn1text: self.app.localization.e(messages.success),
-                                btn2text: self.app.localization.e(messages.cancel),
+                                html: self.app.localization.e(messages.text || 'stateactionDefault'),
+                                btn1text: self.app.localization.e(messages.success || 'rcontinue'),
+                                btn2text: self.app.localization.e(messages.cancel || 'dcancel'),
                 
                                 class: 'zindex accepting accepting2',
                 
@@ -18879,11 +18884,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    
-
-
-            });
-
+                });
 
                 // When token is refreshed, update the matrix element for the Vue app
                 FirebasePlugin?.onTokenRefresh(function (token) {
@@ -18897,6 +18898,7 @@ Platform = function (app, listofnodes) {
                 }, function (error) {
                     console.error(error);
                 });
+                
             }
         }
 
@@ -19011,6 +19013,10 @@ Platform = function (app, listofnodes) {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
+                if (share.repost){
+                    nm += ' + ' + self.app.localization.e('reposted')
+                }
+
                 return nm
             },
 
@@ -19062,6 +19068,10 @@ Platform = function (app, listofnodes) {
 
                 if(nm.length > 2){
                     h += '<div><span>' + nm + '</span></div>'
+                }
+
+                if (share.repost){
+                    h += '<div><i class="fas fa-share"></i> <span>' + self.app.localization.e('reposted') + '</span></div>'
                 }
 
 
@@ -22087,6 +22097,19 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
+            
+            
+            /*self.messageHandler({
+                "addr":"PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM","msg":"event",
+                "txid":"170fa3679d10d8aaa9d2ee95240cf7e5e3452f183c8c84d840163adeaa6bafaa","time":1726040005,
+                "addrFrom":"PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5","avatarFrom":"https://i.imgur.com/5kkmKpS.jpg",
+                "mesType":"postfromprivate",
+                "nameFrom":"Daniel_Satchkov",
+                "node":"185.44.127.61:38081:8087"
+            })*/
+            
+            
+
             /*self.messageHandler({
                 "addr": "PXqzCNZjUsCALqiNkhTsgn6gZSQLKicVY3",
                 "msg": "event",
@@ -23029,8 +23052,6 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('quitAndInstall');
                         d = null;
 
-
-
                     },
 
                     fail: function () {
@@ -23740,6 +23761,11 @@ Platform = function (app, listofnodes) {
                 if (clbk)
                     clbk()
             }
+
+            setTimeout(() => {
+                if (typeof initShadowPopups === 'function') initShadowPopups()
+            }, 1000)
+            
             
 
         })
@@ -24897,7 +24923,7 @@ Platform = function (app, listofnodes) {
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
 
-                if(intent.action == 'VIEW') return
+                if (intent.action == 'VIEW') return
 
 
 
@@ -24962,74 +24988,82 @@ Platform = function (app, listofnodes) {
                     }
                     else{
 
-                        self.app.user.isState(function (state) {
+                        self.app.platform.sdk.user.stateAction(() => {
+                            
+                            menuDialog({
+
+                                items: [
+    
+                                    {
+                                        text: self.app.localization.e('sendToChat'),
+                                        class: 'itemmain',
+                                        action: function (clbk) {
+    
+                                            self.matrixchat.wait().then(r => {
+                                                return self.matrixchat.share.object(sharing)
+                                            }).catch(r => {
+                    
+                                                sitemessage(self.app.localization.e('e13293')+' /ul102')
+                    
+                                            })
+                                            
+                                            clbk()
+                                        }
+                                    },
+    
+                                    {
+                                        text:  self.app.localization.e('createPost'),
+                                        action: function (clbk) {
+    
+                                            var shareEssenseData = {
+                                                close : function(){
+                                                },
+                                                post : function(){
+                                                },
+                                                absolute : true,
+                                            }
+    
+                                            if (sharing.messages && sharing.messages[0]){
+                                                shareEssenseData.description = sharing.messages[0];
+                                            }
+    
+                                            if (sharing.images){
+                                                shareEssenseData.images = sharing.images;
+                                            }
+    
+                                            app.nav.api.load({
+                                                open : true,
+                                                id : 'share',
+                                                inWnd : true,
+                                                eid : 'postin',
+                                                mid : 'postin',
+                            
+                                                clbk : function(e, p){
+                                                    globalpreloader(false)
+                                                },
+                            
+                                                essenseData : shareEssenseData
+                                            })
+    
+                                            clbk()
+                                        }
+                                    }
+    
+    
+                                ]
+                            })
+            
+                        }, {
+                        })
+
+                        /*self.app.user.isState(function (state) {
 
                             if (state){
-
-                                menuDialog({
-
-                                    items: [
-        
-                                        {
-                                            text: self.app.localization.e('sendToChat'),
-                                            class: 'itemmain',
-                                            action: function (clbk) {
-        
-                                                self.matrixchat.wait().then(r => {
-                                                    return self.matrixchat.share.object(sharing)
-                                                }).catch(r => {
-                        
-                                                    sitemessage(self.app.localization.e('e13293')+' /ul102')
-                        
-                                                })
-                                                
-                                                clbk()
-                                            }
-                                        },
-        
-                                        {
-                                            text:  self.app.localization.e('createPost'),
-                                            action: function (clbk) {
-        
-                                                var shareEssenseData = {
-                                                    close : function(){
-                                                    },
-                                                    post : function(){
-                                                    },
-                                                    absolute : true,
-                                                }
-        
-                                                if (sharing.messages && sharing.messages[0]){
-                                                    shareEssenseData.description = sharing.messages[0];
-                                                }
-        
-                                                if (sharing.images){
-                                                    shareEssenseData.images = sharing.images;
-                                                }
-        
-                                                app.nav.api.load({
-                                                    open : true,
-                                                    id : 'share',
-                                                    inWnd : true,
-                                                    eid : 'postin',
-                                                    mid : 'postin',
                                 
-                                                    clbk : function(e, p){
-                                                        globalpreloader(false)
-                                                    },
+
                                 
-                                                    essenseData : shareEssenseData
-                                                })
-        
-                                                clbk()
-                                            }
-                                        }
-        
-        
-                                    ]
-                                })
                             }
-                        })
+                        })*/
 
                     }
                 })

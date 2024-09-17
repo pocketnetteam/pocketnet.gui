@@ -4610,23 +4610,38 @@ html.mobileview .wnd.pipmini ._close {
 .mainsearchresults .result {
   min-height: 33px;
 }
+.mainsearchresults .swra,
 .mainsearchresults .swrp,
 .mainsearchresults .userTable {
   display: flex;
   align-items: center;
 }
+.mainsearchresults .swra .rsicon,
 .mainsearchresults .swrp .rsicon,
 .mainsearchresults .userTable .rsicon,
+.mainsearchresults .swra .iconWrapper,
 .mainsearchresults .swrp .iconWrapper,
 .mainsearchresults .userTable .iconWrapper {
   max-width: 44px;
   min-width: 44px;
   text-align: center;
 }
+.mainsearchresults .swra .label,
 .mainsearchresults .swrp .label,
 .mainsearchresults .userTable .label {
   margin-left: 0.5em;
   text-align: center;
+}
+.mainsearchresults .swra {
+  font-weight: 700;
+  text-align: left;
+}
+.mainsearchresults .swra .appicon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
+  position: relative;
 }
 html.cameraenabled {
   background: transparent;
@@ -4949,6 +4964,23 @@ html.allcontent_application #footerWrapper {
 }
 .registrationProgressIcon.blocked i {
   color: rgb(var(--color-bad)) !important;
+}
+.appiconsmall {
+  line-height: 0.25em;
+  font-size: 0.25em;
+  opacity: 1;
+  position: absolute;
+  bottom: -4%;
+  right: -4%;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+.appiconsmall .real .fa-certificate {
+  color: rgb(var(--color-bg-orange));
+}
+.appiconsmall .real .fa-play {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+  margin-left: 0.1em;
 }
 .realperson {
   line-height: 0.25em;
@@ -6791,6 +6823,9 @@ html.mobileview .fastMessage.smallsize .close {
 html.mobileview .fastMessage .foranswer,
 html.mobileview .notification .foranswer {
   display: none;
+}
+html.mobileview .wnd.normalizedmobile .customscroll {
+  overscroll-behavior: none;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;

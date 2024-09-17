@@ -5588,6 +5588,7 @@ html.mobileview{
     .result{
         min-height: 33px;
     }
+    .swra,
     .swrp,
     .userTable{
         display: flex;
@@ -5604,6 +5605,19 @@ html.mobileview{
             margin-left: @rhythm;
             text-align: center;
         }
+    }
+
+    .swra{
+        font-weight: 700;
+		text-align: left;
+
+        .appicon{
+			width: 44px;
+			height: 44px;
+			border-radius: 6px;
+			background: rgb(var(--background-secondary-theme));
+			position: relative;
+		}
     }
 
     .swrp{
@@ -6076,6 +6090,34 @@ html.allcontent_application{
         }
     }
     
+}
+
+
+
+.appiconsmall{
+    
+    line-height: 0.25em;
+    font-size: 0.25em;
+    opacity: 1;
+    position : absolute;
+    bottom : -4%;
+    right : -4%;
+    .shadowText();
+
+    .real{
+
+        
+        .fa-certificate{
+            color : rgb(var(--color-bg-orange));
+        }
+
+        .fa-play{
+            color : rgb(var(--text-on-bg-ac-color));
+            box-shadow: none;
+            margin-left: 0.1em;
+        }
+
+    }
 }
 
 .realperson{
@@ -8401,6 +8443,11 @@ html.mobileview{
 
 
     .wnd{
+        &.normalizedmobile{
+            .customscroll{
+                overscroll-behavior: none;
+            }
+        }
         &.normalizedmobile:not(.hiddenState){
             contain: strict;
 

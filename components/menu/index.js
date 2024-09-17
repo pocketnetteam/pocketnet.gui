@@ -636,7 +636,7 @@ var menu = (function(){
 										_.each(c, function(v){
 											counts[v.type] || (counts[v.type] = 0)
 
-											if(counts[v.type] >= 7) return
+											if(counts[v.type] >= 6) return
 
 											counts[v.type]++
 
@@ -644,7 +644,7 @@ var menu = (function(){
 										})
 										
 									})
-
+									
 									r = _.uniq(r, function(d){
 										return d.type + d.index
 									})
@@ -656,6 +656,12 @@ var menu = (function(){
 									r = _.filter(r, (a) => {
 										return a.type != 'video'
 									})
+
+									var apps = self.app.apps.get.forsearch()
+
+									r = apps.concat(r)
+
+									console.log('apps', apps)
 
 									return r
 								}
@@ -807,6 +813,7 @@ var menu = (function(){
 							},
 
 							active : function(a){
+								
 
 								window.rifticker.add(() => {
 									if (a){
@@ -1231,6 +1238,7 @@ var menu = (function(){
 
 
 		var closesearch = function(){
+			
 			if (el.c) el.c.removeClass('searchactive')
 
 			if (menusearch){

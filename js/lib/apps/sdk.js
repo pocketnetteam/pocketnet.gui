@@ -201,10 +201,25 @@ var BastyonSdk = function(){
 
     //////////////////
 
-    self.rpc = function(method, parameters = []){
+    self.rpc = function(method, parameters = [], options){
+
+        /*
+        options = {
+            rpc : {
+                fnode : '65.21.252.135:38081'
+            }
+        } 
+
+        options = {
+            fnode : '65.21.252.135:38081'
+        }
+        
+        */
+
         return action('rpc', {
             method,
-            parameters
+            parameters,
+            options
         })
     }
 
