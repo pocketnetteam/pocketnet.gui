@@ -353,6 +353,16 @@
   padding: 0 0.5em;
   overflow: hidden;
 }
+#post .recomandationsFromContent .streambgwrapper #transactionview {
+  height: auto;
+}
+#post .recomandationsFromContent .streambgwrapper .inputWrapper button {
+  background: transparent;
+  border: 0;
+}
+#post .recomandationsFromContent .streambgwrapper .inputWrapper .emojipicker {
+  width: 35px;
+}
 #post .recomandationsFromContent .streambgwrapper .toggle-chat {
   background: rgba(0, 0, 0, 0.04);
   display: none;
