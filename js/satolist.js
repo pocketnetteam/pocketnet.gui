@@ -10725,6 +10725,8 @@ Platform = function (app, listofnodes) {
 
             getone: function (address, clbk, light, reload) {
 
+                console.log('address', address, 'light', light)
+
                 self.sdk.users.get([address], function(data = {}, error){
                     if(!data) data = {}
 
@@ -25236,9 +25238,8 @@ Platform = function (app, listofnodes) {
 					let res = new Promise((resolve, reject) => {
 						address = hexDecode(address.split(':')[0].replace('@',''))
 						this.sdk.users.getone(address, () => {
-
 							resolve(self.psdk.userInfo.getShortForm(address))
-						})
+						}, true)
 					})
 
 					return res

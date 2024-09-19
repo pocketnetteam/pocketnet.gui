@@ -956,9 +956,9 @@ getcommonlinkProtocol = function(){
 
 formatInternalLinkReverse = function(value = ''){
 
-    value = value.toLowerCase()
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
@@ -982,10 +982,9 @@ formatInternalLinkReverse = function(value = ''){
 
 formatInternalLink = function(value = ''){
 
-    value = value.toLowerCase()
-
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
@@ -1004,10 +1003,10 @@ formatInternalLinkHref = function(value = ''){
 
     if(((typeof _Electron != 'undefined' && _Electron) || window.cordova)) return value
 
-    value = value.toLowerCase()
-
 	try {
 		if(thislink(value)){
+
+            value = value.toLowerCase()
 
             var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
