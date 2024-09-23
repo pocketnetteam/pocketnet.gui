@@ -16,7 +16,7 @@
 	},{
         "id" : "barteron.pocketnet.app",
         "version": "1.0.0",
-        "scope" : "test.barter.pocketnet.app",
+        "scope" : "barteron.club",
         "cantdelete" : true,
         "develop" : true,
         "install" : true,
