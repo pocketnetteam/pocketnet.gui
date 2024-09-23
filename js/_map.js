@@ -769,6 +769,12 @@ __map =  {
 			add : insertingfunc
 		},
 
+		fastsend : {
+			uri : "fastsend",
+			href : "fastsend",
+			add : insertingfunc
+		},
+
 		mobilesearch : {
 			uri : "mobilesearch",
 			href : "mobilesearch",
