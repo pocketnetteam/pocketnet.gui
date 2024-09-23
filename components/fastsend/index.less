@@ -1,0 +1,37 @@
+@import "../../css/__cssvar";
+
+#fastsend{
+
+    .caption{
+        margin-top: 2 * @rhythm;
+        margin-bottom: 4 * @rhythm;
+
+        span{
+            font-size: 2em;
+            font-weight: 700;
+        }
+    }
+
+    textarea{
+        height: 160px;
+        resize: none;
+        &:placeholder-shown{
+            color : rgb(var(--neutral-grad-3));
+        }
+    }
+
+    input{
+        &:placeholder-shown{
+            color : rgb(var(--neutral-grad-3));
+        }
+    }
+
+    .buttonswrapper,
+    .infowrapper{
+        margin-top: 4 * @rhythm;
+    }
+
+    button{
+        min-width: 180px;
+    }
+}
