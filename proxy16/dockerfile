@@ -1,4 +1,4 @@
-FROM node:16-slim
+FROM node:18-slim
 
 EXPOSE 8899 8099
 RUN apt-get update && apt-get install -y curl g++ make python3 pkg-config libpixman-1-dev libcairo2-dev libpango1.0-dev libgif-dev
