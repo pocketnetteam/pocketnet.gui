@@ -956,14 +956,14 @@ getcommonlinkProtocol = function(){
 
 formatInternalLinkReverse = function(value = ''){
 
-    value = value.toLowerCase()
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-        var cleared = value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
+        var cleared = value.replace('http://', '').replace('https://', '').replace('www.', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
 
         if(cleared == url || cleared == '') {
 
@@ -982,10 +982,9 @@ formatInternalLinkReverse = function(value = ''){
 
 formatInternalLink = function(value = ''){
 
-    value = value.toLowerCase()
-
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
@@ -1004,10 +1003,10 @@ formatInternalLinkHref = function(value = ''){
 
     if(((typeof _Electron != 'undefined' && _Electron) || window.cordova)) return value
 
-    value = value.toLowerCase()
-
 	try {
 		if(thislink(value)){
+
+            value = value.toLowerCase()
 
             var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
@@ -1025,7 +1024,7 @@ formatInternalLinkHref = function(value = ''){
             //url.protocol = window.location.protocol
             //url.host = window.location.host
 
-            return value.replace(url.protocol + "//" + url.host + '/', getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
+            return value.replace(url.protocol + "//" + url.host + window.pocketnetpublicpath, getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
 			
 			
 		}
@@ -1043,9 +1042,17 @@ thislink = function (_url = '') {
 
     _url = _url.toLowerCase()
 
-    var host = window.location.host || ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
+    var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-    if(_url.indexOf(getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath) == 0) return true
+    if (_url.indexOf("/embedvideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
+        return false;
+    }
+
+
+    if(_url.indexOf(getcommonlinkProtocol() + '//' + window.location.host + window.pocketnetpublicpath) == 0) return true
+    if(_url.indexOf(getcommonlinkProtocol() + '//' + host) == 0) return true
+
+    if(_url.indexOf(getcommonlinkProtocol() + '//www.' + host) == 0) return true
     
     var url = {}
 
@@ -1060,9 +1067,6 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
-    if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
-        return false;
-    }
 
     if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
 

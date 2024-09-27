@@ -1017,6 +1017,22 @@ _l.selectnode = function(a) {
 _l.shareBareLink = "Поделиться Видео";
 _l.videoCopied = "Ссылка на видео успешно скопирована";
 
+_l.removeVideoDialog = "Вы уверены, что хотите удалить это видео?"
+
+_l.pterror_meta = "Неопределенный запрос"
+_l.pterror_host = "Видеосервер не найден"
+_l.pterror_link = "Неизвестная ссылка"
+_l.pterror_removeerror = "Невозможно удалить медиа. Попробуйте еще раз."
+_l.pterror_updateempty = "Изменений для обновления не найдено"
+_l.pterror_uploaderror = "Видео не было загружено"
+_l.pterror_dailyquotalimit = "Вы достигли лимита на загрузку видео"
+_l.pterror_videoQuotaUsedDaily = "Не удалось получить информацию о канале (квота)"
+_l.pterror_usersMe = "Не удалось получить информацию о канале"
+_l.pterror_oauthClientsLocal = "Не удалось получить информацию oAuth с сервера"
+_l.pterror_pocketnetAuth = "Авторизация не удалась"
+_l.pterror_getToken = "Невозможно получить токен"
+_l.pterror_videonotselected = "Видео не выбрано"
+
 _l.period = "Период";
 _l.periodday = "Один день";
 _l.period3day = "Три дня";
@@ -1170,6 +1186,7 @@ _l.editVideoDescription = "Изменить название/описание в
 _l.errorChangingDescription = "Ошибка изменения видео";
 _l.downloadVideo = "Скачать видео в сохранённые";
 _l.deleteSavedVideo = "Удалить видео из сохранённых";
+_l.downloadingVideo = "Сохранение видео";
 _l.selectQuality = "Выберите качество загружаемого видео";
 _l.downloadedVideos = "Сохранённые видео";
 _l.deleteAllDownloadedVideos = "Удалить все видео из сохранённых";
@@ -2711,3 +2728,15 @@ _l.foreground_service_mediaPlayback_title = appname
 _l.foreground_service_mediaPlayback_text = "В "+appname+" воспроизводится видео"
 _l.foreground_service_mediaUploading_title = appname
 _l.foreground_service_mediaUploading_text = "В "+appname+" происходит загрузка видео"
+
+
+_l.stateactionDefault = "Чтобы совершить действие вы должны зарегистрироваться или войти в свой аккаунт."
+
+_l.incomingVideoCall = "Входящий видео звонок"
+_l.incomingAudioCall = "Входящий аудио звонок"
+
+_l.connecting = "Устанавливается соединение"
+
+_l.quotanow = function(v){
+	return "Вы можете загрузить видео размером не больше чем"
+}
