@@ -2324,6 +2324,8 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
+
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2935,3 +2937,11 @@ _l.connecting = "Connecting"
 _l.quotanow = function(v){
 	return "You can upload a video no larger than"
 }
+
+
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"

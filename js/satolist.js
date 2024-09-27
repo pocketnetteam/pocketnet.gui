@@ -3902,6 +3902,13 @@ Platform = function (app, listofnodes) {
             if (info.dev) return 'dev'
             if (info.real) return 'real'
 
+            var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+
+            if (ustate){
+                if(ustate.badges && ustate.badges.indexOf('shark') > -1) return 'shark'
+                if(ustate.badges && ustate.badges.indexOf('moderator') > -1) return 'moderator'
+            }
+
             return ''
 
         },
@@ -3911,9 +3918,29 @@ Platform = function (app, listofnodes) {
 
             if (t == 'dev') return this.markDev();
             if (t == 'real') return this.markReal();
+            if (t == 'shark') return this.markShark();
+            if (t == 'real') return this.markModerator();
 
             return ''
 
+        },
+        markShark : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
 
         markReal : function(){
@@ -6215,6 +6242,24 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        jury: {
+
+            // Fetch all the jurys
+            getalljury: function() {
+                return self.app.api.rpc('getalljury');
+            },
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function(address) {
+                return self.app.api.rpc('getjuryassigned', [address]);
+            },
+
+            getjurymoderators: function(juryId) {
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+            },
+
+        },
+
         external : {
             expandLink : function(json = {}){
 
