@@ -1,0 +1,115 @@
+<div id="<%-module.map.id%>">
+	<div class="work adj <%-minimal%>">
+		<div class="top red">
+			<%-e('monet_title')%>
+		</div>
+		<div class="content-monet">
+
+			<div class="buy-pkoin">
+
+
+				<!-- <div class="video">
+					<h2><%-e('monet_subtitle')%></h2>
+					<% if(app.localization.key === 'ru') {%>
+						<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&autoplay=true&s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&host=peertube23.pocketnet.app&id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<% } %>
+					<% if(app.localization.key === 'en') {%>
+						<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&autoplay=true&s=2cdab966cf0cce28b52597a42d9f4290489b120a2ec64a09e6a6650ffb090f66&host=peertube23.pocketnet.app&id=cf7b0d22-6d10-46bc-bb9b-de6d51482153" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<% } %>					
+					</iframe>
+				</div> -->
+				<div>
+					<p class="yellow">
+						<%-e('monet_howworks_title')%>					
+					</p>
+					<p class="text">
+						<%-e('monet_howworks_text_1')%>					
+					</p>
+				</div>
+				<div>
+					<p class="yellow">
+						<%-e('monet_participation_title')%>					
+					</p>
+					<p class="text">
+						<%-e('monet_participation_text_1')%>					
+					</p>
+					<p class="text">
+						<%=e('monet_participation_text_2')%>					
+					</p>
+					<p class="text">
+						<%-e('monet_participation_text_3')%>					
+					</p>
+				</div>
+				<div>
+					<p class="yellow">
+						<%-e('monet_monet_withdrawal_title')%>					
+					</p>
+					<p class="text">
+						<%=e('monet_monet_withdrawal_text_1')%>		
+
+					</p>
+				</div>
+				<div>
+					<p class="yellow">
+						<%-e('monet_calculation_title')%>					
+					</p>
+					<p class="text">
+						<%-e('monet_calculation_text1')%>					
+					</p>
+				</div>
+				<p class="yellow">
+					<%-e('monet_increaseearnings_title')%>		
+				</p>
+				<div class="columns">
+
+					<div class="column">
+						<ul>
+							<li>
+								<%-e('monet_increaseearnings_text1')%>					
+							</li>
+							<li>
+								<%-e('monet_increaseearnings_text2')%>					
+							</li>
+							<li>
+								<%-e('monet_increaseearnings_text3')%>					
+							</li>
+						</ul>
+					</div>
+				</div>
+
+	
+				<div class="buy-pkoin">
+						<h2 class="yellow"><%-e('monet_footer_1')%></h2>
+
+					<% if(app.localization.key === 'ru') {%>
+						<img class="img" src="./img/monetization_scheme_ru.png"/>
+					<% } else { %>
+						<img class="img" src="./img/monetization_scheme_en.jpg"/>
+					<% } %>
+
+					<% if(!state) { %>						
+
+						<a href="registration" class="item signup registration" events="signup">
+			
+							<div class="label">
+								<b><%=e('monet_signup')%></b>
+							</div>
+			
+						</a>
+				
+					<% } %>
+					
+					<p class="text">
+						<%=e('monet_footer_2')%>
+					</p>
+				
+				</div>
+
+			</div>
+
+			
+		</div>
+	
+
+	</div>
+</div>
