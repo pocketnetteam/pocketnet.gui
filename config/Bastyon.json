@@ -24,6 +24,16 @@
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "store" : {}
+    },{
+        "id" : "demo.pocketnet.app",
+        "version": "0.0.1",
+        "scope" : "localhost:8081",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Demo application",
+        "includeinsearch" : true,
+        "store" : {}
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
