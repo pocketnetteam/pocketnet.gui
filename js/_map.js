@@ -400,6 +400,13 @@ __map =  {
 
 	},
 
+	monetization : {
+		uri : "monetization",
+		href : "monetization",
+		add : insertingfunc,
+		anonimus : true
+	},
+
 	boost : {
 		uri : "boost",
 		href : "boost",
