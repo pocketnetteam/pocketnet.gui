@@ -11617,56 +11617,60 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.storage.addressesobj = [];
                 }
 
-                const anum = 10
+                var anum = 10
+                var added = 0
                 
                 try{
                     anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
                 }catch(e){
-                    
                 }
                 
-                
+                var walletsItem = self.sdk.address.pnet().address + 'wallets2';
 
-                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+                var addressesList = [];
 
                 /**
                  * Here we take cached wallet ID's
                  * or generating them dynamically if
                  * not cached.
                  */
+
                 if (walletsItem in localStorage) {
-                    // console.time('LOADING CACHED WALLETS');
 
                     try{
-                        const wallets = JSON.parse(localStorage[walletsItem]);
+                        var wallets = JSON.parse(localStorage[walletsItem]);
 
                         wallets.forEach((walletAddress, walletNum) => {
+
+                            if(walletNum > anum - 1) return
+
                             self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+
+                            addressesList.push(walletAddress);
+
+                            added++
                         });
+
                     }catch(e){
                         
                     }
 
                     
-                    // console.timeEnd('LOADING CACHED WALLETS');
-                } else {
-                    // console.time('GENERATING WALLETS');
-                    const addressesList = [];
+                } 
+                
+                
 
-                    for (let i = 0; i < anum; i++) {
-                        const address = self.sdk.addresses.addWalletAddress(i);
+                for (let i = added; i < anum; i++) {
+                    var address = self.sdk.addresses.addWalletAddress(i);
 
-                        addressesList.push(address);
-                    }
+                    addressesList.push(address);
 
-                    try{
-                        localStorage[walletsItem] = JSON.stringify(addressesList);
-                    }catch(e){
-                        
-                    }
+                }
 
+                try{
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                }catch(e){
                     
-                    // console.timeEnd('GENERATING WALLETS');
                 }
 
                 self.sdk.addresses.save();

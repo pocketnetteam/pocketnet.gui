@@ -2162,30 +2162,34 @@ var share = (function(){
 						if(!el.c) return
 
 						if(!isMobile()){
-							var elimages = el.images.find('.imagesEmbWr')
+							
+							setTimeout(() => {
+								var elimages = el.images.find('.imagesEmbWr')
 
 
-						  	elimages.isotope({
-
-								layoutMode: 'packery',
-								itemSelector: '.imageContainer',
-								packery: {
-									gutter: 20
-								},
-								initLayout: false
-							});
-
-
-							elimages.on('arrangeComplete', function(){
-
-								if (clbk)
-									clbk();
-			
-								el.images.addClass('active')
-
-							});
-
-							elimages.isotope()
+								elimages.isotope({
+  
+								  layoutMode: 'packery',
+								  itemSelector: '.imageContainer',
+								  packery: {
+									  gutter: 20
+								  },
+								  initLayout: false
+							  });
+  
+  
+							  elimages.on('arrangeComplete', function(){
+  
+								  if (clbk)
+									  clbk();
+			  
+								  el.images.addClass('active')
+  
+							  });
+  
+							  elimages.isotope()
+							}, 10)
+							
 						}
 						else
 						{

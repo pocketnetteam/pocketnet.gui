@@ -2390,26 +2390,10 @@ const SendStatus = {
 
           //return Promise.reject('ny3')
 
-          const version = Date.now();
-          id = this.core.mtrx.kit.tetatetid(info[0], this.core.user.userinfo, version);
+          id = this.core.mtrx.kit.tetatetid(info[0], this.core.user.userinfo);
           matrixId = this.core.user.matrixId(info[0].id);
           myMatrixId = this.core.user.matrixId(this.core.user.userinfo.id);
           var initialstate = [{
-            type: "m.room.power_levels",
-            state_key: "",
-            content: {
-              users: {
-                [myMatrixId]: 100
-              },
-              users_default: 100,
-              events_default: 100,
-              state_default: 100,
-              ban: 100,
-              kick: 100,
-              redact: 100,
-              invite: 100
-            }
-          }, {
             type: "m.set.encrypted",
             state_key: "",
             content: {
@@ -2423,14 +2407,14 @@ const SendStatus = {
             name: "#" + id,
             initial_state: initialstate
           });
-        }).then(r => {
+        }).then(_chat => {
+          chat = _chat;
           this.$store.state.globalpreloader = false;
+          let m_chat = this.core.mtrx.client.getRoom(_chat.room_id);
+          let event = m_chat.currentState.getStateEvents("m.room.power_levels");
+          return this.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).catch(e => {});
+        }).then(r => {
           this.creating = false;
-          this.$router.push({
-            query: {
-              id
-            }
-          });
           if (this.connect && this.connect == id) {
             this.greetings();
           }
