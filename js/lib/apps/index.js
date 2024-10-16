@@ -1739,6 +1739,8 @@ var BastyonApps = function(app){
 
             if (pps.p) pps.p = hexDecode(pps.p)
 
+            console.log('application pps', href, pps)
+
             return {
                 id : pps.id,
                 path : pps.p || '',

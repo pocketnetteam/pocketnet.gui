@@ -1782,6 +1782,8 @@ Platform = function (app, listofnodes) {
 
         url = url.replace("http:", "https:").replace("http//", "https://")
 
+        console.log('application parse', url)
+
         var meta = parseVideo(url);
 
         var _url = null;
@@ -11954,7 +11956,12 @@ Platform = function (app, listofnodes) {
             failed: {},
             loading : {},
 
+         
             getnew : function(url, action){
+
+                console.log('application url', url)
+
+
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
@@ -11963,11 +11970,11 @@ Platform = function (app, listofnodes) {
                 if (f[url]) return Promise.resolve(null)
                 if (s[url]) return Promise.resolve(s[url])
 
+
                 var appinfo = self.app.apps.isApplicationLink(url)
 
                 var apppromise = (() => {return Promise.resolve(null)})()
 
-                console.log('appinfo', appinfo)
 
 
                 if (appinfo){
