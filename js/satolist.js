@@ -11963,14 +11963,41 @@ Platform = function (app, listofnodes) {
                 if (f[url]) return Promise.resolve(null)
                 if (s[url]) return Promise.resolve(s[url])
 
-                l[url] = self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+                var appinfo = self.app.apps.isApplicationLink(url)
+
+                var apppromise = (() => {return Promise.resolve(null)})()
+
+                console.log('appinfo', appinfo)
+
+
+                if (appinfo){
+                    apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
+
+                        console.log('application')
+
+                        if(!r) return Promise.resolve(null)
+
+                        return Promise.resolve({og : {...r.meta, application : r.application, url : appinfo.url}})
+        
+                    })
+                }
+                
+
+                l[url] = apppromise.then((d) => {
+
+                    if(d) return Promise.resolve(d)
+
+                    return self.app.api.fetch(action || 'urlPreview', {url})
+                }).then(d => {
 
                     var og = deep(d, 'og');
+
+                    console.log("application OG", og)
 
                     if(!og) return Promise.reject()
 
                     _.each(og, (o, i) => {
-                        og[i] = superXSS(o)
+                        og[i] = i == 'application' ? o : superXSS(o)
                     })
 
 

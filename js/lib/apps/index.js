@@ -1694,6 +1694,7 @@ var BastyonApps = function(app){
                     return {}
                 }).then(meta => {
                     result.meta = meta
+                    result.meta.path = path
 
                     return Promise.resolve()
                 })
@@ -1740,7 +1741,8 @@ var BastyonApps = function(app){
 
             return {
                 id : pps.id,
-                path : pps.p || ''
+                path : pps.p || '',
+                url : 'application?id=' + pps.id + "&p=" + hexEncode(pps.p)
             }
         }
 

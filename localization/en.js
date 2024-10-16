@@ -2935,3 +2935,5 @@ _l.connecting = "Connecting"
 _l.quotanow = function(v){
 	return "You can upload a video no larger than"
 }
+
+_l.openin = "Open"
