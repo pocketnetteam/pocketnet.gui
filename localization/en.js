@@ -2936,6 +2936,9 @@ _l.quotanow = function(v){
 	return "You can upload a video no larger than"
 }
 
+
+_l.openin = "Open"
+
 _l.monet_title = "A new advertising and monetization program for bloggers has been launched on Bastyon starting from September 9th." 
 _l.monet_subtitle = "What does this program entail, how does it work, who can participate, how are earnings calculated, and why is it needed?"  
 _l.monet_howworks_title = "How it works:"; 
@@ -2955,3 +2958,4 @@ _l.monet_increaseearnings_text3 = "Video length does not matter on Bastyon as ad
 _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PKOIN)"; 
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
+
