@@ -99,11 +99,11 @@ var importManifest = function(application){
         if (application.develop) {
             manifest.scope = application.path
         }
-        else
-            manifest.scope = 'https://' + manifest.scope
+        else {
+            manifest.scope = 'https://' + manifest.scope 
+        }
 
-        return Promise.resolve(manifest)
-        
+        return Promise.resolve(manifest)        
     }).catch((e) => {
         console.error(e)
 
@@ -933,7 +933,6 @@ var BastyonApps = function(app){
             return html
         })
     }
-
     var resources = function(application, cached = {}){
         
         if (allresources[application.id]) return Promise.resolve(allresources[application.id])
@@ -984,12 +983,11 @@ var BastyonApps = function(app){
         }).finally(() => {
             delete getresources[application.id]
         })
-
+        
         return getresources[application.id]
     }
 
     var install = function(application, cached = {}){
-
         if (installed[application.id]) return Promise.resolve(installed[application.id])
         if (installing[application.id]) return installing[application.id].promise
 
@@ -1029,7 +1027,7 @@ var BastyonApps = function(app){
             trigger('installed', {
                 application
             })
-
+            
             return installed[application.id]
 
         }).finally(() => {
@@ -1113,11 +1111,9 @@ var BastyonApps = function(app){
     }
 
     var listener = function(event){
-
         var application = _.find(installed, (application) => {
             return application.manifest.scope.indexOf(event.origin) == 0
         })
-
         if(!application) return
 
         windows[application.manifest.id] = event.source
@@ -1435,6 +1431,82 @@ var BastyonApps = function(app){
         )
     }
 
+    var loadAllAppsFromLocalhost = function() {
+        let apps = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('app_')) {
+                const appData = JSON.parse(localStorage.getItem(key));
+                apps.push(appData);
+            }
+        }
+        return apps;
+    };
+
+
+    self.addAppToConfig = function(app) {
+        const existingApp = loadAppFromLocalhost(app.id);
+        if (existingApp) {
+            return Promise.reject(new Error('conflict:id_already_exists'));
+        }
+
+        if (!app.id || !app.name || !app.version || !app.scope) {
+            return Promise.reject(new Error('missing:required_fields'));
+        }
+        try {
+            
+            app.develop = true;
+            app.install = true;
+            
+            saveAppToLocalhost(app);
+            
+            return install(app)
+        } catch (e) {
+            removeAppFromLocalhost(app.id);
+            return Promise.reject(e)
+        }
+    };
+
+    self.removeAppFromConfig = function(appId) {
+        const existingApp = loadAppFromLocalhost(appId);
+        if (!existingApp) {
+            return Promise.reject(new Error('not_found:app_id'))
+        }
+        removeAppFromLocalhost(appId);
+        return remove(appId)
+    };
+
+    var saveAppToLocalhost = function(app) {
+        try {
+            const key = `app_${app.id}`;
+            localStorage.setItem(key, JSON.stringify(app));
+        } catch (e) {
+            console.error('storage:save_error', e);
+        }
+    };
+
+    var loadAppFromLocalhost = function(appId) {
+        try {
+            const key = `app_${appId}`;
+            const appData = localStorage.getItem(key);
+            return appData ? JSON.parse(appData) : null;
+        } catch (e) {
+            console.error('storage:load_error', e);
+            return null;
+        }
+    };
+
+    var removeAppFromLocalhost = function(appId) {
+        try {
+            const key = `app_${appId}`;
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.error('storage:remove_error', e);
+        }
+    };
+
+
+
     var setlocaldata = function(data){
         var newlocaldata = {}
 
@@ -1450,7 +1522,7 @@ var BastyonApps = function(app){
         _.each(localdata, (info, id) => {
             if(!newlocaldata[id]) removing.push(id)
         })
-
+ 
         _.each(newlocaldata, (info, id) => {
             if(!localdata[id]) adding.push(info)
         })
@@ -1465,10 +1537,6 @@ var BastyonApps = function(app){
 
             return
 
-            /// getapplication by info.id
-            install(/* getapplication by info.id, */ info.cached).catch(e => {
-
-            })
         }))
 
         
@@ -1492,10 +1560,13 @@ var BastyonApps = function(app){
     self.init = function(){
 
         var promises = []
+        const developApps = app.developapps || [];
+        const localApps = loadAllAppsFromLocalhost() || [];
+        const allApps = [...developApps, ...localApps];
 
-        if (app.developapps){
+        if (allApps.length > 0) {
 
-            promises.push(Promise.all(_.map(app.developapps, (application) => {
+            promises.push(Promise.all(_.map(allApps, (application) => {
 
                 if(!application.store) application.store = {}
 
@@ -1839,6 +1910,3 @@ var BastyonApps = function(app){
 
     return self
 }
-
-if(typeof module != "undefined"){ module.exports = {BastyonApps}; } 
-else { window.BastyonApps = BastyonApps; }
