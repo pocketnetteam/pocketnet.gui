@@ -751,10 +751,15 @@ var share = (function(){
 
 
 				if(!currentShare.url.v){
-					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
+					var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+					var tpl = '(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|('+protocol+':/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?'
 					
+					var r = new RegExp(tpl, 'gi')
 
 					var matches = text.match(r);
+
+					console.log('application matches', matches, tpl)
 
 
 					if(matches && matches.length > 0){
@@ -1950,6 +1955,8 @@ var share = (function(){
 				
 				var url = currentShare.url.v;
 
+				console.log('application url ori', url, currentShare)
+
 				var meta = self.app.platform.parseUrl(url);
 
 				var og = self.app.platform.sdk.remote.storage[url];
@@ -1968,6 +1975,8 @@ var share = (function(){
 
 				}, function(p){
 
+
+					console.log('application meta', meta)
 					
 
 					if(currentShare.url.v && !og){
@@ -2162,30 +2171,34 @@ var share = (function(){
 						if(!el.c) return
 
 						if(!isMobile()){
-							var elimages = el.images.find('.imagesEmbWr')
+							
+							setTimeout(() => {
+								var elimages = el.images.find('.imagesEmbWr')
 
 
-						  	elimages.isotope({
-
-								layoutMode: 'packery',
-								itemSelector: '.imageContainer',
-								packery: {
-									gutter: 20
-								},
-								initLayout: false
-							});
-
-
-							elimages.on('arrangeComplete', function(){
-
-								if (clbk)
-									clbk();
-			
-								el.images.addClass('active')
-
-							});
-
-							elimages.isotope()
+								elimages.isotope({
+  
+								  layoutMode: 'packery',
+								  itemSelector: '.imageContainer',
+								  packery: {
+									  gutter: 20
+								  },
+								  initLayout: false
+							  });
+  
+  
+							  elimages.on('arrangeComplete', function(){
+  
+								  if (clbk)
+									  clbk();
+			  
+								  el.images.addClass('active')
+  
+							  });
+  
+							  elimages.isotope()
+							}, 10)
+							
 						}
 						else
 						{
