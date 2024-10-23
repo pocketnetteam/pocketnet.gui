@@ -319,6 +319,17 @@ function rpc(request, callback, obj) {
             } 
 
         }
+
+        
+
+        if (res.status === 408) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: sql request timeout',
+                code : 408
+            } 
+
+        }
         
 
         const data = res?.data;
