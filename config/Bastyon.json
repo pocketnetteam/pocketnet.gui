@@ -23,6 +23,7 @@
         "name" : "Barteron",
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
+        "includeminiapps" : true,
         "store" : {}
     }],
     "protocol" : "bastyon",

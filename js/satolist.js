@@ -4313,7 +4313,7 @@ Platform = function (app, listofnodes) {
                     if (sender === receiver){
                         sitemessage(self.app.localization.e('donateself'));
 
-                        reject()
+                        reject('donateself')
                     }
 
                     else{
@@ -4346,7 +4346,7 @@ Platform = function (app, listofnodes) {
 
                                     p.value = value;
                                     p.send = _p.send
-                                    
+                                    p.txid = txid
 
                                     resolve(p)
                                 }
