@@ -185,6 +185,7 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '65.21.252.135',
 		stable : true,
+		alwaysrun : true
 	},
 	{
 		host : '178.217.159.221',
