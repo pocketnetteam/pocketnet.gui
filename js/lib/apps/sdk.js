@@ -270,6 +270,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.open = {
+        post : function(txid){
+            return action('open.post', {txid})
+        },
+        donate : function(receiver){
+            return action('open.donate', {receiver})
+        },
+    }
+
     self.permissions = {
         check : function({permission}){
             return action('checkPermission', {permission})
