@@ -1,0 +1,12 @@
+#miniapps {
+  width: 100%;
+}
+#miniapps .miniapp {
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+  width: 100%;
+  background: rgb(var(--background-secondary-theme));
+}
+#miniapps .miniapp .appimage {
+  aspect-ratio: 1;
+}
