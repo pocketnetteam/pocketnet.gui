@@ -753,13 +753,15 @@ var share = (function(){
 				if(!currentShare.url.v){
 					var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
-					var tpl = '(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|('+protocol+':/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?'
+					//var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
+					var r = /(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|(bastyon:\/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi
+
 					
-					var r = new RegExp(tpl, 'gi')
+					//var r = new RegExp(rtpl, 'gi')
 
 					var matches = text.match(r);
 
-					console.log('application matches', matches, tpl)
+					//console.log('application matches', matches, tpl)
 
 
 					if(matches && matches.length > 0){

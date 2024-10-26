@@ -11994,7 +11994,7 @@ Platform = function (app, listofnodes) {
 
                 var apppromise = (() => {return Promise.resolve(null)})()
 
-
+    console.log('appinfo', appinfo)
 
                 if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {

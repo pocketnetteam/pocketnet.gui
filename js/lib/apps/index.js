@@ -1790,11 +1790,14 @@ var BastyonApps = function(app){
         if(thislink(href)){
             var th = app.nav.thisSiteLink(href)
 
-            if (th.indexOf('application?') != 0) return null
+            if (th.indexOf('application?') == -1) return null
 
             var pps = parameters(th, true)
 
             if(!pps.id) return null
+
+            console.log('application pps', href, pps)
+
 
             if (pps.p) pps.p = hexDecode(pps.p)
 
@@ -1803,7 +1806,7 @@ var BastyonApps = function(app){
             return {
                 id : pps.id,
                 path : pps.p || '',
-                url : 'application?id=' + pps.id + "&p=" + hexEncode(pps.p)
+                url : 'application?id=' + pps.id + (pps.p ? ("&p=" + hexEncode(pps.p)) : '')
             }
         }
 
