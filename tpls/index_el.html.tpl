@@ -106,7 +106,7 @@
             <div id="footerWrapper">
                 
             </div>
-            <div id="miniapps"></div>
+            <div id="miniappscnt"></div>
 
             <div class="topPreloader" id="_topPreloader">
             </div>
