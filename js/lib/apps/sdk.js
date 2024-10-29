@@ -450,5 +450,4 @@ var BastyonSdk = function(){
 
 
 
-if(typeof module != "undefined"){ module.exports = {BastyonSdk}; } 
-else { window.BastyonSdk = BastyonSdk; }
+window.BastyonSdk = BastyonSdk; 
