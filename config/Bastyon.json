@@ -21,10 +21,10 @@
         "cantdelete" : true,
         "develop" : true,
         "install" : true,
-        "name" : "Barteron",
-        "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
+        "name" : "Barteron",
+        "grantedPermissions" : ["account", "chat"],
         "store" : {},
         "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
     }],
