@@ -8,7 +8,10 @@ var devapplication = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed;
+		var el, ed, application;
+
+		var publishedStatus = null // published|development
+		var authorStatus = null // my, not my
 
 		var actions = {
 
@@ -67,9 +70,11 @@ var devapplication = (function(){
 				var applicationId = parameters().id || null
 				var address = self.app.user.address.value // current user
 
-				///get from blockchain
-				///get from ls
-				// if none create application 
+				// statuses - published|development, by author
+
+				// get from blockchain by applicationId (published) - skip now - 
+				// if none get from ls (development) 
+				// if none create application (application = new Application({id : applicationId}))
 				// if exist check author address
 
 				var data = {
