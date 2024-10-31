@@ -12,7 +12,8 @@
 		"name" : "Swipelux",
         "develop" : true,
         "install" : true,
-        "store" : {"g" : true}
+        "store" : {"g" : true},
+        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
 	},{
         "id" : "barteron.pocketnet.app",
         "version": "1.0.0",
@@ -24,7 +25,8 @@
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
-        "store" : {}
+        "store" : {},
+        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
