@@ -19,7 +19,24 @@ var devapplication = (function(){
 		}
 
 		var renders = {
+			example : function(){
+				self.shell({
+					name :  'example',
+					el : el.c.find('.cntexample'),
+					data : {
+						x : 1
+					},
 
+				}, function(p){
+					
+					p.el.find('.ex').on('click', function(){
+						alert(1)
+					})
+
+
+
+				})
+			}
 		}
 
 		var state = {
@@ -34,6 +51,10 @@ var devapplication = (function(){
 		var initEvents = function(){
 			
 
+		}
+
+		var make = function(){
+			renders.example()
 		}
 
 		return {
@@ -72,6 +93,7 @@ var devapplication = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents();
+				make();
 
 				p.clbk(null, p);
 			}
