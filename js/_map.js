@@ -782,6 +782,18 @@ __map =  {
 			add : insertingfunc
 		},
 
+		devapplication : {
+			uri : "devapplication",
+			href : "devapplication",
+			add : insertingfunc
+		},
+
+		devapplications : {
+			uri : "devapplications",
+			href : "devapplications",
+			add : insertingfunc
+		},
+
 		mobilesearch : {
 			uri : "mobilesearch",
 			href : "mobilesearch",
@@ -799,9 +811,7 @@ __map =  {
 			uri : "donate",
 			href : "donate",
 			add : insertingfunc,
-
 			ignoreMinimize : true
-
 		},
 
 		donateAnimations : {

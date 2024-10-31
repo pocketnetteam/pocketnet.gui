@@ -1,4 +1,4 @@
-var miniapps = (function(){
+var devapplication = (function(){
 
 	var self = new nModule();
 
@@ -19,21 +19,7 @@ var miniapps = (function(){
 		}
 
 		var renders = {
-			miniapps : function(clbk){
-				var apps = self.app.apps.get.forminiapps()
 
-				self.shell({
-					name :  'apps',
-					data : {
-						apps
-					},
-
-					el : el.c
-
-				}, function(_p){
-					if(clbk) clbk()
-				})
-			}
 		}
 
 		var state = {
@@ -47,9 +33,7 @@ var miniapps = (function(){
 
 		var initEvents = function(){
 			
-			self.app.apps.on('installed', renders.miniapps)
-			self.app.apps.on('removed', renders.miniapps)
-			self.app.apps.on('loaded', renders.miniapps)
+
 		}
 
 		return {
@@ -57,36 +41,27 @@ var miniapps = (function(){
 
 			getdata : function(clbk, p){
 
-
 				ed = p.settings.essenseData
+
+				var applicationId = parameters().id || null
+				var address = self.app.user.address.value // current user
+
+				///get from blockchain
+				///get from ls
+				// if none create application
+				// if exist check author address
 
 				var data = {
 					ed
 				};
 
-
-				pretry(() => {
-					return self.app.apps.inited
-				}, 100, 15000).then(() => {
-					var apps = self.app.apps.get.forminiapps()
-
-					data.apps = apps
-
-	
-					clbk(data);
-				})
-
-				
+				clbk(data);
 
 			},
 
 			destroy : function(){
 				ed = {}
 				el = {};
-
-				self.app.apps.off('installed', renders.miniapps)
-				self.app.apps.off('removed', renders.miniapps)
-				self.app.apps.off('loaded', renders.miniapps)
 			},
 			
 			init : function(p){
@@ -97,8 +72,6 @@ var miniapps = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents();
-
-				renders.miniapps()
 
 				p.clbk(null, p);
 			}
@@ -133,11 +106,11 @@ var miniapps = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = miniapps;
+	module.exports = devapplication;
 }
 else{
 
-	app.modules.miniapps = {};
-	app.modules.miniapps.module = miniapps;
+	app.modules.devapplication = {};
+	app.modules.devapplication.module = devapplication;
 
 }

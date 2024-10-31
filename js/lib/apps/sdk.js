@@ -274,8 +274,8 @@ var BastyonSdk = function(){
         post : function(txid){
             return action('open.post', {txid})
         },
-        donate : function(receiver){
-            return action('open.donate', {receiver})
+        donation : function(receiver){
+            return action('open.donation', {receiver})
         },
     }
 
