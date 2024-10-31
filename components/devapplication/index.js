@@ -70,7 +70,20 @@ var devapplication = (function(){
 				var applicationId = parameters().id || null
 				var address = self.app.user.address.value // current user
 
+				// self.app.apps.get
+
 				// statuses - published|development, by author
+
+				/// ERRORS - sitemessage(self.app.localization.e('errorreload'))
+
+				/*
+				
+				new dialog({
+					html : self.app.localization.e('acc' + error),
+					class : "one zindex"
+				})
+				
+				*/
 
 				// get from blockchain by applicationId (published) - skip now - 
 				// if none get from ls (development) 
