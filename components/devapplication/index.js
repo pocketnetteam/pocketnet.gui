@@ -48,7 +48,7 @@ var devapplication = (function(){
 
 				///get from blockchain
 				///get from ls
-				// if none create application
+				// if none create application 
 				// if exist check author address
 
 				var data = {
