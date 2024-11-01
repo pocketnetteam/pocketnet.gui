@@ -2940,9 +2940,9 @@ _l.quotanow = function(v){
 
 
 _l.jury = "Jury"
-_l.juryQuestionPost = "Can you confirm this post does not belong on Bastyon for the following reason"
-_l.juryQuestionComment = "Can you confirm this comment does not belong on Bastyon for the following reason"
-_l.juryQuestionUser = "Can you confirm this user is violating the rules of Bastyon for the following reason"
+_l.juryQuestionPost = "Can you confirm this post does not belong on "+appname+" for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on "+appname+" for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of "+appname+" for the following reason"
 _l.juryvote_success =  "Your vote has been successfully submitted"
 _l.juryconfirm = "Do you confirm your decision?"
 _l.openin = "Open"
@@ -2966,4 +2966,11 @@ _l.monet_increaseearnings_text3 = "Video length does not matter on Bastyon as ad
 _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PKOIN)"; 
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
+
+_l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionReason = "Reason"
+_l.juryYes = "Yes, it does"
+_l.juryNo = "No, it does not violate"
 

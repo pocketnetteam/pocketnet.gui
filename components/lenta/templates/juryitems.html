@@ -1,0 +1,36 @@
+<% _.each(shares, function(item){ %>
+
+       <div class="share share_common shareinlenta juryitem" id="<%-item.txid%>" juryid="<%-item.id %>">
+
+            <div class="juryinfo">
+                <div class="subcaption">
+                    <span>
+                    <% if(item.type == 'share') {%><%-e('juryCaptionPost')%><% } %>
+                    <% if(item.type == 'comment') {%><%-e('juryCaptionComment')%><% } %>
+                    <% if(item.type == 'channel') {%><%-e('juryCaptionUser')%><% } %>
+                    </span>
+                </div>
+
+                <div class="reasonCaption">
+                    <span><%-e('juryCaptionReason')%></span>
+                </div>
+
+                <div class="reason">
+                    <span><%-e('lowstar_reason_' + item.info.reason)%></span>
+                </div>
+            </div>
+            <div class="jurycnt">
+                <div class="shareSpacer">
+                </div>
+            </div>
+            <div class="juryActions">
+                <div class="buttonWrapper">
+                    <button class="button bad juryyes"><%-e('juryYes')%></button>
+                </div>
+                <div class="buttonWrapper">
+                    <button class="button good juryno"><%-e('juryNo')%></button>
+                </div>
+            </div>
+       </div>
+
+<% }) %>

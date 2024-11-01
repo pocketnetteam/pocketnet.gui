@@ -32,6 +32,10 @@ var toppanel = (function(){
 					links.saved = "index?r=saved"
 				}
 
+				if(app.platform.sdk.user.isjury()){
+					links.jury = "index?r=jury"
+				}
+
 				var vs = _.toArray(links)
 
 				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
@@ -47,6 +51,10 @@ var toppanel = (function(){
 
 				if (self.app.savesupported()) {
 					labels.push(self.app.localization.e('downloaded'));
+				}
+
+				if (self.app.platform.sdk.user.isjury()){
+					labels.push(self.app.localization.e('jury'));
 				}
 
 				var contents = new Parameter({

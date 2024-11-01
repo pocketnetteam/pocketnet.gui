@@ -924,7 +924,10 @@ button{
         border: 1px solid rgb(var(--color-good));
     }
 
-
+    &.bad{
+        background: rgb(var(--color-bad));
+        border: 1px solid rgb(var(--color-bad));
+    }
     &.contrast{
         background: rgb(var(--color-bg-ac-2));
         border: 1px solid rgb(var(--color-bg-ac-2));
@@ -6148,6 +6151,16 @@ html.allcontent_application{
         .fa-code{
             color : rgb(var(--text-on-bg-ac-color));
         }   
+    }
+
+    .shark, .moderator {
+        .fa-certificate{
+            color : rgb(var(--color-bg-ac-bright));
+        }
+        .fa-crown, .fa-flag{
+            color : rgb(var(--text-on-bg-ac-color));
+            box-shadow: none;
+        }
     }
 }
 

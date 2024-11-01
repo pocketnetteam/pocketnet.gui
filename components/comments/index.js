@@ -359,7 +359,7 @@ var comments = (function(){
 				}
 
 				//var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
-				var authors = [share.address]
+				var authors = share ? [share.address] : []
 
 				/*_.each(cmtsTo, (c) => {
 					authors.push(c.address)
@@ -1099,6 +1099,7 @@ var comments = (function(){
 			tocomment : function(id){
 				
 				if(ed.openapi) return
+				if(ed.jury) return
 
 				_scrollTo(el.c.find("#" + id), _in)
 			},
@@ -1371,7 +1372,7 @@ var comments = (function(){
 			scrollToComment : function(el) {
 
 				if (ed.openapi) return
-
+				if (ed.jury) return
 
 				if (el && el.length > 0 && isMobile()) {
 
@@ -2357,7 +2358,7 @@ var comments = (function(){
 
 			post : function(clbk, p){
 
-				if (ed.openapi || ed.cantsend) {
+				if (ed.jury || ed.openapi || ed.cantsend) {
 					if(clbk) clbk()
 
 					return

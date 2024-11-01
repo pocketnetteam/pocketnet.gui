@@ -976,7 +976,7 @@ ModFlag = function(){
 ModVote = function(){
 	var self = this;
 
-	self.s2 = {
+	self.s2 = { // id
 		set : function(_v){
 			this.v = _v
 		},
@@ -988,7 +988,7 @@ ModVote = function(){
 			this.v = _v
 		},
 		v : ''
-	};
+	}; //verdict
 
 
 
@@ -1008,9 +1008,19 @@ ModVote = function(){
 	}
 
 	self.export = function(){
-		return {
-			s2 : self.s2.v,
-			i1 : self.i1.v
+
+		if(!alias){
+			return {
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+		else{
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
 		}
 	}
 

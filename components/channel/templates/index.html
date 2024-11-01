@@ -34,7 +34,7 @@
 				
 				blocking = me ? me.relation(author.address, 'blocking') : null
 
-				if (blocking){
+				if (blocking && !ed.jury){
 					modclass = 'blocked'
 				}
 			}
@@ -71,51 +71,54 @@
 						<span class="adr"><%-app.platform.api.clearname(name || author.address, true)%></span>
 					</div>
 
-					<% if(ed.openprofilebutton && !app.curation()) { %>
+					
 
-						<a href="<%-app.platform.api.authorlink(author.address)%>">
+						<% if(ed.openprofilebutton && !app.curation()) { %>
 
+							<a href="<%-app.platform.api.authorlink(author.address)%>">
+
+								<div class="openprofilebuttonwrapper">
+									<button class="button openprofilebutton">
+										<%= e('gotoProfile2') %>
+									</button>
+								</div>
+
+							</a>
+
+						<% } %>
+
+						<% if(ed.customaction) {%>
 							<div class="openprofilebuttonwrapper">
-								<button class="button openprofilebutton">
-									<%= e('gotoProfile2') %>
+								<button class="button openprofilebutton customaction">
+									<%- e(ed.customaction.label) %>
 								</button>
 							</div>
+						<% } %>
 
-						</a>
+						
+						<% if(ed.followbutton && !app.curation()) { %>
 
-					<% } %>
 
-					<% if(ed.customaction) {%>
-						<div class="openprofilebuttonwrapper">
-							<button class="button openprofilebutton customaction">
-								<%- e(ed.customaction.label) %>
-							</button>
-						</div>
-					<% } %>
+							<div class="subscribeWrapper">
 
+								<% if(author.following) { %>
+
+									<button class="unsubscribeButton">
+										<%=e('unfollow') %>
+									</button>
+
+								<% } else { %>
+
+									<button class="subscribeButton">
+										<%=e('follow') %>
+									</button>
+									
+								<% } %>
+
+							</div>
+
+						<% } %>
 					
-					<% if(ed.followbutton && !app.curation()) { %>
-
-
-						<div class="subscribeWrapper">
-
-							<% if(author.following) { %>
-
-								<button class="unsubscribeButton">
-									<%=e('unfollow') %>
-								</button>
-
-							<% } else { %>
-
-								<button class="subscribeButton">
-									<%=e('follow') %>
-								</button>
-								
-							<% } %>
-
-						</div>
-
-					<% } %>
 
 					<div class="panel">
 						<% _.each(reports, function(report){ %> 
@@ -147,14 +150,17 @@
 						<% } %>
 					</div>
 
-					<% if(state) {%>
-						<% if(!author.me && !sUserInfo.deleted) {%>
-							<div class="blockWrapper">
+					<% if(!ed.jury) {%>
 
-								<span class="block"><%-e('block')%></span>
-								<span class="unblock"><%-e('unblock')%></span>
-								
-							</div>
+						<% if(state) {%>
+							<% if(!author.me && !sUserInfo.deleted) {%>
+								<div class="blockWrapper">
+
+									<span class="block"><%-e('block')%></span>
+									<span class="unblock"><%-e('unblock')%></span>
+									
+								</div>
+							<% } %>
 						<% } %>
 					<% } %>
 

@@ -771,6 +771,10 @@ button.good {
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
+button.bad {
+  background: rgb(var(--color-bad));
+  border: 1px solid rgb(var(--color-bad));
+}
 button.contrast {
   background: rgb(var(--color-bg-ac-2));
   border: 1px solid rgb(var(--color-bg-ac-2));
@@ -5000,6 +5004,17 @@ html.allcontent_application #footerWrapper {
 }
 .realperson .dev .fa-code {
   color: rgb(var(--text-on-bg-ac-color));
+}
+.realperson .shark .fa-certificate,
+.realperson .moderator .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.realperson .shark .fa-crown,
+.realperson .moderator .fa-crown,
+.realperson .shark .fa-flag,
+.realperson .moderator .fa-flag {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
 }
 .usericon {
   background: rgb(var(--neutral-grad-0));
