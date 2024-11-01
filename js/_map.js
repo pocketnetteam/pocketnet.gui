@@ -968,8 +968,18 @@ __map =  {
 		viewchangereload : true
 	},
 
-	
-	
+	miniapps : {
+		uri : "miniapps",
+		href : "miniapps",
+		add : {
+			el : 'miniapps'
+		},
+		now : true,
+		anonimus : true,
+		renew : true,
+		reload : true,
+		viewchangereload : true
+	},
 
 	bnavigation : {
 		uri : "bnavigation",
