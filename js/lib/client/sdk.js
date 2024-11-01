@@ -1192,7 +1192,7 @@ var pSDK = function ({ app, api, actions }) {
             return request('jury', address, (data) => {
                 return api.rpc('getjuryassigned', [address]).then(items => {
 
-                    items.push({
+                    /*items.push({
                         id : '9b4788f9a6d55330e30416af16f39fef10cf84c30adff32d589396d99454afbc',
                         postid : 'ff48022c117497c3e080e9f7bef64ba2f415984aae26cdfc3f8c693e4b1a84a3',
                         parentid : '52858212de5ec997385969e568f0585d1e7962f3afe109da6ae24db365403573',
@@ -1216,7 +1216,7 @@ var pSDK = function ({ app, api, actions }) {
 
                         type : 100,
                         address : 'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX'
-                    })
+                    })*/
 
                     var converted = _.map(items, (item) => {
 
