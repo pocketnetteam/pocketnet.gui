@@ -756,6 +756,43 @@ var BastyonApps = function(app){
                     return makeAction(vote, application)
                 }
             }
+        },
+
+        open : {
+            donation : {
+                parameters : ['receiver'],
+                action : function({data, application}){
+
+                    return app.platform.ui.wallet.donate({
+                        reciever : data.reciever
+                    }).then((p) => {
+                        return Promise.resolve({value : p.value, txid : p.txid})
+                    }).catch(e => {
+                        return Promise.reject(appsError(e))
+                    })
+    
+                    //// TODO CHECK ELECTRON NODE SAFE
+                    return app.api.rpc(data.method, data.parameters, data.options)
+                }
+            },
+
+            post : {
+                parameters : ['txid'],
+                action : function({data, application}){
+
+                    self.nav.api.load({
+                        open : true,
+                        href : 'post?s=' + data.txid,
+                        inWnd : true,
+                        essenseData : {
+                            share : data.txid
+                        }
+                    })
+    
+                    //// TODO CHECK ELECTRON NODE SAFE
+                    return Promise.resolve({})
+                }
+            }
         }
 
     }
@@ -966,6 +1003,12 @@ var BastyonApps = function(app){
             result.includeinsearch = true
         }
 
+        if (application.includeminiapps){
+            result.includeminiapps = true
+        }
+
+        
+
         if (application.production){
             result.production = true
         }
@@ -993,7 +1036,7 @@ var BastyonApps = function(app){
             delete installing[application.id]
         }), application}
 
-        return installing[application.id]
+        return installing[application.id].promise
         
     }
 
@@ -1528,6 +1571,8 @@ var BastyonApps = function(app){
 
         return Promise.all(promises).then(() => {
 
+            console.log("miniapp ini")
+
             self.inited = true
             
             window.addEventListener("message", listener)
@@ -1542,6 +1587,20 @@ var BastyonApps = function(app){
         forsearch : function(){
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
+            }), app => {
+
+                return {
+                    icon : app.icon,
+                    name : app.manifest.name,
+                    url : 'application?id=' + app.manifest.id,
+                    type : 'application'
+                }
+            })
+        },
+
+        forminiapps : function(){
+            return _.map(_.filter(installed, (s) => {
+                return s.includeminiapps
             }), app => {
 
                 return {
@@ -1694,6 +1753,7 @@ var BastyonApps = function(app){
                     return {}
                 }).then(meta => {
                     result.meta = meta
+                    result.meta.path = path
 
                     return Promise.resolve()
                 })
@@ -1730,17 +1790,23 @@ var BastyonApps = function(app){
         if(thislink(href)){
             var th = app.nav.thisSiteLink(href)
 
-            if (th.indexOf('application?') != 0) return null
+            if (th.indexOf('application?') == -1) return null
 
             var pps = parameters(th, true)
 
             if(!pps.id) return null
 
+            console.log('application pps', href, pps)
+
+
             if (pps.p) pps.p = hexDecode(pps.p)
+
+            console.log('application pps', href, pps)
 
             return {
                 id : pps.id,
-                path : pps.p || ''
+                path : pps.p || '',
+                url : 'application?id=' + pps.id + (pps.p ? ("&p=" + hexEncode(pps.p)) : '')
             }
         }
 

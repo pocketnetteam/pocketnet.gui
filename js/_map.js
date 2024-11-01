@@ -400,6 +400,13 @@ __map =  {
 
 	},
 
+	monetization : {
+		uri : "monetization",
+		href : "monetization",
+		add : insertingfunc,
+		anonimus : true
+	},
+
 	boost : {
 		uri : "boost",
 		href : "boost",
@@ -961,8 +968,18 @@ __map =  {
 		viewchangereload : true
 	},
 
-	
-	
+	miniapps : {
+		uri : "miniapps",
+		href : "miniapps",
+		add : {
+			el : 'miniapps'
+		},
+		now : true,
+		anonimus : true,
+		renew : true,
+		reload : true,
+		viewchangereload : true
+	},
 
 	bnavigation : {
 		uri : "bnavigation",

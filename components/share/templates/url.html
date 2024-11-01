@@ -231,7 +231,23 @@
 		<% if(og && !_.isEmpty(og) && !app.platform.sdk.usersettings.meta.preview.value) {%>
 
 			<div class="urlhtmlcontent">
+
+				<% if(og.application) {%>
+					<a href="<%-og.url%>">
+						<div class="applicationCaption">
+							<div class="appicon">
+								<div class="bgimage" image="<%-og.application.icon%>"></div>
+							</div>
+								<div class="appname">
+								<span><%- og.application.manifest.name %></span>
+							</div>
+						</div>
+					</a>
+				<% } %>
+
 				<div class="ogtable table">
+
+
 					<% if(og.image && !deep(share, 'images.length')) {
 
 						var imagesetting = deep(share, 'settings.image') || 'a'
@@ -265,6 +281,16 @@
 						<% } %>
 					</div>
 				</div>
+
+				<% if(og.application) {%>
+					<a href="<%-og.url%>">
+						<div class="applicationButton">
+							<button class="button orange">
+								<%-e('openin')%> <%- og.application.manifest.name %>
+							</button>
+						</div>
+					</a>
+				<% } %>
 			</div>
 
 		<% } %>

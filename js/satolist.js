@@ -385,7 +385,26 @@ Platform = function (app, listofnodes) {
         'PJw76ZEdMHgp8NfLuvacjF2cP2sGrAGGoe' : true,
         'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55' : true,
         'PKwc6u5ZFZVJWwZyLPh5bTgbpvADaH74g7' : true,
-        'PKXtnTBkpvo9U5atc5PTSxbdXpoiaYYUKj' : true
+        'PKXtnTBkpvo9U5atc5PTSxbdXpoiaYYUKj' : true,
+        'PXen74Rrke5MQ3FrcFYKq8xxGm6y1zSrXF' : true,
+        'PE7AZNAxSpKnnLkXXdQB6a7ZyYoqfRBLT3' : true,
+        'PSsUbLchKSeAEDVESwa1tEYG5eF3hnX5rM' : true,
+        'PALP9o5GPtyKrD6D9m3NCUUkTZxAcm64ue' : true,
+        'PDCpUaxYzFCWuHjuvPju6ad51vtDT6JwXQ' : true,
+        'PJYv6vUb8mZu7Y2Qt6d41v8iS4jL3k6dCe' : true,
+        'PDyTM57JnknqsCkmuaT1p77ivtfCtkPRya' : true,
+        'PVAaKHgPB3FmU6XEuvwMAWugTMjKoRo73t' : true,
+        'PJBt5eXpeep6WK8wCHcECBnPm689zSkCtf' : true,
+        'PMABcFZc7fcgPZzstJrHeYoWXJGoP3pd7X' : true,
+        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx' : true,
+        'PMqBXWqWn4SEM6ZM5fWrXxsFpbtW31886J' : true,
+        'PT7pwrGFNGLmSxUqU1akFr2PzhcTozEH5B' : true,
+        'PJehpQqXpregZF2aiDyPfwceer2kG71mCy' : true,
+        'PThktEkvkgNeL9G6EDAESNwneUGz9DeugR' : true,
+        'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX' : true,
+        'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp' : true,
+        'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao' : true
+
     } 
 
     self.bch = {
@@ -1781,6 +1800,8 @@ Platform = function (app, listofnodes) {
 
 
         url = url.replace("http:", "https:").replace("http//", "https://")
+
+        console.log('application parse', url)
 
         var meta = parseVideo(url);
 
@@ -4325,7 +4346,7 @@ Platform = function (app, listofnodes) {
                     if (sender === receiver){
                         sitemessage(self.app.localization.e('donateself'));
 
-                        reject()
+                        reject('donateself')
                     }
 
                     else{
@@ -4358,7 +4379,7 @@ Platform = function (app, listofnodes) {
 
                                     p.value = value;
                                     p.send = _p.send
-                                    
+                                    p.txid = txid
 
                                     resolve(p)
                                 }
@@ -11662,56 +11683,60 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.storage.addressesobj = [];
                 }
 
-                const anum = 10
+                var anum = 10
+                var added = 0
                 
                 try{
                     anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
                 }catch(e){
-                    
                 }
                 
-                
+                var walletsItem = self.sdk.address.pnet().address + 'wallets2';
 
-                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+                var addressesList = [];
 
                 /**
                  * Here we take cached wallet ID's
                  * or generating them dynamically if
                  * not cached.
                  */
+
                 if (walletsItem in localStorage) {
-                    // console.time('LOADING CACHED WALLETS');
 
                     try{
-                        const wallets = JSON.parse(localStorage[walletsItem]);
+                        var wallets = JSON.parse(localStorage[walletsItem]);
 
                         wallets.forEach((walletAddress, walletNum) => {
+
+                            if(walletNum > anum - 1) return
+
                             self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+
+                            addressesList.push(walletAddress);
+
+                            added++
                         });
+
                     }catch(e){
                         
                     }
 
                     
-                    // console.timeEnd('LOADING CACHED WALLETS');
-                } else {
-                    // console.time('GENERATING WALLETS');
-                    const addressesList = [];
+                } 
+                
+                
 
-                    for (let i = 0; i < anum; i++) {
-                        const address = self.sdk.addresses.addWalletAddress(i);
+                for (let i = added; i < anum; i++) {
+                    var address = self.sdk.addresses.addWalletAddress(i);
 
-                        addressesList.push(address);
-                    }
+                    addressesList.push(address);
 
-                    try{
-                        localStorage[walletsItem] = JSON.stringify(addressesList);
-                    }catch(e){
-                        
-                    }
+                }
 
+                try{
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                }catch(e){
                     
-                    // console.timeEnd('GENERATING WALLETS');
                 }
 
                 self.sdk.addresses.save();
@@ -11995,7 +12020,12 @@ Platform = function (app, listofnodes) {
             failed: {},
             loading : {},
 
+         
             getnew : function(url, action){
+
+                console.log('application url', url)
+
+
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
@@ -12004,14 +12034,41 @@ Platform = function (app, listofnodes) {
                 if (f[url]) return Promise.resolve(null)
                 if (s[url]) return Promise.resolve(s[url])
 
-                l[url] = self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+
+                var appinfo = self.app.apps.isApplicationLink(url)
+
+                var apppromise = (() => {return Promise.resolve(null)})()
+
+    console.log('appinfo', appinfo)
+
+                if (appinfo){
+                    apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
+
+                        console.log('application')
+
+                        if(!r) return Promise.resolve(null)
+
+                        return Promise.resolve({og : {...r.meta, application : r.application, url : appinfo.url}})
+        
+                    })
+                }
+                
+
+                l[url] = apppromise.then((d) => {
+
+                    if(d) return Promise.resolve(d)
+
+                    return self.app.api.fetch(action || 'urlPreview', {url})
+                }).then(d => {
 
                     var og = deep(d, 'og');
+
+                    console.log("application OG", og)
 
                     if(!og) return Promise.reject()
 
                     _.each(og, (o, i) => {
-                        og[i] = superXSS(o)
+                        og[i] = i == 'application' ? o : superXSS(o)
                     })
 
 

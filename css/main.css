@@ -2316,6 +2316,7 @@ input[type=radio].radio:checked + label {
 }
 #windowsContainer .rightchatspacer {
   margin-right: 0;
+  margin-left: 0;
 }
 #windowsContainer .wnd:nth-last-child(2) .wndback,
 #windowsContainer .wnd:nth-last-child(1) .wndback {
@@ -6456,14 +6457,29 @@ html.mobileview #bnavigation .fakem {
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#ffffff', GradientType=0 );
     }
 }*/
+#miniappscnt {
+  position: fixed;
+  left: 0;
+  width: 44px;
+  bottom: 52px;
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  overflow: hidden;
+  z-index: 15;
+}
 @media only screen and (max-width: 1400px) {
   .rightchatspacer {
     margin-right: 33px;
+    margin-left: 33px;
   }
 }
 @media only screen and (max-width: 768px) {
   .rightchatspacer {
     margin-right: 0;
+    margin-left: 0;
+  }
+  #miniappscnt {
+    display: none;
   }
 }
 @media only screen and (max-width: 1366px) {
@@ -6479,6 +6495,7 @@ html.mobileview #bnavigation .fakem {
 }
 html.mobileview .rightchatspacer {
   margin-right: 0;
+  margin-left: 0;
 }
 html.mobileview #content .work {
   /*width: 100%;*/

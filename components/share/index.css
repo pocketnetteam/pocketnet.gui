@@ -470,6 +470,26 @@
 #share .attachements .urlhtmlcontent {
   font-size: 0.8em;
 }
+#share .attachements .urlhtmlcontent .applicationCaption {
+  display: flex;
+  align-items: center;
+}
+#share .attachements .urlhtmlcontent .applicationCaption .appicon {
+  width: 22px;
+}
+#share .attachements .urlhtmlcontent .applicationCaption .appicon .bgimage {
+  width: 22px;
+  height: 22px;
+}
+#share .attachements .urlhtmlcontent .applicationCaption .appname {
+  margin-left: 0.5em;
+}
+#share .attachements .urlhtmlcontent .applicationCaption .appname span {
+  font-weight: 700;
+}
+#share .attachements .urlhtmlcontent .applicationButton {
+  margin-top: 1em;
+}
 #share .attachements .urlhtmlcontent .ogtable > div {
   vertical-align: top;
   padding: 0.5em 0;

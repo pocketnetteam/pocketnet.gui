@@ -1387,7 +1387,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 										resolve({
 											data: '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
 											code: 200,
-											node: node.exportsafe(),
+											node: {
+												key : node.key
+											},
 										});
 									}, f.rand(120, 1000));
 								});
@@ -1438,7 +1440,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							return Promise.resolve({
 								data: data,
 								code: 200,
-								node: node.exportsafe(),
+								node: {
+									key : node.key
+								},
 								time : time
 							});
 						});
@@ -1452,7 +1456,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return Promise.reject({
 							error: e,
 							code: e.code,
-							node: node ? node.export() : null,
+							node: node ? {
+								key : node.key
+							} : null,
 						});
 					});
 				},
