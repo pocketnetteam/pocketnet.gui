@@ -248,8 +248,6 @@ class Notifications{
 
     addblock(block, node, ignore){
 
-        console.log('addblock', this.destroyed)
-
         if(this.destroyed) return
 
         if(!node.version || f.numfromreleasestring(node.version) < 0.21) {
@@ -276,8 +274,6 @@ class Notifications{
             this.logger.w('system', 'info', `Notification: Firebase user list is empty`)
             return;
         }
-
-        console.log("PUSH BLOCK")
 
         const notification = {
             height: block.height,
@@ -338,7 +334,6 @@ class Notifications{
             try{
                 this.run()
             }catch(e){
-                console.log('run2', e)
             }
 
             
