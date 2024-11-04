@@ -6095,9 +6095,76 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 }
 
+saveBase64File = function(name, base64, type){
+		
+	return new Promise((resolve, reject) => {
+
+		var format = fkit.extensionBase64(base64)
+
+		if (window.cordova) {
+
+			var fl = b64toBlob(base64.split(',')[1], type);
+
+			p_saveAsWithCordova(fl, name + '.' + format, function (d, e) {
+	
+				if(e) return reject(e)
+
+				return resolve(d)
+				
+			}, true)
+	
+		}
+	
+		else {
+			p_saveAs({
+				file: base64,
+				format: format,
+				name: name
+			})
+
+			return resolve({name})
+		}
+	})
+	
+}
+
+downloadFileByUrl = function(url){
+
+	return new Promise(function (resolve, reject) {
+		var xhr = new XMLHttpRequest();
+
+		xhr.onload = function () {
+
+			var type = xhr.getResponseHeader("content-type");
+			var blob = new Blob([xhr.response], { type: type, name: "file" })
+
+			getBase64(blob).then((base64) => {
+
+				resolve({
+					base64,
+					type
+				})
+
+			})
+
+		};
+
+		xhr.onerror = function (e) {
+			console.error(e, url);
+			reject(new TypeError("Request failed"));
+		};
+
+		xhr.open("GET", url);
+		xhr.responseType = "arraybuffer";
+		xhr.send(null);
+	});
+
+}
+
 /* ______________________________ */
 
 /* NAVIGATION */
+
 
 
 
@@ -7035,8 +7102,6 @@ AJAX = function(p) {
 			preloader(true);
 
 		if(_Node) {
-
-			//data.node = "NODE";
 
 			var _d = {
 				method: type,
@@ -9548,6 +9613,8 @@ var fkit = {
 		'image/gif': 'gif',
 		'image/webp': 'webp',
 		'image/jfif': 'jfif'
+
+		//Da
 	},
 	extensionBase64: function (base64) {
 		if (!base64) return ''
