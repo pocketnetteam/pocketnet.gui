@@ -82,6 +82,7 @@ class Notifications{
             const ts = Date.now();
             try {
 
+
                 this.logger.w('system', 'info', `Notification: Generate Events: ${item.height}`)
 
                 const {events, block} = await this.generateEvents(item)
@@ -247,6 +248,8 @@ class Notifications{
 
     addblock(block, node, ignore){
 
+        console.log('addblock', this.destroyed)
+
         if(this.destroyed) return
 
         if(!node.version || f.numfromreleasestring(node.version) < 0.21) {
@@ -273,6 +276,8 @@ class Notifications{
             this.logger.w('system', 'info', `Notification: Firebase user list is empty`)
             return;
         }
+
+        console.log("PUSH BLOCK")
 
         const notification = {
             height: block.height,
