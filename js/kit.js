@@ -1007,7 +1007,7 @@ ModVote = function(){
 		return self.s2.v + self.i1.v
 	}
 
-	self.export = function(){
+	self.export = function(alias){
 
 		if(!alias){
 			return {

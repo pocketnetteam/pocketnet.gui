@@ -2477,9 +2477,12 @@ var lenta = (function(){
 					btn2text : self.app.localization.e('dno'),
 					success : function(){	
 
+						
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
 							_el.remove()
-						}).catch(e => {})
+						}).catch(e => {
+							console.error(e)
+						})
 
 					}
 				})
@@ -2504,7 +2507,9 @@ var lenta = (function(){
 
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
 							_el.remove()
-						}).catch(e => {})
+						}).catch(e => {
+							console.error(e)
+						})
 
 					}
 				})

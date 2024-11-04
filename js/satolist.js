@@ -6270,11 +6270,6 @@ Platform = function (app, listofnodes) {
 
             sendverdict : function(juryobject, verdict){
 
-                self.app.platform.errorHandler('network', true)
-
-                    return Promise.reject('network')
-
-
                 if(!juryobject || typeof verdict == undefined){
                     self.app.platform.errorHandler('network', true)
 
@@ -6291,6 +6286,8 @@ Platform = function (app, listofnodes) {
                 return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
                     successCheck()
                     sitemessage(self.app.localization.e('juryvote_success'))
+
+                    self.psdk.jury.clear()
 
                     return Promise.resolve(action)
 

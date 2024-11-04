@@ -1271,6 +1271,8 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('modVote'), filter)
 
+                console.log('actions', actions)
+
                 _.each(actions, (action) => {
 
                     var txid = deep(action, 'object.s2.v')
@@ -1321,6 +1323,10 @@ var pSDK = function ({ app, api, actions }) {
         get: function (id) {
             return storage.jury[id] || null
         },
+
+        clear : function(){
+            clearallfromdb('jury')
+        }
     }
 
     /// content
