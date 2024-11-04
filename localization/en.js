@@ -2801,6 +2801,9 @@ _l.permissions_name_chat = appname + " chat"
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
+_l.permissions_name_externallink = "Opening External Links";
+_l.permissions_descriptions_externallink = "The application requests permission to open external links in the browser or other applications";
+
 _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'

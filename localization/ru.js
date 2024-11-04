@@ -2605,6 +2605,9 @@ _l.permissions_name_chat = appname + " чат"
 _l.permissions_name_geolocation = "Доступ к местоположению"
 _l.permissions_descriptions_geolocation = "Приложение запрашивает разрешение к вашему местоположению"
 
+_l.permissions_name_externallink = "Открытие внешних ссылок";
+_l.permissions_descriptions_externallink = "Приложение запрашивает доступ на открытие внешних ссылок в браузере или других приложениях";
+
 
 _l.limits = "Лимиты"
 _l.pay = "Оплатить"
