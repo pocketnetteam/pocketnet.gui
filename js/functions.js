@@ -6095,6 +6095,8 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 }
 
+//Da_Ki
+
 saveBase64File = function(name, base64, type){
 		
 	return new Promise((resolve, reject) => {
@@ -9614,7 +9616,7 @@ var fkit = {
 		'image/webp': 'webp',
 		'image/jfif': 'jfif'
 
-		//Da
+		//Da_Ki
 	},
 	extensionBase64: function (base64) {
 		if (!base64) return ''
