@@ -199,7 +199,11 @@ var BastyonApps = function(app){
             uniq : false,
             session : true
         },
-
+        'externallink': {
+            name: 'permissions_name_externallink',
+            description: 'permissions_descriptions_externallink',
+            level: 1
+        },
         'zaddress' : {
             name : 'permissions_name_zaddress',
             description : 'permissions_descriptions_zaddress',
@@ -302,6 +306,25 @@ var BastyonApps = function(app){
                 var signature = app.user.signature(data.string + '/' + application.manifest.id)
 
                 return Promise.resolve(signature)
+            }
+        },
+        openExternalLink: {
+            parameters : ['url'],
+            permissions: ['externallink'],
+            action : function({ data }){
+                const url = data.url
+                if (window.cordova?.InAppBrowser) {
+                    window.cordova.InAppBrowser.open(url, '_system');
+                    return Promise.resolve()
+                }
+
+                if (electron?.shell?.openExternal) {
+                    electron.shell.openExternal(url);
+                    return Promise.resolve()
+                }
+
+                window.open(url, '_blank');
+                Promise.resolve()
             }
         },
 
@@ -771,8 +794,6 @@ var BastyonApps = function(app){
                         return Promise.reject(appsError(e))
                     })
     
-                    //// TODO CHECK ELECTRON NODE SAFE
-                    return app.api.rpc(data.method, data.parameters, data.options)
                 }
             },
 
@@ -1290,7 +1311,7 @@ var BastyonApps = function(app){
     }
 
     var requestPermission = function(application, permission, data, p){
-
+        
         if (application.manifest.permissions.indexOf(permission) == -1){
             return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
         }
@@ -1465,10 +1486,6 @@ var BastyonApps = function(app){
 
             return
 
-            /// getapplication by info.id
-            install(/* getapplication by info.id, */ info.cached).catch(e => {
-
-            })
         }))
 
         
