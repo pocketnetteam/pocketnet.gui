@@ -536,6 +536,8 @@ var BastyonApps = function(app){
                 if(!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
 
+                if (typeof data.canmakepost == 'undefined') data.canmakepost = true
+
                 app.platform.ui.socialshare(null, data)
 
                 return Promise.resolve()

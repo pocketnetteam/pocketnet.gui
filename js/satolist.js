@@ -4157,6 +4157,7 @@ Platform = function (app, listofnodes) {
                     sharing : p.sharing || null,
                     embedding : p.embedding || null,
                     notincludedRef : true,
+                    canmakepost : p.canmakepost
                 }
             })
         },

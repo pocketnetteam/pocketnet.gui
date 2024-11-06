@@ -2962,3 +2962,4 @@ _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PK
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
 
+_l.makePost = "Make a publication"
