@@ -270,6 +270,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.open = {
+        post : function(txid){
+            return action('open.post', {txid})
+        },
+        donate : function(receiver){
+            return action('open.donate', {receiver})
+        },
+    }
+
     self.permissions = {
         check : function({permission}){
             return action('checkPermission', {permission})
@@ -284,6 +293,10 @@ var BastyonSdk = function(){
         return action('payment', data).then(action => {
             return actionHelper(action)
         })
+    }
+
+    self.openExternalLink = function(url){
+        return action('openExternalLink', {url})
     }
 
     self.barteron = {

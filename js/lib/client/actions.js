@@ -2017,6 +2017,8 @@ var Account = function(address, parent){
                 var p2sh = parent.app.platform.sdk.addresses.storage.addressesobj[index];
                 var dumped = parent.app.platform.sdk.address.dumpKeys(index)
 
+                
+
                 try{
                     txb.sign({
                         prevOutScriptType: 'p2sh-p2wpkh',
@@ -2028,6 +2030,9 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
+
+                    console.log('addresses index', dumped, p2sh)
+                    
                     throw 'unableSign:5'
                 }
 

@@ -651,9 +651,26 @@ var wallet = (function(){
 
 				topPreloader(0)
 
-				make(function(){
-					topPreloader(100)
-				});
+				globalpreloader(true)
+
+				var account = self.app.platform.actions.getCurrentAccount()
+
+                if (account) {
+                    account.updateUnspents(0).then(() => {
+						make(function(){
+							globalpreloader(false)
+
+							topPreloader(100)
+						});
+					})
+                }
+				else{
+					make(function(){
+						topPreloader(100)
+					});
+				}
+
+				
 			},
 
 			linkValidation : function(){

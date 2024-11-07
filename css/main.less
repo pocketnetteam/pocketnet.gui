@@ -2694,6 +2694,7 @@ input[type=radio].radio:checked + label {
 #windowsContainer{
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
     }
     .wnd{
 
@@ -7910,18 +7911,33 @@ html{
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#ffffff', GradientType=0 );
     }
 }*/
-
+#miniappscnt{
+    position: fixed;
+    left: 0;
+    width: 44px;
+    bottom: 52px;
+    border-top-right-radius: @rhythm;
+    border-bottom-right-radius: @rhythm;
+    overflow: hidden;
+    z-index: 15;
+}
 
 
 @media only screen and (max-width: 1400px) {
     .rightchatspacer{
         margin-right: 33px;
+        margin-left: 33px;
     }
 }
 
 @media only screen and (max-width: 768px) {
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
+    }
+
+    #miniappscnt{
+        display: none;
     }
 }
 
@@ -7936,9 +7952,6 @@ html{
 }
 
 
-
-
-
 @media only screen and (max-width: 1280px) {
     #content{
         .work{
@@ -7951,6 +7964,7 @@ html{
 html.mobileview{
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
     }
 
     #content .work{

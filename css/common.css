@@ -699,6 +699,26 @@
 .share_common .urlhtmlcontent {
   font-size: 0.85em;
 }
+.share_common .urlhtmlcontent .applicationCaption {
+  display: flex;
+  align-items: center;
+}
+.share_common .urlhtmlcontent .applicationCaption .appicon {
+  width: 22px;
+}
+.share_common .urlhtmlcontent .applicationCaption .appicon .bgimage {
+  width: 22px;
+  height: 22px;
+}
+.share_common .urlhtmlcontent .applicationCaption .appname {
+  margin-left: 0.5em;
+}
+.share_common .urlhtmlcontent .applicationCaption .appname span {
+  font-weight: 700;
+}
+.share_common .urlhtmlcontent .applicationButton {
+  margin-top: 1em;
+}
 .share_common .urlhtmlcontent .ogtable > div {
   vertical-align: top;
   padding: 0.5em 0;

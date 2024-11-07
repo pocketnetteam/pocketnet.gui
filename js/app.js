@@ -1408,6 +1408,7 @@ Application = function (p) {
 		self.el = {
 			camera: $('#camera'),
 			content: $('#content'),
+			miniapps: $('#miniappscnt'),
 			app: $('#application'),
 			header: $('#headerWrapper'),
 			menu: $('#menuWrapper'),

@@ -10,7 +10,10 @@
         "develop": true,
         "cantdelete" : true,
         "name" : "Barteron",
-		"grantedPermissions" : ["account", "chat"]
+        "grantedPermissions" : ["account", "chat"],
+        "includeinsearch" : true,
+        "includeminiapps" : true,
+        "store" : {}
     },
     {
 		"id" : "demo.pocketnet.app",

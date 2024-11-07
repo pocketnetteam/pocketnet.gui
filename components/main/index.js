@@ -166,7 +166,7 @@ var main = (function(){
 
 			addbuttonscroll  : function(){
 
-				if (self.app.lastScrollTop > 400){
+				if (self.app.lastScrollTop > 1200){
 					if(!addbuttonShowed)
 						el.addbutton.addClass('scrollactive')
 
