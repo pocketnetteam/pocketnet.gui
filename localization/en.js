@@ -2125,6 +2125,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
