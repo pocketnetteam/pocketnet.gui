@@ -1170,34 +1170,117 @@ Nav = function(app)
 
 				if(!external)
 				{
-					if(link.attr('donottrust'))
-					{
+			
+					if (link.attr('donottrust')){
 						link.off('click').on('click', function(e){
 							var href = $(this).attr('href');	
 
 							app.mobile.vibration.small()
 
-							if (href.indexOf('http') == -1) href = 'https://' + href
+							var openanother = function(){
+								self.api.load({
+									open : true,
+									id : 'anothersite',
+									inWnd : true,
 
-							self.api.load({
-								open : true,
-								id : 'anothersite',
-								inWnd : true,
+									essenseData : {
+										link : href
+									}
+								})
+							}
 
-								essenseData : {
-									link : href
+							app.apps.get.applicationsSearch(href).then(apps => {
+
+								if(href.indexOf('http') == -1) href = 'https://' + href
+
+								if(apps.length == 0){
+									openanother()
 								}
+								else{
+									var application = apps[0]
+									var scope = application.manifest.scope.replace('https://', '')
+
+									var newpath = href.replace('https://', '').replace('http://', '').replace(scope, '')
+
+									if (newpath[0] == '/') newpath = newpath.substring(1)
+
+									var pth  = 'application?id=' + application.manifest.id + (newpath.length ? '&p=' + hexEncode(newpath): '')
+
+									if(app.apps.get.applicationExternalLink(scope)){
+										sitemessage(app.localization.e('redirectminiappsuccess', application.manifest.name))
+										self.api.go({
+											href : pth,
+											history : true,
+											open : true
+										})
+
+										return
+									}
+									
+
+									new dialog({
+										header: app.localization.e('askdefaultapplink', application.manifest.name),
+										btn1text: app.localization.e('dyes'),
+										btn2text: app.localization.e('dno'),
+										nomoreask : app.localization.e('nomoreaskdefaultapplink', {name : application.manifest.name, scope : scope}),
+										class: 'zindex',
+						
+										success: function (d) {
+
+											if(d.nomoreask){
+												app.apps.set.applicationExternalLink(scope, application.manifest.id)
+											}
+
+											self.api.go({
+												href : pth,
+												history : true,
+												open : true
+											})
+
+											
+										},
+						
+										fail: function () {
+											openanother()
+										}
+									})
+
+									
+
+									////dialog
+
+									
+
+									
+
+
+									//
+
+								}
+
+								
+		
 							})
+
+
+							
+
+							
 
 
 							return false;
 						})
-
+	
 					}
 					else
 					{
 						core.externalTarget(link)
 					}
+					
+
+					
+
+					
 					
 				}
 				else

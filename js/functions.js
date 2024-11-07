@@ -1463,6 +1463,10 @@ dialog = function (p) {
 
 	var destroyed = false;
 
+	self.nomoreask = false;
+
+	if(p.nomoreask) self.nomoreask = true
+
 	if ($('html').hasClass('nooverflow')) removescroll = false;
 
 	if (!p.success) p.success = false;
@@ -1522,6 +1526,11 @@ dialog = function (p) {
 			html += '<div class="body"><div class="text">' + (p.html || "") + '</div></div>';
 		}
 
+		if (p.nomoreask){
+			html += '<div class="nomoreaskWrapper"><i class="fas '+ (self.nomoreask ? 'fa-check-circle' : 'fa-circle') + '"></i> ' +p.nomoreask+ '</div>';
+
+		}
+
 		html += '<div class="buttons">\
 					   <div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+ p.btn2text + '</button></div>\
 					   <div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+ p.btn1text + '</button></div>\
@@ -1541,6 +1550,21 @@ dialog = function (p) {
 		$el.find('.btn1').on('click', function () { response(p.success) });
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
+		$el.find('.nomoreaskWrapper').on('click', function(){
+			self.nomoreask = !self.nomoreask
+			var icon = $(this).find('i')
+
+			icon.removeClass('fa-check-circle')
+			icon.removeClass('fa-circle')
+
+			if(self.nomoreask){
+				icon.addClass('fa-check-circle')
+			}
+			else{
+				icon.addClass('fa-circle')
+			}
+			
+		})
 
 		setTimeout(() => initOutsideClickEvent(), 500);
 
@@ -7748,7 +7772,8 @@ search = function (el, p) {
 			if (!p.closeByHtmlRemove)
 				$('html').off('click', helpers.closeclickResults);
 
-			searchEl.removeClass('fastSearchShow');
+			if (searchEl)
+				searchEl.removeClass('fastSearchShow');
 		},
 		closeclickResults: function (e) {
 			if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
@@ -8031,6 +8056,8 @@ search = function (el, p) {
 
 		el = null
 		p = {}
+
+		$('html').off('click', helpers.closeclickResults);
 	}
 
 	self.showlast = events.showlast
