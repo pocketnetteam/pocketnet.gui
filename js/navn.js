@@ -1208,6 +1208,8 @@ Nav = function(app)
 
 									if(app.apps.get.applicationExternalLink(scope)){
 										sitemessage(app.localization.e('redirectminiappsuccess', application.manifest.name))
+
+										//app.apps.openInWnd(application, null, hexEncode(newpath))
 										self.api.go({
 											href : pth,
 											history : true,
@@ -1230,6 +1232,9 @@ Nav = function(app)
 											if(d.nomoreask){
 												app.apps.set.applicationExternalLink(scope, application.manifest.id)
 											}
+
+											//app.apps.openInWnd(application, null, hexEncode(newpath))
+
 
 											self.api.go({
 												href : pth,

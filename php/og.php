@@ -1,7 +1,9 @@
 <?PHP
 require_once('php/rpc.php');
 require_once('php/api.php');
-
+/*ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);*/
 
 class OG {
 
@@ -27,9 +29,16 @@ class OG {
 
 
 
-	public function __construct ($get, $proxypath, $domain, $project)
+	public function __construct ($get, $proxypath, $domain, $project, $uri)
 	{
+        $this->path = '';
+        $pathParts = explode('/', $uri);
 
+        if(count($pathParts) > 1){
+            $this->path = $pathParts[count($pathParts) - 1];
+        }
+        //echo $this->path;
+        
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
 
@@ -85,6 +94,18 @@ class OG {
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
+        if (strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0){
+
+            if (isset($get['id'])){
+                $this->application = array(
+                    'id' => $get['id'],
+                    'path' => isset($get['p']) ? hex2bin($get['p']) : ''
+                );
+
+                //echo json_encode($this->application);
+            }
+
+        }
 
 	}
 	public function __destruct ()

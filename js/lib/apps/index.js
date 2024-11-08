@@ -1898,6 +1898,23 @@ var BastyonApps = function(app){
         })
     }
 
+    self.openInWnd = function(application, clbk, path){
+        app.nav.api.load({
+            open: true,
+            href: 'application',
+            inWnd : true,
+            history : true,
+            eid: 'application_' + application.manifest.id,
+            clbk: clbk,
+
+            essenseData: {
+                application : application.manifest.id,
+                path : path
+
+            }
+        })
+    }
+
     self.emit = emit
 
     self.requestPermissions = requestPermissions

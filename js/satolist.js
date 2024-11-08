@@ -24431,7 +24431,7 @@ Platform = function (app, listofnodes) {
             }
 
             core.activeChange = function(value){
-                var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
+                var wnds = self.app.el.windows.find('.wnd:not(.pipmini,.appwindow)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
                 window.rifticker.add(() => {
