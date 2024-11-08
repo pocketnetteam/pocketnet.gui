@@ -1226,9 +1226,10 @@ var pSDK = function ({ app, api, actions }) {
 
                         i.address = item.a || item.address
 
+
                         if(item.type == 'share'){ i.type = 'share'; i.key = item.txid || item.id }
                         if(item.type == 'video'){ i.type = 'share'; i.key = item.txid || item.id }
-                        if(item.type == 100){ i.type = 'channel'; i.key = i.address }
+                        if(item.type == 100 || item.k){ i.type = 'channel'; i.key = i.address }
 
                         if(!i.type){ 
                             i.type = 'comment'; 

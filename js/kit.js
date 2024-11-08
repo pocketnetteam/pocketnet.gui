@@ -3491,6 +3491,8 @@ pComment = function(){
 	return self;
 }
 
+
+
 Img = function(p){
 	if(!p) p = {};
  
@@ -3932,7 +3934,7 @@ kits = {
 		share : Share,
 		complainShare : ComplainShare,
 		modFlag : ModFlag,
-		modeVote : ModVote,
+		modVote : ModVote,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,

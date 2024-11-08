@@ -6261,7 +6261,9 @@ Platform = function (app, listofnodes) {
             },
             // Fetch all the jurys for a specific user address
             getjuryassigned: function(address) {
-                return self.psdk.jury.getjuryassigned(address)
+                return self.psdk.jury.getjuryassigned(address).catch(e => {
+                    return []
+                })
             },
 
             getjurymoderators: function(juryId) {
@@ -6284,6 +6286,7 @@ Platform = function (app, listofnodes) {
                 ///self.sdk.node.transactions.clearTempHard()
 
                 return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
+                    console.log("jury verdict", action)
                     successCheck()
                     sitemessage(self.app.localization.e('juryvote_success'))
 
@@ -6292,6 +6295,7 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve(action)
 
                 }).catch(e => {
+                    console.error(e)
                     self.app.platform.errorHandler(e, true)
 
                     return Promise.reject(e)

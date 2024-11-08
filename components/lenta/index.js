@@ -2482,6 +2482,8 @@ var lenta = (function(){
 							_el.remove()
 						}).catch(e => {
 							console.error(e)
+
+							sitemessage(e)
 						})
 
 					}
@@ -2506,9 +2508,12 @@ var lenta = (function(){
 					success : function(){	
 
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
+							console.log("JURY YES SEND")
 							_el.remove()
 						}).catch(e => {
 							console.error(e)
+
+							sitemessage(e)
 						})
 
 					}
@@ -3409,7 +3414,13 @@ var lenta = (function(){
 
 				if (item.type == 'comment'){
 
+					console.log('jury comment')
+
 					self.app.platform.papi.comment(item.commentPs.postid, _elcnt, () => {
+
+					console.log('jury comment clbk')
+
+
 						c()
 					}, {jury : true, commentPs : item.commentPs})
 					
