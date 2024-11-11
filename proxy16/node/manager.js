@@ -855,7 +855,7 @@ var Nodemanager = function(p){
 
         return new Promise((resolve, reject) => {
 
-            db.remove({ version: {$in : ['0.22.0', '0.22.1', '0.21.1', '0.21.2', '0.21.3', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
+            db.remove({ version: {$in : ['0.22.6', '0.22.5', '0.22.4', '0.22.3', '0.22.2', '0.22.0', '0.22.1', '0.21.1', '0.21.2', '0.21.3', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
 
                 if(err) return reject(err)
                 

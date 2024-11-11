@@ -9667,6 +9667,17 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+
+                if(self.currentBlock > 0){
+                    if(uinfo.bans){
+                        _.find(uinfo.bans, (b, index) => {
+                            if(b < self.currentBlock){
+                                return true
+                            }
+                        })
+                    }
+                }
+
                 if(typeof count == 'undefined') count = -12
 
                 if (ustate && ustate.reputation <= count && !self.real[address]/* &&

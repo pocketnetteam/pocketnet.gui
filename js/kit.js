@@ -2460,7 +2460,7 @@ pUserInfo = function(){
 	self.address = ''
 
 	self.rc = 0;
-
+	self.bans = {}
 	self.content = {}
 
 	self.objectid = makeid()
@@ -2477,6 +2477,7 @@ pUserInfo = function(){
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
 		self.deleted = v.deleted || false
+		self.bans = v.bans || {}
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;
@@ -2604,6 +2605,7 @@ pUserInfo = function(){
 		v.content = _.clone(self.content)
 
 		v.dev = self.dev
+		v.bans = self.bans
 
 
 		if (self.regdate && self.regdate.getTime){
