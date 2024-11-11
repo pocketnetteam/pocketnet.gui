@@ -1189,8 +1189,14 @@ var pSDK = function ({ app, api, actions }) {
         keys : ['jury'],
         getjuryassigned : function (address) {
 
+            
+
             return request('jury', address, (data) => {
-                return api.rpc('getjuryassigned', [address]).then(items => {
+                return api.rpc('getjuryassigned', [address], {
+                    rpc : {
+                        fnode : '65.21.252.135:38081'
+                    }
+                }).then(items => {
 
                     /*items.push({
                         id : '9b4788f9a6d55330e30416af16f39fef10cf84c30adff32d589396d99454afbc',
