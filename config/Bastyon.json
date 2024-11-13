@@ -74,6 +74,7 @@
             },
             
             "matrix" : "matrix.pocketnet.app",
+            "matrixMirrors" : ["matrix.2.pocketnet.app"],
 
             "monetization" : {
                 "url" : "pnettool.pocketnet.app",

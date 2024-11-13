@@ -2771,3 +2771,9 @@ _l.monet_footer_1 = "Внутренняя экономика Бастиона �
 _l.monet_signup = "ЗАРЕГИСТРИРОВАТЬСЯ НА БАСТИОНЕ";
 _l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com">support@bastyon.com</a>, чтобы зарабатывать через рекламу на канале`;
 
+_l.makePost = "Сделать публикацию"
+
+
+_l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
+_l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};

@@ -32,13 +32,21 @@ var application = (function(){
 	
 			},
 			gotohome : function(){
-				self.app.nav.api.load({
-					open : true,
-					href : 'index',
 
-					///href : 'home',
-					history : true,
-				})
+				if(self.container){
+					self.closeContainer()
+				}
+				else{
+					self.app.nav.api.load({
+						open : true,
+						href : 'index',
+	
+						///href : 'home',
+						history : true,
+					})
+				}
+
+				
 			},
 			openinfo : function(){
 				app.nav.api.load({
@@ -221,6 +229,10 @@ var application = (function(){
 						actions.install()
 					})
 
+					p.el.find('.back').on('click', function(){
+						actions.gotohome()
+					})
+
 					events.pageevents(p, true)
 					
 					if (clbk)
@@ -276,6 +288,10 @@ var application = (function(){
 
 					events.pageevents(p)
 
+					p.el.find('.back').on('click', function(){
+						actions.gotohome()
+					})
+
 					if (clbk)
 						clbk();
 				})
@@ -302,6 +318,10 @@ var application = (function(){
 
 					events.pageevents(p)
 
+					p.el.find('.back').on('click', function(){
+						actions.gotohome()
+					})
+
 					if (clbk)
 						clbk();
 				})
@@ -324,7 +344,7 @@ var application = (function(){
 			self.app.apps.on('installed', events.installed)
 			self.app.apps.on('removed', events.removed)
 
-			
+
 		}
 
 		var remake = function(id){
@@ -347,6 +367,8 @@ var application = (function(){
 		}
 
 		var make = function(){
+
+			console.log('application_notexist', self)
 
 			if(!application || !appdata){
 				renders.error('application_notexist')
@@ -409,13 +431,17 @@ var application = (function(){
 			},
 
 			getdata : function(clbk, p){
+
+				ed = p.settings.essenseData || {}
 				
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent_application')
 					self.app.mobile.reload.destroyparallax()
 				})
 
-				var id = parameters().id
+				var id = ed.application || parameters().id
+
+				var path = ed.path || ''
 
 				application = null
 				appdata = null
@@ -425,10 +451,23 @@ var application = (function(){
 					if (f){
 						application = f.application
 						appdata = f.appdata
+
+						if (ed.application){
+
+							var ps = {}
+
+							if(path) ps.p = path
+
+							ps.id = id
+
+							self.app.nav.api.history.addRemoveParameters([], ps, {
+								replaceState: true
+							})
+						}
 					}
 					
-	
-					ed = p.settings.essenseData
+					
+					
 	
 					var data = {
 						ed
@@ -491,6 +530,12 @@ var application = (function(){
 				p.clbk(null, p);
 
 			
+			},
+
+			clearparameters: ['id', 'p'],
+
+			wnd : {			
+				class : 'appwindow',
 			}
 		}
 	};

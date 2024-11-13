@@ -190,3 +190,19 @@
   border: 0;
   outline: 0;
 }
+.wnd.appwindow {
+  z-index: 500;
+}
+.wnd.appwindow ._close {
+  display: none;
+}
+.wnd.appwindow .wndinner {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}
+.wnd.appwindow .wndback {
+  backdrop-filter: none!important;
+  -webkit-backdrop-filter: none!important;
+}
