@@ -1820,6 +1820,11 @@ var share = (function(){
 							addTag : function(tag){
 								actions.addTag(tag)
 								renders.stateline()
+								
+								setTimeout(() => {
+									if (taginput)
+										taginput.focus()
+								}, 10)
 							},
 
 							addTags : function(tags){

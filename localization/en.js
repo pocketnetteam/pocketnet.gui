@@ -2125,6 +2125,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2962,3 +2964,8 @@ _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PK
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
 
+_l.makePost = "Make a publication"
+
+_l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
+_l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};
