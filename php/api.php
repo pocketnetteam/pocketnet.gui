@@ -87,5 +87,20 @@ class API {
 
         return array();
     }
+
+    public function urlpreview($url){
+
+
+        $action = 'urlPreview';
+        $params = array('url' => $url);
+
+        $data = $this->send($action, $params);
+
+        if (isset($data->og)){
+            return $data->og;
+        }
+
+        return NULL;
+    }
 	
 }

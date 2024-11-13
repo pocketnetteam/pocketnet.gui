@@ -1926,6 +1926,8 @@ _l.easyNode_e10061 = "Ваша Нода запущена. Все равно за
 _l.easyNode_e10062 = "Доступно обновление Ноды. Загрузить новую версию?"
 _l.easyNode_e10063 = "Нода успешно обновлена"
 _l.easyNode_e10064 = "Поддержка"
+_l.easyNode_e10065 = "Экспортируйте кошелек и сохраните в надежном месте перед пополнением баланса!"
+
 
 _l.IHave = "У меня";
 _l.downloadNode = "Скачать Ноду для Windows";
@@ -2606,6 +2608,9 @@ _l.permissions_name_chat = appname + " чат"
 _l.permissions_name_geolocation = "Доступ к местоположению"
 _l.permissions_descriptions_geolocation = "Приложение запрашивает разрешение к вашему местоположению"
 
+_l.permissions_name_externallink = "Открытие внешних ссылок";
+_l.permissions_descriptions_externallink = "Приложение запрашивает доступ на открытие внешних ссылок в браузере или других приложениях";
+
 
 _l.limits = "Лимиты"
 _l.pay = "Оплатить"
@@ -2780,3 +2785,9 @@ _l.juryCaptionUser = "Нарушает ли канал автора правил
 _l.juryCaptionReason = "Причина"
 _l.juryYes = "Да, нарушает"
 _l.juryNo = "Нет, не нарушает"
+_l.makePost = "Сделать публикацию"
+
+
+_l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
+_l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};

@@ -4173,6 +4173,7 @@ Platform = function (app, listofnodes) {
                     sharing : p.sharing || null,
                     embedding : p.embedding || null,
                     notincludedRef : true,
+                    canmakepost : p.canmakepost
                 }
             })
         },
@@ -21569,29 +21570,22 @@ Platform = function (app, listofnodes) {
 
         var hideallnotificationselement = function(show){
 
-            hideallnotificationselementShowed = show
-            
-            if(self.hideallnotificationsel){
-                window.rifticker.add(() => {
-                    if(show){
-                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+            if (hideallnotificationselementShowed == show) return
 
-                    }
-                    else{
-                        self.hideallnotificationsel.addClass('willhidden')
+            if (self.hideallnotificationsel){
+                if(show){
+                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
 
-                        setTimeout(function () {
-                            if (hideallnotificationselementShowed){
-                                return
-                            }
-                            self.hideallnotificationsel.html('')
-                            self.hideallnotificationsel.removeClass('willhidden')
-                        }, 200)
-                    }
-                })
-
+                }
+                else{
+                    self.hideallnotificationsel.addClass('willhidden')
+                    self.hideallnotificationsel.html('')
+                    self.hideallnotificationsel.removeClass('willhidden')
+                }
             }
+
+            hideallnotificationselementShowed = show
         }
 
         var arrangeMessages = function(){
@@ -24591,7 +24585,7 @@ Platform = function (app, listofnodes) {
             }
 
             core.activeChange = function(value){
-                var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
+                var wnds = self.app.el.windows.find('.wnd:not(.pipmini,.appwindow)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
                 window.rifticker.add(() => {

@@ -133,6 +133,7 @@ var BastyonApps = function(app){
     var getresources = {}
 
     var key = app.user.address.value || ''
+    var externalLinksStorageKey = 'externalLinksStorageKey'
 
     self.inited = false
 
@@ -199,7 +200,11 @@ var BastyonApps = function(app){
             uniq : false,
             session : true
         },
-
+        'externallink': {
+            name: 'permissions_name_externallink',
+            description: 'permissions_descriptions_externallink',
+            level: 1
+        },
         'zaddress' : {
             name : 'permissions_name_zaddress',
             description : 'permissions_descriptions_zaddress',
@@ -302,6 +307,25 @@ var BastyonApps = function(app){
                 var signature = app.user.signature(data.string + '/' + application.manifest.id)
 
                 return Promise.resolve(signature)
+            }
+        },
+        openExternalLink: {
+            parameters : ['url'],
+            permissions: ['externallink'],
+            action : function({ data }){
+                const url = data.url
+                if (window.cordova?.InAppBrowser) {
+                    window.cordova.InAppBrowser.open(url, '_system');
+                    return Promise.resolve()
+                }
+
+                if (electron?.shell?.openExternal) {
+                    electron.shell.openExternal(url);
+                    return Promise.resolve()
+                }
+
+                window.open(url, '_blank');
+                Promise.resolve()
             }
         },
 
@@ -512,6 +536,8 @@ var BastyonApps = function(app){
 
                 if(!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
+
+                if (typeof data.canmakepost == 'undefined') data.canmakepost = true
 
                 app.platform.ui.socialshare(null, data)
 
@@ -771,8 +797,6 @@ var BastyonApps = function(app){
                         return Promise.reject(appsError(e))
                     })
     
-                    //// TODO CHECK ELECTRON NODE SAFE
-                    return app.api.rpc(data.method, data.parameters, data.options)
                 }
             },
 
@@ -1290,7 +1314,7 @@ var BastyonApps = function(app){
     }
 
     var requestPermission = function(application, permission, data, p){
-
+        
         if (application.manifest.permissions.indexOf(permission) == -1){
             return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
         }
@@ -1465,10 +1489,6 @@ var BastyonApps = function(app){
 
             return
 
-            /// getapplication by info.id
-            install(/* getapplication by info.id, */ info.cached).catch(e => {
-
-            })
         }))
 
         
@@ -1583,7 +1603,26 @@ var BastyonApps = function(app){
         })
     }
 
+    
+
+    self.set = {
+        applicationExternalLink : function(scope, appid){
+            try{
+                localStorage[externalLinksStorageKey + '_' + scope] = appid
+            }catch(e){
+
+            }
+        }
+    }
+
     self.get = {
+        applicationExternalLink: function(scope){
+            try{
+                return localStorage[externalLinksStorageKey + '_' + scope] || null
+            }catch(e){
+
+            }
+        },
         forsearch : function(){
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
@@ -1671,7 +1710,7 @@ var BastyonApps = function(app){
             })
         },
 
-        installedAndInstalling : function({search = ''}){
+        installedAndInstalling : function(){
             var result = {}
 
             _.each(installing, (ins, id) => {
@@ -1690,6 +1729,37 @@ var BastyonApps = function(app){
             })
 
             return result
+        },
+
+        applicationsSearch : function(str = '', onlyInstalled){
+            var ins = this.installedAndInstalling()
+
+            str = str.toLowerCase()
+
+            /// added only scope
+
+            
+
+            var filtered =_.filter(ins, (application) => {
+                if(application.manifest){
+
+                    if(application.manifest.id == str) return true
+                    if(application.manifest.name.toLowerCase() == str) return true
+
+                    var scope = application.manifest.scope.replace('https://', '').toLowerCase()
+                    var i = str.indexOf(scope)
+
+                    console.log('scope', scope, str, i)
+
+                    if (i < 9 && i > 0) return true // /???
+                }
+            })
+
+            if(onlyInstalled) return filtered
+
+            /// add blockchain search
+
+            return Promise.resolve(filtered)
         },
 
         applicationall : function(id, cached){
@@ -1825,6 +1895,23 @@ var BastyonApps = function(app){
 
         clbks[key] = clbks[key].filter((a) => {
             return a != action
+        })
+    }
+
+    self.openInWnd = function(application, clbk, path){
+        app.nav.api.load({
+            open: true,
+            href: 'application',
+            inWnd : true,
+            history : true,
+            eid: 'application_' + application.manifest.id,
+            clbk: clbk,
+
+            essenseData: {
+                application : application.manifest.id,
+                path : path
+
+            }
         })
     }
 

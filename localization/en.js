@@ -2125,6 +2125,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2803,6 +2805,9 @@ _l.permissions_name_chat = appname + " chat"
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
+_l.permissions_name_externallink = "Opening External Links";
+_l.permissions_descriptions_externallink = "The application requests permission to open external links in the browser or other applications";
+
 _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'
@@ -2974,3 +2979,8 @@ _l.juryCaptionReason = "Reason"
 _l.juryYes = "Yes, it does"
 _l.juryNo = "No, it does not violate"
 
+_l.makePost = "Make a publication"
+
+_l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
+_l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};
