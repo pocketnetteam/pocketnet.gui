@@ -3082,7 +3082,8 @@ Platform = function (app, listofnodes) {
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
                             openapi : typeof p.openapi == 'undefined' ? true : p.openapi,
-                            playingClbk : p.playingClbk
+                            playingClbk : p.playingClbk,
+                            jury : p.jury
                         }
                     })
 
@@ -3173,7 +3174,8 @@ Platform = function (app, listofnodes) {
             if(clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p, a){
+        channel : function(id, el, clbk, p = {}, a){
+
 
             var r = false
 
@@ -3197,7 +3199,8 @@ Platform = function (app, listofnodes) {
 
                         essenseData: {
                             id : id,
-                            openapi : true
+                            openapi : true,
+                            jury : p.jury
                         }
                     })
 
@@ -3251,8 +3254,9 @@ Platform = function (app, listofnodes) {
         comment : function(id, el, clbk, p, additional){
 
             if(!additional) additional = {}
+            if(!p) p = {}
 
-            var ps = additional.commentPs || p.commentPs
+            var ps = additional.commentPs || p.commentPs || {}
 
             app.nav.api.load({
                 open : true,
@@ -3268,6 +3272,7 @@ Platform = function (app, listofnodes) {
                     fromtop : true,
                     commentPs : ps,
                     openapi : p.openapi,
+                    jury : p.jury
 
                 },
 
@@ -3916,25 +3921,36 @@ Platform = function (app, listofnodes) {
 
         },
 
-        usertype : function(address){
+        
+        markUser : function(address){
 
-            var info = self.psdk.userInfo.getShortForm(address)
+            var t = self.sdk.user.type(address)
 
-            if (info.dev) return 'dev'
-            if (info.real) return 'real'
+            if (t == 'dev') return this.markDev();
+            if (t == 'real') return this.markReal();
+            if (t == 'shark') return this.markShark();
+            if (t == 'moderator') return this.markModerator();
 
             return ''
 
         },
-        markUser : function(address){
+        markShark : function(){
 
-            var t = self.ui.usertype(address)
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
 
-            if (t == 'dev') return this.markDev();
-            if (t == 'real') return this.markReal();
-
-            return ''
-
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
 
         markReal : function(){
@@ -6237,6 +6253,59 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        jury: {
+
+            // Fetch all the jurys
+            getalljury: function() {
+                return self.app.api.rpc('getalljury');
+            },
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function(address) {
+                return self.psdk.jury.getjuryassigned(address).catch(e => {
+                    return []
+                })
+            },
+
+            getjurymoderators: function(juryId) {
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+            },
+
+            sendverdict : function(juryobject, verdict){
+
+                if(!juryobject || typeof verdict == undefined){
+                    self.app.platform.errorHandler('network', true)
+
+                    return Promise.reject('network')
+                }
+
+                var modvote = new ModVote();
+
+                modvote.s2.set(juryobject.id)
+                modvote.i1.set(verdict || 0)
+
+                ///self.sdk.node.transactions.clearTempHard()
+
+                return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
+                    console.log("jury verdict", action)
+                    successCheck()
+                    sitemessage(self.app.localization.e('juryvote_success'))
+
+                    self.psdk.jury.clear()
+
+                    return Promise.resolve(action)
+
+                }).catch(e => {
+                    console.error(e)
+                    self.app.platform.errorHandler(e, true)
+
+                    return Promise.reject(e)
+
+                })
+            }
+
+        },
+
         external : {
             expandLink : function(json = {}){
 
@@ -9168,6 +9237,32 @@ Platform = function (app, listofnodes) {
 
             storage: {
             },
+
+            isjury : function(address){
+
+                if(!address) address = self.app.user.address.value
+
+                return self.sdk.user.type(address) == 'moderator'
+    
+            },
+
+            type : function(address){
+
+                var info = self.psdk.userInfo.getShortForm(address)
+    
+                if (info.dev) return 'dev'
+                if (info.real) return 'real'
+    
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+    
+                if (ustate){
+                    if(ustate.badges && ustate.badges.indexOf('moderator') > -1) return 'moderator'
+                    if(ustate.badges && ustate.badges.indexOf('shark') > -1) return 'shark'
+                }
+    
+                return ''
+    
+            },
             
             stateAction : function(clbk, messages){
                 app.user.isState(function(state){
@@ -9571,6 +9666,17 @@ Platform = function (app, listofnodes) {
 
                 if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
                     return true
+                }
+
+
+                if(self.currentBlock > 0){
+                    if(uinfo.bans){
+                        _.find(uinfo.bans, (b, index) => {
+                            if(b < self.currentBlock){
+                                return true
+                            }
+                        })
+                    }
                 }
 
                 if(typeof count == 'undefined') count = -12
@@ -15585,6 +15691,9 @@ Platform = function (app, listofnodes) {
                 ////TODO_REF_ACTIONS
 
                 checkvisibility : function(share){
+
+                    if(!share.visibility) return false
+
                     var v = share.visibility()
 
                     var a = self.sdk.address.pnet()
@@ -16072,6 +16181,51 @@ Platform = function (app, listofnodes) {
 
 
                         }
+
+                    })
+                },
+
+                jury : function(p = {}, clbk, cache){
+
+                    console.log("JURY", cache)
+
+                    if(!p.page) p.page = 0
+                    if(!p.count) p.count = 20
+                    
+
+                    self.app.user.isState(function (state) {
+
+                        if(!state){
+                            return clbk([])
+                        }
+
+                        p.address = self.sdk.address.pnet().address;
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'jury' + p.address
+                        var promise = null
+
+                        if (cache != 'clear' && storage[key]) {
+                            promise = () => {
+                                return Promise.resolve(storage[key])
+                            }
+                        }
+                        else {
+                            promise = self.app.platform.sdk.jury.getjuryassigned(p.address)
+                        }
+
+                        promise.then((items) => {
+
+                            items = _.filter(items, (item, i) => {
+                                return i >= p.page * p.count && i < (p.page + 1) * p.count
+                            })
+
+                            items =  self.psdk.jury.tempRemove(items, (i) => {return true})
+
+                            console.log("cjury ", items)
+
+                            if(clbk) clbk(items, null, {})
+                        })
 
                     })
                 },
@@ -23990,7 +24144,7 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
+                            var massmailingenabled = self.app.platform.istest() || (self.sdk.user.type(self.app.user.address.value) ? true : false)
                             
                             var iscallsenabled = true///self.app.platform.istest() ? true : false
 
