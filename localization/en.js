@@ -2326,6 +2326,8 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
+
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2942,6 +2944,12 @@ _l.quotanow = function(v){
 }
 
 
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on "+appname+" for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on "+appname+" for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of "+appname+" for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
 _l.openin = "Open"
 
 _l.monet_title = "A new advertising and monetization program for bloggers has been launched on Bastyon starting from September 9th." 
@@ -2963,6 +2971,13 @@ _l.monet_increaseearnings_text3 = "Video length does not matter on Bastyon as ad
 _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PKOIN)"; 
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
+
+_l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionReason = "Reason"
+_l.juryYes = "Yes, it does"
+_l.juryNo = "No, it does not violate"
 
 _l.makePost = "Make a publication"
 
