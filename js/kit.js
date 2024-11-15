@@ -2419,6 +2419,10 @@ Miniapp = function(){
 		self.tags = d.tags || [];
 	}
 
+	self.typeop = function(){
+		return 'miniapp'
+	}
+
 	self.type = 'miniapp';
 
 	return self;
