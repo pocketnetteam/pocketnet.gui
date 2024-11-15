@@ -2959,3 +2959,28 @@ _l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PK
 _l.monet_signup = "SIGN UP ON BASTYON"; 
 _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
 
+
+_l.miniApp_publishMessage = "Publishing the mini-app: {0}";
+_l.miniApp_requiredMessage = "This field cannot be empty";
+_l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?";
+_l.miniApp_yesButton = "Yes";
+_l.miniApp_noButton = "Cancel";
+_l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
+_l.miniApp_loadErrorMessage = "Failed to load application data.";
+_l.miniApp_iconAltText = "App Icon";
+_l.miniApp_publishButton = "Publish";
+_l.miniApp_editButton = "Edit";
+_l.miniApp_deleteButton = "Delete";
+_l.miniApp_authorLabel = "Author";
+_l.miniApp_versionLabel = "Version";
+_l.miniApp_permissionsLabel = "Permissions";
+_l.miniApp_idLabel = "ID";
+_l.miniApp_linkLabel = "App Link";
+_l.miniApp_goToAppLinkText = "Go to App";
+_l.miniApp_descriptionUnavailable = "Description unavailable";
+_l.miniApp_editTitle = "Edit Application <%= id %>";
+_l.miniApp_versionLabel = "Version";
+_l.miniApp_scopeLabel = "Scope";
+_l.miniApp_nameLabel = "Name";
+_l.miniApp_saveButton = "Save";
+_l.miniApp_cancelButton = "Cancel";
