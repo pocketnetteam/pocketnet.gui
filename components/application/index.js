@@ -94,9 +94,10 @@ var application = (function(){
 			},
 
 			loaded : function(p){
-
+				console.log('loaded', p);
+				
 				if(!application) return
-
+				
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
@@ -123,8 +124,8 @@ var application = (function(){
 				}
 			},
 
-			installed : function(p = {}){
-				if (p.application.manifest.id == application.manifest.id){
+			installed : function(p = {}){				
+				if (p.application.manifest?.id == application.manifest?.id){
 					remake(p.application.manifest.id)
 				}
 			},

@@ -2766,3 +2766,29 @@ _l.monet_footer_1 = "Внутренняя экономика Бастиона �
 _l.monet_signup = "ЗАРЕГИСТРИРОВАТЬСЯ НА БАСТИОНЕ";
 _l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com">support@bastyon.com</a>, чтобы зарабатывать через рекламу на канале`;
 
+
+
+_l.miniApp_requiredMessage = "Это поле не может быть пустым";
+_l.miniApp_publishMessage = "Публикация мини-приложения: {0}";
+_l.miniApp_deleteConfirmation = "Вы уверены, что хотите удалить мини-приложение?";
+_l.miniApp_yesButton = "Да";
+_l.miniApp_noButton = "Отмена";
+_l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
+_l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
+_l.miniApp_iconAltText = "Иконка приложения";
+_l.miniApp_publishButton = "Публиковать";
+_l.miniApp_editButton = "Редактировать";
+_l.miniApp_deleteButton = "Удалить";
+_l.miniApp_authorLabel = "Автор";
+_l.miniApp_versionLabel = "Версия";
+_l.miniApp_permissionsLabel = "Права доступа";
+_l.miniApp_idLabel = "ID";
+_l.miniApp_linkLabel = "Ссылка на приложение";
+_l.miniApp_goToAppLinkText = "Перейти к приложению";
+_l.miniApp_descriptionUnavailable = "Описание недоступно";
+_l.miniApp_editTitle = "Редактирование приложения: ";
+_l.miniApp_versionLabel = "Версия";
+_l.miniApp_scopeLabel = "Scope";
+_l.miniApp_nameLabel = "Название";
+_l.miniApp_saveButton = "Сохранить";
+_l.miniApp_cancelButton = "Отмена";
