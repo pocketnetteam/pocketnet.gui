@@ -2353,7 +2353,7 @@ brtOffer = function(){
 
 /* ---- */
 
-miniapp = function(){
+Miniapp = function(){
 	var self = this;
 
 	self.id = null;
@@ -3954,7 +3954,7 @@ kits = {
 		accSet : Settings,
 		brtoffer : brtOffer,
 		brtaccount : brtAccount,
-		miniapp : miniapp
+		miniapp : Miniapp
 
 	},
 
