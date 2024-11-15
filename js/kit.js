@@ -2353,6 +2353,77 @@ brtOffer = function(){
 
 /* ---- */
 
+miniapp = function(){
+	var self = this;
+
+	self.id = null;
+	self.hash = ''
+	self.address = '';
+	self.name = '';
+	self.description = '';
+	self.tags = []
+	
+
+	self.validation = function(){
+		if(!self.id) return 'id';
+		if(!self.address) return 'address';
+		if(!self.description) return 'description';
+		if(!self.name) return 'name';
+		if(!self.tags.length) return 'tags';
+
+	}
+
+	self.serialize = function(){
+		return self.address +
+				(self.hash ?? '') +
+				JSON.stringify({
+					n: self.name,
+					d: self.description,
+					t: self.tags
+				}) +
+				self.id
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				hash: self.hash || null,
+				id : self.id,
+				name: self.name,
+				description: self.description,
+				tags: self.tags
+			};
+		}
+
+		return {
+			s1: self.address,
+			...(self.hash && { s2: self.hash }),
+			p: {
+				s1: JSON.stringify({
+					n: self.name,
+					d: self.description,
+					t: self.tags
+				}),
+				s2: self.id
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || '';
+		self.hash = d.hash || null;
+		self.name = d.name || '';
+		self.id = d.id || '';
+		self.description = d.description || '';
+		self.tags = d.tags || [];
+	}
+
+	self.type = 'miniapp';
+
+	return self;
+}
+
 
 pUserInfo = function(){
 
@@ -3882,7 +3953,8 @@ kits = {
 		contentDelete : Remove,
 		accSet : Settings,
 		brtoffer : brtOffer,
-		brtaccount : brtAccount
+		brtaccount : brtAccount,
+		miniapp : miniapp
 
 	},
 
