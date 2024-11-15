@@ -2420,11 +2420,81 @@ Miniapp = function(){
 	}
 
 	self.typeop = function(){
-		return 'miniapp'
+		return 'app'
+	}
+
+	self.alias = function(){
+		var ma = new pMiniapp();
+
+		ma._import(self)
+
+		return ma;
 	}
 
 	self.type = 'miniapp';
 
+	return self;
+}
+
+pMiniapp = function(){
+	var self = this
+
+	self.id = null;
+	self.hash = ''
+	self.address = '';
+	self.name = '';
+	self.description = '';
+	self.tags = []
+
+	self._import = function(v){
+		self.name = v.name || '';
+		self.hash = v.hash || '';
+		self.address = v.address || '';
+		self.description = v.description || '';
+		self.id = v.id || null;
+		self.tags = v.tags || [];
+
+		if(v.s1) self.address = v.s1
+		if(v.s2) self.hash = v.s2
+
+		if(v.p){
+			if(v.p.s1){
+				var js = JSON.parse(v.p.s1)
+
+				self.name = js.n || '';
+				self.description = js.d || '';
+				self.tags = js.t || [];
+			}
+
+			if(v.p.s2){
+				self.id = v.p.s2
+			}
+		}
+	}
+
+	self.export = function(){
+
+		var v = {};
+
+		v.name = self.name
+		v.hash = self.hash 
+		v.id = self.id 
+		v.address = self.address 
+		v.description = self.description 
+		v.tags = _.clone(self.tags)
+
+
+		return v
+	}
+
+	self.import = function(v){
+		v = JSON.parse(v)
+
+		self._import(v)
+	}
+
+
+	self.type = 'miniapp';
 	return self;
 }
 
@@ -3970,7 +4040,8 @@ kits = {
 		share : pShare,
 		comment : pComment,
 		contentDelete : pRemove,
-		settings : pSettings
+		settings : pSettings,
+		miniapp : pMiniapp
 	}
 }
 
