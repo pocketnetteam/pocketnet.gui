@@ -106,6 +106,12 @@ var pSDK = function ({ app, api, actions }) {
         transactionsRequest : {
             time : 60
         },
+        miniappRequest: {
+            time: 60 * 60 // temp
+        },
+        miniapp : {
+            time : 60 * 60
+        },
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -1574,12 +1580,127 @@ var pSDK = function ({ app, api, actions }) {
         },
 
     }
+    
+    self.miniapp = {
+        keys : 'miniapp',
+        request: function (executor, hash, cacheIndex) {
+
+            return request('miniapp', hash, (data) => {
+                
+                return executor(data).then(r => {
+                    return this.cleanData(r)
+                })
+
+            }, {
+                requestIndexedDb: cacheIndex || 'miniappRequest',
+
+                insertFromResponse: (r) => this.insertFromResponse(r)
+            })
+        },
+
+        insertFromResponse: function (data) {
+
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.hash,
+                    data: r
+                }
+            })
+
+            var indexedDb = 'miniapp'
+            var key = 'miniapp'
+
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data) {
+                        storage[key][r.key] = r.data // ADD STORAGE
+                        filtered.push(r)
+                    }
+
+                    var object = this.transform(r)  // ADD STORAGE (TR)
+
+                    if (object) {
+                        objects[key][r.key] = object
+
+                        checkObjectInActions([object])
+                    }
+
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        cleanData : function(rawapps){
+            return _.filter(_.map(rawapps, (c) => {
+
+                if(!c) return false
+
+                var miniappjson = {}
+
+                try {
+
+                    
+                        miniappjson.address = c.s1 || ''
+                        miniappjson.hash = c.s2 || ''
+
+                    if(c.p){
+                        if(c.p.s1){
+                            var js = JSON.parse(c.p.s1)
+            
+                            miniappjson.name = js.n || '';
+                            miniappjson.description = js.d || '';
+                            miniappjson.tags = js.t || [];
+                        }
+                        else{
+                            return null
+                        }
+            
+                        if (c.p.s2){
+                            miniappjson.id = c.p.s2
+                        }else{
+                            return null
+                        }
+                    }
+                    else{
+                        return null
+                    }
+
+                }
+                catch (e) {
+                    console.error(e)
+
+                    return null
+                }
+
+                return miniappjson
+
+            }), c => c)
+        },
+
+        transform: function ({ key, data: miniapp }) {
+
+            var s = new pMiniapp();
+
+            s._import(miniapp);
+
+            return s
+        },
+    }
 
     self.share = {
         keys: ['share'],
 
         request: function (executor, hash, cacheIndex) {
-
 
             return request('share', hash, (data) => {
                 
@@ -1589,15 +1710,10 @@ var pSDK = function ({ app, api, actions }) {
                         return r
                     }
 
-
-
                     if(_.isArray(r)){
                         r = {
                             contents : r
                         }
-                        /*return Promise.resolve({
-                            contents : data
-                        })*/
                     }
 
 
