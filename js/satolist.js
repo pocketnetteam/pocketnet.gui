@@ -6236,6 +6236,48 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        miniapps : {
+            gettest : function(ps = {}, rpc){
+                return self.psdk.share.request(() => {
+
+                    var parameters = {
+                        tags : [],
+                        search : '',
+                        topHeight : self.currentBlock,
+                        pageStart : 0,
+                        pageSize : 20,
+                        orderBy : 'height',
+                        orderDesc : true,
+                        ...ps
+                    }
+
+
+                    return self.app.api.rpc('getapps', _.toArray(parameters), {
+                        rpc : rpc
+                    }).then(data => {
+
+                        return Promise.resolve(data)
+
+                    })
+                }, {
+                    method,
+                    parameters
+                }).then(d => {
+
+                    return Promise.resolve(d)
+
+                }).catch(e => {
+
+                    console.error('e', e)
+
+                    if (clbk) {
+                        clbk([], e)
+                    }
+
+                })
+            }
+        },
         external : {
             expandLink : function(json = {}){
 

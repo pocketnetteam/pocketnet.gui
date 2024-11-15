@@ -1583,7 +1583,7 @@ var pSDK = function ({ app, api, actions }) {
     
     self.miniapp = {
         keys : 'miniapp',
-        request: function (executor, hash, cacheIndex) {
+        request: function (executor, hash) {
 
             return request('miniapp', hash, (data) => {
                 
@@ -1592,7 +1592,7 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
-                requestIndexedDb: cacheIndex || 'miniappRequest',
+                requestIndexedDb: 'miniappRequest',
 
                 insertFromResponse: (r) => this.insertFromResponse(r)
             })
@@ -1605,7 +1605,7 @@ var pSDK = function ({ app, api, actions }) {
                 if (!r) return null
 
                 return {
-                    key: r.hash,
+                    key: r.id,
                     data: r
                 }
             })
@@ -1694,6 +1694,10 @@ var pSDK = function ({ app, api, actions }) {
             s._import(miniapp);
 
             return s
+        },
+
+        get: function (id) {
+            return objects.miniapp[id] || null
         },
     }
 
