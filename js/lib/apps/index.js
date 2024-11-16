@@ -539,6 +539,12 @@ var BastyonApps = function(app){
 
                 if (typeof data.canmakepost == 'undefined') data.canmakepost = true
 
+                if (data.sharing){
+                    data.sharing.tags || (data.sharing.tags = [])
+                    data.sharing.tags.push(application.manifest.name)
+                }
+                
+
                 app.platform.ui.socialshare(null, data)
 
                 return Promise.resolve()
