@@ -5438,6 +5438,18 @@ html.allcontent_application #footerWrapper {
 .fastMessage.smallsize .cwrapper > div .tips > div {
   display: none;
 }
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage {
+  display: block;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .transactionmessagewrapper {
+  display: block;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .foramount {
+  text-align: left;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .formessage {
+  display: none;
+}
 .fastMessage.smallsize .cwrapper > div .tips > div.notifytext {
   display: block;
   font-size: 0.8em;

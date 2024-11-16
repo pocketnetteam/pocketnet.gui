@@ -24,7 +24,7 @@
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
-        "store" : {}
+        "store" : {"g" : true}
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
