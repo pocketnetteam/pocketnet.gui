@@ -12101,8 +12101,6 @@ Platform = function (app, listofnodes) {
 
                 var apppromise = (() => {return Promise.resolve(null)})()
 
-    console.log('appinfo', appinfo)
-
                 if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
 
@@ -20587,6 +20585,8 @@ Platform = function (app, listofnodes) {
 
                     platform.actions.ws.block(data)
 
+                    platform.app.apps.emit('block', {height : hb})
+
                     ////////////////
 
 
@@ -20663,6 +20663,9 @@ Platform = function (app, listofnodes) {
                     _.each(platform.sdk.node.transactions.storage, (tx) => {
                         if(tx.height && tx.height != platform.currentBlock) tx.confirmations ++
                     })
+
+
+                    platform.app.apps.emit('block', {height : data.block || data.height})
 
                     ////////////////
 
@@ -21921,7 +21924,7 @@ Platform = function (app, listofnodes) {
                 if (!m) m = {}
 
 
-                if (data.txid) {
+               if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -22478,8 +22481,10 @@ Platform = function (app, listofnodes) {
                 node: "137.135.25.73:38081:8087",
                 time: 1636521290,
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
-            })*/
+            })
 
+
+            self.messageHandler({"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","msg":"transaction","txid":"02049bfc66ccf0efdd03cf715dad9d3f18c729b4012671982b115ff4d67f8069","time":1731655840,"amount":"1250000","nout":"6","node":"185.9.187.123:38081:8087"})*/
             
 
             // test coin
