@@ -159,7 +159,11 @@ const publics = {
     getjuryassigned: true,
     getjurymoderators: true,
 
-    getbans : true
+    getbans : true,
+
+    getapps : true,
+    getappscores : true,
+    getappcomments : true
 
 }
 
@@ -563,9 +567,11 @@ RpcClient.callspec = {
     getjuryassigned: 'str',
     getjurymoderators: 'str',
 
-    getbans: 'str'
+    getbans: 'str',
 
-    
+    getapps : 'obj str int int int str bool',
+    getappscores : 'str int int int str bool',
+    getappcomments : 'str int int int str bool'
 
 };
 
