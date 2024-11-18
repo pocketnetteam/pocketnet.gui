@@ -44,7 +44,7 @@
         
             require_once('php/og.php'); 
 
-            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project");
+            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project", $_SERVER['REQUEST_URI'], '__VAR__.strconfig');
 
             $og->get();
             $og->echotags();
@@ -108,6 +108,7 @@
             <div id="footerWrapper">
                 
             </div>
+            <div id="miniappscnt"></div>
 
         </div>
 

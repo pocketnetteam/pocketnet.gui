@@ -11,8 +11,21 @@
 		"cantdelete" : true,
 		"name" : "Swipelux",
         "develop" : true,
-        "install" : true
-	}],
+        "install" : true,
+        "store" : {"g" : true}
+	},{
+        "id" : "barteron.pocketnet.app",
+        "version": "1.0.0",
+        "scope" : "barteron.club",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Barteron",
+        "grantedPermissions" : ["account", "chat"],
+        "includeinsearch" : true,
+        "includeminiapps" : true,
+        "store" : {"g" : true}
+    }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
@@ -61,6 +74,7 @@
             },
             
             "matrix" : "matrix.pocketnet.app",
+            "matrixMirrors" : ["matrix.2.pocketnet.app"],
 
             "monetization" : {
                 "url" : "pnettool.pocketnet.app",

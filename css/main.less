@@ -924,7 +924,10 @@ button{
         border: 1px solid rgb(var(--color-good));
     }
 
-
+    &.bad{
+        background: rgb(var(--color-bad));
+        border: 1px solid rgb(var(--color-bad));
+    }
     &.contrast{
         background: rgb(var(--color-bg-ac-2));
         border: 1px solid rgb(var(--color-bg-ac-2));
@@ -2694,6 +2697,7 @@ input[type=radio].radio:checked + label {
 #windowsContainer{
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
     }
     .wnd{
 
@@ -3813,6 +3817,21 @@ html.mobileview.android{
     .body{
         margin: 3 * @rhythm 0;
         font-size: 0.9em;
+    }
+
+    .nomoreaskWrapper{
+        margin-bottom: 3 * @rhythm;
+        margin-top: 3 * @rhythm;
+        font-size: 0.8em;
+        cursor: pointer;
+
+        .fa-check-circle{
+            color : rgb(var(--color-good));
+        }
+
+        .fa-circle{
+            color : rgb(var(--neutral-grad-2));
+        }
     }
 
     .buttons{
@@ -5588,6 +5607,7 @@ html.mobileview{
     .result{
         min-height: 33px;
     }
+    .swra,
     .swrp,
     .userTable{
         display: flex;
@@ -5604,6 +5624,19 @@ html.mobileview{
             margin-left: @rhythm;
             text-align: center;
         }
+    }
+
+    .swra{
+        font-weight: 700;
+		text-align: left;
+
+        .appicon{
+			width: 44px;
+			height: 44px;
+			border-radius: 6px;
+			background: rgb(var(--background-secondary-theme));
+			position: relative;
+		}
     }
 
     .swrp{
@@ -6078,6 +6111,34 @@ html.allcontent_application{
     
 }
 
+
+
+.appiconsmall{
+    
+    line-height: 0.25em;
+    font-size: 0.25em;
+    opacity: 1;
+    position : absolute;
+    bottom : -4%;
+    right : -4%;
+    .shadowText();
+
+    .real{
+
+        
+        .fa-certificate{
+            color : rgb(var(--color-bg-orange));
+        }
+
+        .fa-play{
+            color : rgb(var(--text-on-bg-ac-color));
+            box-shadow: none;
+            margin-left: 0.1em;
+        }
+
+    }
+}
+
 .realperson{
    
     line-height: 0.25em;
@@ -6105,6 +6166,16 @@ html.allcontent_application{
         .fa-code{
             color : rgb(var(--text-on-bg-ac-color));
         }   
+    }
+
+    .shark, .moderator {
+        .fa-certificate{
+            color : rgb(var(--color-bg-ac-bright));
+        }
+        .fa-crown, .fa-flag{
+            color : rgb(var(--text-on-bg-ac-color));
+            box-shadow: none;
+        }
     }
 }
 
@@ -6548,6 +6619,22 @@ html.allcontent_application{
                 .tips{
                     >div{
                         display: none;
+
+                        &.transactionmessage{
+                            display: block;
+
+                            .transactionmessagewrapper{
+                                display: block;
+                            }
+
+                            .foramount{
+                                text-align: left;
+                            }
+
+                            .formessage{
+                                display: none;
+                            }
+                        }
 
                         &.notifytext{
                             display: block;
@@ -7868,18 +7955,33 @@ html{
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#ffffff', GradientType=0 );
     }
 }*/
-
+#miniappscnt{
+    position: fixed;
+    left: 0;
+    width: 44px;
+    bottom: 52px;
+    border-top-right-radius: @rhythm;
+    border-bottom-right-radius: @rhythm;
+    overflow: hidden;
+    z-index: 15;
+}
 
 
 @media only screen and (max-width: 1400px) {
     .rightchatspacer{
         margin-right: 33px;
+        margin-left: 33px;
     }
 }
 
 @media only screen and (max-width: 768px) {
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
+    }
+
+    #miniappscnt{
+        display: none;
     }
 }
 
@@ -7894,9 +7996,6 @@ html{
 }
 
 
-
-
-
 @media only screen and (max-width: 1280px) {
     #content{
         .work{
@@ -7909,6 +8008,7 @@ html{
 html.mobileview{
     .rightchatspacer{
         margin-right: 0;
+        margin-left: 0;
     }
 
     #content .work{
@@ -8401,6 +8501,11 @@ html.mobileview{
 
 
     .wnd{
+        &.normalizedmobile{
+            .customscroll{
+                overscroll-behavior: none;
+            }
+        }
         &.normalizedmobile:not(.hiddenState){
             contain: strict;
 

@@ -17,6 +17,8 @@
             $og->echotags();
         ?>
 
+    <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+
   </head>
   <body id="custom-css" class="standalone-video-embed">
     <div id="error-block">
@@ -70,13 +72,8 @@
         }
       })
       
-      console.log("here1")
-      api.initIf(() => {
-
+      api.initIf().then(() => {
         return api.getPeertubeserversList()
-
-        console.log("here")
-
       }).catch(e => {
         console.error(e)
       }).then(() => {

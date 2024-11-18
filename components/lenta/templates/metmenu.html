@@ -200,7 +200,7 @@ if(share){
 		}
 
 
-		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
+		if (my && (!share.time || share.time > (new Date()).addHours(-24 * 120) )){
 			m.push('edit')
 		}
 

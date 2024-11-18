@@ -1626,7 +1626,8 @@ var authorn = (function(){
 				el.blocking = el.c.find('.blocking')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 
-				self.sdk.activity.adduser('visited', author.address)
+				if(!self.app.user.isItMe(author.address))
+					self.sdk.activity.adduser('visited', author.address)
 
 				initEvents();
 				init()

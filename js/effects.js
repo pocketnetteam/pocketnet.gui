@@ -448,7 +448,6 @@ FX_Manager = function(app){
 
     var importlibs = function(clbk){
 
-
         importScripts(lib, relations, function(){
 
             if (clbk)
@@ -458,7 +457,15 @@ FX_Manager = function(app){
     }
 
     self.prepare = function(clbk){
-        importlibs(clbk)
+
+
+        if (typeof _Electron != 'undefined') {
+            clbk()
+        }
+        else{
+            importlibs(clbk)
+        }
+        
 
         return self
     }

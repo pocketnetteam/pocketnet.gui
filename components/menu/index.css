@@ -573,6 +573,13 @@
 #menu .searchFastResultWrapper .user:hover {
   color: rgb(var(--color-txt-ac));
 }
+#menu .searchFastResultWrapper .appicon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
+  position: relative;
+}
 #menu .searchFastResultWrapper .searchbywrapper .caption {
   padding-bottom: 0.5em;
 }
@@ -580,6 +587,17 @@
   font-weight: 700;
   color: rgb(var(--color-txt-ac));
   font-size: 0.9em;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra > div.label {
+  font-weight: 700;
+  text-align: left;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp {
   width: 100%;

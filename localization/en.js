@@ -2125,6 +2125,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2324,6 +2326,8 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
+
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2801,6 +2805,9 @@ _l.permissions_name_chat = appname + " chat"
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
+_l.permissions_name_externallink = "Opening External Links";
+_l.permissions_descriptions_externallink = "The application requests permission to open external links in the browser or other applications";
+
 _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'
@@ -2924,3 +2931,56 @@ _l.foreground_service_mediaPlayback_title = appname
 _l.foreground_service_mediaPlayback_text = "The "+appname+" is playing a video"
 _l.foreground_service_mediaUploading_title = appname
 _l.foreground_service_mediaUploading_text = "The "+appname+" is uploading video"
+
+_l.stateactionDefault = "To perform the action you must register or log in to your account."
+
+_l.incomingVideoCall = "Incoming video call"
+_l.incomingAudioCall = "Incoming audio call"
+_l.connecting = "Connecting"
+
+
+_l.quotanow = function(v){
+	return "You can upload a video no larger than"
+}
+
+
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on "+appname+" for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on "+appname+" for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of "+appname+" for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
+_l.openin = "Open"
+
+_l.monet_title = "A new advertising and monetization program for bloggers has been launched on Bastyon starting from September 9th." 
+_l.monet_subtitle = "What does this program entail, how does it work, who can participate, how are earnings calculated, and why is it needed?"  
+_l.monet_howworks_title = "How it works:"; 
+_l.monet_howworks_text_1 = "Advertisers promote their products or services on Bastyon (information for advertisers can be found here bastyon.com/boost). The ads appear in the main feed and in author channels. All earnings from the main feed go to nodes (information on how to earn through a simple node bastyon.com/easynode), while earnings from author channels go directly to the authors. Bastyon is not a corporation and does not operate for profit, so all advertising revenue from channels goes to the authors."; 
+_l.monet_participation_title = "Who participates and what are the payouts:"; 
+_l.monet_participation_text_1 = "At the initial stage, monetization only works on verified author channels. Over time, the program will expand to other channels with high activity. Authors can disable monetization by removing ads and forfeiting their payouts." 
+_l.monet_participation_text_2 = `If you have a channel outside of Bastyon with more than 1,000 subscribers, you can email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to request verification.` 
+_l.monet_participation_text_3 = "IMPORTANT: Authors earn proportionally to the activity and number of people on their channel. The more comments and ratings, the higher the payouts from the advertising pool. Authors have a Monetization dashboard in their settings where they can view their payout history. Payouts are made at the end of each week for activity on posts made in the past two weeks."; 
+_l.monet_monet_withdrawal_title = "How authors can withdraw earnings (very simple):"; 
+_l.monet_monet_withdrawal_text_1 = `Authors can withdraw PKOIN through exchanges like Tapbit, Digifineх, or through peer-to-peer exchanges in rubles, dollars, or any other currency. For author convenience, some older exchanges are directly available in the monetization dashboard. Other exchanges with a year or more of active history will be added to the dashboard. For withdrawal inquiries, contact support at <a href="mailto:support@bastyon.com">support@bastyon.com</a>` 
+_l.monet_calculation_title = "How payouts are calculated?"; 
+_l.monet_calculation_text1 = "Earnings vary depending on the amount of advertising in a week and how much advertisers have paid. The money from advertisers is divided among authors, but the amount depends on the total advertising revenue and the activity on the channel (ratings and comments). Audience growth attracts new advertisers, leading to increased earnings. Active channels can earn the equivalent of $50-75 per week or more.";  
+_l.monet_increaseearnings_title = "How to increase earnings:"; 
+_l.monet_increaseearnings_text1 = "Create more content"; 
+_l.monet_increaseearnings_text2 = "Invite more people to engage"; 
+_l.monet_increaseearnings_text3 = "Video length does not matter on Bastyon as ads do not interrupt the video, engagement under posts is what matters";  
+_l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PKOIN)"; 
+_l.monet_signup = "SIGN UP ON BASTYON"; 
+_l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
+
+_l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionReason = "Reason"
+_l.juryYes = "Yes, it does"
+_l.juryNo = "No, it does not violate"
+
+_l.makePost = "Make a publication"
+
+_l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
+_l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};

@@ -1,12 +1,15 @@
 <?PHP
 require_once('php/rpc.php');
 require_once('php/api.php');
-
+/*ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);*/
 
 class OG {
 
     private $rpc = NULL;
     private $author = NULL;
+    private $application = NULL;
     private $connect = FALSE;
     private $txid = NULL;
     private $commentid = NULL;
@@ -17,9 +20,10 @@ class OG {
 
     private $domain = NULL;
     private $project = NULL;
+    private $config = NULL;
     
 
-    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutContentCreators","aboutHIW","aboutTwitter","abilityincrease","support","applications","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings");
+    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutContentCreators","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings");
 
     private $defaultOg = NULL;
 
@@ -27,9 +31,18 @@ class OG {
 
 
 
-	public function __construct ($get, $proxypath, $domain, $project)
+	public function __construct ($get, $proxypath, $domain, $project, $uri, $strconfig)
 	{
+        $this->path = '';
+        $pathParts = explode('/', $uri);
 
+        $this->config = json_decode($strconfig);
+
+        if(count($pathParts) > 1){
+            $this->path = $pathParts[count($pathParts) - 1];
+        }
+        //echo $this->path;
+        
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
 
@@ -85,6 +98,18 @@ class OG {
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
+        if ($this->config != NULL && (strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0)){
+
+            if (isset($get['id'])){
+                $this->application = array(
+                    'id' => $get['id'],
+                    'path' => isset($get['p']) ? hex2bin($get['p']) : ''
+                );
+
+                //echo json_encode($this->application);
+            }
+
+        }
 
 	}
 	public function __destruct ()
@@ -93,8 +118,6 @@ class OG {
     }
 
     public function is_bot() {
-
-        
 
         if (isset($_SERVER['HTTP_USER_AGENT'])){
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit|bastyon/i', $_SERVER['HTTP_USER_AGENT'])){
@@ -307,148 +330,184 @@ class OG {
 
             $this->currentOg['is_bot'] = 'true';
 
-            if ($this->stx != NULL){
-                $this->currentOg['title'] = "PKOIN transaction";
-                $this->currentOg['description'] = "Pocketcoin transaction details";
-            }
+            if ($this->application != NULL){
 
-            else{
 
-                if ($this->ext != NULL){
+                $da = $this->config->developapps;
+                $found_da = NULL;
 
-                    $this->currentOg['title'] = "Payment link";
-                    $this->currentOg['description'] = "Pay using PKOIN";
-
+                foreach ($da as $app)
+                {
+                    if ($app->id == $this->application['id'])
+                    {
+                        $found_da = $app;
+                        break;
+                    }
                 }
 
-                else
-                {
-                    if($this->author != NULL){
+                if ($found_da != 'NULL'){
+                    $url = 'https://'.$found_da->scope.'/'.$this->application['path'];
+                }
 
-                        $a = $this->rpc->author($this->author);
-        
-                        if ($a != false){
-                            $a = $a[0];
-        
-                            if(!$title){
-                                $this->currentOg['title'] = urldecode($a->name);
-        
-                                if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
-                                if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
-        
-                                if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
-                            }
-        
-                            if(!$description){
-                                $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
-                            }
-        
-                            if(isset($a->a) && $a->a != ''){
-                                $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
-                            }
-        
-                            if(!$image){
-                                $this->currentOg['image'] = $a->i;
-                            }
-        
-                        }
+                $remote_og = $this->api->urlpreview($url);
+
+                $this->currentOg['title'] = $this->project.' application '.$found_da->name;
+
+                if($remote_og != NULL){
+                    if(isset($remote_og->title) && $remote_og->title != '') $this->currentOg['title'] = $this->project.'. '.$found_da->name.': '.$remote_og->title;
+                    if(isset($remote_og->description) && $remote_og->description != '') $this->currentOg['description'] = $remote_og->description;
+                    if(isset($remote_og->image) && $remote_og->image != '') $this->currentOg['image'] = $remote_og->image;
+                }
+                else{
+                    echo 'NULL';
+                }
+               
+                
+            } else{
+
+                if ($this->stx != NULL){
+                    $this->currentOg['title'] = "PKOIN transaction";
+                    $this->currentOg['description'] = "Pocketcoin transaction details";
+                }
+
+                else{
+
+                    if ($this->ext != NULL){
+
+                        $this->currentOg['title'] = "Payment link";
+                        $this->currentOg['description'] = "Pay using PKOIN";
+
                     }
-        
-                    if($this->txid != NULL){
-        
-                        $r = $this->rpc->share($this->txid);
-        
-                        if($r != false){
-        
-                            $r = $r[0];
-        
-                            $pca = 'p';
-        
-                            $this->author = $r->address;
-        
-                            if ($r->c != ''){
-                                $this->currentOg['title']= urldecode($r->c);
-                                $title = true;
+
+                    else
+                    {
+                        if($this->author != NULL){
+
+                            $a = $this->rpc->author($this->author);
+            
+                            if ($a != false){
+                                $a = $a[0];
+            
+                                if(!$title){
+                                    $this->currentOg['title'] = urldecode($a->name);
+            
+                                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
+                                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+            
+                                    if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
+                                }
+            
+                                if(!$description){
+                                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
+                                }
+            
+                                if(isset($a->a) && $a->a != ''){
+                                    $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
+                                }
+            
+                                if(!$image){
+                                    $this->currentOg['image'] = $a->i;
+                                }
+            
                             }
-        
-                            if(isset($r->s) && isset($r->s->v) && $r->s->v == 'a'){
-                                $this->currentOg['description'] = '';
-                            }
-                            else{
-                                $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
-                            }
-                            
-                            $description = true;
-        
-                            $this->currentOg['type'] = 'article';
-        
-                            if (isset($r->u) && $r->u != ''){
-                                $this->ogFromVideo(urldecode($r->u), $this->txid);
-                            }
-        
-                            if (isset($r->i[$this->imageNum])) {
-                                $this->currentOg['image'] = $r->i[$this->imageNum];
-                                $image = true;
-                            }
-                            else{
-        
-                                if(isset($r->u) && $r->u != ''){
-        
-                                    $video = $this->videoImage(urldecode($r->u));
-                                    
-                                    if($video){
-        
-                                        if(isset($this->currentOg['twitter:image'])){
-                                            $this->currentOg['image'] = $this->currentOg['twitter:image'];
+                        }
+            
+                        if($this->txid != NULL){
+            
+                            $r = $this->rpc->share($this->txid);
+            
+                            if($r != false){
+            
+                                $r = $r[0];
+            
+                                $pca = 'p';
+            
+                                $this->author = $r->address;
+            
+                                if ($r->c != ''){
+                                    $this->currentOg['title']= urldecode($r->c);
+                                    $title = true;
+                                }
+            
+                                if(isset($r->s) && isset($r->s->v) && $r->s->v == 'a'){
+                                    $this->currentOg['description'] = '';
+                                }
+                                else{
+                                    $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
+                                }
+                                
+                                $description = true;
+            
+                                $this->currentOg['type'] = 'article';
+            
+                                if (isset($r->u) && $r->u != ''){
+                                    $this->ogFromVideo(urldecode($r->u), $this->txid);
+                                }
+            
+                                if (isset($r->i[$this->imageNum])) {
+                                    $this->currentOg['image'] = $r->i[$this->imageNum];
+                                    $image = true;
+                                }
+                                else{
+            
+                                    if(isset($r->u) && $r->u != ''){
+            
+                                        $video = $this->videoImage(urldecode($r->u));
+                                        
+                                        if($video){
+            
+                                            if(isset($this->currentOg['twitter:image'])){
+                                                $this->currentOg['image'] = $this->currentOg['twitter:image'];
+                                            }
+                                            else{
+                                                $this->currentOg['image'] = $video;
+                                            }   
+            
+                                            $image = true;
                                         }
-                                        else{
-                                            $this->currentOg['image'] = $video;
-                                        }   
-        
-                                        $image = true;
                                     }
+            
                                 }
-        
+            
                             }
-        
-                        }
-        
-                        
-                    }
-        
-                    if($this->commentid != NULL){
-        
-                        $comment = $this->rpc->comment($this->commentid);
-        
-                        if ($comment != false){
-        
-                            if(isset($comment[0])){
-        
-                                $comment = $comment[0];
-        
-                                
-        
-                                $this->author = $comment->address;
-                                
-                                try{
-        
-                                    $msg = json_decode($comment->msg);
-        
-                                    $pca = 'c';
-        
-                                    $this->currentOg['description'] = substr(strip_tags(urldecode($msg->message)), 0, 130).'...';                         
-                                    
-                                } 
-                                
-                                catch (Exception $ex) {
-                                
-                                }
-        
+            
                             
-                            }
-        
                         }
-                    }
+            
+                        if($this->commentid != NULL){
+            
+                            $comment = $this->rpc->comment($this->commentid);
+            
+                            if ($comment != false){
+            
+                                if(isset($comment[0])){
+            
+                                    $comment = $comment[0];
+            
+                                    
+            
+                                    $this->author = $comment->address;
+                                    
+                                    try{
+            
+                                        $msg = json_decode($comment->msg);
+            
+                                        $pca = 'c';
+            
+                                        $this->currentOg['description'] = substr(strip_tags(urldecode($msg->message)), 0, 130).'...';                         
+                                        
+                                    } 
+                                    
+                                    catch (Exception $ex) {
+                                    
+                                    }
+            
+                                
+                                }
+            
+                            }
+                        }
+                }
             }
 
         }

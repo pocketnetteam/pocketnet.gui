@@ -97,6 +97,7 @@
             <div id="footerWrapper">
                 
             </div>
+            <div id="miniappscnt"></div>
 
         </div>
 

@@ -102,6 +102,7 @@
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 line-height: 1em;
+                word-break: break-word;
 
                 span{
                     font-weight: 700;
@@ -167,3 +168,49 @@
     }
 }
 
+/*t*/ @media only screen and (max-width: 768px){
+    #recommendations{
+    
+
+        .recoVideoDiv {
+            align-items: center;
+    
+            .videoThumbnail {
+    
+                height: 90px;
+                width: 100px;
+                min-width: 100px;
+                border-radius: 6px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background: rgb(var(--neutral-grad-0));
+                position: relative;
+    
+                overflow: hidden;
+    
+                &[data-image]{
+                    filter : brightness(85%);
+                }
+    
+                .durationWrapper {
+                    float: right;
+                    margin: 6px;
+                    border-radius: 12px;
+                    background: rgba(var(--color-shadow-base), 0.8);
+                    color: rgb(var(--text-on-bg-shadow-color));
+                    padding: 0.25em 0.5em;
+                    font-size: 0.8em;
+    
+                    &.dummy{
+                        width: 40px;
+                        height: 20px;
+                        background : rgb(var(--neutral-grad-1));
+                    }
+                }
+    
+            }
+           
+        }
+    } 
+}

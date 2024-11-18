@@ -146,6 +146,7 @@ Application = function (p) {
 		url: url,
 
 		matrix: p.matrix,
+		matrixMirrors : p.matrixMirrors,
 
 		nav: {
 			navPrefix: window.pocketnetpublicpath || '/pocketnet',
@@ -1277,7 +1278,7 @@ Application = function (p) {
 		 * for desktop popup before we had created popup
 		 * conditional checking in appear method of instance
 		 */
-		if (typeof initShadowPopups === 'function') initShadowPopups()
+		
 	}
 
 	self.initApplications = function(){
@@ -1408,6 +1409,7 @@ Application = function (p) {
 		self.el = {
 			camera: $('#camera'),
 			content: $('#content'),
+			miniapps: $('#miniappscnt'),
 			app: $('#application'),
 			header: $('#headerWrapper'),
 			menu: $('#menuWrapper'),

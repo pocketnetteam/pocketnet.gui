@@ -201,10 +201,25 @@ var BastyonSdk = function(){
 
     //////////////////
 
-    self.rpc = function(method, parameters = []){
+    self.rpc = function(method, parameters = [], options){
+
+        /*
+        options = {
+            rpc : {
+                fnode : '65.21.252.135:38081'
+            }
+        } 
+
+        options = {
+            fnode : '65.21.252.135:38081'
+        }
+        
+        */
+
         return action('rpc', {
             method,
-            parameters
+            parameters,
+            options
         })
     }
 
@@ -255,6 +270,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.open = {
+        post : function(txid){
+            return action('open.post', {txid})
+        },
+        donate : function(receiver){
+            return action('open.donate', {receiver})
+        },
+    }
+
     self.permissions = {
         check : function({permission}){
             return action('checkPermission', {permission})
@@ -269,6 +293,10 @@ var BastyonSdk = function(){
         return action('payment', data).then(action => {
             return actionHelper(action)
         })
+    }
+
+    self.openExternalLink = function(url){
+        return action('openExternalLink', {url})
     }
 
     self.barteron = {

@@ -185,6 +185,7 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '65.21.252.135',
 		stable : true,
+		alwaysrun : true
 	},
 	{
 		host : '178.217.159.221',
@@ -1189,7 +1190,6 @@ const kit = {
 					return Promise.resolve(r)
 				})
 			},
-			// TODO (brangr): проверить
 			update: function (message) {
 				return kit.proxy().then(proxy => {
 					return proxy.nodeControl.kit.update()
@@ -1197,14 +1197,6 @@ const kit = {
 					return Promise.resolve(r)
 				})
 			},
-			// TODO (brangr): почему коммент?
-			/*checkupdate : function(message){
-				return kit.proxy().then(proxy => {
-					return proxy.nodeControl.kit.checkupdate().then(update => {
-						send(message.id, null, update)
-					})
-				})
-			},*/
 			request: function (message) {
 
 				return kit.proxy().then(proxy => {

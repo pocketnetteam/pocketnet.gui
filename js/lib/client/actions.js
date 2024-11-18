@@ -6,6 +6,7 @@ var ActionOptions = {
     optimizeUnspentsMax : 300,
     clearRejected : true,
     clearCompleted : true,
+    testWithoutSend : false, ///
     objects : {
         transaction : {
             calculateFee : function(){
@@ -343,6 +344,8 @@ var Action = function(account, object, priority, settings){
         }
 
         if (e.expObject){
+
+            console.log('import', e.expObject.type, kits.c)
 
             var alias = new kits.c[e.expObject.type]()
                 alias.import(e.expObject)
@@ -758,7 +761,17 @@ var Action = function(account, object, priority, settings){
 
         trigger()
 
-        return account.parent.api.rpc(method, parameters).then(transaction => {
+        var sendPromise = new Promise((resolve) => {
+            return resolve(makeid())
+        }) 
+
+        if(!ActionOptions.testWithoutSend)
+            sendPromise = account.parent.api.rpc(method, parameters)
+        
+
+        console.log('sendPromise', sendPromise, ActionOptions.testWithoutSend)
+
+        return sendPromise.then(transaction => {
 
             self.transaction = transaction
 
@@ -773,6 +786,8 @@ var Action = function(account, object, priority, settings){
             self.sent = new Date()
 
             trigger()
+
+            console.log('jury here', self.transaction)
 
             return Promise.resolve()
 
@@ -1908,6 +1923,8 @@ var Account = function(address, parent){
 
         //self.actions.value = []
 
+        console.log("IMPORT", e.actions)
+
         _.each(e.actions.value, (exported) => {
 
             if (new Date(exported.until) < new Date()) return
@@ -1939,6 +1956,8 @@ var Account = function(address, parent){
                     return a.id == exported.id
                 })
 
+                console.log('IMPORT', exported)
+
                 var action = (prevaction || new Action(self, {}))
                     action.import(exported)
 
@@ -1947,7 +1966,8 @@ var Account = function(address, parent){
                     self.actions.value.push(action)
             }
             catch(e){
-                //console.log('exported', exported)
+                console.log('exported', exported)
+                console.error(e)
             }
 
             
@@ -2017,6 +2037,8 @@ var Account = function(address, parent){
                 var p2sh = parent.app.platform.sdk.addresses.storage.addressesobj[index];
                 var dumped = parent.app.platform.sdk.address.dumpKeys(index)
 
+                
+
                 try{
                     txb.sign({
                         prevOutScriptType: 'p2sh-p2wpkh',
@@ -2028,6 +2050,9 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
+
+                    console.log('addresses index', dumped, p2sh)
+                    
                     throw 'unableSign:5'
                 }
 

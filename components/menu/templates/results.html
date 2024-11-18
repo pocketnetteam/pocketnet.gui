@@ -238,6 +238,31 @@
 						</div>
 
 					<% } %>
+
+					<% if(r.type == 'application') {%>
+
+						<div class="searchbywrapper small">
+							<a href="<%-r.url%>">
+								<div class="searchby searchbyusers">
+									<div class="swra">
+										<div class="appicon" contain="none" image="<%-r.icon || '*'%>">
+											<div class="appiconsmall">
+												<span class="fa-stack fa-2x real">
+													<i class="fas fa-certificate fa-stack-2x"></i>
+													<i class="fas fa-play fa-stack-1x"></i>
+												</span>
+											</div>
+										</div>
+										<div class="label">
+											<%- r.name %>
+										</div>
+									</div>
+								</div>
+							</a>
+					
+						</div>
+
+					<% } %>
 					
 
 				</div>
