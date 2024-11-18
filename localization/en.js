@@ -2125,6 +2125,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2324,6 +2326,8 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
+
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2801,6 +2805,9 @@ _l.permissions_name_chat = appname + " chat"
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
 
+_l.permissions_name_externallink = "Opening External Links";
+_l.permissions_descriptions_externallink = "The application requests permission to open external links in the browser or other applications";
+
 _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'
@@ -2937,6 +2944,12 @@ _l.quotanow = function(v){
 }
 
 
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on "+appname+" for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on "+appname+" for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of "+appname+" for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
 _l.openin = "Open"
 
 _l.monet_title = "A new advertising and monetization program for bloggers has been launched on Bastyon starting from September 9th." 

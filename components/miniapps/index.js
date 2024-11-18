@@ -31,7 +31,6 @@ var miniapps = (function(){
 					el : el.c
 
 				}, function(_p){
-					if(clbk) clbk()
 				})
 			}
 		}

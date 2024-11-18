@@ -771,6 +771,10 @@ button.good {
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
+button.bad {
+  background: rgb(var(--color-bad));
+  border: 1px solid rgb(var(--color-bad));
+}
 button.contrast {
   background: rgb(var(--color-bg-ac-2));
   border: 1px solid rgb(var(--color-bg-ac-2));
@@ -3230,6 +3234,18 @@ html.mobileview.android .wnd .wndback {
   margin: 1.5em 0;
   font-size: 0.9em;
 }
+.dialog .nomoreaskWrapper {
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+.dialog .nomoreaskWrapper .fa-check-circle {
+  color: rgb(var(--color-good));
+}
+.dialog .nomoreaskWrapper .fa-circle {
+  color: rgb(var(--neutral-grad-2));
+}
 .dialog .buttons {
   overflow: hidden;
 }
@@ -5001,6 +5017,17 @@ html.allcontent_application #footerWrapper {
 .realperson .dev .fa-code {
   color: rgb(var(--text-on-bg-ac-color));
 }
+.realperson .shark .fa-certificate,
+.realperson .moderator .fa-certificate {
+  color: rgb(var(--color-bg-ac-bright));
+}
+.realperson .shark .fa-crown,
+.realperson .moderator .fa-crown,
+.realperson .shark .fa-flag,
+.realperson .moderator .fa-flag {
+  color: rgb(var(--text-on-bg-ac-color));
+  box-shadow: none;
+}
 .usericon {
   background: rgb(var(--neutral-grad-0));
   color: rgb(var(--color-txt-gray-dark));
@@ -5409,6 +5436,18 @@ html.allcontent_application #footerWrapper {
   display: none;
 }
 .fastMessage.smallsize .cwrapper > div .tips > div {
+  display: none;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage {
+  display: block;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .transactionmessagewrapper {
+  display: block;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .foramount {
+  text-align: left;
+}
+.fastMessage.smallsize .cwrapper > div .tips > div.transactionmessage .formessage {
   display: none;
 }
 .fastMessage.smallsize .cwrapper > div .tips > div.notifytext {

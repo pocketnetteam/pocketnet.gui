@@ -9,7 +9,20 @@
 			<div class="wrk">
 				<div class="flexWrapper">	
 
-					
+					<% if(ed.canmakepost && state && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
+
+						<% if(!share && !postId){ %>
+
+							<div class="makepost">
+								<div elementsid="makepostbutton" class="button black">
+									<i class="fas fa-plus-circle"></i>
+									<span><%- e('makePost') %></span> 
+								</div>
+							</div>
+
+						<% } %>
+
+					<% } %>
 
 					<% if(state && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 

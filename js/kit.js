@@ -973,6 +973,71 @@ ModFlag = function(){
 	return self;
 }
 
+ModVote = function(){
+	var self = this;
+
+	self.s2 = { // id
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	}; //verdict
+
+
+
+	self.validation = function(){
+
+		if(!self.s2.v){
+			return 'jury'
+		}
+
+		if(self.i1.v != 0 && self.i1.v != 1){
+			return 'verdict'
+		}
+	}
+
+	self.serialize = function(){
+		return self.s2.v + self.i1.v
+	}
+
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+		else{
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+
+	}
+
+	self.type = 'modVote'
+	return self;
+}
+
 ContentBoost = function(txid){
 	var self = this;
 	
@@ -2540,7 +2605,7 @@ pUserInfo = function(){
 	self.address = ''
 
 	self.rc = 0;
-
+	self.bans = {}
 	self.content = {}
 
 	self.objectid = makeid()
@@ -2557,6 +2622,7 @@ pUserInfo = function(){
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
 		self.deleted = v.deleted || false
+		self.bans = v.bans || {}
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;
@@ -2684,6 +2750,7 @@ pUserInfo = function(){
 		v.content = _.clone(self.content)
 
 		v.dev = self.dev
+		v.bans = self.bans
 
 
 		if (self.regdate && self.regdate.getTime){
@@ -3571,6 +3638,8 @@ pComment = function(){
 	return self;
 }
 
+
+
 Img = function(p){
 	if(!p) p = {};
  
@@ -4012,6 +4081,7 @@ kits = {
 		share : Share,
 		complainShare : ComplainShare,
 		modFlag : ModFlag,
+		modVote : ModVote,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,

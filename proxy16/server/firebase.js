@@ -405,29 +405,49 @@ var Firebase = function(p){
             const sendPush = async (message, tokens, users)=>{
                 const resendTokens = [];
                 for(let i = 0; i < tokens.length; i += 499) {
-                    message.tokens = tokens.slice(i, 499);
-                    try {
-                        const response = await admin.messaging().sendMulticast(message)
-                        for (const responseIndex in response.responses) {
-                            const addresses = users.filter(el=>el.token === message?.tokens[responseIndex]).map(el=>el.address)
-                            for(const address of addresses) {
-                                if (!response.responses[responseIndex]?.success) {
-                                    block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, true, response.responses[responseIndex]?.error?.errorInfo?.message, response.responses[responseIndex]?.error?.errorInfo?.code))
-                                    if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
-                                        this.logger.w('system', 'error', `Firebase: Token is inactive, delete token - Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${message?.tokens[responseIndex]}`)
-                                        self.kit.revokeToken({token: message?.tokens[responseIndex]})
-                                    } else if (message?.tokens[responseIndex]) {
 
-                                        self.logger.w('system', 'error', `Firebase: Send push (resend after 35s): Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${message?.tokens[responseIndex]}`)
-                                        resendTokens.push(message?.tokens[responseIndex])
+                    var messages = []
+                    var tokensForEach = tokens.slice(i, 499)
+
+                    _.each(tokensForEach, (token) => {
+                        messages.push({
+                            ...message,
+                            token
+                        })
+                    })
+
+                    //message.tokens = tokens.slice(i, 499);
+                    try {
+                        const response = await admin.messaging().sendEach(messages)
+
+                        for (const responseIndex in response.responses) {
+
+                            var msg = messages[responseIndex]
+
+                            if (msg){
+                                const addresses = users.filter(el=>el.token === msg.token).map(el=>el.address)
+
+                                for(const address of addresses) {
+                                    if (!response.responses[responseIndex]?.success) {
+                                        block.pushStatus.unshift(addStatus(msg.token, address, true, response.responses[responseIndex]?.error?.errorInfo?.message, response.responses[responseIndex]?.error?.errorInfo?.code))
+                                        if (msg.token && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
+                                            this.logger.w('system', 'error', `Firebase: Token is inactive, delete token - Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${msg.token}`)
+                                            self.kit.revokeToken({token: msg.token})
+                                        } else if (msg.token) {
+    
+                                            self.logger.w('system', 'error', `Firebase: Send push (resend after 35s): Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${msg.token}`)
+                                            resendTokens.push(msg.token)
+                                        }
+                                    }else {
+                                        block.pushStatus.unshift(addStatus(msg.token, address, false, "Success", 0))
                                     }
-                                }else {
-                                    block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, false, "Success", 0))
                                 }
                             }
+
+                            
                         }
                     }catch (e) {
-                        self.logger.w('system', 'error', `Firebase: Multicast response error (resend after 35s): ${e?.message || e}`)
+                        self.logger.w('system', 'error', `Firebase: SendEach response error (resend after 35s): ${e?.message || e}`)
                         await new Promise(resolve => setTimeout(resolve, 35000))
                         resendTokens.push(tokens.slice(i, 499))
                     }

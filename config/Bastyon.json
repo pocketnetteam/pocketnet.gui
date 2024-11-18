@@ -23,10 +23,7 @@
         "install" : true,
         "includeinsearch" : true,
         "includeminiapps" : true,
-        "name" : "Barteron",
-        "grantedPermissions" : ["account", "chat"],
-        "store" : {},
-        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+        "store" : {"g" : true}
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
@@ -76,6 +73,7 @@
             },
             
             "matrix" : "matrix.pocketnet.app",
+            "matrixMirrors" : ["matrix.2.pocketnet.app"],
 
             "monetization" : {
                 "url" : "pnettool.pocketnet.app",

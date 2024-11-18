@@ -35,6 +35,48 @@
 .share_common .pkoin span {
   margin-left: 0.5em;
 }
+.share_common.juryitem #channel,
+.share_common.juryitem #comments {
+  border-radius: 12px;
+  border: 1px solid rgba(var(--neutral-grad-1), 0.5);
+  border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.35);
+  border-right: 1px solid rgba(var(--neutral-grad-1), 0.35);
+  min-height: 120px box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+.share_common.juryitem #channel {
+  padding: 1em;
+}
+.share_common.juryitem .juryinfo {
+  padding: 1em;
+  text-align: center;
+}
+.share_common.juryitem .juryinfo .subcaption span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+.share_common.juryitem .juryinfo .reasonCaption span {
+  font-size: 0.8em;
+}
+.share_common.juryitem .juryinfo .reason span {
+  font-weight: 700;
+  color: rgb(var(--color-bad));
+  font-size: 1.5em;
+}
+.share_common.juryitem .juryActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+.share_common.juryitem .juryActions .buttonWrapper {
+  margin-right: 0.5em;
+}
+.share_common.juryitem .juryActions .buttonWrapper:nth-last-child(1) {
+  margin-right: 0;
+}
 .share_common .boost {
   color: rgb(var(--color-star-yellow));
   border-radius: 8px;
@@ -1274,6 +1316,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
                 text-align: center;
             }
         }*/
+  }
+  .share_common.juryitem #channel,
+  .share_common.juryitem #comments {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    margin-bottom: 0.25em;
   }
   .share_common .pkoin {
     padding: 6px 8px;
