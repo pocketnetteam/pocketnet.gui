@@ -166,7 +166,7 @@
     margin-bottom: 5px;
 }
 
-#devapplication .miniapp-container .edit-form .form-input {
+#devapplication .miniapp-container .edit-form .form-input, .miniapp-container #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
     padding: 10px;
     border: 1px solid rgb(var(--neutral-grad-2));
     border-radius: 5px;
@@ -239,3 +239,19 @@
 .miniapp-container .app-link:active {
     color: var(--color-txt-ac-1);
 }
+
+.miniapp-container #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
+    padding: 0;
+    padding-left: 4px;
+    box-shadow: none;
+    margin: 0;
+}
+
+.miniapp-container #taginput .tgs .search .searchFastResultWrapper {
+    background-color: rgb(var(--background-secondary-theme));
+}
+
+.miniapp-container #taginput .tgs .tagsWrapper > div.tagsInputWrapper {
+    width: 100%;
+}
+

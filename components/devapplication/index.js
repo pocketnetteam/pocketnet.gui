@@ -4,7 +4,7 @@ var devapplication = (function () {
 
   var Essense = function (p) {
     var primary = deep(p, "history");
-    var el, applicationId;
+    var el, applicationId, application;
     var currentStatus = "view";
 
     var actions = {
@@ -19,7 +19,8 @@ var devapplication = (function () {
           version: el.c.find("#app-version").val(),
           scope: el.c.find("#app-scope").val(),
           name: el.c.find("#app-name").val(),
-        };
+          tags: el.c.find(".tag").map((_, tag) => $(tag).attr("tag")).get(), 
+        };        
 
         const validationRules = getValidationRules(updatedData);
         const hasErrors = validationRules.some(validateField);
@@ -132,7 +133,46 @@ var devapplication = (function () {
           renderDetails(application);
         }
       },
+      tagInput: function ({
+        tags,
+        _p
+      }) {
+        let _tags = [...tags]
+        const refreshTagInput = () => {
+          renders.tagInput({
+            tags: _tags,
+            _p
+          })
+        }
+        self.nav.api.load({
+          open: true,
+          id: "taginput",
+          el: _p.el.find(".tag-input-container"),
+          eid: "editTags",
+          animation: false,
+          insertimmediately: true,
+          essenseData: {
+            tags: function () {
+              return tags || [];
+            },
+            addTag: function (tag) {
+              _tags.push(tag)
+              refreshTagInput()
+            },
+            removeTag: function (tag) {
+              if (tags) {
+                _tags = _tags.filter((t) => t !== tag);
+                refreshTagInput()
+              }
+            },
+            language: function () {
+              return self.app.localization.key;
+            },
+          },
+        });
+      }
     };
+
 
     var renderEditForm = function (application) {
       self.shell({
@@ -152,6 +192,10 @@ var devapplication = (function () {
           ["#app-name", "#app-version", "#app-scope"].forEach((selector) =>
             _p.el.find(selector).on("input", () => clearErrors(selector))
           );
+          renders.tagInput({
+            tags: [],
+            _p
+          })
         }
       );
     };
@@ -188,12 +232,10 @@ var devapplication = (function () {
         console.error("Отсутствует ID приложения");
         return;
       }
-
       app.apps.get
         .application(applicationId)
-        .then(function ({
-          application
-        }) {
+        .then(function (response) {
+          application = response.application
           var userAddress = self.app.user.address.value;
 
           if (application.manifest.author !== userAddress) {
@@ -201,9 +243,11 @@ var devapplication = (function () {
             return;
           }
 
-          renders.miniAppDetail(application);
+          renders.miniAppDetail(response.application);
         })
         .catch(function (e) {
+          console.log('error here |||');
+
           el.c.find(".content").html(`<p>${self.app.localization.e("miniApp_loadErrorMessage")}</p>`);
         });
     };
