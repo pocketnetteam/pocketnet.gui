@@ -1738,7 +1738,7 @@ var pSDK = function ({ app, api, actions }) {
     }
     
     self.miniapp = {
-        keys : 'miniapp',
+        keys : ['miniapp'],
         request: function (executor, hash) {
 
             return request('miniapp', hash, (data) => {

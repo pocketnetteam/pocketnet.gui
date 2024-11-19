@@ -6278,7 +6278,7 @@ Platform = function (app, listofnodes) {
 
                     })
                 }, {
-                    method,
+                    method : 'getapps',
                     parameters
                 }).then(d => {
 
@@ -6286,11 +6286,7 @@ Platform = function (app, listofnodes) {
 
                 }).catch(e => {
 
-                    console.error('e', e)
-
-                    if (clbk) {
-                        clbk([], e)
-                    }
+                    return Promise.reject(e)
 
                 })
             }
