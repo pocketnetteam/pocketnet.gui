@@ -6261,7 +6261,7 @@ Platform = function (app, listofnodes) {
 
                     })
                 }, {
-                    'getapps',
+                    method : 'getapps',
                     parameters
                 }).then(d => {
 
