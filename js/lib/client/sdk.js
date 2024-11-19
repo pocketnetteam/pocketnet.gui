@@ -109,7 +109,8 @@ var pSDK = function ({ app, api, actions }) {
 
         jury : {
             time : 360
-        miniappRequest: {
+        },
+         miniappRequest: {
             time: 60 * 60 // temp
         },
         miniapp : {
