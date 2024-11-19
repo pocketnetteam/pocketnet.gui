@@ -3921,7 +3921,9 @@ Platform = function (app, listofnodes) {
 
         },
 
-        
+        usertype : function(){
+            return self.sdk.user.type(address)
+        },
         markUser : function(address){
 
             var t = self.sdk.user.type(address)
