@@ -6239,7 +6239,7 @@ Platform = function (app, listofnodes) {
 
         miniapps : {
             gettest : function(ps = {}, rpc){
-                return self.psdk.share.request(() => {
+                return self.psdk.miniapp.request(() => {
 
                     var parameters = {
                         tags : [],
