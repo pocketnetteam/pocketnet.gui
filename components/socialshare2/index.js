@@ -779,6 +779,8 @@ var socialshare2 = (function(){
 						p.images = _.map(p.images, (im) => {
 							return superXSS(im)
 						})
+
+						p.tags = ed.sharing.tags || []
 					}
 					
 					if (ed.url){
