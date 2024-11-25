@@ -1814,6 +1814,7 @@ var pSDK = function ({ app, api, actions }) {
                             var js = JSON.parse(c.p.s1)
             
                             miniappjson.name = js.n || '';
+                            miniappjson.scope = js.s || '';
                             miniappjson.description = js.d || '';
                             miniappjson.tags = js.t || [];
                         }

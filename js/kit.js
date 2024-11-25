@@ -2425,6 +2425,7 @@ Miniapp = function(){
 	self.hash = ''
 	self.address = '';
 	self.name = '';
+	self.scope = '';
 	self.description = '';
 	self.tags = []
 	
@@ -2434,8 +2435,8 @@ Miniapp = function(){
 		if(!self.address) return 'address';
 		if(!self.description) return 'description';
 		if(!self.name) return 'name';
+		if(!self.scope) return 'scope';
 		if(!self.tags.length) return 'tags';
-
 	}
 
 	self.serialize = function(){
@@ -2443,6 +2444,7 @@ Miniapp = function(){
 				(self.hash ?? '') +
 				JSON.stringify({
 					n: self.name,
+					s: self.scope,
 					d: self.description,
 					t: self.tags
 				}) +
@@ -2457,6 +2459,7 @@ Miniapp = function(){
 				id : self.id,
 				name: self.name,
 				description: self.description,
+				scope: self.scope,
 				tags: self.tags
 			};
 		}
@@ -2467,6 +2470,7 @@ Miniapp = function(){
 			p: {
 				s1: JSON.stringify({
 					n: self.name,
+					s: self.scope,
 					d: self.description,
 					t: self.tags
 				}),
@@ -2479,13 +2483,14 @@ Miniapp = function(){
 		self.address = d.address || '';
 		self.hash = d.hash || null;
 		self.name = d.name || '';
+		self.scope = d.scope || '';
 		self.id = d.id || '';
 		self.description = d.description || '';
 		self.tags = d.tags || [];
 	}
 
 	self.typeop = function(){
-		return 'app'
+		return 'miniapp'
 	}
 
 	self.alias = function(){
@@ -2508,11 +2513,13 @@ pMiniapp = function(){
 	self.hash = ''
 	self.address = '';
 	self.name = '';
+	self.scope = '';
 	self.description = '';
 	self.tags = []
 
 	self._import = function(v){
 		self.name = v.name || '';
+		self.scope = v.scope || '';
 		self.hash = v.hash || '';
 		self.address = v.address || '';
 		self.description = v.description || '';
@@ -2527,6 +2534,7 @@ pMiniapp = function(){
 				var js = JSON.parse(v.p.s1)
 
 				self.name = js.n || '';
+				self.scope = js.scope || '';
 				self.description = js.d || '';
 				self.tags = js.t || [];
 			}
@@ -2542,6 +2550,7 @@ pMiniapp = function(){
 		var v = {};
 
 		v.name = self.name
+		v.scope = self.scope
 		v.hash = self.hash 
 		v.id = self.id 
 		v.address = self.address 

@@ -20,7 +20,7 @@ var parseManifest = function (json) {
 
     result.id = data.id.replace(/[^a-z0-9\.]/g, '')
     result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
-    result.version = numfromreleasestring(data.version)
+    result.version = numfromreleasestring(data.version || '1.0.0')
     result.versiontxt = superXSS(data.version)
     result.descriptions = {}
 
@@ -89,15 +89,13 @@ var importManifest = function (application) {
         if (manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
         if (manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
 
-        if (manifest.version < application.version) {
-            return Promise.reject(appsError('version'))
-        }
+        // if (manifest.version < application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
 
-        if (manifest.version > application.version) {
-            return Promise.reject(appsError('version'))
-        }
-
-
+        // if (manifest.version > application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
         if (application.develop) {
             manifest.scope = application.path
         } else {
@@ -1578,7 +1576,6 @@ var BastyonApps = function (app) {
         }
 
         existingApp.name = app.name || existingApp.name;
-        existingApp.version = app.version || existingApp.version;
         existingApp.scope = app.scope || existingApp.scope;
 
         try {
@@ -1596,7 +1593,7 @@ var BastyonApps = function (app) {
             return Promise.reject(new Error('conflict:id_already_exists'));
         }
 
-        if (!app.id || !app.name || !app.version || !app.scope) {
+        if (!app.id || !app.name || !app.scope) {
             return Promise.reject(new Error('missing:required_fields'));
         }
         try {
@@ -1739,7 +1736,7 @@ var BastyonApps = function (app) {
                     return install({
                         ...application,
                         develop: true,
-                        version: numfromreleasestring(application.version)
+                        version: numfromreleasestring(application?.version || '1.0.0')
                     })
                 }
 
@@ -1761,7 +1758,7 @@ var BastyonApps = function (app) {
 
                 return install({
                     ...application,
-                    version: numfromreleasestring(application.version)
+                    version: numfromreleasestring(application.version || '1.0.0')
                 }, info.cached)
 
             }).then(() => {
@@ -1808,6 +1805,23 @@ var BastyonApps = function (app) {
             return Promise.reject(e)
         })
     }
+
+
+    self.validateResources = async function (application) {
+        try {
+            const resourceData = await resources(application);
+
+            const missingResources = appfiles.filter(file => !resourceData[file.id]);
+
+            if (missingResources.length > 0) {
+                return Promise.reject(appsError('missing:resources'));
+            }
+
+            return Promise.resolve('Resources are valid');
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    };
 
     
 
@@ -1873,7 +1887,15 @@ var BastyonApps = function (app) {
                 return download(application)
             })
         },
-        application: function (id) {
+        application: async function (id) {
+            const application = await app.platform.sdk.miniapps.getbyid(id)
+            if (application) {
+                 await install({
+                        ...application,
+                        develop: true
+                })
+            }
+            
             if (installed[id]) {
                 return Promise.resolve({
                     application: installed[id],

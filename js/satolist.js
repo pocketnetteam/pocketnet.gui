@@ -3878,45 +3878,6 @@ Platform = function (app, listofnodes) {
 
         carousel : function(el, clbk){
             throw 'use new carousel()'
-			var images = el.find('[image]');
-
-            var w = el.width()
-
-            images.imagesLoadedPN({ imageAttr: true}, function (image) {
-
-                var aspectRatio = 0
-
-                _.each(image.images, function(img){
-                    var _img = img.img;
-
-                    var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-                    if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-                })
-
-                if (aspectRatio){
-
-                    if(aspectRatio > 1.66) aspectRatio = 1.66
-
-                    images.height( w * aspectRatio)
-                }
-
-                el.addClass('owl-carousel')
-                el.owlCarousel({
-                    items: 1,
-                    dots: true,
-                    nav: !self.app.mobileview,
-                    navText: [
-                        '<i class="fas fa-chevron-left"></i> ',
-                        '<i class="fas fa-chevron-right"></i>'
-                        ]
-
-                });
-
-                if (clbk)
-                    clbk()
-
-            }, self.app)
 
 
         },
@@ -5401,6 +5362,33 @@ Platform = function (app, listofnodes) {
 
                 
             },
+            miniapp: function (data, clbk) {
+                var miniapp = new Miniapp();
+                
+                miniapp.id = data.id;
+	            miniapp.hash = data.hash
+	            miniapp.address = data.address
+	            miniapp.name = data.name
+	            miniapp.description = data.description
+	            miniapp.tags = data.tags
+	            miniapp.scope = data.scope
+                
+
+                self.app.platform.actions.addActionAndSendIfCan(miniapp).then(action => {
+                    var alias = action.object
+                  
+					successCheck()
+
+					if (clbk) clbk(alias)
+  
+				}).catch(e => {
+
+                    if(clbk) clbk(null, e)
+
+				})
+
+                
+            },
 
             unblocking: function (address, clbk) {
                 var unblocking = new Unblocking();
@@ -5423,36 +5411,6 @@ Platform = function (app, listofnodes) {
 
                 return
 
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    unblocking,
-
-                    function (tx, error) {
-
-                        if (tx) {
-                            var me = self.psdk.userInfo.getmy() 
-                            
-                            //deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            var u = self.psdk.userInfo.get(address) 
-                            
-                            //self.sdk.users.storage[address];
-
-                            if (me) me.removeRelation(address, 'blocking')
-
-                            var clbks = deep(self.clbks, 'api.actions.unblocking') || {}
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
             },
 
             subscribeWithDialog: function (address, renderclbk) {
@@ -6255,7 +6213,11 @@ Platform = function (app, listofnodes) {
     self.sdk = {
 
         miniapps : {
-            gettest : function(ps = {}, rpc){
+            getbyid: async function(appId){
+                const apps = await this.getall()
+                return apps.find(app => app.id === appId)
+            },
+            getall : function(ps = {}, rpc){
                 return self.psdk.miniapp.request(() => {
 
                     var parameters = {
@@ -6270,16 +6232,16 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    return self.app.api.rpc('getapps', _.toArray(parameters), {
-                        rpc : rpc
-                    }).then(data => {
+                        return self.app.api.rpc('getapps', parameters, {
+                            rpc : rpc
+                        }).then(data => {
 
-                        return Promise.resolve(data)
+                            return Promise.resolve(data)
 
-                    })
+                        })
                 }, {
                     method : 'getapps',
-                    parameters
+                    parameters: parameters
                 }).then(d => {
 
                     return Promise.resolve(d)
@@ -9832,9 +9794,6 @@ Platform = function (app, listofnodes) {
 
                 return false
 
-                if (/*info.reputation > 100 && */info.postcnt > 10) return true
-
-                return false
 
             },
 
@@ -10064,18 +10023,6 @@ Platform = function (app, listofnodes) {
 
                         return
 
-                        self.sdk.node.transactions.create.commonFromUnspent(
-                            obj,
-                            function(tx, error){
-                                if(!tx){	
-
-                                    return reject(error)
-                                    //self.app.platform.errorHandler(error, true)	
-                                }
-
-                                
-                            }
-                        )
 
 
 
@@ -15259,41 +15206,6 @@ Platform = function (app, listofnodes) {
                 return
 
 
-                var l = self.sdk.postscores.get()
-
-                if (!l.storage[id] || update) {
-
-
-                    //// TODO_REF_ACTIONS maybe
-
-                    self.app.api.rpc('getpostscores', [id]).then(d => {
-
-                        
-
-                        _.each(d, function (d) {
-
-                            l.storage[d.posttxid] || (l.storage[d.posttxid] = [])
-
-                            l.storage[d.posttxid].push({
-                                address: d.address,
-                                value: d.value
-                            })
-                        })
-
-                        if (clbk)
-                            clbk(null)
-
-                    }).catch(e => {
-                        if (clbk) {
-                            clbk(e, null)
-                        }
-                    })
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
             }
         },
 
@@ -15822,37 +15734,6 @@ Platform = function (app, listofnodes) {
 
                     return
 
-                    self.sdk.node.transactions.create.commonFromUnspent(
-
-                        share,
-
-                        function (_alias, error) {
-
-
-                            if (!_alias) {
-
-                                if (clbk) {
-                                    clbk(error, null)
-                                }
-
-                            }
-
-                            else {
-
-                                s[txid] || (s[txid] = {})
-
-                                var c = _.find(s[txid][share.parentid || '0'] || [], function (c) {
-                                    return c.id == share.id
-                                })
-
-                                if (c) c.deleted = true
-
-                                if (clbk)
-                                    clbk(null, _alias)
-                            }
-
-                        }
-                    )
 
                 },
 

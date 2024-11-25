@@ -7,10 +7,10 @@
 
         <div class="actions">
             <% if (appStatus === 'development') { %>
-                <button class="publish-app-btn"><%= e('miniApp_publishButton') %></button>
+            <button class="publish-app-btn"><%= e('miniApp_publishButton') %></button>
+            <button class="delete-app-btn"><%= e('miniApp_deleteButton') %></button>
             <% } %>
             <button class="edit-app-btn"><%= e('miniApp_editButton') %></button>
-            <button class="delete-app-btn"><%= e('miniApp_deleteButton') %></button>
         </div>
     </div>
 
@@ -20,8 +20,8 @@
                 <div class="label"><%= e('miniApp_authorLabel') %>:</div>
                 <div class="value"><%= author %></div>
 
-                <div class="label"><%= e('miniApp_versionLabel') %>:</div>
-                <div class="value"><%= version %></div>
+                <div class="label"><%= e('miniApp_tagsLabel') %>:</div>
+                <div class="value"><%= tags %></div>
 
                 <div class="label"><%= e('miniApp_permissionsLabel') %>:</div>
                 <div class="value"><%= permissions %></div>
