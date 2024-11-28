@@ -818,6 +818,7 @@ var main = (function(){
 							videomobile : videomain && isMobile(),
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
+							fixposition : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,

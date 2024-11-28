@@ -1138,7 +1138,7 @@ var authorn = (function(){
 					renderclbk : function(){
 
 					},
-
+					fixposition : true,
 					canloadmorescroll : function(){
 
 						if(openedpost) return false

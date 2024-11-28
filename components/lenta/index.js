@@ -17,6 +17,7 @@ var lenta = (function(){
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
+		var positionfixed = false
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -102,6 +103,40 @@ var lenta = (function(){
 
 
 		var actions = {
+
+			fixposition : function(b, fp = ''){
+
+				if(!essenseData.fixposition) return
+
+				if(sharesInview.length && sharesInview[0].txid == b){
+					b = null
+				}
+
+				if (b){
+					var json = hexEncode(
+						JSON.stringify({
+							block : fixedblock,
+							b, fp,
+							si: subloadedindex,
+							s : subloaded
+						})
+					)
+
+					self.app.nav.api.history.addParameters({
+						fx : json
+					})
+
+					positionfixed = true
+				}
+				else{
+					self.app.nav.api.history.removeParameters(['fx'])
+
+					positionfixed = false
+
+				}
+
+				
+			},
 
 			translate : function(txid, dl){
 				return self.app.platform.sdk.translate.share.request(txid, dl).then((r) => {
@@ -623,6 +658,8 @@ var lenta = (function(){
 				make(clbk);
 
 				self.app.nav.api.history.removeParameters(['v', 's'])
+
+				actions.fixposition(null)
 			},
 
 			clear : function(){
@@ -655,6 +692,7 @@ var lenta = (function(){
 				sharesFromRecommendations = {}
 				authorsettings = {}
 				showMoreStatus = {}
+				positionfixed = false
 
 				_.each(players, function(p){
 					if (p.p)
@@ -2670,6 +2708,12 @@ var lenta = (function(){
 
 				if(!essenseData.horizontal){
 
+					if (initialized && positionfixed){
+						if(self.app.lastScrollTop < 1000){
+							action.fixposition(null)
+						}
+					}
+
 
 					if (
 						!loading && !ended &&
@@ -3934,8 +3978,15 @@ var lenta = (function(){
 
 				}, function(_p){
 
+
+
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
+
+						if(shares.length){
+							actions.fixposition(shares[0].txid)
+						}
+
 					}
 					else
 					{
@@ -5904,6 +5955,8 @@ var lenta = (function(){
 				})
 
 				initedcommentes = {}
+
+				positionfixed = false
 
 				delete self.app.events.resize[mid]
 				delete self.iclbks[mid]
