@@ -42,8 +42,8 @@ var devapplication = (function () {
           return;
         }
 
-        const onEditComplete = () => {
-          loadMiniApp();
+        const onEditComplete = (newAppData) => {
+          loadMiniApp(newAppData);
           currentStatus = "view";
         };
 
@@ -55,7 +55,7 @@ var devapplication = (function () {
 
           app.apps.validateResources(newAppData)
             .then(() => self.app.platform.api.actions.miniapp(newAppData))
-            .then(onEditComplete)
+            .then(() => onEditComplete(newAppData))
             .catch(handleAppError)
             .finally(() => globalpreloader(false));
         } else {
@@ -113,7 +113,6 @@ var devapplication = (function () {
 
         app.apps.addAppToConfig(newData).then(() => {
             applicationId = newData.id
-            app.apps.removeAppFromConfig(applicationId);
             loadMiniApp()
           }).catch(handleAppError)
           .finally(() => globalpreloader(false))
@@ -135,11 +134,12 @@ var devapplication = (function () {
           tags: application.tags,
         };
 
-        self.app.platform.api.actions.miniapp(publishData, (_, err) => {
+        self.app.platform.api.actions.miniapp(publishData, async (_, err) => {
           globalpreloader(false);
 
           if (!err) {
             sitemessage(self.app.localization.e("miniApp_publishSuccessMessage"));
+            await app.apps.removeAppFromConfig(applicationId);
             loadMiniApp();
           } else {
             sitemessage(self.app.localization.e("miniApp_publishErrorMessage"));
@@ -258,6 +258,7 @@ var devapplication = (function () {
           animation: false,
           insertimmediately: true,
           essenseData: {
+            addonlytags : true,
             tags: function () {
               return tags || [];
             },
@@ -335,7 +336,9 @@ var devapplication = (function () {
       );
     };
 
-    var loadMiniApp = function () {
+    var loadMiniApp = function (application) {
+      if(application) return renders.miniAppDetail(application);
+    
       if (!applicationId) {
         renders.createForm()
         return;
