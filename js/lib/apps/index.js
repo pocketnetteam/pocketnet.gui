@@ -204,10 +204,10 @@ var BastyonApps = function (app) {
             description: 'permissions_descriptions_externallink',
             level: 1
         },
-        'zaddress' : {
-            name : 'permissions_name_zaddress',
-            description : 'permissions_descriptions_zaddress',
-            level : 4
+        'zaddress': {
+            name: 'permissions_name_zaddress',
+            description: 'permissions_descriptions_zaddress',
+            level: 4
         },
     }
 
@@ -321,9 +321,11 @@ var BastyonApps = function (app) {
             }
         },
         openExternalLink: {
-            parameters : ['url'],
+            parameters: ['url'],
             permissions: ['externallink'],
-            action : function({ data }){
+            action: function ({
+                data
+            }) {
                 const url = data.url
                 if (window.cordova?.InAppBrowser) {
                     window.cordova.InAppBrowser.open(url, '_system');
@@ -885,7 +887,7 @@ var BastyonApps = function (app) {
                     }).catch(e => {
                         return Promise.reject(appsError(e))
                     })
-    
+
                 }
             },
 
@@ -1410,9 +1412,9 @@ var BastyonApps = function (app) {
 
     }
 
-    var requestPermission = function(application, permission, data, p){
-        
-        if (application.manifest.permissions.indexOf(permission) == -1){
+    var requestPermission = function (application, permission, data, p) {
+
+        if (application.manifest.permissions.indexOf(permission) == -1) {
             return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
         }
 
@@ -1823,27 +1825,27 @@ var BastyonApps = function (app) {
         }
     };
 
-    
+
 
     self.set = {
-        applicationExternalLink : function(scope, appid){
-            try{
+        applicationExternalLink: function (scope, appid) {
+            try {
                 localStorage[externalLinksStorageKey + '_' + scope] = appid
-            }catch(e){
+            } catch (e) {
 
             }
         }
     }
 
     self.get = {
-        applicationExternalLink: function(scope){
-            try{
+        applicationExternalLink: function (scope) {
+            try {
                 return localStorage[externalLinksStorageKey + '_' + scope] || null
-            }catch(e){
+            } catch (e) {
 
             }
         },
-        forsearch : function(){
+        forsearch: function () {
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
             }), app => {
@@ -1890,12 +1892,12 @@ var BastyonApps = function (app) {
         application: async function (id) {
             const application = await app.platform.sdk.miniapps.getbyid(id)
             if (application) {
-                 await install({
-                        ...application,
-                        develop: true
+                await install({
+                    ...application,
+                    develop: true
                 })
             }
-            
+
             if (installed[id]) {
                 return Promise.resolve({
                     application: installed[id],
@@ -1949,7 +1951,7 @@ var BastyonApps = function (app) {
             })
         },
 
-        installedAndInstalling : function(){
+        installedAndInstalling: function () {
             var result = {}
 
             _.each(installing, (ins, id) => {
@@ -1970,38 +1972,52 @@ var BastyonApps = function (app) {
             return result
         },
 
-        applicationsSearch : function(str = '', onlyInstalled){
-            var ins = this.installedAndInstalling()
+        applicationsSearch: async function (search = '', searchBy) {
+            const adaptApplicationData = (app) => ({
+                name: app.name || app.manifest?.name || '',
+                icon: app.icon || `https://${app.scope}/b_icon.png`,
+                description: app.description || app.manifest?.description?.eng || '',
+                tags: app.tags || [],
+                id: app.id || '',
+                status: this.appStatusById(app.id),
+                address: app.author || app.address || '',
+            });
 
-            str = str.toLowerCase()
+            const filterApplications = (apps, str, searchBy) => {
+                const searchTerm = str.toLowerCase();
+                return apps?.filter(app => {
+                    switch (searchBy) {
+                        case 'name':
+                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(searchTerm);
+                        case 'scope':
+                            const scope = app.manifest?.scope?.replace('https://', '').toLowerCase() || app.scope?.toLowerCase() || '';
+                            return scope.includes(searchTerm);
+                        case 'tags':
+                            return app.tags?.includes(searchTerm);
+                        case 'address':
+                            const author = app.author?.toLowerCase() || app.address?.toLowerCase() || '';
+                            return author.includes(searchTerm);
+                        default:
+                            return false;
+                    }
+                });
+            };
 
-            /// added only scope
+            const installedApps = this.installedAndInstalling();
+            const filteredInstalledApps = filterApplications(Object.values(installedApps), search, searchBy || 'name');
 
-            
+            let additionalApps = [];
+            if (search) {
+                additionalApps = await app.platform.sdk.miniapps.getall({
+                    [searchBy || 'search']: search
+                });
+            }
 
-            var filtered =_.filter(ins, (application) => {
-                if(application.manifest){
-
-                    if(application.manifest.id == str) return true
-                    if(application.manifest.name.toLowerCase() == str) return true
-
-                    var scope = application.manifest.scope.replace('https://', '').toLowerCase()
-                    var i = str.indexOf(scope)
-
-                    console.log('scope', scope, str, i)
-
-                    if (i < 9 && i > 0) return true // /???
-                }
-            })
-
-            if(onlyInstalled) return filtered
-
-            /// add blockchain search
-
-            return Promise.resolve(filtered)
+            const allApps = [...filteredInstalledApps, ...additionalApps];
+            return allApps.map(adaptApplicationData);
         },
 
-        applicationall : function(id, cached){
+        applicationall: function (id, cached) {
 
             return self.get.application(id).catch(e => {
                 return null
@@ -2150,18 +2166,18 @@ var BastyonApps = function (app) {
         })
     }
 
-    self.openInWnd = function(application, clbk, path){
+    self.openInWnd = function (application, clbk, path) {
         app.nav.api.load({
             open: true,
             href: 'application',
-            inWnd : true,
-            history : true,
+            inWnd: true,
+            history: true,
             eid: 'application_' + application.manifest.id,
             clbk: clbk,
 
             essenseData: {
-                application : application.manifest.id,
-                path : path
+                application: application.manifest.id,
+                path: path
 
             }
         })
@@ -2179,5 +2195,10 @@ var BastyonApps = function (app) {
     return self
 }
 
-if(typeof module != "undefined"){ module.exports = {BastyonApps}; } 
-else { window.BastyonApps = BastyonApps; }
+if (typeof module != "undefined") {
+    module.exports = {
+        BastyonApps
+    };
+} else {
+    window.BastyonApps = BastyonApps;
+}

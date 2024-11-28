@@ -6212,35 +6212,32 @@ Platform = function (app, listofnodes) {
 
     self.sdk = {
 
-        miniapps : {
-            getbyid: async function(appId){
-                const apps = await this.getall()
-                return apps.find(app => app.id === appId)
+        miniapps: {
+            getbyid: async function (appId) {
+                const apps = await this.getall({id: appId})
+                return apps[0]
             },
-            getall : function(ps = {}, rpc){
+            getall: function (ps = {}, rpc) {
+                var parameters = {
+                    tags: [],
+                    search: '',
+                    topHeight: self.currentBlock,
+                    pageStart: 0,
+                    pageSize: 20,
+                    orderBy: 'height',
+                    orderDesc: true,
+                    ...ps
+                }
                 return self.psdk.miniapp.request(() => {
+                    return self.app.api.rpc('getapps', parameters, {
+                        rpc: rpc
+                    }).then(data => {
 
-                    var parameters = {
-                        tags : [],
-                        search : '',
-                        topHeight : self.currentBlock,
-                        pageStart : 0,
-                        pageSize : 20,
-                        orderBy : 'height',
-                        orderDesc : true,
-                        ...ps
-                    }
+                        return Promise.resolve(data)
 
-
-                        return self.app.api.rpc('getapps', parameters, {
-                            rpc : rpc
-                        }).then(data => {
-
-                            return Promise.resolve(data)
-
-                        })
+                    })
                 }, {
-                    method : 'getapps',
+                    method: 'getapps',
                     parameters: parameters
                 }).then(d => {
 

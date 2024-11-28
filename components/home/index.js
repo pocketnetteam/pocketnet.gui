@@ -1,216 +1,310 @@
-var home = (function(){
-
+var home = (function () {
 	var self = new nModule();
 
 	var essenses = {};
 
-	var Essense = function(p){
+	var Essense = function (p) {
+		var primary = deep(p, "history");
 
-		var primary = deep(p, 'history');
-
-		var el, ed, applicationSearch;
+		var el, ed, applicationSearch, acsearch, userAddress = self.app?.user?.address?.value;
 
 		var actions = {
-			applicationSearchClear : function(){
-				renders.applications()
+			applicationSearchClear: function () {
+				renders.applications();
 			},
-			applicationSearch : function(){
-				acsearch = new search(el.c.find('.applicationSearch'), {
-					placeholder : self.app.localization.e('searchbyapplications'),
+			applySearchFilter: function (searchConfig) {
+				if (!searchConfig || !searchConfig.searchBy || !searchConfig.search) {
+					console.warn('Invalid search configuration provided:', searchConfig);
+					return;
+				}
 
-					clbk : function(_el){
+				const searchValue = `${searchConfig.searchBy}:${Array.isArray(searchConfig.search) 
+        ? searchConfig.search.filter(Boolean).join(' ')  
+        : String(searchConfig.search).trim()}`;
 
-					},
+				if (!searchValue) {
+					console.warn('Search value is empty:', searchValue);
+					return;
+				}
 
-					last : {
-						get : function(){
+				if (acsearch && typeof acsearch.setvalue === 'function') {
+					acsearch.setvalue(searchValue);
+				} else {
+					console.error('acsearch.setvalue is not a valid function or acsearch is undefined.');
+				}
+
+				try {
+					renders.applications(searchConfig);
+				} catch (error) {
+					console.error('Error rendering applications:', error);
+				}
+			},
+			applicationSearch: function () {
+				if (acsearch) {
+					acsearch.destroy();
+					acsearch = null;
+				}
+				acsearch = new search(el.c.find(".applicationSearch"), {
+					placeholder: self.app.localization.e("searchbyapplications"),
+
+					clbk: function (_el) {},
+
+					last: {
+						get: function (d) {
+							console.log(d, "||");
 
 							return [];
-
 						},
 
-						tpl : function(result, clbk){
-							
-						}
+						tpl: function (result, clbk) {},
 					},
 
-					events : {							
-						search : function(value, clbk, e, helpers){
-
+					events: {
+						fastsearch: async function (value, clbk) {
+							if (value.length < 2) {
+								el.c.find(".search").removeClass("validSearch");
+								return clbk();
+							}
+							const applications = await self.app.apps.get.applicationsSearch(
+								value
+							);
+							renders.searchResults(applications, value);
+							clbk();
 						},
-
-						clear : function(fs){
-							actions.applicationSearchClear()
-						}
-					}
-					
-				})
+						search: async function (value, clbk, e, helpers) {
+							await renders.applications({
+								search: value,
+							});
+							clbk();
+						},
+						active: function (isActive) {
+							if (isActive) {
+								el.c.addClass("search-active");
+							} else {
+								el.c.removeClass("search-active");
+							}
+						},
+						clear: function (fs) {
+							actions.applicationSearchClear();
+							el.c.find(".searchFastResultWrapper").empty();
+						},
+					},
+				});
 			},
+			hideSearchResultsMenu: function () {
+				const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
+				searchResultsWrapper.addClass("hidden");
+			},
+			applicationClick: function (applicationId) {
+				var applications = self.app.apps.get.installedAndInstalling({});
 
-			applicationClick : function(applicationId){
-				var applications = self.app.apps.get.installedAndInstalling({})
+				var application = applications[applicationId];
 
-				var application = applications[applicationId]
-
-				if(!application){
+				if (!application) {
 					//// not installed application from search, to app page
 
-					return
+					return;
 				}
 
-				if(application.installing){
+				if (application.installing) {
+					//// not installed application, to app page with installing bar
 
-					//// not installed application, to app page with installing bar 
-
-					return
+					return;
 				}
 
-				if(application.installed){
+				if (application.installed) {
+					//// not installed application, to app page with installing bar
 
-					self.nav.api.go({
-						href : 'application?id=' + applicationId,
-						history : true,
-						open : true
-					})	
-
-					//// not installed application, to app page with installing bar 
-
-					return
+					return;
 				}
-			}
-		}
+			},
+		};
 
-		var events = {
-			
-		}
+		var events = {};
+
+		const applicationActions = {
+			navigateToApplication: (applicationId) => {
+				self.nav.api.go({
+					href: `application?id=${applicationId}`,
+					history: true,
+					open: true,
+				});
+			},
+			navigateToDevApplication: (applicationId) => {
+				self.nav.api.go({
+					href: `devapplication${applicationId ? "?id=" + applicationId : ''}`,
+					history: true,
+					open: true,
+				});
+			},
+		};
 
 		var renders = {
-			applications : function(applications, clbk){
+			searchResults: function (results, value) {
+				el.c.find(".search").addClass("validSearch");
+				self.shell({
+						name: "searchResults",
+						el: el.c.find(".searchFastResultWrapper"),
+						data: {
+							applications: results,
+							value,
+							hasSearchOptions: value.split(':').length <= 1,
+						},
+					},
+					function (p) {
+						p.el.find(".application").on("click", function (event) {
+							const applicationId = $(this).data("id");
+							applicationActions.navigateToApplication(applicationId);
+						});
+						p.el.find(".search-option").on("click", function (event) {
+							const searchBy = $(this).data("searchby");
 
-				if(!applications){
-					applications = self.app.apps.get.installedAndInstalling({})
+							const searchTransformers = {
+								tags: (value) => value.split(' ').filter(Boolean),
+								default: (value) => value
+							};
+							actions.applySearchFilter({
+								searchBy,
+								search: searchTransformers[searchBy || 'default'](value)
+							});
+							hideSearchResultsMenu()
+						});
+					}
+				);
+			},
+			applications: async function (searchConfig, clbk) {
+				if (!searchConfig?.applications) {
+					applications = await self.app.apps.get.applicationsSearch(
+						searchConfig?.search,
+						searchConfig?.searchBy
+					);
 				}
 
 				self.shell({
-
-					name :  'applications',
-					el :   el.c.find('.applicationsList'),
-					data : {
-						applications
+						name: "applications",
+						el: el.c.find(".applicationsList"),
+						data: {
+							applications,
+							userAddress,
+						},
 					},
+					function (p) {
+						p.el.find(".application").on("click", function (event) {
+							const actionType = $(event.target).closest("[data-action]").data("action");
+							const applicationId = event.currentTarget.dataset?.id;
 
-				}, function(p){
+							if (actionType && applicationActions[actionType]) {
+								applicationActions[actionType](applicationId);
+							} else {
+								console.warn("Unknown action:", actionType);
+							}
+						});
+						p.el.find(".tag").on("click", function (event) {
+							actions.applySearchFilter({
+								searchBy: 'tags',
+								search: [$(this).text().trim()]
+							})
+						});
+						el.c.on("click", "#createAppButton", function () {
+							applicationActions.navigateToDevApplication();
+						});
 
-					p.el.find('.application').on('click', function(){
-
-						var application = $(this).attr('application')
-
-							actions.applicationClick(application)
-					})
-
-					if (clbk)
-						clbk()
-
-				})
+						el.c.on("click", "#myAppsButton", function () {
+							actions.applySearchFilter({
+								searchBy: "address",
+								search: userAddress,
+							});
+						});
+						if (clbk) clbk();
+					}
+				);
 
 				_.each(applications, (ins) => {
-					if (ins.installing){
+					if (ins.installing) {
 						ins.promise.then(() => {
-							renders.applications()
-						})
+							renders.applications();
+						});
 					}
-				})
-			}
-		}
+				});
+			},
+		};
 
 		var state = {
-			save : function(){
+			save: function () {},
+			load: function () {},
+		};
 
-			},
-			load : function(){
-				
-			}
-		}
+		var initEvents = function () {
+			const searchInput = el.c.find(".applicationSearch input");
+			const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
 
-		var initEvents = function(){
-			
+			searchInput.on("focus", function () {
+				searchResultsWrapper.removeClass("hidden");
+			});
 
-		}
+			searchInput.on("blur", function () {
+				setTimeout(actions.hideSearchResultsMenu, 200);
+			});
+		};
 
-		var make = function(){
-			applicationSearch = actions.applicationSearch()
+		var make = function () {
+			applicationSearch = actions.applicationSearch();
 
-			renders.applications()
-		}
+			renders.applications();
+		};
 
 		return {
-			primary : primary,
+			primary: primary,
 
-			getdata : function(clbk, p){
-
-				ed = p.settings.essenseData
+			getdata: function (clbk, p) {
+				ed = p.settings.essenseData;
 
 				var data = {
-					ed
+					ed,
+					userAddress
 				};
 
 				clbk(data);
-
 			},
 
-			destroy : function(){
-				ed = {}
+			destroy: function () {
+				ed = {};
 				el = {};
 			},
-			
-			init : function(p){
 
+			init: function (p) {
 				state.load();
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find("#" + self.map.id);
 
+				make();
 				initEvents();
-				make()
-
 				p.clbk(null, p);
-			}
-		}
+			},
+		};
 	};
 
-
-
-	self.run = function(p){
-
+	self.run = function (p) {
 		var essense = self.addEssense(essenses, Essense, p);
 
 		self.init(essense, p);
-
 	};
 
-	self.stop = function(){
-
-		_.each(essenses, function(essense){
-
+	self.stop = function () {
+		_.each(essenses, function (essense) {
 			window.rifticker.add(() => {
 				essense.destroy();
-			})
-
-		})
-
-	}
+			});
+		});
+	};
 
 	return self;
 })();
 
-
-if(typeof module != "undefined")
-{
+if (typeof module != "undefined") {
 	module.exports = home;
-}
-else{
-
+} else {
 	app.modules.home = {};
 	app.modules.home.module = home;
-
 }
