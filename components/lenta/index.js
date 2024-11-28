@@ -18,6 +18,7 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
 		var positionfixed = false
+		var restoredposition = null
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -103,7 +104,25 @@ var lenta = (function(){
 
 
 		var actions = {
+			restoreposition: function(fx){
 
+				try{
+					var json = JSON.parse(
+						hexDecode(fx)
+					)
+
+					subloadedindex = json.subloadedindex || 0
+					subloaded = json.subloaded || 0
+					fixedblock = json.fixedblock || 0
+
+					restoredposition = b
+
+				}catch(e){
+
+				}
+
+				
+			},
 			fixposition : function(b, fp = ''){
 
 				if(!essenseData.fixposition) return
@@ -693,6 +712,7 @@ var lenta = (function(){
 				authorsettings = {}
 				showMoreStatus = {}
 				positionfixed = false
+				restoredposition = null
 
 				_.each(players, function(p){
 					if (p.p)
@@ -2709,7 +2729,7 @@ var lenta = (function(){
 				if(!essenseData.horizontal){
 
 					if (initialized && positionfixed){
-						if(self.app.lastScrollTop < 1000){
+						if(self.app.lastScrollTop < 1000 && !restoredposition){
 							action.fixposition(null)
 						}
 					}
@@ -3983,9 +4003,7 @@ var lenta = (function(){
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
 
-						if(shares.length){
-							actions.fixposition(shares[0].txid)
-						}
+						
 
 					}
 					else
@@ -4988,9 +5006,26 @@ var lenta = (function(){
 								offset : offsetblock,
 								page : page,
 								period : period,
-								tagsexcluded : tagsexcluded
+								tagsexcluded : tagsexcluded,
+								txid : (restoredposition && !restoredposition.restored) ? restoredposition.b : null
 
 							}, function(shares, error, pr){
+
+								console.log("pr", pr)
+
+								if (pr && pr.txid){
+									actions.fixposition(pr.txid)
+								}
+
+								/*
+								
+								if(shares.length){
+									actions.fixposition(shares[0].txid)
+								}
+								
+								*/
+
+								if(restoredposition) restoredposition.restored = true
 
 								if(error && ignoreerror){
 									loading = false
@@ -5789,6 +5824,11 @@ var lenta = (function(){
 
 				else 		recommended = false;		
 
+				if(_s.fx){
+
+					actions.restoreposition(_s.fx)
+				}
+
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
 				if (essenseData.second){
@@ -5957,6 +5997,7 @@ var lenta = (function(){
 				initedcommentes = {}
 
 				positionfixed = false
+				restoredposition = null
 
 				delete self.app.events.resize[mid]
 				delete self.iclbks[mid]
