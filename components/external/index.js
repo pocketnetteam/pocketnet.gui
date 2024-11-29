@@ -395,10 +395,8 @@ var external = (function(){
 							}
 						})
 
-						console.log("ASD")
 
 						payment.makeQR().then(q => {
-							console.log(q)
 
 							self.app.nav.api.load({
 								open : true,
@@ -501,7 +499,6 @@ var external = (function(){
 								return m
 							}, 0)
 
-							console.log("VERIFY", amount, tx, parameters.paymentHash, opr, payment, payment.getHash(), parameters)
 
 							if (amount = (parameters.value || 0) + (parameters.shipmentValue || 0)){
 								if (opr.replace('pay_', '') == payment.getHash()){
@@ -678,7 +675,6 @@ var external = (function(){
 
 					}
 					
-					console.log("VER", tx)
 
 					helpers.getFees(tx).then(fees => {
 

@@ -105,7 +105,6 @@ var menu = (function(){
 			
 			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('https//', '').replace('http//', '').replace('bastyon//', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
 
-			console.log('href', href, link)
 
 			var p = {
 				href : href,
@@ -661,7 +660,6 @@ var menu = (function(){
 
 									r = apps.concat(r)
 
-									console.log('apps', apps)
 
 									return r
 								}

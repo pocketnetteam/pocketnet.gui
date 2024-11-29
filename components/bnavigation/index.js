@@ -50,7 +50,7 @@ var bnavigation = (function(){
 				}
 				catch (e) { }
 				
-				
+				console.log('needadd', indexkey)
 
 				if (k == indexkey) k = indexkey + '?b=true'
 

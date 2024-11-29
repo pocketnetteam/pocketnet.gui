@@ -1801,7 +1801,6 @@ Platform = function (app, listofnodes) {
 
         url = url.replace("http:", "https:").replace("http//", "https://")
 
-        console.log('application parse', url)
 
         var meta = parseVideo(url);
 
@@ -4187,7 +4186,6 @@ Platform = function (app, listofnodes) {
 
             const { name, description, tags, url } = p;
 
-            console.log("SHARE", p)
 
             setTimeout(function(){
                 app.nav.api.load({
@@ -4918,7 +4916,6 @@ Platform = function (app, listofnodes) {
 
         upbutton: function (el, p) {
 
-            console.log('upbutton', el, p)
 
             if (typeof window == 'undefined') return;
 
@@ -6289,7 +6286,6 @@ Platform = function (app, listofnodes) {
                 ///self.sdk.node.transactions.clearTempHard()
 
                 return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
-                    console.log("jury verdict", action)
                     successCheck()
                     sitemessage(self.app.localization.e('juryvote_success'))
 
@@ -10624,8 +10620,6 @@ Platform = function (app, listofnodes) {
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
-                    console.log("DATA", d)
-
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
                     }
@@ -10855,7 +10849,6 @@ Platform = function (app, listofnodes) {
 
             getone: function (address, clbk, light, reload) {
 
-                console.log('address', address, 'light', light)
 
                 self.sdk.users.get([address], function(data = {}, error){
                     if(!data) data = {}
@@ -12087,9 +12080,6 @@ Platform = function (app, listofnodes) {
          
             getnew : function(url, action){
 
-                console.log('application url', url)
-
-
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
@@ -12105,8 +12095,6 @@ Platform = function (app, listofnodes) {
 
                 if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
-
-                        console.log('application')
 
                         if(!r) return Promise.resolve(null)
 
@@ -12124,8 +12112,6 @@ Platform = function (app, listofnodes) {
                 }).then(d => {
 
                     var og = deep(d, 'og');
-
-                    console.log("application OG", og)
 
                     if(!og) return Promise.reject()
 
@@ -16187,8 +16173,6 @@ Platform = function (app, listofnodes) {
 
                 jury : function(p = {}, clbk, cache){
 
-                    console.log("JURY", cache)
-
                     if(!p.page) p.page = 0
                     if(!p.count) p.count = 20
                     
@@ -16221,8 +16205,6 @@ Platform = function (app, listofnodes) {
                             })
 
                             items =  self.psdk.jury.tempRemove(items, (i) => {return true})
-
-                            console.log("cjury ", items)
 
                             if(clbk) clbk(items, null, {})
                         })
@@ -16361,9 +16343,6 @@ Platform = function (app, listofnodes) {
                             })
 
                             var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, mtd == 'getboostfeed' ? [] : p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
-
-
-                            console.log('methodparams', methodparams)
 
                             s.getex(parameters, function (data, error) {
 
@@ -16769,8 +16748,6 @@ Platform = function (app, listofnodes) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
-
-                    console.log('address', vout, address)
 
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
@@ -21527,8 +21504,6 @@ Platform = function (app, listofnodes) {
 
             var rmfu2 = function(){
 
-                console.log('destroyMessage', message, time)
-
                 message.el.remove();
 
                 removeEqual(self.fastMessages, {
@@ -21612,8 +21587,6 @@ Platform = function (app, listofnodes) {
 			var remove = self.fastMessages.length - maxCount;
 
 			var s = false;
-
-            console.log('self.fastMessages.length', self.fastMessages.length)
 
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
@@ -21714,7 +21687,6 @@ Platform = function (app, listofnodes) {
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
-                    console.log('notifications', notifications)
 
                     if(!notifications) return
 
@@ -24167,7 +24139,6 @@ Platform = function (app, listofnodes) {
 
                             if(typeof _Electron != 'undefined') path = './'
 
-                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element

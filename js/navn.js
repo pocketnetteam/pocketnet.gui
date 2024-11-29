@@ -160,6 +160,8 @@ Nav = function(app)
 
 			var wb = false;
 
+			console.log('needadd', href)
+
 			if (np.back || back){
 
 				var index = findIndex(backManager.chain, function(c){
@@ -175,7 +177,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
+				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r && !np.fx){
 					//// 
 					backManager.clearAll()
 				}
@@ -184,7 +186,10 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx);
+
+
+					console.log('needadd', needadd, np)
 
 	
 					if (needadd){
@@ -1812,6 +1817,7 @@ Nav = function(app)
 	self.relations = relations;
 	self.current = current
 	self.thisSiteLink = core.thisSiteLink
+	self.backManager = backManager
 
 	return self;
 }

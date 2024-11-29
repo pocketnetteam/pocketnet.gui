@@ -13,7 +13,6 @@ var fastsend = (function(){
 		var actions = {
 
 			makeTransaction : function(list, message, clbk){
-				console.log('list', list)
 
 				var transaction = new Transaction()
 				

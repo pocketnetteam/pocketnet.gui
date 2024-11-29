@@ -90,8 +90,6 @@ var uploadpeertube = (function () {
 			getQuota : function(){
 				return self.app.peertubeHandler.api.videos.checkQuota().then((rme) => {
 					
-					console.log("R", rme)
-
 					return Promise.resolve(rme)
 				}).catch(e => {
 					console.error(e)
@@ -755,8 +753,6 @@ var uploadpeertube = (function () {
 						data.hasAccess = true;
 						hasAccess = true
 						
-
-						console.log('video', res)
 
 						clbk(data);
 					})

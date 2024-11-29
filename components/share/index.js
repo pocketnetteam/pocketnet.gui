@@ -1962,7 +1962,6 @@ var share = (function(){
 				
 				var url = currentShare.url.v;
 
-				console.log('application url ori', url, currentShare)
 
 				var meta = self.app.platform.parseUrl(url);
 
@@ -1982,9 +1981,6 @@ var share = (function(){
 
 				}, function(p){
 
-
-					console.log('application meta', meta)
-					
 
 					if(currentShare.url.v && !og){
 
@@ -2711,7 +2707,6 @@ var share = (function(){
 						delete el.eMessage[0].emojioneArea
 
 
-						console.log('destroy')
 					}
 
 					

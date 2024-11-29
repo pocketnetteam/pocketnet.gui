@@ -83,7 +83,6 @@ var transactionslist = (function(){
 					return Promise.reject(e)
 				}).then((r) => {
 
-					console.log("Result" , r)
 
 					if(r.length < pagesize) end = true
 
@@ -96,7 +95,6 @@ var transactionslist = (function(){
 
 			makepage : function(clbk){
 
-				console.log('makepage', page)
 
 				if(loading) return
 				if(end) return
@@ -149,7 +147,6 @@ var transactionslist = (function(){
 				}
 			},
 			list : function(transactions){
-				console.log('result 2', transactions)
 				self.shell({
 
 					name: 'list',
