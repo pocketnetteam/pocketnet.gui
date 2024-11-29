@@ -2979,6 +2979,7 @@ _l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?"
 _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
+_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
 _l.miniApp_loadErrorMessage = "Failed to load application data.";
 _l.miniApp_iconAltText = "App Icon";
 _l.miniApp_publishButton = "Publish";

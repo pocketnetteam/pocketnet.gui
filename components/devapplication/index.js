@@ -202,9 +202,17 @@ var devapplication = (function () {
         btn1text: self.app.localization.e("miniApp_yesButton"),
         btn2text: self.app.localization.e("miniApp_noButton"),
         success: function () {
-          app.apps.removeAppFromConfig(applicationId);
-          this.sitemessage(self.app.localization.e("miniApp_deleteSuccessMessage"));
-          actions.goToIndex()
+          app.apps.deleteApp({
+              id: applicationId,
+              hash: application?.hash
+            })
+            .then(() => {
+              this.sitemessage(self.app.localization.e("miniApp_deleteSuccessMessage"));
+              actions.goToIndex();
+            })
+            .catch(() => {
+              this.sitemessage(self.app.localization.e("miniApp_deleteErrorMessage"));
+            });
         },
       });
     };
@@ -258,7 +266,7 @@ var devapplication = (function () {
           animation: false,
           insertimmediately: true,
           essenseData: {
-            addonlytags : true,
+            addonlytags: true,
             tags: function () {
               return tags || [];
             },
@@ -337,8 +345,8 @@ var devapplication = (function () {
     };
 
     var loadMiniApp = function (application) {
-      if(application) return renders.miniAppDetail(application);
-    
+      if (application) return renders.miniAppDetail(application);
+
       if (!applicationId) {
         renders.createForm()
         return;

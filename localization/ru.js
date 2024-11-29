@@ -2786,6 +2786,7 @@ _l.miniApp_deleteConfirmation = "Вы уверены, что хотите уда
 _l.miniApp_yesButton = "Да";
 _l.miniApp_noButton = "Отмена";
 _l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
+_l.miniApp_deleteErrorMessage = "Не удалось удалить приложение. Попробуйте ещё раз позже.";
 _l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
 _l.miniApp_iconAltText = "Иконка приложения";
 _l.miniApp_publishButton = "Публиковать";

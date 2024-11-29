@@ -917,7 +917,7 @@ var BastyonApps = function (app) {
 
     var makeAction = function (data, application, settings) {
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application: application.manifest.id,
+            application: application?.manifest?.id || application.id,
             ...settings
         }).then(action => {
             return Promise.resolve(action.export())
@@ -1620,6 +1620,40 @@ var BastyonApps = function (app) {
         removeAppFromLocalhost(appId);
         return remove(appId)
     };
+
+    self.removeAppByHash = function ({
+        hash,
+        appId
+    }) {
+        var remove = new Remove();
+
+        try {
+            remove.import({
+                txidEdit: hash
+            });
+
+            return makeAction(remove, {
+                id: appId
+            }, true);
+        } catch (e) {
+            return Promise.reject(appsError('remove:action:failed'));
+        }
+    };
+
+    self.deleteApp = function ({
+        hash,
+        id
+    }) {
+        if (hash) {
+            return self.removeAppByHash({
+                hash,
+                appId: id
+            });
+        } else {
+            return self.removeAppFromConfig(appId);
+        }
+    };
+
 
     var saveAppToLocalhost = function (app) {
         try {
