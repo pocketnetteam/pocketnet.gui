@@ -100,9 +100,6 @@ var lenta = (function(){
 			
 		}
 
-		
-
-
 		var actions = {
 			restoreposition: function(fx){
 
@@ -688,7 +685,10 @@ var lenta = (function(){
 
 				make(clbk);
 
-				self.app.nav.api.history.removeParameters(['v', 's'])
+				self.app.nav.api.history.removeParameters(['v', 's'], {
+					replaceState : true,
+					removefromback : false
+				})
 
 				actions.fixposition(null)
 			},
@@ -1808,6 +1808,7 @@ var lenta = (function(){
 
 					self.app.nav.api.history.addParameters({
 						v : id
+					}, {
 					})
 
 					var player = players[id]
@@ -2738,7 +2739,7 @@ var lenta = (function(){
 
 					if (initialized && positionfixed){
 						if(self.app.lastScrollTop < 1000 && !restoredposition && initialized){
-							action.fixposition(null)
+							actions.fixposition(null)
 						}
 					}
 
@@ -5803,6 +5804,8 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("INIT")
+
 				ovf = false
 
 				newmaterials = 0;
@@ -5907,6 +5910,9 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROY")
+
 				initialized = null
 
 				delete self.app.events.delayedscroll['videos' + mid]
@@ -5926,6 +5932,7 @@ var lenta = (function(){
 				}
 
 				if (fullscreenvideoShowed){
+					console.log('exitFullScreenVideo')
 					actions.exitFullScreenVideo(fullscreenvideoShowed)
 				}
 

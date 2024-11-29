@@ -82,6 +82,10 @@
   white-space: nowrap;
   font-size: 0.9em;
 }
+#menu .navicon .fa-plus-circle {
+  font-size: 1.2em;
+  color: #0026ff;
+}
 #menu.searchactive .sections .items.searchWrapper {
   display: block;
 }

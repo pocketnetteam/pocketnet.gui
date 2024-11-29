@@ -1197,6 +1197,9 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
+				console.log("HANDLER1")
+
+
 				var tgsi = decodeURI(parameters().sst || '')
 
 				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
@@ -1289,6 +1292,8 @@ var main = (function(){
 
 					renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 
+					console.log("HANDLER")
+
 					if (lenta) {
 						lenta.clearessense()
 						lenta = null
@@ -1331,6 +1336,8 @@ var main = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("INIT MAIN")
+
 				hsready = false;
 
 				var _s = parameters()
@@ -1372,7 +1379,7 @@ var main = (function(){
 
 				if((_s.v || _s.s) && (isMobile())){
 
-					self.nav.api.load({
+					/*self.nav.api.load({
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
@@ -1380,7 +1387,7 @@ var main = (function(){
 						fade : self.app.el.content
 					})
 
-					return 
+					return */
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1407,6 +1414,7 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
 
 				showCategories(false)
 

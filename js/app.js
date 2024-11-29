@@ -894,22 +894,22 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post']
 		},
 
 		authorn: {
 			href: 'authorn',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post']
 		},
 
 		userpage: {

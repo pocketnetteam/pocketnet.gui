@@ -9,9 +9,18 @@ var bnavigation = (function(){
 		var primary = deep(p, 'history');
 
 		var el, w;
+		var notifications = {}
 
 		var actions = {
+			ahnotify : function(el, c, type){
 
+				if(!c) c = 0
+
+				if(type) notifications[type] = c
+
+				if (el)
+					renders.ah(el, notifications[type])
+			},
 		}
 
 
@@ -39,6 +48,21 @@ var bnavigation = (function(){
 		}
 
 		var renders = {
+			ah : function(el, c){
+
+				window.rifticker.add(() => {
+					if (c > 0){
+						el.addClass('amountHave')
+					}
+					else
+					{
+						el.removeClass('amountHave')
+					}
+
+					el.find('.amount').html(c)
+				})
+			},
+
 			menu : function(href){
 
 				var indexkey = self.app.nav.api.backChainIndex()
@@ -93,7 +117,8 @@ var bnavigation = (function(){
 						search,
 						haschat : self.app.platform.matrixchat.core,
 						thref : self.app.nav.get.href(),
-						ps : parameters()
+						ps : parameters(),
+						notifications : notifications
 						//mestate : _mestate
 					}
 
@@ -148,6 +173,19 @@ var bnavigation = (function(){
 						if (show) show()
 
 					})
+
+					p.el.find('.tochat').on('click', function(){
+						var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+						if (show) {
+							self.app.mobile.vibration.small()
+							show()
+						}
+					})
+					
+					console.log('notifications', notifications)
+
+					renders.ah(el.c.find('.tochat'), notifications['chat'])
 					
 				})
 
@@ -203,6 +241,11 @@ var bnavigation = (function(){
 
 			}
 
+			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu3 = function(count){
+				console.log('count notifications', count)
+				if(el.c) actions.ahnotify(el.c.find('.tochat'), count, 'chat') 
+			}
+
 			/*if (self.app.scrolling){
 				self.app.scrolling.clbks.navigation = events.scrollman
 			}*/
@@ -218,6 +261,7 @@ var bnavigation = (function(){
 
 			getdata : function(clbk, p){
 
+				notifications = {}
 
 				var data = {};
 
@@ -240,6 +284,8 @@ var bnavigation = (function(){
 					window.removeEventListener('keyboardWillShow', renders.hide);
 					window.removeEventListener('keyboardWillHide', renders.show);	
 				}
+
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu3
 
 				delete self.app.nav.clbks.history.navigation
 

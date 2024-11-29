@@ -5647,7 +5647,7 @@ Platform = function (app, listofnodes) {
 
                             var path = ''
 
-                            if(d.share.itisvideo() && !window.cordova){
+                            if (d.share.itisvideo() && !window.cordova && !self.app.mobileview){
                                 path = 'index?video=1&v=' + id
                             }
                             else
@@ -5675,7 +5675,14 @@ Platform = function (app, listofnodes) {
 
                             }
                             else{
-                                window.open(href, '_blank');
+
+                                app.nav.api.load({
+                                    open: true,
+                                    href: path,
+                                    history: true,
+                                })
+
+                                //window.open(href, '_blank');
                             }
 
                             close()

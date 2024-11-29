@@ -13,7 +13,40 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 				<div class="section leftpart">
 
-					<% if(haschat && state && (app.mobileview)) {%>
+					<% if(app.mobileview) {%>
+						<% if(state) {%>
+						<div class="items naviconwrapper">
+							
+						</div>
+						<% } else { %> 
+							<div class="items sitenames">
+
+								<div class="item  sitename" >
+									<div elementsid="eventssitename" class="icon" events="sitename">
+	
+										<img class="header_logo onlylight all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+											
+									</div>
+									<div elementsid="eventslang" class="label">
+										<div elementsid="menu_localization" class="lang localization">
+											
+											<% if(isMobile()) {%>
+												<%-(lkey.key || '').toUpperCase()%> 
+											<% } else { %>
+												<%-(lkey.name || '').toLowerCase()%> 
+											<% } %>
+
+											<i class="fas fa-caret-down"></i>
+										</div>
+									</div>						
+
+								</div>
+								
+							</div>
+						<% } %>
+					<% } %>
+
+					<!--<% if(haschat && state && (app.mobileview)) {%>
 
 						<div class="items chat">
 							<div elementsid="eventschats" class="item  chatwr" events="chats">
@@ -60,7 +93,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 						<% } %>
 
-					<% } %>
+					<% } %>-->
 
 				</div>
 

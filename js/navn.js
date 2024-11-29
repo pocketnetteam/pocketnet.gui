@@ -22,6 +22,10 @@ Nav = function(app)
 		links : true,
 	}
 
+	if (history.scrollRestoration) {
+		history.scrollRestoration = "manual";
+	}
+
 	var hostname = window.location.hostname
 
 	var electronopen = false
@@ -32,6 +36,8 @@ Nav = function(app)
 	if (_OpenApi){
 		defaultpathname = 'openapi.html'
 	}
+
+	self.initialHistoryLength = history.length
 
 	var protocol = null;
 
@@ -155,8 +161,11 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref', 'pc']);
+				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
+				if(np.fx){
+					href = khref + collectParameters({fx : np.fx})
+				}
 
 			var wb = false;
 
@@ -177,7 +186,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r && !np.fx){
+				if (khref == indexpage && !np.fx/* && !np.video && !np.audio && !np.read && !np.r && !np.fx*/){
 					//// 
 					backManager.clearAll()
 				}
@@ -186,17 +195,27 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || np.fx/* || (np.video || np.read || np.audio || np.r || np.fx)*/;
 
 
-					console.log('needadd', needadd, np)
-
-	
 					if (needadd){
 	
 						var riobj = removeEqualRIObj(backManager.chain, {
 							href : href
 						})
+
+						console.log('riobj', riobj, np.fx, backManager.chain)
+
+						if(!riobj && np.fx && backManager.chain.length > 1){
+							var c0 = backManager.chain[0]
+
+							if (c0.href.split('?')[0] == khref){
+								riobj = {
+									el : c0,
+									index : 1
+								}
+							}
+						}
 
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
@@ -244,19 +263,19 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
-			/*if(!bp){
+			if(!bp){
 
 				if (self.dynamic && !module.find(lhref)){
 					bp = deep(app, 'backmap.authorn') 
 				}
-			}*/
+			}
 
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
 
-				/*if (self.dynamic && !module.find(href)){
+				if (self.dynamic && !module.find(href)){
 					if(bp.childrens.indexOf('authorn') > -1) return true
-				}*/
+				}
 			}
 			else{
 				
@@ -651,9 +670,10 @@ Nav = function(app)
 							}
 							
 
-							if (p.goback){
+							/*if (p.goback){
+								console.log("GOBACKSCROLL")
 								app.actions.scroll(p.goback.scroll)
-							}
+							}*/
 
 							c(a, b, d)
 						}

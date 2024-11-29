@@ -1084,6 +1084,14 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.nav.clbks.history.menunavigation = function(href){
+				renders.menunavigation()
+			}
+
+			self.app.platform.sdk.registrations.clbks.menunavigation = function(){
+				renders.menunavigation()
+			}
+
 			self.app.events.resize.menu = function(){
 				if(self.app.width <= 768 && menusearch){
 					events.searchinit.init()
@@ -1185,6 +1193,99 @@ var menu = (function(){
 		}
 
 		var renders = {
+			menunavigation : function(clbk){
+
+				if(self.app.mobileview && app.nav.current){
+
+					var pathname = app.nav.current.href
+
+					self.shell({
+						name :  'navicon',
+						data : {
+							pathname,
+							path : app.nav.current.completeHref
+						},
+
+						el : el.c.find('.naviconwrapper')
+
+					}, function(_p){
+
+						_p.el.find('.item').on('click', function(){
+							if (pathname == 'index'){
+
+								self.nav.api.go({
+									open : true,
+									href : 'share',
+									inWnd : true,
+									history : true,
+									
+									essenseData : {
+										rmhistory : true
+									}
+								})
+
+							}
+							else{
+
+								var chain = self.app.nav.backManager.chain
+
+
+								if (chain.length > 2) {
+									
+
+									self.nav.api.go({
+										href : chain[1].href,
+										history : true,
+										open : true
+									})
+								}
+								else{
+
+									var k = ''
+									var indexkey = 'index'
+									var link = indexkey
+
+									try{
+										k = localStorage['lentakey'] || ''
+									}catch(e){
+
+									}
+
+									if (k == 'video'){
+										link = indexkey + '?video=1'
+									}
+									else{
+										if (k == 'read'){
+											link = indexkey + '?read=1'
+										}
+										else if (k == 'audio'){
+											link = indexkey + '?audio=1'
+										}
+									}
+
+									self.nav.api.go({
+										href : link,
+										history : true,
+										open : true
+									})
+
+								}
+							}
+						})
+
+						
+
+
+						if(clbk) clbk()
+					})
+
+				}
+				else{
+					if(clbk) clbk()
+				}
+
+
+			},
 			results : function(results, value, clbk, p){
 
 				if(!p) p = {}
@@ -1231,6 +1332,7 @@ var menu = (function(){
 		var make = function(){
 
 			renders.userinfo()
+			renders.menunavigation()
 
 		}
 
@@ -1300,6 +1402,10 @@ var menu = (function(){
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
 				delete self.app.platform.actionListeners['menu']
+
+				delete self.app.nav.clbks.history.menunavigation
+	
+				delete self.app.platform.sdk.registrations.clbks.menunavigation
 
 
 				self.app.platform.actions.clbk('change', 'menu', null)

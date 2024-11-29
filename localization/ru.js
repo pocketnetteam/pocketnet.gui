@@ -2791,3 +2791,4 @@ _l.makePost = "Сделать публикацию"
 _l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};
 _l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
 _l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};
+_l.chat = "Чат"
