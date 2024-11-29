@@ -6,38 +6,39 @@ var home = (function () {
 	var Essense = function (p) {
 		var primary = deep(p, "history");
 
-		var el, ed, applicationSearch, acsearch, userAddress = self.app?.user?.address?.value;
+		var el, ed, applicationSearch, acsearch, userAddress = null;
 
 		var actions = {
 			applicationSearchClear: function () {
 				renders.applications();
 			},
-			applySearchFilter: function (searchConfig) {
-				if (!searchConfig || !searchConfig.searchBy || !searchConfig.search) {
-					console.warn('Invalid search configuration provided:', searchConfig);
+			applySearchFilter: function (search) {
+				if (!search) {
+					console.warn('Invalid search configuration provided:', search);
 					return;
-				}
+				};
 
-				const searchValue = `${searchConfig.searchBy}:${Array.isArray(searchConfig.search) 
-        ? searchConfig.search.filter(Boolean).join(' ')  
-        : String(searchConfig.search).trim()}`;
-
-				if (!searchValue) {
+				if (!search) {
 					console.warn('Search value is empty:', searchValue);
 					return;
 				}
 
 				if (acsearch && typeof acsearch.setvalue === 'function') {
-					acsearch.setvalue(searchValue);
+					acsearch.setvalue(search);
 				} else {
 					console.error('acsearch.setvalue is not a valid function or acsearch is undefined.');
 				}
 
 				try {
-					renders.applications(searchConfig);
+					renders.applications({
+						search
+					});
 				} catch (error) {
 					console.error('Error rendering applications:', error);
 				}
+			},
+			removeValidSearchClass: function () {
+				el.c.find(".search").removeClass("validSearch");
 			},
 			applicationSearch: function () {
 				if (acsearch) {
@@ -62,7 +63,7 @@ var home = (function () {
 					events: {
 						fastsearch: async function (value, clbk) {
 							if (value.length < 2) {
-								el.c.find(".search").removeClass("validSearch");
+								actions.removeValidSearchClass()
 								return clbk();
 							}
 							const applications = await self.app.apps.get.applicationsSearch(
@@ -75,6 +76,7 @@ var home = (function () {
 							await renders.applications({
 								search: value,
 							});
+							actions.hideSearchResultsMenu()
 							clbk();
 						},
 						active: function (isActive) {
@@ -86,6 +88,7 @@ var home = (function () {
 						},
 						clear: function (fs) {
 							actions.applicationSearchClear();
+							actions.removeValidSearchClass()
 							el.c.find(".searchFastResultWrapper").empty();
 						},
 					},
@@ -94,29 +97,6 @@ var home = (function () {
 			hideSearchResultsMenu: function () {
 				const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
 				searchResultsWrapper.addClass("hidden");
-			},
-			applicationClick: function (applicationId) {
-				var applications = self.app.apps.get.installedAndInstalling({});
-
-				var application = applications[applicationId];
-
-				if (!application) {
-					//// not installed application from search, to app page
-
-					return;
-				}
-
-				if (application.installing) {
-					//// not installed application, to app page with installing bar
-
-					return;
-				}
-
-				if (application.installed) {
-					//// not installed application, to app page with installing bar
-
-					return;
-				}
 			},
 		};
 
@@ -136,9 +116,9 @@ var home = (function () {
 					history: true,
 					open: true,
 				});
-			},
-		};
-
+			}
+		}
+		
 		var renders = {
 			searchResults: function (results, value) {
 				el.c.find(".search").addClass("validSearch");
@@ -159,15 +139,8 @@ var home = (function () {
 						p.el.find(".search-option").on("click", function (event) {
 							const searchBy = $(this).data("searchby");
 
-							const searchTransformers = {
-								tags: (value) => value.split(' ').filter(Boolean),
-								default: (value) => value
-							};
-							actions.applySearchFilter({
-								searchBy,
-								search: searchTransformers[searchBy || 'default'](value)
-							});
-							hideSearchResultsMenu()
+							actions.applySearchFilter(`${searchBy}:${value}`);
+							actions.hideSearchResultsMenu()
 						});
 					}
 				);
@@ -200,21 +173,16 @@ var home = (function () {
 							}
 						});
 						p.el.find(".tag").on("click", function (event) {
-							actions.applySearchFilter({
-								searchBy: 'tags',
-								search: [$(this).text().trim()]
-							})
+							actions.applySearchFilter(`tags:${$(this).text().trim()}`);
 						});
 						el.c.on("click", "#createAppButton", function () {
 							applicationActions.navigateToDevApplication();
 						});
 
 						el.c.on("click", "#myAppsButton", function () {
-							actions.applySearchFilter({
-								searchBy: "address",
-								search: userAddress,
-							});
+							actions.applySearchFilter(`address:${userAddress}`);
 						});
+
 						if (clbk) clbk();
 					}
 				);
@@ -230,9 +198,13 @@ var home = (function () {
 		};
 
 		var state = {
-			save: function () {},
-			load: function () {},
-		};
+			save: function () {
+
+			},
+			load: function () {
+
+			}
+		}
 
 		var initEvents = function () {
 			const searchInput = el.c.find(".applicationSearch input");
@@ -259,6 +231,7 @@ var home = (function () {
 			getdata: function (clbk, p) {
 				ed = p.settings.essenseData;
 
+				userAddress = self.app?.user?.address?.value || null;
 				var data = {
 					ed,
 					userAddress

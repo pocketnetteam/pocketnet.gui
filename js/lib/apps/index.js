@@ -1973,6 +1973,19 @@ var BastyonApps = function (app) {
         },
 
         applicationsSearch: async function (search = '', searchBy) {
+            if (search.includes(':')) {
+                const [detectedSearchBy, ...searchParts] = search.split(':');
+                searchBy = detectedSearchBy.trim();
+                search = searchParts.join(':').trim();
+            }
+
+            const searchTransformers = {
+                tags: (value) => value.split(' ').filter(Boolean),
+                default: (value) => value
+            };
+
+            const transformedSearch = (searchTransformers[searchBy] || searchTransformers.default)(search);
+
             const adaptApplicationData = (app) => ({
                 name: app.name || app.manifest?.name || '',
                 icon: app.icon || `https://${app.scope}/b_icon.png`,
@@ -1983,20 +1996,19 @@ var BastyonApps = function (app) {
                 address: app.author || app.address || '',
             });
 
-            const filterApplications = (apps, str, searchBy) => {
-                const searchTerm = str.toLowerCase();
+            const filterApplications = (_search, apps, searchBy) => {
                 return apps?.filter(app => {
                     switch (searchBy) {
                         case 'name':
-                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(searchTerm);
+                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(_search);
                         case 'scope':
                             const scope = app.manifest?.scope?.replace('https://', '').toLowerCase() || app.scope?.toLowerCase() || '';
-                            return scope.includes(searchTerm);
+                            return scope.includes(_search);
                         case 'tags':
-                            return app.tags?.includes(searchTerm);
+                            return _search.some(tag => app.tags?.includes(tag));
                         case 'address':
                             const author = app.author?.toLowerCase() || app.address?.toLowerCase() || '';
-                            return author.includes(searchTerm);
+                            return author.includes(_search);
                         default:
                             return false;
                     }
@@ -2004,12 +2016,12 @@ var BastyonApps = function (app) {
             };
 
             const installedApps = this.installedAndInstalling();
-            const filteredInstalledApps = filterApplications(Object.values(installedApps), search, searchBy || 'name');
+            const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
             let additionalApps = [];
-            if (search) {
+            if (transformedSearch) {
                 additionalApps = await app.platform.sdk.miniapps.getall({
-                    [searchBy || 'search']: search
+                    [searchBy || 'search']: transformedSearch
                 });
             }
 
