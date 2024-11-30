@@ -227,7 +227,11 @@ var bnavigation = (function(){
 
 			el.c.find('.fakem').on('click', function(){
 
-				$('html').removeClass('scrollmodedown')
+				if (self.app.el.html.hasClass('scrollmodedown')) {
+					window.requestAnimationFrame(() => {
+						self.app.el.html.removeClass('scrollmodedown')
+					})
+				}
 			})
 
 			self.app.events.scroll.navigation = events.scroll

@@ -163,8 +163,10 @@ Nav = function(app)
 
 				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
-				if(np.fx){
-					href = khref + collectParameters({fx : np.fx})
+				if(np.video || np.read || np.audio || np.r || np.fx){
+					href = khref + collectParameters({
+						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read
+					})
 				}
 
 			var wb = false;
@@ -186,7 +188,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.fx/* && !np.video && !np.audio && !np.read && !np.r && !np.fx*/){
+				if (khref == indexpage && !np.fx && !np.video && !np.audio && !np.read && !np.r && !np.fx){
 					//// 
 					backManager.clearAll()
 				}
@@ -195,7 +197,7 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || np.fx/* || (np.video || np.read || np.audio || np.r || np.fx)*/;
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx);
 
 
 					if (needadd){
@@ -579,6 +581,8 @@ Nav = function(app)
 
 						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
+
+							app.mobile.removescrollmodedown()
 						}
 							
 
@@ -645,6 +649,8 @@ Nav = function(app)
 
 							app.actions.scrollToTop()
 
+							app.mobile.removescrollmodedown()
+
 						}
 						catch(e){
 							console.error(e)
@@ -705,6 +711,8 @@ Nav = function(app)
 			else
 			{
 				app.actions.scrollToTop()
+
+				app.mobile.removescrollmodedown()
 
 				p.clbk(null, p);
 			}

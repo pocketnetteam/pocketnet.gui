@@ -2347,6 +2347,14 @@ Application = function (p) {
 
 	self.mobile = {
 
+		removescrollmodedown : function(){
+			if (app.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					app.el.html.removeClass('scrollmodedown')
+				})
+			}
+		},
+
 		audiotoggle: function (mode = 'SPEAKER') {
 
 			if (typeof window.AudioToggle != 'undefined') {

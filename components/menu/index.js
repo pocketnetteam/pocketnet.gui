@@ -1260,6 +1260,10 @@ var menu = (function(){
 										}
 										else if (k == 'audio'){
 											link = indexkey + '?audio=1'
+										}else{
+											if(k){
+												link = indexkey + '?r=' + k
+											}
 										}
 									}
 
