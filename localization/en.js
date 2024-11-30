@@ -260,6 +260,8 @@ _l.stp = "Beginner";
 _l.stpg = "Top";
 _l.stpreal = "Verified";
 _l.stpdev = ""+appname+" developer";
+_l.stpmoderator = "Moderator";
+
 
 _l.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
 _l.trialreputationtipaction = "Learn more about reputation here"
