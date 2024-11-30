@@ -5676,13 +5676,13 @@ Platform = function (app, listofnodes) {
                             }
                             else{
 
-                                app.nav.api.load({
+                                /*app.nav.api.load({
                                     open: true,
                                     href: path,
                                     history: true,
-                                })
+                                })*/
 
-                                //window.open(href, '_blank');
+                                window.open(href, '_blank');
                             }
 
                             close()
