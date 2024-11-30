@@ -1251,21 +1251,24 @@ var menu = (function(){
 
 									}
 
-									if (k == 'video'){
-										link = indexkey + '?video=1'
-									}
-									else{
-										if (k == 'read'){
-											link = indexkey + '?read=1'
+									if(k != indexkey){
+										if (k == 'video'){
+											link = indexkey + '?video=1'
 										}
-										else if (k == 'audio'){
-											link = indexkey + '?audio=1'
-										}else{
-											if(k){
-												link = indexkey + '?r=' + k
+										else{
+											if (k == 'read'){
+												link = indexkey + '?read=1'
+											}
+											else if (k == 'audio'){
+												link = indexkey + '?audio=1'
+											}else{
+												if(k){
+													link = indexkey + '?r=' + k
+												}
 											}
 										}
 									}
+									
 
 									self.nav.api.go({
 										href : link,
