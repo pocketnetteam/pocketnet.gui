@@ -368,8 +368,6 @@ var application = (function(){
 
 		var make = function(){
 
-			console.log('application_notexist', self)
-
 			if(!application || !appdata){
 				renders.error('application_notexist')
 				return

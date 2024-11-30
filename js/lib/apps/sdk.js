@@ -75,7 +75,6 @@ var BastyonSdk = function(){
         window.history[changeState] = new Proxy(window.history[changeState], {
             
             apply (target, thisArg, argList) {
-                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 

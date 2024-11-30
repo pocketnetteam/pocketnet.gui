@@ -2484,8 +2484,6 @@ var wallet = (function(){
 
 				/*self.app.api.rpc('getaccountearning', [self.app.user.address.value, 0, 1627534]).then(function (s) {
 
-					console.log("STATS", s)
-					
 					var stats = {...s[0]}
 
 					delete stats.address

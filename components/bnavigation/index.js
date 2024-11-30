@@ -74,8 +74,6 @@ var bnavigation = (function(){
 				}
 				catch (e) { }
 				
-				console.log('needadd', indexkey)
-
 				if (k == indexkey) k = indexkey + '?b=true'
 
 				if (k.indexOf('?') == -1) {
@@ -183,8 +181,6 @@ var bnavigation = (function(){
 						}
 					})
 					
-					console.log('notifications', notifications)
-
 					renders.ah(el.c.find('.tochat'), notifications['chat'])
 					
 				})
@@ -246,7 +242,6 @@ var bnavigation = (function(){
 			}
 
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu3 = function(count){
-				console.log('count notifications', count)
 				if(el.c) actions.ahnotify(el.c.find('.tochat'), count, 'chat') 
 			}
 

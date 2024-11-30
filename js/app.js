@@ -110,8 +110,6 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	console.log('monet', p)
-
 	if (p.monetization && typeof window.Monetization != 'undefined'){
 		self.monetization = new window.Monetization(self, p.monetization)
 	}
@@ -1686,9 +1684,6 @@ Application = function (p) {
 
 		playingvideo: function (v, from) {
 
-			console.log("PLAYING", v ,from)
-			
-
 			if(from && from.player_id){
 				if(self.playingvideocollisions[from.player_id]){
 					delete self.playingvideocollisions[from.player_id]
@@ -2835,8 +2830,6 @@ Application = function (p) {
 
 			if (window.cordova) {
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
-
-					console.log('playing set backgroundMode', t)
 
 					if (t) {
 

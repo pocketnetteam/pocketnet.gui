@@ -171,8 +171,6 @@ Nav = function(app)
 
 			var wb = false;
 
-			console.log('needadd', href)
-
 			if (np.back || back){
 
 				var index = findIndex(backManager.chain, function(c){
@@ -205,8 +203,6 @@ Nav = function(app)
 						var riobj = removeEqualRIObj(backManager.chain, {
 							href : href
 						})
-
-						console.log('riobj', riobj, np.fx, backManager.chain)
 
 						if(!riobj && np.fx && backManager.chain.length > 1){
 							var c0 = backManager.chain[0]

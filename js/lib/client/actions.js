@@ -345,8 +345,6 @@ var Action = function(account, object, priority, settings){
 
         if (e.expObject){
 
-            console.log('import', e.expObject.type, kits.c)
-
             var alias = new kits.c[e.expObject.type]()
                 alias.import(e.expObject)
 
@@ -769,8 +767,6 @@ var Action = function(account, object, priority, settings){
             sendPromise = account.parent.api.rpc(method, parameters)
         
 
-        console.log('sendPromise', sendPromise, ActionOptions.testWithoutSend)
-
         return sendPromise.then(transaction => {
 
             self.transaction = transaction
@@ -787,7 +783,6 @@ var Action = function(account, object, priority, settings){
 
             trigger()
 
-            console.log('jury here', self.transaction)
 
             return Promise.resolve()
 
@@ -1923,7 +1918,6 @@ var Account = function(address, parent){
 
         //self.actions.value = []
 
-        console.log("IMPORT", e.actions)
 
         _.each(e.actions.value, (exported) => {
 
@@ -1956,7 +1950,6 @@ var Account = function(address, parent){
                     return a.id == exported.id
                 })
 
-                console.log('IMPORT', exported)
 
                 var action = (prevaction || new Action(self, {}))
                     action.import(exported)
@@ -2050,8 +2043,6 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
-
-                    console.log('addresses index', dumped, p2sh)
                     
                     throw 'unableSign:5'
                 }

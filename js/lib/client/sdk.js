@@ -1257,7 +1257,6 @@ var pSDK = function ({ app, api, actions }) {
 
                     })
 
-                    console.log('jury converted', converted)
 
                     return converted
 
@@ -1278,14 +1277,10 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('modVote'), filter)
 
-                console.log('actions', actions)
-
                 _.each(actions, (action) => {
 
                     var txid = deep(action, 'object.s2.v')
                     
-                    console.log("______JURY", txid)
-
                     objects = _.filter(objects, (o) => {
                         return o.id == txid
                     })
@@ -1396,7 +1391,6 @@ var pSDK = function ({ app, api, actions }) {
                     }
                     catch (e) {
                         console.error(e)
-                        console.log(c)
                         return null
                     }
 

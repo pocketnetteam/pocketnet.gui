@@ -117,7 +117,6 @@ var lenta = (function(){
 					console.error(e)
 				}
 
-				console.log('restoredposition', restoredposition)
 				
 			},
 			fixposition : function(b, fp = ''){
@@ -133,8 +132,6 @@ var lenta = (function(){
 				}
 
 				if (b){
-
-					console.log('fixedblock', fixedblock)
 
 					var json = hexEncode(
 						JSON.stringify({
@@ -5804,7 +5801,6 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log("INIT")
 
 				ovf = false
 
@@ -5911,7 +5907,6 @@ var lenta = (function(){
 
 			destroy : function(){
 
-				console.log("DESTROY")
 
 				initialized = null
 
@@ -5932,7 +5927,6 @@ var lenta = (function(){
 				}
 
 				if (fullscreenvideoShowed){
-					console.log('exitFullScreenVideo')
 					actions.exitFullScreenVideo(fullscreenvideoShowed)
 				}
 

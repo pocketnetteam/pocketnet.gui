@@ -1197,9 +1197,6 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
-				console.log("HANDLER1")
-
-
 				var tgsi = decodeURI(parameters().sst || '')
 
 				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
@@ -1292,8 +1289,6 @@ var main = (function(){
 
 					renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 
-					console.log("HANDLER")
-
 					if (lenta) {
 						lenta.clearessense()
 						lenta = null
@@ -1335,8 +1330,6 @@ var main = (function(){
 			},
 
 			getdata : function(clbk, p){
-
-				console.log("INIT MAIN")
 
 				hsready = false;
 

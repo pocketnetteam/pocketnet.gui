@@ -23873,13 +23873,7 @@ Platform = function (app, listofnodes) {
                             console.error(e)
                         })
     
-                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
-                            unspents = _.sortBy(unspents, (u) => {
-                                return u.amount
-                            })
-                            console.log("UNSPENTS", unspents)
-                        })*/
-                        
+         
     
                         self.preparingUser = false;
     

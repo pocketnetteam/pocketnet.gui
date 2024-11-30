@@ -761,8 +761,6 @@ var share = (function(){
 
 					var matches = text.match(r);
 
-					//console.log('application matches', matches, tpl)
-
 
 					if(matches && matches.length > 0){
 

@@ -1597,8 +1597,6 @@ var BastyonApps = function(app){
 
         return Promise.all(promises).then(() => {
 
-            console.log("miniapp ini")
-
             self.inited = true
             
             window.addEventListener("message", listener)
@@ -1755,8 +1753,6 @@ var BastyonApps = function(app){
                     var scope = application.manifest.scope.replace('https://', '').toLowerCase()
                     var i = str.indexOf(scope)
 
-                    console.log('scope', scope, str, i)
-
                     if (i < 9 && i > 0) return true // /???
                 }
             })
@@ -1872,12 +1868,7 @@ var BastyonApps = function(app){
 
             if(!pps.id) return null
 
-            console.log('application pps', href, pps)
-
-
             if (pps.p) pps.p = hexDecode(pps.p)
-
-            console.log('application pps', href, pps)
 
             return {
                 id : pps.id,

@@ -6261,8 +6261,6 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
-	console.log('scr ofssetObj', ofssetObj)
-
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6273,8 +6271,6 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
-
-		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -8334,15 +8330,12 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
-		console.log('files', files)
-
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
 
-					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8350,8 +8343,6 @@ initUpload = function (p) {
 				},
 				fail: function () {
 					end();
-
-					console.log('failed')
 
 
 					if (p.onFail)
@@ -8361,8 +8352,6 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
-
-				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8397,18 +8386,11 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
-						console.log("read")
-
-
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
-							console.log("resize")
-
 							autorotation(file, fileObject.base64, function (base64) {
-
-								console.log('autorotation')
 
 								fileObject.base64 = base64;
 

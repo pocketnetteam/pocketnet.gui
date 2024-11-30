@@ -193,8 +193,6 @@ var applicationmeta = (function(){
 
 				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
 				
-				console.log("PR", pr)
-				
 				pr.promise.then(() => {
 					successCheck()
 				}).catch(e => {
