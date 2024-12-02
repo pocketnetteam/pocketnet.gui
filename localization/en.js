@@ -2979,7 +2979,7 @@ _l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?"
 _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
-_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
+_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
 _l.miniApp_loadErrorMessage = "Failed to load application data.";
 _l.miniApp_iconAltText = "App Icon";
 _l.miniApp_publishButton = "Publish";
@@ -3036,3 +3036,23 @@ _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_createDescription = "Ensure all data matches the fields defined in the application's `b_manifest.json` file. Any discrepancies may cause issues during installation.";
 _l.miniApp_tagsRequiredMessage = "Please specify at least one tag for the application.";
 _l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";
+
+
+_l.miniApp_documentationButtonLabel = "Documentation";
+_l.miniApp_createButtonLabel = "Create Mini App";
+_l.miniApp_myAppsButtonLabel = "Created by Me";
+_l.miniApp_appsButtonLabel = "Applications";
+
+_l.miniApp_heroTitle = "A Powerful Platform for Your Projects";
+_l.miniApp_heroSubtitle = "Develop applications and leverage all the capabilities of Bastion in your business.";
+_l.miniApp_heroCtaButton = "Get Started";
+
+_l.miniApp_featuresTitle = "Features";
+_l.miniApp_featureDecentralizedTitle = "Decentralized";
+_l.miniApp_featureDecentralizedDescription = "Build applications without centralized control, ensuring your data is secure.";
+_l.miniApp_featureScalableTitle = "Scalable";
+_l.miniApp_featureScalableDescription = "Leverage Bastion's network to support applications of any size.";
+_l.miniApp_featureCryptoIntegrationTitle = "Easy Cryptocurrency Payment Integration";
+_l.miniApp_featureCryptoIntegrationDescription = "Embed cryptocurrency payments in your applications for user convenience.";
+_l.miniApp_featureApiAccessTitle = "Full Access to Bastion API";
+_l.miniApp_featureApiAccessDescription = "Utilize all the features of Bastion API to create functional and innovative applications.";

@@ -40,7 +40,7 @@ var home = (function () {
 			removeValidSearchClass: function () {
 				el.c.find(".search").removeClass("validSearch");
 			},
-			applicationSearch: function () {
+			applicationSearch: function (searchValue) {
 				if (acsearch) {
 					acsearch.destroy();
 					acsearch = null;
@@ -93,6 +93,10 @@ var home = (function () {
 						},
 					},
 				});
+
+				if (searchValue) {
+					acsearch.setvalue(searchValue);
+				}
 			},
 			hideSearchResultsMenu: function () {
 				const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
@@ -118,7 +122,7 @@ var home = (function () {
 				});
 			}
 		}
-		
+
 		var renders = {
 			searchResults: function (results, value) {
 				el.c.find(".search").addClass("validSearch");
@@ -145,7 +149,7 @@ var home = (function () {
 					}
 				);
 			},
-			applications: async function (searchConfig, clbk) {
+			applications: async function (searchConfig, clbk) {	
 				if (!searchConfig?.applications) {
 					applications = await self.app.apps.get.applicationsSearch(
 						searchConfig?.search,
@@ -220,9 +224,11 @@ var home = (function () {
 		};
 
 		var make = function () {
-			applicationSearch = actions.applicationSearch();
-
-			renders.applications();
+			const searchValue = parameters().search
+			applicationSearch = actions.applicationSearch(searchValue);
+			renders.applications({
+				search: searchValue
+			});
 		};
 
 		return {

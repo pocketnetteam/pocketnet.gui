@@ -5,21 +5,22 @@
       <i class="fas fa-hashtag"></i>
     </div>
     <div class="result-label">
-      Искать по тегу: <b><%- value %></b>
+      <%= e('searchbytags') %>
+      <b><%- value %></b>
     </div>
   </div>
 </div>
-<% }%>
-<% if (applications && applications.length) { %>
+<% }%> <% if (applications && applications.length) { %>
 <div class="application-results">
   <% applications.forEach(function(app) { %>
   <div class="application" data-id="<%- app.id %>">
-    <div class="app-icon" style="background-image: url('<%- app.icon %>')"></div>
+    <div
+      class="app-icon"
+      style="background-image: url('<%- app.icon %>')"
+    ></div>
     <div class="app-info">
       <div class="app-name"><%- app.name %></div>
-      <div class="app-description">
-        <%- app.description || '' %>
-      </div>
+      <div class="app-description"><%- app.description || '' %></div>
     </div>
   </div>
   <% }); %>
