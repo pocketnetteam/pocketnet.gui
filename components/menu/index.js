@@ -607,7 +607,7 @@ var menu = (function(){
 						placeholder : self.app.localization.e('e13139'),
 						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
-						mobileSearch : self.app.width <= 768,
+						mobileSearch : self.app.width <= 768 || self.app.mobileview,
 
 
 						id : 'searchOnBastyon',
@@ -1093,13 +1093,13 @@ var menu = (function(){
 			}
 
 			self.app.events.resize.menu = function(){
-				if(self.app.width <= 768 && menusearch){
+				/*if(self.app.width <= 768 && menusearch){
 					events.searchinit.init()
 				}
 
 				if(self.app.width > 768 && !menusearch){
 					events.searchinit.init()
-				}
+				}*/
 			}
 
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){

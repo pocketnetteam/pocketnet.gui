@@ -4786,6 +4786,9 @@ html.mobileview.fullscreen #menuWrapper {
 html.mobileview.fullscreen #navigationWrapper {
   display: none!important;
 }
+.mobsearch {
+  cursor: pointer;
+}
 html.allcontent_application #navigationWrapper,
 html.allcontent_application #menuWrapper,
 html.allcontent_application #footerWrapper {

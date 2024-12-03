@@ -2718,8 +2718,9 @@ var lenta = (function(){
 					actions.videoPosition(fullscreenvideoShowed)
 				}
 
-
-				lwidth = el.c.width()
+				if(!essenseData.horizontal){
+					lwidth = self.app.width < 768 && self.app.width > 0 ? self.app.width : el.c.width()
+				}
 				
 			},	
 
@@ -6092,7 +6093,10 @@ var lenta = (function(){
 				clearnewmaterials()	
 
 				rifticker.add(() => {
-					lwidth = el.c.width()
+					lwidth = 0
+					if(!essenseData.horizontal){
+						lwidth = self.app.width < 768 && self.app.width > 0 ? self.app.width : el.c.width()
+					}
 				})
 				
 

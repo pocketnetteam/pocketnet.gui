@@ -1782,7 +1782,9 @@ Application = function (p) {
 				blockScroll = true
 				scrollrif = null
 
-				self.el.window.scrollTop(to)
+				//self.el.window.scrollTop(to)
+
+				window.scrollBy(0,to)
 				self.scrollTop = to
 
 				setTimeout(function () {

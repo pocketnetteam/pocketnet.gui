@@ -9937,32 +9937,28 @@ if (typeof window != 'undefined') {
 				return;
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenIcon.classList.remove("rotate");
-				splashScreenIcon.classList.add('zoom-out-rotate');
-				splashScreen.classList.add('fade-out');
-				// When zoom out animation is done, completely remove the splash screen
-				setTimeout(() => {
-					// Clear interval if needed
-					if (splashScreeninterval != undefined) {
-						clearInterval(splashScreeninterval);
-					}
-					// Completely remove the splashscreen
-
-					if (splashScreen)
-						splashScreen.remove();
-					splashScreenIcon = null
-
-					splashScreen = null
-				}, zoomOutDuration * 2);
+				window.requestAnimationFrame(() => {
+					splashScreenIcon.classList.remove("rotate");
+					splashScreenIcon.classList.add('zoom-out-rotate');
+					splashScreen.classList.add('fade-out');
+					// When zoom out animation is done, completely remove the splash screen
+					setTimeout(() => {
+						// Clear interval if needed
+						if (splashScreeninterval != undefined) {
+							clearInterval(splashScreeninterval);
+						}
+						// Completely remove the splashscreen
+	
+						if (splashScreen)
+							splashScreen.remove();
+						splashScreenIcon = null
+	
+						splashScreen = null
+					}, zoomOutDuration * 2);
+				})
+				
 			}
-			// Wait until half the rotation is done
-			/*setTimeout(() => {
-				// Change the logo image
-				if (splashScreenIcon)
-					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
-				// Increase index
-				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);*/
+		
 		}
 
 		// Wait until the zoom in is done
@@ -9970,11 +9966,13 @@ if (typeof window != 'undefined') {
 			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenIcon.classList.remove('zoom-in');
-			splashScreenIcon.classList.add('rotate');
-			// Triggered every times we reached the end of the rotating animation
-			rotatingAnimationEnded();
-			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			window.requestAnimationFrame(() => {
+				splashScreenIcon.classList.remove('zoom-in');
+				splashScreenIcon.classList.add('rotate');
+				// Triggered every times we reached the end of the rotating animation
+				rotatingAnimationEnded();
+				splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			})
 		}, zoomInDuration);
 
 	}

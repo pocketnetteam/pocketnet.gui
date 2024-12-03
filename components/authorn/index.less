@@ -817,10 +817,14 @@
                 display: none;
 
                 &.about{
-                    display: block;
                     border-bottom: 0;
                     margin-bottom: 0;
                     padding-bottom: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
                 }
                 
             }
@@ -844,6 +848,8 @@
                     display: block;
 
                     &.about{
+                        display: block;
+                        -webkit-line-clamp:inherit;
                         margin-bottom: 2 * @rhythm;
                     }
                 }
