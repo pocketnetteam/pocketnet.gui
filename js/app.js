@@ -892,28 +892,34 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		authorn: {
 			href: 'authorn',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview', 'application', 'home']
+		},
+
+		home : {
+			href : 'home',
+			childrens : ['application']
 		}
+
 
 	}
 

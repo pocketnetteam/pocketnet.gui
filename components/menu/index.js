@@ -1226,57 +1226,7 @@ var menu = (function(){
 
 							}
 							else{
-
-								var chain = self.app.nav.backManager.chain
-
-
-								if (chain.length > 2) {
-									
-
-									self.nav.api.go({
-										href : chain[1].href,
-										history : true,
-										open : true
-									})
-								}
-								else{
-
-									var k = ''
-									var indexkey = 'index'
-									var link = indexkey
-
-									try{
-										k = localStorage['lentakey'] || ''
-									}catch(e){
-
-									}
-
-									if(k != indexkey){
-										if (k == 'video'){
-											link = indexkey + '?video=1'
-										}
-										else{
-											if (k == 'read'){
-												link = indexkey + '?read=1'
-											}
-											else if (k == 'audio'){
-												link = indexkey + '?audio=1'
-											}else{
-												if(k){
-													link = indexkey + '?r=' + k
-												}
-											}
-										}
-									}
-									
-
-									self.nav.api.go({
-										href : link,
-										history : true,
-										open : true
-									})
-
-								}
+								self.app.platform.ui.goback()
 							}
 						})
 

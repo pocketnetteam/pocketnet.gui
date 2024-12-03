@@ -163,9 +163,9 @@ Nav = function(app)
 
 				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
-				if(np.video || np.read || np.audio || np.r || np.fx){
+				if(np.video || np.read || np.audio || np.r || np.fx || np.id){
 					href = khref + collectParameters({
-						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read
+						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read, id : np.id
 					})
 				}
 
@@ -195,8 +195,7 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx);
-
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx || np.id);
 
 					if (needadd){
 	

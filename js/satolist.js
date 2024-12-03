@@ -3284,6 +3284,65 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        goback : function(def){
+
+            var chain = self.app.nav.backManager.chain
+
+            if (chain.length > 2) {
+
+                self.app.nav.api.go({
+                    href : chain[1].href,
+                    history : true,
+                    open : true
+                })
+                
+            }
+            else{
+
+                var k = ''
+                var indexkey = 'index'
+                var link = indexkey
+
+                if(!def){
+    
+                    try{
+                        k = localStorage['lentakey'] || ''
+                    }catch(e){
+    
+                    }
+    
+                    if(k != indexkey){
+                        if (k == 'video'){
+                            link = indexkey + '?video=1'
+                        }
+                        else{
+                            if (k == 'read'){
+                                link = indexkey + '?read=1'
+                            }
+                            else if (k == 'audio'){
+                                link = indexkey + '?audio=1'
+                            }else{
+                                if(k){
+                                    link = indexkey + '?r=' + k
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else{
+                    link = def
+                }
+
+                self.app.nav.api.go({
+                    href : link,
+                    history : true,
+                    open : true
+                })
+
+            }
+        },
+
         support : function(template, parameters){
  
             app.nav.api.load({

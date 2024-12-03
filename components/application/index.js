@@ -37,13 +37,14 @@ var application = (function(){
 					self.closeContainer()
 				}
 				else{
-					self.app.nav.api.load({
+					self.app.platform.ui.goback('home')
+					/*self.app.nav.api.load({
 						open : true,
 						href : 'index',
 	
 						///href : 'home',
 						history : true,
-					})
+					})*/
 				}
 
 				

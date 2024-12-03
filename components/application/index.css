@@ -80,8 +80,15 @@
   height: calc(55px + var(--app-margin-top));
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 2;
   pointer-events: none;
+}
+#application .captionRow .captionRowWrapper {
+  display: flex;
+  flex-grow: 2;
+  align-items: center;
+  max-width: 1980px;
 }
 #application .captionRow .iconwrapper {
   min-width: 55px;
