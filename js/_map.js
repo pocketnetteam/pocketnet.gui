@@ -785,12 +785,14 @@ __map =  {
 		devapplication : {
 			uri : "devapplication",
 			href : "devapplication",
-			add : insertingfunc
+			add : insertingfunc,
+			anonimus : true,
 		},
 
 		devapplications : {
 			uri : "devapplications",
 			href : "devapplications",
+			anonimus : true,
 			add : insertingfunc
 		},
 
