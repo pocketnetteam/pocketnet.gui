@@ -1148,6 +1148,10 @@ var share = (function(){
 						el.caption.focus() 
 					}
 
+					if(error == 'ntime1'){
+						events.selectTimeWrapper()
+					}
+
 					return true
 				}
 				else
@@ -1185,7 +1189,8 @@ var share = (function(){
             url : self.app.localization.e('e13164'),
             error_video : self.app.localization.e('e13165'),
 			videocaption : self.app.localization.e('entervideocaption'),
-			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error') 
+			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error'),
+			ntime1 : self.app.localization.e('emptyntime1')
 		}
 
 		var events = {
@@ -1197,62 +1202,141 @@ var share = (function(){
 				}
 		
 			},
+			selectTimeWrapper : function(){
+				events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
 
-			selectTime : function(){
+					if(date){
+						currentShare.settings.t = date.getTime() / 1000
+					}
 
-				var d = new Date()
+					renders.settings();
+					state.save()
+				})
+			},
+			selectTime : function(time, clbk){
 
-					d = d.addMinutes(10);
+				var date = {}
+				var dlg = null
 
-				var date = {
-					day : null,
-					hour : d.getHours(),
-					minutes : d.getMinutes()
+				var defdateclear = function(){
+					var d = new Date()
+
+					d = d.addMinutes(30);
+
+					return d
 				}
 
-				if(essenseData.time){
-					date.day = essenseData.time.yyyymmdd()
-					date.hour = essenseData.time.getHours()
-					date.minutes = essenseData.time.getMinutes()
+				var defdate = function(){
+					
+					var d = defdateclear()
+
+					date = {
+						day : d.yyyymmdd(),
+						hour : d.getHours(),
+						minutes : d.getMinutes()
+					}
 				}
 
-				self.fastTemplate('sharedate', function(html){
+				var preparetemplate = function(time, clbk){
+					
 
-					new dialog({
+					if (time && time > defdateclear()){
+						date.day = time.yyyymmdd()
+						date.hour = time.getHours()
+						date.minutes = time.getMinutes()
+					}
+
+					self.fastTemplate('sharedate', function(html){
+						if(clbk) clbk(html)
+					}, {
+						date : date,
+						min : defdateclear()
+					})
+				}
+
+				var getdate = function(){
+
+					var ds = strToDateSmall(date.day)
+						ds = ds.addHours(date.hour)
+						ds = ds.addMinutes(date.minutes)
+
+					return ds
+				}
+
+				var livetemplate = function(el){
+
+					console.log('livetemplate', el)
+
+					el.find('.day').on('change', function() {
+						date.day = $(this).val()
+
+						console.log('date.day', date.day)
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+					})
+
+					el.find('.hours').on('change', function() {
+						date.hour = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+
+					el.find('.minutes').on('change', function() {
+						date.minutes = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+				}
+
+				var replacetemplate = function(){
+
+					console.log('dlg', dlg)
+					
+					if(!dlg) return
+
+					console.log("DSADAS")
+
+					preparetemplate(null, (html) => {
+						dlg.replacehtml(html)
+
+						livetemplate(dlg.el)
+					})
+					
+				}
+
+				defdate()
+
+				preparetemplate(time, (html) => {
+					dlg = new dialog({
 						html : html,
 
 						btn1text : self.app.localization.e('daccept'),
 
 						class : "one sharedate zindex",
 
-						clbk : function(d){
-
-
+						clbk : function(el){
+							livetemplate(el)
 						},	
 
 						wrap : true,
 
 						success : function(d){
-							var day = d.el.find('.day').val()
-							var hours = d.el.find('.hours').val()
-							var minutes = d.el.find('.minutes').val()
 
-							var date = strToDateSmall(day)
-
-								date = date.addHours(hours)
-
-								date = date.addMinutes(minutes)
+							var date = getdate(d.el)
 
 							var now = new Date();
 
 							if (now < date){
 
-								essenseData.time = date;
-
-								el.selectTime.find('.selectedTime').html(convertDate(dateToStr(date)))
-
-								if (essenseData.selectTime)
-									essenseData.selectTime(date)
+								if(clbk) clbk(date)
 
 								return true;
 							}
@@ -1265,13 +1349,14 @@ var share = (function(){
 							}
 						}
 					})
-
-					html
-
-				}, {
-					date : date
 				})
 
+
+					
+
+					
+
+				
 				
 			},
 
@@ -1291,8 +1376,6 @@ var share = (function(){
 
 							if (essenseData.type)
 								essenseData.type(type)
-
-
 							
 						},
 
@@ -1726,6 +1809,7 @@ var share = (function(){
 					if(!currentShare.hasexchangetag() && !currentShare.repost.v && u && (u.reputation > 50 || !u.trial)) {
 
 						currentShare.settings.f || (currentShare.settings.f = '0')
+						currentShare.settings.t || (currentShare.settings.t = '0')
 
 						var selector = new Parameter({
 
@@ -1744,18 +1828,34 @@ var share = (function(){
 
 						})
 
+						var timeselector = new Parameter({
+
+							type : "VALUES",
+							name : "Time",
+							id : 'time',
+							possibleValues : ['0','1'],
+							possibleValuesLabels : [
+								self.app.localization.e('spostnow'), 
+								self.app.localization.e('sposttime')
+							],
+							defaultValue : '0',
+							value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
+
+						})
+
 						self.shell({
 							name :  'settings',
 							el : el.settings,
 							data : {
 								share : currentShare,
 								essenseData : essenseData,
-								selector : selector
+								selector : selector,
+								timeselector
 							},
 
 						}, function(p){
 
-							ParametersLive([selector], p.el)
+							ParametersLive([selector, timeselector], p.el)
 
 
 							selector._onChange = function(){
@@ -1764,6 +1864,39 @@ var share = (function(){
 
 								state.save()
 							}
+
+							timeselector._onChange = function(){
+
+								currentShare.settings.t = timeselector.value
+
+								if(timeselector.value == '0') delete currentShare.settings.t
+
+								renders.settings();
+
+								state.save()
+							}
+
+							p.el.find('.timelabel').on('click', function(){
+
+								events.selectTimeWrapper()
+
+								/*events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
+
+									if(date){
+										currentShare.settings.t = date.getTime() / 1000
+									}
+
+									renders.settings();
+									state.save()
+								})*/
+							})
+
+							p.el.find('.cleartimelabel').on('click', function(){
+								delete currentShare.settings.t
+
+								renders.settings();
+								state.save()
+							})
 
 							if (clbk)
 								clbk();

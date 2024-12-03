@@ -130,7 +130,14 @@ var ActionOptions = {
 
         share : {
             rejectedAsk : true,
-            priority : 2
+            priority : 2,
+            delayedNtime : function(action){
+                if (action.object.settings.t > 1){
+                    return action.object.settings.t
+                }
+
+                return 0
+            }
         },
 
         contentBoost : {
@@ -210,7 +217,6 @@ var errorCodesAndActions = {
     '2'  : errorCodesAndActionsExecutors.limit,
     '3'  : errorCodesAndActionsExecutors.limit,
     '15' : errorCodesAndActionsExecutors.limit,
-    //'26' : errorCodesAndActionsExecutors.limit,
     '29' : errorCodesAndActionsExecutors.limit,
     '31' : errorCodesAndActionsExecutors.limit,
     '49' : errorCodesAndActionsExecutors.limit,
@@ -434,6 +440,17 @@ var Action = function(account, object, priority, settings){
 
     var buildTransaction = function({inputs, outputs, opreturnData}){
         var txb = new bitcoin.TransactionBuilder();
+
+        //delayedNtime
+
+        if(options.delayedNtime){
+            var ntime = options.delayedNtime(self)
+            var now = (new Date()).getTime() / 1000
+
+            if (ntime && ntime < now){
+                txb.setNTime(ntime)
+            }
+        }
 
         txb.addNTime(account.parent.app.platform.timeDifference || 0)
 

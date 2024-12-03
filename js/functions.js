@@ -1658,6 +1658,9 @@ dialog = function (p) {
 
 	self.el = $el;
 	self.destroy = destroy;
+	self.replacehtml = function(html){
+		$el.find('.body .text').html(html)
+	}
 	return self;
 }
 

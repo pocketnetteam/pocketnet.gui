@@ -749,7 +749,9 @@ var BastyonApps = function(app){
 
                     offer.import(data);
 
-                    return makeAction(offer, application, true);
+                    return makeAction(offer, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
@@ -761,7 +763,9 @@ var BastyonApps = function(app){
 
                     remove.import({ txidEdit: data.hash });
 
-                    return makeAction(remove, application, true);
+                    return makeAction(remove, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
@@ -1307,6 +1311,8 @@ var BastyonApps = function(app){
 
     var removePermission = function(application, permission){
         if(!this.clearPermission(application, permission)) return false
+
+        var appdata = localdata[application.manifest.id]
 
         appdata.permissions.push({
             id : permission,

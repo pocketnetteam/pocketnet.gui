@@ -5049,8 +5049,10 @@ html.allcontent_application #footerWrapper {
 .usericon .letter {
   font-size: 1.5em;
 }
-.usericon:hover .realperson {
-  opacity: 0.7;
+@media (pointer: hover) {
+  .usericon:hover .realperson {
+    opacity: 0.7;
+  }
 }
 .usericon .registrationProgressIcon {
   position: absolute;

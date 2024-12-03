@@ -1559,6 +1559,10 @@ Share = function(lang){
 			
 		}
 
+		if (self.settings.t == 1){
+			return 'ntime1'
+		}
+
 		if(!self.tags.v.length && !self.repost.v){
 			return 'tags'
 		}

@@ -629,13 +629,25 @@
   #authorn .uinfo .item {
     display: none;
   }
-  #authorn .uinfo.showall .ucaption {
-    margin-bottom: 0.5em;
+  #authorn .uinfo .item.about {
+    display: block;
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  #authorn .uinfo .fa-chevron-down {
+    color: rgb(var(--neutral-grad-2));
+  }
+  #authorn .uinfo.showall .fa-chevron-down {
+    transform: rotate(-180deg);
   }
   #authorn .uinfo.showall .ucaption i {
     display: block;
   }
   #authorn .uinfo.showall .item {
     display: block;
+  }
+  #authorn .uinfo.showall .item.about {
+    margin-bottom: 1em;
   }
 }

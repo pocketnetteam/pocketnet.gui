@@ -89,13 +89,17 @@ var application = (function(){
 
 				var sl = '.settings .icon'
 
-				if(isMobile() && !s) sl = '.abssettings .icon'
+				//if(isMobile() && !s) sl = '.abssettings .icon'
 
 				p.el.find(sl).on('click', function(){
 					renders.menu($(this))
 				})
 
-				var chatel = p.el.find('.chatDoubleRow')
+				p.el.find('.info').on('click', function(){
+					actions.openinfo()
+				})
+
+				var chatel = p.el.find('.chat')
 
 				chatel.on('click', events.chats.click)
 				events.chats.init(chatel)
@@ -109,8 +113,11 @@ var application = (function(){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
 
-				if (el.c)
-					el.c.find('.captionRow').addClass('notactive')
+				setTimeout(() => {
+					if (el.c)
+						el.c.find('.captionRow').addClass('notactive')
+				}, 2000)
+				
 			},
 
 			changestate : function(p = {}){

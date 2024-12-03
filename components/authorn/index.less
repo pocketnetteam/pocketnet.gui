@@ -802,9 +802,9 @@
         }
 
         .uinfo{
-           padding-top: @rhythm;
-           padding-bottom: @rhythm;
-           padding-right: 2 * @rhythm;
+            padding-top: @rhythm;
+            padding-bottom: @rhythm;
+            padding-right: 2 * @rhythm;
             .ucaption{
                 margin-bottom: 0;
     
@@ -815,13 +815,25 @@
     
             .item{
                 display: none;
+
+                &.about{
+                    display: block;
+                    border-bottom: 0;
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                }
                 
             }
 
-            &.showall{
-                .ucaption{
+            .fa-chevron-down{
+                color : rgb(var(--neutral-grad-2));
+            }
 
-                    margin-bottom: @rhythm;
+            &.showall{
+                .fa-chevron-down{
+                    transform: rotate(-180deg);
+                }
+                .ucaption{
     
                     i{
                         display: block;
@@ -830,6 +842,10 @@
 
                 .item{
                     display: block;
+
+                    &.about{
+                        margin-bottom: 2 * @rhythm;
+                    }
                 }
             }
         }

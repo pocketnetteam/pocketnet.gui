@@ -2792,3 +2792,4 @@ _l.askdefaultapplink = function(appname){ return "Открыть ли данну
 _l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
 _l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};
 _l.chat = "Чат"
+_l.emptyntime1 = 'Пожалуйста, выберите дату и время публикации'
