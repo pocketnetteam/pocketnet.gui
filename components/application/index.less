@@ -137,6 +137,13 @@
             }
         }
 
+        &.electronstyle{
+            .caption{
+                margin-right: 110px;
+            }
+            
+        }
+
         .abssettings{
             
             position: absolute;
@@ -176,6 +183,7 @@
         }
 
         &.notactive{
+            .missicon,
             .caption{
                 transform: translateY(-100px);
                 .transition(0.1s);
@@ -183,6 +191,7 @@
             }
             
             &:hover{
+                .missicon,
                 .caption{
                     transition-delay: 0.3s;
                     transform: translateY(0px);

@@ -857,6 +857,7 @@ wnd = function (p) {
 
 
 			var cl = function () {
+
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
 				window.rifticker.add(() => {
@@ -9933,11 +9934,14 @@ if (typeof window != 'undefined') {
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function () {
-			if (!splashScreenIcon)
-				return;
+			
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
 				window.requestAnimationFrame(() => {
+
+					if (!splashScreenIcon)
+						return;
+
 					splashScreenIcon.classList.remove("rotate");
 					splashScreenIcon.classList.add('zoom-out-rotate');
 					splashScreen.classList.add('fade-out');

@@ -345,7 +345,7 @@ class OG {
                     }
                 }
 
-                if ($found_da != 'NULL'){
+                if ($found_da != NULL){
                     $url = 'https://'.$found_da->scope.'/'.$this->application['path'];
                 }
 

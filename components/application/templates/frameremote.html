@@ -10,14 +10,31 @@
         </div>
     </div>
 <% } %>-->
-<div class="captionRow">
+<div class="captionRow <%if(app.electronview){%>electronstyle<%}%>">
     <div class="captionRowWrapper">
-        <% if(!app.mobileview || !state) {%>
+        <% if(!app.mobileview || !state || app.electronview) {%>
             <div class="back iconwrapper filterIcon">
                 <div class="icon">
                     <i class="fas fa-chevron-left"></i>
                 </div>
             </div>
+
+            <% if(app.electronview) {%>
+
+                <div class="forward iconwrapper filterIcon missicon">
+                    <div class="icon">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="refresh iconwrapper filterIcon missicon">
+                    <div class="icon">
+                        <i class="fas fa-redo-alt"></i>
+                    </div>
+                </div>
+
+            <% } %>
+
         <% } else { %> 
             <div class="chat iconwrapper">
                 <div class="icon">
@@ -33,7 +50,7 @@
         <div class="caption">
             <span><%-application.manifest.name%></span>
         </div>
-        <% if(app.mobileview) {%>
+        <% if(app.mobileview || app.electronview) {%>
             <div class="settings iconwrapper filterIcon">
                 <div class="icon">
                     <i class="fas fa-ellipsis-v"></i>

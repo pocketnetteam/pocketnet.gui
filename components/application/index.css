@@ -122,6 +122,9 @@
   font-weight: 700;
   font-size: 0.9em;
 }
+#application .captionRow.electronstyle .caption {
+  margin-right: 110px;
+}
 #application .captionRow .abssettings {
   position: absolute;
   right: 100%;
@@ -159,6 +162,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+#application .captionRow.notactive .missicon,
 #application .captionRow.notactive .caption {
   transform: translateY(-100px);
   -moz-transition: 0.1s;
@@ -167,6 +171,7 @@
   transition: 0.1s;
   transition-delay: 2.3s;
 }
+#application .captionRow.notactive:hover .missicon,
 #application .captionRow.notactive:hover .caption {
   transition-delay: 0.3s;
   transform: translateY(0px);

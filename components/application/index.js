@@ -319,7 +319,7 @@ var application = (function(){
 
 					data : {
 						application,
-						src 
+						src
 					},
 
 				}, function(p){
@@ -327,7 +327,26 @@ var application = (function(){
 					events.pageevents(p)
 
 					p.el.find('.back').on('click', function(){
-						actions.gotohome()
+						if(self.app.electronview && history.length){
+							history.back()
+						}
+						else{
+							actions.gotohome()
+						}
+					})
+
+					p.el.find('.forward').on('click', function(){
+						if (history.length) {
+							history.forward() 
+						}
+					})
+
+					p.el.find('.refresh').on('click',()=>{
+
+						var electron = require('electron');
+
+						if (electron)
+							electron.ipcRenderer.send('electron-refresh');
 					})
 
 					if (clbk)
