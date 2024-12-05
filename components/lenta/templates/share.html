@@ -101,7 +101,7 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<% if(!share.temp && !share.relay) {%>
+					<% if((!share.temp && !share.relay) || share.delayed()) {%>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
@@ -622,8 +622,19 @@ var arranges = {
 														<span><%=e('postInRelay2')%></span>
 													<% } %> 
 
-												<% } else { %> 
-													<span><%=e('postWaitConf')%></span>
+												<% } else { 
+													
+													var delayed = share.delayed()
+													
+													if (delayed) {%>
+
+														<span><%=e('postWaitDelayed', app.reltime(delayed))%></span>
+
+													<% } else { %>
+
+														<span><%=e('postWaitConf')%></span>
+
+													<%  } %>
 												<% } %>
 												
 											</div>

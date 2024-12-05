@@ -438,19 +438,16 @@ var Action = function(account, object, priority, settings){
         
     }
 
-    var buildTransaction = function({inputs, outputs, opreturnData}){
+    var buildTransaction = function({inputs, outputs, opreturnData, delayedNtime}){
         var txb = new bitcoin.TransactionBuilder();
 
         //delayedNtime
 
-        if(options.delayedNtime){
-            var ntime = options.delayedNtime(self)
-            var now = (new Date()).getTime() / 1000
-
-            if (ntime && ntime < now){
-                txb.setNTime(ntime)
-            }
+        if(delayedNtime){
+            txb.setLockTime(delayedNtime)
         }
+
+        console.log('Transaction delayedNtime', delayedNtime, txb)
 
         txb.addNTime(account.parent.app.platform.timeDifference || 0)
 
@@ -738,14 +735,30 @@ var Action = function(account, object, priority, settings){
             }
         }
 
+        var delayedNtime = 0
+
+        if(options.delayedNtime){
+            var ntime = options.delayedNtime(self)
+            var now = (new Date()).getTime() / 1000
+
+            if (ntime && ntime > now){
+                delayedNtime = ntime
+            }
+        }
+
+        console.log("TRANSACTION", self, delayedNtime)
+
         var tx = null
         
         try{
-            tx = buildTransaction({inputs, outputs, opreturnData})
+            tx = buildTransaction({inputs, outputs, opreturnData, delayedNtime})
         }
         catch(e){
             return Promise.reject(e)
         }
+
+        console.log("TRANSACTION", tx)
+
 
         
         if ((options.calculateFee && options.calculateFee(self)) && !calculatedFee){
@@ -793,6 +806,11 @@ var Action = function(account, object, priority, settings){
             }
 
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
+
+            if (delayedNtime){
+                self.checkConfirmationUntil = (new Date(delayedNtime * 1000)).addSeconds(35)
+                self.until = (new Date(delayedNtime * 1000)).addSeconds(60 * 60 * 12)
+            }
 
             delete self.sending
 

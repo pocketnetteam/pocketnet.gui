@@ -2860,7 +2860,18 @@ pShare = function(){
 		videos : [],
 		image : '',
 		f : '0',
-		c : ''
+		c : '',
+		t : '0'
+	}
+
+	self.delayed = function(){
+		if(share.temp || share.relay){
+			if(share.settings.t > 1 && ((new Date()).getTime() / 1000) < share.settings.t){
+				return new Date(share.settings.t * 1000)
+			}
+		}
+
+		return null
 	}
 
 	self.isEmpty = function(){

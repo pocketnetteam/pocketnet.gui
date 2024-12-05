@@ -2986,3 +2986,8 @@ _l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scop
 _l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};
 _l.chat = "Chat"
 _l.emptyntime1 = 'Please select the date and time of publication'
+
+
+_l.postWaitDelayed = function(time){
+    return 'The publication will be published:' + time 
+}

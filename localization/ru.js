@@ -2793,3 +2793,8 @@ _l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда от�
 _l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};
 _l.chat = "Чат"
 _l.emptyntime1 = 'Пожалуйста, выберите дату и время публикации'
+
+
+_l.postWaitDelayed = function(time){
+    return 'Публикация будет опубликована:' + time 
+}

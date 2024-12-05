@@ -164,8 +164,6 @@ if(share){
 
 	m.push('opennewwindow');
 
-	
-
 	if(share.address && user.address.value && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -236,6 +234,10 @@ if(share){
 				m.unshift('block')
 			}
 
+		}
+
+		if(my && share.delayed()){
+			m = ['remove', 'edit']
 		}
 	}
 

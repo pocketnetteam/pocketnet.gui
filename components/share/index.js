@@ -1206,7 +1206,7 @@ var share = (function(){
 				events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
 
 					if(date){
-						currentShare.settings.t = date.getTime() / 1000
+						currentShare.settings.t = Number((date.getTime() / 1000).toFixed(0))
 					}
 
 					renders.settings();
