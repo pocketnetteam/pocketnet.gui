@@ -9753,6 +9753,10 @@ Platform = function (app, listofnodes) {
                 
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
+                if(ustate.likers_count > 100){
+                    isOverComplained = false
+                }
+
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
                 if(self.bch[address]) return true
