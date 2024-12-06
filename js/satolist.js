@@ -6336,6 +6336,35 @@ Platform = function (app, listofnodes) {
                 return self.app.api.rpc('getjurymoderators', [juryId]);
             },
 
+            getcountforme : function(clbk){
+                self.app.user.isState(function (state) {
+                    if (state && self.sdk.user.isjury()){
+
+                        self.sdk.node.shares.jury({page : 0, count : 1000}, (items) => {
+
+                            var c = items.length
+
+                            if(clbk) clbk(c)
+
+                        })
+                    }
+                    else{
+                        if(clbk) clbk(0)
+                    }
+                })
+            },
+
+            updatejurycount : function(){
+
+                self.sdk.jury.getcountforme(function(count){
+                    console.log("JURY COUNT", count)
+                    self.sdk.newmaterials.update({
+                        jury : count
+                    })
+                })
+                
+            },
+
             sendverdict : function(juryobject, verdict){
 
                 if(!juryobject || typeof verdict == undefined){
@@ -11274,12 +11303,14 @@ Platform = function (app, listofnodes) {
                     index_sub : data['sharesSubscr'] || 0
                 }
 
-                counts.index = counts.common
+                counts.index = counts.common || 0
 
                 _.each(counts, function(c, i){
                     // c = rand(1,3)
                     self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
                 })
+
+                if(typeof data.jury != 'undefined') self.sdk.newmaterials.storage['jury'] = data.jury || 0
 
                 _.each(self.sdk.newmaterials.clbks.update, function(u){
                     u(self.sdk.newmaterials.storage)
@@ -16270,7 +16301,12 @@ Platform = function (app, listofnodes) {
                                 return i >= p.page * p.count && i < (p.page + 1) * p.count
                             })
 
-                            items =  self.psdk.jury.tempRemove(items, (i) => {return true})
+                            items =  self.psdk.jury.tempRemove(items, (i) => {return true}, (alias) => {
+
+                                console.log('jury', alias)
+
+                                return alias.actor == p.address
+                            })
 
                             if(clbk) clbk(items, null, {})
                         })
@@ -23918,6 +23954,7 @@ Platform = function (app, listofnodes) {
     
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
+                            self.app.platform.sdk.jury.updatejurycount()
                         },3000)
 
                         

@@ -2544,6 +2544,12 @@ var lenta = (function(){
 
 						
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
+
+							setTimeout(() => {
+								self.app.platform.sdk.jury.updatejurycount()
+							}, 1000)
+							
+
 							_el.remove()
 						}).catch(e => {
 							console.error(e)
@@ -5656,7 +5662,14 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
-							
+							console.log('jury', recommended)
+
+							setTimeout(() => {
+								if(recommended == 'jury'){
+									console.log('update jury count')
+									self.app.platform.sdk.jury.updatejurycount()
+								}
+							}, 100)
 
 
 							window.rifticker.add(function(){

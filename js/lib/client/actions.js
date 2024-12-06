@@ -192,6 +192,10 @@ var ActionOptions = {
 
             },
         },
+
+        modVote : {
+            keep : 800
+        }
     }
 }
 
@@ -234,6 +238,8 @@ var Action = function(account, object, priority, settings){
 
     var self = this
 
+    console.log('options', options, object.type)
+
     self.object = object
     self.priority = priority || options.priority || 3
     self.added = new Date()
@@ -241,6 +247,7 @@ var Action = function(account, object, priority, settings){
     self.settings = settings || {}
     self.rejectWait = null
     self.updated = null
+    self.keep = options.keep || false
 
     self.sent = null
     self.checkedUntil = null
@@ -281,6 +288,7 @@ var Action = function(account, object, priority, settings){
         e.completed = self.completed
         e.tryingsend = self.tryingsend
         e.updated = self.updated
+        e.keep = self.keep
 
         if (self.object.export){
             e.expObject = self.object.export(true)
@@ -343,6 +351,10 @@ var Action = function(account, object, priority, settings){
 
         if (e.completed){
             self.completed = e.completed
+        }
+
+        if (e.keep){
+            self.keep = e.keep
         }
 
         if (e.rejected){
@@ -1891,7 +1903,7 @@ var Account = function(address, parent){
         }
 
         self.actions.value = _.filter(self.actions, (a) => {
-            if(a.completed || a.rejected) return false
+            if((a.completed && !a.keep) || a.rejected) return false
 
             return true
         })
@@ -1958,13 +1970,13 @@ var Account = function(address, parent){
 
             if (new Date(exported.until) < new Date()) return
 
-            if (exported.completed && self.emitted.completed[exported.id]){
+            if ((exported.completed && !exported.keep) && self.emitted.completed[exported.id]){
                 return
             }
 
 
             //withcompleted
-            if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
+            if ((flag != 'withcompleted' && (((exported.completed && !exported.keep) && ActionOptions.clearCompleted)) || 
             
             (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'actions_checkFail' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
@@ -2345,7 +2357,7 @@ var Account = function(address, parent){
 
             if(filter && !filter(action)) return false
             
-            return !action.completed && (!action.rejected || action.controlReject())
+            return (!action.completed || action.keep) && (!action.rejected || action.controlReject())
         }), (action) => {
 
             if(clear) return action
