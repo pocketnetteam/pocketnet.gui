@@ -141,6 +141,11 @@ Application = function (p) {
 
 	self.margintop = 0
 
+	if (self.test) {
+		self.delaypost = true
+		self.publishapps = true
+	}
+
 	self.options = {
 
 		url: url,

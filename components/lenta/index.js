@@ -6003,7 +6003,6 @@ var lenta = (function(){
 				delete self.app.platform.actionListeners[mid]
 				delete self.app.psdk.updatelisteners[mid]
 				
-
 				_.each(initedcommentes, function(c){
 					c?.clearessense()
 				})

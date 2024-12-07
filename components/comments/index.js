@@ -3157,6 +3157,8 @@ var comments = (function(){
 
 			destroy : function(){
 
+				console.log("DESTROY COMMENTS")
+
 
 				/*delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]

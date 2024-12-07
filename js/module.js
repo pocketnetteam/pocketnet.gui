@@ -740,6 +740,7 @@ nModule = function(){
 		if (essenses[id])
 		{
 			essenses[id].destroy();
+			essenses[id].destroyed = true
 
 			delete essenses[id];
 		}
