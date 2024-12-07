@@ -887,7 +887,17 @@ var Action = function(account, object, priority, settings){
                 return account.parent.app.platform.currentBlock
             }, function(){
 
-                account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
+                var getfun = account.parent.app.platform.sdk.node.transactions.get.tx
+
+                if(ActionOptions.testWithoutSend){
+                    getfun = function(t, clbk){
+                        clbk({
+                            confirmations : rand(0, 10) < 2 ? 1 : 0
+                        })
+                    }
+                }
+
+                getfun(self.transaction, (data, error = {}) => {
 
                     data || (data = {})
 
