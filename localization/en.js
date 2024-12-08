@@ -3011,6 +3011,7 @@ _l.miniApp_missingScopeError = "The `scope` information is missing in the manife
 _l.miniApp_brokenAuthorError = "Invalid application author. This may be caused by a missing or incorrectly formatted `author` field (expected a Base58 address).";
 _l.miniApp_discrepancyIdError = "Discrepancy between the application ID in the manifest and the application ID specified during installation.";
 _l.miniApp_discrepancyDevelopError = "Discrepancy in the development status (`develop`) between the manifest and the specified application.";
+_l.miniApp_discrepancyAuthorError = "Addition is not possible: The application author specified in the manifest does not match your address. You cannot add applications that you do not own.";
 _l.miniApp_conflictIdAlreadyExistsError = "Conflict: An application with this ID already exists. Check the new application's ID or remove the existing one.";
 _l.miniApp_permissionDeniedError = "The user denied the permission requested by the application.";
 _l.miniApp_permissionMissingError = "One of the permissions requested by the application is missing in the manifest.";
@@ -3031,6 +3032,7 @@ _l.miniApp_missingApplicationError = "The application was not found in the insta
 
 _l.miniApp_publishSuccessMessage = "The application has been successfully published.";
 _l.miniApp_publishErrorMessage = "An error occurred while publishing the application.";
+_l.miniApp_publishOnlyTestNetworkMessage = "Currently, publishing is only available on the test network.";
 _l.miniApp_scopeDescription = "Enter the domain name without a protocol (e.g., 'example.com'). The application must support the HTTPS protocol.";
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_createDescription = "Ensure all data matches the fields defined in the application's `b_manifest.json` file. Any discrepancies may cause issues during installation.";

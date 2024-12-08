@@ -104,8 +104,9 @@ var importManifest = function (application) {
 
         return Promise.resolve(manifest)
     }).catch((e) => {
-        console.error(e)
-
+        if (e.message?.startsWith('discrepancy')) {
+            return Promise.reject(e)
+        }
         return Promise.reject(appsError('import:manifest'))
     })
 }
@@ -1845,12 +1846,19 @@ var BastyonApps = function (app) {
 
     self.validateResources = async function (application) {
         try {
-            const resourceData = await resources(application);
+            const resourceData = await resources({
+                ...application,
+                develop: true
+            });
 
             const missingResources = appfiles.filter(file => !resourceData[file.id]);
 
             if (missingResources.length > 0) {
                 return Promise.reject(appsError('missing:resources'));
+            }
+
+            if (resourceData.manifest.author !== application.author) {
+                return Promise.reject(appsError('discrepancy:author'));
             }
 
             return Promise.resolve('Resources are valid');

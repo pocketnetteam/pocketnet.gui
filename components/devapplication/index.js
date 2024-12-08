@@ -1,6 +1,7 @@
 var devapplication = (function () {
   var self = new nModule();
-  var essenses = {};
+  var essenses = {},
+    userAddress = null;
 
   var Essense = function (p) {
     var primary = deep(p, "history");
@@ -36,14 +37,12 @@ var devapplication = (function () {
             .get(),
         };
 
-        const validationRules = [
-          {
-            value: updatedData.tags,
-            selector: ".tag-input-container",
-            message: self.app.localization.e("miniApp_tagsRequiredMessage"),
-            condition: (value) => Array.isArray(value) && value.length > 0,
-          },
-        ];
+        const validationRules = [{
+          value: updatedData.tags,
+          selector: ".tag-input-container",
+          message: self.app.localization.e("miniApp_tagsRequiredMessage"),
+          condition: (value) => Array.isArray(value) && value.length > 0,
+        }, ];
 
         if (validationRules.some(validateField)) {
           globalpreloader(false);
@@ -59,6 +58,7 @@ var devapplication = (function () {
           const newAppData = {
             ...application,
             ...updatedData,
+            author: userAddress,
           };
 
           app.apps
@@ -91,10 +91,10 @@ var devapplication = (function () {
             .find(".tag")
             .map((_, tag) => $(tag).attr("tag"))
             .get(),
+          author: userAddress,
         };
 
-        const validationRules = [
-          {
+        const validationRules = [{
             value: newData.name,
             selector: "#app-name",
             message: self.app.localization.e("miniApp_requiredMessage"),
@@ -127,7 +127,8 @@ var devapplication = (function () {
         }
 
         app.apps
-          .addAppToConfig(newData)
+          .validateResources(newData)
+          .then(() => app.apps.addAppToConfig(newData))
           .then(() => {
             applicationId = newData.id;
             loadMiniApp();
@@ -140,6 +141,12 @@ var devapplication = (function () {
         loadMiniApp();
       },
       publish: function () {
+        if (!self.app.test) {
+          return sitemessage(
+            self.app.localization.e("miniApp_publishOnlyTestNetworkMessage")
+          );
+        }
+
         globalpreloader(true);
 
         const publishData = {
@@ -148,7 +155,7 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?.["en"],
+          description: application.manifest.descriptions?. ["en"],
           tags: application.tags,
         };
 
@@ -243,8 +250,7 @@ var devapplication = (function () {
 
     var renders = {
       createForm: function () {
-        self.shell(
-          {
+        self.shell({
             name: "miniAppCreateForm",
             el: el.c.find(".content"),
             data: {},
@@ -272,7 +278,10 @@ var devapplication = (function () {
           renderDetails(application);
         }
       },
-      tagInput: function ({ tags, _p }) {
+      tagInput: function ({
+        tags,
+        _p
+      }) {
         let _tags = [...tags];
         const refreshTagInput = () => {
           renders.tagInput({
@@ -312,8 +321,7 @@ var devapplication = (function () {
     };
 
     var renderEditForm = function (application) {
-      self.shell(
-        {
+      self.shell({
           name: "miniAppEditForm",
           el: el.c.find(".content"),
           data: {
@@ -341,8 +349,7 @@ var devapplication = (function () {
     var renderDetails = function (application) {
       const description = application.manifest.descriptions;
 
-      self.shell(
-        {
+      self.shell({
           name: "miniAppDetail",
           el: el.c.find(".content"),
           data: {
@@ -355,8 +362,7 @@ var devapplication = (function () {
             permissions: application.manifest?.permissions?.join(", "),
             version: application.manifest?.versiontxt,
             scope: application.manifest.scope,
-            description:
-              description?.[app.localization.key] ?? description?.["en"],
+            description: description?. [app.localization.key] ?? description?. ["en"],
           },
         },
         function (_p) {
@@ -379,7 +385,7 @@ var devapplication = (function () {
         .application(applicationId)
         .then(function (response) {
           application = response.application;
-          var userAddress = self.app.user.address.value;
+          userAddress = self.app.user.address.value;
 
           if (application.manifest.author !== userAddress) {
             el.c
