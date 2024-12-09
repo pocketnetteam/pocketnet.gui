@@ -232,9 +232,20 @@ var BastyonApps = function(app){
             }
         },
 
+        psdk : {
+            parameters : [],
+            action : function({data, application}){
+                return app.platform.psdk.userInfo.load(data.addresses)
+            }
+        },
+
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
+
+                if (data.options.cachetime){
+                    return app.platform.psdk.rpc(data.method, data.parameters, data.options)
+                }
 
                 //// TODO CHECK ELECTRON NODE SAFE
                 return app.api.rpc(data.method, data.parameters, data.options)

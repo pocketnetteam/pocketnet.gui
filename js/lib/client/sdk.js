@@ -110,6 +110,10 @@ var pSDK = function ({ app, api, actions }) {
         jury : {
             time : 360
         },
+
+        defaultRpcRequest : {
+            time : 60
+        }
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -155,7 +159,7 @@ var pSDK = function ({ app, api, actions }) {
         if(!baddata[key]) baddata[key] = {}
     }
 
-    var settodb = function (dbname, result) {
+    var settodb = function (dbname, result, p = {}) {
         if (!dbname || !dbmeta[dbname]) {
             return Promise.resolve()
         }
@@ -168,7 +172,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
-            return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
+            return self.db.set(dbname, p.cachetime || dbmeta[dbname].time, key, data).catch(e => {
                 console.error(e)
                 return Promise.resolve()
             })
@@ -198,14 +202,14 @@ var pSDK = function ({ app, api, actions }) {
         return self.db.clearAll(dbname)
     }
 
-    var settodbone = function (dbname, hash, data) {
+    var settodbone = function (dbname, hash, data, p) {
 
         if (!hash || !data) return Promise.resolve()
 
         return settodb(dbname, [{
             key: hash,
             data
-        }])
+        }], p)
     }
 
     var getfromdbone = function (dbname, hash, getold) {
@@ -611,7 +615,8 @@ var pSDK = function ({ app, api, actions }) {
 
     var request = function (key, hash, executor, p = {
         requestIndexedDb: null,
-        insertFromResponse: null
+        insertFromResponse: null,
+        cachetime : undefined
     }) {
 
         if (_.isObject(hash)) {
@@ -636,7 +641,7 @@ var pSDK = function ({ app, api, actions }) {
                     r = p.transformResult(r)
                 }
 
-                settodbone(p.requestIndexedDb, hash, r)
+                settodbone(p.requestIndexedDb, hash, r, {cachetime})
 
                 return Promise.resolve(r)
             }).catch(e => {
@@ -2521,6 +2526,23 @@ var pSDK = function ({ app, api, actions }) {
             
         }
     }
+
+    self.rpc = {
+        keys : ['defaultRpcRequest'],
+        request : function(action, parameters, p = {}){
+
+            var hash = action + '_' + JSON.stringify(parameters)
+
+            return request('defaultRpcRequest', hash, (data) => {
+                return api.rpc(action, parameters, p.rpc)
+            }, {
+                update : p.update,
+                requestIndexedDb: 'defaultRpcRequest',
+                cachetime : p.cachetime
+            })
+        }
+    }
+
 
     self.postScores = {
         keys: ['postScores'],

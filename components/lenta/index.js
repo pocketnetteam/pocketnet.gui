@@ -1427,7 +1427,7 @@ var lenta = (function(){
 				if (share){
 
 					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
-					if (parameters().address) url += '&address=' + (parameters().address || '')
+					//if (parameters().address) url += '&address=' + (parameters().address || '')
 
 
 					if(video || essenseData.videomobile || share.itisvideo()){

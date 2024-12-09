@@ -2796,5 +2796,5 @@ _l.emptyntime1 = 'Пожалуйста, выберите дату и время 
 
 
 _l.postWaitDelayed = function(time){
-    return 'Публикация будет опубликована:' + time 
+    return 'Публикация будет опубликована: ' + time 
 }

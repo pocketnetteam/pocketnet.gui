@@ -2989,5 +2989,5 @@ _l.emptyntime1 = 'Please select the date and time of publication'
 
 
 _l.postWaitDelayed = function(time){
-    return 'The publication will be published:' + time 
+    return 'The publication will be published: ' + time 
 }

@@ -452,10 +452,10 @@ var Action = function(account, object, priority, settings){
 
     var buildTransaction = function({inputs, outputs, opreturnData, delayedNtime}){
         var txb = new bitcoin.TransactionBuilder();
-
+        var seqnumber = 0 
         //delayedNtime
 
-        if(delayedNtime){
+        if (delayedNtime){
             txb.setLockTime(delayedNtime)
         }
 
@@ -464,7 +464,8 @@ var Action = function(account, object, priority, settings){
         txb.addNTime(account.parent.app.platform.timeDifference || 0)
 
         _.each(inputs, (input, index) => {
-            txb.addInput(input.txid, input.vout, null, Buffer.from(input.scriptPubKey, 'hex'))
+            seqnumber++
+            txb.addInput(input.txid, input.vout, delayedNtime ? seqnumber : null, Buffer.from(input.scriptPubKey, 'hex'))
         })
 
         if(opreturnData){
@@ -1244,7 +1245,7 @@ var Action = function(account, object, priority, settings){
 
         if(!alias.address) alias.address = account.address
 
-        alias.time = new Date()
+        alias.time = self.added || new Date()
         alias.timeUpd = alias.time
         alias.optype = self.object.typeop ? self.object.typeop() : self.object.type
 

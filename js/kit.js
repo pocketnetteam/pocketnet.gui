@@ -2865,9 +2865,12 @@ pShare = function(){
 	}
 
 	self.delayed = function(){
-		if(share.temp || share.relay){
-			if(share.settings.t > 1 && ((new Date()).getTime() / 1000) < share.settings.t){
-				return new Date(share.settings.t * 1000)
+
+		console.log('delayed', self)
+
+		if(self.temp || self.relay){
+			if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+				return new Date(self.settings.t * 1000)
 			}
 		}
 
