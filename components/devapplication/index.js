@@ -155,12 +155,12 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?. ["en"],
+          description: application.manifest.descriptions?.["en"],
           tags: application.tags,
         };
 
         self.app.platform.api.actions.miniapp(publishData, async (_, err) => {
-          globalpreloader(false);
+          globalpreloader(false);          
 
           if (!err) {
             sitemessage(
@@ -374,8 +374,10 @@ var devapplication = (function () {
       );
     };
 
-    var loadMiniApp = function (application) {
-      if (application) return renders.miniAppDetail(application);
+    var loadMiniApp = function (targetApplication) {
+       userAddress = self.app.user.address.value;
+
+      if (targetApplication) return renders.miniAppDetail(targetApplication);
 
       if (!applicationId) {
         renders.createForm();
@@ -385,7 +387,6 @@ var devapplication = (function () {
         .application(applicationId)
         .then(function (response) {
           application = response.application;
-          userAddress = self.app.user.address.value;
 
           if (application.manifest.author !== userAddress) {
             el.c
