@@ -143,6 +143,7 @@ Application = function (p) {
 
 	if (self.test) {
 		self.delaypost = true
+		self.caneditdelaypost = true
 		self.publishapps = true
 	}
 

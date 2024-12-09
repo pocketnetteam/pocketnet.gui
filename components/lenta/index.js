@@ -5360,6 +5360,7 @@ var lenta = (function(){
 							var replaceAll = true
 
 							var trx = self.psdk.share.get(alias.txid)
+							var originalAction = alias
 
 							if (replace){
 								replace.txid = alias.txid
@@ -5391,13 +5392,21 @@ var lenta = (function(){
 
 									actions.destroyShare(replace)
 
+
 									if(status == 'rejected' && (!alias || !alias.editing)) {
 
-										if(el.share[replace.txid]) el.share[replace.txid].remove()
+										if(alias && !alias.editing && originalAction.editing){
 
-										delete el.share[replace.txid]
+										}
+										else{
+											if(el.share[replace.txid]) el.share[replace.txid].remove()
 
-										return
+												delete el.share[replace.txid]
+		
+												return
+										}
+
+										
 									}
 
 									renders.shares([alias], function(){

@@ -1480,6 +1480,15 @@ Share = function(lang){
 		f : '0',
 		c : ''
 	}
+
+	self.delayed = function(){
+
+		if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+			return new Date(self.settings.t * 1000)
+		}
+
+		return null
+	}
 	
 
 	self.checkloaded = function(){

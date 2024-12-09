@@ -3,33 +3,40 @@
         <%= selector.input() %>
     </div>
 
-    <% if(app.delaypost) {%>
-    <div class="visibilityWrapper timewrapper">
-        <div class="wrpsflex">
-            <div class="timechanger">
-                <%= timeselector.input() %>
-            </div>
-            <div class="timelabel">
-                <span class="selectedTime">
-                    <% if(share.settings.t > 1) { 
-                        
-                        %> 
+    <% if(app.delaypost) {
+        
+        if(share.aliasid && !share.delayed()){
+            console.log('share.delayed()', share.delayed(), new Date(), new Date(share.settings.t * 1000))
+        }
+        else { %> 
+        
+            <div class="visibilityWrapper timewrapper">
+                <div class="wrpsflex">
+                    <div class="timechanger">
+                        <%= timeselector.input() %>
+                    </div>
+                    <div class="timelabel">
+                        <span class="selectedTime">
+                            <% if(share.settings.t > 1) { 
+                                
+                                %> 
 
-                        <%- moment(new Date(share.settings.t * 1000)).format('D MMMM, HH:mm') %>
+                                <%- moment(new Date(share.settings.t * 1000)).format('D MMMM, HH:mm') %>
 
-                    <% } else { %> 
+                            <% } else { %> 
 
-                        <%=e('stimenotselected')%>
+                                <%=e('stimenotselected')%>
 
+                            <% } %>
+                        </span> 
+                    </div>
+                    <% if(share.settings.t > 1) { %>
+                        <div class="cleartimelabel">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
                     <% } %>
-                </span> 
-            </div>
-            <% if(share.settings.t > 1) { %>
-                <div class="cleartimelabel">
-                    <i class="fas fa-times-circle"></i>
                 </div>
+            </div>
             <% } %>
-        </div>
-    </div>
     <% } %>
 </div>

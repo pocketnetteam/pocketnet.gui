@@ -456,7 +456,8 @@ var Action = function(account, object, priority, settings){
         //delayedNtime
 
         if (delayedNtime){
-            txb.setLockTime(delayedNtime)
+            txb.setLockTime(delayedNtime + (account.parent.app.platform.timeDifference || 0))
+            txb.setNTime(delayedNtime)
         }
 
         console.log('Transaction delayedNtime', delayedNtime, txb)

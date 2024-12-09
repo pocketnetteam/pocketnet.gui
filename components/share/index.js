@@ -2813,6 +2813,12 @@ var share = (function(){
 					checkEntity : checkEntity,
 				};
 
+				if (currentShare.settings.t > 1){
+					if((new Date).getTime() / 1000 > currentShare.settings.t){
+						currentShare.settings.t = 0
+					}
+				}
+
 				console.log('currentShare', currentShare)
 
 				clbk(data);
