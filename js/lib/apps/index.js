@@ -236,7 +236,7 @@ var BastyonApps = function(app){
             userInfoLoad : {
                 parameters : [],
                 action : function({data, application}){
-                    return app.platform.psdk.userInfo.load(data.addresses)
+                    return app.platform.psdk.userInfo.load(data.addresses, data.light, data.update)
                 }
             }
             
