@@ -1,108 +1,78 @@
-var devapplications = (function(){
+var devapplications = (function () {
+  var self = new nModule();
 
-	var self = new nModule();
+  var essenses = {};
 
-	var essenses = {};
+  var Essense = function (p) {
+    var primary = deep(p, "history");
 
-	var Essense = function(p){
+    var el, ed;
 
-		var primary = deep(p, 'history');
+    var actions = {};
 
-		var el, ed;
+    var events = {};
 
-		var actions = {
+    var renders = {};
 
-		}
+    var state = {
+      save: function () {},
+      load: function () {},
+    };
 
-		var events = {
-			
-		}
+    var initEvents = function () {};
 
-		var renders = {
+    return {
+      primary: primary,
 
-		}
+      getdata: function (clbk, p) {
+        ed = p.settings.essenseData;
+        userAddress = self.app.user.address.value;
+        var data = {
+          ed,
+          userAddress,
+        };
 
-		var state = {
-			save : function(){
+        clbk(data);
+      },
 
-			},
-			load : function(){
-				
-			}
-		}
+      destroy: function () {
+        ed = {};
+        el = {};
+      },
 
-		var initEvents = function(){
-			
+      init: function (p) {
+        state.load();
 
-		}
+        el = {};
+        el.c = p.el.find("#" + self.map.id);
 
-		return {
-			primary : primary,
+        initEvents();
 
-			getdata : function(clbk, p){
+        p.clbk(null, p);
+      },
+    };
+  };
 
-				ed = p.settings.essenseData
+  self.run = function (p) {
+    var essense = self.addEssense(essenses, Essense, p);
 
-				var data = {
-					ed
-				};
+    self.init(essense, p);
+  };
 
-				clbk(data);
+  self.stop = function () {
+    _.each(essenses, function (essense) {
+      window.rifticker.add(() => {
+        essense.destroy();
+      });
+    });
+  };
 
-			},
-
-			destroy : function(){
-				ed = {}
-				el = {};
-			},
-			
-			init : function(p){
-
-				state.load();
-
-				el = {};
-				el.c = p.el.find('#' + self.map.id);
-
-				initEvents();
-
-				p.clbk(null, p);
-			}
-		}
-	};
-
-
-
-	self.run = function(p){
-
-		var essense = self.addEssense(essenses, Essense, p);
-
-		self.init(essense, p);
-
-	};
-
-	self.stop = function(){
-
-		_.each(essenses, function(essense){
-
-			window.rifticker.add(() => {
-				essense.destroy();
-			})
-
-		})
-
-	}
-
-	return self;
+  return self;
 })();
 
-
-if(typeof module != "undefined")
-{
-	module.exports = devapplications;
-}
-else{
-
-	app.modules.devapplications = {};
-	app.modules.devapplications.module = devapplications;
-
+if (typeof module != "undefined") {
+  module.exports = devapplications;
+} else {
+  app.modules.devapplications = {};
+  app.modules.devapplications.module = devapplications;
 }

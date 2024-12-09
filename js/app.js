@@ -146,6 +146,7 @@ Application = function (p) {
 		url: url,
 
 		matrix: p.matrix,
+		matrixMirrors : p.matrixMirrors,
 
 		nav: {
 			navPrefix: window.pocketnetpublicpath || '/pocketnet',

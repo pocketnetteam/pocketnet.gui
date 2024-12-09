@@ -973,6 +973,71 @@ ModFlag = function(){
 	return self;
 }
 
+ModVote = function(){
+	var self = this;
+
+	self.s2 = { // id
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	}; //verdict
+
+
+
+	self.validation = function(){
+
+		if(!self.s2.v){
+			return 'jury'
+		}
+
+		if(self.i1.v != 0 && self.i1.v != 1){
+			return 'verdict'
+		}
+	}
+
+	self.serialize = function(){
+		return self.s2.v + self.i1.v
+	}
+
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+		else{
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+
+	}
+
+	self.type = 'modVote'
+	return self;
+}
+
 ContentBoost = function(txid){
 	var self = this;
 	
@@ -2360,6 +2425,7 @@ Miniapp = function(){
 	self.hash = ''
 	self.address = '';
 	self.name = '';
+	self.scope = '';
 	self.description = '';
 	self.tags = []
 	
@@ -2369,8 +2435,8 @@ Miniapp = function(){
 		if(!self.address) return 'address';
 		if(!self.description) return 'description';
 		if(!self.name) return 'name';
+		if(!self.scope) return 'scope';
 		if(!self.tags.length) return 'tags';
-
 	}
 
 	self.serialize = function(){
@@ -2378,6 +2444,7 @@ Miniapp = function(){
 				(self.hash ?? '') +
 				JSON.stringify({
 					n: self.name,
+					s: self.scope,
 					d: self.description,
 					t: self.tags
 				}) +
@@ -2392,6 +2459,7 @@ Miniapp = function(){
 				id : self.id,
 				name: self.name,
 				description: self.description,
+				scope: self.scope,
 				tags: self.tags
 			};
 		}
@@ -2402,6 +2470,7 @@ Miniapp = function(){
 			p: {
 				s1: JSON.stringify({
 					n: self.name,
+					s: self.scope,
 					d: self.description,
 					t: self.tags
 				}),
@@ -2414,13 +2483,14 @@ Miniapp = function(){
 		self.address = d.address || '';
 		self.hash = d.hash || null;
 		self.name = d.name || '';
+		self.scope = d.scope || '';
 		self.id = d.id || '';
 		self.description = d.description || '';
 		self.tags = d.tags || [];
 	}
 
 	self.typeop = function(){
-		return 'app'
+		return 'miniapp'
 	}
 
 	self.alias = function(){
@@ -2443,11 +2513,13 @@ pMiniapp = function(){
 	self.hash = ''
 	self.address = '';
 	self.name = '';
+	self.scope = '';
 	self.description = '';
 	self.tags = []
 
 	self._import = function(v){
 		self.name = v.name || '';
+		self.scope = v.scope || '';
 		self.hash = v.hash || '';
 		self.address = v.address || '';
 		self.description = v.description || '';
@@ -2462,6 +2534,7 @@ pMiniapp = function(){
 				var js = JSON.parse(v.p.s1)
 
 				self.name = js.n || '';
+				self.scope = js.scope || '';
 				self.description = js.d || '';
 				self.tags = js.t || [];
 			}
@@ -2477,6 +2550,7 @@ pMiniapp = function(){
 		var v = {};
 
 		v.name = self.name
+		v.scope = self.scope
 		v.hash = self.hash 
 		v.id = self.id 
 		v.address = self.address 
@@ -2540,7 +2614,7 @@ pUserInfo = function(){
 	self.address = ''
 
 	self.rc = 0;
-
+	self.bans = {}
 	self.content = {}
 
 	self.objectid = makeid()
@@ -2557,6 +2631,7 @@ pUserInfo = function(){
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
 		self.deleted = v.deleted || false
+		self.bans = v.bans || {}
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;
@@ -2684,6 +2759,7 @@ pUserInfo = function(){
 		v.content = _.clone(self.content)
 
 		v.dev = self.dev
+		v.bans = self.bans
 
 
 		if (self.regdate && self.regdate.getTime){
@@ -3571,6 +3647,8 @@ pComment = function(){
 	return self;
 }
 
+
+
 Img = function(p){
 	if(!p) p = {};
  
@@ -4012,6 +4090,7 @@ kits = {
 		share : Share,
 		complainShare : ComplainShare,
 		modFlag : ModFlag,
+		modVote : ModVote,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,

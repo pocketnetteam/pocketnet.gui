@@ -106,7 +106,11 @@ var pSDK = function ({ app, api, actions }) {
         transactionsRequest : {
             time : 60
         },
-        miniappRequest: {
+
+        jury : {
+            time : 360
+        },
+         miniappRequest: {
             time: 60 * 60 // temp
         },
         miniapp : {
@@ -1186,6 +1190,158 @@ var pSDK = function ({ app, api, actions }) {
         }
 
     }
+
+    self.jury = {
+        keys : ['jury'],
+        getjuryassigned : function (address) {
+
+            
+
+            return request('jury', address, (data) => {
+                return api.rpc('getjuryassigned', [address], {
+                    rpc : {
+                        fnode : '65.21.252.135:38081'
+                    }
+                }).then(items => {
+
+                    /*items.push({
+                        id : '9b4788f9a6d55330e30416af16f39fef10cf84c30adff32d589396d99454afbc',
+                        postid : 'ff48022c117497c3e080e9f7bef64ba2f415984aae26cdfc3f8c693e4b1a84a3',
+                        parentid : '52858212de5ec997385969e568f0585d1e7962f3afe109da6ae24db365403573',
+                        answerid : '52858212de5ec997385969e568f0585d1e7962f3afe109da6ae24db365403573',
+                        jury : {
+                            "juryid": "12828e0458c778458a3ca4899f753559b015572be367a45e4b2acef7fde43a81",
+                            "height": 2856615,
+                            "reason": 2
+                        },
+
+                        type : 'comment',
+                        address : 'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX'
+                    })
+
+                    items.push({
+                        jury : {
+                            "juryid": "155528e0458c778458a3ca4899f753559b015572be367a45e4b2acef7fde43a81",
+                            "height": 2856615,
+                            "reason": 1
+                        },
+
+                        type : 100,
+                        address : 'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX'
+                    })*/
+
+                    var converted = _.map(items, (item) => {
+
+                        var i = {
+                            info : item.jury
+                        }
+
+                        i.address = item.a || item.address
+
+
+                        if(item.type == 'share'){ i.type = 'share'; i.key = item.txid || item.id }
+                        if(item.type == 'video'){ i.type = 'share'; i.key = item.txid || item.id }
+                        if(item.type == 100 || item.k){ i.type = 'channel'; i.key = i.address }
+
+                        if(!i.type){ 
+                            i.type = 'comment'; 
+                            i.key = item.id;
+
+                            i.commentPs = {
+                                commentid : item.id,
+                                postid : item.postid,
+                                parentid : item.parentid,
+                                answerid : item.answerid,
+                            }
+                        }
+
+                        i.txid = i.address + '_' + i.key
+                        i.objecttype = 'jury'
+                        i.id = item.jury.juryid
+
+                        return i
+
+                    })
+
+                    console.log('jury converted', converted)
+
+                    return converted
+
+                }).catch(e => {
+
+                    return Promise.reject(e)
+                })
+
+            }, {
+                requestIndexedDb: 'jury',
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+            
+        },
+
+        tempRemove: function (objects = [], filter) {
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('modVote'), filter)
+
+                console.log('actions', actions)
+
+                _.each(actions, (action) => {
+
+                    var txid = deep(action, 'object.s2.v')
+                    
+                    console.log("______JURY", txid)
+
+                    objects = _.filter(objects, (o) => {
+                        return o.id == txid
+                    })
+                })
+            })
+
+            return objects
+
+        },
+        insertFromResponseEx: function (data) {
+            return Promise.resolve(this.insertFromResponse(data))
+        },
+        
+        insertFromResponse: function (data) {
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.id,
+                    data: r
+                }
+            })
+
+            var key = 'jury'
+
+            var filtered = []
+
+            _.each(result, (r) => {
+
+                if (r && r.key && r.data) {
+                    storage[key][r.key] = r.data
+                    filtered.push(r)
+                }
+
+            })
+
+            return filtered
+
+        },
+
+        get: function (id) {
+            return storage.jury[id] || null
+        },
+
+        clear : function(){
+            clearallfromdb('jury')
+        }
+    }
+
     /// content
 
     self.comment = {
@@ -1658,6 +1814,7 @@ var pSDK = function ({ app, api, actions }) {
                             var js = JSON.parse(c.p.s1)
             
                             miniappjson.name = js.n || '';
+                            miniappjson.scope = js.s || '';
                             miniappjson.description = js.d || '';
                             miniappjson.tags = js.t || [];
                         }
@@ -2012,7 +2169,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 })
             }, {
-                queue: true,
+                //queue: true,
                 transform: (r) => this.transform(r),
                 update,
                 indexedDb: 'share',

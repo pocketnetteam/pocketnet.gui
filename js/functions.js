@@ -1463,6 +1463,10 @@ dialog = function (p) {
 
 	var destroyed = false;
 
+	self.nomoreask = false;
+
+	if(p.nomoreask) self.nomoreask = true
+
 	if ($('html').hasClass('nooverflow')) removescroll = false;
 
 	if (!p.success) p.success = false;
@@ -1522,6 +1526,11 @@ dialog = function (p) {
 			html += '<div class="body"><div class="text">' + (p.html || "") + '</div></div>';
 		}
 
+		if (p.nomoreask){
+			html += '<div class="nomoreaskWrapper"><i class="fas '+ (self.nomoreask ? 'fa-check-circle' : 'fa-circle') + '"></i> ' +p.nomoreask+ '</div>';
+
+		}
+
 		html += '<div class="buttons">\
 					   <div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+ p.btn2text + '</button></div>\
 					   <div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+ p.btn1text + '</button></div>\
@@ -1541,6 +1550,21 @@ dialog = function (p) {
 		$el.find('.btn1').on('click', function () { response(p.success) });
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
+		$el.find('.nomoreaskWrapper').on('click', function(){
+			self.nomoreask = !self.nomoreask
+			var icon = $(this).find('i')
+
+			icon.removeClass('fa-check-circle')
+			icon.removeClass('fa-circle')
+
+			if(self.nomoreask){
+				icon.addClass('fa-check-circle')
+			}
+			else{
+				icon.addClass('fa-circle')
+			}
+			
+		})
 
 		setTimeout(() => initOutsideClickEvent(), 500);
 
@@ -6095,9 +6119,78 @@ p_saveAsWithCordova = function (file, name, clbk, todownloads) {
 
 }
 
+//Da_Ki
+
+saveBase64File = function(name, base64, type){
+		
+	return new Promise((resolve, reject) => {
+
+		var format = fkit.extensionBase64(base64)
+
+		if (window.cordova) {
+
+			var fl = b64toBlob(base64.split(',')[1], type);
+
+			p_saveAsWithCordova(fl, name + '.' + format, function (d, e) {
+	
+				if(e) return reject(e)
+
+				return resolve(d)
+				
+			}, true)
+	
+		}
+	
+		else {
+			p_saveAs({
+				file: base64,
+				format: format,
+				name: name
+			})
+
+			return resolve({name})
+		}
+	})
+	
+}
+
+downloadFileByUrl = function(url){
+
+	return new Promise(function (resolve, reject) {
+		var xhr = new XMLHttpRequest();
+
+		xhr.onload = function () {
+
+			var type = xhr.getResponseHeader("content-type");
+			var blob = new Blob([xhr.response], { type: type, name: "file" })
+
+			getBase64(blob).then((base64) => {
+
+				resolve({
+					base64,
+					type
+				})
+
+			})
+
+		};
+
+		xhr.onerror = function (e) {
+			console.error(e, url);
+			reject(new TypeError("Request failed"));
+		};
+
+		xhr.open("GET", url);
+		xhr.responseType = "arraybuffer";
+		xhr.send(null);
+	});
+
+}
+
 /* ______________________________ */
 
 /* NAVIGATION */
+
 
 
 
@@ -7036,8 +7129,6 @@ AJAX = function(p) {
 
 		if(_Node) {
 
-			//data.node = "NODE";
-
 			var _d = {
 				method: type,
 				uri: url,
@@ -7681,7 +7772,8 @@ search = function (el, p) {
 			if (!p.closeByHtmlRemove)
 				$('html').off('click', helpers.closeclickResults);
 
-			searchEl.removeClass('fastSearchShow');
+			if (searchEl)
+				searchEl.removeClass('fastSearchShow');
 		},
 		closeclickResults: function (e) {
 			if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
@@ -7964,6 +8056,8 @@ search = function (el, p) {
 
 		el = null
 		p = {}
+
+		$('html').off('click', helpers.closeclickResults);
 	}
 
 	self.showlast = events.showlast
@@ -9548,6 +9642,8 @@ var fkit = {
 		'image/gif': 'gif',
 		'image/webp': 'webp',
 		'image/jfif': 'jfif'
+
+		//Da_Ki
 	},
 	extensionBase64: function (base64) {
 		if (!base64) return ''

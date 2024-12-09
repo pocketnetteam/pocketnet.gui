@@ -924,7 +924,10 @@ button{
         border: 1px solid rgb(var(--color-good));
     }
 
-
+    &.bad{
+        background: rgb(var(--color-bad));
+        border: 1px solid rgb(var(--color-bad));
+    }
     &.contrast{
         background: rgb(var(--color-bg-ac-2));
         border: 1px solid rgb(var(--color-bg-ac-2));
@@ -3816,6 +3819,21 @@ html.mobileview.android{
         font-size: 0.9em;
     }
 
+    .nomoreaskWrapper{
+        margin-bottom: 3 * @rhythm;
+        margin-top: 3 * @rhythm;
+        font-size: 0.8em;
+        cursor: pointer;
+
+        .fa-check-circle{
+            color : rgb(var(--color-good));
+        }
+
+        .fa-circle{
+            color : rgb(var(--neutral-grad-2));
+        }
+    }
+
     .buttons{
         overflow: hidden;
 
@@ -6149,6 +6167,16 @@ html.allcontent_application{
             color : rgb(var(--text-on-bg-ac-color));
         }   
     }
+
+    .shark, .moderator {
+        .fa-certificate{
+            color : rgb(var(--color-bg-ac-bright));
+        }
+        .fa-crown, .fa-flag{
+            color : rgb(var(--text-on-bg-ac-color));
+            box-shadow: none;
+        }
+    }
 }
 
 .markuserinline{
@@ -6591,6 +6619,22 @@ html.allcontent_application{
                 .tips{
                     >div{
                         display: none;
+
+                        &.transactionmessage{
+                            display: block;
+
+                            .transactionmessagewrapper{
+                                display: block;
+                            }
+
+                            .foramount{
+                                text-align: left;
+                            }
+
+                            .formessage{
+                                display: none;
+                            }
+                        }
 
                         &.notifytext{
                             display: block;

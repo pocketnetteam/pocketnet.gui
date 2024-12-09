@@ -295,6 +295,10 @@ var BastyonSdk = function(){
         })
     }
 
+    self.openExternalLink = function(url){
+        return action('openExternalLink', {url})
+    }
+
     self.barteron = {
         account : function(data){
             return action('barteron.account', data)
@@ -450,4 +454,5 @@ var BastyonSdk = function(){
 
 
 
-window.BastyonSdk = BastyonSdk; 
+if(typeof module != "undefined"){ module.exports = {BastyonSdk}; } 
+else { window.BastyonSdk = BastyonSdk; }

@@ -20,7 +20,7 @@ var parseManifest = function (json) {
 
     result.id = data.id.replace(/[^a-z0-9\.]/g, '')
     result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
-    result.version = numfromreleasestring(data.version)
+    result.version = numfromreleasestring(data.version || '1.0.0')
     result.versiontxt = superXSS(data.version)
     result.descriptions = {}
 
@@ -89,15 +89,13 @@ var importManifest = function (application) {
         if (manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
         if (manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
 
-        if (manifest.version < application.version) {
-            return Promise.reject(appsError('version'))
-        }
+        // if (manifest.version < application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
 
-        if (manifest.version > application.version) {
-            return Promise.reject(appsError('version'))
-        }
-
-
+        // if (manifest.version > application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
         if (application.develop) {
             manifest.scope = application.path
         } else {
@@ -106,8 +104,9 @@ var importManifest = function (application) {
 
         return Promise.resolve(manifest)
     }).catch((e) => {
-        console.error(e)
-
+        if (e.message?.startsWith('discrepancy')) {
+            return Promise.reject(e)
+        }
         return Promise.reject(appsError('import:manifest'))
     })
 }
@@ -134,6 +133,7 @@ var BastyonApps = function (app) {
     var getresources = {}
 
     var key = app.user.address.value || ''
+    var externalLinksStorageKey = 'externalLinksStorageKey'
 
     self.inited = false
 
@@ -200,7 +200,11 @@ var BastyonApps = function (app) {
             uniq: false,
             session: true
         },
-
+        'externallink': {
+            name: 'permissions_name_externallink',
+            description: 'permissions_descriptions_externallink',
+            level: 1
+        },
         'zaddress': {
             name: 'permissions_name_zaddress',
             description: 'permissions_descriptions_zaddress',
@@ -315,6 +319,27 @@ var BastyonApps = function (app) {
                 var signature = app.user.signature(data.string + '/' + application.manifest.id)
 
                 return Promise.resolve(signature)
+            }
+        },
+        openExternalLink: {
+            parameters: ['url'],
+            permissions: ['externallink'],
+            action: function ({
+                data
+            }) {
+                const url = data.url
+                if (window.cordova?.InAppBrowser) {
+                    window.cordova.InAppBrowser.open(url, '_system');
+                    return Promise.resolve()
+                }
+
+                if (electron?.shell?.openExternal) {
+                    electron.shell.openExternal(url);
+                    return Promise.resolve()
+                }
+
+                window.open(url, '_blank');
+                Promise.resolve()
             }
         },
 
@@ -553,6 +578,8 @@ var BastyonApps = function (app) {
 
                 if (!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
+
+                if (typeof data.canmakepost == 'undefined') data.canmakepost = true
 
                 app.platform.ui.socialshare(null, data)
 
@@ -891,7 +918,7 @@ var BastyonApps = function (app) {
 
     var makeAction = function (data, application, settings) {
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application: application.manifest.id,
+            application: application?.manifest?.id || application.id,
             ...settings
         }).then(action => {
             return Promise.resolve(action.export())
@@ -1552,7 +1579,6 @@ var BastyonApps = function (app) {
         }
 
         existingApp.name = app.name || existingApp.name;
-        existingApp.version = app.version || existingApp.version;
         existingApp.scope = app.scope || existingApp.scope;
 
         try {
@@ -1570,7 +1596,7 @@ var BastyonApps = function (app) {
             return Promise.reject(new Error('conflict:id_already_exists'));
         }
 
-        if (!app.id || !app.name || !app.version || !app.scope) {
+        if (!app.id || !app.name || !app.scope) {
             return Promise.reject(new Error('missing:required_fields'));
         }
         try {
@@ -1595,6 +1621,40 @@ var BastyonApps = function (app) {
         removeAppFromLocalhost(appId);
         return remove(appId)
     };
+
+    self.removeAppByHash = function ({
+        hash,
+        appId
+    }) {
+        var remove = new Remove();
+
+        try {
+            remove.import({
+                txidEdit: hash
+            });
+
+            return makeAction(remove, {
+                id: appId
+            }, true);
+        } catch (e) {
+            return Promise.reject(appsError('remove:action:failed'));
+        }
+    };
+
+    self.deleteApp = function ({
+        hash,
+        id
+    }) {
+        if (hash) {
+            return self.removeAppByHash({
+                hash,
+                appId: id
+            });
+        } else {
+            return self.removeAppFromConfig(appId);
+        }
+    };
+
 
     var saveAppToLocalhost = function (app) {
         try {
@@ -1713,7 +1773,7 @@ var BastyonApps = function (app) {
                     return install({
                         ...application,
                         develop: true,
-                        version: numfromreleasestring(application.version)
+                        version: numfromreleasestring(application?.version || '1.0.0')
                     })
                 }
 
@@ -1735,7 +1795,7 @@ var BastyonApps = function (app) {
 
                 return install({
                     ...application,
-                    version: numfromreleasestring(application.version)
+                    version: numfromreleasestring(application.version || '1.0.0')
                 }, info.cached)
 
             }).then(() => {
@@ -1783,7 +1843,50 @@ var BastyonApps = function (app) {
         })
     }
 
+
+    self.validateResources = async function (application) {
+        try {
+            const resourceData = await resources({
+                ...application,
+                develop: true
+            });
+
+            const missingResources = appfiles.filter(file => !resourceData[file.id]);
+
+            if (missingResources.length > 0) {
+                return Promise.reject(appsError('missing:resources'));
+            }
+
+            if (resourceData.manifest.author !== application.author) {
+                return Promise.reject(appsError('discrepancy:author'));
+            }
+
+            return Promise.resolve('Resources are valid');
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    };
+
+
+
+    self.set = {
+        applicationExternalLink: function (scope, appid) {
+            try {
+                localStorage[externalLinksStorageKey + '_' + scope] = appid
+            } catch (e) {
+
+            }
+        }
+    }
+
     self.get = {
+        applicationExternalLink: function (scope) {
+            try {
+                return localStorage[externalLinksStorageKey + '_' + scope] || null
+            } catch (e) {
+
+            }
+        },
         forsearch: function () {
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
@@ -1828,7 +1931,15 @@ var BastyonApps = function (app) {
                 return download(application)
             })
         },
-        application: function (id) {
+        application: async function (id) {
+            const application = await app.platform.sdk.miniapps.getbyid(id)
+            if (application) {
+                await install({
+                    ...application,
+                    develop: true
+                })
+            }
+
             if (installed[id]) {
                 return Promise.resolve({
                     application: installed[id],
@@ -1882,9 +1993,7 @@ var BastyonApps = function (app) {
             })
         },
 
-        installedAndInstalling: function ({
-            search = ''
-        }) {
+        installedAndInstalling: function () {
             var result = {}
 
             _.each(installing, (ins, id) => {
@@ -1903,6 +2012,63 @@ var BastyonApps = function (app) {
             })
 
             return result
+        },
+
+        applicationsSearch: async function (search = '', searchBy) {
+            if (search.includes(':')) {
+                const [detectedSearchBy, ...searchParts] = search.split(':');
+                searchBy = detectedSearchBy.trim();
+                search = searchParts.join(':').trim();
+            }
+
+            const searchTransformers = {
+                tags: (value) => value.split(' ').filter(Boolean),
+                default: (value) => value
+            };
+
+            const transformedSearch = (searchTransformers[searchBy] || searchTransformers.default)(search);
+
+            const adaptApplicationData = (app) => ({
+                name: app.name || app.manifest?.name || '',
+                icon: app.icon || `https://${app.scope}/b_icon.png`,
+                description: app.description || app.manifest?.description?.eng || '',
+                tags: app.tags || [],
+                id: app.id || '',
+                status: this.appStatusById(app.id),
+                address: app.author || app.address || '',
+            });
+
+            const filterApplications = (_search, apps, searchBy) => {
+                return apps?.filter(app => {
+                    switch (searchBy) {
+                        case 'name':
+                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(_search);
+                        case 'scope':
+                            const scope = app.manifest?.scope?.replace('https://', '').toLowerCase() || app.scope?.toLowerCase() || '';
+                            return scope.includes(_search);
+                        case 'tags':
+                            return _search.some(tag => app.tags?.includes(tag));
+                        case 'address':
+                            const author = app.author?.toLowerCase() || app.address?.toLowerCase() || '';
+                            return author.includes(_search);
+                        default:
+                            return false;
+                    }
+                });
+            };
+
+            const installedApps = this.installedAndInstalling();
+            const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
+
+            let additionalApps = [];
+            if (transformedSearch) {
+                additionalApps = await app.platform.sdk.miniapps.getall({
+                    [searchBy || 'search']: transformedSearch
+                });
+            }
+
+            const allApps = [...filteredInstalledApps, ...additionalApps];
+            return allApps.map(adaptApplicationData);
         },
 
         applicationall: function (id, cached) {
@@ -2054,6 +2220,23 @@ var BastyonApps = function (app) {
         })
     }
 
+    self.openInWnd = function (application, clbk, path) {
+        app.nav.api.load({
+            open: true,
+            href: 'application',
+            inWnd: true,
+            history: true,
+            eid: 'application_' + application.manifest.id,
+            clbk: clbk,
+
+            essenseData: {
+                application: application.manifest.id,
+                path: path
+
+            }
+        })
+    }
+
     self.emit = emit
 
     self.requestPermissions = requestPermissions
@@ -2064,4 +2247,12 @@ var BastyonApps = function (app) {
     self.remove = remove
 
     return self
+}
+
+if (typeof module != "undefined") {
+    module.exports = {
+        BastyonApps
+    };
+} else {
+    window.BastyonApps = BastyonApps;
 }
