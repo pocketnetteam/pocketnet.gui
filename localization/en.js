@@ -260,6 +260,8 @@ _l.stp = "Beginner";
 _l.stpg = "Top";
 _l.stpreal = "Verified";
 _l.stpdev = ""+appname+" developer";
+_l.stpmoderator = "Moderator";
+
 
 _l.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
 _l.trialreputationtipaction = "Learn more about reputation here"
@@ -3058,3 +3060,15 @@ _l.miniApp_featureCryptoIntegrationTitle = "Easy Cryptocurrency Payment Integrat
 _l.miniApp_featureCryptoIntegrationDescription = "Embed cryptocurrency payments in your applications for user convenience.";
 _l.miniApp_featureApiAccessTitle = "Full Access to Bastion API";
 _l.miniApp_featureApiAccessDescription = "Utilize all the features of Bastion API to create functional and innovative applications.";
+_l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionReason = "Reason"
+_l.juryYes = "Yes, it does"
+_l.juryNo = "No, it does not violate"
+
+_l.makePost = "Make a publication"
+
+_l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
+_l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};

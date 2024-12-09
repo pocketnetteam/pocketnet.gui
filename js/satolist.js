@@ -3077,16 +3077,16 @@ Platform = function (app, listofnodes) {
                             fromempty: p.fromempty,
                             nocommentcaption: p.nocommentcaption,
                             eid: id + (p.eid || ""),
-                            comments: p.comments,
-                            video: p.video,
-                            autoplay: p.autoplay,
-                            opensvi: p.opensvi,
-                            minimize: p.minimize,
-                            postclass: p.postclass,
-                            showrecommendations: p.showrecommendations,
-                            openapi: typeof p.openapi == 'undefined' ? true : p.openapi,
-                            playingClbk: p.playingClbk,
-                            jury: p.jury
+                            comments : p.comments,
+                            video : p.video,
+                            autoplay : p.autoplay,
+                            opensvi : p.opensvi,
+                            minimize : p.minimize,
+                            postclass : p.postclass,
+                            showrecommendations : p.showrecommendations,
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi,
+                            playingClbk : p.playingClbk,
+                            jury : p.jury
                         }
                     })
 
@@ -3174,7 +3174,7 @@ Platform = function (app, listofnodes) {
             if (clbk) clbk()
         },
 
-        channel: function (id, el, clbk, p = {}, a) {
+        channel : function(id, el, clbk, p = {}, a){
 
 
             var r = false
@@ -3196,9 +3196,9 @@ Platform = function (app, listofnodes) {
                         clbk: clbk,
 
                         essenseData: {
-                            id: id,
-                            openapi: true,
-                            jury: p.jury
+                            id : id,
+                            openapi : true,
+                            jury : p.jury
                         }
                     })
 
@@ -3250,8 +3250,8 @@ Platform = function (app, listofnodes) {
 
         comment: function (id, el, clbk, p, additional) {
 
-            if (!additional) additional = {}
-            if (!p) p = {}
+            if(!additional) additional = {}
+            if(!p) p = {}
 
             var ps = additional.commentPs || p.commentPs || {}
 
@@ -3261,15 +3261,15 @@ Platform = function (app, listofnodes) {
                 el: el,
                 eid: id + 'post_' + (ps.commentid || ''),
 
-                essenseData: {
-                    txid: id,
-                    showall: true,
-                    init: true,
-                    preview: false,
-                    fromtop: true,
-                    commentPs: ps,
-                    openapi: p.openapi,
-                    jury: p.jury
+                essenseData : {
+                    txid : id,
+                    showall : true,
+                    init : true,
+                    preview : false,
+                    fromtop : true,
+                    commentPs : ps,
+                    openapi : p.openapi,
+                    jury : p.jury
 
                 },
 
@@ -3893,8 +3893,10 @@ Platform = function (app, listofnodes) {
 
         },
 
-
-        markUser: function (address) {
+        usertype : function(address){
+            return self.sdk.user.type(address)
+        },
+        markUser : function(address){
 
             var t = self.sdk.user.type(address)
 
@@ -3905,6 +3907,24 @@ Platform = function (app, listofnodes) {
 
             return ''
 
+        },
+        markShark : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
         },
         markShark: function () {
 
@@ -4135,13 +4155,13 @@ Platform = function (app, listofnodes) {
                 history: true,
                 inWnd: true,
 
-                essenseData: {
-                    url: url || p.url,
-                    caption: app.localization.e('e13133'),
-                    sharing: p.sharing || null,
-                    embedding: p.embedding || null,
-                    notincludedRef: true,
-                    canmakepost: p.canmakepost
+                essenseData : {
+                    url : url || p.url,
+                    caption : app.localization.e('e13133'),
+                    sharing : p.sharing || null,
+                    embedding : p.embedding || null,
+                    notincludedRef : true,
+                    canmakepost : p.canmakepost
                 }
             })
         },
@@ -6283,13 +6303,13 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            getjurymoderators: function (juryId) {
+            getjurymoderators: function(juryId) {
                 return self.app.api.rpc('getjurymoderators', [juryId]);
             },
 
-            sendverdict: function (juryobject, verdict) {
+            sendverdict : function(juryobject, verdict){
 
-                if (!juryobject || typeof verdict == undefined) {
+                if(!juryobject || typeof verdict == undefined){
                     self.app.platform.errorHandler('network', true)
 
                     return Promise.reject('network')
@@ -6322,8 +6342,8 @@ Platform = function (app, listofnodes) {
 
         },
 
-        external: {
-            expandLink: function (json = {}) {
+        external : {
+            expandLink : function(json = {}){
 
                 var eExt = {}
 
@@ -12115,7 +12135,7 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve(null)
                 })()
 
-                if (appinfo) {
+                if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
 
                         console.log('application')
@@ -15690,9 +15710,9 @@ Platform = function (app, listofnodes) {
 
                 ////TODO_REF_ACTIONS
 
-                checkvisibility: function (share) {
+                checkvisibility : function(share){
 
-                    if (!share.visibility) return false
+                    if(!share.visibility) return false
 
                     var v = share.visibility()
 
@@ -16156,17 +16176,17 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                jury: function (p = {}, clbk, cache) {
+                jury : function(p = {}, clbk, cache){
 
                     console.log("JURY", cache)
 
-                    if (!p.page) p.page = 0
-                    if (!p.count) p.count = 20
-
+                    if(!p.page) p.page = 0
+                    if(!p.count) p.count = 20
+                    
 
                     self.app.user.isState(function (state) {
 
-                        if (!state) {
+                        if(!state){
                             return clbk([])
                         }
 
@@ -16180,7 +16200,8 @@ Platform = function (app, listofnodes) {
                             promise = () => {
                                 return Promise.resolve(storage[key])
                             }
-                        } else {
+                        }
+                        else {
                             promise = self.app.platform.sdk.jury.getjuryassigned(p.address)
                         }
 
@@ -16190,19 +16211,17 @@ Platform = function (app, listofnodes) {
                                 return i >= p.page * p.count && i < (p.page + 1) * p.count
                             })
 
-                            items = self.psdk.jury.tempRemove(items, (i) => {
-                                return true
-                            })
+                            items =  self.psdk.jury.tempRemove(items, (i) => {return true})
 
                             console.log("cjury ", items)
 
-                            if (clbk) clbk(items, null, {})
+                            if(clbk) clbk(items, null, {})
                         })
 
                     })
                 },
 
-                gettopfeed: function (p, clbk, cache) {
+                gettopfeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method: 'gettopfeed',
@@ -20519,9 +20538,7 @@ Platform = function (app, listofnodes) {
 
                     platform.actions.ws.block(data)
 
-                    platform.app.apps.emit('block', {
-                        height: hb
-                    })
+                    platform.app.apps.emit('block', {height : hb})
 
                     ////////////////
 
@@ -20604,6 +20621,9 @@ Platform = function (app, listofnodes) {
                     platform.app.apps.emit('block', {
                         height: data.block || data.height
                     })
+
+
+                    platform.app.apps.emit('block', {height : data.block || data.height})
 
                     ////////////////
 
@@ -21847,7 +21867,7 @@ Platform = function (app, listofnodes) {
                 if (!m) m = {}
 
 
-                if (data.txid) {
+               if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -24054,8 +24074,8 @@ Platform = function (app, listofnodes) {
                             var privatekey = self.app.user.private.value.toString('hex');
 
                             var massmailingenabled = self.app.platform.istest() || (self.sdk.user.type(self.app.user.address.value) ? true : false)
-
-                            var iscallsenabled = true ///self.app.platform.istest() ? true : false
+                            
+                            var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var path = '/'
 
@@ -24496,6 +24516,7 @@ Platform = function (app, listofnodes) {
             }
 
             core.activeChange = function (value) {
+
                 var wnds = self.app.el.windows.find('.wnd:not(.pipmini,.appwindow)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 

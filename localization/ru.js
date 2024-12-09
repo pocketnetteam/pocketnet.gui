@@ -255,6 +255,8 @@ _l.stp = "Начинающий";
 _l.stpg = "Топ";
 _l.stpreal = "Верифицированный";
 _l.stpdev = "Разработчик "+appname+"";
+_l.stpmoderator = "Модератор";
+
 
 _l.trialreputationtip = "Чтобы стать топовым пользователем необходимо набрать валидную репутацию. По крайней мере 100 топовых пользователей сети должны положительно оценить ваш контент (После трёх месяцев это требование смягчается до 30 пользователей). Кроме этого ваша репутация должна быть выше 100";
 
@@ -2862,3 +2864,15 @@ _l.miniApp_featureCryptoIntegrationTitle = "Легкая интеграция к
 _l.miniApp_featureCryptoIntegrationDescription = "Встраивайте криптовалютные платежи в ваши приложения для удобства пользователей.";
 _l.miniApp_featureApiAccessTitle = "Полный доступ к API Бастиона";
 _l.miniApp_featureApiAccessDescription = "Используйте все возможности API Бастиона для создания функциональных и инновационных приложений.";
+_l.juryCaptionPost = "Нарушает ли публикация правила размещения контента в "+appname+"?"
+_l.juryCaptionComment = "Нарушает ли комментарий правила размещения контента в "+appname+"?"
+_l.juryCaptionUser = "Нарушает ли канал автора правила размещения контента в "+appname+"?"
+_l.juryCaptionReason = "Причина"
+_l.juryYes = "Да, нарушает"
+_l.juryNo = "Нет, не нарушает"
+_l.makePost = "Сделать публикацию"
+
+
+_l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
+_l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};

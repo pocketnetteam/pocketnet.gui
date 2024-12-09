@@ -205,10 +205,10 @@ var BastyonApps = function (app) {
             description: 'permissions_descriptions_externallink',
             level: 1
         },
-        'zaddress': {
-            name: 'permissions_name_zaddress',
-            description: 'permissions_descriptions_zaddress',
-            level: 4
+        'zaddress' : {
+            name : 'permissions_name_zaddress',
+            description : 'permissions_descriptions_zaddress',
+            level : 4
         },
     }
 
@@ -322,11 +322,9 @@ var BastyonApps = function (app) {
             }
         },
         openExternalLink: {
-            parameters: ['url'],
+            parameters : ['url'],
             permissions: ['externallink'],
-            action: function ({
-                data
-            }) {
+            action : function({ data }){
                 const url = data.url
                 if (window.cordova?.InAppBrowser) {
                     window.cordova.InAppBrowser.open(url, '_system');
@@ -580,6 +578,12 @@ var BastyonApps = function (app) {
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
 
                 if (typeof data.canmakepost == 'undefined') data.canmakepost = true
+
+                if (data.sharing){
+                    data.sharing.tags || (data.sharing.tags = [])
+                    data.sharing.tags.push(application.manifest.name)
+                }
+                
 
                 app.platform.ui.socialshare(null, data)
 
@@ -888,7 +892,7 @@ var BastyonApps = function (app) {
                     }).catch(e => {
                         return Promise.reject(appsError(e))
                     })
-
+    
                 }
             },
 
@@ -1413,9 +1417,9 @@ var BastyonApps = function (app) {
 
     }
 
-    var requestPermission = function (application, permission, data, p) {
-
-        if (application.manifest.permissions.indexOf(permission) == -1) {
+    var requestPermission = function(application, permission, data, p){
+        
+        if (application.manifest.permissions.indexOf(permission) == -1){
             return Promise.reject(appsError('permission:notexistinmanifest:' + permission))
         }
 
@@ -2220,18 +2224,18 @@ var BastyonApps = function (app) {
         })
     }
 
-    self.openInWnd = function (application, clbk, path) {
+    self.openInWnd = function(application, clbk, path){
         app.nav.api.load({
             open: true,
             href: 'application',
-            inWnd: true,
-            history: true,
+            inWnd : true,
+            history : true,
             eid: 'application_' + application.manifest.id,
             clbk: clbk,
 
             essenseData: {
-                application: application.manifest.id,
-                path: path
+                application : application.manifest.id,
+                path : path
 
             }
         })
