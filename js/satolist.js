@@ -3926,24 +3926,7 @@ Platform = function (app, listofnodes) {
                 </span>
             </div>`
         },
-        markShark: function () {
-
-            return `<div class="realperson">
-                <span class="fa-stack fa-2x shark">
-                    <i class="fas fa-certificate fa-stack-2x"></i>
-                    <i class="fas fa-flag fa-stack-1x"></i>
-                </span>
-            </div>`
-        },
-        markModerator: function () {
-
-            return `<div class="realperson">
-                <span class="fa-stack fa-2x moderator">
-                    <i class="fas fa-certificate fa-stack-2x"></i>
-                    <i class="fas fa-crown fa-stack-1x"></i>
-                </span>
-            </div>`
-        },
+        
 
         markReal: function () {
 
