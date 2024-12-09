@@ -26,6 +26,7 @@ if(!_Node)
 	var _listofproxies = servers.proxy || []
 
 	var matrix = servers.matrix || ""
+	var matrixMirrors = servers.matrixMirrors || []
 		
 	if (window.location.host === 'pre.pocketnet.app') {
 		_listofproxies = [
@@ -47,6 +48,7 @@ if(!_Node)
 	app = new Application({
 		listofproxies : _listofproxies,
 		matrix : matrix,
+		matrixMirrors,
 		developapps,
 		translateApiProxy,
 		monetization : servers.monetization

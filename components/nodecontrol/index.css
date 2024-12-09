@@ -78,6 +78,10 @@
 #nodecontrol .stacking .canstacking .gray {
   color: rgb(var(--neutral-grad-3));
 }
+#nodecontrol .stacking .canstacking .warning {
+  margin-top: 0.5em;
+  text-transform: uppercase;
+}
 #nodecontrol .stacking .copyaddress {
   cursor: pointer;
 }

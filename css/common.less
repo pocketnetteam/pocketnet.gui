@@ -50,7 +50,67 @@
         }
     }
 
-    
+    &.juryitem{
+        #channel,
+        #comments{
+            border-radius: 12px;
+            border : 1px solid rgba(var(--neutral-grad-1), 0.5); 
+            border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.35);
+            border-right: 1px solid rgba(var(--neutral-grad-1), 0.35);
+            min-height: 120px
+
+            .shadowSmaller();
+
+            margin-left: @rhythm;
+            margin-right: @rhythm;
+            margin-bottom: @rhythm;
+        }
+        #channel{
+            padding : 2 * @rhythm;
+        }
+        .juryinfo{
+            padding : 2 * @rhythm;
+            text-align: center;
+
+            .subcaption{
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            .reasonCaption{
+                span{
+                    font-size: 0.8em;
+                }
+            }
+
+            .reason{
+                span{
+                    font-weight: 700;
+                    color : rgb(var(--color-bad));
+                    font-size: 1.5em;
+                }
+            }
+        }
+
+        .juryActions{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding : 2 * @rhythm;
+
+            .buttonWrapper{
+                margin-right: @rhythm;
+                &:nth-last-child(1){
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .jurycnt{
+        }
+    }
 
     .boost{
         color: rgb(var(--color-star-yellow));
@@ -1698,6 +1758,16 @@ html.mobileview.ios{
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
+
+        &.juryitem{
+            #channel,
+            #comments{
+    
+                margin-left: 0.5 * @rhythm;
+                margin-right: 0.5 * @rhythm;
+                margin-bottom: 0.5 * @rhythm;
+            }
+        }
 
         .pkoin{
             padding: 6px 8px;

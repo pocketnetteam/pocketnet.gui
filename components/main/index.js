@@ -79,10 +79,20 @@ var main = (function(){
 				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
 			},
+			
 			{
 				link : "index?r=best",
 				label : () => self.app.localization.e('e13138'),
 				value : 'best'
+			},
+
+			{
+				link : "index?r=jury",
+				label : () => self.app.localization.e('jury'),
+				value : 'jury',
+				if : function(){
+					return app.platform.sdk.user.isjury()
+				}
 			},
 		]
 		
@@ -814,7 +824,7 @@ var main = (function(){
 
 							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable && mode != 'jury',
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
