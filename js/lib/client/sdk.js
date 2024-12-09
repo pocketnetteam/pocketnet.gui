@@ -641,7 +641,7 @@ var pSDK = function ({ app, api, actions }) {
                     r = p.transformResult(r)
                 }
 
-                settodbone(p.requestIndexedDb, hash, r, {cachetime})
+                settodbone(p.requestIndexedDb, hash, r, {cachetime : p.cachetime})
 
                 return Promise.resolve(r)
             }).catch(e => {

@@ -2813,6 +2813,8 @@ var share = (function(){
 					checkEntity : checkEntity,
 				};
 
+				console.log('currentShare', currentShare)
+
 				clbk(data);
 
 
