@@ -233,10 +233,13 @@ var BastyonApps = function(app){
         },
 
         psdk : {
-            parameters : [],
-            action : function({data, application}){
-                return app.platform.psdk.userInfo.load(data.addresses)
+            userInfoLoad : {
+                parameters : [],
+                action : function({data, application}){
+                    return app.platform.psdk.userInfo.load(data.addresses)
+                }
             }
+            
         },
 
         rpc : {
