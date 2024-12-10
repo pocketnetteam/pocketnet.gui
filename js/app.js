@@ -140,10 +140,11 @@ Application = function (p) {
 	self.electronview = typeof _Electron != 'undefined' && _Electron
 
 	self.margintop = 0
+	self.delaypost = true
+	self.caneditdelaypost = false
+
 
 	if (self.test) {
-		self.delaypost = true
-		self.caneditdelaypost = true
 		self.publishapps = true
 	}
 
