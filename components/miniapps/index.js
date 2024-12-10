@@ -19,7 +19,7 @@ var miniapps = (function(){
 		}
 
 		var renders = {
-			miniapps : function(){
+			miniapps : function(clbk){
 				var apps = self.app.apps.get.forminiapps()
 
 				self.shell({
