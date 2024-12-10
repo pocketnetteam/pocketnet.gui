@@ -1,0 +1,43 @@
+<div class="miniapp-container">
+    <div class="miniapp-form">
+        <h2 class="form-title"><%= e('miniApp_createTitle') %></h2>
+        <p class="form-description">
+            <%= e('miniApp_createDescription') %>
+        </p>
+        <form>
+            <div class="form-group">
+                <label for="app-version" class="form-label">ID</label>
+                <input type="text" id="app-id" class="form-input">
+                <small class="field-error" id="error-app-version"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="app-scope" class="form-label"><%= e('miniApp_scopeLabel') %></label>
+                <small class="field-description">
+                    <%= e('miniApp_scopeDescription') %>
+                </small>
+                <input type="text" id="app-scope" class="form-input">
+                <small class="field-error" id="error-app-scope"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="app-name" class="form-label"><%= e('miniApp_nameLabel') %></label>
+                <input type="text" id="app-name" class="form-input">
+                <small class="field-error" id="error-app-name"></small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <%= e('miniApp_tagsLabel') %>
+                </label>
+                <div class="tag-input-container"></div>
+                <small class="field-error" id="error-app-tag"></small>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="button save-btn"><%= e('miniApp_saveButton') %></button>
+                <button type="button" class="button cancel-btn"><%= e('miniApp_cancelButton') %></button>
+            </div>
+        </form>
+    </div>
+</div>

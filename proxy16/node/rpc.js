@@ -573,8 +573,6 @@ RpcClient.callspec = {
     getappscores : 'str int int int str bool',
     getappcomments : 'str int int int str bool'
 
-    
-
 };
 
 var slice = function(arr, start, end) {

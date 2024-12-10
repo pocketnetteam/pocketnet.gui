@@ -1,0 +1,50 @@
+<div id="devapplications">
+	<div id="main">
+		<header class="header">
+			<nav class="navigation">
+				<a href="https://docs.pocketnet.app/" class="nav-link"><%= e('miniApp_documentationButtonLabel') %></a>
+				<a href="devapplication" class="nav-link">
+					<%= e('miniApp_createButtonLabel') %>
+				</a>
+				<% if (userAddress) { %>
+				<a href="home?search=address:<%=userAddress%>" class="nav-link">
+					<%= e('miniApp_myAppsButtonLabel') %>
+				</a>
+				<% } %>
+				<a href="home" class="nav-link" id="navigateToApps">
+					<%= e('miniApp_appsButtonLabel') %>
+				</a>
+			</nav>
+		</header>
+
+		<main class="hero">
+			<div class="hero-content">
+				<h1><%= e('miniApp_heroTitle') %></h1>
+				<p><%= e('miniApp_heroSubtitle') %></p>
+				<a href="devapplication" class="cta-button"><%= e('miniApp_createButtonLabel') %></a>
+			</div>
+		</main>
+
+		<section class="features">
+			<h2><%= e('miniApp_featuresTitle') %></h2>
+			<div class="features-grid">
+				<div class="feature">
+					<h3><%= e('miniApp_featureDecentralizedTitle') %></h3>
+					<p><%= e('miniApp_featureDecentralizedDescription') %></p>
+				</div>
+				<div class="feature">
+					<h3><%= e('miniApp_featureScalableTitle') %></h3>
+					<p><%= e('miniApp_featureScalableDescription') %></p>
+				</div>
+				<div class="feature">
+					<h3><%= e('miniApp_featureCryptoIntegrationTitle') %></h3>
+					<p><%= e('miniApp_featureCryptoIntegrationDescription') %></p>
+				</div>
+				<div class="feature">
+					<h3><%= e('miniApp_featureApiAccessTitle') %></h3>
+					<p><%= e('miniApp_featureApiAccessDescription') %></p>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

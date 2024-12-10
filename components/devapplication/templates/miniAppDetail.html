@@ -1,0 +1,41 @@
+<div class="miniapp-container">
+    <div class="header">
+        <div class="icon-name">
+            <img src="<%= icon %>" alt="<%= e('miniApp_iconAltText') %>" class="app-icon">
+            <div class="app-title"><%= name %></div>
+        </div>
+
+        <div class="actions">
+            <% if (appStatus === 'development') { %>
+            <button class="publish-app-btn"><%= e('miniApp_publishButton') %></button>
+            <% } %>
+            <button class="delete-app-btn"><%= e('miniApp_deleteButton') %></button>
+            <button class="edit-app-btn"><%= e('miniApp_editButton') %></button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="info-section">
+            <div class="details">
+                <div class="label"><%= e('miniApp_authorLabel') %>:</div>
+                <div class="value"><%= author %></div>
+
+                <div class="label"><%= e('miniApp_tagsLabel') %>:</div>
+                <div class="value"><%= tags %></div>
+
+                <div class="label"><%= e('miniApp_permissionsLabel') %>:</div>
+                <div class="value"><%= permissions %></div>
+
+                <div class="label"><%= e('miniApp_idLabel') %>:</div>
+                <div class="value"><%= id %></div>
+
+                <div class="label"><%= e('miniApp_linkLabel') %>:</div>
+                <a class="value app-link" href="application?id=<%=id%>"><%= e('miniApp_goToAppLinkText') %></a>
+            </div>
+        </div>
+
+        <div class="description">
+            <p><%= description || e('miniApp_descriptionUnavailable') %></p>
+        </div>
+    </div>
+</div>

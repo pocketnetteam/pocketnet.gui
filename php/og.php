@@ -98,7 +98,7 @@ class OG {
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
-        if ($this->config != NULL && (strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0)){
+        if ((strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0)){
 
             if (isset($get['id'])){
                 $this->application = array(
@@ -106,7 +106,7 @@ class OG {
                     'path' => isset($get['p']) ? hex2bin($get['p']) : ''
                 );
 
-                //echo json_encode($this->application);
+                // echo json_encode($this->application);
             }
 
         }
@@ -345,9 +345,25 @@ class OG {
                     }
                 }
 
-                if ($found_da != NULL){
-                    $url = 'https://'.$found_da->scope.'/'.$this->application['path'];
+                if ($found_da === NULL){
+                    $found_da = $this->rpc->getappbyid($this->application['id']);
+                    if ($found_da != false) {
+                        $found_da = $found_da[0];
+                        $decoded_data = new stdClass();
+                        $decoded_data->scope = '';
+                        $decoded_data->name = '';
+                        $decoded_data->description = '';
+                        $json_data = json_decode($found_da->p->s1);
+                        if ($json_data) {
+                            $decoded_data->scope = isset($json_data->s) ? $json_data->s : '';
+                            $decoded_data->name = isset($json_data->n) ? $json_data->n : '';
+                            $decoded_data->description = isset($json_data->d) ? $json_data->d : '';
+                        }
+                        $found_da = $decoded_data;
+                    }
                 }
+
+                $url = isset($found_da->scope) ? 'https://' . $found_da->scope . '/' . $this->application['path'] : null;
 
                 $remote_og = $this->api->urlpreview($url);
 
@@ -355,7 +371,8 @@ class OG {
 
                 if($remote_og != NULL){
                     if(isset($remote_og->title) && $remote_og->title != '') $this->currentOg['title'] = $this->project.'. '.$found_da->name.': '.$remote_og->title;
-                    if(isset($remote_og->description) && $remote_og->description != '') $this->currentOg['description'] = $remote_og->description;
+                    if(isset($found_da->description) && $found_da->description != '') $this->currentOg['description'] = $found_da->description;
+                    else if(isset($remote_og->description) && $remote_og->description != '') $this->currentOg['description'] = $remote_og->description;
                     if(isset($remote_og->image) && $remote_og->image != '') $this->currentOg['image'] = $remote_og->image;
                 }
                 else{

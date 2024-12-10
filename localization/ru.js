@@ -255,6 +255,8 @@ _l.stp = "Начинающий";
 _l.stpg = "Топ";
 _l.stpreal = "Верифицированный";
 _l.stpdev = "Разработчик "+appname+"";
+_l.stpmoderator = "Модератор";
+
 
 _l.trialreputationtip = "Чтобы стать топовым пользователем необходимо набрать валидную репутацию. По крайней мере 100 топовых пользователей сети должны положительно оценить ваш контент (После трёх месяцев это требование смягчается до 30 пользователей). Кроме этого ваша репутация должна быть выше 100";
 
@@ -2779,6 +2781,89 @@ _l.monet_signup = "ЗАРЕГИСТРИРОВАТЬСЯ НА БАСТИОНЕ";
 _l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com">support@bastyon.com</a>, чтобы зарабатывать через рекламу на канале`;
 
 
+
+_l.miniApp_requiredMessage = "Это поле не может быть пустым";
+_l.miniApp_publishMessage = "Публикация мини-приложения: {0}";
+_l.miniApp_deleteConfirmation = "Вы уверены, что хотите удалить мини-приложение?";
+_l.miniApp_yesButton = "Да";
+_l.miniApp_noButton = "Отмена";
+_l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
+_l.miniApp_deleteErrorMessage = "Не удалось удалить приложение. Попробуйте ещё раз позже.";
+_l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
+_l.miniApp_iconAltText = "Иконка приложения";
+_l.miniApp_publishButton = "Публиковать";
+_l.miniApp_editButton = "Редактировать";
+_l.miniApp_deleteButton = "Удалить";
+_l.miniApp_authorLabel = "Автор";
+_l.miniApp_tagsLabel = "Тэги";
+_l.miniApp_permissionsLabel = "Права доступа";
+_l.miniApp_idLabel = "ID";
+_l.miniApp_linkLabel = "Ссылка на приложение";
+_l.miniApp_goToAppLinkText = "Перейти к приложению";
+_l.miniApp_descriptionUnavailable = "Описание недоступно";
+_l.miniApp_editTitle = "Редактирование приложения: ";
+_l.miniApp_scopeLabel = "Scope";
+_l.miniApp_nameLabel = "Название";
+_l.miniApp_saveButton = "Сохранить";
+_l.miniApp_cancelButton = "Отмена";
+_l.miniApp_importManifestError = "Ошибка импорта манифеста. Это может произойти, если файл `b_manifest.json` отсутствует, повреждён или имеет некорректный JSON-формат.";
+_l.miniApp_importIconError = "Ошибка импорта иконки приложения. Это может произойти, если файл `b_icon.png` отсутствует или недоступен.";
+_l.miniApp_brokenManifestError = "Манифест приложения повреждён. Это может быть вызвано синтаксической ошибкой JSON или недостающими ключами в манифесте.";
+_l.miniApp_brokenPermissionsError = "Некорректные или пустые разрешения в манифесте. Убедитесь, что разрешения указаны корректно.";
+_l.miniApp_missingIdError = "В манифесте отсутствует идентификатор приложения. Поле `id` должно быть заполнено.";
+_l.miniApp_missingNameError = "В манифесте отсутствует имя приложения. Поле `name` должно быть заполнено.";
+_l.miniApp_missingVersionError = "В манифесте отсутствует версия приложения. Поле `version` должно быть заполнено.";
+_l.miniApp_missingDescriptionEnError = "Не указано описание приложения на английском языке в разделе `descriptions`.";
+_l.miniApp_missingScopeError = "Отсутствует информация о `scope` в манифесте. Убедитесь, что указано корректное значение `scope`.";
+_l.miniApp_brokenAuthorError = "Некорректный автор приложения. Это может быть вызвано отсутствием или неверным форматом поля `author` (ожидается адрес в формате Base58).";
+_l.miniApp_discrepancyIdError = "Несоответствие между ID приложения в манифесте и ID приложения, указанным в процессе установки.";
+_l.miniApp_discrepancyDevelopError = "Несоответствие статуса разработки (`develop`) между манифестом и указанным приложением.";
+_l.miniApp_discrepancyAuthorError = "Добавление невозможно: автор приложения, указанный в манифесте, не совпадает с вашим адресом. Вы не можете добавлять приложения, которым не владеете.";
+_l.miniApp_conflictIdAlreadyExistsError = "Конфликт: приложение с таким идентификатором уже существует. Проверьте ID нового приложения или удалите существующее.";
+_l.miniApp_permissionDeniedError = "Пользователь отклонил разрешение, запрошенное приложением.";
+_l.miniApp_permissionMissingError = "Одно из запрашиваемых приложением разрешений отсутствует в манифесте.";
+_l.miniApp_permissionsEmptyError = "Запрашиваемый список разрешений пуст. Приложение должно запрашивать хотя бы одно разрешение.";
+_l.miniApp_parametersMissingError = "Одно или несколько обязательных параметров отсутствуют при выполнении действия.";
+_l.miniApp_locationNotAvailableError = "Не удалось получить данные геолокации. Проверьте разрешения или состояние GPS.";
+_l.miniApp_messageEmptyError = "Сообщение для функции alert пустое. Убедитесь, что передан текст сообщения.";
+_l.miniApp_versionError = "Версия манифеста не соответствует установленной версии приложения.";
+_l.miniApp_userAuthorizedError = "Пользователь уже авторизован. Регистрация невозможна.";
+_l.miniApp_imagesMax10Error = "Превышено допустимое количество загружаемых изображений (максимум 10).";
+_l.miniApp_brokenZAddressesError = "Не удалось получить z-адреса пользователя. Возможно, данные отсутствуют или некорректны.";
+_l.miniApp_mobileCameraNotSupportedError = "Камера мобильного устройства не поддерживается приложением.";
+_l.miniApp_mobileCameraCancelError = "Пользователь отменил доступ к камере или загрузку изображений.";
+_l.miniApp_permissionNotExistInManifestError = "Запрошенное разрешение отсутствует в манифесте приложения.";
+_l.miniApp_permissionRequestError = "Ошибка при запросе разрешения у пользователя. Убедитесь, что разрешение корректно указано.";
+_l.miniApp_errorCodeAppDataError = "Ошибка в данных локального хранилища приложения.";
+_l.miniApp_missingApplicationError = "Приложение не найдено в установленном списке. Возможно, оно было удалено или ID указан некорректно.";
+_l.miniApp_publishSuccessMessage = "Приложение успешно опубликовано.";
+_l.miniApp_publishErrorMessage = "Произошла ошибка при публикации приложения.";
+_l.miniApp_publishOnlyTestNetworkMessage = "В данный момент публикация доступна только в тестовой сети.";
+_l.miniApp_scopeDescription = "Введите доменное имя без протокола (например, 'example.com'). Приложение должно поддерживать протокол HTTPS.";
+_l.miniApp_createTitle = "Создание нового мини-приложения";
+_l.miniApp_createDescription = "Убедитесь, что все данные совпадают с полями, указанными в файле `b_manifest.json` приложения. Любые расхождения могут вызвать ошибки при установке.";
+_l.miniApp_tagsRequiredMessage = "Укажите хотя бы один тег для приложения.";
+_l.miniApp_idInvalidMessage = "ID должен быть в формате доменного имени, например, app.pocketnet или example.app. Используйте только буквы в нижнем регистре и хотя бы одну точку.";
+_l.miniApp_scopeInvalidMessage = "Поле scope должно быть в формате поддомена, например, app.pocketnet. Используйте только строчные буквы, цифры и точки без префиксов https:// или www."
+
+_l.miniApp_documentationButtonLabel = "Документация";
+_l.miniApp_createButtonLabel = "Создать приложение";
+_l.miniApp_myAppsButtonLabel = "Созданные мной";
+_l.miniApp_appsButtonLabel = "Приложения";
+
+_l.miniApp_heroTitle = "Мощная платформа для ваших проектов";
+_l.miniApp_heroSubtitle = "Разрабатывайте приложения и используйте все возможности Бастиона в вашем бизнесе.";
+_l.miniApp_heroCtaButton = "Начать работу";
+
+_l.miniApp_featuresTitle = "Возможности";
+_l.miniApp_featureDecentralizedTitle = "Децентрализованность";
+_l.miniApp_featureDecentralizedDescription = "Создавайте приложения без централизованного контроля, обеспечивая безопасность ваших данных.";
+_l.miniApp_featureScalableTitle = "Масштабируемость";
+_l.miniApp_featureScalableDescription = "Используйте сеть Бастиона для поддержки приложений любого размера.";
+_l.miniApp_featureCryptoIntegrationTitle = "Легкая интеграция криптовалютных платежей";
+_l.miniApp_featureCryptoIntegrationDescription = "Встраивайте криптовалютные платежи в ваши приложения для удобства пользователей.";
+_l.miniApp_featureApiAccessTitle = "Полный доступ к API Бастиона";
+_l.miniApp_featureApiAccessDescription = "Используйте все возможности API Бастиона для создания функциональных и инновационных приложений.";
 _l.juryCaptionPost = "Нарушает ли публикация правила размещения контента в "+appname+"?"
 _l.juryCaptionComment = "Нарушает ли комментарий правила размещения контента в "+appname+"?"
 _l.juryCaptionUser = "Нарушает ли канал автора правила размещения контента в "+appname+"?"
