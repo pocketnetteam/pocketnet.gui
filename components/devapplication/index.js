@@ -170,12 +170,12 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?. ["en"],
+          description: application.manifest.descriptions?.["en"],
           tags: application.tags,
         };
 
         self.app.platform.api.actions.miniapp(publishData, async (_, err) => {
-          globalpreloader(false);
+          globalpreloader(false);          
 
           if (!err) {
             sitemessage(
@@ -404,6 +404,7 @@ var devapplication = (function () {
       app.apps.get
         .application(applicationId)
         .then(function (response) {
+
           application = response.appdata?.data
 
           if (!application || application.installing && !application.installed) {
