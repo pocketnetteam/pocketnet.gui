@@ -50,8 +50,8 @@ var devapplication = (function () {
         }
 
         const onEditComplete = (newAppData) => {
-          loadMiniApp(newAppData);
           currentStatus = "view";
+          loadMiniApp(newAppData);
         };
 
         if (application.hash) {
@@ -63,10 +63,25 @@ var devapplication = (function () {
 
           app.apps
             .validateResources(newAppData)
-            .then(() => self.app.platform.api.actions.miniapp(newAppData))
-            .then(() => onEditComplete(newAppData))
-            .catch(handleAppError)
-            .finally(() => globalpreloader(false));
+            .then(() => {
+              return self.app.platform.api.actions.miniapp(
+                newAppData,
+                (_, err) => {
+                  globalpreloader(false);
+                  if (err) {
+                    return sitemessage(
+                      self.app.localization.e("miniApp_editErrorMessage")
+                    );
+                  }
+                  onEditComplete(newAppData);
+                  self.app.apps.syncInstalledAppData({
+                    ...newAppData,
+                    develop: true,
+                  });
+                }
+              );
+            })
+            .catch(handleAppError);
         } else {
           app.apps
             .editAppInConfig({
@@ -155,12 +170,12 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?.["en"],
+          description: application.manifest.descriptions?. ["en"],
           tags: application.tags,
         };
 
         self.app.platform.api.actions.miniapp(publishData, async (_, err) => {
-          globalpreloader(false);          
+          globalpreloader(false);
 
           if (!err) {
             sitemessage(
@@ -302,6 +317,8 @@ var devapplication = (function () {
               return tags || [];
             },
             addTag: function (tag) {
+              const maxlength = 2
+              if (_tags.length > maxlength) return sitemessage(self.app.localization.e('miniApp_extendedTags') + maxlength);
               _tags.push(tag);
               refreshTagInput();
               clearErrors();
@@ -375,7 +392,8 @@ var devapplication = (function () {
     };
 
     var loadMiniApp = function (targetApplication) {
-       userAddress = self.app.user.address.value;
+      globalpreloader(true);
+      userAddress = self.app.user.address.value;
 
       if (targetApplication) return renders.miniAppDetail(targetApplication);
 
@@ -386,9 +404,23 @@ var devapplication = (function () {
       app.apps.get
         .application(applicationId)
         .then(function (response) {
-          application = response.application;
+          application = response.appdata?.data
 
-          if (application.manifest.author !== userAddress) {
+          if (!application || application.installing && !application.installed) {
+            return self.app.apps
+              .install({
+                ...response.application,
+                develop: true,
+              })
+              .then(() => {
+                loadMiniApp();
+              });
+          }
+
+          if (
+            (application.manifest?.author || application.address) !==
+            userAddress
+          ) {
             el.c
               .find(".content")
               .html(
@@ -397,15 +429,16 @@ var devapplication = (function () {
             return;
           }
 
-          renders.miniAppDetail(response.application);
+          renders.miniAppDetail(application);
         })
         .catch(function (e) {
+          console.error(e);
           el.c
             .find(".content")
             .html(
               `<p>${self.app.localization.e("miniApp_loadErrorMessage")}</p>`
             );
-        });
+        }).finally(() => globalpreloader(false));
     };
 
     var make = function () {
