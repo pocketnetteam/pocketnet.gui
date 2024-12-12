@@ -1213,7 +1213,6 @@ var BastyonApps = function (app) {
         var tosave = {}
 
         _.each(localdata, (info, id) => {
-            console.log(info, 'info.savelocaldata');
 
             var saving = {
                 id,
@@ -1808,7 +1807,6 @@ var BastyonApps = function (app) {
         var installed = getlocaldata()
 
         promises.push(Promise.all(_.map(installed, (info) => {
-            console.log(info, 'info.init');
 
             self.get.applicationall(info.id, info.cached).then(({
                 application

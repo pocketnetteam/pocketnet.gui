@@ -107,7 +107,6 @@ var application = (function(){
 			},
 
 			loaded : function(p){
-				console.log('loaded', p);
 				
 				if(!application) return
 				

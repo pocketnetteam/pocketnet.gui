@@ -6367,7 +6367,6 @@ Platform = function (app, listofnodes) {
             updatejurycount : function(){
 
                 self.sdk.jury.getcountforme(function(count){
-                    console.log("JURY COUNT", count)
                     self.sdk.newmaterials.update({
                         jury : count
                     })
@@ -12205,8 +12204,6 @@ Platform = function (app, listofnodes) {
                 if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
 
-                        console.log('application')
-
                         if (!r) return Promise.resolve(null)
 
                         return Promise.resolve({
@@ -16275,8 +16272,6 @@ Platform = function (app, listofnodes) {
                             })
 
                             items =  self.psdk.jury.tempRemove(items, (i) => {return true}, (alias) => {
-
-                                console.log('jury', alias)
 
                                 return alias.actor == p.address
                             })
@@ -24059,7 +24054,7 @@ Platform = function (app, listofnodes) {
                         vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
-                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
+                    importScript('chat/matrix-element.js?v=' + vs, clbk)
 
                 }
 

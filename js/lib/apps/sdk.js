@@ -99,7 +99,6 @@ var BastyonSdk = function(){
             }
 
         }
-        //console.log('application:event:inapp', event)
     })
 
     var on = function(key, data){

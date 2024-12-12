@@ -412,8 +412,6 @@ var activities = (function () {
 
 				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
 
-					console.log("HERE")
-
 					actions.getdata(currentFilter).then(data => {
 
 						var ids = _.map(data, (v) => {

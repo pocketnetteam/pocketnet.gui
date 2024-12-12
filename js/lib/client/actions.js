@@ -238,7 +238,6 @@ var Action = function(account, object, priority, settings){
 
     var self = this
 
-    console.log('options', options, object.type)
 
     self.object = object
     self.priority = priority || options.priority || 3
@@ -460,7 +459,6 @@ var Action = function(account, object, priority, settings){
             txb.setNTime(delayedNtime)
         }
 
-        console.log('Transaction delayedNtime', delayedNtime, txb)
 
         txb.addNTime(account.parent.app.platform.timeDifference || 0)
 
@@ -760,7 +758,6 @@ var Action = function(account, object, priority, settings){
             }
         }
 
-        console.log("TRANSACTION", self, delayedNtime)
 
         var tx = null
         
@@ -770,8 +767,6 @@ var Action = function(account, object, priority, settings){
         catch(e){
             return Promise.reject(e)
         }
-
-        console.log("TRANSACTION", tx)
 
 
         
@@ -2018,7 +2013,6 @@ var Account = function(address, parent){
                     self.actions.value.push(action)
             }
             catch(e){
-                console.log('exported', exported)
                 console.error(e)
             }
 

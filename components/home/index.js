@@ -52,7 +52,6 @@ var home = (function () {
 
 					last: {
 						get: function (d) {
-							console.log(d, "||");
 
 							return [];
 						},

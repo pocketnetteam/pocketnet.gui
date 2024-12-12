@@ -5671,11 +5671,9 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
-							console.log('jury', recommended)
 
 							setTimeout(() => {
 								if(recommended == 'jury'){
-									console.log('update jury count')
 									self.app.platform.sdk.jury.updatejurycount()
 								}
 							}, 100)

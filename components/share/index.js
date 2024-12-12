@@ -1265,12 +1265,9 @@ var share = (function(){
 
 				var livetemplate = function(el){
 
-					console.log('livetemplate', el)
 
 					el.find('.day').on('change', function() {
 						date.day = $(this).val()
-
-						console.log('date.day', date.day)
 
 						if(getdate() < defdateclear()) defdate()
 
@@ -1298,11 +1295,7 @@ var share = (function(){
 
 				var replacetemplate = function(){
 
-					console.log('dlg', dlg)
-					
 					if(!dlg) return
-
-					console.log("DSADAS")
 
 					preparetemplate(null, (html) => {
 						dlg.replacehtml(html)
@@ -2818,8 +2811,6 @@ var share = (function(){
 						currentShare.settings.t = 0
 					}
 				}
-
-				console.log('currentShare', currentShare)
 
 				clbk(data);
 
