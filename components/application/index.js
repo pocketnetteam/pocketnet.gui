@@ -545,7 +545,7 @@ var application = (function(){
 				curpath = ''
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('#' + self.map.id + "fx");
 
 				initEvents();
 

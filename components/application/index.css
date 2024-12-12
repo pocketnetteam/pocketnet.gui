@@ -1,15 +1,23 @@
-#application .errorwrapper {
+#applicationfx .errorwrapper {
   text-align: center;
   padding: 2em;
 }
-#application .errorwrapper span {
+#applicationfx .errorwrapper span {
   font-size: 2em;
   font-weight: 100;
 }
-#application .chatDoubleRow {
+#applicationfx .chatDoubleRow {
   position: fixed;
   left: 0;
   top: 0;
+}
+#applicationfx .chatDoubleRow .icon {
+  position: absolute;
+  left: 0.5em;
+  bottom: 5px;
+}
+#applicationfx .chat,
+#applicationfx .chatDoubleRow {
   padding-top: var(--app-margin-top);
   height: calc(55px + var(--app-margin-top));
   display: flex;
@@ -17,65 +25,8 @@
   z-index: 2;
   width: 55px;
 }
-#application .chatDoubleRow .icon {
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
-  border-radius: 12px;
-  background: rgba(var(--background-hidden-layer), 0.15);
-  backdrop-filter: blur(4px);
-  color: #AAAAAA;
-  -webkit-backdrop-filter: blur(4px);
-  transition: 0.3s;
-  position: absolute;
-  left: 0.5em;
-  bottom: 5px;
-  text-align: center;
-}
-#application .chatDoubleRow .icon svg {
-  margin-bottom: 3px;
-  height: 23px;
-  width: 23px;
-  fill: #AAAAAA;
-}
-#application .chatDoubleRow .icon .amount {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  padding: 0 0.5em;
-  min-width: 16px;
-  height: 16px;
-  line-height: 16px;
-  text-align: center;
-  font-size: 0.5em;
-  background: rgba(var(--color-bg-ac-bright), 0.95);
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  z-index: 20;
-  border-radius: 50%;
-  display: none;
-}
-#application .chatDoubleRow .chatDoubleRow {
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-#application .chatDoubleRow .chatDoubleRow .icon {
-  position: absolute;
-  left: 0.5em;
-  bottom: 5px;
-}
-#application .chatDoubleRow .chat,
-#application .chatDoubleRow .chatDoubleRow {
-  padding-top: var(--app-margin-top);
-  height: calc(55px + var(--app-margin-top));
-  display: flex;
-  align-items: center;
-  z-index: 2;
-  width: 55px;
-}
-#application .chatDoubleRow .chat .icon,
-#application .chatDoubleRow .chatDoubleRow .icon {
+#applicationfx .chat .icon,
+#applicationfx .chatDoubleRow .icon {
   width: 45px;
   height: 45px;
   line-height: 45px;
@@ -90,15 +41,15 @@
   transition: 0.3s;
   text-align: center;
 }
-#application .chatDoubleRow .chat .icon svg,
-#application .chatDoubleRow .chatDoubleRow .icon svg {
+#applicationfx .chat .icon svg,
+#applicationfx .chatDoubleRow .icon svg {
   margin-bottom: 3px;
   height: 23px;
   width: 23px;
   fill: #AAAAAA;
 }
-#application .chatDoubleRow .chat .icon .amount,
-#application .chatDoubleRow .chatDoubleRow .icon .amount {
+#applicationfx .chat .icon .amount,
+#applicationfx .chatDoubleRow .icon .amount {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -115,11 +66,11 @@
   border-radius: 50%;
   display: none;
 }
-#application .chatDoubleRow .chat.amountHave .icon .amount,
-#application .chatDoubleRow .chatDoubleRow.amountHave .icon .amount {
+#applicationfx .chat.amountHave .icon .amount,
+#applicationfx .chatDoubleRow.amountHave .icon .amount {
   display: block;
 }
-#application .chatDoubleRow .captionRow {
+#applicationfx .captionRow {
   position: fixed;
   left: 0;
   right: 0;
@@ -133,20 +84,20 @@
   z-index: 2;
   pointer-events: none;
 }
-#application .chatDoubleRow .captionRow .captionRowWrapper {
+#applicationfx .captionRow .captionRowWrapper {
   display: flex;
   flex-grow: 2;
   align-items: center;
   max-width: 1980px;
 }
-#application .chatDoubleRow .captionRow .iconwrapper {
+#applicationfx .captionRow .iconwrapper {
   min-width: 55px;
   pointer-events: all;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#application .chatDoubleRow .captionRow .iconwrapper .icon {
+#applicationfx .captionRow .iconwrapper .icon {
   color: #AAAAAA;
   width: 55px;
   height: 55px;
@@ -154,7 +105,7 @@
   text-align: center;
   cursor: pointer;
 }
-#application .chatDoubleRow .captionRow .caption {
+#applicationfx .captionRow .caption {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +114,7 @@
   color: #fff;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
-#application .chatDoubleRow .captionRow .caption span {
+#applicationfx .captionRow .caption span {
   padding: 0.5em 1em;
   border-radius: 32px;
   backdrop-filter: blur(4px);
@@ -171,17 +122,17 @@
   font-weight: 700;
   font-size: 0.9em;
 }
-#application .chatDoubleRow .captionRow.electronstyle .caption {
+#applicationfx .captionRow.electronstyle .caption {
   margin-right: 110px;
 }
-#application .chatDoubleRow .captionRow .abssettings {
+#applicationfx .captionRow .abssettings {
   position: absolute;
   right: 100%;
   top: auto;
   bottom: 5px;
   margin-left: 0.5em;
 }
-#application .chatDoubleRow .captionRow .abssettings .icon {
+#applicationfx .captionRow .abssettings .icon {
   width: 45px;
   height: 45px;
   line-height: 45px;
@@ -196,7 +147,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#application .chatDoubleRow .captionRow .filterIcon .icon {
+#applicationfx .captionRow .filterIcon .icon {
   width: 45px;
   height: 45px;
   line-height: 45px;
@@ -211,8 +162,8 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#application .chatDoubleRow .captionRow.notactive .missicon,
-#application .chatDoubleRow .captionRow.notactive .caption {
+#applicationfx .captionRow.notactive .missicon,
+#applicationfx .captionRow.notactive .caption {
   transform: translateY(-100px);
   -moz-transition: 0.1s;
   -o-transition: 0.1s;
@@ -220,111 +171,27 @@
   transition: 0.1s;
   transition-delay: 2.3s;
 }
-#application .chatDoubleRow .captionRow.notactive:hover .missicon,
-#application .chatDoubleRow .captionRow.notactive:hover .caption {
+#applicationfx .captionRow.notactive:hover .missicon,
+#applicationfx .captionRow.notactive:hover .caption {
   transition-delay: 0.3s;
   transform: translateY(0px);
 }
-#application .chatDoubleRow .caption {
-  text-align: center;
-  flex-grow: 2;
-}
-#application .chatDoubleRow .caption span {
-  font-weight: 700;
-}
-#application .chatDoubleRow .abssettings {
-  position: absolute;
-  right: 100%;
-  top: auto;
-  bottom: 5px;
-  margin-left: 0.5em;
-}
-#application .chatDoubleRow .abssettings .icon {
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
-  opacity: 0;
-  border-radius: 12px;
-  background: rgba(var(--background-hidden-layer), 0.15);
-  backdrop-filter: blur(4px);
-  color: #AAAAAA;
-  -webkit-backdrop-filter: blur(4px);
-  transition: 0.3s;
-}
-#application .chatDoubleRow.notactive {
-  transform: translateX(100%);
-  transition: 0.1s;
-  transition-delay: 1s;
-}
-#application .chatDoubleRow.notactive .abssettings .icon {
-  transition-delay: 1s;
-  opacity: 1;
-}
-#application .chatDoubleRow.notactive:hover {
-  transform: translateX(0);
-  transition-delay: 0s;
-}
-#application .chatDoubleRow.notactive:hover .abssettings .icon {
-  transition-delay: 0s;
-  opacity: 0;
-}
-#application .installwrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  max-width: 600px;
+#applicationfx .installwrapper {
   height: 80vh;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
 }
-#application .installwrapper .appicon {
+#applicationfx .installwrapper .appicon {
   width: 96px;
   height: 96px;
-  background: rgba(var(--neutral-grad-1), 0.3);
-  border-radius: 16px;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2em;
-  color: rgb(var(--color-txt-gray-dark));
+  margin-bottom: 48px;
 }
-#application .installwrapper .appdetails {
-  margin-bottom: 24px;
+#applicationfx .installwrapper .installButton button {
+  min-width: 160px;
 }
-#application .installwrapper .appdetails .appname {
-  font-size: 1.8em;
-  font-weight: bold;
-  color: rgb(var(--text-color));
-  margin-bottom: 8px;
-}
-#application .installwrapper .appdetails .appdescription {
-  font-size: 1.2em;
-  color: rgb(var(--text-on-main-bg-color));
-  opacity: 0.8;
-  margin-bottom: 12px;
-}
-#application .installwrapper .appdetails .apptags {
-  display: flex;
-  gap: 0.5em;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-#application .installwrapper .appdetails .apptags .tag {
-  display: inline-block;
-  padding: 0.3em 0.8em;
-  font-size: 0.8em;
-  color: rgb(var(--text-color));
-  background: rgb(var(--neutral-grad-1));
-  border: 1px solid rgb(var(--neutral-grad-0));
-  border-radius: 12px;
-}
-#application .installwrapper .installButton {
-  margin-top: 16px;
-}
-#application .iframewrapper {
+#applicationfx .iframewrapper {
   position: fixed;
   left: 0;
   right: 0;
@@ -333,14 +200,14 @@
   z-index: 1;
   background: rgb(var(--background-hidden-layer));
 }
-#application .iframewrapper iframe {
+#applicationfx .iframewrapper iframe {
   opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
-#application .iframewrapper iframe.loaded {
-  opacity: 1;
-}
-#application .iframewrapper .loadingIcon {
+#applicationfx .iframewrapper .loadingIcon {
   position: absolute;
   left: 0;
   top: 0;
@@ -350,15 +217,18 @@
   align-items: center;
   justify-content: center;
 }
-#application .iframewrapper .loadingIcon .appicon {
+#applicationfx .iframewrapper .loadingIcon .appicon {
   width: 96px;
   height: 96px;
   margin-bottom: 48px;
 }
-#application .iframewrapper.loaded .loadingIcon {
+#applicationfx .iframewrapper.loaded iframe {
+  opacity: 1;
+}
+#applicationfx .iframewrapper.loaded .loadingIcon {
   display: none;
 }
-#application iframe {
+#applicationfx iframe {
   width: 100%;
   height: 100%;
   border: 0;
@@ -377,6 +247,6 @@
   max-height: none;
 }
 .wnd.appwindow .wndback {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none!important;
+  -webkit-backdrop-filter: none!important;
 }

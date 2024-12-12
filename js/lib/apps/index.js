@@ -1171,6 +1171,8 @@ var BastyonApps = function (app) {
                 result.installed = true
                 result.installing = false
 
+                console.log("INSTALL APPLICATION", application)
+
                 installed[application.id] = {
                     ...application,
                     ...result,
@@ -1781,6 +1783,8 @@ var BastyonApps = function (app) {
         const localApps = loadAllAppsFromLocalhost() || [];
         const allApps = [...developApps, ...localApps];
 
+        console.log('localApps', localApps, developApps)
+
         if (allApps.length > 0) {
 
             promises.push(Promise.all(_.map(allApps, (application) => {
@@ -1821,13 +1825,16 @@ var BastyonApps = function (app) {
 
         }
 
-        var installed = getlocaldata()
+        var installedLocal = getlocaldata()
 
-        _.map(installed, (info) => {
+        console.log("INSTALLED LOCAL", installedLocal)
+        
+
+        _.map(installedLocal, (info) => {
             install(info.data, info.cached)
         })
 
-        promises.push(Promise.all(_.map(installed, (info) => {
+        promises.push(Promise.all(_.map(installedLocal, (info) => {
 
             self.get.applicationall(info.id, info.cached).then(({
                 application
@@ -2105,6 +2112,11 @@ var BastyonApps = function (app) {
                 });
             };
             const installedApps = this.installedAndInstalling();
+
+            console.log('instali', installed, installing)
+
+            console.log('installedApps', installedApps)
+
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
             let additionalApps = [];
@@ -2113,6 +2125,8 @@ var BastyonApps = function (app) {
                     [searchBy || 'search']: transformedSearch
                 });
             }
+
+            console.log('filteredInstalledApps', filteredInstalledApps, additionalApps)
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 

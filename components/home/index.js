@@ -166,6 +166,8 @@ var home = (function () {
 					);
 				}
 
+				console.log('applications', applications)
+
 				self.shell({
 					name: "applications",
 					el: el.c.find(".applicationsList"),
@@ -223,6 +225,7 @@ var home = (function () {
 		var make = function () {
 			const searchValue = parameters().search;
 			applicationSearch = actions.applicationSearch(searchValue);
+
 			renders.applications({
 				search: searchValue,
 			});
