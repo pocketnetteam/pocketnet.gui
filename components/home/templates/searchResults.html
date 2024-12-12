@@ -14,13 +14,16 @@
 <div class="application-results">
   <% applications.forEach(function(app) { %>
   <div class="application" data-id="<%- app.id %>">
-    <div
-      class="app-icon"
-      style="background-image: url('<%- app.icon %>')"
-    ></div>
+    <div class="app-icon" style="background-image: url('<%- app.icon %>')"></div>
     <div class="app-info">
       <div class="app-name"><%- app.name %></div>
       <div class="app-description"><%- app.description || '' %></div>
+      <div class="app-tags">
+        <% if (app && app.tags && app.tags.length) { %> <%
+        app.tags.forEach(function(tag) { %>
+        <span class="app-tag"><%- tag %></span>
+        <% }); %> <% } %>
+      </div>
     </div>
   </div>
   <% }); %>
