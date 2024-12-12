@@ -238,12 +238,23 @@ var BastyonApps = function (app) {
             }
         },
 
-        rpc: {
-            parameters: ['method', 'parameters'],
-            action: function ({
-                data,
-                application
-            }) {
+        psdk : {
+            userInfoLoad : {
+                parameters : [],
+                action : function({data, application}){
+                    return app.platform.psdk.userInfo.load(data.addresses, data.light, data.update)
+                }
+            }
+            
+        },
+
+        rpc : {
+            parameters : ['method', 'parameters'],
+            action : function({data, application}){
+
+                if (data.options.cachetime){
+                    return app.platform.psdk.rpc(data.method, data.parameters, data.options)
+                }
 
                 //// TODO CHECK ELECTRON NODE SAFE
                 return app.api.rpc(data.method, data.parameters, data.options)
@@ -825,7 +836,9 @@ var BastyonApps = function (app) {
 
                     offer.import(data);
 
-                    return makeAction(offer, application, true);
+                    return makeAction(offer, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
@@ -842,7 +855,9 @@ var BastyonApps = function (app) {
                         txidEdit: data.hash
                     });
 
-                    return makeAction(remove, application, true);
+                    return makeAction(remove, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
@@ -1156,6 +1171,8 @@ var BastyonApps = function (app) {
                 result.installed = true
                 result.installing = false
 
+                console.log("INSTALL APPLICATION", application)
+
                 installed[application.id] = {
                     ...application,
                     ...result,
@@ -1214,7 +1231,6 @@ var BastyonApps = function (app) {
         var tosave = {}
 
         _.each(localdata, (info, id) => {
-            console.log(info, 'info.savelocaldata');
 
             var saving = {
                 id,
@@ -1421,6 +1437,8 @@ var BastyonApps = function (app) {
 
     var removePermission = function (application, permission) {
         if (!this.clearPermission(application, permission)) return false
+
+        var appdata = localdata[application.manifest.id]
 
         appdata.permissions.push({
             id: permission,
@@ -1765,6 +1783,8 @@ var BastyonApps = function (app) {
         const localApps = loadAllAppsFromLocalhost() || [];
         const allApps = [...developApps, ...localApps];
 
+        console.log('localApps', localApps, developApps)
+
         if (allApps.length > 0) {
 
             promises.push(Promise.all(_.map(allApps, (application) => {
@@ -1805,14 +1825,16 @@ var BastyonApps = function (app) {
 
         }
 
-        var installed = getlocaldata()
+        var installedLocal = getlocaldata()
 
-        _.map(installed, (info) => {
+        console.log("INSTALLED LOCAL", installedLocal)
+        
+
+        _.map(installedLocal, (info) => {
             install(info.data, info.cached)
         })
 
-        promises.push(Promise.all(_.map(installed, (info) => {
-            console.log(info, 'info.init');
+        promises.push(Promise.all(_.map(installedLocal, (info) => {
 
             self.get.applicationall(info.id, info.cached).then(({
                 application
@@ -1855,8 +1877,6 @@ var BastyonApps = function (app) {
 
 
         return Promise.all(promises).then(() => {
-
-            console.log("miniapp ini")
 
             self.inited = true
 
@@ -2092,6 +2112,11 @@ var BastyonApps = function (app) {
                 });
             };
             const installedApps = this.installedAndInstalling();
+
+            console.log('instali', installed, installing)
+
+            console.log('installedApps', installedApps)
+
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
             let additionalApps = [];
@@ -2100,6 +2125,8 @@ var BastyonApps = function (app) {
                     [searchBy || 'search']: transformedSearch
                 });
             }
+
+            console.log('filteredInstalledApps', filteredInstalledApps, additionalApps)
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 
@@ -2228,12 +2255,7 @@ var BastyonApps = function (app) {
 
             if (!pps.id) return null
 
-            console.log('application pps', href, pps)
-
-
             if (pps.p) pps.p = hexDecode(pps.p)
-
-            console.log('application pps', href, pps)
 
             return {
                 id: pps.id,

@@ -36,13 +36,14 @@ var application = (function(){
 					self.closeContainer()
 				}
 				else{
-					self.app.nav.api.load({
+					self.app.platform.ui.goback('home')
+					/*self.app.nav.api.load({
 						open : true,
 						href : 'index',
 	
 						///href : 'home',
 						history : true,
-					})
+					})*/
 				}
 
 				
@@ -88,20 +89,23 @@ var application = (function(){
 
 				var sl = '.settings .icon'
 
-				if(isMobile() && !s) sl = '.abssettings .icon'
+				//if(isMobile() && !s) sl = '.abssettings .icon'
 
 				p.el.find(sl).on('click', function(){
 					renders.menu($(this))
 				})
 
-				var chatel = p.el.find('.chatDoubleRow')
+				p.el.find('.info').on('click', function(){
+					actions.openinfo()
+				})
+
+				var chatel = p.el.find('.chat')
 
 				chatel.on('click', events.chats.click)
 				events.chats.init(chatel)
 			},
 
 			loaded : function(p){
-				console.log('loaded', p);
 				
 				if(!application) return
 				
@@ -109,8 +113,11 @@ var application = (function(){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
 
-				if (el.c)
-					el.c.find('.captionRow').addClass('notactive')
+				setTimeout(() => {
+					if (el.c)
+						el.c.find('.captionRow').addClass('notactive')
+				}, 2000)
+				
 			},
 
 			changestate : function(p = {}){
@@ -311,7 +318,7 @@ var application = (function(){
 
 					data : {
 						application,
-						src 
+						src
 					},
 
 				}, function(p){
@@ -319,7 +326,26 @@ var application = (function(){
 					events.pageevents(p)
 
 					p.el.find('.back').on('click', function(){
-						actions.gotohome()
+						if(self.app.electronview && history.length){
+							history.back()
+						}
+						else{
+							actions.gotohome()
+						}
+					})
+
+					p.el.find('.forward').on('click', function(){
+						if (history.length) {
+							history.forward() 
+						}
+					})
+
+					p.el.find('.refresh').on('click',()=>{
+
+						var electron = require('electron');
+
+						if (electron)
+							electron.ipcRenderer.send('electron-refresh');
 					})
 
 					if (clbk)
@@ -367,8 +393,6 @@ var application = (function(){
 		}
 
 		var make = function(){
-
-			console.log('application_notexist', self)
 
 			if(!application || !appdata){
 				renders.error('application_notexist')
@@ -521,7 +545,7 @@ var application = (function(){
 				curpath = ''
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('#' + self.map.id + "fx");
 
 				initEvents();
 

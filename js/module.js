@@ -167,7 +167,10 @@ nModule = function(){
 								if (key != 'auto'){
 									
 									if(p.history)
-										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []),{
+											replaceState : true,
+											removefromback : false
+										})
 									
 									try{
 										self.app.nav.api.changedclbks()
@@ -737,6 +740,7 @@ nModule = function(){
 		if (essenses[id])
 		{
 			essenses[id].destroy();
+			essenses[id].destroyed = true
 
 			delete essenses[id];
 		}

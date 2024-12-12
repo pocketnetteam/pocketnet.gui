@@ -488,7 +488,6 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
-							console.log('videosVolume', videosVolume)
 
 							self.sdk.videos.volume = videosVolume
 

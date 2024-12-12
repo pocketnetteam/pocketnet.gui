@@ -629,13 +629,31 @@
   #authorn .uinfo .item {
     display: none;
   }
-  #authorn .uinfo.showall .ucaption {
-    margin-bottom: 0.5em;
+  #authorn .uinfo .item.about {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  #authorn .uinfo .fa-chevron-down {
+    color: rgb(var(--neutral-grad-2));
+  }
+  #authorn .uinfo.showall .fa-chevron-down {
+    transform: rotate(-180deg);
   }
   #authorn .uinfo.showall .ucaption i {
     display: block;
   }
   #authorn .uinfo.showall .item {
     display: block;
+  }
+  #authorn .uinfo.showall .item.about {
+    display: block;
+    -webkit-line-clamp: inherit;
+    margin-bottom: 1em;
   }
 }

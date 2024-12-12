@@ -110,6 +110,11 @@ var pSDK = function ({ app, api, actions }) {
         jury : {
             time : 360
         },
+
+        defaultRpcRequest : {
+            time : 60
+        },
+        
         miniappRequest: {
             time: 60 * 60 // temp
         },
@@ -161,7 +166,7 @@ var pSDK = function ({ app, api, actions }) {
         if(!baddata[key]) baddata[key] = {}
     }
 
-    var settodb = function (dbname, result) {
+    var settodb = function (dbname, result, p = {}) {
         if (!dbname || !dbmeta[dbname]) {
             return Promise.resolve()
         }
@@ -174,7 +179,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
-            return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
+            return self.db.set(dbname, p.cachetime || dbmeta[dbname].time, key, data).catch(e => {
                 console.error(e)
                 return Promise.resolve()
             })
@@ -204,14 +209,14 @@ var pSDK = function ({ app, api, actions }) {
         return self.db.clearAll(dbname)
     }
 
-    var settodbone = function (dbname, hash, data) {
+    var settodbone = function (dbname, hash, data, p) {
 
         if (!hash || !data) return Promise.resolve()
 
         return settodb(dbname, [{
             key: hash,
             data
-        }])
+        }], p)
     }
 
     var getfromdbone = function (dbname, hash, getold) {
@@ -617,7 +622,8 @@ var pSDK = function ({ app, api, actions }) {
 
     var request = function (key, hash, executor, p = {
         requestIndexedDb: null,
-        insertFromResponse: null
+        insertFromResponse: null,
+        cachetime : undefined
     }) {
 
         if (_.isObject(hash)) {
@@ -642,7 +648,7 @@ var pSDK = function ({ app, api, actions }) {
                     r = p.transformResult(r)
                 }
 
-                settodbone(p.requestIndexedDb, hash, r)
+                settodbone(p.requestIndexedDb, hash, r, {cachetime : p.cachetime})
 
                 return Promise.resolve(r)
             }).catch(e => {
@@ -1263,7 +1269,6 @@ var pSDK = function ({ app, api, actions }) {
 
                     })
 
-                    console.log('jury converted', converted)
 
                     return converted
 
@@ -1284,14 +1289,10 @@ var pSDK = function ({ app, api, actions }) {
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('modVote'), filter)
 
-                console.log('actions', actions)
-
                 _.each(actions, (action) => {
 
                     var txid = deep(action, 'object.s2.v')
                     
-                    console.log("______JURY", txid)
-
                     objects = _.filter(objects, (o) => {
                         return o.id == txid
                     })
@@ -1402,7 +1403,6 @@ var pSDK = function ({ app, api, actions }) {
                     }
                     catch (e) {
                         console.error(e)
-                        console.log(c)
                         return null
                     }
 
@@ -2645,6 +2645,23 @@ var pSDK = function ({ app, api, actions }) {
             
         }
     }
+
+    self.rpc = {
+        keys : ['defaultRpcRequest'],
+        request : function(action, parameters, p = {}){
+
+            var hash = action + '_' + JSON.stringify(parameters)
+
+            return request('defaultRpcRequest', hash, (data) => {
+                return api.rpc(action, parameters, p.rpc)
+            }, {
+                update : p.update,
+                requestIndexedDb: 'defaultRpcRequest',
+                cachetime : p.cachetime
+            })
+        }
+    }
+
 
     self.postScores = {
         keys: ['postScores'],

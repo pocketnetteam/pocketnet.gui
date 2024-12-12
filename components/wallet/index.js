@@ -1203,7 +1203,6 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						console.log('_scrollToTop', el.step, w)
 
 						_scrollTop(el.step, w, 50)
 
@@ -2129,11 +2128,9 @@ var wallet = (function(){
 										renders.mainWithClear()
 
 										if(reciever.indexOf('P') == 0){
-											console.log('reciever', reciever)
 											self.sdk.users.get(reciever, function(){
 												if(self.psdk.userInfo.get(reciever)){
 													self.sdk.activity.adduser('transaction', reciever)
-													console.log("adduser")
 												}
 											})
 										}
@@ -2487,8 +2484,6 @@ var wallet = (function(){
 
 				/*self.app.api.rpc('getaccountearning', [self.app.user.address.value, 0, 1627534]).then(function (s) {
 
-					console.log("STATS", s)
-					
 					var stats = {...s[0]}
 
 					delete stats.address

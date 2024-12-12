@@ -857,6 +857,7 @@ wnd = function (p) {
 
 
 			var cl = function () {
+
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
 				window.rifticker.add(() => {
@@ -1658,6 +1659,9 @@ dialog = function (p) {
 
 	self.el = $el;
 	self.destroy = destroy;
+	self.replacehtml = function(html){
+		$el.find('.body .text').html(html)
+	}
 	return self;
 }
 
@@ -6261,8 +6265,6 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
-	console.log('scr ofssetObj', ofssetObj)
-
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6273,8 +6275,6 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
-
-		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -8334,15 +8334,12 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
-		console.log('files', files)
-
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
 
-					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8350,8 +8347,6 @@ initUpload = function (p) {
 				},
 				fail: function () {
 					end();
-
-					console.log('failed')
 
 
 					if (p.onFail)
@@ -8361,8 +8356,6 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
-
-				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8397,18 +8390,11 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
-						console.log("read")
-
-
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
-							console.log("resize")
-
 							autorotation(file, fileObject.base64, function (base64) {
-
-								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -9948,36 +9934,35 @@ if (typeof window != 'undefined') {
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function () {
-			if (!splashScreenIcon)
-				return;
+			
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenIcon.classList.remove("rotate");
-				splashScreenIcon.classList.add('zoom-out-rotate');
-				splashScreen.classList.add('fade-out');
-				// When zoom out animation is done, completely remove the splash screen
-				setTimeout(() => {
-					// Clear interval if needed
-					if (splashScreeninterval != undefined) {
-						clearInterval(splashScreeninterval);
-					}
-					// Completely remove the splashscreen
+				window.requestAnimationFrame(() => {
 
-					if (splashScreen)
-						splashScreen.remove();
-					splashScreenIcon = null
+					if (!splashScreenIcon)
+						return;
 
-					splashScreen = null
-				}, zoomOutDuration * 2);
+					splashScreenIcon.classList.remove("rotate");
+					splashScreenIcon.classList.add('zoom-out-rotate');
+					splashScreen.classList.add('fade-out');
+					// When zoom out animation is done, completely remove the splash screen
+					setTimeout(() => {
+						// Clear interval if needed
+						if (splashScreeninterval != undefined) {
+							clearInterval(splashScreeninterval);
+						}
+						// Completely remove the splashscreen
+	
+						if (splashScreen)
+							splashScreen.remove();
+						splashScreenIcon = null
+	
+						splashScreen = null
+					}, zoomOutDuration * 2);
+				})
+				
 			}
-			// Wait until half the rotation is done
-			/*setTimeout(() => {
-				// Change the logo image
-				if (splashScreenIcon)
-					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
-				// Increase index
-				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);*/
+		
 		}
 
 		// Wait until the zoom in is done
@@ -9985,11 +9970,13 @@ if (typeof window != 'undefined') {
 			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenIcon.classList.remove('zoom-in');
-			splashScreenIcon.classList.add('rotate');
-			// Triggered every times we reached the end of the rotating animation
-			rotatingAnimationEnded();
-			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			window.requestAnimationFrame(() => {
+				splashScreenIcon.classList.remove('zoom-in');
+				splashScreenIcon.classList.add('rotate');
+				// Triggered every times we reached the end of the rotating animation
+				rotatingAnimationEnded();
+				splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			})
 		}, zoomInDuration);
 
 	}

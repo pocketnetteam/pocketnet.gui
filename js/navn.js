@@ -22,6 +22,10 @@ Nav = function(app)
 		links : true,
 	}
 
+	if (history.scrollRestoration) {
+		history.scrollRestoration = "manual";
+	}
+
 	var hostname = window.location.hostname
 
 	var electronopen = false
@@ -32,6 +36,8 @@ Nav = function(app)
 	if (_OpenApi){
 		defaultpathname = 'openapi.html'
 	}
+
+	self.initialHistoryLength = history.length
 
 	var protocol = null;
 
@@ -155,8 +161,13 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref', 'pc']);
+				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
+				if(np.video || np.read || np.audio || np.r || np.fx || np.id){
+					href = khref + collectParameters({
+						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read, id : np.id
+					})
+				}
 
 			var wb = false;
 
@@ -175,7 +186,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
+				if (khref == indexpage && !np.fx && !np.video && !np.audio && !np.read && !np.r && !np.fx){
 					//// 
 					backManager.clearAll()
 				}
@@ -184,14 +195,24 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx || np.id);
 
-	
 					if (needadd){
 	
 						var riobj = removeEqualRIObj(backManager.chain, {
 							href : href
 						})
+
+						if(!riobj && np.fx && backManager.chain.length > 1){
+							var c0 = backManager.chain[0]
+
+							if (c0.href.split('?')[0] == khref){
+								riobj = {
+									el : c0,
+									index : 1
+								}
+							}
+						}
 
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
@@ -239,19 +260,19 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
-			/*if(!bp){
+			if(!bp){
 
 				if (self.dynamic && !module.find(lhref)){
 					bp = deep(app, 'backmap.authorn') 
 				}
-			}*/
+			}
 
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
 
-				/*if (self.dynamic && !module.find(href)){
+				if (self.dynamic && !module.find(href)){
 					if(bp.childrens.indexOf('authorn') > -1) return true
-				}*/
+				}
 			}
 			else{
 				
@@ -555,6 +576,8 @@ Nav = function(app)
 
 						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
+
+							app.mobile.removescrollmodedown()
 						}
 							
 
@@ -621,6 +644,8 @@ Nav = function(app)
 
 							app.actions.scrollToTop()
 
+							app.mobile.removescrollmodedown()
+
 						}
 						catch(e){
 							console.error(e)
@@ -646,9 +671,10 @@ Nav = function(app)
 							}
 							
 
-							if (p.goback){
+							/*if (p.goback){
+								console.log("GOBACKSCROLL")
 								app.actions.scroll(p.goback.scroll)
-							}
+							}*/
 
 							c(a, b, d)
 						}
@@ -680,6 +706,8 @@ Nav = function(app)
 			else
 			{
 				app.actions.scrollToTop()
+
+				app.mobile.removescrollmodedown()
 
 				p.clbk(null, p);
 			}
@@ -1812,6 +1840,7 @@ Nav = function(app)
 	self.relations = relations;
 	self.current = current
 	self.thisSiteLink = core.thisSiteLink
+	self.backManager = backManager
 
 	return self;
 }

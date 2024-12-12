@@ -1813,7 +1813,6 @@ Platform = function (app, listofnodes) {
 
         url = url.replace("http:", "https:").replace("http//", "https://")
 
-        console.log('application parse', url)
 
         var meta = parseVideo(url);
 
@@ -3282,8 +3281,67 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        support: function (template, parameters) {
+        goback : function(def){
 
+            var chain = self.app.nav.backManager.chain
+
+            if (chain.length > 2) {
+
+                self.app.nav.api.go({
+                    href : chain[1].href,
+                    history : true,
+                    open : true
+                })
+                
+            }
+            else{
+
+                var k = ''
+                var indexkey = 'index'
+                var link = indexkey
+
+                if(!def){
+    
+                    try{
+                        k = localStorage['lentakey'] || ''
+                    }catch(e){
+    
+                    }
+    
+                    if(k != indexkey){
+                        if (k == 'video'){
+                            link = indexkey + '?video=1'
+                        }
+                        else{
+                            if (k == 'read'){
+                                link = indexkey + '?read=1'
+                            }
+                            else if (k == 'audio'){
+                                link = indexkey + '?audio=1'
+                            }else{
+                                if(k){
+                                    link = indexkey + '?r=' + k
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else{
+                    link = def
+                }
+
+                self.app.nav.api.go({
+                    href : link,
+                    history : true,
+                    open : true
+                })
+
+            }
+        },
+
+        support : function(template, parameters){
+ 
             app.nav.api.load({
                 open: true,
                 id: 'support',
@@ -4161,7 +4219,6 @@ Platform = function (app, listofnodes) {
                 url
             } = p;
 
-            console.log("SHARE", p)
 
             setTimeout(function () {
                 app.nav.api.load({
@@ -4908,7 +4965,6 @@ Platform = function (app, listofnodes) {
 
         upbutton: function (el, p) {
 
-            console.log('upbutton', el, p)
 
             if (typeof window == 'undefined') return;
 
@@ -5633,7 +5689,7 @@ Platform = function (app, listofnodes) {
 
                             var path = ''
 
-                            if (d.share.itisvideo() && !window.cordova) {
+                            if (d.share.itisvideo() && !window.cordova && !self.app.mobileview){
                                 path = 'index?video=1&v=' + id
                             } else {
                                 path = 'post?s=' + id
@@ -6295,6 +6351,34 @@ Platform = function (app, listofnodes) {
                 return self.app.api.rpc('getjurymoderators', [juryId]);
             },
 
+            getcountforme : function(clbk){
+                self.app.user.isState(function (state) {
+                    if (state && self.sdk.user.isjury()){
+
+                        self.sdk.node.shares.jury({page : 0, count : 1000}, (items) => {
+
+                            var c = items.length
+
+                            if(clbk) clbk(c)
+
+                        })
+                    }
+                    else{
+                        if(clbk) clbk(0)
+                    }
+                })
+            },
+
+            updatejurycount : function(){
+
+                self.sdk.jury.getcountforme(function(count){
+                    self.sdk.newmaterials.update({
+                        jury : count
+                    })
+                })
+                
+            },
+
             sendverdict : function(juryobject, verdict){
 
                 if(!juryobject || typeof verdict == undefined){
@@ -6311,7 +6395,6 @@ Platform = function (app, listofnodes) {
                 ///self.sdk.node.transactions.clearTempHard()
 
                 return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
-                    console.log("jury verdict", action)
                     successCheck()
                     sitemessage(self.app.localization.e('juryvote_success'))
 
@@ -9708,7 +9791,11 @@ Platform = function (app, listofnodes) {
 
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
-                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a, b) => a + +b, 0) : 0
+                if(ustate.likers_count > 100){
+                    isOverComplained = false
+                }
+
+                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
                 if (self.bch[address]) return true
 
@@ -10650,9 +10737,7 @@ Platform = function (app, listofnodes) {
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
 
-                    console.log("DATA", d)
-
-                    if (!d || !d.length) {
+                    if(!d || !d.length){
                         return Promise.resolve(dummy())
                     }
 
@@ -10881,7 +10966,6 @@ Platform = function (app, listofnodes) {
 
             getone: function (address, clbk, light, reload) {
 
-                console.log('address', address, 'light', light)
 
                 self.sdk.users.get([address], function (data = {}, error) {
                     if (!data) data = {}
@@ -11231,14 +11315,16 @@ Platform = function (app, listofnodes) {
                     index_sub: data['sharesSubscr'] || 0
                 }
 
-                counts.index = counts.common
+                counts.index = counts.common || 0
 
                 _.each(counts, function (c, i) {
                     // c = rand(1,3)
                     self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
                 })
 
-                _.each(self.sdk.newmaterials.clbks.update, function (u) {
+                if(typeof data.jury != 'undefined') self.sdk.newmaterials.storage['jury'] = data.jury || 0
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
                     u(self.sdk.newmaterials.storage)
                 })
 
@@ -12105,9 +12191,6 @@ Platform = function (app, listofnodes) {
 
             getnew: function (url, action) {
 
-                console.log('application url', url)
-
-
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
@@ -12125,8 +12208,6 @@ Platform = function (app, listofnodes) {
 
                 if (appinfo){
                     apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
-
-                        console.log('application')
 
                         if (!r) return Promise.resolve(null)
 
@@ -12153,9 +12234,7 @@ Platform = function (app, listofnodes) {
 
                     var og = deep(d, 'og');
 
-                    console.log("application OG", og)
-
-                    if (!og) return Promise.reject()
+                    if(!og) return Promise.reject()
 
                     _.each(og, (o, i) => {
                         og[i] = i == 'application' ? o : superXSS(o)
@@ -16166,8 +16245,6 @@ Platform = function (app, listofnodes) {
 
                 jury : function(p = {}, clbk, cache){
 
-                    console.log("JURY", cache)
-
                     if(!p.page) p.page = 0
                     if(!p.count) p.count = 20
                     
@@ -16199,9 +16276,10 @@ Platform = function (app, listofnodes) {
                                 return i >= p.page * p.count && i < (p.page + 1) * p.count
                             })
 
-                            items =  self.psdk.jury.tempRemove(items, (i) => {return true})
+                            items =  self.psdk.jury.tempRemove(items, (i) => {return true}, (alias) => {
 
-                            console.log("cjury ", items)
+                                return alias.actor == p.address
+                            })
 
                             if(clbk) clbk(items, null, {})
                         })
@@ -16341,9 +16419,6 @@ Platform = function (app, listofnodes) {
                                 [],
                                 [], p.tagsexcluded
                             ];
-
-
-                            console.log('methodparams', methodparams)
 
                             s.getex(parameters, function (data, error) {
 
@@ -16745,8 +16820,6 @@ Platform = function (app, listofnodes) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
-
-                    console.log('address', vout, address)
 
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
@@ -21463,8 +21536,6 @@ Platform = function (app, listofnodes) {
 
             var rmfu2 = function () {
 
-                console.log('destroyMessage', message, time)
-
                 message.el.remove();
 
                 removeEqual(self.fastMessages, {
@@ -21545,10 +21616,8 @@ Platform = function (app, listofnodes) {
 
             var s = false;
 
-            console.log('self.fastMessages.length', self.fastMessages.length)
-
-            if (self.fastMessages.length >= maxCount) {
-                _.each(self.fastMessages, function (m, i) {
+			if(self.fastMessages.length >= maxCount){
+				_.each(self.fastMessages, function(m, i){
 
                     if (!m.expanded && !m.el.hasClass('smallsize')) {
                         m.el.addClass('smallsize');
@@ -21644,7 +21713,6 @@ Platform = function (app, listofnodes) {
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
-                    console.log('notifications', notifications)
 
                     if (!notifications) return
 
@@ -23795,8 +23863,8 @@ Platform = function (app, listofnodes) {
 
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
-                        }, 3000)
-
+                            self.app.platform.sdk.jury.updatejurycount()
+                        },3000)
 
                         var account = self.actions.addAccount(self.app.user.address.value)
 
@@ -23808,15 +23876,9 @@ Platform = function (app, listofnodes) {
                         account.updateUnspents().catch(e => {
                             console.error(e)
                         })
-
-                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
-                            unspents = _.sortBy(unspents, (u) => {
-                                return u.amount
-                            })
-                            console.log("UNSPENTS", unspents)
-                        })*/
-
-
+    
+         
+    
                         self.preparingUser = false;
 
                         self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
@@ -23997,7 +24059,7 @@ Platform = function (app, listofnodes) {
                         vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
-                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
+                    importScript('chat/matrix-element.js?v=' + vs, clbk)
 
                 }
 
@@ -24077,8 +24139,7 @@ Platform = function (app, listofnodes) {
 
                             if (typeof _Electron != 'undefined') path = './'
 
-                            console.log('isTablet', isTablet())
-
+                            
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${self.app.user.address.value}"

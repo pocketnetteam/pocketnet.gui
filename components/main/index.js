@@ -818,6 +818,7 @@ var main = (function(){
 							videomobile : videomain && isMobile(),
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
+							fixposition : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
@@ -1371,7 +1372,7 @@ var main = (function(){
 
 				if((_s.v || _s.s) && (isMobile())){
 
-					self.nav.api.load({
+					/*self.nav.api.load({
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
@@ -1379,7 +1380,7 @@ var main = (function(){
 						fade : self.app.el.content
 					})
 
-					return 
+					return */
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1406,6 +1407,7 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
 
 				showCategories(false)
 

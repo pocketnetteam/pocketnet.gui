@@ -9363,8 +9363,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         video_id = video_id.replace('/embed/', '/video/');
 
-        console.log('video_id', video_id)
-
         options.app.platform.sdk.remote.getnew(video_id, 'bitchute').then(og => {
 
           if (og.video && og.video.as) {

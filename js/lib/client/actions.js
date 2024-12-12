@@ -130,7 +130,14 @@ var ActionOptions = {
 
         share : {
             rejectedAsk : true,
-            priority : 2
+            priority : 2,
+            delayedNtime : function(action){
+                if (action.object.settings.t > 1){
+                    return action.object.settings.t
+                }
+
+                return 0
+            }
         },
 
         contentBoost : {
@@ -185,6 +192,10 @@ var ActionOptions = {
 
             },
         },
+
+        modVote : {
+            keep : 800
+        }
     }
 }
 
@@ -210,7 +221,6 @@ var errorCodesAndActions = {
     '2'  : errorCodesAndActionsExecutors.limit,
     '3'  : errorCodesAndActionsExecutors.limit,
     '15' : errorCodesAndActionsExecutors.limit,
-    //'26' : errorCodesAndActionsExecutors.limit,
     '29' : errorCodesAndActionsExecutors.limit,
     '31' : errorCodesAndActionsExecutors.limit,
     '49' : errorCodesAndActionsExecutors.limit,
@@ -228,6 +238,7 @@ var Action = function(account, object, priority, settings){
 
     var self = this
 
+
     self.object = object
     self.priority = priority || options.priority || 3
     self.added = new Date()
@@ -235,6 +246,7 @@ var Action = function(account, object, priority, settings){
     self.settings = settings || {}
     self.rejectWait = null
     self.updated = null
+    self.keep = options.keep || false
 
     self.sent = null
     self.checkedUntil = null
@@ -275,6 +287,7 @@ var Action = function(account, object, priority, settings){
         e.completed = self.completed
         e.tryingsend = self.tryingsend
         e.updated = self.updated
+        e.keep = self.keep
 
         if (self.object.export){
             e.expObject = self.object.export(true)
@@ -339,13 +352,15 @@ var Action = function(account, object, priority, settings){
             self.completed = e.completed
         }
 
+        if (e.keep){
+            self.keep = e.keep
+        }
+
         if (e.rejected){
             self.rejected = e.rejected
         }
 
         if (e.expObject){
-
-            console.log('import', e.expObject.type, kits.c)
 
             var alias = new kits.c[e.expObject.type]()
                 alias.import(e.expObject)
@@ -434,13 +449,22 @@ var Action = function(account, object, priority, settings){
         
     }
 
-    var buildTransaction = function({inputs, outputs, opreturnData}){
+    var buildTransaction = function({inputs, outputs, opreturnData, delayedNtime}){
         var txb = new bitcoin.TransactionBuilder();
+        var seqnumber = 0 
+        //delayedNtime
+
+        if (delayedNtime){
+            txb.setLockTime(delayedNtime + (account.parent.app.platform.timeDifference || 0))
+            txb.setNTime(delayedNtime)
+        }
+
 
         txb.addNTime(account.parent.app.platform.timeDifference || 0)
 
         _.each(inputs, (input, index) => {
-            txb.addInput(input.txid, input.vout, null, Buffer.from(input.scriptPubKey, 'hex'))
+            seqnumber++
+            txb.addInput(input.txid, input.vout, delayedNtime ? seqnumber : null, Buffer.from(input.scriptPubKey, 'hex'))
         })
 
         if(opreturnData){
@@ -723,14 +747,27 @@ var Action = function(account, object, priority, settings){
             }
         }
 
+        var delayedNtime = 0
+
+        if(options.delayedNtime){
+            var ntime = options.delayedNtime(self)
+            var now = (new Date()).getTime() / 1000
+
+            if (ntime && ntime > now){
+                delayedNtime = ntime
+            }
+        }
+
+
         var tx = null
         
         try{
-            tx = buildTransaction({inputs, outputs, opreturnData})
+            tx = buildTransaction({inputs, outputs, opreturnData, delayedNtime})
         }
         catch(e){
             return Promise.reject(e)
         }
+
 
         
         if ((options.calculateFee && options.calculateFee(self)) && !calculatedFee){
@@ -769,8 +806,6 @@ var Action = function(account, object, priority, settings){
             sendPromise = account.parent.api.rpc(method, parameters)
         
 
-        console.log('sendPromise', sendPromise, ActionOptions.testWithoutSend)
-
         return sendPromise.then(transaction => {
 
             self.transaction = transaction
@@ -781,13 +816,17 @@ var Action = function(account, object, priority, settings){
 
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
 
+            if (delayedNtime){
+                self.checkConfirmationUntil = (new Date(delayedNtime * 1000)).addSeconds(35)
+                self.until = (new Date(delayedNtime * 1000)).addSeconds(60 * 60 * 12)
+            }
+
             delete self.sending
 
             self.sent = new Date()
 
             trigger()
 
-            console.log('jury here', self.transaction)
 
             return Promise.resolve()
 
@@ -845,7 +884,17 @@ var Action = function(account, object, priority, settings){
                 return account.parent.app.platform.currentBlock
             }, function(){
 
-                account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
+                var getfun = account.parent.app.platform.sdk.node.transactions.get.tx
+
+                if(ActionOptions.testWithoutSend){
+                    getfun = function(t, clbk){
+                        clbk({
+                            confirmations : rand(0, 10) < 2 ? 1 : 0
+                        })
+                    }
+                }
+
+                getfun(self.transaction, (data, error = {}) => {
 
                     data || (data = {})
 
@@ -1192,7 +1241,7 @@ var Action = function(account, object, priority, settings){
 
         if(!alias.address) alias.address = account.address
 
-        alias.time = new Date()
+        alias.time = self.added || new Date()
         alias.timeUpd = alias.time
         alias.optype = self.object.typeop ? self.object.typeop() : self.object.type
 
@@ -1861,7 +1910,7 @@ var Account = function(address, parent){
         }
 
         self.actions.value = _.filter(self.actions, (a) => {
-            if(a.completed || a.rejected) return false
+            if((a.completed && !a.keep) || a.rejected) return false
 
             return true
         })
@@ -1923,19 +1972,18 @@ var Account = function(address, parent){
 
         //self.actions.value = []
 
-        console.log("IMPORT", e.actions)
 
         _.each(e.actions.value, (exported) => {
 
             if (new Date(exported.until) < new Date()) return
 
-            if (exported.completed && self.emitted.completed[exported.id]){
+            if ((exported.completed && !exported.keep) && self.emitted.completed[exported.id]){
                 return
             }
 
 
             //withcompleted
-            if ((flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted)) || 
+            if ((flag != 'withcompleted' && (((exported.completed && !exported.keep) && ActionOptions.clearCompleted)) || 
             
             (exported.rejected && exported.rejected != 'actions_rejectedFromNodes' && exported.rejected != 'actions_checkFail' && exported.rejected != 'newAttempt' && !errorCodesAndActions[exported.rejected] && ActionOptions.clearRejected))
             
@@ -1956,7 +2004,6 @@ var Account = function(address, parent){
                     return a.id == exported.id
                 })
 
-                console.log('IMPORT', exported)
 
                 var action = (prevaction || new Action(self, {}))
                     action.import(exported)
@@ -1966,7 +2013,6 @@ var Account = function(address, parent){
                     self.actions.value.push(action)
             }
             catch(e){
-                console.log('exported', exported)
                 console.error(e)
             }
 
@@ -2050,8 +2096,6 @@ var Account = function(address, parent){
                 }
 
                 catch(e){
-
-                    console.log('addresses index', dumped, p2sh)
                     
                     throw 'unableSign:5'
                 }
@@ -2319,7 +2363,7 @@ var Account = function(address, parent){
 
             if(filter && !filter(action)) return false
             
-            return !action.completed && (!action.rejected || action.controlReject())
+            return (!action.completed || action.keep) && (!action.rejected || action.controlReject())
         }), (action) => {
 
             if(clear) return action
