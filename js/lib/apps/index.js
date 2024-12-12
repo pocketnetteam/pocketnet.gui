@@ -1830,8 +1830,8 @@ var BastyonApps = function (app) {
         console.log("INSTALLED LOCAL", installedLocal)
         
 
-        _.map(installedLocal, (info) => {
-            install(info.data, info.cached)
+        _.forEach(installedLocal, (info) => {
+           info?.id && install(info.data, info.cached)
         })
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
