@@ -5827,6 +5827,10 @@ html.mobileview.fullscreen{
     }
 }
 
+.mobsearch{
+    cursor: pointer;
+}
+
 html.allcontent_application{
     #navigationWrapper,
     #menuWrapper,
@@ -6206,11 +6210,14 @@ html.allcontent_application{
         font-size: 1.5em;
     }
 
-    &:hover{
-        .realperson{
-            opacity: 0.7;
+    @media (pointer:hover) {
+        &:hover{
+            .realperson{
+                opacity: 0.7;
+            }
         }
     }
+    
 
     .registrationProgressIcon{
         position : absolute;
@@ -7089,6 +7096,8 @@ html.allcontent_application{
         }
     }
 }
+
+
 
 
 .ui-autocomplete{
@@ -8122,7 +8131,7 @@ html.allcontent{
 /*t*/ @media only screen and (max-width: 768px){
 
     
-
+    
     button{
         &.medium{
             font-size: 1em;

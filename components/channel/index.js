@@ -173,6 +173,7 @@ var channel = (function(){
 
 				if(!ed.id){
 					clbk({
+						author : null,
 						ed : ed
 					})
 

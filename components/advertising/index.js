@@ -191,7 +191,6 @@ var advertising = (function () {
 
 							monthel.toggleClass('expanded')
 
-							console.log('w', w)
 
 							renders.posts(w.posts, monthel.find('.postsTable'), exp)
 						}
@@ -222,7 +221,6 @@ var advertising = (function () {
 							customaction : {
 								label : 'advertising_buychat',
 								action : function(profile){
-									console.log('profile', profile)
 
 									self.app.platform.matrixchat.startchat(profile.address)
 								}
@@ -334,7 +332,6 @@ var advertising = (function () {
 				
 				actions.getEarnings(group).then((data) => {
 
-					console.log('data', data, advertisingParameters.groupBy, advertisingParameters.currentYear)
 
 					if(advertisingParameters.currentYear != fixyear) return
 					if(advertisingParameters.groupBy != fixgroup) return

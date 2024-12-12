@@ -1480,6 +1480,15 @@ Share = function(lang){
 		f : '0',
 		c : ''
 	}
+
+	self.delayed = function(){
+
+		if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+			return new Date(self.settings.t * 1000)
+		}
+
+		return null
+	}
 	
 
 	self.checkloaded = function(){
@@ -1557,6 +1566,10 @@ Share = function(lang){
 				return 'url'
 			}
 			
+		}
+
+		if (self.settings.t == 1){
+			return 'ntime1'
 		}
 
 		if(!self.tags.v.length && !self.repost.v){
@@ -3010,7 +3023,21 @@ pShare = function(){
 		videos : [],
 		image : '',
 		f : '0',
-		c : ''
+		c : '',
+		t : '0'
+	}
+
+	self.delayed = function(){
+
+		console.log('delayed', self)
+
+		if(self.temp || self.relay){
+			if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+				return new Date(self.settings.t * 1000)
+			}
+		}
+
+		return null
 	}
 
 	self.isEmpty = function(){

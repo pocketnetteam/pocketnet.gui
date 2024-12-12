@@ -1,5 +1,42 @@
-<div class="settings">
+<div class="settings <% if(share.settings.t >= 1) {%>showtimepicker<% } %>">
     <div class="visibilityWrapper">
         <%= selector.input() %>
     </div>
+
+    <% if(app.delaypost) {
+        
+        if(share.aliasid && !share.delayed()){
+           
+        }
+        else { %> 
+        
+            <div class="visibilityWrapper timewrapper">
+                <div class="wrpsflex">
+                    <div class="timechanger">
+                        <%= timeselector.input() %>
+                    </div>
+                    <div class="timelabel">
+                        <span class="selectedTime">
+                            <% if(share.settings.t > 1) { 
+                                
+                                %> 
+
+                                <%- moment(new Date(share.settings.t * 1000)).format('D MMMM, HH:mm') %>
+
+                            <% } else { %> 
+
+                                <%=e('stimenotselected')%>
+
+                            <% } %>
+                        </span> 
+                    </div>
+                    <% if(share.settings.t > 1) { %>
+                        <div class="cleartimelabel">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+    <% } %>
 </div>

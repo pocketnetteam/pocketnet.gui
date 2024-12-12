@@ -18,6 +18,7 @@ var leftpanel = (function(){
 
 			_.each(s, function(v, k){
 
+
 				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
 				if(v > 99) v = '99'

@@ -802,9 +802,9 @@
         }
 
         .uinfo{
-           padding-top: @rhythm;
-           padding-bottom: @rhythm;
-           padding-right: 2 * @rhythm;
+            padding-top: @rhythm;
+            padding-bottom: @rhythm;
+            padding-right: 2 * @rhythm;
             .ucaption{
                 margin-bottom: 0;
     
@@ -815,13 +815,29 @@
     
             .item{
                 display: none;
+
+                &.about{
+                    border-bottom: 0;
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                }
                 
             }
 
-            &.showall{
-                .ucaption{
+            .fa-chevron-down{
+                color : rgb(var(--neutral-grad-2));
+            }
 
-                    margin-bottom: @rhythm;
+            &.showall{
+                .fa-chevron-down{
+                    transform: rotate(-180deg);
+                }
+                .ucaption{
     
                     i{
                         display: block;
@@ -830,6 +846,12 @@
 
                 .item{
                     display: block;
+
+                    &.about{
+                        display: block;
+                        -webkit-line-clamp:inherit;
+                        margin-bottom: 2 * @rhythm;
+                    }
                 }
             }
         }

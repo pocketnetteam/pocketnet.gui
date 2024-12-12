@@ -722,7 +722,6 @@ var camerapreview = (function(){
 				actions.stopcamera()
 			}
 
-			console.log(ed)
 
 			initUpload({
 				el : el.openexternal,
@@ -734,11 +733,9 @@ var camerapreview = (function(){
 				onError : ed.onError,
 				onSuccess : function(){
 
-					console.log("SA")
 
 					if(ed.onSuccess) ed.onSuccess()
 
-					console.log("STOP")
 
 					self.stop()
 				},

@@ -1206,8 +1206,6 @@ PeerTubePocketnet = function (app) {
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
 
-					console.log('video options', options)
-
 					data.session = sessions[options.host]
 
 					data.isNewUser = deep(data, 'session.isNewUser')
@@ -1315,12 +1313,9 @@ PeerTubePocketnet = function (app) {
 				if (data.refresh_token) data.grant_type = 'refresh_token';
 				else data.grant_type = 'password';
 
-				console.log('video 23', data)
-
 
 				return request('getToken', data, options)
 					.then((res) => {
-						console.log('video 2', res)
 						if (!res.access_token || !res.refresh_token) {
 							return Promise.reject(error('getToken'));
 						}
