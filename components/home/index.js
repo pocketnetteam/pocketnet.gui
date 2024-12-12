@@ -6,7 +6,11 @@ var home = (function () {
 	var Essense = function (p) {
 		var primary = deep(p, "history");
 
-		var el, ed, applicationSearch, acsearch, userAddress = null;
+		var el,
+			ed,
+			applicationSearch,
+			acsearch,
+			userAddress = null;
 
 		var actions = {
 			applicationSearchClear: function () {
@@ -14,27 +18,29 @@ var home = (function () {
 			},
 			applySearchFilter: function (search) {
 				if (!search) {
-					console.warn('Invalid search configuration provided:', search);
-					return;
-				};
-
-				if (!search) {
-					console.warn('Search value is empty:', searchValue);
+					console.warn("Invalid search configuration provided:", search);
 					return;
 				}
 
-				if (acsearch && typeof acsearch.setvalue === 'function') {
+				if (!search) {
+					console.warn("Search value is empty:", searchValue);
+					return;
+				}
+
+				if (acsearch && typeof acsearch.setvalue === "function") {
 					acsearch.setvalue(search);
 				} else {
-					console.error('acsearch.setvalue is not a valid function or acsearch is undefined.');
+					console.error(
+						"acsearch.setvalue is not a valid function or acsearch is undefined."
+					);
 				}
 
 				try {
 					renders.applications({
-						search
+						search,
 					});
 				} catch (error) {
-					console.error('Error rendering applications:', error);
+					console.error("Error rendering applications:", error);
 				}
 			},
 			removeValidSearchClass: function () {
@@ -48,7 +54,7 @@ var home = (function () {
 				acsearch = new search(el.c.find(".applicationSearch"), {
 					placeholder: self.app.localization.e("searchbyapplications"),
 
-					clbk: function (_el) {},
+					clbk: function (_el) { },
 
 					last: {
 						get: function (d) {
@@ -56,13 +62,13 @@ var home = (function () {
 							return [];
 						},
 
-						tpl: function (result, clbk) {},
+						tpl: function (result, clbk) { },
 					},
 
 					events: {
 						fastsearch: async function (value, clbk) {
 							if (value.length < 2) {
-								actions.removeValidSearchClass()
+								actions.removeValidSearchClass();
 								return clbk();
 							}
 							const applications = await self.app.apps.get.applicationsSearch(
@@ -75,7 +81,7 @@ var home = (function () {
 							await renders.applications({
 								search: value,
 							});
-							actions.hideSearchResultsMenu()
+							actions.hideSearchResultsMenu();
 							clbk();
 						},
 						active: function (isActive) {
@@ -87,7 +93,7 @@ var home = (function () {
 						},
 						clear: function (fs) {
 							actions.applicationSearchClear();
-							actions.removeValidSearchClass()
+							actions.removeValidSearchClass();
 							el.c.find(".searchFastResultWrapper").empty();
 						},
 					},
@@ -115,25 +121,25 @@ var home = (function () {
 			},
 			navigateToDevApplication: (applicationId) => {
 				self.nav.api.go({
-					href: `devapplication${applicationId ? "?id=" + applicationId : ''}`,
+					href: `devapplication${applicationId ? "?id=" + applicationId : ""}`,
 					history: true,
 					open: true,
 				});
-			}
-		}
+			},
+		};
 
 		var renders = {
 			searchResults: function (results, value) {
 				el.c.find(".search").addClass("validSearch");
 				self.shell({
-						name: "searchResults",
-						el: el.c.find(".searchFastResultWrapper"),
-						data: {
-							applications: results,
-							value,
-							hasSearchOptions: value.split(':').length <= 1,
-						},
+					name: "searchResults",
+					el: el.c.find(".searchFastResultWrapper"),
+					data: {
+						applications: results,
+						value,
+						hasSearchOptions: value.split(":").length <= 1,
 					},
+				},
 					function (p) {
 						p.el.find(".application").on("click", function (event) {
 							const applicationId = $(this).data("id");
@@ -143,12 +149,16 @@ var home = (function () {
 							const searchBy = $(this).data("searchby");
 
 							actions.applySearchFilter(`${searchBy}:${value}`);
-							actions.hideSearchResultsMenu()
+							actions.hideSearchResultsMenu();
+						});
+						p.el.find(".app-tag").on("click", function (event) {
+							event.stopPropagation();
+							actions.applySearchFilter(`tags:${$(this).text().trim()}`);
 						});
 					}
 				);
 			},
-			applications: async function (searchConfig, clbk) {	
+			applications: async function (searchConfig, clbk) {
 				if (!searchConfig?.applications) {
 					applications = await self.app.apps.get.applicationsSearch(
 						searchConfig?.search,
@@ -157,16 +167,18 @@ var home = (function () {
 				}
 
 				self.shell({
-						name: "applications",
-						el: el.c.find(".applicationsList"),
-						data: {
-							applications,
-							userAddress,
-						},
+					name: "applications",
+					el: el.c.find(".applicationsList"),
+					data: {
+						applications,
+						userAddress,
 					},
+				},
 					function (p) {
 						p.el.find(".application").on("click", function (event) {
-							const actionType = $(event.target).closest("[data-action]").data("action");
+							const actionType = $(event.target)
+								.closest("[data-action]")
+								.data("action");
 							const applicationId = event.currentTarget.dataset?.id;
 
 							if (actionType && applicationActions[actionType]) {
@@ -175,9 +187,7 @@ var home = (function () {
 								console.warn("Unknown action:", actionType);
 							}
 						});
-						p.el.find(".tag").on("click", function (event) {
-							actions.applySearchFilter(`tags:${$(this).text().trim()}`);
-						});
+
 						el.c.on("click", "#createAppButton", function () {
 							applicationActions.navigateToDevApplication();
 						});
@@ -189,25 +199,13 @@ var home = (function () {
 						if (clbk) clbk();
 					}
 				);
-
-				_.each(applications, (ins) => {
-					if (ins.installing) {
-						ins.promise.then(() => {
-							renders.applications();
-						});
-					}
-				});
 			},
 		};
 
 		var state = {
-			save: function () {
-
-			},
-			load: function () {
-
-			}
-		}
+			save: function () { },
+			load: function () { },
+		};
 
 		var initEvents = function () {
 			const searchInput = el.c.find(".applicationSearch input");
@@ -223,10 +221,10 @@ var home = (function () {
 		};
 
 		var make = function () {
-			const searchValue = parameters().search
+			const searchValue = parameters().search;
 			applicationSearch = actions.applicationSearch(searchValue);
 			renders.applications({
-				search: searchValue
+				search: searchValue,
 			});
 		};
 
@@ -239,7 +237,7 @@ var home = (function () {
 				userAddress = self.app?.user?.address?.value || null;
 				var data = {
 					ed,
-					userAddress
+					userAddress,
 				};
 
 				clbk(data);
@@ -285,4 +283,5 @@ if (typeof module != "undefined") {
 } else {
 	app.modules.home = {};
 	app.modules.home.module = home;
+
 }

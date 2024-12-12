@@ -2982,7 +2982,9 @@ _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
 _l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
-_l.miniApp_loadErrorMessage = "Failed to load application data.";
+_l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
+_l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
+
 _l.miniApp_iconAltText = "App Icon";
 _l.miniApp_publishButton = "Publish";
 _l.miniApp_editButton = "Edit";
@@ -3040,6 +3042,7 @@ _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_createDescription = "Ensure all data matches the fields defined in the application's `b_manifest.json` file. Any discrepancies may cause issues during installation.";
 _l.miniApp_tagsRequiredMessage = "Please specify at least one tag for the application.";
 _l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";
+_l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
 
 _l.miniApp_documentationButtonLabel = "Documentation";

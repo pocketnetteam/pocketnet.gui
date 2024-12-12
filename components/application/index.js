@@ -16,15 +16,14 @@ var application = (function(){
 
 				globalpreloader(true)
 
-				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
-				
-				
-				pr.promise.then(() => {
+				self.app.apps.install({
+					...application,
+					develop: true,
+					version: numfromreleasestring(application.version || '1.0.0')
+				}).then(() => {
 					successCheck()
 				}).catch(e => {
-
 					console.error(e)
-
 					sitemessage(JSON.stringify(e), null, 5000)
 				}).finally(() => {
 					globalpreloader(false)
@@ -140,8 +139,8 @@ var application = (function(){
 			},
 
 			installed : function(p = {}){				
-				if (p.application.manifest?.id == application.manifest?.id){
-					remake(p.application.manifest.id)
+				if (p.application?.id == application?.id){
+					remake(p.application.id)
 				}
 			},
 
@@ -400,7 +399,7 @@ var application = (function(){
 				return
 			}
 
-			if(!application.installed){
+		if(!application.installed){
 				renders.install()
 				return
 			}

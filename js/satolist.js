@@ -6297,7 +6297,12 @@ Platform = function (app, listofnodes) {
                 const apps = await this.getall({id: appId})
                 return apps[0]
             },
-            getall: function (ps = {}, rpc) {
+            getall: async function (ps = {}, rpc) {
+                const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+                if(!Boolean(app.appready)) {
+                    await delay(500)
+	                return this.getall(ps, rpc)
+                }
                 var parameters = {
                     tags: [],
                     search: '',

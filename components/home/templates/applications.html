@@ -14,16 +14,6 @@
             <span class="dev-label">Dev</span>
             <% } %>
         </div>
-        <div class="description">
-            <%- ins.description || '' %>
-        </div>
-        <div class="tags">
-            <% if (ins && ins.tags && ins.tags.length) { %>
-            <% ins.tags.forEach(function(tag) { %>
-            <span class="tag"><%- tag %></span>
-            <% }); %>
-            <% } %>
-        </div>
     </div>
     <% }); %>
     <% } else { %>
