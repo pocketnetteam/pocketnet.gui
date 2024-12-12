@@ -78,6 +78,7 @@ var importIcon = function (application) {
 
 const getAppIconFromScope  = (scope) => `https://${scope}/b_icon.png`
 
+
 var importManifest = function (application) {
 
     return importFile(application, 'b_manifest.json').then((manifest) => {
@@ -1005,6 +1006,7 @@ var BastyonApps = function (app) {
 
     ]
 
+
     var syncInstalledAppData = function (application) {
         if (
           !localdata[application.id] ||
@@ -1120,6 +1122,7 @@ var BastyonApps = function (app) {
             });
             return Promise.resolve(installed[application.id])
         }
+
         if (installing[application.id]) return installing[application.id].promise
 
         var result = {}
@@ -1161,6 +1164,7 @@ var BastyonApps = function (app) {
 
                 syncInstalledAppData(application)
 
+
                 trigger('installed', {
                     application
                 })
@@ -1174,6 +1178,7 @@ var BastyonApps = function (app) {
         }
 
         return installing[application.id].promise
+
     }
 
 
@@ -1205,6 +1210,7 @@ var BastyonApps = function (app) {
     }
 
     var savelocaldata = function () {        
+
         var tosave = {}
 
         _.each(localdata, (info, id) => {
@@ -1702,6 +1708,7 @@ var BastyonApps = function (app) {
 
 
     var setlocaldata = function (data) {        
+
         var newlocaldata = {}
 
         try {
@@ -1951,6 +1958,7 @@ var BastyonApps = function (app) {
         },
         application: async function (id) {
             
+
             if (installed[id]) {
                 return Promise.resolve({
                     application: installed[id],
@@ -2057,6 +2065,7 @@ var BastyonApps = function (app) {
             const adaptApplicationData = (app) => ({
                 name: app.name || app.manifest?.name || '',
                 icon: app.icon || getAppIconFromScope(app.scope),
+
                 description: app.description || app.manifest?.description?.eng || '',
                 tags: app.tags || [],
                 id: app.id || '',
@@ -2103,6 +2112,7 @@ var BastyonApps = function (app) {
                 return null
             }).then(application => {
                 
+
                 if (!application) {
 
                     var a = _.find(app.developapps, (dapp) => {
@@ -2112,6 +2122,7 @@ var BastyonApps = function (app) {
                     if(!a) {
                         a = cached?.manifest
                     }
+
 
                     if (a) return resources(a, cached).then((resourses) => {
                         return Promise.resolve({

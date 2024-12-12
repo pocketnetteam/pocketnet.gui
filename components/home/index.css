@@ -6,7 +6,6 @@
 
 #home .work {
   margin: 0 auto;
-  max-width: 768px;
 }
 
 #home .chapter {
@@ -237,6 +236,7 @@
 #home .application-results .app-info .app-tags .app-tag:hover {
   background: rgb(var(--neutral-grad-2));
   color: rgb(var(--text-on-main-bg-color));
+
 }
 
 #home .application-results .app-info .app-description {
@@ -250,6 +250,7 @@
   line-height: 1.2em;
   max-height: 2.4em;
 }
+
 
 #home .buttonsWrapper {
   display: flex;

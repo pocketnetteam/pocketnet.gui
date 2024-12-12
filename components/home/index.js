@@ -284,4 +284,5 @@ if (typeof module != "undefined") {
 } else {
   app.modules.home = {};
   app.modules.home.module = home;
+
 }

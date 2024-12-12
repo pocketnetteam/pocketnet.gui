@@ -319,6 +319,7 @@ var devapplication = (function () {
             addTag: function (tag) {
               const maxlength = 2
               if (_tags.length > maxlength) return sitemessage(self.app.localization.e('miniApp_extendedTags') + maxlength);
+              
               _tags.push(tag);
               refreshTagInput();
               clearErrors();
@@ -395,6 +396,7 @@ var devapplication = (function () {
       globalpreloader(true);
       userAddress = self.app.user.address.value;
 
+
       if (targetApplication) return renders.miniAppDetail(targetApplication);
 
       if (!applicationId) {
@@ -429,7 +431,7 @@ var devapplication = (function () {
               );
             return;
           }
-
+            
           renders.miniAppDetail(application);
         })
         .catch(function (e) {
