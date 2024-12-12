@@ -155,3 +155,7 @@
 html.mobileview #bnavigation {
   display: block;
 }
+html[theme="black"] #bnavigation .tochat svg,
+html[theme="gray"] #bnavigation .tochat svg {
+  fill: rgb(var(--text-color));
+}
