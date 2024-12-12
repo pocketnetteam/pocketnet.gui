@@ -2,10 +2,12 @@
   text-align: center;
   padding: 2em;
 }
+
 #application .errorwrapper span {
   font-size: 2em;
   font-weight: 100;
 }
+
 #application .chatDoubleRow {
   position: fixed;
   left: 0;
@@ -17,6 +19,7 @@
   z-index: 2;
   width: 55px;
 }
+
 #application .chatDoubleRow .icon {
   width: 45px;
   height: 45px;
@@ -35,12 +38,14 @@
   bottom: 5px;
   text-align: center;
 }
+
 #application .chatDoubleRow .icon svg {
   margin-bottom: 3px;
   height: 23px;
   width: 23px;
   fill: #AAAAAA;
 }
+
 #application .chatDoubleRow .icon .amount {
   position: absolute;
   left: 50%;
@@ -58,9 +63,11 @@
   border-radius: 50%;
   display: none;
 }
+
 #application .chatDoubleRow.amountHave .icon .amount {
   display: block;
 }
+
 #application .captionRow {
   position: fixed;
   left: 0;
@@ -73,9 +80,11 @@
   align-items: center;
   z-index: 2;
 }
+
 #application .captionRow .iconwrapper {
   min-width: 55px;
 }
+
 #application .captionRow .iconwrapper .icon {
   width: 55px;
   height: 55px;
@@ -83,13 +92,16 @@
   text-align: center;
   cursor: pointer;
 }
+
 #application .captionRow .caption {
   text-align: center;
   flex-grow: 2;
 }
+
 #application .captionRow .caption span {
   font-weight: 700;
 }
+
 #application .captionRow .abssettings {
   position: absolute;
   right: 100%;
@@ -97,6 +109,7 @@
   bottom: 5px;
   margin-left: 0.5em;
 }
+
 #application .captionRow .abssettings .icon {
   width: 45px;
   height: 45px;
@@ -112,6 +125,7 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+
 #application .captionRow.notactive {
   transform: translateX(100%);
   -moz-transition: 0.1s;
@@ -120,33 +134,86 @@
   transition: 0.1s;
   transition-delay: 1s;
 }
+
 #application .captionRow.notactive .abssettings .icon {
   transition-delay: 1s;
   opacity: 1;
 }
+
 #application .captionRow.notactive:hover {
   transform: translateX(0);
   transition-delay: 0s;
 }
+
 #application .captionRow.notactive:hover .abssettings .icon {
   transition-delay: 0s;
   opacity: 0;
 }
+
 #application .installwrapper {
-  height: 80vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  flex-flow: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  height: 80vh;
+  margin: 0;
+  padding: 0;
 }
+
 #application .installwrapper .appicon {
   width: 96px;
   height: 96px;
-  margin-bottom: 48px;
+  background: rgba(var(--neutral-grad-1), 0.3);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: rgb(var(--color-txt-gray-dark));
 }
-#application .installwrapper .installButton button {
-  min-width: 160px;
+
+#application .installwrapper .appdetails {
+  margin-bottom: 24px;
 }
+
+#application .installwrapper .appdetails .appname {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: rgb(var(--text-color));
+  margin-bottom: 8px;
+}
+
+#application .installwrapper .appdetails .appdescription {
+  font-size: 1.2em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+#application .installwrapper .appdetails .apptags {
+  display: flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#application .installwrapper .appdetails .apptags .tag {
+  display: inline-block;
+  padding: 0.3em 0.8em;
+  font-size: 0.8em;
+  color: rgb(var(--text-color));
+  background: rgb(var(--neutral-grad-1));
+  border: 1px solid rgb(var(--neutral-grad-0));
+  border-radius: 12px;
+}
+
+#application .installwrapper .installButton {
+  margin-top: 16px;
+}
+
 #application .iframewrapper {
   position: fixed;
   left: 0;
@@ -156,6 +223,7 @@
   z-index: 1;
   background: rgb(var(--background-hidden-layer));
 }
+
 #application .iframewrapper iframe {
   opacity: 0;
   -moz-transition: opacity 0.3s;
@@ -163,6 +231,7 @@
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+
 #application .iframewrapper .loadingIcon {
   position: absolute;
   left: 0;
@@ -173,36 +242,44 @@
   align-items: center;
   justify-content: center;
 }
+
 #application .iframewrapper .loadingIcon .appicon {
   width: 96px;
   height: 96px;
   margin-bottom: 48px;
 }
+
 #application .iframewrapper.loaded iframe {
   opacity: 1;
 }
+
 #application .iframewrapper.loaded .loadingIcon {
   display: none;
 }
+
 #application iframe {
   width: 100%;
   height: 100%;
   border: 0;
   outline: 0;
 }
+
 .wnd.appwindow {
   z-index: 500;
 }
+
 .wnd.appwindow ._close {
   display: none;
 }
+
 .wnd.appwindow .wndinner {
   width: 100%;
   height: 100%;
   max-width: none;
   max-height: none;
 }
+
 .wnd.appwindow .wndback {
-  backdrop-filter: none!important;
-  -webkit-backdrop-filter: none!important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
