@@ -24059,7 +24059,7 @@ Platform = function (app, listofnodes) {
                         vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
-                    importScript('chat/matrix-element.js?v=' + vs, clbk)
+                    importScript('chat/matrix-element.min.js?v=' + vs, clbk)
 
                 }
 
