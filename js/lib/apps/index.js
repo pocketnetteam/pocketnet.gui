@@ -76,6 +76,9 @@ var importIcon = function (application) {
     })
 }
 
+const getAppIconFromScope  = (scope) => `https://${scope}/b_icon.png`
+
+
 var importManifest = function (application) {
 
     return importFile(application, 'b_manifest.json').then((manifest) => {
@@ -1003,27 +1006,29 @@ var BastyonApps = function (app) {
 
     ]
 
-    var registerLocal = function (application) {
 
+    var syncInstalledAppData = function (application) {
+        if (
+          !localdata[application.id] ||
+          !_.isEqual(localdata[application.id].data, application)
+        ) {
 
-        if (!localdata[application.id]) {
+          localdata[application.id] = {
+            permissions: [],
+            data: application || {},
+            cached: {},
+          };
 
-            localdata[application.id] = {
-                permissions: [],
-                data: {},
-                cached: {}
-            }
+          if (application.develop) {
+            _.each(application.grantedPermissions || [], (permission) => {
+              localdata[application.id].permissions.push({
+                id: permission,
+                state: "granted",
+              });
+            });
+          }
 
-            if (application.develop) {
-                _.each(application.grantedPermissions || [], (permission) => {
-                    localdata[application.id].permissions.push({
-                        id: permission,
-                        state: 'granted'
-                    })
-                })
-            }
-
-            savelocaldata()
+          savelocaldata();
         }
 
     }
@@ -1109,7 +1114,15 @@ var BastyonApps = function (app) {
     }
 
     var install = function (application, cached = {}) {
-        if (installed[application.id]) return Promise.resolve(installed[application.id])
+        if (installed[application.id]) { 
+            syncInstalledAppData({
+              ...application,
+              installing: false,
+              installed: true,
+            });
+            return Promise.resolve(installed[application.id])
+        }
+
         if (installing[application.id]) return installing[application.id].promise
 
         var result = {}
@@ -1141,6 +1154,7 @@ var BastyonApps = function (app) {
             promise: resources(application, cached).then((resourses) => {
                 result.path = application.path
                 result.installed = true
+                result.installing = false
 
                 installed[application.id] = {
                     ...application,
@@ -1148,7 +1162,8 @@ var BastyonApps = function (app) {
                     ...resourses,
                 }
 
-                registerLocal(application)
+                syncInstalledAppData(application)
+
 
                 trigger('installed', {
                     application
@@ -1194,7 +1209,8 @@ var BastyonApps = function (app) {
 
     }
 
-    var savelocaldata = function () {
+    var savelocaldata = function () {        
+
         var tosave = {}
 
         _.each(localdata, (info, id) => {
@@ -1691,7 +1707,8 @@ var BastyonApps = function (app) {
 
 
 
-    var setlocaldata = function (data) {
+    var setlocaldata = function (data) {        
+
         var newlocaldata = {}
 
         try {
@@ -1789,6 +1806,10 @@ var BastyonApps = function (app) {
         }
 
         var installed = getlocaldata()
+
+        _.map(installed, (info) => {
+            install(info.data, info.cached)
+        })
 
         promises.push(Promise.all(_.map(installed, (info) => {
             console.log(info, 'info.init');
@@ -1936,13 +1957,7 @@ var BastyonApps = function (app) {
             })
         },
         application: async function (id) {
-            const application = await app.platform.sdk.miniapps.getbyid(id)
-            if (application) {
-                await install({
-                    ...application,
-                    develop: true
-                })
-            }
+            
 
             if (installed[id]) {
                 return Promise.resolve({
@@ -1961,6 +1976,21 @@ var BastyonApps = function (app) {
 
                 }).catch(e => {
                     return Promise.reject(e)
+                })
+            }
+
+            
+            const application = await app.platform.sdk.miniapps.getbyid(id)
+
+            
+            if (application) {
+                return Promise.resolve({
+                    application: {
+                        ...application,
+                        installing: true,
+                        icon: getAppIconFromScope(application.scope)
+                    },
+                    appdata: {}
                 })
             }
 
@@ -1999,7 +2029,7 @@ var BastyonApps = function (app) {
 
         installedAndInstalling: function () {
             var result = {}
-
+            
             _.each(installing, (ins, id) => {
                 result[id] = {
                     application: ins.application,
@@ -2034,7 +2064,8 @@ var BastyonApps = function (app) {
 
             const adaptApplicationData = (app) => ({
                 name: app.name || app.manifest?.name || '',
-                icon: app.icon || `https://${app.scope}/b_icon.png`,
+                icon: app.icon || getAppIconFromScope(app.scope),
+
                 description: app.description || app.manifest?.description?.eng || '',
                 tags: app.tags || [],
                 id: app.id || '',
@@ -2060,7 +2091,6 @@ var BastyonApps = function (app) {
                     }
                 });
             };
-
             const installedApps = this.installedAndInstalling();
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
@@ -2071,22 +2101,28 @@ var BastyonApps = function (app) {
                 });
             }
 
-            const allApps = [...filteredInstalledApps, ...additionalApps];
-            return allApps.map(adaptApplicationData);
+            const allApps = [...filteredInstalledApps, ...additionalApps]
+
+           const uniqueApps = Array.from(new Map(allApps.map(app => [app.id, app])).values());
+
+            return uniqueApps.map(adaptApplicationData);
         },
-
         applicationall: function (id, cached) {
-
             return self.get.application(id).catch(e => {
                 return null
             }).then(application => {
-
+                
 
                 if (!application) {
 
                     var a = _.find(app.developapps, (dapp) => {
                         return dapp.id == id
                     })
+
+                    if(!a) {
+                        a = cached?.manifest
+                    }
+
 
                     if (a) return resources(a, cached).then((resourses) => {
                         return Promise.resolve({
@@ -2243,7 +2279,9 @@ var BastyonApps = function (app) {
 
     self.emit = emit
 
+    self.syncInstalledAppData = syncInstalledAppData
     self.requestPermissions = requestPermissions
+    self.updateLo = requestPermissions
     self.givePermission = givePermission
     self.removePermission = removePermission
     self.clearPermission = clearPermission
