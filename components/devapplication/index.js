@@ -170,12 +170,12 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?.["en"],
+          description: application.manifest.descriptions?. ["en"],
           tags: application.tags,
         };
 
         self.app.platform.api.actions.miniapp(publishData, async (_, err) => {
-          globalpreloader(false);          
+          globalpreloader(false);
 
           if (!err) {
             sitemessage(
@@ -319,7 +319,7 @@ var devapplication = (function () {
             addTag: function (tag) {
               const maxlength = 2
               if (_tags.length > maxlength) return sitemessage(self.app.localization.e('miniApp_extendedTags') + maxlength);
-              
+
               _tags.push(tag);
               refreshTagInput();
               clearErrors();
@@ -393,7 +393,6 @@ var devapplication = (function () {
     };
 
     var loadMiniApp = function (targetApplication) {
-      globalpreloader(true);
       userAddress = self.app.user.address.value;
 
 
@@ -403,6 +402,8 @@ var devapplication = (function () {
         renders.createForm();
         return;
       }
+      
+      globalpreloader(true);
       app.apps.get
         .application(applicationId)
         .then(function (response) {
@@ -431,7 +432,7 @@ var devapplication = (function () {
               );
             return;
           }
-            
+
           renders.miniAppDetail(application);
         })
         .catch(function (e) {
@@ -471,12 +472,15 @@ var devapplication = (function () {
 
   self.run = function (p) {
     var essense = self.addEssense(essenses, Essense, p);
+
     self.init(essense, p);
   };
 
   self.stop = function () {
-    self.eachModule(function (essense) {
-      essense.destroy();
+    _.each(essenses, function (essense) {
+      window.rifticker.add(() => {
+        essense.destroy();
+      });
     });
   };
 
