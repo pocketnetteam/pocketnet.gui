@@ -176,7 +176,7 @@
   transition-delay: 0.3s;
   transform: translateY(0px);
 }
-#application .installwrapper {
+#applicationfx .installwrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -187,7 +187,7 @@
   margin: auto;
   padding: 0;
 }
-#application .installwrapper .appicon {
+#applicationfx .installwrapper .appicon {
   width: 96px;
   height: 96px;
   background: rgba(var(--neutral-grad-1), 0.3);
@@ -199,28 +199,28 @@
   font-size: 2em;
   color: rgb(var(--color-txt-gray-dark));
 }
-#application .installwrapper .appdetails {
+#applicationfx .installwrapper .appdetails {
   margin-bottom: 24px;
 }
-#application .installwrapper .appdetails .appname {
+#applicationfx .installwrapper .appdetails .appname {
   font-size: 1.8em;
   font-weight: bold;
   color: rgb(var(--text-color));
   margin-bottom: 8px;
 }
-#application .installwrapper .appdetails .appdescription {
+#applicationfx .installwrapper .appdetails .appdescription {
   font-size: 1.2em;
   color: rgb(var(--text-on-main-bg-color));
   opacity: 0.8;
   margin-bottom: 12px;
 }
-#application .installwrapper .appdetails .apptags {
+#applicationfx .installwrapper .appdetails .apptags {
   display: flex;
   gap: 0.5em;
   flex-wrap: wrap;
   justify-content: center;
 }
-#application .installwrapper .appdetails .apptags .tag {
+#applicationfx .installwrapper .appdetails .apptags .tag {
   display: inline-block;
   padding: 0.3em 0.8em;
   font-size: 0.8em;
@@ -229,7 +229,7 @@
   border: 1px solid rgb(var(--neutral-grad-0));
   border-radius: 12px;
 }
-#application .installwrapper .installButton {
+#applicationfx .installwrapper .installButton {
   margin-top: 16px;
 }
 #applicationfx .installwrapper .appicon {
