@@ -900,24 +900,30 @@ Nav = function(app)
 				if(map.now === true) return true;
 			})	
 			
-			
+
 			lazyEach({
 				array : map,
 				sync : false,
 				action : function(p){
 					var obj = p.item;
 
+					if(obj.dontwait){
+						if (p.success)
+							p.success();
+					}
+
 					core.load({
 						href : obj.href,
 						open : true,
 						clbk : function(error)
 						{
+
 							if(error)
 							{
 								
 							}
 
-							if (p.success)
+							if (p.success && !obj.dontwait)
 								p.success();
 						}
 					})
@@ -1742,9 +1748,12 @@ Nav = function(app)
 				};
 			}
 
-			
+			console.log("HERER1 !!!")
 
 			core.openInitialModules(function(){
+
+			console.log("HERE2 !!!")
+
 
 				p.open = true;
 				p.history = true;
