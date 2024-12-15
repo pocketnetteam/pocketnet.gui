@@ -16,9 +16,11 @@
   left: 0.5em;
   bottom: 5px;
 }
-#applicationfx .chat,
 #applicationfx .chatDoubleRow {
   padding-top: var(--app-margin-top);
+}
+#applicationfx .chat,
+#applicationfx .chatDoubleRow {
   height: calc(55px + var(--app-margin-top));
   display: flex;
   align-items: center;
