@@ -234,11 +234,6 @@
 #applicationfx .installwrapper .installButton {
   margin-top: 16px;
 }
-#applicationfx .installwrapper .appicon {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 48px;
-}
 #applicationfx .installwrapper .installButton button {
   min-width: 160px;
 }
@@ -298,6 +293,6 @@
   max-height: none;
 }
 .wnd.appwindow .wndback {
-  backdrop-filter: none!important;
-  -webkit-backdrop-filter: none!important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
