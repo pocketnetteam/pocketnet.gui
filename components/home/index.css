@@ -136,10 +136,9 @@
   align-items: center;
   padding: 10px;
   cursor: pointer;
+  opacity: 0.8;
   border-bottom: 1px solid rgb(var(--neutral-grad-1));
-}
-#home .search-options .search-option:hover {
-  background: rgb(var(--neutral-grad-2));
+  transition: all 0.3s ease;
 }
 #home .search-options .search-option .result-icon {
   margin-right: 10px;
@@ -150,17 +149,15 @@
   font-size: 0.9em;
   color: rgb(var(--text-color));
 }
+#home .search-options .search-option:hover  {
+   opacity: 1;
+}
 #home .application-results .application {
   display: flex;
   align-items: center;
   padding: 10px;
   cursor: pointer;
   border-bottom: 1px solid rgb(var(--neutral-grad-1));
-}
-#home .application-results .application:hover .app-name {
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-  color: rgb(var(--color-txt-ac));
 }
 #home .application-results .application .app-icon {
   width: 25px;
@@ -179,6 +176,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: rgb(var(--text-color));
+}
+#home .application-results .application:hover .app-info .app-name {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  color: rgb(var(--color-txt-ac));
 }
 #home .application-results .application .app-info .app-tags {
   display: flex;

@@ -1,21 +1,22 @@
 @import "../../css/__cssvar";
 
-#applicationfx{
-    .errorwrapper{
+#applicationfx {
+    .errorwrapper {
         text-align: center;
-        padding : 4 * @rhythm;
+        padding: 4 * @rhythm;
 
-        span{
+        span {
             font-size: 2em;
             font-weight: 100;
         }
     }
 
-    .chatDoubleRow{
+    .chatDoubleRow {
         position: fixed;
         left: 0;
         top: 0;
-        .icon{
+
+        .icon {
             position: absolute;
             left: @rhythm;
             bottom: 5px;
@@ -34,54 +35,55 @@
         z-index: 2;
         width: 55px;
 
-        .icon{
+        .icon {
             width: 45px;
             height: 45px;
             line-height: 45px;
             border-radius: 12px;
             background: rgba(var(--background-hidden-layer), 0.15);
             backdrop-filter: blur(4px);
-            color : #AAAAAA;
-            -webkit-backdrop-filter: blur(4px);  
+            color: #AAAAAA;
+            -webkit-backdrop-filter: blur(4px);
             .transition(0.3s);
-            
+
             text-align: center;
-            svg{
+
+            svg {
                 margin-bottom: 3px;
                 height: 23px;
                 width: 23px;
                 fill: #AAAAAA;
             }
 
-            .amount{
+            .amount {
                 position: absolute;
                 left: 50%;
-                top : 50%;
-                padding : 0 @rhythm;
+                top: 50%;
+                padding: 0 @rhythm;
                 min-width: 16px;
                 height: 16px;
                 line-height: 16px;
                 text-align: center;
                 font-size: 0.5em;
                 background: rgba(var(--color-bg-ac-bright), 0.95);
-                color : rgb(var(--text-on-bg-ac-color));
+                color: rgb(var(--text-on-bg-ac-color));
                 .shadowSmaller();
                 z-index: 20;
                 border-radius: 50%;
-                display : none;
+                display: none;
             }
-            
         }
 
-        &.amountHave{
-            .icon{
-                .amount{
-                    display : block;
+        &.amountHave {
+            .icon {
+                .amount {
+                    display: block;
                 }
             }
         }
     }
-    .captionRow{
+
+    .captionRow {
         position: fixed;
         left: 0;
         right: 0;
@@ -95,24 +97,22 @@
         z-index: 2;
         pointer-events: none;
 
-        .captionRowWrapper{
+        .captionRowWrapper {
             display: flex;
             flex-grow: 2;
             align-items: center;
             max-width: 1980px;
         }
-        
 
-        .iconwrapper{
+        .iconwrapper {
             min-width: 55px;
             pointer-events: all;
             display: flex;
             justify-content: center;
             align-items: center;
 
-
-            .icon{
-                color : #AAAAAA;
+            .icon {
+                color: #AAAAAA;
                 width: 55px;
                 height: 55px;
                 line-height: 55px;
@@ -121,41 +121,39 @@
             }
         }
 
-        .caption{
+        .caption {
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             flex-grow: 2;
-            color : #fff;
+            color: #fff;
             text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 
-            span{
-                padding : @rhythm 2 * @rhythm;
+            span {
+                padding: @rhythm 2 * @rhythm;
                 border-radius: 32px;
                 backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);  
+                -webkit-backdrop-filter: blur(4px);
                 font-weight: 700;
                 font-size: 0.9em;
             }
         }
 
-        &.electronstyle{
-            .caption{
+        &.electronstyle {
+            .caption {
                 margin-right: 110px;
             }
-            
         }
 
-        .abssettings{
-            
+        .abssettings {
             position: absolute;
             right: 100%;
-            top : auto;
-            bottom : 5px;
+            top: auto;
+            bottom: 5px;
             margin-left: @rhythm;
-            
-            .icon{
+
+            .icon {
                 width: 45px;
                 height: 45px;
                 line-height: 45px;
@@ -163,39 +161,40 @@
                 border-radius: 12px;
                 background: rgba(var(--background-hidden-layer), 0.15);
                 backdrop-filter: blur(4px);
-                color : #AAAAAA;
-                -webkit-backdrop-filter: blur(4px);  
+                color: #AAAAAA;
+                -webkit-backdrop-filter: blur(4px);
                 .transition(0.3s);
             }
-            
         }
 
-        .filterIcon{
-            .icon{
+        .filterIcon {
+            .icon {
                 width: 45px;
                 height: 45px;
                 line-height: 45px;
                 opacity: 1;
                 border-radius: 12px;
                 background: rgba(var(--background-hidden-layer), 0.15);
-                color : #AAAAAA;
+                color: #AAAAAA;
                 backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);  
+                -webkit-backdrop-filter: blur(4px);
                 .transition(0.3s);
             }
         }
 
-        &.notactive{
+        &.notactive {
+
             .missicon,
-            .caption{
+            .caption {
                 transform: translateY(-100px);
                 .transition(0.1s);
                 transition-delay: 2.3s;
             }
-            
-            &:hover{
+
+            &:hover {
+
                 .missicon,
-                .caption{
+                .caption {
                     transition-delay: 0.3s;
                     transform: translateY(0px);
                 }
@@ -203,82 +202,128 @@
         }
     }
 
-    .installwrapper{
-        height: 80vh;
+    .installwrapper {
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: center;
-        flex-flow: column;
+        align-items: center;
+        text-align: center;
+        max-width: 600px;
+        height: 80vh;
+        margin: auto;
+        padding: 0;
 
-        .appicon{
+        .appicon {
             width: 96px;
             height: 96px;
-            margin-bottom: 48px;
+            background: rgba(var(--neutral-grad-1), 0.3);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: rgb(var(--color-txt-gray-dark));
         }
 
-        .installButton{
-            button{
+        .appdetails {
+            margin-bottom: 24px;
+
+            .appname {
+                font-size: 1.8em;
+                font-weight: bold;
+                color: rgb(var(--text-color));
+                margin-bottom: 8px;
+            }
+
+            .appdescription {
+                font-size: 1.2em;
+                color: rgb(var(--text-on-main-bg-color));
+                opacity: 0.8;
+                margin-bottom: 12px;
+            }
+
+            .apptags {
+                display: flex;
+                gap: 0.5em;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                .tag {
+                    display: inline-block;
+                    padding: 0.3em 0.8em;
+                    font-size: 0.8em;
+                    color: rgb(var(--text-color));
+                    background: rgb(var(--neutral-grad-1));
+                    border: 1px solid rgb(var(--neutral-grad-0));
+                    border-radius: 12px;
+                }
+            }
+        }
+
+        .installButton {
+            margin-top: 16px;
+
+            button {
                 min-width: 160px;
             }
         }
     }
 
-    .iframewrapper{
+    .iframewrapper {
         position: fixed;
         left: 0;
         right: 0;
-        top : 0;
-        
-        
-        bottom : 0;
+        top: 0;
+        bottom: 0;
         z-index: 1;
         background: rgb(var(--background-hidden-layer));
-        
-        iframe{
+
+        iframe {
             opacity: 0;
             .transition(0.3s, opacity);
         }
 
-        .loadingIcon{
+        .loadingIcon {
             position: absolute;
-            left : 0;
-            top : 0;
-            bottom : 0;
-            right : 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
             display: flex;
             align-items: center;
             justify-content: center;
 
-            .appicon{
+            .appicon {
                 width: 96px;
                 height: 96px;
                 margin-bottom: 48px;
             }
         }
-        
-        &.loaded{
-            iframe{
+
+        &.loaded {
+            iframe {
                 opacity: 1;
             }
-            
-            .loadingIcon{
+
+            .loadingIcon {
                 display: none;
             }
         }
     }
-    iframe{
+
+    iframe {
         width: 100%;
         height: 100%;
         border: 0;
         outline: 0;
     }
-
 }
 
-.wnd.appwindow{
+.wnd.appwindow {
     z-index: 500;
 
-    ._close{
+    ._close {
         display: none;
     }
 
@@ -289,8 +334,8 @@
         max-height: none;
     }
 
-    .wndback{
-        backdrop-filter: none!important;
-        -webkit-backdrop-filter: none!important;
+    .wndback {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
     }
 }
