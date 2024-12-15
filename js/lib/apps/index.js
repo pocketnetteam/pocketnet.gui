@@ -1111,6 +1111,9 @@ var BastyonApps = function (app) {
                         resolve()
                     }).catch(reject)
                 }
+            }).catch(e => {
+
+                return Promise.reject(e)
             })
 
         })))
@@ -1170,8 +1173,6 @@ var BastyonApps = function (app) {
                 result.path = application.path
                 result.installed = true
                 result.installing = false
-
-                console.log("INSTALL APPLICATION", application)
 
                 installed[application.id] = {
                     ...application,
@@ -1783,8 +1784,6 @@ var BastyonApps = function (app) {
         const localApps = loadAllAppsFromLocalhost() || [];
         const allApps = [...developApps, ...localApps];
 
-        console.log('localApps', localApps, developApps)
-
         if (allApps.length > 0) {
 
             promises.push(Promise.all(_.map(allApps, (application) => {
@@ -1815,6 +1814,9 @@ var BastyonApps = function (app) {
                         ...application,
                         develop: true,
                         version: numfromreleasestring(application?.version || '1.0.0')
+                    }).catch(e => {
+
+                        return Promise.resolve()
                     })
                 }
 
@@ -1826,9 +1828,6 @@ var BastyonApps = function (app) {
         }
 
         var installedLocal = getlocaldata()
-
-        console.log("INSTALLED LOCAL", installedLocal)
-        
 
         _.map(installedLocal, (info) => {
             install(info.data, info.cached)
@@ -1842,7 +1841,7 @@ var BastyonApps = function (app) {
 
                 return install({
                     ...application,
-                    version: numfromreleasestring(application.version || '1.0.0')
+                    //version: numfromreleasestring(application.version || '1.0.0')
                 }, info.cached)
 
             }).then(() => {
@@ -2113,9 +2112,6 @@ var BastyonApps = function (app) {
             };
             const installedApps = this.installedAndInstalling();
 
-            console.log('instali', installed, installing)
-
-            console.log('installedApps', installedApps)
 
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
@@ -2126,11 +2122,9 @@ var BastyonApps = function (app) {
                 });
             }
 
-            console.log('filteredInstalledApps', filteredInstalledApps, additionalApps)
-
             const allApps = [...filteredInstalledApps, ...additionalApps]
 
-           const uniqueApps = Array.from(new Map(allApps.map(app => [app.id, app])).values());
+            const uniqueApps = Array.from(new Map(allApps.map(app => [app.id, app])).values());
 
             return uniqueApps.map(adaptApplicationData);
         },
@@ -2297,6 +2291,28 @@ var BastyonApps = function (app) {
 
             }
         })
+    }
+
+    self.openInWndById = function(id, clbk, path){
+
+        self.get.applicationall(id).then(({application}) => {
+            app.nav.api.load({
+                open: true,
+                href: 'application',
+                inWnd : true,
+                history : true,
+                eid: 'application_' + application.manifest.id,
+                clbk: clbk,
+    
+                essenseData: {
+                    application : application.manifest.id,
+                    path : path
+    
+                }
+            })
+        })
+
+        
     }
 
     self.emit = emit

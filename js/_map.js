@@ -990,7 +990,8 @@ __map =  {
 		anonimus : true,
 		renew : true,
 		reload : true,
-		viewchangereload : true
+		viewchangereload : true,
+		dontwait : true
 	},
 
 	bnavigation : {
