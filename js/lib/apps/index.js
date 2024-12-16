@@ -1023,6 +1023,11 @@ var BastyonApps = function (app) {
 
 
     var syncInstalledAppData = function (application) {
+
+        console.log('application.id', application.id, application)
+
+        if(application.id == 'undefined' || !application.id) return
+
         if (
           !localdata[application.id] ||
           !_.isEqual(localdata[application.id].data, application)
@@ -1157,8 +1162,6 @@ var BastyonApps = function (app) {
             result.includeminiapps = true
         }
 
-
-
         if (application.production) {
             result.production = true
         }
@@ -1181,7 +1184,6 @@ var BastyonApps = function (app) {
                 }
 
                 syncInstalledAppData(application)
-
 
                 trigger('installed', {
                     application
@@ -1850,9 +1852,9 @@ var BastyonApps = function (app) {
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
 
-            if(_.find(allApps, (app) => {
+            /*if(_.find(allApps, (app) => {
                 return app.id == info.id
-            })) return Promise.resolve()
+            })) return Promise.resolve()*/
 
             return self.get.applicationall(info.id, info.cached).then(({
                 application
@@ -1968,7 +1970,7 @@ var BastyonApps = function (app) {
             if (appData) {
                 return "development"
             } else {
-                return new Error("application:status:not_found")
+                return ""
             }
         },
         forminiapps: function () {
