@@ -9802,6 +9802,31 @@ checkConnection = function () {
 	}
 }
 
+localSearch = function(s1 = '', s2 = '', level = 0.6){
+
+	if(!s1) return 0
+	if(!s2) return 1
+
+	s1 = s1.toLowerCase()
+	s2 = s2.toLowerCase()
+
+	if (s1.indexOf(s2) > -1) return 1
+
+	var parts = s1.split(/[ \t\v\r\n\f,.]+/)
+
+	var m = 0
+	
+	_.each(parts, (part) => {
+		var eq = stringEqTrig(part, s2)
+
+		if (eq > level && eq > m) m = eq
+	})
+
+	if(m < 0 || !m) m = 0
+
+	return m
+}
+
 stringEqTrig = function (s1, s2) {
 
 	if (!s1) s1 = ''
@@ -9818,8 +9843,6 @@ stringEqTrig = function (s1, s2) {
 		return ps.toLowerCase().replace(/[^a-zа-я0-9&]*/g, '');
 	}
 
-
-
 	var makeTr = function (w) {
 		var trs = {};
 
@@ -9829,8 +9852,6 @@ stringEqTrig = function (s1, s2) {
 			if (index < 0 || index >= w.length) c = "_";
 
 			else c = w[index];
-
-
 
 			return c;
 		}
