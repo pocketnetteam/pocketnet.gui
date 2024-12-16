@@ -36,7 +36,7 @@ var application = (function(){
 					self.closeContainer()
 				}
 				else{
-					self.app.platform.ui.goback('home')
+					self.app.platform.ui.goback('index')
 					/*self.app.nav.api.load({
 						open : true,
 						href : 'index',
