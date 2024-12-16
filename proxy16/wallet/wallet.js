@@ -361,7 +361,37 @@ var Wallet = function(p){
             }
         },
 
-        sendwithprivatekey : function(address, amount, key){
+        getunspentswithprivatekey : function(key){
+            if(!key) return Promise.reject('key')
+
+            var kp = null
+            
+            try{
+                kp = self.pocketnet.kit.keyPair(key)
+            }
+            catch(e){
+                return Promise.reject('keyPair')
+            }
+
+            var temp = {
+                keys : kp,
+                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
+                unspents : null,
+                key : key
+            }
+
+            return self.unspents.getc(temp).then(unspents => {
+
+                var balance = _.reduce(unspents, (m, u) => {
+                    return m + u.amount || 0
+                }, 0)
+
+                return Promise.resolve({unspents, balance})
+            })
+
+        },
+
+        sendwithprivatekey : function(address, amount, key, feemode = 'exclude'){
 
             if(!address) return Promise.reject('address')
             if(!amount) return Promise.reject('amount')
@@ -393,7 +423,7 @@ var Wallet = function(p){
             var meta = null
 
             return self.unspents.getc(temp).then(unspents => {
-                return self.transactions.txfees(unspents, outputs, 'exclude', temp)
+                return self.transactions.txfees(unspents, outputs, feemode, temp)
             }).then(_meta => {
 
                 meta = _meta
