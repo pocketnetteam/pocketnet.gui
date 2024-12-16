@@ -3062,7 +3062,7 @@ var pSDK = function ({ app, api, actions }) {
         prepareStorages()
     }
 
-    self.search = function(type, str = ''){
+    self.localSearch = function(type, str = ''){
         if(!self[type]) return []
 
         var meta = self[type]
