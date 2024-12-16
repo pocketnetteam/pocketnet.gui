@@ -1850,7 +1850,11 @@ var BastyonApps = function (app) {
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
 
-            self.get.applicationall(info.id, info.cached).then(({
+            if(_.find(allApps, (app) => {
+                return app.id == info.id
+            })) return Promise.resolve()
+
+            return self.get.applicationall(info.id, info.cached).then(({
                 application
             }) => {
 
