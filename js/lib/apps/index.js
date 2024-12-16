@@ -1233,6 +1233,8 @@ var BastyonApps = function (app) {
 
         _.each(localdata, (info, id) => {
 
+            if(!id || id == 'undefined') return
+
             var saving = {
                 id,
                 cached: {},
@@ -1606,6 +1608,9 @@ var BastyonApps = function (app) {
     }
 
     var loadAllAppsFromLocalhost = function () {
+
+        return []
+
         let apps = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -1788,7 +1793,7 @@ var BastyonApps = function (app) {
 
         var promises = []
         const developApps = app.developapps || [];
-        const localApps = loadAllAppsFromLocalhost() || [];
+        const localApps = [] //loadAllAppsFromLocalhost() || [];
         const allApps = [...developApps, ...localApps];
 
         if (allApps.length > 0) {
@@ -1839,9 +1844,9 @@ var BastyonApps = function (app) {
         console.log("INSTALLED LOCAL", installedLocal)
         
 
-        _.forEach(installedLocal, (info) => {
+        /*_.forEach(installedLocal, (info) => {
            info?.id && install(info.data, info.cached)
-        })
+        })*/
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
 
