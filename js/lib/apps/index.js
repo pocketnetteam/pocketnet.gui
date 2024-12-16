@@ -1026,6 +1026,8 @@ var BastyonApps = function (app) {
 
         console.log('application.id', application.id, application)
 
+        if(application.id == 'undefined' || !application.id) return
+
         if (
           !localdata[application.id] ||
           !_.isEqual(localdata[application.id].data, application)
@@ -1182,7 +1184,6 @@ var BastyonApps = function (app) {
                 }
 
                 syncInstalledAppData(application)
-
 
                 trigger('installed', {
                     application
@@ -1969,7 +1970,7 @@ var BastyonApps = function (app) {
             if (appData) {
                 return "development"
             } else {
-                return new Error("application:status:not_found")
+                return ""
             }
         },
         forminiapps: function () {
