@@ -32,7 +32,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         userInfoLight: {
-            time: 30000
+            time: 120000
         },
 
         userState: {
@@ -758,6 +758,17 @@ var pSDK = function ({ app, api, actions }) {
 
     self.userInfo = {
         keys: ['userInfoFull', 'userInfoLight'],
+
+        objkey : 'address',
+
+        searchIndex : function(obj){
+            var sobj = {
+                name : {v : (obj.n || obj.name), c : 5},
+                about : {v : (obj.a || obj.about), c : 1}
+            }
+
+            return sobj
+        },
 
         cleanData: function (rawinfo) {
             return _.filter(_.map(rawinfo, (c) => {
@@ -1860,6 +1871,18 @@ var pSDK = function ({ app, api, actions }) {
 
     self.share = {
         keys: ['share'],
+
+        objkey : 'txid',
+
+        searchIndex : function(obj){
+            var sobj = {
+                caption : {v : (obj.c || obj.caption), c : 2},
+                message : {v : (obj.b || obj.message), c : 1},
+                tags : {v : (obj.t || obj.tags || []).join(' '), c : 1}
+            }
+
+            return sobj
+        },
 
         request: function (executor, hash, cacheIndex) {
 
@@ -3037,6 +3060,52 @@ var pSDK = function ({ app, api, actions }) {
         self.objects = objects = {}
 
         prepareStorages()
+    }
+
+    self.search = function(type, str = ''){
+        if(!self[type]) return []
+
+        var meta = self[type]
+
+        var objs = []
+
+        _.each(meta.keys, (key) => {
+            objs = objs.concat(_.toArray(objects[key]))
+        })
+
+        if (meta.objkey){
+            objs = _.uniq(objs, (o) => {
+                return o[meta.objkey]
+            })
+        }
+
+        var si = meta.searchIndex
+
+        var executor = function(obj){
+            var ind = si(obj)
+            var value = 0
+
+            _.each(ind, ({v = '', c = 1}) => {
+
+                console.log('localSearch(v, str)', localSearch(v, str), v, str, c)
+
+                value += localSearch(v, str) * c
+            })
+
+            return value
+        }
+
+        console.log('objs', objs)
+
+        var resultObjects = _.map(objs, (obj) => {
+            var value = executor(obj)
+
+            return {
+                obj, value
+            }
+        })
+
+        return Promise.resolve(resultObjects)
     }
 
     self.ws = {
