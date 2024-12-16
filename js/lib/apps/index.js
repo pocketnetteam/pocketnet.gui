@@ -1408,6 +1408,10 @@ var BastyonApps = function (app) {
     var givePermission = function (application, permission) {
         if (!this.clearPermission(application, permission)) return false
 
+        var appdata = localdata[application.manifest.id]
+
+        if (!appdata) return false
+
         appdata.permissions.push({
             id: permission,
             state: 'granted'
@@ -1428,6 +1432,7 @@ var BastyonApps = function (app) {
         }
 
         if (!meta) return false
+        if (!appdata) return false
 
         appdata.permissions = _.filter(appdata.permissions, (_permission) => {
             return _permission.id != permission
@@ -1440,6 +1445,8 @@ var BastyonApps = function (app) {
         if (!this.clearPermission(application, permission)) return false
 
         var appdata = localdata[application.manifest.id]
+
+        if (!appdata) return false
 
         appdata.permissions.push({
             id: permission,
