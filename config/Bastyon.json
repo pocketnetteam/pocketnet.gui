@@ -26,6 +26,16 @@
         "includeinsearch" : true,
         "includeminiapps" : true,
         "store" : {"g" : true}
+    },{
+        "id" : "app.pocketnet.docs",
+        "version": "1.0.0",
+        "scope" : "docs.pocketnet.app",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Bastyon documentation",
+        "grantedPermissions" : [],
+        "store" : {"g" : true, "i" : true}
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",

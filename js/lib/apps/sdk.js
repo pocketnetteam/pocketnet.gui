@@ -426,6 +426,7 @@ var BastyonSdk = function(){
                 }
     
                 document.documentElement.setAttribute('theme', theme.rootid);
+                document.documentElement.setAttribute('bastyon', 'bastyon');
     
                 document.documentElement.style.setProperty('--app-margin-top', `${margintop}`);
 

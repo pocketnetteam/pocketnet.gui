@@ -406,7 +406,8 @@ Platform = function (app, listofnodes) {
         'PThktEkvkgNeL9G6EDAESNwneUGz9DeugR': true,
         'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX': true,
         'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
-        'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true
+        'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
+        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true
 
     }
 
@@ -458,6 +459,7 @@ Platform = function (app, listofnodes) {
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
         'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
         'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
+        
     ];
 
     self.whiteList = [
