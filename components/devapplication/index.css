@@ -124,7 +124,6 @@
   margin-bottom: 20px;
   color: rgb(var(--text-color));
 }
-/* Разделы формы кроме первого отграничены линией сверху */
 #devapplication .miniapp-container .miniapp-form .form-title:not(:first-of-type) {
   margin-top: 40px;
   padding-top: 20px;
@@ -179,7 +178,6 @@
   background-color: rgb(var(--background-secondary-theme));
 }
 
-/* Стили для отображения иконки */
 #devapplication .miniapp-container .miniapp-form .icon-preview-container {
   margin-top: 10px;
   background-color: rgb(var(--neutral-grad-0));
@@ -199,7 +197,6 @@
 }
 
 
-/* Адаптивные стили */
 @media (max-width: 768px) {
   #devapplication .miniapp-container {
     padding: 20px;
