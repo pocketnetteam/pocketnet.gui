@@ -37,12 +37,14 @@ var devapplication = (function () {
             .get(),
         };
 
-        const validationRules = [{
-          value: updatedData.tags,
-          selector: ".tag-input-container",
-          message: self.app.localization.e("miniApp_tagsRequiredMessage"),
-          condition: (value) => Array.isArray(value) && value.length > 0,
-        }, ];
+        const validationRules = [
+          {
+            value: updatedData.tags,
+            selector: ".tag-input-container",
+            message: self.app.localization.e("miniApp_tagsRequiredMessage"),
+            condition: (value) => Array.isArray(value) && value.length > 0,
+          },
+        ];
 
         if (validationRules.some(validateField)) {
           globalpreloader(false);
@@ -109,7 +111,8 @@ var devapplication = (function () {
           author: userAddress,
         };
 
-        const validationRules = [{
+        const validationRules = [
+          {
             value: newData.name,
             selector: "#app-name",
             message: self.app.localization.e("miniApp_requiredMessage"),
@@ -125,7 +128,7 @@ var devapplication = (function () {
             value: newData.tags,
             selector: ".tag-input-container",
             message: self.app.localization.e("miniApp_tagsRequiredMessage"),
-            condition: (value) => Array.isArray(value) && value.length > 0,
+            condition: (value) => Array.isArray(value) && value.length == 2,
           },
           {
             value: newData.id,
@@ -264,8 +267,27 @@ var devapplication = (function () {
     };
 
     var renders = {
+      appIconPreview: function (scope) {
+        self.shell(
+          {
+            name: "appIconPreview",
+            el: el.c.find(".icon-preview-container"),
+            data: {
+              icon: `https://${scope}/b_icon.png`,
+            },
+          },
+          function (_p) {
+            _p.el.find(".app-icon-preview").on("error", function () {
+              $(this).replaceWith(
+                `<span class="icon-error-message" style="color: red;">Иконка не может быть загружена. Проверьте доступность <code>b_icon.png</code> на вашем домене.</span>`
+              );
+            });
+          }
+        );
+      },
       createForm: function () {
-        self.shell({
+        self.shell(
+          {
             name: "miniAppCreateForm",
             el: el.c.find(".content"),
             data: {},
@@ -277,6 +299,9 @@ var devapplication = (function () {
             ["#app-name", "#app-scope", "#app-id"].forEach((selector) =>
               _p.el.find(selector).on("input", () => clearErrors(selector))
             );
+            _p.el.find("#app-scope").on("blur", function () {
+              renders.appIconPreview(this.value);
+            });
             renders.tagInput({
               tags: [],
               _p,
@@ -293,10 +318,7 @@ var devapplication = (function () {
           renderDetails(application);
         }
       },
-      tagInput: function ({
-        tags,
-        _p
-      }) {
+      tagInput: function ({ tags, _p }) {
         let _tags = [...tags];
         const refreshTagInput = () => {
           renders.tagInput({
@@ -339,7 +361,8 @@ var devapplication = (function () {
     };
 
     var renderEditForm = function (application) {
-      self.shell({
+      self.shell(
+        {
           name: "miniAppEditForm",
           el: el.c.find(".content"),
           data: {
@@ -350,6 +373,7 @@ var devapplication = (function () {
           },
         },
         function (_p) {
+          renders.appIconPreview(application.scope);
           _p.el.find(".save-btn").on("click", actions.editApp);
           _p.el.find(".cancel-btn").on("click", actions.cancelEdit);
 
@@ -367,7 +391,8 @@ var devapplication = (function () {
     var renderDetails = function (application) {
       const description = application.manifest.descriptions;
 
-      self.shell({
+      self.shell(
+        {
           name: "miniAppDetail",
           el: el.c.find(".content"),
           data: {
@@ -380,7 +405,8 @@ var devapplication = (function () {
             permissions: application.manifest?.permissions?.join(", "),
             version: application.manifest?.versiontxt,
             scope: application.manifest.scope,
-            description: description?. [app.localization.key] ?? description?. ["en"],
+            description:
+              description?.[app.localization.key] ?? description?.["en"],
           },
         },
         function (_p) {
@@ -395,7 +421,6 @@ var devapplication = (function () {
     var loadMiniApp = function (targetApplication) {
       userAddress = self.app.user.address.value;
 
-
       if (targetApplication) return renders.miniAppDetail(targetApplication);
 
       if (!applicationId) {
@@ -407,10 +432,12 @@ var devapplication = (function () {
       app.apps.get
         .application(applicationId)
         .then(function (response) {
+          application = response.appdata?.data;
 
-          application = response.appdata?.data
-
-          if (!application || application.installing && !application.installed) {
+          if (
+            !application ||
+            (application.installing && !application.installed)
+          ) {
             return self.app.apps
               .install({
                 ...response.application,
@@ -442,7 +469,8 @@ var devapplication = (function () {
             .html(
               `<p>${self.app.localization.e("miniApp_loadErrorMessage")}</p>`
             );
-        }).finally(() => globalpreloader(false));
+        })
+        .finally(() => globalpreloader(false));
     };
 
     var make = function () {

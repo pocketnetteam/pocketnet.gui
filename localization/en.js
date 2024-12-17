@@ -2990,15 +2990,12 @@ _l.miniApp_publishButton = "Publish";
 _l.miniApp_editButton = "Edit";
 _l.miniApp_deleteButton = "Delete";
 _l.miniApp_authorLabel = "Author";
-_l.miniApp_tagsLabel = "Tags";
 _l.miniApp_permissionsLabel = "Permissions";
 _l.miniApp_idLabel = "ID";
 _l.miniApp_linkLabel = "App Link";
 _l.miniApp_goToAppLinkText = "Go to App";
 _l.miniApp_descriptionUnavailable = "Description unavailable";
 _l.miniApp_editTitle = "Edit Application <%= id %>";
-_l.miniApp_scopeLabel = "Scope";
-_l.miniApp_nameLabel = "Name";
 _l.miniApp_saveButton = "Save";
 _l.miniApp_cancelButton = "Cancel";
 
@@ -3037,10 +3034,8 @@ _l.miniApp_missingApplicationError = "The application was not found in the insta
 _l.miniApp_publishSuccessMessage = "The application has been successfully published.";
 _l.miniApp_publishErrorMessage = "An error occurred while publishing the application.";
 _l.miniApp_publishOnlyTestNetworkMessage = "Currently, publishing is only available on the test network.";
-_l.miniApp_scopeDescription = "Enter the domain name without a protocol (e.g., 'example.com'). The application must support the HTTPS protocol.";
 _l.miniApp_createTitle = "Create a New Mini-Application";
-_l.miniApp_createDescription = "Ensure all data matches the fields defined in the application's `b_manifest.json` file. Any discrepancies may cause issues during installation.";
-_l.miniApp_tagsRequiredMessage = "Please specify at least one tag for the application.";
+_l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
 _l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";
 _l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
@@ -3063,6 +3058,51 @@ _l.miniApp_featureCryptoIntegrationTitle = "Easy Cryptocurrency Payment Integrat
 _l.miniApp_featureCryptoIntegrationDescription = "Embed cryptocurrency payments in your applications for user convenience.";
 _l.miniApp_featureApiAccessTitle = "Full Access to Bastion API";
 _l.miniApp_featureApiAccessDescription = "Utilize all the features of Bastion API to create functional and innovative applications.";
+
+_l.miniApp_iconAltText = "Application Icon";
+_l.miniApp_createTitle = "Create a New Mini-Application";
+_l.miniApp_createDescription = "Ensure that all data matches the fields specified in the application's b_manifest.json file. Any discrepancies may cause errors during installation.";
+
+_l.miniApp_instructionsIntro = "To successfully create a mini-application, you need to have a published application on your own domain.";
+_l.miniApp_instructionsFilesNeeded = "Your domain must have two available files:";
+_l.miniApp_instructionsManifest = "b_manifest - A JSON manifest containing information about the application.";
+_l.miniApp_instructionsIcon = "b_icon.png - The application icon (PNG format), available at: https://[scope]/b_icon.png, where scope is the domain you specified.";
+_l.miniApp_instructionsManifestExample = "Example of b_manifest:";
+_l.miniApp_instructionsDataMatch = "All data entered in the form (id, name, scope) must match the fields in the manifest. The author field in the manifest must match the user who is adding this application.";
+_l.miniApp_instructionsDevMode = "After clicking the 'Save' button, your mini-application will be created in development mode (dev-mode). It will only be accessible locally to you, not publicly. Later, you will have access to a control panel where you can publish the application for all users.";
+
+_l.miniApp_nameLabel = "Name";
+_l.miniApp_scopeLabel = "Domain";
+_l.miniApp_tagsLabel = "Tags";
+
+_l.miniApp_idInstructions = "The ID must be in domain name format, such as app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
+_l.miniApp_nameInstructions = "Enter a clear name that users will see (e.g., Demo).";
+_l.miniApp_scopeDescription = "Enter the domain name without a protocol (e.g., 'example.com'). The application will load in an iframe over HTTPS. The application must support the HTTPS protocol.";
+_l.miniApp_scopeInstructions = "Specify the subdomain without the protocol or prefixes (e.g., demo.bastyonapps.com), from which the application will load in an iframe. Use only lowercase letters, numbers, and dots.";
+
+_l.miniApp_iconInstructions = "Your application's icon will be loaded from https://[scope]/b_icon.png, if the file is available. If the icon cannot be loaded, an error message will be displayed. Ensure that b_icon.png is uploaded to your domain.";
+_l.miniApp_iconLabelInstructions = "After specifying the domain above, the icon will be loaded from https://[scope]/b_icon.png. If the icon is missing or the domain is incorrect, an error message will be shown.";
+
+_l.miniApp_tagsCountRequirement = "Add 2 tags that describe your application.";
+_l.miniApp_tagsInstructions = "Tags help users find your application.";
+
+_l.miniApp_saveButton = "Save";
+_l.miniApp_cancelButton = "Cancel";
+
+_l.miniApp_placeholderId = "For example: example.app";
+_l.miniApp_placeholderName = "For example: My Super App";
+_l.miniApp_placeholderScope = "For example: demo.bastyonapps.com";
+_l.miniApp_infoSectionTitle = "Information";
+_l.miniApp_deploymentSectionTitle = "Deployment";
+_l.miniApp_displaySectionTitle = "Display";
+
+_l.miniApp_editAppTitle = "Edit Mini-Application";
+_l.miniApp_editDescription = "You can modify the tags of your mini-application. Other parameters (ID, Name, Scope) are fixed and cannot be edited.";
+_l.miniApp_tagsEditInstruction = "You can add or remove tags.";
+_l.miniApp_fieldsLockedInfo = "The ID, name, and scope of your application cannot be changed after creation.";
+
+
+
 _l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
 _l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
 _l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
