@@ -1909,7 +1909,7 @@ var Account = function(address, parent){
             updated : null
         }
 
-        self.actions.value = _.filter(self.actions, (a) => {
+        self.actions.value = _.filter(self.actions.value, (a) => {
             if((a.completed && !a.keep) || a.rejected) return false
 
             return true
@@ -1925,6 +1925,8 @@ var Account = function(address, parent){
         }*/
 
         self.save()
+
+        self.updateUnspents()
     }
 
     self.export = function(){
