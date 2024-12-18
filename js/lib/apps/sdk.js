@@ -41,6 +41,27 @@ var BastyonSdk = function(){
     var listeners = {}
     var currentState = (document.location.pathname + document.location.search).replace('/', '');
 
+    self.proxyRequests = function(){
+        if(self.applicationInfo.device == 'application_electron'){
+            /// TODO Allow script to intercept application requests
+
+            /*
+
+                on.fetch((data) => {
+                    action('request', data).then((result/response?) => {
+                    
+                    }).catch(e => {
+                
+                    })
+                })
+            
+            */
+        }
+        else{
+            return Promise.resolve()
+        }
+    }
+
     const popstateEventHandler = function() {
         onChangeState()
     }
@@ -120,10 +141,7 @@ var BastyonSdk = function(){
     }
 
     var send = function(message){
-        
         window.parent.postMessage(message, "*") 
-
-        
     }
 
     var action = function(action, data){

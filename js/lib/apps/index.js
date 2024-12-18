@@ -355,6 +355,36 @@ var BastyonApps = function (app) {
             }
         },
 
+        request: {
+            permissions: [''],
+            authorization: false,
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
+
+                ///electronFetch
+
+                return electronFetch(data).then(response => {
+                    if (response.ok){
+                        /// JSON, arrayBuffer, etc
+                        return Promise.resolve(r.json())
+                    }
+                    
+                    return Promise.reject({
+                        status : response.status,
+                        /// error etc
+                    })
+
+                }).catch(e => {
+
+                    return Promise.reject(e)
+                })
+
+            }
+        },
+
         authFetch: {
             permissions: ['authFetch'],
             authorization: true,

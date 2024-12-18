@@ -36,6 +36,16 @@
         "name" : "Bastyon documentation",
         "grantedPermissions" : [],
         "store" : {"g" : true, "i" : true}
+    },{
+        "id" : "demo.pocketnet.app",
+        "version": "0.0.1",
+        "scope" : "localhost:8080",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Demo application",
+        "grantedPermissions" : [],
+        "store" : {"g" : true, "i" : true}
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
