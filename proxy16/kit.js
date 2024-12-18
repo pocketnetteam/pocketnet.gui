@@ -224,8 +224,8 @@ var defaultSettings = {
 	tor : {
 		dbpath2 : 'data/tordb',
 		path : 'data/tor',
-		enabled2: 'neveruse',
-		useSnowFlake : false,
+		enabled2: 'auto',
+		useSnowFlake : true,
 		customObfs4 : false,
 	},
 

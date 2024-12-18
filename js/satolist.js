@@ -407,7 +407,8 @@ Platform = function (app, listofnodes) {
         'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX': true,
         'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
         'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
-        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true
+        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true,
+        'PTY4jFADbYei6BF5tXSme6dFy1aWe87bqZ': true
 
     }
 
