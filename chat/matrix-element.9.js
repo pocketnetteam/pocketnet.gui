@@ -2501,7 +2501,8 @@ const SendStatus = {
             if (_this.relationEvent.type == "m.replace" && _this.relationEvent.event) {
               return _this.core.mtrx.textEvent(_this.chat, text, {
                 encryptEvent: _this.clbkEncrypt,
-                encryptedEvent: _this.clbkEncrypted
+                encryptedEvent: _this.clbkEncrypted,
+                encryptedEventError: _this.clbkEncrypted
               }).then(r => {
                 r["m.relates_to"] = {
                   rel_type: "m.replace",
@@ -2531,7 +2532,8 @@ const SendStatus = {
                 relation: _this.relationEvent
               }, params || {}), {
                 encryptEvent: _this.clbkEncrypt,
-                encryptedEvent: _this.clbkEncrypted
+                encryptedEvent: _this.clbkEncrypted,
+                encryptedEventError: _this.clbkEncrypted
               });
             },
             data = {};
@@ -2549,6 +2551,9 @@ const SendStatus = {
         };
       }()).catch(e => {
         this.setSendStatus(SendStatus.Error);
+        this.$dialog.confirm(this.$i18n.t("sendingerror"), {
+          okText: this.$i18n.t("button.ok")
+        });
         this.$emit("sentMessageError", {
           error: e
         });

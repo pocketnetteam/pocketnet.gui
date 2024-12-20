@@ -14,10 +14,32 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 				<div class="section leftpart">
 
 					<% if(app.mobileview) {%>
-						<% if(state) {%>
-						<div class="items naviconwrapper">
+						<% if(state) {
 							
-						</div>
+							if(!deep(app.platform.sdk, 'usersettings.meta.interfacemobilelayoutmenu.value')){ 
+								
+								if(haschat) { %>
+									<div class="items chat">
+										<div elementsid="eventschats" class="item  chatwr" events="chats">
+											<div class="icon">
+												<div class="icn">
+			
+													<svg id="l" data-name="l 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135.45 81.46"><title>l</title><path d="M135.45,40.73c0-.1,0-.21,0-.31a4,4,0,0,0-.08-.53s0,0,0-.07v0a4,4,0,0,0-2.07-2.65L61,.43a4,4,0,0,0-5.81,3.45l-.7,23.38L40.18,37.46a4,4,0,0,0-1.63,2.68s0,.09,0,.13a3.31,3.31,0,0,0,0,.93s0,.09,0,.13A4,4,0,0,0,40.18,44L54.47,54.2l.7,23.38A4,4,0,0,0,61,81l72.3-36.72a4,4,0,0,0,2.07-2.65v0s0,0,0-.07a4,4,0,0,0,.08-.53C135.45,40.94,135.45,40.84,135.45,40.73ZM60.73,32.62a4,4,0,0,0,1.67-3.14L63,10.42l51.78,26.29H55ZM63,71,62.41,52a4,4,0,0,0-1.67-3.14L55,44.75h59.76Z"/><path d="M14.7,26.6H37.08a4,4,0,0,0,0-8H14.7a4,4,0,0,0,0,8Z"/><path d="M37.08,54.58H14.7a4,4,0,1,0,0,8H37.08a4,4,0,0,0,0-8Z"/><path d="M32.34,40.59a4,4,0,0,0-4-4H4a4,4,0,0,0,0,8H28.34A4,4,0,0,0,32.34,40.59Z"/></svg>
+			
+												</div>
+												<div class="amount">
+												</div>
+											</div>
+										</div>
+									</div>
+
+								<% } %>
+							<% } else { %>
+								<div class="items naviconwrapper">
+								
+								</div>
+							<% } %>
+							
 						<% } else { %> 
 							<div class="items sitenames">
 
@@ -72,55 +94,6 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 						</div>
 
 					<% } %>
-
-					<!--<% if(haschat && state && (app.mobileview)) {%>
-
-						<div class="items chat">
-							<div elementsid="eventschats" class="item  chatwr" events="chats">
-								<div class="icon">
-									<div class="icn">
-
-										<svg id="l" data-name="l 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135.45 81.46"><title>l</title><path d="M135.45,40.73c0-.1,0-.21,0-.31a4,4,0,0,0-.08-.53s0,0,0-.07v0a4,4,0,0,0-2.07-2.65L61,.43a4,4,0,0,0-5.81,3.45l-.7,23.38L40.18,37.46a4,4,0,0,0-1.63,2.68s0,.09,0,.13a3.31,3.31,0,0,0,0,.93s0,.09,0,.13A4,4,0,0,0,40.18,44L54.47,54.2l.7,23.38A4,4,0,0,0,61,81l72.3-36.72a4,4,0,0,0,2.07-2.65v0s0,0,0-.07a4,4,0,0,0,.08-.53C135.45,40.94,135.45,40.84,135.45,40.73ZM60.73,32.62a4,4,0,0,0,1.67-3.14L63,10.42l51.78,26.29H55ZM63,71,62.41,52a4,4,0,0,0-1.67-3.14L55,44.75h59.76Z"/><path d="M14.7,26.6H37.08a4,4,0,0,0,0-8H14.7a4,4,0,0,0,0,8Z"/><path d="M37.08,54.58H14.7a4,4,0,1,0,0,8H37.08a4,4,0,0,0,0-8Z"/><path d="M32.34,40.59a4,4,0,0,0-4-4H4a4,4,0,0,0,0,8H28.34A4,4,0,0,0,32.34,40.59Z"/></svg>
-
-									</div>
-									<div class="amount">
-									</div>
-								</div>
-							</div>
-						</div>
-
-					<% } else { %> 
-
-						<% if( !(state  && (app.mobileview))  ) {%>
-
-							<div class="items sitenames">
-
-								<div class="item  sitename" >
-									<div elementsid="eventssitename" class="icon" events="sitename">
-	
-										<img class="header_logo onlylight all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
-											
-									</div>
-									<div elementsid="eventslang" class="label">
-										<div elementsid="menu_localization" class="lang localization">
-											
-											<% if(isMobile()) {%>
-												<%-(lkey.key || '').toUpperCase()%> 
-											<% } else { %>
-												<%-(lkey.name || '').toLowerCase()%> 
-											<% } %>
-
-											<i class="fas fa-caret-down"></i>
-										</div>
-									</div>						
-
-								</div>
-								
-							</div>
-
-						<% } %>
-
-					<% } %>-->
 
 				</div>
 

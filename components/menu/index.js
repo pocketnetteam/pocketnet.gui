@@ -155,6 +155,11 @@ var menu = (function(){
 
 				init : function(el){
 
+					
+					if (self.app.platform.matrixchat)
+						actions.ahnotify(el, self.app.platform.matrixchat.getNotificationsCount(), 'chat')
+
+
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
 					}
