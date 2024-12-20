@@ -1748,12 +1748,7 @@ Nav = function(app)
 				};
 			}
 
-			console.log("HERER1 !!!")
-
 			core.openInitialModules(function(){
-
-			console.log("HERE2 !!!")
-
 
 				p.open = true;
 				p.history = true;

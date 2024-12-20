@@ -3084,3 +3084,5 @@ _l.postWaitDelayed = function(time){
 }
 
 _l.fordevelopers = "For developers"
+_l.interfacemobilelayoutmenu = "Chat button in the middle of the bottom bar"
+_l.interface = "Interface"
