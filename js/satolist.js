@@ -407,7 +407,8 @@ Platform = function (app, listofnodes) {
         'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX': true,
         'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
         'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
-        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true
+        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true,
+        'PPCHQtVQ6hQna3V6E5Snaht9v9NCJJLYTM': true
 
     }
 
@@ -1027,6 +1028,13 @@ Platform = function (app, listofnodes) {
                     id: 'vidgetstaking',
                     type: "BOOLEAN",
                     value: true
+                },
+
+                interfacemobilelayoutmenu: {
+                    name: self.app.localization.e('interfacemobilelayoutmenu'),
+                    id: 'interfacemobilelayoutmenu',
+                    type: "BOOLEAN",
+                    value: false
                 },
 
                 commentsOrder: {
@@ -9054,6 +9062,8 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
+                    
+
                     system: {
                         name: self.app.localization.e('system'),
                         options: {}
@@ -9068,6 +9078,16 @@ Platform = function (app, listofnodes) {
 
                 if (!self.released.vidgets.staking) {
                     delete c.vidgets.options.vidgetstaking
+                }
+
+
+                if(self.app.mobileview){
+                    c.interface = {
+                        name: self.app.localization.e('interface'),
+                        options: {
+                            interfacemobilelayoutmenu: options.interfacemobilelayoutmenu,
+                        }
+                    }
                 }
 
                 c.system.options.useanimations = options.useanimations
@@ -9146,6 +9166,14 @@ Platform = function (app, listofnodes) {
                                 }*/
 
                             }
+                        }
+
+                        if(i == 'interfacemobilelayoutmenu'){
+                            if (self.app.modules.bnavigation)
+                                self.app.modules.bnavigation.module.restart()
+
+                            if (self.app.modules.menu)
+                                self.app.modules.menu.module.restart()
                         }
                     }
                 })

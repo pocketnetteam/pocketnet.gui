@@ -2889,3 +2889,7 @@ _l.postWaitDelayed = function(time){
 }
 
 _l.fordevelopers = "Для разработчиков"
+
+_l.interfacemobilelayoutmenu = "Кнопка чата посередине нижней панели"
+_l.interface = "Интерфейс"
+
