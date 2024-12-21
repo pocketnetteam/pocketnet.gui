@@ -1,0 +1,300 @@
+@import "../../css/__cssvar";
+#devapplication {
+  .miniapp-container {
+    font-family: var(--font);
+    border-radius: 12px;
+    margin: 20px auto;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-gray-border);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+
+      .icon-name {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .app-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 10px;
+          background-color: var(--color-gray-slight);
+          padding: 10px;
+          object-fit: contain;
+        }
+
+        .app-title {
+          font-size: 1.8em;
+          font-weight: bold;
+        }
+      }
+
+      .actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .info-section {
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        padding: 20px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .details {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .label {
+            font-size: 1em;
+            font-weight: bold;
+          }
+
+          .value {
+            font-size: 1.2em;
+          }
+        }
+      }
+
+      .description {
+        border-radius: 8px;
+        padding: 20px;
+        line-height: 1.6;
+        font-size: 1.1em;
+      }
+    }
+
+    .miniapp-form {
+      padding: 20px;
+      background-color: rgb(var(--background-secondary-theme));
+      border: 1px solid rgb(var(--neutral-grad-1));
+      border-radius: 8px;
+      margin-top: 20px;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        font-weight: bold;
+        color: rgb(var(--color-txt-gray-dark));
+        margin-bottom: 5px;
+      }
+
+      .form-input {
+        padding: 10px;
+        border: 1px solid rgb(var(--neutral-grad-2));
+        border-radius: 5px;
+        font-size: 1em;
+        background-color: rgb(var(--background-main));
+        color: rgb(var(--text-color));
+
+        &.error {
+          border: 1px solid rgb(var(--color-bad)) !important;
+          background-color: rgba(var(--color-bad), 0.05) !important;
+        }
+
+        &[readonly] {
+          background-color: rgb(var(--neutral-grad-0));
+          cursor: not-allowed;
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+
+        .button {
+          padding: 10px 20px;
+          border-radius: 6px;
+          cursor: pointer;
+          border: 1px solid rgb(var(--neutral-grad-2));
+          background-color: rgb(var(--color-bg-ac));
+          color: rgb(var(--text-on-bg-ac-color));
+          transition: all 0.3s;
+
+          &:hover {
+            background-color: rgb(var(--color-bg-ac-bright));
+          }
+        }
+      }
+
+      .form-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: rgb(var(--text-color));
+      }
+
+      .field-description {
+        font-size: 0.9em;
+        color: rgb(var(--color-txt-gray-light));
+        margin-top: 5px;
+        display: block;
+        line-height: 1.4;
+      }
+
+      .form-description {
+        font-size: 1em;
+        color: rgb(var(--color-txt-gray-light));
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+
+      .field-error {
+        color: rgb(var(--color-bad));
+        font-size: 0.8em;
+        margin-top: 5px;
+        display: none;
+      }
+    }
+
+    .app-link {
+      color: var(--color-txt-ac);
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-txt-ac);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+
+      &:hover {
+        color: var(--color-bg-ac);
+        border-color: var(--color-bg-ac);
+        text-decoration: underline;
+      }
+
+      &:active {
+        color: var(--color-txt-ac-1);
+      }
+    }
+
+    #taginput {
+      .tgs {
+        .tagsWrapper {
+          > .tagsInputWrapper {
+            > .inputWrapper {
+              padding: 0;
+              padding-left: 4px;
+              box-shadow: none;
+              margin: 0;
+            }
+
+            width: 100%;
+          }
+
+          .search {
+            .searchFastResultWrapper {
+              background-color: rgb(var(--background-secondary-theme));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .miniapp-container {
+      padding: 20px;
+
+      .header {
+        .icon-name {
+          .app-title {
+            font-size: 1.5em;
+          }
+        }
+
+        .actions {
+          .button {
+            padding: 8px 16px;
+            font-size: 0.85em;
+          }
+        }
+      }
+
+      .content {
+        .info-section {
+          padding: 15px;
+
+          .details {
+            .label {
+              font-size: 0.9em;
+            }
+
+            .value {
+              font-size: 1.1em;
+            }
+          }
+        }
+
+        .description {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .miniapp-container {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .icon-name {
+          .app-title {
+            font-size: 1.3em;
+          }
+        }
+
+        .actions {
+          width: 100%;
+          justify-content: space-between;
+
+          .button {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8em;
+          }
+        }
+      }
+
+      .content {
+        .info-section {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 10px;
+
+          .details {
+            .label,
+            .value {
+              font-size: 1em;
+            }
+          }
+        }
+
+        .description {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+}
+

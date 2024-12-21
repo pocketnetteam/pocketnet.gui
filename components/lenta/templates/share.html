@@ -39,7 +39,7 @@ var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
-var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address) && (typeof jury == 'undefined' || !jury)
 
 var deletedaccount = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(share.address) : false
 
@@ -101,7 +101,7 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<% if(!share.temp && !share.relay) {%>
+					<% if((!share.temp && !share.relay) || (share.delayed() && app.caneditdelaypost)) {%>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
@@ -295,6 +295,7 @@ var arranges = {
 						</div>
 
 					<% } else {
+
 
 						if((thisrepost || isMobile() || (typeof openapi != 'undefined' && openapi)) && share.images.length + additionall > 1){
 							icClass = 'carousel noswipepnt'
@@ -621,8 +622,19 @@ var arranges = {
 														<span><%=e('postInRelay2')%></span>
 													<% } %> 
 
-												<% } else { %> 
-													<span><%=e('postWaitConf')%></span>
+												<% } else { 
+													
+													var delayed = share.delayed()
+
+													if (delayed) {%>
+
+														<span><%=e('postWaitDelayed', app.reltime(delayed))%></span>
+
+													<% } else { %>
+
+														<span><%=e('postWaitConf')%></span>
+
+													<%  } %>
 												<% } %>
 												
 											</div>

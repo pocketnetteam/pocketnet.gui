@@ -4,6 +4,16 @@
     "name" : "Bastyon",
     "fullname" : "Bastyon",
     "developapps" : [{
+		"id" : "swipelux.app",
+		"version": "0.0.1",
+		"scope" : "app.swipelux.pocketnet.app",
+		"cantdelete" : true,
+		"name" : "Swipelux",
+        "develop" : true,
+        "install" : true,
+        "store" : {"g" : true},
+        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+	},{
         "id" : "barteron.pocketnet.app",
         "version": "1.0.0",
         "scope" : "localhost:8080",
@@ -13,16 +23,18 @@
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
-        "store" : {}
-    },
-    {
-		"id" : "demo.pocketnet.app",
-		"version": "0.0.1",
-		"scope" : "localhost:8081",
-		"cantdelete" : true,
-		"name" : "Demo",
-		"grantedPermissions" : ["account", "notifications", "messaging", "payment", "sign", "camera", "gallery"]
-	}],
+        "store" : {"g" : true}
+    },{
+        "id" : "app.pocketnet.docs",
+        "version": "1.0.0",
+        "scope" : "docs.pocketnet.app",
+        "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
+        "name" : "Bastyon documentation",
+        "grantedPermissions" : [],
+        "store" : {"g" : true, "i" : true}
+    }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
@@ -71,6 +83,7 @@
             },
             
             "matrix" : "matrix.pocketnet.app",
+            "matrixMirrors" : ["matrix.2.pocketnet.app"],
 
             "monetization" : {
                 "url" : "pnettool.pocketnet.app",

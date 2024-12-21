@@ -1,27 +1,26 @@
-var appsError = function(e){
+var appsError = function (e) {
 
     var error = new Error(e)
 
-    if (e == 'broken:permissions') 
+    if (e == 'broken:permissions')
         error.tip = 'example: ["userinfo", "notifications", "messaging", "payment", "sign", "camera", "gallery"]'
 
     return error
 }
 
-var parseManifest = function(json){
+var parseManifest = function (json) {
     var data = {}
     var result = {}
 
-    try{
+    try {
         data = JSON.parse(json)
-    }
-    catch(e){
+    } catch (e) {
         throw appsError('broken:manifest')
     }
 
     result.id = data.id.replace(/[^a-z0-9\.]/g, '')
     result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
-    result.version = numfromreleasestring(data.version)
+    result.version = numfromreleasestring(data.version || '1.0.0')
     result.versiontxt = superXSS(data.version)
     result.descriptions = {}
 
@@ -32,40 +31,44 @@ var parseManifest = function(json){
     result.author = data.author
     result.develop = data.develop == false ? false : true
     result.scope = data.scope
-    result.permissions = _.map(data.permissions || [], (p) => {return p.replace(/[^a-z0-9\.]/g, '')})
+    result.permissions = _.map(data.permissions || [], (p) => {
+        return p.replace(/[^a-z0-9\.]/g, '')
+    })
 
 
-    var brokenPermissions = _.find(result.permissions, (p) => {!p})
+    var brokenPermissions = _.find(result.permissions, (p) => {
+        !p
+    })
     if (brokenPermissions) throw appsError('broken:permissions')
 
-    if(!result.id) throw appsError('missing:id')
-    if(!result.name) throw appsError('missing:name')
-    if(!result.version) throw appsError('missing:version')
-    if(!result.descriptions['en']) throw appsError('missing:description:en')
-    if(!result.scope) throw appsError('missing:scope')
+    if (!result.id) throw appsError('missing:id')
+    if (!result.name) throw appsError('missing:name')
+    if (!result.version) throw appsError('missing:version')
+    if (!result.descriptions['en']) throw appsError('missing:description:en')
+    if (!result.scope) throw appsError('missing:scope')
 
-    
 
-    try{
+
+    try {
         bitcoin.address.fromBase58Check(result.author)
-    }catch(e){
+    } catch (e) {
         throw appsError('broken:author')
     }
-    
+
     return result
 }
 
-var importFile = function(application, path){
+var importFile = function (application, path) {
     return simpleRequest(application.path + '/' + path, path)
 }
 
-var importFileAsBase64 = function(application, path){
+var importFileAsBase64 = function (application, path) {
     return fetchLocalAppCopy(application.path + '/' + path, path).then(d => {
         return getBase64(d.data)
     })
 }
 
-var importIcon = function(application){
+var importIcon = function (application) {
     return importFileAsBase64(application, 'b_icon.png').then((png) => {
         return Promise.resolve(png)
     }).catch(() => {
@@ -73,55 +76,55 @@ var importIcon = function(application){
     })
 }
 
-var importManifest = function(application){
+const getAppIconFromScope  = (scope) => `https://${scope}/b_icon.png`
+
+
+var importManifest = function (application) {
 
     return importFile(application, 'b_manifest.json').then((manifest) => {
 
-        try{
+        try {
             manifest = parseManifest(manifest)
-        }
-        catch(e){
+        } catch (e) {
             return Promise.reject(e)
         }
 
-        if(manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
-        if(manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
-        
-        if(manifest.version < application.version) {
-            return Promise.reject(appsError('version'))
-        }
+        if (manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
+        if (manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
 
-        if(manifest.version > application.version) {
-            return Promise.reject(appsError('version'))
-        }
+        // if (manifest.version < application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
 
-
+        // if (manifest.version > application.version) {
+        //     return Promise.reject(appsError('version'))
+        // }
         if (application.develop) {
             manifest.scope = application.path
-        }
-        else
+        } else {
             manifest.scope = 'https://' + manifest.scope
+        }
 
         return Promise.resolve(manifest)
-        
     }).catch((e) => {
-        console.error(e)
-
+        if (e.message?.startsWith('discrepancy')) {
+            return Promise.reject(e)
+        }
         return Promise.reject(appsError('import:manifest'))
     })
 }
 
-var validateParameters = function(data, parameters){
+var validateParameters = function (data, parameters) {
     var e = _.find(parameters, (p) => {
-        if(!data[p]) return true
+        if (!data[p]) return true
     })
 
-    if(!e) return null
+    if (!e) return null
 
     return appsError('parameters:missing:' + e)
 }
 
-var BastyonApps = function(app){
+var BastyonApps = function (app) {
     var self = this
     var installed = {}
     var installing = {}
@@ -133,10 +136,11 @@ var BastyonApps = function(app){
     var getresources = {}
 
     var key = app.user.address.value || ''
+    var externalLinksStorageKey = 'externalLinksStorageKey'
 
     self.inited = false
 
-    self.info = function(){
+    self.info = function () {
         return {
             permissions,
             actions,
@@ -146,58 +150,58 @@ var BastyonApps = function(app){
     }
 
     var permissions = {
-        'account' : {
-            name : 'permissions_name_account',
-            description : 'permissions_descriptions_account',
-            level : 5
+        'account': {
+            name: 'permissions_name_account',
+            description: 'permissions_descriptions_account',
+            level: 5
         },
 
-        'authFetch' : {
-            name : 'permissions_auth_fetch',
-            description : 'permissions_auth_fetch',
-            level : 5
+        'authFetch': {
+            name: 'permissions_auth_fetch',
+            description: 'permissions_auth_fetch',
+            level: 5
         },
 
-        'sign' : {
-            name : 'permissions_name_sign',
-            description : 'permissions_descriptions_sign',
-            level : 1,
-            uniq : true
+        'sign': {
+            name: 'permissions_name_sign',
+            description: 'permissions_descriptions_sign',
+            level: 1,
+            uniq: true
         },
 
-        'messaging' : {
-            name : 'permissions_name_messaging',
-            description : 'permissions_descriptions_messaging',
-            level : 9,
-            auto : true
+        'messaging': {
+            name: 'permissions_name_messaging',
+            description: 'permissions_descriptions_messaging',
+            level: 9,
+            auto: true
         },
 
-        'mobilecamera' : {
-            name : 'permissions_name_mobilecamera',
-            description : 'permissions_descriptions_mobilecamera',
-            level : 9,
-            auto : true
+        'mobilecamera': {
+            name: 'permissions_name_mobilecamera',
+            description: 'permissions_descriptions_mobilecamera',
+            level: 9,
+            auto: true
         },
 
-        'payment' : {
-            name : 'permissions_name_payment',
-            description : 'permissions_descriptions_payment',
-            level : 2,
-            uniq : true
+        'payment': {
+            name: 'permissions_name_payment',
+            description: 'permissions_descriptions_payment',
+            level: 2,
+            uniq: true
         },
 
-        'chat' : {
-            name : 'permissions_name_chat',
-            description : 'permissions_descriptions_chat',
-            level : 2
+        'chat': {
+            name: 'permissions_name_chat',
+            description: 'permissions_descriptions_chat',
+            level: 2
         },
 
-        'geolocation' : {
-            name : 'permissions_name_geolocation',
-            description : 'permissions_descriptions_geolocation',
-            level : 2,
-            uniq : false,
-            session : true
+        'geolocation': {
+            name: 'permissions_name_geolocation',
+            description: 'permissions_descriptions_geolocation',
+            level: 2,
+            uniq: false,
+            session: true
         },
         'externallink': {
             name: 'permissions_name_externallink',
@@ -212,18 +216,21 @@ var BastyonApps = function(app){
     }
 
     var actions = {
-        opensettings : {
-            parameters : [],
+        opensettings: {
+            parameters: [],
 
-            action : function({data, application}){
+            action: function ({
+                data,
+                application
+            }) {
 
                 app.nav.api.load({
-                    open : true,
-                    id : 'applicationmeta',
-                    inWnd : true,
+                    open: true,
+                    id: 'applicationmeta',
+                    inWnd: true,
 
-                    essenseData : {
-                        application : application.manifest.id
+                    essenseData: {
+                        application: application.manifest.id
                     }
                 })
 
@@ -231,77 +238,97 @@ var BastyonApps = function(app){
             }
         },
 
+        psdk : {
+            userInfoLoad : {
+                parameters : [],
+                action : function({data, application}){
+                    return app.platform.psdk.userInfo.load(data.addresses, data.light, data.update)
+                }
+            }
+            
+        },
+
         rpc : {
             parameters : ['method', 'parameters'],
             action : function({data, application}){
+
+                if (data.options.cachetime){
+                    return app.platform.psdk.rpc(data.method, data.parameters, data.options)
+                }
 
                 //// TODO CHECK ELECTRON NODE SAFE
                 return app.api.rpc(data.method, data.parameters, data.options)
             }
         },
 
-        account : {
-            permissions : ['account'],
-            authorization : true,
-            action : function({data, application}){
+        account: {
+            permissions: ['account'],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
 
                 var account = app.platform.actions.getCurrentAccount()
 
                 return Promise.resolve({
-                    address : app.user.address.value,
-                    signature : app.user.signature(application.manifest.id, 1280),
-                    status : account ? account.getStatus() : undefined
+                    address: app.user.address.value,
+                    signature: app.user.signature(application.manifest.id, 1280),
+                    status: account ? account.getStatus() : undefined
                 })
             }
         },
 
-        balance : {
-            permissions : ['account'],
-            authorization : true,
-            action : function(){
+        balance: {
+            permissions: ['account'],
+            authorization: true,
+            action: function () {
                 var account = app.platform.actions.getCurrentAccount()
 
-                if (account){
+                if (account) {
                     var balance = account.actualBalance([account.address])
                     return Promise.resolve(balance)
-                }
-                else{
+                } else {
                     return Promise.resolve({})
                 }
             }
         },
 
-        zaddress : {
-            permissions : ['zaddress'],
-            authorization : true,
-            action : function({data, application}){
+        zaddress: {
+            permissions: ['zaddress'],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
                 var account = app.platform.actions.getCurrentAccount()
 
-                if (account){
+                if (account) {
 
                     var ads = app.platform.sdk.addresses.storage.addresses || []
 
-                    if (ads.length){
+                    if (ads.length) {
 
                         var address = ads[strToNumHash(application.manifest.id, ads.length - 1)]
 
                         return Promise.resolve(address)
-                    }
-                    else{
+                    } else {
                         return Promise.reject(appsError('broken:zaddresses'))
                     }
-                    
-                }
-                else{
+
+                } else {
                     return Promise.reject(appsError('broken:zaddresses'))
                 }
             }
         },
 
-        sign : {
-            permissions : ['sign'],
-            authorization : true,
-            action : function({data, application}){
+        sign: {
+            permissions: ['sign'],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
 
                 var signature = app.user.signature(data.string + '/' + application.manifest.id)
 
@@ -329,16 +356,19 @@ var BastyonApps = function(app){
         },
 
         authFetch: {
-            permissions : ['authFetch'],
-            authorization : true,
-            parameters : ['url'],
-            action : function({data, application}){
+            permissions: ['authFetch'],
+            authorization: true,
+            parameters: ['url'],
+            action: function ({
+                data,
+                application
+            }) {
 
                 var url = data.url
 
                 var signature = app.user.signature(application.manifest.id)
 
-                if(!data.data || !_.isObject(data.data)) data.data = {}
+                if (!data.data || !_.isObject(data.data)) data.data = {}
 
                 data.data.signature = signature
 
@@ -349,11 +379,11 @@ var BastyonApps = function(app){
                 return fetch(url, {
 
                     ...data
-        
+
                 }).then(r => {
-        
+
                     return Promise.resolve(r.json())
-        
+
                 }).catch(e => {
 
                     return Promise.reject(e)
@@ -362,37 +392,43 @@ var BastyonApps = function(app){
             }
         },
 
-        payment : {
-            parameters : ['recievers', 'feemode'],
-            permissions : ['account', 'payment'],
-            authorization : true,
-            action : function({data, application}){
+        payment: {
+            parameters: ['recievers', 'feemode'],
+            permissions: ['account', 'payment'],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
 
                 var source = [app.user.address.value];
 
                 var transaction = new Transaction()
-				
-					transaction.source.set(source)
-					transaction.reciever.set(data.recievers)
-					transaction.feemode.set(data.feemode)
+
+                transaction.source.set(source)
+                transaction.reciever.set(data.recievers)
+                transaction.feemode.set(data.feemode)
 
                 if (data.message)
-					transaction.message.set(data.message)
+                    transaction.message.set(data.message)
 
                 return makeAction(transaction, application, {
-                    rejectIfError : true
+                    rejectIfError: true
                 })
 
             }
         },
 
-        getaction : {
-            parameters : ['id'],
-            authorization : true,
-            action : function({data, application}){
+        getaction: {
+            parameters: ['id'],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
                 var action = app.platform.actions.getActionById(data.id)
 
-                if(!action){
+                if (!action) {
                     return Promise.resolve(null)
                 }
 
@@ -401,8 +437,10 @@ var BastyonApps = function(app){
         },
 
         getactions: {
-            authorization : true,
-            action : function({application}){
+            authorization: true,
+            action: function ({
+                application
+            }) {
                 var actions = app.platform.actions.getActionsByApp(application.manifest.id)
 
                 return _.map(actions, (a) => {
@@ -411,52 +449,61 @@ var BastyonApps = function(app){
             }
         },
 
-        alert : {
-            permissions : ['messaging'],
-            parameters : ['message'],
+        alert: {
+            permissions: ['messaging'],
+            parameters: ['message'],
 
-            action : function({data, application}){
+            action: function ({
+                data,
+                application
+            }) {
 
                 var message = superXSS(data.message)
 
-                if(!message){
+                if (!message) {
                     return Promise.reject(appsError('message:empty'))
                 }
 
                 sitemessage(message)
 
                 return Promise.resolve()
-             
+
             }
         },
 
-        checkPermission : {
-            parameters : ['permission'],
-            action : function({data, application}){
+        checkPermission: {
+            parameters: ['permission'],
+            action: function ({
+                data,
+                application
+            }) {
                 return Promise.resolve(checkPermission(application, data.permission));
             }
         },
 
-        requestPermissions : {
-            parameters : ['permissions'],
-            action : function({data, application}){
+        requestPermissions: {
+            parameters: ['permissions'],
+            action: function ({
+                data,
+                application
+            }) {
 
-                if(!data.permissions.length) return Promise.reject(appsError('permissions:empty'))
+                if (!data.permissions.length) return Promise.reject(appsError('permissions:empty'))
 
                 var failedError = ''
                 var permissionFailed = _.find(data.permissions, (permission) => {
-                    if(!permissions[permission]) {
+                    if (!permissions[permission]) {
                         failedError = 'notexist'
                         return true
                     }
 
-                    if (permissions[permission].once){
+                    if (permissions[permission].once) {
                         failedError = 'uniq'
                         return true
                     }
                 })
 
-                if(permissionFailed){
+                if (permissionFailed) {
                     return Promise.reject(appsError('permissions:' + failedError + ':' + permissionFailed))
                 }
 
@@ -464,13 +511,16 @@ var BastyonApps = function(app){
             }
         },
 
-        mobile : {
-            camera : {
-                permissions : ['mobilecamera'],
-                parameters : [],
-                action : function({data, application}){
+        mobile: {
+            camera: {
+                permissions: ['mobilecamera'],
+                parameters: [],
+                action: function ({
+                    data,
+                    application
+                }) {
 
-                    if(!app.mobile.supportimagegallery()){
+                    if (!app.mobile.supportimagegallery()) {
                         return Promise.reject(appsError('mobile:camera:notsupported'))
                     }
 
@@ -479,35 +529,40 @@ var BastyonApps = function(app){
                         var images = []
 
                         app.platform.ui.uploadImage({
-                            action : (image, clbk) => {
+                            action: (image, clbk) => {
                                 images.push({
-                                    image : image.base64
+                                    image: image.base64
                                 })
 
                                 clbk()
                             },
-                            onSuccess : () => {
-                                return resolve({images})
+                            onSuccess: () => {
+                                return resolve({
+                                    images
+                                })
                             },
 
-                            onCancel : function(){
+                            onCancel: function () {
                                 return reject(appsError('mobile:camera:cancel'))
                             }
                         })
 
                     })
 
-                    
-                    
+
+
                 }
             }
         },
 
-        share : {
-            permissions : [],
-            parameters : [],
-            authorization : true,
-            action : function({data, application}){
+        share: {
+            permissions: [],
+            parameters: [],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
 
                 //url, sharing {images, }, embeding
                 /*
@@ -533,29 +588,40 @@ var BastyonApps = function(app){
                 */
 
 
-                if(!data.url) data.withouturl = true
+                if (!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
+
+                if (typeof data.canmakepost == 'undefined') data.canmakepost = true
+
+                if (data.sharing){
+                    data.sharing.tags || (data.sharing.tags = [])
+                    data.sharing.tags.push(application.manifest.name)
+                }
+                
 
                 app.platform.ui.socialshare(null, data)
 
                 return Promise.resolve()
-                
+
             }
         },
 
-        chat : {
+        chat: {
 
-            openRoom : {
-                permissions : ['chat'],
-                parameters : [],
-                authorization : true,
-                action : function({data, application}){
+            openRoom: {
+                permissions: ['chat'],
+                parameters: [],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
 
                     var chatLink = '/chat?id=' + data.roomid;
 
 
                     return app.platform.matrixchat.wait().then((core) => {
-                        if (app.mobileview){
+                        if (app.mobileview) {
                             core.apptochat(chatLink)
                         } else {
                             core.gopage(chatLink)
@@ -563,73 +629,85 @@ var BastyonApps = function(app){
 
                         return Promise.resolve()
                     })
-                    
+
                 }
             },
 
-            getOrCreateRoom : {
-                permissions : ['chat'],
-                parameters : ['users'],
-                authorization : true,
-                action : function({data, application}){
+            getOrCreateRoom: {
+                permissions: ['chat'],
+                parameters: ['users'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     return app.platform.matrixchat.wait().then((core) => {
                         return core.getOrCreateRoom({
-                            users : data.users,
-                            parameters : data.parameters || {},
-                            alliasSuffix : application.manifest.id
+                            users: data.users,
+                            parameters: data.parameters || {},
+                            alliasSuffix: application.manifest.id
                         })
                     })
                 }
             },
-            send : {
-                permissions : ['chat'],
-                parameters : ['roomid', 'content'],
-                authorization : true,
+            send: {
+                permissions: ['chat'],
+                parameters: ['roomid', 'content'],
+                authorization: true,
 
-                action : function({data, application}){
+                action: function ({
+                    data,
+                    application
+                }) {
                     return app.platform.matrixchat.wait().then((core) => {
                         return core.sendMessage({
-                            alliasSuffix : application.manifest.id,
-                            content : data.content,
-                            roomid : data.roomid
+                            alliasSuffix: application.manifest.id,
+                            content: data.content,
+                            roomid: data.roomid
                         })
                     })
-                }   
+                }
             }
         },
 
-        appinfo : {
-            parameters : [],
-            action : function({data, application}){
+        appinfo: {
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
 
 
                 return Promise.resolve({
-                    pkoin : !app.pkoindisable,
-                    device : typeof _Electron != 'undefined' ? 'application_electron' : (window.cordova ? (isios() ? 'application_ios' : 'application_android') : 'browser'),
-                    version : window.packageversion,
-                    production : !window.testpocketnet,
-                    locale : app.localization.key,
-                    theme : app.platform.sdk.theme.all[app.platform.sdk.theme.current],
-                    margintop : document.documentElement.style.getPropertyValue('--app-margin-top') || '0px',
-                    application : application.manifest,
-                    project : project_config
+                    pkoin: !app.pkoindisable,
+                    device: typeof _Electron != 'undefined' ? 'application_electron' : (window.cordova ? (isios() ? 'application_ios' : 'application_android') : 'browser'),
+                    version: window.packageversion,
+                    production: !window.testpocketnet,
+                    locale: app.localization.key,
+                    theme: app.platform.sdk.theme.all[app.platform.sdk.theme.current],
+                    margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || '0px',
+                    application: application.manifest,
+                    project: project_config
                 })
             }
         },
 
-        geolocation : {
-            permissions : ['geolocation'],
-            parameters : [],
-            action : function({data, application}){
+        geolocation: {
+            permissions: ['geolocation'],
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
                 return new Promise((resolve, reject) => {
                     app.platform.sdk.geolocation.get({
-                        onSuccess : (pos) => {
+                        onSuccess: (pos) => {
                             resolve({
                                 latitude: pos.coords.latitude,
                                 longitude: pos.coords.longitude
                             });
                         },
-                        onError : () => {
+                        onError: () => {
                             reject(appsError('location:notavailable'))
                         }
                     });
@@ -637,71 +715,83 @@ var BastyonApps = function(app){
             }
         },
 
-        currency : {
-            permissions : [],
-            parameters : [],
-            action : function({ data, application }) {
+        currency: {
+            permissions: [],
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
                 return app.api.fetch('exchanges/history').then(result => {
                     return result.prices;
                 })
             }
         },
 
-        userstate : {
-            permissions : [],
-            parameters : [],
-            action : function({data, application}){
+        userstate: {
+            permissions: [],
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
                 return app.user.isStatePromise()
             }
         },
 
-        registration : {
-            parameters : [],
-            action : function({data, application}){
+        registration: {
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
 
                 return app.user.isStatePromise().then(state => {
 
-                    if (state){
+                    if (state) {
                         return Promise.reject(appsError('user:authorized'))
                     }
 
                     app.nav.api.load({
-                        open : true,
-                        id : 'registration',
-                        inWnd : true,
-                        essenseData : {
-                            application : application.manifest.id,
-                            successHref : '_this',
-                            signInClbk : function(){
+                        open: true,
+                        id: 'registration',
+                        inWnd: true,
+                        essenseData: {
+                            application: application.manifest.id,
+                            successHref: '_this',
+                            signInClbk: function () {
                                 if (clbk) clbk()
                             }
                         }
                     });
-    
+
                     return Promise.resolve('registration:opened')
 
                 })
 
-                
+
             }
         },
 
-        images : {
-            upload : {
-                authorization : true,
-                permissions : [],
-                parameters : ['images'],
+        images: {
+            upload: {
+                authorization: true,
+                permissions: [],
+                parameters: ['images'],
 
-                action : function({data, application}){
-                    
-                    if(data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
+                action: function ({
+                    data,
+                    application
+                }) {
+
+                    if (data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
 
                     return Promise.all(_.map(data.images, (img) => {
                         return resizePromise(img, 1080, 1080).then((resized) => {
 
                             return app.imageUploader.upload({
-                                Action : 'image',
-                                base64 : resized
+                                Action: 'image',
+                                base64: resized
                             }, 'imgur').then((url) => {
                                 return Promise.resolve({
                                     url
@@ -714,16 +804,19 @@ var BastyonApps = function(app){
 
                         })
                     }))
-                   
+
                 }
             }
         },
 
-        barteron : {
-            account : {
-                permissions : ['account'],
-                authorization : true,
-                action : function({data, application}){
+        barteron: {
+            account: {
+                permissions: ['account'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     var account = new brtAccount();
 
                     account.import(data);
@@ -732,34 +825,49 @@ var BastyonApps = function(app){
                 }
             },
 
-            offer : {
-                permissions : ['account'],
-                authorization : true,
-                action : function({data, application}){
+            offer: {
+                permissions: ['account'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     var offer = new brtOffer();
 
                     offer.import(data);
 
-                    return makeAction(offer, application, true);
+                    return makeAction(offer, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
-            removeOffer : {
-                permissions : ['account'],
-                authorization : true,
-                action : function({data, application}){
+            removeOffer: {
+                permissions: ['account'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     var remove = new Remove();
 
-                    remove.import({ txidEdit: data.hash });
+                    remove.import({
+                        txidEdit: data.hash
+                    });
 
-                    return makeAction(remove, application, true);
+                    return makeAction(remove, application, {
+                        rejectIfError : true
+                    });
                 }
             },
 
-            comment : {
-                permissions : ['account'],
-                authorization : true,
-                action : function({data, application}){
+            comment: {
+                permissions: ['account'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     var comment = new Comment();
 
                     comment.import(data);
@@ -768,10 +876,13 @@ var BastyonApps = function(app){
                 }
             },
 
-            vote : {
-                permissions : ['account'],
-                authorization : true,
-                action : function({data, application}){
+            vote: {
+                permissions: ['account'],
+                authorization: true,
+                action: function ({
+                    data,
+                    application
+                }) {
                     var vote = new UpvoteShare();
 
                     vote.import(data);
@@ -781,15 +892,21 @@ var BastyonApps = function(app){
             }
         },
 
-        open : {
-            donation : {
-                parameters : ['receiver'],
-                action : function({data, application}){
+        open: {
+            donation: {
+                parameters: ['receiver'],
+                action: function ({
+                    data,
+                    application
+                }) {
 
                     return app.platform.ui.wallet.donate({
-                        reciever : data.reciever
+                        reciever: data.reciever
                     }).then((p) => {
-                        return Promise.resolve({value : p.value, txid : p.txid})
+                        return Promise.resolve({
+                            value: p.value,
+                            txid: p.txid
+                        })
                     }).catch(e => {
                         return Promise.reject(appsError(e))
                     })
@@ -797,19 +914,22 @@ var BastyonApps = function(app){
                 }
             },
 
-            post : {
-                parameters : ['txid'],
-                action : function({data, application}){
+            post: {
+                parameters: ['txid'],
+                action: function ({
+                    data,
+                    application
+                }) {
 
                     self.nav.api.load({
-                        open : true,
-                        href : 'post?s=' + data.txid,
-                        inWnd : true,
-                        essenseData : {
-                            share : data.txid
+                        open: true,
+                        href: 'post?s=' + data.txid,
+                        inWnd: true,
+                        essenseData: {
+                            share: data.txid
                         }
                     })
-    
+
                     //// TODO CHECK ELECTRON NODE SAFE
                     return Promise.resolve({})
                 }
@@ -818,9 +938,9 @@ var BastyonApps = function(app){
 
     }
 
-    var makeAction = function(data, application, settings){
+    var makeAction = function (data, application, settings) {
         return app.platform.actions.addActionAndSendIfCan(data, null, null, {
-            application : application.manifest.id,
+            application: application?.manifest?.id || application.id,
             ...settings
         }).then(action => {
             return Promise.resolve(action.export())
@@ -831,106 +951,113 @@ var BastyonApps = function(app){
     }
 
     var emitters = {
-        block : {
-        },
-        state : {
+        block: {},
+        state: {
 
         },
-        action : {
+        action: {
 
         },
-        balance : {
-            permissions : ['account']
+        balance: {
+            permissions: ['account']
         },
-        test : {
+        test: {
 
         },
-        locale : {},
-        theme : {},
-        changestate : {}
+        locale: {},
+        theme: {},
+        changestate: {}
     }
 
     var events = {
-        changestate : function(application, data, source){
+        changestate: function (application, data, source) {
 
 
             trigger('changestate', {
 
-                application : application.manifest.id,
-                data : {
-                    value : data.data.value,
-                    replace : data.data.replace,
-                    encoded : hexEncode(data.data.value)
+                application: application.manifest.id,
+                data: {
+                    value: data.data.value,
+                    replace: data.data.replace,
+                    encoded: hexEncode(data.data.value)
                 }
-                
+
             }, source)
         },
 
-        loaded : function(application, data, source){
+        loaded: function (application, data, source) {
             trigger('loaded', {
-                application : application.manifest.id,
+                application: application.manifest.id,
                 data
             }, source)
         }
     }
 
-    var trigger = function(key, data, source){
+    var trigger = function (key, data, source) {
         _.each(clbks[key] || [], (f) => {
             f(data, source)
         })
     }
 
     var listening = {
-        
+
     }
 
-    var appfiles = [
-        {
-            name : 'b_manifest.json',
-            id : "manifest",
-            type : "application/json",
-            importer : importManifest,
-            cache : true
+    var appfiles = [{
+            name: 'b_manifest.json',
+            id: "manifest",
+            type: "application/json",
+            importer: importManifest,
+            cache: true
         },
 
         {
-            name : 'b_icon.png',
-            id : "icon",
-            type : 'image/png',
-            importer : importIcon,
-            cache : true
+            name: 'b_icon.png',
+            id: "icon",
+            type: 'image/png',
+            importer: importIcon,
+            cache: true
         },
-        
+
     ]
 
-    var registerLocal = function(application){
-        if(!localdata[application.id]) {
 
-            localdata[application.id] = {
-                permissions : [],
-                data : {},
-                cached : {}
-            }
+    var syncInstalledAppData = function (application) {
 
-            if (application.develop){
-                _.each(application.grantedPermissions || [], (permission) => {
-                    localdata[application.id].permissions.push({
-                        id : permission,
-                        state : 'granted'
-                    })
-                })
-            }
+        console.log('application.id', application.id, application)
 
-            savelocaldata()
+        if(application.id == 'undefined' || !application.id) return
+
+        if (
+          !localdata[application.id] ||
+          !_.isEqual(localdata[application.id].data, application)
+        ) {
+
+          localdata[application.id] = {
+            permissions: [],
+            data: application || {},
+            cached: {},
+          };
+
+          if (application.develop) {
+            _.each(application.grantedPermissions || [], (permission) => {
+              localdata[application.id].permissions.push({
+                id: permission,
+                state: "granted",
+              });
+            });
+          }
+
+          savelocaldata();
         }
-            
+
     }
 
-    var download = function(application){
+    var download = function (application) {
 
         var key = application.manifest.id + '+' + application.manifest.version
 
-        if(!downloading[key]) {
+        if (!downloading[key]) {
             downloading[key] = importFile(application, 'output.html').then((html) => {
 
                 /// to indexedDB
@@ -944,56 +1071,56 @@ var BastyonApps = function(app){
 
         return downloading[key].then(html => {
 
-            if(!application.develop){
+            if (!application.develop) {
                 //// check hash with manifest
                 /// return Promise.reject('hash')
             }
 
-            
+
 
             return html
         })
     }
+    var resources = function (application, cached = {}) {
 
-    var resources = function(application, cached = {}){
-        
         if (allresources[application.id]) return Promise.resolve(allresources[application.id])
         if (getresources[application.id]) return getresources[application.id]
 
-        if (application.develop){
+        if (application.develop) {
             application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
 
-            
-        }
-        else{   
+
+        } else {
             application.path = 'https://' + application.scope
         }
 
         var promises = []
         var result = {
-            fromcache : {}
+            fromcache: {}
         }
 
         promises = promises.concat(Promise.all(_.map(appfiles, (file) => {
 
             return new Promise((resolve, reject) => {
 
-                if(file.cache && cached[file.id]){
+                if (file.cache && cached[file.id]) {
                     result[file.id] = cached[file.id]
                     result.fromcache[file.id] = true
                     resolve()
-                }
-                else{
+                } else {
                     file.importer(application).then(data => {
                         result[file.id] = data
-    
+
                         delete result.fromcache[file.id]
 
                         resolve()
                     }).catch(reject)
                 }
+            }).catch(e => {
+
+                return Promise.reject(e)
             })
-            
+
         })))
 
         getresources[application.id] = Promise.all(promises).then(() => {
@@ -1009,63 +1136,78 @@ var BastyonApps = function(app){
         return getresources[application.id]
     }
 
-    var install = function(application, cached = {}){
+    var install = function (application, cached = {}) {
+        if (installed[application.id]) { 
+            syncInstalledAppData({
+              ...application,
+              installing: false,
+              installed: true,
+            });
+            return Promise.resolve(installed[application.id])
+        }
 
-        if (installed[application.id]) return Promise.resolve(installed[application.id])
         if (installing[application.id]) return installing[application.id].promise
 
         var result = {}
 
-        if (application.cantdelete){
+        if (application.cantdelete) {
             result.cantdelete = true
         }
 
-        if (application.includeinsearch){
+        if (application.includeinsearch) {
             result.includeinsearch = true
         }
 
-        if (application.includeminiapps){
+        if (application.includeminiapps) {
             result.includeminiapps = true
         }
 
-        
-
-        if (application.production){
+        if (application.production) {
             result.production = true
         }
-        
-        if (application.develop){
+
+        if (application.develop) {
             result.develop = true
         }
 
 
-        installing[application.id] = {promise : resources(application, cached).then((resourses) => {
-            result.path = application.path
-            result.installed = true
+        installing[application.id] = {
+            promise: resources(application, cached).then((resourses) => {
+                result.path = application.path
+                result.installed = true
+                result.installing = false
 
-            installed[application.id] = {...result, ...resourses}
+                installed[application.id] = {
+                    ...application,
+                    ...result,
+                    ...resourses,
+                }
 
-            registerLocal(application)
+                syncInstalledAppData(application)
 
-            trigger('installed', {
-                application
-            })
+                trigger('installed', {
+                    application
+                })
 
-            return installed[application.id]
+                return installed[application.id]
 
-        }).finally(() => {
-            delete installing[application.id]
-        }), application}
+            }).finally(() => {
+                delete installing[application.id]
+            }),
+            application
+        }
 
         return installing[application.id].promise
-        
+
     }
 
-    
 
-    var remove = function(id){
 
-        return self.get.application(id).then(({application}) => {
+    var remove = function (id) {
+
+        return self.get.application(id).then(({
+            application
+        }) => {
 
             delete application.installed
 
@@ -1081,26 +1223,29 @@ var BastyonApps = function(app){
             delete installed[application.manifest.id]
 
             savelocaldata()
-    
+
             return Promise.resolve()
         })
-       
+
     }
 
-    var savelocaldata = function(){
+    var savelocaldata = function () {        
+
         var tosave = {}
 
         _.each(localdata, (info, id) => {
 
+            if(!id || id == 'undefined') return
+
             var saving = {
                 id,
-                cached : {},
-                permissions : info.permissions,
-                data : info.data
+                cached: {},
+                permissions: info.permissions,
+                data: info.data
             }
 
             _.each(appfiles, (file) => {
-                if (file.cache){
+                if (file.cache) {
                     saving.cached[file.id] = (installed[id] ? installed[id][file.id] : null) || info.cached[file.id] || null
                 }
             })
@@ -1108,55 +1253,51 @@ var BastyonApps = function(app){
             tosave[id] = saving
         })
 
-        try{
+        try {
             localStorage['apps_' + key] = JSON.stringify(tosave)
-        }catch(e){
+        } catch (e) {
 
         }
-        
+
     }
 
-    var getlocaldata = function(){
+    var getlocaldata = function () {
         var apps = {}
 
-        try{
+        try {
             apps = JSON.parse(localStorage['apps_' + key])
-        }catch(e){
+        } catch (e) {
 
         }
 
         return apps
     }
 
-    var unregisterApplication = function(application){
+    var unregisterApplication = function (application) {
         delete windows[application.manifest.id]
         delete listening[application.manifest.id]
     }
 
-    var listener = function(event){
-
+    var listener = function (event) {
         var application = _.find(installed, (application) => {
             return application.manifest.scope.indexOf(event.origin) == 0
         })
-
-        if(!application) return
+        if (!application) return
 
         windows[application.manifest.id] = event.source
 
         var data = event.data || {}
         var promise = null
 
-        if(!data.data) data.data = {}
+        if (!data.data) data.data = {}
 
-        if (data.action){
+        if (data.action) {
 
             var action = deep(actions, data.action)
 
-            if(!action){
+            if (!action) {
                 promise = Promise.reject(appsError('missing:action in actions (' + data.action + ')'))
-            }
-
-            else{   
+            } else {
 
                 promise = requestPermissions(application, action.permissions || [], data.data).then(() => {
 
@@ -1165,56 +1306,54 @@ var BastyonApps = function(app){
                     if (error) return Promise.reject(error)
 
 
-                    if (action.authorization){
+                    if (action.authorization) {
                         return app.user.isStatePromise().then(state => {
-                            if(state){
+                            if (state) {
                                 return Promise.resolve()
-                            }
-                            else{
+                            } else {
                                 return Promise.reject(appsError('required:authorization'))
                             }
                         })
-                    }
-                    else{
+                    } else {
                         return Promise.resolve()
                     }
 
-                    
+
                 }).then(() => {
                     return action.action({
-                        data : data.data,
+                        data: data.data,
                         application
                     })
                 })
 
             }
-            
+
         }
 
-        if (data.listener){
+        if (data.listener) {
 
             listening[application.manifest.id] = data.listener
 
             promise = Promise.resolve('registered')
-            
+
             //Promise.reject(appsError('todo:listeners'))
         }
 
-        if (data.event){
-            if (events[data.event]){
+        if (data.event) {
+            if (events[data.event]) {
                 events[data.event](application, data, event.source)
             }
         }
 
-        if(!promise) return
+        if (!promise) return
 
         return promise.then((result) => {
 
-            if (data.id){
+            if (data.id) {
 
                 var response = {
-                    response : data.id,
-                    data : result
+                    response: data.id,
+                    data: result
                 }
 
                 send(response, application)
@@ -1224,11 +1363,11 @@ var BastyonApps = function(app){
 
             console.error(e)
 
-            if (data.id){
+            if (data.id) {
 
                 var response = {
-                    response : data.id,
-                    error : e
+                    response: data.id,
+                    error: e
                 }
 
                 send(response, application)
@@ -1236,41 +1375,50 @@ var BastyonApps = function(app){
         })
     }
 
-    var requestPermissionForm = function(application, permission, data, p = {}){
+    var requestPermissionForm = function (application, permission, data, p = {}) {
 
 
         var meta = permissions[permission]
 
-        if (meta.canrequest && !meta.canrequest()){
+        if (meta.canrequest && !meta.canrequest()) {
             return Promise.reject(appsError('permission:request:cantrequest:' + permission))
         }
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                return app.platform.ui.requestPermission({application, meta, permission, data}, p).then((reason) => {
+                return app.platform.ui.requestPermission({
+                    application,
+                    meta,
+                    permission,
+                    data
+                }, p).then((reason) => {
                     return resolve(reason)
                 }).catch(reason => {
-        
-                    if (reason == 'error'){
+
+                    if (reason == 'error') {
                         return Promise.reject(appsError('permission:request:error:' + permission))
                     }
-        
+
                     return reject(reason)
                 })
             }, 250)
         })
 
-        
 
-      
+
+
     }
 
-    var givePermission = function(application, permission){
-        if(!this.clearPermission(application, permission)) return false
+    var givePermission = function (application, permission) {
+        if (!this.clearPermission(application, permission)) return false
+
+        var appdata = localdata[application.manifest.id]
+
+        if (!appdata) return false
 
         appdata.permissions.push({
-            id : permission,
-            state : 'granted'
+            id: permission,
+            state: 'granted'
         })
 
         savelocaldata()
@@ -1279,29 +1427,34 @@ var BastyonApps = function(app){
 
     }
 
-    var clearPermission = function(application, permission){
+    var clearPermission = function (application, permission) {
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
 
-        if (application.manifest.permissions.indexOf(permission) == -1){
+        if (application.manifest.permissions.indexOf(permission) == -1) {
             return false
         }
 
-        if(!meta) return false
+        if (!meta) return false
+        if (!appdata) return false
 
         appdata.permissions = _.filter(appdata.permissions, (_permission) => {
             return _permission.id != permission
         })
 
         return true
-    } 
+    }
 
-    var removePermission = function(application, permission){
-        if(!this.clearPermission(application, permission)) return false
+    var removePermission = function (application, permission) {
+        if (!this.clearPermission(application, permission)) return false
+
+        var appdata = localdata[application.manifest.id]
+
+        if (!appdata) return false
 
         appdata.permissions.push({
-            id : permission,
-            state : 'forbid'
+            id: permission,
+            state: 'forbid'
         })
 
         savelocaldata()
@@ -1319,50 +1472,50 @@ var BastyonApps = function(app){
         var meta = permissions[permission]
         var appdata = localdata[application.manifest.id]
 
-        if(!appdata) return Promise.reject(appsError('error:code:appdata'))
-        if(!meta) return Promise.reject(appsError('permission:missing'))
+        if (!appdata) return Promise.reject(appsError('error:code:appdata'))
+        if (!meta) return Promise.reject(appsError('permission:missing'))
 
 
-        if(checkPermission(application, permission)) return Promise.resolve()
-        if(checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
+        if (checkPermission(application, permission)) return Promise.resolve()
+        if (checkPermission(application, permission, 'forbid')) return Promise.reject(appsError('permission:denied:' + permission + '/forbid'))
 
-        
-        if (meta.auto && !meta.uniq){
+
+        if (meta.auto && !meta.uniq) {
             appdata.permissions.push({
-                id : permission,
-                state : 'granted'
+                id: permission,
+                state: 'granted'
             })
 
             savelocaldata()
-    
+
             return Promise.resolve()
         }
-        
+
 
         return requestPermissionForm(application, permission, data, p).then(state => {
 
-            if(state == 'granted'){
+            if (state == 'granted') {
 
-                if(!meta.uniq){
+                if (!meta.uniq) {
                     appdata.permissions.push({
-                        id : permission,
+                        id: permission,
                         state
                     })
 
                     savelocaldata()
                 }
-        
+
                 return Promise.resolve()
             }
 
-            if (state == 'once'){
+            if (state == 'once') {
                 ///maybe temp array
                 return Promise.resolve()
             }
 
-            if (state == 'forbid'){
+            if (state == 'forbid') {
                 appdata.permissions.push({
-                    id : permission,
+                    id: permission,
                     state
                 })
 
@@ -1375,36 +1528,36 @@ var BastyonApps = function(app){
 
         ////resolve
 
-        
-        
+
+
     }
 
-    var requestPermissions = function(application, permissions, data, p){
+    var requestPermissions = function (application, permissions, data, p) {
 
-        if(!_.isArray(permissions)) return Promise.reject(appsError('permissions:type:array'))
+        if (!_.isArray(permissions)) return Promise.reject(appsError('permissions:type:array'))
 
         return processArray(permissions, (permission) => {
             return requestPermission(application, permission, data, p)
         })
     }
 
-    var checkPermission = function(application, permission, state = 'granted'){
+    var checkPermission = function (application, permission, state = 'granted') {
         var appdata = localdata[application.manifest.id]
 
-        if(!appdata) return false
+        if (!appdata) return false
 
         return _.find(appdata.permissions, (_permission) => {
             return _permission.id == permission && _permission.state == state
         }) ? true : false
     }
 
-    var emit = function(key, data, applicationId){
+    var emit = function (key, data, applicationId) {
 
         var filteredListeners = listening
 
-        if (applicationId){
+        if (applicationId) {
 
-            if(!listening[applicationId]) {
+            if (!listening[applicationId]) {
                 console.warn('application:notlistening:' + applicationId)
                 return
             }
@@ -1416,14 +1569,14 @@ var BastyonApps = function(app){
         _.each(filteredListeners, (listener, id) => {
             var application = installed[id]
 
-            if (application){
+            if (application) {
 
                 var emitter = emitters[key]
 
-                if(!emitter) return
+                if (!emitter) return
 
                 var notgranted = _.find(emitter.permissions || [], (permission) => {
-                    if(!checkPermission(application, permission)){
+                    if (!checkPermission(application, permission)) {
                         return true
                     }
                 })
@@ -1439,29 +1592,161 @@ var BastyonApps = function(app){
                 send(message, application)
             }
         })
-        
+
     }
 
 
-    var send = function(message, application){
-        if(!application) return
+    var send = function (message, application) {
+        if (!application) return
 
-        if(!windows[application.manifest.id]) return
+        if (!windows[application.manifest.id]) return
 
-        if(!windows[application.manifest.id].window) return
+        if (!windows[application.manifest.id].window) return
 
         windows[application.manifest.id].window.postMessage(
-            message, 
+            message,
             application.manifest.scope
         )
     }
 
-    var setlocaldata = function(data){
+    var loadAllAppsFromLocalhost = function () {
+
+        return []
+
+        let apps = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('app_')) {
+                const appData = JSON.parse(localStorage.getItem(key));
+                apps.push(appData);
+            }
+        }
+        return apps;
+    };
+
+
+    self.editAppInConfig = function (app) {
+        const existingApp = loadAppFromLocalhost(app.id);
+        if (!existingApp) {
+            return Promise.reject(new Error('not_found:app_id'));
+        }
+
+        existingApp.name = app.name || existingApp.name;
+        existingApp.scope = app.scope || existingApp.scope;
+
+        try {
+            saveAppToLocalhost(existingApp);
+
+            return install(existingApp);
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    };
+
+    self.addAppToConfig = function (app) {
+        const existingApp = loadAppFromLocalhost(app.id);
+        if (existingApp) {
+            return Promise.reject(new Error('conflict:id_already_exists'));
+        }
+
+        if (!app.id || !app.name || !app.scope) {
+            return Promise.reject(new Error('missing:required_fields'));
+        }
+        try {
+
+            app.develop = true;
+            app.install = true;
+
+            saveAppToLocalhost(app);
+
+            return install(app)
+        } catch (e) {
+            removeAppFromLocalhost(app.id);
+            return Promise.reject(e)
+        }
+    };
+
+    self.removeAppFromConfig = function (appId) {
+        const existingApp = loadAppFromLocalhost(appId);
+        if (!existingApp) {
+            return Promise.reject(new Error('not_found:app_id'))
+        }
+        removeAppFromLocalhost(appId);
+        return remove(appId)
+    };
+
+    self.removeAppByHash = function ({
+        hash,
+        appId
+    }) {
+        var remove = new Remove();
+
+        try {
+            remove.import({
+                txidEdit: hash
+            });
+
+            return makeAction(remove, {
+                id: appId
+            }, true);
+        } catch (e) {
+            return Promise.reject(appsError('remove:action:failed'));
+        }
+    };
+
+    self.deleteApp = function ({
+        hash,
+        id
+    }) {
+        if (hash) {
+            return self.removeAppByHash({
+                hash,
+                appId: id
+            });
+        } else {
+            return self.removeAppFromConfig(appId);
+        }
+    };
+
+
+    var saveAppToLocalhost = function (app) {
+        try {
+            const key = `app_${app.id}`;
+            localStorage.setItem(key, JSON.stringify(app));
+        } catch (e) {
+            console.error('storage:save_error', e);
+        }
+    };
+
+    var loadAppFromLocalhost = function (appId) {
+        try {
+            const key = `app_${appId}`;
+            const appData = localStorage.getItem(key);
+            return appData ? JSON.parse(appData) : null;
+        } catch (e) {
+            console.error('storage:load_error', e);
+            return null;
+        }
+    };
+
+    var removeAppFromLocalhost = function (appId) {
+        try {
+            const key = `app_${appId}`;
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.error('storage:remove_error', e);
+        }
+    };
+
+
+
+    var setlocaldata = function (data) {        
+
         var newlocaldata = {}
 
-        try{
+        try {
             newlocaldata = JSON.parse(data)
-        }catch(e){
+        } catch (e) {
 
         }
 
@@ -1469,11 +1754,11 @@ var BastyonApps = function(app){
         var adding = []
 
         _.each(localdata, (info, id) => {
-            if(!newlocaldata[id]) removing.push(id)
+            if (!newlocaldata[id]) removing.push(id)
         })
 
         _.each(newlocaldata, (info, id) => {
-            if(!localdata[id]) adding.push(info)
+            if (!localdata[id]) adding.push(info)
         })
 
         localdata = newlocaldata
@@ -1488,10 +1773,10 @@ var BastyonApps = function(app){
 
         }))
 
-        
+
     }
 
-    self.destroy = function(){
+    self.destroy = function () {
         window.removeEventListener("message", listener)
 
         installed = {}
@@ -1506,26 +1791,28 @@ var BastyonApps = function(app){
         app.platform.sdk.syncStorage.off('change', 'apps');
     }
 
-    self.init = function(){
+    self.init = function () {
 
         var promises = []
+        const developApps = app.developapps || [];
+        const localApps = [] //loadAllAppsFromLocalhost() || [];
+        const allApps = [...developApps, ...localApps];
 
-        if (app.developapps){
+        if (allApps.length > 0) {
 
-            promises.push(Promise.all(_.map(app.developapps, (application) => {
+            promises.push(Promise.all(_.map(allApps, (application) => {
 
-                if(!application.store) application.store = {}
+                if (!application.store) application.store = {}
 
-                if (application.install){
+                if (application.install) {
 
-                    if (window.cordova && window.pocketnetstore){
-                        if(isios()){
-                            if(!application.store['i']){
+                    if (window.cordova && window.pocketnetstore) {
+                        if (isios()) {
+                            if (!application.store['i']) {
                                 return Promise.resolve()
                             }
-                        }
-                        else{
-                            if(!application.store['g']){
+                        } else {
+                            if (!application.store['g']) {
                                 return Promise.resolve()
                             }
                         }
@@ -1533,53 +1820,76 @@ var BastyonApps = function(app){
 
                     application.cantdelete = true
 
-                    if (application.access && _.isArray(application.access)){
-                        if(_.indexOf(application.access, app.user.address.value) == -1) return Promise.resolve()
+                    if (application.access && _.isArray(application.access)) {
+                        if (_.indexOf(application.access, app.user.address.value) == -1) return Promise.resolve()
                     }
-    
-                    return install({...application, develop : true, version : numfromreleasestring(application.version)})
+
+                    return install({
+                        ...application,
+                        develop: true,
+                        version: numfromreleasestring(application?.version || '1.0.0')
+                    }).catch(e => {
+
+                        return Promise.resolve()
+                    })
                 }
 
                 return Promise.resolve()
 
-                
+
             })))
 
         }
 
-        var installed = getlocaldata()
+        var installedLocal = getlocaldata()
 
-        promises.push(Promise.all(_.map(installed, (info) => {
+        console.log("INSTALLED LOCAL", installedLocal)
+        
 
-            self.get.applicationall(info.id, info.cached).then(({application}) => {
+        /*_.forEach(installedLocal, (info) => {
+           info?.id && install(info.data, info.cached)
+        })*/
 
-                return install({...application, version : numfromreleasestring(application.version)}, info.cached)
-                
+        promises.push(Promise.all(_.map(installedLocal, (info) => {
+
+            /*if(_.find(allApps, (app) => {
+                return app.id == info.id
+            })) return Promise.resolve()*/
+
+            return self.get.applicationall(info.id, info.cached).then(({
+                application
+            }) => {
+
+                return install({
+                    ...application,
+                    //version: numfromreleasestring(application.version || '1.0.0')
+                }, info.cached)
+
             }).then(() => {
 
                 localdata[info.id] = {
-                    permissions : info.permissions,
-                    data : info.data,
-                    cached : info.cached
+                    permissions: info.permissions,
+                    data: info.data,
+                    cached: info.cached
                 }
 
             }).catch(e => {
                 return Promise.resolve()
             })
-            
+
         })))
 
-        
 
-        try{
+
+        try {
             setlocaldata(localStorage['apps_' + key])
-        }catch(e){
+        } catch (e) {
 
         }
 
-        app.platform.sdk.syncStorage.on('change', 'apps', function(e){
+        app.platform.sdk.syncStorage.on('change', 'apps', function (e) {
 
-            if(e.newValue == e.oldValue) return
+            if (e.newValue == e.oldValue) return
 
             setlocaldata(e.newValue)
 
@@ -1588,10 +1898,8 @@ var BastyonApps = function(app){
 
         return Promise.all(promises).then(() => {
 
-            console.log("miniapp ini")
-
             self.inited = true
-            
+
             window.addEventListener("message", listener)
 
         }).catch(e => {
@@ -1600,56 +1908,110 @@ var BastyonApps = function(app){
         })
     }
 
+
+    self.validateResources = async function (application) {
+        try {
+            const resourceData = await resources({
+                ...application,
+                develop: true
+            });
+
+            const missingResources = appfiles.filter(file => !resourceData[file.id]);
+
+            if (missingResources.length > 0) {
+                return Promise.reject(appsError('missing:resources'));
+            }
+
+            if (resourceData.manifest.author !== application.author) {
+                return Promise.reject(appsError('discrepancy:author'));
+            }
+
+            return Promise.resolve('Resources are valid');
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    };
+
+
+
+    self.set = {
+        applicationExternalLink: function (scope, appid) {
+            try {
+                localStorage[externalLinksStorageKey + '_' + scope] = appid
+            } catch (e) {
+
+            }
+        }
+    }
+
     self.get = {
-        forsearch : function(){
+        applicationExternalLink: function (scope) {
+            try {
+                return localStorage[externalLinksStorageKey + '_' + scope] || null
+            } catch (e) {
+
+            }
+        },
+        forsearch: function () {
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
             }), app => {
 
                 return {
-                    icon : app.icon,
-                    name : app.manifest.name,
-                    url : 'application?id=' + app.manifest.id,
-                    type : 'application'
+                    icon: app.icon,
+                    name: app.manifest.name,
+                    url: 'application?id=' + app.manifest.id,
+                    type: 'application'
                 }
             })
         },
-
-        forminiapps : function(){
+        appStatusById: function (applicationId) {
+            const appData = loadAppFromLocalhost(applicationId);
+            if (appData) {
+                return "development"
+            } else {
+                return ""
+            }
+        },
+        forminiapps: function () {
             return _.map(_.filter(installed, (s) => {
                 return s.includeminiapps
             }), app => {
 
                 return {
-                    icon : app.icon,
-                    name : app.manifest.name,
-                    url : 'application?id=' + app.manifest.id,
-                    type : 'application'
+                    icon: app.icon,
+                    name: app.manifest.name,
+                    url: 'application?id=' + app.manifest.id,
+                    type: 'application'
                 }
             })
         },
-        installing : function(){
+        installing: function () {
             return installing
         },
-        output : function(id){
-            return self.get.application(id).then(({application}) => {
+        output: function (id) {
+            return self.get.application(id).then(({
+                application
+            }) => {
                 return download(application)
             })
         },
-        application : function(id){
-            if(installed[id]){
+        application: async function (id) {
+            
+
+            if (installed[id]) {
                 return Promise.resolve({
-                    application : installed[id],
-                    appdata : localdata[id] || {}
+                    application: installed[id],
+                    appdata: localdata[id] || {}
                 })
             }
 
-            if (installing[id]){
+            if (installing[id]) {
                 return installing[id].promise.then(() => {
 
                     return Promise.resolve({
-                        application : installed[id],
-                        appdata : localdata[id] || {}
+                        application: installed[id],
+                        appdata: localdata[id] || {}
                     })
 
                 }).catch(e => {
@@ -1657,75 +2019,160 @@ var BastyonApps = function(app){
                 })
             }
 
+            
+            const application = await app.platform.sdk.miniapps.getbyid(id)
+
+            
+            if (application) {
+                return Promise.resolve({
+                    application: {
+                        ...application,
+                        installing: true,
+                        icon: getAppIconFromScope(application.scope)
+                    },
+                    appdata: {}
+                })
+            }
+
 
             return Promise.reject(appsError("missing:application"))
         },
 
-        installed : function(){
+        installed: function () {
             return installed
         },
 
-        resourcesForApplications : function(appsmeta){
+        resourcesForApplications: function (appsmeta) {
 
             var results = {}
 
             return Promise.all(_.map(appsmeta, (appmeta) => {
 
-                if(!appmeta) return Promise.resolve()
-                if(!appmeta.scope) return Promise.resolve()
-                if(!appmeta.id) return Promise.resolve()
+                if (!appmeta) return Promise.resolve()
+                if (!appmeta.scope) return Promise.resolve()
+                if (!appmeta.id) return Promise.resolve()
 
                 return resources(appmeta).then((resources) => {
-                    var result = {...resources}
-                        result.path = appmeta.path
+                    var result = {
+                        ...resources
+                    }
+                    result.path = appmeta.path
 
-                        results[appmeta.id] = {
-                            application : result,
-                        }
+                    results[appmeta.id] = {
+                        application: result,
+                    }
                 })
             })).then(() => {
                 return Promise.resolve(results)
             })
         },
 
-        installedAndInstalling : function({search = ''}){
+        installedAndInstalling: function () {
             var result = {}
-
+            
             _.each(installing, (ins, id) => {
                 result[id] = {
-                    application : ins.application,
-                    installing : true,
-                    promise : ins.promise
+                    application: ins.application,
+                    installing: true,
+                    promise: ins.promise
                 }
             })
 
             _.each(installed, (ins, id) => {
                 result[id] = {
                     ...ins,
-                    installed : true
+                    installed: true
                 }
             })
 
             return result
         },
 
-        applicationall : function(id, cached){
+        applicationsSearch: async function (search = '', searchBy) {
+            if (search.includes(':')) {
+                const [detectedSearchBy, ...searchParts] = search.split(':');
+                searchBy = detectedSearchBy.trim();
+                search = searchParts.join(':').trim();
+            }
 
+            const searchTransformers = {
+                tags: (value) => value.split(' ').filter(Boolean),
+                default: (value) => value
+            };
+
+            const transformedSearch = (searchTransformers[searchBy] || searchTransformers.default)(search);
+
+            const adaptApplicationData = (app) => ({
+                name: app.name || app.manifest?.name || '',
+                icon: app.icon || getAppIconFromScope(app.scope),
+
+                description: app.description || app.manifest?.description?.eng || '',
+                tags: app.tags || [],
+                id: app.id || '',
+                status: this.appStatusById(app.id),
+                address: app.author || app.address || '',
+            });
+
+            const filterApplications = (_search, apps, searchBy) => {
+                return apps?.filter(app => {
+                    switch (searchBy) {
+                        case 'name':
+                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(_search);
+                        case 'scope':
+                            const scope = app.manifest?.scope?.replace('https://', '').toLowerCase() || app.scope?.toLowerCase() || '';
+                            return scope.includes(_search);
+                        case 'tags':
+                            return _search.some(tag => app.tags?.includes(tag));
+                        case 'address':
+                            const author = app.author?.toLowerCase() || app.address?.toLowerCase() || '';
+                            return author.includes(_search);
+                        default:
+                            return false;
+                    }
+                });
+            };
+            const installedApps = this.installedAndInstalling();
+
+
+            const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
+
+            let additionalApps = [];
+            if (transformedSearch) {
+                additionalApps = await app.platform.sdk.miniapps.getall({
+                    [searchBy || 'search']: transformedSearch
+                });
+            }
+
+            const allApps = [...filteredInstalledApps, ...additionalApps]
+
+            const uniqueApps = Array.from(new Map(allApps.map(app => [app.id, app])).values());
+
+            return uniqueApps.map(adaptApplicationData);
+        },
+        applicationall: function (id, cached) {
             return self.get.application(id).catch(e => {
                 return null
             }).then(application => {
+                
 
-
-                if(!application){
+                if (!application) {
 
                     var a = _.find(app.developapps, (dapp) => {
                         return dapp.id == id
                     })
 
-                    if(a) return resources(a, cached).then((resourses) => {
+                    if(!a) {
+                        a = cached?.manifest
+                    }
+
+
+                    if (a) return resources(a, cached).then((resourses) => {
                         return Promise.resolve({
-                            application : {...a, ...resourses},
-                            appdata : {}
+                            application: {
+                                ...a,
+                                ...resourses
+                            },
+                            appdata: {}
                         })
                     })
 
@@ -1733,7 +2180,7 @@ var BastyonApps = function(app){
                     // in search == true --- result.application = application result.notinstalled = true
                 }
 
-                if(!application){
+                if (!application) {
                     return Promise.reject(appsError("missing:application"))
                 }
 
@@ -1742,17 +2189,23 @@ var BastyonApps = function(app){
             })
         },
 
-        applicationAny : function({id, path}){
+        applicationAny: function ({
+            id,
+            path
+        }) {
 
             var result = {}
 
             return self.get.applicationall(id).then(a => {
 
-                result = {...result, ...a}
+                result = {
+                    ...result,
+                    ...a
+                }
 
                 var url = a.application.manifest.scope
 
-                if (path){
+                if (path) {
                     url = url + '/' + path
                 }
 
@@ -1781,18 +2234,22 @@ var BastyonApps = function(app){
 
         },
 
-        applications : function({search = ''}){
-            var insapplications = _.toArray(self.get.installedAndInstalling({search}))
+        applications: function ({
+            search = ''
+        }) {
+            var insapplications = _.toArray(self.get.installedAndInstalling({
+                search
+            }))
             var nodeApps = []
-            var devapps = []//_.filter(app.developapps, ())
+            var devapps = [] //_.filter(app.developapps, ())
 
             var sorted = _.sortBy(_.uniq(insapplications.concat(nodeApps, devapps), (app) => {
 
                 return app.application?.id || app.manifest?.id || app.id
 
-            }), function(ins){
-                if(ins.installing) return 1
-                if(ins.installed) return 2
+            }), function (ins) {
+                if (ins.installing) return 1
+                if (ins.installed) return 2
 
                 return 3
             })
@@ -1803,51 +2260,87 @@ var BastyonApps = function(app){
         }
     }
 
-    self.isApplicationLink = function(href){
-        if(thislink(href)){
+    self.isApplicationLink = function (href) {
+        if (thislink(href)) {
             var th = app.nav.thisSiteLink(href)
 
             if (th.indexOf('application?') == -1) return null
 
             var pps = parameters(th, true)
 
-            if(!pps.id) return null
-
-            console.log('application pps', href, pps)
-
+            if (!pps.id) return null
 
             if (pps.p) pps.p = hexDecode(pps.p)
 
-            console.log('application pps', href, pps)
-
             return {
-                id : pps.id,
-                path : pps.p || '',
-                url : 'application?id=' + pps.id + (pps.p ? ("&p=" + hexEncode(pps.p)) : '')
+                id: pps.id,
+                path: pps.p || '',
+                url: 'application?id=' + pps.id + (pps.p ? ("&p=" + hexEncode(pps.p)) : '')
             }
         }
 
         return null
-        
+
     }
 
-    self.on = function(key, action){
-        if(!clbks[key]) clbks[key] = []
+    self.on = function (key, action) {
+        if (!clbks[key]) clbks[key] = []
 
         clbks[key].push(action)
     }
 
-    self.off = function(key, action){
-        if(!clbks[key]) clbks[key] = []
+    self.off = function (key, action) {
+        if (!clbks[key]) clbks[key] = []
 
         clbks[key] = clbks[key].filter((a) => {
             return a != action
         })
     }
 
+    self.openInWnd = function(application, clbk, path){
+        app.nav.api.load({
+            open: true,
+            href: 'application',
+            inWnd : true,
+            history : true,
+            eid: 'application_' + application.manifest.id,
+            clbk: clbk,
+
+            essenseData: {
+                application : application.manifest.id,
+                path : path
+
+            }
+        })
+    }
+
+    self.openInWndById = function(id, clbk, path){
+
+        self.get.applicationall(id).then(({application}) => {
+            app.nav.api.load({
+                open: true,
+                href: 'application',
+                inWnd : true,
+                history : true,
+                eid: 'application_' + application.manifest.id,
+                clbk: clbk,
+    
+                essenseData: {
+                    application : application.manifest.id,
+                    path : path
+    
+                }
+            })
+        })
+
+        
+    }
+
     self.emit = emit
 
+    self.syncInstalledAppData = syncInstalledAppData
     self.requestPermissions = requestPermissions
+    self.updateLo = requestPermissions
     self.givePermission = givePermission
     self.removePermission = removePermission
     self.clearPermission = clearPermission
@@ -1857,5 +2350,10 @@ var BastyonApps = function(app){
     return self
 }
 
-if(typeof module != "undefined"){ module.exports = {BastyonApps}; } 
-else { window.BastyonApps = BastyonApps; }
+if (typeof module != "undefined") {
+    module.exports = {
+        BastyonApps
+    };
+} else {
+    window.BastyonApps = BastyonApps;
+}

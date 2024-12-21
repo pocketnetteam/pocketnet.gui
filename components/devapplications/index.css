@@ -1,0 +1,129 @@
+#devapplications .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 2em;
+  flex-wrap: wrap;
+}
+#devapplications .navigation {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+#devapplications .navigation .nav-link {
+  color: rgb(var(--text-on-main-bg-color));
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+#devapplications .navigation .nav-link:hover {
+  background-color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--text-color));
+}
+#devapplications .user-button img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+#devapplications .hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4em 2em;
+}
+#devapplications .hero .hero-content {
+  max-width: 600px;
+  padding: 1em;
+}
+#devapplications .hero .hero-content h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: rgb(var(--color-bg-ac));
+  margin-bottom: 0.5em;
+}
+#devapplications .hero .hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+  color: rgb(var(--text-on-main-bg-color));
+}
+#devapplications .hero .cta-button {
+  padding: 0.75em 1.5em;
+  background: linear-gradient(90deg, rgb(var(--color-bg-ac)) 0%, rgb(var(--color-bg-ac-1)) 100%);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+}
+#devapplications .features {
+  padding: 3em 2em;
+  text-align: center;
+}
+#devapplications .features h2 {
+  font-size: 2em;
+  margin-bottom: 1em;
+  color: rgb(var(--color-bg-ac));
+}
+#devapplications .features .features-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+#devapplications .features .features-grid .feature {
+  flex: 1;
+  max-width: 300px;
+  background: rgb(var(--background-main));
+  padding: 2em;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#devapplications .features .features-grid .feature h3 {
+  font-size: 1.5em;
+  color: rgb(var(--text-color));
+}
+#devapplications .features .features-grid .feature p {
+  font-size: 1em;
+  color: rgb(var(--text-on-main-bg-color));
+}
+@media (max-width: 768px) {
+  #devapplications .hero-content h1 {
+    font-size: 2em;
+  }
+  #devapplications .features h2 {
+    font-size: 1.8em;
+  }
+  #devapplications .features .features-grid .feature {
+    max-width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  #devapplications .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  #devapplications .hero-content h1 {
+    font-size: 1.8em;
+  }
+  #devapplications .hero-content p {
+    font-size: 1em;
+  }
+  #devapplications .cta-button {
+    font-size: 0.9em;
+    padding: 0.5em 1em;
+  }
+  #devapplications .features h2 {
+    font-size: 1.5em;
+  }
+  #devapplications .features .features-grid {
+    flex-direction: column;
+    gap: 1em;
+  }
+  #devapplications .features .features-grid .feature {
+    padding: 1.5em;
+  }
+}

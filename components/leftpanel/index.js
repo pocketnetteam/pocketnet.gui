@@ -18,6 +18,7 @@ var leftpanel = (function(){
 
 			_.each(s, function(v, k){
 
+
 				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
 				if(v > 99) v = '99'
@@ -215,6 +216,10 @@ var leftpanel = (function(){
 						navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
 						sitemessage(self.app.localization.e('copybuiltfrom'));
 					});
+
+					_p.el.find('.fordevelopers').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.docs')
+					})
 
 					if(clbk) clbk()
 				})

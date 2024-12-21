@@ -79,10 +79,20 @@ var main = (function(){
 				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
 			},
+			
 			{
 				link : "index?r=best",
 				label : () => self.app.localization.e('e13138'),
 				value : 'best'
+			},
+
+			{
+				link : "index?r=jury",
+				label : () => self.app.localization.e('jury'),
+				value : 'jury',
+				if : function(){
+					return app.platform.sdk.user.isjury()
+				}
 			},
 		]
 		
@@ -808,13 +818,14 @@ var main = (function(){
 							videomobile : videomain && isMobile(),
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
+							fixposition : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
 							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable && mode != 'jury',
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
@@ -1361,7 +1372,7 @@ var main = (function(){
 
 				if((_s.v || _s.s) && (isMobile())){
 
-					self.nav.api.load({
+					/*self.nav.api.load({
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
@@ -1369,7 +1380,7 @@ var main = (function(){
 						fade : self.app.el.content
 					})
 
-					return 
+					return */
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1396,6 +1407,7 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
 
 				showCategories(false)
 

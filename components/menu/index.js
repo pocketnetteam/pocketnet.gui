@@ -105,7 +105,6 @@ var menu = (function(){
 			
 			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('https//', '').replace('http//', '').replace('bastyon//', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
 
-			console.log('href', href, link)
 
 			var p = {
 				href : href,
@@ -155,6 +154,11 @@ var menu = (function(){
 				},
 
 				init : function(el){
+
+					
+					if (self.app.platform.matrixchat)
+						actions.ahnotify(el, self.app.platform.matrixchat.getNotificationsCount(), 'chat')
+
 
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
@@ -608,7 +612,7 @@ var menu = (function(){
 						placeholder : self.app.localization.e('e13139'),
 						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
-						mobileSearch : self.app.width <= 768,
+						mobileSearch : self.app.width <= 768 || self.app.mobileview,
 
 
 						id : 'searchOnBastyon',
@@ -661,7 +665,6 @@ var menu = (function(){
 
 									r = apps.concat(r)
 
-									console.log('apps', apps)
 
 									return r
 								}
@@ -1086,14 +1089,22 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.nav.clbks.history.menunavigation = function(href){
+				renders.menunavigation()
+			}
+
+			self.app.platform.sdk.registrations.clbks.menunavigation = function(){
+				renders.menunavigation()
+			}
+
 			self.app.events.resize.menu = function(){
-				if(self.app.width <= 768 && menusearch){
+				/*if(self.app.width <= 768 && menusearch){
 					events.searchinit.init()
 				}
 
 				if(self.app.width > 768 && !menusearch){
 					events.searchinit.init()
-				}
+				}*/
 			}
 
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
@@ -1187,6 +1198,56 @@ var menu = (function(){
 		}
 
 		var renders = {
+			menunavigation : function(clbk){
+
+				if(self.app.mobileview && app.nav.current){
+
+					var pathname = app.nav.current.href
+
+					self.shell({
+						name :  'navicon',
+						data : {
+							pathname,
+							path : app.nav.current.completeHref
+						},
+
+						el : el.c.find('.naviconwrapper')
+
+					}, function(_p){
+
+						_p.el.find('.item').on('click', function(){
+							if (pathname == 'index'){
+
+								self.nav.api.go({
+									open : true,
+									href : 'share',
+									inWnd : true,
+									history : true,
+									
+									essenseData : {
+										rmhistory : true
+									}
+								})
+
+							}
+							else{
+								self.app.platform.ui.goback()
+							}
+						})
+
+						
+
+
+						if(clbk) clbk()
+					})
+
+				}
+				else{
+					if(clbk) clbk()
+				}
+
+
+			},
 			results : function(results, value, clbk, p){
 
 				if(!p) p = {}
@@ -1233,6 +1294,7 @@ var menu = (function(){
 		var make = function(){
 
 			renders.userinfo()
+			renders.menunavigation()
 
 		}
 
@@ -1302,6 +1364,10 @@ var menu = (function(){
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
 				delete self.app.platform.actionListeners['menu']
+
+				delete self.app.nav.clbks.history.menunavigation
+	
+				delete self.app.platform.sdk.registrations.clbks.menunavigation
 
 
 				self.app.platform.actions.clbk('change', 'menu', null)

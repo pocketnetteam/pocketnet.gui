@@ -488,7 +488,6 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
-							console.log('videosVolume', videosVolume)
 
 							self.sdk.videos.volume = videosVolume
 
@@ -1427,7 +1426,8 @@ var post = (function () {
 							mestate: {},
 							repost: ed.repost,
 							fromempty: ed.fromempty,
-							preview : ed.preview
+							preview : ed.preview,
+							jury : ed.jury
 						},
 
 						
@@ -2108,7 +2108,7 @@ var post = (function () {
 
 			if (share) {
 
-				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
+				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address) && !ed.jury){
 
 					renders.lockedaccount()
 					

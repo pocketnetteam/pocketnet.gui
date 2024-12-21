@@ -973,6 +973,71 @@ ModFlag = function(){
 	return self;
 }
 
+ModVote = function(){
+	var self = this;
+
+	self.s2 = { // id
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	}; //verdict
+
+
+
+	self.validation = function(){
+
+		if(!self.s2.v){
+			return 'jury'
+		}
+
+		if(self.i1.v != 0 && self.i1.v != 1){
+			return 'verdict'
+		}
+	}
+
+	self.serialize = function(){
+		return self.s2.v + self.i1.v
+	}
+
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+		else{
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				i1 : self.i1.v
+			}
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+
+	}
+
+	self.type = 'modVote'
+	return self;
+}
+
 ContentBoost = function(txid){
 	var self = this;
 	
@@ -1415,6 +1480,15 @@ Share = function(lang){
 		f : '0',
 		c : ''
 	}
+
+	self.delayed = function(){
+
+		if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+			return new Date(self.settings.t * 1000)
+		}
+
+		return null
+	}
 	
 
 	self.checkloaded = function(){
@@ -1492,6 +1566,10 @@ Share = function(lang){
 				return 'url'
 			}
 			
+		}
+
+		if (self.settings.t == 1){
+			return 'ntime1'
 		}
 
 		if(!self.tags.v.length && !self.repost.v){
@@ -2353,6 +2431,160 @@ brtOffer = function(){
 
 /* ---- */
 
+Miniapp = function(){
+	var self = this;
+
+	self.id = null;
+	self.hash = ''
+	self.address = '';
+	self.name = '';
+	self.scope = '';
+	self.description = '';
+	self.tags = []
+	
+
+	self.validation = function(){
+		if(!self.id) return 'id';
+		if(!self.address) return 'address';
+		if(!self.description) return 'description';
+		if(!self.name) return 'name';
+		if(!self.scope) return 'scope';
+		if(!self.tags.length) return 'tags';
+	}
+
+	self.serialize = function(){
+		return self.address +
+				(self.hash ?? '') +
+				JSON.stringify({
+					n: self.name,
+					s: self.scope,
+					d: self.description,
+					t: self.tags
+				}) +
+				self.id
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				hash: self.hash || null,
+				id : self.id,
+				name: self.name,
+				description: self.description,
+				scope: self.scope,
+				tags: self.tags
+			};
+		}
+
+		return {
+			s1: self.address,
+			...(self.hash && { s2: self.hash }),
+			p: {
+				s1: JSON.stringify({
+					n: self.name,
+					s: self.scope,
+					d: self.description,
+					t: self.tags
+				}),
+				s2: self.id
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || '';
+		self.hash = d.hash || null;
+		self.name = d.name || '';
+		self.scope = d.scope || '';
+		self.id = d.id || '';
+		self.description = d.description || '';
+		self.tags = d.tags || [];
+	}
+
+	self.typeop = function(){
+		return 'miniapp'
+	}
+
+	self.alias = function(){
+		var ma = new pMiniapp();
+
+		ma._import(self)
+
+		return ma;
+	}
+
+	self.type = 'miniapp';
+
+	return self;
+}
+
+pMiniapp = function(){
+	var self = this
+
+	self.id = null;
+	self.hash = ''
+	self.address = '';
+	self.name = '';
+	self.scope = '';
+	self.description = '';
+	self.tags = []
+
+	self._import = function(v){
+		self.name = v.name || '';
+		self.scope = v.scope || '';
+		self.hash = v.hash || '';
+		self.address = v.address || '';
+		self.description = v.description || '';
+		self.id = v.id || null;
+		self.tags = v.tags || [];
+
+		if(v.s1) self.address = v.s1
+		if(v.s2) self.hash = v.s2
+
+		if(v.p){
+			if(v.p.s1){
+				var js = JSON.parse(v.p.s1)
+
+				self.name = js.n || '';
+				self.scope = js.scope || '';
+				self.description = js.d || '';
+				self.tags = js.t || [];
+			}
+
+			if(v.p.s2){
+				self.id = v.p.s2
+			}
+		}
+	}
+
+	self.export = function(){
+
+		var v = {};
+
+		v.name = self.name
+		v.scope = self.scope
+		v.hash = self.hash 
+		v.id = self.id 
+		v.address = self.address 
+		v.description = self.description 
+		v.tags = _.clone(self.tags)
+
+
+		return v
+	}
+
+	self.import = function(v){
+		v = JSON.parse(v)
+
+		self._import(v)
+	}
+
+
+	self.type = 'miniapp';
+	return self;
+}
+
 
 pUserInfo = function(){
 
@@ -2395,7 +2627,7 @@ pUserInfo = function(){
 	self.address = ''
 
 	self.rc = 0;
-
+	self.bans = {}
 	self.content = {}
 
 	self.objectid = makeid()
@@ -2412,6 +2644,7 @@ pUserInfo = function(){
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
 		self.deleted = v.deleted || false
+		self.bans = v.bans || {}
 
 		if (v.subscribes) {
 			self.subscribes = v.subscribes;
@@ -2539,6 +2772,7 @@ pUserInfo = function(){
 		v.content = _.clone(self.content)
 
 		v.dev = self.dev
+		v.bans = self.bans
 
 
 		if (self.regdate && self.regdate.getTime){
@@ -2789,7 +3023,21 @@ pShare = function(){
 		videos : [],
 		image : '',
 		f : '0',
-		c : ''
+		c : '',
+		t : '0'
+	}
+
+	self.delayed = function(){
+
+		console.log('delayed', self)
+
+		if(self.temp || self.relay){
+			if(self.settings.t > 1 && ((new Date()).getTime() / 1000) < self.settings.t){
+				return new Date(self.settings.t * 1000)
+			}
+		}
+
+		return null
 	}
 
 	self.isEmpty = function(){
@@ -3426,6 +3674,8 @@ pComment = function(){
 	return self;
 }
 
+
+
 Img = function(p){
 	if(!p) p = {};
  
@@ -3867,6 +4117,7 @@ kits = {
 		share : Share,
 		complainShare : ComplainShare,
 		modFlag : ModFlag,
+		modVote : ModVote,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,
@@ -3882,7 +4133,8 @@ kits = {
 		contentDelete : Remove,
 		accSet : Settings,
 		brtoffer : brtOffer,
-		brtaccount : brtAccount
+		brtaccount : brtAccount,
+		miniapp : Miniapp
 
 	},
 
@@ -3894,7 +4146,8 @@ kits = {
 		share : pShare,
 		comment : pComment,
 		contentDelete : pRemove,
-		settings : pSettings
+		settings : pSettings,
+		miniapp : pMiniapp
 	}
 }
 

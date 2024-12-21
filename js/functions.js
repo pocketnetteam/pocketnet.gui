@@ -857,6 +857,7 @@ wnd = function (p) {
 
 
 			var cl = function () {
+
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
 				window.rifticker.add(() => {
@@ -1463,6 +1464,10 @@ dialog = function (p) {
 
 	var destroyed = false;
 
+	self.nomoreask = false;
+
+	if(p.nomoreask) self.nomoreask = true
+
 	if ($('html').hasClass('nooverflow')) removescroll = false;
 
 	if (!p.success) p.success = false;
@@ -1522,6 +1527,11 @@ dialog = function (p) {
 			html += '<div class="body"><div class="text">' + (p.html || "") + '</div></div>';
 		}
 
+		if (p.nomoreask){
+			html += '<div class="nomoreaskWrapper"><i class="fas '+ (self.nomoreask ? 'fa-check-circle' : 'fa-circle') + '"></i> ' +p.nomoreask+ '</div>';
+
+		}
+
 		html += '<div class="buttons">\
 					   <div class="btn2wr"><button elementsid="dialog_btn2" class="btn2 medium">'+ p.btn2text + '</button></div>\
 					   <div class="btn1wr"><button elementsid="dialog_btn1" class="btn1 medium">'+ p.btn1text + '</button></div>\
@@ -1541,6 +1551,21 @@ dialog = function (p) {
 		$el.find('.btn1').on('click', function () { response(p.success) });
 		$el.find('.btn2').on('click', function () { response(p.fail, true) });
 		$el.find('._close').on('click', function () { response(p.close, true) });
+		$el.find('.nomoreaskWrapper').on('click', function(){
+			self.nomoreask = !self.nomoreask
+			var icon = $(this).find('i')
+
+			icon.removeClass('fa-check-circle')
+			icon.removeClass('fa-circle')
+
+			if(self.nomoreask){
+				icon.addClass('fa-check-circle')
+			}
+			else{
+				icon.addClass('fa-circle')
+			}
+			
+		})
 
 		setTimeout(() => initOutsideClickEvent(), 500);
 
@@ -1634,6 +1659,9 @@ dialog = function (p) {
 
 	self.el = $el;
 	self.destroy = destroy;
+	self.replacehtml = function(html){
+		$el.find('.body .text').html(html)
+	}
 	return self;
 }
 
@@ -6237,8 +6265,6 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
-	console.log('scr ofssetObj', ofssetObj)
-
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6249,8 +6275,6 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
-
-		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -7748,7 +7772,8 @@ search = function (el, p) {
 			if (!p.closeByHtmlRemove)
 				$('html').off('click', helpers.closeclickResults);
 
-			searchEl.removeClass('fastSearchShow');
+			if (searchEl)
+				searchEl.removeClass('fastSearchShow');
 		},
 		closeclickResults: function (e) {
 			if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
@@ -8031,6 +8056,8 @@ search = function (el, p) {
 
 		el = null
 		p = {}
+
+		$('html').off('click', helpers.closeclickResults);
 	}
 
 	self.showlast = events.showlast
@@ -8307,15 +8334,12 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
-		console.log('files', files)
-
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
 
-					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8323,8 +8347,6 @@ initUpload = function (p) {
 				},
 				fail: function () {
 					end();
-
-					console.log('failed')
 
 
 					if (p.onFail)
@@ -8334,8 +8356,6 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
-
-				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8370,18 +8390,11 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
-						console.log("read")
-
-
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
-							console.log("resize")
-
 							autorotation(file, fileObject.base64, function (base64) {
-
-								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -9789,6 +9802,31 @@ checkConnection = function () {
 	}
 }
 
+localSearch = function(s1 = '', s2 = '', level = 0.6){
+
+	if(!s1) return 0
+	if(!s2) return 1
+
+	s1 = s1.toLowerCase()
+	s2 = s2.toLowerCase()
+
+	if (s1.indexOf(s2) > -1) return 1
+
+	var parts = s1.split(/[ \t\v\r\n\f,.]+/)
+
+	var m = 0
+	
+	_.each(parts, (part) => {
+		var eq = stringEqTrig(part, s2)
+
+		if (eq > level && eq > m) m = eq
+	})
+
+	if(m < 0 || !m) m = 0
+
+	return m
+}
+
 stringEqTrig = function (s1, s2) {
 
 	if (!s1) s1 = ''
@@ -9805,8 +9843,6 @@ stringEqTrig = function (s1, s2) {
 		return ps.toLowerCase().replace(/[^a-zа-я0-9&]*/g, '');
 	}
 
-
-
 	var makeTr = function (w) {
 		var trs = {};
 
@@ -9816,8 +9852,6 @@ stringEqTrig = function (s1, s2) {
 			if (index < 0 || index >= w.length) c = "_";
 
 			else c = w[index];
-
-
 
 			return c;
 		}
@@ -9921,36 +9955,35 @@ if (typeof window != 'undefined') {
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function () {
-			if (!splashScreenIcon)
-				return;
+			
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenIcon.classList.remove("rotate");
-				splashScreenIcon.classList.add('zoom-out-rotate');
-				splashScreen.classList.add('fade-out');
-				// When zoom out animation is done, completely remove the splash screen
-				setTimeout(() => {
-					// Clear interval if needed
-					if (splashScreeninterval != undefined) {
-						clearInterval(splashScreeninterval);
-					}
-					// Completely remove the splashscreen
+				window.requestAnimationFrame(() => {
 
-					if (splashScreen)
-						splashScreen.remove();
-					splashScreenIcon = null
+					if (!splashScreenIcon)
+						return;
 
-					splashScreen = null
-				}, zoomOutDuration * 2);
+					splashScreenIcon.classList.remove("rotate");
+					splashScreenIcon.classList.add('zoom-out-rotate');
+					splashScreen.classList.add('fade-out');
+					// When zoom out animation is done, completely remove the splash screen
+					setTimeout(() => {
+						// Clear interval if needed
+						if (splashScreeninterval != undefined) {
+							clearInterval(splashScreeninterval);
+						}
+						// Completely remove the splashscreen
+	
+						if (splashScreen)
+							splashScreen.remove();
+						splashScreenIcon = null
+	
+						splashScreen = null
+					}, zoomOutDuration * 2);
+				})
+				
 			}
-			// Wait until half the rotation is done
-			/*setTimeout(() => {
-				// Change the logo image
-				if (splashScreenIcon)
-					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
-				// Increase index
-				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);*/
+		
 		}
 
 		// Wait until the zoom in is done
@@ -9958,11 +9991,13 @@ if (typeof window != 'undefined') {
 			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenIcon.classList.remove('zoom-in');
-			splashScreenIcon.classList.add('rotate');
-			// Triggered every times we reached the end of the rotating animation
-			rotatingAnimationEnded();
-			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			window.requestAnimationFrame(() => {
+				splashScreenIcon.classList.remove('zoom-in');
+				splashScreenIcon.classList.add('rotate');
+				// Triggered every times we reached the end of the rotating animation
+				rotatingAnimationEnded();
+				splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			})
 		}, zoomInDuration);
 
 	}

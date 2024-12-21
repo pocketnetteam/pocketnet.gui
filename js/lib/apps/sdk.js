@@ -75,7 +75,6 @@ var BastyonSdk = function(){
         window.history[changeState] = new Proxy(window.history[changeState], {
             
             apply (target, thisArg, argList) {
-                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 
@@ -100,7 +99,6 @@ var BastyonSdk = function(){
             }
 
         }
-        //console.log('application:event:inapp', event)
     })
 
     var on = function(key, data){
@@ -274,8 +272,8 @@ var BastyonSdk = function(){
         post : function(txid){
             return action('open.post', {txid})
         },
-        donate : function(receiver){
-            return action('open.donate', {receiver})
+        donation : function(receiver){
+            return action('open.donation', {receiver})
         },
     }
 
@@ -428,6 +426,7 @@ var BastyonSdk = function(){
                 }
     
                 document.documentElement.setAttribute('theme', theme.rootid);
+                document.documentElement.setAttribute('bastyon', 'bastyon');
     
                 document.documentElement.style.setProperty('--app-margin-top', `${margintop}`);
 

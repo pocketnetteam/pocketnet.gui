@@ -6,7 +6,7 @@ var Middle = function(server){
 
     var self = this
 
-    var countlogs = 15000
+    var countlogs = 1500
     var logs = []
 
     var requestcountFinished = 0
@@ -27,7 +27,7 @@ var Middle = function(server){
 
 		var d = logs.length - countlogs
 
-		if (d > countlogs / 10){
+		if (d > countlogs / 100){
 			logs = logs.slice(d)
 		}
     }

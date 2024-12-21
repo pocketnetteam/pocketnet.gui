@@ -1,24 +1,34 @@
 <div class="captionRow">
     <div class="back iconwrapper">
-        <a href="home">
-            <div class="icon">
-                <i class="fas fa-chevron-left"></i>
-            </div>
-        </a>
+        <div class="icon">
+            <i class="fas fa-chevron-left"></i>
+        </div>
     </div>
     <div class="caption">
-        <span><%-application && application.manifest ? application.manifest.name : ""%></span>
+        <span><%-application && application.name ? application.name : ""%></span>
     </div>
     <% if(application) {%>
-        <div class="settings iconwrapper">
-            <div class="icon">
-                <i class="fas fa-ellipsis-v"></i>
-            </div>
+    <div class="settings iconwrapper">
+        <div class="icon">
+            <i class="fas fa-ellipsis-v"></i>
         </div>
+    </div>
     <% } %>
 </div>
 <div class="installwrapper">
-    <div class="appicon" image="<%-application.icon%>">
+    <img class="appicon" src="<%-application.icon%>"></>
+    <div class="appdetails">
+        <div class="appname"><%-application.name || "Unknown App"%></div>
+        <div class="appdescription"><%-application.description || "No description available."%></div>
+        <div class="apptags">
+            <% if (application.tags && application.tags.length) { %>
+                <% application.tags.forEach(function(tag) { %>
+                    <span class="tag"><%- tag %></span>
+                <% }) %>
+            <% } else { %>
+                <span class="tag">No tags available</span>
+            <% } %>
+        </div>
     </div>
 
     <div class="installButton">

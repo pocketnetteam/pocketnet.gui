@@ -1,0 +1,20 @@
+<div class="miniapp-container">
+	<div class="miniapp-form">
+		<h2 class="form-title"><%= e('miniApp_editTitle') %> <%= name %></h2>
+		<form>
+			<div class="form-group">
+				<label class="form-label"> <%= e('miniApp_tagsLabel') %> </label>
+				<div class="tag-input-container"></div>
+				<small class="field-error" id="error-app-scope"></small>
+			</div>
+			<div class="form-actions">
+				<button type="button" class="button save-btn">
+					<%= e('miniApp_saveButton') %>
+				</button>
+				<button type="button" class="button cancel-btn">
+					<%= e('miniApp_cancelButton') %>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

@@ -782,6 +782,20 @@ __map =  {
 			add : insertingfunc
 		},
 
+		devapplication : {
+			uri : "devapplication",
+			href : "devapplication",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		devapplications : {
+			uri : "devapplications",
+			href : "devapplications",
+			anonimus : true,
+			add : insertingfunc
+		},
+
 		mobilesearch : {
 			uri : "mobilesearch",
 			href : "mobilesearch",
@@ -799,9 +813,7 @@ __map =  {
 			uri : "donate",
 			href : "donate",
 			add : insertingfunc,
-
 			ignoreMinimize : true
-
 		},
 
 		donateAnimations : {
@@ -978,7 +990,8 @@ __map =  {
 		anonimus : true,
 		renew : true,
 		reload : true,
-		viewchangereload : true
+		viewchangereload : true,
+		dontwait : true
 	},
 
 	bnavigation : {

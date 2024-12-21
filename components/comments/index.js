@@ -97,7 +97,6 @@ var comments = (function(){
 					//newcomments : 'newcomments'
 				}
 
-				console.log('comment, optype', comment, optype)
 
 				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
@@ -359,7 +358,7 @@ var comments = (function(){
 				}
 
 				//var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
-				var authors = [share.address]
+				var authors = share ? [share.address] : []
 
 				/*_.each(cmtsTo, (c) => {
 					authors.push(c.address)
@@ -614,7 +613,6 @@ var comments = (function(){
 
 							var ext = fkit.extensionBase64(image.base64)
 
-							console.log("EXT", ext)
 
 							if (ext == 'gif'){
 								added(image.base64)
@@ -679,7 +677,6 @@ var comments = (function(){
 				delete areas[id]
 				delete currents[id]
 
-				console.log('removeForm')
 
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
@@ -690,12 +687,10 @@ var comments = (function(){
 
 				var current = currents[id];
 
-				console.log('currents', currents)
 
 				if (current){
 					var e = current.validation();
 
-					console.log('comment', e, current)
 
 					if (e){
 						actions.removeSending(wrapper)
@@ -1099,6 +1094,7 @@ var comments = (function(){
 			tocomment : function(id){
 				
 				if(ed.openapi) return
+				if(ed.jury) return
 
 				_scrollTo(el.c.find("#" + id), _in)
 			},
@@ -1371,7 +1367,7 @@ var comments = (function(){
 			scrollToComment : function(el) {
 
 				if (ed.openapi) return
-
+				if (ed.jury) return
 
 				if (el && el.length > 0 && isMobile()) {
 
@@ -2357,7 +2353,7 @@ var comments = (function(){
 
 			post : function(clbk, p){
 
-				if (ed.openapi || ed.cantsend) {
+				if (ed.jury || ed.openapi || ed.cantsend) {
 					if(clbk) clbk()
 
 					return

@@ -38,6 +38,8 @@ var showAvatar = function(relatedContent){
 
 if(activities) {
 
+	console.log('activities', activities)
+
 _.each(activities, function(period, index){
 %>
 <div class="period <%-index%>">
@@ -128,13 +130,13 @@ if(activity.txType === 301) { %>
 </div>
 <%}
 //	Subscribe
-if(activity.txType === 302 || activity.txType === 304) { %>
+if(activity.txType === 302 || activity.txType === 304 || activity.txType === 303) { %>
 <div class="comment">
 	<div class="avatar">
 		<% showAvatar(activity?.relatedContent) %>
 	</div>
 	<div class="description">
-		<div class="head"><%=e(activity.txType === 302 ? 'a_subscribe' : 'a_unsubscribe')%>
+		<div class="head"><%=e(activity.txType === 302 || activity.txType === 303 ? 'a_subscribe' : 'a_unsubscribe')%>
 			<a href="<%-activity?.relatedContent?.account?.n%>">
 				<strong><%-activity?.relatedContent?.account.n%></strong>
 			</a>
