@@ -1427,21 +1427,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							if(time.node) delete time.node.b
 
-							/**
-							 * TEMP BLOCK 290323
-							 *
-							 * Added in context of disappearing
-							 * comments investigation.
-							 */
-							/*if (method === 'sendrawtransactionwithmessage') {
-								const type = cparameters[2];
-								const txid = data;
-								const nodeHost = node.host;
-								const block = node.height();
-
-								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
-							}*/
-
 							return Promise.resolve({
 								data: data,
 								code: 200,
