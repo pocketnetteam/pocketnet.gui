@@ -23,6 +23,8 @@ var Wallet = function(p){
     self.lastprocesserror = null
     self.lastprocesserrorDate = null
 
+    var tempSpentUnspents = {}
+
     self.patterns = {
         ip : function(queueobj, all){
             if(!queueobj.ip) return Promise.reject('ip')
@@ -423,6 +425,13 @@ var Wallet = function(p){
             var meta = null
 
             return self.unspents.getc(temp).then(unspents => {
+
+                unspents = _.filter(unspents, (i) => {
+
+                    if(!tempSpentUnspents[i.txid + '_' + i.vout]) return true
+                    
+                })
+
                 return self.transactions.txfees(unspents, outputs, feemode, temp)
             }).then(_meta => {
 
@@ -430,6 +439,8 @@ var Wallet = function(p){
 
                 _.each(meta.inputs, function(input){
                     input.cantspend = true
+
+                    tempSpentUnspents[input.txid + '_' + input.vout] = true
                 })
 
                 return self.transactions.send(meta.tx)
@@ -439,6 +450,12 @@ var Wallet = function(p){
 
                 if (meta){
                     self.unspents.release(meta.inputs)
+
+                    _.each(meta.inputs, function(input){
+                        delete tempSpentUnspents[input.txid + '_' + input.vout]
+                    })
+
+                    
                 }
 
                 if((e == -26 || e == -25 || e == 16)){
