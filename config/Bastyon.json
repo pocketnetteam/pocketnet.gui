@@ -23,6 +23,7 @@
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
+        "install" : true,
         "store" : {"g" : true}
     },{
         "id" : "app.pocketnet.docs",
