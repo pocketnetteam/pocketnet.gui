@@ -33,18 +33,18 @@ class OG {
 
 	public function __construct ($get, $proxypath, $domain, $project, $uri, $strconfig)
 	{
-        $this->path = '';
+        $this->upath = '';
         $pathParts = explode('/', $uri);
 
         $this->config = json_decode($strconfig);
 
         if(count($pathParts) > 1){
-            $this->path = $pathParts[count($pathParts) - 1];
+            $this->upath = $pathParts[count($pathParts) - 1];
         }
-        //echo $this->path;
+        //echo $this->upath;
         
         $this->rpc = new RPC($proxypath);
-        $this->api = new API($proxypath);
+        $this->lapi = new API($proxypath);
 
         $this->project = $project;
         $this->domain = $domain;
@@ -98,7 +98,7 @@ class OG {
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
-        if ((strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0)){
+        if ((strpos($this->upath, 'application?') >= 0 || strpos($this->upath, 'mapplication=true') >= 0)){
 
             if (isset($get['id'])){
                 $this->application = array(
@@ -203,7 +203,7 @@ class OG {
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
 
-                $peertubeinfo = $this->api->peertubeinfo($v['host_name'], $v['id']);
+                $peertubeinfo = $this->lapi->peertubeinfo($v['host_name'], $v['id']);
 
                 $this->currentOg['twitter:site'] = $this->domain;
                 $this->currentOg['twitter:card'] = 'player';
@@ -365,7 +365,7 @@ class OG {
 
                 $url = isset($found_da->scope) ? 'https://' . $found_da->scope . '/' . $this->application['path'] : null;
 
-                $remote_og = $this->api->urlpreview($url);
+                $remote_og = $this->lapi->urlpreview($url);
 
                 $this->currentOg['title'] = $this->project.' application '.$found_da->name;
 
