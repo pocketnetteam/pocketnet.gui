@@ -27,7 +27,7 @@ var Middle = function(server){
 
 		var d = logs.length - countlogs
 
-		if (d > countlogs / 100){
+		if (d > countlogs / 5){
 			logs = logs.slice(d)
 		}
     }
@@ -166,7 +166,7 @@ var Middle = function(server){
         
         result._success = function(data, code){
             if(!code) code = 200
-            result.status(code).jsonp({
+            result.status(code).json({
                 result : 'success',
                 data : data
             })
@@ -177,7 +177,7 @@ var Middle = function(server){
             if(!code) code = 500
             if(code < 100) code = 500
 
-            result.status(code).jsonp({
+            result.status(code).json({
                 error : error,
                 code : code
             })
@@ -219,13 +219,13 @@ var Middle = function(server){
             }
            
             try{
-                result.status(code).jsonp(jsonp)
+                result.status(code).json(jsonp)
 
                 addLogs(request.data, request.clientIP, code, request.baseUrl + request.path, start)
             }  
             
             catch(e){
-                result.status(500).jsonp({
+                result.status(500).json({
                     code : 500
                 })
             }
@@ -241,7 +241,7 @@ var Middle = function(server){
             if(code < 100) code = 500
 
             try{
-                result.status(code).jsonp({
+                result.status(code).json({
                     error : error,
                     code : code
                 })
@@ -251,7 +251,7 @@ var Middle = function(server){
             
             catch(e){
 
-                result.status(500).jsonp({
+                result.status(500).json({
                     code : 500
                 })
 
