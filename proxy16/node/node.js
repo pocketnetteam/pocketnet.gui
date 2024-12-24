@@ -156,7 +156,11 @@ var Node = function(options, manager){
             wss.service.on('disconnected', function(){
                 wss.service = null
                 wssconnected = false
-                serviceConnection()
+
+
+                setTimeout(() => {
+                    serviceConnection()
+                }, 60000)
             })
 
         }

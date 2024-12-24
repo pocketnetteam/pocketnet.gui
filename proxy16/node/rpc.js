@@ -370,6 +370,7 @@ function rpc(request, callback, obj) {
     })
     .catch(err => {
 
+
         called = true;
 
         var error = err.response?.data?.error;

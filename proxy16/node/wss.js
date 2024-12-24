@@ -117,7 +117,8 @@ var Wss = function(node, service){
 
                 emit('close')
 
-                if (attempt > 5){
+                if (attempt > 2){
+
                     emit('disconnected')
                 }
                 else{
