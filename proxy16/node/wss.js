@@ -111,8 +111,6 @@ var Wss = function(node, service){
 
             ws.onclose = (e) => {
 
-                console.log('onclose', path)
-
                 ws = null
 
                 if (self.closed) return
@@ -120,8 +118,6 @@ var Wss = function(node, service){
                 emit('close')
 
                 if (attempt > 2){
-
-                    console.log("DISCONNECTED", path)
 
                     emit('disconnected')
                 }
