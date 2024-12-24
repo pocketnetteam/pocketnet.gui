@@ -111,13 +111,18 @@ var Wss = function(node, service){
 
             ws.onclose = (e) => {
 
+                console.log('onclose', path)
+
                 ws = null
 
                 if (self.closed) return
 
                 emit('close')
 
-                if (attempt > 5){
+                if (attempt > 2){
+
+                    console.log("DISCONNECTED", path)
+
                     emit('disconnected')
                 }
                 else{
