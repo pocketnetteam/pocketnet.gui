@@ -1219,7 +1219,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		node: {
 			rpcex : {
 				path: '/rpc-ex/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U }) {
 					if (!method) {
 						return Promise.reject({
@@ -1238,7 +1238,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			rpc: {
 				path: '/rpc/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U, cachehash, internal }, request) {
 					if (!method) {
 						return Promise.reject({
