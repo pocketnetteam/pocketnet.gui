@@ -2,7 +2,7 @@
 
 const request = require('request');
 const nodeFetch = require('node-fetch');
-
+var _ = require("underscore");
 global.fetch = (...args) => {
     try {
         return nodeFetch(...args);
@@ -470,25 +470,23 @@ class Transports {
                     return result;
                 });
 
-            const torcontrol = this.torapplications;
 
-            const statsFilePath = path.join(torcontrol.getsettingspath(), 'hosts-stats.json');
-            const areStatsEmpty = (Object.keys(this.accessRecords).length === 0);
+            if(global.SAVE_HOSTS_STATS){
+                
+                const torcontrol = this.torapplications;
 
-            if (areStatsEmpty && fs.existsSync(statsFilePath)) {
-                const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
-                this.accessRecords = JSON.parse(fileData);
-            }
-
-            try {
-                if (!fs.existsSync(torcontrol.settings.path)) {
-                    fs.mkdirSync(torcontrol.settings.path, { recursive: true });
+                const statsFilePath = path.join(torcontrol.getsettingspath(), 'hosts-stats.json');
+                const areStatsEmpty = (Object.keys(this.accessRecords).length === 0);
+    
+                if (areStatsEmpty && fs.existsSync(statsFilePath)) {
+                    const fileData = fs.readFileSync(statsFilePath, { encoding: 'utf8' });
+                    this.accessRecords = JSON.parse(fileData);
                 }
-
-                fs.writeFileSync(statsFilePath, JSON.stringify(this.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
-            } catch (err) {
-                console.warn('Hosts stats are not available:', err.message);
+    
+                this.saveHostsDeb()
             }
+
+            
         }
 
         const pingPromise = this.accessRecords[hostname].inProgress;
@@ -520,6 +518,28 @@ class Transports {
 
         return isAccessOk;
     }
+
+    saveHosts(){
+
+        const torcontrol = this.torapplications;
+        const statsFilePath = path.join(torcontrol.getsettingspath(), 'hosts-stats.json');
+        const areStatsEmpty = (Object.keys(this.accessRecords).length === 0);
+        
+        if(!areStatsEmpty){
+            try {
+                if (!fs.existsSync(torcontrol.settings.path)) {
+                    fs.mkdirSync(torcontrol.settings.path, { recursive: true });
+                }
+    
+                fs.writeFileSync(statsFilePath, JSON.stringify(this.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
+            } catch (err) {
+                console.warn('Hosts stats are not available:', err.message);
+            }
+        }
+        
+    }
+
+    saveHostsDeb = _.debounce(this.saveHosts, 60000)
 
     async pingHost(host, port) {
         function synackPing() {

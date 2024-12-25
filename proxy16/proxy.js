@@ -1138,7 +1138,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
-						return f.deep(p, 'lastComment.address')
+						return p?.lastComment?.address || null
 					})
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
@@ -1268,9 +1268,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					var cparameters = _.clone(parameters)
 
-					self.logger.w('rpc', 'debug', 'RPC REQUEST')
-
-
+					
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1282,8 +1280,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 
 					}).then(() => {
-
-						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
 
@@ -1316,17 +1312,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
-						if(method == 'getnodeinfo') {
+						if (method == 'getnodeinfo') {
 							cparameters.push(node.key)
-							cachehash = null
+							cachehash = node.key
 						}
 
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
-							
-
-							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
 							if(!noderating && !options.cache) {
 
@@ -1351,8 +1344,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 					.then((waitstatus) => {
 
-						self.logger.w('rpc', 'debug', 'AFTER CACHE:' + waitstatus)
-
 						time.cache = performance.now() - timep
 
 						_waitstatus = waitstatus
@@ -1376,6 +1367,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								time : time
 							});
 						}
+						
 
 						if(waitstatus == 'attemps'){
 							return Promise.reject({
@@ -1401,16 +1393,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							}
 						}
 
-						self.logger.w('rpc', 'debug', 'BEFORE QUEUE')
-
 						return new Promise((resolve, reject) => {
 
 							time.start = performance.now() - timep
 							time.node = {
 								b : timep
 							}
-
-							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
 
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
 
@@ -1420,7 +1408,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
-								server.cache.set(method, cparameters, data, node.height());
+								server.cache.set(method, cparameters, data, node.height(), null, method == 'getnodeinfo' ? cachehash : null);
 							}
 
 							time.ready = performance.now() - timep
