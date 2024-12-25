@@ -449,6 +449,7 @@ var Cache = function(p){
             }
 
             if(!cachehash){
+
                 var ks = null
 
                 try{
@@ -463,7 +464,7 @@ var Cache = function(p){
 
             var k = cachehash || f.hash(ks)
 
-            var sd = f.deep(storage, key + "." + k)
+            var sd = storage[key] ? (storage[key][k] || null) : null
 
             if (sd){
                 var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
