@@ -685,7 +685,7 @@ var BastyonApps = function (app) {
                     production: !window.testpocketnet,
                     locale: app.localization.key,
                     theme: app.platform.sdk.theme.all[app.platform.sdk.theme.current],
-                    margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || '0px',
+                    margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || document.documentElement.style.getPropertyValue('--app-margin-top-default') || '0px',
                     application: application.manifest,
                     project: project_config
                 })
