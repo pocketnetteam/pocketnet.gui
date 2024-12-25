@@ -3077,8 +3077,12 @@ _l.miniApp_tagsLabel = "Tags";
 
 _l.miniApp_idInstructions = "The ID must be in domain name format, such as app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
 _l.miniApp_nameInstructions = "Enter a clear name that users will see (e.g., Demo).";
-_l.miniApp_scopeDescription = "Enter the domain name without a protocol (e.g., 'example.com'). The application will load in an iframe over HTTPS. The application must support the HTTPS protocol.";
-_l.miniApp_scopeInstructions = "Specify the subdomain without the protocol or prefixes (e.g., demo.bastyonapps.com), from which the application will load in an iframe. Use only lowercase letters, numbers, and dots.";
+_l.miniApp_scopeDescription = 
+  "Enter the domain name without the protocol (for example, 'example.com'). " +
+  "The application must support the HTTPS protocol, which means if you specify 'example.com', " +
+  "it should be accessible at https://example.com. " +
+  "Do not include 'https://' or any other prefixes. Only lowercase letters, " +
+  "digits, and dots are allowed (for example, 'my-app.bastyonapps.com' or 'subdomain.example.com').";
 
 _l.miniApp_iconInstructions = "Your application's icon will be loaded from https://[scope]/b_icon.png, if the file is available. If the icon cannot be loaded, an error message will be displayed. Ensure that b_icon.png is uploaded to your domain.";
 _l.miniApp_iconLabelInstructions = "After specifying the domain above, the icon will be loaded from https://[scope]/b_icon.png. If the icon is missing or the domain is incorrect, an error message will be shown.";
@@ -3097,7 +3101,11 @@ _l.miniApp_deploymentSectionTitle = "Deployment";
 _l.miniApp_displaySectionTitle = "Display";
 
 _l.miniApp_editAppTitle = "Edit Mini-Application";
-_l.miniApp_editDescription = "You can modify the tags of your mini-application. Other parameters (ID, Name, Scope) are fixed and cannot be edited.";
+_l.miniApp_editDescriptionIntro = "All the data specified in the form (id, name, scope) must match the fields in the manifest (b_manifest).";
+_l.miniApp_editDescriptionAuthor = "The 'author' field in the manifest must correspond to the user who adds this application (the owner).";
+_l.miniApp_editDescriptionScope = "If you change the scope (domain), make sure the new domain has the required files: b_manifest (a JSON file describing the application) and b_icon.png (the PNG icon), available at https://[scope]/b_icon.png.";
+_l.miniApp_editDescriptionId = "Changing the id effectively creates a new mini-application, so it's generally best not to change the id if you're simply updating an existing one.";
+_l.miniApp_editDescriptionOutro = "After making the necessary changes, don't forget to click Save so that the updated information takes effect.";
 _l.miniApp_tagsEditInstruction = "You can add or remove tags.";
 _l.miniApp_fieldsLockedInfo = "The ID, name, and scope of your application cannot be changed after creation.";
 

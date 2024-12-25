@@ -30,25 +30,10 @@ var devapplication = (function () {
         globalpreloader(true);
         clearErrors();
 
-        const updatedData = {
-          tags: el.c
-            .find(".tag")
-            .map((_, tag) => $(tag).attr("tag"))
-            .get(),
-        };
-
-        const validationRules = [
-          {
-            value: updatedData.tags,
-            selector: ".tag-input-container",
-            message: self.app.localization.e("miniApp_tagsRequiredMessage"),
-            condition: (value) => Array.isArray(value) && value.length > 0,
-          },
-        ];
-
-        if (validationRules.some(validateField)) {
-          globalpreloader(false);
-          return;
+        const updatedData = prepareAppData();
+        if (!validateAppData(updatedData)) {
+          currentStatus = "view";
+          return globalpreloader(false);
         }
 
         const onEditComplete = (newAppData) => {
@@ -56,91 +41,47 @@ var devapplication = (function () {
           loadMiniApp(newAppData);
         };
 
-        if (application.hash) {
-          const newAppData = {
-            ...application,
-            ...updatedData,
-            author: userAddress,
-          };
-
-          app.apps
-            .validateResources(newAppData)
-            .then(() => {
-              return self.app.platform.api.actions.miniapp(
-                newAppData,
-                (_, err) => {
-                  globalpreloader(false);
+        const newAppData = {
+          ...application,
+          ...updatedData,
+        };
+        app.apps
+          .validateResources(newAppData)
+          .then(() => {
+            if (application.hash) {
+              return new Promise((resolve, reject) => {
+                self.app.platform.api.actions.miniapp(newAppData, (_, err) => {
                   if (err) {
-                    return sitemessage(
-                      self.app.localization.e("miniApp_editErrorMessage")
-                    );
+                    return reject(err);
                   }
-                  onEditComplete(newAppData);
                   self.app.apps.syncInstalledAppData({
                     ...newAppData,
                     develop: true,
                   });
-                }
-              );
-            })
-            .catch(handleAppError);
-        } else {
-          app.apps
-            .editAppInConfig({
-              id: applicationId,
-              ...updatedData,
-            })
-            .then(onEditComplete)
-            .catch(handleAppError)
-            .finally(() => globalpreloader(false));
-        }
+                  resolve();
+                });
+              });
+            } else {
+              return app.apps.editAppInConfig({
+                id: applicationId,
+                ...updatedData,
+              });
+            }
+          })
+          .then(() => {
+            onEditComplete(newAppData);
+          })
+          .catch((err) => {
+            handleAppError(err);
+          })
+          .finally(() => globalpreloader(false));
       },
       createApp: function () {
         globalpreloader(true);
         clearErrors();
 
-        var newData = {
-          id: el.c.find("#app-id").val(),
-          version: el.c.find("#app-version").val(),
-          scope: el.c.find("#app-scope").val(),
-          name: el.c.find("#app-name").val(),
-          tags: el.c
-            .find(".tag")
-            .map((_, tag) => $(tag).attr("tag"))
-            .get(),
-          author: userAddress,
-        };
-
-        const validationRules = [
-          {
-            value: newData.name,
-            selector: "#app-name",
-            message: self.app.localization.e("miniApp_requiredMessage"),
-          },
-          {
-            value: newData.scope,
-            selector: "#app-scope",
-            message: self.app.localization.e("miniApp_scopeInvalidMessage"),
-            condition: (value) =>
-              /^[a-zA-Z0-9.-]+$/.test(value) && value.indexOf("https") === -1,
-          },
-          {
-            value: newData.tags,
-            selector: ".tag-input-container",
-            message: self.app.localization.e("miniApp_tagsRequiredMessage"),
-            condition: (value) => Array.isArray(value) && value.length == 2,
-          },
-          {
-            value: newData.id,
-            selector: "#app-id",
-            message: self.app.localization.e("miniApp_idInvalidMessage"),
-            condition: (value) => /^[a-z0-9]+(\.[a-z0-9]+)+$/.test(value),
-          },
-        ];
-
-        const hasErrors = validationRules.some(validateField);
-
-        if (hasErrors) {
+        const newData = prepareAppData();
+        if (!validateAppData(newData)) {
           return globalpreloader(false);
         }
 
@@ -173,7 +114,7 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?. ["en"],
+          description: application.manifest.descriptions?.["en"],
           tags: application.tags,
         };
 
@@ -206,6 +147,53 @@ var devapplication = (function () {
         confirmDeletion();
       },
     };
+
+    function prepareAppData() {
+      return {
+        id: el.c.find("#app-id").val(),
+        version: el.c.find("#app-version").val(),
+        scope: el.c.find("#app-scope").val(),
+        name: el.c.find("#app-name").val(),
+        tags: el.c
+          .find(".tag")
+          .map((_, tag) => $(tag).attr("tag"))
+          .get(),
+        author: userAddress,
+      };
+    }
+
+    function validateAppData(appData) {
+      clearErrors();
+      var validationRules = [
+        {
+          value: appData.name,
+          selector: "#app-name",
+          message: self.app.localization.e("miniApp_requiredMessage"),
+        },
+        {
+          value: appData.scope,
+          selector: "#app-scope",
+          message: self.app.localization.e("miniApp_scopeInvalidMessage"),
+          condition: (value) =>
+            /^[a-zA-Z0-9.-]+$/.test(value) && value.indexOf("https") === -1,
+        },
+        {
+          value: appData.tags,
+          selector: ".tag-input-container",
+          message: self.app.localization.e("miniApp_tagsRequiredMessage"),
+          condition: (value) => Array.isArray(value) && value.length == 2,
+        },
+        {
+          value: appData.id,
+          selector: "#app-id",
+          message: self.app.localization.e("miniApp_idInvalidMessage"),
+          condition: (value) => /^[a-z0-9]+(\.[a-z0-9]+)+$/.test(value),
+        },
+      ];
+
+      var hasErrors = validationRules.some(validateField);
+      return !hasErrors;
+    }
 
     var validateField = function ({
       value,
@@ -339,8 +327,11 @@ var devapplication = (function () {
               return tags || [];
             },
             addTag: function (tag) {
-              const maxlength = 2
-              if (_tags.length > maxlength) return sitemessage(self.app.localization.e('miniApp_extendedTags') + maxlength);
+              const maxlength = 2;
+              if (_tags.length > maxlength)
+                return sitemessage(
+                  self.app.localization.e("miniApp_extendedTags") + maxlength
+                );
 
               _tags.push(tag);
               refreshTagInput();
@@ -427,7 +418,7 @@ var devapplication = (function () {
         renders.createForm();
         return;
       }
-      
+
       globalpreloader(true);
       app.apps.get
         .application(applicationId)

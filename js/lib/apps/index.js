@@ -1613,15 +1613,6 @@ var BastyonApps = function (app) {
 
         return []
 
-        let apps = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('app_')) {
-                const appData = JSON.parse(localStorage.getItem(key));
-                apps.push(appData);
-            }
-        }
-        return apps;
     };
 
 
@@ -1635,8 +1626,8 @@ var BastyonApps = function (app) {
         existingApp.scope = app.scope || existingApp.scope;
 
         try {
-            saveAppToLocalhost(existingApp);
 
+            saveAppToLocalhost(existingApp);
             return install(existingApp);
         } catch (e) {
             return Promise.reject(e);
