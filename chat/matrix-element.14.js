@@ -963,7 +963,6 @@ var functions = __webpack_require__("3139");
   },
   activated() {
     if (this.$refs["scroller"]) {
-      console.log('update scroller');
       this.$refs["scroller"].$forceUpdate();
     }
   },
