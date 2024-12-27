@@ -445,6 +445,19 @@ var BastyonSdk = function(){
         }
     }
 
+    self.extendMetamaskOptions = function(options){
+        
+        if(self.applicationInfo.device == 'application_electron'){
+            options.shouldShimWeb3 = false
+        }
+
+        options.openDeeplink = function(url){
+            self.openExternalLink(url)
+        }
+
+        return options
+    }
+
 
     listen()
 

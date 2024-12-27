@@ -96,8 +96,6 @@ var Exchanges = function(){
 
                 }).catch(e => {
 
-                    console.log('digifinex error', e)
-
                     return Promise.reject('notfound')
                 })
             },
@@ -139,8 +137,6 @@ var Exchanges = function(){
 
                     return f.getPkoinPrice(prepared, 'price')
                 }).catch(e => {
-
-                    console.log('coingecko error', e)
 
                     return Promise.reject('notfound')
                 })
