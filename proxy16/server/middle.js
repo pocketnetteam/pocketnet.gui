@@ -297,13 +297,17 @@ var Middle = function(server){
     
         if (request.headers){
             var s = request.headers['authorization'] || '';
-            var apikey = s.replace('Bearer ', '') || ''
+
+            if (s){
+                var apikey = s.replace('Bearer ', '') || ''
     
-            if(!request.data) request.data = {}
-    
-            if (apikey){
-                request.data.apikey = apikey  
+                if(!request.data) request.data = {}
+        
+                if (apikey){
+                    request.data.apikey = apikey  
+                }
             }
+            
         }
     
         if (next) 

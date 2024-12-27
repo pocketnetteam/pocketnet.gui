@@ -784,7 +784,7 @@ var BastyonApps = function (app) {
                     application
                 }) {
 
-                    if (data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
+                    if (data.images.length > 10) return Promise.reject(appsError('images:max:10'))
 
                     return Promise.all(_.map(data.images, (img) => {
                         return resizePromise(img, 1080, 1080).then((resized) => {
