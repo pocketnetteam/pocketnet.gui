@@ -1261,7 +1261,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					var direct = true
 					var smartresult = null
 
-					var cparameters = _.clone(parameters)
+					var cparameters = [...parameters]
 
 					
 					return new Promise((resolve, reject) => {
