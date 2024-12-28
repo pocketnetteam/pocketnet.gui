@@ -51,10 +51,13 @@ var WSS = function(admins, manage){
             return user
         },
 
-        node : function(p){
+        node : function(p, user){
 
             var node = null
             var auto = true
+
+            //console.log('user', _.toArray(user.nodes).length)
+            //console.log('user', user.nodes)
 
             return self.nodeManager.waitready().then(r => {
                 if (p){
@@ -72,9 +75,17 @@ var WSS = function(admins, manage){
                 else{
                      // || self.nodeManager.select(0)
                 }
+
+                if (!node){
+                    if (user && !_.isEmpty(user.nodes)){
+                        var narray = _.toArray(user.nodes)
+
+                        node = narray[f.rand(0, narray.length - 1)].instance
+                    }
+                }
     
                 if(!node){
-    
+
                     return f.pretry(function(){
                         node = self.nodeManager.selectProbability()
     
@@ -116,7 +127,7 @@ var WSS = function(admins, manage){
         }
     }
 
-    var connectNode = function(user, node) {
+    var connectNode = function(user, node, iini) {
 
         var ws = node.instance.wss.add(user)
 
@@ -125,19 +136,39 @@ var WSS = function(admins, manage){
         ws.on('open', () => {})
         ws.on('disconnected', () => {
 
+           
+
             if (node.auto) {
-                disconnectNode(user)
+                disconnectNode(user, node, iini)
+                disconnectNodes(user)
 
                 create.node().then(node => {
 
-                    connectNode(user, node)
+                    user.nodes[node.key] || (user.nodes[node.key] = node)
+
+                    if (iini){
+                        user.nodes[node.key].ini[iini.id] = {
+                            ...iini.ini
+                        }
+                    }
+                    
+
+                    setTimeout(() => {
+                        connectNode(user, node, iini)
+                    }, 10000)
 
                 }).catch(e => {})
 
                 return
             }
 
-            connectNode(user, node)
+            else{
+                setTimeout(() => {
+                    connectNode(user, node, iini)
+                }, 60000)
+            }
+
+           
         })
 
         ws.on('changenode', (data) => {
@@ -146,7 +177,7 @@ var WSS = function(admins, manage){
 
                 if (client.type == 'firebase'){
 
-                    /*disconnectNode(user)
+                    /*disconnectNodes(user)
 
                     create.node(data.node).then(node => {
                         connectNode(user, node)
@@ -170,15 +201,13 @@ var WSS = function(admins, manage){
         })
 
         ws.on('message', (data) => {
-           
+
             var fbdata = {}; 
 
             data.node = node.instance.ckey
 
             _.each(data, (d, k) => { fbdata[k] = (d || "").toString() })
 
-            
-                      
             _.each(node.ini, function(client){
 
 
@@ -186,13 +215,13 @@ var WSS = function(admins, manage){
 
                     if (data.msg == 'new block') return     
 
-                    if (self.firebase){
+                    /*if (self.firebase){
 
                         self.firebase.sendToDevice(fbdata, client.device, client.address).catch(e => {
                             console.error(e)
                         })
 
-                    }
+                    }*/
 
                 }
                 else{
@@ -209,16 +238,14 @@ var WSS = function(admins, manage){
 
     }
 
-    var disconnectNode = function(user){
+    var disconnectNodes = function(user){
         var clearNodes = []
 
         _.each(user.nodes, function(node, key){
 
             if (_.isEmpty(node.ini)){
-
                 node.instance.wss.disconnect(user)
                 clearNodes.push(key)
-
             }
         })
 
@@ -227,9 +254,30 @@ var WSS = function(admins, manage){
         })
     }
 
+    var disconnectNode = function(user, node, iini){
+
+        //console.log('disconnectNode')
+
+        if(user && user.nodes && node && iini){
+            var nnode = user.nodes[node.key]
+            if (nnode){
+
+                delete nnode.ini[iini.id]
+
+                if (_.isEmpty(nnode.ini)){
+                    nnode.instance.wss.disconnect(user)
+
+                    delete user.nodes[node.key] 
+                }
+
+            }
+        }
+
+    }
+
     var disconnectClient = function(ws) {
 
-       
+        //console.log('disconnectClient', ws.id)
 
         delete allwss[ws.id]
         delete allws[ws.id]
@@ -253,7 +301,7 @@ var WSS = function(admins, manage){
                 delete node.ini[ws.id]
             })
 
-            disconnectNode(user)
+            disconnectNodes(user)
 
             if (_.isEmpty(user.devices.ws) && _.isEmpty(user.devices.fb)){
                 clearUsers.push(user.address)
@@ -395,12 +443,14 @@ var WSS = function(admins, manage){
             user.clients[ws.id] = ws
             user.devices.ws[ws.id] = device
 
-            create.node(message.node).then(node => {
+            create.node(message.node, user).then(node => {
 
                 sendMessage({
                     msg : node ? "registered" : 'registererror',
                     addr : user.addr,
-                    node : node.instance.export()
+                    node : {
+                        key : node.key
+                    }
                 }, ws).catch(e => {})
     
                 user.nodes[node.key] || (user.nodes[node.key] = node)
@@ -415,7 +465,7 @@ var WSS = function(admins, manage){
                     user.ticks[ws.id] = setInterval(() => {tick(ws)}, 30000)
                 }
     
-                connectNode(user, user.nodes[node.key]);
+                connectNode(user, user.nodes[node.key], {ini : user.nodes[node.key].ini[ws.id], id : ws.id});
                
             }).catch(e => {
 
@@ -520,7 +570,6 @@ var WSS = function(admins, manage){
                     return createWs(port - 1, settings)
 
                 }).then(resolve).catch(e => {
-                    console.log('init wss', e)
                     reject(e)
                 })
 
@@ -759,7 +808,7 @@ var WSS = function(admins, manage){
                         delete node.ini[id]
                     })
                     
-                    disconnectNode(user)
+                    disconnectNodes(user)
 
                     if (_.isEmpty(user.devices.ws) && _.isEmpty(user.devices.fb)){
                         clearUsers.push(user.address)

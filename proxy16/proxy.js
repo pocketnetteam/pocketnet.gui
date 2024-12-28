@@ -903,8 +903,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			var catchError = function (key) {
 				return (e) => {
 
-					console.log('error', key, e)
-
 					return Promise.resolve()
 				}
 			}
@@ -912,7 +910,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var promises = _.map(list, (i) => {
 				return self[i].init().catch(catchError(i)).then(() => {
-					console.log('ini', i)
 					return Promise.resolve()
 				})
 
@@ -975,8 +972,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		destroy: function () {
-
-			console.log("DESTROY")
 
 			if (statInterval) {
 				clearInterval(statInterval)

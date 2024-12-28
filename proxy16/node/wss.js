@@ -95,6 +95,11 @@ var Wss = function(node, service){
         var path = `${wsprotocol}://${node.host}:${wsport}/ws`;
 
         if(!ws){
+            /*if(user)
+                console.log('new ws', path, user.address, f.rand(0, 100))
+            else{
+                console.log('new ws', path, 'noaddress', f.rand(0, 100))
+            }*/
             ws = new WebSocket(path);        
 
             attempt++
@@ -144,12 +149,8 @@ var Wss = function(node, service){
 
                     node.addblock(data)
 
-                    // console.log('block', f.numfromreleasestring(node.version) )
-
                     node.notification(data)
 
-                    //blockhash
-            
                 }
 
                 emit('message', data)

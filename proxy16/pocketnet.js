@@ -159,8 +159,6 @@ var Pocketnet = function(){
                 }
                 catch (e) {
 
-                    console.log("ERR", e)
-
                 }
             return type
         },

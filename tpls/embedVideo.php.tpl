@@ -84,5 +84,6 @@
       
     </script>
     <script src="./peertube/video-embed.bundle.js"></script>
+    <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
   </body>
 </html>

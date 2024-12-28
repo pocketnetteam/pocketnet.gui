@@ -87,6 +87,8 @@ var Logger = function(_loggers){
     });
 
     self.w = function(key, level, message, meta){
+
+        return false
             
         var l = winston.loggers.get(key)
         if (l) l.log({level, message, meta})
@@ -104,7 +106,6 @@ var Logger = function(_loggers){
                 writelogs = true
             }
             catch(e){
-                console.log("E", e)
                 writelogs = false
             }
         }
