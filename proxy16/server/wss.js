@@ -44,6 +44,7 @@ var WSS = function(admins, manage){
                 clients: {},
                 nodes : {},
                 ticks : {},
+                reconnections : {},
 
                 admin
             }
@@ -127,6 +128,28 @@ var WSS = function(admins, manage){
         }
     }
 
+    var reconnectNode = function(user, node, iini, time = 10000) {
+
+        console.log('reconnectNode')
+
+        if (iini){
+            if (user.reconnections[iini.id]){
+                clearTimeout(user.reconnections[iini.id])
+                delete user.reconnections[iini.id]
+            }
+        }
+
+        var timeout = setTimeout(() => {
+            connectNode(user, node, iini)
+        }, time)
+
+        if (iini){
+            user.reconnections[iini.id] = timeout
+        }
+
+        return timeout
+    }
+
     var connectNode = function(user, node, iini) {
 
         var ws = node.instance.wss.add(user)
@@ -135,8 +158,6 @@ var WSS = function(admins, manage){
 
         ws.on('open', () => {})
         ws.on('disconnected', () => {
-
-           
 
             if (node.auto) {
                 disconnectNode(user, node, iini)
@@ -152,10 +173,7 @@ var WSS = function(admins, manage){
                         }
                     }
                     
-
-                    setTimeout(() => {
-                        connectNode(user, node, iini)
-                    }, 10000)
+                    reconnectNode(user, node, iini, 1000)
 
                 }).catch(e => {})
 
@@ -163,9 +181,9 @@ var WSS = function(admins, manage){
             }
 
             else{
-                setTimeout(() => {
-                    connectNode(user, node, iini)
-                }, 60000)
+
+                reconnectNode(user, node, iini, 2000)
+
             }
 
            
@@ -295,6 +313,11 @@ var WSS = function(admins, manage){
             if (user.ticks[ws.id]){
                 clearInterval(user.ticks[ws.id])
                 delete user.ticks[ws.id]
+            }
+
+            if (user.reconnections[ws.id]){
+                clearTimeout(user.reconnections[ws.id])
+                delete user.reconnections[ws.id]
             }
 
             _.each(user.nodes, function(node, key){

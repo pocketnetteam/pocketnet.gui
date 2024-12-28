@@ -469,7 +469,7 @@ var Cache = function(p){
             if (sd){
                 var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
-                if (t > new Date()){
+                if (t > Date.now()){
                     return sd.data
                 }
                 else{
