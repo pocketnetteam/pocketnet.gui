@@ -681,7 +681,7 @@ var Node = function(options, manager){
             if(cachedrating){
 
 
-                if(cachedrating.time + 30000 > Date.now()){
+                if(cachedrating.time + 130000 > Date.now()){
                     return cachedrating.result || 0
                 }
             }
