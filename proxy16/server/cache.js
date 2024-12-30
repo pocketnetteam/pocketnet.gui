@@ -12,24 +12,27 @@ var Cache = function(p){
     var softclearTime = 10000
 
     var workerInterval = null
-    var workerTime = 200
+    var workerTime = 400
     var waittime = 8500
 
     var ckeys = {}
 
     var worker = function(){
 
-        _.each(waiting, function(w){
-            _.each(w, function(k, key){
+        for(var key in waiting) {
+            let w = waiting[key]
+
+            for(var key2 in w) {
+                let k = w[key2]
                 executingWatcher(k, key)
-            })
-        })
+            }
+        }
     }
 
     var executingWatcher = function(k, key, ignoredate){
 
         var itemswithattemp = []
-        var now = new Date()
+        var now = Date.now()
 
         _.each(k.clbks, function(c, waitid){
 
@@ -68,8 +71,8 @@ var Cache = function(p){
 
                 var newexecutor = itemswithattemp[f.rand(0, itemswithattemp.length - 1)]
 
-                _.each (itemswithattemp, function(ce){
-                    ce[0].date = f.date.addseconds(ce[0].date, waittime / 1000)
+                _.each(itemswithattemp, function(ce){
+                    ce[0].date = ce[0].date + waittime// f.date.addseconds(ce[0].date, waittime / 1000)
                 })
                 
                 k.executor = newexecutor[1]
@@ -409,7 +412,7 @@ var Cache = function(p){
 
             storage[key][k] = {
                 data : data,
-                time : new Date()
+                time : Date.now()
             }
 
             self.setsmart(key, data)
@@ -467,7 +470,7 @@ var Cache = function(p){
             var sd = storage[key] ? (storage[key][k] || null) : null
 
             if (sd){
-                var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
+                var t = sd.time + 1000 * (sd.ontime || ckeys[key].time) //f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
                 if (t > Date.now()){
                     return sd.data
@@ -496,7 +499,7 @@ var Cache = function(p){
 
             smart[storagekey][d[c.smart.idou]] = {
                 data : d,
-                date : new Date()
+                date : Date.now()
             }
 
         })
@@ -585,7 +588,7 @@ var Cache = function(p){
             waiting[key][k].executor = waitid
 
             waiting[key][k].clbks[waitid] = {
-                date : f.date.addseconds(new Date(), waittime / 1000)
+                date : Date.now() + waittime
             }
 
             clbk('execute')
@@ -595,7 +598,7 @@ var Cache = function(p){
 
         waiting[key][k].clbks[waitid] = {
             action : clbk,
-            date : f.date.addseconds(new Date(), waittime / 1000)
+            date : Date.now() + waittime
         }
 
         
@@ -635,11 +638,17 @@ var Cache = function(p){
             var size = 0;
             
             var length = _.toArray(storage[key] || {}).length
+            var wl = 0
+
+            if(waiting[key]){
+                wl = _.toArray(waiting[key]).length
+            }
 
             meta[key] = {
                 block : c.block,
                 length : length,
-                size : size
+                size : size,
+                waiting : wl
             }
 
         })
@@ -657,7 +666,7 @@ var Cache = function(p){
 
     var softclear = function(){
 
-        var date = new Date()
+        var date = Date.now()
 
         _.each(storage, function(s, key){
 
@@ -673,7 +682,7 @@ var Cache = function(p){
 
                 if(sd.time){
 
-                    var t = f.date.addseconds(sd.time, 3 * (sd.ontime || c.time))
+                    var t = sd.time + 3 * (sd.ontime || c.time) * 1000// f.date.addseconds(sd.time, 3 * (sd.ontime || c.time))
 
                     if (t < date){
                         removekeys.push(lkey)
@@ -704,7 +713,7 @@ var Cache = function(p){
 
                 if(sd.time){
 
-                    var t = f.date.addseconds(sd.time, 3 * (time))
+                    var t = sd.time + 3 * (time) * 1000 ///f.date.addseconds(sd.time, 3 * (time))
 
                     if (t < date){
                         removekeys.push(lkey)
