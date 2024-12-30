@@ -2088,6 +2088,37 @@ var BastyonApps = function (app) {
             return result
         },
 
+        applicationsSearchOld : function(str = '', onlyInstalled){
+            var ins = this.installedAndInstalling()
+
+            str = str.toLowerCase()
+
+            /// added only scope
+
+            
+
+            var filtered =_.filter(ins, (application) => {
+                if(application.manifest){
+
+                    if(application.manifest.id == str) return true
+                    if(application.manifest.name.toLowerCase() == str) return true
+
+                    var scope = application.manifest.scope.replace('https://', '').toLowerCase()
+                    var i = str.indexOf(scope)
+
+                    console.log('scope', scope, str, i)
+
+                    if (i < 9 && i > 0) return true // /???
+                }
+            })
+
+            if(onlyInstalled) return filtered
+
+            /// add blockchain search
+
+            return Promise.resolve(filtered)
+        },
+
         applicationsSearch: async function (search = '', searchBy) {
             if (search.includes(':')) {
                 const [detectedSearchBy, ...searchParts] = search.split(':');
