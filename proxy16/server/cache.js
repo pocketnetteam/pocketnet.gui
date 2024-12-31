@@ -22,14 +22,24 @@ var Cache = function(p){
         for(var key in waiting) {
             let w = waiting[key]
 
+            var removing = []
+
             for(var key2 in w) {
                 let k = w[key2]
-                executingWatcher(k, key)
+
+                if(executingWatcher(k)){
+                    removing.push(key2)
+                    //delete w[key2]
+                }
             }
+
+            _.each(removing, (key2) => {
+                delete w[key2]
+            })
         }
     }
 
-    var executingWatcher = function(k, key, ignoredate){
+    var executingWatcher = function(k, ignoredate){
 
         var itemswithattemp = []
         var now = Date.now()
@@ -61,11 +71,8 @@ var Cache = function(p){
                 })
 
                 if(_.isEmpty(k.clbks)){
-                    delete k[key]
+                    return true
                 }
-
-                k.attemp = 0
-
             }
             else{
 
@@ -79,7 +86,6 @@ var Cache = function(p){
                 newexecutor[0].action('execute')
 
                 delete k.clbks[k.executor]
-
 
             }
 
@@ -384,7 +390,10 @@ var Cache = function(p){
                 waiting[key] = {}
 
             if (waiting[key][k]){   
-                executingWatcher(waiting[key][k], key, true)
+                if(executingWatcher(waiting[key][k], true)){
+                    delete waiting[key][k]
+                }
+                
             }
 
         }
@@ -630,6 +639,14 @@ var Cache = function(p){
     self.info = function(compact){
 
         var meta = {}
+        var wt = {}
+
+        if(!compact){
+            _.each(waiting, (w, k) => {
+                wt[k] = _.toArray(w).length
+            })
+        }
+        
 
         _.each(ckeys, function(c, key){
 
@@ -655,6 +672,7 @@ var Cache = function(p){
 
         return {
             meta : meta,
+            wt : wt
         }
     }
     
