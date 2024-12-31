@@ -74,6 +74,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var torapplications = new TorControl(settings.tor, self)
 
 	var transports = new Transports();
+	var cachedInfo = null
 
 	var dump = {}
 
@@ -103,7 +104,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
-		var info = self.kit.info(true)
+		var info = self.kit.info(true, true)
 		var nn = {}
 
 		_.each(info.nodeManager.nodes, (n, k) => {
@@ -855,7 +856,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		stats: function (n) {
 			return getStats(n)
 		},
-		info: function (compact) {
+		info: function (compact, wcached) {
+
+
+			if(cachedInfo && !wcached){
+				if(cachedInfo.time + 120000 > Date.now()){
+					return cachedInfo.data
+				}
+			}
 
 			var mem = process.memoryUsage()
 
@@ -865,8 +873,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
-
-			return {
+			var info = {
 				status: status,
 				test : self.test,
 
@@ -897,6 +904,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				translateapi : translateapi.info(compact)
 			}
 
+			cachedInfo = {
+				time : Date.now(),
+				data : info
+			}
+
+			return info
 		},
 
 		initlist: function (list) {
@@ -1261,7 +1274,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					var direct = true
 					var smartresult = null
 
-					var cparameters = [...parameters]
+					var cparameters = _.clone(parameters)
 
 					
 					return new Promise((resolve, reject) => {
