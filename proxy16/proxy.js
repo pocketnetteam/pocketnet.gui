@@ -1950,6 +1950,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			cacheinfo: {
+				path: '/cacheinfo',
+				action: function (message) {
+
+					return Promise.resolve({
+						cache : server.cache.info()
+					});
+
+				},
+			},
+
 			clearrmt: {
 				path: '/clearrmt',
 				authorization: 'signature',

@@ -130,8 +130,6 @@ var WSS = function(admins, manage){
 
     var reconnectNode = function(user, node, iini, time = 10000) {
 
-        console.log('reconnectNode')
-
         if (iini){
             if (user.reconnections[iini.id]){
                 clearTimeout(user.reconnections[iini.id])
@@ -900,7 +898,7 @@ var WSS = function(admins, manage){
             wss.clients.forEach(socket => {
                 clients++
 
-                if ([socket.OPEN].includes(socket.readyState)) {
+                if (socket.readyState == socket.OPEN) {
                     open++
                 }
             })
@@ -912,7 +910,7 @@ var WSS = function(admins, manage){
             ws.clients.forEach(socket => {
                 clients++
 
-                if ([socket.OPEN].includes(socket.readyState)) {
+                if (socket.readyState == socket.OPEN) {
                     open++
                 }
             })
