@@ -859,11 +859,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		info: function (compact, wcached) {
 
 
-			if(cachedInfo && !wcached){
+			/*if(cachedInfo && !wcached){
 				if(cachedInfo.time + 120000 > Date.now()){
 					return cachedInfo.data
 				}
-			}
+			}*/
 
 			var mem = process.memoryUsage()
 
@@ -904,10 +904,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				translateapi : translateapi.info(compact)
 			}
 
-			cachedInfo = {
+			/*cachedInfo = {
 				time : Date.now(),
-				data : info
-			}
+				data : JSON.parse(JSON.stringify(info))
+			}*/
 
 			return info
 		},
