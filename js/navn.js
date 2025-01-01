@@ -1223,7 +1223,7 @@ Nav = function(app)
 								})
 							}
 
-							app.apps.get.applicationsSearch(href).then(apps => {
+							app.apps.get.applicationsSearchOld(href).then(apps => {
 
 								if(href.indexOf('http') == -1) href = 'https://' + href
 

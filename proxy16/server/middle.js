@@ -19,7 +19,7 @@ var Middle = function(server){
 			ip : ip,
 			s : status,
 			pn : pathname,
-			date : new Date(),
+			date : Date.now(),
             start : start
 		})
 
@@ -267,7 +267,7 @@ var Middle = function(server){
     
     self.data = function(request, result, next){
      
-        request.data = _.merge(request.query, request.body)
+        request.data = {...request.query, ...request.body}
         
         /*_.each(request.data, function(v, key){
     
@@ -297,13 +297,17 @@ var Middle = function(server){
     
         if (request.headers){
             var s = request.headers['authorization'] || '';
-            var apikey = s.replace('Bearer ', '') || ''
+
+            if (s){
+                var apikey = s.replace('Bearer ', '') || ''
     
-            if(!request.data) request.data = {}
-    
-            if (apikey){
-                request.data.apikey = apikey  
+                if(!request.data) request.data = {}
+        
+                if (apikey){
+                    request.data.apikey = apikey  
+                }
             }
+            
         }
     
         if (next) 

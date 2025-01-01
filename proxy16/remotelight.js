@@ -116,7 +116,6 @@ var Remote = function(app){
 			}, function(error, response, body){
 
 				if (error){
-					console.log(error)
 
 					errors[uri] = 'nc'
 
@@ -176,7 +175,6 @@ var Remote = function(app){
 
 
 				if (error){
-					console.log(error)
 					errors[uri] = 'nc'
 
 					if (clbk){

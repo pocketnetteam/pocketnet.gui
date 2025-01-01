@@ -533,11 +533,11 @@ var uploadpeertube = (function () {
 
 					if (window.cordova || isMobile()) {
 						/** Mobile slow 3G chunking */
-						return 256 * 1024;
+						return 2 * 256 * 1024;
 					}
 
 					/** Regular internet (60 mbit/s) */
-					return 256 * 4096;
+					return 2 * 256 * 4096;
 				};
 
 				initCancelListener(() => {
