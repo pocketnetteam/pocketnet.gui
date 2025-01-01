@@ -1955,7 +1955,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function (message) {
 
 					return Promise.resolve({
-						cache : server.cache.info()
+						data : {
+							cache : server.cache.info()
+						}
 					});
 
 				},
