@@ -1361,8 +1361,6 @@ var BastyonApps = function (app) {
 
         }).catch(e => {
 
-            console.error(e)
-
             if (data.id) {
 
                 var response = {
@@ -1370,7 +1368,38 @@ var BastyonApps = function (app) {
                     error: e
                 }
 
-                send(response, application)
+
+                try{
+                    send(response, application)
+                }catch(e2){
+
+                    var error = {}
+
+                    if (e){
+                        if (e.toString){
+
+                            error.description = e.toString()
+                            error.message = e.message
+                            error.name = e.name
+                            error.stack = e.stack
+                            
+                        }
+                        else{
+                            if(typeof e == 'string'){
+                                error.message = e
+                                error.name = "Error"
+                            }
+                        }
+                    }
+
+                    if(!error.message) error.message = 'undefined error'
+                    if(!error.name) error.name = 'undefined error'
+
+                    response.error = error
+
+                    send(response, application)
+                }
+                
             }
         })
     }
