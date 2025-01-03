@@ -52,6 +52,7 @@ var Cache = function(p){
                     itemswithattemp.push([c,waitid])
 
                 if (k.executor == waitid){
+                    delete k.clbks[k.executor]
                     delete k.executor
                 }
             }
@@ -64,6 +65,8 @@ var Cache = function(p){
             k.attemp++
 
             if (k.attemp >= 3){
+
+                k.attemp = 0
 
                 _.each(itemswithattemp, function(ce){
                     ce[0].action('attemps')
