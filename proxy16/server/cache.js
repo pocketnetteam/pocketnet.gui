@@ -94,6 +94,10 @@ var Cache = function(p){
 
         }
 
+        if(_.isEmpty(k.clbks)){
+            return true
+        }
+
     }
     
     if (!p.dontCache)
@@ -394,6 +398,7 @@ var Cache = function(p){
 
             if (waiting[key][k]){   
                 if(executingWatcher(waiting[key][k], true)){
+
                     delete waiting[key][k]
                 }
                 
