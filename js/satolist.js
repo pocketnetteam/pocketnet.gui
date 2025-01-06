@@ -407,7 +407,29 @@ Platform = function (app, listofnodes) {
         'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX': true,
         'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
         'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
-        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true
+        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true,
+        'PPCHQtVQ6hQna3V6E5Snaht9v9NCJJLYTM': true,
+        'PN1iicsiSVHvo52LREkJvVtSxcq2153gnz': true,
+        'PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE': true,
+        'PFRhNJJcAVTf8XkghJt3Gu8NJJhAA4BZ68': true,
+        'PUXPS6R697STByf1FZH1a121jDPr6fmKe8': true,
+        'PWoQb1iiZ7xtzLLPDoJCGcPkug3adGKhbv': true,
+        'PUom3RVtdmeohTbM2TepAeCH7E8hmAcg9e': true,
+        'PARMbP2sdVuAtxqJE1Xi64hpnYgdyTSBUe': true,
+        'PF14hD23JaDEpNNRittHptzZMKkvd1bhtY': true,
+        'PDbM95VjNxRrR8t75NcUc3zxy8EWaVvQfk': true,
+        'PR8zYNzx7tvxmdDzzs5Fzm6Ak1FhdcwPdS': true,
+        'PTY4jFADbYei6BF5tXSme6dFy1aWe87bqZ': true,
+        'PNPqF9MoJfdABB9VNBxgxiAxXJVaP9Ujdg': true,
+        'PX3v9h7TFEnqFriBQTBPHNz4dZyjb9Wtfz': true,
+        'PMWvUDHLULhzkNtr4pdMpMFkBsq4knuDxo': true,
+        'PMxtwpDJxX1Wmky5mfg1CrNCVqqtdF1sGt': true,
+        'PLNievYvwzGmr1Vp2TcuJMPZscFDp7R9ed': true,
+        'PQtqVJ7QnkGtJthY2KEFuMxKuDAAnUeChT': true,
+        'PPi3APdPebC5EkqmGio23QQKgBJr1CwFeX': true,
+        'PS7uZBtymwr3J2tgXmLEQxC2vQrCfzdx7V': true,
+        'PNcYjTjjVfgsHXS8ppREBAos2JhTrZ4EQm': true,
+        'PFXvSPL7ErBvVTvkmf1UhmCyrCY7VModAG': true
 
     }
 
@@ -1027,6 +1049,13 @@ Platform = function (app, listofnodes) {
                     id: 'vidgetstaking',
                     type: "BOOLEAN",
                     value: true
+                },
+
+                interfacemobilelayoutmenu: {
+                    name: self.app.localization.e('interfacemobilelayoutmenu'),
+                    id: 'interfacemobilelayoutmenu',
+                    type: "BOOLEAN",
+                    value: false
                 },
 
                 commentsOrder: {
@@ -9054,6 +9083,8 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
+                    
+
                     system: {
                         name: self.app.localization.e('system'),
                         options: {}
@@ -9068,6 +9099,16 @@ Platform = function (app, listofnodes) {
 
                 if (!self.released.vidgets.staking) {
                     delete c.vidgets.options.vidgetstaking
+                }
+
+
+                if(self.app.mobileview){
+                    c.interface = {
+                        name: self.app.localization.e('interface'),
+                        options: {
+                            interfacemobilelayoutmenu: options.interfacemobilelayoutmenu,
+                        }
+                    }
                 }
 
                 c.system.options.useanimations = options.useanimations
@@ -9146,6 +9187,14 @@ Platform = function (app, listofnodes) {
                                 }*/
 
                             }
+                        }
+
+                        if(i == 'interfacemobilelayoutmenu'){
+                            if (self.app.modules.bnavigation)
+                                self.app.modules.bnavigation.module.restart()
+
+                            if (self.app.modules.menu)
+                                self.app.modules.menu.module.restart()
                         }
                     }
                 })

@@ -167,8 +167,14 @@ __map =  {
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
+		{ c : 'leftpanel', n : 'footer' },
+		{ c : 'leftpanel', n : 'menu' },
+		{ c : 'leftpanel', n : 'best' },
+		{ c : 'miniapps', n : 'index' },
+		{ c : 'miniapps', n : 'apps' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
+		{ c : 'tagcloud', n : 'tags' },
 		{ c : 'userpage', n : 'index' },
 		{ c : 'categories', n : 'index' },
 		{ c : 'categories', n : 'categories' },
@@ -184,11 +190,25 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
+		{ c : 'notifications', n : 'index' },
+		{ c : 'embeding', n : 'images' },
+		{ c : 'taginput', n : 'index' },
+		{ c : 'taginput', n : 'tags' },
 
+		
+		
 		{ c : 'share', n : 'body' },
 		{ c : 'share', n : 'postline' },
 		{ c : 'share', n : 'index' },
 		{ c : 'share', n : 'url' },
+		{ c : 'share', n : 'repost' },
+		{ c : 'share', n : 'settings' },
+
+		{ c : 'staking', n : 'index' },
+		{ c : 'staking', n : 'lastprice' },
+		{ c : 'staking', n : 'graph' },
+
+		
 
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },

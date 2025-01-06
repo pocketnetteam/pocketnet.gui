@@ -685,7 +685,7 @@ var BastyonApps = function (app) {
                     production: !window.testpocketnet,
                     locale: app.localization.key,
                     theme: app.platform.sdk.theme.all[app.platform.sdk.theme.current],
-                    margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || '0px',
+                    margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || document.documentElement.style.getPropertyValue('--app-margin-top-default') || '0px',
                     application: application.manifest,
                     project: project_config
                 })
@@ -784,7 +784,7 @@ var BastyonApps = function (app) {
                     application
                 }) {
 
-                    if (data.images.length >= 10) return Promise.reject(appsError('images:max:10'))
+                    if (data.images.length > 10) return Promise.reject(appsError('images:max:10'))
 
                     return Promise.all(_.map(data.images, (img) => {
                         return resizePromise(img, 1080, 1080).then((resized) => {
@@ -1361,8 +1361,6 @@ var BastyonApps = function (app) {
 
         }).catch(e => {
 
-            console.error(e)
-
             if (data.id) {
 
                 var response = {
@@ -1370,7 +1368,38 @@ var BastyonApps = function (app) {
                     error: e
                 }
 
-                send(response, application)
+
+                try{
+                    send(response, application)
+                }catch(e2){
+
+                    var error = {}
+
+                    if (e){
+                        if (e.toString){
+
+                            error.description = e.toString()
+                            error.message = e.message
+                            error.name = e.name
+                            error.stack = e.stack
+                            
+                        }
+                        else{
+                            if(typeof e == 'string'){
+                                error.message = e
+                                error.name = "Error"
+                            }
+                        }
+                    }
+
+                    if(!error.message) error.message = 'undefined error'
+                    if(!error.name) error.name = 'undefined error'
+
+                    response.error = error
+
+                    send(response, application)
+                }
+                
             }
         })
     }
@@ -2077,6 +2106,37 @@ var BastyonApps = function (app) {
             })
 
             return result
+        },
+
+        applicationsSearchOld : function(str = '', onlyInstalled){
+            var ins = this.installedAndInstalling()
+
+            str = str.toLowerCase()
+
+            /// added only scope
+
+            
+
+            var filtered =_.filter(ins, (application) => {
+                if(application.manifest){
+
+                    if(application.manifest.id == str) return true
+                    if(application.manifest.name.toLowerCase() == str) return true
+
+                    var scope = application.manifest.scope.replace('https://', '').toLowerCase()
+                    var i = str.indexOf(scope)
+
+                    console.log('scope', scope, str, i)
+
+                    if (i < 9 && i > 0) return true // /???
+                }
+            })
+
+            if(onlyInstalled) return filtered
+
+            /// add blockchain search
+
+            return Promise.resolve(filtered)
         },
 
         applicationsSearch: async function (search = '', searchBy) {

@@ -241,6 +241,9 @@ var bnavigation = (function(){
 
 			}
 
+			if (self.app.platform.matrixchat)
+				actions.ahnotify(el.c.find('.tochat'), self.app.platform.matrixchat.getNotificationsCount(), 'chat')
+
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu3 = function(count){
 				if(el.c) actions.ahnotify(el.c.find('.tochat'), count, 'chat') 
 			}

@@ -2,11 +2,11 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.105",
+    "version": "0.9.108",
 
-    "versionsuffix": "6",
-    "cordovaversion": "1.8.105",
-    "cordovaversioncode": "1801056",
+    "versionsuffix": "2",
+    "cordovaversion": "1.8.108",
+    "cordovaversioncode": "1801082",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -16,6 +16,7 @@
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
         "start": "electron . --development",
+        "startinspect": "electron . --development --inspect=9229",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "build": "npm run build:proxy16 && npm run dev:bastyon",

@@ -2,12 +2,12 @@
 
 class API {
 
-    protected $api = 'https://pocketnet.app:8899/';
+    protected $aapi = 'https://pocketnet.app:8899/';
 
 	public function __construct ($proxypath)
 	{
         if (isset($proxypath)){
-            $this->api = $proxypath;
+            $this->aapi = $proxypath;
         }
             
 	}
@@ -68,7 +68,7 @@ class API {
 	public function send($action, $params){
         $fields = $this->prepareRequest($action, $params);
         
-        $url = $this->api.$action;
+        $url = $this->aapi.$action;
 
         return $this->curl($url, $fields);
     }
