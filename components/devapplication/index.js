@@ -106,6 +106,12 @@ var devapplication = (function () {
           );
         }
 
+        if (application.scope.includes("localhost")) {
+          return sitemessage(
+            self.app.localization.e("miniApp_localhostScopeWarningMessage")
+          );
+        }
+
         globalpreloader(true);
 
         const publishData = {
