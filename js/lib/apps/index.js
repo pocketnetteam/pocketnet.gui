@@ -1660,14 +1660,13 @@ var BastyonApps = function (app) {
         if (!existingApp) {
             return Promise.reject(new Error('not_found:app_id'));
         }
-
-        existingApp.name = app.name || existingApp.name;
-        existingApp.scope = app.scope || existingApp.scope;
+        
+        const newAppData = { ...existingApp, ...app };
 
         try {
 
-            saveAppToLocalhost(existingApp);
-            return install(existingApp);
+            saveAppToLocalhost(newAppData);
+            return install(newAppData);
         } catch (e) {
             return Promise.reject(e);
         }
@@ -1712,10 +1711,10 @@ var BastyonApps = function (app) {
         var remove = new Remove();
 
         try {
+            self.remove(appId);
             remove.import({
                 txidEdit: hash
             });
-
             return makeAction(remove, {
                 id: appId
             }, true);
@@ -1734,7 +1733,7 @@ var BastyonApps = function (app) {
                 appId: id
             });
         } else {
-            return self.removeAppFromConfig(appId);
+            return self.removeAppFromConfig(id);
         }
     };
 
@@ -1825,7 +1824,7 @@ var BastyonApps = function (app) {
 
         var promises = []
         const developApps = app.developapps || [];
-        const localApps = [] //loadAllAppsFromLocalhost() || [];
+        const localApps = [];
         const allApps = [...developApps, ...localApps];
 
         if (allApps.length > 0) {
@@ -1876,9 +1875,9 @@ var BastyonApps = function (app) {
         console.log("INSTALLED LOCAL", installedLocal)
         
 
-        /*_.forEach(installedLocal, (info) => {
-           info?.id && install(info.data, info.cached)
-        })*/
+        _.forEach(installedLocal, (info) => {
+            info?.id && install(info.data, info.cached)
+        })
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
 
@@ -1952,7 +1951,7 @@ var BastyonApps = function (app) {
                 return Promise.reject(appsError('missing:resources'));
             }
 
-            if (resourceData.manifest.author !== application.author) {
+            if (resourceData.manifest.author !== application.address) {
                 return Promise.reject(appsError('discrepancy:author'));
             }
 

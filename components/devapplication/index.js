@@ -120,7 +120,9 @@ var devapplication = (function () {
           address: application.manifest?.author,
           name: application.manifest?.name,
           scope: application.scope,
-          description: application.manifest.descriptions?.["en"],
+          description:
+            application.manifest?.description ||
+            application.manifest.descriptions?.["en"],
           tags: application.tags,
         };
 
@@ -164,7 +166,7 @@ var devapplication = (function () {
           .find(".tag")
           .map((_, tag) => $(tag).attr("tag"))
           .get(),
-        author: userAddress,
+        address: userAddress,
       };
     }
 
@@ -180,8 +182,14 @@ var devapplication = (function () {
           value: appData.scope,
           selector: "#app-scope",
           message: self.app.localization.e("miniApp_scopeInvalidMessage"),
-          condition: (value) =>
-            /^[a-zA-Z0-9.-]+$/.test(value) && value.indexOf("https") === -1,
+          condition: (value) => {
+            const localhostPattern = /^localhost:\d+$/;
+            const domainPattern = /^[a-zA-Z0-9.-]+$/;
+            return (
+              localhostPattern.test(value) ||
+              (domainPattern.test(value) && value.indexOf("https") === -1)
+            );
+          },
         },
         {
           value: appData.tags,
@@ -232,6 +240,7 @@ var devapplication = (function () {
         history: true,
       });
     };
+
 
     var confirmDeletion = function () {
       new dialog({
@@ -366,7 +375,7 @@ var devapplication = (function () {
             id: application?.id,
             name: application?.name,
             version: application?.version,
-            scope: application?.scope,
+            scope: application?.scope?.replace(/^https?:\/\//, ''),
           },
         },
         function (_p) {
@@ -432,7 +441,8 @@ var devapplication = (function () {
       app.apps.get
         .application(applicationId)
         .then(function (response) {
-          application = response.appdata?.data;
+          application = response.application || response.appdata?.data;
+          
 
           if (
             !application ||
