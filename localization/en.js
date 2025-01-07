@@ -3034,6 +3034,7 @@ _l.miniApp_missingApplicationError = "The application was not found in the insta
 _l.miniApp_publishSuccessMessage = "The application has been successfully published.";
 _l.miniApp_publishErrorMessage = "An error occurred while publishing the application.";
 _l.miniApp_publishOnlyTestNetworkMessage = "Currently, publishing is only available on the test network.";
+_l.miniApp_localhostScopeWarningMessage = "Publishing an application with a local scope ('localhost') is not allowed. Please change the scope in the editing tab.";
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
 _l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";

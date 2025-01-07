@@ -386,8 +386,12 @@ var devapplication = (function () {
     };
 
     var renderDetails = function (application) {
-      const description = application.manifest.descriptions;
-
+      const description =
+        application.manifest?.description || application.manifest.descriptions;
+      const localizedDescription =
+        typeof description === "string"
+          ? description
+          : description?.[app.localization.key] ?? description?.["en"];
       self.shell(
         {
           name: "miniAppDetail",
@@ -402,8 +406,7 @@ var devapplication = (function () {
             permissions: application.manifest?.permissions?.join(", "),
             version: application.manifest?.versiontxt,
             scope: application.manifest.scope,
-            description:
-              description?.[app.localization.key] ?? description?.["en"],
+            description: localizedDescription,
           },
         },
         function (_p) {
