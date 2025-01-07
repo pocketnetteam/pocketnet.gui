@@ -343,7 +343,7 @@ var devapplication = (function () {
             },
             addTag: function (tag) {
               const maxlength = 2;
-              if (_tags.length > maxlength)
+              if (_tags.length >= maxlength)
                 return sitemessage(
                   self.app.localization.e("miniApp_extendedTags") + maxlength
                 );
