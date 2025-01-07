@@ -3002,7 +3002,7 @@ _l.miniApp_cancelButton = "Cancel";
 
 _l.miniApp_importManifestError = "Manifest import error. This can occur if the `b_manifest.json` file is missing, corrupted, or has an invalid JSON format.";
 _l.miniApp_importIconError = "Application icon import error. This can occur if the `b_icon.png` file is missing or inaccessible.";
-_l.miniApp_brokenManifestError = "The application manifest is corrupted. This may be caused by a JSON syntax error or missing keys in the manifest.";
+_l.miniApp_brokenManifestError = "Manifest import error on the specified domain. Check the existence and correctness of the `b_manifest.json` file. If HTTPS with a self-signed certificate is used, allow access in your browser.";
 _l.miniApp_brokenPermissionsError = "Invalid or empty permissions in the manifest. Ensure the permissions are specified correctly.";
 _l.miniApp_missingIdError = "The application ID is missing in the manifest. The `id` field must be filled.";
 _l.miniApp_missingNameError = "The application name is missing in the manifest. The `name` field must be filled.";
@@ -3064,7 +3064,7 @@ _l.miniApp_iconAltText = "Application Icon";
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_createDescription = "Ensure that all data matches the fields specified in the application's b_manifest.json file. Any discrepancies may cause errors during installation.";
 
-_l.miniApp_instructionsIntro = "To successfully create a mini-application, you need to have a published application on your own domain.";
+_l.miniApp_instructionsIntro = "To successfully create a mini-application, you need to have a published application on your own domain. You can also use a local address for testing, for example localhost:3333. This address can be changed later in the edit section.";
 _l.miniApp_instructionsFilesNeeded = "Your domain must have two available files:";
 _l.miniApp_instructionsManifest = "b_manifest - A JSON manifest containing information about the application.";
 _l.miniApp_instructionsIcon = "b_icon.png - The application icon (PNG format), available at: https://[scope]/b_icon.png, where scope is the domain you specified.";
