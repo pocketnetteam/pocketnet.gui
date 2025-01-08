@@ -2205,11 +2205,16 @@ var BastyonApps = function (app) {
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 
-           const uniqueApps = Array.from(
-             new Map(allApps.map((app) => [app.id, app])).values()
-           ).filter((app) => app.name);
 
-            return uniqueApps.map(adaptApplicationData);
+            const appsMap = new Map(allApps.map((app) => [app.id, app]));
+            const uniqueAppsRaw = Array.from(appsMap.values());
+
+
+            const adaptedApps = uniqueAppsRaw.map(adaptApplicationData);
+
+            const filteredApps = adaptedApps.filter((app) => app.name);
+
+            return filteredApps;
         },
         applicationall: function (id, cached) {
             return self.get.application(id).catch(e => {
