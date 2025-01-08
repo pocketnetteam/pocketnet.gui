@@ -199,6 +199,10 @@ var transactionview = (function(){
 						self.app.platform.ui.socialshare('transactionview?stx=' + txid)
 					})
 
+					p.el.find('.toblockexplorer').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('transaction/'+ txid))
+					})
+
 					if(clbk) clbk()
 					
 				})

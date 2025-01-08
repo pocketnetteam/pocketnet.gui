@@ -243,7 +243,13 @@ var home = (function () {
 					userAddress,
 				};
 
-				clbk(data);
+				pretry(() => {
+					return self.app.apps.inited
+				}, 100, 3000).then(() => {
+	
+					clbk(data);
+				})
+
 			},
 
 			destroy: function () {

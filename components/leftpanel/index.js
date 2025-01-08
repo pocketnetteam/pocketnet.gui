@@ -221,6 +221,10 @@ var leftpanel = (function(){
 						self.app.apps.openInWndById('app.pocketnet.docs')
 					})
 
+					_p.el.find('.blockexplorer').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+					})
+
 					if(clbk) clbk()
 				})
 			},
