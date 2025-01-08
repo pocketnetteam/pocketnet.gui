@@ -2205,7 +2205,9 @@ var BastyonApps = function (app) {
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 
-            const uniqueApps = Array.from(new Map(allApps.map(app => [app.id, app])).values());
+           const uniqueApps = Array.from(
+             new Map(allApps.map((app) => [app.id, app])).values()
+           ).filter((app) => app.name);
 
             return uniqueApps.map(adaptApplicationData);
         },
