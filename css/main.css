@@ -4465,6 +4465,9 @@ html.mobileview.android .wnd .wndback {
 .sharepostmenu.downloadMenu .menuitem .label span.lightColor {
   color: rgb(var(--neutral-grad-3));
 }
+.toblockexplorer {
+  cursor: pointer;
+}
 .matrixchatwrapper {
   font-size: 16px;
 }

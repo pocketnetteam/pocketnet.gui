@@ -58,8 +58,6 @@ var Cache = function(p){
             }
         })
 
-       
-        
         if (itemswithattemp.length){
 
             k.attemp++
@@ -367,7 +365,20 @@ var Cache = function(p){
             getbans: {
                 time : 460,
                 block : 0,
-            } 
+            },
+            
+            getstatisticcontentbydays : {
+                time : 3600
+            },
+
+            getstatisticbydays : {
+                time : 3600
+            },
+
+            getcoininfo: {
+                time : 460,
+                block : 0,
+            },
         }
     }
 

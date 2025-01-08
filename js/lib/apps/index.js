@@ -2394,10 +2394,13 @@ var BastyonApps = function (app) {
     
                 essenseData: {
                     application : application.manifest.id,
-                    path : path
+                    path : path,
+                    inWnd : true
     
                 }
             })
+        }).catch(e => {
+            console.error(e)
         })
 
         
