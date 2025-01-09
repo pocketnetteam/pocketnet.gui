@@ -22,6 +22,7 @@ var parseManifest = function (json) {
     result.name = superXSS(data.name.replace(/[^\p{L}\p{N}\p{Z}]/gu, ''))
     result.version = numfromreleasestring(data.version || '1.0.0')
     result.versiontxt = superXSS(data.version)
+    result.description = superXSS(data.description)
     result.descriptions = {}
 
     _.each(data.descriptions, (description, l) => {
@@ -44,7 +45,7 @@ var parseManifest = function (json) {
     if (!result.id) throw appsError('missing:id')
     if (!result.name) throw appsError('missing:name')
     if (!result.version) throw appsError('missing:version')
-    if (!result.descriptions['en']) throw appsError('missing:description:en')
+    if (!result.descriptions?.['en'] && !result.description) throw appsError('missing:description')
     if (!result.scope) throw appsError('missing:scope')
 
 
@@ -81,16 +82,18 @@ const getAppIconFromScope  = (scope) => `https://${scope}/b_icon.png`
 
 var importManifest = function (application) {
 
-    return importFile(application, 'b_manifest.json').then((manifest) => {
-
+    return importFile(application, "b_manifest.json")
+      .then((manifest) => {
         try {
-            manifest = parseManifest(manifest)
+          manifest = parseManifest(manifest);
         } catch (e) {
-            return Promise.reject(e)
+          return Promise.reject(e);
         }
 
-        if (manifest.id != application.id) return Promise.reject(appsError('discrepancy:id'))
-        if (manifest.develop != (application.develop || false)) return Promise.reject(appsError('discrepancy:develop'))
+        if (manifest.id != application.id)
+          return Promise.reject(appsError("discrepancy:id"));
+        if (manifest.develop != (application.develop || false))
+          return Promise.reject(appsError("discrepancy:develop"));
 
         // if (manifest.version < application.version) {
         //     return Promise.reject(appsError('version'))
@@ -100,18 +103,25 @@ var importManifest = function (application) {
         //     return Promise.reject(appsError('version'))
         // }
         if (application.develop) {
-            manifest.scope = application.path
+          manifest.scope = application.path;
         } else {
-            manifest.scope = 'https://' + manifest.scope
+          manifest.scope = "https://" + manifest.scope;
         }
 
-        return Promise.resolve(manifest)
-    }).catch((e) => {
-        if (e.message?.startsWith('discrepancy')) {
-            return Promise.reject(e)
+        return Promise.resolve(manifest);
+      })
+      .catch((e) => {
+        const matchesErrorPattern = (message) =>
+          [/^missing:.+/, /^discrepancy:.+/].some((pattern) =>
+            pattern.test(message)
+          );
+
+        if (matchesErrorPattern(e.message)) {
+          return Promise.reject(e);
         }
-        return Promise.reject(appsError('import:manifest'))
-    })
+
+        return Promise.reject(appsError("import:manifest"));
+      });
 }
 
 var validateParameters = function (data, parameters) {
@@ -1642,15 +1652,6 @@ var BastyonApps = function (app) {
 
         return []
 
-        let apps = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('app_')) {
-                const appData = JSON.parse(localStorage.getItem(key));
-                apps.push(appData);
-            }
-        }
-        return apps;
     };
 
 
@@ -1659,14 +1660,13 @@ var BastyonApps = function (app) {
         if (!existingApp) {
             return Promise.reject(new Error('not_found:app_id'));
         }
-
-        existingApp.name = app.name || existingApp.name;
-        existingApp.scope = app.scope || existingApp.scope;
+        
+        const newAppData = { ...existingApp, ...app };
 
         try {
-            saveAppToLocalhost(existingApp);
 
-            return install(existingApp);
+            saveAppToLocalhost(newAppData);
+            return install(newAppData);
         } catch (e) {
             return Promise.reject(e);
         }
@@ -1711,10 +1711,10 @@ var BastyonApps = function (app) {
         var remove = new Remove();
 
         try {
+            self.remove(appId);
             remove.import({
                 txidEdit: hash
             });
-
             return makeAction(remove, {
                 id: appId
             }, true);
@@ -1733,7 +1733,7 @@ var BastyonApps = function (app) {
                 appId: id
             });
         } else {
-            return self.removeAppFromConfig(appId);
+            return self.removeAppFromConfig(id);
         }
     };
 
@@ -1824,7 +1824,7 @@ var BastyonApps = function (app) {
 
         var promises = []
         const developApps = app.developapps || [];
-        const localApps = [] //loadAllAppsFromLocalhost() || [];
+        const localApps = [];
         const allApps = [...developApps, ...localApps];
 
         if (allApps.length > 0) {
@@ -1875,9 +1875,9 @@ var BastyonApps = function (app) {
         console.log("INSTALLED LOCAL", installedLocal)
         
 
-        /*_.forEach(installedLocal, (info) => {
-           info?.id && install(info.data, info.cached)
-        })*/
+        _.forEach(installedLocal, (info) => {
+            info?.id && install(info.data, info.cached)
+        })
 
         promises.push(Promise.all(_.map(installedLocal, (info) => {
 
@@ -1951,7 +1951,7 @@ var BastyonApps = function (app) {
                 return Promise.reject(appsError('missing:resources'));
             }
 
-            if (resourceData.manifest.author !== application.author) {
+            if (resourceData.manifest.author !== application.address) {
                 return Promise.reject(appsError('discrepancy:author'));
             }
 
