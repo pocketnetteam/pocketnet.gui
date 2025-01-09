@@ -90,6 +90,9 @@
   background-color: rgb(var(--background-main));
   color: rgb(var(--text-color));
 }
+#devapplication .miniapp-container .miniapp-form .form-input::placeholder {
+  color: rgba(var(--color-txt-gray-light),0.8);
+}
 #devapplication .miniapp-container .miniapp-form .form-input.error {
   border: 1px solid rgb(var(--color-bad)) !important;
   background-color: rgba(var(--color-bad), 0.05) !important;
@@ -120,6 +123,11 @@
   font-weight: bold;
   margin-bottom: 20px;
   color: rgb(var(--text-color));
+}
+#devapplication .miniapp-container .miniapp-form .form-title:not(:first-of-type) {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(var(--neutral-grad-2));
 }
 #devapplication .miniapp-container .miniapp-form .field-description {
   font-size: 0.9em;
@@ -169,6 +177,26 @@
 #devapplication .miniapp-container #taginput .tgs .tagsWrapper .search .searchFastResultWrapper {
   background-color: rgb(var(--background-secondary-theme));
 }
+
+#devapplication .miniapp-container .miniapp-form .icon-preview-container {
+  margin-top: 10px;
+  background-color: rgb(var(--neutral-grad-0));
+  border: 1px solid rgb(var(--neutral-grad-2));
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  min-height: 100px;
+}
+
+#devapplication .miniapp-container .miniapp-form .icon-preview-container .app-icon-preview {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+
 @media (max-width: 768px) {
   #devapplication .miniapp-container {
     padding: 20px;
@@ -193,6 +221,7 @@
     font-size: 1em;
   }
 }
+
 @media (max-width: 480px) {
   #devapplication .miniapp-container .header {
     flex-direction: column;
