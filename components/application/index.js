@@ -482,7 +482,8 @@ var application = (function(){
 
 							if(path) ps.p = path
 
-							ps.id = id
+							if(!ed.inWnd)
+								ps.id = id
 
 							self.app.nav.api.history.addRemoveParameters([], ps, {
 								replaceState: true

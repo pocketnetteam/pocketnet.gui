@@ -280,9 +280,6 @@
   border: 0;
   outline: 0;
 }
-.wnd.appwindow {
-  z-index: 500;
-}
 .wnd.appwindow ._close {
   display: none;
 }
