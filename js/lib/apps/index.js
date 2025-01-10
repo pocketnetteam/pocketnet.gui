@@ -31,7 +31,7 @@ var parseManifest = function (json) {
 
     result.author = data.author
     result.develop = data.develop == false ? false : true
-    result.scope = data.scope
+    //result.scope = data.scope
     result.permissions = _.map(data.permissions || [], (p) => {
         return p.replace(/[^a-z0-9\.]/g, '')
     })
@@ -46,7 +46,7 @@ var parseManifest = function (json) {
     if (!result.name) throw appsError('missing:name')
     if (!result.version) throw appsError('missing:version')
     if (!result.descriptions?.['en'] && !result.description) throw appsError('missing:description')
-    if (!result.scope) throw appsError('missing:scope')
+    //if (!result.scope) throw appsError('missing:scope')
 
 
 
@@ -105,7 +105,7 @@ var importManifest = function (application) {
         if (application.develop) {
           manifest.scope = application.path;
         } else {
-          manifest.scope = "https://" + manifest.scope;
+          manifest.scope = "https://" + application.scope ? application.scope : manifest.scope;
         }
 
         return Promise.resolve(manifest);
@@ -226,6 +226,34 @@ var BastyonApps = function (app) {
     }
 
     var actions = {
+        ext: {
+            parameters: ['ext'],
+
+            action: function ({
+                data,
+                application
+            }) {
+
+                try {
+
+                    var ps = app.platform.sdk.external.getFromHash(data.ext)
+
+                    if(ps.action == 'auth'){
+                        return Promise.reject(appsError('application:ext:auth:deprecated'))
+                    }
+
+                    app.platform.ui.external(ps)
+
+                    return Promise.resolve('application:ext:opened')
+
+                } catch (e) {
+                    console.error(e)
+
+                    return Promise.reject(appsError('application:ext:notopened'))
+                }
+
+            }
+        },
         opensettings: {
             parameters: [],
 

@@ -1817,24 +1817,26 @@ var pSDK = function ({ app, api, actions }) {
                 try {
 
                     
-                        miniappjson.address = c.s1 || ''
-                        miniappjson.hash = c.s2 || ''
+                        miniappjson.address = superXSS(c.s1 || '')
+                        miniappjson.hash = superXSS(c.s2 || '')
 
                     if(c.p){
                         if(c.p.s1){
                             var js = JSON.parse(c.p.s1)
             
-                            miniappjson.name = js.n || '';
-                            miniappjson.scope = js.s || '';
-                            miniappjson.description = js.d || '';
-                            miniappjson.tags = js.t || [];
+                            miniappjson.name = superXSS(js.n || '');
+                            miniappjson.scope = superXSS(js.s || '');
+                            miniappjson.description = superXSS(js.d || '');
+                            miniappjson.tags = _.map(js.t || [], (t) => {
+                                return superXSS(t)
+                            });
                         }
                         else{
                             return null
                         }
             
                         if (c.p.s2){
-                            miniappjson.id = c.p.s2
+                            miniappjson.id = superXSS(c.p.s2)
                         }else{
                             return null
                         }

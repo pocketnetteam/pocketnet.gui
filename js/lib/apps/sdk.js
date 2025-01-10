@@ -293,6 +293,23 @@ var BastyonSdk = function(){
         })
     }
 
+    self.ext = function(url = ''){
+
+        var prts = url.split('?ext=')
+
+        if(prts.length > 1){
+            return action('ext', {
+                ext : prts[1]
+            })
+        }
+
+        else{
+            return Promise.reject('wrongUrl')
+        }
+        
+    }
+
+   
     self.openExternalLink = function(url){
         return action('openExternalLink', {url})
     }
