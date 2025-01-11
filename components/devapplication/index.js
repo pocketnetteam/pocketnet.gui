@@ -241,7 +241,6 @@ var devapplication = (function () {
       });
     };
 
-
     var confirmDeletion = function () {
       new dialog({
         class: "zindex",
@@ -304,10 +303,62 @@ var devapplication = (function () {
             );
             _p.el.find("#app-scope").on("blur", function () {
               renders.appIconPreview(this.value);
+              renders.showManifestButton(this.value);
             });
+            renders.deploymentInstructions();
             renders.tagInput({
               tags: [],
               _p,
+            });
+          }
+        );
+      },
+      showManifestButton: function (scope) {
+        simpleRequest(`https://${scope}/b_manifest.json`, "b_manifest.json")
+          .then((manifest) => {
+            self.shell(
+              {
+                name: "showManifestButton",
+                el: el.c.find("#manifestButtonContainer"),
+                data: {},
+              },
+              function (_p) {
+                _p.el.find("#showManifestBtn").click(function () {
+                  alert(JSON.stringify(JSON.parse(manifest), null, 2));
+                });
+              }
+            );
+          })
+          .catch(() => {
+            el.c.find("#manifestButtonContainer").empty();
+            handleAppError({ message: "import:manifest" });
+          });
+      },
+      deploymentInstructions: function () {
+        self.shell(
+          {
+            name: "deploymentInstructions",
+            el: el.c.find("#deploymentInstructions"),
+            data: {},
+          },
+          function (_p) {
+            const header = _p.el.find(".accordion-header");
+            const content = _p.el.find(".accordion-content");
+            const icon = _p.el.find(".accordion-icon");
+
+            header.on("click", function () {
+              if (content.hasClass("show")) {
+                content.removeClass("show");
+                content.css("max-height", "0px");
+                icon.text("+");
+              } else {
+                const scrollHeight = content[0].scrollHeight;
+                const padding = 40;
+                const totalHeight = scrollHeight + padding;
+                content.addClass("show");
+                content.css("max-height", `${totalHeight}px`);
+                icon.text("-");
+              }
             });
           }
         );
@@ -375,14 +426,18 @@ var devapplication = (function () {
             id: application?.id,
             name: application?.name,
             version: application?.version,
-            scope: application?.scope?.replace(/^https?:\/\//, ''),
+            scope: application?.scope?.replace(/^https?:\/\//, ""),
           },
         },
         function (_p) {
           renders.appIconPreview(application.scope);
           _p.el.find(".save-btn").on("click", actions.editApp);
           _p.el.find(".cancel-btn").on("click", actions.cancelEdit);
-
+          _p.el.find("#app-scope").on("blur", function () {
+            renders.appIconPreview(this.value);
+            renders.showManifestButton(this.value);
+          });
+          renders.deploymentInstructions();
           ["#app-name", "#app-version", "#app-scope"].forEach((selector) =>
             _p.el.find(selector).on("input", () => clearErrors(selector))
           );
@@ -442,7 +497,6 @@ var devapplication = (function () {
         .application(applicationId)
         .then(function (response) {
           application = response.application || response.appdata?.data;
-          
 
           if (
             !application ||

@@ -3064,13 +3064,14 @@ _l.miniApp_iconAltText = "Application Icon";
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_createDescription = "Ensure that all data matches the fields specified in the application's b_manifest.json file. Any discrepancies may cause errors during installation.";
 
-_l.miniApp_instructionsIntro = "To successfully create a mini-application, you need to have a published application on your own domain. You can also use a local address for testing, for example localhost:3333. This address can be changed later in the edit section.";
-_l.miniApp_instructionsFilesNeeded = "Your domain must have two available files:";
-_l.miniApp_instructionsManifest = "b_manifest - A JSON manifest containing information about the application.";
-_l.miniApp_instructionsIcon = "b_icon.png - The application icon (PNG format), available at: https://[scope]/b_icon.png, where scope is the domain you specified.";
-_l.miniApp_instructionsManifestExample = "Example of b_manifest:";
-_l.miniApp_instructionsDataMatch = "All data entered in the form (id, name, scope) must match the fields in the manifest. The author field in the manifest must match the user who is adding this application.";
-_l.miniApp_instructionsDevMode = "After clicking the 'Save' button, your mini-application will be created in development mode (dev-mode). It will only be accessible locally to you, not publicly. Later, you will have access to a control panel where you can publish the application for all users.";
+_l.miniApp_instructionsTitle = "Deployment Instructions";
+_l.miniApp_instructionsIntro = "Deploying the application is quite simple. You need to provide two files: b_manifest and b_icon.";
+_l.miniApp_instructionsFilesNeeded = "To ensure a successful deployment, make sure the following files are available on your domain:";
+_l.miniApp_instructionsManifest = "b_manifest - JSON file containing information about the application.";
+_l.miniApp_instructionsIcon = "b_icon.png - the application icon in PNG format, available at the URL: https://[scope]/b_icon.png, where scope is your domain.";
+_l.miniApp_instructionsManifestExample = "Example content of the b_manifest file:";
+_l.miniApp_instructionsDataMatch = "Important: all form data (id, name) must match the corresponding fields in the b_manifest file exactly. The author field must match the current user adding the application. The scope field specifies the domain where the application is hosted. For testing, you can use a local address such as localhost:3333. This address can later be replaced with your domain, e.g., example.com.";
+_l.miniApp_instructionsDevMode = "After saving, your mini-application will be created in development mode (dev mode). It will only be available to you locally. Later, you can publish the application for all users through the management panel.";
 
 _l.miniApp_nameLabel = "Name";
 _l.miniApp_scopeLabel = "Domain";
@@ -3085,8 +3086,9 @@ _l.miniApp_scopeDescription =
   "Do not include 'https://' or any other prefixes. Only lowercase letters, " +
   "digits, and dots are allowed (for example, 'my-app.bastyonapps.com' or 'subdomain.example.com').";
 
-_l.miniApp_iconInstructions = "Your application's icon will be loaded from https://[scope]/b_icon.png, if the file is available. If the icon cannot be loaded, an error message will be displayed. Ensure that b_icon.png is uploaded to your domain.";
-_l.miniApp_iconLabelInstructions = "After specifying the domain above, the icon will be loaded from https://[scope]/b_icon.png. If the icon is missing or the domain is incorrect, an error message will be shown.";
+_l.miniApp_iconInstructions = "In the display section, you configure the appearance of your application. The icon is automatically loaded from the URL https://[scope]/b_icon.png, where [scope] is the domain of your application (e.g., example.com). Ensure the b_icon.png file is accessible and in PNG format.";
+_l.miniApp_iconLabelInstructions = "After entering the domain, you will see a preview of the loaded icon. If the file is missing or the domain is incorrect, an error message will appear.";
+_l.miniApp_showManifestButton = "Show b_manifest content";
 
 _l.miniApp_tagsCountRequirement = "Add 2 tags that describe your application.";
 _l.miniApp_tagsInstructions = "Tags help users find your application.";
@@ -3102,7 +3104,7 @@ _l.miniApp_deploymentSectionTitle = "Deployment";
 _l.miniApp_displaySectionTitle = "Display";
 
 _l.miniApp_editAppTitle = "Edit Mini-Application";
-_l.miniApp_editDescriptionIntro = "All the data specified in the form (id, name, scope) must match the fields in the manifest (b_manifest).";
+_l.miniApp_editDescriptionIntro = "All the data specified in the form (id, name) must match the fields in the manifest (b_manifest).";
 _l.miniApp_editDescriptionAuthor = "The 'author' field in the manifest must correspond to the user who adds this application (the owner).";
 _l.miniApp_editDescriptionScope = "If you change the scope (domain), make sure the new domain has the required files: b_manifest (a JSON file describing the application) and b_icon.png (the PNG icon), available at https://[scope]/b_icon.png.";
 _l.miniApp_editDescriptionId = "Changing the id effectively creates a new mini-application, so it's generally best not to change the id if you're simply updating an existing one.";

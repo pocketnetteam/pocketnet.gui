@@ -19,7 +19,11 @@ var devapplications = (function () {
       load: function () {},
     };
 
-    var initEvents = function () {};
+    var initEvents = function () {
+      el.c.find("#navigateToDocs").on('click', () => {
+        self.app.apps.openInWndById('app.pocketnet.docs', null, '')
+      })
+    };
 
     return {
       primary: primary,
