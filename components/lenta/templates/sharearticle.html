@@ -362,6 +362,38 @@ var cc = share.renders.captionclear(translated.c);
 
             <% } %>
 
+            <% if(checkvisibility == 'paid' || checkvisibility == 'paid_check' || checkvisibility == 'paid_error'){ %>
+
+                <div class="hiddenlabeltext">
+                    <%=e('sharevisibilitylabel_paid_' + cview)%>
+                </div>
+
+                <% if(state) {%>
+
+                    <% if(checkvisibility == 'paid_check'){ %>
+                        <div class="hiddenlabelaction">
+                            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                        </div>
+                    <% } %>
+
+                    <% if(checkvisibility == 'paid_error'){ %>
+                        <div class="hiddenlabelaction">
+                            <%=e('sharevisibilitylabel_paid_error')%>
+                        </div>
+                    <% } %>
+
+                    <% if(checkvisibility == 'paid'){ %>
+                        <div class="hiddenlabelaction">
+                            <button elementsid="hrefregistration" class="orange small button getpaidsubscription"><%=e('getpaidsubscription')%></button>
+                        </div>
+                    <% } %>
+
+                    
+
+                <% } %>
+
+            <% } %>
+
             <% if(!state) {%>
 
                 <div class="hiddenlabelaction">

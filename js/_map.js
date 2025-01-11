@@ -802,6 +802,12 @@ __map =  {
 			add : insertingfunc
 		},
 
+		managepaidsubscription : {
+			uri : "managepaidsubscription",
+			href : "managepaidsubscription",
+			add : insertingfunc
+		},
+
 		devapplication : {
 			uri : "devapplication",
 			href : "devapplication",

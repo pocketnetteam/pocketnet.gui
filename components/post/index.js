@@ -297,7 +297,7 @@ var post = (function () {
 			},
 
 			sharesocial: function (clbk) {
-				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
+				var url = 'https://' + self.app.options.url + '/' + ('post?') + 's=' + share.txid
 
 				if (parameters().address) {
 					url += '&address=' + (parameters().address || '')

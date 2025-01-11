@@ -3402,11 +3402,17 @@ pShare = function(){
 
 		//if(rand(0, 1)) return 'sub'
 
+		if(!self.settings.f) return null
+
 		if(self.settings.f == '0') return null
 
 		if(self.settings.f == '1') return 'sub'
 
 		if(self.settings.f == '2') return 'reg'
+
+		if(self.settings.f == '3') return 'paid'
+
+		return 'any'
 	}
 
 	self.type = 'share'
@@ -3917,10 +3923,33 @@ Settings = function(){
 		v : ''
 	};
 
+	self.paidsubscription = {
+		set : function(_v){
+
+			if (!_v || _.isNaN(_v)){
+				this.v = 0
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('paidsubscription', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
 	self.clear = function(){
 
 		self.pin.set()
 		self.monetization.set()
+		self.paidsubscription.set()
 
 	}
 
@@ -3950,7 +3979,8 @@ Settings = function(){
 
         return JSON.stringify({
 			pin: self.pin.v,
-			monetization : self.monetization.v
+			monetization : self.monetization.v,
+			paidsubscription : self.paidsubscription.v
 		})
 
 	}
@@ -3966,7 +3996,8 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
-					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
+					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
+					paidsubscription : self.paidsubscription.v
 				})
 			} 
 		}
@@ -3974,7 +4005,8 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
-				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
+				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
+				paidsubscription : self.paidsubscription.v
 			})
 		}
 
@@ -3999,6 +4031,7 @@ Settings = function(){
 
 		self.pin.set(parsed.pin || ""); 
 		self.monetization.set(parsed.monetization); 
+		self.paidsubscription.set(parsed.paidsubscription || 0)
 
 	}
 
@@ -4030,6 +4063,7 @@ pSettings = function(){
 
 	self.pin = '';
 	self.monetization = ''
+	self.paidsubscription = 0
 	self.address = ''
 
 	self._import = function(dv = {}){
@@ -4041,6 +4075,7 @@ pSettings = function(){
 		self.pin = v.pin || ""
 		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
 		self.address = v.address || ""
+		self.paidsubscription = v.paidsubscription || 0
 	}
 
 	self.export = function(){
@@ -4084,7 +4119,8 @@ pSettings = function(){
 		s.import({
 			d : {
 				pin : self.pin,
-				monetization : self.monetization
+				monetization : self.monetization,
+				paidsubscription : self.paidsubscription
 			}
 		})
 

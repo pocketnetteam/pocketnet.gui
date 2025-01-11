@@ -121,6 +121,11 @@ var pSDK = function ({ app, api, actions }) {
         miniapp : {
             time : 60 * 60
         },
+
+    
+        getfromtotransactions : {
+            time : 60 * 60
+        }
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -1159,6 +1164,7 @@ var pSDK = function ({ app, api, actions }) {
             if (object.address == exp.actor) {
                 object.pin = exp.pin
                 object.monetization = exp.monetization
+                object.paidsubscription = exp.paidsubscription
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true
@@ -1746,6 +1752,24 @@ var pSDK = function ({ app, api, actions }) {
             })
         },
 
+    }
+
+    self.getfromtotransactions = {
+
+        keys : ['getfromtotransactions'],
+
+        request: function (executor, hash, p = {}) {
+
+
+            return request('getfromtotransactions', hash, (data) => {
+                
+                return executor(data)
+
+            }, {
+                requestIndexedDb: 'getfromtotransactions',
+                update : p.update,
+            })
+        }
     }
     
     self.miniapp = {

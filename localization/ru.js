@@ -2943,3 +2943,30 @@ _l.fordevelopers = "Для разработчиков"
 _l.interfacemobilelayoutmenu = "Кнопка чата посередине нижней панели"
 _l.interface = "Интерфейс"
 
+_l.managePaidSubscription = "Настроить привилегированные подписки"
+
+_l.paidsubscription_condition_caption = "Настройка привилегированных подписок"
+_l.paidsubscription_condition_text = "Установите стоимость привилегированной подписки на ваш канал и тогда вы можете делать публикации только для тех пользователей что вас поддерживают. Для того чтобы пользователь увидел ваш контент, размер денежных переводов за период должен быть равен или превышать установленный вами уровень."
+_l.paidsubscription_condition_hyvalue = "За шесть месяцев"
+_l.paidsubscription_condition_yvalue = "В год"
+_l.paidsubscription_condition_value = "Стоимость месячной привилегированной подписки"
+_l.paidsubscription_removecondition = "Отключить привилегированные подписки"
+_l.paidsubscription_removecondition_question = "Вы действительно хотите отключить привелигированные подписки на вас? Тогда ваши материалы станут видны для всех пользователей."
+_l.paidsubscription_addcondition = "Добавить условия привилегированной подписки"
+_l.paidsubscription_updatecondition = "Обновить условия привилегированной подписки"
+
+_l.paidsubscription_updatecondition_question = "Вы действительно хотите обновить стоимость привилегированной подписки на вас? Условия просмотра публикаций обновятся и для предыдущих материалов."
+
+_l.paidsubscription_updatecondition_success = "Условия привилегированной подписки на вас изменены. Изменения будут применены у пользователей в течение дня."
+
+_l.visibleonlytopaid = "Видно только привилегированным подписчикам"
+
+
+_l.sharevisibility_paid = 'Для привилегированных подписчиков'
+_l.sharevisibilitylabel_paid_post = 'Автор решил сделать эту <b>публикацию</b> видимой только привилегированным подписчикам'
+_l.sharevisibilitylabel_paid_article = 'Автор решил сделать эту <b>статью</b> видимой только привилегированным подписчикам'
+_l.sharevisibilitylabel_paid_video = 'Автор решил сделать это <b>видео</b> видимым только привилегированным подписчикам'
+
+_l.sharevisibilitylabel_paid_error = 'Мы не смогли проверить наличие привилегированной подписки. Попробуйте позже.'
+
+_l.getpaidsubscription = 'Стать привилегированным подписчиком'

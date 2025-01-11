@@ -11,15 +11,11 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
         <% if(!sUserInfo.deleted) {%>
 
-            <% if(author.me) {%>
-                <!--<button class="button editprofile"><%-e('e13186')%></button>-->
-            <% } %>
-            <!--<button class="button openwallet"><%= e('rwallet') %></button>-->
-            <!--<button class="button videoCabinet"><%= e('videoCabinet') %></button>-->
-
             <% if(!app.mobileview) {%>
                 <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
             <% } %>
+
+            <button class="button managePaidSubscription"><%= e('managePaidSubscription') %> <i class="fas fa-fire"></i></button>
 
         <% } else {%> 
             <button class="button openwallet"><%= e('rwallet') %></button>

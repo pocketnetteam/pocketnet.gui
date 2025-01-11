@@ -486,6 +486,19 @@ var authorn = (function(){
 				})
 			},
 
+			managePaidSubscription : function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'managepaidsubscription',
+					history : true,
+					inWnd : true,
+					essenseData : {
+					}
+				})
+				
+			},
+
 			settings : function(){
 
 				self.nav.api.go({
@@ -897,6 +910,7 @@ var authorn = (function(){
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
+					p.el.find('.managePaidSubscription').on('click', events.managePaidSubscription)
 
 					p.el.find('.follow').on('click', events.subscribe)
 					p.el.find('.unsubscribe').on('click', events.unsubscribe)
