@@ -1,0 +1,50 @@
+<div class="subscriptiondata">
+
+    <% if(subscriptiondata.result == 'paid') {%>
+
+        <div class="paid">
+
+            <div class="paidtext">
+                <span><%-e('getpaidsubscription_text')%></span>
+            </div>
+
+            <% _.each(subscriptiondata.data, function(v, k){ %> 
+                <div class="option <% if(selectedOption == k) {%> selected <% } %>" option="<%-k%>">
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="text">
+                        <% if(v.tx.length) {%>
+                            <div>
+                                <span><%-e('getpaidsubscription_option_' + k + '_p')%></span>
+                            </div>
+                            <div class="add">
+                                <span><%-e('getpaidsubscription_option_p', app.reltime(new Date(v.tx[0].time * 1000)))%></span>
+                            </div>
+                        <% } else { %> 
+                            <div>
+                                <span><%-e('getpaidsubscription_option_' + k)%></span>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="value"><span><%-app.platform.mp.coin( - v.balance)%> PKOIN</span></div>
+                </div>
+            <% }) %>
+        </div>
+
+    <% } %>
+
+    <% if(subscriptiondata.result == 'paid_success') {%>
+
+        <div class="paidsuccess">
+
+            <% if(!relation) {%>
+
+            <% } else { %> 
+                
+            <% } %>
+
+        </div>
+        
+    <% } %>
+</div>

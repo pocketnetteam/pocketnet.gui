@@ -273,6 +273,7 @@
   min-width: 44px;
   max-width: 88px;
 }
+#authorn .buttonsrow .getPaidSubscription i,
 #authorn .buttonsrow .managePaidSubscription i {
   color: rgb(var(--color-bg-orange));
 }

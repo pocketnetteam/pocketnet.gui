@@ -11018,8 +11018,6 @@ Platform = function (app, listofnodes) {
         
                         return Promise.all(promises).then(() => {
 
-                            console.log("PADI DATA", data)
-        
                             if(data.getcondition.error || data.getfromtotransactions.error){
                                 return Promise.reject(data.getcondition.error || data.getfromtotransactions.error)
                             }
@@ -11044,8 +11042,6 @@ Platform = function (app, listofnodes) {
                             var balance = {}
                             var until = 0
 
-                            console.log("PAID ST22", data.getfromtotransactions.result)
-
                             _.each(data.getfromtotransactions.result, (trx) => {
                                 _.each(paidC, (v, k) => {
                                     if (trx.height > v.block){
@@ -11054,8 +11050,6 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
                             })
-
-                            console.log("PAID ST223", paidC)
 
 
                             var resultStatus = 'paid'
@@ -11066,7 +11060,7 @@ Platform = function (app, listofnodes) {
                                 resultStatus = 'paid_success'
                             }
 
-                           /* if (resultStatus == 'paid_success'){
+                            if (resultStatus == 'paid_success'){
 
                                 
 
@@ -11108,7 +11102,7 @@ Platform = function (app, listofnodes) {
                                     }
 
                                 }
-                            }*/
+                            }
 
                             _.each(paidC, (v, k) => {
                                 balance[k] = v.balance || 0
@@ -11134,7 +11128,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.paidsubscription.checking[address] = promise().then(() => {
 
                     _.each(self.sdk.paidsubscription._clbks.updatepaiddata, (f) => {
-                        f(address)
+                        f(address, paidsubscriptionCache[self.app.user.address.value][address])
                     })
 
                     return paidsubscriptionCache[self.app.user.address.value][address]
@@ -16086,10 +16080,7 @@ Platform = function (app, listofnodes) {
 
                         if (me && me.relation(share.address, 'subscribes')) {
 
-
                             var cache = self.sdk.paidsubscription.checkvisibilityCache(share.address)
-
-                            console.log('checkvisibilityStrong cache', cache)
 
                             if (cache){
                                 if(cache.error){
@@ -17016,26 +17007,32 @@ Platform = function (app, listofnodes) {
 
                 getfromtotransactions : function(from, to, update){
 
-                    if(!self.currentBlock){
-                        return Promise.reject('currentBlock is empty')
-                    }
-
-                    return app.psdk.getfromtotransactions.request(() => {
-
-                        var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
-
-                        return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
-                            rpc: {
-                                fnode: nodes[rand(0, nodes.length - 1)]
-                            }
+                    return pretry(function () {
+                        return self.currentBlock
+                    }).then(() => {
+                        if(!self.currentBlock){
+                            return Promise.reject('currentBlock is empty')
+                        }
+    
+                        return app.psdk.getfromtotransactions.request(() => {
+    
+                            var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
+    
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
+                                rpc: {
+                                    fnode: nodes[rand(0, nodes.length - 1)]
+                                }
+                            })
+        
+                        }, from + to, {
+                            update : update
+                        }).then(function (s) {
+        
+                            return s
                         })
-    
-                    }, from + to, {
-                        update : update
-                    }).then(function (s) {
-    
-                        return s
                     })
+
+                    
 
                 },
 

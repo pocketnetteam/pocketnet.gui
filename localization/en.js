@@ -3137,7 +3137,7 @@ _l.interfacemobilelayoutmenu = "Chat button in the middle of the bottom bar"
 _l.interface = "Interface"
 
 
-_l.managePaidSubscription = "Set up privileged subscriptions"
+_l.managePaidSubscription = "Privileged subscriptions"
 
 
 _l.paidsubscription_condition_caption = "Setting up privileged subscriptions"
@@ -3164,4 +3164,27 @@ _l.sharevisibilitylabel_paid_video = 'The author decided to make this <b>video</
 _l.sharevisibilitylabel_paid_error = 'We were unable to verify that you have a premium subscription. Please try again later.'
 
 _l.getpaidsubscription = 'Become a privileged subscriber'
+_l.getpaidsubscription2 = 'Become a privileged subscriber'
+_l.getpaidsubscription3 = 'Apply for a privileged subscription'
 
+_l.getpaidsubscription_text = 'Get a privileged subscription and get access to all the author`s publications!'
+
+_l.getpaidsubscription_acceptQuestion = 'Do you confirm the following actions: '
+
+_l.getpaidsubscription_acceptQuestion_paid = function(){}
+_l.getpaidsubscription_acceptQuestion_subscribe = function(){}
+
+_l.getpaidsubscription_option_1m = 'Buy a 1 month subscription'
+_l.getpaidsubscription_option_6m = 'Buy a 6 month subscription'
+_l.getpaidsubscription_option_1y = 'Buy a 1 year subscription'
+
+_l.getpaidsubscription_option_1m_p = 'Pay extra for a 1 month subscription'
+_l.getpaidsubscription_option_6m_p = 'Pay extra for a 6 month subscription'
+_l.getpaidsubscription_option_1y_p = 'Pay extra for a 1 year subscription'
+
+_l.getpaidsubscription_select_option = 'Please select the premium subscription payment option'
+
+
+_l.getpaidsubscription_option_p = function(date){ return 'The subscription will end on ' + date + ', but can be renewed later for less money.' }
+
+_l.getPaidSubscription = "Privileged subscription"

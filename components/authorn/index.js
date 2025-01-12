@@ -485,7 +485,23 @@ var authorn = (function(){
 					self.app.platform.ui.wallet.donate({receiver : author.address, donatemode : true}).catch(e => {})
 				})
 			},
+			
+			getPaidSubscription : function(){
 
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : author.address,
+						}
+					})
+				})
+				
+			},
 			managePaidSubscription : function(){
 
 				self.nav.api.go({
@@ -922,6 +938,16 @@ var authorn = (function(){
 						renders.metmenu($(this))
 					})
 					
+					self.app.user.isState(function(state){
+						if(state && !author.me){
+							self.sdk.paidsubscription.getcondition(author.address).then(value => {
+								if(value > 0){
+									p.el.find('.getPaidSubscription').removeClass('hidden')
+									p.el.find('.getPaidSubscription').on('click', events.getPaidSubscription)
+								}
+							})
+						}
+					})
 					
 
 					if(clbk) clbk()

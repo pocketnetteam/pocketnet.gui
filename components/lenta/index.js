@@ -1932,6 +1932,31 @@ var lenta = (function(){
 
 			},
 
+			getpaidsubscription : function(txid, clbk){
+				var share = self.psdk.share.get(txid)
+
+				if(!share) return
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : share.address,
+						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
+				})
+
+			},
+
 			postscores : function(txid, clbk){
 
 				var share = self.psdk.share.get(txid)
@@ -2825,6 +2850,12 @@ var lenta = (function(){
 				actions.postscores(id)
 			},
 
+			getpaidsubscription: function(){
+				var id = $(this).closest('.share').attr('id');
+
+				actions.getpaidsubscription(id)
+			},
+
 			
 
 			like : function(){
@@ -3661,7 +3692,6 @@ var lenta = (function(){
 										console.error('checkvisibilityStrong', e)
 									})
 
-									console.log("CHECK VISIBILITY", share.txid)
 								}
 
 							}
@@ -5168,6 +5198,7 @@ var lenta = (function(){
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
+			el.c.on('click', '.getpaidsubscription',events.getpaidsubscription)
 
 			function initOutsideClickEvent(e) {
 				let isOutside = false;
