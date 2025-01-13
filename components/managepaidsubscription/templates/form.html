@@ -1,0 +1,46 @@
+<div class="formWrapper">
+    <div class="caption">
+        <span><%- e('paidsubscription_condition_caption') %></span>
+    </div>
+
+    <div class="textWrapper">
+        <span><%- e('paidsubscription_condition_text') %></span>
+    </div>
+
+    <div class="fwr">
+
+        <div class="inputWrapperCaption">
+            <span><%- e('paidsubscription_condition_value') %></span>
+        </div>
+        <div class="inputWrapper">
+            <%= input.input() %>
+            <span class="text">PKOIN</span>
+        </div>
+
+        <div class="otherConditions">
+            <div class="crow">
+                <span><%- e('paidsubscription_condition_hyvalue') %></span> <span class="value" index="hy"></span>
+            </div>
+            <div class="crow">
+                <span><%- e('paidsubscription_condition_yvalue') %></span> <span class="value" index="y"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <% if(oldCurrentValue) {%>
+        <div class="removecondition"><span><%- e('paidsubscription_removecondition') %></span></div>
+    <% } %>
+
+    <div class="buttonsrow">
+        <button class="button setcondition disabled" disabled>
+            <% if(!oldCurrentValue) {%>
+                <i class="fas fa-check-circle"></i> <span><%- e('paidsubscription_addcondition') %></span>
+            <% } else { %> 
+                <i class="fas fa-sync"></i> <span><%- e('paidsubscription_updatecondition') %></span>
+            <% } %>
+        </button>
+       
+    </div>
+</div>

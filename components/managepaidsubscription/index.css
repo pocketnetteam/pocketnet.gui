@@ -1,0 +1,67 @@
+#managepaidsubscription .formWrapper {
+  padding: 2em;
+  text-align: center;
+}
+#managepaidsubscription .formWrapper .caption span {
+  font-weight: 700;
+}
+#managepaidsubscription .formWrapper .textWrapper {
+  padding: 1em;
+}
+#managepaidsubscription .formWrapper .textWrapper span {
+  font-size: 0.8em;
+}
+#managepaidsubscription .formWrapper .inputWrapperCaption {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+#managepaidsubscription .formWrapper .inputWrapperCaption span {
+  font-size: 0.9em;
+  font-weight: 700;
+}
+#managepaidsubscription .formWrapper .inputWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#managepaidsubscription .formWrapper .inputWrapper input {
+  margin-right: 1em;
+}
+#managepaidsubscription .formWrapper .inputWrapper span {
+  font-size: 0.9em;
+}
+#managepaidsubscription .formWrapper .otherConditions {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#managepaidsubscription .formWrapper .otherConditions span {
+  font-size: 0.8em;
+}
+#managepaidsubscription .formWrapper .removecondition {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+#managepaidsubscription .formWrapper .removecondition span {
+  font-size: 0.8em;
+  color: rgb(var(--color-bad));
+}
+#managepaidsubscription .formWrapper .buttonsrow {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#managepaidsubscription .formWrapper .fwr {
+  padding: 1em;
+  border-radius: 12px;
+  background: rgba(var(--neutral-grad-0), 0.5);
+}
+#windowsContainer .wnd.managepaidsubscriptionWindow .wndinner {
+  height: 570px;
+  width: 480px;
+}

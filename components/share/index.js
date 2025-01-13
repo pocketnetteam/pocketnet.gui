@@ -1804,96 +1804,102 @@ var share = (function(){
 						currentShare.settings.f || (currentShare.settings.f = '0')
 						currentShare.settings.t || (currentShare.settings.t = '0')
 
-						var selector = new Parameter({
+						self.sdk.paidsubscription.getcondition(self.app.user.address.value).then(value => {
 
-							type : "VALUES",
-							name : "Visibility",
-							id : 'organizationCode',
-							dbId : "INS_BROKER_CODE",
-							possibleValues : ['0','1','2'],
-							possibleValuesLabels : [
+							var visvalues = ['0','1','2']
+							var visvaluesLabels = [
 								self.app.localization.e('visibletoeveryone'), 
 								self.app.localization.e('visibleonlytosubscribers'),
 								self.app.localization.e('visibleonlytoregistered')
-							],
-							defaultValue : currentShare.settings.f,
-							value : currentShare.settings.f
+							]
 
-						})
-
-						var timeselector = new Parameter({
-
-							type : "VALUES",
-							name : "Time",
-							id : 'time',
-							possibleValues : ['0','1'],
-							possibleValuesLabels : [
-								self.app.localization.e('spostnow'), 
-								self.app.localization.e('sposttime')
-							],
-							defaultValue : '0',
-							value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
-
-						})
-
-						self.shell({
-							name :  'settings',
-							el : el.settings,
-							data : {
-								share : currentShare,
-								essenseData : essenseData,
-								selector : selector,
-								timeselector
-							},
-
-						}, function(p){
-
-							ParametersLive([selector, timeselector], p.el)
-
-
-							selector._onChange = function(){
-
-								currentShare.settings.f = selector.value
-
-								state.save()
+							if(value){
+								visvalues.push('3')
+								visvaluesLabels.push(self.app.localization.e('visibleonlytopaid'))
 							}
 
-							timeselector._onChange = function(){
+							var selector = new Parameter({
 
-								currentShare.settings.t = timeselector.value
-
-								if(timeselector.value == '0') delete currentShare.settings.t
-
-								renders.settings();
-
-								state.save()
-							}
-
-							p.el.find('.timelabel').on('click', function(){
-
-								events.selectTimeWrapper()
-
-								/*events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
-
-									if(date){
-										currentShare.settings.t = date.getTime() / 1000
-									}
-
+								type : "VALUES",
+								name : "Visibility",
+								id : 'organizationCode',
+								dbId : "INS_BROKER_CODE",
+								possibleValues : visvalues,
+								possibleValuesLabels : visvaluesLabels,
+								defaultValue : currentShare.settings.f,
+								value : currentShare.settings.f
+	
+							})
+	
+							var timeselector = new Parameter({
+	
+								type : "VALUES",
+								name : "Time",
+								id : 'time',
+								possibleValues : ['0','1'],
+								possibleValuesLabels : [
+									self.app.localization.e('spostnow'), 
+									self.app.localization.e('sposttime')
+								],
+								defaultValue : '0',
+								value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
+	
+							})
+	
+							self.shell({
+								name :  'settings',
+								el : el.settings,
+								data : {
+									share : currentShare,
+									essenseData : essenseData,
+									selector : selector,
+									timeselector
+								},
+	
+							}, function(p){
+	
+								ParametersLive([selector, timeselector], p.el)
+	
+	
+								selector._onChange = function(){
+	
+									currentShare.settings.f = selector.value
+	
+									state.save()
+								}
+	
+								timeselector._onChange = function(){
+	
+									currentShare.settings.t = timeselector.value
+	
+									if(timeselector.value == '0') delete currentShare.settings.t
+	
+									renders.settings();
+	
+									state.save()
+								}
+	
+								p.el.find('.timelabel').on('click', function(){
+	
+									events.selectTimeWrapper()
+								})
+	
+								p.el.find('.cleartimelabel').on('click', function(){
+									delete currentShare.settings.t
+	
 									renders.settings();
 									state.save()
-								})*/
+								})
+	
+								if (clbk)
+									clbk();
 							})
 
-							p.el.find('.cleartimelabel').on('click', function(){
-								delete currentShare.settings.t
-
-								renders.settings();
-								state.save()
-							})
-
-							if (clbk)
-								clbk();
+						}).catch(e => {
+							console.error(e)
 						})
+
+						
 					}
 
 					else{
@@ -2714,6 +2720,10 @@ var share = (function(){
 			
 			currentShare.on.change.edit = events.change;
 
+			self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key] = function(){
+				renders.settings()
+			}
+
 			//self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
@@ -2878,6 +2888,7 @@ var share = (function(){
 				$('html').off('click', events.unfocus);
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
+				delete self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key]
 
 				if (sortable){
 					sortable.destroy()

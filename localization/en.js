@@ -3137,3 +3137,63 @@ _l.postWaitDelayed = function(time){
 _l.fordevelopers = "For developers"
 _l.interfacemobilelayoutmenu = "Chat button in the middle of the bottom bar"
 _l.interface = "Interface"
+
+
+_l.managePaidSubscription = "Privileged subscriptions"
+
+
+_l.paidsubscription_condition_caption = "Setting up privileged subscriptions"
+_l.paidsubscription_condition_text = "Set the price of a privileged subscription to your channel and then you can make publications only for those users who support you. In order for the user to see your content, the amount of money transfers for the period must be equal to or exceed the level you set."
+_l.paidsubscription_condition_hyvalue = "In six months"
+_l.paidsubscription_condition_yvalue = "Per year"
+_l.paidsubscription_condition_value = "Monthly Privileged Subscription Cost"
+_l.paidsubscription_removecondition = "Disable privileged subscriptions"
+_l.paidsubscription_removecondition_question = "Do you really want to disable privileged subscriptions to you? Then your materials will be visible to all users."
+_l.paidsubscription_addcondition = "Add privileged subscription terms"
+_l.paidsubscription_updatecondition = "Update your privileged subscription terms"
+_l.paidsubscription_updatecondition_question = "Are you sure you want to update the price of your privileged subscription? The conditions for viewing publications will be updated for previous materials as well."
+
+_l.paidsubscription_updatecondition_success = "The terms of your privileged subscription have been changed. The changes will be applied to users within a day."
+
+_l.visibleonlytopaid = "Visible to privileged subscribers only"
+
+
+_l.sharevisibility_paid = 'For privileged subscribers'
+_l.sharevisibilitylabel_paid_post = 'The author has decided to make this <b>publication</b> visible only to privileged subscribers'
+_l.sharevisibilitylabel_paid_article = 'The author has decided to make this <b>article</b> visible only to privileged subscribers'
+_l.sharevisibilitylabel_paid_video = 'The author decided to make this <b>video</b> visible only to privileged subscribers'
+
+_l.sharevisibilitylabel_paid_error = 'We were unable to verify that you have a premium subscription. Please try again later.'
+
+_l.getpaidsubscription = 'Become a privileged subscriber'
+_l.getpaidsubscription2 = 'Become a privileged subscriber'
+_l.getpaidsubscription3 = 'Apply for a privileged subscription'
+
+_l.getpaidsubscription_text = 'Get a privileged subscription and get access to all the author`s publications!'
+
+_l.getpaidsubscription_acceptQuestion = 'Do you confirm the following actions: '
+
+_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Transfer to <b>' + name +'</b> <b>' + amount +' PKOIN</b> for privileged subscription' }
+_l.getpaidsubscription_acceptQuestion_subscribe = function({name}){return 'Subscribe to <b>' + name +'</b>'}
+
+_l.getpaidsubscription_option_1m = 'Buy a 1 month subscription'
+_l.getpaidsubscription_option_6m = 'Buy a 6 month subscription'
+_l.getpaidsubscription_option_1y = 'Buy a 1 year subscription'
+
+_l.getpaidsubscription_option_1m_p = 'Pay extra for a 1 month subscription'
+_l.getpaidsubscription_option_6m_p = 'Pay extra for a 6 month subscription'
+_l.getpaidsubscription_option_1y_p = 'Pay extra for a 1 year subscription'
+
+_l.getpaidsubscription_select_option = 'Please select the premium subscription payment option'
+
+
+_l.getpaidsubscription_option_p = function(date){ return 'The subscription will end on ' + date + ', but can be renewed later for less money.' }
+
+_l.getPaidSubscription = "Privileged subscription"
+_l.fastmessagepaidsubscription = 'as payment for a privileged subscription'
+_l.getpaidsubscription_paidsuccess_text = "Your privileged subscription has already been paid for."
+
+_l.getpaidsubscription_paidsuccess_until= function(date){ return 'Subscription paid until <b>' + date + '</b>'}
+_l.getpaidsubscription_paidsuccess_text_relation="Access to materials for privileged subscribers has already been paid for, all that remains is to subscribe to the author"
+
+_l.fastmessagepaidsubscription_share = 'Publication for privileged subscribers'
