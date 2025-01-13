@@ -628,7 +628,8 @@ var pSDK = function ({ app, api, actions }) {
     var request = function (key, hash, executor, p = {
         requestIndexedDb: null,
         insertFromResponse: null,
-        cachetime : undefined
+        cachetime : undefined,
+        update : false
     }) {
 
         if (_.isObject(hash)) {
@@ -642,7 +643,7 @@ var pSDK = function ({ app, api, actions }) {
 
         if (temp[key][hash]) return temp[key][hash]
 
-        temp[key][hash] = getfromdbone(p.requestIndexedDb, hash).then((r) => {
+        temp[key][hash] = (p.update ? Promise.resolve(null) : getfromdbone(p.requestIndexedDb, hash)).then((r) => {
 
             if (r) return Promise.resolve(r)
 
@@ -1760,6 +1761,8 @@ var pSDK = function ({ app, api, actions }) {
 
         request: function (executor, hash, p = {}) {
 
+            console.log("UPDATE", p.update)
+
 
             return request('getfromtotransactions', hash, (data) => {
                 
@@ -1776,9 +1779,12 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(actions.getAccounts(), (account) => {
 
-                if(account.adddress != from) return
+                if(account.address != from) return
+
 
                 _.each(account.getTempActions(''), (action) => {
+
+                    console.log('temp', action)
 
                     _.each(action.outputs, (out) => {
                         if(out.address == to){

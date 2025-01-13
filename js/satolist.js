@@ -1346,7 +1346,9 @@ Platform = function (app, listofnodes) {
             }
         },
         "actions_noinputs_wait": {
-
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait')
+            }
         },
 
         "actions_noinputs_wait_comment": {
@@ -17092,6 +17094,8 @@ Platform = function (app, listofnodes) {
 
                 getfromtotransactions : function(from, to, update){
 
+                    console.log('getfromtotransactions', update)
+
                     return pretry(function () {
                         return self.currentBlock
                     }).then(() => {
@@ -17113,7 +17117,12 @@ Platform = function (app, listofnodes) {
                             update : update
                         }).then(function (s) {
 
+                            console.log("SSS", s)
+
                             s = self.psdk.getfromtotransactions.tempAdd(s, from, to)
+
+                            console.log("SSS2", s)
+
         
                             return s
                         })

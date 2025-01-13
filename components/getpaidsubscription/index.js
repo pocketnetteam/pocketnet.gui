@@ -10,7 +10,7 @@ var getpaidsubscription = (function(){
 
 		var el, ed, subdata = null, me = null, relation = null, selectedOption;
 
-		var actions = {
+		var _actions = {
 			getTransaction : function(amount, reciever){
 
 				var transaction = new Transaction()
@@ -22,7 +22,7 @@ var getpaidsubscription = (function(){
 							amount : amount
 						}
 					])
-					transaction.feemode.set('include')
+					transaction.feemode.set('exclude')
 					transaction.message.set('a:subscription')
 					
 
@@ -142,7 +142,7 @@ var getpaidsubscription = (function(){
 								return sitemessage('error')
 							}
 
-							var transaction = actions.getTransaction(amount, ed.address)
+							var transaction = _actions.getTransaction(amount, ed.address)
 
 							return self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 								calculatedFee : 0,
@@ -187,7 +187,9 @@ var getpaidsubscription = (function(){
 						return
 					}
 
-					amount = - subscriptiondata.data[selectedOption].balance
+					amount = - subdata.data[selectedOption].balance
+
+					console.log('amount', amount)
 
 					if (amount <= 0){
 						sitemessage('error')
@@ -199,7 +201,7 @@ var getpaidsubscription = (function(){
 				if (actions.length){
 
 					new dialog({
-						html : self.app.localization.e('getpaidsubscription_acceptQuestion') + _.map(actions, (a) => {return a.text()}),
+						html : self.app.localization.e('getpaidsubscription_acceptQuestion') + _.map(actions, (a) => {return a.text()})  + '?',
 						btn1text :  self.app.localization.e('daccept'),
 						btn2text :  self.app.localization.e('dcancel'),
 						class : 'zindex',
@@ -209,6 +211,7 @@ var getpaidsubscription = (function(){
 
 							return processArray(actions, (action) => {
 								return action.action().catch(e => {
+									console.error(e)
 									return Promise.reject(e)
 								})
 							}).then(() => {
@@ -231,6 +234,8 @@ var getpaidsubscription = (function(){
 								})
 
 							}).catch(e => {
+
+								console.error(e)
 
 								self.app.platform.errorHandler(e, true)
 
