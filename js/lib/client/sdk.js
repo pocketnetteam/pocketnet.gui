@@ -1884,6 +1884,7 @@ var pSDK = function ({ app, api, actions }) {
             
                             miniappjson.name = superXSS(js.n || '');
                             miniappjson.scope = superXSS(js.s || '');
+                            miniappjson.tscope = superXSS(js.ts || '');
                             miniappjson.description = superXSS(js.d || '');
                             miniappjson.tags = _.map(js.t || [], (t) => {
                                 return superXSS(t)

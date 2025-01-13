@@ -173,9 +173,6 @@ var getpaidsubscription = (function(){
 
 				var actions = []
 
-				if (!relation){
-					actions.push(mactions.subscribe)
-				}
 
 				if (subdata.result == 'paid'){
 					actions.push(mactions.paid)
@@ -196,6 +193,11 @@ var getpaidsubscription = (function(){
 
 						return
 					}
+				}
+
+				
+				if (!relation){
+					actions.push(mactions.subscribe)
 				}
 
 				if (actions.length){

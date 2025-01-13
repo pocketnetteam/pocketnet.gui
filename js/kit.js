@@ -2439,6 +2439,7 @@ Miniapp = function(){
 	self.address = '';
 	self.name = '';
 	self.scope = '';
+	self.tscope = '';
 	self.description = '';
 	self.tags = []
 	
@@ -2458,6 +2459,7 @@ Miniapp = function(){
 				JSON.stringify({
 					n: self.name,
 					s: self.scope,
+					ts : self.tscope || '',
 					d: self.description,
 					t: self.tags
 				}) +
@@ -2473,6 +2475,7 @@ Miniapp = function(){
 				name: self.name,
 				description: self.description,
 				scope: self.scope,
+				tscope : self.tscope || '',
 				tags: self.tags
 			};
 		}
@@ -2484,6 +2487,7 @@ Miniapp = function(){
 				s1: JSON.stringify({
 					n: self.name,
 					s: self.scope,
+					ts : self.tscope,
 					d: self.description,
 					t: self.tags
 				}),
@@ -2497,6 +2501,7 @@ Miniapp = function(){
 		self.hash = d.hash || null;
 		self.name = d.name || '';
 		self.scope = d.scope || '';
+		self.tscope = d.tscope || '';
 		self.id = d.id || '';
 		self.description = d.description || '';
 		self.tags = d.tags || [];
@@ -2527,12 +2532,14 @@ pMiniapp = function(){
 	self.address = '';
 	self.name = '';
 	self.scope = '';
+	self.tscope = '';
 	self.description = '';
 	self.tags = []
 
 	self._import = function(v){
 		self.name = v.name || '';
 		self.scope = v.scope || '';
+		self.tscope = v.tscope || '';
 		self.hash = v.hash || '';
 		self.address = v.address || '';
 		self.description = v.description || '';
@@ -2547,7 +2554,8 @@ pMiniapp = function(){
 				var js = JSON.parse(v.p.s1)
 
 				self.name = js.n || '';
-				self.scope = js.scope || '';
+				self.scope = js.s || '';
+				self.tscope = js.ts || '';
 				self.description = js.d || '';
 				self.tags = js.t || [];
 			}
@@ -2564,6 +2572,7 @@ pMiniapp = function(){
 
 		v.name = self.name
 		v.scope = self.scope
+		v.tscope = self.tscope
 		v.hash = self.hash 
 		v.id = self.id 
 		v.address = self.address 
