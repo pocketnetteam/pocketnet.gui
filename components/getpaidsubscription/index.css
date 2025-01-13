@@ -1,0 +1,204 @@
+#getpaidsubscription .content .usericon {
+  background: rgba(var(--neutral-grad-1), 0.5);
+}
+#getpaidsubscription .content.liftUpThePost .options {
+  display: none;
+}
+#getpaidsubscription .content.liftUpThePost .wndinner {
+  height: 540px;
+}
+#getpaidsubscription .content .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+}
+#getpaidsubscription .content .top,
+#getpaidsubscription .content .fieldsWrapper,
+#getpaidsubscription .content .sendButtonWrapper {
+  padding: 1em 1em;
+}
+#getpaidsubscription .content .top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.5);
+}
+#getpaidsubscription .content .top .title {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+#getpaidsubscription .content .top .buyButtonWrapper {
+  display: flex;
+  align-items: center;
+}
+#getpaidsubscription .content .top .buyButtonWrapper .buyButton {
+  border: 1px solid rgb(var(--neutral-grad-1));
+  box-sizing: border-box;
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+}
+#getpaidsubscription .content .top .buyButtonWrapper .buyButton .text {
+  margin-right: 1em;
+  font-weight: 600;
+  color: rgb(var(--text-color));
+}
+#getpaidsubscription .content .top .buyButtonWrapper .buyButton img {
+  width: 20px;
+  height: 20px;
+}
+#getpaidsubscription .content .abswrappcontent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70px;
+  bottom: 91px;
+  padding-bottom: 1.5em;
+}
+#getpaidsubscription .content .profile {
+  display: flex;
+  align-items: top;
+  padding: 1em;
+  background: rgb(var(--background-secondary-theme));
+}
+#getpaidsubscription .content .profile .description {
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+}
+#getpaidsubscription .content .profile .description .name {
+  font-weight: 700;
+}
+#getpaidsubscription .content .profile .description .about {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 0.8em;
+}
+#getpaidsubscription .content .fieldsWrapper {
+  padding-bottom: 0;
+}
+#getpaidsubscription .content .sendButtonWrapper {
+  display: none;
+  padding: 1.5em 1em;
+  border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+  background: rgb(var(--background-total-theme));
+}
+#getpaidsubscription .content .sendButtonWrapper .sendButton {
+  text-align: center;
+}
+#getpaidsubscription .content .preloadeWrapper {
+  text-align: center;
+  padding: 2em;
+}
+#getpaidsubscription .content.ready .sendButtonWrapper {
+  display: block;
+}
+#getpaidsubscription .subscriptiondata .paid .paidtext {
+  padding: 2em;
+  text-align: center;
+}
+#getpaidsubscription .subscriptiondata .paid .paidtext span {
+  font-size: 0.8em;
+}
+#getpaidsubscription .subscriptiondata .paid .option {
+  display: flex;
+  align-items: flex-start;
+  padding: 1em;
+  cursor: pointer;
+  margin-bottom: 0.5em;
+  border-radius: 12px;
+  background: rgba(var(--neutral-grad-0), 0.2);
+}
+#getpaidsubscription .subscriptiondata .paid .option.selected {
+  background: rgba(var(--color-good), 0.2);
+}
+#getpaidsubscription .subscriptiondata .paid .option.selected .icon {
+  color: rgb(var(--color-good));
+}
+#getpaidsubscription .subscriptiondata .paid .option.selected .value {
+  color: rgb(var(--color-good));
+}
+#getpaidsubscription .subscriptiondata .paid .option .icon i {
+  font-size: 0.8em;
+}
+#getpaidsubscription .subscriptiondata .paid .option .text {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  flex-grow: 2;
+}
+#getpaidsubscription .subscriptiondata .paid .option .text .add span {
+  font-size: 0.8em;
+}
+#getpaidsubscription .subscriptiondata .paid .option .value {
+  margin-left: auto;
+  white-space: nowrap;
+}
+#getpaidsubscription .subscriptiondata .paid .option .value span {
+  font-weight: 700;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .until {
+  text-align: center;
+  padding: 1em;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .text {
+  margin-top: 1em;
+  text-align: center;
+  padding: 1em;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .text span {
+  font-size: 2em;
+  font-weight: 100;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .imageWrapper {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .paidsuccessimage {
+  width: 128px;
+  height: 128px;
+}
+.wnd.getpaidsubscriptionwindow .wndinner {
+  box-shadow: none;
+  max-width: 480px;
+  max-height: 640px;
+}
+.wnd.getpaidsubscriptionwindow .wndinner .wndheader {
+  display: none;
+}
+.wnd.getpaidsubscriptionwindow .wndinner .wndcontent {
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  overflow: auto;
+}
+.wnd.getpaidsubscriptionwindow .wndinner > div.buttons {
+  display: none;
+}
+.wnd.getpaidsubscriptionwindow #getpaidsubscription .sendButtonWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+@media only screen and (max-width: 768px) {
+  .wnd.getpaidsubscriptionwindow #getpaidsubscription .abswrappcontent {
+    position: static;
+  }
+  .wnd.getpaidsubscriptionwindow #getpaidsubscription .sendButtonWrapper {
+    position: static;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .wnd.getpaidsubscriptionwindow #getpaidsubscription .boostinfodata .text span {
+    font-size: 0.8em;
+  }
+}

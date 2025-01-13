@@ -121,6 +121,11 @@ var pSDK = function ({ app, api, actions }) {
         miniapp : {
             time : 60 * 60
         },
+
+    
+        getfromtotransactions : {
+            time : 60 * 60
+        }
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -623,7 +628,8 @@ var pSDK = function ({ app, api, actions }) {
     var request = function (key, hash, executor, p = {
         requestIndexedDb: null,
         insertFromResponse: null,
-        cachetime : undefined
+        cachetime : undefined,
+        update : false
     }) {
 
         if (_.isObject(hash)) {
@@ -637,7 +643,7 @@ var pSDK = function ({ app, api, actions }) {
 
         if (temp[key][hash]) return temp[key][hash]
 
-        temp[key][hash] = getfromdbone(p.requestIndexedDb, hash).then((r) => {
+        temp[key][hash] = (p.update ? Promise.resolve(null) : getfromdbone(p.requestIndexedDb, hash)).then((r) => {
 
             if (r) return Promise.resolve(r)
 
@@ -1159,6 +1165,7 @@ var pSDK = function ({ app, api, actions }) {
             if (object.address == exp.actor) {
                 object.pin = exp.pin
                 object.monetization = exp.monetization
+                object.paidsubscription = exp.paidsubscription
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true
@@ -1747,6 +1754,57 @@ var pSDK = function ({ app, api, actions }) {
         },
 
     }
+
+    self.getfromtotransactions = {
+
+        keys : ['getfromtotransactions'],
+
+        request: function (executor, hash, p = {}) {
+
+            console.log("UPDATE", p.update)
+
+
+            return request('getfromtotransactions', hash, (data) => {
+                
+                return executor(data)
+
+            }, {
+                requestIndexedDb: 'getfromtotransactions',
+                update : p.update,
+            })
+        },
+        tempAdd : function(ar = [], from, to){
+
+            var add = []
+
+            _.each(actions.getAccounts(), (account) => {
+
+                if(account.address != from) return
+
+
+                _.each(account.getTempActions(''), (action) => {
+
+                    console.log('temp', action)
+
+                    _.each(action.outputs, (out) => {
+                        if(out.address == to){
+                            add.unshift({
+                                amount : out.amount * 100000000,
+                                time : Date.now() / 1000,
+                                height : app.platform.currentBlock,
+                                temp : true
+                            })
+                        }
+                    })
+                    
+                })
+
+               
+            })
+
+            return ar.concat(add)
+        }
+    }
     
     self.miniapp = {
         keys : ['miniapp'],
@@ -1826,6 +1884,7 @@ var pSDK = function ({ app, api, actions }) {
             
                             miniappjson.name = superXSS(js.n || '');
                             miniappjson.scope = superXSS(js.s || '');
+                            miniappjson.tscope = superXSS(js.ts || '');
                             miniappjson.description = superXSS(js.d || '');
                             miniappjson.tags = _.map(js.t || [], (t) => {
                                 return superXSS(t)
@@ -2668,7 +2727,27 @@ var pSDK = function ({ app, api, actions }) {
                 requestIndexedDb: 'transactionsRequest'
             })
             
-        }
+        },
+        listener: function (exp, address, status, action) {
+            if (status == 'completed') {
+
+
+                var keys = []
+
+                _.each(action.outputs, (output) => {
+                    if(output.address != address){
+                        keys.push(address + output.address)
+                    }
+                })
+
+                keys = _.filter(_.uniq(keys), k => k)
+
+                if (keys.length){
+                    clearfromdb('getfromtotransactions', keys)
+                }
+                
+            }
+        },
     }
 
     self.rpc = {
@@ -3031,7 +3110,7 @@ var pSDK = function ({ app, api, actions }) {
 
             var alias = action.get()
 
-            self[action.object.type].listener(alias, address, status)
+            self[action.object.type].listener(alias, address, status, action)
 
             if (status == 'completed' && action.object.ustate) {
 

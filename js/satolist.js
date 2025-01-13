@@ -504,6 +504,8 @@ Platform = function (app, listofnodes) {
     self.repost = true;
     self.videoenabled = true;
 
+    var paidsubscriptionCache = {}
+
     self.ischristmastime = function () {
         var currentDate = new Date();
         var currentMonth = currentDate.getMonth() + 1;
@@ -1344,7 +1346,9 @@ Platform = function (app, listofnodes) {
             }
         },
         "actions_noinputs_wait": {
-
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait')
+            }
         },
 
         "actions_noinputs_wait_comment": {
@@ -4795,7 +4799,6 @@ Platform = function (app, listofnodes) {
                 parameters.opacity = 0.8
                 parameters.scatter = 20
                 parameters.duration = 900
-
                 parameters.color || (parameters.color = '#ffa000')
 
                 self.effects.effectinternal(el, 'stars', parameters, clbk)
@@ -4817,6 +4820,26 @@ Platform = function (app, listofnodes) {
                 parameters.color || (parameters.color = '#a10000')
 
                 self.effects.effectinternal(el, 'hearts', parameters, clbk)
+            },
+
+            fire: function (el, parameters, clbk) {
+
+                if (!parameters) parameters = {}
+
+                parameters.opacity = 0.9
+                parameters.scatter = 150
+                parameters.duration = 1800
+                parameters.size = 20
+
+                if (self.app.mobileview) {
+                    parameters.duration = 1400
+                }
+
+                parameters.symbol = '🔥'
+
+                parameters.color || (parameters.color = '#a10000')
+
+                self.effects.effectinternal(el, 'fire', parameters, clbk)
             },
         },
 
@@ -4889,6 +4912,52 @@ Platform = function (app, listofnodes) {
 
                     if (clbk) clbk()
                 })
+            },
+
+            paidsubscription: function (el, clbk) {
+                if (self.effects.breakeffect(el, clbk)) {
+                    return
+                }
+
+                self.effects.animation = true
+
+                var parameters = {}
+
+                parameters.color = '#FF3B00'
+
+                if (self.app.mobileview) {
+                    parameters.from = {
+                        x: 'center',
+                        y: 'top'
+                    }
+                    parameters.to = {
+                        x: 'right',
+                        y: 'bottom'
+                    }
+                } else {
+                    parameters.from = {
+                        x: 'left',
+                        y: 'bottom'
+                    }
+                    parameters.to = {
+                        x: 'center',
+                        y: 'center'
+                    }
+                }
+
+                self.effects.make({
+                    top: 0,
+                    left: 0,
+                    width: self.app.width,
+                    height: self.app.height
+                }, 'fire', parameters, function () {
+
+                    self.effects.animation = false
+
+                    if (clbk) clbk()
+                })
+
+
             },
 
             donatehearts: function (el, clbk) {
@@ -9630,6 +9699,8 @@ Platform = function (app, listofnodes) {
 
                     var ct = new Settings();
 
+                    ct.paidsubscription.set(typeof settingsObj.paidsubscription == 'undefined' ? (settings.paidsubscription || 0) : settingsObj.paidsubscription);
+
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
                     ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
@@ -10956,6 +11027,221 @@ Platform = function (app, listofnodes) {
 
         usersl: {
             storage: {},
+        },
+
+        paidsubscription : {
+            _clbks : {
+                setcondition : {},
+                updatepaiddata : {}
+                //TODO
+            },
+            checking : {},
+            checkvisibilityCache : function(address){
+                if(!paidsubscriptionCache[self.app.user.address.value]) paidsubscriptionCache[self.app.user.address.value] = {}
+
+                return paidsubscriptionCache[self.app.user.address.value][address]
+            },
+            checkvisibilityStrong : function(address, update, lightupdate){
+
+                if (self.sdk.paidsubscription.checking[address]) return self.sdk.paidsubscription.checking[address]
+                
+                var cache = this.checkvisibilityCache(address)
+                var promise = null
+
+                if (cache && !update && !lightupdate) return promise = () => {return Promise.resolve()}
+                else{
+                    promise = () => {
+                        var data = {}
+                        var promises = [
+                            self.sdk.node.transactions.getfromtotransactions(self.app.user.address.value, address, update).then((r) => {
+
+                               
+        
+                                data.getfromtotransactions = {
+                                    result : r
+                                }
+                                return Promise.resolve()
+        
+                            }).catch(e => {
+                                data.getfromtotransactions = {
+                                    error : e
+                                }
+        
+                                return Promise.resolve()
+                            }),
+        
+                            self.sdk.paidsubscription.getcondition(address).then((v) => {
+                                data.getcondition = {
+                                    result : v
+                                }
+                            }).catch(e => {
+                                data.getcondition = {
+                                    error : e
+                                }
+        
+                                return Promise.resolve()
+                            })
+                        ]
+        
+                        if(!paidsubscriptionCache[self.app.user.address.value]) paidsubscriptionCache[self.app.user.address.value] = {}
+        
+                        return Promise.all(promises).then(() => {
+
+                            if(data.getcondition.error || data.getfromtotransactions.error){
+                                return Promise.reject(data.getcondition.error || data.getfromtotransactions.error)
+                            }
+
+                            if(!self.currentBlock){
+                                return Promise.reject('currentBlock is empty')
+                            }
+
+                            var paidC = {
+                                '1m' : {c : 1, m : 1, tx : []}, '6m' : {c : 5.5, m : 6, tx : []}, '1y' : {c : 10, m : 12, tx : []}
+                            }
+
+                            var d = 86400
+                            var dc = 365
+
+                            _.each(paidC, (v, k) => {
+                                v.block = self.currentBlock - v.m * 43200
+                                v.time = (Date.now() / 1000) - v.m * 2635200
+
+                                v.value = (data.getcondition.result || 0) * v.c
+                                v.balance = -v.value
+                            })
+
+                            var balance = {}
+                            var until = 0
+
+                            _.each(data.getfromtotransactions.result, (trx) => {
+                                _.each(paidC, (v, k) => {
+                                    if (trx.time > v.time){
+                                        v.balance += trx.amount / smulti
+                                        v.tx.push(trx)
+                                    }
+                                })
+                            })
+
+
+                            var resultStatus = 'paid'
+
+                            if(_.find(paidC, (v) => {
+                                return v.balance > 0
+                            })) {
+                                resultStatus = 'paid_success'
+                            }
+
+                            if (resultStatus == 'paid_success'){
+
+                                
+
+                                for(var i = 0; i < dc; i++){
+
+                                    var pb = {}
+
+                                    _.each(paidC, (v, k) => {
+                                        pb[k] = {
+                                            block : v.block,
+                                            time : v.time,
+                                            value : v.value,
+                                            balance : -v.value
+                                        }
+                                    })
+
+                                    _.each(data.getfromtotransactions.result, (trx) => {
+                                        _.each(pb, (v, k) => {
+                                            if (trx.time > v.time + d * i){
+                                                v.balance += trx.amount / smulti
+                                            }
+                                        })
+                                    })
+
+                                    var resultStatus_l = 'paid'
+
+                                    if(_.find(pb, (v) => {
+                                        return v.balance > 0
+                                    })) {
+                                        resultStatus_l = 'paid_success'
+                                    }
+
+                                    if(resultStatus_l == 'paid'){
+
+                                        until = new Date(Date.now() + i * d * 1000)
+
+                                        break
+                                    }
+
+                                }
+                            }
+
+                            _.each(paidC, (v, k) => {
+                                balance[k] = v.balance || 0
+                            })
+                         
+                            paidsubscriptionCache[self.app.user.address.value][address] = {
+                                result : resultStatus,
+                                balance : balance,
+                                data : paidC,
+                                until
+                            }
+        
+                        }).catch(e => {
+                            paidsubscriptionCache[self.app.user.address.value][address] = {
+                                error : e
+                            }
+        
+                            return Promise.resolve()
+                        })
+                    }
+                }
+
+                self.sdk.paidsubscription.checking[address] = promise().then(() => {
+
+                    _.each(self.sdk.paidsubscription._clbks.updatepaiddata, (f) => {
+                        f(address, paidsubscriptionCache[self.app.user.address.value][address])
+                    })
+
+                    return paidsubscriptionCache[self.app.user.address.value][address]
+                }).finally(() => {
+                    delete self.sdk.paidsubscription.checking[address]
+                })
+
+                return self.sdk.paidsubscription.checking[address]
+            },
+            
+            getcondition : function(address){
+                return self.psdk.accSet.load(address).then(s => {
+
+                    var settings = self.psdk.accSet.get(address) || {}
+
+                    return Promise.resolve(settings.paidsubscription || 0)
+                })
+            },
+
+            setcondition : function(paidsubscription, clbk){
+                self.app.platform.sdk.user.accSetMy({
+                    paidsubscription: paidsubscription || 0
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        _.each(self.sdk.paidsubscription._clbks.setcondition, (f) => {
+                            f(paidsubscription)
+                        })
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            }
         },
 
         users: {
@@ -15840,6 +16126,12 @@ Platform = function (app, listofnodes) {
 
                     if (!v) return false
 
+                    if (a && a.address){
+                        if(self.sdk.user.type(a.address) == 'moderator'){
+                            return false
+                        }
+                    }
+
                     if (v == 'reg') {
 
                         if (self.app.user.getstate()) return false
@@ -15854,6 +16146,44 @@ Platform = function (app, listofnodes) {
 
                         if (me && me.relation(share.address, 'subscribes')) {
                             return false
+                        }
+
+                    }
+
+                    if (v == 'paid') {
+
+                        
+
+                        var me = self.psdk.userInfo.getmy()
+
+                        if (me && me.relation(share.address, 'subscribes')) {
+
+                            if (app.pkoindisable){
+                                return false
+                            }
+
+                            var cache = self.sdk.paidsubscription.checkvisibilityCache(share.address)
+
+                            if (cache){
+                                if(cache.error){
+                                    return 'paid_error'
+                                }
+
+                                if(cache.result == 'paid_success'){
+                                    return false
+                                }
+                                else{
+                                    return v
+                                }
+                            }
+
+                            return 'paid_check'
+
+                        }
+                        else{
+                            if (app.pkoindisable){
+                                return 'sub'
+                            }
                         }
 
                     }
@@ -16413,9 +16743,9 @@ Platform = function (app, listofnodes) {
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
                         method: 'getboostfeed',
-                        rpc: {
+                        /*rpc: {
                             fnode: '65.21.252.135:38081'
-                        }
+                        }*/
                     })
                 },
 
@@ -16759,6 +17089,46 @@ Platform = function (app, listofnodes) {
                 loading: {},
 
                 clbks: {
+
+                },
+
+                getfromtotransactions : function(from, to, update){
+
+                    console.log('getfromtotransactions', update)
+
+                    return pretry(function () {
+                        return self.currentBlock
+                    }).then(() => {
+                        if(!self.currentBlock){
+                            return Promise.reject('currentBlock is empty')
+                        }
+    
+                        return app.psdk.getfromtotransactions.request(() => {
+    
+                            var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
+    
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
+                                rpc: {
+                                    fnode: nodes[rand(0, nodes.length - 1)]
+                                }
+                            })
+        
+                        }, from + to, {
+                            update : update
+                        }).then(function (s) {
+
+                            console.log("SSS", s)
+
+                            s = self.psdk.getfromtotransactions.tempAdd(s, from, to)
+
+                            console.log("SSS2", s)
+
+        
+                            return s
+                        })
+                    })
+
+                    
 
                 },
 
@@ -19323,6 +19693,8 @@ Platform = function (app, listofnodes) {
 
                 var m = share.caption;
 
+                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable
+
                 if (!m) m = share.renders.text()
 
                 var symbols = extendedpreview ? (platform.app.mobileview ? 80 : 180) : 20;
@@ -19344,7 +19716,7 @@ Platform = function (app, listofnodes) {
 
                 h = '<div class="sharepreview"><div class="shareprwrapper">'
 
-                if (images.length && !extendedpreview) {
+                if (images.length && !extendedpreview && !paidsub) {
 
                     var img = images[0]
 
@@ -19364,8 +19736,12 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="tcell fortext">'
 
-                if (nm.length > 2) {
+                if (nm.length > 2 && !paidsub) {
                     h += '<div><span>' + nm + '</span></div>'
+                }
+
+                if (paidsub){
+                    h += '<div><span><b>' + self.app.localization.e('fastmessagepaidsubscription_share') + '</b></span></div>'
                 }
 
                 if (share.repost) {
@@ -19373,7 +19749,7 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if (images.length && extendedpreview) {
+                if (images.length && extendedpreview && !paidsub) {
 
 
                     h += '<div class="shareimages commentprev">'
@@ -19399,7 +19775,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                if (images.length || links.length || share.tags.length || meta.type) {
+                if (!paidsub && (images.length || links.length || share.tags.length || meta.type)) {
 
                     h += '<div class="additionalcontent">'
 
@@ -19425,9 +19801,6 @@ Platform = function (app, listofnodes) {
 
                     h += '</div>'
                 }
-
-
-
 
                 h += '</div>'
 
@@ -19467,6 +19840,10 @@ Platform = function (app, listofnodes) {
 
                 if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization') {
                     h += ' <i class="fas fa-heart"></i>'
+                }
+
+                if (data.opmessage == 'a:subscription') {
+                    h += ' <i class="fas fa-fire"></i>'
                 }
 
 
@@ -20178,7 +20555,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    if (data.share && data.share.itisstream()) {
+                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && data.share.visibility() == 'paid'))) {
                         message.el.addClass('bright')
                     }
 
@@ -20478,7 +20855,7 @@ Platform = function (app, listofnodes) {
 
                                         if (data.opmessage) {
 
-                                            if (data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization') {
+                                            if (data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization' && data.opmessage != 'a:subscription') {
                                                 txt += ' ' + self.app.localization.e('e13336') + ' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
                                             }
 
@@ -20489,6 +20866,11 @@ Platform = function (app, listofnodes) {
                                             if (data.opmessage == 'a:donate') {
                                                 txt += ' ' + self.app.localization.e('fastmessagedonate')
                                             }
+
+                                            if (data.opmessage == 'a:subscription') {
+                                                txt += ' ' + self.app.localization.e('fastmessagepaidsubscription')
+                                            }
+                                            
 
 
                                         }
@@ -20592,6 +20974,13 @@ Platform = function (app, listofnodes) {
                     if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization') {
 
                         self.app.platform.effects.templates.donatehearts(app.el.html, function () {
+
+                        })
+                    }
+
+                    if (data.opmessage == 'a:subscription') {
+
+                        self.app.platform.effects.templates.paidsubscription(app.el.html, function () {
 
                         })
                     }

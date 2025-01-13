@@ -2870,13 +2870,14 @@ _l.miniApp_iconAltText = "Иконка приложения";
 _l.miniApp_createTitle = "Создание нового мини-приложения";
 _l.miniApp_createDescription = "Убедитесь, что все данные совпадают с полями, указанными в файле b_manifest.json приложения. Любые расхождения могут вызвать ошибки при установке.";
 
-_l.miniApp_instructionsIntro = "Чтобы успешно создать миниприложение, вам необходимо иметь опубликованное приложение на собственном домене. Для тестирования вы также можете использовать локальный адрес, например localhost:3333. Впоследствии этот адрес можно будет заменить в разделе редактирования.";
-_l.miniApp_instructionsFilesNeeded = "На вашем домене должны быть доступны два файла:";
-_l.miniApp_instructionsManifest = "b_manifest - JSON манифест с информацией о приложении.";
-_l.miniApp_instructionsIcon = "b_icon.png - иконка приложения (формат PNG), доступная по адресу: https://[scope]/b_icon.png, где scope – домен, указанный вами.";
-_l.miniApp_instructionsManifestExample = "Пример b_manifest:";
-_l.miniApp_instructionsDataMatch = "Все указанные в форме данные (id, name, scope) должны соответствовать полям манифеста. Поле author в манифесте должно совпадать с пользователем, который добавляет это приложение.";
-_l.miniApp_instructionsDevMode = "После нажатия на кнопку «Сохранить» ваше миниприложение будет создано в режиме разработки (dev-режим). Оно будет доступно только вам локально, а не публично. В дальнейшем вам будет доступна панель управления, где вы сможете опубликовать приложение для всех пользователей.";
+_l.miniApp_instructionsTitle = "Инструкции для размещения";
+_l.miniApp_instructionsIntro = "Разместить приложение довольно просто. Вам нужно подключить два файла: b_manifest и b_icon.";
+_l.miniApp_instructionsFilesNeeded = "Для успешного размещения убедитесь, что следующие файлы доступны на вашем домене:";
+_l.miniApp_instructionsManifest = "b_manifest - JSON-файл с информацией о приложении.";
+_l.miniApp_instructionsIcon = "b_icon.png - иконка приложения в формате PNG, доступная по адресу: https://[scope]/b_icon.png, где scope – ваш домен.";
+_l.miniApp_instructionsManifestExample = "Пример содержимого файла b_manifest:";
+_l.miniApp_instructionsDataMatch = "Важно: все данные из формы (id, name) должны точно совпадать с соответствующими полями в файле b_manifest. Поле author должно совпадать с текущим пользователем, который добавляет приложение. Поле scope указывает домен размещения приложения. Для тестирования можно использовать локальный адрес, например localhost:3333. Впоследствии этот адрес можно будет заменить на ваш домен, например example.com.";
+_l.miniApp_instructionsDevMode = "После сохранения ваше миниприложение будет создано в режиме разработки (dev-режим). Оно будет доступно только вам локально. Позже вы сможете опубликовать приложение для всех пользователей через панель управления.";
 
 _l.miniApp_nameLabel = "Название";
 _l.miniApp_scopeLabel = "Домен";
@@ -2892,8 +2893,9 @@ _l.miniApp_scopeDescription =
   "цифры и точки (например, 'my-app.bastyonapps.com' или 'subdomain.example.com').";
 
 
-_l.miniApp_iconInstructions = "Иконка вашего приложения будет загружена из https://[scope]/b_icon.png, если файл доступен. Если иконка не загрузится, отобразится сообщение об ошибке. Убедитесь, что b_icon.png загружен на ваш домен.";
-_l.miniApp_iconLabelInstructions = "После указания домена выше, иконка будет загружена с https://[scope]/b_icon.png. Если иконка отсутствует или домен неверен, будет показано сообщение об ошибке.";
+_l.miniApp_iconInstructions = "В разделе отображения вы настраиваете внешний вид вашего приложения. Иконка загружается автоматически с адреса https://[scope]/b_icon.png, где [scope] — это домен вашего приложения (например, example.com). Убедитесь, что файл b_icon.png доступен и соответствует формату PNG.";
+_l.miniApp_iconLabelInstructions = "После ввода домена вы увидите предварительный просмотр иконки. Если файл отсутствует или указан неверный домен, появится сообщение об ошибке.";
+_l.miniApp_showManifestButton = "Показать содержимое b_manifest";
 
 _l.miniApp_tagsCountRequirement = "Добавьте 2 тега, описывающих ваше приложение.";
 _l.miniApp_tagsInstructions = "Теги помогают пользователям находить приложение.";
@@ -2909,7 +2911,7 @@ _l.miniApp_deploymentSectionTitle = "Размещение";
 _l.miniApp_displaySectionTitle = "Отображение";
 
 _l.miniApp_editAppTitle = "Редактирование мини-приложения";
-_l.miniApp_editDescriptionIntro = "Все указанные в форме данные (id, name, scope) должны соответствовать полям манифеста (b_manifest).";
+_l.miniApp_editDescriptionIntro = "Указанные в форме данные (id, name) должны соответствовать полям манифеста (b_manifest).";
 _l.miniApp_editDescriptionAuthor = "Поле author в манифесте обязательно должно совпадать с пользователем, который добавляет это приложение (владелец).";
 _l.miniApp_editDescriptionScope = "Если вы меняете scope (домен), убедитесь, что на новом домене размещены актуальные файлы: b_manifest (JSON с описанием приложения) и b_icon.png (иконка в формате PNG), доступная по адресу https://[scope]/b_icon.png.";
 _l.miniApp_editDescriptionId = "При изменении id фактически создаётся новое мини-приложение, поэтому обычно id лучше не трогать, если вы просто обновляете уже существующее приложение.";
@@ -2943,3 +2945,63 @@ _l.fordevelopers = "Для разработчиков"
 _l.interfacemobilelayoutmenu = "Кнопка чата посередине нижней панели"
 _l.interface = "Интерфейс"
 
+_l.managePaidSubscription = "Привилегированные подписки"
+
+_l.paidsubscription_condition_caption = "Настройка привилегированных подписок"
+_l.paidsubscription_condition_text = "Установите стоимость привилегированной подписки на ваш канал и тогда вы можете делать публикации только для тех пользователей что вас поддерживают. Для того чтобы пользователь увидел ваш контент, размер денежных переводов за период должен быть равен или превышать установленный вами уровень."
+_l.paidsubscription_condition_hyvalue = "За шесть месяцев"
+_l.paidsubscription_condition_yvalue = "В год"
+_l.paidsubscription_condition_value = "Стоимость месячной привилегированной подписки"
+_l.paidsubscription_removecondition = "Отключить привилегированные подписки"
+_l.paidsubscription_removecondition_question = "Вы действительно хотите отключить привелигированные подписки на вас? Тогда ваши материалы станут видны для всех пользователей."
+_l.paidsubscription_addcondition = "Добавить условия привилегированной подписки"
+_l.paidsubscription_updatecondition = "Обновить условия привилегированной подписки"
+
+_l.paidsubscription_updatecondition_question = "Вы действительно хотите обновить стоимость привилегированной подписки на вас? Условия просмотра публикаций обновятся и для предыдущих материалов."
+
+_l.paidsubscription_updatecondition_success = "Условия привилегированной подписки на вас изменены. Изменения будут применены у пользователей в течение дня."
+
+_l.visibleonlytopaid = "Видно только привилегированным подписчикам"
+
+
+_l.sharevisibility_paid = 'Для привилегированных подписчиков'
+_l.sharevisibilitylabel_paid_post = 'Автор решил сделать эту <b>публикацию</b> видимой только привилегированным подписчикам'
+_l.sharevisibilitylabel_paid_article = 'Автор решил сделать эту <b>статью</b> видимой только привилегированным подписчикам'
+_l.sharevisibilitylabel_paid_video = 'Автор решил сделать это <b>видео</b> видимым только привилегированным подписчикам'
+
+_l.sharevisibilitylabel_paid_error = 'Мы не смогли проверить наличие привилегированной подписки. Попробуйте позже.'
+
+_l.getpaidsubscription = 'Стать привилегированным подписчиком'
+_l.getpaidsubscription2 = 'Оформление привилегированной подписки'
+_l.getpaidsubscription3 = 'Оформить привилегированную подписку'
+
+
+_l.getpaidsubscription_acceptQuestion = 'Подтверждаете ли вы следующие действия: '
+_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Перечислить <b>' + name +'</b> <b>' + amount +' PKOIN</b> за привилегированную подписку' }
+_l.getpaidsubscription_acceptQuestion_subscribe = function({name}){return 'Подписаться на <b>' + name +'</b>'}
+
+_l.getpaidsubscription_option_1m = 'Купить подписку на 1 месяц'
+_l.getpaidsubscription_option_6m = 'Купить подписку на 6 месяцев'
+_l.getpaidsubscription_option_1y = 'Купить подписку на год'
+
+_l.getpaidsubscription_option_1m_p = 'Доплатить до подписки на 1 месяц'
+_l.getpaidsubscription_option_6m_p = 'Доплатить до подписки на 6 месяцев'
+_l.getpaidsubscription_option_1y_p = 'Доплатить до подписки на 1 год'
+
+_l.getpaidsubscription_select_option = 'Пожалуйста, выберите опцию оплаты привилегированной подписки'
+
+
+_l.getpaidsubscription_text = 'Оформите привилегированную подписку и получите доступ ко всем публикациям автора!'
+
+_l.getpaidsubscription_option_p = function(date){ return 'Подписка закончится ' + date + ', но позже её можно будет продлить за меньшие деньги' }
+
+_l.getPaidSubscription = "Привилегированная подписка"
+
+
+
+_l.fastmessagepaidsubscription = 'в качестве оплаты привилегированной подписки'
+_l.getpaidsubscription_paidsuccess_text = "Ваша привилегированная подписка уже оплачена"
+_l.getpaidsubscription_paidsuccess_until= function(date){ return 'Подписка оплачена до <b>' + date + '</b>'}
+_l.getpaidsubscription_paidsuccess_text_relation="Доступ к материалам для привилегированных подписчиков уже оплачен осталось только подписаться на автора"
+
+_l.fastmessagepaidsubscription_share = 'Публикация для привилегированных подписчиков'

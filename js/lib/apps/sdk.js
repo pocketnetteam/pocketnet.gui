@@ -306,6 +306,7 @@ var BastyonSdk = function(){
         else{
             return Promise.reject('wrongUrl')
         }
+
         
     }
 

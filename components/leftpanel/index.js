@@ -217,9 +217,6 @@ var leftpanel = (function(){
 						sitemessage(self.app.localization.e('copybuiltfrom'));
 					});
 
-					_p.el.find('.fordevelopers').on('click', () => {
-						self.app.apps.openInWndById('app.pocketnet.docs')
-					})
 
 					_p.el.find('.blockexplorer').on('click', () => {
 						self.app.apps.openInWndById('app.pocketnet.blockexplorer')

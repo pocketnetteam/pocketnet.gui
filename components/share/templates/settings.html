@@ -1,13 +1,11 @@
-<div class="settings <% if(share.settings.t >= 1) {%>showtimepicker<% } %>">
+<div class="settings <% if(typeof share != 'undefined' && share.settings && share.settings.t >= 1) {%>showtimepicker<% } %>">
     <div class="visibilityWrapper">
         <%= selector.input() %>
     </div>
 
-    <% if(app.delaypost) {
+    <% if(app.delaypost && typeof timeselector != 'undefined' && typeof share != 'undefined' && share.settings) {
         
-        if(share.aliasid && !share.delayed()){
-           
-        }
+        if(share.aliasid && !share.delayed()){}
         else { %> 
         
             <div class="visibilityWrapper timewrapper">
