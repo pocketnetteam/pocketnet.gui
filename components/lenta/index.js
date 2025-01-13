@@ -3882,6 +3882,12 @@ var lenta = (function(){
 						if(reason && reason == 'sub' && share.visibility() != 'sub') return
 						if(reason && reason == 'paid' && share.visibility() != 'paid') return
 
+						/*if(reason && reason == 'paid'){
+							if(self.app.platform.sdk.node.shares.checkvisibility(share) == 'paid_success'){
+
+							}
+						}*/
+
 						shares.push(share)
 					}
 				})

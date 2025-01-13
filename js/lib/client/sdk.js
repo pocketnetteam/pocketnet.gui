@@ -124,7 +124,7 @@ var pSDK = function ({ app, api, actions }) {
 
     
         getfromtotransactions : {
-            time : 60 * 60
+            time : 60 * 60 * 60
         }
     }
 

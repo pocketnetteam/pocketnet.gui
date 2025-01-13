@@ -11071,6 +11071,11 @@ Platform = function (app, listofnodes) {
                             }),
         
                             self.sdk.paidsubscription.getcondition(address).then((v) => {
+
+                                if (v == 0){
+                                    return 'zerovalue'
+                                }
+
                                 data.getcondition = {
                                     result : v
                                 }
@@ -11126,14 +11131,12 @@ Platform = function (app, listofnodes) {
                             var resultStatus = 'paid'
 
                             if(_.find(paidC, (v) => {
-                                return v.balance > 0
+                                return v.balance >= 0
                             })) {
                                 resultStatus = 'paid_success'
                             }
 
                             if (resultStatus == 'paid_success'){
-
-                                
 
                                 for(var i = 0; i < dc; i++){
 
