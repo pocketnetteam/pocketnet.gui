@@ -3171,8 +3171,8 @@ _l.getpaidsubscription_text = 'Get a privileged subscription and get access to a
 
 _l.getpaidsubscription_acceptQuestion = 'Do you confirm the following actions: '
 
-_l.getpaidsubscription_acceptQuestion_paid = function(){}
-_l.getpaidsubscription_acceptQuestion_subscribe = function(){}
+_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Transfer to <b>' + name +'</b> <b>' + amount +' PKOIN</b> for privileged subscription' }
+_l.getpaidsubscription_acceptQuestion_subscribe = function({name}){return 'Subscribe to <b>' + name +'</b>'}
 
 _l.getpaidsubscription_option_1m = 'Buy a 1 month subscription'
 _l.getpaidsubscription_option_6m = 'Buy a 6 month subscription'
@@ -3188,3 +3188,10 @@ _l.getpaidsubscription_select_option = 'Please select the premium subscription p
 _l.getpaidsubscription_option_p = function(date){ return 'The subscription will end on ' + date + ', but can be renewed later for less money.' }
 
 _l.getPaidSubscription = "Privileged subscription"
+_l.fastmessagepaidsubscription = 'as payment for a privileged subscription'
+_l.getpaidsubscription_paidsuccess_text = "Your privileged subscription has already been paid for."
+
+_l.getpaidsubscription_paidsuccess_until= function(date){ return 'Subscription paid until <b>' + date + '</b>'}
+_l.getpaidsubscription_paidsuccess_text_relation="Access to materials for privileged subscribers has already been paid for, all that remains is to subscribe to the author"
+
+_l.fastmessagepaidsubscription_share = 'Publication for privileged subscribers'

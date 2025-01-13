@@ -15,7 +15,11 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
                 <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
             <% } %>
 
+            <% if(sUserInfo.reputation > 100) {%>
+            
             <button class="button managePaidSubscription"><%= e('managePaidSubscription') %> <i class="fas fa-fire"></i></button>
+
+            <% } %>
 
         <% } else {%> 
             <button class="button openwallet"><%= e('rwallet') %></button>

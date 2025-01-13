@@ -119,23 +119,27 @@ var getpaidsubscription = (function(){
 
 				if(!subdata) return
 
+				if(!subdata.data){
+					return 
+				}
+
+				var ui = self.psdk.userInfo.get(ed.address)
+
+				if(!ui){
+					return
+				}
+
+				var amount = 0
+				
 				var mactions = {
 					paid : {
-						text : () => {return 'paid'},
+						text : () => {
+							return self.app.localization.e('getpaidsubscription_acceptQuestion_paid', {amount : self.app.platform.mp.coin(amount), name : ui.name})
+						},
 						action : () => {
 
-							if(!selectedOption){
-								return Promise.reject('selectedOption')
-							}
-
-							if(!subdata || !subdata.data){
-								return Promise.reject('subdata')
-							}
-
-							var amount = - subscriptiondata.data[selectedOption].balance
-
 							if (amount <= 0){
-								return Promise.reject('error')
+								return sitemessage('error')
 							}
 
 							var transaction = actions.getTransaction(amount, ed.address)
@@ -149,7 +153,9 @@ var getpaidsubscription = (function(){
 					},
 
 					subscribe : {
-						text : () => {return 'subscribe'},
+						text : () => {
+							return self.app.localization.e('getpaidsubscription_acceptQuestion_subscribe', {name : ui.name})
+						},
 						action : () => {
 
 							return new Promise((resolve, reject) => {
@@ -180,6 +186,14 @@ var getpaidsubscription = (function(){
 
 						return
 					}
+
+					amount = - subscriptiondata.data[selectedOption].balance
+
+					if (amount <= 0){
+						sitemessage('error')
+
+						return
+					}
 				}
 
 				if (actions.length){
@@ -199,8 +213,22 @@ var getpaidsubscription = (function(){
 								})
 							}).then(() => {
 
+								return self.app.platform.sdk.paidsubscription.checkvisibilityStrong(ed.address, false, true)
+
+								
+
+							}).then(() => {
+
 								sitemessage(self.app.localization.e('wssuccessfully'))
 								successCheck()
+
+								return new Promise((resolve) => {
+									setTimeout(() => {
+										self.closeContainer()
+										resolve()
+									}, 400)
+
+								})
 
 							}).catch(e => {
 

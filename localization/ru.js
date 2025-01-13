@@ -2975,7 +2975,7 @@ _l.getpaidsubscription3 = 'Оформить привилегированную �
 
 
 _l.getpaidsubscription_acceptQuestion = 'Подтверждаете ли вы следующие действия: '
-_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Перечислить <b>' + name +'</b> <b>' + amount +'</b> за привилегированную подписку' }
+_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Перечислить <b>' + name +'</b> <b>' + amount +' PKOIN</b> за привилегированную подписку' }
 _l.getpaidsubscription_acceptQuestion_subscribe = function({name}){return 'Подписаться на <b>' + name +'</b>'}
 
 _l.getpaidsubscription_option_1m = 'Купить подписку на 1 месяц'
@@ -2997,3 +2997,9 @@ _l.getPaidSubscription = "Привилегированная подписка"
 
 
 
+_l.fastmessagepaidsubscription = 'в качестве оплаты привилегированной подписки'
+_l.getpaidsubscription_paidsuccess_text = "Ваша привилегированная подписка уже оплачена"
+_l.getpaidsubscription_paidsuccess_until= function(date){ return 'Подписка оплачена до <b>' + date + '</b>'}
+_l.getpaidsubscription_paidsuccess_text_relation="Доступ к материалам для привилегированных подписчиков уже оплачен осталось только подписаться на автора"
+
+_l.fastmessagepaidsubscription_share = 'Публикация для привилегированных подписчиков'

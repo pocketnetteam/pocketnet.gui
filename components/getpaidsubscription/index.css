@@ -141,6 +141,30 @@
 #getpaidsubscription .subscriptiondata .paid .option .value span {
   font-weight: 700;
 }
+#getpaidsubscription .subscriptiondata .paidsuccess .until {
+  text-align: center;
+  padding: 1em;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .text {
+  margin-top: 1em;
+  text-align: center;
+  padding: 1em;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .text span {
+  font-size: 2em;
+  font-weight: 100;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .imageWrapper {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#getpaidsubscription .subscriptiondata .paidsuccess .paidsuccessimage {
+  width: 128px;
+  height: 128px;
+}
 .wnd.getpaidsubscriptionwindow .wndinner {
   box-shadow: none;
   max-width: 480px;

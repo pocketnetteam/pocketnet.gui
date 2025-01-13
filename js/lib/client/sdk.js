@@ -1769,6 +1769,34 @@ var pSDK = function ({ app, api, actions }) {
                 requestIndexedDb: 'getfromtotransactions',
                 update : p.update,
             })
+        },
+        tempAdd : function(ar = [], from, to){
+
+            var add = []
+
+            _.each(actions.getAccounts(), (account) => {
+
+                if(account.adddress != from) return
+
+                _.each(account.getTempActions(''), (action) => {
+
+                    _.each(action.outputs, (out) => {
+                        if(out.address == to){
+                            add.unshift({
+                                amount : out.amount * 100000000,
+                                time : Date.now() / 1000,
+                                height : app.platform.currentBlock,
+                                temp : true
+                            })
+                        }
+                    })
+                    
+                })
+
+               
+            })
+
+            return ar.concat(add)
         }
     }
     
@@ -2692,7 +2720,27 @@ var pSDK = function ({ app, api, actions }) {
                 requestIndexedDb: 'transactionsRequest'
             })
             
-        }
+        },
+        listener: function (exp, address, status, action) {
+            if (status == 'completed') {
+
+
+                var keys = []
+
+                _.each(action.outputs, (output) => {
+                    if(output.address != address){
+                        keys.push(address + output.address)
+                    }
+                })
+
+                keys = _.filter(_.uniq(keys), k => k)
+
+                if (keys.length){
+                    clearfromdb('getfromtotransactions', keys)
+                }
+                
+            }
+        },
     }
 
     self.rpc = {
@@ -3055,7 +3103,7 @@ var pSDK = function ({ app, api, actions }) {
 
             var alias = action.get()
 
-            self[action.object.type].listener(alias, address, status)
+            self[action.object.type].listener(alias, address, status, action)
 
             if (status == 'completed' && action.object.ustate) {
 
