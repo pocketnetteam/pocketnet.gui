@@ -19,6 +19,7 @@ var authorn = (function(){
 		var result = null
 		var fixedBlock = null
 		var lastnav = '' 
+		var external = null
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
@@ -416,7 +417,126 @@ var authorn = (function(){
 		}
 
 		var events = {
+			uploadwallpapper : function(){
 
+				var added = function(image){
+
+				
+
+					var images = [{
+						original : image[0],
+						index : 0
+					}]
+
+					self.nav.api.load({
+						open : true,
+						id : 'imageGalleryEdit',
+						inWnd : true,
+	
+						essenseData : {
+							edit : true,
+							initialValue : 0,
+							images : images,
+	
+							apply : true,
+	
+							crop : {
+								aspectRatio : 3 / 1,
+								style : 'apply',
+								autoCropArea : 1,
+							},
+	
+							success : function(i, editclbk){
+
+								
+	
+								resize(images[0].original, 1920, 640, function(resized){
+									var r = resized.split(',');
+							
+									if (r[1]){
+	
+										self.app.platform.sdk.users.setCover(resized, function(err, alias){
+											if(!err){
+												renders.randombg()
+												successCheck()
+											}
+										})
+	
+									}
+									
+									editclbk()
+	
+									
+								}, null, 0.85)
+	
+							}
+						}
+					})
+				}
+
+				if(self.app.mobile.supportimagegallery()){
+
+					app.platform.ui.uploadImage({
+						multiple : false,
+						action : (image, clbk) => {
+
+							var ext = fkit.extensionBase64(image.base64)
+
+							if (ext == 'gif'){
+								sitemessage('uploadwallpapperGiferror')
+							}
+							else{
+								added(img)
+							}
+
+							clbk()
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
+						}
+					})
+
+
+					return
+				}
+	
+				self.nav.api.load({
+					open : true,
+					id : 'embeding',
+					inWnd : true,
+					donate: true,
+
+					essenseData : {
+						type : 'images',
+						multiple : false,
+						uploadTitle : '',
+						caption : '',
+						maxh : 1920,
+						maxw : 640,
+						noresize : true,
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
+						on : {
+						
+							added,
+
+							destroy(){
+								external = null
+							}
+						}
+					},
+
+					clbk : function(s, p){
+						external = p
+					}
+				})
+			},
 			share : function(){
 				self.nav.api.load({
 					open : true,
@@ -819,36 +939,49 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
-					Circles({
-						target: el.bg.find('.bgwallpaper')[0],
-						quantity: 15,
-						radius: {
-							min: 2,
-							max: 400
-						},
-						zIndex: {
-							min: 0,
-							max: 20
-						},
-						hue: {
-							min: 0,
-							max: 180
-						},
-						saturation: {
-							min: 50,
-							max: 100
-						},
-						light: {
-							min: 25,
-							max: 75
-						},
-						alpha: {
-							min: 0.2,
-							max: 0.8
+					self.app.platform.sdk.users.getCover(author.address).then(cover => {
+						if(!cover){
+							Circles({
+								target: el.bg.find('.bgwallpaper')[0],
+								quantity: 15,
+								radius: {
+									min: 2,
+									max: 400
+								},
+								zIndex: {
+									min: 0,
+									max: 20
+								},
+								hue: {
+									min: 0,
+									max: 180
+								},
+								saturation: {
+									min: 50,
+									max: 100
+								},
+								light: {
+									min: 25,
+									max: 75
+								},
+								alpha: {
+									min: 0.2,
+									max: 0.8
+								}
+							})
+						}
+						else{
+
+							p.el.find('.bgwallpaper').attr('image', cover)
+							bgImages(p.el)
 						}
 					})
 
+					
+
 					p.el.find('.share').on('click', events.share)
+
+					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
 
 					if(clbk) clbk()
 
@@ -1629,6 +1762,9 @@ var authorn = (function(){
 					upbackbutton.destroy()
 					upbackbutton = null
 				}
+
+				if (external) 
+					external.destroy()
 
 				if (href != 'author') 
 					self.app.el.html.removeClass('allcontent')

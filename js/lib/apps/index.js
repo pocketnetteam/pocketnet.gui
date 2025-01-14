@@ -596,7 +596,6 @@ var BastyonApps = function (app) {
         share: {
             permissions: [],
             parameters: [],
-            authorization: true,
             action: function ({
                 data,
                 application

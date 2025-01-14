@@ -6629,6 +6629,50 @@ html.allcontent {
 html.allcontent #footerWrapper {
   background: #051b28;
 }
+html.allcontent #panelWrapper {
+  padding: 0;
+}
+html.allcontent:not(.scroll65) #menu .menuspace {
+  opacity: 1;
+}
+html.allcontent:not(.scroll65) #menu .menuWrapper {
+  background: transparent;
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .sections .items .item .icn svg {
+  fill: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .onlyblackallcontent {
+  display: block;
+}
+html.allcontent:not(.scroll65) #menu .noblackallcontent {
+  display: none;
+}
+html.allcontent:not(.scroll65) #menu .postssearch .searchInput {
+  background: rgba(var(--background-hidden-layer), 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+html.allcontent:not(.scroll65) #menu .postssearch input {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .postssearch :placeholder-shown {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .postssearch ::placeholder {
+  color: rgba(var(--text-on-bg-shadow-color), 0.5);
+}
+html.allcontent:not(.scroll65) #menu .postssearch .searchIconLabel,
+html.allcontent:not(.scroll65) #menu .postssearch .searchPanel {
+  color: rgba(var(--text-on-bg-shadow-color), 0.5);
+}
+html.allcontent #menu .menuspace {
+  opacity: 0;
+  display: block;
+}
+html.mobileview.allcontent .contentWrapper {
+  padding-top: 0;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   button.medium {

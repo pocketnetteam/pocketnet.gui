@@ -8,7 +8,7 @@ var managepaidsubscription = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, address = null, currentValue = 0, oldCurrentValue = 0, minValue = 10;
+		var el, ed, address = null, currentValue = 0, oldCurrentValue = 0, minValue = 1;
 
 		var input = null;
 
@@ -39,7 +39,6 @@ var managepaidsubscription = (function(){
 	
 						self.closeContainer()
 					}
-
 
 				})
 			}
@@ -118,7 +117,7 @@ var managepaidsubscription = (function(){
 		
 							success : function(){
 
-								currentValue = 0
+								currentValue = -1
 		
 								actions.set();
 		

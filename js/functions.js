@@ -2194,7 +2194,7 @@ srcToData = function (url, callback) {
 	xhr.send();
 }
 
-resizeFit = function (srcData, width, height, clbk, format) {
+resizeFit = function (srcData, width, height, clbk, format, quality) {
 	var imageObj = new Image(),
 		canvas = document.createElement("canvas"),
 		ctx = canvas.getContext('2d'),
@@ -2216,8 +2216,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 		newHeight = imageObj.height;
 		newWidth = imageObj.width;
 
-		if (newHeight <= height && newWidth <= width) {
-
+		if (newHeight <= height && newWidth <= width && !quality) {
+			clbk(srcData);
+			return
 		}
 		else {
 			if (newWidth > width) {
@@ -2245,7 +2246,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.85);
+		console.log("QU image", width, height, imageObj.width, imageObj.height, newWidth, newHeight)
+
+		var url = canvas.toDataURL("image/" + format, quality || 0.85);
 
 		$(canvas).remove();
 
@@ -2256,7 +2259,7 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 }
 
-resize = function (srcData, width, height, clbk, format) {
+resize = function (srcData, width, height, clbk, format, quality) {
 
 	/**/
 
@@ -2280,8 +2283,9 @@ resize = function (srcData, width, height, clbk, format) {
 		newHeight = imageObj.height;
 		newWidth = imageObj.width;
 
-		if (newHeight <= height && newWidth <= width) {
-
+		if (newHeight <= height && newWidth <= width && !quality) {
+			clbk(srcData);
+			return
 		}
 		else {
 			if (newWidth > width) {
@@ -2301,8 +2305,11 @@ resize = function (srcData, width, height, clbk, format) {
 
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+		
+		console.log("QU image f", width, height, imageObj.width, imageObj.height, newWidth, newHeight)
 
-		var url = canvas.toDataURL("image/" + format, 0.85);
+
+		var url = canvas.toDataURL("image/" + format, quality || 0.85);
 
 		$(canvas).remove();
 

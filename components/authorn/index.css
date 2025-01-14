@@ -28,7 +28,7 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 200px;
+  height: 265px;
   /*aspect-ratio: 4;*/
   z-index: 0;
   border-bottom-left-radius: 12px;
@@ -58,14 +58,15 @@
   max-width: 1076px;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
+  margin-left: 0.5em;
   cursor: pointer;
   border-radius: 12px;
   min-width: 44px;
   line-height: 42px;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  background: rgba(var(--background-main-contrast), 0.3);
-  border: 1px solid rgba(var(--background-main), 0.8);
+  background: rgba(var(--background-main-contrast), 0.2);
+  border: 1px solid rgba(var(--background-main), 0.6);
   color: rgba(var(--background-main), 0.7);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -116,7 +117,7 @@
   height: 100%;
 }
 #authorn .acontentps {
-  height: 200px;
+  height: 265px;
   /*aspect-ratio: 4;*/
 }
 #authorn .blocking,
@@ -586,13 +587,13 @@
     padding-top: 3em;
   }
   #authorn .bgwallpaperWrapper {
-    height: 130px;
+    height: 195px;
   }
   #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
     padding: 0.5em;
   }
   #authorn .acontentps {
-    height: 130px;
+    height: 195px;
   }
   #authorn .fbuttonsrow button {
     height: 45px;

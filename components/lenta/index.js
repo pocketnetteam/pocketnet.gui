@@ -25,6 +25,7 @@ var lenta = (function(){
 		var subloadedindex = 0
 		var authorsettings = {}
 		var fragments = {}
+		var visibilityStatus = {}
 
 		var boosted = [],
 			boostloadedblock = 0,
@@ -764,6 +765,7 @@ var lenta = (function(){
 				initedcommentes = {}
 				players = {}
 				sharesInview = []
+				visibilityStatus = {}
 				
 			},
 
@@ -3684,6 +3686,8 @@ var lenta = (function(){
 
 								var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
 
+								visibilityStatus[share.txid] = checkvisibility
+
 								if (checkvisibility == 'paid_check'){
 
 									self.app.platform.sdk.paidsubscription.checkvisibilityStrong(share.address).then(r => {
@@ -3881,6 +3885,23 @@ var lenta = (function(){
 
 						if(reason && reason == 'sub' && share.visibility() != 'sub') return
 						if(reason && reason == 'paid' && share.visibility() != 'paid') return
+
+						var ns = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+						console.log("ns", ns, visibilityStatus)
+
+						if(visibilityStatus[share.txid] == ns) {
+							console.log("RELOAD no")
+							return
+						}
+
+						visibilityStatus[share.txid] = ns
+
+						/*if(reason && reason == 'paid'){
+							if(self.app.platform.sdk.node.shares.checkvisibility(share) == 'paid_success'){
+
+							}
+						}*/
 
 						shares.push(share)
 					}
