@@ -3269,7 +3269,7 @@ pShare = function(){
 
 			var name = app.platform.api.name(self.address)
 			var edjs = new edjsHTML(null, app)
-			var message = edjs.apply(self.message, decodeURIComponent)
+			var message = edjs.apply(self.message, articleDecode)
 			text = edjs.text(message);
 			text = self.caption + `\n\n` + text;
 	

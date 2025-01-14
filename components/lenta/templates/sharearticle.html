@@ -427,7 +427,7 @@ var cc = share.renders.captionclear(translated.c);
     var txt = null
 
     try{
-        var message = edjs.apply(translated.m || share.message, trydecode)
+        var message = edjs.apply(translated.m || share.message, articleDecodeTry)
         txt = edjs.parse(message)
     } catch(e){
         console.error(e)
@@ -515,7 +515,7 @@ var cc = share.renders.captionclear(translated.c);
                                 <% if(!share.temp && !share.relay){
                                     
                                     var edjs = new edjsHTML(null, app)
-                                    var message = edjs.apply(translated.m || share.message, trydecode)
+                                    var message = edjs.apply(translated.m || share.message, articleDecodeTry)
 				                    var words = edjs.words(message)
 
                                     var textPreview = '';

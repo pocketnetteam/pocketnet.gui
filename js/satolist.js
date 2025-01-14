@@ -8312,7 +8312,7 @@ Platform = function (app, listofnodes) {
 
                 empty.visibility = (share.settings.f || 0) + ''
                 empty.caption.value = share.caption.v
-                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), articleDecode)
                 empty.tags = _.clone(share.tags.v)
                 empty.language = share.language.v
                 empty.time = share.time
@@ -8494,7 +8494,7 @@ Platform = function (app, listofnodes) {
 
                 var edjs = new edjsHTML(null, app)
 
-                var artcontent = edjs.apply(art.content, encodeURIComponent)
+                var artcontent = edjs.apply(art.content, articleEncode)
 
                 var share = new Share(art.language || self.app.localization.key, self.app);
 

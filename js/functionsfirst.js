@@ -1570,3 +1570,13 @@ trydecode = function(s = ''){
 
     return r
 }
+
+articleDecodeTry = function(s = ''){
+    return findAndReplaceLink(trydecode(s), true)   
+}  
+articleDecode = function(s = ''){
+    return findAndReplaceLink(decodeURIComponent(s), true)   
+}
+articleEncode = function(s = ''){
+    return encodeURIComponent(findAndReplaceLinkClearReverse(s))
+}    
