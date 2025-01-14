@@ -9705,7 +9705,24 @@ Platform = function (app, listofnodes) {
                     ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
-                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    ct.cover.set(typeof settingsObj.cover == 'undefined' ? (settings.cover || '') : settingsObj.cover);
+
+                    return new Promise((resolve, reject) => {
+                        ct.uploadImage(self.app, function(err){
+
+                            if (err){
+    
+                                reject('imageerror')
+                                
+                                return 
+                            }
+    
+                            resolve()
+    
+                        })
+                    }).then(() => {
+                        return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    })
 
                 }).then(action => {
 
@@ -11217,7 +11234,7 @@ Platform = function (app, listofnodes) {
 
                     var settings = self.psdk.accSet.get(address) || {}
 
-                    return Promise.resolve(settings.paidsubscription || 0)
+                    return Promise.resolve(Number(superXSS(settings.paidsubscription || 0)))
                 })
             },
 
@@ -11252,6 +11269,35 @@ Platform = function (app, listofnodes) {
             storage: {},
 
             nameaddressstorage: {},
+            getCover : function (address) {
+                return self.psdk.accSet.load(address).then(s => {
+
+                    var settings = self.psdk.accSet.get(address) || {}
+
+                    return Promise.resolve(superXSS(settings.cover || ''))
+                })
+            },
+            setCover : function (cover, clbk) {
+
+                self.app.platform.sdk.user.accSetMy({
+                    cover: cover || ''
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
 
             setMonetization: function (monetization, clbk) {
                 self.app.platform.sdk.user.accSetMy({

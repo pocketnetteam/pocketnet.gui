@@ -627,10 +627,6 @@ var comments = (function(){
 								})
 							}
 
-							
-
-							
-
 						},
 						onSuccess : function(){
 

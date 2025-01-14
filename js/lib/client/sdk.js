@@ -1166,6 +1166,7 @@ var pSDK = function ({ app, api, actions }) {
                 object.pin = exp.pin
                 object.monetization = exp.monetization
                 object.paidsubscription = exp.paidsubscription
+                object.cover = exp.cover
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true

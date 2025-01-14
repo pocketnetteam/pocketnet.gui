@@ -58,14 +58,15 @@
   max-width: 1076px;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
+  margin-left: 0.5em;
   cursor: pointer;
   border-radius: 12px;
   min-width: 44px;
   line-height: 42px;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  background: rgba(var(--background-main-contrast), 0.3);
-  border: 1px solid rgba(var(--background-main), 0.8);
+  background: rgba(var(--background-main-contrast), 0.2);
+  border: 1px solid rgba(var(--background-main), 0.6);
   color: rgba(var(--background-main), 0.7);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;

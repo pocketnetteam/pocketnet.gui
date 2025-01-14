@@ -3197,3 +3197,7 @@ _l.getpaidsubscription_paidsuccess_until= function(date){ return 'Subscription p
 _l.getpaidsubscription_paidsuccess_text_relation="Access to materials for privileged subscribers has already been paid for, all that remains is to subscribe to the author"
 
 _l.fastmessagepaidsubscription_share = 'Publication for privileged subscribers'
+_l.uploadwallpappercaption = "Set profile cover"
+_l.uploadwallpapperuploadTitle = "Select a profile cover image"
+_l.uploadwallpapperGiferror = "Gif images are not allowed"
+

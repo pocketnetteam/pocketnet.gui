@@ -3005,3 +3005,8 @@ _l.getpaidsubscription_paidsuccess_until= function(date){ return 'Подписк
 _l.getpaidsubscription_paidsuccess_text_relation="Доступ к материалам для привилегированных подписчиков уже оплачен осталось только подписаться на автора"
 
 _l.fastmessagepaidsubscription_share = 'Публикация для привилегированных подписчиков'
+
+_l.uploadwallpappercaption = "Установить обложку профиля"
+_l.uploadwallpapperuploadTitle = "Выберите изображение для обложки профиля"
+_l.uploadwallpapperGiferror = "Изображения gif не разрешены"
+
