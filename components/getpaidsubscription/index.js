@@ -306,13 +306,11 @@ var getpaidsubscription = (function(){
 						return
 					}
 
-					
-
 					data.userinfo = self.psdk.userInfo.get(ed.address)
 
 					clbk(data);
 
-				})
+				}, true)
 
 			},
 

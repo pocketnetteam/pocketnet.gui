@@ -8133,6 +8133,79 @@ html.allcontent{
     #footerWrapper{
         background: #051b28;
     }
+
+    #panelWrapper{
+        padding : 0;
+    }
+    
+    &:not(.scroll65){
+        #menu{
+            .menuspace{
+                opacity: 1;
+            }
+
+            .menuWrapper{
+                background: transparent;
+                color : rgb(var(--text-on-bg-shadow-color));
+            }
+
+            .sections .items .item .icn svg{
+                fill: rgb(var(--text-on-bg-shadow-color));
+            }
+
+            .onlyblackallcontent{
+                display: block;
+            }
+
+            .noblackallcontent{
+                display: none;
+            }
+
+            .postssearch {
+
+                .searchInput{
+                    background: rgba(var(--background-hidden-layer), 0.1);
+                    backdrop-filter: blur(5px);
+                    -webkit-backdrop-filter: blur(5px);  
+                }
+
+                input{
+                    color : rgb(var(--text-on-bg-shadow-color));
+                }
+
+                :placeholder-shown{
+                    color : rgb(var(--text-on-bg-shadow-color));
+                }
+
+                ::placeholder {
+                    color : rgba(var(--text-on-bg-shadow-color), 0.5);
+                }
+
+                .searchIconLabel,
+                .searchPanel{
+                    color : rgba(var(--text-on-bg-shadow-color), 0.5);
+                }
+
+            }
+        }
+    }
+
+    
+    #menu{
+        .menuspace{
+            opacity: 0;
+            display: block;
+        }
+    }
+    
+    
+}
+
+html.mobileview.allcontent{
+   
+    .contentWrapper{
+        padding-top: 0;
+    }
     
 }
 

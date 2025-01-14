@@ -14,7 +14,7 @@ var post = (function () {
 		var primary = (p.history && !p.inWnd) || p.primary;
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false;
-
+		var allcontentenabled = false
 		var progressInterval;
 
 		var videoinfoupdateInterval = null
@@ -2166,6 +2166,9 @@ var post = (function () {
 					
 				}
 				else{
+
+					
+
 					renders.share(function () {
 
 						renders.comments()
@@ -2353,7 +2356,14 @@ var post = (function () {
 				el = {};
 				ed = {}
 
+				if(allcontentenabled){
+					window.rifticker.add(() => {
+						self.app.el.html.removeClass('allcontent')
+					})
+				}
 				
+
+				allcontentenabled = false
 
 			},
 
@@ -2375,6 +2385,7 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
+				allcontentenabled = false
 				
 				
 				if (share.itisarticle()){
@@ -2387,6 +2398,15 @@ var post = (function () {
 				}
 
 				make()
+
+				if(share && !p.inWnd && share.itisarticle()){
+
+					allcontentenabled = true
+
+					window.rifticker.add(() => {
+						self.app.el.html.addClass('allcontent')
+					})
+				}
 
 				/*if (ed.video && p.inWnd && !self.app.mobileview)
 					self.app.el.menu.find('#menu').addClass('static')*/
