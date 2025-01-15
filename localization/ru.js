@@ -3010,3 +3010,7 @@ _l.uploadwallpappercaption = "Установить обложку профиля
 _l.uploadwallpapperuploadTitle = "Выберите изображение для обложки профиля"
 _l.uploadwallpapperGiferror = "Изображения gif не разрешены"
 
+_l.setcoverquestion = 'Хотите ли вы сохранить эту фотографию в качестве обложки профиля?'
+_l.setcoverquestionyes = 'Да, установить обложку'
+_l.setcoverquestionno = 'Нет'
+

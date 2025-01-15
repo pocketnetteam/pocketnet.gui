@@ -3181,6 +3181,10 @@ html.mobileview.android .wnd .wndback {
 .dialog.zindex {
   z-index: 5000;
 }
+.dialog.bop {
+  background: #000000;
+  background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+}
 .dialog .caption {
   font-weight: 700;
 }
@@ -6631,6 +6635,9 @@ html.allcontent #footerWrapper {
 }
 html.allcontent #panelWrapper {
   padding: 0;
+}
+html.allcontent .contentWrapper {
+  margin-top: 0;
 }
 html.allcontent:not(.scroll65) #menu .menuspace {
   opacity: 1;

@@ -781,6 +781,9 @@ html.mobileview #menu .signup {
   margin-left: 1em;
   margin-right: 1em;
 }
+html.mobileview #menu .menuspace {
+  height: calc(95px + var(--app-margin-top));
+}
 html.mobileview #menu .sections {
   width: 100%;
   max-width: none;
