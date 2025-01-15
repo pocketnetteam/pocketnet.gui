@@ -15,7 +15,24 @@
 #menu .sitenamelabel {
   text-transform: uppercase;
 }
+#menu .menuspace {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(165px + var(--app-margin-top));
+  contain: strict;
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  display: none;
+  z-index: 19;
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
 #menu .menuWrapper {
+  /*-webkit-app-region: drag;*/
   width: 100%;
   position: fixed;
   left: 0;
@@ -36,6 +53,9 @@
 				-webkit-app-region: none;
 			  }
 		}*/
+}
+#menu .menuWrapper .onlyblackallcontent {
+  display: none;
 }
 #menu .usericon {
   position: relative;
@@ -694,6 +714,7 @@
   min-height: 33px;
 }
 #menu .postssearch :placeholder-shown {
+  text-align: center;
   color: rgba(var(--color-txt-gray-dark), 0.5);
 }
 #menu .postssearch .searchIconLabel,

@@ -455,6 +455,19 @@ var BastyonSdk = function(){
 
     }
 
+    self.manageBastyonImageSrc = function(src = ''){
+        if(!self.project) return null
+        if(!src) return src
+
+        var srcNew = src;
+
+        self.project.archivedPeertubeServers.map(server => {
+            if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+        });
+
+        return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
+    }
+
     self.inbastyon = function(){
         try {
             return window.self !== window.top;

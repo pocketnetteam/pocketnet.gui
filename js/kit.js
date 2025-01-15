@@ -3269,7 +3269,7 @@ pShare = function(){
 
 			var name = app.platform.api.name(self.address)
 			var edjs = new edjsHTML(null, app)
-			var message = edjs.apply(self.message, decodeURIComponent)
+			var message = edjs.apply(self.message, articleDecode)
 			text = edjs.text(message);
 			text = self.caption + `\n\n` + text;
 	
@@ -3954,11 +3954,77 @@ Settings = function(){
 		v : ''
 	};
 
+	self.cover = {
+		set : function(_v){
+
+			if (!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('cover', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
 	self.clear = function(){
 
 		self.pin.set()
 		self.monetization.set()
 		self.paidsubscription.set()
+		self.cover.set()
+
+	}
+
+	self.checkloaded = function(){
+		return self.cover.v.indexOf('data:image') > -1
+	}
+
+	self.uploadImage = function(app, clbk){
+
+		var image = self.cover.v;
+
+		console.log('image', image)
+		console.log('image', image.indexOf('data:image'))
+
+		if (image.indexOf('data:image') > -1){
+
+			var r = image.split(',');
+
+			if (r[1]){
+
+				app.imageUploader.upload({
+					base64: image
+				}).then( url => {
+
+					self.cover.v = url;
+
+					if (clbk)
+						clbk();
+
+				}).catch(err => {
+
+					if (clbk)
+						clbk(err);
+
+				})
+
+			}
+		}
+		else
+		{
+			if (clbk)
+				clbk();
+		}
 
 	}
 
@@ -3975,11 +4041,6 @@ Settings = function(){
 	}
 
 
-	self.checkloaded = function(){
-		return false
-	}
-
-
 	self.validation = function(){
 		return false
 	}
@@ -3989,7 +4050,8 @@ Settings = function(){
         return JSON.stringify({
 			pin: self.pin.v,
 			monetization : self.monetization.v,
-			paidsubscription : self.paidsubscription.v
+			paidsubscription : self.paidsubscription.v,
+			cover : self.cover.v
 		})
 
 	}
@@ -4006,7 +4068,8 @@ Settings = function(){
 				d: JSON.stringify({
 					pin: self.pin.v || "",
 					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
-					paidsubscription : self.paidsubscription.v
+					paidsubscription : self.paidsubscription.v,
+					cover : self.cover.v
 				})
 			} 
 		}
@@ -4015,7 +4078,8 @@ Settings = function(){
 			d: JSON.stringify({
 				pin: self.pin.v || "",
 				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
-				paidsubscription : self.paidsubscription.v
+				paidsubscription : self.paidsubscription.v,
+				cover : self.cover.v
 			})
 		}
 
@@ -4041,6 +4105,7 @@ Settings = function(){
 		self.pin.set(parsed.pin || ""); 
 		self.monetization.set(parsed.monetization); 
 		self.paidsubscription.set(parsed.paidsubscription || 0)
+		self.cover.set(parsed.cover || '')
 
 	}
 
@@ -4074,6 +4139,7 @@ pSettings = function(){
 	self.monetization = ''
 	self.paidsubscription = 0
 	self.address = ''
+	self.cover = ''
 
 	self._import = function(dv = {}){
 
@@ -4084,6 +4150,7 @@ pSettings = function(){
 		self.pin = v.pin || ""
 		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
 		self.address = v.address || ""
+		self.cover = v.cover || ""
 		self.paidsubscription = v.paidsubscription || 0
 	}
 
@@ -4091,7 +4158,11 @@ pSettings = function(){
 
 		var v = {
 			d : {
-				pin : self.pin
+				pin : self.pin,
+				monetization : self.monetization,
+				address : self.address,
+				cover : self.cover,
+				paidsubscription : self.paidsubscription
 			}
 		}
 
@@ -4129,7 +4200,8 @@ pSettings = function(){
 			d : {
 				pin : self.pin,
 				monetization : self.monetization,
-				paidsubscription : self.paidsubscription
+				paidsubscription : self.paidsubscription,
+				cover : self.cover
 			}
 		})
 

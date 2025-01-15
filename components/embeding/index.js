@@ -127,29 +127,39 @@ var embeding = (function(){
 			
 			},
 			slowUpload : function(file, clbk){
-				resize(file.base64, 1080, 1080, function(resized){
 
-					var r = resized.split(',');
-
-					if (r[1]){
-
-						
-						file.id = makeid();
-						file.slow = true;
-						file.base64 = resized;
-
-						options.images.value.push(file)
-
-
-					}
-
+				if(ed.noresize){
+					options.images.value.push(file)
 					if (clbk)
 						clbk()
-				})
+				}
+				else{
+					resize(file.base64, ed.maxh || 1080, ed.maxw || 1080, function(resized){
+
+						var r = resized.split(',');
+	
+						if (r[1]){
+	
+							
+							file.id = makeid();
+							file.slow = true;
+							file.base64 = resized;
+	
+							options.images.value.push(file)
+	
+	
+						}
+	
+						if (clbk)
+							clbk()
+					})
+				}
+
+				
 			},
 
 			upload : function(file, clbk){
-				resize(file.base64, 1080, 1080, function(resized){
+				resize(file.base64, ed.maxh || 1080, ed.maxw || 1080, function(resized){
 
 					var r = resized.split(',');
 
@@ -291,11 +301,11 @@ var embeding = (function(){
 				initUpload({
 					el : el.upload,
 		
-					ext : ['png', 'jpeg', 'jpg', 'gif', 'webp', 'avif'],
+					ext : ed.ext || ['png', 'jpeg', 'jpg', 'gif', 'webp', 'avif'],
 					app : self.app,
 					dropZone : el.c.closest('.wnd'),
 
-					multiple : true,
+					multiple : typeof ed.multiple == 'undefined' ? true : ed.multiple,
 					uploadImage : true,
 
 					action : function(file, clbk){
@@ -357,7 +367,8 @@ var embeding = (function(){
 
 				var data = {
 					type : type,
-					options : options
+					options : options,
+					ed
 				};
 
 				clbk(data);

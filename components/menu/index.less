@@ -24,8 +24,23 @@
 	.sitenamelabel{
 		text-transform: uppercase;
 	}
+
+	.menuspace{
+		position: fixed;
+		left: 0;
+		right: 0;
+		top : 0;
+		height: calc(165px + var(--app-margin-top));
+		contain: strict;
+		background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+		display: none;
+		z-index: 19;
+		opacity: 0;
+		.transition(0.3s, opacity);
+	}
 	
 	.menuWrapper{
+		/*-webkit-app-region: drag;*/
 		width: 100%;
 		position: fixed;
 		left: 0;
@@ -37,6 +52,10 @@
 		z-index: 20;
 		contain: strict;
 		background: rgb(var(--background-total-theme));
+
+		.onlyblackallcontent{
+			display: none;
+		}
 		
 		// electronnav
 		/*
@@ -938,6 +957,7 @@
 		}
 
 		:placeholder-shown{
+			text-align: center;
 			color : rgba(var(--color-txt-gray-dark), 0.5);
 		}
 

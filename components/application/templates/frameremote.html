@@ -15,7 +15,12 @@
         <% if(!app.mobileview || !state || app.electronview) {%>
             <div class="back iconwrapper filterIcon">
                 <div class="icon">
-                    <i class="fas fa-chevron-left"></i>
+                    <% if(app.electronview) {%>
+                        <i class="fas fa-chevron-left"></i>
+                    <% } else { %> 
+                        <i class="fas fa-times"></i>
+                    <% } %>
+                    
                 </div>
             </div>
 

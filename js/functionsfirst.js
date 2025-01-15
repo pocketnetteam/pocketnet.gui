@@ -404,11 +404,11 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			if (data.file) {
 				nd.file = { ...data.file }
-				nd.file.url = fu(nd.file.url)
+				nd.file.url = fu(nd.file.url, true)
 			}
 
 			return nd
@@ -443,7 +443,7 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.link = fu(nd.link)
+			nd.link = fu(nd.link, true)
 
 			if (data.meta) {
 				nd.meta = { ...data.meta }
@@ -452,7 +452,7 @@ edjsHTMLCnt = function (a, app) {
 
 				if (data.meta.image) {
 					nd.meta.image = { ...data.meta.image }
-					nd.meta.image.url = fu(nd.meta.image.url)
+					nd.meta.image.url = fu(nd.meta.image.url, true)
 				}
 			}
 
@@ -464,8 +464,8 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.embed = fu(nd.embed)
-			nd.source = fu(nd.source)
+			nd.embed = fu(nd.embed, true)
+			nd.source = fu(nd.source, true)
 
 			if (nd.caption) nd.caption = fu(nd.caption)
 
@@ -1570,3 +1570,21 @@ trydecode = function(s = ''){
 
     return r
 }
+
+articleDecodeTry = function(s = '', nl){
+    if(nl) return trydecode(s)
+
+    return findAndReplaceLink(trydecode(s), true)   
+}  
+articleDecode = function(s = '', nl){
+
+    if(nl) return decodeURIComponent(s)
+
+    return findAndReplaceLink(decodeURIComponent(s), true)   
+}
+articleEncode = function(s = '', nl){
+
+    if(nl) return encodeURIComponent(s)
+
+    return encodeURIComponent(findAndReplaceLinkClearReverse(s))
+}    

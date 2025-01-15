@@ -98,6 +98,11 @@
 #getpaidsubscription .content.ready .sendButtonWrapper {
   display: block;
 }
+#getpaidsubscription .errorWrapper {
+  text-align: center;
+  padding: 2em;
+  color: rgb(var(--neutral-grad-2));
+}
 #getpaidsubscription .subscriptiondata .paid .paidtext {
   padding: 2em;
   text-align: center;

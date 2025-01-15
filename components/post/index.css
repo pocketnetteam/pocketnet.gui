@@ -877,6 +877,7 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
+    contain: none;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .translateApi .translateto span {
     color: rgb(var(--text-color));

@@ -8312,7 +8312,7 @@ Platform = function (app, listofnodes) {
 
                 empty.visibility = (share.settings.f || 0) + ''
                 empty.caption.value = share.caption.v
-                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), articleDecode)
                 empty.tags = _.clone(share.tags.v)
                 empty.language = share.language.v
                 empty.time = share.time
@@ -8494,7 +8494,7 @@ Platform = function (app, listofnodes) {
 
                 var edjs = new edjsHTML(null, app)
 
-                var artcontent = edjs.apply(art.content, encodeURIComponent)
+                var artcontent = edjs.apply(art.content, articleEncode)
 
                 var share = new Share(art.language || self.app.localization.key, self.app);
 
@@ -9705,7 +9705,24 @@ Platform = function (app, listofnodes) {
                     ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
-                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    ct.cover.set(typeof settingsObj.cover == 'undefined' ? (settings.cover || '') : settingsObj.cover);
+
+                    return new Promise((resolve, reject) => {
+                        ct.uploadImage(self.app, function(err){
+
+                            if (err){
+    
+                                reject('imageerror')
+                                
+                                return 
+                            }
+    
+                            resolve()
+    
+                        })
+                    }).then(() => {
+                        return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    })
 
                 }).then(action => {
 
@@ -11071,6 +11088,11 @@ Platform = function (app, listofnodes) {
                             }),
         
                             self.sdk.paidsubscription.getcondition(address).then((v) => {
+
+                                if (v == 0){
+                                    return 'zerovalue'
+                                }
+
                                 data.getcondition = {
                                     result : v
                                 }
@@ -11126,14 +11148,12 @@ Platform = function (app, listofnodes) {
                             var resultStatus = 'paid'
 
                             if(_.find(paidC, (v) => {
-                                return v.balance > 0
+                                return v.balance >= 0
                             })) {
                                 resultStatus = 'paid_success'
                             }
 
                             if (resultStatus == 'paid_success'){
-
-                                
 
                                 for(var i = 0; i < dc; i++){
 
@@ -11214,7 +11234,7 @@ Platform = function (app, listofnodes) {
 
                     var settings = self.psdk.accSet.get(address) || {}
 
-                    return Promise.resolve(settings.paidsubscription || 0)
+                    return Promise.resolve(Number(superXSS(settings.paidsubscription || 0)))
                 })
             },
 
@@ -11249,6 +11269,35 @@ Platform = function (app, listofnodes) {
             storage: {},
 
             nameaddressstorage: {},
+            getCover : function (address) {
+                return self.psdk.accSet.load(address).then(s => {
+
+                    var settings = self.psdk.accSet.get(address) || {}
+
+                    return Promise.resolve(superXSS(settings.cover || ''))
+                })
+            },
+            setCover : function (cover, clbk) {
+
+                self.app.platform.sdk.user.accSetMy({
+                    cover: cover || ''
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
 
             setMonetization: function (monetization, clbk) {
                 self.app.platform.sdk.user.accSetMy({

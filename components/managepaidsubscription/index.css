@@ -47,7 +47,6 @@
   color: rgb(var(--color-bad));
 }
 #managepaidsubscription .formWrapper .buttonsrow {
-  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
