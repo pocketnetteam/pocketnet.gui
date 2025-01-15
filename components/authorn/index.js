@@ -417,11 +417,49 @@ var authorn = (function(){
 		}
 
 		var events = {
+			tempcover : function(src){
+				renders.randombg(null, src)
+
+				var ds = false
+
+				new dialog({
+					html :  self.app.localization.e('setcoverquestion'),
+					btn1text : self.app.localization.e('setcoverquestionyes'),
+					btn2text : self.app.localization.e('setcoverquestionno'),
+
+					class : 'zindex bop',
+
+					success : function(){
+
+						ds = true
+
+						self.app.platform.sdk.users.setCover(src, function(err, alias){
+							if(!err){
+								renders.randombg()
+								successCheck()
+							}
+						})
+
+					},
+
+                    fail: function () {
+
+						ds = true
+
+						renders.randombg(null)
+                    },
+
+					onDestroy : function(){
+						if(!ds){
+							renders.randombg(null)
+						}
+						
+					}
+				})
+			},
 			uploadwallpapper : function(){
 
 				var added = function(image){
-
-				
 
 					var images = [{
 						original : image[0],
@@ -454,13 +492,15 @@ var authorn = (function(){
 									var r = resized.split(',');
 							
 									if (r[1]){
+
+										events.tempcover(resized)
 	
-										self.app.platform.sdk.users.setCover(resized, function(err, alias){
+										/*self.app.platform.sdk.users.setCover(resized, function(err, alias){
 											if(!err){
 												renders.randombg()
 												successCheck()
 											}
-										})
+										})*/
 	
 									}
 									
@@ -478,6 +518,7 @@ var authorn = (function(){
 
 					app.platform.ui.uploadImage({
 						multiple : false,
+						mp : 6,
 						action : (image, clbk) => {
 
 							var ext = fkit.extensionBase64(image.base64)
@@ -486,7 +527,7 @@ var authorn = (function(){
 								sitemessage('uploadwallpapperGiferror')
 							}
 							else{
-								added(img)
+								added([image.base64])
 							}
 
 							clbk()
@@ -928,7 +969,7 @@ var authorn = (function(){
 				}
 			},
 
-			randombg : function(clbk){
+			randombg : function(clbk, tempcover){
 
 				self.shell({
 					name :  'bg',
@@ -938,6 +979,25 @@ var authorn = (function(){
 					},
 					insertimmediately : true,
 				}, function(p){
+
+					
+
+					
+
+					p.el.find('.share').on('click', events.share)
+
+					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
+
+					if(clbk) clbk()
+
+					if (tempcover){
+
+						p.el.find('.bgwallpaper').attr('image', tempcover)
+						bgImages(p.el)
+
+						return 
+					}
+
 
 					self.app.platform.sdk.users.getCover(author.address).then(cover => {
 						if(!cover){
@@ -976,14 +1036,6 @@ var authorn = (function(){
 							bgImages(p.el)
 						}
 					})
-
-					
-
-					p.el.find('.share').on('click', events.share)
-
-					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
-
-					if(clbk) clbk()
 
 				})
 

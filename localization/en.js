@@ -3201,3 +3201,6 @@ _l.uploadwallpappercaption = "Set profile cover"
 _l.uploadwallpapperuploadTitle = "Select a profile cover image"
 _l.uploadwallpapperGiferror = "Gif images are not allowed"
 
+_l.setcoverquestion = 'Would you like to save this photo as your profile cover?'
+_l.setcoverquestionyes = 'Yes, set cover'
+_l.setcoverquestionno = 'No'
