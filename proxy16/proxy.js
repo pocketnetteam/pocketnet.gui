@@ -1140,7 +1140,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				})
 
 				var withvideos = _.filter(posts, p => {
-					return p.type == 'video' && p.u
+					return (p.type == 'video' || p.type == 'audio') && p.u
 				})
 
 				videos = _.map(withvideos, function(p){

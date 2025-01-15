@@ -255,7 +255,9 @@ var Roy = function (parent) {
 			}
 		}
 
-		if (!list.length) return Promise.reject('failed');
+		if (!list.length) {
+			return Promise.reject('failed');
+		}
 
 		var index = 0;
 		var error = null;
@@ -276,6 +278,7 @@ var Roy = function (parent) {
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
+
 
 					if (e && e.status) {
 						if (e.status != 500) {
