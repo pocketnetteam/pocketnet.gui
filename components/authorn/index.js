@@ -1001,6 +1001,9 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
+					p.el.find('.toblockexplorer').on('click', function(){
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ author.address))
+					})
 
 					p.el.find('.copyaddress').on('click', function(){
 						copyText($(this))

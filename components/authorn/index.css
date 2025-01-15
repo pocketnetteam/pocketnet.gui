@@ -31,6 +31,7 @@
   height: 265px;
   /*aspect-ratio: 4;*/
   z-index: 0;
+  filter: brightness(90%);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
