@@ -141,8 +141,17 @@ edjsHTMLCnt = function (a, app) {
 
 		var ftext = filterXSS(text, {
 			stripIgnoreTag: true,
+            onTag : function(tag, html, options){
+                if(tag == 'a'){
+                    if(html == '</a>') return
+                    if(!options.isWhite) return ''
+
+                    return html.replace('>', ' cordovalink="_system" donottrust="true">')
+
+                }
+            },
 			whiteList: {
-				a: ["href", "title", "target", 'cordovalink'],
+				a: ["href", "title", "target", 'cordovalink', 'donottrust'],
 				br: ["style"],
 				b: ["style"],
 				span: ["style"],
@@ -347,7 +356,7 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				level: data.level,
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
@@ -391,9 +400,9 @@ edjsHTMLCnt = function (a, app) {
 			return _.map(data, function (i) {
 				var nd = { ...i }
 
-				nd.url = fu(nd.url)
+				nd.url = fu(nd.url, true)
 
-				if (nd.caption) nd.caption = fu(nd.caption)
+				if (nd.caption) nd.caption = fu(nd.caption, true)
 
 				return nd
 			})
@@ -419,22 +428,22 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				caption: fu(data.caption),
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
 
 		code: function (data, fu) {
 			return {
-				code: fu(data.code)
+				code: fu(data.code, true)
 			}
 		},
 
 		warning: function (data, fu) {
 
 			return {
-				title: fu(data.title),
-				message: fu(data.message),
+				title: fu(data.title, true),
+				message: fu(data.message, true),
 			}
 
 		},
@@ -447,8 +456,8 @@ edjsHTMLCnt = function (a, app) {
 
 			if (data.meta) {
 				nd.meta = { ...data.meta }
-				nd.meta.title = fu(nd.meta.title)
-				nd.meta.description = fu(nd.meta.description)
+				nd.meta.title = fu(nd.meta.title, true)
+				nd.meta.description = fu(nd.meta.description, true)
 
 				if (data.meta.image) {
 					nd.meta.image = { ...data.meta.image }
@@ -467,7 +476,7 @@ edjsHTMLCnt = function (a, app) {
 			nd.embed = fu(nd.embed, true)
 			nd.source = fu(nd.source, true)
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			return nd
 		},

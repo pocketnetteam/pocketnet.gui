@@ -153,6 +153,19 @@ var ActionOptions = {
             burn : true
         },
 
+        miniapp : {
+            rejectedAsk : true,
+            amount : function(action){
+                return (window.testpocketnet || action.object.hash) ? 0 : 50
+            },
+
+            destination : function(action){
+                return []
+            },
+
+            burn : true
+        },
+
         comment : {
             rejectedAsk : true,
             destination : function(action){

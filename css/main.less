@@ -182,6 +182,7 @@
 :root {
 	--app-margin-top-default: 0px;
 	--app-margin-top: 0px;
+    --app-margin-top-i: 0px;
     --app-margin-bottom-default: 0px;
 	--keyboardheight: 0px;
 	--app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
@@ -190,6 +191,7 @@
 @supports (width: max(1px, 1px)) {
     :root {
         --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+        --app-margin-top-i: env(safe-area-inset-top);
     }
 }
 

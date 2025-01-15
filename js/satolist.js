@@ -18714,6 +18714,8 @@ Platform = function (app, listofnodes) {
 
             },
             info: function (links, update) {
+
+
                 var s = self.sdk.videos.storage
 
 
@@ -22105,6 +22107,12 @@ Platform = function (app, listofnodes) {
 
             var s = false;
 
+            var ioffset = 0
+
+            if(window.cordova && isios()){
+                ioffset = Number((getComputedStyle(document.documentElement).getPropertyValue("--app-margin-top-i") || '0px').replace('px'))
+            }
+
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
@@ -22124,13 +22132,18 @@ Platform = function (app, listofnodes) {
 
             if (mtbl) {
                 boffset = platform.app.margintop
+
+                if(window.cordova && isios()){
+                    boffset = Math.max(ioffset, platform.app.margintop)
+                }
+                
             }
 
             if (showremove && self.fastMessages.length >= showremove) {
                 boffset = 50
 
                 if (mtbl) {
-                    boffset += platform.app.margintop
+                    boffset += Math.max(ioffset, platform.app.margintop)
                 }
 
                 hideallnotificationselement(true)

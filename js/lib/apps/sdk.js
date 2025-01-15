@@ -222,6 +222,9 @@ var BastyonSdk = function(){
     }
 
     self.get = {
+        videos : function(urls){
+            return action('get.videos', {urls})
+        },
         account : function(){
             return action('account', {})
         },
