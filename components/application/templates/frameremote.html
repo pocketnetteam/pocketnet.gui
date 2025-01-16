@@ -66,7 +66,7 @@
       <span><%-application.manifest.name%></span>
     <% if(tscope) {%>
     <div class="domain-toggle">
-        <span id="toggle-label">Режим разработки:</span>
+        <span id="toggle-label"><%= e('miniApp_devModeLabel') %></span>
         <label class="switch">
             <input value="<%-isInDevMode%>" type="checkbox" id="domain-switch"
                 <%= Boolean(isInDevMode) ? "checked" : "" %>>
