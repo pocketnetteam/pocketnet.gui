@@ -2439,6 +2439,7 @@ Miniapp = function(){
 	self.address = '';
 	self.name = '';
 	self.scope = '';
+	self.tscope = '';
 	self.description = '';
 	self.tags = []
 	
@@ -2458,6 +2459,7 @@ Miniapp = function(){
 				JSON.stringify({
 					n: self.name,
 					s: self.scope,
+					ts : self.tscope || '',
 					d: self.description,
 					t: self.tags
 				}) +
@@ -2473,6 +2475,7 @@ Miniapp = function(){
 				name: self.name,
 				description: self.description,
 				scope: self.scope,
+				tscope : self.tscope || '',
 				tags: self.tags
 			};
 		}
@@ -2484,6 +2487,7 @@ Miniapp = function(){
 				s1: JSON.stringify({
 					n: self.name,
 					s: self.scope,
+					ts : self.tscope,
 					d: self.description,
 					t: self.tags
 				}),
@@ -2497,6 +2501,7 @@ Miniapp = function(){
 		self.hash = d.hash || null;
 		self.name = d.name || '';
 		self.scope = d.scope || '';
+		self.tscope = d.tscope || '';
 		self.id = d.id || '';
 		self.description = d.description || '';
 		self.tags = d.tags || [];
@@ -2527,12 +2532,14 @@ pMiniapp = function(){
 	self.address = '';
 	self.name = '';
 	self.scope = '';
+	self.tscope = '';
 	self.description = '';
 	self.tags = []
 
 	self._import = function(v){
 		self.name = v.name || '';
 		self.scope = v.scope || '';
+		self.tscope = v.tscope || '';
 		self.hash = v.hash || '';
 		self.address = v.address || '';
 		self.description = v.description || '';
@@ -2547,7 +2554,8 @@ pMiniapp = function(){
 				var js = JSON.parse(v.p.s1)
 
 				self.name = js.n || '';
-				self.scope = js.scope || '';
+				self.scope = js.s || '';
+				self.tscope = js.ts || '';
 				self.description = js.d || '';
 				self.tags = js.t || [];
 			}
@@ -2564,6 +2572,7 @@ pMiniapp = function(){
 
 		v.name = self.name
 		v.scope = self.scope
+		v.tscope = self.tscope
 		v.hash = self.hash 
 		v.id = self.id 
 		v.address = self.address 
@@ -3260,7 +3269,7 @@ pShare = function(){
 
 			var name = app.platform.api.name(self.address)
 			var edjs = new edjsHTML(null, app)
-			var message = edjs.apply(self.message, decodeURIComponent)
+			var message = edjs.apply(self.message, articleDecode)
 			text = edjs.text(message);
 			text = self.caption + `\n\n` + text;
 	
@@ -3402,11 +3411,17 @@ pShare = function(){
 
 		//if(rand(0, 1)) return 'sub'
 
+		if(!self.settings.f) return null
+
 		if(self.settings.f == '0') return null
 
 		if(self.settings.f == '1') return 'sub'
 
 		if(self.settings.f == '2') return 'reg'
+
+		if(self.settings.f == '3') return 'paid'
+
+		return 'any'
 	}
 
 	self.type = 'share'
@@ -3917,10 +3932,99 @@ Settings = function(){
 		v : ''
 	};
 
+	self.paidsubscription = {
+		set : function(_v){
+
+			if (!_v || _.isNaN(_v)){
+				this.v = 0
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('paidsubscription', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
+	self.cover = {
+		set : function(_v){
+
+			if (!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('cover', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
 	self.clear = function(){
 
 		self.pin.set()
 		self.monetization.set()
+		self.paidsubscription.set()
+		self.cover.set()
+
+	}
+
+	self.checkloaded = function(){
+		return self.cover.v.indexOf('data:image') > -1
+	}
+
+	self.uploadImage = function(app, clbk){
+
+		var image = self.cover.v;
+
+		console.log('image', image)
+		console.log('image', image.indexOf('data:image'))
+
+		if (image.indexOf('data:image') > -1){
+
+			var r = image.split(',');
+
+			if (r[1]){
+
+				app.imageUploader.upload({
+					base64: image
+				}).then( url => {
+
+					self.cover.v = url;
+
+					if (clbk)
+						clbk();
+
+				}).catch(err => {
+
+					if (clbk)
+						clbk(err);
+
+				})
+
+			}
+		}
+		else
+		{
+			if (clbk)
+				clbk();
+		}
 
 	}
 
@@ -3937,11 +4041,6 @@ Settings = function(){
 	}
 
 
-	self.checkloaded = function(){
-		return false
-	}
-
-
 	self.validation = function(){
 		return false
 	}
@@ -3950,7 +4049,9 @@ Settings = function(){
 
         return JSON.stringify({
 			pin: self.pin.v,
-			monetization : self.monetization.v
+			monetization : self.monetization.v,
+			paidsubscription : self.paidsubscription.v,
+			cover : self.cover.v
 		})
 
 	}
@@ -3966,7 +4067,9 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
-					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
+					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
+					paidsubscription : self.paidsubscription.v,
+					cover : self.cover.v
 				})
 			} 
 		}
@@ -3974,7 +4077,9 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
-				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
+				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
+				paidsubscription : self.paidsubscription.v,
+				cover : self.cover.v
 			})
 		}
 
@@ -3999,6 +4104,8 @@ Settings = function(){
 
 		self.pin.set(parsed.pin || ""); 
 		self.monetization.set(parsed.monetization); 
+		self.paidsubscription.set(parsed.paidsubscription || 0)
+		self.cover.set(parsed.cover || '')
 
 	}
 
@@ -4030,7 +4137,9 @@ pSettings = function(){
 
 	self.pin = '';
 	self.monetization = ''
+	self.paidsubscription = 0
 	self.address = ''
+	self.cover = ''
 
 	self._import = function(dv = {}){
 
@@ -4041,13 +4150,19 @@ pSettings = function(){
 		self.pin = v.pin || ""
 		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
 		self.address = v.address || ""
+		self.cover = v.cover || ""
+		self.paidsubscription = v.paidsubscription || 0
 	}
 
 	self.export = function(){
 
 		var v = {
 			d : {
-				pin : self.pin
+				pin : self.pin,
+				monetization : self.monetization,
+				address : self.address,
+				cover : self.cover,
+				paidsubscription : self.paidsubscription
 			}
 		}
 
@@ -4084,7 +4199,9 @@ pSettings = function(){
 		s.import({
 			d : {
 				pin : self.pin,
-				monetization : self.monetization
+				monetization : self.monetization,
+				paidsubscription : self.paidsubscription,
+				cover : self.cover
 			}
 		})
 

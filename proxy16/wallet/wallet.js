@@ -347,7 +347,7 @@ var Wallet = function(p){
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
             }
             catch(e){
-                //console.log("E", e)
+                console.log("E", e)
             }
           
             return {

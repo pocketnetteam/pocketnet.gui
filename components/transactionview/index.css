@@ -5,6 +5,9 @@
   margin: 0 auto;
   padding: 1em;
 }
+#transactionview .toblockexplorer {
+  cursor: pointer;
+}
 #transactionview .scaption {
   padding: 0.5em 0;
 }

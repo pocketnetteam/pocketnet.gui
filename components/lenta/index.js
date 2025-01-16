@@ -25,6 +25,7 @@ var lenta = (function(){
 		var subloadedindex = 0
 		var authorsettings = {}
 		var fragments = {}
+		var visibilityStatus = {}
 
 		var boosted = [],
 			boostloadedblock = 0,
@@ -764,6 +765,7 @@ var lenta = (function(){
 				initedcommentes = {}
 				players = {}
 				sharesInview = []
+				visibilityStatus = {}
 				
 			},
 
@@ -1426,7 +1428,7 @@ var lenta = (function(){
 
 				if (share){
 
-					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
+					var url = 'https://'+self.app.options.url+'/' + ('post?') + 's='+id
 					//if (parameters().address) url += '&address=' + (parameters().address || '')
 
 
@@ -1929,6 +1931,31 @@ var lenta = (function(){
 				}
 
 				
+
+			},
+
+			getpaidsubscription : function(txid, clbk){
+				var share = self.psdk.share.get(txid)
+
+				if(!share) return
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : share.address,
+						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
+				})
 
 			},
 
@@ -2825,6 +2852,12 @@ var lenta = (function(){
 				actions.postscores(id)
 			},
 
+			getpaidsubscription: function(){
+				var id = $(this).closest('.share').attr('id');
+
+				actions.getpaidsubscription(id)
+			},
+
 			
 
 			like : function(){
@@ -3650,7 +3683,24 @@ var lenta = (function(){
 									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
 								}
 
+
+								var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+								visibilityStatus[share.txid] = checkvisibility
+
+								if (checkvisibility == 'paid_check'){
+
+									self.app.platform.sdk.paidsubscription.checkvisibilityStrong(share.address).then(r => {
+										console.log("checkvisibilityStrong", r)
+									}).catch(e => {
+										console.error('checkvisibilityStrong', e)
+									})
+
+								}
+
 							}
+
+							
 
 
 							if (clbk) clbk();
@@ -3834,6 +3884,24 @@ var lenta = (function(){
 					if (share.address == address && share.visibility()) {
 
 						if(reason && reason == 'sub' && share.visibility() != 'sub') return
+						if(reason && reason == 'paid' && share.visibility() != 'paid') return
+
+						var ns = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+						console.log("ns", ns, visibilityStatus)
+
+						if(visibilityStatus[share.txid] == ns) {
+							console.log("RELOAD no")
+							return
+						}
+
+						visibilityStatus[share.txid] = ns
+
+						/*if(reason && reason == 'paid'){
+							if(self.app.platform.sdk.node.shares.checkvisibility(share) == 'paid_success'){
+
+							}
+						}*/
 
 						shares.push(share)
 					}
@@ -5151,6 +5219,7 @@ var lenta = (function(){
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
+			el.c.on('click', '.getpaidsubscription',events.getpaidsubscription)
 
 			function initOutsideClickEvent(e) {
 				let isOutside = false;
@@ -5342,6 +5411,9 @@ var lenta = (function(){
 						
 					}*/
 
+					self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[mid] = function(address){
+						renders.maybechangevisibility(address, 'paid')
+					}
 
 					self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
@@ -6009,6 +6081,7 @@ var lenta = (function(){
 			
 				delete self.app.platform.actionListeners[mid]
 				delete self.app.psdk.updatelisteners[mid]
+				delete self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[mid]
 				
 				_.each(initedcommentes, function(c){
 					c?.clearessense()

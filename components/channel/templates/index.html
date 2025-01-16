@@ -45,125 +45,134 @@
 
 		%>
 
-			<div class="userinfo <%-modclass%>">
-				<div class="icon">
-					<% var src = deep(author, 'data.image')  %>
-					<div class="usericon" image="<%-src || '*'%>">
-
-						<% if(!src && letter) {%>
-
-							<span class="letter">
-								<%-letter.toUpperCase()%>
-							</span>
-
-						<% } else if (!src) { %>
-
-							<i class="far fa-user"></i>
-
-						<% } %>
-
-					</div>
+			<div class="bgwallpaperWrapper">
+				<div class="bgwallpaper <%- modclass %>">
+					<div class="grad"></div>
 				</div>
+			</div>
+			
 
-				<div class="nameinfo">
+			<div class="userinfo <%-modclass%>">
+				<div class="uiwrapper">
+					<div class="icon">
+						<% var src = deep(author, 'data.image')  %>
+						<div class="usericon" image="<%-src || '*'%>">
 
-					<div class="name">
-						<span class="adr"><%-app.platform.api.clearname(name || author.address, true)%></span>
+							<% if(!src && letter) {%>
+
+								<span class="letter">
+									<%-letter.toUpperCase()%>
+								</span>
+
+							<% } else if (!src) { %>
+
+								<i class="far fa-user"></i>
+
+							<% } %>
+
+						</div>
 					</div>
 
-					
+					<div class="nameinfo">
 
-						<% if(ed.openprofilebutton && !app.curation()) { %>
+						<div class="name">
+							<span class="adr"><%-app.platform.api.clearname(name || author.address, true)%></span>
+						</div>
 
-							<a href="<%-app.platform.api.authorlink(author.address)%>">
+						
 
+							<% if(ed.openprofilebutton && !app.curation()) { %>
+
+								<a href="<%-app.platform.api.authorlink(author.address)%>">
+
+									<div class="openprofilebuttonwrapper">
+										<button class="button openprofilebutton">
+											<%= e('gotoProfile2') %>
+										</button>
+									</div>
+
+								</a>
+
+							<% } %>
+
+							<% if(ed.customaction) {%>
 								<div class="openprofilebuttonwrapper">
-									<button class="button openprofilebutton">
-										<%= e('gotoProfile2') %>
+									<button class="button openprofilebutton customaction">
+										<%- e(ed.customaction.label) %>
 									</button>
 								</div>
+							<% } %>
 
-							</a>
-
-						<% } %>
-
-						<% if(ed.customaction) {%>
-							<div class="openprofilebuttonwrapper">
-								<button class="button openprofilebutton customaction">
-									<%- e(ed.customaction.label) %>
-								</button>
-							</div>
-						<% } %>
-
-						
-						<% if(ed.followbutton && !app.curation()) { %>
-
-
-							<div class="subscribeWrapper">
-
-								<% if(author.following) { %>
-
-									<button class="unsubscribeButton">
-										<%=e('unfollow') %>
-									</button>
-
-								<% } else { %>
-
-									<button class="subscribeButton">
-										<%=e('follow') %>
-									</button>
-									
-								<% } %>
-
-							</div>
-
-						<% } %>
-					
-
-					<div class="panel">
-						<% _.each(reports, function(report){ %> 
-						
-						
-							<div class="usermenuitem" menuitem="<%-report.id%>">
 							
-									<span class="rname"><%-report.name%></span>
-									<%=report.icon%> 
-									<span class="count">
-										<% if(report.count) {%>
-											<%-report.count() || 0%>
-										<% } %>
-									</span>
+							<% if(ed.followbutton && !app.curation()) { %>
+
+
+								<div class="subscribeWrapper">
+
+									<% if(author.following) { %>
+
+										<button class="unsubscribeButton">
+											<%=e('unfollow') %>
+										</button>
+
+									<% } else { %>
+
+										<button class="subscribeButton">
+											<%=e('follow') %>
+										</button>
+										
+									<% } %>
+
+								</div>
+
+							<% } %>
 						
+
+						<div class="panel">
+							<% _.each(reports, function(report){ %> 
+							
+							
+								<div class="usermenuitem" menuitem="<%-report.id%>">
 								
-							</div>
+										<span class="rname"><%-report.name%></span>
+										<%=report.icon%> 
+										<span class="count">
+											<% if(report.count) {%>
+												<%-report.count() || 0%>
+											<% } %>
+										</span>
 							
-						<% }) %>
-					</div>
-
-					<div class="additional">
-
-						<% if(about) {%><div class="about"><%= about %></div>
-						<% } else { %> 
-							<% if(d) {%>
-								<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
-							<% } %>
-						<% } %>
-					</div>
-
-					<% if(!ed.jury) {%>
-
-						<% if(state) {%>
-							<% if(!author.me && !sUserInfo.deleted) {%>
-								<div class="blockWrapper">
-
-									<span class="block"><%-e('block')%></span>
-									<span class="unblock"><%-e('unblock')%></span>
 									
 								</div>
+								
+							<% }) %>
+						</div>
+
+						<div class="additional">
+
+							<% if(about) {%><div class="about"><%= about %></div>
+							<% } else { %> 
+								<% if(d) {%>
+									<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+								<% } %>
+							<% } %>
+						</div>
+
+						<% if(!ed.jury) {%>
+
+							<% if(state) {%>
+								<% if(!author.me && !sUserInfo.deleted) {%>
+									<div class="blockWrapper">
+
+										<span class="block"><%-e('block')%></span>
+										<span class="unblock"><%-e('unblock')%></span>
+										
+									</div>
+								<% } %>
 							<% } %>
 						<% } %>
-					<% } %>
 
+					</div>
 				</div>
 
 				

@@ -35,6 +35,16 @@
         "name" : "Bastyon documentation",
         "grantedPermissions" : [],
         "store" : {"g" : true, "i" : true}
+    },{
+        "id": "app.pocketnet.blockexplorer",
+        "version": "0.0.1",
+        "scope": "bastyon.com/blockexplorer",
+        "cantdelete": true,
+        "name": "Block Explorer",
+        "develop": true,
+        "install": true,
+        "store": {"g" : true, "i" : true},
+        "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
     }],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",

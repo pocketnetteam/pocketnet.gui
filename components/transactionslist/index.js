@@ -196,6 +196,17 @@ var transactionslist = (function(){
 				events.opentransaction(txid)
 			})
 
+			el.c.on('click', '.toblockexplorer', function(){
+				var txid = $(this).attr('txid')
+
+				self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('transaction/'+ txid))
+
+				return false
+			})
+
+
+			
+
 			if (scnt.hasClass('applicationhtml')) {
 				self.app.events.scroll['transactionslist'] = events.loadmorescroll
 			}

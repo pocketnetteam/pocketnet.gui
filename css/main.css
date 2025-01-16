@@ -147,6 +147,7 @@
 :root {
   --app-margin-top-default: 0px;
   --app-margin-top: 0px;
+  --app-margin-top-i: 0px;
   --app-margin-bottom-default: 0px;
   --keyboardheight: 0px;
   --app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
@@ -154,6 +155,7 @@
 @supports (width: max(1px, 1px)) {
   :root {
     --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+    --app-margin-top-i: env(safe-area-inset-top);
   }
 }
 /* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
@@ -3181,6 +3183,10 @@ html.mobileview.android .wnd .wndback {
 .dialog.zindex {
   z-index: 5000;
 }
+.dialog.bop {
+  background: #000000;
+  background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+}
 .dialog .caption {
   font-weight: 700;
 }
@@ -4465,6 +4471,9 @@ html.mobileview.android .wnd .wndback {
 .sharepostmenu.downloadMenu .menuitem .label span.lightColor {
   color: rgb(var(--neutral-grad-3));
 }
+.toblockexplorer {
+  cursor: pointer;
+}
 .matrixchatwrapper {
   font-size: 16px;
 }
@@ -5094,6 +5103,10 @@ html.allcontent_application #footerWrapper {
 .fastMessage .fa-heart,
 .notification .fa-heart {
   color: #ed1f1f;
+}
+.fastMessage .fa-fire,
+.notification .fa-fire {
+  color: rgb(var(--color-bg-orange));
 }
 .fastMessage .messagethumbs,
 .notification .messagethumbs {
@@ -6621,6 +6634,53 @@ html.allcontent {
 }
 html.allcontent #footerWrapper {
   background: #051b28;
+}
+html.allcontent #panelWrapper {
+  padding: 0;
+}
+html.allcontent .contentWrapper {
+  margin-top: 0;
+}
+html.allcontent:not(.scroll65) #menu .menuspace {
+  opacity: 1;
+}
+html.allcontent:not(.scroll65) #menu .menuWrapper {
+  background: transparent;
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .sections .items .item .icn svg {
+  fill: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .onlyblackallcontent {
+  display: block;
+}
+html.allcontent:not(.scroll65) #menu .noblackallcontent {
+  display: none;
+}
+html.allcontent:not(.scroll65) #menu .postssearch .searchInput {
+  background: rgba(var(--background-hidden-layer), 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+html.allcontent:not(.scroll65) #menu .postssearch input {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .postssearch :placeholder-shown {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+html.allcontent:not(.scroll65) #menu .postssearch ::placeholder {
+  color: rgba(var(--text-on-bg-shadow-color), 0.5);
+}
+html.allcontent:not(.scroll65) #menu .postssearch .searchIconLabel,
+html.allcontent:not(.scroll65) #menu .postssearch .searchPanel {
+  color: rgba(var(--text-on-bg-shadow-color), 0.5);
+}
+html.allcontent #menu .menuspace {
+  opacity: 0;
+  display: block;
+}
+html.mobileview.allcontent .contentWrapper {
+  padding-top: 0;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

@@ -222,6 +222,9 @@ var BastyonSdk = function(){
     }
 
     self.get = {
+        videos : function(urls){
+            return action('get.videos', {urls})
+        },
         account : function(){
             return action('account', {})
         },
@@ -293,6 +296,24 @@ var BastyonSdk = function(){
         })
     }
 
+    self.ext = function(url = ''){
+
+        var prts = url.split('?ext=')
+
+        if(prts.length > 1){
+            return action('ext', {
+                ext : prts[1]
+            })
+        }
+
+        else{
+            return Promise.reject('wrongUrl')
+        }
+
+        
+    }
+
+   
     self.openExternalLink = function(url){
         return action('openExternalLink', {url})
     }
@@ -435,6 +456,19 @@ var BastyonSdk = function(){
 
         })
 
+    }
+
+    self.manageBastyonImageSrc = function(src = ''){
+        if(!self.project) return null
+        if(!src) return src
+
+        var srcNew = src;
+
+        self.project.archivedPeertubeServers.map(server => {
+            if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+        });
+
+        return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
     }
 
     self.inbastyon = function(){

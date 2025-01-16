@@ -1957,6 +1957,33 @@ Application = function (p) {
 				self.mobile.reload.destroyparallax()
 			}
 
+			if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					self.el.html.addClass('scrollmodedown')
+				})
+			}
+
+			if (showPanel == '3' && self.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					self.el.html.removeClass('scrollmodedown')
+				})
+			}
+
+
+			if(scrollTop > 120){
+				if(!self.el.html.hasClass('scroll65')){
+					window.requestAnimationFrame(() => {
+						self.el.html.addClass('scroll65')
+					})
+				}
+			}
+			else{
+				if(self.el.html.hasClass('scroll65')){
+					window.requestAnimationFrame(() => {
+						self.el.html.removeClass('scroll65')
+					})
+				}
+			}
 
 
 			if (self.mobileview && !cr) {

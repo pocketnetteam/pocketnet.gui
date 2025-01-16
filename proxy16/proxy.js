@@ -77,6 +77,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var cachedInfo = null
 
 	var dump = {}
+	var status = 0
 
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
@@ -105,6 +106,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var addStats = function () {
 
 		var info = self.kit.info(true, true)
+
+
+		try{
+			info = JSON.parse(JSON.stringify(info))
+		}catch(e){
+			return
+		}
+
 		var nn = {}
 
 		_.each(info.nodeManager.nodes, (n, k) => {
@@ -884,7 +893,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wss: self.wss.info(compact),
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
-				admins: settings.admins,
+				admins: [...settings.admins],
 				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
@@ -906,7 +915,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			cachedInfo = {
 				time : Date.now(),
-				data : info
+				data : JSON.parse(JSON.stringify(info))
 			}
 
 			return info
@@ -1131,7 +1140,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				})
 
 				var withvideos = _.filter(posts, p => {
-					return p.type == 'video' && p.u
+					return (p.type == 'video' || p.type == 'audio') && p.u
 				})
 
 				videos = _.map(withvideos, function(p){
@@ -1436,7 +1445,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					.catch((e) => {
 
 						if (_waitstatus == 'execute'){
-							server.cache.remove(method, cparameters);
+							server.cache.remove(method, cparameters, cachehash);
 						}
 
 						return Promise.reject({
@@ -1784,6 +1793,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return self.kit.sinit()
 					}
 				},*/
+			walletinfo : {
+				path: '/walletinfo',
+				action: function (message) {
+					return Promise.resolve({
+						data: {
+							wallet : self.wallet.info(true),
+							captcha: {
+								hexCaptcha : settings.server.hexCaptcha || false,
+							},
+						},
+					});
+				},
+			},
 			info: {
 				path: '/info',
 				action: function (message) {
@@ -1955,7 +1977,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function (message) {
 
 					return Promise.resolve({
-						cache : server.cache.info()
+						data : {
+							cache : server.cache.info()
+						}
 					});
 
 				},

@@ -141,8 +141,17 @@ edjsHTMLCnt = function (a, app) {
 
 		var ftext = filterXSS(text, {
 			stripIgnoreTag: true,
+            onTag : function(tag, html, options){
+                if(tag == 'a'){
+                    if(html == '</a>') return
+                    if(!options.isWhite) return ''
+
+                    return html.replace('>', ' cordovalink="_system" donottrust="true">')
+
+                }
+            },
 			whiteList: {
-				a: ["href", "title", "target", 'cordovalink'],
+				a: ["href", "title", "target", 'cordovalink', 'donottrust'],
 				br: ["style"],
 				b: ["style"],
 				span: ["style"],
@@ -347,7 +356,7 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				level: data.level,
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
@@ -391,9 +400,9 @@ edjsHTMLCnt = function (a, app) {
 			return _.map(data, function (i) {
 				var nd = { ...i }
 
-				nd.url = fu(nd.url)
+				nd.url = fu(nd.url, true)
 
-				if (nd.caption) nd.caption = fu(nd.caption)
+				if (nd.caption) nd.caption = fu(nd.caption, true)
 
 				return nd
 			})
@@ -404,11 +413,11 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			if (data.file) {
 				nd.file = { ...data.file }
-				nd.file.url = fu(nd.file.url)
+				nd.file.url = fu(nd.file.url, true)
 			}
 
 			return nd
@@ -419,22 +428,22 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				caption: fu(data.caption),
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
 
 		code: function (data, fu) {
 			return {
-				code: fu(data.code)
+				code: fu(data.code, true)
 			}
 		},
 
 		warning: function (data, fu) {
 
 			return {
-				title: fu(data.title),
-				message: fu(data.message),
+				title: fu(data.title, true),
+				message: fu(data.message, true),
 			}
 
 		},
@@ -443,16 +452,16 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.link = fu(nd.link)
+			nd.link = fu(nd.link, true)
 
 			if (data.meta) {
 				nd.meta = { ...data.meta }
-				nd.meta.title = fu(nd.meta.title)
-				nd.meta.description = fu(nd.meta.description)
+				nd.meta.title = fu(nd.meta.title, true)
+				nd.meta.description = fu(nd.meta.description, true)
 
 				if (data.meta.image) {
 					nd.meta.image = { ...data.meta.image }
-					nd.meta.image.url = fu(nd.meta.image.url)
+					nd.meta.image.url = fu(nd.meta.image.url, true)
 				}
 			}
 
@@ -464,10 +473,10 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.embed = fu(nd.embed)
-			nd.source = fu(nd.source)
+			nd.embed = fu(nd.embed, true)
+			nd.source = fu(nd.source, true)
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			return nd
 		},
@@ -1570,3 +1579,21 @@ trydecode = function(s = ''){
 
     return r
 }
+
+articleDecodeTry = function(s = '', nl){
+    if(nl) return trydecode(s)
+
+    return findAndReplaceLink(trydecode(s), true)   
+}  
+articleDecode = function(s = '', nl){
+
+    if(nl) return decodeURIComponent(s)
+
+    return findAndReplaceLink(decodeURIComponent(s), true)   
+}
+articleEncode = function(s = '', nl){
+
+    if(nl) return encodeURIComponent(s)
+
+    return encodeURIComponent(findAndReplaceLinkClearReverse(s))
+}    

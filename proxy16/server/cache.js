@@ -52,18 +52,19 @@ var Cache = function(p){
                     itemswithattemp.push([c,waitid])
 
                 if (k.executor == waitid){
+                    delete k.clbks[k.executor]
                     delete k.executor
                 }
             }
         })
 
-       
-        
         if (itemswithattemp.length){
 
             k.attemp++
 
             if (k.attemp >= 3){
+
+                k.attemp = 0
 
                 _.each(itemswithattemp, function(ce){
                     ce[0].action('attemps')
@@ -89,6 +90,10 @@ var Cache = function(p){
 
             }
 
+        }
+
+        if(_.isEmpty(k.clbks)){
+            return true
         }
 
     }
@@ -360,7 +365,25 @@ var Cache = function(p){
             getbans: {
                 time : 460,
                 block : 0,
-            } 
+            },
+            
+            getstatisticcontentbydays : {
+                time : 3600
+            },
+
+            getstatisticbydays : {
+                time : 3600
+            },
+
+            getcoininfo: {
+                time : 460,
+                block : 0,
+            },
+
+            getfromtotransactions : {
+                time : 460,
+                block : 0,
+            }
         }
     }
 
@@ -391,6 +414,7 @@ var Cache = function(p){
 
             if (waiting[key][k]){   
                 if(executingWatcher(waiting[key][k], true)){
+
                     delete waiting[key][k]
                 }
                 

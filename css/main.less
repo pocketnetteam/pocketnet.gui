@@ -182,6 +182,7 @@
 :root {
 	--app-margin-top-default: 0px;
 	--app-margin-top: 0px;
+    --app-margin-top-i: 0px;
     --app-margin-bottom-default: 0px;
 	--keyboardheight: 0px;
 	--app-margin-bottom: max(env(safe-area-inset-bottom), var(--app-margin-bottom-default));
@@ -190,6 +191,7 @@
 @supports (width: max(1px, 1px)) {
     :root {
         --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+        --app-margin-top-i: env(safe-area-inset-top);
     }
 }
 
@@ -3751,6 +3753,11 @@ html.mobileview.android{
         z-index: 5000;
     }
 
+    &.bop{
+        background: rgb(0,0,0);
+        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    }
+
     .caption{
         font-weight: 700;
     }
@@ -5408,6 +5415,10 @@ html.mobileview.android{
     }
 }
 
+.toblockexplorer{
+    cursor: pointer;
+}
+
 .matrixchatwrapper{
     font-size: 16px;
 }
@@ -6267,6 +6278,10 @@ html.allcontent_application{
     }
     .fa-heart{
         color : #ed1f1f;
+    }
+
+    .fa-fire{
+        color : rgb(var(--color-bg-orange));
     }
 
     .messagethumbs{
@@ -8124,6 +8139,83 @@ html.allcontent{
 
     #footerWrapper{
         background: #051b28;
+    }
+
+    #panelWrapper{
+        padding : 0;
+    }
+
+    .contentWrapper{
+        margin-top: 0;
+    }
+    
+    &:not(.scroll65){
+        #menu{
+            .menuspace{
+                opacity: 1;
+            }
+
+            .menuWrapper{
+                background: transparent;
+                color : rgb(var(--text-on-bg-shadow-color));
+            }
+
+            .sections .items .item .icn svg{
+                fill: rgb(var(--text-on-bg-shadow-color));
+            }
+
+            .onlyblackallcontent{
+                display: block;
+            }
+
+            .noblackallcontent{
+                display: none;
+            }
+
+            .postssearch {
+
+                .searchInput{
+                    background: rgba(var(--background-hidden-layer), 0.1);
+                    backdrop-filter: blur(5px);
+                    -webkit-backdrop-filter: blur(5px);  
+                }
+
+                input{
+                    color : rgb(var(--text-on-bg-shadow-color));
+                }
+
+                :placeholder-shown{
+                    color : rgb(var(--text-on-bg-shadow-color));
+                }
+
+                ::placeholder {
+                    color : rgba(var(--text-on-bg-shadow-color), 0.5);
+                }
+
+                .searchIconLabel,
+                .searchPanel{
+                    color : rgba(var(--text-on-bg-shadow-color), 0.5);
+                }
+
+            }
+        }
+    }
+
+    
+    #menu{
+        .menuspace{
+            opacity: 0;
+            display: block;
+        }
+    }
+    
+    
+}
+
+html.mobileview.allcontent{
+   
+    .contentWrapper{
+        padding-top: 0;
     }
     
 }

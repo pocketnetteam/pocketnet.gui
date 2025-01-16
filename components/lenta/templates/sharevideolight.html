@@ -161,6 +161,15 @@ var icondisplay = function(){ %>
 
 					<% } %>
 
+					<% if(checkvisibility == 'paid'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_paid_' + cview)%>
+						</div>
+
+
+					<% } %>
+
 
 					<% if(!state) {%>
 

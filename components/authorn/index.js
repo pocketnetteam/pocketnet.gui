@@ -19,6 +19,7 @@ var authorn = (function(){
 		var result = null
 		var fixedBlock = null
 		var lastnav = '' 
+		var external = null
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
@@ -416,7 +417,167 @@ var authorn = (function(){
 		}
 
 		var events = {
+			tempcover : function(src){
+				renders.randombg(null, src)
 
+				var ds = false
+
+				new dialog({
+					html :  self.app.localization.e('setcoverquestion'),
+					btn1text : self.app.localization.e('setcoverquestionyes'),
+					btn2text : self.app.localization.e('setcoverquestionno'),
+
+					class : 'zindex bop',
+
+					success : function(){
+
+						ds = true
+
+						self.app.platform.sdk.users.setCover(src, function(err, alias){
+							if(!err){
+								renders.randombg()
+								successCheck()
+							}
+						})
+
+					},
+
+                    fail: function () {
+
+						ds = true
+
+						renders.randombg(null)
+                    },
+
+					onDestroy : function(){
+						if(!ds){
+							renders.randombg(null)
+						}
+						
+					}
+				})
+			},
+			uploadwallpapper : function(){
+
+				var added = function(image){
+
+					var images = [{
+						original : image[0],
+						index : 0
+					}]
+
+					self.nav.api.load({
+						open : true,
+						id : 'imageGalleryEdit',
+						inWnd : true,
+	
+						essenseData : {
+							edit : true,
+							initialValue : 0,
+							images : images,
+	
+							apply : true,
+	
+							crop : {
+								aspectRatio : 3 / 1,
+								style : 'apply',
+								autoCropArea : 1,
+							},
+	
+							success : function(i, editclbk){
+
+								
+	
+								resize(images[0].original, 1920, 640, function(resized){
+									var r = resized.split(',');
+							
+									if (r[1]){
+
+										events.tempcover(resized)
+	
+										/*self.app.platform.sdk.users.setCover(resized, function(err, alias){
+											if(!err){
+												renders.randombg()
+												successCheck()
+											}
+										})*/
+	
+									}
+									
+									editclbk()
+	
+									
+								}, null, 0.85)
+	
+							}
+						}
+					})
+				}
+
+				if(self.app.mobile.supportimagegallery()){
+
+					app.platform.ui.uploadImage({
+						multiple : false,
+						mp : 6,
+						action : (image, clbk) => {
+
+							var ext = fkit.extensionBase64(image.base64)
+
+							if (ext == 'gif'){
+								sitemessage('uploadwallpapperGiferror')
+							}
+							else{
+								added([image.base64])
+							}
+
+							clbk()
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
+						}
+					})
+
+
+					return
+				}
+	
+				self.nav.api.load({
+					open : true,
+					id : 'embeding',
+					inWnd : true,
+					donate: true,
+
+					essenseData : {
+						type : 'images',
+						multiple : false,
+						uploadTitle : '',
+						caption : '',
+						maxh : 1920,
+						maxw : 640,
+						noresize : true,
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
+						on : {
+						
+							added,
+
+							destroy(){
+								external = null
+							}
+						}
+					},
+
+					clbk : function(s, p){
+						external = p
+					}
+				})
+			},
 			share : function(){
 				self.nav.api.load({
 					open : true,
@@ -484,6 +645,35 @@ var authorn = (function(){
 				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.wallet.donate({receiver : author.address, donatemode : true}).catch(e => {})
 				})
+			},
+			
+			getPaidSubscription : function(){
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : author.address,
+						}
+					})
+				})
+				
+			},
+			managePaidSubscription : function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'managepaidsubscription',
+					history : true,
+					inWnd : true,
+					essenseData : {
+					}
+				})
+				
 			},
 
 			settings : function(){
@@ -779,7 +969,7 @@ var authorn = (function(){
 				}
 			},
 
-			randombg : function(clbk){
+			randombg : function(clbk, tempcover){
 
 				self.shell({
 					name :  'bg',
@@ -790,38 +980,62 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
-					Circles({
-						target: el.bg.find('.bgwallpaper')[0],
-						quantity: 15,
-						radius: {
-							min: 2,
-							max: 400
-						},
-						zIndex: {
-							min: 0,
-							max: 20
-						},
-						hue: {
-							min: 0,
-							max: 180
-						},
-						saturation: {
-							min: 50,
-							max: 100
-						},
-						light: {
-							min: 25,
-							max: 75
-						},
-						alpha: {
-							min: 0.2,
-							max: 0.8
-						}
-					})
+					
+
+					
 
 					p.el.find('.share').on('click', events.share)
 
+					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
+
 					if(clbk) clbk()
+
+					if (tempcover){
+
+						p.el.find('.bgwallpaper').attr('image', tempcover)
+						bgImages(p.el)
+
+						return 
+					}
+
+
+					self.app.platform.sdk.users.getCover(author.address).then(cover => {
+						if(!cover){
+							Circles({
+								target: el.bg.find('.bgwallpaper')[0],
+								quantity: 15,
+								radius: {
+									min: 2,
+									max: 400
+								},
+								zIndex: {
+									min: 0,
+									max: 20
+								},
+								hue: {
+									min: 0,
+									max: 180
+								},
+								saturation: {
+									min: 50,
+									max: 100
+								},
+								light: {
+									min: 25,
+									max: 75
+								},
+								alpha: {
+									min: 0.2,
+									max: 0.8
+								}
+							})
+						}
+						else{
+
+							p.el.find('.bgwallpaper').attr('image', cover)
+							bgImages(p.el)
+						}
+					})
 
 				})
 
@@ -839,6 +1053,9 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
+					p.el.find('.toblockexplorer').on('click', function(){
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ author.address))
+					})
 
 					p.el.find('.copyaddress').on('click', function(){
 						copyText($(this))
@@ -897,6 +1114,7 @@ var authorn = (function(){
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
+					p.el.find('.managePaidSubscription').on('click', events.managePaidSubscription)
 
 					p.el.find('.follow').on('click', events.subscribe)
 					p.el.find('.unsubscribe').on('click', events.unsubscribe)
@@ -908,6 +1126,16 @@ var authorn = (function(){
 						renders.metmenu($(this))
 					})
 					
+					self.app.user.isState(function(state){
+						if(state && !author.me){
+							self.sdk.paidsubscription.getcondition(author.address).then(value => {
+								if(value > 0){
+									p.el.find('.getPaidSubscription').removeClass('hidden')
+									p.el.find('.getPaidSubscription').on('click', events.getPaidSubscription)
+								}
+							})
+						}
+					})
 					
 
 					if(clbk) clbk()
@@ -1589,6 +1817,9 @@ var authorn = (function(){
 					upbackbutton.destroy()
 					upbackbutton = null
 				}
+
+				if (external) 
+					external.destroy()
 
 				if (href != 'author') 
 					self.app.el.html.removeClass('allcontent')

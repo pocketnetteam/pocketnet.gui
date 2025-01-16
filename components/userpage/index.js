@@ -734,6 +734,10 @@ var userpage = (function(){
 
 							sitemessage(self.app.localization.e('successcopied'))
 						})
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ deep(self, 'app.user.address.value')))
+						})
 					})
 
 					
@@ -758,6 +762,10 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+						})
 	
 						//_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);

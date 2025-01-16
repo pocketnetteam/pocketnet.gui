@@ -453,7 +453,7 @@ var camerapreview = (function(){
 
 
 						dimensions = _.filter(dimensions, function(d){
-							return d.width * d.height < 3 * 1000 * 1000
+							return d.width * d.height < (ed.mp || 3) * 1000 * 1000
 						})
 		
 						var maxdimension = _.max(dimensions, function(d){

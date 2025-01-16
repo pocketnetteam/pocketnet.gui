@@ -14,7 +14,7 @@ var post = (function () {
 		var primary = (p.history && !p.inWnd) || p.primary;
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false;
-
+		var allcontentenabled = false
 		var progressInterval;
 
 		var videoinfoupdateInterval = null
@@ -26,6 +26,26 @@ var post = (function () {
 		var authblock = false;
 
 		var actions = {
+
+			getpaidsubscription : function(){
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : share.address,
+						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
+				})
+			},
 
 			translate : function(dl){
 				return self.app.platform.sdk.translate.share.request(share.txid, dl).then((r) => {
@@ -297,7 +317,7 @@ var post = (function () {
 			},
 
 			sharesocial: function (clbk) {
-				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
+				var url = 'https://' + self.app.options.url + '/' + ('post?') + 's=' + share.txid
 
 				if (parameters().address) {
 					url += '&address=' + (parameters().address || '')
@@ -1153,6 +1173,19 @@ var post = (function () {
 		}
 
 		var renders = {
+
+			maybechangevisibility : function(address, reason){
+
+				if (share.address == address && share.visibility()) {
+
+					if(reason && reason == 'sub' && share.visibility() != 'sub') return
+					if(reason && reason == 'paid' && share.visibility() != 'paid') return
+
+					renders.share()
+				}
+
+			},
+
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
 					
@@ -1528,6 +1561,8 @@ var post = (function () {
 											
 											});
 
+											el.share.find('.getpaidsubscription').on('click', actions.getpaidsubscription);
+
 											el.share.find('.toregistration').on('click', events.toregistration)
 
 											el.share.find('.txid').on('click', events.getTransaction);
@@ -1570,6 +1605,18 @@ var post = (function () {
 												history : true
 											})
 										})
+
+										var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+										if (checkvisibility == 'paid_check'){
+
+											self.app.platform.sdk.paidsubscription.checkvisibilityStrong(share.address).then(r => {
+												console.log("checkvisibilityStrong", r)
+											}).catch(e => {
+												console.error('checkvisibilityStrong', e)
+											})
+
+										}
 
 										function initOutsideClickEvent(e) {
 											if(share.itisarticle()) return
@@ -2018,6 +2065,10 @@ var post = (function () {
 
 			}*/
 
+			self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[eid] = function(address){
+				renders.maybechangevisibility(address, 'paid')
+			}
+
 
 			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
@@ -2071,6 +2122,7 @@ var post = (function () {
 
 				if(type == 'unsubscribe' || type == 'subscribe' || type == 'subscribePrivate'){
 					actions.subscribeLabel(alias.address.v)
+					renders.maybechangevisibility(alias.address.v, 'sub')
 				}
 				
 			}
@@ -2114,6 +2166,9 @@ var post = (function () {
 					
 				}
 				else{
+
+					
+
 					renders.share(function () {
 
 						renders.comments()
@@ -2269,6 +2324,7 @@ var post = (function () {
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
 				delete self.app.platform.actionListeners[eid]
 				delete self.app.psdk.updatelisteners[eid]
+				delete self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[eid]
 
 				authblock = false;
 				showMoreStatus = false;
@@ -2300,7 +2356,14 @@ var post = (function () {
 				el = {};
 				ed = {}
 
+				if(allcontentenabled){
+					window.rifticker.add(() => {
+						self.app.el.html.removeClass('allcontent')
+					})
+				}
 				
+
+				allcontentenabled = false
 
 			},
 
@@ -2322,6 +2385,7 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
+				allcontentenabled = false
 				
 				
 				if (share.itisarticle()){
@@ -2334,6 +2398,15 @@ var post = (function () {
 				}
 
 				make()
+
+				if(share && !p.inWnd && share.itisarticle()){
+
+					allcontentenabled = true
+
+					window.rifticker.add(() => {
+						self.app.el.html.addClass('allcontent')
+					})
+				}
 
 				/*if (ed.video && p.inWnd && !self.app.mobileview)
 					self.app.el.menu.find('#menu').addClass('static')*/

@@ -41,10 +41,10 @@
         left:0;
         right: 0;
         top: 0;
-        height: 200px;
+        height: 265px;
         /*aspect-ratio: 4;*/
         z-index: 0;
-        
+        filter: brightness(90%);
         border-bottom-left-radius: @rad;
         border-bottom-right-radius: @rad;
 
@@ -73,14 +73,15 @@
                     }
 
                     .item{
+                        margin-left: @rhythm;
                         cursor: pointer;
                         border-radius: @rad;
                         min-width: 44px;
                         line-height: 42px;
                         padding-left: @rhythm;
                         padding-right: @rhythm;
-                        background: rgba(var(--background-main-contrast),0.3);
-                        border : 1px solid rgba(var(--background-main),0.8);
+                        background: rgba(var(--background-main-contrast),0.2);
+                        border : 1px solid rgba(var(--background-main),0.6);
                         color : rgba(var(--background-main),0.7);
                         .transition(0.3s);
                         text-align: center;
@@ -147,7 +148,7 @@
 
     .acontentps{
 
-        height: 200px;
+        height: 265px;
         /*aspect-ratio: 4;*/
     }
 
@@ -351,6 +352,14 @@
             &.icon{
                 min-width: 44px;
                 max-width: 88px;
+            }
+        }
+
+        .getPaidSubscription,
+        .managePaidSubscription{
+            
+            i{
+                color : rgb(var(--color-bg-orange));
             }
         }
     }
@@ -746,7 +755,7 @@
         }
 
         .bgwallpaperWrapper{
-            height: 130px;
+            height: 195px;
 
             .bgwallpaper{
                 .bgpanel{
@@ -759,7 +768,7 @@
         }
     
         .acontentps{
-            height: 130px;
+            height: 195px;
         }
 
         .fbuttonsrow{

@@ -86,6 +86,7 @@ var Peertube = function (settings) {
 				return Promise.resolve(r);
 			})
 			.catch((e) => {
+
 				statistic.add({
 					code: e == 'failed' ? 501 : (e || {}).code || 500,
 					difference: performance.now() - responseTime,
@@ -206,6 +207,7 @@ var Peertube = function (settings) {
 				}
 
 				return self.inner.video(parsed).then((r) => {
+
 					var ontime = null;
 
 					var fr = null;
@@ -231,6 +233,7 @@ var Peertube = function (settings) {
 				});
 			})
 			.catch((e) => {
+
 				if (!e) e = {};
 
 				var cachedone = false;
@@ -283,6 +286,7 @@ var Peertube = function (settings) {
 							return Promise.resolve();
 						})
 						.catch((e) => {
+
 							result.errors ? result.errors.push(url) : (result.errors = [url]);
 
 							return Promise.resolve();
@@ -294,6 +298,7 @@ var Peertube = function (settings) {
 					return Promise.resolve(result);
 				})
 				.catch((e = {}) => {
+
 					return Promise.reject({
 						error: e,
 						code: e.code || 500,
