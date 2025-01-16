@@ -16228,7 +16228,7 @@ Platform = function (app, listofnodes) {
 
                         if (me && me.relation(share.address, 'subscribes')) {
 
-                            if (app.pkoindisable){
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
                                 return false
                             }
 
@@ -16251,7 +16251,7 @@ Platform = function (app, listofnodes) {
 
                         }
                         else{
-                            if (app.pkoindisable){
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
                                 return 'sub'
                             }
                         }
@@ -17359,9 +17359,9 @@ Platform = function (app, listofnodes) {
 
                 get: {
 
-                    tx: function (id, clbk, p) {
+                    tx: function (id, clbk, p, upd) {
 
-                        self.psdk.transaction.load(id, false, p).then(tx => {
+                        self.psdk.transaction.load(id, upd || false, p).then(tx => {
 
                             if (clbk) {
                                 clbk(tx)
@@ -19758,7 +19758,7 @@ Platform = function (app, listofnodes) {
 
                 var m = share.caption;
 
-                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable
+                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable && !app.paidsubscriptiondisable
 
                 if (!m) m = share.renders.text()
 
@@ -20620,7 +20620,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && data.share.visibility() == 'paid'))) {
+                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && !platform.app.paidsubscriptiondisable && data.share.visibility() == 'paid'))) {
                         message.el.addClass('bright')
                     }
 

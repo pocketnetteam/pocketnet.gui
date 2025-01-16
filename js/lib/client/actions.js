@@ -953,7 +953,7 @@ var Action = function(account, object, priority, settings){
 
                     return reject('actions_waitConfirmation')
 
-                })
+                }, {}, true)
 
             })
         })
