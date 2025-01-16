@@ -36,6 +36,8 @@ Platform = function (app, listofnodes) {
         return s.toLowerCase()
     })
 
+    var urlreg = /(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|(bastyon:\/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi
+
     self.real = {
         'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH': true,
         'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy': true,
@@ -10039,7 +10041,7 @@ Platform = function (app, listofnodes) {
 
             hiddenComment: function (comment) {
 
-                if (comment.blck_cnt_cmt) return true
+                if (comment.blck_cnt_cmt) return 'hiddenCommentLabel'
 
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
@@ -10049,9 +10051,28 @@ Platform = function (app, listofnodes) {
 
                 if (ustate && ustate.reputation <= -0.5) {
                     if (comment.scoreDown >= 5) {
-                        return true
+                        return 'hiddenCommentLabel'
                     }
                 }
+
+
+                if (ustate && ustate.reputation < 20){
+
+					var matches = comment.message.match(urlreg);
+
+                    if (matches && matches.length > 0){
+
+                        if(_.find(matches, (m) => {
+                            return !thislink(m)
+                        })){
+                            return 'hiddenCommentLabelLink'
+                        }
+
+                    }
+                    
+                }
+
+                return false
             },
 
             canuseimagesincomments: function (address) {
@@ -16207,7 +16228,7 @@ Platform = function (app, listofnodes) {
 
                         if (me && me.relation(share.address, 'subscribes')) {
 
-                            if (app.pkoindisable){
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
                                 return false
                             }
 
@@ -16230,7 +16251,7 @@ Platform = function (app, listofnodes) {
 
                         }
                         else{
-                            if (app.pkoindisable){
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
                                 return 'sub'
                             }
                         }
@@ -17143,8 +17164,6 @@ Platform = function (app, listofnodes) {
 
                 getfromtotransactions : function(from, to, update){
 
-                    console.log('getfromtotransactions', update)
-
                     return pretry(function () {
                         return self.currentBlock
                     }).then(() => {
@@ -17166,13 +17185,8 @@ Platform = function (app, listofnodes) {
                             update : update
                         }).then(function (s) {
 
-                            console.log("SSS", s)
-
                             s = self.psdk.getfromtotransactions.tempAdd(s, from, to)
 
-                            console.log("SSS2", s)
-
-        
                             return s
                         })
                     })
@@ -17345,9 +17359,9 @@ Platform = function (app, listofnodes) {
 
                 get: {
 
-                    tx: function (id, clbk, p) {
+                    tx: function (id, clbk, p, upd) {
 
-                        self.psdk.transaction.load(id, false, p).then(tx => {
+                        self.psdk.transaction.load(id, upd || false, p).then(tx => {
 
                             if (clbk) {
                                 clbk(tx)
@@ -19744,7 +19758,7 @@ Platform = function (app, listofnodes) {
 
                 var m = share.caption;
 
-                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable
+                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable && !app.paidsubscriptiondisable
 
                 if (!m) m = share.renders.text()
 
@@ -20606,7 +20620,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && data.share.visibility() == 'paid'))) {
+                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && !platform.app.paidsubscriptiondisable && data.share.visibility() == 'paid'))) {
                         message.el.addClass('bright')
                     }
 

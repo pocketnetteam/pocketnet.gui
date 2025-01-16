@@ -4,7 +4,11 @@ var commentf = function(comment){
 
 	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
 
-	var hiddenComment = !comment.my(app) && app.platform.sdk.user.hiddenComment(comment) && !(comment.deleted || lockedaccount)
+	var hiddenComment = false
+
+	if(!comment.my(app) && !(comment.deleted || lockedaccount)){
+		hiddenComment = app.platform.sdk.user.hiddenComment(comment)
+	}
 
 	var hiddenComments = false
 
@@ -122,7 +126,7 @@ var commentf = function(comment){
 
 									<div>
 
-										<%=e(hiddenComment ? 'hiddenCommentLabel' : (hiddenComments ? 'hiddenCommentsLabel' : (blockedbyme ? 'blockedbymeHiddenCommentLabel' : 'hiddenCommentLabel')))%>
+										<%=e(hiddenComment ? (hiddenComment) : (hiddenComments ? 'hiddenCommentsLabel' : (blockedbyme ? 'blockedbymeHiddenCommentLabel' : 'hiddenCommentLabel')))%>
 
 									</div>
 
