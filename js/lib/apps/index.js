@@ -1022,9 +1022,7 @@ var BastyonApps = function (app) {
             }, source)
         },
 
-        loaded: function (application, data, source) {
-            console.log('loaded', application, data, source);
-            
+        loaded: function (application, data, source) {            
             trigger('loaded', {
                 application: application.id || application.manifest.id,
                 data
