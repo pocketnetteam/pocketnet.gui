@@ -9367,6 +9367,7 @@ findAndReplaceLinkClear = function(inputText = '', fu){
 
 findAndReplaceLink = function (inputText = '', nottrust) {
 
+
 	if (typeof linkifyHtml != 'undefined') {
 
 		try {
@@ -9385,6 +9386,7 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 
 				format : (value, type) => {
 
+
 					if(type == 'url'){
 						value = formatInternalLink(value)
 					}
@@ -9397,6 +9399,8 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 				},
 
 				formatHref : (value, type) => {
+
+
 					if (type == 'url'){
 						value = formatInternalLinkHref(value)
 					}
@@ -9404,7 +9408,6 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 					return value
 				}
 			})
-
 
 			return l
 		}

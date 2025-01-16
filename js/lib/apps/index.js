@@ -971,6 +971,19 @@ var BastyonApps = function (app) {
                     return Promise.resolve({})
                 }
             }
+        },
+
+        get : {
+            videos : {
+                permissions: [],
+                parameters: [],
+                action: function ({
+                    data,
+                    application
+                }) {
+                    return app.platform.sdk.videos.info(data.urls)
+                }
+            }
         }
 
     }
@@ -1060,8 +1073,6 @@ var BastyonApps = function (app) {
 
 
     var syncInstalledAppData = function (application) {
-
-        console.log('application.id', application.id, application)
 
         if(application.id == 'undefined' || !application.id) return
 
