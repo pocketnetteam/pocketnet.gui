@@ -2978,6 +2978,7 @@ _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon
 _l.miniApp_publishMessage = "Publishing the mini-app: {0}";
 _l.miniApp_requiredMessage = "This field cannot be empty";
 _l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?";
+_l.miniApp_publishConfirmation = "Are you sure you want to publish the application? If you are not in the test network, a fee of 50 will be charged.";
 _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
