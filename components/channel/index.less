@@ -24,6 +24,18 @@
                 width: 100%;
                 height: 100%;
                 background: #051b48;
+                opacity: 1!important;
+
+
+                &[imageloaded="true"]{
+                    [circle="circle"]{
+                        opacity: 0;
+                    }
+                }
+    
+                [circle="circle"]{
+                    .transition(0.3s, opacity);
+                }
                 
                 &.deleted,
                 &.blocked{

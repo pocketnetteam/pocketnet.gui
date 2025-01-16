@@ -981,9 +981,6 @@ var authorn = (function(){
 				}, function(p){
 
 					
-
-					
-
 					p.el.find('.share').on('click', events.share)
 
 					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
@@ -998,40 +995,40 @@ var authorn = (function(){
 						return 
 					}
 
+					Circles({
+						target: el.bg.find('.bgwallpaper')[0],
+						quantity: 15,
+						radius: {
+							min: 2,
+							max: 400
+						},
+						zIndex: {
+							min: 0,
+							max: 20
+						},
+						hue: {
+							min: 0,
+							max: 180
+						},
+						saturation: {
+							min: 50,
+							max: 100
+						},
+						light: {
+							min: 25,
+							max: 75
+						},
+						alpha: {
+							min: 0.2,
+							max: 0.8
+						}
+					})
 
 					self.app.platform.sdk.users.getCover(author.address).then(cover => {
 						if(!cover){
-							Circles({
-								target: el.bg.find('.bgwallpaper')[0],
-								quantity: 15,
-								radius: {
-									min: 2,
-									max: 400
-								},
-								zIndex: {
-									min: 0,
-									max: 20
-								},
-								hue: {
-									min: 0,
-									max: 180
-								},
-								saturation: {
-									min: 50,
-									max: 100
-								},
-								light: {
-									min: 25,
-									max: 75
-								},
-								alpha: {
-									min: 0.2,
-									max: 0.8
-								}
-							})
+							
 						}
 						else{
-
 							p.el.find('.bgwallpaper').attr('image', cover)
 							bgImages(p.el)
 						}
