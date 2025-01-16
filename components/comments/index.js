@@ -2786,7 +2786,6 @@ var comments = (function(){
 
 			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
 
-
 				if(type == 'comment'){
 					var comment = alias
 

@@ -3014,3 +3014,4 @@ _l.setcoverquestion = 'Хотите ли вы сохранить эту фото
 _l.setcoverquestionyes = 'Да, установить обложку'
 _l.setcoverquestionno = 'Нет'
 
+_l.hiddenCommentLabelLink = "Комментарий скрыт из-за того, что содержит ссылку на внешний ресурс от пользователя с недостаточным рейтингом"
