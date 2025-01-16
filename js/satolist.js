@@ -17345,9 +17345,9 @@ Platform = function (app, listofnodes) {
 
                 get: {
 
-                    tx: function (id, clbk, p) {
+                    tx: function (id, clbk, p, upd) {
 
-                        self.psdk.transaction.load(id, false, p).then(tx => {
+                        self.psdk.transaction.load(id, upd || false, p).then(tx => {
 
                             if (clbk) {
                                 clbk(tx)
