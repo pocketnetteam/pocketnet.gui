@@ -4657,6 +4657,7 @@ html.mobileview .wnd.pipmini ._close {
 .mainsearchresults .userTable .label {
   margin-left: 0.5em;
   text-align: center;
+  word-break: break-all;
 }
 .mainsearchresults .swra {
   font-weight: 700;

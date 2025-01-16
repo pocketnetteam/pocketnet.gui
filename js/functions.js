@@ -10672,6 +10672,7 @@ function Circles(params) {
         this.current.style.top = randInt(0, 100) + '%';
         this.current.style.left = randInt(0, 100) + '%';
         this.current.style.zIndex = this.zin;
+		this.current.setAttribute('circle', 'circle')
 
         this.current.style.webkitTransform = 'translate(-50%, -50%)';
         this.current.style.mozTransform = 'translate(-50%, -50%)';
