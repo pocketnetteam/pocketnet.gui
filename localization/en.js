@@ -3204,3 +3204,5 @@ _l.uploadwallpapperGiferror = "Gif images are not allowed"
 _l.setcoverquestion = 'Would you like to save this photo as your profile cover?'
 _l.setcoverquestionyes = 'Yes, set cover'
 _l.setcoverquestionno = 'No'
+
+_l.hiddenCommentLabelLink = "The comment has been hidden because it contains a link to an external resource from a user with insufficient rating."
