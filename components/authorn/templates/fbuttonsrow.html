@@ -15,7 +15,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
                 <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
             <% } %>
 
-            <% if(sUserInfo.reputation > 100 && !app.pkoindisable) {%>
+            <% if(sUserInfo.reputation > 100 && !app.pkoindisable && !app.paidsubscriptiondisable) {%>
             
                 <button class="button managePaidSubscription"><%= e('managePaidSubscription') %> <i class="fas fa-fire"></i></button>
 
@@ -84,7 +84,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
             <% if(!sUserInfo.deleted) {%>
                 <% if(!blocking) {%>
     
-                    <% if(!author.reputationBlocked) {%>
+                    <% if(!author.reputationBlocked && !app.paidsubscriptiondisable && !app.pkoindisable) {%>
                         <button class="button getPaidSubscription hidden"><%= e('getPaidSubscription') %> <i class="fas fa-fire"></i></button>
                     <% } %>
                 <% } %>

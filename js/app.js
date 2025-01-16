@@ -135,6 +135,7 @@ Application = function (p) {
 
 	self.boost = !(window.cordova && isios());
 	self.pkoindisable = window.cordova && isios();
+	self.paidsubscriptiondisable = window.cordova && isios();
 	self.cutversion = window.cordova && isios();
 
 	self.electronview = typeof _Electron != 'undefined' && _Electron
