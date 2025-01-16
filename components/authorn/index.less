@@ -55,6 +55,17 @@
             top : 0;
             background: #051b48;
             bottom: 0;
+            opacity: 1!important;
+
+            &[imageloaded="true"]{
+                [circle="circle"]{
+                    opacity: 0;
+                }
+            }
+
+            [circle="circle"]{
+                .transition(0.3s, opacity);
+            }
 
             .bgpanel{
                 position: absolute;
