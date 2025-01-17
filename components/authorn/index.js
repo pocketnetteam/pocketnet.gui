@@ -1658,6 +1658,7 @@ var authorn = (function(){
 
 			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
+				self.app.mobile.statusbar.background()
 			})
 
 			if (page){
@@ -1778,6 +1779,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
+					self.app.mobile.statusbar.topfadebackground()
 				})
 
 				ed = p.settings.essenseData
@@ -1818,8 +1820,10 @@ var authorn = (function(){
 				if (external) 
 					external.destroy()
 
-				if (href != 'author') 
+				if (href != 'author') {
 					self.app.el.html.removeClass('allcontent')
+					self.app.mobile.statusbar.background()
+				}
 
 				delete self.app.platform.actionListeners.authorn
 

@@ -18727,7 +18727,7 @@ Platform = function (app, listofnodes) {
 
 
             },
-            info: function (links, update) {
+            info: function (links, update, proxyupdate) {
 
 
                 var s = self.sdk.videos.storage
@@ -18758,14 +18758,13 @@ Platform = function (app, listofnodes) {
                     return /*l.meta.subType || */ l.meta.type;
                 })
 
-
                 var promisesmap = _.map(groups, function (links, type) {
 
                     if (!self.sdk.videos.types[type]) {
                         return Promise.reject('typehandler')
                     }
 
-                    return self.sdk.videos.types[type](links).then(r => {
+                    return self.sdk.videos.types[type](links, proxyupdate).then(r => {
 
                         _.each(r, function (l) {
                             s[l.link] = s[l.meta.id] = l
@@ -18890,10 +18889,11 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                peertube: function (links) {
+                peertube: function (links, update) {
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
+                        update : update ? true : false
                     }).then(linksInfo => {
                         self.sdk.videos.catchPeertubeLinks(linksInfo, links)
                         return Promise.resolve(links);
@@ -22124,7 +22124,7 @@ Platform = function (app, listofnodes) {
             var ioffset = 0
 
             if(window.cordova && isios()){
-                ioffset = Number((getComputedStyle(document.documentElement).getPropertyValue("--app-margin-top-i") || '0px').replace('px'))
+                ioffset = Number((getComputedStyle(document.documentElement).getPropertyValue("--app-margin-top-i") || '0px').replace('px', ''))
             }
 
 			if(self.fastMessages.length >= maxCount){
