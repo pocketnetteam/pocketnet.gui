@@ -2785,6 +2785,7 @@ _l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com"
 _l.miniApp_requiredMessage = "Это поле не может быть пустым";
 _l.miniApp_publishMessage = "Публикация мини-приложения: {0}";
 _l.miniApp_deleteConfirmation = "Вы уверены, что хотите удалить мини-приложение?";
+_l.miniApp_publishConfirmation = "Вы действительно желаете опубликовать приложение? Если вы не находитесь в тестовой сети, будет взиматься взнос в размере 50.";
 _l.miniApp_yesButton = "Да";
 _l.miniApp_noButton = "Отмена";
 _l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
