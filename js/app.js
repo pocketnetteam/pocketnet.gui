@@ -1975,6 +1975,10 @@ Application = function (p) {
 				if(!self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.addClass('scroll65')
+
+						if (self.mobile.statusbar.status != 'background'){
+							self.mobile.statusbar.background()
+						}
 					})
 				}
 			}
@@ -1982,6 +1986,12 @@ Application = function (p) {
 				if(self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.removeClass('scroll65')
+
+						if (self.el.html.hasClass('allcontent') && self.mobile.statusbar.status != 'topfadebackground'){
+							self.mobile.statusbar.topfadebackground()
+						}
+
+						
 					})
 				}
 			}
@@ -2845,6 +2855,20 @@ Application = function (p) {
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
 				self.mobile.statusbar.status = 'gallerybackground'
+				
+
+			},
+
+			topfadebackground: function () {
+
+				if (window.StatusBar) {
+
+					StatusBar.overlaysWebView(true);
+					window.StatusBar.backgroundColorByHexString('#00000000');
+					window.StatusBar.styleLightContent()
+				}
+
+				self.mobile.statusbar.status = 'topfadebackground'
 				
 
 			},

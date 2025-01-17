@@ -2232,7 +2232,8 @@ var share = (function(){
 				})
 
 				if (meta.type == 'peertube') {
-					self.app.platform.sdk.videos.info([url])
+					console.log("updateupdate")
+					self.app.platform.sdk.videos.info([url], true, true)
 						.then(() => rndr())
 						.catch(() => rndr())
 				} else {
