@@ -2359,6 +2359,7 @@ var post = (function () {
 				if(allcontentenabled){
 					window.rifticker.add(() => {
 						self.app.el.html.removeClass('allcontent')
+						self.app.mobile.statusbar.background()
 					})
 				}
 				
@@ -2405,6 +2406,7 @@ var post = (function () {
 
 					window.rifticker.add(() => {
 						self.app.el.html.addClass('allcontent')
+						self.app.mobile.statusbar.gallerybackground()
 					})
 				}
 
