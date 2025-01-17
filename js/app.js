@@ -1975,6 +1975,10 @@ Application = function (p) {
 				if(!self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.addClass('scroll65')
+
+						if (self.mobile.statusbar.status != 'background'){
+							self.mobile.statusbar.background()
+						}
 					})
 				}
 			}
@@ -1982,6 +1986,12 @@ Application = function (p) {
 				if(self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.removeClass('scroll65')
+
+						if (self.el.html.hasClass('allcontent') && self.mobile.statusbar.status != 'gallerybackground'){
+							self.mobile.statusbar.gallerybackground()
+						}
+
+						
 					})
 				}
 			}
