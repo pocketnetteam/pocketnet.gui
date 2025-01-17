@@ -160,6 +160,7 @@ PeerTubePocketnet = function (app) {
 	self.checkTranscoding = function(url) {
 		return app.api.fetch('peertube/videos', {
 			urls: [url],
+			update : true
 		}).then(r => {
 			var result = r[url]
 
