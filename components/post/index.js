@@ -2406,7 +2406,7 @@ var post = (function () {
 
 					window.rifticker.add(() => {
 						self.app.el.html.addClass('allcontent')
-						self.app.mobile.statusbar.gallerybackground()
+						self.app.mobile.statusbar.topfadebackground()
 					})
 				}
 
