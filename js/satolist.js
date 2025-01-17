@@ -5553,6 +5553,7 @@ Platform = function (app, listofnodes) {
                 miniapp.address = data.address
                 miniapp.name = data.name
                 miniapp.description = data.description
+                miniapp.tscope = data.tscope
                 miniapp.tags = data.tags
                 miniapp.scope = data.scope
 

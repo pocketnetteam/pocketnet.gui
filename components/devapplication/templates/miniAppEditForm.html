@@ -77,6 +77,20 @@
             placeholder="<%= e('miniApp_placeholderScope') %>"
           />
           <small class="field-error" id="error-app-scope"></small>
+            <label for="app-tscope" style="margin-top: 20px" class="form-label">
+            <%= e('miniApp_tScopeLabel') %>
+          </label>
+          <small class="field-description">
+            <%= e('miniApp_tScopeInstructions') %>
+          </small>
+          <input
+            type="text"
+            id="app-tscope"
+            value="<%= tscope %>"
+            class="form-input"
+            placeholder="<%= e('miniApp_placeholderTScope') %>"
+          />
+          <small class="field-error" id="error-tscope"></small>
           <div id="deploymentInstructions"></div>
         </div>
 
