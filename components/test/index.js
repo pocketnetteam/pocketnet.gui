@@ -678,6 +678,15 @@ var test = (function(){
 					name : self.app.localization.e('uwebsite')
 				}),
 
+				imageUrl : new Parameter({
+					name : self.app.localization.e('uimageUrl'),
+					placeholder : self.app.localization.e('uimageUrlPlaceholder'),
+					id : 'image',
+					type : "IMAGEURL",
+					onType : true,
+					require : false
+				}),
+
 				addresses : new function(){
 
 					var _self = this;
