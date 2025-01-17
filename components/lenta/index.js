@@ -2269,7 +2269,7 @@ var lenta = (function(){
 
 						var vel = $(inv[0]);
 
-						id = vel.attr('pid')							
+					 	id = vel.attr('pid')							
 
 						var player = _.find(ap, function(p){
 							return p.id == id
@@ -2678,13 +2678,37 @@ var lenta = (function(){
 						if (player.error) return
 
 						//	player.p.muted = true;
-
+						
 						if (player.p.playing){
+
+							var startTime = player.p.getPosition ? player.p.getPosition() : 0;
+
+							self.app.actions.playingvideo(null)
+
+							var _el = player.el.closest('.share')
+
 							player.p.stop()
 
-							setTimeout(function(){
-								videopaused = false
-							}, 100)
+							if(!_el.hasClass('showAdditional') && !_el.hasClass('blocking')){
+	
+								var share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')]
+	
+								setTimeout(function(){
+
+									videopaused = false;
+
+									if (player.p.embed.details && player.p.embed.details.duration >= 60 && startTime >= 20){
+
+										self.app.platform.ui.pipvideo(share.txid, null, {
+											startTime
+										})
+
+									}
+									
+
+								}, 300)
+							}
+
 						}
 
 					})
