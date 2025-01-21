@@ -1,3 +1,101 @@
+var PaymentHash = (function () {
+    function adler32(str) {
+        var MOD_ADLER = 65521,
+            a = 1,
+            b = 0;
+        for (var i = 0; i < str.length; i++) {
+            a = (a + str.charCodeAt(i)) % MOD_ADLER;
+            b = (b + a) % MOD_ADLER;
+        }
+        return ((b << 16) | a) >>> 0;
+    }
+
+    function hexEncode(text) {
+        var ch = 0,
+            result = "";
+        for (var i = 0; i < text.length; i++) {
+            ch = text.charCodeAt(i);
+            if (ch > 0xff) ch -= 0x350;
+            ch = ch.toString(16);
+            while (ch.length < 2) ch = "0" + ch;
+            result += ch;
+        }
+        return result;
+    }
+
+    function makeURLParameters(payment) {
+        var o = {
+            a: "p"
+        };
+        if (payment.s_url) o.s = payment.s_url;
+        if (payment.shipmentValue) o.sv = payment.shipmentValue;
+        if (payment.c_url) o.c = payment.c_url;
+        if (payment.c_url_type && payment.c_url_type !== "fetch") o.ct = payment.c_url_type;
+        if (payment.address) o.ad = payment.address;
+        if (payment.email) o.e = 1;
+        if (payment.phone) o.p = 1;
+        if (payment.anonimus) o.an = 1;
+        if (payment.payload) o.pl = payment.payload;
+        if (payment.date) o.d = payment.date;
+        if (payment.expired) o.ex = payment.expired;
+        if (payment.value) o.v = payment.value;
+        if (payment.description) o.de = payment.description;
+        if (payment.saltValue) o.sv = payment.saltValue;
+        if (payment.discount) o.di = payment.discount;
+        if (payment.tax) o.ta = payment.tax;
+        if (payment.store) {
+            o.st = {};
+            if (payment.store.name) o.st.n = payment.store.name;
+            if (payment.store.site) o.st.s = payment.store.site;
+        }
+        if (payment.items && payment.items.length) {
+            o.i = [];
+            for (var i = 0; i < payment.items.length; i++) {
+                var it = payment.items[i];
+                if (it) {
+                    var itl = {};
+                    if (it.image) itl.i = it.image;
+                    if (it.name) itl.n = it.name;
+                    if (it.value) itl.v = it.value;
+                    if (it.count) itl.c = it.count;
+                    o.i.push(itl);
+                }
+            }
+        }
+        return o;
+    }
+
+    function getAdlerHash(payment) {
+        var prts = [];
+        prts.push(payment.address);
+        if (payment.items) prts.push(JSON.stringify(payment.items));
+        else prts.push(payment.value || 0);
+        if (payment.description) prts.push(payment.description);
+        if (payment.saltValue) prts.push(payment.saltValue);
+        if (payment.discount) prts.push(payment.discount);
+        if (payment.tax) prts.push(payment.tax);
+        if (payment.s_url) prts.push(payment.s_url);
+        if (payment.shipmentValue) prts.push(payment.shipmentValue);
+        if (payment.store) prts.push(JSON.stringify(payment.store));
+        if (payment.payload) prts.push(JSON.stringify(payment.payload));
+        else prts.push(JSON.stringify(payment.date));
+        var h = adler32(prts.join("_"));
+        if (h < 0) h = -h;
+        return String(h);
+    }
+
+    function makeURLHash(payment = {}) {
+        var params = makeURLParameters(payment);
+        params.h = getAdlerHash(payment);
+        var hex = hexEncode(JSON.stringify(params));
+        return "_" + hex;
+    }
+
+    return {
+        makeURLHash
+    };
+})();
+
 var makeid = function(){
 
     function s4() {
@@ -296,21 +394,13 @@ var BastyonSdk = function(){
         })
     }
 
-    self.ext = function(url = ''){
+    self.ext = function(payment){
 
-        var prts = url.split('?ext=')
-
-        if(prts.length > 1){
-            return action('ext', {
-                ext : prts[1]
-            })
-        }
-
-        else{
-            return Promise.reject('wrongUrl')
-        }
-
-        
+        if(!payment || typeof payment != 'object') return Promise.reject('wrongPayment')
+    
+        return action('ext', {
+            ext : PaymentHash.makeURLHash(payment)
+        })
     }
 
    
