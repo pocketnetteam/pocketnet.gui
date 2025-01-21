@@ -6542,7 +6542,7 @@ Platform = function (app, listofnodes) {
                 if (json.h) eExt.paymentHash = json.h
                 if (json.de) eExt.description = json.de
                 if (json.v) eExt.value = json.v
-                if (json.sv) eExt.saltValue = json.sv
+                if (json.sav) eExt.saltValue = json.sav
                 if (json.di) eExt.discount = json.di
                 if (json.ta) eExt.tax = json.ta
 
@@ -6625,6 +6625,8 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (ps.action == 'pay') {
+
+                    console.log('ps', ps)
 
                     if (!ps.address) throw 'missing:address'
 

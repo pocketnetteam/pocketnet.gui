@@ -218,6 +218,13 @@
             <div class="getqrcode">
                 <span><%=e('getqrcode')%></span>
             </div>
+            <% if(myaddress) {%>
+                <div class="actionButtonWrapper buttonWrapper">
+                    <div class="btns">
+                        <button class="button share"><span><%=e('share')%></span></button>
+                    </div>
+                </div>
+            <% } %>
         <% } %>
         <% if(lsdata.txid) { %>
 
