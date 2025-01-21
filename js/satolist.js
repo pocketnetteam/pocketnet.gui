@@ -432,7 +432,20 @@ Platform = function (app, listofnodes) {
         'PS7uZBtymwr3J2tgXmLEQxC2vQrCfzdx7V': true,
         'PNcYjTjjVfgsHXS8ppREBAos2JhTrZ4EQm': true,
         'PAEfhDBmbyBLzgWknSQKC8ufGoZH3SSF9t': true,
-        'PLaWxupK8wAVVCLy8Rv6b8XDCqATU4kGGN': true
+        'PLaWxupK8wAVVCLy8Rv6b8XDCqATU4kGGN': true,
+        'PD8xcteF7CZVvjLM1ec2jd6h2QH25J5bP5': true,
+        'PRsfNvi3XDyxYpVzAu1nXkGJWdRYYQ8wPR': true,
+        'PWSLgrE2UHin8Jbtbnmft7X7MnwNFrdpYi': true,
+        'PBKw17wrG66sT5jTZpqDvyBmHaDmbomMUD': true,
+        'PT8aDYBurU7b4BPnc4QKmRKhQ4iJkAGPF5': true,
+        'PVz4usHgrGeWzuJA1TRbnLqbULfjkyaorW': true,
+        'PVcXQqD8JB6p4sGram8j2EivexTj2MrN4w': true,
+        'PPZwZcoqm3KYTwyD8KD3Xqdx5iFGurUyU2': true,
+        'P9QRW8rWPhPeW2iQs74eKBbtgvmQBk9iEM': true,
+        'PNhZXx4nNH75CLhh7Gsaho3JyAg9VBhi4y': true,
+        'PXP4ZqvpnfUShULfEMd2DQ6KeNfZkXhvVn': true,
+        
+
 
     }
 

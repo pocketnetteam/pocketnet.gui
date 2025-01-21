@@ -1024,6 +1024,18 @@ var authorn = (function(){
 						}
 					})
 
+					var me = self.app.platform.psdk.userInfo.getmy()
+
+					if(!author.me) {
+							
+						var blocking = me ? me.relation(author.address, 'blocking') : null
+
+						if (blocking){
+							return
+						}
+
+					}
+
 					self.app.platform.sdk.users.getCover(author.address).then(cover => {
 						if(!cover){
 							
