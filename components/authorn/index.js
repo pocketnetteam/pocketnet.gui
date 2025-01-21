@@ -560,8 +560,8 @@ var authorn = (function(){
 						uploadTitle : '',
 						caption : '',
 						maxh : 1920,
-						maxw : 640,
-						noresize : true,
+						maxw : 1920,
+						quality : 1,
 						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
 						on : {
 						

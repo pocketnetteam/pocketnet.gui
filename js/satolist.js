@@ -431,7 +431,8 @@ Platform = function (app, listofnodes) {
         'PPi3APdPebC5EkqmGio23QQKgBJr1CwFeX': true,
         'PS7uZBtymwr3J2tgXmLEQxC2vQrCfzdx7V': true,
         'PNcYjTjjVfgsHXS8ppREBAos2JhTrZ4EQm': true,
-        'PAEfhDBmbyBLzgWknSQKC8ufGoZH3SSF9t': true
+        'PAEfhDBmbyBLzgWknSQKC8ufGoZH3SSF9t': true,
+        'PLaWxupK8wAVVCLy8Rv6b8XDCqATU4kGGN': true
 
     }
 
@@ -11218,12 +11219,14 @@ Platform = function (app, listofnodes) {
                             _.each(paidC, (v, k) => {
                                 balance[k] = v.balance || 0
                             })
+                            
                          
                             paidsubscriptionCache[self.app.user.address.value][address] = {
                                 result : resultStatus,
                                 balance : balance,
                                 data : paidC,
-                                until
+                                until,
+                                value : data.getcondition.result 
                             }
         
                         }).catch(e => {
@@ -13647,7 +13650,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -13760,7 +13763,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/из рук в руки",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
 
@@ -13873,7 +13876,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -13984,7 +13987,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -14096,7 +14099,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -14207,7 +14210,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -14318,7 +14321,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
@@ -14429,7 +14432,7 @@ Platform = function (app, listofnodes) {
                             name: "PKOIN/peer-to-peer",
                             tags: ['pkoin_commerce'],
                             id: 'c63',
-                            new: true
+                            new: app.pkoindisable ? false : true
                         },
 
                         {

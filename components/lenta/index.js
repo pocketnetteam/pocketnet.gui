@@ -3512,6 +3512,10 @@ var lenta = (function(){
 					})
 				}
 
+				setTimeout(() => {
+					c()
+				}, 3000)
+
 
 				if (item.type == 'share'){
 					renders.repost(_el, item.key, item.txid, false, () => {
@@ -3525,9 +3529,6 @@ var lenta = (function(){
 
 
 					self.app.platform.papi.comment(item.commentPs.postid, _elcnt, () => {
-
-
-
 						c()
 					}, {jury : true, commentPs : item.commentPs})
 					
