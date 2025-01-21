@@ -31,7 +31,13 @@ var devapplication = (function () {
         clearErrors();
 
         const updatedData = prepareAppData();
-        if (!validateAppData(updatedData)) {
+
+        const hasValidatedAppData = validateAppData({
+          ...updatedData,
+          scope: updatedData.scope || (application.hash && "Not Filled"),
+        });
+
+        if (!hasValidatedAppData) {
           currentStatus = "view";
           return globalpreloader(false);
         }
@@ -106,7 +112,7 @@ var devapplication = (function () {
           );
         }
 
-        if (application.scope.includes("localhost")) {
+        if (!application.scope || application.scope.includes("localhost")) {
           return sitemessage(
             self.app.localization.e("miniApp_localhostScopeWarningMessage")
           );
@@ -185,6 +191,7 @@ var devapplication = (function () {
           selector: "#app-scope",
           message: self.app.localization.e("miniApp_scopeInvalidMessage"),
           condition: (value) => {
+            if (!value) return true;
             const domainPattern = /^[a-zA-Z0-9.-]+$/;
             return domainPattern.test(value) && value.indexOf("https") === -1;
           },
@@ -317,8 +324,9 @@ var devapplication = (function () {
             _p.el.find(".save-btn").on("click", actions.createApp);
             _p.el.find(".cancel-btn").on("click", actions.goToIndex);
 
-            ["#app-name", "#app-scope", "#app-id", "#app-tscope"].forEach((selector) =>
-              _p.el.find(selector).on("input", () => clearErrors(selector))
+            ["#app-name", "#app-scope", "#app-id", "#app-tscope"].forEach(
+              (selector) =>
+                _p.el.find(selector).on("input", () => clearErrors(selector))
             );
             _p.el.find("#app-scope").on("blur", function () {
               renders.appIconPreview(this.value);
@@ -352,7 +360,9 @@ var devapplication = (function () {
           })
           .catch(() => {
             el.c.find("#manifestButtonContainer").empty();
-            handleAppError({ message: "import:manifest" });
+            handleAppError({
+              message: "import:manifest",
+            });
           });
       },
       deploymentInstructions: function () {
@@ -458,8 +468,9 @@ var devapplication = (function () {
           addAssetsLoadHandler(_p, "#app-scope");
           addAssetsLoadHandler(_p, "#app-tscope");
           renders.deploymentInstructions();
-          ["#app-name", "#app-version", "#app-scope", '#app-tscope'].forEach((selector) =>
-            _p.el.find(selector).on("input", () => clearErrors(selector))
+          ["#app-name", "#app-version", "#app-scope", "#app-tscope"].forEach(
+            (selector) =>
+              _p.el.find(selector).on("input", () => clearErrors(selector))
           );
           renders.tagInput({
             tags: application.tags || [],

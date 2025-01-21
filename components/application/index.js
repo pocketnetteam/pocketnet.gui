@@ -329,6 +329,7 @@ var application = (function(){
 						application,
 						isInDevMode: _scope === tscope,
 						tscope: isUserAuthor && tscope,
+						scope: appdata.scope,
 						src
 					},
 
@@ -351,9 +352,8 @@ var application = (function(){
 						}
 					})
 					
-					p.el.find('#domain-switch')?.on('change', function(){
+					p.el.find('#domain-switch')?.on('change', function () {
 						const isDevMode = this.checked;
-						
 						renders.frameremote(isDevMode ? tscope : appdata.scope);
 					})
 

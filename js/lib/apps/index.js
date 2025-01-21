@@ -1124,9 +1124,7 @@ var BastyonApps = function (app) {
         if (getresources[application.id]) return getresources[application.id]
 
         if (application.develop) {
-            application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
-
-
+            application.path = 'https://' + (application.scope || application.tscope)
         } else {
             application.path = 'https://' + application.scope
         }
@@ -1727,10 +1725,7 @@ var BastyonApps = function (app) {
         if (existingApp) {
             return Promise.reject(new Error('conflict:id_already_exists'));
         }
-
-        if (!app.id || !app.name || !app.scope) {
-            return Promise.reject(new Error('missing:required_fields'));
-        }
+        
         try {
 
             app.develop = true;
