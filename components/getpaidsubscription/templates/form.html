@@ -45,15 +45,24 @@
                 </div>
 
             <% } else { %> 
-                <div class="text">
-                    <span><%-e('getpaidsubscription_paidsuccess_text') %></span>
-                </div>
-                <div class="imageWrapper">
-                    <div image="img/on-fire.png" class="paidsuccessimage"></div>
-                </div>
-                <div class="until">
-                    <span><%=e('getpaidsubscription_paidsuccess_until', app.reltime(new Date(subscriptiondata.until))) %></span>
-                </div>
+
+                <% if(subscriptiondata.until) {%>
+                    <div class="text">
+                        <span><%-e('getpaidsubscription_paidsuccess_text') %></span>
+                    </div>
+                    <div class="imageWrapper">
+                        <div image="img/on-fire.png" class="paidsuccessimage"></div>
+                    </div>
+                    <div class="until">
+                        <span><%=e('getpaidsubscription_paidsuccess_until', app.reltime(new Date(subscriptiondata.until))) %></span>
+                    </div>
+                <% } else  {%> 
+                    <% if(subscriptiondata.value < 0) {%>
+                        <div class="text">
+                            <span><%-e('getpaidsubscription_paidsuccess_removecodition_text') %></span>
+                        </div>
+                    <% } %>
+                <% } %>
             <% } %>
 
         </div>

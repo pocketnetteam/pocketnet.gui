@@ -3206,3 +3206,4 @@ _l.setcoverquestionyes = 'Yes, set cover'
 _l.setcoverquestionno = 'No'
 
 _l.hiddenCommentLabelLink = "The comment has been hidden because it contains a link to an external resource from a user with insufficient rating."
+_l.getpaidsubscription_paidsuccess_removecodition_text = "The author has disabled the ability to issue a privileged access to it. Therefore, previously posted materials for privileged subscribers are available free of charge to everyone."

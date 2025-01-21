@@ -50,7 +50,7 @@
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
-	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
+	"blockexplorer" : "https://bastyon.com/blockexplorer/",
     "servers" : {
         "production" : {
             "proxy" : [
