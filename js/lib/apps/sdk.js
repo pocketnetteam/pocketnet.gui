@@ -40,7 +40,7 @@ var PaymentHash = (function () {
         if (payment.expired) o.ex = payment.expired;
         if (payment.value) o.v = payment.value;
         if (payment.description) o.de = payment.description;
-        if (payment.saltValue) o.sv = payment.saltValue;
+        if (payment.saltValue) o.sav = payment.saltValue;
         if (payment.discount) o.di = payment.discount;
         if (payment.tax) o.ta = payment.tax;
         if (payment.store) {
