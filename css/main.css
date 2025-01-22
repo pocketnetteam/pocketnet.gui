@@ -6628,6 +6628,35 @@ html.mobileview #content .work {
     page-break-after: avoid;
   }
 }
+html.allcontentvideo #menu {
+  display: none;
+}
+html.allcontentvideo #miniappscnt {
+  display: none!important;
+}
+html.allcontentvideo #panelWrapper {
+  padding: 0;
+}
+html.allcontentvideo .contentWrapper {
+  margin-top: 0;
+}
+html.allcontentvideo .rightchatspacer {
+  margin-left: 0;
+  margin-right: 0;
+}
+html.allcontentvideo #content .work {
+  width: 100%;
+  max-width: none;
+}
+html.allcontentvideo #content .work.adj {
+  padding: 0;
+}
+html.allcontentvideo .upbackbuttonwrapper {
+  display: none!important;
+}
+html.allcontentvideo #main .lentacellsvi {
+  padding-top: 0;
+}
 html.allcontent {
   /*body{
         background: #051b48;

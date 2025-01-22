@@ -17,12 +17,16 @@
 							</div>
 						</div>
 
+						
+						<% if(!app.television) {%>
 						<div class="mainpanelcell">
 							<div class="cnt fxd">
 								<div class="panel">
 								</div>
 							</div>
 						</div>
+						<% } %>
+
 
 						<div class="lentacell">
 
@@ -44,14 +48,19 @@
 									
 								</div>
 
-								<div class="bgCaption sec <%-h%>">
-									<div class="share">
-									</div>
-								</div>
+								<% if(!app.television){ %>
 
-								<div class="topvideosWrapper">
-									<div class="wrpcn"></div>
-								</div>
+									<div class="bgCaption sec <%-h%>">
+										<div class="share">
+										</div>
+									</div>
+									
+
+									<div class="topvideosWrapper">
+										<div class="wrpcn"></div>
+									</div>
+
+								<% } %>
 
 								<div class="searchusersWrapper">
 									<div class="wrpcn"></div>
@@ -96,7 +105,7 @@
 	<div class="upbuttonwrapper">
 	</div>
 	
-	<% if(state) {%>
+	<% if(state && !app.television) {%>
 		<div elementsid="addsignature" class="addbutton">
 			<i class="fas fa-signature"></i> <span><%- e('newShare') %></span>
 		</div>

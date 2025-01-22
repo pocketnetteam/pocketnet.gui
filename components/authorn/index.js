@@ -200,6 +200,12 @@ var authorn = (function(){
 				}
 			})
 
+			if(self.app.television){
+				method = _.find(lentameta, (v) => {
+					return v.id == 'video'
+				})
+			}
+
 			if(!method){
 				return lentameta[0]
 			}
@@ -1154,11 +1160,11 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
-				/*if (author.deleted || author.reputationBlocked){
+				if (self.app.television){
 					if (clbk)
 						clbk()
 					return 
-				}*/
+				}
 
 				var current = currentLenta()
 
@@ -1440,7 +1446,7 @@ var authorn = (function(){
 
 			whatsnew : function(clbk){
 
-				if(author.me && !self.app.mobileview){
+				if(author.me && !self.app.mobileview && !self.app.television){
 					self.nav.api.load({
 
 						open : true,
@@ -1570,7 +1576,7 @@ var authorn = (function(){
 			upbutton : function(){
 				if(upbutton) upbutton.destroy()
 
-				if(isMobile()) return
+				if(isMobile() || self.app.television) return
 
 				if (el.c)
 					upbutton = self.app.platform.api.upbutton(el.up, {

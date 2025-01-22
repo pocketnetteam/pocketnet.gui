@@ -39,11 +39,11 @@ var icondisplay = function(){ %>
 
 		<div class="metatable">
 			<div class="author">
-
 			<div class="authorTable">
 				<div class="iconWrapper">
+					<% if(!app.television) {%>
 					<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-
+					<% } %>
 
 						<% 
 							var src = userInfo.image;  
@@ -70,7 +70,9 @@ var icondisplay = function(){ %>
 
 							</div>
 						</div>
+					<% if(!app.television) {%>
 					</a>
+					<% } %>
 				</div>
 				<% if(!ed.horizontal) {%>
 					<div class="authorCell">
@@ -82,7 +84,7 @@ var icondisplay = function(){ %>
 					</div>
 				<% } %>
 
-				<% if(!ed.horizontal) {%>
+				<% if(!ed.horizontal && !app.television) {%>
 
 				<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 					<% if((typeof openapi == 'undefined' || !openapi)) {%>

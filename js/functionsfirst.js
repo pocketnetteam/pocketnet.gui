@@ -631,6 +631,9 @@ isios = function () {
     return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || iOS()
 }
 
+istelevision = function(){
+    return window.cordova && window.device && window.device.television()
+}
 
 getbaseorientation = function(){
 	

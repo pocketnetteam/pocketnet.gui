@@ -133,8 +133,9 @@ Application = function (p) {
 		self.test = true
 	}
 
+	self.television = typeof istelevision == 'undefined' ? false : istelevision()
 	self.boost = !(window.cordova && isios());
-	self.pkoindisable = window.cordova && isios();
+	self.pkoindisable = self.television || (window.cordova && isios());
 	self.paidsubscriptiondisable = window.cordova && isios();
 	self.cutversion = window.cordova && isios();
 
@@ -352,12 +353,17 @@ Application = function (p) {
 			mobileview = false
 		}
 
+		if (self.television){
+			mobileview = false
+		}
+
 		return mobileview
 	}
 
 	var istouchstyle = function () {
-
+		
 		self.mobileview = istouchstylecalculate()
+		
 
 		var id = window.rifticker.add(() => {
 
@@ -415,6 +421,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		if(self.television) return false
 		return isElectron || (window.cordova);
 	}
 

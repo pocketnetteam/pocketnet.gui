@@ -4035,7 +4035,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
+				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || ((essenseData.searchValue || essenseData.searchTags) && !self.app.television)){
 					tpl = 'shares'
 				}
 
@@ -5941,6 +5941,8 @@ var lenta = (function(){
 				
 				video = essenseData.video || false
 
+				console.log('video??' ,video)
+
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -6163,8 +6165,14 @@ var lenta = (function(){
 			},
 
 			update : function(){
-				if(el.shares && isotopeinited) el.shares.isotope('layout')
+				if(el.shares && isotopeinited) {
+					setTimeout(() => {
+						el.shares.isotope('layout')
+
+					}, 50)
+				}
 			},
+
 			
 			init : function(p){
 

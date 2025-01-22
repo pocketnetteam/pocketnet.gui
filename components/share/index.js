@@ -2799,7 +2799,23 @@ var share = (function(){
 
 				if(!essenseData.share && !essenseData.dontsave){
 
-					state.load()
+					if(!state.load() && window.project_config.preferredtags && window.project_config.preferredtags.length){
+						if (essenseData.repost || parameters().repost) {
+
+						}
+						else{
+
+							var preferred = self.app.platform.sdk.categories.getbyids(window.project_config.preferredtags, self.app.localization.key)
+
+							var preferredtags = []
+
+							_.each(preferred, (p) => {
+								preferredtags = preferredtags.concat(p.tags)
+							})
+
+							currentShare.tags.set(preferredtags)
+						}
+					}
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2807,7 +2823,7 @@ var share = (function(){
 				if (essenseData.repost || parameters().repost) 
 					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length;
 
 
 				var data = {

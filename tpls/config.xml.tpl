@@ -211,6 +211,12 @@
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
+
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-feature android:name="android.software.leanback" android:required="true" />
+            <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+        </config-file>
+        
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>

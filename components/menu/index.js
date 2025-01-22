@@ -336,7 +336,7 @@ var menu = (function(){
 
 					setTimeout(function(){
 
-						if(!isTablet()){
+						if(!isTablet() && !self.app.television){
 							self.nav.api.load({
 								eid : 'menu',
 								open : true,
@@ -357,12 +357,21 @@ var menu = (function(){
 					self.app.mobile.vibration.small(true)
 
 					if(isTablet()){
-
-
 						self.nav.api.go({
 							open : true,
 							href : 'notifications',
 							inWnd : true,
+							history : true,
+							essenseData : {
+							}
+						})
+					}
+					
+					if(self.app.television){
+
+						self.nav.api.go({
+							open : true,
+							href : 'notifications',
 							history : true,
 							essenseData : {
 							}

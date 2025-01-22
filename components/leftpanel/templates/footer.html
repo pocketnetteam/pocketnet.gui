@@ -1,32 +1,40 @@
 <div class="rightbottomlinks">
 
-    <% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
-        <div class="downloadapplication">
-            <button class="button small"><%= e('e13120') %></button>
-        </div>
+    <% if(!app.television) {%>
+
+        <% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
+            <div class="downloadapplication">
+                <button class="button small"><%= e('e13120') %></button>
+            </div>
+
+        <% } %>
+
+        <% if (!window.cordova && !isMobile()) {%>
+            <div class="donations">
+                <button class="button small good"><%= e('donate') %></button>
+            </div>
+        <% } %>
 
     <% } %>
 
-    <% if (!window.cordova && !isMobile()) {%>
-        <div class="donations">
-            <button class="button small good"><%= e('donate') %></button>
-        </div>
-    <% } %>
-
-
+    <% if(!app.television) {%>
     <div>
 
-        <span class="likelink blockexplorer"><%= e('e13182') %></span>
-        <span>&middot;</span>
-        <a elementsid="fordevelopers" href="devapplications"><%= e('fordevelopers') %></a>
-        <span>&middot;</span>
-        <% if(!app.cutversion) {%>
-        <a elementsid="aboutlink" href="about"><%= e('aboutus') %></a>
-        <span>&middot;</span>
-        <a elementsid="about?id=about-faq" href="about?id=about-faq">F.A.Q.</a>
-        <span>&middot;</span>
-        <% } %>
-        <a elementsid="help?page=applications" href="applications"><%= e('e14106') %></a>
+        
+
+            <span class="likelink blockexplorer"><%= e('e13182') %></span>
+            <span>&middot;</span>
+            <a elementsid="fordevelopers" href="devapplications"><%= e('fordevelopers') %></a>
+            <span>&middot;</span>
+            <% if(!app.cutversion) {%>
+            <a elementsid="aboutlink" href="about"><%= e('aboutus') %></a>
+            <span>&middot;</span>
+            <a elementsid="about?id=about-faq" href="about?id=about-faq">F.A.Q.</a>
+            <span>&middot;</span>
+            <% } %>
+            <a elementsid="help?page=applications" href="applications"><%= e('e14106') %></a>
+
+        
 
         <% if(!app.cutversion) {%>
             <span>&middot;</span>
@@ -37,6 +45,8 @@
             <a elementsid="howtobuy" href="howtobuy"><%= e('howToBuy') %></a>
         <% } %>
     </div>
+
+    <% } %>
 
     <% var year = new Date().getFullYear() %>
 
