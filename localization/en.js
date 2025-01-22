@@ -2985,7 +2985,10 @@ _l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again late
 _l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
+_l.miniApp_guideLink = "Guide to Bastyon Mini-Applications";
+
 _l.miniApp_iconAltText = "App Icon";
+_l.miniApp_iconErrorMessage = "The icon could not be loaded. Please check the availability of the file on your domain:";
 _l.miniApp_publishButton = "Publish";
 _l.miniApp_editButton = "Edit";
 _l.miniApp_deleteButton = "Delete";

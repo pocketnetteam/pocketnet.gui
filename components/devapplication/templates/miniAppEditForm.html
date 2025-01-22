@@ -3,6 +3,7 @@
     <div class="header">
       <div class="icon-name">
         <div class="app-title"><%= e('miniApp_editAppTitle') %></div>
+        <p id="miniAppDocsLink"></p>
       </div>
     </div>
     <div class="content">
@@ -77,7 +78,7 @@
             placeholder="<%= e('miniApp_placeholderScope') %>"
           />
           <small class="field-error" id="error-app-scope"></small>
-            <label for="app-tscope" style="margin-top: 20px" class="form-label">
+          <label for="app-tscope" style="margin-top: 20px" class="form-label">
             <%= e('miniApp_tScopeLabel') %>
           </label>
           <small class="field-description">
@@ -90,7 +91,7 @@
             class="form-input"
             placeholder="<%= e('miniApp_placeholderTScope') %>"
           />
-          <small class="field-error" id="error-tscope"></small>
+          <small class="field-error" id="error-app-tscope"></small>
           <div id="deploymentInstructions"></div>
         </div>
 

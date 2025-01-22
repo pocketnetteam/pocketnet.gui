@@ -2792,7 +2792,10 @@ _l.miniApp_deleteErrorMessage = "Не удалось удалить прилож
 _l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
+_l.miniApp_guideLink = "Руководство по мини-приложениям Bastyon";
+
 _l.miniApp_iconAltText = "Иконка приложения";
+_l.miniApp_iconErrorMessage = "Иконка не может быть загружена. Пожалуйста, проверьте доступность файла на вашем домене:";
 _l.miniApp_publishButton = "Публиковать";
 _l.miniApp_editButton = "Редактировать";
 _l.miniApp_deleteButton = "Удалить";
