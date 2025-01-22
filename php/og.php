@@ -429,7 +429,7 @@ class OG {
                             }
                         }
             
-                        if($this->txid != NULL){
+                        if($this->txid != NULL && $this->commentid == NULL){
             
                             $r = $this->rpc->share($this->txid);
             
