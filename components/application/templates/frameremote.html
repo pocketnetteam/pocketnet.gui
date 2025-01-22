@@ -64,11 +64,11 @@
     <% }%>
     <div class="caption">
       <span><%-application.manifest.name%></span>
-    <% if(tscope) {%>
+    <% if(tscope && scope) {%>
     <div class="domain-toggle">
         <span id="toggle-label"><%= e('miniApp_devModeLabel') %></span>
         <label class="switch">
-            <input value="<%-isInDevMode%>" disabled="<%-!scope%>" type="checkbox" id="domain-switch"
+            <input value="<%-isInDevMode%>" type="checkbox" id="domain-switch"
               <%= Boolean(isInDevMode) ? "checked" : "" %>>
             <span class="slider"></span>
         </label>

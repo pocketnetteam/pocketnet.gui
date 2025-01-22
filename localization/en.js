@@ -3040,7 +3040,7 @@ _l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
 _l.miniApp_scopeInvalidMessage = "This field must be in the format of a subdomain, for example, app.pocketnet. Use only lowercase letters, numbers, and dots without https:// or www prefixes.";
 _l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
-_l.miniApp_devModeLabel = "Development Mode:";
+_l.miniApp_devModeLabel = "Development Environment:";
 _l.miniApp_documentationButtonLabel = "Documentation";
 _l.miniApp_createButtonLabel = "Create Mini App";
 _l.miniApp_myAppsButtonLabel = "Created by Me";

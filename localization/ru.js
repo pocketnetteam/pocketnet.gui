@@ -2846,7 +2846,7 @@ _l.miniApp_scopeInvalidMessage = "Это поле должно быть в фо�
 _l.miniApp_extendedTags = "Максимальное количество тегов, которое вы можете добавить, — ";
 
 
-_l.miniApp_devModeLabel = "Режим разработки:";
+_l.miniApp_devModeLabel = "Окружение разработки:";
 _l.miniApp_documentationButtonLabel = "Документация";
 _l.miniApp_createButtonLabel = "Создать приложение";
 _l.miniApp_myAppsButtonLabel = "Созданные мной";
