@@ -158,6 +158,12 @@ var devapplication = (function () {
           history: true,
         });
       },
+      openSupport: function () {
+        app.platform.ui.support("common", {
+          error: "",
+          additionalData: {},
+        });
+      },
       delete: function () {
         confirmDeletion();
       },
@@ -230,6 +236,7 @@ var devapplication = (function () {
 
     function addAssetsLoadHandler(_p, selector) {
       _p.el.find(selector).on("blur", function () {
+        if (!this.value) return;
         renders.appIconPreview(this.value);
         renders.showManifestButton(this.value);
       });
@@ -312,6 +319,17 @@ var devapplication = (function () {
           }
         );
       },
+      supportLink: function () {
+        self.shell(
+          {
+            name: "supportLink",
+            el: el.c.find("#supportLink"),
+          },
+          function (_p) {
+            _p.el.find("#openSupport").on("click", actions.openSupport);
+          }
+        );
+      },
       appIconPreview: function (scope) {
         self.shell(
           {
@@ -351,6 +369,7 @@ var devapplication = (function () {
             addAssetsLoadHandler(_p, "#app-tscope");
             renders.miniAppDocsLink();
             renders.deploymentInstructions();
+            renders.supportLink();
             renders.tagInput({
               tags: [],
               _p,
@@ -488,6 +507,7 @@ var devapplication = (function () {
             addAssetsLoadHandler(_p, "#app-tscope");
             renders.deploymentInstructions();
             renders.miniAppDocsLink();
+            renders.supportLink();
             ["#app-name", "#app-version", "#app-scope", "#app-tscope"].forEach(
               (selector) =>
                 _p.el.find(selector).on("input", () => clearErrors(selector))

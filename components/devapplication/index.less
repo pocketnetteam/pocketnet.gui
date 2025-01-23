@@ -194,7 +194,7 @@
       }
     }
 
-    .app-link {
+    .details-app-link {
       color: var(--color-txt-ac);
       font-weight: bold;
       cursor: pointer;
@@ -214,7 +214,7 @@
       }
     }
 
-    #navigateToMiniAppDocs {
+    .miniapp-link {
       color: var(--color-txt-ac);
       text-decoration: underline;
       font-weight: bold;
@@ -225,15 +225,19 @@
         color: var(--color-bg-ac);
         text-decoration: none;
       }
+
+      &:active {
+        color: rgb(var(--color-txt-ac-1));
+      }
     }
 
     #taginput {
       .tgs {
         .tagsWrapper {
-          >.tagsInputWrapper {
+          > .tagsInputWrapper {
             width: 100%;
 
-            >.inputWrapper {
+            > .inputWrapper {
               padding: 0;
               padding-left: 4px;
               box-shadow: none;

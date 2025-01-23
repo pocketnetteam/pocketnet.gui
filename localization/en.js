@@ -2987,6 +2987,8 @@ _l.miniApp_editErrorMessage = "Не удалось отредактироват�
 
 _l.miniApp_guideLink = "Guide to Bastyon Mini-Applications";
 
+_l.miniApp_supportLinkText = "Questions or improvement ideas? Contact support";
+
 _l.miniApp_iconAltText = "App Icon";
 _l.miniApp_iconErrorMessage = "The icon could not be loaded. Please check the availability of the file on your domain:";
 _l.miniApp_publishButton = "Publish";
