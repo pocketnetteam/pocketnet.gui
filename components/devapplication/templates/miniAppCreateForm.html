@@ -3,6 +3,7 @@
     <div class="header">
       <div class="icon-name">
         <div class="app-title"><%= e('miniApp_createTitle') %></div>
+        <p id="miniAppDocsLink"></p>
       </div>
     </div>
     <div class="miniapp-form">
@@ -10,34 +11,20 @@
       <p class="form-description"><%= e('miniApp_createDescription') %></p>
       <form>
         <div class="form-group">
-          <label for="app-id" class="form-label"
-            ><%= e('miniApp_idLabel') %></label
-          >
+          <label for="app-id" class="form-label"><%= e('miniApp_idLabel') %></label>
           <small class="field-description">
             <%= e('miniApp_idInstructions') %>
           </small>
-          <input
-            type="text"
-            id="app-id"
-            class="form-input"
-            placeholder="<%= e('miniApp_placeholderId') %>"
-          />
+          <input type="text" id="app-id" class="form-input" placeholder="<%= e('miniApp_placeholderId') %>" />
           <small class="field-error" id="error-app-id"></small>
         </div>
 
         <div class="form-group">
-          <label for="app-name" class="form-label"
-            ><%= e('miniApp_nameLabel') %></label
-          >
+          <label for="app-name" class="form-label"><%= e('miniApp_nameLabel') %></label>
           <small class="field-description">
             <%= e('miniApp_nameInstructions') %>
           </small>
-          <input
-            type="text"
-            id="app-name"
-            class="form-input"
-            placeholder="<%= e('miniApp_placeholderName') %>"
-          />
+          <input type="text" id="app-name" class="form-input" placeholder="<%= e('miniApp_placeholderName') %>" />
           <small class="field-error" id="error-app-name"></small>
         </div>
 
@@ -45,28 +32,25 @@
           <%= e('miniApp_deploymentSectionTitle') %>
         </h2>
         <div class="form-group">
-          <label for="app-scope" class="form-label"
-            ><%= e('miniApp_scopeLabel') %></label
-          >
-          <small class="field-description"
-            ><%= e('miniApp_scopeDescription') %></small
-          >
-          <input
-            type="text"
-            id="app-scope"
-            class="form-input"
-            placeholder="<%= e('miniApp_placeholderScope') %>"
-          />
+          <label for="app-scope" class="form-label"><%= e('miniApp_scopeLabel') %></label>
+          <small class="field-description"><%= e('miniApp_scopeDescription') %></small>
+          <input type="text" id="app-scope" class="form-input" placeholder="<%= e('miniApp_placeholderScope') %>" />
           <small class="field-error" id="error-app-scope"></small>
+          <label for="app-tscope" style="margin-top: 20px" class="form-label">
+            <%= e('miniApp_tScopeLabel') %>
+          </label>
+          <small class="field-description">
+            <%= e('miniApp_tScopeInstructions') %>
+          </small>
+          <input type="text" id="app-tscope" class="form-input" placeholder="<%= e('miniApp_placeholderTScope') %>" />
+          <small class="field-error" id="error-app-tscope"></small>
           <div id="deploymentInstructions"></div>
         </div>
         <h2 class="form-title"><%= e('miniApp_displaySectionTitle') %></h2>
         <p class="form-description"><%= e('miniApp_iconInstructions') %></p>
         <div class="form-group">
           <label class="form-label"><%= e('miniApp_iconAltText') %></label>
-          <small class="field-description"
-            ><%= e('miniApp_iconLabelInstructions') %></small
-          >
+          <small class="field-description"><%= e('miniApp_iconLabelInstructions') %></small>
           <div class="icon-preview-container"></div>
         </div>
         <div id="manifestButtonContainer"></div>
@@ -76,9 +60,7 @@
         <p class="form-description"><%= e('miniApp_tagsCountRequirement') %></p>
         <div class="form-group">
           <label class="form-label"><%= e('miniApp_tagsLabel') %></label>
-          <small class="field-description"
-            ><%= e('miniApp_tagsInstructions') %></small
-          >
+          <small class="field-description"><%= e('miniApp_tagsInstructions') %></small>
           <div id="app-tags" class="form-input tag-input-container"></div>
           <small class="field-error" id="error-app-tag"></small>
         </div>
@@ -94,6 +76,7 @@
         <div class="form-group" style="margin-top: 20px">
           <p><%= e('miniApp_instructionsDevMode') %></p>
         </div>
+        <div class="form-group" id="supportLink"></div>
       </form>
     </div>
   </div>

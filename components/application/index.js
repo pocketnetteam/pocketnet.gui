@@ -8,7 +8,7 @@ var application = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, application, appdata, curpath;
+		var el, ed, application, appdata, curpath, userAddress, isUserAuthor;
 
 		var actions = {
 			install : function(){
@@ -107,9 +107,9 @@ var application = (function(){
 
 			loaded : function(p){
 				
-				if(!application) return
+				if(!application || !appdata) return
 				
-				if (p.application == application.manifest.id){
+				if (p.application == appdata.id){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
 
@@ -122,10 +122,10 @@ var application = (function(){
 
 			changestate : function(p = {}){
 				if(!p.data) return
-				if(!application) return
+				if(!application || !appdata) return
 
 
-				if (p.application == application.manifest.id/* && p.data.encoded*/){
+				if (p.application == appdata.id/* && p.data.encoded*/){
 
 					self.app.nav.api.history.addRemoveParameters([], {
 						p: p.data.encoded
@@ -301,10 +301,19 @@ var application = (function(){
 
 					if (clbk)
 						clbk();
-				})
+				})	
 			},
-			frameremote : function(clbk){
-				var src = application.manifest.scope + '/' + (actions.getpath() || application.manifest.start || '')
+			frameremote : function(scope, clbk){	
+				let _scope = scope;
+				const tscope = appdata.tscope 				
+
+				if(!_scope) {
+					const hasTestScope = Boolean(tscope);
+					
+					_scope = isUserAuthor && hasTestScope ? tscope : appdata.scope;
+				}			
+
+				var src = self.app.apps.normalizeScopeUrl(_scope + '/' + (actions.getpath() || application.manifest.start || ''))
 				curpath = actions.getpath()
 
 				/*if(window.testpocketnet){
@@ -315,9 +324,12 @@ var application = (function(){
 
 					name :  'frameremote',
 					el :   el.c,
-
+					
 					data : {
 						application,
+						isInDevMode: _scope === tscope,
+						tscope: isUserAuthor && tscope,
+						scope: appdata.scope,
 						src
 					},
 
@@ -338,6 +350,11 @@ var application = (function(){
 						if (history.length) {
 							history.forward() 
 						}
+					})
+					
+					p.el.find('#domain-switch')?.on('change', function () {
+						const isDevMode = this.checked;
+						renders.frameremote(isDevMode ? tscope : appdata.scope);
 					})
 
 					p.el.find('.refresh').on('click',()=>{
@@ -382,7 +399,8 @@ var application = (function(){
 
 				if (f){
 					application = f.application
-					appdata = f.appdata
+					
+					appdata = f.appdata?.data
 				}
 
 				make()
@@ -394,7 +412,7 @@ var application = (function(){
 
 		var make = function(){
 
-			if(!application || !appdata){
+			if(!application){
 				renders.error('application_notexist')
 				return
 			}
@@ -470,11 +488,15 @@ var application = (function(){
 				application = null
 				appdata = null
 
-				self.app.apps.get.applicationall(id).then((f) => {
+      	userAddress = self.app.user.address.value;
+				self.app.apps.get.application(id).then((f) => {
 
 					if (f){
+						
 						application = f.application
-						appdata = f.appdata
+						
+						appdata = f.appdata?.data
+						isUserAuthor = appdata && appdata.address === userAddress;
 
 						if (ed.application){
 

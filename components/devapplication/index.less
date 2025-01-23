@@ -1,4 +1,5 @@
 @import "../../css/__cssvar";
+
 #devapplication {
   .miniapp-container {
     font-family: var(--font);
@@ -10,14 +11,13 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--color-gray-border);
-      padding-bottom: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
 
       .icon-name {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 20px;
 
         .app-icon {
           width: 60px;
@@ -194,7 +194,7 @@
       }
     }
 
-    .app-link {
+    .details-app-link {
       color: var(--color-txt-ac);
       font-weight: bold;
       cursor: pointer;
@@ -211,6 +211,23 @@
 
       &:active {
         color: var(--color-txt-ac-1);
+      }
+    }
+
+    .miniapp-link {
+      color: var(--color-txt-ac);
+      text-decoration: underline;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s, text-decoration 0.3s;
+
+      &:hover {
+        color: var(--color-bg-ac);
+        text-decoration: none;
+      }
+
+      &:active {
+        color: rgb(var(--color-txt-ac-1));
       }
     }
 
@@ -284,93 +301,72 @@
 }
 
 @media (max-width: 768px) {
-  #devapplication {
-    .miniapp-container {
-      padding: 20px;
+  .miniapp-container {
+    padding: 20px;
 
-      .header {
-        .icon-name {
-          .app-title {
-            font-size: 1.5em;
-          }
-        }
+    .header .icon-name .app-title {
+      font-size: 1.5em;
+    }
 
-        .actions {
-          .button {
-            padding: 8px 16px;
-            font-size: 0.85em;
-          }
-        }
+    .actions .button {
+      padding: 8px 16px;
+      font-size: 0.85em;
+    }
+
+    .content .info-section {
+      padding: 15px;
+
+      .details .label {
+        font-size: 0.9em;
       }
 
-      .content {
-        .info-section {
-          padding: 15px;
-
-          .details {
-            .label {
-              font-size: 0.9em;
-            }
-
-            .value {
-              font-size: 1.1em;
-            }
-          }
-        }
-
-        .description {
-          font-size: 1em;
-        }
+      .details .value {
+        font-size: 1.1em;
       }
+    }
+
+    .content .description {
+      font-size: 1em;
     }
   }
 }
 
 @media (max-width: 480px) {
-  #devapplication {
-    .miniapp-container {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
+  .miniapp-container {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
 
-        .icon-name {
-          .app-title {
-            font-size: 1.3em;
-          }
-        }
-
-        .actions {
-          width: 100%;
-          justify-content: space-between;
-
-          .button {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            font-size: 0.8em;
-          }
-        }
+      .icon-name .app-title {
+        font-size: 1.3em;
       }
 
-      .content {
-        .info-section {
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 10px;
+      .actions {
+        width: 100%;
+        justify-content: space-between;
 
-          .details {
-            .label,
-            .value {
-              font-size: 1em;
-            }
-          }
-        }
-
-        .description {
-          font-size: 0.9em;
+        .button {
+          flex: 1;
+          text-align: center;
+          padding: 8px;
+          font-size: 0.8em;
         }
       }
     }
+
+    .content .info-section {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+
+      .details .label,
+      .details .value {
+        font-size: 1em;
+      }
+    }
+
+    .content .description {
+      font-size: 0.9em;
+    }
   }
 }
-
