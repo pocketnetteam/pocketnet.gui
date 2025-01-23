@@ -632,7 +632,6 @@ isios = function () {
 }
 
 istelevision = function(){
-    return true
     return window.cordova && window._device && window._device.television()
 }
 
