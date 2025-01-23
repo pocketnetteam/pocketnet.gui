@@ -5394,7 +5394,7 @@ Platform = function (app, listofnodes) {
 
             if (!p) p = {}
 
-            if (self.app.mobileview || p.dlg) {
+            if (self.app.mobileview || p.dlg || self.app.television) {
                 return self.api.mobiletooltip(_el, content, clbk, p, tooltip)
             }
 
@@ -15032,6 +15032,17 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getbyids: function (ids = [], _k) {
+                var allcats = self.sdk.categories.get(_k)
+
+                var cats = _.filter(allcats, function (c) {
+                    return ids.indexOf(c.id > -1)
+                })
+
+                return cats
+
+            },
+
             search: function (name) {
 
                 return _.filter(self.sdk.categories.get(), function (c) {
@@ -15092,7 +15103,22 @@ Platform = function (app, listofnodes) {
                 } catch (e) {}
 
 
-                if (!p.settings) p.settings = {}
+                if(!p.settings) {
+                    p.settings = {}
+
+                    if(window.project_config.preferredtags && window.project_config.preferredtags.length){
+
+                        p.settings.selected = {}
+
+                        _.each(self.sdk.categories.data.all, (cats, k) => {
+                            p.settings.selected[k] = {}
+
+                            _.each(window.project_config.preferredtags, (id) => {
+                                p.settings.selected[k][id] = true
+                            })
+                        })
+                    }
+                }
 
                 self.sdk.categories.settings = p.settings
 
@@ -15100,6 +15126,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
                 self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
+
 
                 if (clbk) clbk()
             }
@@ -20604,7 +20631,7 @@ Platform = function (app, listofnodes) {
 
                             var share = self.app.platform.psdk.share.get(data.txid)
 
-                            if (share && share.itisstream()) {
+                            if (share && (share.itisstream() || (share.itisvideo() && self.app.television))) {
 
                                 platform.app.nav.api.load({
                                     open: true,
@@ -24486,7 +24513,8 @@ Platform = function (app, listofnodes) {
             }
 
             setTimeout(() => {
-                if (typeof initShadowPopups === 'function') initShadowPopups()
+                console.log('self.app.television', self.app.television)
+                if (typeof initShadowPopups === 'function' && !self.app.television) initShadowPopups()
             }, 1000)
 
 
@@ -24637,6 +24665,7 @@ Platform = function (app, listofnodes) {
             if (self.matrixchat.inited) return
             if (self.matrixchat.initing) return
             if (_OpenApi) return
+            if (self.app.television) return
 
             self.matrixchat.initing = true
 

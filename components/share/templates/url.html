@@ -12,8 +12,14 @@
 			var aspectRatio = Number((info.data || deep(localdata, 'infos.videoDetails') || {}).aspectRatio || 0);
 
 			var image = (info.data || {}).image || share.images[0];
+
+			var vcclass = ''
+
+			if((aspectRatio < 1.25) && (aspectRatio >= 0.9)) vcclass = 'squareVideo'
+			if((aspectRatio < 0.9) && (aspectRatio != 0)) vcclass = 'verticalVideo'
+
 	%>
-		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+		<div class="videoWrapper fullscreenActive <%- vcclass %>" pid="<%- makeid() %>">
 			
 			<% if(meta.type != 'peertube' && (!fullplayer || !app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type == 'youtube' && window.cordova))) {%>
 
@@ -70,7 +76,7 @@
 
 						<div class="jsPlayerPreview">
 							<% if(info.data) {%>
-								<div class="wpl opensviurl" image="<%-info.data.thumbnail || '*'%>">
+								<div class="wpl opensviurl tvfocusedopacity" image="<%-info.data.thumbnail || '*'%>">
 								</div>
 								<% if(info.data.duration) {%>
 									<div class="durationWrapper">

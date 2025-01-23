@@ -66,6 +66,10 @@ var leftpanel = (function(){
 
 				if(!el.c) return;
 
+				if(self.app.television){
+					return
+				}
+
 				self.shell({
 					name :  'best',
 					data : {},
@@ -103,11 +107,15 @@ var leftpanel = (function(){
 
 				self.app.user.isState(function(state){
 
-					if(isMobile() && pathname != 'index'){
+					if((isMobile() && pathname != 'index')){
 						el.c.addClass('hidden')
 					}
 					else{
 						el.c.removeClass('hidden')
+
+						if(self.app.television){
+							return
+						}
 
 						self.shell({
 

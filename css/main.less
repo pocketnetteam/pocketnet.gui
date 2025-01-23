@@ -8129,7 +8129,110 @@ html.mobileview{
         page-break-after: avoid;
     }
 }
+html.television{
+    .tvfocusedzoom{
+        
+        .transition(0.3s, transform);
+        &:focus{
 
+            outline: none;
+            transform: scale(1.2);
+        }
+    }
+
+    button,
+    a,
+    .tvfocusedopacity{
+        
+        .transition(0.3s, opacity);
+        &:focus{
+
+            outline: none;
+            opacity : 0.5;
+        }
+    }
+    
+    #miniappscnt{
+        display: none;
+    }
+    .rightchatspacer{
+        margin-left : 0!important;
+        margin-right: @rhythm;
+    }
+    #content .work.adj{
+        width: 100%;
+    }
+    .video-js{
+        cursor: pointer!important;
+        .vjs-picture-in-picture-control{
+            display: none!important;
+        }
+
+        .vjs-fullscreen-control{
+            display: none!important;
+        }
+
+        .vjs-mute-control {
+            display: none!important;
+        }
+
+        .vjs-volume-control{
+            display: none!important;
+        }
+
+        .vjs-icon-settings{
+            display: none!important;
+        }
+
+        .vjs-slider,
+        .vjs-progress-control{
+            pointer-events: none;
+            cursor: default!important;
+        }
+    }
+}
+html.allcontentvideo{
+    #menu{
+        display: none;
+    }
+
+    #miniappscnt{
+        display: none!important;
+
+    }
+
+    #panelWrapper{
+        padding : 0;
+    }
+
+    .contentWrapper{
+        margin-top: 0;
+    }
+
+    .rightchatspacer{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #content .work{
+        width: 100%;
+        max-width: none;
+
+        &.adj{
+            padding : 0;
+        }
+    }
+
+    .upbackbuttonwrapper{
+        display: none!important;
+    }
+
+    #main{
+        .lentacellsvi{
+            padding-top: 0;
+        }
+    }
+}
 html.allcontent{
    
 
@@ -8480,6 +8583,7 @@ html.mobileview.allcontent{
 
 }
 
+html.television,
 html.mobileview{
 
     &.keyboadrshown{

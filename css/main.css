@@ -6628,6 +6628,92 @@ html.mobileview #content .work {
     page-break-after: avoid;
   }
 }
+html.television .tvfocusedzoom {
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+html.television .tvfocusedzoom:focus {
+  outline: none;
+  transform: scale(1.2);
+}
+html.television button,
+html.television a,
+html.television .tvfocusedopacity {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+html.television button:focus,
+html.television a:focus,
+html.television .tvfocusedopacity:focus {
+  outline: none;
+  opacity: 0.5;
+}
+html.television #miniappscnt {
+  display: none;
+}
+html.television .rightchatspacer {
+  margin-left: 0!important;
+  margin-right: 0.5em;
+}
+html.television #content .work.adj {
+  width: 100%;
+}
+html.television .video-js {
+  cursor: pointer!important;
+}
+html.television .video-js .vjs-picture-in-picture-control {
+  display: none!important;
+}
+html.television .video-js .vjs-fullscreen-control {
+  display: none!important;
+}
+html.television .video-js .vjs-mute-control {
+  display: none!important;
+}
+html.television .video-js .vjs-volume-control {
+  display: none!important;
+}
+html.television .video-js .vjs-icon-settings {
+  display: none!important;
+}
+html.television .video-js .vjs-slider,
+html.television .video-js .vjs-progress-control {
+  pointer-events: none;
+  cursor: default!important;
+}
+html.allcontentvideo #menu {
+  display: none;
+}
+html.allcontentvideo #miniappscnt {
+  display: none!important;
+}
+html.allcontentvideo #panelWrapper {
+  padding: 0;
+}
+html.allcontentvideo .contentWrapper {
+  margin-top: 0;
+}
+html.allcontentvideo .rightchatspacer {
+  margin-left: 0;
+  margin-right: 0;
+}
+html.allcontentvideo #content .work {
+  width: 100%;
+  max-width: none;
+}
+html.allcontentvideo #content .work.adj {
+  padding: 0;
+}
+html.allcontentvideo .upbackbuttonwrapper {
+  display: none!important;
+}
+html.allcontentvideo #main .lentacellsvi {
+  padding-top: 0;
+}
 html.allcontent {
   /*body{
         background: #051b48;
@@ -6850,6 +6936,7 @@ html.mobileview.allcontent .contentWrapper {
     background: transparent;
   }
 }
+html.television.keyboadrshown .focusedinput,
 html.mobileview.keyboadrshown .focusedinput {
   position: fixed!important;
   bottom: calc(var(--app-margin-bottom, 0) - 1px) !important;
@@ -6858,9 +6945,11 @@ html.mobileview.keyboadrshown .focusedinput {
   right: 0!important;
   max-height: 25vh!important;
 }
+html.television .dialog,
 html.mobileview .dialog {
   padding-bottom: calc(var(--app-margin-bottom, 0) - 1px);
 }
+html.television .sitemessage,
 html.mobileview .sitemessage {
   position: fixed;
   width: auto;
@@ -6874,6 +6963,7 @@ html.mobileview .sitemessage {
   text-align: center;
   border: 1px solid rgb(var(--neutral-grad-1));
 }
+html.television .fastMessage,
 html.mobileview .fastMessage {
   position: fixed;
   left: 0.25em;
@@ -6891,6 +6981,7 @@ html.mobileview .fastMessage {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
+html.television .fastMessage.willhidden,
 html.mobileview .fastMessage.willhidden {
   -moz-transition: opacity 0.2s;
   -o-transition: opacity 0.2s;
@@ -6898,6 +6989,7 @@ html.mobileview .fastMessage.willhidden {
   transition: opacity 0.2s;
   opacity: 0;
 }
+html.television .fastMessage .fmCnt,
 html.mobileview .fastMessage .fmCnt {
   width: 100%;
   height: 100%;
@@ -6905,36 +6997,48 @@ html.mobileview .fastMessage .fmCnt {
   text-overflow: ellipsis;
   padding-right: 1em;
 }
+html.television .fastMessage .close,
 html.mobileview .fastMessage .close {
   padding: 1em;
 }
+html.television .fastMessage .time,
 html.mobileview .fastMessage .time {
   display: none;
 }
+html.television .fastMessage .tips,
 html.mobileview .fastMessage .tips {
   /*display: none; */
 }
+html.television .fastMessage .tips .additionalcontent,
 html.mobileview .fastMessage .tips .additionalcontent {
   display: none;
 }
+html.television .fastMessage .cwrapper.table > div,
 html.mobileview .fastMessage .cwrapper.table > div {
   vertical-align: middle;
 }
+html.television .fastMessage .commentmessagewrapper > div,
 html.mobileview .fastMessage .commentmessagewrapper > div,
+html.television .fastMessage .notification .commentmessagewrapper > div,
 html.mobileview .fastMessage .notification .commentmessagewrapper > div {
   vertical-align: bottom;
 }
+html.television .fastMessage .subscribeWrapper > div.forsubscribe,
 html.mobileview .fastMessage .subscribeWrapper > div.forsubscribe,
+html.television .fastMessage .notification .subscribeWrapper > div.forsubscribe,
 html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe {
   width: 80px;
   vertical-align: bottom;
 }
+html.television .fastMessage .foramount,
 html.mobileview .fastMessage .foramount {
   width: auto!important;
 }
+html.television .fastMessage.smallsize,
 html.mobileview .fastMessage.smallsize {
   padding-right: 2em;
 }
+html.television .fastMessage.smallsize .close,
 html.mobileview .fastMessage.smallsize .close {
   padding-top: 0;
   padding-bottom: 0;
@@ -6942,25 +7046,31 @@ html.mobileview .fastMessage.smallsize .close {
   display: flex;
   align-items: center;
 }
+html.television .fastMessage .foranswer,
 html.mobileview .fastMessage .foranswer,
+html.television .notification .foranswer,
 html.mobileview .notification .foranswer {
   display: none;
 }
+html.television .wnd.normalizedmobile .customscroll,
 html.mobileview .wnd.normalizedmobile .customscroll {
   overscroll-behavior: none;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState),
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;
   /*.hideButton{
                 display: none!important;
             }*/
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   width: 100%;
   background: transparent!important;
   will-change: transform;
   box-shadow: none!important;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndback,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   backface-visibility: hidden;
   -moz-transition: 0s;
@@ -6968,6 +7078,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   -webkit-transition: 0s;
   transition: 0s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .buttons,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   padding-bottom: 6em !important;
   position: relative;
@@ -6977,13 +7088,16 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   max-width: 768px;
   margin: 0 auto;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .buttons .close,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons .close {
   display: none!important;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) ._close,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) ._close {
   backdrop-filter: none!important;
   opacity: 0;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .closeline,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .closeline {
   top: 120px;
   height: 2px;
@@ -6999,6 +7113,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .closeline {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   max-height: none!important;
   top: auto!important;
@@ -7016,11 +7131,13 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndheader,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndheader {
   max-width: 768px;
   margin: 0 auto;
   position: sticky;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   position: relative;
   border-bottom-right-radius: 0;
@@ -7043,6 +7160,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   -webkit-transition: padding-bottom 0.3s;
   transition: padding-bottom 0.3s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent > div,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent > div {
   opacity: 0;
   -moz-transition: opacity 0.3s;
@@ -7050,19 +7168,24 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent > 
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar {
   width: 0;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar {
   display: none!important;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons {
   display: none;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons > div,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons > div {
   max-width: 768px;
   margin: 0 auto;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner {
   top: 0!important;
   bottom: auto!important;
@@ -7070,6 +7193,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner {
   -webkit-transform: translateY(-110%);
   transform: translateY(-110%);
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndcontent,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndcontent {
   padding-top: 0;
   border-radius: 0;
@@ -7078,32 +7202,38 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndco
   max-height: calc(var(--vh, 1vh) * 52);
   min-height: 0;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).fromtop .closeline,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .closeline {
   top: auto;
   bottom: 120px;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).fromtop.sette .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop.sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).asette .wndback,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).asette .closeline,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .closeline {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).asette .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .wndinner {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).sette .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -7112,35 +7242,45 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .wndinner {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).sette ._close,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette ._close,
+html.television .wnd.normalizedmobile:not(.hiddenState).sette .closeline,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .closeline,
+html.television .wnd.normalizedmobile:not(.hiddenState).sette .wndback,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .wndback {
   opacity: 1;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).showbetter.sette .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter.sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).showbetter .closeline,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter .closeline {
   opacity: 0;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).showbetter .roundclosebutton,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter .roundclosebutton {
   backdrop-filter: none;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState).noheader .wndinner,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).noheader .wndinner {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState):only-child .wndback,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
+html.television .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndback,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndback {
   opacity: 0;
 }
+html.television .wnd.maxheight .wndinner .wndcontent,
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }

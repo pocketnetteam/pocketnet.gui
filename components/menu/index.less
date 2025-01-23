@@ -25,6 +25,12 @@
 		text-transform: uppercase;
 	}
 
+	.icon{
+		a{
+			display: block;
+		}
+	}
+
 	.menuspace{
 		position: fixed;
 		left: 0;
@@ -1066,6 +1072,7 @@ html.allcontent{
 
 	}
 } 
+html.television,
 html.mobileview{
 	#menu{
 		z-index: 4;
@@ -1283,6 +1290,24 @@ html.mobileview{
 	} 
 
 	
+}
+
+html.television{
+	#menu{
+
+		.sections{
+
+			.items{
+				
+
+				.item{
+					&.signin{
+						display: flex;
+					}
+				}
+			}
+		}
+	}
 }
 
 html[theme="black"],

@@ -124,7 +124,7 @@ var metadisplay = function(){ %>
 								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
 									<span class="sbtnxs">
-										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
+										&middot; <span class="subscribeLabel asubscribe tvfocusedopacity"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
 							
 									</span>
 
@@ -162,7 +162,7 @@ var metadisplay = function(){ %>
 		<% if(!checkvisibility && state && (typeof repost == 'undefined' || !repost)) { %>			
 
 			<div class="metapanel">
-				<div class="metapanelitem metmenu">
+				<div class="metapanelitem metmenu tvfocusedzoom">
 					<i class="fas fa-ellipsis-h"></i>
 				</div>
 			</div>
@@ -493,7 +493,7 @@ var metadisplay = function(){ %>
 	
 											<div class="itemwr table">
 												<div class="iconwr">
-													<div class="icon">
+													<div class="icon tvfocusedopacity">
 														<i class="fas fa-share-alt"></i>
 													</div>
 												</div>
