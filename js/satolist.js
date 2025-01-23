@@ -5394,7 +5394,7 @@ Platform = function (app, listofnodes) {
 
             if (!p) p = {}
 
-            if (self.app.mobileview || p.dlg) {
+            if (self.app.mobileview || p.dlg || self.app.television) {
                 return self.api.mobiletooltip(_el, content, clbk, p, tooltip)
             }
 

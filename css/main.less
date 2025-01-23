@@ -8139,6 +8139,19 @@ html.television{
             transform: scale(1.2);
         }
     }
+
+    button,
+    a,
+    .tvfocusedopacity{
+        
+        .transition(0.3s, opacity);
+        &:focus{
+
+            outline: none;
+            opacity : 0.5;
+        }
+    }
+    
     #miniappscnt{
         display: none;
     }

@@ -115,7 +115,7 @@ var commentf = function(comment){
 						<div class="panelWrapper">
 							<% if(!comment.deleted && !comment.rejected) {%>
 
-								<div elementsid="comments_panel" class="panel">
+								<div elementsid="comments_panel" class="panel tvfocusedzoom">
 									<i class="fas fa-ellipsis-h"></i>
 								</div>
 							<% } %>
@@ -208,7 +208,7 @@ var commentf = function(comment){
 										<% _.each(comment.images, function(image){ %>
 				
 											<div class="imagesWrapper">
-												<div elementsid="comments_imageCommentOpen" class="image imageCommentOpen" image="<%-image || '*'%>" i="<%-image%>">
+												<div elementsid="comments_imageCommentOpen" class="image tvfocusedopacity imageCommentOpen" image="<%-image || '*'%>" i="<%-image%>">
 												</div>
 											</div>
 				
@@ -229,7 +229,7 @@ var commentf = function(comment){
 									
 									%> 
 
-										<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp  <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+										<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp tvfocusedopacity  <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
 											<i class="fas fa-thumbs-up"></i>
 
 											<span class="commentScore">
@@ -239,7 +239,7 @@ var commentf = function(comment){
 
 
 
-										<div class="upvoteComment scoreDown <% if(comment.myScore && comment.myScore < 0) {%> ratedScore <% } %>" score="scoreDown">
+										<div class="upvoteComment scoreDown tvfocusedopacity <% if(comment.myScore && comment.myScore < 0) {%> ratedScore <% } %>" score="scoreDown">
 											<i class="fas fa-thumbs-down fa-flip-horizontal"></i>
 
 											<span class="commentScore">
@@ -256,8 +256,8 @@ var commentf = function(comment){
 
 								%>
 
-									<div elementsid="comments_replies" class="item replies <%-h%>">
-										<div class="iconlabelWrapper cact">
+									<div elementsid="comments_replies" class="item replies  <%-h%>">
+										<div class="iconlabelWrapper cact tvfocusedopacity">
 											<div class="label">
 												<span><%=e('e13037')%> (<label class="repliescount"><%- comment.children %></label>)</span>
 											</div>
@@ -271,8 +271,8 @@ var commentf = function(comment){
 
 
 								<% if((!state || mestate.reputation >= -50) && !comment.deleted && !comment.relay && !comment.temp && !comment.rejected && !lockedaccount && !ed.cantsend) { %> 
-									<div elementsid="comments_reply" class="item reply">
-										<div class="label cact">
+									<div elementsid="comments_reply" class="item reply ">
+										<div class="label cact tvfocusedopacity">
 											<span><%=e('reply')%></span>
 										</div>
 									</div>
@@ -321,7 +321,7 @@ var commentf = function(comment){
 	<div class="comments-operations">
 		<div class="operations-wrapper">
 
-			<div class="refresh-comments" pid="refresh-comments">
+			<div class="refresh-comments tvfocusedopacity" pid="refresh-comments">
 				<div class="icon-wrapper">
 					<i class="fa fa-sync-alt" aria-hidden="true"></i>
 				</div>
@@ -330,7 +330,7 @@ var commentf = function(comment){
 			<%= sort.input() %>
 
 			<% if(ed.close) {%>
-				<div class="close-comments" pid="refresh-comments">
+				<div class="close-comments tvfocusedopacity" pid="refresh-comments">
 					<div class="icon-wrapper">
 						<i class="fas fa-times-circle"></i>
 					</div>
