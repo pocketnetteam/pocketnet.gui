@@ -7664,7 +7664,7 @@ mobsearch = function (el, p) {
 	if (p.mobileSearch && p.app) {
 		window.rifticker.add(() => {
 
-			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
+			el.html('<div class="mobsearch tvfocusedzoom">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
 				p.app.platform.ui.mobilesearch(p)
 			})

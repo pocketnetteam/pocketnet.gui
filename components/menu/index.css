@@ -15,6 +15,9 @@
 #menu .sitenamelabel {
   text-transform: uppercase;
 }
+#menu .icon a {
+  display: block;
+}
 #menu .menuspace {
   position: fixed;
   left: 0;
@@ -775,72 +778,93 @@ html.allcontent #menu .usericon {
 html.allcontent #menu .far.fa-comment {
   font-weight: 700;
 }
+html.television #menu,
 html.mobileview #menu {
   z-index: 4;
 }
+html.television #menu .signup,
 html.mobileview #menu .signup {
   margin-left: 1em;
   margin-right: 1em;
 }
+html.television #menu .menuspace,
 html.mobileview #menu .menuspace {
   height: calc(95px + var(--app-margin-top));
 }
+html.television #menu .sections,
 html.mobileview #menu .sections {
   width: 100%;
   max-width: none;
   padding: 0 1em;
   padding-right: 0;
 }
+html.television #menu .sections .section,
 html.mobileview #menu .sections .section {
   padding: 0;
   width: auto;
 }
+html.television #menu .sections .section.leftpart,
 html.mobileview #menu .sections .section.leftpart {
   min-width: 0;
 }
+html.television #menu .sections .section.right,
 html.mobileview #menu .sections .section.right {
   min-width: 0;
   padding-right: 0;
 }
+html.television #menu .sections .section.centerpart,
 html.mobileview #menu .sections .section.centerpart {
   margin-left: auto;
 }
+html.television #menu .sections .section:nth-child(1),
 html.mobileview #menu .sections .section:nth-child(1) {
   padding-left: 0;
 }
+html.television #menu .sections .items,
 html.mobileview #menu .sections .items {
   float: left;
   height: 100%;
 }
+html.television #menu .sections .items.sitenames,
 html.mobileview #menu .sections .items.sitenames {
   width: auto;
 }
+html.television #menu .sections .items.searchWrapper,
 html.mobileview #menu .sections .items.searchWrapper {
   padding-right: 1em;
 }
+html.television #menu .sections .items.searchWrapper .item,
 html.mobileview #menu .sections .items.searchWrapper .item {
   min-width: 0;
 }
+html.television #menu .sections .items .item.signout,
 html.mobileview #menu .sections .items .item.signout,
+html.television #menu .sections .items .item.signin,
 html.mobileview #menu .sections .items .item.signin {
   text-align: right;
   padding-right: 1em;
 }
+html.television #menu .sections .items .item.wallets,
 html.mobileview #menu .sections .items .item.wallets {
   margin-right: 0.5em;
 }
+html.television #menu .sections .items .item.wallets .pkoinlabel,
 html.mobileview #menu .sections .items .item.wallets .pkoinlabel {
   font-size: 0.7em;
 }
+html.television #menu .sections .items .item.signin,
 html.mobileview #menu .sections .items .item.signin {
   display: none;
 }
+html.television #menu .sections .items .item.sitename .label,
 html.mobileview #menu .sections .items .item.sitename .label {
   text-align: center;
 }
+html.television #menu .sections .items .item.user,
 html.mobileview #menu .sections .items .item.user {
   margin-right: 0.5em;
 }
+html.television #menu .sections .items .item.user .userpic,
 html.mobileview #menu .sections .items .item.user .userpic {
   float: right;
   width: 34px;
@@ -848,59 +872,80 @@ html.mobileview #menu .sections .items .item.user .userpic {
   line-height: 34px;
   font-size: 0.9em;
 }
+html.television #menu .searchFastResultWrapper .fastsearch,
 html.mobileview #menu .searchFastResultWrapper .fastsearch {
   padding-left: 40px;
 }
+html.television #menu .searchFastResultWrapper .users,
 html.mobileview #menu .searchFastResultWrapper .users {
   padding-left: 0px;
 }
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
 html.mobileview #menu:not(.searchactive) .postssearch .searchPanel,
+html.television #menu:not(.searchactive) .postssearch .searchInputWrapper,
 html.mobileview #menu:not(.searchactive) .postssearch .searchInputWrapper {
   display: none;
 }
+html.television #menu:not(.searchactive) .postssearch .searchInput,
 html.mobileview #menu:not(.searchactive) .postssearch .searchInput {
   background: transparent!important;
   border: 1px solid transparent!important;
 }
+html.television #menu:not(.searchactive) .postssearch input,
 html.mobileview #menu:not(.searchactive) .postssearch input {
   color: rgb(var(--text-color));
   background: transparent;
 }
+html.television #menu:not(.searchactive) .postssearch .searchIconLabel,
 html.mobileview #menu:not(.searchactive) .postssearch .searchIconLabel,
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
 html.mobileview #menu:not(.searchactive) .postssearch .searchPanel {
   color: rgb(var(--text-color));
   background: transparent;
 }
+html.television #menu:not(.searchactive) .postssearch .searchFastResultWrapper,
 html.mobileview #menu:not(.searchactive) .postssearch .searchFastResultWrapper {
   display: none;
 }
+html.television #menu:not(.searchactive) .sections .items.searchWrapper,
 html.mobileview #menu:not(.searchactive) .sections .items.searchWrapper {
   max-width: 40px;
 }
+html.television #menu .postssearch input,
 html.mobileview #menu .postssearch input {
   padding: 0;
 }
+html.television #menu .sections .items .item.user,
 html.mobileview #menu .sections .items .item.user {
   margin-right: 0;
 }
+html.television #menu .sections .items .item.user .icon,
 html.mobileview #menu .sections .items .item.user .icon {
   padding-right: 0.5em;
 }
+html.television #menu .sections .items.searchWrapper .postssearch .searchIconLabel,
 html.mobileview #menu .sections .items.searchWrapper .postssearch .searchIconLabel {
   width: 40px;
 }
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel,
 html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel {
   width: 40px;
 }
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear],
 html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear] {
   display: block!important;
 }
+html.television #menu .sections .items.navWrapper,
 html.mobileview #menu .sections .items.navWrapper {
   display: none!important;
 }
+html.television html.allcontent #menu .sitenames,
 html.mobileview html.allcontent #menu .sitenames {
   overflow: hidden;
   width: 24px!important;
+}
+html.television #menu .sections .items .item.signin {
+  display: flex;
 }
 html[theme="black"] #menu .sections .items .item .icn svg,
 html[theme="gray"] #menu .sections .items .item .icn svg {

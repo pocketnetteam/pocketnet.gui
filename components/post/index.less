@@ -1147,6 +1147,9 @@ html.mobileview{
 html.allcontentvideo{
 	#post{
 		&.videomainpost{
+			.forurl{
+				margin-bottom: 4 * @rhythm;
+			}
 			&.recommendationsenabled{
 				.share{
 					max-width: 100%;
@@ -1168,6 +1171,12 @@ html.allcontentvideo{
 				height: 100vh;
 			}
 
+			.jsPlayerLoading,
+			.js-player{
+				max-height: 100vh;
+				height: 100vh;
+			}
+
 			.videoWrapper{
 				border-radius: 0;
 			}
@@ -1176,13 +1185,7 @@ html.allcontentvideo{
 				border-radius: 0;
 			}
 
-			.vjs-picture-in-picture-control{
-				display: none;
-			}
-
-			.vjs-fullscreen-control{
-				display: none;
-			}
+			
 		}
 	}
 }

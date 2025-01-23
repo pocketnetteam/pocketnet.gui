@@ -10,6 +10,7 @@
 					<div class="tcaption">
 						<span><%=e('Categories').toUpperCase()%></span> 
 					</div>	
+					<% if(!app.television) {%>
 					<div class="buttons">
 						<div elementsid="addcategory" class="ticon addcategory">
 							<i class="far fa-plus-square"></i>
@@ -19,6 +20,7 @@
 							<i class="fas fa-ban"></i>
 						</div>
 					</div>
+					<% } %>
 
 				</div>
 			</div>

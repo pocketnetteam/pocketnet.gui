@@ -621,7 +621,7 @@ var menu = (function(){
 						placeholder : self.app.localization.e('e13139'),
 						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
-						mobileSearch : self.app.width <= 768 || self.app.mobileview,
+						mobileSearch : self.app.width <= 768 || self.app.mobileview || self.app.television,
 
 
 						id : 'searchOnBastyon',

@@ -1171,6 +1171,8 @@ var lenta = (function(){
 							options: [1]
 						},
 
+						television : app.television,
+
 						pictureInPictureRequest : function(){
 							
 							var player = players[share.txid].p
@@ -4124,7 +4126,7 @@ var lenta = (function(){
 
 					essenserenderclbk()
 
-					if (video && !isMobile()){
+					if (video && (!isMobile() && !self.app.television)){
 						if(!isotopeinited && !essenseData.horizontal){
 							el.shares.isotope({
 
@@ -6168,8 +6170,7 @@ var lenta = (function(){
 				if(el.shares && isotopeinited) {
 					setTimeout(() => {
 						el.shares.isotope('layout')
-
-					}, 50)
+					}, 200)
 				}
 			},
 

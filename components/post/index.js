@@ -515,6 +515,7 @@ var post = (function () {
 							self.sdk.videos.save()
 						},
 
+						television : app.television,
 						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){

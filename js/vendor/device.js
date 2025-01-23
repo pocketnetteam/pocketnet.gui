@@ -126,6 +126,7 @@
   device.television = function() {
     var i, television = [
       "googletv",
+      "android tv",
       "viera",
       "smarttv",
       "internet.tv",
@@ -295,6 +296,7 @@
     module.exports = device;
   } else {
     window.device = device;
+    window._device = device
   }
 
 }).call(this);

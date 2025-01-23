@@ -816,8 +816,8 @@ var main = (function(){
 							searchTags : searchtags,
 							read : readmain,
 							audio : audiomain,
-							video :  videomain && !isMobile(),
-							videomobile : videomain && isMobile(),
+							video :  videomain && (!isMobile() || self.app.television),
+							videomobile : videomain && isMobile() && !self.app.television,
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 							fixposition : true,
@@ -885,9 +885,9 @@ var main = (function(){
 								
 									el.c.addClass('opensvishowed')
 
-									setTimeout(() => {
-										el.c.addClass('opensvishowedend')
-									}, 300)
+									/*setTimeout(() => {
+										
+									}, 500)*/
 
 								})
 
@@ -919,7 +919,9 @@ var main = (function(){
 											upbackbutton.apply()
 										},300)
 
-									renders.post(id)
+									renders.post(id, function(){
+										el.c.addClass('opensvishowedend')
+									})
 
 									self.nav.api.history.addParameters({
 										v : id
@@ -969,9 +971,13 @@ var main = (function(){
 					})	
 			},
 
-			post : function(id){
+			post : function(id, clbk){
 
-				if(!el || !el.c) return
+				if(!el || !el.c) {
+					if(clbk) clbk()
+
+						return
+				}
 
 				if (!id){
 
@@ -983,6 +989,8 @@ var main = (function(){
 
 					el.c.find('.renderposthere').html('')
 
+					if(clbk) clbk()
+
 				}
 
 				else{
@@ -990,6 +998,8 @@ var main = (function(){
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
+
+						if(clbk) clbk()
 					}, {
 						video : true,
 						showrecommendations : true,
@@ -1573,7 +1583,7 @@ var main = (function(){
 					videomain = false
 				}
 
-				if(videomain && !isMobile()){
+				if(videomain && (!isMobile() || self.app.television)){
 					window.rifticker.add(() => {
 						el.c.addClass('videomain')
 					})

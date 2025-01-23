@@ -632,7 +632,8 @@ isios = function () {
 }
 
 istelevision = function(){
-    return window.cordova && window.device && window.device.television()
+    return true
+    return window.cordova && window._device && window._device.television()
 }
 
 getbaseorientation = function(){

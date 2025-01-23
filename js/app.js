@@ -1465,6 +1465,10 @@ Application = function (p) {
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
+		if (self.television){
+			self.el.html.addClass('television')
+		}
+
 		initevents()
 
 		moment.locale(self.localization.key)
@@ -1473,6 +1477,8 @@ Application = function (p) {
 			document.addEventListener('deviceready', function () {
 
 				self.el.html.addClass('cordova')
+
+				
 
 				if (self.curation()) {
 					self.el.html.addClass('curation')
@@ -2486,7 +2492,7 @@ Application = function (p) {
 		},
 
 		safearea: function () {
-			if (window.cordova) {
+			if (window.cordova && !self.television) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
 				self.margintop = 25
 			}

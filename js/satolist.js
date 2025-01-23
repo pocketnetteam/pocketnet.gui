@@ -24513,7 +24513,8 @@ Platform = function (app, listofnodes) {
             }
 
             setTimeout(() => {
-                if (typeof initShadowPopups === 'function') initShadowPopups()
+                console.log('self.app.television', self.app.television)
+                if (typeof initShadowPopups === 'function' && !self.app.television) initShadowPopups()
             }, 1000)
 
 

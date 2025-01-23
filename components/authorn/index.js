@@ -225,8 +225,8 @@ var authorn = (function(){
 			default : true,
 			extend : function(params){
 				params.getpin = true
-				params.opensviStream = !isMobile() ? true : null
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensviStream = !isMobile() || self.app.television ? true : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 				
 				return params
 			},
@@ -243,10 +243,10 @@ var authorn = (function(){
 			text : 'e14105',
 			parameter : 'video',
 			extend : function(params){
-				params.video = !isMobile()
-				params.videomobile = isMobile()
+				params.video = !isMobile() || self.app.television
+				params.videomobile = isMobile() && !self.app.television
 
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 
 				return params
 			},

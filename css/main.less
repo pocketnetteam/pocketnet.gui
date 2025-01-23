@@ -8129,6 +8129,55 @@ html.mobileview{
         page-break-after: avoid;
     }
 }
+html.television{
+    .tvfocusedzoom{
+        
+        .transition(0.3s, transform);
+        &:focus{
+
+            outline: none;
+            transform: scale(1.2);
+        }
+    }
+    #miniappscnt{
+        display: none;
+    }
+    .rightchatspacer{
+        margin-left : 0!important;
+        margin-right: @rhythm!important;
+    }
+    #content .work.adj{
+        width: 100%;
+    }
+    .video-js{
+        cursor: pointer!important;
+        .vjs-picture-in-picture-control{
+            display: none!important;
+        }
+
+        .vjs-fullscreen-control{
+            display: none!important;
+        }
+
+        .vjs-mute-control {
+            display: none!important;
+        }
+
+        .vjs-volume-control{
+            display: none!important;
+        }
+
+        .vjs-icon-settings{
+            display: none!important;
+        }
+
+        .vjs-slider,
+        .vjs-progress-control{
+            pointer-events: none;
+            cursor: default!important;
+        }
+    }
+}
 html.allcontentvideo{
     #menu{
         display: none;
@@ -8521,6 +8570,7 @@ html.mobileview.allcontent{
 
 }
 
+html.television,
 html.mobileview{
 
     &.keyboadrshown{

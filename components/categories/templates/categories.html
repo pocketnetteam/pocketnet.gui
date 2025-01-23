@@ -12,7 +12,7 @@
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div class="catvalue catcheckgl" title="<%-title%>">
+                        <div class="catvalue catcheckgl tvfocusedzoom" title="<%-title%>">
                             <i class="<%- cat.icon ||  'far fa-star'%>"></i>
                             <span class="catname"><%- cat.name %></span>
                         </div>
@@ -23,12 +23,15 @@
                             </div>
                         <% } %>
 
+                        <%  %>
+                        <% if(!app.television) {%>
                         <div class="minus">
                             <i class="fa fa-minus-circle"></i>
                         </div>
                         <div class="times">
                             <i class="fa fa-times"></i>
                         </div>
+                        <% } %>
 
                         
                     </div>
