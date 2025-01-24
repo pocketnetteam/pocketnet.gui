@@ -15767,7 +15767,7 @@ Platform = function (app, listofnodes) {
                                     s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             } else {
-                                d = d[type] || {
+                                d = d[type == 'videos' ? 'posts' : type] || {
                                     data: []
                                 }
 
