@@ -6,6 +6,8 @@ const { dialog } = require('electron');
 
 global.MIN_NODES_COUNT = 3
 global.USE_TLS_NODES_ONLY = true
+global.SAVE_HOSTS_STATS = true
+global.USE_NODE_TRANSPORTS = true
 
 
 var WssDummy = function(wc){

@@ -23,6 +23,8 @@ var Wallet = function(p){
     self.lastprocesserror = null
     self.lastprocesserrorDate = null
 
+    var tempSpentUnspents = {}
+
     self.patterns = {
         ip : function(queueobj, all){
             if(!queueobj.ip) return Promise.reject('ip')
@@ -345,7 +347,7 @@ var Wallet = function(p){
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
             }
             catch(e){
-                //console.log("E", e)
+                console.log("E", e)
             }
           
             return {
@@ -361,7 +363,37 @@ var Wallet = function(p){
             }
         },
 
-        sendwithprivatekey : function(address, amount, key){
+        getunspentswithprivatekey : function(key){
+            if(!key) return Promise.reject('key')
+
+            var kp = null
+            
+            try{
+                kp = self.pocketnet.kit.keyPair(key)
+            }
+            catch(e){
+                return Promise.reject('keyPair')
+            }
+
+            var temp = {
+                keys : kp,
+                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
+                unspents : null,
+                key : key
+            }
+
+            return self.unspents.getc(temp).then(unspents => {
+
+                var balance = _.reduce(unspents, (m, u) => {
+                    return m + u.amount || 0
+                }, 0)
+
+                return Promise.resolve({unspents, balance})
+            })
+
+        },
+
+        sendwithprivatekey : function(address, amount, key, feemode = 'exclude'){
 
             if(!address) return Promise.reject('address')
             if(!amount) return Promise.reject('amount')
@@ -393,13 +425,22 @@ var Wallet = function(p){
             var meta = null
 
             return self.unspents.getc(temp).then(unspents => {
-                return self.transactions.txfees(unspents, outputs, 'exclude', temp)
+
+                unspents = _.filter(unspents, (i) => {
+
+                    if(!tempSpentUnspents[i.txid + '_' + i.vout]) return true
+                    
+                })
+
+                return self.transactions.txfees(unspents, outputs, feemode, temp)
             }).then(_meta => {
 
                 meta = _meta
 
                 _.each(meta.inputs, function(input){
                     input.cantspend = true
+
+                    tempSpentUnspents[input.txid + '_' + input.vout] = true
                 })
 
                 return self.transactions.send(meta.tx)
@@ -409,6 +450,12 @@ var Wallet = function(p){
 
                 if (meta){
                     self.unspents.release(meta.inputs)
+
+                    _.each(meta.inputs, function(input){
+                        delete tempSpentUnspents[input.txid + '_' + input.vout]
+                    })
+
+                    
                 }
 
                 if((e == -26 || e == -25 || e == 16)){

@@ -97,7 +97,6 @@ var comments = (function(){
 					//newcomments : 'newcomments'
 				}
 
-				console.log('comment, optype', comment, optype)
 
 				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
@@ -614,7 +613,6 @@ var comments = (function(){
 
 							var ext = fkit.extensionBase64(image.base64)
 
-							console.log("EXT", ext)
 
 							if (ext == 'gif'){
 								added(image.base64)
@@ -628,10 +626,6 @@ var comments = (function(){
 									clbk()
 								})
 							}
-
-							
-
-							
 
 						},
 						onSuccess : function(){
@@ -679,7 +673,6 @@ var comments = (function(){
 				delete areas[id]
 				delete currents[id]
 
-				console.log('removeForm')
 
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
@@ -690,12 +683,10 @@ var comments = (function(){
 
 				var current = currents[id];
 
-				console.log('currents', currents)
 
 				if (current){
 					var e = current.validation();
 
-					console.log('comment', e, current)
 
 					if (e){
 						actions.removeSending(wrapper)
@@ -2794,7 +2785,6 @@ var comments = (function(){
 			}*/
 
 			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
-
 
 				if(type == 'comment'){
 					var comment = alias

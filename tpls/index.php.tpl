@@ -6,7 +6,7 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
-        <meta http-equiv="X-Frame-Options: SAMEORIGIN">
+        <meta http-equiv="X-Frame-Options" content="sameorigin" />
         
         <link rel="alternate" href="android-app://pocketnet.app/https/pocketnet.app" />
         <link rel="alternate" href="android-app://pocketnet.app/https/test.pocketnet.app" />

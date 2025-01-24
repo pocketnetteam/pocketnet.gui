@@ -24,8 +24,30 @@
 	.sitenamelabel{
 		text-transform: uppercase;
 	}
+
+	.icon{
+		a{
+			display: block;
+		}
+	}
+
+	.menuspace{
+		position: fixed;
+		left: 0;
+		right: 0;
+		top : 0;
+		height: calc(165px + var(--app-margin-top));
+		contain: strict;
+		background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+		display: none;
+		z-index: 19;
+		opacity: 0;
+		.transition(0.3s, opacity);
+		pointer-events: none;
+	}
 	
 	.menuWrapper{
+		/*-webkit-app-region: drag;*/
 		width: 100%;
 		position: fixed;
 		left: 0;
@@ -37,6 +59,10 @@
 		z-index: 20;
 		contain: strict;
 		background: rgb(var(--background-total-theme));
+
+		.onlyblackallcontent{
+			display: none;
+		}
 		
 		// electronnav
 		/*
@@ -103,6 +129,13 @@
 		bottom : auto;
 		white-space: nowrap;
 		font-size: 0.9em;
+	}
+
+	.navicon{
+		.fa-plus-circle{
+			font-size: 1.2em;
+			color : #0026ff;
+		}
 	}
 
 	
@@ -931,6 +964,7 @@
 		}
 
 		:placeholder-shown{
+			text-align: center;
 			color : rgba(var(--color-txt-gray-dark), 0.5);
 		}
 
@@ -1038,13 +1072,17 @@ html.allcontent{
 
 	}
 } 
-
-/*t*/ @media only screen and (max-width: 768px){
+html.television,
+html.mobileview{
 	#menu{
 		z-index: 4;
 		.signup{
 			margin-left: 2 * @rhythm;
 			margin-right: 2 * @rhythm;
+		}
+
+		.menuspace{
+			height: calc(95px + var(--app-margin-top));
 		}
 		
 
@@ -1252,6 +1290,24 @@ html.allcontent{
 	} 
 
 	
+}
+
+html.television{
+	#menu{
+
+		.sections{
+
+			.items{
+				
+
+				.item{
+					&.signin{
+						display: flex;
+					}
+				}
+			}
+		}
+	}
 }
 
 html[theme="black"],

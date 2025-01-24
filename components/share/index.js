@@ -57,13 +57,13 @@ var share = (function(){
 				
 				el.c.removeClass('minimized')
 
-				make();	
+				makeDebounced();	
 			},
 
 			closeexternal : function(){
 				external = null
 
-				if(!destroying) make();
+				if(!destroying) makeDebounced();
 			},
 
 			getrepost : function(clbk){
@@ -761,8 +761,6 @@ var share = (function(){
 
 					var matches = text.match(r);
 
-					//console.log('application matches', matches, tpl)
-
 
 					if(matches && matches.length > 0){
 
@@ -1150,6 +1148,10 @@ var share = (function(){
 						el.caption.focus() 
 					}
 
+					if(error == 'ntime1'){
+						events.selectTimeWrapper()
+					}
+
 					return true
 				}
 				else
@@ -1187,7 +1189,8 @@ var share = (function(){
             url : self.app.localization.e('e13164'),
             error_video : self.app.localization.e('e13165'),
 			videocaption : self.app.localization.e('entervideocaption'),
-			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error') 
+			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error'),
+			ntime1 : self.app.localization.e('emptyntime1')
 		}
 
 		var events = {
@@ -1199,62 +1202,134 @@ var share = (function(){
 				}
 		
 			},
+			selectTimeWrapper : function(){
+				events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
 
-			selectTime : function(){
+					if(date){
+						currentShare.settings.t = Number((date.getTime() / 1000).toFixed(0))
+					}
 
-				var d = new Date()
+					renders.settings();
+					state.save()
+				})
+			},
+			selectTime : function(time, clbk){
 
-					d = d.addMinutes(10);
+				var date = {}
+				var dlg = null
 
-				var date = {
-					day : null,
-					hour : d.getHours(),
-					minutes : d.getMinutes()
+				var defdateclear = function(){
+					var d = new Date()
+
+					d = d.addMinutes(30);
+
+					return d
 				}
 
-				if(essenseData.time){
-					date.day = essenseData.time.yyyymmdd()
-					date.hour = essenseData.time.getHours()
-					date.minutes = essenseData.time.getMinutes()
+				var defdate = function(){
+					
+					var d = defdateclear()
+
+					date = {
+						day : d.yyyymmdd(),
+						hour : d.getHours(),
+						minutes : d.getMinutes()
+					}
 				}
 
-				self.fastTemplate('sharedate', function(html){
+				var preparetemplate = function(time, clbk){
+					
 
-					new dialog({
+					if (time && time > defdateclear()){
+						date.day = time.yyyymmdd()
+						date.hour = time.getHours()
+						date.minutes = time.getMinutes()
+					}
+
+					self.fastTemplate('sharedate', function(html){
+						if(clbk) clbk(html)
+					}, {
+						date : date,
+						min : defdateclear()
+					})
+				}
+
+				var getdate = function(){
+
+					var ds = strToDateSmall(date.day)
+						ds = ds.addHours(date.hour)
+						ds = ds.addMinutes(date.minutes)
+
+					return ds
+				}
+
+				var livetemplate = function(el){
+
+
+					el.find('.day').on('change', function() {
+						date.day = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+					})
+
+					el.find('.hours').on('change', function() {
+						date.hour = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+
+					el.find('.minutes').on('change', function() {
+						date.minutes = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+				}
+
+				var replacetemplate = function(){
+
+					if(!dlg) return
+
+					preparetemplate(null, (html) => {
+						dlg.replacehtml(html)
+
+						livetemplate(dlg.el)
+					})
+					
+				}
+
+				defdate()
+
+				preparetemplate(time, (html) => {
+					dlg = new dialog({
 						html : html,
 
 						btn1text : self.app.localization.e('daccept'),
 
 						class : "one sharedate zindex",
 
-						clbk : function(d){
-
-
+						clbk : function(el){
+							livetemplate(el)
 						},	
 
 						wrap : true,
 
 						success : function(d){
-							var day = d.el.find('.day').val()
-							var hours = d.el.find('.hours').val()
-							var minutes = d.el.find('.minutes').val()
 
-							var date = strToDateSmall(day)
-
-								date = date.addHours(hours)
-
-								date = date.addMinutes(minutes)
+							var date = getdate(d.el)
 
 							var now = new Date();
 
 							if (now < date){
 
-								essenseData.time = date;
-
-								el.selectTime.find('.selectedTime').html(convertDate(dateToStr(date)))
-
-								if (essenseData.selectTime)
-									essenseData.selectTime(date)
+								if(clbk) clbk(date)
 
 								return true;
 							}
@@ -1267,13 +1342,14 @@ var share = (function(){
 							}
 						}
 					})
-
-					html
-
-				}, {
-					date : date
 				})
 
+
+					
+
+					
+
+				
 				
 			},
 
@@ -1293,8 +1369,6 @@ var share = (function(){
 
 							if (essenseData.type)
 								essenseData.type(type)
-
-
 							
 						},
 
@@ -1728,48 +1802,104 @@ var share = (function(){
 					if(!currentShare.hasexchangetag() && !currentShare.repost.v && u && (u.reputation > 50 || !u.trial)) {
 
 						currentShare.settings.f || (currentShare.settings.f = '0')
+						currentShare.settings.t || (currentShare.settings.t = '0')
 
-						var selector = new Parameter({
+						self.sdk.paidsubscription.getcondition(self.app.user.address.value).then(value => {
 
-							type : "VALUES",
-							name : "Visibility",
-							id : 'organizationCode',
-							dbId : "INS_BROKER_CODE",
-							possibleValues : ['0','1','2'],
-							possibleValuesLabels : [
+							var visvalues = ['0','1','2']
+							var visvaluesLabels = [
 								self.app.localization.e('visibletoeveryone'), 
 								self.app.localization.e('visibleonlytosubscribers'),
 								self.app.localization.e('visibleonlytoregistered')
-							],
-							defaultValue : currentShare.settings.f,
-							value : currentShare.settings.f
+							]
 
-						})
-
-						self.shell({
-							name :  'settings',
-							el : el.settings,
-							data : {
-								share : currentShare,
-								essenseData : essenseData,
-								selector : selector
-							},
-
-						}, function(p){
-
-							ParametersLive([selector], p.el)
-
-
-							selector._onChange = function(){
-
-								currentShare.settings.f = selector.value
-
-								state.save()
+							if(value){
+								visvalues.push('3')
+								visvaluesLabels.push(self.app.localization.e('visibleonlytopaid'))
 							}
 
-							if (clbk)
-								clbk();
+							var selector = new Parameter({
+
+								type : "VALUES",
+								name : "Visibility",
+								id : 'organizationCode',
+								dbId : "INS_BROKER_CODE",
+								possibleValues : visvalues,
+								possibleValuesLabels : visvaluesLabels,
+								defaultValue : currentShare.settings.f,
+								value : currentShare.settings.f
+	
+							})
+	
+							var timeselector = new Parameter({
+	
+								type : "VALUES",
+								name : "Time",
+								id : 'time',
+								possibleValues : ['0','1'],
+								possibleValuesLabels : [
+									self.app.localization.e('spostnow'), 
+									self.app.localization.e('sposttime')
+								],
+								defaultValue : '0',
+								value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
+	
+							})
+	
+							self.shell({
+								name :  'settings',
+								el : el.settings,
+								data : {
+									share : currentShare,
+									essenseData : essenseData,
+									selector : selector,
+									timeselector
+								},
+	
+							}, function(p){
+	
+								ParametersLive([selector, timeselector], p.el)
+	
+	
+								selector._onChange = function(){
+	
+									currentShare.settings.f = selector.value
+	
+									state.save()
+								}
+	
+								timeselector._onChange = function(){
+	
+									currentShare.settings.t = timeselector.value
+	
+									if(timeselector.value == '0') delete currentShare.settings.t
+	
+									renders.settings();
+	
+									state.save()
+								}
+	
+								p.el.find('.timelabel').on('click', function(){
+	
+									events.selectTimeWrapper()
+								})
+	
+								p.el.find('.cleartimelabel').on('click', function(){
+									delete currentShare.settings.t
+	
+									renders.settings();
+									state.save()
+								})
+	
+								if (clbk)
+									clbk();
+							})
+
+						}).catch(e => {
+							console.error(e)
 						})
+
+						
 					}
 
 					else{
@@ -1883,8 +2013,6 @@ var share = (function(){
 
 					renders.repost();
 
-					
-
 				});
 
 				renders.postline();
@@ -1957,12 +2085,12 @@ var share = (function(){
 
 			url : function(clbk){
 
+				console.log("RENDER URL")
 
 				destroyPlayer()
 				
 				var url = currentShare.url.v;
 
-				console.log('application url ori', url, currentShare)
 
 				var meta = self.app.platform.parseUrl(url);
 
@@ -1983,9 +2111,6 @@ var share = (function(){
 				}, function(p){
 
 
-					console.log('application meta', meta)
-					
-
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
@@ -1994,11 +2119,17 @@ var share = (function(){
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
-								player = _player
+								console.log("player clbk plyr", _player)
 
-								try{
-									player.muted = false
-								}catch(e){}
+								if(_player){
+									player = _player
+
+									try{
+										player.muted = false
+									}catch(e){}
+								}
+
+								
 								
 							}, {
 								denyPeertubeAutoPlay: true,
@@ -2106,7 +2237,8 @@ var share = (function(){
 				})
 
 				if (meta.type == 'peertube') {
-					self.app.platform.sdk.videos.info([url])
+					console.log("updateupdate")
+					self.app.platform.sdk.videos.info([url], true, true)
 						.then(() => rndr())
 						.catch(() => rndr())
 				} else {
@@ -2572,8 +2704,12 @@ var share = (function(){
 		}
 
 		var make = function(){
+			if(destroying) return
+
 			renders.all()
 		}
+
+		var makeDebounced = _.debounce(make, 300)
 
 		var initEvents = function(){
 
@@ -2593,6 +2729,10 @@ var share = (function(){
 			
 			
 			currentShare.on.change.edit = events.change;
+
+			self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key] = function(){
+				renders.settings()
+			}
 
 			//self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
@@ -2619,6 +2759,9 @@ var share = (function(){
 
 
 		var destroyPlayer = function(){
+
+			console.log('player', player)
+
 			if (player) {
 
 				if (player.playing){
@@ -2668,7 +2811,23 @@ var share = (function(){
 
 				if(!essenseData.share && !essenseData.dontsave){
 
-					state.load()
+					if(!state.load() && window.project_config.preferredtags && window.project_config.preferredtags.length){
+						if (essenseData.repost || parameters().repost) {
+
+						}
+						else{
+
+							var preferred = self.app.platform.sdk.categories.getbyids(window.project_config.preferredtags, self.app.localization.key)
+
+							var preferredtags = []
+
+							_.each(preferred, (p) => {
+								preferredtags = preferredtags.concat(p.tags)
+							})
+
+							currentShare.tags.set(preferredtags)
+						}
+					}
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2676,7 +2835,7 @@ var share = (function(){
 				if (essenseData.repost || parameters().repost) 
 					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length;
 
 
 				var data = {
@@ -2685,6 +2844,12 @@ var share = (function(){
 					postcnt : 1,
 					checkEntity : checkEntity,
 				};
+
+				if (currentShare.settings.t > 1){
+					if((new Date).getTime() / 1000 > currentShare.settings.t){
+						currentShare.settings.t = 0
+					}
+				}
 
 				clbk(data);
 
@@ -2711,7 +2876,6 @@ var share = (function(){
 						delete el.eMessage[0].emojioneArea
 
 
-						console.log('destroy')
 					}
 
 					
@@ -2753,6 +2917,7 @@ var share = (function(){
 				$('html').off('click', events.unfocus);
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
+				delete self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key]
 
 				if (sortable){
 					sortable.destroy()

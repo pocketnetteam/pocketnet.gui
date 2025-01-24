@@ -810,6 +810,17 @@
 	}
 }
 
+html.television{
+	#lenta{
+		&.mainvideo{
+			.shares{
+				display: block;
+				overflow: hidden;
+			}
+		}
+	}
+}
+
 #lenta{
 	
 	&.horizontal{
@@ -1117,6 +1128,15 @@
 			.shares{
 				.authorgroup{
 					width: 50%;
+					clear: none;
+
+					&:nth-child(3n + 1){
+						clear: none;
+					}
+
+					&:nth-child(2n + 1){
+						clear: left;
+					}
 				}
 			}
 		}

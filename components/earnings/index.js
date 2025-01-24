@@ -19,7 +19,7 @@ var earnings = (function () {
 		var monetizationParameters = {
 			currentYear : new Date().getFullYear(),
 			years : [2023, new Date().getFullYear()],
-			exchanges : ['PMZ3DiGWKGybLb5oCz9ojwxuTBA6GcYAKq', 'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK']
+			exchanges : ['PMZ3DiGWKGybLb5oCz9ojwxuTBA6GcYAKq', 'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK', 'PEL45oK7ppFhB69G6GSsMLxHatNu5FJc5P']
 		}
 
 		var address = ''
@@ -166,7 +166,6 @@ var earnings = (function () {
 
 							weekel.toggleClass('expanded')
 
-							console.log("WWW", w)
 
 							renders.posts(w.posts, weekel.find('.postsTable'), exp, null, w.current)
 						}
@@ -194,7 +193,6 @@ var earnings = (function () {
 							customaction : {
 								label : 'monetization_buychat',
 								action : function(profile){
-									console.log('profile', profile)
 
 									self.app.platform.matrixchat.startchat(profile.address)
 								}

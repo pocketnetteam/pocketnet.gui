@@ -17,12 +17,15 @@ var lenta = (function(){
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
+		var positionfixed = false
+		var restoredposition = null
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
 		var subloadedindex = 0
 		var authorsettings = {}
 		var fragments = {}
+		var visibilityStatus = {}
 
 		var boosted = [],
 			boostloadedblock = 0,
@@ -98,10 +101,68 @@ var lenta = (function(){
 			
 		}
 
-		
-
-
 		var actions = {
+			restoreposition: function(fx){
+
+				if(!essenseData.fixposition) return
+
+				try{
+					var json = JSON.parse(
+						hexDecode(fx)
+					)
+
+					fixedblock = json.block || 0
+					restoredposition = json
+
+				}catch(e){
+					console.error(e)
+				}
+
+				
+			},
+			fixposition : function(b, fp = ''){
+
+				if(!essenseData.fixposition || isotopeinited) return
+
+				if(sharesInview.length && sharesInview[0].txid == b){
+					b = null
+				}
+
+				if (essenseData.includesub && !subloaded){
+					b = null
+				}
+
+				if (b){
+
+					var json = hexEncode(
+						JSON.stringify({
+							block : fixedblock,
+							b, 
+							fp,
+						})
+					)
+
+					self.app.nav.api.history.addParameters({
+						fx : json
+					},{
+						replaceState : true,
+						removefromback : false
+					})
+
+					positionfixed = true
+				}
+				else{
+					self.app.nav.api.history.removeParameters(['fx'], {
+						replaceState : true,
+						removefromback : false
+					})
+
+					positionfixed = false
+
+				}
+
+				
+			},
 
 			translate : function(txid, dl){
 				return self.app.platform.sdk.translate.share.request(txid, dl).then((r) => {
@@ -622,7 +683,12 @@ var lenta = (function(){
 
 				make(clbk);
 
-				self.app.nav.api.history.removeParameters(['v', 's'])
+				self.app.nav.api.history.removeParameters(['v', 's'], {
+					replaceState : true,
+					removefromback : false
+				})
+
+				actions.fixposition(null)
 			},
 
 			clear : function(){
@@ -655,6 +721,8 @@ var lenta = (function(){
 				sharesFromRecommendations = {}
 				authorsettings = {}
 				showMoreStatus = {}
+				positionfixed = false
+				restoredposition = null
 
 				_.each(players, function(p){
 					if (p.p)
@@ -697,6 +765,7 @@ var lenta = (function(){
 				initedcommentes = {}
 				players = {}
 				sharesInview = []
+				visibilityStatus = {}
 				
 			},
 
@@ -830,8 +899,6 @@ var lenta = (function(){
 							}
 						})
 
-						console.log('boost position', position)
-	
 						if(position){
 	
 							var share = sharesInview[position]
@@ -1046,6 +1113,8 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
+						console.log("LENTA PLAYER CLBK", player)
+
 						if(!el.share) return
 
 						if (player){
@@ -1103,6 +1172,8 @@ var lenta = (function(){
 							selected : 1,
 							options: [1]
 						},
+
+						television : app.television,
 
 						pictureInPictureRequest : function(){
 							
@@ -1361,8 +1432,8 @@ var lenta = (function(){
 
 				if (share){
 
-					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
-					if (parameters().address) url += '&address=' + (parameters().address || '')
+					var url = 'https://'+self.app.options.url+'/' + ('post?') + 's='+id
+					//if (parameters().address) url += '&address=' + (parameters().address || '')
 
 
 					if(video || essenseData.videomobile || share.itisvideo()){
@@ -1740,6 +1811,7 @@ var lenta = (function(){
 
 					self.app.nav.api.history.addParameters({
 						v : id
+					}, {
 					})
 
 					var player = players[id]
@@ -1863,6 +1935,31 @@ var lenta = (function(){
 				}
 
 				
+
+			},
+
+			getpaidsubscription : function(txid, clbk){
+				var share = self.psdk.share.get(txid)
+
+				if(!share) return
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : share.address,
+						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
+				})
 
 			},
 
@@ -2014,7 +2111,6 @@ var lenta = (function(){
 						allimages.push(i)
 					})
 
-					console.log('jury openGalleryRec', )
 
 					if(!share.repost && share.objecttype != 'jury'){
 
@@ -2479,6 +2575,12 @@ var lenta = (function(){
 
 						
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
+
+							setTimeout(() => {
+								self.app.platform.sdk.jury.updatejurycount()
+							}, 1000)
+							
+
 							_el.remove()
 						}).catch(e => {
 							console.error(e)
@@ -2508,7 +2610,6 @@ var lenta = (function(){
 					success : function(){	
 
 						self.app.platform.sdk.jury.sendverdict(jury, verdict).then(() => {
-							console.log("JURY YES SEND")
 							_el.remove()
 						}).catch(e => {
 							console.error(e)
@@ -2654,8 +2755,9 @@ var lenta = (function(){
 					actions.videoPosition(fullscreenvideoShowed)
 				}
 
-
-				lwidth = el.c.width()
+				if(!essenseData.horizontal){
+					lwidth = self.app.width < 768 && self.app.width > 0 ? self.app.width : el.c.width()
+				}
 				
 			},	
 
@@ -2669,6 +2771,12 @@ var lenta = (function(){
 
 
 				if(!essenseData.horizontal){
+
+					if (initialized && positionfixed){
+						if(self.app.lastScrollTop < 1000 && !restoredposition && initialized){
+							actions.fixposition(null)
+						}
+					}
 
 
 					if (
@@ -2746,6 +2854,12 @@ var lenta = (function(){
 				var id = $(this).closest('.share').attr('id');
 
 				actions.postscores(id)
+			},
+
+			getpaidsubscription: function(){
+				var id = $(this).closest('.share').attr('id');
+
+				actions.getpaidsubscription(id)
 			},
 
 			
@@ -3402,7 +3516,10 @@ var lenta = (function(){
 					})
 				}
 
-				console.log("jury item", item)
+				setTimeout(() => {
+					c()
+				}, 3000)
+
 
 				if (item.type == 'share'){
 					renders.repost(_el, item.key, item.txid, false, () => {
@@ -3414,13 +3531,8 @@ var lenta = (function(){
 
 				if (item.type == 'comment'){
 
-					console.log('jury comment')
 
 					self.app.platform.papi.comment(item.commentPs.postid, _elcnt, () => {
-
-					console.log('jury comment clbk')
-
-
 						c()
 					}, {jury : true, commentPs : item.commentPs})
 					
@@ -3576,7 +3688,24 @@ var lenta = (function(){
 									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
 								}
 
+
+								var checkvisibility = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+								visibilityStatus[share.txid] = checkvisibility
+
+								if (checkvisibility == 'paid_check'){
+
+									self.app.platform.sdk.paidsubscription.checkvisibilityStrong(share.address).then(r => {
+										console.log("checkvisibilityStrong", r)
+									}).catch(e => {
+										console.error('checkvisibilityStrong', e)
+									})
+
+								}
+
 							}
+
+							
 
 
 							if (clbk) clbk();
@@ -3760,6 +3889,24 @@ var lenta = (function(){
 					if (share.address == address && share.visibility()) {
 
 						if(reason && reason == 'sub' && share.visibility() != 'sub') return
+						if(reason && reason == 'paid' && share.visibility() != 'paid') return
+
+						var ns = self.app.platform.sdk.node.shares.checkvisibility(share)
+
+						console.log("ns", ns, visibilityStatus)
+
+						if(visibilityStatus[share.txid] == ns) {
+							console.log("RELOAD no")
+							return
+						}
+
+						visibilityStatus[share.txid] = ns
+
+						/*if(reason && reason == 'paid'){
+							if(self.app.platform.sdk.node.shares.checkvisibility(share) == 'paid_success'){
+
+							}
+						}*/
 
 						shares.push(share)
 					}
@@ -3892,11 +4039,9 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
+				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || ((essenseData.searchValue || essenseData.searchTags) && !self.app.television)){
 					tpl = 'shares'
 				}
-
-				console.log('jury recomended', shares)
 
 				if (recommended == 'jury'){
 					tpl = 'juryitems'
@@ -3934,8 +4079,13 @@ var lenta = (function(){
 
 				}, function(_p){
 
+
+
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
+
+						
+
 					}
 					else
 					{
@@ -3978,7 +4128,7 @@ var lenta = (function(){
 
 					essenserenderclbk()
 
-					if (video && !isMobile()){
+					if (video && (!isMobile() && !self.app.television)){
 						if(!isotopeinited && !essenseData.horizontal){
 							el.shares.isotope({
 
@@ -4175,7 +4325,6 @@ var lenta = (function(){
 			},
 
 			repost : function(el, repostid, txid, empty, clbk, all){
-				console.log('jury repost', el.find('.jurycnt, .repostWrapper'), repostid, txid, empty, clbk, all)
 
 				if(repostid){
 			
@@ -4507,7 +4656,6 @@ var lenta = (function(){
 
 				var allshares = [].concat(shares, bshares)
 
-				console.log('jury3', shares)
 
 				if(includingsub) {
 								
@@ -4557,8 +4705,7 @@ var lenta = (function(){
 
 				var author = essenseData.author;
 
-				console.log("jury1", shares)
-
+				if (pr.txid && !includingsub) actions.fixposition(pr.txid)
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
@@ -4568,7 +4715,6 @@ var lenta = (function(){
 
 						loading = false;
 						
-						console.log("jury2", shares)
 
 						if (!el.c) return
 
@@ -4636,13 +4782,12 @@ var lenta = (function(){
 								})
 							}
 
-							console.log("jury", shares)
 
 							//shares.concat(bshares)
 
 							shares = [].concat(bshares, shares)
 
-							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
+							if(!restoredposition && essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 								shares = [].concat(recommendations, shares)
 
 								_.each(recommendations, (r) => {
@@ -4751,7 +4896,7 @@ var lenta = (function(){
 
 						}
 
-						if (essenseData.getpin && author && !sharesInview.length){
+						if (essenseData.getpin && author && !sharesInview.length && !restoredposition){
 
 							self.psdk.accSet.load(author).then(setting => {
 
@@ -4909,7 +5054,7 @@ var lenta = (function(){
 								return
 							}
 
-							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
+							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded && !restoredposition){
 
 								loader = 'getsubscribesfeed'
 
@@ -4921,6 +5066,7 @@ var lenta = (function(){
 
 
 							var period = 1440
+
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -4937,9 +5083,22 @@ var lenta = (function(){
 								offset : offsetblock,
 								page : page,
 								period : period,
-								tagsexcluded : tagsexcluded
+								tagsexcluded : tagsexcluded,
+								txid : (restoredposition && !restoredposition.restored) ? restoredposition.b : null
 
 							}, function(shares, error, pr){
+
+								
+
+								/*
+								
+								if(shares.length){
+									actions.fixposition(shares[0].txid)
+								}
+								
+								*/
+
+								if(restoredposition) restoredposition.restored = true
 
 								if(error && ignoreerror){
 									loading = false
@@ -4956,7 +5115,9 @@ var lenta = (function(){
 
 								///
 
-								if(pr.blocknumber) fixedblock = pr.blocknumber
+								if (pr.blocknumber) fixedblock = pr.blocknumber
+								//if (pr.txid) actions.fixposition(pr.txid)
+								
 								
 								if (essenseData.shuffle) {
 									shares = _.shuffle(shares)
@@ -5063,6 +5224,7 @@ var lenta = (function(){
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
+			el.c.on('click', '.getpaidsubscription',events.getpaidsubscription)
 
 			function initOutsideClickEvent(e) {
 				let isOutside = false;
@@ -5254,6 +5416,9 @@ var lenta = (function(){
 						
 					}*/
 
+					self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[mid] = function(address){
+						renders.maybechangevisibility(address, 'paid')
+					}
 
 					self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
@@ -5272,6 +5437,7 @@ var lenta = (function(){
 							var replaceAll = true
 
 							var trx = self.psdk.share.get(alias.txid)
+							var originalAction = alias
 
 							if (replace){
 								replace.txid = alias.txid
@@ -5303,13 +5469,21 @@ var lenta = (function(){
 
 									actions.destroyShare(replace)
 
+
 									if(status == 'rejected' && (!alias || !alias.editing)) {
 
-										if(el.share[replace.txid]) el.share[replace.txid].remove()
+										if(alias && !alias.editing && originalAction.editing){
 
-										delete el.share[replace.txid]
+										}
+										else{
+											if(el.share[replace.txid]) el.share[replace.txid].remove()
 
-										return
+												delete el.share[replace.txid]
+		
+												return
+										}
+
+										
 									}
 
 									renders.shares([alias], function(){
@@ -5446,7 +5620,7 @@ var lenta = (function(){
 		}
 
 		var makeboost = function(){
-			if (essenseData.includeboost){
+			if (essenseData.includeboost && !restoredposition){
 
 				boostplaces = {
 					4 : false,
@@ -5457,7 +5631,6 @@ var lenta = (function(){
 				load.boosted(function(shares){
 					boosted = shares
 
-					console.log('boosted', boosted)
 
 
 					actions.includeboost()
@@ -5482,6 +5655,10 @@ var lenta = (function(){
 				cache = 'cache'
 			}
 
+			if (restoredposition) {
+				cache = 'restore'
+			}
+
 			if (essenseData.contents){
 
 				el.c.find('.shares').html('')
@@ -5502,12 +5679,11 @@ var lenta = (function(){
 					actions.opensvi(p.v)
 				}
 
-				if(essenseData.author && beginmaterial){
+				if(restoredposition || (essenseData.author && beginmaterial)){
 					window.rifticker.add(() => {
 						el.c.addClass('showprev')
 					})
 				}
-
 				
 			}
 
@@ -5572,7 +5748,12 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
-							
+
+							setTimeout(() => {
+								if(recommended == 'jury'){
+									self.app.platform.sdk.jury.updatejurycount()
+								}
+							}, 100)
 
 
 							window.rifticker.add(function(){
@@ -5718,6 +5899,7 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
+
 				ovf = false
 
 				newmaterials = 0;
@@ -5738,6 +5920,11 @@ var lenta = (function(){
 
 				else 		recommended = false;		
 
+				if(_s.fx){
+
+					actions.restoreposition(_s.fx)
+				}
+
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
 				if (essenseData.second){
@@ -5757,6 +5944,8 @@ var lenta = (function(){
 				canloadprev = !!!essenseData.txids || false
 				
 				video = essenseData.video || false
+
+				console.log('video??' ,video)
 
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
@@ -5817,6 +6006,8 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+
 				initialized = null
 
 				delete self.app.events.delayedscroll['videos' + mid]
@@ -5897,13 +6088,16 @@ var lenta = (function(){
 			
 				delete self.app.platform.actionListeners[mid]
 				delete self.app.psdk.updatelisteners[mid]
+				delete self.app.platform.sdk.paidsubscription._clbks.updatepaiddata[mid]
 				
-
 				_.each(initedcommentes, function(c){
 					c?.clearessense()
 				})
 
 				initedcommentes = {}
+
+				positionfixed = false
+				restoredposition = null
 
 				delete self.app.events.resize[mid]
 				delete self.iclbks[mid]
@@ -5975,8 +6169,13 @@ var lenta = (function(){
 			},
 
 			update : function(){
-				if(el.shares && isotopeinited) el.shares.isotope('layout')
+				if(el.shares && isotopeinited) {
+					setTimeout(() => {
+						el.shares.isotope('layout')
+					}, 200)
+				}
 			},
+
 			
 			init : function(p){
 
@@ -5998,7 +6197,10 @@ var lenta = (function(){
 				clearnewmaterials()	
 
 				rifticker.add(() => {
-					lwidth = el.c.width()
+					lwidth = 0
+					if(!essenseData.horizontal){
+						lwidth = self.app.width < 768 && self.app.width > 0 ? self.app.width : el.c.width()
+					}
 				})
 				
 

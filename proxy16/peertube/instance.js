@@ -179,6 +179,8 @@ var instance = function (host, ip, Roy) {
 			});
 		} catch(error) {
 
+
+
 			const meta = {
 				code: ((error || {}).response || {}).status || 500,
 				difference: performance.now() - responseTime,

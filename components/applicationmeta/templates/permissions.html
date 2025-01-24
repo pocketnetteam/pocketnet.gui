@@ -1,8 +1,10 @@
-<div class="subcaption">
-    <span><%-e('permissions')%></span>
-</div>
-
 <% if(permissions.length) {%>
+
+    <div class="subcaption">
+        <span><%-e('permissions')%></span>
+    </div>
+
+
 
     <div class="list">
         <% _.each(permissions, function(permission){ 
@@ -31,12 +33,6 @@
             </div>
 
         <% }) %>
-    </div>
-
-<% } else { %> 
-
-    <div class="empty">
-        empty
     </div>
     
 <% } %>

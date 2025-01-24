@@ -110,8 +110,6 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	console.log('monet', p)
-
 	if (p.monetization && typeof window.Monetization != 'undefined'){
 		self.monetization = new window.Monetization(self, p.monetization)
 	}
@@ -135,11 +133,35 @@ Application = function (p) {
 		self.test = true
 	}
 
+	self.television = typeof istelevision == 'undefined' ? false : istelevision()
 	self.boost = !(window.cordova && isios());
-	self.pkoindisable = window.cordova && isios();
+	self.pkoindisable = self.television || (window.cordova && isios());
+	self.paidsubscriptiondisable = window.cordova && isios();
 	self.cutversion = window.cordova && isios();
 
+	self.electronview = typeof _Electron != 'undefined' && _Electron
+
 	self.margintop = 0
+	
+	self.caneditdelaypost = false
+
+
+	if (self.test) {
+		self.publishapps = true
+	}
+
+	if (self.test) {
+		self.delaypost = true
+	}
+
+	try{
+		if(localStorage['testdelaypost']){
+			self.delaypost = true
+		}
+		
+	}catch(e){
+
+	}
 
 	self.options = {
 
@@ -331,12 +353,17 @@ Application = function (p) {
 			mobileview = false
 		}
 
+		if (self.television){
+			mobileview = false
+		}
+
 		return mobileview
 	}
 
 	var istouchstyle = function () {
-
+		
 		self.mobileview = istouchstylecalculate()
+		
 
 		var id = window.rifticker.add(() => {
 
@@ -394,6 +421,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		if(self.television) return false
 		return isElectron || (window.cordova);
 	}
 
@@ -894,28 +922,34 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		authorn: {
 			href: 'authorn',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview', 'application', 'home']
+		},
+
+		home : {
+			href : 'home',
+			childrens : ['application']
 		}
+
 
 	}
 
@@ -1431,6 +1465,10 @@ Application = function (p) {
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
+		if (self.television){
+			self.el.html.addClass('television')
+		}
+
 		initevents()
 
 		moment.locale(self.localization.key)
@@ -1439,6 +1477,8 @@ Application = function (p) {
 			document.addEventListener('deviceready', function () {
 
 				self.el.html.addClass('cordova')
+
+				
 
 				if (self.curation()) {
 					self.el.html.addClass('curation')
@@ -1686,9 +1726,6 @@ Application = function (p) {
 
 		playingvideo: function (v, from) {
 
-			console.log("PLAYING", v ,from)
-			
-
 			if(from && from.player_id){
 				if(self.playingvideocollisions[from.player_id]){
 					delete self.playingvideocollisions[from.player_id]
@@ -1782,6 +1819,7 @@ Application = function (p) {
 				scrollrif = null
 
 				self.el.window.scrollTop(to)
+
 				self.scrollTop = to
 
 				setTimeout(function () {
@@ -1933,6 +1971,43 @@ Application = function (p) {
 				self.mobile.reload.destroyparallax()
 			}
 
+			if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					self.el.html.addClass('scrollmodedown')
+				})
+			}
+
+			if (showPanel == '3' && self.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					self.el.html.removeClass('scrollmodedown')
+				})
+			}
+
+
+			if(scrollTop > 120){
+				if(!self.el.html.hasClass('scroll65')){
+					window.requestAnimationFrame(() => {
+						self.el.html.addClass('scroll65')
+
+						if (self.mobile.statusbar.status != 'background'){
+							self.mobile.statusbar.background()
+						}
+					})
+				}
+			}
+			else{
+				if(self.el.html.hasClass('scroll65')){
+					window.requestAnimationFrame(() => {
+						self.el.html.removeClass('scroll65')
+
+						if (self.el.html.hasClass('allcontent') && self.mobile.statusbar.status != 'topfadebackground'){
+							self.mobile.statusbar.topfadebackground()
+						}
+
+						
+					})
+				}
+			}
 
 
 			if (self.mobileview && !cr) {
@@ -2347,6 +2422,14 @@ Application = function (p) {
 
 	self.mobile = {
 
+		removescrollmodedown : function(){
+			if (app.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					app.el.html.removeClass('scrollmodedown')
+				})
+			}
+		},
+
 		audiotoggle: function (mode = 'SPEAKER') {
 
 			if (typeof window.AudioToggle != 'undefined') {
@@ -2409,7 +2492,7 @@ Application = function (p) {
 		},
 
 		safearea: function () {
-			if (window.cordova) {
+			if (window.cordova && !self.television) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
 				self.margintop = 25
 			}
@@ -2789,6 +2872,20 @@ Application = function (p) {
 
 			},
 
+			topfadebackground: function () {
+
+				if (window.StatusBar) {
+
+					StatusBar.overlaysWebView(true);
+					window.StatusBar.backgroundColorByHexString('#00000000');
+					window.StatusBar.styleLightContent()
+				}
+
+				self.mobile.statusbar.status = 'topfadebackground'
+				
+
+			},
+
 			hide: function () {
 				if (window.StatusBar) {
 					window.StatusBar.hide()
@@ -2827,8 +2924,6 @@ Application = function (p) {
 
 			if (window.cordova) {
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
-
-					console.log('playing set backgroundMode', t)
 
 					if (t) {
 

@@ -74,8 +74,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var torapplications = new TorControl(settings.tor, self)
 
 	var transports = new Transports();
+	var cachedInfo = null
 
 	var dump = {}
+	var status = 0
 
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
@@ -103,7 +105,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
-		var info = self.kit.info(true)
+		var info = self.kit.info(true, true)
+
+
+		try{
+			info = JSON.parse(JSON.stringify(info))
+		}catch(e){
+			return
+		}
+
 		var nn = {}
 
 		_.each(info.nodeManager.nodes, (n, k) => {
@@ -449,10 +459,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return wallet.info(compact)
 		},
 
+		sendwithprivatekey: function ({ address, amount, key, feemode }) {
+			return wallet.kit.sendwithprivatekey(address, amount, key, feemode)
+		},
 
-		sendwithprivatekey: function ({ address, amount, key }) {
-			return wallet.kit.sendwithprivatekey(address, amount, key)
-		}
+		getunspentswithprivatekey: function ({ key }) {
+			return wallet.kit.getunspentswithprivatekey(key)
+		},
+
+		
 	}
 
 	self.systemnotify = {
@@ -850,7 +865,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		stats: function (n) {
 			return getStats(n)
 		},
-		info: function (compact) {
+		info: function (compact, wcached) {
+
+
+			if(cachedInfo && !wcached){
+				if(cachedInfo.time + 120000 > Date.now()){
+					return cachedInfo.data
+				}
+			}
 
 			var mem = process.memoryUsage()
 
@@ -860,8 +882,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
-
-			return {
+			var info = {
 				status: status,
 				test : self.test,
 
@@ -872,7 +893,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wss: self.wss.info(compact),
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
-				admins: settings.admins,
+				admins: [...settings.admins],
 				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
@@ -892,13 +913,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				translateapi : translateapi.info(compact)
 			}
 
+			cachedInfo = {
+				time : Date.now(),
+				data : JSON.parse(JSON.stringify(info))
+			}
+
+			return info
 		},
 
 		initlist: function (list) {
 			var catchError = function (key) {
 				return (e) => {
-
-					console.log('error', key, e)
 
 					return Promise.resolve()
 				}
@@ -907,7 +932,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var promises = _.map(list, (i) => {
 				return self[i].init().catch(catchError(i)).then(() => {
-					console.log('ini', i)
 					return Promise.resolve()
 				})
 
@@ -970,8 +994,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		destroy: function () {
-
-			console.log("DESTROY")
 
 			if (statInterval) {
 				clearInterval(statInterval)
@@ -1118,7 +1140,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				})
 
 				var withvideos = _.filter(posts, p => {
-					return p.type == 'video' && p.u
+					return (p.type == 'video' || p.type == 'audio') && p.u
 				})
 
 				videos = _.map(withvideos, function(p){
@@ -1133,7 +1155,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
-						return f.deep(p, 'lastComment.address')
+						return p?.lastComment?.address || null
 					})
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
@@ -1214,7 +1236,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		node: {
 			rpcex : {
 				path: '/rpc-ex/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U }) {
 					if (!method) {
 						return Promise.reject({
@@ -1233,7 +1255,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			rpc: {
 				path: '/rpc/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U, cachehash, internal }, request) {
 					if (!method) {
 						return Promise.reject({
@@ -1263,9 +1285,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					var cparameters = _.clone(parameters)
 
-					self.logger.w('rpc', 'debug', 'RPC REQUEST')
-
-
+					
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1277,8 +1297,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 
 					}).then(() => {
-
-						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
 
@@ -1311,17 +1329,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
-						if(method == 'getnodeinfo') {
+						if (method == 'getnodeinfo') {
 							cparameters.push(node.key)
-							cachehash = null
+							cachehash = node.key
 						}
 
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
-							
-
-							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
 							if(!noderating && !options.cache) {
 
@@ -1346,8 +1361,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 					.then((waitstatus) => {
 
-						self.logger.w('rpc', 'debug', 'AFTER CACHE:' + waitstatus)
-
 						time.cache = performance.now() - timep
 
 						_waitstatus = waitstatus
@@ -1371,6 +1384,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								time : time
 							});
 						}
+						
 
 						if(waitstatus == 'attemps'){
 							return Promise.reject({
@@ -1396,8 +1410,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							}
 						}
 
-						self.logger.w('rpc', 'debug', 'BEFORE QUEUE')
-
 						return new Promise((resolve, reject) => {
 
 							time.start = performance.now() - timep
@@ -1405,9 +1417,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								b : timep
 							}
 
-							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
-
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
+							nodeManager.queue(node, method, parameters, direct || options.node ? true : false, {resolve, reject}, time.node)
 
 						})
 
@@ -1415,27 +1425,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
-								server.cache.set(method, cparameters, data, node.height());
+								server.cache.set(method, cparameters, data, node.height(), null, method == 'getnodeinfo' ? cachehash : null);
 							}
 
 							time.ready = performance.now() - timep
 
 							if(time.node) delete time.node.b
-
-							/**
-							 * TEMP BLOCK 290323
-							 *
-							 * Added in context of disappearing
-							 * comments investigation.
-							 */
-							/*if (method === 'sendrawtransactionwithmessage') {
-								const type = cparameters[2];
-								const txid = data;
-								const nodeHost = node.host;
-								const block = node.height();
-
-								self.logger.w('logs290323', 'debug', [type, txid, nodeHost, block].toString());
-							}*/
 
 							return Promise.resolve({
 								data: data,
@@ -1450,7 +1445,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					.catch((e) => {
 
 						if (_waitstatus == 'execute'){
-							server.cache.remove(method, cparameters);
+							server.cache.remove(method, cparameters, cachehash);
 						}
 
 						return Promise.reject({
@@ -1798,6 +1793,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return self.kit.sinit()
 					}
 				},*/
+			walletinfo : {
+				path: '/walletinfo',
+				action: function (message) {
+					return Promise.resolve({
+						data: {
+							wallet : self.wallet.info(true),
+							captcha: {
+								hexCaptcha : settings.server.hexCaptcha || false,
+							},
+						},
+					});
+				},
+			},
 			info: {
 				path: '/info',
 				action: function (message) {
@@ -1960,6 +1968,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						server.cache.clear()
 
 					return Promise.resolve('success');
+
+				},
+			},
+
+			cacheinfo: {
+				path: '/cacheinfo',
+				action: function (message) {
+
+					return Promise.resolve({
+						data : {
+							cache : server.cache.info()
+						}
+					});
 
 				},
 			},
@@ -2389,6 +2410,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		wallet: {
+			getunspentswithprivatekey: {
+				path: '/wallet/getunspentswithprivatekey',
+				authorization: false,
+				action: function (p) {
+					return self.wallet
+						.getunspentswithprivatekey(p)
+						.then((r) => {
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 			sendwithprivatekey: {
 				path: '/wallet/sendwithprivatekey',
 				authorization: false,

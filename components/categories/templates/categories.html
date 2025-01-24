@@ -12,7 +12,7 @@
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div class="catvalue catcheckgl" title="<%-title%>">
+                        <div class="catvalue catcheckgl tvfocusedopacity" title="<%-title%>">
                             <i class="<%- cat.icon ||  'far fa-star'%>"></i>
                             <span class="catname"><%- cat.name %></span>
                         </div>
@@ -23,12 +23,15 @@
                             </div>
                         <% } %>
 
+                        <%  %>
+                        <% if(!app.television) {%>
                         <div class="minus">
                             <i class="fa fa-minus-circle"></i>
                         </div>
                         <div class="times">
                             <i class="fa fa-times"></i>
                         </div>
+                        <% } %>
 
                         
                     </div>
@@ -39,12 +42,12 @@
 
     <% if(cats.length > slicer) {%>
 
-        <div class="showallcats showhideallcats">
+        <div class="showallcats showhideallcats tvfocusedopacity">
             <i class="fa fa-chevron-down"></i>
             <span class="text"><%=e('e13021')%> (<%= cats.length - slicer %>) </span>
         </div>
 
-        <div class="hideallcats showhideallcats">
+        <div class="hideallcats showhideallcats tvfocusedopacity">
             <i class="fa fa-chevron-up"></i>
             <span class="text"><%=e('hide')%></span>
         </div>

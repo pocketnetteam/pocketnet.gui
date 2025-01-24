@@ -23,7 +23,7 @@ class OG {
     private $config = NULL;
     
 
-    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutContentCreators","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings");
+    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutContentCreators","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings", "home");
 
     private $defaultOg = NULL;
 
@@ -33,18 +33,18 @@ class OG {
 
 	public function __construct ($get, $proxypath, $domain, $project, $uri, $strconfig)
 	{
-        $this->path = '';
+        $this->upath = '';
         $pathParts = explode('/', $uri);
 
         $this->config = json_decode($strconfig);
 
         if(count($pathParts) > 1){
-            $this->path = $pathParts[count($pathParts) - 1];
+            $this->upath = $pathParts[count($pathParts) - 1];
         }
-        //echo $this->path;
+        //echo $this->upath;
         
         $this->rpc = new RPC($proxypath);
-        $this->api = new API($proxypath);
+        $this->lapi = new API($proxypath);
 
         $this->project = $project;
         $this->domain = $domain;
@@ -98,7 +98,7 @@ class OG {
 
         if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
-        if ($this->config != NULL && (strpos($this->path, 'application?') >= 0 || strpos($this->path, 'mapplication=true') >= 0)){
+        if ((strpos($this->upath, 'application?') >= 0 || strpos($this->upath, 'mapplication=true') >= 0)){
 
             if (isset($get['id'])){
                 $this->application = array(
@@ -106,7 +106,7 @@ class OG {
                     'path' => isset($get['p']) ? hex2bin($get['p']) : ''
                 );
 
-                //echo json_encode($this->application);
+                // echo json_encode($this->application);
             }
 
         }
@@ -203,7 +203,7 @@ class OG {
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
 
-                $peertubeinfo = $this->api->peertubeinfo($v['host_name'], $v['id']);
+                $peertubeinfo = $this->lapi->peertubeinfo($v['host_name'], $v['id']);
 
                 $this->currentOg['twitter:site'] = $this->domain;
                 $this->currentOg['twitter:card'] = 'player';
@@ -345,17 +345,34 @@ class OG {
                     }
                 }
 
-                if ($found_da != 'NULL'){
-                    $url = 'https://'.$found_da->scope.'/'.$this->application['path'];
+                if ($found_da === NULL){
+                    $found_da = $this->rpc->getappbyid($this->application['id']);
+                    if ($found_da != false) {
+                        $found_da = $found_da[0];
+                        $decoded_data = new stdClass();
+                        $decoded_data->scope = '';
+                        $decoded_data->name = '';
+                        $decoded_data->description = '';
+                        $json_data = json_decode($found_da->p->s1);
+                        if ($json_data) {
+                            $decoded_data->scope = isset($json_data->s) ? $json_data->s : '';
+                            $decoded_data->name = isset($json_data->n) ? $json_data->n : '';
+                            $decoded_data->description = isset($json_data->d) ? $json_data->d : '';
+                        }
+                        $found_da = $decoded_data;
+                    }
                 }
 
-                $remote_og = $this->api->urlpreview($url);
+                $url = isset($found_da->scope) ? 'https://' . $found_da->scope . '/' . $this->application['path'] : null;
+
+                $remote_og = $this->lapi->urlpreview($url);
 
                 $this->currentOg['title'] = $this->project.' application '.$found_da->name;
 
                 if($remote_og != NULL){
                     if(isset($remote_og->title) && $remote_og->title != '') $this->currentOg['title'] = $this->project.'. '.$found_da->name.': '.$remote_og->title;
-                    if(isset($remote_og->description) && $remote_og->description != '') $this->currentOg['description'] = $remote_og->description;
+                    if(isset($found_da->description) && $found_da->description != '') $this->currentOg['description'] = $found_da->description;
+                    else if(isset($remote_og->description) && $remote_og->description != '') $this->currentOg['description'] = $remote_og->description;
                     if(isset($remote_og->image) && $remote_og->image != '') $this->currentOg['image'] = $remote_og->image;
                 }
                 else{
@@ -381,38 +398,8 @@ class OG {
 
                     else
                     {
-                        if($this->author != NULL){
-
-                            $a = $this->rpc->author($this->author);
             
-                            if ($a != false){
-                                $a = $a[0];
-            
-                                if(!$title){
-                                    $this->currentOg['title'] = urldecode($a->name);
-            
-                                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
-                                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
-            
-                                    if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
-                                }
-            
-                                if(!$description){
-                                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
-                                }
-            
-                                if(isset($a->a) && $a->a != ''){
-                                    $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
-                                }
-            
-                                if(!$image){
-                                    $this->currentOg['image'] = $a->i;
-                                }
-            
-                            }
-                        }
-            
-                        if($this->txid != NULL){
+                        if($this->txid != NULL && $this->commentid == NULL){
             
                             $r = $this->rpc->share($this->txid);
             
@@ -503,6 +490,37 @@ class OG {
                                     }
             
                                 
+                                }
+            
+                            }
+                        }
+
+                        if($this->author != NULL){
+
+                            $a = $this->rpc->author($this->author);
+            
+                            if ($a != false){
+                                $a = $a[0];
+            
+                                if(!$title){
+                                    $this->currentOg['title'] = urldecode($a->name);
+            
+                                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
+                                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+            
+                                    if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
+                                }
+            
+                                if(!$description){
+                                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
+                                }
+            
+                                if(isset($a->a) && $a->a != ''){
+                                    $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
+                                }
+            
+                                if(!$image){
+                                    $this->currentOg['image'] = $a->i;
                                 }
             
                             }

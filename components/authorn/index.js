@@ -19,6 +19,7 @@ var authorn = (function(){
 		var result = null
 		var fixedBlock = null
 		var lastnav = '' 
+		var external = null
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
@@ -199,6 +200,12 @@ var authorn = (function(){
 				}
 			})
 
+			if(self.app.television){
+				method = _.find(lentameta, (v) => {
+					return v.id == 'video'
+				})
+			}
+
 			if(!method){
 				return lentameta[0]
 			}
@@ -218,8 +225,8 @@ var authorn = (function(){
 			default : true,
 			extend : function(params){
 				params.getpin = true
-				params.opensviStream = !isMobile() ? true : null
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensviStream = !isMobile() || self.app.television ? true : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 				
 				return params
 			},
@@ -236,10 +243,10 @@ var authorn = (function(){
 			text : 'e14105',
 			parameter : 'video',
 			extend : function(params){
-				params.video = !isMobile()
-				params.videomobile = isMobile()
+				params.video = !isMobile() || self.app.television
+				params.videomobile = isMobile() && !self.app.television
 
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 
 				return params
 			},
@@ -416,7 +423,167 @@ var authorn = (function(){
 		}
 
 		var events = {
+			tempcover : function(src){
+				renders.randombg(null, src)
 
+				var ds = false
+
+				new dialog({
+					html :  self.app.localization.e('setcoverquestion'),
+					btn1text : self.app.localization.e('setcoverquestionyes'),
+					btn2text : self.app.localization.e('setcoverquestionno'),
+
+					class : 'zindex bop',
+
+					success : function(){
+
+						ds = true
+
+						self.app.platform.sdk.users.setCover(src, function(err, alias){
+							if(!err){
+								renders.randombg()
+								successCheck()
+							}
+						})
+
+					},
+
+                    fail: function () {
+
+						ds = true
+
+						renders.randombg(null)
+                    },
+
+					onDestroy : function(){
+						if(!ds){
+							renders.randombg(null)
+						}
+						
+					}
+				})
+			},
+			uploadwallpapper : function(){
+
+				var added = function(image){
+
+					var images = [{
+						original : image[0],
+						index : 0
+					}]
+
+					self.nav.api.load({
+						open : true,
+						id : 'imageGalleryEdit',
+						inWnd : true,
+	
+						essenseData : {
+							edit : true,
+							initialValue : 0,
+							images : images,
+	
+							apply : true,
+	
+							crop : {
+								aspectRatio : 3 / 1,
+								style : 'apply',
+								autoCropArea : 1,
+							},
+	
+							success : function(i, editclbk){
+
+								
+	
+								resize(images[0].original, 1920, 640, function(resized){
+									var r = resized.split(',');
+							
+									if (r[1]){
+
+										events.tempcover(resized)
+	
+										/*self.app.platform.sdk.users.setCover(resized, function(err, alias){
+											if(!err){
+												renders.randombg()
+												successCheck()
+											}
+										})*/
+	
+									}
+									
+									editclbk()
+	
+									
+								}, null, 0.85)
+	
+							}
+						}
+					})
+				}
+
+				if(self.app.mobile.supportimagegallery()){
+
+					app.platform.ui.uploadImage({
+						multiple : false,
+						mp : 6,
+						action : (image, clbk) => {
+
+							var ext = fkit.extensionBase64(image.base64)
+
+							if (ext == 'gif'){
+								sitemessage('uploadwallpapperGiferror')
+							}
+							else{
+								added([image.base64])
+							}
+
+							clbk()
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
+						}
+					})
+
+
+					return
+				}
+	
+				self.nav.api.load({
+					open : true,
+					id : 'embeding',
+					inWnd : true,
+					donate: true,
+
+					essenseData : {
+						type : 'images',
+						multiple : false,
+						uploadTitle : '',
+						caption : '',
+						maxh : 1920,
+						maxw : 1920,
+						quality : 1,
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
+						on : {
+						
+							added,
+
+							destroy(){
+								external = null
+							}
+						}
+					},
+
+					clbk : function(s, p){
+						external = p
+					}
+				})
+			},
 			share : function(){
 				self.nav.api.load({
 					open : true,
@@ -484,6 +651,35 @@ var authorn = (function(){
 				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.wallet.donate({receiver : author.address, donatemode : true}).catch(e => {})
 				})
+			},
+			
+			getPaidSubscription : function(){
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.nav.api.load({
+						open : true,
+						href : 'getpaidsubscription',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							address : author.address,
+						}
+					})
+				})
+				
+			},
+			managePaidSubscription : function(){
+
+				self.nav.api.go({
+					open : true,
+					href : 'managepaidsubscription',
+					history : true,
+					inWnd : true,
+					essenseData : {
+					}
+				})
+				
 			},
 
 			settings : function(){
@@ -779,7 +975,7 @@ var authorn = (function(){
 				}
 			},
 
-			randombg : function(clbk){
+			randombg : function(clbk, tempcover){
 
 				self.shell({
 					name :  'bg',
@@ -789,6 +985,21 @@ var authorn = (function(){
 					},
 					insertimmediately : true,
 				}, function(p){
+
+					
+					p.el.find('.share').on('click', events.share)
+
+					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
+
+					if(clbk) clbk()
+
+					if (tempcover){
+
+						p.el.find('.bgwallpaper').attr('image', tempcover)
+						bgImages(p.el)
+
+						return 
+					}
 
 					Circles({
 						target: el.bg.find('.bgwallpaper')[0],
@@ -819,9 +1030,27 @@ var authorn = (function(){
 						}
 					})
 
-					p.el.find('.share').on('click', events.share)
+					var me = self.app.platform.psdk.userInfo.getmy()
 
-					if(clbk) clbk()
+					if(!author.me) {
+							
+						var blocking = me ? me.relation(author.address, 'blocking') : null
+
+						if (blocking){
+							return
+						}
+
+					}
+
+					self.app.platform.sdk.users.getCover(author.address).then(cover => {
+						if(!cover){
+							
+						}
+						else{
+							p.el.find('.bgwallpaper').attr('image', cover)
+							bgImages(p.el)
+						}
+					})
 
 				})
 
@@ -839,6 +1068,9 @@ var authorn = (function(){
 					insertimmediately : true,
 				}, function(p){
 
+					p.el.find('.toblockexplorer').on('click', function(){
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ author.address))
+					})
 
 					p.el.find('.copyaddress').on('click', function(){
 						copyText($(this))
@@ -897,6 +1129,7 @@ var authorn = (function(){
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
+					p.el.find('.managePaidSubscription').on('click', events.managePaidSubscription)
 
 					p.el.find('.follow').on('click', events.subscribe)
 					p.el.find('.unsubscribe').on('click', events.unsubscribe)
@@ -908,6 +1141,16 @@ var authorn = (function(){
 						renders.metmenu($(this))
 					})
 					
+					self.app.user.isState(function(state){
+						if(state && !author.me){
+							self.sdk.paidsubscription.getcondition(author.address).then(value => {
+								if(value > 0){
+									p.el.find('.getPaidSubscription').removeClass('hidden')
+									p.el.find('.getPaidSubscription').on('click', events.getPaidSubscription)
+								}
+							})
+						}
+					})
 					
 
 					if(clbk) clbk()
@@ -917,11 +1160,11 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
-				/*if (author.deleted || author.reputationBlocked){
+				if (self.app.television){
 					if (clbk)
 						clbk()
 					return 
-				}*/
+				}
 
 				var current = currentLenta()
 
@@ -1124,6 +1367,8 @@ var authorn = (function(){
 			
 			lenta : function(){
 
+				if(modules.lenta) modules.lenta.destroy()
+
 				var hr = 'authorn?address=' + author.address
 				var n =  app.platform.api.name(author.address)
 				if (n) hr = n.toLowerCase() + "?"
@@ -1138,7 +1383,7 @@ var authorn = (function(){
 					renderclbk : function(){
 
 					},
-
+					fixposition : true,
 					canloadmorescroll : function(){
 
 						if(openedpost) return false
@@ -1156,10 +1401,6 @@ var authorn = (function(){
 				}
 
 
-				
-
-				
-
 				el.lenta.html('')
 
 				if(!author.reputationBlocked && !author.deleted){
@@ -1175,8 +1416,6 @@ var authorn = (function(){
 					monetizationPromise.then((m) => {
 
 						params.includeboost = monetizationStatic && m
-
-
 
 						self.nav.api.load({
 
@@ -1207,7 +1446,7 @@ var authorn = (function(){
 
 			whatsnew : function(clbk){
 
-				if(author.me && !self.app.mobileview){
+				if(author.me && !self.app.mobileview && !self.app.television){
 					self.nav.api.load({
 
 						open : true,
@@ -1337,7 +1576,7 @@ var authorn = (function(){
 			upbutton : function(){
 				if(upbutton) upbutton.destroy()
 
-				if(isMobile()) return
+				if(isMobile() || self.app.television) return
 
 				if (el.c)
 					upbutton = self.app.platform.api.upbutton(el.up, {
@@ -1437,6 +1676,7 @@ var authorn = (function(){
 
 			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
+				self.app.mobile.statusbar.background()
 			})
 
 			if (page){
@@ -1532,7 +1772,6 @@ var authorn = (function(){
 				if (address && author.address != address){
 
 					get(address, () => {
-
 						destroy();
 						init();
 					})
@@ -1558,6 +1797,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
+					self.app.mobile.statusbar.topfadebackground()
 				})
 
 				ed = p.settings.essenseData
@@ -1595,8 +1835,13 @@ var authorn = (function(){
 					upbackbutton = null
 				}
 
-				if (href != 'author') 
+				if (external) 
+					external.destroy()
+
+				if (href != 'author') {
 					self.app.el.html.removeClass('allcontent')
+					self.app.mobile.statusbar.background()
+				}
 
 				delete self.app.platform.actionListeners.authorn
 

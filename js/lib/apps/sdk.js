@@ -1,3 +1,101 @@
+var PaymentHash = (function () {
+    function adler32(str) {
+        var MOD_ADLER = 65521,
+            a = 1,
+            b = 0;
+        for (var i = 0; i < str.length; i++) {
+            a = (a + str.charCodeAt(i)) % MOD_ADLER;
+            b = (b + a) % MOD_ADLER;
+        }
+        return ((b << 16) | a) >>> 0;
+    }
+
+    function hexEncode(text) {
+        var ch = 0,
+            result = "";
+        for (var i = 0; i < text.length; i++) {
+            ch = text.charCodeAt(i);
+            if (ch > 0xff) ch -= 0x350;
+            ch = ch.toString(16);
+            while (ch.length < 2) ch = "0" + ch;
+            result += ch;
+        }
+        return result;
+    }
+
+    function makeURLParameters(payment) {
+        var o = {
+            a: "p"
+        };
+        if (payment.s_url) o.s = payment.s_url;
+        if (payment.shipmentValue) o.sv = payment.shipmentValue;
+        if (payment.c_url) o.c = payment.c_url;
+        if (payment.c_url_type && payment.c_url_type !== "fetch") o.ct = payment.c_url_type;
+        if (payment.address) o.ad = payment.address;
+        if (payment.email) o.e = 1;
+        if (payment.phone) o.p = 1;
+        if (payment.anonimus) o.an = 1;
+        if (payment.payload) o.pl = payment.payload;
+        if (payment.date) o.d = payment.date;
+        if (payment.expired) o.ex = payment.expired;
+        if (payment.value) o.v = payment.value;
+        if (payment.description) o.de = payment.description;
+        if (payment.saltValue) o.sav = payment.saltValue;
+        if (payment.discount) o.di = payment.discount;
+        if (payment.tax) o.ta = payment.tax;
+        if (payment.store) {
+            o.st = {};
+            if (payment.store.name) o.st.n = payment.store.name;
+            if (payment.store.site) o.st.s = payment.store.site;
+        }
+        if (payment.items && payment.items.length) {
+            o.i = [];
+            for (var i = 0; i < payment.items.length; i++) {
+                var it = payment.items[i];
+                if (it) {
+                    var itl = {};
+                    if (it.image) itl.i = it.image;
+                    if (it.name) itl.n = it.name;
+                    if (it.value) itl.v = it.value;
+                    if (it.count) itl.c = it.count;
+                    o.i.push(itl);
+                }
+            }
+        }
+        return o;
+    }
+
+    function getAdlerHash(payment) {
+        var prts = [];
+        prts.push(payment.address);
+        if (payment.items) prts.push(JSON.stringify(payment.items));
+        else prts.push(payment.value || 0);
+        if (payment.description) prts.push(payment.description);
+        if (payment.saltValue) prts.push(payment.saltValue);
+        if (payment.discount) prts.push(payment.discount);
+        if (payment.tax) prts.push(payment.tax);
+        if (payment.s_url) prts.push(payment.s_url);
+        if (payment.shipmentValue) prts.push(payment.shipmentValue);
+        if (payment.store) prts.push(JSON.stringify(payment.store));
+        if (payment.payload) prts.push(JSON.stringify(payment.payload));
+        else prts.push(JSON.stringify(payment.date));
+        var h = adler32(prts.join("_"));
+        if (h < 0) h = -h;
+        return String(h);
+    }
+
+    function makeURLHash(payment = {}) {
+        var params = makeURLParameters(payment);
+        params.h = getAdlerHash(payment);
+        var hex = hexEncode(JSON.stringify(params));
+        return "_" + hex;
+    }
+
+    return {
+        makeURLHash
+    };
+})();
+
 var makeid = function(){
 
     function s4() {
@@ -75,7 +173,6 @@ var BastyonSdk = function(){
         window.history[changeState] = new Proxy(window.history[changeState], {
             
             apply (target, thisArg, argList) {
-                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 
@@ -100,7 +197,6 @@ var BastyonSdk = function(){
             }
 
         }
-        //console.log('application:event:inapp', event)
     })
 
     var on = function(key, data){
@@ -224,6 +320,9 @@ var BastyonSdk = function(){
     }
 
     self.get = {
+        videos : function(urls){
+            return action('get.videos', {urls})
+        },
         account : function(){
             return action('account', {})
         },
@@ -274,8 +373,8 @@ var BastyonSdk = function(){
         post : function(txid){
             return action('open.post', {txid})
         },
-        donate : function(receiver){
-            return action('open.donate', {receiver})
+        donation : function(receiver){
+            return action('open.donation', {receiver})
         },
     }
 
@@ -295,6 +394,16 @@ var BastyonSdk = function(){
         })
     }
 
+    self.ext = function(payment){
+
+        if(!payment || typeof payment != 'object') return Promise.reject('wrongPayment')
+    
+        return action('ext', {
+            ext : PaymentHash.makeURLHash(payment)
+        })
+    }
+
+   
     self.openExternalLink = function(url){
         return action('openExternalLink', {url})
     }
@@ -428,6 +537,7 @@ var BastyonSdk = function(){
                 }
     
                 document.documentElement.setAttribute('theme', theme.rootid);
+                document.documentElement.setAttribute('bastyon', 'bastyon');
     
                 document.documentElement.style.setProperty('--app-margin-top', `${margintop}`);
 
@@ -438,12 +548,38 @@ var BastyonSdk = function(){
 
     }
 
+    self.manageBastyonImageSrc = function(src = ''){
+        if(!self.project) return null
+        if(!src) return src
+
+        var srcNew = src;
+
+        self.project.archivedPeertubeServers.map(server => {
+            if (srcNew.includes(server)) srcNew = srcNew.replace(server, 'peertube.archive.pocketnet.app');
+        });
+
+        return srcNew.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet').replace('https://http://', 'http://');
+    }
+
     self.inbastyon = function(){
         try {
             return window.self !== window.top;
         } catch (e) {
             return true;
         }
+    }
+
+    self.extendMetamaskOptions = function(options){
+        
+        if(self.applicationInfo.device == 'application_electron'){
+            options.shouldShimWeb3 = false
+        }
+
+        options.openDeeplink = function(url){
+            self.openExternalLink(url)
+        }
+
+        return options
     }
 
 

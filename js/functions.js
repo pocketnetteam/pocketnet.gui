@@ -464,7 +464,7 @@ wnd = function (p) {
 		},
 
 		roundclose: function () {
-			return '<div class="_close roundclosebutton"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
+			return '<div class="_close roundclosebutton tvfocusedzoom"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
 		}
 	}
 
@@ -857,6 +857,7 @@ wnd = function (p) {
 
 
 			var cl = function () {
+
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
 				window.rifticker.add(() => {
@@ -1658,6 +1659,9 @@ dialog = function (p) {
 
 	self.el = $el;
 	self.destroy = destroy;
+	self.replacehtml = function(html){
+		$el.find('.body .text').html(html)
+	}
 	return self;
 }
 
@@ -2190,7 +2194,7 @@ srcToData = function (url, callback) {
 	xhr.send();
 }
 
-resizeFit = function (srcData, width, height, clbk, format) {
+resizeFit = function (srcData, width, height, clbk, format, quality) {
 	var imageObj = new Image(),
 		canvas = document.createElement("canvas"),
 		ctx = canvas.getContext('2d'),
@@ -2212,8 +2216,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 		newHeight = imageObj.height;
 		newWidth = imageObj.width;
 
-		if (newHeight <= height && newWidth <= width) {
-
+		if (newHeight <= height && newWidth <= width && !quality) {
+			clbk(srcData);
+			return
 		}
 		else {
 			if (newWidth > width) {
@@ -2241,7 +2246,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-		var url = canvas.toDataURL("image/" + format, 0.85);
+		console.log("QU image", width, height, imageObj.width, imageObj.height, newWidth, newHeight)
+
+		var url = canvas.toDataURL("image/" + format, quality || 0.85);
 
 		$(canvas).remove();
 
@@ -2252,7 +2259,7 @@ resizeFit = function (srcData, width, height, clbk, format) {
 
 }
 
-resize = function (srcData, width, height, clbk, format) {
+resize = function (srcData, width, height, clbk, format, quality) {
 
 	/**/
 
@@ -2276,8 +2283,9 @@ resize = function (srcData, width, height, clbk, format) {
 		newHeight = imageObj.height;
 		newWidth = imageObj.width;
 
-		if (newHeight <= height && newWidth <= width) {
-
+		if (newHeight <= height && newWidth <= width && !quality) {
+			clbk(srcData);
+			return
 		}
 		else {
 			if (newWidth > width) {
@@ -2297,8 +2305,11 @@ resize = function (srcData, width, height, clbk, format) {
 
 
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+		
+		console.log("QU image f", width, height, imageObj.width, imageObj.height, newWidth, newHeight)
 
-		var url = canvas.toDataURL("image/" + format, 0.85);
+
+		var url = canvas.toDataURL("image/" + format, quality || 0.85);
 
 		$(canvas).remove();
 
@@ -4909,10 +4920,10 @@ Parameter = function (p) {
 
 				if (self.type == 'valuesmultibig') {
 					input += '<div class="vc_valuecustom_multibig" pid="' + self.id + '">';
-					input += '<div class="vc_valuecustom">';
+					input += '<div class="vc_valuecustom tvfocusedopacity">';
 				}
 				else {
-					input += '<div class="vc_valuecustom" pid="' + self.id + '">';
+					input += '<div class="vc_valuecustom tvfocusedopacity" pid="' + self.id + '">';
 				}
 
 				input += '<div class="vc_textInput table">';
@@ -6261,8 +6272,6 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
-	console.log('scr ofssetObj', ofssetObj)
-
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6273,8 +6282,6 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
-
-		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -7657,7 +7664,7 @@ mobsearch = function (el, p) {
 	if (p.mobileSearch && p.app) {
 		window.rifticker.add(() => {
 
-			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
+			el.html('<div class="mobsearch tvfocusedopacity">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
 				p.app.platform.ui.mobilesearch(p)
 			})
@@ -7708,7 +7715,7 @@ search = function (el, p) {
 
 		var elements = [
 
-			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
+			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel tvfocusedopacity">' + (p.icon ||
 				'<i class="fa fa-search" aria-hidden="true"></i>' +
 				'<i class="fas fa-circle-notch fa-spin"></i>') +
 			'</div>',
@@ -7719,7 +7726,7 @@ search = function (el, p) {
 
 			'<div class="searchPanel">' +
 				'<div class="searchPanelWrapper">' +
-					'<div class="searchPanelItem" event="clear">' +
+					'<div class="searchPanelItem tvfocusedopacity" event="clear">' +
 						'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
 					'</div>' +
 				'</div>' +
@@ -8334,15 +8341,12 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
-		console.log('files', files)
-
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
 
-					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8350,8 +8354,6 @@ initUpload = function (p) {
 				},
 				fail: function () {
 					end();
-
-					console.log('failed')
 
 
 					if (p.onFail)
@@ -8361,8 +8363,6 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
-
-				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8397,18 +8397,11 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
-						console.log("read")
-
-
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
-							console.log("resize")
-
 							autorotation(file, fileObject.base64, function (base64) {
-
-								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -9374,6 +9367,7 @@ findAndReplaceLinkClear = function(inputText = '', fu){
 
 findAndReplaceLink = function (inputText = '', nottrust) {
 
+
 	if (typeof linkifyHtml != 'undefined') {
 
 		try {
@@ -9392,6 +9386,7 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 
 				format : (value, type) => {
 
+
 					if(type == 'url'){
 						value = formatInternalLink(value)
 					}
@@ -9404,6 +9399,8 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 				},
 
 				formatHref : (value, type) => {
+
+
 					if (type == 'url'){
 						value = formatInternalLinkHref(value)
 					}
@@ -9411,7 +9408,6 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 					return value
 				}
 			})
-
 
 			return l
 		}
@@ -9816,6 +9812,31 @@ checkConnection = function () {
 	}
 }
 
+localSearch = function(s1 = '', s2 = '', level = 0.6){
+
+	if(!s1) return 0
+	if(!s2) return 1
+
+	s1 = s1.toLowerCase()
+	s2 = s2.toLowerCase()
+
+	if (s1.indexOf(s2) > -1) return 1
+
+	var parts = s1.split(/[ \t\v\r\n\f,.]+/)
+
+	var m = 0
+	
+	_.each(parts, (part) => {
+		var eq = stringEqTrig(part, s2)
+
+		if (eq > level && eq > m) m = eq
+	})
+
+	if(m < 0 || !m) m = 0
+
+	return m
+}
+
 stringEqTrig = function (s1, s2) {
 
 	if (!s1) s1 = ''
@@ -9832,8 +9853,6 @@ stringEqTrig = function (s1, s2) {
 		return ps.toLowerCase().replace(/[^a-zа-я0-9&]*/g, '');
 	}
 
-
-
 	var makeTr = function (w) {
 		var trs = {};
 
@@ -9843,8 +9862,6 @@ stringEqTrig = function (s1, s2) {
 			if (index < 0 || index >= w.length) c = "_";
 
 			else c = w[index];
-
-
 
 			return c;
 		}
@@ -9948,36 +9965,35 @@ if (typeof window != 'undefined') {
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function () {
-			if (!splashScreenIcon)
-				return;
+			
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenIcon.classList.remove("rotate");
-				splashScreenIcon.classList.add('zoom-out-rotate');
-				splashScreen.classList.add('fade-out');
-				// When zoom out animation is done, completely remove the splash screen
-				setTimeout(() => {
-					// Clear interval if needed
-					if (splashScreeninterval != undefined) {
-						clearInterval(splashScreeninterval);
-					}
-					// Completely remove the splashscreen
+				window.requestAnimationFrame(() => {
 
-					if (splashScreen)
-						splashScreen.remove();
-					splashScreenIcon = null
+					if (!splashScreenIcon)
+						return;
 
-					splashScreen = null
-				}, zoomOutDuration * 2);
+					splashScreenIcon.classList.remove("rotate");
+					splashScreenIcon.classList.add('zoom-out-rotate');
+					splashScreen.classList.add('fade-out');
+					// When zoom out animation is done, completely remove the splash screen
+					setTimeout(() => {
+						// Clear interval if needed
+						if (splashScreeninterval != undefined) {
+							clearInterval(splashScreeninterval);
+						}
+						// Completely remove the splashscreen
+	
+						if (splashScreen)
+							splashScreen.remove();
+						splashScreenIcon = null
+	
+						splashScreen = null
+					}, zoomOutDuration * 2);
+				})
+				
 			}
-			// Wait until half the rotation is done
-			/*setTimeout(() => {
-				// Change the logo image
-				if (splashScreenIcon)
-					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
-				// Increase index
-				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);*/
+		
 		}
 
 		// Wait until the zoom in is done
@@ -9985,11 +10001,13 @@ if (typeof window != 'undefined') {
 			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenIcon.classList.remove('zoom-in');
-			splashScreenIcon.classList.add('rotate');
-			// Triggered every times we reached the end of the rotating animation
-			rotatingAnimationEnded();
-			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			window.requestAnimationFrame(() => {
+				splashScreenIcon.classList.remove('zoom-in');
+				splashScreenIcon.classList.add('rotate');
+				// Triggered every times we reached the end of the rotating animation
+				rotatingAnimationEnded();
+				splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+			})
 		}, zoomInDuration);
 
 	}
@@ -10654,6 +10672,7 @@ function Circles(params) {
         this.current.style.top = randInt(0, 100) + '%';
         this.current.style.left = randInt(0, 100) + '%';
         this.current.style.zIndex = this.zin;
+		this.current.setAttribute('circle', 'circle')
 
         this.current.style.webkitTransform = 'translate(-50%, -50%)';
         this.current.style.mozTransform = 'translate(-50%, -50%)';

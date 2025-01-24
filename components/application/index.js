@@ -16,15 +16,14 @@ var application = (function(){
 
 				globalpreloader(true)
 
-				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
-				
-				
-				pr.promise.then(() => {
+				self.app.apps.install({
+					...application,
+					develop: true,
+					version: numfromreleasestring(application.version || '1.0.0')
+				}).then(() => {
 					successCheck()
 				}).catch(e => {
-
 					console.error(e)
-
 					sitemessage(JSON.stringify(e), null, 5000)
 				}).finally(() => {
 					globalpreloader(false)
@@ -37,13 +36,14 @@ var application = (function(){
 					self.closeContainer()
 				}
 				else{
-					self.app.nav.api.load({
+					self.app.platform.ui.goback('index')
+					/*self.app.nav.api.load({
 						open : true,
 						href : 'index',
 	
 						///href : 'home',
 						history : true,
-					})
+					})*/
 				}
 
 				
@@ -89,28 +89,35 @@ var application = (function(){
 
 				var sl = '.settings .icon'
 
-				if(isMobile() && !s) sl = '.abssettings .icon'
+				//if(isMobile() && !s) sl = '.abssettings .icon'
 
 				p.el.find(sl).on('click', function(){
 					renders.menu($(this))
 				})
 
-				var chatel = p.el.find('.chatDoubleRow')
+				p.el.find('.info').on('click', function(){
+					actions.openinfo()
+				})
+
+				var chatel = p.el.find('.chat')
 
 				chatel.on('click', events.chats.click)
 				events.chats.init(chatel)
 			},
 
 			loaded : function(p){
-
+				
 				if(!application) return
-
+				
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
 
-				if (el.c)
-					el.c.find('.captionRow').addClass('notactive')
+				setTimeout(() => {
+					if (el.c)
+						el.c.find('.captionRow').addClass('notactive')
+				}, 2000)
+				
 			},
 
 			changestate : function(p = {}){
@@ -131,9 +138,9 @@ var application = (function(){
 				}
 			},
 
-			installed : function(p = {}){
-				if (p.application.manifest.id == application.manifest.id){
-					remake(p.application.manifest.id)
+			installed : function(p = {}){				
+				if (p.application?.id == application?.id){
+					remake(p.application.id)
 				}
 			},
 
@@ -311,7 +318,7 @@ var application = (function(){
 
 					data : {
 						application,
-						src 
+						src
 					},
 
 				}, function(p){
@@ -319,7 +326,26 @@ var application = (function(){
 					events.pageevents(p)
 
 					p.el.find('.back').on('click', function(){
-						actions.gotohome()
+						if(self.app.electronview && history.length){
+							history.back()
+						}
+						else{
+							actions.gotohome()
+						}
+					})
+
+					p.el.find('.forward').on('click', function(){
+						if (history.length) {
+							history.forward() 
+						}
+					})
+
+					p.el.find('.refresh').on('click',()=>{
+
+						var electron = require('electron');
+
+						if (electron)
+							electron.ipcRenderer.send('electron-refresh');
 					})
 
 					if (clbk)
@@ -368,14 +394,12 @@ var application = (function(){
 
 		var make = function(){
 
-			console.log('application_notexist', self)
-
 			if(!application || !appdata){
 				renders.error('application_notexist')
 				return
 			}
 
-			if(!application.installed){
+		if(!application.installed){
 				renders.install()
 				return
 			}
@@ -458,7 +482,8 @@ var application = (function(){
 
 							if(path) ps.p = path
 
-							ps.id = id
+							if(!ed.inWnd)
+								ps.id = id
 
 							self.app.nav.api.history.addRemoveParameters([], ps, {
 								replaceState: true
@@ -521,7 +546,7 @@ var application = (function(){
 				curpath = ''
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('#' + self.map.id + "fx");
 
 				initEvents();
 

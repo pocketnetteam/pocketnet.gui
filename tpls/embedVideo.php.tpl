@@ -11,7 +11,7 @@
         
             require_once('php/og.php'); 
 
-            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project");
+            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project", $_SERVER['REQUEST_URI'], '__VAR__.strconfig');
 
             $og->get();
             $og->echotags();
@@ -84,5 +84,6 @@
       
     </script>
     <script src="./peertube/video-embed.bundle.js"></script>
+    <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
   </body>
 </html>

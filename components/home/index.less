@@ -1,119 +1,283 @@
 @import "../../css/__cssvar";
 
-#home{
-    margin-top: 20vh;
-    padding : 2 * @rhythm @rhythm;
-    padding-top: 4 * @rhythm;
+#home {
+  padding: 1em 0.5em;
+  margin-top: 20vh;
+  padding-top: 2em;
 
-    .work{
-        margin : 0 auto;
-        max-width: 768px;
+  .work {
+    margin: 0 auto;
+    max-width: 768px;
+  }
+
+  .chapter {
+    margin-bottom: 2.5em;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+
+  .caption {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    span {
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+  }
+
+  .searchWrapper {
+    padding: 0.5em 0;
+    position: relative;
+    margin-top: 1em;
+  }
+
+  .validSearch {
+    .searchFastResultWrapper {
+      left: 0;
+      display: block;
+      border-radius: 0.5em;
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgb(var(--background-main));
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .applicationSearch {
+    background: rgb(var(--background-main));
+    border-radius: 24px;
+
+    input {
+      background: transparent;
+      border: 0;
+      line-height: 44px;
+      padding: 0;
     }
 
-    .chapter{
-        margin-bottom: 5 * @rhythm;
+    .searchPanel {
+      background: transparent;
+      border: 0;
     }
-    .caption{
-        padding-left: @rhythm;
-        padding-right: @rhythm;
-        span{
-            font-size: 1.5em;
-            font-weight: 700;
+  }
+
+  .applicationsList {
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(14%, 1fr));
+      margin-top: 1em;
+      gap: 1em;
+    }
+
+    .application {
+      padding: 1em;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+
+      .icon {
+        width: 3em;
+        height: 3em;
+        background-size: cover;
+        border-radius: 12px;
+        margin-bottom: 0.5em;
+      }
+
+      .name {
+        max-width: 120px;
+        margin-bottom: 0.5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .description {
+        font-size: 0.9em;
+        color: rgb(var(--text-on-main-bg-color));
+        margin-bottom: 0.5em;
+        text-align: center;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.4em;
+        max-height: 4.2em;
+      }
+
+      &.dev-mode {
+        .name {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3em;
         }
-    }
 
-    .searchWrapper{
-        padding : @rhythm 0;
-        margin-top: 2 * @rhythm;
-    }
+        .dev-label {
+          background: rgb(var(--color-bg-ac));
+          color: rgb(var(--text-on-bg-ac-color));
+          font-size: 0.7em;
+          font-weight: bold;
+          padding: 0.2em 0.5em;
+          border-radius: 4px;
+        }
+      }
 
-    .applicationSearch{
+      .manage-button {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
         background: rgb(var(--background-main));
-        border-radius: 24px;
+        border: 1px solid rgb(var(--neutral-grad-1));
+        border-radius: 50%;
+        width: 2em;
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(var(--text-on-main-bg-color));
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-        .searchIconLabel{
+        &:hover {
+          background: rgb(var(--neutral-grad-2));
+          color: rgb(var(--text-color));
         }
 
-        input{
-            background: transparent;
-            border: 0;
-            line-height: 44px;
-            padding: 0;
+        i {
+          font-size: 0.9em;
         }
-
-        .searchPanel{
-            background: transparent;
-            border: 0;
-        }
+      }
     }
+  }
 
-    .applicationsList{
-        
-        margin-top: 2 * @rhythm;
-        padding : @rhythm;
-        
-        .list{
-            display: grid;
-            grid-template-columns: 20% 20% 20% 20% 20%;
-            grid-template-rows: 14 * @rhythm;
+  .search-options {
+    .search-option {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      opacity: 0.8;
+      border-bottom: 1px solid rgb(var(--neutral-grad-1));
+      transition: all 0.3s ease;
+
+      .result-icon {
+        margin-right: 10px;
+        font-size: 1.2em;
+        color: rgb(var(--color-txt-ac));
+      }
+
+      .result-label {
+        font-size: 0.9em;
+        color: rgb(var(--text-color));
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .application-results {
+    .application {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid rgb(var(--neutral-grad-1));
+
+      .app-icon {
+        width: 25px;
+        min-width: 25px;
+        min-height: 25px;
+        height: 25px;
+        border-radius: 5px;
+        background-size: cover;
+        margin-right: 10px;
+      }
+
+      .app-info {
+        .app-name {
+          transition: color 0.3s ease;
+          font-weight: bold;
+          font-size: 0.9em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: rgb(var(--text-color));
+
+          &:hover {
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            color: rgb(var(--color-txt-ac));
+          }
         }
 
-        .application{
-            position: relative;
-            padding: @rhythm 0;
+        .app-tags {
+          display: flex;
+          margin-top: 0.6em;
+          gap: 0.5em;
+          flex-wrap: wrap;
+
+          .app-tag {
+            display: inline-block;
+            padding: 0.2em 0.6em;
+            font-size: 0.8em;
+            color: rgb(var(--text-color));
+            background: rgb(var(--neutral-grad-1));
+            border: 1px solid rgb(var(--neutral-grad-0));
+            border-radius: 12px;
             cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
 
-            .icon{
-                margin : 0 auto;
-                border-radius: 12px;
-                
-                width: 6 * @rhythm;
-                height: 6 * @rhythm;
+            &:hover {
+              background: rgb(var(--neutral-grad-2));
+              color: rgb(var(--text-on-main-bg-color));
             }
-
-            .name{
-                text-align: center;
-                margin-top: @rhythm;
-                -webkit-line-clamp: 2;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .badge{
-                position: absolute;
-                top : 0.5 * @rhythm;
-                right: 0.5 * @rhythm;
-                width: 2 * @rhythm;
-                height: 2 * @rhythm;
-                border-radius: 50%;
-                background: rgb(var(--neutral-grad-1));
-
-                &[num="0"]{
-                    display: none;
-                }
-            }
-
-            &.installed{
-                .badge{
-                    background: rgb(var(--color-bg-orange));
-                    width: 1 * @rhythm;
-                    height: 1 * @rhythm;
-                    top : 1 * @rhythm;
-                    right: 1 * @rhythm;
-                }
-            }
-
-            &.installing{
-                .icon{
-                    border-radius: 12px;
-                    background: rgb(var(--neutral-grad-0));
-                }
-                
-                .badge{
-                    background: rgb(var(--color-good));
-                }
-            }
+          }
         }
-    
+
+        .app-description {
+          font-size: 0.8em;
+          color: rgb(var(--text-on-main-bg-color));
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: 1.2em;
+          max-height: 2.4em;
+        }
+      }
     }
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    gap: 1em;
+
+    button {
+      background-color: rgb(var(--color-bg-ac));
+      color: rgb(var(--text-on-bg-ac-color));
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: rgb(var(--neutral-grad-2));
+        color: rgb(var(--text-color));
+      }
+    }
+  }
 }

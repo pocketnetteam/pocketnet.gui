@@ -1,3 +1,10 @@
+<% 
+
+	var dnow = min.yyyymmdd();
+	var dhour = min.getHours();
+	var dminutes = min.getMinutes()
+%>
+
 <div class="selectDateWrapper">
 
 	<div class="selectDateTableWrapper labels table">
@@ -10,10 +17,10 @@
 		<div class="dateWrapper">
 			<select class="day">
 				<% 
-				var today = new Date();
+				
+				var today = new Date()
 
-
-				for(var i = 0; i < 15; i++) {
+				for(var i = 0; i < 3; i++) {
 
 					var d = today.yyyymmdd();
 					var selected = ''
@@ -22,7 +29,7 @@
 
 				%>
 
-					<option value="<%-d%>" <%-selected%>><%-convertDate(d)%></option>
+					<option value="<%-d%>" <%-selected%>><%-moment(d).local().format('D MMMM YYYY')%></option>
 
 				<% 
 
@@ -35,11 +42,19 @@
 		<div class="hoursWrapper">
 			
 			<select class="hours">
-				<% for(var i = 0; i < 24; i++) {
+				<% 
+
+				var I = 0
+
+				if(date.day == dnow){
+					I = dhour
+				}
+				
+				for(var i = I; i < 24; i++) {
 
 					var selected = ''
 
-					if (i == date.hour) selected = 'selected'
+					if (i <= date.hour) selected = 'selected'
 
 				%>
 
@@ -54,7 +69,15 @@
 
 		<div class="minutesWrapper">
 			<select class="minutes">
-				<% for(var i = 0; i < 60; i++) {
+				<% 
+				
+				var I = 0
+
+				if(date.day <= dnow && date.hour <= dhour){
+					I = dminutes
+				}
+				
+				for(var i = I; i < 60; i++) {
 
 					var selected = ''
 

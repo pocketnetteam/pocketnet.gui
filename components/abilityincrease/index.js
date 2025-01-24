@@ -25,7 +25,6 @@ var abilityincrease = (function(){
 		var meta = {
 			video : function(increase){
 
-				console.log('increase', increase)
 
 				if (increase.balance || increase.reputation) {
 
@@ -120,7 +119,6 @@ var abilityincrease = (function(){
 
 				template = deep(p, 'settings.essenseData.template') || 'video'
 
-				console.log('video template', template)
 
 
 				self.app.platform.sdk.ustate.canincrease(
@@ -135,7 +133,6 @@ var abilityincrease = (function(){
 						data.template = template
 						data.meta = meta[template](increase)
 
-						console.log('video data', data)
 
 						clbk(data);
 

@@ -9266,7 +9266,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
 
-					clbk();
+					//clbk();
 
 				}, null, null, options.app);
 
@@ -9293,7 +9293,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url,
           mobile : options.mobile,
-
+          television: options.television,
           assetsStorage : localVideo ? null : deep(options, 'app.videotransport.assets'),
           segmentsStorage : localVideo ? null : deep(options, 'app.videotransport.segments')
 
@@ -9362,8 +9362,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
     if ('bitchute' == provider) {
 
         video_id = video_id.replace('/embed/', '/video/');
-
-        console.log('video_id', video_id)
 
         options.app.platform.sdk.remote.getnew(video_id, 'bitchute').then(og => {
 

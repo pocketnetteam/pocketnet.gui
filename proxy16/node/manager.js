@@ -65,6 +65,7 @@ var Nodemanager = function(p){
     var commonnotinitedInterval = null
     var queue = []
     var queueInterval = null
+    var cachedStatusNodes = null
 
     var minnodescount = global.MIN_NODES_COUNT || 1
     var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
@@ -1002,6 +1003,7 @@ var Nodemanager = function(p){
         self.remap()
 
         cachedchain = null
+        cachedStatusNodes = null
 
         if (findInterval) {
             clearInterval(findInterval)
@@ -1165,9 +1167,23 @@ var Nodemanager = function(p){
 
     self.waitreadywithrating = function(){
 
+        if(cachedStatusNodes && cachedStatusNodes + 120000 > Date.now()){
+            return Promise.resolve()
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
-        }, 30, 10000)
+        }, 30, 10000).then(() => {
+
+            if(inited && self.initednodeswithrating().length){
+                cachedStatusNodes = Date.now()
+            }
+            else{
+                cachedStatusNodes = null
+            }
+
+            return Promise.resolve()
+        })
     }
 
     self.waitready = function(){

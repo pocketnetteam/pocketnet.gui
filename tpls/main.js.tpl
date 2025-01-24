@@ -389,6 +389,7 @@ function createWindow() {
         },*/
         title: appName,
         webSecurity: false,
+        
 
         icon: defaultIcon,
 
