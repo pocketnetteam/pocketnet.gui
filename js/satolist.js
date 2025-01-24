@@ -15739,8 +15739,25 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    //
+
                     self.psdk.search.request(() => {
-                        return self.app.api.rpc('search', np)
+
+                        var options = {}
+
+                        var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
+
+                        console.log('type', type)
+
+                        if (type == 'videos'){
+                            options.rpc = {
+                                fnode: nodes[rand(0, nodes.length - 1)]
+                            }
+                        }
+
+                        console.log('type options', options)
+
+                        return self.app.api.rpc('search', np, options)
                     }, np).then(d => {
 
                         if (type != 'fs') {

@@ -1113,6 +1113,8 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
+						console.log("LENTA PLAYER CLBK", player)
+
 						if(!el.share) return
 
 						if (player){

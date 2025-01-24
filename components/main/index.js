@@ -316,7 +316,10 @@ var main = (function(){
 
 		var load = {
 			posts : function(clbk, start, count){
-				self.app.platform.sdk.search.get(searchvalue, 'posts', start, count, fixedBlock, function(r){
+
+				
+
+				self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', start, count, fixedBlock, function(r){
 
 					clbk(r.data);
 
@@ -712,7 +715,7 @@ var main = (function(){
 					if (searchvalue){
 						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-						self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'video' : 'posts', 0, 10, null, function(r, block){
+						self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', 0, 10, null, function(r, block){
 
 							fixedBlock = block
 	
