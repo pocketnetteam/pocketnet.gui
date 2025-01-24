@@ -398,36 +398,6 @@ class OG {
 
                     else
                     {
-                        if($this->author != NULL){
-
-                            $a = $this->rpc->author($this->author);
-            
-                            if ($a != false){
-                                $a = $a[0];
-            
-                                if(!$title){
-                                    $this->currentOg['title'] = urldecode($a->name);
-            
-                                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
-                                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
-            
-                                    if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
-                                }
-            
-                                if(!$description){
-                                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
-                                }
-            
-                                if(isset($a->a) && $a->a != ''){
-                                    $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
-                                }
-            
-                                if(!$image){
-                                    $this->currentOg['image'] = $a->i;
-                                }
-            
-                            }
-                        }
             
                         if($this->txid != NULL && $this->commentid == NULL){
             
@@ -520,6 +490,37 @@ class OG {
                                     }
             
                                 
+                                }
+            
+                            }
+                        }
+
+                        if($this->author != NULL){
+
+                            $a = $this->rpc->author($this->author);
+            
+                            if ($a != false){
+                                $a = $a[0];
+            
+                                if(!$title){
+                                    $this->currentOg['title'] = urldecode($a->name);
+            
+                                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
+                                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+            
+                                    if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
+                                }
+            
+                                if(!$description){
+                                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . $a->subscribers_count;
+                                }
+            
+                                if(isset($a->a) && $a->a != ''){
+                                    $this->currentOg['description'] .= "\n". strip_tags(urldecode($a->a));
+                                }
+            
+                                if(!$image){
+                                    $this->currentOg['image'] = $a->i;
                                 }
             
                             }

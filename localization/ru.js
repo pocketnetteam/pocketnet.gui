@@ -2601,7 +2601,7 @@ _l.hideallnotifications = "Скрыть все оповещения"
 _l.deleteapplicationQuestion = "Вы действительно хотите удалить приложение?"
 _l.deleteapplicationQuestionDevelop = "Вы действительно хотите удалить приложение? Для приложений, которые находятся в режиме разработки данная функция лишь симулирует удаление и сбрасывает настройки до следующего запуска."
 _l.application_settings = "О приложении"
-_l.application_close = "Закрыть"
+_l.application_close = "Вернуться в " + appname;
 _l.application_notexist = "Приложение не найдено или сервер приложения не отвечает"
 
 _l.permissions_descriptions_chat = "Отправлять сообщения в чат "+appname+", создавать группы и чаты"

@@ -57,13 +57,13 @@ var share = (function(){
 				
 				el.c.removeClass('minimized')
 
-				make();	
+				makeDebounced();	
 			},
 
 			closeexternal : function(){
 				external = null
 
-				if(!destroying) make();
+				if(!destroying) makeDebounced();
 			},
 
 			getrepost : function(clbk){
@@ -2013,8 +2013,6 @@ var share = (function(){
 
 					renders.repost();
 
-					
-
 				});
 
 				renders.postline();
@@ -2087,6 +2085,7 @@ var share = (function(){
 
 			url : function(clbk){
 
+				console.log("RENDER URL")
 
 				destroyPlayer()
 				
@@ -2120,11 +2119,17 @@ var share = (function(){
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
-								player = _player
+								console.log("player clbk plyr", _player)
 
-								try{
-									player.muted = false
-								}catch(e){}
+								if(_player){
+									player = _player
+
+									try{
+										player.muted = false
+									}catch(e){}
+								}
+
+								
 								
 							}, {
 								denyPeertubeAutoPlay: true,
@@ -2699,8 +2704,12 @@ var share = (function(){
 		}
 
 		var make = function(){
+			if(destroying) return
+
 			renders.all()
 		}
+
+		var makeDebounced = _.debounce(make, 300)
 
 		var initEvents = function(){
 
@@ -2750,6 +2759,9 @@ var share = (function(){
 
 
 		var destroyPlayer = function(){
+
+			console.log('player', player)
+
 			if (player) {
 
 				if (player.playing){
