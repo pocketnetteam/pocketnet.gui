@@ -1256,6 +1256,9 @@
 .share_common .work {
   width: 100%;
 }
+html.television .share_common .sharecaption {
+  cursor: default;
+}
 html.mobileview .share_common .images .imagesContainer.owlcar {
   max-width: none;
   contain: strict;

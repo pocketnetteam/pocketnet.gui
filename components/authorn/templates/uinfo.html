@@ -48,6 +48,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
     <% } %>
 
+    <% if(!app.television) {%>
     <div class="item foraddress">
         <div class="itemtable">
             <div class="icon"><i class="fas fa-th toblockexplorer"></i></div>
@@ -56,6 +57,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
             </div>
         </div>
     </div>
+    <% } %>
 
     <% if(!sUserInfo.deleted) {%>
 

@@ -841,6 +841,35 @@ html.mobileview #post .sharearticle .articlecontent {
 html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   max-width: none;
 }
+html.allcontentvideo #post.videomainpost .forurl {
+  margin-bottom: 2em;
+}
+html.allcontentvideo #post.videomainpost.recommendationsenabled .share {
+  max-width: 100%;
+}
+html.allcontentvideo #post.videomainpost.recommendationsenabled .postWrapper {
+  display: block;
+}
+html.allcontentvideo #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+  margin-left: 0;
+  width: 100%;
+  max-width: 100%;
+}
+html.allcontentvideo #post.videomainpost .video-js {
+  max-height: 100vh;
+  height: 100vh;
+}
+html.allcontentvideo #post.videomainpost .jsPlayerLoading,
+html.allcontentvideo #post.videomainpost .js-player {
+  max-height: 100vh;
+  height: 100vh;
+}
+html.allcontentvideo #post.videomainpost .videoWrapper {
+  border-radius: 0;
+}
+html.allcontentvideo #post.videomainpost .forurl .url {
+  border-radius: 0;
+}
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {
     width: 100%;

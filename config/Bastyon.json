@@ -3,7 +3,7 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    
+    "preferredtags" : [],
     "developapps" : [{
 		"id" : "swipelux.app",
 		"version": "0.0.1",

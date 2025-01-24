@@ -2,7 +2,9 @@
 
 #recommendations{
     
-
+    &:focus{
+        outline: none;
+    }
     .recaption{
         padding : @rhythm 0;
         margin-bottom: @rhythm;
@@ -43,15 +45,13 @@
 
         display: flex;
         margin-bottom: @rhythm;
+        cursor: pointer;
 
         &:nth-last-child(1){
             margin-bottom: 0;
         }
 
-        &:hover {
-            cursor: pointer;
-        }
-
+     
         .videoThumbnail {
 
             height: 90px;

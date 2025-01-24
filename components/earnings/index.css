@@ -24,23 +24,6 @@
 #earnings .monetizationChange .exchange.loaded {
   opacity: 1;
 }
-#earnings .monetizationChange .exchange #channel .channel {
-  position: relative;
-  background: transparent;
-}
-#earnings .monetizationChange .exchange #channel .channel .icon {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-#earnings .monetizationChange .exchange #channel .channel .icon .usericon {
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-}
-#earnings .monetizationChange .exchange #channel .channel .usericon {
-  margin-left: 0;
-}
 #earnings .monetizationChange .exchange #channel .channel .userinfo {
   flex-flow: column;
 }

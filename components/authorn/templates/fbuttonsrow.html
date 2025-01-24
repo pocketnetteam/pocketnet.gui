@@ -34,16 +34,15 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         
         %>
 
-        <% if(!sUserInfo.deleted && !author.reputationBlocked) {%>
+        <% if(!sUserInfo.deleted && !author.reputationBlocked && !app.television) {%>
 
             <button class="button startchat"><%= e('startchat') %> <i class="fas fa-comment"></i></button>
 
         <% } %>
 
-        
-        <!--<button class="button sendcoins"><%= e('sendcoinssm') %> <img class="logo logo20" src="img/logo20.svg"></button>-->
+        <% if(!app.pkoindisable) {%>
         <button class="button donate"><%= e('sendcoinssm') %> <img class="logo logo20 desaturate" src="img/logo20.svg"></button>
-
+        <% } %>
 
         <% if(!sUserInfo.deleted) {%>
             <% if(!blocking) {%>

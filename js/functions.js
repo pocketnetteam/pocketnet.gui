@@ -464,7 +464,7 @@ wnd = function (p) {
 		},
 
 		roundclose: function () {
-			return '<div class="_close roundclosebutton"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
+			return '<div class="_close roundclosebutton tvfocusedzoom"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
 		}
 	}
 
@@ -4920,10 +4920,10 @@ Parameter = function (p) {
 
 				if (self.type == 'valuesmultibig') {
 					input += '<div class="vc_valuecustom_multibig" pid="' + self.id + '">';
-					input += '<div class="vc_valuecustom">';
+					input += '<div class="vc_valuecustom tvfocusedopacity">';
 				}
 				else {
-					input += '<div class="vc_valuecustom" pid="' + self.id + '">';
+					input += '<div class="vc_valuecustom tvfocusedopacity" pid="' + self.id + '">';
 				}
 
 				input += '<div class="vc_textInput table">';
@@ -7664,7 +7664,7 @@ mobsearch = function (el, p) {
 	if (p.mobileSearch && p.app) {
 		window.rifticker.add(() => {
 
-			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
+			el.html('<div class="mobsearch tvfocusedopacity">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
 				p.app.platform.ui.mobilesearch(p)
 			})
@@ -7715,7 +7715,7 @@ search = function (el, p) {
 
 		var elements = [
 
-			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
+			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel tvfocusedopacity">' + (p.icon ||
 				'<i class="fa fa-search" aria-hidden="true"></i>' +
 				'<i class="fas fa-circle-notch fa-spin"></i>') +
 			'</div>',
@@ -7726,7 +7726,7 @@ search = function (el, p) {
 
 			'<div class="searchPanel">' +
 				'<div class="searchPanelWrapper">' +
-					'<div class="searchPanelItem" event="clear">' +
+					'<div class="searchPanelItem tvfocusedopacity" event="clear">' +
 						'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
 					'</div>' +
 				'</div>' +
