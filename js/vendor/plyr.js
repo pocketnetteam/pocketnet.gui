@@ -9266,7 +9266,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
 
-					clbk();
+					//clbk();
 
 				}, null, null, options.app);
 

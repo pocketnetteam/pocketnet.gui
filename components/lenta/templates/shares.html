@@ -1,6 +1,6 @@
 
 
-<% if(typeof boosted == 'undefined' || !boosted) {%>
+<% if(!app.television && (typeof boosted == 'undefined' || !boosted)) {%>
 	<div class="portion">
 <% } %>
 
@@ -35,6 +35,6 @@ i++;
 }) %>
 
 
-<% if(typeof boosted == 'undefined' || !boosted) {%>
+<% if(!app.television && (typeof boosted == 'undefined' || !boosted)) {%>
 </div>
 <% } %>
