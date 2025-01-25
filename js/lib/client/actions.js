@@ -214,7 +214,9 @@ var ActionOptions = {
 
 var errorCodesAndActionsExecutors = {
     wait : function(action){
-        action.rejectWait = (new Date()).addSeconds(60 * 2)
+        
+        if(!action.rejectWait)
+            action.rejectWait = (new Date()).addSeconds(60 * 2)
 
         return Promise.resolve()
     },
