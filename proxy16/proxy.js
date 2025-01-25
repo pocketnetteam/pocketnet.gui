@@ -1417,7 +1417,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								b : timep
 							}
 
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
+							nodeManager.queue(node, method, parameters, direct || options.node ? true : false, {resolve, reject}, time.node)
 
 						})
 
