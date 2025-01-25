@@ -1040,6 +1040,9 @@ var Action = function(account, object, priority, settings){
         if (self.rejected){
 
             if (self.rejectWait && self.rejectWait > new Date()){
+                
+            }
+            else{
                 self.rejectWait = null
                 self.rejected = null
             }
