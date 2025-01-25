@@ -165,36 +165,39 @@ var channel = (function(){
 		}
 
 		var make = function(){
+
+			Circles({
+				target: el.c.find('.bgwallpaper')[0],
+				quantity: 15,
+				radius: {
+					min: 2,
+					max: 400
+				},
+				zIndex: {
+					min: 0,
+					max: 20
+				},
+				hue: {
+					min: 0,
+					max: 180
+				},
+				saturation: {
+					min: 50,
+					max: 100
+				},
+				light: {
+					min: 25,
+					max: 75
+				},
+				alpha: {
+					min: 0.2,
+					max: 0.8
+				}
+			})
+			
 			self.app.platform.sdk.users.getCover(author.address).then(cover => {
 				if(!cover){
-					Circles({
-						target: el.c.find('.bgwallpaper')[0],
-						quantity: 15,
-						radius: {
-							min: 2,
-							max: 400
-						},
-						zIndex: {
-							min: 0,
-							max: 20
-						},
-						hue: {
-							min: 0,
-							max: 180
-						},
-						saturation: {
-							min: 50,
-							max: 100
-						},
-						light: {
-							min: 25,
-							max: 75
-						},
-						alpha: {
-							min: 0.2,
-							max: 0.8
-						}
-					})
+					
 				}
 				else{
 

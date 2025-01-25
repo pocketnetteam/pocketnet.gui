@@ -631,6 +631,9 @@ isios = function () {
     return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || iOS()
 }
 
+istelevision = function(){
+    return window.cordova && window._device && window._device.television()
+}
 
 getbaseorientation = function(){
 	
@@ -1581,17 +1584,24 @@ trydecode = function(s = ''){
 }
 
 articleDecodeTry = function(s = '', nl){
+
+    return trydecode(s)
+
     if(nl) return trydecode(s)
 
     return findAndReplaceLink(trydecode(s), true)   
 }  
 articleDecode = function(s = '', nl){
 
+    return decodeURIComponent(s)
+
     if(nl) return decodeURIComponent(s)
 
     return findAndReplaceLink(decodeURIComponent(s), true)   
 }
 articleEncode = function(s = '', nl){
+
+    return encodeURIComponent(s)
 
     if(nl) return encodeURIComponent(s)
 

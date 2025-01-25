@@ -2020,6 +2020,11 @@ var BastyonApps = function (app) {
             }
         },
         forsearch: function () {
+
+            if(app.television){
+                return []
+            }
+
             return _.map(_.filter(installed, (s) => {
                 return s.includeinsearch
             }), app => {

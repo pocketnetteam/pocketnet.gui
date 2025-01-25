@@ -15,6 +15,7 @@ var post = (function () {
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null, bannerComment, showMoreStatus = false;
 		var allcontentenabled = false
+		var allcontentenabledvideo = false
 		var progressInterval;
 
 		var videoinfoupdateInterval = null
@@ -514,6 +515,7 @@ var post = (function () {
 							self.sdk.videos.save()
 						},
 
+						television : app.television,
 						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
@@ -631,15 +633,19 @@ var post = (function () {
 	
 									if (player.setVolume){
 
-										player.setVolume(window.cordova ? self.sdk.videos.volume : 1)
+										player.setVolume((window.cordova && !self.app.television) ? self.sdk.videos.volume : 1)
 										
 									}
 										
 									else{
 										player.muted = false
 									}
-	
+
+									player.muted = false
+
 								}
+
+								console.log('muted', player)
 
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
@@ -2359,10 +2365,17 @@ var post = (function () {
 				if(allcontentenabled){
 					window.rifticker.add(() => {
 						self.app.el.html.removeClass('allcontent')
+						self.app.mobile.statusbar.background()
+					})
+				}
+
+				if(allcontentenabledvideo){
+					window.rifticker.add(() => {
+						self.app.el.html.removeClass('allcontentvideo')
 					})
 				}
 				
-
+				allcontentenabledvideo = false
 				allcontentenabled = false
 
 			},
@@ -2386,6 +2399,7 @@ var post = (function () {
 				el.wnd = el.c.closest('.wndcontent');
 
 				allcontentenabled = false
+				allcontentenabledvideo = false
 				
 				
 				if (share.itisarticle()){
@@ -2399,12 +2413,22 @@ var post = (function () {
 
 				make()
 
-				if(share && !p.inWnd && share.itisarticle()){
+				if(share && !p.inWnd && share.itisarticle() && !ed.repost){
 
 					allcontentenabled = true
 
 					window.rifticker.add(() => {
 						self.app.el.html.addClass('allcontent')
+						self.app.mobile.statusbar.topfadebackground()
+					})
+				}
+
+				if(share && !p.inWnd && share.itisvideo() && self.app.television && !ed.repost){
+
+					allcontentenabledvideo = true
+
+					window.rifticker.add(() => {
+						self.app.el.html.addClass('allcontentvideo')
 					})
 				}
 

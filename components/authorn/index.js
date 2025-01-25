@@ -200,6 +200,12 @@ var authorn = (function(){
 				}
 			})
 
+			if(self.app.television){
+				method = _.find(lentameta, (v) => {
+					return v.id == 'video'
+				})
+			}
+
 			if(!method){
 				return lentameta[0]
 			}
@@ -219,8 +225,8 @@ var authorn = (function(){
 			default : true,
 			extend : function(params){
 				params.getpin = true
-				params.opensviStream = !isMobile() ? true : null
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensviStream = !isMobile() || self.app.television ? true : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 				
 				return params
 			},
@@ -237,10 +243,10 @@ var authorn = (function(){
 			text : 'e14105',
 			parameter : 'video',
 			extend : function(params){
-				params.video = !isMobile()
-				params.videomobile = isMobile()
+				params.video = !isMobile() || self.app.television
+				params.videomobile = isMobile() && !self.app.television
 
-				params.opensvi = !isMobile() ? actions.openvi : null
+				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 
 				return params
 			},
@@ -560,8 +566,8 @@ var authorn = (function(){
 						uploadTitle : '',
 						caption : '',
 						maxh : 1920,
-						maxw : 640,
-						noresize : true,
+						maxw : 1920,
+						quality : 1,
 						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
 						on : {
 						
@@ -981,9 +987,6 @@ var authorn = (function(){
 				}, function(p){
 
 					
-
-					
-
 					p.el.find('.share').on('click', events.share)
 
 					p.el.find('.uploadwallpapper').on('click', events.uploadwallpapper)
@@ -998,40 +1001,52 @@ var authorn = (function(){
 						return 
 					}
 
+					Circles({
+						target: el.bg.find('.bgwallpaper')[0],
+						quantity: 15,
+						radius: {
+							min: 2,
+							max: 400
+						},
+						zIndex: {
+							min: 0,
+							max: 20
+						},
+						hue: {
+							min: 0,
+							max: 180
+						},
+						saturation: {
+							min: 50,
+							max: 100
+						},
+						light: {
+							min: 25,
+							max: 75
+						},
+						alpha: {
+							min: 0.2,
+							max: 0.8
+						}
+					})
+
+					var me = self.app.platform.psdk.userInfo.getmy()
+
+					if(!author.me) {
+							
+						var blocking = me ? me.relation(author.address, 'blocking') : null
+
+						if (blocking){
+							return
+						}
+
+					}
 
 					self.app.platform.sdk.users.getCover(author.address).then(cover => {
 						if(!cover){
-							Circles({
-								target: el.bg.find('.bgwallpaper')[0],
-								quantity: 15,
-								radius: {
-									min: 2,
-									max: 400
-								},
-								zIndex: {
-									min: 0,
-									max: 20
-								},
-								hue: {
-									min: 0,
-									max: 180
-								},
-								saturation: {
-									min: 50,
-									max: 100
-								},
-								light: {
-									min: 25,
-									max: 75
-								},
-								alpha: {
-									min: 0.2,
-									max: 0.8
-								}
-							})
+							
 						}
 						else{
-
 							p.el.find('.bgwallpaper').attr('image', cover)
 							bgImages(p.el)
 						}
@@ -1145,11 +1160,11 @@ var authorn = (function(){
 
 			alentanavigation: function(clbk){
 
-				/*if (author.deleted || author.reputationBlocked){
+				if (self.app.television){
 					if (clbk)
 						clbk()
 					return 
-				}*/
+				}
 
 				var current = currentLenta()
 
@@ -1431,7 +1446,7 @@ var authorn = (function(){
 
 			whatsnew : function(clbk){
 
-				if(author.me && !self.app.mobileview){
+				if(author.me && !self.app.mobileview && !self.app.television){
 					self.nav.api.load({
 
 						open : true,
@@ -1561,7 +1576,7 @@ var authorn = (function(){
 			upbutton : function(){
 				if(upbutton) upbutton.destroy()
 
-				if(isMobile()) return
+				if(isMobile() || self.app.television) return
 
 				if (el.c)
 					upbutton = self.app.platform.api.upbutton(el.up, {
@@ -1661,6 +1676,7 @@ var authorn = (function(){
 
 			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
+				self.app.mobile.statusbar.background()
 			})
 
 			if (page){
@@ -1781,6 +1797,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
+					self.app.mobile.statusbar.topfadebackground()
 				})
 
 				ed = p.settings.essenseData
@@ -1821,8 +1838,10 @@ var authorn = (function(){
 				if (external) 
 					external.destroy()
 
-				if (href != 'author') 
+				if (href != 'author') {
 					self.app.el.html.removeClass('allcontent')
+					self.app.mobile.statusbar.background()
+				}
 
 				delete self.app.platform.actionListeners.authorn
 

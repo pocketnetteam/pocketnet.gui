@@ -77,7 +77,7 @@ var metadisplay = function(){ %>
 								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount) { %> 
 
 									<span elementsid="sbtnxs-follow" class="sbtnxs">
-										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
+										&middot; <span class="subscribeLabel asubscribe tvfocusedopacity"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe tvfocusedopacity"><%=e('subi')%></span>
 									</span>
 
 								<% } %>
@@ -105,7 +105,7 @@ var metadisplay = function(){ %>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-								<div class="metapanelitem metmenu">
+								<div class="metapanelitem metmenu tvfocusedzoom">
 									<i class="fas fa-ellipsis-h"></i>
 								</div>
 							<% } else { %> 
@@ -617,7 +617,7 @@ var arranges = {
 
 										<div class="itemwr table">
 											<div class="iconwr">
-												<div class="icon">
+												<div class="icon tvfocusedopacity">
 													<i class="fas fa-share-alt"></i>
 												</div>
 											</div>

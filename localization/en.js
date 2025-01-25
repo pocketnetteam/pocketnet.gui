@@ -2798,7 +2798,8 @@ _l.labeltempactionszero = "No pending transactions"
 _l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
 _l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
 _l.application_settings = "Settings"
-_l.application_close = "Close"
+_l.application_close = "Return to the " + appname;
+
 
 _l.application_notexist = "Application not found or application server not responding"
 _l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
@@ -3204,3 +3205,6 @@ _l.uploadwallpapperGiferror = "Gif images are not allowed"
 _l.setcoverquestion = 'Would you like to save this photo as your profile cover?'
 _l.setcoverquestionyes = 'Yes, set cover'
 _l.setcoverquestionno = 'No'
+
+_l.hiddenCommentLabelLink = "The comment has been hidden because it contains a link to an external resource from a user with insufficient rating."
+_l.getpaidsubscription_paidsuccess_removecodition_text = "The author has disabled the ability to issue a privileged access to it. Therefore, previously posted materials for privileged subscribers are available free of charge to everyone."

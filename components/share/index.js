@@ -57,13 +57,13 @@ var share = (function(){
 				
 				el.c.removeClass('minimized')
 
-				make();	
+				makeDebounced();	
 			},
 
 			closeexternal : function(){
 				external = null
 
-				if(!destroying) make();
+				if(!destroying) makeDebounced();
 			},
 
 			getrepost : function(clbk){
@@ -2013,8 +2013,6 @@ var share = (function(){
 
 					renders.repost();
 
-					
-
 				});
 
 				renders.postline();
@@ -2087,6 +2085,7 @@ var share = (function(){
 
 			url : function(clbk){
 
+				console.log("RENDER URL")
 
 				destroyPlayer()
 				
@@ -2120,11 +2119,17 @@ var share = (function(){
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
-								player = _player
+								console.log("player clbk plyr", _player)
 
-								try{
-									player.muted = false
-								}catch(e){}
+								if(_player){
+									player = _player
+
+									try{
+										player.muted = false
+									}catch(e){}
+								}
+
+								
 								
 							}, {
 								denyPeertubeAutoPlay: true,
@@ -2232,7 +2237,8 @@ var share = (function(){
 				})
 
 				if (meta.type == 'peertube') {
-					self.app.platform.sdk.videos.info([url])
+					console.log("updateupdate")
+					self.app.platform.sdk.videos.info([url], true, true)
 						.then(() => rndr())
 						.catch(() => rndr())
 				} else {
@@ -2698,8 +2704,12 @@ var share = (function(){
 		}
 
 		var make = function(){
+			if(destroying) return
+
 			renders.all()
 		}
+
+		var makeDebounced = _.debounce(make, 300)
 
 		var initEvents = function(){
 
@@ -2749,6 +2759,9 @@ var share = (function(){
 
 
 		var destroyPlayer = function(){
+
+			console.log('player', player)
+
 			if (player) {
 
 				if (player.playing){
@@ -2798,7 +2811,23 @@ var share = (function(){
 
 				if(!essenseData.share && !essenseData.dontsave){
 
-					state.load()
+					if(!state.load() && window.project_config.preferredtags && window.project_config.preferredtags.length){
+						if (essenseData.repost || parameters().repost) {
+
+						}
+						else{
+
+							var preferred = self.app.platform.sdk.categories.getbyids(window.project_config.preferredtags, self.app.localization.key)
+
+							var preferredtags = []
+
+							_.each(preferred, (p) => {
+								preferredtags = preferredtags.concat(p.tags)
+							})
+
+							currentShare.tags.set(preferredtags)
+						}
+					}
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2806,7 +2835,7 @@ var share = (function(){
 				if (essenseData.repost || parameters().repost) 
 					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length;
 
 
 				var data = {

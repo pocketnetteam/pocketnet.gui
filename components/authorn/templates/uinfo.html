@@ -24,15 +24,23 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
    
     
 
-    <% if(deep(author, 'data.site')) {%>
+    <% if(deep(author, 'data.site')) {
+        
+        var url = filterXSS(deep(author, 'data.site') || '')
+
+        if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1){
+            url = 'https://' + url
+        }
+        
+        %>
 
         <div class="item site">
             <div class="itemtable">
                 <div class="icon"><i class="fas fa-link"></i></div>
                 
                 <div class="label">
-                    <a elementsid="<%-deep(author, 'data.site')%>" donottrust="true" href="<%-deep(author, 'data.site')%>">
-                        <span><%-filterXSS(deep(author, 'data.site'))%></span>
+                    <a donottrust="true" href="<%-url%>">
+                        <span><%-url%></span>
                     </a>
                 </div>
             </div>
@@ -40,6 +48,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
     <% } %>
 
+    <% if(!app.television) {%>
     <div class="item foraddress">
         <div class="itemtable">
             <div class="icon"><i class="fas fa-th toblockexplorer"></i></div>
@@ -48,6 +57,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
             </div>
         </div>
     </div>
+    <% } %>
 
     <% if(!sUserInfo.deleted) {%>
 

@@ -3,6 +3,7 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
+    "preferredtags" : [],
     "developapps" : [{
 		"id" : "swipelux.app",
 		"version": "0.0.1",
@@ -17,13 +18,13 @@
         "id" : "barteron.pocketnet.app",
         "version": "1.0.0",
         "scope" : "localhost:8080",
-        "develop": true,
         "cantdelete" : true,
+        "develop" : true,
+        "install" : true,
         "name" : "Barteron",
         "grantedPermissions" : ["account", "chat"],
         "includeinsearch" : true,
         "includeminiapps" : true,
-        "install" : true,
         "store" : {"g" : true}
     },{
         "id" : "app.pocketnet.docs",
@@ -49,7 +50,7 @@
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
-	"blockexplorer" : "https://pocketnet.app/blockexplorer/",
+	"blockexplorer" : "https://bastyon.com/blockexplorer/",
     "servers" : {
         "production" : {
             "proxy" : [

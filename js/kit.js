@@ -1279,9 +1279,7 @@ Share = function(lang){
 				return false
 			}
 		},
-		/*clear : function(t){
-			return t.substr(0, 25).toLowerCase().replace(/[^\w]/g, "")
-		},*/
+
 		set : function(tags){
 
 			if(typeof tags == 'undefined'){
@@ -1294,7 +1292,7 @@ Share = function(lang){
 
 						var bycategories = app.platform.sdk.categories.fromTags(tags, self.language.v)
 
-						if (bycategories.categories.length > 2){
+						if (bycategories.categories.length > 2 + (window.project_config.preferredtags || []).length){
 							return false
 						}
 
@@ -1315,14 +1313,14 @@ Share = function(lang){
 
 					if(!tags) return;
 
-						tags = clearTagString(tags)
+					tags = clearTagString(tags)
 
 					var tta = _.uniq(_.clone(this.v).concat(tags))
 
 					if(typeof app != 'undefined'){
 						var bycategories = app.platform.sdk.categories.fromTags(tta, self.language.v)
 
-						if (bycategories.categories.length > 2){
+						if (bycategories.categories.length > 2 + (window.project_config.preferredtags || []).length){
 							return false
 						}
 					}

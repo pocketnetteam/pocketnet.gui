@@ -9,7 +9,7 @@
 
             
                 <div class="tag">
-                    <div class="tagvalue tagcheckgl">
+                    <div class="tagvalue tagcheckgl tvfocusedopacity">
                         <i class="fas fa-hashtag"></i>
                         <span><%- decodeURIComponent(tag.tag) %><% if(tag.count) {%>,&nbsp;<%- compressedNumber(tag.count) %><%}%></span>
                     </div>
@@ -23,12 +23,12 @@
 
     <% if(tags.length > 7) {%>
 
-        <div class="showalltags showhidealltags">
+        <div class="showalltags showhidealltags tvfocusedopacity">
             <i class="fa fa-chevron-down"></i>
             <span class="text"><%=e('e13021')%> (<%=tags.length - 7%>) </span>
         </div>
 
-        <div class="hidealltags showhidealltags">
+        <div class="hidealltags showhidealltags tvfocusedopacity">
             <i class="fa fa-chevron-up"></i>
             <span class="text"><%=e('hide')%></span>
         </div>

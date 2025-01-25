@@ -62,6 +62,12 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
       
+        <resource-file src="resources/android/banner/mipmap-mdpi.png" target="app/src/main/res/drawable-mdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-mdpi.png" target="app/src/main/res/drawable-mdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-hdpi.png" target="app/src/main/res/drawable-hdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xhdpi.png" target="app/src/main/res/drawable-xhdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xxhdpi.png" target="app/src/main/res/drawable-xxhdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xhdpi.png" target="app/src/main/res/drawable/banner.png" />
     </platform>
     <platform name="ios">
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -182,7 +188,7 @@
         </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -211,6 +217,12 @@
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
+
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-feature android:name="android.software.leanback" android:required="true" />
+            <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+        </config-file>
+        
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>

@@ -1,4 +1,4 @@
-<% if(typeof boosted == 'undefined' || !boosted) {%>
+<% if(!app.television && (typeof boosted == 'undefined' || !boosted)) {%>
 <div class="portion">
 <% } %>
 
@@ -65,6 +65,6 @@ _.each(groupshares, function(gs, address){ 	%>
 	
 <% }) %>
 
-<% if(typeof boosted == 'undefined' || !boosted) {%>
+<% if(!app.television && (typeof boosted == 'undefined' || !boosted)) {%>
 	</div>
 <% } %>

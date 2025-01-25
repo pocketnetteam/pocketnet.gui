@@ -134,7 +134,7 @@ var embeding = (function(){
 						clbk()
 				}
 				else{
-					resize(file.base64, ed.maxh || 1080, ed.maxw || 1080, function(resized){
+					resize(file.base64, ed.maxw || 1080, ed.maxh || 1080, function(resized){
 
 						var r = resized.split(',');
 	
@@ -152,7 +152,7 @@ var embeding = (function(){
 	
 						if (clbk)
 							clbk()
-					})
+					}, null, ed.quality)
 				}
 
 				

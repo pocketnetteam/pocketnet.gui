@@ -953,7 +953,7 @@ var Action = function(account, object, priority, settings){
 
                     return reject('actions_waitConfirmation')
 
-                })
+                }, {}, true)
 
             })
         })
@@ -1040,6 +1040,9 @@ var Action = function(account, object, priority, settings){
         if (self.rejected){
 
             if (self.rejectWait && self.rejectWait > new Date()){
+                
+            }
+            else{
                 self.rejectWait = null
                 self.rejected = null
             }
@@ -2017,6 +2020,8 @@ var Account = function(address, parent){
                     return a.id == exported.id
                 })
 
+                if (prevaction && prevaction.completed && !exported.completed) return
+
 
                 var action = (prevaction || new Action(self, {}))
                     action.import(exported)
@@ -2406,6 +2411,7 @@ var Account = function(address, parent){
     var emitFilteredAction = function(action){
         var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : 'relay'))
         var estatus = (status == 'relay' || status == 'sent') ? 'relayorsent' : status
+
 
         if (status && action.id){
             

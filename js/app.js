@@ -133,8 +133,10 @@ Application = function (p) {
 		self.test = true
 	}
 
+	self.television = typeof istelevision == 'undefined' ? false : istelevision()
 	self.boost = !(window.cordova && isios());
-	self.pkoindisable = window.cordova && isios();
+	self.pkoindisable = self.television || (window.cordova && isios());
+	self.paidsubscriptiondisable = window.cordova && isios();
 	self.cutversion = window.cordova && isios();
 
 	self.electronview = typeof _Electron != 'undefined' && _Electron
@@ -351,12 +353,17 @@ Application = function (p) {
 			mobileview = false
 		}
 
+		if (self.television){
+			mobileview = false
+		}
+
 		return mobileview
 	}
 
 	var istouchstyle = function () {
-
+		
 		self.mobileview = istouchstylecalculate()
+		
 
 		var id = window.rifticker.add(() => {
 
@@ -414,6 +421,7 @@ Application = function (p) {
 
 	self.savesupported = function () {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		if(self.television) return false
 		return isElectron || (window.cordova);
 	}
 
@@ -1457,6 +1465,10 @@ Application = function (p) {
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
+		if (self.television){
+			self.el.html.addClass('television')
+		}
+
 		initevents()
 
 		moment.locale(self.localization.key)
@@ -1465,6 +1477,8 @@ Application = function (p) {
 			document.addEventListener('deviceready', function () {
 
 				self.el.html.addClass('cordova')
+
+				
 
 				if (self.curation()) {
 					self.el.html.addClass('curation')
@@ -1974,6 +1988,10 @@ Application = function (p) {
 				if(!self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.addClass('scroll65')
+
+						if (self.mobile.statusbar.status != 'background'){
+							self.mobile.statusbar.background()
+						}
 					})
 				}
 			}
@@ -1981,6 +1999,12 @@ Application = function (p) {
 				if(self.el.html.hasClass('scroll65')){
 					window.requestAnimationFrame(() => {
 						self.el.html.removeClass('scroll65')
+
+						if (self.el.html.hasClass('allcontent') && self.mobile.statusbar.status != 'topfadebackground'){
+							self.mobile.statusbar.topfadebackground()
+						}
+
+						
 					})
 				}
 			}
@@ -2468,7 +2492,7 @@ Application = function (p) {
 		},
 
 		safearea: function () {
-			if (window.cordova) {
+			if (window.cordova && !self.television) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
 				self.margintop = 25
 			}
@@ -2844,6 +2868,20 @@ Application = function (p) {
 					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
 				self.mobile.statusbar.status = 'gallerybackground'
+				
+
+			},
+
+			topfadebackground: function () {
+
+				if (window.StatusBar) {
+
+					StatusBar.overlaysWebView(true);
+					window.StatusBar.backgroundColorByHexString('#00000000');
+					window.StatusBar.styleLightContent()
+				}
+
+				self.mobile.statusbar.status = 'topfadebackground'
 				
 
 			},

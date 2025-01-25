@@ -1113,6 +1113,8 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
+						console.log("LENTA PLAYER CLBK", player)
+
 						if(!el.share) return
 
 						if (player){
@@ -1170,6 +1172,8 @@ var lenta = (function(){
 							selected : 1,
 							options: [1]
 						},
+
+						television : app.television,
 
 						pictureInPictureRequest : function(){
 							
@@ -3512,6 +3516,10 @@ var lenta = (function(){
 					})
 				}
 
+				setTimeout(() => {
+					c()
+				}, 3000)
+
 
 				if (item.type == 'share'){
 					renders.repost(_el, item.key, item.txid, false, () => {
@@ -3525,9 +3533,6 @@ var lenta = (function(){
 
 
 					self.app.platform.papi.comment(item.commentPs.postid, _elcnt, () => {
-
-
-
 						c()
 					}, {jury : true, commentPs : item.commentPs})
 					
@@ -4034,7 +4039,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
+				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || ((essenseData.searchValue || essenseData.searchTags) && !self.app.television)){
 					tpl = 'shares'
 				}
 
@@ -4123,7 +4128,7 @@ var lenta = (function(){
 
 					essenserenderclbk()
 
-					if (video && !isMobile()){
+					if (video && (!isMobile() && !self.app.television)){
 						if(!isotopeinited && !essenseData.horizontal){
 							el.shares.isotope({
 
@@ -5940,6 +5945,8 @@ var lenta = (function(){
 				
 				video = essenseData.video || false
 
+				console.log('video??' ,video)
+
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -6162,8 +6169,13 @@ var lenta = (function(){
 			},
 
 			update : function(){
-				if(el.shares && isotopeinited) el.shares.isotope('layout')
+				if(el.shares && isotopeinited) {
+					setTimeout(() => {
+						el.shares.isotope('layout')
+					}, 200)
+				}
 			},
+
 			
 			init : function(p){
 

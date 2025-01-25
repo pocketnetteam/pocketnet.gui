@@ -43,15 +43,15 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 						<% } else { %> 
 							<div class="items sitenames">
 
-								<div class="item  sitename" >
-									<div elementsid="eventssitename" class="icon" events="sitename">
+								<div class="item sitename " >
+									<div elementsid="eventssitename" class="icon tvfocusedopacity" events="sitename">
 	
 										<img class="header_logo onlylight all noblackallcontent" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
 										<img class="header_logo onlyblackallcontent all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_black.svg">
 											
 									</div>
-									<div elementsid="eventslang" class="label">
-										<div elementsid="menu_localization" class="lang localization">
+									<div elementsid="eventslang" class="label tvfocusedopacity">
+										<div elementsid="menu_localization" class="lang localization tvfocusedopacity">
 											
 											<% if(isMobile()) {%>
 												<%-(lkey.key || '').toUpperCase()%> 
@@ -72,14 +72,14 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 						<div class="items sitenames">
 
 							<div class="item  sitename" >
-								<div elementsid="eventssitename" class="icon" events="sitename">
+								<div elementsid="eventssitename" class="icon tvfocusedopacity" events="sitename">
 
 									<img class="header_logo onlylight all noblackallcontent" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
 									<img class="header_logo onlylight all onlyblackallcontent" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_black.svg">
 										
 								</div>
-								<div elementsid="eventslang" class="label">
-									<div elementsid="menu_localization" class="lang localization">
+								<div elementsid="eventslang" class="label tvfocusedopacity">
+									<div elementsid="menu_localization" class="lang localization tvfocusedopacity">
 										
 										<% if(isMobile()) {%>
 											<%-(lkey.key || '').toUpperCase()%> 
@@ -179,7 +179,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 								</div>-->
 
 
-								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper">
+								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper tvfocusedzoom">
 									<div class="item  right onlyicon activities" events="activities">
 
 										<div class="icon">
@@ -195,7 +195,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 								</div>
 
 								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-									<div class="item  right onlyicon notifications" events="notifications">
+									<div class="item  right onlyicon notifications tvfocusedzoom" events="notifications">
 
 										<div class="icon">
 											<div class="icn">		
@@ -244,7 +244,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 						<% if(state) { %>
 
 							<div class="items workstation">
-								<div elementsid="eventschangeaccount" class="item  right changeaccount" events="changeaccount">
+								<div elementsid="eventschangeaccount" class="item  right changeaccount tvfocusedzoom" events="changeaccount">
 									<div class="icon">
 										<i class="fas fa-sort-down"></i>
 									</div>
@@ -267,18 +267,19 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 							
 						<% if(!state) { %>
 							
+							
 							<div class="items">
-								<div elementsid="eventssignin" class="item  right signin" events="signin">
+								<div elementsid="eventssignin" class="item  right signin tvfocusedopacity" events="signin">
 									<div class="label">
 										<b><%=e('signinmenu')%></b>
 									</div>
 								</div>
 
 							</div>
+							<% if(!app.television) {%>
+							<div class="items">
 
-							<div class="items workstation">
-
-								<div elementsid="eventssignup" class="item right signup" events="signup">
+								<div elementsid="eventssignup" class="item right signup tvfocusedopacity" events="signup">
 
 									<div class="label">
 										<b><%=e('signupmenu')%></b>
@@ -286,6 +287,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 								</div>
 							</div>
+							<% } %>
 
 						<% } %>
 					

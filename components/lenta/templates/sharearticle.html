@@ -94,7 +94,7 @@ var cc = share.renders.captionclear(translated.c);
                 <div class="itemwr table">
                     <div class="iconwr">
                         
-                        <div class="icon">
+                        <div class="icon tvfocusedopacity">
                             <i class="fas fa-share-alt"></i>
                         </div>
                     </div>
@@ -139,7 +139,7 @@ var cc = share.renders.captionclear(translated.c);
     <% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview) && !share.temp) { %>
 				
         <% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-            <div class="metapanelitem metmenu">
+            <div class="metapanelitem metmenu tvfocusedzoom">
                 <i class="fas fa-ellipsis-h"></i>
             </div>
         <% } else { %> 
@@ -161,7 +161,7 @@ var cc = share.renders.captionclear(translated.c);
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
                 <span elementsid="sbtnxs-follow" class="sbtnxs">
-                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
+                    &middot; <span class="subscribeLabel asubscribe tvfocusedopacity"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe tvfocusedopacity"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
                     
                     <% if(state && !my && user.address.value && me) {
                         
@@ -281,7 +281,7 @@ var cc = share.renders.captionclear(translated.c);
 
         <% if(typeof preview == 'undefined' || !preview) {%>
 
-        <div class="iconwrapper sharesocial">
+        <div class="iconwrapper sharesocial tvfocusedopacity">
             <i class="fas fa-share-alt"></i>
         </div>
 
