@@ -18,6 +18,7 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
+        "packl": "electron-builder -l --dir --x64",
         "build": "npm run build:proxy16 && npm run dev:bastyon",
         "build:proxy16": "cd proxy16 && npm run build",
         "dist": "electron-builder -w --x64 --ia32 -p never",
@@ -36,8 +37,8 @@
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=Bastyon",
         "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/ -project=Bastyon",
-        "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
-        "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
+        "dev:bastyon": "node minimize.js -prodaction=false -path=/ -project=Bastyon",
+        "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/ -project=Bastyon",
         "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/"
     },
     "devDependencies": {
