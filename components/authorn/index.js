@@ -40,6 +40,11 @@ var authorn = (function(){
 
 				})
 
+				window.rifticker.add(() => {
+					self.app.el.html.removeClass('allcontent')
+					self.app.mobile.statusbar.background()
+				})
+
 				setTimeout(() => {
 
 					if (upbutton) upbutton.destroy()
@@ -171,6 +176,9 @@ var authorn = (function(){
 
 				el.c.removeClass('opensvishowedend')
 				el.c.addClass('opensvishowedWillremoved')
+
+				self.app.el.html.addClass('allcontent')
+				self.app.mobile.statusbar.topfadebackground()
 
 				renders.upbutton()
 				renders.post(null)
