@@ -65,6 +65,7 @@ var Nodemanager = function(p){
     var commonnotinitedInterval = null
     var queue = []
     var queueInterval = null
+    var cachedStatusNodes = null
 
     var minnodescount = global.MIN_NODES_COUNT || 1
     var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
@@ -855,7 +856,7 @@ var Nodemanager = function(p){
 
         return new Promise((resolve, reject) => {
 
-            db.remove({ version: {$in : ['0.22.0', '0.22.1', '0.21.1', '0.21.2', '0.21.3', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
+            db.remove({ version: {$in : ['0.22.6', '0.22.5', '0.22.4', '0.22.3', '0.22.2', '0.22.0', '0.22.1', '0.21.1', '0.21.2', '0.21.3', '0.20.29', '0.20.28', '0.20.27', '0.20.26', '0.20.25', '0.20.24', '0.20.23', '0.20.22']}  }, { multi: true }, function (err, numRemoved) {
 
                 if(err) return reject(err)
                 
@@ -1002,6 +1003,7 @@ var Nodemanager = function(p){
         self.remap()
 
         cachedchain = null
+        cachedStatusNodes = null
 
         if (findInterval) {
             clearInterval(findInterval)
@@ -1165,9 +1167,23 @@ var Nodemanager = function(p){
 
     self.waitreadywithrating = function(){
 
+        if(cachedStatusNodes && cachedStatusNodes + 120000 > Date.now()){
+            return Promise.resolve()
+        }
+
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
-        }, 30, 10000)
+        }, 30, 10000).then(() => {
+
+            if(inited && self.initednodeswithrating().length){
+                cachedStatusNodes = Date.now()
+            }
+            else{
+                cachedStatusNodes = null
+            }
+
+            return Promise.resolve()
+        })
     }
 
     self.waitready = function(){

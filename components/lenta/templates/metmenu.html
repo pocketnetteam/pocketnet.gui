@@ -164,15 +164,12 @@ if(share){
 
 	m.push('opennewwindow');
 
-	
-
 	if(share.address && user.address.value && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
 		var me = psdk.userInfo.getmy()
 
-		console.log("meme", me)
 
 		if (my){
 
@@ -200,7 +197,7 @@ if(share){
 		}
 
 
-		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
+		if (my && (!share.time || share.time > (new Date()).addHours(-24 * 120) )){
 			m.push('edit')
 		}
 
@@ -237,6 +234,10 @@ if(share){
 				m.unshift('block')
 			}
 
+		}
+
+		if(my && share.delayed() && app.caneditdelaypost){
+			m = ['remove', 'edit']
 		}
 	}
 

@@ -383,7 +383,7 @@ var easynode = (function(){
 			},
 
 			wnd : {
-				class : 'wndeasynode withoutButtons normalizedmobile',
+				class : 'wndeasynode withoutButtons normalizedmobile maxheight',
 			}
 		}
 	};

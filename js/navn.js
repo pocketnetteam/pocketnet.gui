@@ -22,6 +22,10 @@ Nav = function(app)
 		links : true,
 	}
 
+	if (history.scrollRestoration) {
+		history.scrollRestoration = "manual";
+	}
+
 	var hostname = window.location.hostname
 
 	var electronopen = false
@@ -32,6 +36,8 @@ Nav = function(app)
 	if (_OpenApi){
 		defaultpathname = 'openapi.html'
 	}
+
+	self.initialHistoryLength = history.length
 
 	var protocol = null;
 
@@ -155,8 +161,13 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref', 'pc']);
+				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
+				if(np.video || np.read || np.audio || np.r || np.fx || np.id){
+					href = khref + collectParameters({
+						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read, id : np.id
+					})
+				}
 
 			var wb = false;
 
@@ -175,7 +186,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.audio && !np.read && !np.r){
+				if (khref == indexpage && !np.fx && !np.video && !np.audio && !np.read && !np.r && !np.fx){
 					//// 
 					backManager.clearAll()
 				}
@@ -184,14 +195,24 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r);
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx || np.id);
 
-	
 					if (needadd){
 	
 						var riobj = removeEqualRIObj(backManager.chain, {
 							href : href
 						})
+
+						if(!riobj && np.fx && backManager.chain.length > 1){
+							var c0 = backManager.chain[0]
+
+							if (c0.href.split('?')[0] == khref){
+								riobj = {
+									el : c0,
+									index : 1
+								}
+							}
+						}
 
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
@@ -239,19 +260,19 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
-			/*if(!bp){
+			if(!bp){
 
 				if (self.dynamic && !module.find(lhref)){
 					bp = deep(app, 'backmap.authorn') 
 				}
-			}*/
+			}
 
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
 
-				/*if (self.dynamic && !module.find(href)){
+				if (self.dynamic && !module.find(href)){
 					if(bp.childrens.indexOf('authorn') > -1) return true
-				}*/
+				}
 			}
 			else{
 				
@@ -555,6 +576,8 @@ Nav = function(app)
 
 						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
+
+							app.mobile.removescrollmodedown()
 						}
 							
 
@@ -621,6 +644,8 @@ Nav = function(app)
 
 							app.actions.scrollToTop()
 
+							app.mobile.removescrollmodedown()
+
 						}
 						catch(e){
 							console.error(e)
@@ -646,9 +671,10 @@ Nav = function(app)
 							}
 							
 
-							if (p.goback){
+							/*if (p.goback){
+								console.log("GOBACKSCROLL")
 								app.actions.scroll(p.goback.scroll)
-							}
+							}*/
 
 							c(a, b, d)
 						}
@@ -680,6 +706,8 @@ Nav = function(app)
 			else
 			{
 				app.actions.scrollToTop()
+
+				app.mobile.removescrollmodedown()
 
 				p.clbk(null, p);
 			}
@@ -872,24 +900,30 @@ Nav = function(app)
 				if(map.now === true) return true;
 			})	
 			
-			
+
 			lazyEach({
 				array : map,
 				sync : false,
 				action : function(p){
 					var obj = p.item;
 
+					if(obj.dontwait){
+						if (p.success)
+							p.success();
+					}
+
 					core.load({
 						href : obj.href,
 						open : true,
 						clbk : function(error)
 						{
+
 							if(error)
 							{
 								
 							}
 
-							if (p.success)
+							if (p.success && !obj.dontwait)
 								p.success();
 						}
 					})
@@ -1170,34 +1204,122 @@ Nav = function(app)
 
 				if(!external)
 				{
-					if(link.attr('donottrust'))
-					{
+			
+					if (link.attr('donottrust')){
 						link.off('click').on('click', function(e){
 							var href = $(this).attr('href');	
 
 							app.mobile.vibration.small()
 
-							if (href.indexOf('http') == -1) href = 'https://' + href
+							var openanother = function(){
+								self.api.load({
+									open : true,
+									id : 'anothersite',
+									inWnd : true,
 
-							self.api.load({
-								open : true,
-								id : 'anothersite',
-								inWnd : true,
+									essenseData : {
+										link : href
+									}
+								})
+							}
 
-								essenseData : {
-									link : href
+							app.apps.get.applicationsSearchOld(href).then(apps => {
+
+								if(href.indexOf('http') == -1) href = 'https://' + href
+
+								if(apps.length == 0){
+									openanother()
 								}
+								else{
+									var application = apps[0]
+									var scope = application.manifest.scope.replace('https://', '')
+
+									var newpath = href.replace('https://', '').replace('http://', '').replace(scope, '')
+
+									if (newpath[0] == '/') newpath = newpath.substring(1)
+
+									var pth  = 'application?id=' + application.manifest.id + (newpath.length ? '&p=' + hexEncode(newpath): '')
+
+									if(app.apps.get.applicationExternalLink(scope)){
+										sitemessage(app.localization.e('redirectminiappsuccess', application.manifest.name))
+
+										//app.apps.openInWnd(application, null, hexEncode(newpath))
+										self.api.go({
+											href : pth,
+											history : true,
+											open : true
+										})
+
+										return
+									}
+									
+
+									new dialog({
+										header: app.localization.e('askdefaultapplink', application.manifest.name),
+										btn1text: app.localization.e('dyes'),
+										btn2text: app.localization.e('dno'),
+										nomoreask : app.localization.e('nomoreaskdefaultapplink', {name : application.manifest.name, scope : scope}),
+										class: 'zindex',
+						
+										success: function (d) {
+
+											if(d.nomoreask){
+												app.apps.set.applicationExternalLink(scope, application.manifest.id)
+											}
+
+											//app.apps.openInWnd(application, null, hexEncode(newpath))
+
+
+											self.api.go({
+												href : pth,
+												history : true,
+												open : true
+											})
+
+											
+										},
+						
+										fail: function () {
+											openanother()
+										}
+									})
+
+									
+
+									////dialog
+
+									
+
+									
+
+
+									//
+
+								}
+
+								
+		
 							})
+
+
+							
+
+							
 
 
 							return false;
 						})
-
+	
 					}
 					else
 					{
 						core.externalTarget(link)
 					}
+					
+
+					
+
+					
 					
 				}
 				else
@@ -1626,8 +1748,6 @@ Nav = function(app)
 				};
 			}
 
-			
-
 			core.openInitialModules(function(){
 
 				p.open = true;
@@ -1724,6 +1844,7 @@ Nav = function(app)
 	self.relations = relations;
 	self.current = current
 	self.thisSiteLink = core.thisSiteLink
+	self.backManager = backManager
 
 	return self;
 }

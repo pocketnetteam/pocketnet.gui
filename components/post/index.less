@@ -17,6 +17,27 @@
 	background: transparent;
 }
 
+.poctelc{
+	.lockedaccount,
+	.empty{
+		text-align: center;
+		padding : 10 * @rhythm;
+
+		span{
+			font-size: 2em;
+			font-weight: 100;
+		}
+
+		&.allb{
+			background: rgb(var(--background-main));
+			margin: 0 auto;
+			border-radius: 12px;
+
+		}
+	}
+
+}
+
 #post{
 	background: rgb(var(--background-main));
 
@@ -58,9 +79,6 @@
 		&.allb{
 			background: rgb(var(--background-main));
 			margin: 0 auto;
-			margin-top : 10 * @rhythm;
-			max-width: 400px;
-
 			border-radius: 12px;
 		}
 	}
@@ -451,6 +469,21 @@
 			margin-left: 0.25em;
 			padding: 0 0.5em;
 			overflow: hidden;
+
+			#transactionview{
+				height: auto;
+			}
+
+			.inputWrapper{
+				button{
+					background: transparent;
+					border : 0;
+				}
+
+				.emojipicker{
+					width: 35px;
+				}
+			}
 
 			.toggle-chat {
 				background: rgba(0, 0, 0, 0.04);
@@ -1111,6 +1144,51 @@ html.mobileview{
 	}
 }
 
+html.allcontentvideo{
+	#post{
+		&.videomainpost{
+			.forurl{
+				margin-bottom: 4 * @rhythm;
+			}
+			&.recommendationsenabled{
+				.share{
+					max-width: 100%;
+				}
+
+				.postWrapper{
+					display: block;
+				}
+
+				.recomandationsFromContent{
+					margin-left: 0;
+					width: 100%;
+					max-width: 100%;
+				}
+			}
+
+			.video-js{
+				max-height: 100vh;
+				height: 100vh;
+			}
+
+			.jsPlayerLoading,
+			.js-player{
+				max-height: 100vh;
+				height: 100vh;
+			}
+
+			.videoWrapper{
+				border-radius: 0;
+			}
+
+			.forurl .url{
+				border-radius: 0;
+			}
+
+			
+		}
+	}
+}
 
 
 
@@ -1167,6 +1245,7 @@ html.mobileview{
 
 				&:not(.verticalcover){
 					height: auto;
+					contain: none;
 
 					.translateApi{
 			

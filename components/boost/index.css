@@ -208,6 +208,18 @@
   background: #f0b811;
   border-radius: 5px;
 }
+.wndboostpr .wndinner {
+  width: 90%;
+  max-width: 860px;
+  height: 95%;
+}
+.wndboostpr #boost .header {
+  margin-top: 0;
+  border-top: 0;
+}
+.wndboostpr #boost .container {
+  padding-top: 0;
+}
 @media only screen and (max-width: 768px) {
   #boost {
     padding: 0.5em 1em;

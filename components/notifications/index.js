@@ -210,8 +210,7 @@ var notifications = (function(){
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
 							}, function(){
 
-								/*if(!self.app.mobileview)
-									self.closeContainer()*/
+								if(self.app.television) self.closeContainer()
 							})
 						}
 					})

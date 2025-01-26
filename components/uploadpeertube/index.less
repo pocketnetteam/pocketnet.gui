@@ -81,10 +81,32 @@
         }
     }
 
+    .quotacontent{
+        
+        padding : @rhythm 2 * @rhythm;
+        border-radius: 16px;
+        background: linear-gradient(94.23deg,#70005a22 12.41%,#5f6b8a11 32.55%,#14325a33 89.95%);
+        text-align: center;
+
+        span{
+            font-size: 0.8em;
+
+            &.nm{
+                font-weight: 700;
+            }
+        }
+    }
+
     .uploadRow {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .quotafieldcontainer{
+            flex-grow: 1;
+            width: 80%;
+            position: relative;
+        }
 
         .upload-field-container {
             flex-grow: 1;
@@ -110,7 +132,7 @@
         .inputWrapper {
             height: 120px;
             background: rgb(var(--background-secondary-theme));
-            border-radius: 6px;
+            border-radius: 16px;
             padding: 3 * @rhythm;
             text-align: center;
 
@@ -397,6 +419,7 @@
 
         .uplsection {
             padding: 2 * @rhythm;
+            padding-bottom: 4 * @rhythm;
             border-radius: 6px;
 
             .caption {

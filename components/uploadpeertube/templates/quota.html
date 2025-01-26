@@ -1,0 +1,5 @@
+<% if(quota.quotanow < 2 * 1024 * 1024 * 1024) {%>
+<div class="quotacontent">
+    <span><%-e('quotanow')%></span> <span class="nm"><%-formatBytes(quota.quotanow)%></span>
+</div>
+<% } %>

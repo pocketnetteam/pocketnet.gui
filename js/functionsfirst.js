@@ -141,8 +141,17 @@ edjsHTMLCnt = function (a, app) {
 
 		var ftext = filterXSS(text, {
 			stripIgnoreTag: true,
+            onTag : function(tag, html, options){
+                if(tag == 'a'){
+                    if(html == '</a>') return
+                    if(!options.isWhite) return ''
+
+                    return html.replace('>', ' cordovalink="_system" donottrust="true">')
+
+                }
+            },
 			whiteList: {
-				a: ["href", "title", "target", 'cordovalink'],
+				a: ["href", "title", "target", 'cordovalink', 'donottrust'],
 				br: ["style"],
 				b: ["style"],
 				span: ["style"],
@@ -347,7 +356,7 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				level: data.level,
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
@@ -391,9 +400,9 @@ edjsHTMLCnt = function (a, app) {
 			return _.map(data, function (i) {
 				var nd = { ...i }
 
-				nd.url = fu(nd.url)
+				nd.url = fu(nd.url, true)
 
-				if (nd.caption) nd.caption = fu(nd.caption)
+				if (nd.caption) nd.caption = fu(nd.caption, true)
 
 				return nd
 			})
@@ -404,11 +413,11 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			if (data.file) {
 				nd.file = { ...data.file }
-				nd.file.url = fu(nd.file.url)
+				nd.file.url = fu(nd.file.url, true)
 			}
 
 			return nd
@@ -419,22 +428,22 @@ edjsHTMLCnt = function (a, app) {
 
 			return {
 				caption: fu(data.caption),
-				text: fu(data.text)
+				text: fu(data.text, true)
 			}
 
 		},
 
 		code: function (data, fu) {
 			return {
-				code: fu(data.code)
+				code: fu(data.code, true)
 			}
 		},
 
 		warning: function (data, fu) {
 
 			return {
-				title: fu(data.title),
-				message: fu(data.message),
+				title: fu(data.title, true),
+				message: fu(data.message, true),
 			}
 
 		},
@@ -443,16 +452,16 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.link = fu(nd.link)
+			nd.link = fu(nd.link, true)
 
 			if (data.meta) {
 				nd.meta = { ...data.meta }
-				nd.meta.title = fu(nd.meta.title)
-				nd.meta.description = fu(nd.meta.description)
+				nd.meta.title = fu(nd.meta.title, true)
+				nd.meta.description = fu(nd.meta.description, true)
 
 				if (data.meta.image) {
 					nd.meta.image = { ...data.meta.image }
-					nd.meta.image.url = fu(nd.meta.image.url)
+					nd.meta.image.url = fu(nd.meta.image.url, true)
 				}
 			}
 
@@ -464,10 +473,10 @@ edjsHTMLCnt = function (a, app) {
 
 			var nd = { ...data }
 
-			nd.embed = fu(nd.embed)
-			nd.source = fu(nd.source)
+			nd.embed = fu(nd.embed, true)
+			nd.source = fu(nd.source, true)
 
-			if (nd.caption) nd.caption = fu(nd.caption)
+			if (nd.caption) nd.caption = fu(nd.caption, true)
 
 			return nd
 		},
@@ -622,6 +631,9 @@ isios = function () {
     return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || iOS()
 }
 
+istelevision = function(){
+    return window.cordova && window._device && window._device.television()
+}
 
 getbaseorientation = function(){
 	
@@ -956,14 +968,14 @@ getcommonlinkProtocol = function(){
 
 formatInternalLinkReverse = function(value = ''){
 
-    value = value.toLowerCase()
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var url = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-        var cleared = value.replace('http://', '').replace('https://', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
+        var cleared = value.replace('http://', '').replace('https://', '').replace('www.', '').replace(protocol + '://', '').replace(window.location.host + window.pocketnetpublicpath, '').replace(url + '/', '')
 
         if(cleared == url || cleared == '') {
 
@@ -982,10 +994,9 @@ formatInternalLinkReverse = function(value = ''){
 
 formatInternalLink = function(value = ''){
 
-    value = value.toLowerCase()
-
-
     if(thislink(value)){
+
+        value = value.toLowerCase()
 
         var protocol = ((window.project_config || {}).protocol || 'bastyon')
         var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
@@ -1004,10 +1015,10 @@ formatInternalLinkHref = function(value = ''){
 
     if(((typeof _Electron != 'undefined' && _Electron) || window.cordova)) return value
 
-    value = value.toLowerCase()
-
 	try {
 		if(thislink(value)){
+
+            value = value.toLowerCase()
 
             var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
@@ -1025,7 +1036,7 @@ formatInternalLinkHref = function(value = ''){
             //url.protocol = window.location.protocol
             //url.host = window.location.host
 
-            return value.replace(url.protocol + "//" + url.host + '/', getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
+            return value.replace(url.protocol + "//" + url.host + window.pocketnetpublicpath, getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath)
 			
 			
 		}
@@ -1043,9 +1054,17 @@ thislink = function (_url = '') {
 
     _url = _url.toLowerCase()
 
-    var host = window.location.host || ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
+    var host = ((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))
 
-    if(_url.indexOf(getcommonlinkProtocol() + '//' + host + window.pocketnetpublicpath) == 0) return true
+    if (_url.indexOf("/embedvideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
+        return false;
+    }
+
+
+    if(_url.indexOf(getcommonlinkProtocol() + '//' + window.location.host + window.pocketnetpublicpath) == 0) return true
+    if(_url.indexOf(getcommonlinkProtocol() + '//' + host) == 0) return true
+
+    if(_url.indexOf(getcommonlinkProtocol() + '//www.' + host) == 0) return true
     
     var url = {}
 
@@ -1060,9 +1079,6 @@ thislink = function (_url = '') {
         p: [((window.testpocketnet ? (window.project_config || {}).turl : (window.project_config || {}).url))]
     }
 
-    if (_url.indexOf("/embedVideo.php") > -1 || _url.indexOf("/docs") > -1 || _url.indexOf("/blockexplorer") > -1) {
-        return false;
-    }
 
     if (_url.indexOf(((window.project_config || {}).protocol || 'bastyon') +  '://') > -1) return true
 
@@ -1566,3 +1582,28 @@ trydecode = function(s = ''){
 
     return r
 }
+
+articleDecodeTry = function(s = '', nl){
+
+    return trydecode(s)
+
+    if(nl) return trydecode(s)
+
+    return findAndReplaceLink(trydecode(s), true)   
+}  
+articleDecode = function(s = '', nl){
+
+    return decodeURIComponent(s)
+
+    if(nl) return decodeURIComponent(s)
+
+    return findAndReplaceLink(decodeURIComponent(s), true)   
+}
+articleEncode = function(s = '', nl){
+
+    return encodeURIComponent(s)
+
+    if(nl) return encodeURIComponent(s)
+
+    return encodeURIComponent(findAndReplaceLinkClearReverse(s))
+}    

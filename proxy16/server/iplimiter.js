@@ -7,12 +7,12 @@ var Iplimiter = function(p){
     
     var limiter = require('lambda-rate-limiter')({
         interval: p.interval,
-        uniqueTokenPerInterval: 500 
+        uniqueTokenPerInterval: 300 
     });
 
     var self = this;
 
-    var count = p.count || 500;
+    var count = p.count || 300;
     var blacklistcount = p.blacklistcount || 3;
 
     var temp = {
@@ -46,7 +46,6 @@ var Iplimiter = function(p){
             '::ffff:51.250.104.218' : true,
             '::ffff:51.250.41.252' : true,
             '::ffff:51.250.73.97' : true,
-
             '::ffff:64.235.40.47' : true,
             '::ffff:64.235.42.75' : true,
             '::ffff:64.235.50.17' : true,

@@ -18,6 +18,7 @@ var leftpanel = (function(){
 
 			_.each(s, function(v, k){
 
+
 				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
 				if(v > 99) v = '99'
@@ -65,6 +66,10 @@ var leftpanel = (function(){
 
 				if(!el.c) return;
 
+				if(self.app.television){
+					return
+				}
+
 				self.shell({
 					name :  'best',
 					data : {},
@@ -102,11 +107,15 @@ var leftpanel = (function(){
 
 				self.app.user.isState(function(state){
 
-					if(isMobile() && pathname != 'index'){
+					if((isMobile() && pathname != 'index')){
 						el.c.addClass('hidden')
 					}
 					else{
 						el.c.removeClass('hidden')
+
+						if(self.app.television){
+							return
+						}
 
 						self.shell({
 
@@ -215,6 +224,11 @@ var leftpanel = (function(){
 						navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
 						sitemessage(self.app.localization.e('copybuiltfrom'));
 					});
+
+
+					_p.el.find('.blockexplorer').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+					})
 
 					if(clbk) clbk()
 				})

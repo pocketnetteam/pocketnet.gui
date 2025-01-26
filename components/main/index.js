@@ -79,10 +79,20 @@ var main = (function(){
 				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
 			},
+			
 			{
 				link : "index?r=best",
 				label : () => self.app.localization.e('e13138'),
 				value : 'best'
+			},
+
+			{
+				link : "index?r=jury",
+				label : () => self.app.localization.e('jury'),
+				value : 'jury',
+				if : function(){
+					return app.platform.sdk.user.isjury()
+				}
 			},
 		]
 		
@@ -93,13 +103,15 @@ var main = (function(){
 				var pss = parameters()
 
 				var r = pss.r || 'index'
-				var video = pss.video || false
+				var video = pss.video || self.app.television || false
 				var read = pss.read || false
 				var audio = pss.audio || false
 
 				if(video) r = 'video'
 				if(read) r = 'read'
 				if(audio) r = 'audio'
+
+				console.log('currentModeKey', r)
 
 				return r
 			},
@@ -132,6 +144,8 @@ var main = (function(){
 				var r = actions.currentModeKey()
 
 				var value = _.find(_modes, (m) => m.value == r)
+
+				console.log('actions.currentModeKey', r ,value)
 
 				return {
 					value : value ? value.value : null,
@@ -166,7 +180,7 @@ var main = (function(){
 
 			addbuttonscroll  : function(){
 
-				if (self.app.lastScrollTop > 400){
+				if (self.app.lastScrollTop > 1200){
 					if(!addbuttonShowed)
 						el.addbutton.addClass('scrollactive')
 
@@ -240,8 +254,6 @@ var main = (function(){
 				}, 350)
 
 				
-
-
 				self.nav.api.changedclbks()
 
 				if(lenta && lenta.update) lenta.update()
@@ -304,7 +316,10 @@ var main = (function(){
 
 		var load = {
 			posts : function(clbk, start, count){
-				self.app.platform.sdk.search.get(searchvalue, 'posts', start, count, fixedBlock, function(r){
+
+				
+
+				self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', start, count, fixedBlock, function(r){
 
 					clbk(r.data);
 
@@ -447,7 +462,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !audiomain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
+				if (!isMobile() && !videomain && !readmain && !audiomain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted() && !self.app.television){
 
 					//el.c.removeClass('wshar')
 
@@ -700,7 +715,7 @@ var main = (function(){
 					if (searchvalue){
 						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
+						self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', 0, 10, null, function(r, block){
 
 							fixedBlock = block
 	
@@ -804,17 +819,18 @@ var main = (function(){
 							searchTags : searchtags,
 							read : readmain,
 							audio : audiomain,
-							video :  videomain && !isMobile(),
-							videomobile : videomain && isMobile(),
+							video :  videomain && (!isMobile() || self.app.television),
+							videomobile : videomain && isMobile() && !self.app.television,
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
+							fixposition : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
 							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable && mode != 'jury',
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
@@ -833,9 +849,9 @@ var main = (function(){
 							cancelsearch : function(){
 								var backlink = 'index'
 
-								if (parameters().video) backlink = 'index?video=1'
-								if (parameters().read) backlink = 'index?read=1'
-								if (parameters().audio) backlink = 'index?audio=1'
+								if (parameters().video || self.app.television) backlink = 'index?video=1'
+								if (parameters().read && !self.app.television) backlink = 'index?read=1'
+								if (parameters().audio && !self.app.television) backlink = 'index?audio=1'
 
 
 								self.nav.api.load({
@@ -872,9 +888,9 @@ var main = (function(){
 								
 									el.c.addClass('opensvishowed')
 
-									setTimeout(() => {
-										el.c.addClass('opensvishowedend')
-									}, 300)
+									/*setTimeout(() => {
+										
+									}, 500)*/
 
 								})
 
@@ -884,7 +900,6 @@ var main = (function(){
 								
 									if (upbackbutton) upbackbutton.destroy()
 
-									if(typeof _Electron == 'undefined' || !_Electron){
 										setTimeout(function(){
 										
 											upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
@@ -906,9 +921,10 @@ var main = (function(){
 										setTimeout(function(){
 											upbackbutton.apply()
 										},300)
-									}
 
-									renders.post(id)
+									renders.post(id, function(){
+										el.c.addClass('opensvishowedend')
+									})
 
 									self.nav.api.history.addParameters({
 										v : id
@@ -958,9 +974,13 @@ var main = (function(){
 					})	
 			},
 
-			post : function(id){
+			post : function(id, clbk){
 
-				if(!el || !el.c) return
+				if(!el || !el.c) {
+					if(clbk) clbk()
+
+						return
+				}
 
 				if (!id){
 
@@ -972,6 +992,8 @@ var main = (function(){
 
 					el.c.find('.renderposthere').html('')
 
+					if(clbk) clbk()
+
 				}
 
 				else{
@@ -979,6 +1001,8 @@ var main = (function(){
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
+
+						if(clbk) clbk()
 					}, {
 						video : true,
 						showrecommendations : true,
@@ -1129,15 +1153,15 @@ var main = (function(){
 			try {
 				localStorage['lentakey'] = parameters().r || 'index'
 			
-				if (parameters().video){
+				if (parameters().video || self.app.television){
 					localStorage['lentakey'] = 'video'
 				}
 
-				if (parameters().read){
+				if (parameters().read && !self.app.television){
 					localStorage['lentakey'] = 'read'
 				}
 
-				if (parameters().audio){
+				if (parameters().audio && !self.app.television){
 					localStorage['lentakey'] = 'audio'
 				}
 			}
@@ -1199,6 +1223,10 @@ var main = (function(){
 				var ncurrentMode = parameters().r || 'common';
 
 				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : parameters().audio ? 'audio' : (parameters().r || 'index')
+
+				if(self.app.television){
+					nlentakey = 'video'
+				}
 
 				self.app.Logger.info({
 					actionId: 'SELECT_FEED_SECTION',
@@ -1363,7 +1391,7 @@ var main = (function(){
 
 				if((_s.v || _s.s) && (isMobile())){
 
-					self.nav.api.load({
+					/*self.nav.api.load({
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
@@ -1371,7 +1399,7 @@ var main = (function(){
 						fade : self.app.el.content
 					})
 
-					return 
+					return */
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1398,6 +1426,7 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
 
 				showCategories(false)
 
@@ -1542,11 +1571,11 @@ var main = (function(){
 					result = {}
 				}
 
-				videomain = parameters().video ? true : false
+				videomain = (parameters().video || self.app.television) ? true : false
 				
-				readmain = parameters().read ? true : false
+				readmain = (parameters().read && !self.app.television) ? true : false
 
-				audiomain = parameters().audio ? true : false
+				audiomain = (parameters().audio && !self.app.television) ? true : false
 
 				if(readmain) {
 					videomain = false
@@ -1557,7 +1586,7 @@ var main = (function(){
 					videomain = false
 				}
 
-				if(videomain && !isMobile()){
+				if(videomain && (!isMobile() || self.app.television)){
 					window.rifticker.add(() => {
 						el.c.addClass('videomain')
 					})

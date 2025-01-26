@@ -752,6 +752,59 @@ var socialshare2 = (function(){
 				}, 200)
 			})
 
+			el.c.find('.makepost .button').on('click', function(e){
+
+				e.target.blur();
+				self.app.mobile.vibration.small()
+
+				self.app.platform.sdk.user.stateAction(() => {
+
+					var p = {dontsave : true}
+
+					p.description = '' 
+					
+
+					if (ed.sharing){
+
+						if (ed.sharing.title){
+							p.description = p.description + superXSS(ed.sharing.title) + '\n'
+						}
+
+						if (ed.sharing.text && ed.sharing.text.body){
+							p.description = p.description + superXSS(ed.sharing.text.body) + '\n'
+						}
+
+						p.images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
+
+						p.images = _.map(p.images, (im) => {
+							return superXSS(im)
+						})
+
+						p.tags = ed.sharing.tags || []
+					}
+					
+					if (ed.url){
+						p.url = self.app.nav.api.history.removeParametersFromHref(superXSS(ed.url), ['ref'])
+
+						if(p.description != '') p.description = p.description + '\n'
+
+						p.description = p.description + p.url
+					}
+
+					self.app.platform.ui.share(p)
+
+					setTimeout(function(){
+						self.closeContainer()
+					}, 200)
+
+				})
+				
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
+			})
+
 			el.c.find('.chat .button').on('click', function(){
 
 				if (ed.url){

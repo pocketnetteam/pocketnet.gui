@@ -1,4 +1,5 @@
-var electron = null, fs, url, path, https;
+var electron = null,
+    fs, url, path, https;
 
 window.project_config || (window.project_config = {})
 
@@ -30,207 +31,211 @@ Platform = function (app, listofnodes) {
 
     self.lastblocktime = null
     self.lasttimecheck = null
-    
-    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3", "COCET", "OTCOC", "OTCOCAC", "OTCAC", "COCATb", "O4KO", "B_POT", "XYI", "O4KE", "O4KYET", "CYHYTb"], (s) => {return s.toLowerCase()})
+
+    self.bwdictionary = _.map(["masturbation", "ussalovo", "usralovo", "porevo", "naebalovo", "podralovo", "B_HECO3HAHKE", "B_HE3HAHKE", "XEPOTA", "XEPOBOE", "ebanat", "uyebanets", "XEPOBOE", "XYEBOE", "pizdabol", "HOC_B_KAKEHE", "s_pekla_na_huy", "XEP_TE_B_HOC", "KAKAXA", "KAKA_HA_XEPE", "XEP_B_KAKE", "HOCOM_B_XEP", "HOCOM_B_KAKEH", "razblyadko", "puki_puki", "zablyadko", "eblanko", "perdelko", "ohuelko", "zalupko", "XYEET_B_XYETE", "pizdelko", "OXYETb", "uyeban", "ueban", "OXYETb_OHO", "XYETE", "XYEET", "XMbIPb", "XAPKOTA", "PEDRILLO", "MPA3b", "PIZDOTA", "XMbIPbKA", "MPA3OTA", "PIZDLO", "TBAPb", "POTOM_HACOC", "UKRAM_PIZDA", "UKROPETS", "PIZDLO", "PEDRILLO", "SSUKA", "3ABOHbKA", "3ABOHbKO", "3ACCAHbKO", "3ACCATKA", "3ACCATKO", "3ACEPbKA", "PIZDUK", "3ACCAHbKA", "3ACEPbKO", "3ACEPEH_MO3K", "3ACPATKO", "BOHbKO", "BOHbKA", "CCAHbKA", "CCAKA", "CCAKOTKA", "CCAHbKO", "CCAKOTKO", "CCbIKOTKA", "CKBEPHA", "CPAKOBMA3", "CPAKA", "CPAKATbIKA", "CPAKATbIKAH", "CPAKATbIKAHA", "CPAKOBMA3KO", "CPAKOTbIK", "CPAMEH", "CPAMOTA", "CPAKOCPAM", "CPAMHOMA3", "KPbICA", "PAKOM_CTAHb", "KAKAXOMA3KA", "PAKOMBCTAHb", "KAKAXOMA3", "PAKOMBCTAHbKA", "PBAHbE", "PBOTA", "PBOTHA_BOHbKA", "TbIX_DbIPA", "PIDOR", "PIDARAS", "PEDRILLON", "PEDRILKA", "PEDRILLION", "PEDRILKO", "PIDOROK", "PIDORKA", "PIDOR", "PIDORKO", "PIDARASKA", "PIDARASKO", "PIDERASKO", "PIDER", "PIDARASKO", "PERDUCCIO", "PERDILLO", "PERDILLION", "PERDILLIAN", "PERDILION", "PERDILO", "PERDILIAN", "PERDAK", "ELDAK", "PERDOLO", "PERDOLLO", "PERDOLLION", "PERDOLLIAN", "PERDOLIAN", "PERDOLION", "PERDULO", "PERDULLO", "PERDULLION", "PERDULLIAN", "PERDULKO", "PERDULION", "PERDULINA", "PERDULINO", "ZAPERDULINO", "PERDULIN", "ZAPERDULIN", "ZAPERDELANO", "ZAPERDELENO", "ZAPERDOLINO", "ELDACHINA", "MUDILLION", "MUDILA", "MUDILLO", "3ACPATKA", "PERDULIAN", "DURAK", "EUROUKR", "BCPATb", "3AMECbI", "CPATb", "BKAKATb", "3ACPATb", "BbICPATb", "HACPATb", "KAKATb", "BbIKAKATb", "HAKAKATb", "XYETb", "3AKAKATb", "XYEBOTEBO", "DEBILKA", "DEBILKO", "DEBILOK", "AXYEBATb", "XYEBOM", "XYEBOTEBO", "XYEBOTHOE", "XYEBOM", "XYETE", "zalupo", "zalupe", "zalupin", "zalupa", "zalupn", "PA3OCPATKA", "XYEK", "3ATbIKE", "KYKAPEKY", "poyebotevo", "KY_KA_PE_KY", "KYKAPEKOBO", "ebanadel", "ebanadelnyj", "B_POT_TE_CCbI", "B_POT_TE_CEPb", "chpok_chpok", "chpoki_chpoki", "PIZDOTOCHKA", "PIZDYONKA", "PIZDATOCHKA", "PIZDOTKA", "PIZDA", "MOXHATKA", "PILOTKA", "EBUCHKA", "TbIX_TbIXTbIX", "ZLOEBUCHKA", "ZLAJA_PIZDA", "PIZDISCHA", "PIZDENN", "UKROPIZDA", "3ABOHbKA", "CCbIKOTKA", "_3ABOHbKA", "3ACCAHbKO", "3ACEPbKA", "3ACPATKA", "POLONIZED", "BOHbKO", "3ACEPEH_MO3K", "EUROUKR", "MPA3b", "HUYLO", "EBLAN", "CPAKOTbIK", "CPAKOBMA3", "COCET", "OTCOC", "OTCOCAC", "OTCAC", "COCATb", "O4KO", "B_POT", "XYI", "O4KE", "O4KYET", "CYHYTb"], (s) => {
+        return s.toLowerCase()
+    })
+
+    var urlreg = /(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|(bastyon:\/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi
 
     self.real = {
-        'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH' : true,
-        'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy' : true,
-        'PF4eMjha9MFs4F3CaiHG1CJjDJGS7w8tvF' : true,
-        'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK' : true,
-        'P9igzkJ57DYXyXMjCyTLvHmJJTjwDBB8Ug' : true,
-        'PHPrCVNBHMJCD2fVUFXLw92rZnAMJ1UFF6' : true,
-        'PEXsbgKmfxxMGhaqELM7FdhgexhhvtrirY' : true,
-        'PHLz9EhgvPDZx9Erer3romhcNSGRw2FUmu' : true,
-        'PXasvRAZmYYvX7bxCXoSD6xskKsXFAt3jg' : true,
-        'PUcbjUHfSTSYxLwqmndEzWVyxwTCiGjkTL' : true,
-        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC' : true,
-        'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
-        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
-        'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
-        'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
-        'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh' : true,
-        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
-        'PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p' : true,
-        'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
-        'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
-        'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
-        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
-        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
-        'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
-        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true,
-        'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt' : true,
-        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true,
-        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh' : true,
-        'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s' : true,
-        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' : true,
-        'PUYo1a6LxjnnBVi6uBjHUsZQS4FnbUwdAN' : true,
-        'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi' : true,
-        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa' : true,
-        'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps' : true,
-        'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR' : true,
-        'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
-        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
-        'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
-        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true,
-        'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o' : true,
-        'PGCTymXHcEydV8SSmoABTB8YEchJbDoRJn' : true,
-        'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa' : true,
-        'PHqNLuNEwrw8nzj71ELVGp7w1eEp8p2pKA' : true,
-        'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx' : true,
-        'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx' : true,
-        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true,
-        'PNoR5LNLAZP3VGiNcK2wn4xxAFT6yQAMqj' : true,
-        'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB' : true,
-        'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
-        'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
-        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
-        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true,
-        'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB' : true,
-        'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB' : true,
-        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw' : true,
-        'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' : true,
-        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt' : true,
-        'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
-        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true,
-        'PMf2RiHZiZTtQZftkxhRYbN5CgBH6dNh5A' : true,
-        'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
-        'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
-        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
-        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds' : true,
-        'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq' : true,
-        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' : true,
-        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP' : true,
-        'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
-        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
-        'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
-        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
-        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
-        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV' : true,
-        'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j' : true,
-        'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU' : true,
-        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx' : true,
-        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS' : true,
-        'PQ2wxGv2YNbie2BP66aac72Y3UU1uSzxCX' : true,
-        'PE6VLUqsPYLJnX2W7qhHX6yb2zLN3H2x25' : true,
-        'PEiNYu3dNM4oZDRYvSrsfy51xz7CokPYNV' : true,
-        'PQk66yNJS3agLJ2k6A1AN5FmM2TNUwEgbP' : true,
-        'PFpBmqET9NyQA2EHp8BPEjjKZobXUBBjjn' : true, //a
-        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb' : true,
-        'PCeyj5aXETKtCYbXJxmDv3bXGawda1KEHQ' : true,
-        'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN' : true,
-        'P9XuLKA5iCiZT6epTuVWzLU23c2gedSDkc' : true,
-        'PTNtirNwbe5GfgNod7rwMWLLGhYWhGyLJx' : true,
-        'PUaDSBBveSUG9yieuDSYCpgsyE2djYU9N5' : true,
-        'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn' : true,
-        'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2' : true,
-        'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf' : true,
-        'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb' : true,
-        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj' : true,
-        'PKp1bjJByqY76XNZNzDFkTAhyfPq4bah5V' : true,
-        'PPEWFN5ETvdjc7TKqjxDPEWmZRUyPUYr8z' : true,
-        'PH1yzW1qvyeq3thaFhUwv3pTA2VazhtZDT' : true,
-        'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4' : true,
-        'PJTNch4or4Zr8cDnF3KA4eAXTqWCxYLSzu' : true,
-        'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH' : true,
-        'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
-        'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
-        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true,
-        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
-        'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
-        'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
-        'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
-        'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
-        'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
-        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
-        'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true,
-        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true,
-        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz' : true,
-        'PFrbFN4W2kwHj9jbHwLjt3vAkTM7ThgGBk' : true,
-        'PGCqT8bhkWHLEyQG1xgVhrzojCN1VjDLaP' : true,
-        'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ' : true,
-        'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
-        'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
-        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true,
-        'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC' : true,
-        'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP' : true,
-        'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM' : true,
-        'PUq5SNWQCdU1dwuQUNRCKaxgzw52rD6Uez' : true,
-        'PTft97ycE3N6ZKgvixdpbYj8qPxzCe2CxG' : true,
-        'P9W6f4HJoimwsjJwmnAWKG6HQKcUHz1vaP' : true,
-        'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v' : true,
-        'PKB7GXh1qcY7Q7gs3hafgpzndHLKTx4isM' : true,
-        'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt' : true,
-        'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
-        'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
-        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
-        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true,
-        'PSbwbtsVfALgykAUsCYofkPFTu9Chd6RUo' : true,
-        'PP3QYWu7ZRRm7NTAkXD7u3NbCKNGJhbEeL' : true,
-        'PP8AJb4X4uHxJw89UEGcNEom5RZy2RRxBY' : true,
-        'PRhLYR1TJegWzuzFa7FwT1iCCpNSeJrpjn' : true,
-        'PXb9rpCDax5NpU6m4tt2gdXyTp4urbTdS8' : true,
-        'PRDXZpyF7rm9cJw3y6DX2nFvK1AYgjpXdF' : true,
-        'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3' : true,
-        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
-        'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
-        'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
-        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
-        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
-        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true,
-        'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN' : true,
-        'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7' : true,
-        'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1' : true,
-        'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
-        'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
-        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
-        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
-        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
-        'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
-        'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
-        'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
-        'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
-        'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
-        'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
-        'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
-        'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
-        'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
-        'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf' : true,
-        'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
-        'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
-        'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
-        'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
-        'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
-        'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
-        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
-        'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
-        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
-        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
-        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
-        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
-        'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
-        'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
-        'PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw' : true,
-        'PF3oocNVVz5gfdFJGQF4J4xf2bCaxRxYTh' : true,
-        'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
-        'PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe' : true,
-        'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6' : true,
-        'PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt' : true,
-        'PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr' : true,
-        'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA' : true,
-        'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m' : true,
-        'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G' : true,
-        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H' : true,
-        'PUFZvqrgdnaGXxaFmwPuUPf5NhGg7tpBe9' : true,
+        'PWCgoqiexbA2kP3pubQVX1sctE3vTzchUH': true,
+        'PKLxDhsyQNsSSzmLZDTwLL8GXz8zKM6PNy': true,
+        'PF4eMjha9MFs4F3CaiHG1CJjDJGS7w8tvF': true,
+        'PLpzAiA6H8isp33WeVx2UEuXLfc3SyqkzK': true,
+        'P9igzkJ57DYXyXMjCyTLvHmJJTjwDBB8Ug': true,
+        'PHPrCVNBHMJCD2fVUFXLw92rZnAMJ1UFF6': true,
+        'PEXsbgKmfxxMGhaqELM7FdhgexhhvtrirY': true,
+        'PHLz9EhgvPDZx9Erer3romhcNSGRw2FUmu': true,
+        'PXasvRAZmYYvX7bxCXoSD6xskKsXFAt3jg': true,
+        'PUcbjUHfSTSYxLwqmndEzWVyxwTCiGjkTL': true,
+        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC': true,
+        'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG': true,
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd': true,
+        'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA': true,
+        'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y': true,
+        'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh': true,
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X': true,
+        'PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p': true,
+        'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux': true,
+        'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ': true,
+        'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw': true,
+        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2': true,
+        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt': true,
+        'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk': true,
+        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn': true,
+        'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt': true,
+        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL': true,
+        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh': true,
+        'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s': true,
+        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m': true,
+        'PUYo1a6LxjnnBVi6uBjHUsZQS4FnbUwdAN': true,
+        'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi': true,
+        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa': true,
+        'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps': true,
+        'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR': true,
+        'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii': true,
+        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs': true,
+        'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov': true,
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta': true,
+        'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o': true,
+        'PGCTymXHcEydV8SSmoABTB8YEchJbDoRJn': true,
+        'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa': true,
+        'PHqNLuNEwrw8nzj71ELVGp7w1eEp8p2pKA': true,
+        'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx': true,
+        'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx': true,
+        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h': true,
+        'PNoR5LNLAZP3VGiNcK2wn4xxAFT6yQAMqj': true,
+        'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB': true,
+        'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp': true,
+        'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ': true,
+        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA': true,
+        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ': true,
+        'PFbq1BkrrVsmEAevMqQ2PV6aFf7QWQP9sB': true,
+        'PXgYFdVs5W831WpksVLA5hNtXa7XSqUzLB': true,
+        'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw': true,
+        'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM': true,
+        'PQt1eggTZKCCbjVsHx6rcMcBMU2p2PNQmt': true,
+        'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe': true,
+        'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5': true,
+        'PMf2RiHZiZTtQZftkxhRYbN5CgBH6dNh5A': true,
+        'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf': true,
+        'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH': true,
+        'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux': true,
+        'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds': true,
+        'PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq': true,
+        'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4': true,
+        'P8rnj1gSaAQJ1YkAAthSgmLKiDfspb98GP': true,
+        'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL': true,
+        'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj': true,
+        'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh': true,
+        'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j': true,
+        'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6': true,
+        'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ': true,
+        'PLLDTFuBhb4FRPt811bTPjgaYgqoj16hVV': true,
+        'PXmw1tQnengAAy9ML8Depr2kANupmadZ7j': true,
+        'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU': true,
+        'PBKPEWcsZZHH7LQ7GQCNSMSSEteiJMfoFx': true,
+        'PEWQWe1DQM3uh19vRqtFDkUrPreyM5uJnS': true,
+        'PQ2wxGv2YNbie2BP66aac72Y3UU1uSzxCX': true,
+        'PE6VLUqsPYLJnX2W7qhHX6yb2zLN3H2x25': true,
+        'PEiNYu3dNM4oZDRYvSrsfy51xz7CokPYNV': true,
+        'PQk66yNJS3agLJ2k6A1AN5FmM2TNUwEgbP': true,
+        'PFpBmqET9NyQA2EHp8BPEjjKZobXUBBjjn': true, //a
+        'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb': true,
+        'PCeyj5aXETKtCYbXJxmDv3bXGawda1KEHQ': true,
+        'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN': true,
+        'P9XuLKA5iCiZT6epTuVWzLU23c2gedSDkc': true,
+        'PTNtirNwbe5GfgNod7rwMWLLGhYWhGyLJx': true,
+        'PUaDSBBveSUG9yieuDSYCpgsyE2djYU9N5': true,
+        'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn': true,
+        'PF57cm7HGsc5djwK556uZ7AZbqk59wXxF2': true,
+        'PQ2W4ispScj349r3Gsqr1PchSVDvU59Ssf': true,
+        'PUBkQATBYhGiCvvdtHCX7GM7fdx23wdaJb': true,
+        'PJzhMENFrkp6Bopfzsf4VR46E3Znd2aoGj': true,
+        'PKp1bjJByqY76XNZNzDFkTAhyfPq4bah5V': true,
+        'PPEWFN5ETvdjc7TKqjxDPEWmZRUyPUYr8z': true,
+        'PH1yzW1qvyeq3thaFhUwv3pTA2VazhtZDT': true,
+        'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4': true,
+        'PJTNch4or4Zr8cDnF3KA4eAXTqWCxYLSzu': true,
+        'PKS5Hy6FV3ytgUDmcAVa8y8qxPYKg3CdMH': true,
+        'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7': true,
+        'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck': true,
+        'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p': true,
+        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC': true,
+        'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt': true,
+        'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ': true,
+        'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1': true,
+        'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr': true,
+        'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ': true,
+        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc': true,
+        'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb': true,
+        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK': true,
+        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz': true,
+        'PFrbFN4W2kwHj9jbHwLjt3vAkTM7ThgGBk': true,
+        'PGCqT8bhkWHLEyQG1xgVhrzojCN1VjDLaP': true,
+        'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ': true,
+        'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A': true,
+        'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto': true,
+        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU': true,
+        'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC': true,
+        'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP': true,
+        'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM': true,
+        'PUq5SNWQCdU1dwuQUNRCKaxgzw52rD6Uez': true,
+        'PTft97ycE3N6ZKgvixdpbYj8qPxzCe2CxG': true,
+        'P9W6f4HJoimwsjJwmnAWKG6HQKcUHz1vaP': true,
+        'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v': true,
+        'PKB7GXh1qcY7Q7gs3hafgpzndHLKTx4isM': true,
+        'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt': true,
+        'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji': true,
+        'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg': true,
+        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A': true,
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ': true,
+        'PSbwbtsVfALgykAUsCYofkPFTu9Chd6RUo': true,
+        'PP3QYWu7ZRRm7NTAkXD7u3NbCKNGJhbEeL': true,
+        'PP8AJb4X4uHxJw89UEGcNEom5RZy2RRxBY': true,
+        'PRhLYR1TJegWzuzFa7FwT1iCCpNSeJrpjn': true,
+        'PXb9rpCDax5NpU6m4tt2gdXyTp4urbTdS8': true,
+        'PRDXZpyF7rm9cJw3y6DX2nFvK1AYgjpXdF': true,
+        'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3': true,
+        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y': true,
+        'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS': true,
+        'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f': true,
+        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP': true,
+        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz': true,
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy': true,
+        'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN': true,
+        'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7': true,
+        'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1': true,
+        'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge': true,
+        'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x': true,
+        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke': true,
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7': true,
+        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR': true,
+        'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46': true,
+        'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b': true,
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc': true,
+        'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV': true,
+        'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms': true,
+        'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX': true,
+        'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD': true,
+        'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk': true,
+        'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw': true,
+        'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt': true,
+        'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf': true,
+        'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6': true,
+        'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj': true,
+        'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB': true,
+        'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD': true,
+        'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM': true,
+        'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9': true,
+        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y': true,
+        'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt': true,
+        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL': true,
+        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5': true,
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z': true,
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi': true,
+        'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA': true,
+        'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1': true,
+        'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd': true,
+        'PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw': true,
+        'PF3oocNVVz5gfdFJGQF4J4xf2bCaxRxYTh': true,
+        'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV': true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS': true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE': true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37': true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo': true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m': true,
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r': true,
+        'PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe': true,
+        'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6': true,
+        'PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt': true,
+        'PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr': true,
+        'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA': true,
+        'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m': true,
+        'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G': true,
+        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H': true,
+        'PUFZvqrgdnaGXxaFmwPuUPf5NhGg7tpBe9': true,
         'PDhQL18skFG4g7bEJoYhgvjqo6JNpkN533': true,
         'PP1bBz11vicydAcw7QKJezYQdQMpYGEMiV': true,
         'PSFPrHstL1wawZ2eXLdLEpFEjhG8a27EYb': true,
@@ -250,7 +255,7 @@ Platform = function (app, listofnodes) {
         'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true,
         'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
         'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
-        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
+        'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55': true,
         'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
         'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
@@ -299,107 +304,166 @@ Platform = function (app, listofnodes) {
         'PReDbVPWKujZxBDnzhckPJKfjq95tqNKdE': true,
         'PBGxQwMic8X6bpP9sP2EFhkoZpH1Latvcf': true,
         'PSNZVbxpt5isi5VDEsYPiWT9cxqLjMTdPv': true,
-        'PWo7o1nY77PK9CWiFoAJwzAeDFfnFwNxpu' : true,
-        'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv' : true,
-        'PNYB5PRW8GCjJz1qTDkffrooLdnbMeRQdn' : true,
-        'PDCYW1fyBk2NvckLzPpxruzTWHXJM8gj9y' : true,
-        'PTJH7TnDF9kYfdwF2bhrXqHwcm2QtQqyVh' : true,
-        'PS7Ki2SnrkHh4Wtt7fQewM2TdgHTCZbDYF' : true,
-        'PEDpvHfW68rHHLbPwVgHy1zej6Bzrhsy11' : true,
-        'PMSvfdcTdMnXxicqjB8XA64rkhPpXoznB5' : true,
-        'PVfeMAEsRt5rkaeZVxGFu6yTPBpsy9M1kP' : true,
-        'PSd47DchqhKK3JtNAbKU4FqR7u1S5yHxau' : true,
-        'PFDduS88TXG6ZaYu4r9h52h7BDnv6uiYWg' : true,
-        'PUVj2MyBV7aQUSBKc8DNivghtHcAuY66gT' : true,
-        'PV72Tzp1N7JhTvisstwpAfmVNJnnMsm3zP' : true,
-        'PJVukT6jQYrovaWnfEr7Y5US4vu4gXN2Wh' : true,
-        'PCperKU7icDBQmMBUWceWwWPbqL4ZVe32S' : true,
-        'PGjYxSEzYKVUmg8T4jXtmJuue6psPqaqz6' : true,
-        'PMxxG7ivzLxi7qRBDtoZ6qXy173RRUjnvk' : true,
-        'P8nCpDWuBj6G31P1qP5M29efL7thPQuDyV' : true,
-        'PWibgcduckVSdeHJURrQYHVUcGknxJBj2T' : true,
-        'PVwYGmp5V7SfBhTFLYYuPoVXdDcKcWPVA4' : true,
-        'PJRAwFaXuyYbUgbghWykpApQYYGUNQMNJ9' : true,
-        'PSp72PK7zKXepZ6PDF6DsiX8knyeRnFbvW' : true,
-        'PUzgekqrsTtCxmB17HyXe74ofjKowXXYXy' : true,
-        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik' : true,
-        'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82' : true,
-        'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8' : true,
-        'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r' : true,
-        'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop' : true,
-        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto' : true,
-        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY' : true,
-        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR' : true,
-        'PNAez3KW8mcQdaVJDzTdv5WSGddcoDwBH2' : true,
-        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG' : true,
-        'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s' : true,
-        'PRYXTN9A3JF53fvgdk7f9AJDafGnCvTTNv' : true,
-        'PLYWB4GzSWKjJQoqHyEgR3CEDnCHFySB21' : true,
-        'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ' : true,
-        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN' : true,
-        'PV8nA6h5DRznTypDVDVxoHwLHqueh35gpp' : true,
-        'PKBx48sYjn7DyQrAKBLsHSugZAZXiGKR1u' : true,
-        'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX' : true,
-        'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq' : true,
-        'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ' : true,
-        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF' : true,
-        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX' : true,
-        'PQuQNJExGz9hdQFSaQw36CHSXHVTAivVUx' : true,
-        'PFhnjDAk3yNCXhgVaaT3kHYzShNF6C9zff' : true,
-        'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7' : true,
-        'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
-        'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
-        'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf' : true,
-        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
-        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
-        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
-        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
-        'PMtPowJsJtHtXR4tW4PSKgfp8TVAMBAA5e' : true,
-        'PVCZ5fs6nyPpRjiXgM2naBBujzjTM3B1z4' : true, 
-        'PJWmitSptX35i95ZWHzCJdop3XczrVnQNk' : true,
-        'PJCazxTPm2thAWqmwqHsWghK59FjZvZ9ZM' : true,
-        'PExrUqBAyXfdgmegm4uQDj64ukyuiL2XrC' : true,
-        'PCGpniQGTmabMQKAWiE1nCTaFFdHatzNyS' : true,
-        'PPxrS15N1tKoQcc29FcPrBqfmHpyURny5B' : true,
-        'PGEBZf7Q8vNFsS9PfrqvDxaPRXk9Yve9cK' : true,
-        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
-        'PHZReox7mFtCW3otDDfZ3pZMgkuRS2MJsS' : true,
-        'PAzs51m8yNxK3y5Km6mmmGtGDcXGB8kCz4' : true,
-        'P9QksuZXdA9bhxhNEeXgjtEJrQR3LWi9V7' : true,
-        'PRtwPBwazZM7U9BZQKFvF9N1uK3Tro5gAC' : true,
-        'PGuPFzGiuuEg5ERzW1dF47raA6vefftP3u' : true,
-        'PC5ZyNr9uMG5ytpTvrCXxgp5Pb6JexqkJ7' : true,
-        'PLLpzbNshW1pRoZe6KbZRuKLhm3mgzCHEn' : true,
-        'PNzUT7RSRMQfXxuxwL8XRXQcmnu1mA4kbY' : true,
-        'PVKBpAURkwhZhnSQktndTHQJhnkuNfq2bY' : true,
-        'PDb83yK1KMq9putBFaGuBCfpksUVVDVZcc' : true,
-        'PGmCWzgCW1CNLkgGSHmgCMKDbuZJia1Bpp' : true,
-        'PDtHcn5AM7kkx1h7nKZ818vBgxMqojjxup' : true,
-        'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7' : true,
-        'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo' : true,
-        'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw' : true,
-        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
-        'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
-        'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
-        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
+        'PWo7o1nY77PK9CWiFoAJwzAeDFfnFwNxpu': true,
+        'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv': true,
+        'PNYB5PRW8GCjJz1qTDkffrooLdnbMeRQdn': true,
+        'PDCYW1fyBk2NvckLzPpxruzTWHXJM8gj9y': true,
+        'PTJH7TnDF9kYfdwF2bhrXqHwcm2QtQqyVh': true,
+        'PS7Ki2SnrkHh4Wtt7fQewM2TdgHTCZbDYF': true,
+        'PEDpvHfW68rHHLbPwVgHy1zej6Bzrhsy11': true,
+        'PMSvfdcTdMnXxicqjB8XA64rkhPpXoznB5': true,
+        'PVfeMAEsRt5rkaeZVxGFu6yTPBpsy9M1kP': true,
+        'PSd47DchqhKK3JtNAbKU4FqR7u1S5yHxau': true,
+        'PFDduS88TXG6ZaYu4r9h52h7BDnv6uiYWg': true,
+        'PUVj2MyBV7aQUSBKc8DNivghtHcAuY66gT': true,
+        'PV72Tzp1N7JhTvisstwpAfmVNJnnMsm3zP': true,
+        'PJVukT6jQYrovaWnfEr7Y5US4vu4gXN2Wh': true,
+        'PCperKU7icDBQmMBUWceWwWPbqL4ZVe32S': true,
+        'PGjYxSEzYKVUmg8T4jXtmJuue6psPqaqz6': true,
+        'PMxxG7ivzLxi7qRBDtoZ6qXy173RRUjnvk': true,
+        'P8nCpDWuBj6G31P1qP5M29efL7thPQuDyV': true,
+        'PWibgcduckVSdeHJURrQYHVUcGknxJBj2T': true,
+        'PVwYGmp5V7SfBhTFLYYuPoVXdDcKcWPVA4': true,
+        'PJRAwFaXuyYbUgbghWykpApQYYGUNQMNJ9': true,
+        'PSp72PK7zKXepZ6PDF6DsiX8knyeRnFbvW': true,
+        'PUzgekqrsTtCxmB17HyXe74ofjKowXXYXy': true,
+        'PQxpMbfovvgsdKZnHqesS8xvxcozHCGNik': true,
+        'PLQ49oTdSwgUjaiouj8A68psJFbxJXHt82': true,
+        'PTECfiwYFFCCDMYq9RSrj9HLSJdyN9T1X8': true,
+        'PFidbKvmi6JhV4fUx6XzRfD38xHNzh1y7r': true,
+        'PQDWJwXAEEp9dpRZKuKp5iDi4bGzn5zEop': true,
+        'PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto': true,
+        'PQT1m6M8U81XVanuKre7avRUuKysRQuyZY': true,
+        'PS82eAkDWg9LBn4keH3kxXCU4pLbG7Z7uR': true,
+        'PNAez3KW8mcQdaVJDzTdv5WSGddcoDwBH2': true,
+        'PN8zovq9i8ytAnM3vZERCvrKcJjDZersjG': true,
+        'PWUb3x7RxMUEwVxWhU6eA9jzJMZsid4u8s': true,
+        'PRYXTN9A3JF53fvgdk7f9AJDafGnCvTTNv': true,
+        'PLYWB4GzSWKjJQoqHyEgR3CEDnCHFySB21': true,
+        'PENkgaxRLSCEA4snqJVJ3SypWYzngZgSkJ': true,
+        'PCS1ciq3zhUojiBdbE2uNzfh8Tb9Ae6wZN': true,
+        'PV8nA6h5DRznTypDVDVxoHwLHqueh35gpp': true,
+        'PKBx48sYjn7DyQrAKBLsHSugZAZXiGKR1u': true,
+        'PDHWFCLJcpcmmSsaeMs2jMY1jVuC48rjcX': true,
+        'PMuCPQ8ssu3VYuiRAjoNLnZu3LaVpeoWBq': true,
+        'PWwBQjybmwzDsxN3vYiJ56nS1DZRWsopRJ': true,
+        'PX42tD2b1j8rrtBnMmtL8ZViht5kFi4iVF': true,
+        'PKbYu8Sib6hAB56xeM1r6qWvqbhNFbrTJX': true,
+        'PQuQNJExGz9hdQFSaQw36CHSXHVTAivVUx': true,
+        'PFhnjDAk3yNCXhgVaaT3kHYzShNF6C9zff': true,
+        'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7': true,
+        'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB': true,
+        'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p': true,
+        'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf': true,
+        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX': true,
+        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9': true,
+        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH': true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F': true,
+        'PMtPowJsJtHtXR4tW4PSKgfp8TVAMBAA5e': true,
+        'PVCZ5fs6nyPpRjiXgM2naBBujzjTM3B1z4': true,
+        'PJWmitSptX35i95ZWHzCJdop3XczrVnQNk': true,
+        'PJCazxTPm2thAWqmwqHsWghK59FjZvZ9ZM': true,
+        'PExrUqBAyXfdgmegm4uQDj64ukyuiL2XrC': true,
+        'PCGpniQGTmabMQKAWiE1nCTaFFdHatzNyS': true,
+        'PPxrS15N1tKoQcc29FcPrBqfmHpyURny5B': true,
+        'PGEBZf7Q8vNFsS9PfrqvDxaPRXk9Yve9cK': true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F': true,
+        'PHZReox7mFtCW3otDDfZ3pZMgkuRS2MJsS': true,
+        'PAzs51m8yNxK3y5Km6mmmGtGDcXGB8kCz4': true,
+        'P9QksuZXdA9bhxhNEeXgjtEJrQR3LWi9V7': true,
+        'PRtwPBwazZM7U9BZQKFvF9N1uK3Tro5gAC': true,
+        'PGuPFzGiuuEg5ERzW1dF47raA6vefftP3u': true,
+        'PC5ZyNr9uMG5ytpTvrCXxgp5Pb6JexqkJ7': true,
+        'PLLpzbNshW1pRoZe6KbZRuKLhm3mgzCHEn': true,
+        'PNzUT7RSRMQfXxuxwL8XRXQcmnu1mA4kbY': true,
+        'PVKBpAURkwhZhnSQktndTHQJhnkuNfq2bY': true,
+        'PDb83yK1KMq9putBFaGuBCfpksUVVDVZcc': true,
+        'PGmCWzgCW1CNLkgGSHmgCMKDbuZJia1Bpp': true,
+        'PDtHcn5AM7kkx1h7nKZ818vBgxMqojjxup': true,
+        'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7': true,
+        'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo': true,
+        'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw': true,
+        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS': true,
+        'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP': true,
+        'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J': true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM': true,
+        'PJw76ZEdMHgp8NfLuvacjF2cP2sGrAGGoe': true,
+        'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55': true,
+        'PKwc6u5ZFZVJWwZyLPh5bTgbpvADaH74g7': true,
+        'PKXtnTBkpvo9U5atc5PTSxbdXpoiaYYUKj': true,
+        'PXen74Rrke5MQ3FrcFYKq8xxGm6y1zSrXF': true,
+        'PE7AZNAxSpKnnLkXXdQB6a7ZyYoqfRBLT3': true,
+        'PSsUbLchKSeAEDVESwa1tEYG5eF3hnX5rM': true,
+        'PALP9o5GPtyKrD6D9m3NCUUkTZxAcm64ue': true,
+        'PDCpUaxYzFCWuHjuvPju6ad51vtDT6JwXQ': true,
+        'PJYv6vUb8mZu7Y2Qt6d41v8iS4jL3k6dCe': true,
+        'PDyTM57JnknqsCkmuaT1p77ivtfCtkPRya': true,
+        'PVAaKHgPB3FmU6XEuvwMAWugTMjKoRo73t': true,
+        'PJBt5eXpeep6WK8wCHcECBnPm689zSkCtf': true,
+        'PMABcFZc7fcgPZzstJrHeYoWXJGoP3pd7X': true,
+        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
+        'PMqBXWqWn4SEM6ZM5fWrXxsFpbtW31886J': true,
+        'PT7pwrGFNGLmSxUqU1akFr2PzhcTozEH5B': true,
+        'PJehpQqXpregZF2aiDyPfwceer2kG71mCy': true,
+        'PThktEkvkgNeL9G6EDAESNwneUGz9DeugR': true,
+        'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX': true,
+        'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
+        'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
+        'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true,
+        'PPCHQtVQ6hQna3V6E5Snaht9v9NCJJLYTM': true,
+        'PN1iicsiSVHvo52LREkJvVtSxcq2153gnz': true,
+        'PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE': true,
+        'PFRhNJJcAVTf8XkghJt3Gu8NJJhAA4BZ68': true,
+        'PUXPS6R697STByf1FZH1a121jDPr6fmKe8': true,
+        'PWoQb1iiZ7xtzLLPDoJCGcPkug3adGKhbv': true,
+        'PUom3RVtdmeohTbM2TepAeCH7E8hmAcg9e': true,
+        'PARMbP2sdVuAtxqJE1Xi64hpnYgdyTSBUe': true,
+        'PF14hD23JaDEpNNRittHptzZMKkvd1bhtY': true,
+        'PDbM95VjNxRrR8t75NcUc3zxy8EWaVvQfk': true,
+        'PR8zYNzx7tvxmdDzzs5Fzm6Ak1FhdcwPdS': true,
+        'PTY4jFADbYei6BF5tXSme6dFy1aWe87bqZ': true,
+        'PNPqF9MoJfdABB9VNBxgxiAxXJVaP9Ujdg': true,
+        'PX3v9h7TFEnqFriBQTBPHNz4dZyjb9Wtfz': true,
+        'PMWvUDHLULhzkNtr4pdMpMFkBsq4knuDxo': true,
+        'PMxtwpDJxX1Wmky5mfg1CrNCVqqtdF1sGt': true,
+        'PLNievYvwzGmr1Vp2TcuJMPZscFDp7R9ed': true,
+        'PQtqVJ7QnkGtJthY2KEFuMxKuDAAnUeChT': true,
+        'PPi3APdPebC5EkqmGio23QQKgBJr1CwFeX': true,
+        'PS7uZBtymwr3J2tgXmLEQxC2vQrCfzdx7V': true,
+        'PNcYjTjjVfgsHXS8ppREBAos2JhTrZ4EQm': true,
+        'PAEfhDBmbyBLzgWknSQKC8ufGoZH3SSF9t': true,
+        'PLaWxupK8wAVVCLy8Rv6b8XDCqATU4kGGN': true,
+        'PD8xcteF7CZVvjLM1ec2jd6h2QH25J5bP5': true,
+        'PRsfNvi3XDyxYpVzAu1nXkGJWdRYYQ8wPR': true,
+        'PWSLgrE2UHin8Jbtbnmft7X7MnwNFrdpYi': true,
+        'PBKw17wrG66sT5jTZpqDvyBmHaDmbomMUD': true,
+        'PT8aDYBurU7b4BPnc4QKmRKhQ4iJkAGPF5': true,
+        'PVz4usHgrGeWzuJA1TRbnLqbULfjkyaorW': true,
+        'PVcXQqD8JB6p4sGram8j2EivexTj2MrN4w': true,
+        'PPZwZcoqm3KYTwyD8KD3Xqdx5iFGurUyU2': true,
+        'P9QRW8rWPhPeW2iQs74eKBbtgvmQBk9iEM': true,
+        'PNhZXx4nNH75CLhh7Gsaho3JyAg9VBhi4y': true,
+        'PXP4ZqvpnfUShULfEMd2DQ6KeNfZkXhvVn': true,
+        
 
-    } 
+
+    }
 
     self.bch = {
-        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
+        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL': true
     }
 
     self.bchl = {
-        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ' : true
+        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ': true
     }
 
     self.nvadr = {
-        'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
-        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
-        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
-        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
-        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
-        'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
+        'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK': true,
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd': true,
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X': true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM': true,
+        'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL': true,
+        'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz': true
     }
 
     self.deletedtest = {}
@@ -431,23 +495,24 @@ Platform = function (app, listofnodes) {
         'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
-		'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
-		'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
+        'PLcjUPjznx5AmBwkLYcrKmLNEwuprSexb3',
+        'PURejSeNEoJyn8i1147cKfjHweV6rQJRLX',
+        
     ];
 
     self.whiteList = [
-      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
-      'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
-      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
-      'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
     ];
 
-    self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     //self.archivedServers = window.project_config.archivedPeertubeServers || []
 
     if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
-    
+
     self.focus = true;
     self.currentBlock = 0 //1165858;
     self.online = undefined;
@@ -455,17 +520,19 @@ Platform = function (app, listofnodes) {
     self.repost = true;
     self.videoenabled = true;
 
-    self.ischristmastime = function() {
+    var paidsubscriptionCache = {}
+
+    self.ischristmastime = function () {
         var currentDate = new Date();
-        var currentMonth = currentDate.getMonth() + 1; 
+        var currentMonth = currentDate.getMonth() + 1;
         var currentDay = currentDate.getDate();
-      
+
         if (currentMonth === 12 && currentDay >= 15) {
-          return true;
+            return true;
         } else if (currentMonth === 1 && currentDay <= 15) {
-          return true;
+            return true;
         } else {
-          return false;
+            return false;
         }
     }();
 
@@ -485,8 +552,8 @@ Platform = function (app, listofnodes) {
     self.sm.componentsPath = 'components/'
 
     self.released = {
-        vidgets : {
-            staking : true
+        vidgets: {
+            staking: true
         }
     }
 
@@ -495,19 +562,25 @@ Platform = function (app, listofnodes) {
 
     self.actionListeners = {}
 
-    self.actions.on('change', ({account}) => {
-        if (account.address == app.user.address.value){
-            
+    self.actions.on('change', ({
+        account
+    }) => {
+        if (account.address == app.user.address.value) {
+
         }
     })
 
-    self.actions.on('actionFiltered', ({action, address, status}) => {
+    self.actions.on('actionFiltered', ({
+        action,
+        address,
+        status
+    }) => {
 
         var listener = listeners[action.object.type]
 
-        if(!listener) return
+        if (!listener) return
 
-        if (address == app.user.address.value){
+        if (address == app.user.address.value) {
 
             var alias = action.get()
 
@@ -516,7 +589,11 @@ Platform = function (app, listofnodes) {
             window.rifticker.add(() => {
                 _.each(self.actionListeners, (c, i) => {
                     if (c)
-                        c({type : action.object.type, alias, status})
+                        c({
+                            type: action.object.type,
+                            alias,
+                            status
+                        })
                 })
             })
 
@@ -525,60 +602,60 @@ Platform = function (app, listofnodes) {
     })
 
 
-    
+
 
 
     var listeners = {
-        share : function(alias, status){
+        share: function (alias, status) {
 
-            if (status == 'sent'){
+            if (status == 'sent') {
                 if (alias.itisvideo()) {
                     self.sdk.videos.unposted.remove(alias.url)
                 }
             }
 
         },
-        upvoteShare : function(alias, status){
+        upvoteShare: function (alias, status) {
 
             var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
 
-            if(alias.actor != app.user.address.value) return
-            if(!share) return
+            if (alias.actor != app.user.address.value) return
+            if (!share) return
 
-            if (status == 'completed'){
+            if (status == 'completed') {
 
             }
 
 
-            if (status == 'relay'){
+            if (status == 'relay') {
 
                 self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 
                 if (value > 4) self.sdk.recommendations.successRecommendation(share)
 
             }
-           
+
         },
 
-        cScore : function(alias, status){},
+        cScore: function (alias, status) {},
 
-        comment: function(alias, status){},
-        subscribe: function(alias, status){},
-        subscribePrivate: function(alias, status){},
-        unsubscribe: function(alias, status){},
-        blocking: function(alias, status){},
-        unblocking: function(alias, status){},
-        userInfo: function(alias, status){},
-        contentDelete : function(alias, status){},
-        accSet : function(){},
-        accDel : function(){},
-        transaction : function(){}
+        comment: function (alias, status) {},
+        subscribe: function (alias, status) {},
+        subscribePrivate: function (alias, status) {},
+        unsubscribe: function (alias, status) {},
+        blocking: function (alias, status) {},
+        unblocking: function (alias, status) {},
+        userInfo: function (alias, status) {},
+        contentDelete: function (alias, status) {},
+        accSet: function () {},
+        accDel: function () {},
+        transaction: function () {}
     }
 
-    
 
-    
+
+
 
     self.mp = {
         dollars: function (value, p) {
@@ -696,7 +773,7 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.istest = function(){
+    self.istest = function () {
         var addresses = self.testaddresses;
 
         if (addresses.indexOf(self.app.user.address.value) > -1) {
@@ -704,7 +781,7 @@ Platform = function (app, listofnodes) {
             return true
         }
     }
-    
+
 
     self.values = {
         alph: [
@@ -719,7 +796,7 @@ Platform = function (app, listofnodes) {
     //var sm = {};
 
 
-    self.__applications = function(){
+    self.__applications = function () {
         const ghAppLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest';
         const ghCoreLatest = 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest';
         const readmeDownloadsLink = 'https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices';
@@ -729,7 +806,7 @@ Platform = function (app, listofnodes) {
         var meta = {
 
             ui: {
-                android : {
+                android: {
                     appname: app.meta.fullname,
                     id: "android",
                     text: {
@@ -738,13 +815,13 @@ Platform = function (app, listofnodes) {
                         label: self.app.localization.e('e132233')
                     },
                     icon: '<i class="fab fa-android"></i>',
-                    modile : true,
-                    image : 'applications_android.png',
-                    hreflabel : 'downloadplaystore',
-                    githublabel : 'downloadgithub'
+                    modile: true,
+                    image: 'applications_android.png',
+                    hreflabel: 'downloadplaystore',
+                    githublabel: 'downloadgithub'
                 },
 
-                ios : {
+                ios: {
                     appname: app.meta.fullname,
                     id: "ios",
                     text: {
@@ -753,9 +830,9 @@ Platform = function (app, listofnodes) {
                         label: self.app.localization.e('e132233ios')
                     },
                     icon: '<i class="fab fa-apple"></i>',
-                    modile : true,
-                    image : 'applications_ios.jpg',
-                    hreflabel : 'installpwa',
+                    modile: true,
+                    image: 'applications_ios.jpg',
+                    hreflabel: 'installpwa',
                 },
 
                 windows: {
@@ -769,8 +846,8 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-windows"></i>',
-                    image : 'applications_windows.png',
-                    node : true
+                    image: 'applications_windows.png',
+                    node: true
                 },
 
                 macos: {
@@ -783,7 +860,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     icon: '<i class="fab fa-apple"></i>',
-                    image : 'applications_macos.png'
+                    image: 'applications_macos.png'
                 },
 
                 linux: {
@@ -795,9 +872,9 @@ Platform = function (app, listofnodes) {
                         label: self.app.localization.e('e13224')
                     },
 
-                    image : 'applications_linux.png',
+                    image: 'applications_linux.png',
                     icon: '<i class="fab fa-linux"></i>',
-                    node : true
+                    node: true
                 }
             },
 
@@ -826,278 +903,289 @@ Platform = function (app, listofnodes) {
                 }
             }
         }
-        
+
         _.each(meta, (o, i) => {
             _.each(o, (a, j) => {
-                meta[i][j] = {...a, ...configmeta[i][j] || {}}
+                meta[i][j] = {
+                    ...a,
+                    ...configmeta[i][j] || {}
+                }
             })
         })
 
         return meta
     }
 
-    self.__getSettingsMeta = function(){
+    self.__getSettingsMeta = function () {
 
-        var tgv = ""
+            var tgv = ""
 
-        try{
-            tgv = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
+            try {
+                tgv = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
 
-        }catch(e){
-            
-        }
+            } catch (e) {
 
-        var st = {
-
-            preview: {
-                name: self.app.localization.e('disablePreview'),
-                id: 'preview',
-                type: "BOOLEAN",
-                value: false
-            },
-
-            sound: {
-                name: self.app.localization.e('sound'),
-                id: 'sound',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            win: {
-                name: self.app.localization.e('e13268'),
-                id: 'win',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            transactions: {
-                name: self.app.localization.e('e13269'),
-                id: 'transactions',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            upvotes: {
-                name: self.app.localization.e('e13270'),
-                id: 'upvotes',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            downvotes: {
-                name: self.app.localization.e('e13270d'),
-                id: 'downvotes',
-                type: "BOOLEAN",
-                value: false
-            },
-
-            comments: {
-                name: self.app.localization.e('e13271'),
-                id: 'comments',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            answers: {
-                name: self.app.localization.e('e13272'),
-                id: 'answers',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            followers: {
-                name: self.app.localization.e('e13273'),
-                id: 'followers',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            /*rescued: {
-                name: self.app.localization.e('e13274'),
-                id: 'rescued',
-                type: "BOOLEAN",
-                value: true
-            },*/
-
-            commentScore: {
-                name: self.app.localization.e('e13275'),
-                id: 'commentScore',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            embedvideo: {
-                name: self.app.localization.e('e13276'),
-                id: 'embedvideo',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            videoautoplay2: {
-                name: self.app.localization.e('e13277'),
-                id: 'videoautoplay2',
-                type: "BOOLEAN",
-                value: false
-            },
-
-            videop2p: {
-                name: self.app.localization.e('videop2psettings'),
-                id: 'videop2p',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            videoTranscoding: {
-                name: self.app.localization.e('settingsTranscoding'),
-                id: 'transcoding',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            autostart: {
-                name: self.app.localization.e('e13278'),
-                id: 'autostart',
-                type: "BOOLEAN",
-                value: undefined
-            },
-
-            vidgetchat: {
-                name: self.app.localization.e('e13279'),
-                id: 'vidgetchat',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            vidgettags: {
-                name: self.app.localization.e('e13280'),
-                id: 'vidgettags',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            vidgetlastcomments: {
-                name: self.app.localization.e('e13281'),
-                id: 'vidgetlastcomments',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            vidgetstaking: {
-                name: 'Staking Pocketcoin vidget',
-                id: 'vidgetstaking',
-                type: "BOOLEAN",
-                value: true
-            },
-
-            commentsOrder: {
-                type: "VALUES",
-                name: self.app.localization.e('commentsOrder'),
-                id: 'commentsOrder',
-                placeholder: self.app.localization.e('commentsOrderPlaceholder'),
-                defaultValue: self.app.localization.e('comments_interesting'),
-                value: "",
-                possibleValues: ['interesting', 'timeup', 'time'],
-                possibleValuesLabels: [
-                    self.app.localization.e('comments_interesting'), 
-                    self.app.localization.e('comments_timeup'), 
-                    self.app.localization.e('comments_time')
-                ]
-            },
-
-          
-            enablePeertube : {
-                name: 'Use PeerTube for uploading videos',
-                id : 'enablePeertube',
-                type : "BOOLEAN",
-                value : false,
-            },
-
-            hierarchicalShares : {
-                name: 'Hierarchical Post Feed',
-                id : 'hierarchicalShares',
-                type : "BOOLEAN",
-                value : false,
-            },
-
-            historicalShares : {
-                name: 'Historical Post Feed',
-                id : 'historicalShares',
-                type : "BOOLEAN",
-                value : false,
-            },
-
-            openlinksinelectron : {
-                name: self.app.localization.e('openlinkssettings'),
-                id : 'openlinksinelectron',
-                type : "BOOLEAN",
-                value : false,
-            },
-
-            sendUserStatistics : {
-                name: self.app.localization.e('sendUserStatistics'),
-                id : 'sendUserStatistics',
-                type : "BOOLEAN",
-                value : true,
-            },
-
-            canuseip: {
-                name: self.app.localization.e('canuseipsetting'),
-                id: 'canuseip',
-                type: "BOOLEAN",
-                value: false
-            },
-
-            useanimations: {
-                name: self.app.localization.e('useanimations'),
-                id: 'useanimations',
-                type: "BOOLEAN",
-                value: true
-            },
-
-        }
-
-     
-
-        return st
-    },
-
-    self.errorHandler = function (key, action, akey) {
-
-        var er = null
-
-        if(_.isObject(key)){
-            er = key
-            key = er.code
-        }
-
-        var eobj = self.errors[key] || self.errors['network'];
-
-        if (!eobj) {
-            return false;
-        }
-        else {
-            var m = eobj.message;
-
-            if (m) {
-                if (typeof m == 'function') m = m(akey, er);
-
-                if (!m) return
-
-                sitemessage(m)
             }
 
-            var a = eobj.action
+            var st = {
 
-            if (action && a) {
-                a(key, action, akey)
+                preview: {
+                    name: self.app.localization.e('disablePreview'),
+                    id: 'preview',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                sound: {
+                    name: self.app.localization.e('sound'),
+                    id: 'sound',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                win: {
+                    name: self.app.localization.e('e13268'),
+                    id: 'win',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                transactions: {
+                    name: self.app.localization.e('e13269'),
+                    id: 'transactions',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                upvotes: {
+                    name: self.app.localization.e('e13270'),
+                    id: 'upvotes',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                downvotes: {
+                    name: self.app.localization.e('e13270d'),
+                    id: 'downvotes',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                comments: {
+                    name: self.app.localization.e('e13271'),
+                    id: 'comments',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                answers: {
+                    name: self.app.localization.e('e13272'),
+                    id: 'answers',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                followers: {
+                    name: self.app.localization.e('e13273'),
+                    id: 'followers',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                /*rescued: {
+                    name: self.app.localization.e('e13274'),
+                    id: 'rescued',
+                    type: "BOOLEAN",
+                    value: true
+                },*/
+
+                commentScore: {
+                    name: self.app.localization.e('e13275'),
+                    id: 'commentScore',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                embedvideo: {
+                    name: self.app.localization.e('e13276'),
+                    id: 'embedvideo',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                videoautoplay2: {
+                    name: self.app.localization.e('e13277'),
+                    id: 'videoautoplay2',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                videop2p: {
+                    name: self.app.localization.e('videop2psettings'),
+                    id: 'videop2p',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                videoTranscoding: {
+                    name: self.app.localization.e('settingsTranscoding'),
+                    id: 'transcoding',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                autostart: {
+                    name: self.app.localization.e('e13278'),
+                    id: 'autostart',
+                    type: "BOOLEAN",
+                    value: undefined
+                },
+
+                vidgetchat: {
+                    name: self.app.localization.e('e13279'),
+                    id: 'vidgetchat',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                vidgettags: {
+                    name: self.app.localization.e('e13280'),
+                    id: 'vidgettags',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                vidgetlastcomments: {
+                    name: self.app.localization.e('e13281'),
+                    id: 'vidgetlastcomments',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                vidgetstaking: {
+                    name: 'Staking Pocketcoin vidget',
+                    id: 'vidgetstaking',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                interfacemobilelayoutmenu: {
+                    name: self.app.localization.e('interfacemobilelayoutmenu'),
+                    id: 'interfacemobilelayoutmenu',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                commentsOrder: {
+                    type: "VALUES",
+                    name: self.app.localization.e('commentsOrder'),
+                    id: 'commentsOrder',
+                    placeholder: self.app.localization.e('commentsOrderPlaceholder'),
+                    defaultValue: self.app.localization.e('comments_interesting'),
+                    value: "",
+                    possibleValues: ['interesting', 'timeup', 'time'],
+                    possibleValuesLabels: [
+                        self.app.localization.e('comments_interesting'),
+                        self.app.localization.e('comments_timeup'),
+                        self.app.localization.e('comments_time')
+                    ]
+                },
+
+
+                enablePeertube: {
+                    name: 'Use PeerTube for uploading videos',
+                    id: 'enablePeertube',
+                    type: "BOOLEAN",
+                    value: false,
+                },
+
+                hierarchicalShares: {
+                    name: 'Hierarchical Post Feed',
+                    id: 'hierarchicalShares',
+                    type: "BOOLEAN",
+                    value: false,
+                },
+
+                historicalShares: {
+                    name: 'Historical Post Feed',
+                    id: 'historicalShares',
+                    type: "BOOLEAN",
+                    value: false,
+                },
+
+                openlinksinelectron: {
+                    name: self.app.localization.e('openlinkssettings'),
+                    id: 'openlinksinelectron',
+                    type: "BOOLEAN",
+                    value: false,
+                },
+
+                sendUserStatistics: {
+                    name: self.app.localization.e('sendUserStatistics'),
+                    id: 'sendUserStatistics',
+                    type: "BOOLEAN",
+                    value: true,
+                },
+
+                canuseip: {
+                    name: self.app.localization.e('canuseipsetting'),
+                    id: 'canuseip',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
+                useanimations: {
+                    name: self.app.localization.e('useanimations'),
+                    id: 'useanimations',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
             }
 
-            return (eobj.text || function () { return '' })()
+
+
+            return st
+        },
+
+        self.errorHandler = function (key, action, akey) {
+
+            var er = null
+
+            if (_.isObject(key)) {
+                er = key
+                key = er.code
+            }
+
+            var eobj = self.errors[key] || self.errors['network'];
+
+            if (!eobj) {
+                return false;
+            } else {
+                var m = eobj.message;
+
+                if (m) {
+                    if (typeof m == 'function') m = m(akey, er);
+
+                    if (!m) return
+
+                    sitemessage(m)
+                }
+
+                var a = eobj.action
+
+                if (action && a) {
+                    a(key, action, akey)
+                }
+
+                return (eobj.text || function () {
+                    return ''
+                })()
+            }
+
+
+
         }
-
-
-
-    }
 
     self.errors = {
 
@@ -1134,15 +1222,13 @@ Platform = function (app, listofnodes) {
 
                                     class: 'zindex one'
                                 })
-                            }
-                            else {
+                            } else {
                                 sitemessage(self.errors["network"].message())
                             }
 
                         })
 
-                    }
-                    else {
+                    } else {
                         if (!self.app.user.validate()) {
 
                             self.app.platform.sdk.ustate.me(function (_mestate) {
@@ -1157,8 +1243,7 @@ Platform = function (app, listofnodes) {
 
                                         if (res) {
                                             self.errors["1"].action()
-                                        }
-                                        else {
+                                        } else {
                                             new dialog({
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
@@ -1167,8 +1252,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
                                     })
-                                }
-                                else {
+                                } else {
                                     topPreloader(100);
                                     sitemessage(self.errors["network"].message())
                                 }
@@ -1177,8 +1261,7 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        }
-                        else {
+                        } else {
                             topPreloader(100);
 
                             console.error("TODO_REF_ACTIONS")
@@ -1263,149 +1346,151 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
-        "actions_noinputs_wallet" : {
+        "actions_noinputs_wallet": {
             message: function () {
                 return self.app.localization.e('actions_noinputs_wallet')
             }
         },
-        "actions_noinputs" : {
+        "actions_noinputs": {
             message: function () {
                 return self.app.localization.e('actions_noinputs')
             }
         },
-        "actions_noinputs_on_address" : {
+        "actions_noinputs_on_address": {
             message: function () {
                 return self.app.localization.e('actions_noinputs_on_address')
             }
         },
-        "actions_noinputs_wait" : {
-           
+        "actions_noinputs_wait": {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait')
+            }
         },
 
-        "actions_noinputs_wait_comment" : {
+        "actions_noinputs_wait_comment": {
             message: function () {
                 return self.app.localization.e('actions_noinputs_wait_comment')
             }
         },
-        "actions_totalAmountZero" : {
+        "actions_totalAmountZero": {
             message: function () {
                 return self.app.localization.e('actions_totalAmountZero')
             }
         },
 
-        "actions_totalAmountSmaller_amount" : {
+        "actions_totalAmountSmaller_amount": {
             message: function () {
                 return self.app.localization.e('actions_totalAmountSmaller_amount')
             }
         },
 
-        "actions_totalAmountSmaller_amount_wait" : {
+        "actions_totalAmountSmaller_amount_wait": {
             message: function () {
                 return self.app.localization.e('actions_totalAmountSmaller_amount_wait')
             }
         },
 
-        "actions_totalAmountSmaller_amount_fee" : {
+        "actions_totalAmountSmaller_amount_fee": {
             message: function () {
                 return self.app.localization.e('actions_totalAmountSmaller_amount_fee')
             }
         },
 
-        "actions_totalAmountSmaller_amount_fee_wait" : {
+        "actions_totalAmountSmaller_amount_fee_wait": {
             message: function () {
                 return self.app.localization.e('actions_totalAmountSmaller_amount_fee_wait')
             }
         },
-        "actions_rejected" : {
+        "actions_rejected": {
             message: function () {
                 return self.app.localization.e('actions_rejected')
             }
         },
-        "actions_rejectedFromNodes" : {
+        "actions_rejectedFromNodes": {
             message: function () {
                 return self.app.localization.e('actions_rejectedFromNodes')
             }
         },
-        "actions_waitConfirmation" : {
+        "actions_waitConfirmation": {
             message: function () {
                 return self.app.localization.e('actions_waitConfirmation')
             }
         },
-        "actions_completed" : {
+        "actions_completed": {
             message: function () {
                 return self.app.localization.e('actions_completed')
             }
         },
-        "actions_alreadyCheckConfirmation" : {
+        "actions_alreadyCheckConfirmation": {
             message: function () {
                 return self.app.localization.e('actions_alreadyCheckConfirmation')
             }
         },
 
-        "actions_alreadySent" : {
+        "actions_alreadySent": {
             message: function () {
                 return self.app.localization.e('actions_alreadySent')
             }
         },
-        "actions_alreadySending" : {
+        "actions_alreadySending": {
             message: function () {
                 return self.app.localization.e('actions_alreadySending')
             }
         },
-        "actions_waitUserStatus" : {
+        "actions_waitUserStatus": {
             message: function () {
                 return self.app.localization.e('actions_waitUserStatus')
             }
         },
-        "actions_rejectedByTime" : {
+        "actions_rejectedByTime": {
             message: function () {
                 return self.app.localization.e('actions_rejectedByTime')
             }
         },
-        "actions_resourses" : {
+        "actions_resourses": {
             message: function () {
                 return self.app.localization.e('actions_resourses')
             }
         },
-        "actions_alreadyCheck" : {
+        "actions_alreadyCheck": {
             message: function () {
                 return self.app.localization.e('actions_alreadyCheck')
             }
         },
-        "actions_checkFail" : {
+        "actions_checkFail": {
             message: function () {
                 return self.app.localization.e('actions_checkFail')
             }
         },
 
-        "actions_collision" : {
+        "actions_collision": {
             message: function () {
                 return self.app.localization.e('actions_collision')
             }
         },
-        "actions_actionId" : {
+        "actions_actionId": {
             message: function () {
                 return self.app.localization.e('actions_actionId')
             }
         },
-        "actions_address" : {
+        "actions_address": {
             message: function () {
                 return self.app.localization.e('actions_address')
             }
         },
-        "actions_noAddress" : {
+        "actions_noAddress": {
             message: function () {
                 return self.app.localization.e('actions_noAddress')
             }
         },
 
-        "313" : {
+        "313": {
             message: function () {
                 return self.app.localization.e('lockedaccount')
             }
         },
 
-        "408" : {
+        "408": {
             message: function () {
                 return self.app.localization.e('error408')
             }
@@ -1450,19 +1535,19 @@ Platform = function (app, listofnodes) {
         },
 
         "49": {
-            message: function(){
+            message: function () {
                 return self.app.localization.e('saveSettingsLimit')
             }
         },
 
         "48": {
-            message: function(){
+            message: function () {
                 return self.app.localization.e('canSpendError')
             }
         },
 
         "47": {
-            message: function(){
+            message: function () {
                 return self.app.localization.e('err47')
             }
         },
@@ -1537,7 +1622,7 @@ Platform = function (app, listofnodes) {
 
         "30": {
             message: function () {
-                return  self.app.localization.e('e13244')
+                return self.app.localization.e('e13244')
             }
         },
 
@@ -1591,7 +1676,7 @@ Platform = function (app, listofnodes) {
         },
         "20": {
             message: function () {
-                return  self.app.localization.e('e13253')
+                return self.app.localization.e('e13253')
             }
         },
 
@@ -1730,13 +1815,13 @@ Platform = function (app, listofnodes) {
 
         "2000": {
             message: function () {
-                return  self.app.localization.e('e2000')
+                return self.app.localization.e('e2000')
             }
         },
 
         "-1": {
             message: function () {
-                return  self.app.localization.e('e2000')
+                return self.app.localization.e('e2000')
             }
         },
 
@@ -1751,7 +1836,7 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
-        "tosmallamount" : {
+        "tosmallamount": {
 
             message: function () {
 
@@ -1762,7 +1847,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        "imageerror" : {
+        "imageerror": {
 
             message: function () {
 
@@ -1778,6 +1863,7 @@ Platform = function (app, listofnodes) {
 
 
         url = url.replace("http:", "https:").replace("http//", "https://")
+
 
         var meta = parseVideo(url);
 
@@ -1795,23 +1881,23 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'youtube') {
 
-                if(url.indexOf('@') == -1){
+                if (url.indexOf('@') == -1) {
 
                     if (url.indexOf("watch") > -1) {
 
                         var s = url.split("?");
-    
+
                         if (s[1]) {
-    
-    
+
+
                             var v = parameters(s[1]);
-    
+
                             if (v.v) {
                                 _url = 'https://youtu.be/' + v.v
-    
+
                                 meta.id = v.v
                             }
-    
+
                         }
                     }
 
@@ -1821,7 +1907,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                
+
             }
 
             if (meta.type == 'vimeo' && url.indexOf("player") == -1) {
@@ -1888,9 +1974,7 @@ Platform = function (app, listofnodes) {
             }
 
             meta.url = _url;
-        }
-
-        else {
+        } else {
 
         }
 
@@ -2072,9 +2156,7 @@ Platform = function (app, listofnodes) {
 
                             if (suffix) {
                                 s = convertX(this.x) + ' - <b>' + suffix + '</b><br/>';
-                            }
-
-                            else {
+                            } else {
                                 s = '<b>' + convertX(this.x) + '</b><br/>';
                             }
 
@@ -2136,8 +2218,7 @@ Platform = function (app, listofnodes) {
                                     if (p.to_objectGl)
                                         objSuffix = p.to_objectGl.name
 
-                                }
-                                else {
+                                } else {
                                     if (p.to_object)
                                         objSuffix = '(' + p.to_object.Ticker + ')';
                                 }
@@ -2302,8 +2383,7 @@ Platform = function (app, listofnodes) {
                     /*    options.xAxis.title.style['font-weight'] = "700";
                         options.yAxis[0].title.style['font-weight'] = "700";
                         options.legend.itemStyle['font-weight'] = "700";*/
-                }
-                else {
+                } else {
                     options.plotOptions.pie.size = '85%';
                     options.legend.enabled = true;
                     options.chart.backgroundColor = "#fff";
@@ -2412,7 +2492,7 @@ Platform = function (app, listofnodes) {
 
                 if (typeof graph.options.disableYLabels != 'undefined') {
                     options.yAxis[0].labels.enabled = false;
-                    options.yAxis[0].offset =  0
+                    options.yAxis[0].offset = 0
                 }
 
                 if (typeof graph.options.yGridLineWidth != 'undefined') {
@@ -2527,8 +2607,7 @@ Platform = function (app, listofnodes) {
 
                             if (i % Number(c.toFixed(0))) {
 
-                            }
-                            else {
+                            } else {
                                 newData.push(serie.data[i])
                             }
                         }
@@ -2560,8 +2639,7 @@ Platform = function (app, listofnodes) {
                 if (!options) {
                     if (clbk)
                         clbk(null);
-                }
-                else {
+                } else {
                     if (p.maxPointsCount) {
                         graph.rarefied(options.series, p.maxPointsCount)
                     }
@@ -2601,8 +2679,7 @@ Platform = function (app, listofnodes) {
                         try {
                             chart.img = canvas.toDataURL('image/jpeg');
 
-                        }
-                        catch (e) {
+                        } catch (e) {
 
                             var vgcanvas = document.createElement('canvas');
                             vgcanvas.width = width;
@@ -2653,8 +2730,7 @@ Platform = function (app, listofnodes) {
                     if (!options) {
                         if (clbk)
                             clbk(null);
-                    }
-                    else {
+                    } else {
                         if (p.maxPointsCount) {
                             graph.rarefied(options.series, p.maxPointsCount)
                         }
@@ -2667,7 +2743,7 @@ Platform = function (app, listofnodes) {
                                 me: graph,
                                 id: graph.id,
                                 options: graph.options,
-                                ini : p
+                                ini: p
                             }
                         }, function (_p) {
 
@@ -2694,13 +2770,13 @@ Platform = function (app, listofnodes) {
 
             graph.destroy = function () {
 
-                if(graph.chart)
+                if (graph.chart)
                     graph.chart.destroy();
 
-                if (graph.el){
+                if (graph.el) {
                     graph.el.remove()
                 }
-                
+
 
                 graph.el = null;
 
@@ -2758,7 +2834,7 @@ Platform = function (app, listofnodes) {
 
         api: {
             actions: {
-                anysubscribe : {},
+                anysubscribe: {},
                 subscribe: {},
                 unsubscribe: {},
                 subscribePrivate: {},
@@ -2768,17 +2844,17 @@ Platform = function (app, listofnodes) {
             }
         },
     }
-    
+
 
     self.papi = {
 
-        horizontalSearchUsers: function(el, clbk, p){
+        horizontalSearchUsers: function (el, clbk, p) {
 
-            if(!p) p = {}
+            if (!p) p = {}
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
+            var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>` + (p.caption || '') + `</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             window.rifticker.add(() => {
@@ -2795,35 +2871,35 @@ Platform = function (app, listofnodes) {
 
                 app.nav.api.load({
 
-                    open : true,
-                    id : 'searchusers',
-                    el : _el,
-                    eid : id,
-                    mid : id,
-                    animation : false,
-                    essenseData : {
-                        
-                        window : p.window,
-                        horizontal : p.horizontal,
-                        value : p.value,
-                        loaded : function(shares){
+                    open: true,
+                    id: 'searchusers',
+                    el: _el,
+                    eid: id,
+                    mid: id,
+                    animation: false,
+                    essenseData: {
 
-                            if (p.hcnt){
-                                setTimeout(function(){
+                        window: p.window,
+                        horizontal: p.horizontal,
+                        value: p.value,
+                        loaded: function (shares) {
+
+                            if (p.hcnt) {
+                                setTimeout(function () {
                                     p.hcnt.addClass('hasitems')
                                 }, 300)
 
                             }
 
-                            if(p.loaded) p.loaded(shares)
+                            if (p.loaded) p.loaded(shares)
                         },
-                        count : p.count
+                        count: p.count
                     },
 
-                    clbk : clbk
+                    clbk: clbk
                 })
 
-                el.find('.controlhor').on('click', function(){
+                el.find('.controlhor').on('click', function () {
                     var dir = $(this).attr('dir') || 'right'
 
                     var curscroll = p.window.scrollLeft()
@@ -2831,23 +2907,25 @@ Platform = function (app, listofnodes) {
 
                     var to = width * 0.9
 
-                    if(dir == 'left') to = -to
+                    if (dir == 'left') to = -to
 
                     to = curscroll + to
 
-                    p.window.animate({ scrollLeft: to }, 100);
+                    p.window.animate({
+                        scrollLeft: to
+                    }, 100);
                 })
 
             })
         },
 
-        horizontalLenta : function(el, clbk, p){
+        horizontalLenta: function (el, clbk, p) {
 
-            if(!p) p = {}
+            if (!p) p = {}
 
             p.horizontal = true
 
-            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>` + (p.caption || '') + `</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
             window.rifticker.add(() => {
@@ -2862,7 +2940,7 @@ Platform = function (app, listofnodes) {
 
                 self.papi.clenta(_el, clbk, p)
 
-                el.find('.controlhor').on('click', function(){
+                el.find('.controlhor').on('click', function () {
                     var dir = $(this).attr('dir') || 'right'
 
                     var curscroll = p.window.scrollLeft()
@@ -2870,148 +2948,147 @@ Platform = function (app, listofnodes) {
 
                     var to = width * 0.9
 
-                    if(dir == 'left') to = -to
+                    if (dir == 'left') to = -to
 
                     to = curscroll + to
 
-                    p.window.animate({ scrollLeft: to }, 100);
+                    p.window.animate({
+                        scrollLeft: to
+                    }, 100);
                 })
 
             })
         },
 
-        clenta : function(el, clbk, p){
-            if(!p) p = {}
+        clenta: function (el, clbk, p) {
+            if (!p) p = {}
 
             var id = p.id || makeid()
 
             app.nav.api.load({
 
-                open : true,
-                id : 'lenta',
-                el : el,
-                eid : id,
-                mid : id,
-                animation : false,
-                essenseData : {
-                    author : p.author,
-                    video : p.video,
-                    comments : p.comments,
-                    enterFullScreenVideo : p.fullscreenvideo,
-                    openapi : p.openapi,
-                    renderclbk : p.renderclbk,
-                    ready : p.ready,
-                    window : p.window,
-                    horizontal : p.horizontal,
-                    second : true,
-                    loaderkey : p.loaderkey,
-                    openPostInWindowMobile : p.openPostInWindowMobile,
-                    hasshares : function(shares){
+                open: true,
+                id: 'lenta',
+                el: el,
+                eid: id,
+                mid: id,
+                animation: false,
+                essenseData: {
+                    author: p.author,
+                    video: p.video,
+                    comments: p.comments,
+                    enterFullScreenVideo: p.fullscreenvideo,
+                    openapi: p.openapi,
+                    renderclbk: p.renderclbk,
+                    ready: p.ready,
+                    window: p.window,
+                    horizontal: p.horizontal,
+                    second: true,
+                    loaderkey: p.loaderkey,
+                    openPostInWindowMobile: p.openPostInWindowMobile,
+                    hasshares: function (shares) {
 
-                        if (p.hcnt){
-                            setTimeout(function(){
+                        if (p.hcnt) {
+                            setTimeout(function () {
                                 p.hcnt.addClass('hasitems')
                             }, 300)
 
                         }
 
-                        if(p.hasshares) p.hasshares(shares)
+                        if (p.hasshares) p.hasshares(shares)
                     },
-                    opensvi : p.opensvi,
-                    from : p.from,
-                    compact : p.compact,
-                    r : p.r,
-                    shuffle : p.shuffle,
-                    page : p.page,
+                    opensvi: p.opensvi,
+                    from: p.from,
+                    compact: p.compact,
+                    r: p.r,
+                    shuffle: p.shuffle,
+                    page: p.page,
                     tags: p.tags,
                     lang: p.lang,
-                    period : p.period,
-                    filter : p.filter,
-                    ended : p.ended,
-                    afterload : p.afterload,
-                    count : p.count,
-                    playingClbk : p.playingClbk
+                    period: p.period,
+                    filter: p.filter,
+                    ended: p.ended,
+                    afterload: p.afterload,
+                    count: p.count,
+                    playingClbk: p.playingClbk
                 },
 
-                clbk : clbk
+                clbk: clbk
             })
         },
 
-        lenta : function(ids, el, clbk, p){
+        lenta: function (ids, el, clbk, p) {
 
-            if(!p) p = {}
+            if (!p) p = {}
             var id = makeid()
 
-            if(!_.isArray(ids)) ids = [ids]
+            if (!_.isArray(ids)) ids = [ids]
 
             app.nav.api.load({
 
-                open : true,
-                id : 'lenta',
-                el : el,
-                eid : id,
-                mid : id,
-                animation : false,
-                essenseData : {
+                open: true,
+                id: 'lenta',
+                el: el,
+                eid: id,
+                mid: id,
+                animation: false,
+                essenseData: {
 
-                    notscrollloading : true,
-                    txids : ids,
-                    comments : p.comments,
-                    enterFullScreenVideo : p.fullscreenvideo,
-                    openapi : p.openapi,
-                    renderclbk : p.renderclbk,
-                    ready : p.ready,
-                    second : true,
-                    allowblocked : true,
-                    playingClbk : p.playingClbk
+                    notscrollloading: true,
+                    txids: ids,
+                    comments: p.comments,
+                    enterFullScreenVideo: p.fullscreenvideo,
+                    openapi: p.openapi,
+                    renderclbk: p.renderclbk,
+                    ready: p.ready,
+                    second: true,
+                    allowblocked: true,
+                    playingClbk: p.playingClbk
                 },
 
-                clbk : clbk
+                clbk: clbk
             })
         },
 
-        editImage : function(src, p, clbk){
+        editImage: function (src, p, clbk) {
 
-            if(!p) p = {}
+            if (!p) p = {}
 
-            var images = [
-                {
-                    original : src,
-                    index : 0
-                }
-            ]
+            var images = [{
+                original: src,
+                index: 0
+            }]
 
             return new Promise((resolve, reject) => {
 
                 app.nav.api.load({
-                    open : true,
-                    id : 'imageGalleryEdit',
-                    inWnd : true,
+                    open: true,
+                    id: 'imageGalleryEdit',
+                    inWnd: true,
 
-                    essenseData : {
-                        edit : true,
-                        initialValue : 0,
-                        images : images,
-                        apply : p.apply,
-                        crop : {
-                            aspectRatio : p.aspectRatio || null,
-                            style : 'apply',
-                            autoCropArea : p.autoCropArea || 1,
+                    essenseData: {
+                        edit: true,
+                        initialValue: 0,
+                        images: images,
+                        apply: p.apply,
+                        crop: {
+                            aspectRatio: p.aspectRatio || null,
+                            style: 'apply',
+                            autoCropArea: p.autoCropArea || 1,
                         },
 
-                        success : function(i, editclbk){
+                        success: function (i, editclbk) {
 
-                            resize(images[0].original, p.w || 1920, p.h || 1080, function(resized){
+                            resize(images[0].original, p.w || 1920, p.h || 1080, function (resized) {
                                 var r = resized.split(',');
 
-                                if (r[1]){
+                                if (r[1]) {
 
                                     editclbk()
 
                                     resolve(resized)
 
-                                }
-                                else{
+                                } else {
                                     reject("error")
                                 }
 
@@ -3048,7 +3125,7 @@ Platform = function (app, listofnodes) {
                             repost: p.repost,
                             level: p.level,
                             fromempty: p.fromempty,
-                            nocommentcaption : p.nocommentcaption,
+                            nocommentcaption: p.nocommentcaption,
                             eid: id + (p.eid || ""),
                             comments : p.comments,
                             video : p.video,
@@ -3058,7 +3135,8 @@ Platform = function (app, listofnodes) {
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
                             openapi : typeof p.openapi == 'undefined' ? true : p.openapi,
-                            playingClbk : p.playingClbk
+                            playingClbk : p.playingClbk,
+                            jury : p.jury
                         }
                     })
 
@@ -3074,20 +3152,20 @@ Platform = function (app, listofnodes) {
             app.nav.api.load({
                 open: true,
                 href: 'post',
-                inWnd : !el && p.inWnd,
-                history : !el && p.inWnd,
+                inWnd: !el && p.inWnd,
+                history: !el && p.inWnd,
                 el: el,
                 eid: 'postpreview',
                 clbk: clbk,
 
                 essenseData: {
                     shareobj: share,
-                    nocommentcaption : true,
+                    nocommentcaption: true,
                     eid: 'postpreview',
-                    comments : 'no',
-                    video : false,
-                    autoplay : false,
-                    preview : true,
+                    comments: 'no',
+                    video: false,
+                    autoplay: false,
+                    preview: true,
 
                 }
             })
@@ -3095,7 +3173,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        connect : function(id, el, clbk, p){
+        connect: function (id, el, clbk, p) {
             self.sdk.users.get(id, function () {
 
                 app.nav.api.load({
@@ -3106,50 +3184,48 @@ Platform = function (app, listofnodes) {
                     clbk: clbk,
 
                     essenseData: {
-                        id : id,
-                        connect : true
+                        id: id,
+                        connect: true
                     }
                 })
 
             })
         },
 
-        route : function(href, el, clbk, p = {}, a = {}){
+        route: function (href, el, clbk, p = {}, a = {}) {
 
-            if(a.url && a.url.indexOf('ext=') > -1){
+            if (a.url && a.url.indexOf('ext=') > -1) {
 
                 var type = 'undefined'
 
-                
-                try{
+
+                try {
                     var type = self.sdk.external.type(parameters(a.url, true).ext)
 
                     var icon = ''
 
-                    if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
-                    if(type == 'auth') icon = '<i class="fas fa-user"></i>'
+                    if (type == 'pay') icon = '<i class="fas fa-wallet"></i>'
+                    if (type == 'auth') icon = '<i class="fas fa-user"></i>'
 
-                    el.html('<div class="internalpocketnetlink"><b>'+icon+' '+app.localization.e(type + 'Link')+'</b></div>')
-                }
-                catch(e){
+                    el.html('<div class="internalpocketnetlink"><b>' + icon + ' ' + app.localization.e(type + 'Link') + '</b></div>')
+                } catch (e) {
                     console.error('e', e)
-                    el.html('<div class="internalpocketnetlink"><b>'+app.localization.e('undefinedLink')+'</b></div>')
+                    el.html('<div class="internalpocketnetlink"><b>' + app.localization.e('undefinedLink') + '</b></div>')
                 }
 
-                
-            }
 
-            else{
-                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+            } else {
+                el.html('<div class="internalpocketnetlink"><a elementsid="https://' + app.options.url + '/' + href + '" href="https://' + app.options.url + '/' + href + '"><i class="fas fa-link"></i> https://' + app.options.url + '/' + href + '</a></div>')
             }
 
 
             app.nav.api.links(null, el);
 
-            if(clbk) clbk()
+            if (clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p, a){
+        channel : function(id, el, clbk, p = {}, a){
+
 
             var r = false
 
@@ -3157,11 +3233,9 @@ Platform = function (app, listofnodes) {
 
             try {
                 r = bitcoin.address.fromBase58Check(id);
-            }
-            catch (e) {
-            }
+            } catch (e) {}
 
-            var c = function(){
+            var c = function () {
                 self.sdk.users.get(id, function () {
 
                     app.nav.api.load({
@@ -3173,7 +3247,8 @@ Platform = function (app, listofnodes) {
 
                         essenseData: {
                             id : id,
-                            openapi : true
+                            openapi : true,
+                            jury : p.jury
                         }
                     })
 
@@ -3181,20 +3256,19 @@ Platform = function (app, listofnodes) {
             }
 
 
-            if(r){ c() }
+            if (r) {
+                c()
+            } else {
 
-            else{
-
-                var f = _.find(__map, function(m, i){
+                var f = _.find(__map, function (m, i) {
                     return m.href && (m.href.toLowerCase() == id.toLowerCase())
                 })
 
-                if(f){
+                if (f) {
                     self.papi.route(f.href, el, clbk, p, a)
-                }
-                else{
+                } else {
 
-                    self.sdk.users.addressByName(id, function(_id){
+                    self.sdk.users.addressByName(id, function (_id) {
                         id = _id
                         c()
                     })
@@ -3208,7 +3282,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        transaction : function(txid, el, clbk, p, additional = {}){
+        transaction: function (txid, el, clbk, p, additional = {}) {
             app.nav.api.load({
                 open: true,
                 href: 'transactionview',
@@ -3217,24 +3291,25 @@ Platform = function (app, listofnodes) {
                 clbk: clbk,
 
                 essenseData: {
-                    txid : txid,
-                    node : additional.node,
-                    verify : additional.verify
+                    txid: txid,
+                    node: additional.node,
+                    verify: additional.verify
                 }
             })
         },
 
-        comment : function(id, el, clbk, p, additional){
+        comment: function (id, el, clbk, p, additional) {
 
             if(!additional) additional = {}
+            if(!p) p = {}
 
-            var ps = additional.commentPs || p.commentPs
+            var ps = additional.commentPs || p.commentPs || {}
 
             app.nav.api.load({
-                open : true,
-                id : 'comments',
-                el : el,
-                eid : id + 'post_' + (ps.commentid || ''),
+                open: true,
+                id: 'comments',
+                el: el,
+                eid: id + 'post_' + (ps.commentid || ''),
 
                 essenseData : {
                     txid : id,
@@ -3244,10 +3319,11 @@ Platform = function (app, listofnodes) {
                     fromtop : true,
                     commentPs : ps,
                     openapi : p.openapi,
+                    jury : p.jury
 
                 },
 
-                clbk : clbk
+                clbk: clbk
             })
         },
 
@@ -3256,38 +3332,97 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        goback : function(def){
+
+            var chain = self.app.nav.backManager.chain
+
+            if (chain.length > 2) {
+
+                self.app.nav.api.go({
+                    href : chain[1].href,
+                    history : true,
+                    open : true
+                })
+                
+            }
+            else{
+
+                var k = ''
+                var indexkey = 'index'
+                var link = indexkey
+
+                if(!def){
+    
+                    try{
+                        k = localStorage['lentakey'] || ''
+                    }catch(e){
+    
+                    }
+    
+                    if(k != indexkey){
+                        if (k == 'video'){
+                            link = indexkey + '?video=1'
+                        }
+                        else{
+                            if (k == 'read'){
+                                link = indexkey + '?read=1'
+                            }
+                            else if (k == 'audio'){
+                                link = indexkey + '?audio=1'
+                            }else{
+                                if(k){
+                                    link = indexkey + '?r=' + k
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else{
+                    link = def
+                }
+
+                self.app.nav.api.go({
+                    href : link,
+                    history : true,
+                    open : true
+                })
+
+            }
+        },
+
         support : function(template, parameters){
  
             app.nav.api.load({
-                open : true,
-                id : 'support',
-                inWnd : true,
+                open: true,
+                id: 'support',
+                inWnd: true,
 
-                essenseData : {
+                essenseData: {
                     template,
                     parameters
                 }
             })
         },
 
-        requestPermission : function(parameters, settings){
-            return new Promise ((resolve, reject) => {
+        requestPermission: function (parameters, settings) {
+            return new Promise((resolve, reject) => {
                 app.nav.api.load({
-                    open : true,
-                    id : 'requestpermission',
-                    inWnd : true,
+                    open: true,
+                    id: 'requestpermission',
+                    inWnd: true,
 
-                    essenseData : {
+                    essenseData: {
                         ...parameters,
                         ...settings,
-                        success : (state) => {
+                        success: (state) => {
                             resolve(state)
                         },
 
-                        fail : function(state){
+                        fail: function (state) {
 
-                            if(state == 'closed') state = 'cancel'
-                            
+                            if (state == 'closed') state = 'cancel'
+
                             reject(state)
                         },
                     }
@@ -3295,66 +3430,68 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        sendTransactionAgainQuestion : function(reason, clbk){
-            return new Promise ((resolve, reject) => {
-                
+        sendTransactionAgainQuestion: function (reason, clbk) {
+            return new Promise((resolve, reject) => {
+
             })
         },
 
-        edituserinfo : function(reason, clbk){
-            return new Promise ((resolve, reject) => {
+        edituserinfo: function (reason, clbk) {
+            return new Promise((resolve, reject) => {
                 app.nav.api.load({
-                    open : true,
-                    id : 'test',
-                    inWnd : true,
+                    open: true,
+                    id: 'test',
+                    inWnd: true,
 
-                    essenseData : {
+                    essenseData: {
                         reason,
-                        success : (action) => {
+                        success: (action) => {
                             resolve(action)
                         },
 
-                        fail : function(){
+                        fail: function () {
                             reject('close')
                         },
                     },
 
-                
-                    clbk : function(s, p){
-                        if(clbk) clbk(p)
+
+                    clbk: function (s, p) {
+                        if (clbk) clbk(p)
                     }
                 })
             })
         },
 
-        captcha : function(reason, clbk, proxyOptions = {}){
+        captcha: function (reason, clbk, proxyOptions = {}) {
 
-            if(!proxyOptions.proxy) return Promise.reject('noproxy')
+            if (!proxyOptions.proxy) return Promise.reject('noproxy')
 
             var proxy = self.app.api.get.byid(proxyOptions.proxy)
 
-            if(!proxy) return Promise.reject('noproxy')
+            if (!proxy) return Promise.reject('noproxy')
 
 
-            var getcapcha = function(refresh){
+            var getcapcha = function (refresh) {
 
                 globalpreloader(true)
 
                 return new Promise((resolve, reject) => {
 
-                    self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
+                    self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function (captcha, error) {
 
-                        if (error){
+                        if (error) {
 
                             reject('network')
 
                             return
                         }
 
-                        resolve({captcha})
+                        resolve({
+                            captcha
+                        })
 
                     }, refresh || false, proxyOptions)
-                    
+
                 }).finally(() => {
                     globalpreloader(false)
                 })
@@ -3362,120 +3499,121 @@ Platform = function (app, listofnodes) {
 
             return self.app.user.isStatePromise().then((state) => {
 
-                if(!state) return Promise.reject('state')
+                if (!state) return Promise.reject('state')
 
                 return getcapcha()
 
-            }).then(({captcha}) => {
+            }).then(({
+                captcha
+            }) => {
 
-                return new Promise ((resolve, reject) => {
+                return new Promise((resolve, reject) => {
 
-                    if (captcha.done){
+                    if (captcha.done) {
 
                         resolve(captcha)
-        
-                    }
-                    else{
+
+                    } else {
 
                         app.nav.api.load({
-                            open : true,
-                            id : 'captcha',
-                            inWnd : true,
-            
-                            essenseData : {
+                            open: true,
+                            id: 'captcha',
+                            inWnd: true,
+
+                            essenseData: {
                                 captcha,
                                 proxyOptions,
                                 reason,
-                                getcapcha : () => getcapcha(true),
-                                success : (data) => {
+                                getcapcha: () => getcapcha(true),
+                                success: (data) => {
                                     resolve(data)
                                 },
 
-                                fail : function(){
+                                fail: function () {
                                     reject('close')
                                 },
                             },
-        
-                         
-                            clbk : function(s, p){
-                                if(clbk) clbk(p)
+
+
+                            clbk: function (s, p) {
+                                if (clbk) clbk(p)
                             }
                         })
-        
+
                     }
 
                 })
 
             })
-            
-            
 
-            
-            
+
+
+
+
         },
 
-        mobilesearch : function(p){
+        mobilesearch: function (p) {
 
             app.nav.api.load({
-                open : true,
-                id : 'mobilesearch',
-                inWnd : true,
-                essenseData : p,
+                open: true,
+                id: 'mobilesearch',
+                inWnd: true,
+                essenseData: p,
 
-                clbk : function(s, p){
+                clbk: function (s, p) {
                     self.uimobilesearch = p
                 }
             })
 
         },
 
-        uploadImage : function(p){
+        uploadImage: function (p) {
 
             app.nav.api.load({
-                open : true,
-                id : 'camerapreview',
-                el : app.el.camera,
-                essenseData : p,
+                open: true,
+                id: 'camerapreview',
+                el: app.el.camera,
+                essenseData: p,
 
-                clbk : function(s, p){
+                clbk: function (s, p) {
                     self.uicamerapreview = p
                 }
             })
-            
+
         },
 
-        pipvideo : function(txid, clbk, d){
+        pipvideo: function (txid, clbk, d) {
 
-            if(!d) d = {}
+            if (!d) d = {}
 
             var p = {
-                href : 'post?s=' + txid,
-                clbk : clbk,
+                href: 'post?s=' + txid,
+                clbk: clbk,
 
-                essenseData : {
-                    share : txid,
-                    video : true,
-                    autoplay : true,
-                    pip : true,
-                    startTime : d.startTime || 0
+                essenseData: {
+                    share: txid,
+                    video: true,
+                    autoplay: true,
+                    pip: true,
+                    startTime: d.startTime || 0
                 },
 
-                expand : function(d){
+                expand: function (d) {
 
-                    if(!d) d = {}
+                    if (!d) d = {}
 
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         self.app.nav.api.load({
-                            open : true,
-                            href : 'post?s=' + txid,
-                            inWnd : true,
-                            history : true,
-                            essenseData : {
-                                share : txid,
-                                video : true,
-                                autoplay : true,
-                                startTime : d.startTime || 0
+                            open: true,
+                            href: 'post?s=' + txid,
+                            inWnd: true,
+                            history: true,
+                            essenseData: {
+                                share: txid,
+                                video: true,
+                                autoplay: true,
+                                startTime: d.startTime || 0
                             }
                         })
                     }, 100)
@@ -3490,29 +3628,29 @@ Platform = function (app, listofnodes) {
             //self.matrixchat.backtoapp()
         },
 
-        popup : function(key, always, data){
+        popup: function (key, always, data) {
 
-			var showed = localStorage['popup_' + key] || false;
+            var showed = localStorage['popup_' + key] || false;
 
-			if(!showed || always){
+            if (!showed || always) {
 
-				app.nav.api.load({
-					open : true,
-					id : 'popup',
-					key : key,
-					inWnd : true,
+                app.nav.api.load({
+                    open: true,
+                    id: 'popup',
+                    key: key,
+                    inWnd: true,
 
-					essenseData : {
-						key : key,
-						always : always,
-						data : data
-					}
-				})
-			}
+                    essenseData: {
+                        key: key,
+                        always: always,
+                        data: data
+                    }
+                })
+            }
 
         },
 
-        articledecoration : function(wr, share, extend, clbk){
+        articledecoration: function (wr, share, extend, clbk) {
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
             var edjs = new edjsHTML(null, app)
@@ -3520,10 +3658,10 @@ Platform = function (app, listofnodes) {
             var images = edjs.getallimages(share.message)
 
 
-            if(share.caption.length > 10) capiontextclass = 'caption_medium'
-            if(share.caption.length > 60) capiontextclass = 'caption_long'
+            if (share.caption.length > 10) capiontextclass = 'caption_medium'
+            if (share.caption.length > 60) capiontextclass = 'caption_long'
 
-            var opengallery = function(src){
+            var opengallery = function (src) {
 
 
                 self.app.platform.ui.images(images, src)
@@ -3532,14 +3670,16 @@ Platform = function (app, listofnodes) {
 
             caption.addClass(capiontextclass)
 
-            if(extend){
-                wr.find('.article_carousel').each(function(){
+            if (extend) {
+                wr.find('.article_carousel').each(function () {
 
                     var _el = $(this)
 
-                    _el.find(".img").imagesLoadedPN({ imageAttr: true }, function(image) {
+                    _el.find(".img").imagesLoadedPN({
+                        imageAttr: true
+                    }, function (image) {
 
-                        _.each(image.images, function(img, n){
+                        _.each(image.images, function (img, n) {
                             var _img = img.img;
 
                             var el = $(image.elements[n])
@@ -3558,10 +3698,10 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    _el.find(".img").on('click', function(){
+                    _el.find(".img").on('click', function () {
                         var src = $(this).attr('i')
 
-                        if (src){
+                        if (src) {
                             opengallery(src)
                         }
                     })
@@ -3569,74 +3709,75 @@ Platform = function (app, listofnodes) {
                     //self.app.platform.ui.carousel($(this))
                 })
 
-                wr.find('.article_this_embed').each(function(){
-                    try{
+                wr.find('.article_this_embed').each(function () {
+                    try {
                         self.app.platform.ui.embeding($(this))
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
-                    
+
                 })
 
-                wr.find('.article_image img').on('click', function(){
+                wr.find('.article_image img').on('click', function () {
 
                     var src = $(this).attr('src')
 
-                    if (src){
+                    if (src) {
                         opengallery(src)
                     }
-                    
+
                 })
             }
 
             var cover = share.images[0]
 
 
-            if(!cover){
+            if (!cover) {
 
                 caption.addClass('withoutimage')
 
-                setTimeout(function(){
+                setTimeout(function () {
                     wr.addClass('ready')
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 }, 150)
 
 
 
-            }
-            else{
+            } else {
 
                 var rea = false
 
-                setTimeout(function(){
-                    if(rea) return
+                setTimeout(function () {
+                    if (rea) return
 
                     rea = true
 
                     caption.addClass('withoutimage')
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         wr.addClass('ready')
-                        if(clbk) clbk()
+                        if (clbk) clbk()
                     }, 150)
 
                 }, 3500)
 
-                wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+                wr.find('.articleCover').imagesLoadedPN({
+                    imageAttr: true
+                }, function (image) {
 
-                    if(rea) return
+                    if (rea) return
 
                     rea = true
 
                     var aspectRatio = 0.6
                     var small = false
 
-                    _.each(image.images, function(img){
+                    _.each(image.images, function (img) {
 
                         var _img = img.img;
                         aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-                        if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
+                        if (_img.naturalHeight < 200 || _img.naturalWidth < 300) {
                             small = true
                         }
 
@@ -3644,17 +3785,17 @@ Platform = function (app, listofnodes) {
 
 
 
-                    if(small){
+                    if (small) {
                         caption.addClass('smallimage')
                     }
 
-                    if (aspectRatio > 1 && !small){
+                    if (aspectRatio > 1 && !small) {
                         caption.addClass('verticalcover')
                     }
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         wr.addClass('ready')
-                        if(clbk) clbk()
+                        if (clbk) clbk()
                     }, 150)
 
 
@@ -3664,24 +3805,24 @@ Platform = function (app, listofnodes) {
 
         },
 
-        changeloc : function(_clbk){
+        changeloc: function (_clbk) {
             var items = []
 
-            _.each(self.app.localization.available, function(a){
+            _.each(self.app.localization.available, function (a) {
                 items.push({
-                    text : a.name,
-                    action : function (clbk) {
+                    text: a.name,
+                    action: function (clbk) {
 
                         var na = app.localization.findByName(a.name);
 
-                        if (na && na.key != self.app.localization.key){
+                        if (na && na.key != self.app.localization.key) {
 
                             self.app.localization.set(na.key);
                         }
 
                         clbk()
 
-                        if(_clbk) _clbk()
+                        if (_clbk) _clbk()
 
                     }
                 })
@@ -3692,7 +3833,7 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        embeding : function(el){
+        embeding: function (el) {
 
             var h = el.attr('href')
             var w = new window.PNWIDGETS()
@@ -3701,14 +3842,14 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk, address, block) {
+        showCommentBanner: function (contextElem, clbk, address, block) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
-                return 
+                return
             }
 
             let bannerCommentComponent = null;
-            
+
             if (!contextElem) {
                 return;
             }
@@ -3731,7 +3872,7 @@ Platform = function (app, listofnodes) {
                         block: block
                     },
 
-                    clbk : function(e, p){
+                    clbk: function (e, p) {
                         bannerCommentComponent = p;
 
                         if (clbk) {
@@ -3745,7 +3886,7 @@ Platform = function (app, listofnodes) {
                             });
                         }
 
-                        
+
                     }
                 });
             };
@@ -3754,15 +3895,18 @@ Platform = function (app, listofnodes) {
             const oneDayInSeconds = 86400;
 
             var commentBanner = {}
-            
-            try{
-                commentBanner =  JSON.parse(localStorage.commentBanner || '{}');
 
-            }catch(e){
-                
+            try {
+                commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+
+            } catch (e) {
+
             }
-           
-            let {next, count} = commentBanner; 
+
+            let {
+                next,
+                count
+            } = commentBanner;
 
             if (!count) count = 0;
             if (!next) next = 0;
@@ -3776,17 +3920,17 @@ Platform = function (app, listofnodes) {
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
 
-            if (block){
-                
-                            
-                try{
-                    const blockBanner =  JSON.parse(localStorage.blockBanner || '[]');
-                    if (blockBanner.indexOf(address) === -1){
+            if (block) {
+
+
+                try {
+                    const blockBanner = JSON.parse(localStorage.blockBanner || '[]');
+                    if (blockBanner.indexOf(address) === -1) {
                         createComponent(address);
                     }
 
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 return;
@@ -3805,115 +3949,95 @@ Platform = function (app, listofnodes) {
                 //return bannerCommentComponent;t
             }
 
-            var me = self.psdk.userInfo.getmy() 
-            
+            var me = self.psdk.userInfo.getmy()
+
             ///deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
 
-            if (me && me.relation(address, 'subscribes')){ return; } 
+            if (me && me.relation(address, 'subscribes')) {
+                return;
+            }
 
             count++;
 
-            if (unixTimeNow - oneDayInSeconds > next){
+            if (unixTimeNow - oneDayInSeconds > next) {
                 count = 1;
                 next = Date.now() / 1000;
 
             }
 
             const timeToShowBanner = count <= 4;
-        
+
             if (timeToShowBanner) {
 
-                if (count <= 2){
+                if (count <= 2) {
 
                     createComponent();
 
-                } else if (count <= 4){
+                } else if (count <= 4) {
 
                     createComponent(address);
 
                 }
 
-                try{
-                    localStorage.setItem('commentBanner', JSON.stringify({count, next}));
+                try {
+                    localStorage.setItem('commentBanner', JSON.stringify({
+                        count,
+                        next
+                    }));
 
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
 
-            } 
-        
+            }
+
 
 
         },
 
-        carousel : function(el, clbk){
+        carousel: function (el, clbk) {
             throw 'use new carousel()'
-			var images = el.find('[image]');
-
-            var w = el.width()
-
-            images.imagesLoadedPN({ imageAttr: true}, function (image) {
-
-                var aspectRatio = 0
-
-                _.each(image.images, function(img){
-                    var _img = img.img;
-
-                    var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-                    if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-                })
-
-                if (aspectRatio){
-
-                    if(aspectRatio > 1.66) aspectRatio = 1.66
-
-                    images.height( w * aspectRatio)
-                }
-
-                el.addClass('owl-carousel')
-                el.owlCarousel({
-                    items: 1,
-                    dots: true,
-                    nav: !self.app.mobileview,
-                    navText: [
-                        '<i class="fas fa-chevron-left"></i> ',
-                        '<i class="fas fa-chevron-right"></i>'
-                        ]
-
-                });
-
-                if (clbk)
-                    clbk()
-
-            }, self.app)
 
 
         },
 
         usertype : function(address){
-
-            var info = self.psdk.userInfo.getShortForm(address)
-
-            if (info.dev) return 'dev'
-            if (info.real) return 'real'
-
-            return ''
-
+            return self.sdk.user.type(address)
         },
         markUser : function(address){
 
-            var t = self.ui.usertype(address)
+            var t = self.sdk.user.type(address)
 
             if (t == 'dev') return this.markDev();
             if (t == 'real') return this.markReal();
+            if (t == 'shark') return this.markShark();
+            if (t == 'moderator') return this.markModerator();
 
             return ''
 
         },
+        markShark : function(){
 
-        markReal : function(){
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x shark">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-flag fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        markModerator : function(){
+
+            return `<div class="realperson">
+                <span class="fa-stack fa-2x moderator">
+                    <i class="fas fa-certificate fa-stack-2x"></i>
+                    <i class="fas fa-crown fa-stack-1x"></i>
+                </span>
+            </div>`
+        },
+        
+
+        markReal: function () {
 
             return `<div class="realperson">
                 <span class="fa-stack fa-2x real">
@@ -3923,7 +4047,7 @@ Platform = function (app, listofnodes) {
             </div>`
         },
 
-        markDev : function(){
+        markDev: function () {
 
             return `<div class="realperson">
                     <span class="fa-stack fa-2x dev">
@@ -3934,7 +4058,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        recommendations : function(el, share, ed, clbk){
+        recommendations: function (el, share, ed, clbk) {
 
             var basecount = ed.basecount || 20
 
@@ -3949,45 +4073,45 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
 
-                    container : ed.el,
+                    container: ed.el,
 
-                    caption : 'othervideos',
-                    loader : 'getrecomendedcontents',
-                    startload : ed.startload,
+                    caption: 'othervideos',
+                    loader: 'getrecomendedcontents',
+                    startload: ed.startload,
 
-                    loaders : [{
-                        loader : 'getrecomendedcontents',
-                        parameters : {
+                    loaders: [{
+                        loader: 'getrecomendedcontents',
+                        parameters: {
 
                             contentAddress: share.address,
                             type: 'video',
                             depth: 10000,
                             count: basecount,
-                            lang : share.language
+                            lang: share.language
                         },
-                    },{
-                        loader : 'gettopfeed',
-                        parameters : {
+                    }, {
+                        loader: 'gettopfeed',
+                        parameters: {
 
                             type: 'video',
                             depth: 10000,
                             count: basecount * 1.5,
-                            lang : share.language,
-                            tagsfilter : share.tags
+                            lang: share.language,
+                            tagsfilter: share.tags
                         },
 
                     }],
 
-                    sorting : function(recommendations){
+                    sorting: function (recommendations) {
 
-                        if(recommendations.length <= 1) return recommendations
+                        if (recommendations.length <= 1) return recommendations
 
-                        return _.sortBy(recommendations, function(r, i){
+                        return _.sortBy(recommendations, function (r, i) {
                             return (i + oddtxid) % (recommendations.length - 1)
                         })
                     },
 
-                    filter : function(recommendations){
+                    filter: function (recommendations) {
 
 
                         recommendations = _.filter(recommendations, (_share) => {
@@ -4001,8 +4125,8 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    points : function(_share, p){
-                        if (_share.address == share.address){
+                    points: function (_share, p) {
+                        if (_share.address == share.address) {
                             p = p * 3
                         }
 
@@ -4013,49 +4137,45 @@ Platform = function (app, listofnodes) {
                         return p
                     },
 
-                    open : function(txid){
+                    open: function (txid) {
 
                         var timeout = 300
 
-                        if (ed.beforeopen){
+                        if (ed.beforeopen) {
                             timeout = ed.beforeopen(txid) || 300
                         }
 
-                        if (ed.opensvi){
+                        if (ed.opensvi) {
                             ed.opensvi(txid)
-                        }
-                        else
+                        } else
 
-                        if (ed.next){
+                        if (ed.next) {
 
                             self.sdk.node.shares.getbyid([txid], function () {
 
                                 var share = self.psdk.share.get(txid)
-                                
+
 
                                 ed.next(txid, share)
 
                             })
 
-                        }
+                        } else {
 
-                        else{
-
-                            setTimeout(function(){
-                                if(isMobile()){
+                            setTimeout(function () {
+                                if (isMobile()) {
 
                                     self.app.nav.api.load({
-                                        open : true,
-                                        href : 'post?s=' + txid,
-                                        history : true,
+                                        open: true,
+                                        href: 'post?s=' + txid,
+                                        history: true,
                                     })
 
-                                }
-                                else{
+                                } else {
                                     self.app.nav.api.go({
-                                        href : 'index?video=1&v=' + txid,
-                                        history : true,
-                                        open : true,
+                                        href: 'index?video=1&v=' + txid,
+                                        history: true,
+                                        open: true,
                                     })
                                 }
                             }, timeout)
@@ -4068,41 +4188,41 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbk : clbk
+                clbk: clbk
             })
         },
 
-        images : function(allimages, initialValue, clbk, p){
+        images: function (allimages, initialValue, clbk, p) {
 
-            if(!_.isArray(allimages)) allimages = [allimages]
+            if (!_.isArray(allimages)) allimages = [allimages]
 
-            if(!initialValue) initialValue = allimages[0]
+            if (!initialValue) initialValue = allimages[0]
 
-            if(!initialValue) return false
+            if (!initialValue) return false
 
             var gid = 'uiimages'
 
-            var images = _.map(allimages, function(i){
+            var images = _.map(allimages, function (i) {
                 return {
-                    src : i
+                    src: i
                 }
             })
 
             self.app.nav.api.load({
-                open : true,
-                href : 'imagegallery',
-                inWnd : true,
-                history : true,
+                open: true,
+                href: 'imagegallery',
+                inWnd: true,
+                history: true,
 
-                essenseData : {
-                    initialValue : initialValue,
-                    idName : 'src',
-                    images : images,
-                    gid : gid,
+                essenseData: {
+                    initialValue: initialValue,
+                    idName: 'src',
+                    images: images,
+                    gid: gid,
                     ...p
                 },
 
-                clbk : function(p){
+                clbk: function (p) {
                     if (clbk)
                         clbk(p)
                 }
@@ -4113,19 +4233,19 @@ Platform = function (app, listofnodes) {
 
         },
 
-        socialshare : function(url, p){
-            if(!p) p = {}
+        socialshare: function (url, p) {
+            if (!p) p = {}
 
-            if (url){
-                url = 'https://'+app.options.url+'/' + url
+            if (url) {
+                url = 'https://' + app.options.url + '/' + url
             }
-            
+
 
             app.nav.api.load({
-                open : true,
-                href : 'socialshare2',
-                history : true,
-                inWnd : true,
+                open: true,
+                href: 'socialshare2',
+                history: true,
+                inWnd: true,
 
                 essenseData : {
                     url : url || p.url,
@@ -4133,45 +4253,49 @@ Platform = function (app, listofnodes) {
                     sharing : p.sharing || null,
                     embedding : p.embedding || null,
                     notincludedRef : true,
+                    canmakepost : p.canmakepost
                 }
             })
         },
 
-        share : function(p){
-            if(!p) p = {}
+        share: function (p) {
+            if (!p) p = {}
 
             globalpreloader(true, true)
 
-            const { name, description, tags, url } = p;
+            const {
+                name,
+                description,
+                tags,
+                url
+            } = p;
 
-            console.log("SHARE", p)
 
-            setTimeout(function(){
+            setTimeout(function () {
                 app.nav.api.load({
-                    open : true,
-                    id : 'share',
-                    inWnd : true,
-                    eid : 'postin',
-                    mid : 'postin',
+                    open: true,
+                    id: 'share',
+                    inWnd: true,
+                    eid: 'postin',
+                    mid: 'postin',
 
-                    clbk : function(e, p){
+                    clbk: function (e, p) {
                         globalpreloader(false)
                     },
 
-                    essenseData : {
-                        close : function(){
-                        },
-                        post : function(){
+                    essenseData: {
+                        close: function () {},
+                        post: function () {
                             if (p.onPost) p.onPost();
                         },
-                        absolute : true,
-                        repost  : p.repost,
+                        absolute: true,
+                        repost: p.repost,
                         videoLink: p.videoLink,
                         name,
                         description,
                         tags,
                         url,
-                        dontsave : (p.repost || p.videoLink || p.dontsave) ? true : false
+                        dontsave: (p.repost || p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
@@ -4179,7 +4303,7 @@ Platform = function (app, listofnodes) {
 
         showmykeyfast: function (p) {
 
-            if(!p) p = {}
+            if (!p) p = {}
 
             app.nav.api.load({
 
@@ -4189,7 +4313,7 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
                     dumpkey: true,
-                    showsavelabel : p.showsavelabel,
+                    showsavelabel: p.showsavelabel,
                 },
 
                 clbk: function (p, s) {
@@ -4221,8 +4345,8 @@ Platform = function (app, listofnodes) {
 
                         essenseData: {
                             dumpkey: true,
-                            showsavelabel : p.showsavelabel,
-                            afterregistration : p.afterregistration
+                            showsavelabel: p.showsavelabel,
+                            afterregistration: p.afterregistration
                         },
 
                         clbk: function (p, s) {
@@ -4246,80 +4370,77 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showkeyafterregistration : function(clbk){
+        showkeyafterregistration: function (clbk) {
 
             self.app.user.isState(function (state) {
-                if(state){
-                    
+                if (state) {
+
                     var needshowkey = false
 
-                    try{
+                    try {
                         needshowkey = JSON.parse(localStorage['needshowkey_' + self.app.user.address.value] || 'false')
 
                         //localStorage['needshowkey_' + self.app.user.address.value] = false
 
-                    }catch(e){}
+                    } catch (e) {}
 
 
-                    if (needshowkey){
-                        if (isMobile()){
+                    if (needshowkey) {
+                        if (isMobile()) {
                             self.ui.showmykey({
-                                showsavelabel : true
+                                showsavelabel: true
                             })
-                        }
-                        else{
+                        } else {
                             self.ui.showmykeyfast({
-                                showsavelabel : true
+                                showsavelabel: true
                             })
                         }
                     }
 
-                    
+
                 }
             })
 
-            if(clbk) clbk()
-            
+            if (clbk) clbk()
+
         },
 
-        wallet : {
+        wallet: {
 
-            donate : function(p){
+            donate: function (p) {
 
                 return new Promise((resolve, reject) => {
 
                     var receiver = p.receiver
 
                     var sender = self.sdk.address.pnet().address;
-                
-                    if (sender === receiver){
+
+                    if (sender === receiver) {
                         sitemessage(self.app.localization.e('donateself'));
 
-                        reject()
-                    }
-
-                    else{
+                        reject('donateself')
+                    } else {
                         app.nav.api.load({
-                            open : true,
-                            id : 'donate',
-                            inWnd : true,
-                
-                            essenseData : {
-                                type : 'donate',
-                                sender: sender, 
+                            open: true,
+                            id: 'donate',
+                            inWnd: true,
+
+                            essenseData: {
+                                type: 'donate',
+                                sender: sender,
                                 receiver: receiver,
-                                send : p.send ?? true,
-                                donatemode : p.donatemode,
-                                value : 1,
-                                min : 0.5,
-                                clbk  : function(value, action, txid, _p = {}){
+                                send: p.send ?? true,
+                                donatemode: p.donatemode,
+                                value: 1,
+                                min: 0.5,
+                                clbk: function (value, action, txid, _p = {}) {
 
 
-                                    if ((p.share ?? true) && p.roomid && txid){
+                                    if ((p.share ?? true) && p.roomid && txid) {
 
                                         var node = typeof txidnodestorage != 'undefined' ? txidnodestorage[txid] || null : null
 
-                                        var link = app.meta.protocol + '://i?stx=' +txid
+                                        var link = app.meta.protocol + '://i?stx=' + txid
 
                                         if (node) link += '&node=' + node
 
@@ -4328,14 +4449,14 @@ Platform = function (app, listofnodes) {
 
                                     p.value = value;
                                     p.send = _p.send
-                                    
+                                    p.txid = txid
 
                                     resolve(p)
                                 }
                             },
-                
-                            clbk : function(s, p) {
-                                
+
+                            clbk: function (s, p) {
+
                             }
                         })
                     }
@@ -4343,9 +4464,9 @@ Platform = function (app, listofnodes) {
 
             },
 
-            send : function(p, clbk, el){
+            send: function (p, clbk, el) {
 
-                if(!p) p = {}
+                if (!p) p = {}
 
                 var id = 'papiwalletsend'
 
@@ -4360,34 +4481,34 @@ Platform = function (app, listofnodes) {
 
                 return new Promise((resolve, reject) => {
 
-                    p.sendclbk = function(d){
+                    p.sendclbk = function (d) {
 
-                        if ((p.share ?? true) && p.roomid && d.txid){
+                        if ((p.share ?? true) && p.roomid && d.txid) {
                             self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 
                         resolve(d)
 
-                        if(es && es.container) es.container.close()
+                        if (es && es.container) es.container.close()
                     }
 
                     app.nav.api.load({
-                        open : true,
-                        id : 'wallet',
-                        inWnd : el ? false : true,
-                        el : el ? el : null,
-                        eid : id,
+                        open: true,
+                        id: 'wallet',
+                        inWnd: el ? false : true,
+                        el: el ? el : null,
+                        eid: id,
 
-                        mid : id,
-                        animation : false,
-                        essenseData : p,
-                        clbk : function(e, _p){
+                        mid: id,
+                        animation: false,
+                        essenseData: p,
+                        clbk: function (e, _p) {
 
                             es = _p
 
                             globalpreloader(false)
 
-                            if(clbk) clbk(e, _p)
+                            if (clbk) clbk(e, _p)
                         }
                     })
 
@@ -4397,9 +4518,9 @@ Platform = function (app, listofnodes) {
 
             },
 
-            buy : function(p, clbk, el){
+            buy: function (p, clbk, el) {
 
-                if(!p) p = {}
+                if (!p) p = {}
 
                 var id = 'papiwalletbuy'
 
@@ -4414,34 +4535,34 @@ Platform = function (app, listofnodes) {
 
                 return new Promise((resolve, reject) => {
 
-                    p.sendclbk = function(d){
+                    p.sendclbk = function (d) {
 
-                        if (p.roomid && d.txid){
+                        if (p.roomid && d.txid) {
                             self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 
                         resolve(d)
 
-                        if(es && es.container) es.container.close()
+                        if (es && es.container) es.container.close()
                     }
 
                     app.nav.api.load({
-                        open : true,
-                        id : 'wallet',
-                        inWnd : el ? false : true,
-                        el : el ? el : null,
-                        eid : id,
-                        mid : id,
-                        history : true,
-                        animation : false,
-                        essenseData : p,
-                        clbk : function(e, _p){
+                        open: true,
+                        id: 'wallet',
+                        inWnd: el ? false : true,
+                        el: el ? el : null,
+                        eid: id,
+                        mid: id,
+                        history: true,
+                        animation: false,
+                        essenseData: p,
+                        clbk: function (e, _p) {
 
                             es = _p
 
                             globalpreloader(false)
 
-                            if(clbk) clbk(e, _p)
+                            if (clbk) clbk(e, _p)
                         }
                     })
 
@@ -4452,11 +4573,11 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        saveShare : function(share, clbk, _p){
+        saveShare: function (share, clbk, _p) {
 
-            if(!_p) _p = {}
+            if (!_p) _p = {}
 
-            var error = function(e){
+            var error = function (e) {
                 if (e != 'paused') {
                     sitemessage(e)
 
@@ -4466,11 +4587,11 @@ Platform = function (app, listofnodes) {
                 }
             }
 
-            var save = function(p){
+            var save = function (p) {
 
-                if(!p) p = {}
+                if (!p) p = {}
 
-                p.progress = function(key, percent){
+                p.progress = function (key, percent) {
                     topPreloader2(percent, self.app.localization.e('downloadingVideo'))
                 }
 
@@ -4479,15 +4600,15 @@ Platform = function (app, listofnodes) {
                 self.sdk.localshares.saveShare(share, p).then(r => {
 
                     sitemessage(self.app.localization.e('successdownloaded'), null, 5000, {
-                        action : {
-                            text : self.app.localization.e('gotosaved'),
-                            do : function(){
+                        action: {
+                            text: self.app.localization.e('gotosaved'),
+                            do: function () {
 
                                 app.nav.api.load({
                                     open: true,
                                     href: 'index?r=saved',
                                     history: true,
-                                    handler : true
+                                    handler: true
                                 })
 
                             }
@@ -4497,22 +4618,24 @@ Platform = function (app, listofnodes) {
 
                     topPreloader2(100)
 
-                    if(clbk) clbk()
+                    if (clbk) clbk()
 
                 }).catch(error)
             }
 
-            if(self.sdk.localshares.saving[share.txid]) return
+            if (self.sdk.localshares.saving[share.txid]) return
 
             // If download has been paused, resume it
             if (self.sdk.localshares.paused[share.txid]) {
 
-                save({resolutionId : self.sdk.localshares.paused[share.txid]})
+                save({
+                    resolutionId: self.sdk.localshares.paused[share.txid]
+                })
 
                 return;
             }
 
-            if(self.sdk.localshares.storage[share.txid]){
+            if (self.sdk.localshares.storage[share.txid]) {
 
                 menuDialog({
                     items: [{
@@ -4521,7 +4644,7 @@ Platform = function (app, listofnodes) {
 
                             self.sdk.localshares.deleteShare(share.txid).then(r => {
 
-                                if(clbk) clbk(share.txid, true)
+                                if (clbk) clbk(share.txid, true)
 
                             }).catch(error)
 
@@ -4534,19 +4657,21 @@ Platform = function (app, listofnodes) {
                 return
             }
 
-          
+
 
             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
 
-            if (info){
+            if (info) {
 
-                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function(file){
+                var items = _.map(deep(info, 'original.streamingPlaylists.0.files') || [], function (file) {
                     return {
                         text: file.resolution.label,
                         action: function (clbk) {
 
-                            save({resolutionId : file.resolution.id})
+                            save({
+                                resolutionId: file.resolution.id
+                            })
 
                             clbk()
 
@@ -4554,12 +4679,12 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                if(info && info.original && info.original.isLive){
+                if (info && info.original && info.original.isLive) {
 
                     new dialog({
                         html: "Please wait, you will be able to download the video when the broadcast recording appears",
                         btn1text: self.app.localization.e('daccept'),
-                        class : 'one',
+                        class: 'one',
                         success: function () {
 
                         }
@@ -4568,12 +4693,12 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                if(!items.length){
+                if (!items.length) {
 
                     new dialog({
                         html: "Please wait, the video hasn't been transcoded yet",
                         btn1text: self.app.localization.e('daccept'),
-                        class : 'one',
+                        class: 'one',
                         success: function () {
 
                         }
@@ -4584,132 +4709,127 @@ Platform = function (app, listofnodes) {
                 }
 
                 menuDialog({
-                    header : self.app.localization.e('selectQuality'),
+                    header: self.app.localization.e('selectQuality'),
                     items: items
                 })
 
-            }
-            else{
+            } else {
                 error('Error, cannot find data for this video')
             }
-        
+
 
 
         },
 
-        external : function(ps){
+        external: function (ps) {
 
             self.app.platform.sdk.user.stateAction(() => {
 
-                if (ps.action == 'share'){
+                if (ps.action == 'share') {
 
                     self.app.platform.ui.share({
-						tags : ps.tags,
-                        description : ps.description,
-                        url : ps.url,
-                        dontsave : true
-					})
+                        tags: ps.tags,
+                        description: ps.description,
+                        url: ps.url,
+                        dontsave: true
+                    })
 
-                }
-                else{
+                } else {
                     self.app.nav.api.load({
-                        open : true,
-                        href : 'external',
-                        inWnd : true,
-                        essenseData : {
-                            action : ps.action, 
-                            parameters : ps
+                        open: true,
+                        href: 'external',
+                        inWnd: true,
+                        essenseData: {
+                            action: ps.action,
+                            parameters: ps
                         }
                     })
                 }
 
-                
+
 
             }, {
-                text : 'external_'+ps.action+'link_reg',
-                success : 'rcontinue',
-                cancel : 'dcancel'
+                text: 'external_' + ps.action + 'link_reg',
+                success: 'rcontinue',
+                cancel: 'dcancel'
             })
         },
 
-        
 
-        externalFromCurrentUrl : function(){
+
+        externalFromCurrentUrl: function () {
             var p = parameters()
 
-            if (p.ext){
+            if (p.ext) {
 
-                try{
+                try {
 
                     var ps = self.sdk.external.getFromHash(p.ext)
-                    
+
                     self.ui.external(ps)
 
                     return true
-                }
-                catch(e){
+                } catch (e) {
                     console.error(e)
 
                     sitemessage(e)
                 }
-                
+
 
 
             }
         }
 
     }
-    
+
 
     self.effects = {
-        manager : null,
-        animation : false,
+        manager: null,
+        animation: false,
 
-        effectinternal : function(el, name, parameters, clbk){
+        effectinternal: function (el, name, parameters, clbk) {
 
 
 
-            if(!self.sdk.usersettings.meta.useanimations.value) return
+            if (!self.sdk.usersettings.meta.useanimations.value) return
 
-            var e = function(){
+            var e = function () {
                 window.rifticker.add(() => {
                     self.effects.manager.effect(el, name, parameters, clbk)
                 })
             }
 
-            if(!self.effects.manager){
+            if (!self.effects.manager) {
                 self.effects.manager = new FX_Manager(app)
                 self.effects.manager.prepare(e)
-            }
-            else{
+            } else {
                 e()
             }
         },
 
-        lib : {
-            stars : function(el, parameters, clbk){
+        lib: {
+            stars: function (el, parameters, clbk) {
 
-                if(!parameters) parameters = {}
+                if (!parameters) parameters = {}
 
                 parameters.opacity = 0.8
                 parameters.scatter = 20
                 parameters.duration = 900
-
                 parameters.color || (parameters.color = '#ffa000')
 
                 self.effects.effectinternal(el, 'stars', parameters, clbk)
             },
 
-            hearts: function(el, parameters, clbk){
+            hearts: function (el, parameters, clbk) {
 
-                if(!parameters) parameters = {}
+                if (!parameters) parameters = {}
 
                 parameters.opacity = 0.9
                 parameters.scatter = 150
                 parameters.duration = 1800
                 parameters.size = 20
 
-                if(self.app.mobileview){
+                if (self.app.mobileview) {
                     parameters.duration = 1400
                 }
 
@@ -4717,13 +4837,33 @@ Platform = function (app, listofnodes) {
 
                 self.effects.effectinternal(el, 'hearts', parameters, clbk)
             },
+
+            fire: function (el, parameters, clbk) {
+
+                if (!parameters) parameters = {}
+
+                parameters.opacity = 0.9
+                parameters.scatter = 150
+                parameters.duration = 1800
+                parameters.size = 20
+
+                if (self.app.mobileview) {
+                    parameters.duration = 1400
+                }
+
+                parameters.symbol = '🔥'
+
+                parameters.color || (parameters.color = '#a10000')
+
+                self.effects.effectinternal(el, 'fire', parameters, clbk)
+            },
         },
 
-        container : function(place){
+        container: function (place) {
 
             var container = $("<div/>", {
                 "class": "effect",
-                "style" : "pointer-events: none; z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
+                "style": "pointer-events: none; z-index: 10000; position : absolute; left : " + place.left + "px; top : " + place.top + "px; width : " + place.width + "px; height : " + place.height + "px;"
             })
 
             container.appendTo(self.app.el.app)
@@ -4731,32 +4871,32 @@ Platform = function (app, listofnodes) {
             return container
         },
 
-        make : function(place, name, parameters, clbk){
+        make: function (place, name, parameters, clbk) {
 
-            if (typeof _Electron != 'undefined') return
+            //if (typeof _Electron != 'undefined') return
 
             var container = self.effects.container(place)
 
-            self.effects.lib[name](container, parameters, function(){
+            self.effects.lib[name](container, parameters, function () {
                 container.remove()
 
                 container = null
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             })
         },
 
-        breakeffect : function(el, clbk){
-            if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
-                if(clbk) clbk()
+        breakeffect: function (el, clbk) {
+            if (!el || self.effects.animation) {
+                if (clbk) clbk()
                 return true
             }
         },
 
-        templates : {
-            commentstars : function(el, value, clbk){
+        templates: {
+            commentstars: function (el, value, clbk) {
 
-                if(self.effects.breakeffect(el, clbk)){
+                if (self.effects.breakeffect(el, clbk)) {
                     return
                 }
 
@@ -4778,15 +4918,66 @@ Platform = function (app, listofnodes) {
 
                 left += swidth
 
-                self.effects.make({top : top - height,left,width, height}, 'stars', parameters, function(){
+                self.effects.make({
+                    top: top - height,
+                    left,
+                    width,
+                    height
+                }, 'stars', parameters, function () {
                     self.effects.animation = false
 
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 })
             },
 
-            donatehearts : function(el, clbk){
-                if(self.effects.breakeffect(el, clbk)){
+            paidsubscription: function (el, clbk) {
+                if (self.effects.breakeffect(el, clbk)) {
+                    return
+                }
+
+                self.effects.animation = true
+
+                var parameters = {}
+
+                parameters.color = '#FF3B00'
+
+                if (self.app.mobileview) {
+                    parameters.from = {
+                        x: 'center',
+                        y: 'top'
+                    }
+                    parameters.to = {
+                        x: 'right',
+                        y: 'bottom'
+                    }
+                } else {
+                    parameters.from = {
+                        x: 'left',
+                        y: 'bottom'
+                    }
+                    parameters.to = {
+                        x: 'center',
+                        y: 'center'
+                    }
+                }
+
+                self.effects.make({
+                    top: 0,
+                    left: 0,
+                    width: self.app.width,
+                    height: self.app.height
+                }, 'fire', parameters, function () {
+
+                    self.effects.animation = false
+
+                    if (clbk) clbk()
+                })
+
+
+            },
+
+            donatehearts: function (el, clbk) {
+                if (self.effects.breakeffect(el, clbk)) {
                     return
                 }
 
@@ -4796,23 +4987,39 @@ Platform = function (app, listofnodes) {
 
                 parameters.color = '#ed1f1f'
 
-                if(self.app.mobileview){
-                    parameters.from = {x : 'center', y : 'top'}
-                    parameters.to = {x : 'right', y : 'bottom'}
-                }
-                else{
-                    parameters.from = {x : 'left', y : 'bottom'}
-                    parameters.to = {x : 'center', y : 'center'}
+                if (self.app.mobileview) {
+                    parameters.from = {
+                        x: 'center',
+                        y: 'top'
+                    }
+                    parameters.to = {
+                        x: 'right',
+                        y: 'bottom'
+                    }
+                } else {
+                    parameters.from = {
+                        x: 'left',
+                        y: 'bottom'
+                    }
+                    parameters.to = {
+                        x: 'center',
+                        y: 'center'
+                    }
                 }
 
-                self.effects.make({top : 0, left : 0, width : self.app.width, height : self.app.height}, 'hearts', parameters, function(){
+                self.effects.make({
+                    top: 0,
+                    left: 0,
+                    width: self.app.width,
+                    height: self.app.height
+                }, 'hearts', parameters, function () {
 
                     self.effects.animation = false
 
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 })
 
-                
+
             }
         }
     }
@@ -4827,8 +5034,7 @@ Platform = function (app, listofnodes) {
                 const seed = bitcoin.bip39.mnemonicToSeedSync(m);
 
                 keyPair = self.sdk.address.dumpKeys(0, seed);
-            }
-            else {
+            } else {
 
                 try {
                     keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'));
@@ -4846,7 +5052,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n, t) {
-            var  fb =  ((n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. *]/g, "") : n)
+            var fb = ((n || "").replace ? (n || "").replace(/[^a-zA-Z0-9_. *]/g, "") : n)
 
             if (t) return self.sdk.user.maskNotAllowedName(fb)
 
@@ -4875,6 +5081,7 @@ Platform = function (app, listofnodes) {
 
         upbutton: function (el, p) {
 
+
             if (typeof window == 'undefined') return;
 
             if (!p) p = {};
@@ -4896,11 +5103,11 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="fulltable table">'
                 h += '<div class="fullcell icon">'
-                h +=  (p.icon || '<i class="fas fa-chevron-up"></i>')
+                h += (p.icon || '<i class="fas fa-chevron-up"></i>')
                 h += '</div>'
 
                 h += '<div class="fullcell label">'
-                h +=  (p.text || app.localization.e('tothetop'))
+                h += (p.text || app.localization.e('tothetop'))
                 h += '</div>'
 
                 h += '<div class="fullcell label likeicon">'
@@ -4923,8 +5130,7 @@ Platform = function (app, listofnodes) {
             var getmode = function () {
                 if (w.width() > 1280) {
                     return 'full'
-                }
-                else {
+                } else {
                     return 'mini'
                 }
             }
@@ -4941,7 +5147,7 @@ Platform = function (app, listofnodes) {
             var events = {
                 resize: function () {
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         var mode = getmode();
 
                         if (mode != currentmode) {
@@ -4956,8 +5162,7 @@ Platform = function (app, listofnodes) {
                                 up.css('top', p.top())
                             }
 
-                        }
-                        else {
+                        } else {
 
                         }
                     }, 200)
@@ -4971,8 +5176,7 @@ Platform = function (app, listofnodes) {
                     })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
                         up.addClass('active')
-                    }
-                    else {
+                    } else {
                         up.removeClass('active')
                     }
 
@@ -4980,10 +5184,9 @@ Platform = function (app, listofnodes) {
 
                 click: function () {
 
-                    if (p.click){
+                    if (p.click) {
                         p.click(up.hasClass('active'))
-                    }
-                    else{
+                    } else {
                         app.actions.scroll(0)
                         //_scrollTop(0)
                     }
@@ -4997,8 +5200,8 @@ Platform = function (app, listofnodes) {
                 app.events.scroll[id] = events.scroll
                 app.events.resize[id] = events.resize
 
-               /**window.addEventListener('scroll', events.scroll)
-                window.addEventListener('resize', events.resize)*/
+                /**window.addEventListener('scroll', events.scroll)
+                 window.addEventListener('resize', events.resize)*/
 
                 up.on('click', events.click)
 
@@ -5026,7 +5229,7 @@ Platform = function (app, listofnodes) {
                 events.scroll();
             }
 
-            self.apply = function(){
+            self.apply = function () {
                 events.resize();
                 events.scroll();
             }
@@ -5090,7 +5293,7 @@ Platform = function (app, listofnodes) {
                     ball()
                 }
 
-                if(p.text || p.textHover){
+                if (p.text || p.textHover) {
 
 
 
@@ -5143,7 +5346,7 @@ Platform = function (app, listofnodes) {
 
             self.init()
 
-            if(p.time){
+            if (p.time) {
                 setTimeout(self.destroy, p.time)
             }
 
@@ -5151,47 +5354,47 @@ Platform = function (app, listofnodes) {
 
         },
 
-        mobiletooltip : function(_el, content, clbk, p, tooltip){
+        mobiletooltip: function (_el, content, clbk, p, tooltip) {
 
-            var d = function(){
-                
-                var dialog =  tooltipMobileDialog({
+            var d = function () {
 
-                    html : content(),
-                    clbk : function(el){
-                        if(clbk)
+                var dialog = tooltipMobileDialog({
 
-                            clbk(el, null, function(){
+                    html: content(),
+                    clbk: function (el) {
+                        if (clbk)
+
+                            clbk(el, null, function () {
                                 dialog.destroy()
                             })
                     },
 
-                    app : app
+                    app: app
 
                 })
             }
 
-            var mobiletooltip =  _el.attr('mobiletooltip');
+            var mobiletooltip = _el.attr('mobiletooltip');
 
-            if(mobiletooltip) return
+            if (mobiletooltip) return
 
             d()
 
-            _el.on('click', function(){
+            _el.on('click', function () {
                 d()
             })
 
-            if (!tooltip){
+            if (!tooltip) {
                 _el.attr('mobiletooltip', true)
             }
-            
+
         },
 
         tooltip: function (_el, content, clbk, p, tooltip) {
 
-            if(!p) p = {}
+            if (!p) p = {}
 
-            if (self.app.mobileview || p.dlg){
+            if (self.app.mobileview || p.dlg || self.app.television) {
                 return self.api.mobiletooltip(_el, content, clbk, p, tooltip)
             }
 
@@ -5222,13 +5425,13 @@ Platform = function (app, listofnodes) {
             options.functionReady = function (instance, h) {
 
                 if (clbk) {
-                    clbk($(h.tooltip), _el, function(){
+                    clbk($(h.tooltip), _el, function () {
 
-                        try{
+                        try {
                             if (_el.tooltipster)
                                 _el.tooltipster('hide')
 
-                        }catch(e){
+                        } catch (e) {
 
                         }
 
@@ -5278,8 +5481,7 @@ Platform = function (app, listofnodes) {
 
                         if (!info) {
 
-                        }
-                        else {
+                        } else {
 
                         }
                     }
@@ -5294,8 +5496,7 @@ Platform = function (app, listofnodes) {
 
                     try {
                         r = bitcoin.address.fromBase58Check(v);
-                    }
-                    catch (e) {
+                    } catch (e) {
 
                     }
 
@@ -5304,7 +5505,7 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.users.get(v, function () {
 
-                            var info = self.psdk.userInfo.get(v) 
+                            var info = self.psdk.userInfo.get(v)
                             //self.sdk.users.storage[v] || null;
 
                             render(info)
@@ -5325,11 +5526,11 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        relation : function(address, type){
+        relation: function (address, type) {
 
-            var me = self.psdk.userInfo.getmy() 
-            
-            if(!me) return
+            var me = self.psdk.userInfo.getmy()
+
+            if (!me) return
 
             var r = me.relation(address, type)
 
@@ -5340,23 +5541,50 @@ Platform = function (app, listofnodes) {
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
-                    blocking.address.set(address);
+                blocking.address.set(address);
 
 
                 self.app.platform.actions.addActionAndSendIfCan(blocking).then(action => {
                     var alias = action.object
-                  
-					successCheck()
 
-					if (clbk) clbk(alias)
-  
-				}).catch(e => {
+                    successCheck()
 
-                    if(clbk) clbk(null, e)
+                    if (clbk) clbk(alias)
 
-				})
+                }).catch(e => {
 
-                
+                    if (clbk) clbk(null, e)
+
+                })
+
+
+            },
+            miniapp: function (data, clbk) {
+                var miniapp = new Miniapp();
+
+                miniapp.id = data.id;
+                miniapp.hash = data.hash
+                miniapp.address = data.address
+                miniapp.name = data.name
+                miniapp.description = data.description
+                miniapp.tags = data.tags
+                miniapp.scope = data.scope
+
+
+                self.app.platform.actions.addActionAndSendIfCan(miniapp).then(action => {
+                    var alias = action.object
+
+                    successCheck()
+
+                    if (clbk) clbk(alias)
+
+                }).catch(e => {
+
+                    if (clbk) clbk(null, e)
+
+                })
+
+
             },
 
             unblocking: function (address, clbk) {
@@ -5367,49 +5595,19 @@ Platform = function (app, listofnodes) {
                 self.app.platform.actions.addActionAndSendIfCan(unblocking).then(action => {
                     var alias = action.object
 
-                  
-					successCheck()
 
-					if (clbk) clbk(alias)
-  
-				}).catch(e => {
+                    successCheck()
 
-                    if(clbk) clbk(null, e)
+                    if (clbk) clbk(alias)
 
-				})
+                }).catch(e => {
+
+                    if (clbk) clbk(null, e)
+
+                })
 
                 return
 
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    unblocking,
-
-                    function (tx, error) {
-
-                        if (tx) {
-                            var me = self.psdk.userInfo.getmy() 
-                            
-                            //deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
-
-                            var u = self.psdk.userInfo.get(address) 
-                            
-                            //self.sdk.users.storage[address];
-
-                            if (me) me.removeRelation(address, 'blocking')
-
-                            var clbks = deep(self.clbks, 'api.actions.unblocking') || {}
-
-                            _.each(clbks, function (c) {
-                                c(address)
-                            })
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
             },
 
             subscribeWithDialog: function (address, renderclbk) {
@@ -5424,12 +5622,12 @@ Platform = function (app, listofnodes) {
                             action: function (clbk) {
 
 
-                                self.api.actions.notificationsTurnOn(address, function(tx, error){
+                                self.api.actions.notificationsTurnOn(address, function (tx, error) {
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
 
-                                    if (renderclbk){
+                                    if (renderclbk) {
                                         renderclbk(tx);
                                     }
 
@@ -5441,15 +5639,15 @@ Platform = function (app, listofnodes) {
                         },
 
                         {
-                            text:  self.app.localization.e('e13264'),
+                            text: self.app.localization.e('e13264'),
                             action: function (clbk) {
 
-                                self.api.actions.subscribe(address, function(tx, error){
+                                self.api.actions.subscribe(address, function (tx, error) {
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
 
-                                    if (renderclbk){
+                                    if (renderclbk) {
                                         renderclbk(tx);
                                     }
 
@@ -5468,7 +5666,7 @@ Platform = function (app, listofnodes) {
 
             unsubscribe: function (address, clbk) {
                 var unsubscribe = new Unsubscribe();
-                    unsubscribe.address.set(address);
+                unsubscribe.address.set(address);
 
 
                 self.app.platform.actions.addActionAndSendIfCan(unsubscribe).then(action => {
@@ -5476,7 +5674,7 @@ Platform = function (app, listofnodes) {
                     successCheck()
 
                     if (clbk) clbk(action.get())
-    
+
                 }).catch(e => {
 
                     if (clbk)
@@ -5484,12 +5682,12 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                
+
             },
 
             subscribe: function (address, clbk) {
                 var subscribe = new Subscribe();
-                    subscribe.address.set(address);
+                subscribe.address.set(address);
 
 
                 self.app.platform.actions.addActionAndSendIfCan(subscribe).then(action => {
@@ -5497,7 +5695,7 @@ Platform = function (app, listofnodes) {
                     successCheck()
 
                     if (clbk) clbk(action.get())
-    
+
                 }).catch(e => {
 
                     console.error(e)
@@ -5507,7 +5705,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                
+
             },
 
             notificationsTurnOff: function (address, clbk) {
@@ -5516,17 +5714,17 @@ Platform = function (app, listofnodes) {
 
             notificationsTurnOn: function (address, clbk) {
                 var subscribe = new SubscribePrivate();
-                    subscribe.address.set(address);
+                subscribe.address.set(address);
 
 
                 self.app.platform.actions.addActionAndSendIfCan(subscribe).then(action => {
-                
+
                     successCheck()
 
                     if (clbk) clbk(action.get())
-    
+
                 }).catch(e => {
-                    
+
 
                     console.error(e)
 
@@ -5535,19 +5733,21 @@ Platform = function (app, listofnodes) {
 
                 })
 
-              
+
             },
 
-            htls : function(id){
-                self.app.platform.ui.wallet.send({id : id}, function(){
+            htls: function (id) {
+                self.app.platform.ui.wallet.send({
+                    id: id
+                }, function () {
 
-				})
+                })
             },
 
         },
 
         metmenu: function (_el, id, actions) {
-            var share = self.psdk.share.get(id) 
+            var share = self.psdk.share.get(id)
 
             var address = share.address
 
@@ -5563,12 +5763,12 @@ Platform = function (app, listofnodes) {
                     var t = self.api.tooltip(_el, function () {
 
                         d.share = self.psdk.share.get(id)
-                        
+
                         d.mestate = _mestate
 
-                        try{
+                        try {
                             template(d)
-                        }catch(e){
+                        } catch (e) {
                             console.error
                         }
 
@@ -5576,77 +5776,74 @@ Platform = function (app, listofnodes) {
 
                     }, function (el, f, close) {
 
-                        el.find('.recommendationinfo').on('click', function(){
+                        el.find('.recommendationinfo').on('click', function () {
 
-                            
+
                             var data = {
                                 ...self.sdk.recommendations.sharesinfo[share.txid] || {},
-                                share : share.txid
+                                share: share.txid
                             }
 
                             self.app.nav.api.load({
-                                open : true,
-                                href : 'recommendationinfo',
-                                inWnd : true,
-                                history : true,
-            
-                                essenseData : data
+                                open: true,
+                                href: 'recommendationinfo',
+                                inWnd: true,
+                                history: true,
+
+                                essenseData: data
                             })
 
                             close()
                         })
 
-                        el.find('.opennewwindow').on('click', function(){
+                        el.find('.opennewwindow').on('click', function () {
 
                             self.app.mobile.vibration.small()
 
-                            var href = 'https://'+self.app.options.url+'/' /// domain
+                            var href = 'https://' + self.app.options.url + '/' /// domain
 
 
                             var path = ''
 
-                            if(d.share.itisvideo() && !window.cordova){
+                            if (d.share.itisvideo() && !window.cordova && !self.app.mobileview){
                                 path = 'index?video=1&v=' + id
-                            }
-                            else
-                            {
+                            } else {
                                 path = 'post?s=' + id
                             }
 
                             href += path
 
 
-                            if (window.cordova){
+                            if (window.cordova) {
 
-                                if(!app.nav.current || app.nav.current.href != 'post'){
+                                if (!app.nav.current || app.nav.current.href != 'post') {
                                     app.nav.api.load({
                                         open: true,
                                         href: path,
                                         history: true,
                                     })
-                                }
-                                else
-                                {
+                                } else {
                                     cordova.InAppBrowser.open(href, '_system');
                                 }
 
 
-                            }
-                            else{
+                            } else {
                                 window.open(href, '_blank');
                             }
 
                             close()
                         })
 
-                        var pinPost = function (share, clbk, unpin){
+                        var pinPost = function (share, clbk, unpin) {
 
 
-                            self.app.platform.sdk.user.accSetMy({pin : unpin ? '' : share.txid}, function(err, alias){
+                            self.app.platform.sdk.user.accSetMy({
+                                pin: unpin ? '' : share.txid
+                            }, function (err, alias) {
 
-                                if(!err){
+                                if (!err) {
 
-                                    if (clbk){
+                                    if (clbk) {
 
                                         clbk(null, alias)
                                     }
@@ -5667,13 +5864,13 @@ Platform = function (app, listofnodes) {
                             close()
 
                             new dialog({
-                                class : 'zindex',
-                                html : self.app.localization.e('pinPostDialog'),
-                                btn1text : self.app.localization.e('dyes'),
-                                btn2text : self.app.localization.e('dno'),
-                                success : function(){
+                                class: 'zindex',
+                                html: self.app.localization.e('pinPostDialog'),
+                                btn1text: self.app.localization.e('dyes'),
+                                btn2text: self.app.localization.e('dno'),
+                                success: function () {
 
-                                    pinPost(d.share, function(err, result){
+                                    pinPost(d.share, function (err, result) {
 
                                     }, false)
 
@@ -5687,16 +5884,15 @@ Platform = function (app, listofnodes) {
                             close()
 
                             new dialog({
-                                class : 'zindex',
-                                html : self.app.localization.e('unpinPostDialog'),
-                                btn1text : self.app.localization.e('dyes'),
-                                btn2text : self.app.localization.e('dno'),
-                                success : function(){
+                                class: 'zindex',
+                                html: self.app.localization.e('unpinPostDialog'),
+                                btn1text: self.app.localization.e('dyes'),
+                                btn2text: self.app.localization.e('dno'),
+                                success: function () {
 
-                                    pinPost(d.share, function(err, result){
+                                    pinPost(d.share, function (err, result) {
 
-										if(!err)
-										{
+                                        if (!err) {
 
                                             d.share.pin = false;
                                             var metatable = _el.closest('.metatable');
@@ -5776,7 +5972,7 @@ Platform = function (app, listofnodes) {
                             //actions.donate(id)
 
                             self.ui.wallet.send({
-                                address : address
+                                address: address
                             })
 
                             //deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send')
@@ -5792,27 +5988,27 @@ Platform = function (app, listofnodes) {
 
 
                             new dialog({
-                                class : 'zindex',
-                                html : self.app.localization.e('removePostDialog'),
-                                btn1text : self.app.localization.e('dyes'),
-                                btn2text : self.app.localization.e('dno'),
-                                success : function(){
+                                class: 'zindex',
+                                html: self.app.localization.e('removePostDialog'),
+                                btn1text: self.app.localization.e('dyes'),
+                                btn2text: self.app.localization.e('dno'),
+                                success: function () {
 
                                     var shareslist = _el.closest(`[stxid='${id}']`);
                                     var authorgroup = shareslist.closest('.sharecnt');
 
-                                    var removePost = function (share, clbk){
+                                    var removePost = function (share, clbk) {
 
                                         /*share.deleted = true;
                                         var ct = new Remove();
                                         ct.txidEdit = share.txid;*/
 
-                                        
 
-                                        self.app.platform.sdk.node.shares.delete(share.txid, function(err, alias){
 
-                                            if(!err){
-                                                if (clbk){
+                                        self.app.platform.sdk.node.shares.delete(share.txid, function (err, alias) {
+
+                                            if (!err) {
+                                                if (clbk) {
 
                                                     // var l = share.url;
 
@@ -5841,10 +6037,9 @@ Platform = function (app, listofnodes) {
 
                                     }
 
-                                    removePost(d.share, function(err, result){
+                                    removePost(d.share, function (err, result) {
 
-										if(!err)
-										{
+                                        if (!err) {
 
                                             //authorgroup.addClass('deleted');
 
@@ -5861,30 +6056,30 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.block').on('click', function () {
-                            
+
                             self.app.mobile.vibration.small()
 
                             close()
 
                             new dialog({
-                                class : 'zindex',
-                                html : self.app.localization.e('blockUserQ'),
-                                btn1text : self.app.localization.e('dyes'),
-                                btn2text : self.app.localization.e('dno'),
-                                success : function(){
+                                class: 'zindex',
+                                html: self.app.localization.e('blockUserQ'),
+                                btn1text: self.app.localization.e('dyes'),
+                                btn2text: self.app.localization.e('dno'),
+                                success: function () {
 
                                     self.api.actions.blocking(address, function (tx, error) {
                                         if (!tx) {
                                             self.errorHandler(error, true)
                                         }
                                     })
-        
-                                    
+
+
 
                                 }
                             })
 
-                            
+
 
                         })
 
@@ -5894,28 +6089,28 @@ Platform = function (app, listofnodes) {
                             close()
 
                             new dialog({
-                                class : 'zindex',
-                                html : self.app.localization.e('e13023'),
-                                btn1text : self.app.localization.e('dyes'),
-                                btn2text : self.app.localization.e('dno'),
-                                success : function(){
+                                class: 'zindex',
+                                html: self.app.localization.e('e13023'),
+                                btn1text: self.app.localization.e('dyes'),
+                                btn2text: self.app.localization.e('dno'),
+                                success: function () {
 
                                     self.api.actions.unblocking(address, function (tx, error) {
                                         if (!tx) {
                                             self.errorHandler(error, true)
                                         }
                                     })
-        
-                                    
+
+
 
                                 }
                             })
 
-                            
+
 
                         })
 
-                        
+
 
                         el.find('.edit').on('click', function () {
 
@@ -5927,7 +6122,7 @@ Platform = function (app, listofnodes) {
 
                             if (editing.settings.v == 'a') {
 
-                                if(editing.settings.version >= 2){
+                                if (editing.settings.version >= 2) {
 
                                     app.nav.api.load({
                                         open: true,
@@ -5954,8 +6149,7 @@ Platform = function (app, listofnodes) {
                                         }
                                     })
 
-                                }
-                                else{
+                                } else {
                                     app.nav.api.load({
                                         open: true,
                                         href: 'article',
@@ -5984,8 +6178,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                            }
-                            else {
+                            } else {
 
                                 app.nav.api.load({
 
@@ -5999,7 +6192,7 @@ Platform = function (app, listofnodes) {
                                         share: editing,
                                         notClear: true,
                                         hash: hash,
-                                        absolute : true,
+                                        absolute: true,
                                         cancel: function () {
 
                                             var close = deep(em, 'container.close')
@@ -6028,26 +6221,26 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        el.find('.downloadVideo').on('click', function(){
-                            
+                        el.find('.downloadVideo').on('click', function () {
+
 
                             self.app.mobile.vibration.small()
 
-                            self.ui.saveShare(share, function(id, deleted){
+                            self.ui.saveShare(share, function (id, deleted) {
                                 if (actions.changeSavingStatus)
                                     actions.changeSavingStatus(share.txid, deleted)
                             }, {
-                                before : actions.changeSavingStatusLight,
-                                after : actions.changeSavingStatusLight
+                                before: actions.changeSavingStatusLight,
+                                after: actions.changeSavingStatusLight
                             })
 
                             close()
 
                         })
 
-                        el.find('.deleteSavedVideo').on('click', function(){
+                        el.find('.deleteSavedVideo').on('click', function () {
 
-                            self.ui.saveShare(share, function(id, deleted){
+                            self.ui.saveShare(share, function (id, deleted) {
                                 if (actions.changeSavingStatus)
                                     actions.changeSavingStatus(id, deleted)
                             })
@@ -6056,19 +6249,19 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        el.find('.savePost').on('click', function(){
+                        el.find('.savePost').on('click', function () {
 
-                            var sendSiteMessage = function() {
+                            var sendSiteMessage = function () {
                                 sitemessage(self.app.localization.e('postsaved'), null, 5000, {
-                                    action : {
-                                        text : self.app.localization.e('gotosaved2'),
-                                        do : function(){
+                                    action: {
+                                        text: self.app.localization.e('gotosaved2'),
+                                        do: function () {
 
                                             app.nav.api.load({
                                                 open: true,
                                                 href: 'index?r=saved',
                                                 history: true,
-                                                handler : true
+                                                handler: true
                                             })
 
                                             app.actions.scrollToTop()
@@ -6085,7 +6278,7 @@ Platform = function (app, listofnodes) {
 
                             var user = self.psdk.userInfo.get(share.address)
 
-                            if (user){
+                            if (user) {
                                 share.user = user.export()
                             }
 
@@ -6102,15 +6295,17 @@ Platform = function (app, listofnodes) {
                                     inWnd: true,
 
                                     essenseData: {
-                                        item : 'post',
-                                        obj : share,
+                                        item: 'post',
+                                        obj: share,
 
                                         success: function (saveMedia) {
 
                                             // Save the post on the device without medias
                                             if (!saveMedia) {
 
-                                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+                                                self.app.platform.sdk.localshares.saveShare(share, {
+                                                    doNotSaveMedia: true
+                                                }).then(() => {
 
                                                     sendSiteMessage();
 
@@ -6121,7 +6316,7 @@ Platform = function (app, listofnodes) {
                                             }
 
                                             // Save the post with video
-                                            self.ui.saveShare(share, function() {});
+                                            self.ui.saveShare(share, function () {});
 
                                             return;
 
@@ -6136,20 +6331,22 @@ Platform = function (app, listofnodes) {
                             } else if (self.app.savesupported()) {
 
                                 // Save the post on the device
-                                self.app.platform.sdk.localshares.saveShare(share).then(() =>{
+                                self.app.platform.sdk.localshares.saveShare(share).then(() => {
 
                                     sendSiteMessage();
-                                    
+
                                 });
 
 
                             } else {
 
 
-                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+                                self.app.platform.sdk.localshares.saveShare(share, {
+                                    doNotSaveMedia: true
+                                }).then(() => {
 
                                     sendSiteMessage();
-                                    
+
                                 });
                                 // Here, we have access to the localstorage (browser)
                                 //self.app.platform.sdk.localshares.write.share.localstorage(share);
@@ -6162,7 +6359,7 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        el.find('.deleteSavedPost').on('click', function(){
+                        el.find('.deleteSavedPost').on('click', function () {
 
                             if (self.app.platform.sdk.localshares.delete[self.sdk.localshares.key])
                                 self.app.platform.sdk.localshares.delete[self.sdk.localshares.key](share.txid);
@@ -6192,7 +6389,7 @@ Platform = function (app, listofnodes) {
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
 
-                                    if(close) close()
+                                    if (close) close()
                                 },
 
                                 essenseData: {
@@ -6210,6 +6407,128 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        miniapps: {
+            getbyid: async function (appId) {
+                const apps = await this.getall({id: appId})
+                return apps[0]
+            },
+            getall: async function (ps = {}, rpc) {
+                const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+                if(!Boolean(app.appready)) {
+                    await delay(500)
+	                return this.getall(ps, rpc)
+                }
+                var parameters = {
+                    tags: [],
+                    search: '',
+                    topHeight: self.currentBlock,
+                    pageStart: 0,
+                    pageSize: 20,
+                    orderBy: 'height',
+                    orderDesc: true,
+                    ...ps
+                }
+                return self.psdk.miniapp.request(() => {
+                    return self.app.api.rpc('getapps', parameters, {
+                        rpc: rpc
+                    }).then(data => {
+
+                        return Promise.resolve(data)
+
+                    })
+                }, {
+                    method: 'getapps',
+                    parameters: parameters
+                }).then(d => {
+
+                    return Promise.resolve(d)
+
+                }).catch(e => {
+
+                    return Promise.reject(e)
+
+                })
+            }
+        },
+        jury: {
+            // Fetch all the jurys
+            getalljury: function () {
+                return self.app.api.rpc('getalljury');
+            },
+            // Fetch all the jurys for a specific user address
+            getjuryassigned: function (address) {
+                return self.psdk.jury.getjuryassigned(address).catch(e => {
+                    return []
+                })
+            },
+
+            getjurymoderators: function(juryId) {
+                return self.app.api.rpc('getjurymoderators', [juryId]);
+            },
+
+            getcountforme : function(clbk){
+                self.app.user.isState(function (state) {
+                    if (state && self.sdk.user.isjury()){
+
+                        self.sdk.node.shares.jury({page : 0, count : 1000}, (items) => {
+
+                            var c = items.length
+
+                            if(clbk) clbk(c)
+
+                        })
+                    }
+                    else{
+                        if(clbk) clbk(0)
+                    }
+                })
+            },
+
+            updatejurycount : function(){
+
+                self.sdk.jury.getcountforme(function(count){
+                    self.sdk.newmaterials.update({
+                        jury : count
+                    })
+                })
+                
+            },
+
+            sendverdict : function(juryobject, verdict){
+
+                if(!juryobject || typeof verdict == undefined){
+                    self.app.platform.errorHandler('network', true)
+
+                    return Promise.reject('network')
+                }
+
+                var modvote = new ModVote();
+
+                modvote.s2.set(juryobject.id)
+                modvote.i1.set(verdict || 0)
+
+                ///self.sdk.node.transactions.clearTempHard()
+
+                return self.app.platform.actions.addActionAndSendIfCan(modvote).then(action => {
+                    successCheck()
+                    sitemessage(self.app.localization.e('juryvote_success'))
+
+                    self.psdk.jury.clear()
+
+                    return Promise.resolve(action)
+
+                }).catch(e => {
+                    console.error(e)
+                    self.app.platform.errorHandler(e, true)
+
+                    return Promise.reject(e)
+
+                })
+            }
+
+        },
+
         external : {
             expandLink : function(json = {}){
 
@@ -6219,41 +6538,41 @@ Platform = function (app, listofnodes) {
                 if (json.description) eExt.description = json.description
                 if (json.value) eExt.value = json.value
                 if (json.paymentHash) eExt.paymentHash = json.paymentHash
-                
-    
-                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
-                if (json.ad)    eExt.address = json.ad
-                if (json.s)     eExt.s_url = json.s
-                if (json.sv)    eExt.shipmentValue = json.shipmentValue
-                if (json.c)     eExt.c_url = json.c
-                if (json.ct)    eExt.c_url_type = json.ct
-                if (json.e)     eExt.email = true
-                if (json.p)     eExt.phone = true
-                if (json.an)    eExt.anonimus = true
-                if (json.pl)    eExt.payload = json.pl
-                if (json.ex)    eExt.expired = json.ex
-                if (json.d)     eExt.date = json.d
-                if (json.h)     eExt.paymentHash = json.h
-                if (json.de)    eExt.description = json.de
-                if (json.v)     eExt.value = json.v
-                if (json.sv)    eExt.saltValue = json.sv
-                if (json.di)    eExt.discount = json.di
-                if (json.ta)    eExt.tax = json.ta
 
 
-                if (json.tg)    eExt.tags = json.tg
-                if (json.u)     eExt.url = json.u
-    
+                if (json.a) eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
+                if (json.ad) eExt.address = json.ad
+                if (json.s) eExt.s_url = json.s
+                if (json.sv) eExt.shipmentValue = json.shipmentValue
+                if (json.c) eExt.c_url = json.c
+                if (json.ct) eExt.c_url_type = json.ct
+                if (json.e) eExt.email = true
+                if (json.p) eExt.phone = true
+                if (json.an) eExt.anonimus = true
+                if (json.pl) eExt.payload = json.pl
+                if (json.ex) eExt.expired = json.ex
+                if (json.d) eExt.date = json.d
+                if (json.h) eExt.paymentHash = json.h
+                if (json.de) eExt.description = json.de
+                if (json.v) eExt.value = json.v
+                if (json.sav) eExt.saltValue = json.sav
+                if (json.di) eExt.discount = json.di
+                if (json.ta) eExt.tax = json.ta
+
+
+                if (json.tg) eExt.tags = json.tg
+                if (json.u) eExt.url = json.u
+
                 if (json.st) {
                     eExt.store = {}
-    
-                    if(json.st.n) eExt.store.name = json.st.n
-                    if(json.st.s) eExt.store.site = json.st.s
+
+                    if (json.st.n) eExt.store.name = json.st.n
+                    if (json.st.s) eExt.store.site = json.st.s
                 }
-    
-                if (json.i){
+
+                if (json.i) {
                     eExt.items = []
-    
+
                     _.each(json.i, (it) => {
                         var item = {}
 
@@ -6262,161 +6581,160 @@ Platform = function (app, listofnodes) {
                         if (it.v) item.value = it.v
                         if (it.c) item.count = it.c
 
-    
+
                         eExt.items.push(item)
                     })
                 }
 
-                if(!eExt.action) eExt.action = 'pay'
+                if (!eExt.action) eExt.action = 'pay'
 
 
-               
+
                 return eExt
             },
-            type : function(ext){
+            type: function (ext) {
 
                 var ps = self.sdk.external.getFromHash(ext)
-                    
-                return ps.action            
+
+                return ps.action
             },
 
-            getFromHash : function(ext){
+            getFromHash: function (ext) {
                 var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
 
                 ps.hash = ext
 
-                if(!ps.action){
+                if (!ps.action) {
                     throw 'missing:action'
                 }
 
-                if (ps.action == 'auth'){
-                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+                if (ps.action == 'auth') {
+                    if (!ps.c_url_type) ps.c_url_type = 'fetch'
 
-                    if(!ps.c_url){
+                    if (!ps.c_url) {
                         throw 'missing:c_url'
                     }
 
-                    try{
+                    try {
                         var url = new URL(ps.c_url)
 
                         ps.host = clearStringXss(url.hostname)
 
-                    }catch(e){
+                    } catch (e) {
                         throw 'wrong:c_url:notvalid'
                     }
                 }
 
-                if (ps.action == 'share'){
-                    if(ps.description) ps.description = clearStringXss(ps.description)
-                    if(ps.url) ps.url = clearStringXss(ps.url)
-                    if(ps.tags) {
-                        if(!_.isArray(ps.tags)) throw 'tags:array'
+                if (ps.action == 'share') {
+                    if (ps.description) ps.description = clearStringXss(ps.description)
+                    if (ps.url) ps.url = clearStringXss(ps.url)
+                    if (ps.tags) {
+                        if (!_.isArray(ps.tags)) throw 'tags:array'
 
                         ps.tags = _.map(ps.tags, (tag) => {
                             return clearStringXss(tag)
                         })
                     }
                 }
-    
-                if (ps.action == 'pay'){
-    
-                    if(!ps.address) throw 'missing:address'
-    
-                    if (ps.anonimus){
+
+                if (ps.action == 'pay') {
+
+                    console.log('ps', ps)
+
+                    if (!ps.address) throw 'missing:address'
+
+                    if (ps.anonimus) {
                         delete ps.email
                         delete ps.phone
                         delete ps.s_url
                     }
-    
-                    try{
+
+                    try {
                         bitcoin.address.fromBase58Check(ps.address)
-                    }
-    
-                    catch (e){
+                    } catch (e) {
                         throw 'wrong:address:notvalid'
                     }
-                    
-                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
-                    //if(!ps.payload) ps.payload = {}
-    
-                    if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
-    
-                    if (ps.items){
-    
-                        var a = 0
-    
-                        _.each(ps.items, (item, i) => {
-                            if(!item.name) throw 'missing:items:'+i+':name'
-                            if(!item.value) throw 'missing:items:'+i+':value'
-        
-                            if(!_.isNumber(item.value)) throw 'wrong:items:'+i+':value:nan'
-                            if(item.value < 0) throw 'wrong:items:'+i+':value:lessthanzero'
 
-                            if(item.count && !_.isNumber(item.count)) throw 'wrong:items:'+i+':count:nan'
-        
+                    if (!ps.c_url_type) ps.c_url_type = 'fetch'
+                    //if(!ps.payload) ps.payload = {}
+
+                    if ((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
+
+                    if (ps.items) {
+
+                        var a = 0
+
+                        _.each(ps.items, (item, i) => {
+                            if (!item.name) throw 'missing:items:' + i + ':name'
+                            if (!item.value) throw 'missing:items:' + i + ':value'
+
+                            if (!_.isNumber(item.value)) throw 'wrong:items:' + i + ':value:nan'
+                            if (item.value < 0) throw 'wrong:items:' + i + ':value:lessthanzero'
+
+                            if (item.count && !_.isNumber(item.count)) throw 'wrong:items:' + i + ':count:nan'
+
                             a += (item.count || 1) * item.value
-                            
+
                             item.image = clearStringXss(item.image || '')
                             item.name = clearStringXss(item.name)
                             //item.formattedAmount = self.mp.coin(item.value)
                         })
-    
+
                         ps.value = a
-                    }
-                    else{
-                        if(!_.isNumber(ps.value)) throw 'wrong:value:nan'
+                    } else {
+                        if (!_.isNumber(ps.value)) throw 'wrong:value:nan'
                     }
 
-                    if (ps.saltValue){
-                        if(!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
-                        if(ps.saltValue >= 1) throw 'wrong:saltValue:morethan:1'
-                        if(ps.saltValue <= -1) throw 'wrong:saltValue:lessthan:-1'
-                        if(ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
+                    if (ps.saltValue) {
+                        if (!_.isNumber(ps.saltValue)) throw 'wrong:saltValue:nan'
+                        if (ps.saltValue >= 1) throw 'wrong:saltValue:morethan:1'
+                        if (ps.saltValue <= -1) throw 'wrong:saltValue:lessthan:-1'
+                        if (ps.saltValue.toFixed(8) != ps.saltValue.toString()) throw 'wrong:saltValue:8digitsRule'
 
                         ps.value = ps.value + ps.saltValue
                     }
 
-                    if (ps.discount){
-                        if(!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
-                        if(ps.discount < 0) throw 'wrong:discount:lessthan:0'
+                    if (ps.discount) {
+                        if (!_.isNumber(ps.discount)) throw 'wrong:discount:nan'
+                        if (ps.discount < 0) throw 'wrong:discount:lessthan:0'
 
                         ps.value = ps.value - ps.discount
                     }
 
-                    if (ps.tax){
-                        if(!_.isNumber(ps.tax)) throw 'wrong:tax:nan'
-                        if(ps.tax < 0) throw 'wrong:tax:lessthan:0'
+                    if (ps.tax) {
+                        if (!_.isNumber(ps.tax)) throw 'wrong:tax:nan'
+                        if (ps.tax < 0) throw 'wrong:tax:lessthan:0'
 
                         ps.value = ps.value + ps.tax
                     }
 
-                    if (typeof ps.shipmentValue != 'undefined'){
-                        if(!_.isNumber(ps.shipmentValue)) throw 'wrong:shipmentValue:nan'
-                        if(ps.shipmentValue < 0) throw 'wrong:shipmentValue:lessthan:0'
+                    if (typeof ps.shipmentValue != 'undefined') {
+                        if (!_.isNumber(ps.shipmentValue)) throw 'wrong:shipmentValue:nan'
+                        if (ps.shipmentValue < 0) throw 'wrong:shipmentValue:lessthan:0'
                     }
-                    
-    
-                    if (ps.store){
-                        if(!ps.store.name) throw 'missing:store.name'
+
+
+                    if (ps.store) {
+                        if (!ps.store.name) throw 'missing:store.name'
                         //if(!ps.store.site) throw 'missing:store.site'
-    
+
                         ps.store.name = clearStringXss(ps.store.name)
-                        
+
                         if (ps.store.site)
                             ps.store.site = clearStringXss(ps.store.site)
-                        
+
                     }
-    
-                    if (ps.expired){
-                        if(!ps.date) throw 'missing:date'
-    
-                        if(!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
+
+                    if (ps.expired) {
+                        if (!ps.date) throw 'missing:date'
+
+                        if (!_.isNumber(ps.expired)) throw 'wrong:expired:nan'
                     }
-    
+
                     if (ps.description) ps.description = clearStringXss(ps.description)
-                    
-    
-                    if(!ps.value || ps.value <= 0) throw 'missing:value'
+
+
+                    if (!ps.value || ps.value <= 0) throw 'missing:value'
 
                     //ps.hash = p.ext
                 }
@@ -6424,14 +6742,16 @@ Platform = function (app, listofnodes) {
                 return ps
             },
 
-            getObjectFromHash : function(hash){
+            getObjectFromHash: function (hash) {
 
 
                 var eExt = self.sdk.external.getFromHash(hash)
 
 
-                if(eExt.action == 'pay'){
-                    var payment = self.app.platform.sdk.payments.make({payment : eExt})
+                if (eExt.action == 'pay') {
+                    var payment = self.app.platform.sdk.payments.make({
+                        payment: eExt
+                    })
 
                     /*payment.makeQR().then(q => {
                         console.log(q)
@@ -6442,156 +6762,152 @@ Platform = function (app, listofnodes) {
 
                 return null
 
-                
+
             }
         },
-        payments : {
-       
-            save : function(lsdata, hash){
-				lsdata.updated = new Date()
-					
-				try{
-					localStorage['pays_' + hash] = JSON.stringify(lsdata) || {}
-				}catch(e){
-					console.error(e)
-				}
-				
-			},
-			load : function(hash){
-				var lsdata = {}
+        payments: {
 
-				try{
-					lsdata = JSON.parse(localStorage['pays_' + hash] || "{}") || {}
-					lsdata.updated = new Date(lsdata.updated)
-				}catch(e){
-					console.error(e)
-				}
+            save: function (lsdata, hash) {
+                lsdata.updated = new Date()
 
-				return lsdata
-			},
-            
+                try {
+                    localStorage['pays_' + hash] = JSON.stringify(lsdata) || {}
+                } catch (e) {
+                    console.error(e)
+                }
 
-            get : function(){
-                try{
+            },
+            load: function (hash) {
+                var lsdata = {}
 
-					var allpays = []
+                try {
+                    lsdata = JSON.parse(localStorage['pays_' + hash] || "{}") || {}
+                    lsdata.updated = new Date(lsdata.updated)
+                } catch (e) {
+                    console.error(e)
+                }
 
-					Object.keys(localStorage).forEach(key => {
-						if (key.indexOf('pays_') == 0){
-							var parsed = JSON.parse(localStorage[key])
+                return lsdata
+            },
 
-							if (parsed.txid && parsed.account == self.app.user.address.value){
-								parsed.updated = new Date(parsed.updated)
+
+            get: function () {
+                try {
+
+                    var allpays = []
+
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.indexOf('pays_') == 0) {
+                            var parsed = JSON.parse(localStorage[key])
+
+                            if (parsed.txid && parsed.account == self.app.user.address.value) {
+                                parsed.updated = new Date(parsed.updated)
                                 parsed.hash = key.replace('pays_', '')
                                 parsed.info = self.sdk.external.getFromHash(parsed.hash)
                                 parsed.vid = makeid()
-								allpays.push(parsed)
-							}
-							
-						}
-					});
+                                allpays.push(parsed)
+                            }
+
+                        }
+                    });
 
 
-					return _.sortBy(allpays, (pay) => {
+                    return _.sortBy(allpays, (pay) => {
                         return -pay.updated
                     })
 
-				}
-
-				catch(e){
+                } catch (e) {
                     console.error(e)
-					return []
-				}
+                    return []
+                }
             },
 
-			getLastShipment: function(){
-				try{
+            getLastShipment: function () {
+                try {
 
-					var allpays = []
+                    var allpays = []
 
-					Object.keys(localStorage).forEach(key => {
-						if (key.indexOf('pays_') == 0){
-							var parsed = JSON.parse(localStorage[key])
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.indexOf('pays_') == 0) {
+                            var parsed = JSON.parse(localStorage[key])
 
-							if (parsed.shipment && parsed.account == self.app.user.address.value){
-								parsed.updated = new Date(parsed.updated)
-								allpays.push(parsed)
-							}
-							
-						}
-					});
+                            if (parsed.shipment && parsed.account == self.app.user.address.value) {
+                                parsed.updated = new Date(parsed.updated)
+                                allpays.push(parsed)
+                            }
 
-					if(!allpays.length){
-						return null
-					}
+                        }
+                    });
 
-					var m = _.max(allpays, (p) => {
-						return p.updated
-					})
+                    if (!allpays.length) {
+                        return null
+                    }
 
-					return m.shipment
+                    var m = _.max(allpays, (p) => {
+                        return p.updated
+                    })
 
-				}
+                    return m.shipment
 
-				catch(e){
-					return null
-				}
-				
-			},
+                } catch (e) {
+                    return null
+                }
 
-            remove : function(hash){
-                try{
+            },
+
+            remove: function (hash) {
+                try {
                     localStorage.removeItem('pays_' + hash);
-                }catch(e){
+                } catch (e) {
 
                 }
-                
+
             },
 
-            prepare : function(clbk){
+            prepare: function (clbk) {
                 var removeKeys = []
 
-                try{
+                try {
                     Object.keys(localStorage).forEach(key => {
-                        if (key.indexOf('pays_') == 0){
+                        if (key.indexOf('pays_') == 0) {
                             var parsed = JSON.parse(localStorage[key])
-    
-                            if (!parsed.txid && (parsed.updated || parsed.date)){
+
+                            if (!parsed.txid && (parsed.updated || parsed.date)) {
                                 var upd = new Date(parsed.updated || parsed.date)
-    
-                                if(upd.addDays(3) < (new Date())){
+
+                                if (upd.addDays(3) < (new Date())) {
                                     removeKeys.push(key)
                                 }
                             }
-                            
+
                         }
                     });
-    
+
                     _.each(removeKeys, (key) => {
                         localStorage.removeItem(key);
                     })
-                }catch(e){
+                } catch (e) {
 
                 }
 
-                if(clbk) clbk()
+                if (clbk) clbk()
 
-                
+
 
 
             }
         },
-        
-        geolocation : {
-            get : function(options){
+
+        geolocation: {
+            get: function (options) {
                 return navigator.geolocation.getCurrentPosition(options.onSuccess, options.onError);
             }
         },
-        broadcaster : {
-            clbks : {},
-            history : [],
-            init : function(clbk){
-                if(typeof swBroadcaster != 'undefined') {
+        broadcaster: {
+            clbks: {},
+            history: [],
+            init: function (clbk) {
+                if (typeof swBroadcaster != 'undefined') {
                     swBroadcaster.removeAllNamed('network-stats');
 
                     swBroadcaster.on('network-stats', (data) => {
@@ -6608,54 +6924,55 @@ Platform = function (app, listofnodes) {
                     })
                 }
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             }
         },
-        translate : {
-            storage : {},
-            state : {share : {}, comment : {}},
-            share : {
-                needtranslate : function(txid){
+        translate: {
+            storage: {},
+            state: {
+                share: {},
+                comment: {}
+            },
+            share: {
+                needtranslate: function (txid) {
 
                     var share = self.psdk.share.get(txid)
 
                     var user = self.psdk.userInfo.getmy()
 
-                    if(!share || !user) return []
+                    if (!share || !user) return []
 
-                    if(share.language == user.language) return []
+                    if (share.language == user.language) return []
 
                     return [share.language, user.language]
 
                 },
-                lang : function(txid){
+                lang: function (txid) {
                     self.sdk.translate.storage.share || (self.sdk.translate.storage.share = {})
 
-                    if (self.sdk.translate.state.share[txid] && self.sdk.translate.storage.share[txid][self.sdk.translate.state.share[txid]]){
+                    if (self.sdk.translate.state.share[txid] && self.sdk.translate.storage.share[txid][self.sdk.translate.state.share[txid]]) {
                         return self.sdk.translate.state.share[txid]
-                    }
-
-                    else{
+                    } else {
                         var share = self.psdk.share.get(txid)
 
-                        if(!share) return null
+                        if (!share) return null
 
                         return share.language
                     }
                 },
 
-                get : function(txid){
+                get: function (txid) {
                     var lang = self.sdk.translate.share.lang(txid)
 
-                    if(self.sdk.translate.storage.share[txid] && self.sdk.translate.storage.share[txid][lang]){
+                    if (self.sdk.translate.storage.share[txid] && self.sdk.translate.storage.share[txid][lang]) {
                         return self.sdk.translate.storage.share[txid][lang]
                     }
                 },
 
-                set : function(txid, dl){
+                set: function (txid, dl) {
                     self.sdk.translate.state.share[txid] = dl
                 },
-                request : function(txid, dl){
+                request: function (txid, dl) {
 
                     var share = self.psdk.share.get(txid)
 
@@ -6664,13 +6981,13 @@ Platform = function (app, listofnodes) {
                     self.sdk.translate.storage.share || (self.sdk.translate.storage.share = {})
                     self.sdk.translate.storage.share[txid] || (self.sdk.translate.storage.share[txid] = {})
 
-                    if(self.sdk.translate.storage.share[txid][dl]) return Promise.resolve(self.sdk.translate.storage.share[txid][dl])
+                    if (self.sdk.translate.storage.share[txid][dl]) return Promise.resolve(self.sdk.translate.storage.share[txid][dl])
 
                     return self.app.api.translate.share(txid, dl).then((result) => {
 
                         var cleaned = self.psdk.share.cleanData([result])
 
-                        if(!cleaned.length){
+                        if (!cleaned.length) {
                             return Promise.reject('translate.clean')
                         }
 
@@ -6679,30 +6996,29 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve(self.sdk.translate.storage.share[txid][dl])
 
                     })
-                    
+
                 }
             },
-            comment : {
-                needtranslate : function(txid){
-                },
-                lang : function(txid){
+            comment: {
+                needtranslate: function (txid) {},
+                lang: function (txid) {
 
                 },
-                set : function(txid, dl){
+                set: function (txid, dl) {
                     self.sdk.translate.state.comment || (self.sdk.translate.state.comment = {})
                     self.sdk.translate.state.comment[txid] = dl
                 },
-                request : function(txid, dl){
+                request: function (txid, dl) {
                     self.sdk.translate.storage.comment || (self.sdk.translate.storage.comment = {})
                     self.sdk.translate.storage.comment[txid] || (self.sdk.translate.storage.comment[txid] = {})
 
-                    if(self.sdk.translate.storage.comment[txid][dl]) return Promise.resolve(self.sdk.translate.storage.comment[txid][dl])
+                    if (self.sdk.translate.storage.comment[txid][dl]) return Promise.resolve(self.sdk.translate.storage.comment[txid][dl])
 
                     return self.app.api.translate.comment(txid, dl).then((result) => {
 
                         var cleaned = self.psdk.comment.cleanData([result])
 
-                        if(!cleaned.length){
+                        if (!cleaned.length) {
                             return Promise.reject('translate.clean')
                         }
 
@@ -6711,50 +7027,50 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve(self.sdk.translate.storage.comment[txid][dl])
 
                     })
-                    
+
                 }
             }
         },
-        faqLangs : {
-            get : function(clbk){
+        faqLangs: {
+            get: function (clbk) {
 
                 ///TODO_UPDATE FROM MASTER
 
-                importScript('js/faq.js', function(){
+                importScript('js/faq.js', function () {
 
-                    if (typeof FAQLANGS == 'undefined'){
-                        if(clbk) clbk({})
+                    if (typeof FAQLANGS == 'undefined') {
+                        if (clbk) clbk({})
                     }
 
-                    if (clbk){
+                    if (clbk) {
                         clbk(FAQLANGS(app))
                     }
 
                 }, null, app, 'satolist');
-              
+
             }
         },
 
-        localshares : {
-            storage : {},
-            saving : {},
+        localshares: {
+            storage: {},
+            saving: {},
             paused: {},
-            key : '',
+            key: '',
 
-            getSegment :  function(dir, filename){
+            getSegment: function (dir, filename) {
 
                 return electron.ipcRenderer.invoke('getVideoSegment', dir, filename)
 
             },
 
-            getByMasterSwarmId : function(masterSwarmId){
+            getByMasterSwarmId: function (masterSwarmId) {
                 var s = self.sdk.localshares.storage
 
                 var video = null
 
                 _.find(s, (share) => {
-                    return _.find(share.videos, function(v){
-                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId && v.infos.segments && v.infos.dir) {
+                    return _.find(share.videos, function (v) {
+                        if (v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId && v.infos.segments && v.infos.dir) {
                             video = v;
                             return true
                         }
@@ -6764,39 +7080,39 @@ Platform = function (app, listofnodes) {
                 return video
             },
 
-            status : function(id){
-                if(self.sdk.localshares.storage[id]) return 'saved'
-                if(self.sdk.localshares.paused[id]) return 'paused'
-                if(self.sdk.localshares.saving[id]) return 'saving'
+            status: function (id) {
+                if (self.sdk.localshares.storage[id]) return 'saved'
+                if (self.sdk.localshares.paused[id]) return 'paused'
+                if (self.sdk.localshares.saving[id]) return 'saving'
 
                 return 'cansave'
             },
 
-            videoDlProgress : async function(id){
+            videoDlProgress: async function (id) {
                 const progress = await electron.ipcRenderer.invoke('getVideoDownloadProgress', id);
                 return progress;
             },
 
-            setVideoDlStatus : async function(id, status){
-                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id,  status);
+            setVideoDlStatus: async function (id, status) {
+                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id, status);
             },
 
-            clearfromstorage : function(shareId){
+            clearfromstorage: function (shareId) {
                 delete self.sdk.localshares.storage[shareId]
             },
-            addtostorage : function(share){
+            addtostorage: function (share) {
                 self.sdk.localshares.storage[share.id || share.share.txid] = share
             },
 
-            initclbk : function(clbk){
+            initclbk: function (clbk) {
                 self.sdk.localshares.init().then(r => {
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 }).catch(e => {
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 })
             },
 
-            init : function(){
+            init: function () {
 
                 var k = 'localstorage'
 
@@ -6805,22 +7121,22 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.key = k
 
-                if(!window.peertubeglobalcache) window.peertubeglobalcache = {}
+                if (!window.peertubeglobalcache) window.peertubeglobalcache = {}
 
                 return self.sdk.localshares.getall[self.sdk.localshares.key]().then(r => {
 
-                    _.each(r, function(share){
+                    _.each(r, function (share) {
                         self.sdk.localshares.addtostorage(share)
 
                         if (share.videos) {
-                            _.each(share.videos, function(v){
-                                if(v && v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
+                            _.each(share.videos, function (v) {
+                                if (v && v.infos && v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
                             })
                         }
 
                     })
 
-                    var fm = _.map(_.filter(r, function(u){
+                    var fm = _.map(_.filter(r, function (u) {
                         return u.share && u.share.user
                     }), u => {
                         return u.share.user
@@ -6831,7 +7147,7 @@ Platform = function (app, listofnodes) {
                     /*_.each(fm, (u) => {
                         self.psdk.userInfo.insertFromResponseSmall([_.clone(curShare.share.share)], true)
                     })*/
-                    
+
 
                     /*self.sdk.node.shares.takeusers(_.map(fm, function(u){
                         return {userprofile : u.share.user}
@@ -6845,26 +7161,26 @@ Platform = function (app, listofnodes) {
 
             ////////////////////
 
-            getShareIds: function() {
-                return _.map(self.sdk.localshares.storage, function(v, i){
+            getShareIds: function () {
+                return _.map(self.sdk.localshares.storage, function (v, i) {
                     return i
                 })
             },
 
-            getAllVideos : function(){
+            getAllVideos: function () {
                 var videos = []
 
                 var s = self.sdk.localshares.storage
 
                 _.find(s, (share) => {
-                    var v = _.find(share.videos, function(v){
-                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId && v.infos.segments && v.infos.dir) {
+                    var v = _.find(share.videos, function (v) {
+                        if (v.infos && v.infos.videoDetails && v.infos.masterSwarmId && v.infos.segments && v.infos.dir) {
                             video = v;
                             return true
                         }
                     })
 
-                    if (v){
+                    if (v) {
                         videos.push(v)
                     }
                 })
@@ -6872,33 +7188,33 @@ Platform = function (app, listofnodes) {
                 return videos
             },
 
-            saveShare : function(share, p){
+            saveShare: function (share, p) {
 
-                if(!p) p = {}
+                if (!p) p = {}
 
-                if(self.sdk.localshares.saving[share.txid]) return Promise.reject('saving')
+                if (self.sdk.localshares.saving[share.txid]) return Promise.reject('saving')
 
-                if(self.sdk.localshares.storage[share.txid]) return Promise.reject('Saved')
+                if (self.sdk.localshares.storage[share.txid]) return Promise.reject('Saved')
 
-                if(!share) return Promise.reject('share')
+                if (!share) return Promise.reject('share')
 
-                var user = self.psdk.userInfo.get(share.address) 
+                var user = self.psdk.userInfo.get(share.address)
 
-                if(!user) return Promise.reject('user')
+                if (!user) return Promise.reject('user')
 
                 var exported = share.export()
 
-                if (exported.lastComment){
+                if (exported.lastComment) {
                     var c = self.psdk.comment.get(exported.lastComment)
 
-                    if (c){
+                    if (c) {
                         exported.lastComment = c.export()
                     }
                 }
 
                 var shareInfo = {
                     share: {
-                        id : share.txid,
+                        id: share.txid,
                         share: exported,
                         user: user.export(),
                         timestamp: new Date(),
@@ -6933,8 +7249,7 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        }
-                        else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
+                        } else if (share.images && share.images.length > 0 && !p.doNotSaveMedia) {
 
                             self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
 
@@ -6946,8 +7261,7 @@ Platform = function (app, listofnodes) {
 
                             });
 
-                        }
-                        else
+                        } else
 
                             return resolve()
 
@@ -6984,7 +7298,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getVideo: function(videoId) {
+            getVideo: function (videoId) {
                 var video, shares = self.sdk.localshares.storage;
 
                 try {
@@ -6999,31 +7313,31 @@ Platform = function (app, listofnodes) {
                         }
                     }
 
-                } catch(err) {
+                } catch (err) {
 
                 }
 
                 return video;
             },
 
-            getShare: function(id) {
+            getShare: function (id) {
                 return self.sdk.localshares.storage[id]
             },
 
-            deleteShare : function(id){
+            deleteShare: function (id) {
                 return self.sdk.localshares.delete[self.sdk.localshares.key](id)
             },
 
-            deleteAll: function() {
-                return Promise.all(_.map(self.sdk.localshares.storage, function(v, id){
+            deleteAll: function () {
+                return Promise.all(_.map(self.sdk.localshares.storage, function (v, id) {
                     return self.sdk.localshares.deleteShare(id)
                 }))
             },
 
-            getTotalSize : function(){
+            getTotalSize: function () {
                 var totalSize = 0;
 
-                _.each(self.sdk.localshares.storage, function(share) {
+                _.each(self.sdk.localshares.storage, function (share) {
 
                     if (share.videos) {
 
@@ -7038,45 +7352,52 @@ Platform = function (app, listofnodes) {
                 return totalSize;
             },
 
-            write : {
-                video : {
-                    cordova : function(folder, shareInfo, p){
+            write: {
+                video: {
+                    cordova: function (folder, shareInfo, p) {
 
-                        if(!shareInfo.video) return Promise.resolve()
+                        if (!shareInfo.video) return Promise.resolve()
 
-                        if(!shareInfo.video || !shareInfo.video.original) return Promise.reject('originalinfo')
+                        if (!shareInfo.video || !shareInfo.video.original) return Promise.reject('originalinfo')
 
                         var id = shareInfo.video.original.uuid
                         var videoDetails = shareInfo.video.original
 
-                        if(!p) p = {} //resolutionid, fileDownloadUrl
+                        if (!p) p = {} //resolutionid, fileDownloadUrl
 
 
                         var fileDownloadUrl = _.find(
-                            deep(videoDetails, 'streamingPlaylists.0.files') || [], function(file){
-                            return file.resolution.id == p.resolutionId
-                        })
+                            deep(videoDetails, 'streamingPlaylists.0.files') || [],
+                            function (file) {
+                                return file.resolution.id == p.resolutionId
+                            })
 
-                        if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
+                        if (!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
                         var infos = {
                             thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                            videoDetails : videoDetails,
+                            videoDetails: videoDetails,
                         }
                         var result = {
                             infos: infos,
-                            id : id
+                            id: id
                         }
 
-                        var downloadThumbnail = function() {
+                        var downloadThumbnail = function () {
                             return new Promise((resolve, reject) => {
                                 if (!infos || !infos.thumbnail || infos.thumbnail.length <= 0)
                                     return reject();
-                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
-                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                folder.getDirectory('videos', {
+                                    create: true
+                                }, function (dirEntry3) {
+                                    dirEntry3.getDirectory(id, {
+                                        create: true
+                                    }, function (dirEntry4) {
                                         // Download thumbnail
                                         let thumbnailName = infos.thumbnail.substring(infos.thumbnail.lastIndexOf('/') + 1, infos.thumbnail.length);
-                                        dirEntry4.getFile(thumbnailName, { create: true }, function (thumbFile) {
+                                        dirEntry4.getFile(thumbnailName, {
+                                            create: true
+                                        }, function (thumbFile) {
                                             var fileTransfer = new FileTransfer();
                                             fileTransfer.download(
                                                 'https://' + videoDetails.from + videoDetails.thumbnailPath,
@@ -7112,17 +7433,25 @@ Platform = function (app, listofnodes) {
                             }).finally(() => {
 
                                 // Download video
-                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                folder.getDirectory('videos', {
+                                    create: true
+                                }, function (dirEntry3) {
 
-                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                    dirEntry3.getDirectory(id, {
+                                        create: true
+                                    }, function (dirEntry4) {
 
-                                        dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                        dirEntry4.getFile('info.json', {
+                                            create: true
+                                        }, function (infoFile) {
                                             // Write into file
                                             infoFile.createWriter(function (fileWriter) {
 
                                                 fileWriter.write(JSON.stringify(infos));
 
-                                                dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
+                                                dirEntry4.getFile(p.resolutionId + '.mp4', {
+                                                    create: true
+                                                }, function (targetFile) {
 
                                                     var fileTransfer = new FileTransfer();
 
@@ -7133,11 +7462,11 @@ Platform = function (app, listofnodes) {
 
                                                             // Success
                                                             // Get file size
-                                                            targetFile.file(function(fileDetails) {
+                                                            targetFile.file(function (fileDetails) {
 
                                                                 targetFile.internalURL = entry.toURL();
 
-                                                                if(isios())
+                                                                if (isios())
                                                                     targetFile.internalURL = window.WkWebView.convertFilePath(targetFile.nativeURL)
 
                                                                 result.video = targetFile;
@@ -7156,7 +7485,7 @@ Platform = function (app, listofnodes) {
                                                         null, {}
                                                     );
 
-                                                    fileTransfer.onprogress = function(progressEvent) {
+                                                    fileTransfer.onprogress = function (progressEvent) {
                                                         if (progressEvent)
                                                             p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
                                                     }
@@ -7164,11 +7493,11 @@ Platform = function (app, listofnodes) {
                                                 }, reject);
 
                                             }, reject);
-    
+
                                         }, reject);
-    
+
                                     }, reject)
-    
+
                                 }, reject)
 
                             });
@@ -7177,8 +7506,8 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    electron : async function(folder, shareInfo, p = {}){
-                        if(!shareInfo.video || !shareInfo.video.original) {
+                    electron: async function (folder, shareInfo, p = {}) {
+                        if (!shareInfo.video || !shareInfo.video.original) {
                             return Promise.reject('originalinfo')
                         }
 
@@ -7187,24 +7516,24 @@ Platform = function (app, listofnodes) {
                         const videoDetails = shareInfo.video.original;
 
 
-                        var progressInterval = setInterval(async function() {
+                        var progressInterval = setInterval(async function () {
 
-							const progress = await self.app.platform.sdk.localshares.videoDlProgress(shareInfo.share.id);
+                            const progress = await self.app.platform.sdk.localshares.videoDlProgress(shareInfo.share.id);
 
-							if (progress != undefined && progress.progress >= 1){
+                            if (progress != undefined && progress.progress >= 1) {
                                 clearInterval(progressInterval);
                             }
-								
-							if (progress != undefined && !isNaN(progress.progress)){
+
+                            if (progress != undefined && !isNaN(progress.progress)) {
 
                                 if (p.progress)
                                     p.progress('video', progress.progress * 100);
 
                             }
-						}, 500);
+                        }, 500);
 
 
-                        
+
 
                         const videoData = await electron.ipcRenderer
                             .invoke('saveShareVideo', folder, videoDetails, videoResolution);
@@ -7214,24 +7543,26 @@ Platform = function (app, listofnodes) {
                         return videoData;
                     },
 
-                    localstorage : function(folder, shareInfo, p = {}){
-                        if(!shareInfo.video) return Promise.resolve()
+                    localstorage: function (folder, shareInfo, p = {}) {
+                        if (!shareInfo.video) return Promise.resolve()
                         return Promise.reject('todo')
                     }
                 },
 
-                image : {
+                image: {
 
-                    cordova : async function(folder, shareInfo, images, p = {}){
+                    cordova: async function (folder, shareInfo, images, p = {}) {
 
                         if (!folder || !images || images.length <= 0)
                             return Promise.resolve([]);
 
-                        var nbToDo = images.length, nbDone = 0, resImages = images.map((i) => i);
+                        var nbToDo = images.length,
+                            nbDone = 0,
+                            resImages = images.map((i) => i);
 
                         return new Promise((resolve, reject) => {
 
-                            var checkDone = function() {
+                            var checkDone = function () {
 
                                 nbDone += 1;
 
@@ -7244,13 +7575,13 @@ Platform = function (app, listofnodes) {
                             images.forEach((imageUrl, imageIndex) => {
 
                                 var xhr = new XMLHttpRequest();
-                                xhr.onload = function() {
+                                xhr.onload = function () {
                                     var reader = new FileReader();
-                                    reader.onloadend = function() {
+                                    reader.onloadend = function () {
                                         resImages[imageIndex] = reader.result;
                                         checkDone();
                                     }
-                                    reader.onerror = function(err) {
+                                    reader.onerror = function (err) {
                                         console.log(err);
                                         checkDone();
                                     }
@@ -7261,70 +7592,76 @@ Platform = function (app, listofnodes) {
                                 xhr.send();
 
                             });
-                            
+
                         });
 
                     },
 
-                    electron : async function(folder, shareInfo, images, p = {}){
+                    electron: async function (folder, shareInfo, images, p = {}) {
                         var imagesData = [];
 
                         try {
                             imagesData = await electron.ipcRenderer
                                 .invoke('saveShareImages', folder, shareInfo.share.share.i);
-                        } catch(err) {
+                        } catch (err) {
                             console.log(err);
                         }
 
                         return Promise.resolve(imagesData);
                     },
 
-                    localstorage : function(){
+                    localstorage: function () {
                         return Promise.resolve();
                     }
                 },
 
-                share : {
-                    cordova : function(share){
+                share: {
+                    cordova: function (share) {
 
                         var storage = self.sdk.localshares.helpers.cordovaStorage()
 
-                        if(!storage) return Promise.reject('storage')
+                        if (!storage) return Promise.reject('storage')
 
-                        return new Promise((resolve, reject)=>{
+                        return new Promise((resolve, reject) => {
 
                             // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a posts folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-                                dirEntry11.getDirectory(share.id, { create: true }, function (dirEntry2) {
+                            window.resolveLocalFileSystemURL(storage, function (dirEntry) {
+                                // Create a posts folder
+                                dirEntry.getDirectory('posts', {
+                                    create: true
+                                }, function (dirEntry11) {
+                                    dirEntry11.getDirectory(share.id, {
+                                        create: true
+                                    }, function (dirEntry2) {
 
-                                    // Create JSON file for share informations
-                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-                                        // Write into file
-                                        shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(JSON.stringify(share));
+                                        // Create JSON file for share informations
+                                        dirEntry2.getFile('share.json', {
+                                            create: true
+                                        }, function (shareFile) {
+                                            // Write into file
+                                            shareFile.createWriter(function (fileWriter) {
+                                                fileWriter.write(JSON.stringify(share));
 
-                                            resolve(dirEntry2)
+                                                resolve(dirEntry2)
+                                            });
                                         });
+
+
+                                    }, function (err) {
+                                        return reject(err);
                                     });
-
-
-                                }, function(err) {
+                                }, function (err) {
                                     return reject(err);
                                 });
-                            }, function(err) {
+                            }, function (err) {
                                 return reject(err);
                             });
-                        }, function(err) {
-                            return reject(err);
-                        });
 
                         })
 
                     },
 
-                    electron : async function(share) {
+                    electron: async function (share) {
                         const shareDir = await electron.ipcRenderer
                             .invoke('saveShareData', share);
 
@@ -7332,7 +7669,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     // Write share in localstorage
-                    localstorage : function(share){
+                    localstorage: function (share) {
 
                         if (localStorage && localStorage.setItem) {
 
@@ -7343,7 +7680,7 @@ Platform = function (app, listofnodes) {
 
                             //share.share = share;
                             self.sdk.localshares.addtostorage({
-                                id : share.id,
+                                id: share.id,
                                 share
                             });
 
@@ -7356,9 +7693,9 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            read : {
-                share : {
-                    electron : async function(shareId) {
+            read: {
+                share: {
+                    electron: async function (shareId) {
                         let shareData = {};
 
                         try {
@@ -7372,24 +7709,26 @@ Platform = function (app, listofnodes) {
                         return shareData;
                     },
 
-                    cordova : function(to, from){
+                    cordova: function (to, from) {
 
 
                         return new Promise((resolve, reject) => {
 
-                            from.getFile('share.json', { create: false }, function(shareFile) {
-                                shareFile.file(function(shareFileDetails) {
+                            from.getFile('share.json', {
+                                create: false
+                            }, function (shareFile) {
+                                shareFile.file(function (shareFileDetails) {
                                     // Read info file
                                     var reader = new FileReader();
 
-                                    reader.onloadend = function() {
+                                    reader.onloadend = function () {
 
                                         try {
 
                                             to.share = JSON.parse(this.result);
                                             resolve()
 
-                                        } catch(err){
+                                        } catch (err) {
                                             reject(err)
                                         }
 
@@ -7404,7 +7743,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     // Read shares in localstorage
-                    localstorage : function(shareId){
+                    localstorage: function (shareId) {
 
                         var share;
 
@@ -7414,30 +7753,32 @@ Platform = function (app, listofnodes) {
                                 try {
                                     share = JSON.parse(shareStr);
                                     // share.user = { adr: share.address };
-                                } catch(err) {}
+                                } catch (err) {}
                             }
                         }
 
-                        
+
 
                         return share;
                     }
                 },
 
-                video : {
-                    cordova : function(to, from){
+                video: {
+                    cordova: function (to, from) {
 
 
                         return new Promise((resolve, reject) => {
 
-                            from.getDirectory('videos', { create: true }, function (videosFolder) {
+                            from.getDirectory('videos', {
+                                create: true
+                            }, function (videosFolder) {
 
 
                                 to.videos = {};
 
                                 var videosReader = videosFolder.createReader();
 
-                                videosReader.readEntries(function(videoFolders) {
+                                videosReader.readEntries(function (videoFolders) {
 
                                     lazyEach({
                                         array: videoFolders,
@@ -7448,7 +7789,7 @@ Platform = function (app, listofnodes) {
                                                 to.videos[videoFolder.name] = {};
                                                 to.videos[videoFolder.name].id = videoFolder.name
 
-                                                videoFolder.createReader().readEntries(function(files) {
+                                                videoFolder.createReader().readEntries(function (files) {
                                                     var videoFile, infoFile;
 
                                                     lazyEach({
@@ -7459,7 +7800,7 @@ Platform = function (app, listofnodes) {
 
                                                             if (file.isFile && file.file) {
 
-                                                                file.file(function(fileDetails) {
+                                                                file.file(function (fileDetails) {
 
 
                                                                     if (file.name == 'info.json') {
@@ -7469,13 +7810,13 @@ Platform = function (app, listofnodes) {
 
                                                                         var reader = new FileReader();
 
-                                                                        reader.onloadend = function() {
+                                                                        reader.onloadend = function () {
 
 
                                                                             try {
                                                                                 to.videos[videoFolder.name].infos = JSON.parse(this.result);
 
-                                                                            } catch(err){
+                                                                            } catch (err) {
 
                                                                                 console.error('fileDetails error', err)
 
@@ -7499,21 +7840,21 @@ Platform = function (app, listofnodes) {
                                                                             to.videos[videoFolder.name].size = fileDetails.size;
                                                                         // Resolve internal URL
 
-                                                                        window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
+                                                                        window.resolveLocalFileSystemURL(videoFile.nativeURL, function (entry) {
 
-                                                                            try{
-                                                                                videoFile.internalURL =  entry.toInternalURL()
+                                                                            try {
+                                                                                videoFile.internalURL = entry.toInternalURL()
 
-                                                                                if(isios())
+                                                                                if (isios())
                                                                                     videoFile.internalURL = window.WkWebView.convertFilePath(videoFile.nativeURL)
-    
+
                                                                                 to.videos[videoFolder.name].video = videoFile;
-    
-                                                                            }catch(e){
+
+                                                                            } catch (e) {
                                                                                 console.error(e)
                                                                             }
 
-                                                                            
+
 
                                                                             _p.success()
                                                                         });
@@ -7526,8 +7867,7 @@ Platform = function (app, listofnodes) {
 
                                                                     _p.success()
                                                                 });
-                                                            }
-                                                            else{
+                                                            } else {
                                                                 _p.success()
                                                             }
                                                         },
@@ -7541,8 +7881,7 @@ Platform = function (app, listofnodes) {
 
                                                 });
 
-                                            }
-                                            else{
+                                            } else {
                                                 p.success()
                                             }
                                         },
@@ -7559,7 +7898,7 @@ Platform = function (app, listofnodes) {
                         })
                     },
 
-                    electron : async function(videoId, shareId) {
+                    electron: async function (videoId, shareId) {
 
                         const videosDataList = {};
 
@@ -7567,21 +7906,23 @@ Platform = function (app, listofnodes) {
                             .invoke('getVideoData', shareId, videoId);
 
 
-                        if(videoData)
+                        if (videoData)
                             videosDataList[videoId] = videoData;
 
                         return videosDataList;
                     },
 
-                    localstorage : function(to, from){
+                    localstorage: function (to, from) {
                         return Promise.reject('todo')
                     }
                 }
             },
 
-            get : {
-                electron : async function(shareId) {
-                    const shareDataList = { id: shareId };
+            get: {
+                electron: async function (shareId) {
+                    const shareDataList = {
+                        id: shareId
+                    };
 
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
@@ -7589,7 +7930,7 @@ Platform = function (app, listofnodes) {
                     var u = shareDataList.share.share.u.split(/(\%2F|\/)/g)
 
                     const videoId = u[u.length - 1]
-                    
+
 
                     if (videoId)
                         shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
@@ -7598,13 +7939,13 @@ Platform = function (app, listofnodes) {
                     return shareDataList;
                 },
 
-                cordova : function(shareFolder){
+                cordova: function (shareFolder) {
 
                     return new Promise((resolve, reject) => {
 
                         if (shareFolder.isDirectory) {
                             var share = {
-                                id : shareFolder.name
+                                id: shareFolder.name
                             }
 
                             self.sdk.localshares.read.share.cordova(share, shareFolder).then(r => {
@@ -7619,8 +7960,7 @@ Platform = function (app, listofnodes) {
                                 reject(er)
                             })
 
-                        }
-                        else{
+                        } else {
                             resolve(null)
                             //reject('isDirectory')
                         }
@@ -7631,19 +7971,19 @@ Platform = function (app, listofnodes) {
                 },
 
                 // Get a share from localstorage
-                localstorage : async function(shareId){
+                localstorage: async function (shareId) {
 
                     var share = await self.sdk.localshares.read.share.localstorage(shareId);
 
                     return {
-                        id : shareId,
-                        share : share
+                        id: shareId,
+                        share: share
                     };
                 }
             },
 
-            getall : {
-                electron : async function() {
+            getall: {
+                electron: async function () {
                     const shareLists = await electron.ipcRenderer
                         .invoke('getShareList');
 
@@ -7652,45 +7992,47 @@ Platform = function (app, listofnodes) {
 
                     const shareDataList = {};
 
-                    for(const shareIndex in shareList) {
+                    for (const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
 
-                        try{
+                        try {
                             shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
-                        }catch(e){
-                            
+                        } catch (e) {
+
                         }
 
-                       
+
                     }
 
-                    for(const shareIndex in pausedShareList) {
+                    for (const shareIndex in pausedShareList) {
                         self.sdk.localshares.paused[pausedShareList[shareIndex].shareId] = pausedShareList[shareIndex].resolutionId;
                     }
 
                     return shareDataList;
                 },
 
-                cordova : function(){
+                cordova: function () {
 
                     var v = {};
 
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
 
-                    if(!storage) return Promise.reject('storage')
+                    if (!storage) return Promise.reject('storage')
 
                     return new Promise((resolve, reject) => {
                         // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                        window.resolveLocalFileSystemURL(storage, function (dirEntry) {
                             // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
+                            dirEntry.getDirectory('posts', {
+                                create: true
+                            }, function (dirEntry2) {
 
                                 var shareReader = dirEntry2.createReader();
 
-                                shareReader.readEntries(function(shares) {
+                                shareReader.readEntries(function (shares) {
 
 
-                                    Promise.all(_.map(shares, function(shareFolder){
+                                    Promise.all(_.map(shares, function (shareFolder) {
 
                                         return self.sdk.localshares.get.cordova(shareFolder).then(r => {
 
@@ -7721,7 +8063,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : async function(){
+                localstorage: async function () {
 
                     var shares = {};
 
@@ -7735,7 +8077,7 @@ Platform = function (app, listofnodes) {
                                 let share = await self.sdk.localshares.get.localstorage(matches[1]);
 
                                 shares[share.id] = share;
-                            } catch(err) {
+                            } catch (err) {
                                 console.error(err)
                             }
 
@@ -7746,10 +8088,10 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            helpers : {
-                cordovaStorage : function(){
+            helpers: {
+                cordovaStorage: function () {
 
-                    if(!window.cordova.file) return null
+                    if (!window.cordova.file) return null
 
                     //return 'file:///storage/emulated/0/'
 
@@ -7759,25 +8101,29 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            delete : {
-                localstorage : function(shareId){
+            delete: {
+                localstorage: function (shareId) {
                     self.sdk.localshares.clearfromstorage(shareId)
                     if (localStorage && localStorage.removeItem)
                         localStorage.removeItem('saved2_share_' + shareId);
 
                     return Promise.resolve();
                 },
-                cordova : function(shareId){
+                cordova: function (shareId) {
                     var storage = self.sdk.localshares.helpers.cordovaStorage()
 
-                    if(!storage) return Promise.reject('storage')
+                    if (!storage) return Promise.reject('storage')
 
                     return new Promise((resolve, reject) => {
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                        window.resolveLocalFileSystemURL(storage, function (dirEntry) {
                             // Create a downloads folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry2) {
-                                dirEntry2.getDirectory(shareId, { create: false}, function(dirToDelete) {
-                                    dirToDelete.removeRecursively(function() {
+                            dirEntry.getDirectory('posts', {
+                                create: true
+                            }, function (dirEntry2) {
+                                dirEntry2.getDirectory(shareId, {
+                                    create: false
+                                }, function (dirToDelete) {
+                                    dirToDelete.removeRecursively(function () {
                                         // Success
 
                                         self.sdk.localshares.clearfromstorage(shareId)
@@ -7791,7 +8137,7 @@ Platform = function (app, listofnodes) {
                     })
 
                 },
-                electron : function(shareId){
+                electron: function (shareId) {
                     self.sdk.localshares.clearfromstorage(shareId);
 
                     return electron.ipcRenderer.invoke('deleteShareWithVideo', shareId);
@@ -7816,9 +8162,9 @@ Platform = function (app, listofnodes) {
                 },
             },
 
-            redirect : null,
+            redirect: null,
 
-            getredirectFromCurrentPage : function(){
+            getredirectFromCurrentPage: function () {
                 self.sdk.registrations.redirect = self.app.nav.get.pathnameSearch()
 
             },
@@ -7837,7 +8183,9 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.registrations.save()
 
-                        _.each(this.clbks, function (c) { c(address) })
+                        _.each(this.clbks, function (c) {
+                            c(address)
+                        })
                     }
 
                 }
@@ -7846,7 +8194,7 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
-                
+
                 self.app.Logger.info({
                     actionId: 'USER_REGISTRATION_PROCESS',
                     actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
@@ -7856,38 +8204,42 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.storage[address] = value || true;
                 self.sdk.registrations.save()
 
-                _.each(this.clbks, function (c) { c(address) })
+                _.each(this.clbks, function (c) {
+                    c(address)
+                })
             },
 
-            value : function(address){
+            value: function (address) {
                 var regs = self.sdk.registrations.storage[address];
                 var rm = self.sdk.registrations.storage[address + 'rm']
 
-                if(rm) return 0
+                if (rm) return 0
 
                 return regs
             },
 
-            showprivate : function(address){
+            showprivate: function (address) {
                 address || (address = self.app.user.address.value)
 
                 var regs = self.sdk.registrations.storage[address];
 
-                return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/)
+                return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/ )
 
             },
 
-            donotshowprivate : function(address){
+            donotshowprivate: function (address) {
                 address || (address = self.app.user.address.value)
 
                 self.sdk.registrations.storage[address + 'rm'] = true;
                 self.sdk.registrations.save()
 
-                _.each(this.clbks, function (c) { c(address) })
+                _.each(this.clbks, function (c) {
+                    c(address)
+                })
 
-                try{
+                try {
                     localStorage['needshowkey_' + self.app.user.address.value] = false
-                }catch(e){
+                } catch (e) {
 
                 }
             },
@@ -7896,29 +8248,27 @@ Platform = function (app, listofnodes) {
                 var storage = {};
 
                 var local = "{}"
-                
-                try{
+
+                try {
                     local = localStorage['registrations'] || "{}";
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 if (local) {
                     try {
                         storage = JSON.parse(local)
-                    }
-                    catch (e) {
-                    }
+                    } catch (e) {}
                 }
 
                 self.sdk.registrations.storage = storage;
             },
             save: function () {
 
-                try{
+                try {
                     localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
             }
@@ -7930,39 +8280,39 @@ Platform = function (app, listofnodes) {
 
             storage: [],
 
-            findlastdraft : function(){
+            findlastdraft: function () {
 
-                return _.find(self.sdk.articles.storage, function(s){
+                return _.find(self.sdk.articles.storage, function (s) {
                     return s.version >= 2 && !s.txid
                 })
 
             },
 
-            getbyid : function(id){
-                return _.find(self.sdk.articles.storage, function(s){
+            getbyid: function (id) {
+                return _.find(self.sdk.articles.storage, function (s) {
                     return s.id == id
                 })
             },
 
-            deletebyid : function(id){
-                self.sdk.articles.storage = _.filter(self.sdk.articles.storage, function(s){
+            deletebyid: function (id) {
+                self.sdk.articles.storage = _.filter(self.sdk.articles.storage, function (s) {
                     return s.id != id
                 })
 
                 self.sdk.articles.save()
             },
 
-            getlist : function(){
-                return _.filter(self.sdk.articles.storage, function(s){
+            getlist: function () {
+                return _.filter(self.sdk.articles.storage, function (s) {
                     return s.version >= 2
                 })
             },
 
-            itisdraft(art){
+            itisdraft(art) {
 
-                if(art.editing) return false
+                if (art.editing) return false
 
-                if(
+                if (
 
                     art.caption.value &&
                     art.content && art.content.blocks && art.content.blocks.length
@@ -7970,7 +8320,7 @@ Platform = function (app, listofnodes) {
                 ) return true
             },
 
-            fromshare : function(share){
+            fromshare: function (share) {
 
                 var edjs = new edjsHTML(null, app)
 
@@ -7978,15 +8328,15 @@ Platform = function (app, listofnodes) {
                 var empty = self.sdk.articles.empty(null, 2)
 
 
-                    empty.visibility = (share.settings.f || 0) + ''
-                    empty.caption.value = share.caption.v
-                    empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
-                    empty.tags = _.clone(share.tags.v)
-                    empty.language = share.language.v
-                    empty.time = share.time
-                    empty.cover = deep(share, 'images.v.0')
-                    empty.editing = share.aliasid
-                    empty.shash = share.shash()
+                empty.visibility = (share.settings.f || 0) + ''
+                empty.caption.value = share.caption.v
+                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), articleDecode)
+                empty.tags = _.clone(share.tags.v)
+                empty.language = share.language.v
+                empty.time = share.time
+                empty.cover = deep(share, 'images.v.0')
+                empty.editing = share.aliasid
+                empty.shash = share.shash()
 
                 return empty
             },
@@ -8002,14 +8352,14 @@ Platform = function (app, listofnodes) {
 
                     images: [],
                     content: null,
-                    tags : [],
+                    tags: [],
                     u: '',
-                    version : version || 1,
-                    time : null,
-                    cover : '',
-                    visibility : 0,
+                    version: version || 1,
+                    time: null,
+                    cover: '',
+                    visibility: 0,
 
-                    language : self.app.localization.key
+                    language: self.app.localization.key
                 }
             },
 
@@ -8115,11 +8465,10 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-        
-                try{
+
+                try {
                     localStorage[self.app.user.address.value + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
-                }
-                catch(e){
+                } catch (e) {
                     console.log("e", e)
                 }
 
@@ -8130,21 +8479,19 @@ Platform = function (app, listofnodes) {
 
                 var articles = {};
 
-                var local = "[]" 
-                
-                try{
+                var local = "[]"
+
+                try {
                     local = localStorage[self.app.user.address.value + 'articles'] || "[]";
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
-                
+
 
                 if (local) {
                     try {
                         articles = JSON.parse(local)
-                    }
-                    catch (e) {
-                    }
+                    } catch (e) {}
                 }
 
                 return articles;
@@ -8161,53 +8508,57 @@ Platform = function (app, listofnodes) {
             },
 
 
-            share : function(art){
+            share: function (art) {
 
                 var edjs = new edjsHTML(null, app)
 
-                var artcontent = edjs.apply(art.content, encodeURIComponent)
+                var artcontent = edjs.apply(art.content, articleEncode)
 
                 var share = new Share(art.language || self.app.localization.key, self.app);
 
-                    share.tags.set(_.clone(art.tags))
-                    share.caption.set(art.caption.value)
-                    share.message.set({
-                        blocks : artcontent.blocks,
-                        version : artcontent.version
-                    })
+                share.tags.set(_.clone(art.tags))
+                share.caption.set(art.caption.value)
+                share.message.set({
+                    blocks: artcontent.blocks,
+                    version: artcontent.version
+                })
 
-                    share.settings.v = 'a'
-                    share.settings.version = art.version
-                    share.settings.f = (art.visibility || 0) + ''
+                share.settings.v = 'a'
+                share.settings.version = art.version
+                share.settings.f = (art.visibility || 0) + ''
 
-                    share.images.set([art.cover])
+                share.images.set([art.cover])
 
-                    share.address = deep(app, 'user.address.value')
+                share.address = deep(app, 'user.address.value')
 
-                if (art.editing){
+                if (art.editing) {
                     share.aliasid = art.editing
                 }
 
                 return share
             },
 
-            uploadresource : {
-                image : function(e){
+            uploadresource: {
+                image: function (e) {
 
-                    if(!deep(e, 'data.file.url')){
+                    if (!deep(e, 'data.file.url')) {
                         return Promise.resolve()
                     }
 
-                    return self.app.imageUploader.upload({ base64: e.data.file.url }).then( url => {
-						e.data.file.url = url
+                    return self.app.imageUploader.upload({
+                        base64: e.data.file.url
+                    }).then(url => {
+                        e.data.file.url = url
                         return Promise.resolve()
-					})
+                    })
 
                 },
-                carousel : function(e){
+                carousel: function (e) {
 
                     return Promise.all(_.map(e.data, (d => {
-                        return self.app.imageUploader.upload({base64 : d.url}).then(url => {
+                        return self.app.imageUploader.upload({
+                            base64: d.url
+                        }).then(url => {
                             d.url = url
 
                             return Promise.resolve()
@@ -8215,12 +8566,12 @@ Platform = function (app, listofnodes) {
                     })))
                 },
 
-                content : function(content){
+                content: function (content) {
                     var tps = self.sdk.articles.uploadresource
 
-                    var promises = _.map(content.blocks, function(e){
+                    var promises = _.map(content.blocks, function (e) {
 
-                        if (tps[e.type]){
+                        if (tps[e.type]) {
                             return tps[e.type](e)
                         }
 
@@ -8231,22 +8582,24 @@ Platform = function (app, listofnodes) {
                     return Promise.all(promises)
                 },
 
-                art : function(art){
-                    if(!art.cover){
+                art: function (art) {
+                    if (!art.cover) {
                         return Promise.resolve()
                     }
 
-                    return self.app.imageUploader.upload({base64 : art.cover}).then(r => {
+                    return self.app.imageUploader.upload({
+                        base64: art.cover
+                    }).then(r => {
                         art.cover = r
 
                         return Promise.resolve()
                     })
                 },
 
-                
+
             },
 
-            uploadresources : function(art){
+            uploadresources: function (art) {
 
                 return self.sdk.articles.uploadresource.art(art).then(r => {
                     return self.sdk.articles.uploadresource.content(art.content)
@@ -8255,18 +8608,18 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        sharesObserver : {
-            storage : {
-                viewed : {}
+        sharesObserver: {
+            storage: {
+                viewed: {}
             },
 
-            newmaterials : function(counts){
+            newmaterials: function (counts) {
 
-                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
-                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
+                if (!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
                 _.each(counts, (c, i) => {
-                    if (self.sdk.sharesObserver.storage.viewed[app.user.address.value][i]){
+                    if (self.sdk.sharesObserver.storage.viewed[app.user.address.value][i]) {
                         self.sdk.sharesObserver.storage.viewed[app.user.address.value][i].new = (self.sdk.sharesObserver.storage.viewed[app.user.address.value][i].new || 0) + c
                     }
                 })
@@ -8274,46 +8627,46 @@ Platform = function (app, listofnodes) {
                 self.sdk.sharesObserver.save()
             },
 
-            hasnewkeys : function(keys){
+            hasnewkeys: function (keys) {
                 return _.reduce(keys, (m, key) => {
                     return m && self.sdk.sharesObserver.hasnew(key)
                 }, true)
             },
 
-            hasnew : function(key){
+            hasnew: function (key) {
 
-                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
-                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
+                if (!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
-                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) return true
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) return true
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-                if (block){
+                if (block) {
 
-                    if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30) {
 
                         return true
                     }
 
-                    if (block > (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0)){
+                    if (block > (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0)) {
 
                         return self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].new > 0
                     }
                 }
             },
 
-            view : function(key, first, last){
+            view: function (key, first, last) {
 
-                if(key == 'saved') return
+                if (key == 'saved') return
 
-                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
-                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) 
+                if (!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value])
                     self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
-                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) self.sdk.sharesObserver.storage.viewed[app.user.address.value][key] = {}
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) self.sdk.sharesObserver.storage.viewed[app.user.address.value][key] = {}
 
-                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first || self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first <= first){
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first || self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first <= first) {
 
                     self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first = first
                     self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].new = 0
@@ -8331,36 +8684,34 @@ Platform = function (app, listofnodes) {
 
             },
 
-            key : function(){
+            key: function () {
                 return 'observer_' + (window.testpocketnet ? 'test' : 'production')
             },
 
             save: function () {
 
-                try{
+                try {
                     localStorage[self.sdk.sharesObserver.key()] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
-                }
-                catch(e){
+                } catch (e) {
                     console.error('observer', e)
                 }
 
             },
 
-            init : function(clbk){
+            init: function (clbk) {
                 self.app.user.isState(function (state) {
-                    if(state){
+                    if (state) {
                         self.sdk.sharesObserver.load(clbk)
                         app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), () => {
                             self.sdk.sharesObserver.load()
                         });
-                    }
-                    else{
-                        if(clbk) clbk()
+                    } else {
+                        if (clbk) clbk()
                     }
                 })
             },
 
-            destroy : function(){
+            destroy: function () {
                 self.sdk.sharesObserver.storage.viewed = {}
 
                 app.platform.sdk.syncStorage.off('change', self.sdk.sharesObserver.key());
@@ -8369,14 +8720,13 @@ Platform = function (app, listofnodes) {
 
             load: function (clbk) {
 
-                try{
+                try {
                     self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage[self.sdk.sharesObserver.key()] || "{}") || {}
-                }
-                catch(e){
+                } catch (e) {
                     self.sdk.sharesObserver.storage.viewed = {}
                 }
-                
-                if(clbk) clbk()
+
+                if (clbk) clbk()
             },
         },
 
@@ -8392,12 +8742,12 @@ Platform = function (app, listofnodes) {
 
                 var c = self.sdk.lentaMethod.current
 
-                try{
+                try {
                     localStorage['lentaMethod'] = c;
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
-                
+
 
             },
 
@@ -8407,20 +8757,20 @@ Platform = function (app, listofnodes) {
 
                 t.current = t.default;
 
-                try{
+                try {
                     t.current = localStorage['lentaMethod'] || t.default;
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
-                
+
 
                 t.set()
 
                 if (clbk) clbk()
             },
 
-            get: function(){
+            get: function () {
                 var t = self.sdk.lentaMethod;
 
                 return t.all[t.current];
@@ -8440,11 +8790,11 @@ Platform = function (app, listofnodes) {
 
                     t.current = value;
 
-                    _.each(self.sdk.categories.clbks.selected, function(f){
+                    _.each(self.sdk.categories.clbks.selected, function (f) {
                         f()
                     })
 
-                
+
 
                     t.save()
 
@@ -8458,41 +8808,41 @@ Platform = function (app, listofnodes) {
                 white: {
                     name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite",
-                    color : "#ffffff",
-                    media : '(prefers-color-scheme: light)',
-                    rootid : ''
+                    color: "#ffffff",
+                    media: '(prefers-color-scheme: light)',
+                    rootid: ''
                 },
 
                 black: {
                     name: self.app.localization.e('e13267'),
                     class: "stblack",
-                    color : "#1e2235",
-                    media : '(prefers-color-scheme: dark)',
-                    rootid : 'black'
+                    color: "#1e2235",
+                    media: '(prefers-color-scheme: dark)',
+                    rootid: 'black'
                 },
 
                 gray: {
                     name: self.app.localization.e('gray'),
                     class: "stgray",
-                    color : "#1e1d1a",
-                    media : '(prefers-color-scheme: dark)',
-                    rootid : 'gray'
+                    color: "#1e1d1a",
+                    media: '(prefers-color-scheme: dark)',
+                    rootid: 'gray'
                 },
             },
             default: "white",
             current: null,
 
-            currentStyles : {},
+            currentStyles: {},
 
             save: function () {
 
                 var c = self.sdk.theme.current
 
-                
-                try{
+
+                try {
                     localStorage['usertheme'] = c;
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
             },
@@ -8503,10 +8853,10 @@ Platform = function (app, listofnodes) {
 
                 t.current = t.default;
 
-                try{
+                try {
                     t.current = localStorage['usertheme'] || t.default;
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 t.set()
@@ -8514,18 +8864,18 @@ Platform = function (app, listofnodes) {
                 if (clbk) clbk()
 
                 self.sdk.syncStorage.on('change', 'usertheme', (e) => {
-                    
-                    try{
+
+                    try {
                         t.current = localStorage.usertheme;
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
 
                     t.set();
                 });
             },
 
-            setstyles : function(){
+            setstyles: function () {
                 var root = document.querySelector(':root');
 
                 var rootStyles = getComputedStyle(root);
@@ -8534,9 +8884,9 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getstyle : function(v){
+            getstyle: function (v) {
 
-                if (self.sdk.theme.currentStyles){
+                if (self.sdk.theme.currentStyles) {
                     return self.sdk.theme.currentStyles.getPropertyValue(v)
                 }
 
@@ -8572,7 +8922,7 @@ Platform = function (app, listofnodes) {
 
                     if (cm) cm()
 
-                    if (document.documentElement.hasAttribute('theme')){
+                    if (document.documentElement.hasAttribute('theme')) {
                         document.documentElement.removeAttribute('theme');
                     }
 
@@ -8617,11 +8967,11 @@ Platform = function (app, listofnodes) {
             default: 'normal',
             current: null,
 
-            save: function() {
+            save: function () {
                 localStorage['uiscale'] = self.sdk.uiScale.current;
             },
 
-            load: function(clbk) {
+            load: function (clbk) {
                 const param = self.sdk.uiScale;
 
                 param.current = localStorage['uiscale'] || self.sdk.uiScale.default;
@@ -8647,7 +8997,9 @@ Platform = function (app, listofnodes) {
                         return;
                     }
 
-                    const { webFrame } = require('electron');
+                    const {
+                        webFrame
+                    } = require('electron');
 
                     webFrame.setZoomFactor(selectedValue.scale / 100);
 
@@ -8657,7 +9009,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            listenScalingEvents: function() {
+            listenScalingEvents: function () {
                 const zoomArrList = self.app.platform.sdk.uiScale.all;
                 const zoomKeys = Object.keys(zoomArrList);
 
@@ -8666,7 +9018,7 @@ Platform = function (app, listofnodes) {
                 function scaleUi(e, isScroll, calcDelta) {
                     const mainKeyDown = e.metaKey || e.ctrlKey;
 
-                    if(!mainKeyDown) {
+                    if (!mainKeyDown) {
                         if (isScroll && wheelLock) {
                             $('html').removeClass('scroll-lock');
                             wheelLock = false;
@@ -8689,7 +9041,9 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.uiScale.set(zoomNewName);
                 }
 
-                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({
+                    keyCode
+                }) => {
                     /**
                      * Minus - 189
                      * Minus Numpad - 109
@@ -8698,9 +9052,11 @@ Platform = function (app, listofnodes) {
                      * Plus Numpad - 107
                      */
                     switch (keyCode) {
-                        case 189: case 109:
+                        case 189:
+                        case 109:
                             return -1;
-                        case 187: case 107:
+                        case 187:
+                        case 107:
                             return +1;
                     }
 
@@ -8708,12 +9064,12 @@ Platform = function (app, listofnodes) {
                 }));
 
                 self.app.el.window.on('wheel', (e) => scaleUi(e, true, (e) => {
-                    if(!wheelLock) {
+                    if (!wheelLock) {
                         $('html').addClass('scroll-lock');
                         wheelLock = true;
                     }
 
-                    if(e.originalEvent.deltaY < 0) {
+                    if (e.originalEvent.deltaY < 0) {
                         return +1;
                     } else {
                         return -1;
@@ -8766,7 +9122,7 @@ Platform = function (app, listofnodes) {
                 var c = {
 
                     posts: {
-                        class : 'posts',
+                        class: 'posts',
                         name: self.app.localization.e('posts'),
                         options: {
 
@@ -8778,7 +9134,7 @@ Platform = function (app, listofnodes) {
 
 
                     notifications: {
-                        class : 'notifications',
+                        class: 'notifications',
                         name: self.app.localization.e('notifications'),
                         options: {
 
@@ -8814,20 +9170,32 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    system : {
+                    
+
+                    system: {
                         name: self.app.localization.e('system'),
-                        options : {}
+                        options: {}
                     }
                 }
 
-                if(app.pkoindisable){
+                if (app.pkoindisable) {
                     delete c.notifications.options.win
                     delete c.notifications.options.transactions
                 }
 
 
-                if(!self.released.vidgets.staking){
+                if (!self.released.vidgets.staking) {
                     delete c.vidgets.options.vidgetstaking
+                }
+
+
+                if(self.app.mobileview){
+                    c.interface = {
+                        name: self.app.localization.e('interface'),
+                        options: {
+                            interfacemobilelayoutmenu: options.interfacemobilelayoutmenu,
+                        }
+                    }
                 }
 
                 c.system.options.useanimations = options.useanimations
@@ -8835,14 +9203,13 @@ Platform = function (app, listofnodes) {
                 if (electron) {
                     c.system.options.autostart = options.autostart
                     c.video.options.videoTranscoding = options.videoTranscoding;
-                }
-                else{
-                    if(!window.cordova){
+                } else {
+                    if (!window.cordova) {
                         c.system.options.openlinksinelectron = options.openlinksinelectron
                     }
                 }
 
-                if (self.app.canuseip()){
+                if (self.app.canuseip()) {
                     c.system.options.canuseip = options.canuseip
                 }
 
@@ -8863,7 +9230,7 @@ Platform = function (app, listofnodes) {
 
                         if (m[i].type === "VALUES") {
 
-                            if (m[i].tgto){
+                            if (m[i].tgto) {
 
                                 const idx = m[i].possibleValues.indexOf(String(v));
                                 m[i].value = m[i].possibleValuesLabels[idx];
@@ -8884,12 +9251,12 @@ Platform = function (app, listofnodes) {
                         if (electron && i == 'autostart') {
 
                             electron.ipcRenderer.send('electron-autoLaunchManage', {
-                                enable : m[i].value
+                                enable: m[i].value
                             });
 
                         }
 
-                        if (i == 'canuseip'){
+                        if (i == 'canuseip') {
                             app.peertubeHandler.clear()
                         }
 
@@ -8907,6 +9274,14 @@ Platform = function (app, listofnodes) {
                                 }*/
 
                             }
+                        }
+
+                        if(i == 'interfacemobilelayoutmenu'){
+                            if (self.app.modules.bnavigation)
+                                self.app.modules.bnavigation.module.restart()
+
+                            if (self.app.modules.menu)
+                                self.app.modules.menu.module.restart()
                         }
                     }
                 })
@@ -8928,12 +9303,12 @@ Platform = function (app, listofnodes) {
 
                     if (o.type === "VALUES") {
 
-                       
 
-                            values[i] = {};
-                            values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
-                            values[i].possibleValuesLabels = o.possibleValuesLabels;
-                            values[i].value = o.value;
+
+                        values[i] = {};
+                        values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
+                        values[i].possibleValuesLabels = o.possibleValuesLabels;
+                        values[i].value = o.value;
 
 
 
@@ -8944,13 +9319,13 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                try{
+                try {
                     localStorage['usersettings'] = JSON.stringify(values);
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
-                
+
                 self?.firebase?.settings()
             },
 
@@ -8959,18 +9334,17 @@ Platform = function (app, listofnodes) {
                 var values = {};
 
                 var local = null
-                
-                try{
+
+                try {
                     local = localStorage['usersettings'];
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 if (local) {
                     try {
                         values = JSON.parse(local)
-                    }
-                    catch (e) {
+                    } catch (e) {
 
                     }
                 }
@@ -8984,7 +9358,7 @@ Platform = function (app, listofnodes) {
                 var values = self.sdk.usersettings.load();
                 var m = self.sdk.usersettings.meta = self.__getSettingsMeta();
 
-                if (self.app.user.address.value && self.istest()){
+                if (self.app.user.address.value && self.istest()) {
 
                     self.app.user.features.telegram = 1;
 
@@ -8996,24 +9370,24 @@ Platform = function (app, listofnodes) {
 
                 _.each(values, function (v, i) {
 
-                    if(!m[i]) return
+                    if (!m[i]) return
 
                     if (typeof v === "object") {
 
-                        if (m && m[i]){
+                        if (m && m[i]) {
 
 
-                           
-                                m[i].value = v.value;
 
-                                if (!(m[i].possibleValues && m[i].possibleValues.length)){
+                            m[i].value = v.value;
 
-                                    m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
-                                        return String(i);
-                                    })
-                                    m[i].possibleValuesLabels = v.possibleValuesLabels;
-                                    
-                                } 
+                            if (!(m[i].possibleValues && m[i].possibleValues.length)) {
+
+                                m[i].possibleValues = v.possibleValues && v.possibleValues.map(function (i) {
+                                    return String(i);
+                                })
+                                m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                            }
 
 
                         }
@@ -9025,7 +9399,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    
+
                 })
 
                 if (electron) {
@@ -9034,7 +9408,7 @@ Platform = function (app, listofnodes) {
                         m.autostart.value = true;
 
                         electron.ipcRenderer.send('electron-autoLaunchManage', {
-                            enable : m.autostart.value
+                            enable: m.autostart.value
                         });
 
                         self.sdk.usersettings.save();
@@ -9048,8 +9422,7 @@ Platform = function (app, listofnodes) {
                             clbk()
                         }
                     })
-                }
-                else {
+                } else {
                     if (clbk) {
                         clbk()
                     }
@@ -9057,18 +9430,18 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        keys : {
-            clbks : {
+        keys: {
+            clbks: {
 
             },
 
 
-            haskeys : function(){
+            haskeys: function () {
                 self.sdk.keys.need().then(r => {
                     return Promise.reject('empty')
                 }).catch(err => {
 
-                    if(err == 'exist'){
+                    if (err == 'exist') {
                         return Promise.resolve()
                     }
 
@@ -9077,11 +9450,11 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            error : function(text){
+            error: function (text) {
                 new dialog({
                     html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
-                    class : 'one',
+                    class: 'one',
                     success: function () {
 
                         self.app.nav.api.load({
@@ -9094,11 +9467,11 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            init : function(){
+            init: function () {
                 return Promise.resolve()
 
             },
-            need : function(){
+            need: function () {
 
                 return new Promise((resolve, reject) => {
                     self.app.user.isState(function (state) {
@@ -9113,22 +9486,20 @@ Platform = function (app, listofnodes) {
 
                             var me = self.psdk.userInfo.getmy()
 
-                            if(!me || _.isEmpty(me)){
+                            if (!me || _.isEmpty(me)) {
                                 return reject('me')
                             }
 
-                            if(me.temp || me.relay || me.fromstorage){
+                            if (me.temp || me.relay || me.fromstorage) {
                                 return reject('temprelaystorage')
                             }
 
-                            if(me.keys && me.keys.length){
+                            if (me.keys && me.keys.length) {
                                 return reject('exist')
                             }
 
                             return resolve(me)
-                        }
-                        else
-                        {
+                        } else {
                             reject('state')
                         }
 
@@ -9139,88 +9510,108 @@ Platform = function (app, listofnodes) {
 
         user: {
 
-            storage: {
+            storage: {},
+
+            isjury: function (address) {
+
+                if (!address) address = self.app.user.address.value
+
+                return self.sdk.user.type(address) == 'moderator'
+
             },
-            
-            stateAction : function(clbk, messages){
-                app.user.isState(function(state){
 
-					if(state){
-						clbk()
-					}
+            type: function (address) {
 
-					else
-					{
+                var info = self.psdk.userInfo.getShortForm(address)
 
-						if (_OpenApi){
+                if (info.dev) return 'dev'
+                if (info.real) return 'real'
 
-							var phref = 'https://'+app.options.url+'/post?openapi=true&s=' + txid
-		
-							if (app.ref){
-								phref += '&ref=' + app.ref
-							}
-		
-							window.open(phref, '_blank');
-		
-							return
-						}
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
-                        var openreg = function(){
+                if (ustate) {
+                    if (ustate.badges && ustate.badges.indexOf('moderator') > -1) return 'moderator'
+                    if (ustate.badges && ustate.badges.indexOf('shark') > -1) return 'shark'
+                }
+
+                return ''
+
+            },
+
+            stateAction: function (clbk, messages) {
+                app.user.isState(function (state) {
+
+                    if (state) {
+                        clbk()
+                    } else {
+
+                        if (_OpenApi) {
+
+                            var phref = 'https://' + app.options.url + '/post?openapi=true&s=' + txid
+
+                            if (app.ref) {
+                                phref += '&ref=' + app.ref
+                            }
+
+                            window.open(phref, '_blank');
+
+                            return
+                        }
+
+                        var openreg = function () {
                             app.nav.api.load({
-                                open : true,
-                                id : 'registration',
-                                inWnd : true,
-    
-                                essenseData : {
-    
-                                    successHref : '_this',
-                                    signInClbk : function(){
-    
-                                        if (app.platform.sdk.user.myaccauntdeleted()){
+                                open: true,
+                                id: 'registration',
+                                inWnd: true,
+
+                                essenseData: {
+
+                                    successHref: '_this',
+                                    signInClbk: function () {
+
+                                        if (app.platform.sdk.user.myaccauntdeleted()) {
                                             return
                                         }
-                                        
+
                                         if (clbk)
                                             clbk()
-                                        
+
                                     }
                                 }
                             })
                         }
 
-                        if(!messages){
+                        if (!messages) {
                             openreg()
-                        }
-                        else{
+                        } else {
                             new dialog({
-                                html: self.app.localization.e(messages.text),
-                                btn1text: self.app.localization.e(messages.success),
-                                btn2text: self.app.localization.e(messages.cancel),
-                
+                                html: self.app.localization.e(messages.text || 'stateactionDefault'),
+                                btn1text: self.app.localization.e(messages.success || 'rcontinue'),
+                                btn2text: self.app.localization.e(messages.cancel || 'dcancel'),
+
                                 class: 'zindex accepting accepting2',
-                
+
                                 success: function () {
                                     openreg()
                                 },
-                
-                                fail: function () {
-                                }
+
+                                fail: function () {}
                             })
                         }
 
-						
-					}
 
-				})
+                    }
+
+                })
             },
-           
+
             meUpdate: function (clbk) {
                 self.sdk.user.get(clbk, true)
             },
 
-            loadRelation : function(address, key, reload){
+            loadRelation: function (address, key, reload) {
 
-                if(!self.psdk[key]) return Promise.resolve([])
+                if (!self.psdk[key]) return Promise.resolve([])
 
                 return self.psdk[key].load(address, reload).then(r => {
                     return r
@@ -9234,14 +9625,13 @@ Platform = function (app, listofnodes) {
 
                     var userInfo = self.psdk.userInfo.getmyoriginal()
 
-                    if (userInfo){
+                    if (userInfo) {
 
-                        if(userInfo.subscribers_count + userInfo.subscribes_count + userInfo.blockings_count < 2000){
+                        if (userInfo.subscribers_count + userInfo.subscribes_count + userInfo.blockings_count < 2000) {
                             self.sdk.user.getfullfb(clbk, update)
-                        }
-                        else{
+                        } else {
                             userInfo.loadRelations(['subscribes', 'blocking'], self.sdk.user.loadRelation, update).then(() => {
-                                if(clbk) clbk(userInfo)
+                                if (clbk) clbk(userInfo)
                             }).catch(e => {
                                 console.error(e)
 
@@ -9249,15 +9639,14 @@ Platform = function (app, listofnodes) {
                             })
                         }
 
-                        
-                    }
-                    else{
-                        if(clbk) clbk(userInfo)
+
+                    } else {
+                        if (clbk) clbk(userInfo)
                     }
 
                     //self.sdk.user.loadRelations(['subscribes', 'blocking'], () => {
 
-                    
+
 
                 }, true, update)
 
@@ -9269,7 +9658,7 @@ Platform = function (app, listofnodes) {
 
                     var userInfo = self.psdk.userInfo.getmy()
 
-                    if(clbk) clbk(userInfo)
+                    if (clbk) clbk(userInfo)
 
                 }, false, update)
 
@@ -9283,13 +9672,15 @@ Platform = function (app, listofnodes) {
 
                 }, address).then(function (s) {
 
-                    var stats = {...s[0]}
+                    var stats = {
+                        ...s[0]
+                    }
 
-					delete stats.address
+                    delete stats.address
 
-					_.each(stats, (v, i) => {
-						stats[i] = v / 100000000
-					})
+                    _.each(stats, (v, i) => {
+                        stats[i] = v / 100000000
+                    })
 
                     return stats
                 })
@@ -9302,11 +9693,11 @@ Platform = function (app, listofnodes) {
                 self.app.platform.actions.addActionAndSendIfCan(settings).then(action => {
 
                     var alias = action.get()
-                
+
                     successCheck()
 
                     if (clbk) clbk(null, alias)
-    
+
                 }).catch(e => {
 
                     if (clbk)
@@ -9318,7 +9709,7 @@ Platform = function (app, listofnodes) {
 
             accSetMy: function (settingsObj, clbk) {
 
-                if(!settingsObj) settingsObj = {}
+                if (!settingsObj) settingsObj = {}
 
                 self.psdk.accSet.load(self.app.user.address.value).then(() => {
 
@@ -9326,25 +9717,44 @@ Platform = function (app, listofnodes) {
 
                     var ct = new Settings();
 
+                    ct.paidsubscription.set(typeof settingsObj.paidsubscription == 'undefined' ? (settings.paidsubscription || 0) : settingsObj.paidsubscription);
+
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
-                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? 
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
-                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    ct.cover.set(typeof settingsObj.cover == 'undefined' ? (settings.cover || '') : settingsObj.cover);
+
+                    return new Promise((resolve, reject) => {
+                        ct.uploadImage(self.app, function(err){
+
+                            if (err){
+    
+                                reject('imageerror')
+                                
+                                return 
+                            }
+    
+                            resolve()
+    
+                        })
+                    }).then(() => {
+                        return self.app.platform.actions.addActionAndSendIfCan(ct)
+                    })
 
                 }).then(action => {
 
                     var alias = action.get()
-                
+
                     if (clbk) clbk(null, alias)
-    
+
                 }).catch(e => {
 
                     if (clbk)
                         clbk(e)
 
                 })
-                
+
 
             },
 
@@ -9353,11 +9763,11 @@ Platform = function (app, listofnodes) {
                 var adr = self.app.user.address.value;
 
                 var adrref = null
-                
-                try{
+
+                try {
                     adrref = localStorage[adr + 'subscribeRef'];
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 if (adrref) {
@@ -9366,7 +9776,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.users.get(adrref, function () {
 
-                        var r = self.psdk.userInfo.get(adrref) 
+                        var r = self.psdk.userInfo.get(adrref)
 
                         if (r) {
 
@@ -9385,7 +9795,7 @@ Platform = function (app, listofnodes) {
                                         var h = '<div class="refaddWrapper">'
 
                                         h += '<div class="refaddHeader">'
-                                        h +=  self.app.localization.e('e13290') + ' ' + (r.name || adrref) + '?'
+                                        h += self.app.localization.e('e13290') + ' ' + (r.name || adrref) + '?'
                                         h += '</div>'
 
                                         h += '<div class="refaddTable table">'
@@ -9397,7 +9807,7 @@ Platform = function (app, listofnodes) {
 
                                             h += '<span class="letter">' + letter.toUpperCase() + '</span>';
 
-                                        } else if (!src){
+                                        } else if (!src) {
 
                                             h += '<svg width="40" height="40" data-jdenticon-value="' + adrref + '"></svg>'
 
@@ -9474,31 +9884,31 @@ Platform = function (app, listofnodes) {
                 return self.psdk.userInfo.getmy()
             },
 
-            itisme : function(_address){
+            itisme: function (_address) {
 
-                if(!self.app.user.address.value) return true
+                if (!self.app.user.address.value) return true
 
                 return self.app.user.address.value == _address
 
             },
 
-            newuser : function(address){
-                if(!address) address = self.app.user.address.value
+            newuser: function (address) {
+                if (!address) address = self.app.user.address.value
 
-                if(!address) return false
+                if (!address) return false
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
-                
-                if(!ustate) return false
+
+                if (!ustate) return false
 
                 var redgate = ustate.user_reg_date || ustate.regdate
 
-                if(!redgate) return true
+                if (!redgate) return true
 
                 var d = new Date();
-			        d.setTime(redgate * 1000);
+                d.setTime(redgate * 1000);
 
-                if(d.addHours(24) > new Date()){
+                if (d.addHours(24) > new Date()) {
                     return true
                 }
 
@@ -9507,90 +9917,108 @@ Platform = function (app, listofnodes) {
 
             },
 
-            reputationBlockedMe : function(address, count){
+            reputationBlockedMe: function (address, count) {
 
-                if(!address) address = self.app.user.address.value
+                if (!address) address = self.app.user.address.value
 
                 return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
 
-            reputationBlockedNotMe : function(address, count){
+            reputationBlockedNotMe: function (address, count) {
 
-                if(!address) address = self.app.user.address.value
+                if (!address) address = self.app.user.address.value
 
                 return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
 
-            reputationBlocked : function(address, count){
+            reputationBlocked: function (address, count) {
 
-                if(!address) return false
+                if (!address) return false
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
                 var uinfo = self.psdk.userInfo.get(address)
-                
-                if(!ustate || _.isEmpty(ustate)) return false
+
+                if (!ustate || _.isEmpty(ustate)) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? _.reduce(ustate.flags, (mem, a, b) => {
                     return mem + (b == 2 ? a * 3 : a)
                 }, 0) : 0
-                
+
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
+
+                if(ustate.likers_count > 100){
+                    isOverComplained = false
+                }
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
-                if(self.bch[address]) return true
+                if (self.bch[address]) return true
 
-                if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
+                if (self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova) {
                     return true
                 }
 
-                if(typeof count == 'undefined') count = -12
 
-                if (ustate && ustate.reputation <= count && !self.real[address]/* &&
-                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))*/
-                ){
+                if (self.currentBlock > 0) {
+                    if (uinfo.bans) {
+                        _.find(uinfo.bans, (b, index) => {
+                            if (b < self.currentBlock) {
+                                return true
+                            }
+                        })
+                    }
+                }
+
+                if (typeof count == 'undefined') count = -12
+
+                if (ustate && ustate.reputation <= count && !self.real[address]
+                    /* &&
+                                        (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))*/
+                ) {
                     return true
                 }
 
-                if(isOverComplained) {
+                if (isOverComplained) {
                     return true
                 }
 
-                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 && ustate.likers_count < totalComplainsFirstFlags ) {
+                if (moment().diff(ustate.regdate, 'days') <= 7 && totalComplains > 20 && ustate.likers_count < totalComplainsFirstFlags) {
                     return true
                 }
 
-                if(totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags ){
+                if (totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags) {
                     return true
                 }
 
-                if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                if (totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
                     return true
                 }
 
-                if(this.isNotAllowedName(uinfo)) {
+                if (this.isNotAllowedName(uinfo)) {
                     return true
                 }
             },
 
-            isNotAllowedNameStr : function(name){
-                return self.sdk.user.isNotAllowedName({name})
+            isNotAllowedNameStr: function (name) {
+                return self.sdk.user.isNotAllowedName({
+                    name
+                })
             },
 
-            maskNotAllowedName : function(name = ''){
+            maskNotAllowedName: function (name = '') {
 
-                if(!name || name.length <= 1) return name
+                if (!name || name.length <= 1) return name
 
-                if(self.sdk.user.isNotAllowedNameStr(name)){
+                if (self.sdk.user.isNotAllowedNameStr(name)) {
                     return name[0] + (name.substring(1).substring(0, name.length - 2)).replace(/[a-zA-Z]/g, '*') + name[name.length - 1]
                 }
 
                 return name
             },
 
-            isNotAllowedName : function (user = {}) {
+            isNotAllowedName: function (user = {}) {
 
                 let name, address
                 if (user.name) {
@@ -9602,24 +10030,24 @@ Platform = function (app, listofnodes) {
                     address = user.data.address
                 }
 
-                if(!name) return false
+                if (!name) return false
 
                 /*if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
                 }*/
 
-                name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+                name = name?.toLowerCase().replace(/[^a-z]/g, '') || ''
 
                 var bwf = _.find(self.bwdictionary, (bww) => {
                     return name.indexOf(bww) > -1
                 })
-                
-                if(bwf) return true
 
-                if(!address) return
+                if (bwf) return true
 
-                if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
-                    if(self.whiteList.includes(address)){
+                if (!address) return
+
+                if (name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
+                    if (self.whiteList.includes(address)) {
                         return false
                     }
                     return true
@@ -9627,9 +10055,9 @@ Platform = function (app, listofnodes) {
 
             },
 
-            hiddenComment : function(comment){
+            hiddenComment: function (comment) {
 
-                if(comment.blck_cnt_cmt) return true
+                if (comment.blck_cnt_cmt) return 'hiddenCommentLabel'
 
                 var address = comment.address
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
@@ -9637,64 +10065,79 @@ Platform = function (app, listofnodes) {
                 if (self.app.platform.sdk.user.itisme(address)) return false
 
 
-                if (ustate && ustate.reputation <= -0.5){
-                    if(comment.scoreDown >= 5){
-                        return true
+                if (ustate && ustate.reputation <= -0.5) {
+                    if (comment.scoreDown >= 5) {
+                        return 'hiddenCommentLabel'
                     }
                 }
+
+
+                if (ustate && ustate.reputation < 20){
+
+					var matches = comment.message.match(urlreg);
+
+                    if (matches && matches.length > 0){
+
+                        if(_.find(matches, (m) => {
+                            return !thislink(m)
+                        })){
+                            return 'hiddenCommentLabelLink'
+                        }
+
+                    }
+                    
+                }
+
+                return false
             },
 
-            canuseimagesincomments : function(address){
-                if(!address) address = self.app.user.address.value
+            canuseimagesincomments: function (address) {
+                if (!address) address = self.app.user.address.value
 
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
-                if (ustate && ustate.reputation > 100){
+                if (ustate && ustate.reputation > 100) {
                     return true
                 }
             },
 
-            scamcriteria : function(address){
+            scamcriteria: function (address) {
 
-                if(!address) address = self.app.user.address.value
+                if (!address) address = self.app.user.address.value
 
-                var info = self.psdk.userInfo.get(address); 
-
-                return false
-
-                if (/*info.reputation > 100 && */info.postcnt > 10) return true
+                var info = self.psdk.userInfo.get(address);
 
                 return false
+
 
             },
 
-            upvotevalueblockcriteria : function(value, address){
-                if(!address) address = self.app.user.address.value
+            upvotevalueblockcriteria: function (value, address) {
+                if (!address) address = self.app.user.address.value
 
-                var info = self.psdk.userInfo.get(address); 
-                
+                var info = self.psdk.userInfo.get(address);
+
                 if (value <= 3 && info.reputation < 100) return true
 
                 return false
 
             },
 
-            reputationBlockedRedirect : function(address){
-                if(self.sdk.user.reputationBlocked(address)){
+            reputationBlockedRedirect: function (address) {
+                if (self.sdk.user.reputationBlocked(address)) {
 
-                    if (self.sdk.user.itisme(address)){
+                    if (self.sdk.user.itisme(address)) {
                         self.app.nav.api.load({
-                            open : true,
-                            href : 'userpage',
-                            history : true,
-                            replaceState : true
+                            open: true,
+                            href: 'userpage',
+                            history: true,
+                            replaceState: true
                         })
-                    }
-                    else{
+                    } else {
                         self.app.nav.api.load({
-                            open : true,
-                            href : 'page404',
-                            replaceState : true
+                            open: true,
+                            href: 'page404',
+                            replaceState: true
                         })
                     }
 
@@ -9703,12 +10146,12 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            mystatisticnov : function(){
+            mystatisticnov: function () {
                 var novblock = 1420300
 
-                if(window.testpocketnet) novblock = 302900
+                if (window.testpocketnet) novblock = 302900
 
-                return pretry(function(){
+                return pretry(function () {
                     return self.currentBlock
                 }).then(r => {
                     return self.sdk.user.statistic(self.app.user.address.value, self.currentBlock - novblock)
@@ -9716,14 +10159,16 @@ Platform = function (app, listofnodes) {
 
             },
 
-            statistic : function(address, de){
+            statistic: function (address, de) {
 
 
                 /// TODO LATER MAYBE
 
-                return self.app.api.rpc('getuserstatistic', [[address], 0, de]).then(d => {
+                return self.app.api.rpc('getuserstatistic', [
+                    [address], 0, de
+                ]).then(d => {
 
-                    var result = _.find(d, function(p){
+                    var result = _.find(d, function (p) {
                         return p.address == address
                     })
 
@@ -9735,38 +10180,38 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            myaccauntdeleted : function(){
-                var address =  self.app.user.address.value
-                if(!address) return null
+            myaccauntdeleted: function () {
+                var address = self.app.user.address.value
+                if (!address) return null
 
                 return self.sdk.user.deletedaccount(address)
             },
 
-            deletedaccount : function(address){
+            deletedaccount: function (address) {
 
-        
+
                 var info = self.psdk.userInfo.getShortForm(address)
 
                 if (info && info.deleted) return 'deleted'
             },
 
-            deleteaccount : function(progress){
+            deleteaccount: function (progress) {
 
-                if(!progress) progress = () => {}
+                if (!progress) progress = () => {}
 
-                var prepare = function(){
+                var prepare = function () {
 
                     return new Promise((resolve, reject) => {
 
                         self.sdk.ustate.me((info) => {
 
                             var address = self.app.user.address.value
-    
-                            if(!info || _.isEmpty(info)){
+
+                            if (!info || _.isEmpty(info)) {
                                 return reject('notprepared')
                             }
-    
-                            if(!address){
+
+                            if (!address) {
                                 return reject('notprepared')
                             }
 
@@ -9780,31 +10225,27 @@ Platform = function (app, listofnodes) {
                                     var b = account.actualBalance()
                                     var total = b.actual
 
-                                    if (total){
+                                    if (total) {
                                         resolve()
-                                    }
-
-                                    else{
+                                    } else {
                                         return reject('balance')
                                     }
 
                                 }).catch(e => {
                                     return reject('balance')
-                                })    
-                                
-                            }
+                                })
 
-                            else{
+                            } else {
                                 return reject('notprepared')
                             }
-    
+
                         }, true)
-        
-    
+
+
                     })
                 }
 
-                var removePeertube = function(){
+                var removePeertube = function () {
 
                     var address = self.app.user.address.value
 
@@ -9821,7 +10262,7 @@ Platform = function (app, listofnodes) {
 
 
                             return self.app.peertubeHandler.api.user.removeAccount({
-                                id : address.address
+                                id: address.address
                             }, {
                                 host: ps
                             }).catch(e => {
@@ -9833,13 +10274,13 @@ Platform = function (app, listofnodes) {
 
                         return Promise.all(promises)
                     }).catch(e => {
-                        console.error('e' , e)
+                        console.error('e', e)
 
                         return Promise.resolve()
                     })
                 }
 
-                var removeMatrix = function(){
+                var removeMatrix = function () {
 
                     return self.matrixchat.deactivateAccount().catch(e => {
                         console.error('e', e)
@@ -9855,7 +10296,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                var removeBastyon = function(){
+                var removeBastyon = function () {
 
                     return new Promise((resolve, reject) => {
 
@@ -9871,45 +10312,33 @@ Platform = function (app, listofnodes) {
 
                             //self.app.settings.delete(a, 'last_user')
                             //self.app.settings.delete(a, 'last_ustate_2')
-    
+
                             self.deletedtest[self.app.user.address.value] = true
-    
+
                             self.matrixchat.destroy()
-    
+
                             self.sdk.ustate.me((info) => {
                                 self.sdk.user.get(() => {
-    
+
                                     setTimeout(() => {
                                         resolve()
                                     }, 1000)
-    
+
                                 }, true)
                             }, true)
-            
+
                         }).catch(e => {
-        
+
                             reject(error)
-        
+
                         })
 
                         return
 
-                        self.sdk.node.transactions.create.commonFromUnspent(
-                            obj,
-                            function(tx, error){
-                                if(!tx){	
-
-                                    return reject(error)
-                                    //self.app.platform.errorHandler(error, true)	
-                                }
-
-                                
-                            }
-                        )
 
 
 
-                        
+
                     })
                 }
 
@@ -9947,16 +10376,16 @@ Platform = function (app, listofnodes) {
 
         },
 
-        
+
         ustate: {
             storage: {},
 
             clbks: {},
 
-            loading : {},
+            loading: {},
 
-            change : function(address, state, value){
-                if(!value) value = 1
+            change: function (address, state, value) {
+                if (!value) value = 1
 
                 var us = self.psdk.userState.getmy();
 
@@ -9980,8 +10409,7 @@ Platform = function (app, listofnodes) {
                 if (!info) {
                     result = false;
                     error = 'info';
-                }
-                else {
+                } else {
 
                     if (!info.trial) {
                         if (parameter == 'postunspent' && info.post_unspent <= 0) {
@@ -9991,8 +10419,7 @@ Platform = function (app, listofnodes) {
                         if (parameter == 'scoreunspent' && info.score_unspent <= 0) {
                             result = false;
                         }
-                    }
-                    else {
+                    } else {
                         result = false;
                         error = 'trial';
                     }
@@ -10006,7 +10433,7 @@ Platform = function (app, listofnodes) {
                 return result, error
 
             },
-            
+
             meUpdate: function (clbk) {
                 self.sdk.ustate.me(clbk, true)
             },
@@ -10015,41 +10442,40 @@ Platform = function (app, listofnodes) {
 
                 self.app.user.isState(function (state) {
 
-                    if (state){
+                    if (state) {
                         self.sdk.ustate.get(app.user.address.value, (r) => {
 
-                            if (clbk) 
+                            if (clbk)
                                 clbk(r[app.user.address.value] || {})
 
                         }, update)
+                    } else {
+                        if (clbk) clbk({})
                     }
-                    else{
-                        if(clbk) clbk({})
-                    }
-                    
+
                 })
 
             },
 
-            
+
             get: function (addresses, clbk, update) {
 
                 return self.psdk.userState.load(addresses, update).then(r => {
-                    
+
                     if (clbk) clbk(r)
                 }).catch((e) => {
                     if (clbk) clbk({})
                 })
-             
+
             },
 
-            haslowlimits : function(state){
+            haslowlimits: function (state) {
 
                 state || (state = {})
 
                 var m = self.sdk.ustate.metrics()
 
-                return _.filter(m, function(metrica){
+                return _.filter(m, function (metrica) {
 
                     var l = Number(state[metrica.key + "_unspent"])
 
@@ -10060,28 +10486,28 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            haszerolimits : function(state){
+            haszerolimits: function (state) {
 
                 state || (state = {})
 
                 var m = self.sdk.ustate.metrics()
 
-                return _.filter(m, function(metrica){
+                return _.filter(m, function (metrica) {
                     return Number(state[metrica.key + "_unspent"]) === 0
                 })
             },
 
-            canincrease : function(p, clbk){
+            canincrease: function (p, clbk) {
 
-                if(!p) p = {}
+                if (!p) p = {}
 
-                if (p.template == 'trial'){
+                if (p.template == 'trial') {
                     p.balance = 1000000000
                     p.reputation = 100
                     p.trial = true
                 }
 
-                if (p.template == 'video'){
+                if (p.template == 'video') {
                     p.balance = 500000000
                     p.reputation = 100
                     p.trial = true
@@ -10089,12 +10515,12 @@ Platform = function (app, listofnodes) {
 
                 var result = {}
 
-                self.sdk.ustate.me(function(info){
-                    if(p.balance && (info.balance || 0) < p.balance) result.balance = true
+                self.sdk.ustate.me(function (info) {
+                    if (p.balance && (info.balance || 0) < p.balance) result.balance = true
                     else
-                    if(p.reputation && (info.reputation || 0) < p.reputation) result.reputation = true
+                    if (p.reputation && (info.reputation || 0) < p.reputation) result.reputation = true
                     else
-                    if(p.trial && !info.trial) result.trial = true
+                    if (p.trial && !info.trial) result.trial = true
 
                     if (result.balance || result.reputation) {
                         result.canuseapplacation = (!window.cordova && typeof _Electron == 'undefined')
@@ -10104,93 +10530,93 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            metrics : function(){
+            metrics: function () {
                 return {
 
-                    post : {
-                        key : 'post',
-                        vis : 'scale',
-                        name : self.app.localization.e('spc'),
-                        bad : function(remains, limit){
-                            if(remains <= 3) return true
+                    post: {
+                        key: 'post',
+                        vis: 'scale',
+                        name: self.app.localization.e('spc'),
+                        bad: function (remains, limit) {
+                            if (remains <= 3) return true
                         }
                     },
 
-                    video : {
-                        key : 'video',
-                        vis : 'scale',
-                        name : self.app.localization.e('spv'),
-                        bad : function(remains, limit){
+                    video: {
+                        key: 'video',
+                        vis: 'scale',
+                        name: self.app.localization.e('spv'),
+                        bad: function (remains, limit) {
                             if (limit <= 3) return false
-							
-							if (remains <= 1) {
-								return true
-							}
+
+                            if (remains <= 1) {
+                                return true
+                            }
                         }
                     },
 
-                    audio : {
-                        key : 'audio',
-                        vis : 'scale',
-                        name : self.app.localization.e('spa'),
-                        bad : function(remains, limit){
+                    audio: {
+                        key: 'audio',
+                        vis: 'scale',
+                        name: self.app.localization.e('spa'),
+                        bad: function (remains, limit) {
                             if (limit <= 3) return false
-							
-							if (remains <= 1) {
-								return true
-							}
+
+                            if (remains <= 1) {
+                                return true
+                            }
                         }
                     },
 
-                    score : {
-                        key : 'score',
-                        vis : 'scale',
-                        name : self.app.localization.e('ssc'),
-                        bad : function(remains, limit){
-                            if(remains <= 7) return true
+                    score: {
+                        key: 'score',
+                        vis: 'scale',
+                        name: self.app.localization.e('ssc'),
+                        bad: function (remains, limit) {
+                            if (remains <= 7) return true
                         }
                     },
 
-                    comment : {
-                        key : 'comment',
-                        vis : 'scale',
-                        name : self.app.localization.e('ccc'),
-                        bad : function(remains, limit){
-                            if(remains <= 7) return true
+                    comment: {
+                        key: 'comment',
+                        vis: 'scale',
+                        name: self.app.localization.e('ccc'),
+                        bad: function (remains, limit) {
+                            if (remains <= 7) return true
                         }
                     },
 
-                    comment_score : {
-                        key : 'comment_score',
-                        vis : 'scale',
-                        name : self.app.localization.e('crc'),
-                        bad : function(v, limit){
-                            if(v <= 10) return true
+                    comment_score: {
+                        key: 'comment_score',
+                        vis: 'scale',
+                        name: self.app.localization.e('crc'),
+                        bad: function (v, limit) {
+                            if (v <= 10) return true
                         }
                     },
 
-                    complain : {
-                        key : 'complain',
-                        vis : 'scale',
-                        name : self.app.localization.e('ccpl'),
-                        bad : function(remains, limit){
-                            if(remains <= 3) return true
+                    complain: {
+                        key: 'complain',
+                        vis: 'scale',
+                        name: self.app.localization.e('ccpl'),
+                        bad: function (remains, limit) {
+                            if (remains <= 3) return true
                         }
                     },
 
-                    article : {
-						key : 'article',
-						vis : 'scale',
-						name : self.app.localization.e('artc'),
-						bad : function(remains, limit){
+                    article: {
+                        key: 'article',
+                        vis: 'scale',
+                        name: self.app.localization.e('artc'),
+                        bad: function (remains, limit) {
 
                             if (limit <= 3) return false
-							
-							if (remains <= 1) {
-								return true
-							}
-						},
-					}
+
+                            if (remains <= 1) {
+                                return true
+                            }
+                        },
+                    }
                 }
             }
 
@@ -10204,20 +10630,20 @@ Platform = function (app, listofnodes) {
             clbks: {
                 added: {},
                 seen: {},
-                inited : {}
+                inited: {}
             },
-            clearlocalstorage : function(){
+            clearlocalstorage: function () {
 
-                try{
+                try {
                     var values = {},
-                    keys = Object.keys(localStorage),
-                    i = keys.length;
+                        keys = Object.keys(localStorage),
+                        i = keys.length;
 
-                    while ( i-- ) {
+                    while (i--) {
 
-                        if(keys[i] && keys[i].indexOf('notificationsv') > -1){
+                        if (keys[i] && keys[i].indexOf('notificationsv') > -1) {
 
-                            if(keys[i].indexOf('notificationsv15') == -1){
+                            if (keys[i].indexOf('notificationsv15') == -1) {
                                 localStorage.removeItem(keys[i]);
                             }
 
@@ -10225,21 +10651,21 @@ Platform = function (app, listofnodes) {
                         }
 
                     }
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
-                
+
 
             },
             load: function () {
 
                 var old = {}
 
-                try { 
-                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") 
-                } catch (e){
-                    
+                try {
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}")
+                } catch (e) {
+
                 }
 
                 this.import(old)
@@ -10265,11 +10691,11 @@ Platform = function (app, listofnodes) {
 
                     e.notifications = firstEls(e.notifications, 150)
 
-                    if (self.sdk.address.pnet()){
-                        try{
+                    if (self.sdk.address.pnet()) {
+                        try {
                             localStorage[self.sdk.address.pnet().address + 'notificationsv15'] = JSON.stringify(e)
-                        }catch(e){
-                            
+                        } catch (e) {
+
                         }
                     }
                 }
@@ -10281,7 +10707,7 @@ Platform = function (app, listofnodes) {
                 var n = this
 
                 _.each(n.storage.notifications, function (notification) {
-                    if(!notification.seen)
+                    if (!notification.seen)
                         notification.seen = self.app.platform.currentTime()
                 })
 
@@ -10322,21 +10748,20 @@ Platform = function (app, listofnodes) {
                         if (attr.exported) {
                             var alias = new kits.alias[attr.type]()
 
-                            if (attr.type == 'userInfo'){
+                            if (attr.type == 'userInfo') {
                                 attr.exported.blocking = []
                                 attr.exported.subscribers = []
                                 attr.exported.subscribes = []
 
-                                attr.exported.blocking_loaded = false 
-                                attr.exported.subscribers_loaded = false 
-                                attr.exported.subscribes_loaded = false 
+                                attr.exported.blocking_loaded = false
+                                attr.exported.subscribers_loaded = false
+                                attr.exported.subscribes_loaded = false
                             }
 
                             alias._import(attr.exported)
 
                             imp[i] = alias
-                        }
-                        else {
+                        } else {
                             imp[i] = attr
                         }
 
@@ -10370,26 +10795,25 @@ Platform = function (app, listofnodes) {
 
                             var exported = attr.export()
 
-                            if (attr.type == 'userInfo' && exported){
-                                exported.blocking = [] 
-                                exported.blocking_loaded = false 
+                            if (attr.type == 'userInfo' && exported) {
+                                exported.blocking = []
+                                exported.blocking_loaded = false
 
-                                exported.subscribers = [] 
-                                exported.subscribers_loaded = false 
+                                exported.subscribers = []
+                                exported.subscribers_loaded = false
 
-                                exported.subscribes = [] 
-                                exported.subscribes_loaded = false 
+                                exported.subscribes = []
+                                exported.subscribes_loaded = false
 
                                 exported.recomendedSubscribes = []
-                               
+
                             }
 
                             l[i] = {
                                 exported: exported,
                                 type: attr.type
                             }
-                        }
-                        else {
+                        } else {
                             l[i] = attr
                         }
 
@@ -10407,7 +10831,7 @@ Platform = function (app, listofnodes) {
 
             init: function () {
 
-                if(_OpenApi){
+                if (_OpenApi) {
                     return Promise.reject('openapi')
                 }
 
@@ -10424,7 +10848,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            initcl : function(clbk){
+            initcl: function (clbk) {
                 self.sdk.notifications.init().then(clbk).catch(clbk)
             },
 
@@ -10459,7 +10883,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-          
+
 
             find: function (txid) {
                 return _.find(this.storage.notifications, function (n) {
@@ -10468,28 +10892,26 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        missed : {
-            get : function(block){
+        missed: {
+            get: function (block) {
 
-                var dummy = function(){
+                var dummy = function () {
                     return {
-                        block : {
-                            block : self.currentBlock,
-                            contentsLang : {},
-                            contentsSubscribes : {},
-                            msg : 'newblocks'
+                        block: {
+                            block: self.currentBlock,
+                            contentsLang: {},
+                            contentsSubscribes: {},
+                            msg: 'newblocks'
                         }
                     }
                 }
 
-                if(!self.sdk.address.pnet()) return Promise.reject('address')
-                if(!self.currentBlock) return Promise.reject('currentblock')
-                if(!block) return Promise.reject('block')
+                if (!self.sdk.address.pnet()) return Promise.reject('address')
+                if (!self.currentBlock) return Promise.reject('currentblock')
+                if (!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
-
-                    console.log("DATA", d)
 
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
@@ -10497,15 +10919,15 @@ Platform = function (app, listofnodes) {
 
                     var notifications = d.slice(1) || []
 
-                        notifications = _.sortBy(notifications, function (n) {
-                            return -n.nblock
-                        })
+                    notifications = _.sortBy(notifications, function (n) {
+                        return -n.nblock
+                    })
 
                     d[0].msg = 'newblocks'
 
                     return Promise.resolve({
-                        block : d[0],
-                        notifications : notifications
+                        block: d[0],
+                        notifications: notifications
                     })
 
                 })
@@ -10514,7 +10936,7 @@ Platform = function (app, listofnodes) {
 
         contents: {
             storage: {},
-            loading : {},
+            loading: {},
 
             groups: [{
                 key: 'art',
@@ -10589,10 +11011,10 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                if (ld[address]){
-                    retry(function(){
+                if (ld[address]) {
+                    retry(function () {
                         return !ld[address]
-                    }, function(){
+                    }, function () {
                         gt(address, clbk)
                     })
 
@@ -10628,8 +11050,7 @@ Platform = function (app, listofnodes) {
                             if (c.scoreCnt) c.score = Number(c.scoreSum) / Number(c.scoreCnt)
 
                             list.push(c)
-                        }
-                        catch (e) {
+                        } catch (e) {
 
                         }
 
@@ -10662,20 +11083,248 @@ Platform = function (app, listofnodes) {
             storage: {},
         },
 
+        paidsubscription : {
+            _clbks : {
+                setcondition : {},
+                updatepaiddata : {}
+                //TODO
+            },
+            checking : {},
+            checkvisibilityCache : function(address){
+                if(!paidsubscriptionCache[self.app.user.address.value]) paidsubscriptionCache[self.app.user.address.value] = {}
+
+                return paidsubscriptionCache[self.app.user.address.value][address]
+            },
+            checkvisibilityStrong : function(address, update, lightupdate){
+
+                if (self.sdk.paidsubscription.checking[address]) return self.sdk.paidsubscription.checking[address]
+                
+                var cache = this.checkvisibilityCache(address)
+                var promise = null
+
+                if (cache && !update && !lightupdate) return promise = () => {return Promise.resolve()}
+                else{
+                    promise = () => {
+                        var data = {}
+                        var promises = [
+                            self.sdk.node.transactions.getfromtotransactions(self.app.user.address.value, address, update).then((r) => {
+
+                               
+        
+                                data.getfromtotransactions = {
+                                    result : r
+                                }
+                                return Promise.resolve()
+        
+                            }).catch(e => {
+                                data.getfromtotransactions = {
+                                    error : e
+                                }
+        
+                                return Promise.resolve()
+                            }),
+        
+                            self.sdk.paidsubscription.getcondition(address).then((v) => {
+
+                                if (v == 0){
+                                    return 'zerovalue'
+                                }
+
+                                data.getcondition = {
+                                    result : v
+                                }
+                            }).catch(e => {
+                                data.getcondition = {
+                                    error : e
+                                }
+        
+                                return Promise.resolve()
+                            })
+                        ]
+        
+                        if(!paidsubscriptionCache[self.app.user.address.value]) paidsubscriptionCache[self.app.user.address.value] = {}
+        
+                        return Promise.all(promises).then(() => {
+
+                            if(data.getcondition.error || data.getfromtotransactions.error){
+                                return Promise.reject(data.getcondition.error || data.getfromtotransactions.error)
+                            }
+
+                            if(!self.currentBlock){
+                                return Promise.reject('currentBlock is empty')
+                            }
+
+                            var paidC = {
+                                '1m' : {c : 1, m : 1, tx : []}, '6m' : {c : 5.5, m : 6, tx : []}, '1y' : {c : 10, m : 12, tx : []}
+                            }
+
+                            var d = 86400
+                            var dc = 365
+
+                            _.each(paidC, (v, k) => {
+                                v.block = self.currentBlock - v.m * 43200
+                                v.time = (Date.now() / 1000) - v.m * 2635200
+
+                                v.value = (data.getcondition.result || 0) * v.c
+                                v.balance = -v.value
+                            })
+
+                            var balance = {}
+                            var until = 0
+
+                            _.each(data.getfromtotransactions.result, (trx) => {
+                                _.each(paidC, (v, k) => {
+                                    if (trx.time > v.time){
+                                        v.balance += trx.amount / smulti
+                                        v.tx.push(trx)
+                                    }
+                                })
+                            })
+
+
+                            var resultStatus = 'paid'
+
+                            if(_.find(paidC, (v) => {
+                                return v.balance >= 0
+                            })) {
+                                resultStatus = 'paid_success'
+                            }
+
+                            if (resultStatus == 'paid_success'){
+
+                                for(var i = 0; i < dc; i++){
+
+                                    var pb = {}
+
+                                    _.each(paidC, (v, k) => {
+                                        pb[k] = {
+                                            block : v.block,
+                                            time : v.time,
+                                            value : v.value,
+                                            balance : -v.value
+                                        }
+                                    })
+
+                                    _.each(data.getfromtotransactions.result, (trx) => {
+                                        _.each(pb, (v, k) => {
+                                            if (trx.time > v.time + d * i){
+                                                v.balance += trx.amount / smulti
+                                            }
+                                        })
+                                    })
+
+                                    var resultStatus_l = 'paid'
+
+                                    if(_.find(pb, (v) => {
+                                        return v.balance > 0
+                                    })) {
+                                        resultStatus_l = 'paid_success'
+                                    }
+
+                                    if(resultStatus_l == 'paid'){
+
+                                        until = new Date(Date.now() + i * d * 1000)
+
+                                        break
+                                    }
+
+                                }
+                            }
+
+                            _.each(paidC, (v, k) => {
+                                balance[k] = v.balance || 0
+                            })
+                            
+                         
+                            paidsubscriptionCache[self.app.user.address.value][address] = {
+                                result : resultStatus,
+                                balance : balance,
+                                data : paidC,
+                                until,
+                                value : data.getcondition.result 
+                            }
+        
+                        }).catch(e => {
+                            paidsubscriptionCache[self.app.user.address.value][address] = {
+                                error : e
+                            }
+        
+                            return Promise.resolve()
+                        })
+                    }
+                }
+
+                self.sdk.paidsubscription.checking[address] = promise().then(() => {
+
+                    _.each(self.sdk.paidsubscription._clbks.updatepaiddata, (f) => {
+                        f(address, paidsubscriptionCache[self.app.user.address.value][address])
+                    })
+
+                    return paidsubscriptionCache[self.app.user.address.value][address]
+                }).finally(() => {
+                    delete self.sdk.paidsubscription.checking[address]
+                })
+
+                return self.sdk.paidsubscription.checking[address]
+            },
+            
+            getcondition : function(address){
+                return self.psdk.accSet.load(address).then(s => {
+
+                    var settings = self.psdk.accSet.get(address) || {}
+
+                    return Promise.resolve(Number(superXSS(settings.paidsubscription || 0)))
+                })
+            },
+
+            setcondition : function(paidsubscription, clbk){
+                self.app.platform.sdk.user.accSetMy({
+                    paidsubscription: paidsubscription || 0
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        _.each(self.sdk.paidsubscription._clbks.setcondition, (f) => {
+                            f(paidsubscription)
+                        })
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            }
+        },
+
         users: {
             loading: {},
             storage: {},
 
-            nameaddressstorage : {},
+            nameaddressstorage: {},
+            getCover : function (address) {
+                return self.psdk.accSet.load(address).then(s => {
 
-            setMonetization : function(monetization, clbk){
-                self.app.platform.sdk.user.accSetMy({monetization : monetization || false}, function(err, alias){
+                    var settings = self.psdk.accSet.get(address) || {}
 
-                    console.log("ERROR", err)
+                    return Promise.resolve(superXSS(settings.cover || ''))
+                })
+            },
+            setCover : function (cover, clbk) {
 
-                    if(!err){
+                self.app.platform.sdk.user.accSetMy({
+                    cover: cover || ''
+                }, function (err, alias) {
 
-                        if (clbk){
+                    if (!err) {
+
+                        if (clbk) {
                             clbk(null, alias)
                         }
 
@@ -10689,20 +11338,43 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            checkMonetizationOpportunity : function(address){
+            setMonetization: function (monetization, clbk) {
+                self.app.platform.sdk.user.accSetMy({
+                    monetization: monetization || false
+                }, function (err, alias) {
 
-                if(!address) return false
-                var userinfo = self.psdk.userInfo.get(address)
+                    console.log("ERROR", err)
 
-                if(!userinfo) return false
+                    if (!err) {
 
-				return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
             },
 
-            checkMonetization : function(address){
+            checkMonetizationOpportunity: function (address) {
+
+                if (!address) return false
+                var userinfo = self.psdk.userInfo.get(address)
+
+                if (!userinfo) return false
+
+                return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
+            },
+
+            checkMonetization: function (address) {
 
 
-                if (self.sdk.users.checkMonetizationOpportunity(address)){
+                if (self.sdk.users.checkMonetizationOpportunity(address)) {
 
                     return self.psdk.accSet.load(address).then(s => {
 
@@ -10712,34 +11384,34 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                }
-                else{
+                } else {
                     return Promise.resolve(false)
                 }
             },
 
             getone: function (address, clbk, light, reload) {
 
-                self.sdk.users.get([address], function(data = {}, error){
-                    if(!data) data = {}
 
-                    if(clbk) clbk(data[address] || null, error)
+                self.sdk.users.get([address], function (data = {}, error) {
+                    if (!data) data = {}
+
+                    if (clbk) clbk(data[address] || null, error)
                 }, light, reload)
             },
-            
+
             get: function (addresses, clbk, light, reload) {
                 return self.psdk.userInfo.load(addresses, light, reload).then(r => {
 
 
-                    if(clbk) clbk(r)
+                    if (clbk) clbk(r)
 
                 }).catch(e => {
                     console.error(e)
 
-                    if(clbk) clbk(null, e)
+                    if (clbk) clbk(null, e)
                 })
-            
-                
+
+
 
             },
 
@@ -10757,12 +11429,11 @@ Platform = function (app, listofnodes) {
                         if (!r) {
                             if (clbk)
                                 clbk(null)
-                        }
-                        else {
+                        } else {
 
 
                             self.app.api.fetchauth('free/registration', {
-                                
+
                                 address: account.address,
                                 captcha: self.sdk.captcha.done
 
@@ -10780,8 +11451,7 @@ Platform = function (app, listofnodes) {
                             })
                         }
                     })
-                }
-                else {
+                } else {
                     if (clbk)
                         clbk(null)
                 }
@@ -10799,9 +11469,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(false)
-                    }
-
-                    else {
+                    } else {
                         self.sdk.address.registration(address, function (r) {
 
                             if (!r) {
@@ -10809,8 +11477,7 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(true)
 
-                            }
-                            else {
+                            } else {
                                 if (clbk)
                                     clbk(false)
                             }
@@ -10820,7 +11487,7 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            requestUnspents : function(){
+            requestUnspents: function () {
 
             },
 
@@ -10828,8 +11495,8 @@ Platform = function (app, listofnodes) {
 
             addressByName: function (name, clbk) {
 
-                if(!name){
-                    if (clbk){
+                if (!name) {
+                    if (clbk) {
                         clbk(null)
                     }
 
@@ -10841,17 +11508,14 @@ Platform = function (app, listofnodes) {
 
                 try {
                     bitcoin.address.fromBase58Check(name)
-                }
-
-                catch (e) {
+                } catch (e) {
                     valid = false;
                 }
 
                 if (valid) {
                     if (clbk)
                         clbk(name)
-                }
-                else {
+                } else {
 
                     name = (name || '').toLowerCase()
 
@@ -10864,15 +11528,15 @@ Platform = function (app, listofnodes) {
                     if (me && me.name.toLowerCase() == name.toLowerCase()) {
                         if (clbk) clbk(me.address)
 
-                        return 
+                        return
 
                     }
 
                     if (lf) {
                         if (clbk) clbk(lf.address)
                     }
-              
-                    if(self.sdk.users.nameaddressstorage[name]){
+
+                    if (self.sdk.users.nameaddressstorage[name]) {
                         if (clbk)
                             clbk(self.sdk.users.nameaddressstorage[name])
 
@@ -10899,9 +11563,9 @@ Platform = function (app, listofnodes) {
                 var map = self.app.map;
 
                 if (map[name] || _.find(map, function (m, i) {
-                    if (m.uri == name) return true;
-                    if (m.href == name) return true;
-                })) {
+                        if (m.uri == name) return true;
+                        if (m.href == name) return true;
+                    })) {
 
 
 
@@ -10932,18 +11596,17 @@ Platform = function (app, listofnodes) {
 
                 if (!name) {
                     return str
-                }
-                else {
+                } else {
                     var cname = h(name, p)
                     // return cname
                     var counter = 0
-                    return str.replace(sreg, (match)=>{
-                        if(match){
+                    return str.replace(sreg, (match) => {
+                        if (match) {
                             counter++
                         }
-                        if(counter === 1 ){
+                        if (counter === 1) {
                             return cname
-                        }else{
+                        } else {
                             return ' '
                         }
                     })
@@ -10951,7 +11614,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getTopAccounts : function(p, rpc, clbk){
+            getTopAccounts: function (p, rpc, clbk) {
 
                 var method = 'gettopaccounts';
 
@@ -10959,11 +11622,11 @@ Platform = function (app, listofnodes) {
                 p.tagsfilter = self.app.platform.sdk.categories.gettags();
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
-                p.tagsfilter = _.map(p.tagsfilter, function(t){
+                p.tagsfilter = _.map(p.tagsfilter, function (t) {
                     return encodeURIComponent(t.toLowerCase())
                 })
 
-                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                p.tagsexcluded = _.map(p.tagsexcluded, function (t) {
                     return encodeURIComponent(t.toLowerCase())
                 })
 
@@ -10978,12 +11641,12 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getRecommendedAccounts : function(clbk){
+            getRecommendedAccounts: function (clbk) {
 
                 var rpc = {
-                    cache : true,
-                    locally : true,
-                    fastvideo : true
+                    cache: true,
+                    locally: true,
+                    fastvideo: true
                 }
 
                 var address = self.sdk.activity.getbestaddress();
@@ -10997,7 +11660,7 @@ Platform = function (app, listofnodes) {
                 p.lang = self.app.localization.key;
                 p.count = 15;
 
-                if (!address){
+                if (!address) {
 
                     self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
                     return;
@@ -11008,9 +11671,9 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.node.shares;
 
-                s.getex(parameters, function(data, error){
+                s.getex(parameters, function (data, error) {
 
-                    if (!(data && data.length) || error){
+                    if (!(data && data.length) || error) {
 
                         self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
 
@@ -11027,27 +11690,27 @@ Platform = function (app, listofnodes) {
             },
 
 
-            commonuserpoint : function(address, me){
+            commonuserpoint: function (address, me) {
                 var point = 1;
 
 
-                if (me && me.relation(address, 'subscribes')){
+                if (me && me.relation(address, 'subscribes')) {
                     point += 100
                 }
 
-                if (me && me.relation(address, 'subscribers')){
+                if (me && me.relation(address, 'subscribers')) {
                     point += 20
                 }
 
-                if(self.psdk.userInfo.get(address)) point += 40
+                if (self.psdk.userInfo.get(address)) point += 40
 
-             
+
 
                 var activities = self.app.platform.sdk.activity.has('users', address)
 
-				if (activities.point){
-					point = point * activities.point / 10
-				}
+                if (activities.point) {
+                    point = point * activities.point / 10
+                }
 
 
 
@@ -11057,33 +11720,34 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        posts: {
-        },
+        posts: {},
 
-        newmaterials : {
-            storage : {},
+        newmaterials: {
+            storage: {},
 
-            clbks : {
-                update : {}
+            clbks: {
+                update: {}
             },
 
-            update : function(data){
+            update: function (data) {
 
                 var counts = {
-                    sub : data['sharesSubscr'] || 0,
-                    video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
-                    article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
-                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
+                    sub: data['sharesSubscr'] || 0,
+                    video: deep(data, 'contentsLang.video.' + self.app.localization.key) || 0,
+                    article: deep(data, 'contentsLang.article.' + self.app.localization.key) || 0,
+                    common: deep(data, 'sharesLang.' + self.app.localization.key) || ((deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key) || 0)),
 
-                    index_sub : data['sharesSubscr'] || 0
+                    index_sub: data['sharesSubscr'] || 0
                 }
 
-                counts.index = counts.common
+                counts.index = counts.common || 0
 
-                _.each(counts, function(c, i){
+                _.each(counts, function (c, i) {
                     // c = rand(1,3)
                     self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
                 })
+
+                if(typeof data.jury != 'undefined') self.sdk.newmaterials.storage['jury'] = data.jury || 0
 
                 _.each(self.sdk.newmaterials.clbks.update, function(u){
                     u(self.sdk.newmaterials.storage)
@@ -11092,20 +11756,20 @@ Platform = function (app, listofnodes) {
                 self.sdk.sharesObserver.newmaterials(counts)
             },
 
-            clear : function(){
+            clear: function () {
 
                 self.sdk.newmaterials.storage = {}
 
-                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                _.each(self.sdk.newmaterials.clbks.update, function (u) {
                     u(self.sdk.newmaterials.storage)
                 })
             },
 
-            see : function(key){
+            see: function (key) {
 
                 self.sdk.newmaterials.storage[key] = 0
 
-                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                _.each(self.sdk.newmaterials.clbks.update, function (u) {
                     u(self.sdk.newmaterials.storage)
                 })
             }
@@ -11117,30 +11781,29 @@ Platform = function (app, listofnodes) {
             done: null,
             load: function (clbk) {
 
-                try{
+                try {
                     self.sdk.captcha.done = localStorage['capcha'] || null;
 
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
-                
+
                 if (clbk) clbk()
             },
             save: function () {
 
-                try{
+                try {
                     if (self.sdk.captcha.done) {
                         localStorage['capcha'] = self.sdk.captcha.done
-                    }
-                    else {
+                    } else {
                         delete localStorage['capcha']
                     }
 
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
-                
+
 
             },
             get: function (clbk, refresh, proxyoptions) {
@@ -11169,14 +11832,12 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(d)
 
-                            }
-                            else {
+                            } else {
                                 if (clbk)
-                                clbk(null, err)
+                                    clbk(null, err)
                             }
                         }, proxyoptions)
-                    }
-                    else {
+                    } else {
                         if (clbk)
                             clbk(d)
                     }
@@ -11190,48 +11851,46 @@ Platform = function (app, listofnodes) {
             },
             getHex: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
-        
+
                 self.app.api.fetchauth('captchaHex', {
                     captcha: this.done || this.current || null,
                     language: self.app.localization.key
                 }, proxyoptions).then(d => {
-            
+
                     self.sdk.captcha.current = d.id
-            
+
                     if (d.id != self.sdk.captcha.done) {
                         self.sdk.captcha.done = null
                     }
-            
+
                     self.sdk.captcha.save()
-            
+
                     if (d.result && !d.done) {
                         self.sdk.captcha.make(d.result, d.angles, function (err) {
-                    
+
                             if (!err) {
-                        
+
                                 d.done = true
-                        
+
                                 if (clbk)
                                     clbk(d)
-                        
-                            }
-                            else {
+
+                            } else {
                                 if (clbk)
                                     clbk(null, err)
                             }
                         }, proxyoptions)
-                    }
-                    else {
+                    } else {
                         if (clbk)
                             clbk(d)
                     }
-            
+
                 }).catch(e => {
                     if (clbk)
                         clbk(null, e)
                 })
-        
-        
+
+
             },
             make: function (text, angles, clbk, proxyoptions) {
 
@@ -11307,11 +11966,11 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                
-                try{
+
+                try {
                     self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 if (clbk)
@@ -11319,11 +11978,11 @@ Platform = function (app, listofnodes) {
             },
 
             save: function (clbk) {
-               
-                try{
+
+                try {
                     localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
                 if (clbk)
@@ -11379,35 +12038,33 @@ Platform = function (app, listofnodes) {
             address: function (cur, clbk) {
 
                 var me = self.app.user.address.value || '';
-                
-                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function(d){
 
-					var text = d.text();
+                fetch(this.api + '/PocShifter/donations/' + cur + '/' + me).then(function (d) {
 
-					return text;
-				
-                }).then(function(address){
+                    var text = d.text();
 
-					if (address){
+                    return text;
 
-                        if (address.indexOf('is not available at the moment') > -1){
+                }).then(function (address) {
+
+                    if (address) {
+
+                        if (address.indexOf('is not available at the moment') > -1) {
 
                             clbk(null, self.app.localization.e('addrNotAvailable', cur));
 
-                        } else{
+                        } else {
 
                             clbk(address);
- 
+
                         }
-					}
-					else
-					{
-						clbk(null, self.app.localization.e('e13094'))
-					}
+                    } else {
+                        clbk(null, self.app.localization.e('e13094'))
+                    }
 
-				}).catch(function(err){
+                }).catch(function (err) {
 
-					clbk(null, err);
+                    clbk(null, err);
 
 
                 })
@@ -11452,8 +12109,7 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(null, d.Deal)
-                        }
-                        else {
+                        } else {
                             if (clbk)
                                 clbk('empty', null)
                         }
@@ -11469,60 +12125,59 @@ Platform = function (app, listofnodes) {
             },
             support: function (payload, clbk) {
 
-                var serialize = function(obj) {
+                var serialize = function (obj) {
                     var str = [];
                     for (var p in obj)
-                      if (obj.hasOwnProperty(p)) {
-                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                      }
+                        if (obj.hasOwnProperty(p)) {
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        }
                     return str.join("&");
                 }
 
                 var query = serialize(payload);
-                
+
                 fetch(this.api + '/PocShifter/SupportTicket?' + query, {
                     method: 'POST',
                     headers: {
-                      'Content-Type': 'application/json;charset=utf-8'
+                        'Content-Type': 'application/json;charset=utf-8'
                     }
-                  }).then(function(r){
+                }).then(function (r) {
 
                     return r.text();
-                    
-                  }).then(function(r){
+
+                }).then(function (r) {
 
                     clbk(r);
 
-                  }).catch(function(err){
+                }).catch(function (err) {
 
                     clbk(null, err);
 
-                  })
+                })
 
             },
             status: function (currency, address, clbk) {
 
-                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function(d){
+                fetch(this.api + `/PocShifter/GetPOCDealStatus?currency=${currency}&address=${address}`).then(function (d) {
 
-					return d.json();
-				
-                }).then(function(d){
-                    
+                    return d.json();
+
+                }).then(function (d) {
+
                     if (d[0]) {
                         if (clbk)
                             clbk(null, d[0])
-                    }
-                    else {
+                    } else {
                         if (clbk)
                             clbk('empty', null)
                     }
-                }).catch(function(err){
+                }).catch(function (err) {
 
                     if (clbk) {
                         clbk('server')
-                    }    
+                    }
                 })
-                
+
 
             },
 
@@ -11573,10 +12228,9 @@ Platform = function (app, listofnodes) {
                         var sline = el.find('.spendLine .line');;
 
                         if (amount == 0) {
-                            if(!sline.hasClass('bad'))
+                            if (!sline.hasClass('bad'))
                                 sline.addClass('bad')
-                        }
-                        else {
+                        } else {
                             if (sline.hasClass('bad'))
                                 sline.removeClass('bad')
                         }
@@ -11584,15 +12238,14 @@ Platform = function (app, listofnodes) {
                         sline.css('width', (100 * amount / total) + "%")
 
 
-                    }
-                    else {
+                    } else {
                         el.find('.spendLine').remove()
                     }
 
                     if (clbk)
                         clbk()
                 })
-                    
+
             },
 
         },
@@ -11610,56 +12263,59 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.storage.addressesobj = [];
                 }
 
-                const anum = 10
-                
-                try{
-                    anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
-                }catch(e){
-                    
-                }
-                
-                
+                var anum = 10
+                var added = 0
 
-                const walletsItem = self.sdk.address.pnet().address + 'wallets';
+                try {
+                    anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+                } catch (e) {}
+
+                var walletsItem = self.sdk.address.pnet().address + 'wallets2';
+
+                var addressesList = [];
 
                 /**
                  * Here we take cached wallet ID's
                  * or generating them dynamically if
                  * not cached.
                  */
-                if (walletsItem in localStorage) {
-                    // console.time('LOADING CACHED WALLETS');
 
-                    try{
-                        const wallets = JSON.parse(localStorage[walletsItem]);
+                if (walletsItem in localStorage) {
+
+                    try {
+                        var wallets = JSON.parse(localStorage[walletsItem]);
 
                         wallets.forEach((walletAddress, walletNum) => {
+
+                            if (walletNum > anum - 1) return
+
                             self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+
+                            addressesList.push(walletAddress);
+
+                            added++
                         });
-                    }catch(e){
-                        
+
+                    } catch (e) {
+
                     }
 
-                    
-                    // console.timeEnd('LOADING CACHED WALLETS');
-                } else {
-                    // console.time('GENERATING WALLETS');
-                    const addressesList = [];
 
-                    for (let i = 0; i < anum; i++) {
-                        const address = self.sdk.addresses.addWalletAddress(i);
+                }
 
-                        addressesList.push(address);
-                    }
 
-                    try{
-                        localStorage[walletsItem] = JSON.stringify(addressesList);
-                    }catch(e){
-                        
-                    }
 
-                    
-                    // console.timeEnd('GENERATING WALLETS');
+                for (let i = added; i < anum; i++) {
+                    var address = self.sdk.addresses.addWalletAddress(i);
+
+                    addressesList.push(address);
+
+                }
+
+                try {
+                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                } catch (e) {
+
                 }
 
                 self.sdk.addresses.save();
@@ -11675,17 +12331,17 @@ Platform = function (app, listofnodes) {
                 if (countAddresses) {
                     const itemName = self.sdk.address.pnet().address + 'addressesNum';
 
-                    try{
+                    try {
                         localStorage[itemName] = countAddresses;
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
 
-                    
+
                 }
             },
 
-            addCachedWallet: function(num, address) {
+            addCachedWallet: function (num, address) {
                 const proxyData = {
                     getWalletData: self.sdk.address.wallet,
                     walletNum: num,
@@ -11729,7 +12385,7 @@ Platform = function (app, listofnodes) {
                 return wallet.address;
             },
 
-            getRandomAddress : function(clbk){
+            getRandomAddress: function (clbk) {
                 if (self.sdk.addresses.storage.addresses.length) {
 
                     var ar = _.toArray(self.sdk.addresses.storage.addresses)
@@ -11740,15 +12396,14 @@ Platform = function (app, listofnodes) {
 
 
                     return address
-                }
-                else{
+                } else {
                     var address = self.sdk.addresses.addWalletAddress()
 
                     return address
                 }
             },
 
-            getFirstRandomAddress : function(clbk){
+            getFirstRandomAddress: function (clbk) {
                 if (self.sdk.addresses.storage.addresses.length) {
 
                     var ar = _.toArray(self.sdk.addresses.storage.addresses)
@@ -11760,8 +12415,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(address)
-                }
-                else{
+                } else {
                     var address = self.sdk.addresses.addWalletAddress()
 
                     if (clbk)
@@ -11787,7 +12441,9 @@ Platform = function (app, listofnodes) {
                             var address = p.item;
 
 
-                            self.app.api.rpc('txunspent', [[address], 1, 9999999]).then(u => {
+                            self.app.api.rpc('txunspent', [
+                                [address], 1, 9999999
+                            ]).then(u => {
                                 if (!u.length) {
                                     finded = address;
                                 }
@@ -11798,7 +12454,7 @@ Platform = function (app, listofnodes) {
 
                                 p.success()
                             })
-                         
+
                         },
 
                         all: {
@@ -11815,9 +12471,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                }
-
-                else {
+                } else {
                     var address = self.sdk.addresses.addWalletAddress()
 
                     if (clbk)
@@ -11843,7 +12497,9 @@ Platform = function (app, listofnodes) {
                 var a;
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({ pubkey: pubkey })
+                    a = bitcoin.payments[type]({
+                        pubkey: pubkey
+                    })
 
                     return a;
                 }
@@ -11875,7 +12531,9 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({ pubkey })
+                    a = bitcoin.payments[type]({
+                        pubkey
+                    })
 
                     this.storage[type] = a;
 
@@ -11884,9 +12542,13 @@ Platform = function (app, listofnodes) {
 
                 if (type == 'p2sh') {
 
-                    a = bitcoin.payments['p2wpkh']({ pubkey })
+                    a = bitcoin.payments['p2wpkh']({
+                        pubkey
+                    })
 
-                    var p2sh = bitcoin.payments.p2sh({ redeem: a })
+                    var p2sh = bitcoin.payments.p2sh({
+                        redeem: a
+                    })
 
                     this.storage[type] = p2sh;
 
@@ -11896,11 +12558,17 @@ Platform = function (app, listofnodes) {
 
             wallet: function (n, _private) {
 
-                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
+                const {
+                    publicKey: pubkey
+                } = self.sdk.address.dumpKeys(n, _private);
 
-                const a = bitcoin.payments['p2wpkh']({ pubkey });
+                const a = bitcoin.payments['p2wpkh']({
+                    pubkey
+                });
 
-                const p2sh = bitcoin.payments.p2sh({ redeem: a });
+                const p2sh = bitcoin.payments.p2sh({
+                    redeem: a
+                });
 
                 return p2sh;
             },
@@ -11922,7 +12590,9 @@ Platform = function (app, listofnodes) {
 
             registration: function (address, clbk) {
 
-                self.app.api.rpc('getaddressregistration', [[address]]).then(d => {
+                self.app.api.rpc('getaddressregistration', [
+                    [address]
+                ]).then(d => {
 
                     var r = deep(d, '0.date') || 0;
 
@@ -11941,9 +12611,11 @@ Platform = function (app, listofnodes) {
         remote: {
             storage: {},
             failed: {},
-            loading : {},
+            loading: {},
 
-            getnew : function(url, action){
+
+            getnew: function (url, action) {
+
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
@@ -11952,18 +12624,49 @@ Platform = function (app, listofnodes) {
                 if (f[url]) return Promise.resolve(null)
                 if (s[url]) return Promise.resolve(s[url])
 
-                l[url] = self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+
+                var appinfo = self.app.apps.isApplicationLink(url)
+
+                var apppromise = (() => {
+                    return Promise.resolve(null)
+                })()
+
+                if (appinfo){
+                    apppromise = self.app.apps.get.applicationAny(appinfo).then(r => {
+
+                        if (!r) return Promise.resolve(null)
+
+                        return Promise.resolve({
+                            og: {
+                                ...r.meta,
+                                application: r.application,
+                                url: appinfo.url
+                            }
+                        })
+
+                    })
+                }
+
+
+                l[url] = apppromise.then((d) => {
+
+                    if (d) return Promise.resolve(d)
+
+                    return self.app.api.fetch(action || 'urlPreview', {
+                        url
+                    })
+                }).then(d => {
 
                     var og = deep(d, 'og');
 
                     if(!og) return Promise.reject()
 
                     _.each(og, (o, i) => {
-                        og[i] = superXSS(o)
+                        og[i] = i == 'application' ? o : superXSS(o)
                     })
 
 
-                    if (d.video){
+                    if (d.video) {
                         og.video = {}
 
                         _.each(d.video, (o, i) => {
@@ -12002,31 +12705,31 @@ Platform = function (app, listofnodes) {
                 if (s[url]) {
                     if (clbk)
                         clbk(s[url])
-                }
-
-                else {
+                } else {
 
                     s[url] = {};
 
 
-                    self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
+                    self.app.api.fetch(action || 'urlPreview', {
+                        url
+                    }).then(d => {
 
                         var og = deep(d, 'og');
 
                         s[url] = og
 
-                        if(!s[url]){
+                        if (!s[url]) {
                             f[url] = true
 
                             if (clbk)
                                 clbk(null)
 
-                            return 
+                            return
                         }
 
                         if (s[url].title) s[url].title = superXSS(s[url].title);
                         if (s[url].description) s[url].description = superXSS(s[url].description);
-                            
+
                         clbk(s[url]);
 
                     }).catch(e => {
@@ -12042,171 +12745,170 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        recommendations : {
-            storage : {
-                status : [],
-                shares : [],
-                keys : {}
+        recommendations: {
+            storage: {
+                status: [],
+                shares: [],
+                keys: {}
             },
 
-            planned : [],
-            shares : [],
+            planned: [],
+            shares: [],
 
-            sharesinfo : {},
+            sharesinfo: {},
 
-            enabled : true,
+            enabled: true,
 
-            getcompleted : function(type){
+            getcompleted: function (type) {
                 return _.filter(self.sdk.recommendations.storage.status, (s) => {
                     return s.type == type && s.status == 'completed'
                 })
             },
 
-            plans : function(data, type){
+            plans: function (data, type) {
 
                 var time = self.currentTime()
 
                 var task = {
-                    
-                    created : time,
-                    id : makeid(),
-                    status : 'created', 
+
+                    created: time,
+                    id: makeid(),
+                    status: 'created',
 
                     type,
-                    
-                    ... data
+
+                    ...data
                 }
 
-                if (type == 'users'){
-                    if(
+                if (type == 'users') {
+                    if (
                         !_.find(self.sdk.recommendations.planned, (t) => {
                             return t.address == task.address
-                        }) && 
+                        }) &&
                         !_.find(self.sdk.recommendations.storage.status, (t) => {
-                            return t.address == task.address && (time - t.date > 60 * 24 * 14) 
-                        }) 
-                    ){
+                            return t.address == task.address && (time - t.date > 60 * 24 * 14)
+                        })
+                    ) {
                         self.sdk.recommendations.planned.push(task)
                     }
                 }
 
-                if (type == 'tags'){
-                    if(
+                if (type == 'tags') {
+                    if (
                         !_.find(self.sdk.recommendations.planned, (t) => {
                             return t.hash == task.hash
-                        }) && 
+                        }) &&
                         !_.find(self.sdk.recommendations.storage.status, (t) => {
-                            return t.hash == task.hash && (time - t.date > 60 * 24 * 3) 
-                        }) 
-                    ){
+                            return t.hash == task.hash && (time - t.date > 60 * 24 * 3)
+                        })
+                    ) {
                         self.sdk.recommendations.planned.push(task)
                     }
                 }
             },
 
-            clearplanned : function(){
+            clearplanned: function () {
                 self.sdk.recommendations.planned = _.filter(self.sdk.recommendations.planned, (p) => {
                     return p.status == 'created' || p.status == 'processing'
                 })
             },
 
-            getshares : function(count, type){
-                if(!count) count = 1
+            getshares: function (count, type) {
+                if (!count) count = 1
 
                 var result = []
                 var remove = {}
 
                 _.find(self.sdk.recommendations.shares, (share, i) => {
-                    if(result.length >= count) return true
+                    if (result.length >= count) return true
 
                     self.sdk.recommendations.storage.shares.unshift({
-                        txid : share.txid,
-                        date : self.currentTime()
+                        txid: share.txid,
+                        date: self.currentTime()
                     })
 
                     remove[i] = true
 
                     result.push(share)
-                })  
+                })
 
                 self.sdk.recommendations.storage.shares = _.first(self.sdk.recommendations.storage.shares, 300)
-                
+
 
                 self.sdk.recommendations.shares = _.filter(self.sdk.recommendations.shares, (a, i) => {
                     return !remove[i]
                 })
 
-                if (result.length){
+                if (result.length) {
                     self.sdk.recommendations.save()
                 }
 
                 return result
             },
-            maketasks : function(){
+            maketasks: function () {
 
-                if (self.sdk.recommendations.planned.length && self.sdk.recommendations.shares.length < 6){
-                    if(!_.find(self.sdk.recommendations.planned, (p) => {
-                        return p.status == 'processing'
-                    })){
-                        self.sdk.recommendations.maketask(self.sdk.recommendations.planned[0]) 
+                if (self.sdk.recommendations.planned.length && self.sdk.recommendations.shares.length < 6) {
+                    if (!_.find(self.sdk.recommendations.planned, (p) => {
+                            return p.status == 'processing'
+                        })) {
+                        self.sdk.recommendations.maketask(self.sdk.recommendations.planned[0])
                     }
                 }
             },
 
-            maketasksdebounced : _.debounce(() => {
+            maketasksdebounced: _.debounce(() => {
                 self.sdk.recommendations.maketasks()
             }, 1000),
 
-            point : function(recommendation){
-                
+            point: function (recommendation) {
+
                 var p = Number(recommendation.score || 0)
-    
+
                 p += 10 * (recommendation.comments || 0)
-    
+
                 p += 50 * (recommendation.reposted || 0)
-    
+
                 var activities = self.app.platform.sdk.activity.has('users', recommendation.address)
-    
-                if (activities.point){
+
+                if (activities.point) {
                     p = p + activities.point * 10
                 }
-    
-                if(recommendation.itisvideo()){
+
+                if (recommendation.itisvideo()) {
                     var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
-    
-                    if (h.percent > 94){
+
+                    if (h.percent > 94) {
                         p = p / 100
-                    }
-                    else
-                    if (h.percent > 5){
+                    } else
+                    if (h.percent > 5) {
                         p = p * 10
                     }
-                    
+
                 }
-    
-    
-                if (recommendation.myVal){
+
+
+                if (recommendation.myVal) {
                     p = p / 10
                 }
-    
+
                 return p
-    
+
             },
 
-            prepareshares : function(){
+            prepareshares: function () {
                 var shares = self.sdk.recommendations.shares
 
                 var me = self.psdk.userInfo.getmy()
-                
+
                 shares = _.filter(shares, (recommendation) => {
-                    if (me && me.relation(recommendation.address, 'blocking') ){
+                    if (me && me.relation(recommendation.address, 'blocking')) {
                         return false
                     }
 
                     return true
                 })
 
-                if(!shares.length){
+                if (!shares.length) {
                     return
                 }
 
@@ -12233,193 +12935,205 @@ Platform = function (app, listofnodes) {
 
             },
 
-            maketask : function(task){
-         
+            maketask: function (task) {
+
                 if (task.status != 'created') return
 
-                if(task.type == 'users'){
+                if (task.type == 'users') {
                     var p = {
                         contentAddress: task.address,
                         depth: 10000,
                         count: 15,
-                        lang : 'all', /*self.app.localization.key*/
+                        lang: 'all',
+                        /*self.app.localization.key*/
                     }
 
                     var info = {
-                        address : task.address,
-                        lang : 'all', /*self.app.localization.key*/
-                        task : task.id
+                        address: task.address,
+                        lang: 'all',
+                        /*self.app.localization.key*/
+                        task: task.id
                     }
-    
-                    task.status = 'processing'
-    
-                    self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
-                        
 
-                        if(!self.sdk.recommendations.storage.shares) return
-    
+                    task.status = 'processing'
+
+                    self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
+
+
+                        if (!self.sdk.recommendations.storage.shares) return
+
                         task.status = 'completed'
-    
+
                         shares = _.filter(shares, (s) => {
                             return s.address != task.address
                         })
-    
+
                         _.each(shares, (share) => {
-                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
-                                return s.txid == share.txid
-                            })){
+                            if (!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                    return s.txid == share.txid
+                                })) {
 
                                 self.sdk.recommendations.sharesinfo[share.txid] = {
-                                    key : 'users',
-                                    info : info
+                                    key: 'users',
+                                    info: info
                                 }
 
                                 //share.recommendationKey = 'users'
                                 //share._recommendationInfo = info
                                 self.sdk.recommendations.shares.push(share)
-    
+
                             }
                         })
 
                         task.shares = _.map(shares, (s) => {
                             return s.txid
                         })
-    
+
                         self.sdk.recommendations.prepareshares()
-    
+
                         self.sdk.recommendations.add(task)
-                        
+
                     }, 'clear');
                 }
 
 
-                if(task.type == 'tags'){
+                if (task.type == 'tags') {
                     var p = {
                         depth: 7000,
                         count: 15,
-                        lang : 'all', /*self.app.localization.key*/
-                        tagsfilter : task.tags
+                        lang: 'all',
+                        /*self.app.localization.key*/
+                        tagsfilter: task.tags
                     }
 
                     var info = {
-                        lang : 'all', /*self.app.localization.key*/
-                        tags : task.tags,
-                        task : task.id
+                        lang: 'all',
+                        /*self.app.localization.key*/
+                        tags: task.tags,
+                        task: task.id
                     }
 
-    
+
                     task.status = 'processing'
-    
+
                     self.app.platform.sdk.node.shares.gettopfeed(p, (shares, error) => {
-    
+
                         task.status = 'completed'
-    
+
                         /*shares = _.filter(shares, (s) => {
                             return s.address != task.address
                         })*/
 
                         _.each(shares, (share) => {
-                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
-                                return s.txid == share.txid
-                            })){
+                            if (!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                    return s.txid == share.txid
+                                })) {
 
                                 self.sdk.recommendations.sharesinfo[share.txid] = {
-                                    key : 'tags',
-                                    info : info
+                                    key: 'tags',
+                                    info: info
                                 }
-                          
+
                                 self.sdk.recommendations.shares.push(share)
-    
+
                             }
                         })
 
                         task.shares = _.map(shares, (s) => {
                             return s.txid
                         })
-    
+
                         self.sdk.recommendations.prepareshares()
-    
+
                         self.sdk.recommendations.add(task)
-                        
+
                     }, 'clear');
                 }
 
             },
 
-            schedulers : {
-                users : function(){
+            schedulers: {
+                users: function () {
                     var users = self.sdk.activity.getinterestingUsers()
 
                     var user = randomizer(users)
 
-                    if (user){
-                        self.sdk.recommendations.plans({address : user.address}, 'users')
+                    if (user) {
+                        self.sdk.recommendations.plans({
+                            address: user.address
+                        }, 'users')
                     }
 
                 },
 
-                tags : function(){
+                tags: function () {
                     var tags = self.sdk.memtags.getprobtags(3)
-                    
-                    if (tags.length){
 
-                        var hash = bitcoin.crypto.hash256(JSON.stringify(_.sortBy(tags, (t) => {return t}))).toString('hex')
+                    if (tags.length) {
 
-                        self.sdk.recommendations.plans({tags : tags, hash : hash}, 'tags')
+                        var hash = bitcoin.crypto.hash256(JSON.stringify(_.sortBy(tags, (t) => {
+                            return t
+                        }))).toString('hex')
+
+                        self.sdk.recommendations.plans({
+                            tags: tags,
+                            hash: hash
+                        }, 'tags')
                     }
                 }
             },
 
-            successRecommendation : function(share){
-                if (share.recommendationKey){
-                    if(!self.sdk.recommendations.storage.keys[share.recommendationKey]) self.sdk.recommendations.storage.keys[share.recommendationKey] = 0
-                    self.sdk.recommendations.storage.keys[share.recommendationKey] ++ 
+            successRecommendation: function (share) {
+                if (share.recommendationKey) {
+                    if (!self.sdk.recommendations.storage.keys[share.recommendationKey]) self.sdk.recommendations.storage.keys[share.recommendationKey] = 0
+                    self.sdk.recommendations.storage.keys[share.recommendationKey]++
                     self.sdk.recommendations.save()
                 }
-                    
+
             },
 
-            schedulermake : function(){
+            schedulermake: function () {
 
-                if(!self.sdk.recommendations.enabled) return
+                if (!self.sdk.recommendations.enabled) return
 
                 self.sdk.recommendations.clearplanned()
 
-                if(!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
+                if (!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
 
                 self.app.user.isState(function (state) {
-                    if(state){
+                    if (state) {
 
                         var kf = [
                             /*{
                                 a : self.sdk.recommendations.schedulers.users,
                                 probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
-                            },*/{
-                                a : self.sdk.recommendations.schedulers.tags,
-                                probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                            },*/
+                            {
+                                a: self.sdk.recommendations.schedulers.tags,
+                                probability: 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
                             }
                         ]
-        
+
                         var action = randomizer(kf)
-        
-        
+
+
                         action.a()
-        
+
                         self.sdk.recommendations.maketasksdebounced()
-                        
+
                     }
                 })
 
-               
+
             },
 
-            scheduler : _.debounce(() => {
+            scheduler: _.debounce(() => {
                 self.sdk.recommendations.schedulermake()
             }, 1000),
 
-            add : function(task){
-                if(!self.sdk.recommendations.storage.status) return
-                
+            add: function (task) {
+                if (!self.sdk.recommendations.storage.status) return
+
                 self.sdk.recommendations.storage.status.unshift(task)
 
                 self.sdk.recommendations.storage.status = firstEls(self.sdk.recommendations.storage.status, 300)
@@ -12427,47 +13141,45 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.save()
             },
 
-            lskey : function(){
-                if (window.testpocketnet){
+            lskey: function () {
+                if (window.testpocketnet) {
                     return 'recommendations_tn'
-                }
-                else{
+                } else {
                     return 'recommendations'
                 }
             },
 
             save: function () {
 
-                try{
+                try {
 
                     localStorage[self.sdk.recommendations.lskey()] = JSON.stringify({
-                        status : self.sdk.recommendations.storage.status,
-                        shares : self.sdk.recommendations.storage.shares,
-                        keys : self.sdk.recommendations.storage.keys,
-                        
-                        unseen : _.filter(_.map(self.sdk.recommendations.shares, (s) => {
+                        status: self.sdk.recommendations.storage.status,
+                        shares: self.sdk.recommendations.storage.shares,
+                        keys: self.sdk.recommendations.storage.keys,
+
+                        unseen: _.filter(_.map(self.sdk.recommendations.shares, (s) => {
 
                             var exported = s.export()
 
-                            if (exported.lastComment){
+                            if (exported.lastComment) {
                                 var c = self.psdk.comment.get(exported.lastComment)
 
-                                if (c){
+                                if (c) {
                                     exported.lastComment = c.export()
-                                }
-                                else{
+                                } else {
                                     return null
                                 }
                             }
 
                             return {
-                                date : self.currentTime(),
-                                share : exported,
-                                info : self.sdk.recommendations.sharesinfo[s.txid]
+                                date: self.currentTime(),
+                                share: exported,
+                                info: self.sdk.recommendations.sharesinfo[s.txid]
                             }
                         }), e => e)
                     })
-                }catch(e){
+                } catch (e) {
                     console.error(e)
                 }
 
@@ -12479,8 +13191,7 @@ Platform = function (app, listofnodes) {
 
                 try {
                     p = JSON.parse(localStorage[self.sdk.recommendations.lskey()] || '{}');
-                }
-                catch (e) {}
+                } catch (e) {}
 
                 var time = self.currentTime()
 
@@ -12490,7 +13201,12 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.sharesinfo = {}
 
                 var unseens = _.map(p.unseen || [], (us) => {
-                    return {...us, ...{ ___temp : true }}
+                    return {
+                        ...us,
+                        ...{
+                            ___temp: true
+                        }
+                    }
                 })
 
                 return self.psdk.share.insertFromResponse(_.map(_.filter(unseens, (sd) => {
@@ -12505,10 +13221,12 @@ Platform = function (app, listofnodes) {
                     }
 
                 }), (sd) => {
-                    return sd.share   
+                    return sd.share
                 })).then(r => {
 
-                    self.sdk.recommendations.shares = _.filter(self.psdk.share.gets(_.map(r, ({key}) => {
+                    self.sdk.recommendations.shares = _.filter(self.psdk.share.gets(_.map(r, ({
+                        key
+                    }) => {
                         return key
                     })), v => v)
 
@@ -12517,8 +13235,8 @@ Platform = function (app, listofnodes) {
 
             },
 
-            init : function(clbk){
-                
+            init: function (clbk) {
+
                 self.sdk.recommendations.load().then(() => {
                     self.sdk.recommendations.scheduler()
 
@@ -12526,43 +13244,49 @@ Platform = function (app, listofnodes) {
                         self.sdk.recommendations.load()
                     });
 
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 })
 
-                
+
             },
 
-            destroy : function(){
+            destroy: function () {
                 app.platform.sdk.syncStorage.off('change', self.sdk.recommendations.lskey());
             }
         },
 
-        activity : {
-            latest : {},
-            allowRequestAfterFive : true,
+        activity: {
+            latest: {},
+            allowRequestAfterFive: true,
 
-            getlatest : function(keys, type, count){
+            getlatest: function (keys, type, count) {
                 var r = []
 
                 _.each(keys, (k) => {
                     r = r.concat(self.sdk.activity.latest[k] || [])
                 })
 
-                r = _.filter(r, (r) => {return r.type == type})
+                r = _.filter(r, (r) => {
+                    return r.type == type
+                })
 
-                r = _.sortBy(r, (r) => {return -r.date})
+                r = _.sortBy(r, (r) => {
+                    return -r.date
+                })
 
-                r = _.uniq(r, (r) => {return r.index})
+                r = _.uniq(r, (r) => {
+                    return r.index
+                })
 
 
                 return _.first(r, count)
             },
 
-            getbestaddress : function(){
+            getbestaddress: function () {
 
-                if (this.latest && this.latest.like){
+                if (this.latest && this.latest.like) {
 
-                    var availablesLikes = this.latest.like.filter(function(like){
+                    var availablesLikes = this.latest.like.filter(function (like) {
 
                         return like.value && like.data.subscribers_count + like.data.subscribes_count;
                     })
@@ -12571,14 +13295,14 @@ Platform = function (app, listofnodes) {
                     var bestAddress = '';
                     var bestCount = 1;
 
-                    availablesLikes.forEach(function(like){
+                    availablesLikes.forEach(function (like) {
 
-                        if (like.value > bestCount){
+                        if (like.value > bestCount) {
 
                             bestAddress = like.data.address;
                             bestCount = like.value;
 
-                        } else if (!bestAddress && (like.value === bestCount)){
+                        } else if (!bestAddress && (like.value === bestCount)) {
 
                             bestAddress = like.data.address;
                         }
@@ -12593,43 +13317,43 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getinterestingUsers : function(){
+            getinterestingUsers: function () {
                 var users = {}
 
                 var s = self.sdk.activity
 
-                if(self.sdk.address.pnet()){
-                
+                if (self.sdk.address.pnet()) {
+
                     _.each(s.latest || [], (a, i) => {
 
-                        if(i == 'visited' || i == 'search' || i == 'transaction') return
+                        if (i == 'visited' || i == 'search' || i == 'transaction') return
 
                         _.each(a, (o) => {
-                            if(o.type == 'user'){
+                            if (o.type == 'user') {
 
-                                if(o.id != self.sdk.address.pnet().address){
+                                if (o.id != self.sdk.address.pnet().address) {
                                     users[o.id] || (users[o.id] = {
-                                        date : o.date,
-                                        address : o.id,
-                                        points : 0,
-                                        value : 0
+                                        date: o.date,
+                                        address: o.id,
+                                        points: 0,
+                                        value: 0
                                     })
-    
+
                                     users[o.id].points = users[o.id].points + s.points.users[i] || 10
                                     users[o.id].value = users[o.id].value + (o.data.value || 1)
-    
-                                    if(o.date > users[o.id].date) users[o.id].date = o.date
+
+                                    if (o.date > users[o.id].date) users[o.id].date = o.date
                                 }
-                                
-                               
+
+
                             }
                         })
-                        
+
                     })
 
                 }
 
-                if(_.isEmpty(users)) return []
+                if (_.isEmpty(users)) return []
 
                 var maxdate = _.max(users, (u) => {
                     return u.date
@@ -12646,27 +13370,27 @@ Platform = function (app, listofnodes) {
                 var probabilitymap = _.map(users, (user) => {
 
                     return {
-                        probability : (Math.max(user.value, 1000) + user.points) * (user.date - mindate.date) / difference,
-                        address : user.address
+                        probability: (Math.max(user.value, 1000) + user.points) * (user.date - mindate.date) / difference,
+                        address: user.address
                     }
                 })
 
                 return probabilitymap
             },
 
-            clear : function(){
+            clear: function () {
                 self.sdk.activity.latest = {}
                 self.sdk.activity.save()
             },
 
-            addtagsearch : function(value){
+            addtagsearch: function (value) {
 
                 var hash = bitcoin.crypto.hash256(value).toString('hex')
 
                 var info = {
-                    id : hash,
-                    index : value.toLowerCase(),
-                    value : value
+                    id: hash,
+                    index: value.toLowerCase(),
+                    value: value
                 }
 
 
@@ -12674,88 +13398,90 @@ Platform = function (app, listofnodes) {
 
             },
 
-            addsearch : function(value){
+            addsearch: function (value) {
 
                 var hash = bitcoin.crypto.hash256(value).toString('hex')
 
                 var info = {
-                    id : hash,
-                    index : value.toLowerCase(),
-                    value : value
+                    id: hash,
+                    index: value.toLowerCase(),
+                    value: value
                 }
 
                 self.sdk.activity.add('search', 'str', info)
 
             },
 
-            points : {
-                users : {
-                    like : 50,
-                    clike : 20,
-                    search : 30,
-                    subscribe : 100,
-                    visited : 20,
-                    transaction : 20,
-                    video : 30
+            points: {
+                users: {
+                    like: 50,
+                    clike: 20,
+                    search: 30,
+                    subscribe: 100,
+                    visited: 20,
+                    transaction: 20,
+                    video: 30
                 }
             },
 
-            has : function(key, id){
+            has: function (key, id) {
 
                 var sum = 1
 
                 var activities = _.filter(
 
-                    _.map(self.sdk.activity.latest, function(ar, k){
+                    _.map(self.sdk.activity.latest, function (ar, k) {
 
 
-                        if(_.find(ar, function(u, k){
-                            return id == u.id
-                        })){
+                        if (_.find(ar, function (u, k) {
+                                return id == u.id
+                            })) {
 
                             var p = self.sdk.activity.points[key][k] || 20
 
                             sum += p
 
                             return {
-                                k : k,
-                                p : p
+                                k: k,
+                                p: p
                             }
 
-                        }
-                        else{
+                        } else {
                             return null
                         }
 
 
                     })
 
-                , function(v){ return v })
+                    ,
+                    function (v) {
+                        return v
+                    })
 
                 return {
                     activities,
-                    point : sum
+                    point: sum
                 }
             },
 
-            adduser : function(key, address, value){
+            adduser: function (key, address, value) {
 
-                if(!address) return
+                if (!address) return
 
                 self.sdk.users.get([address], function () {
 
                     var user = self.psdk.userInfo.get(address)
-                    
-                    if (user){
+
+                    if (user) {
 
                         var info = {
-                            id : address,
-                            index : user.name.toLowerCase(),
-                            name : user.name,
-                            image : user.image,
-                            address : address,
+                            id: address,
+                            index: user.name.toLowerCase(),
+                            name: user.name,
+                            image: user.image,
+                            address: address,
                             subscribers_count: user.subscribers_count,
-                            subscribes_count : user.subscribes_count,
+                            subscribes_count: user.subscribes_count,
                             value: Number(value || '0')
                         }
 
@@ -12767,74 +13493,73 @@ Platform = function (app, listofnodes) {
 
             },
 
-            add : function(key, type, info){
+            add: function (key, type, info) {
 
                 var l = self.sdk.activity.latest
 
-                if(!info.index) return 'index'
-                if(!info.id) return 'id'
+                if (!info.index) return 'index'
+                if (!info.id) return 'id'
 
                 l[key] || (l[key] = [])
 
                 var obj = {
-                    index : info.index,
-                    id : info.id,
-                    type : type,
+                    index: info.index,
+                    id: info.id,
+                    type: type,
                 }
 
-                if(type == 'user'){
-                    if(!info.name || !info.address || !info.image){
+                if (type == 'user') {
+                    if (!info.name || !info.address || !info.image) {
                         return 'validation'
                     }
 
                     obj.data = {
-                        name : info.name,
-                        address : info.address,
-                        image : info.image,
+                        name: info.name,
+                        address: info.address,
+                        image: info.image,
                         subscribes_count: info.subscribes_count,
                         subscribers_count: info.subscribers_count,
                     }
 
                     var dvalue = 0
 
-                    if(key == 'like'){
+                    if (key == 'like') {
                         dvalue = 5
                     }
 
-                    if(key == 'video'){
+                    if (key == 'video') {
                         dvalue = 0.1
                     }
 
-                    if(dvalue){
+                    if (dvalue) {
                         var prev = _.find(l[key], (o) => {
                             return o.id == info.id
                         })
 
 
-                        if (prev && prev.data){
-                            obj.data.value = Number( prev.data.value || (1) ) + Number(info.value)
-                        }
-                        else{
+                        if (prev && prev.data) {
+                            obj.data.value = Number(prev.data.value || (1)) + Number(info.value)
+                        } else {
                             obj.data.value = Number(info.value)
                         }
-                        
+
                     }
                 }
 
 
-                if(type == 'str' || type == 'tags'){
-                    if(!info.value){
+                if (type == 'str' || type == 'tags') {
+                    if (!info.value) {
                         return 'validation'
                     }
 
                     obj.data = {
-                        value : info.value
+                        value: info.value
                     }
                 }
 
                 obj.date = self.currentTime()
 
-                l[key] = _.filter(l[key], function(objects){
+                l[key] = _.filter(l[key], function (objects) {
                     return objects.id != info.id && objects.index != info.index
                 })
 
@@ -12844,14 +13569,14 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if(type == 'user' && (key != 'visited' && key != 'search' && key != 'transaction')){
+                if (type == 'user' && (key != 'visited' && key != 'search' && key != 'transaction')) {
                     self.sdk.recommendations.scheduler()
                 }
 
             },
 
-            key : function(){
-                if(window.testpocketnet){
+            key: function () {
+                if (window.testpocketnet) {
                     return 'latestactivity_test'
                 }
 
@@ -12859,14 +13584,14 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                
 
-                try{
+
+                try {
                     localStorage[self.sdk.activity.key()] = JSON.stringify({
-                        activity : self.sdk.activity.latest
+                        activity: self.sdk.activity.latest
                     })
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
             },
 
@@ -12876,25 +13601,24 @@ Platform = function (app, listofnodes) {
 
                 try {
                     p = JSON.parse(localStorage[self.sdk.activity.key()] || '{}');
-                }
-                catch (e) {}
+                } catch (e) {}
 
 
-                if(!p.activity) p.activity = {}
+                if (!p.activity) p.activity = {}
 
                 self.sdk.activity.latest = p.activity
 
                 self.sdk.activity.filladdressstorage()
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             },
 
-            filladdressstorage : function(){
+            filladdressstorage: function () {
 
                 var stor = self.app.platform.sdk.users.nameaddressstorage
 
-                _.each(self.sdk.activity.latest, function(l){
-                    _.each(l, function(a){
+                _.each(self.sdk.activity.latest, function (l) {
+                    _.each(l, function (a) {
 
                         if (a.type == 'user') stor[a.index] = a.id
                     })
@@ -12903,916 +13627,907 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        categories : {
-            data : {
-                all : {
-                    en : [
-                        {
-                            name : "Memes/Funny",
-                            tags : ['funny', 'memes'],
-                            id : 'c2'
+        categories: {
+            data: {
+                all: {
+                    en: [{
+                            name: "Memes/Funny",
+                            tags: ['funny', 'memes'],
+                            id: 'c2'
                         },
                         {
-                            name : "Politics",
-                            tags : ['politics'],
-                            id : 'c3'
+                            name: "Politics",
+                            tags: ['politics'],
+                            id: 'c3'
                         },
                         {
-                            name : "Crypto",
-                            tags : ['crypto'],
-                            id : 'c4'
+                            name: "Crypto",
+                            tags: ['crypto'],
+                            id: 'c4'
                         },
                         {
-                            name : "Technology/Science",
-                            tags : ['technology', 'science'],
-                            id : 'c5'
+                            name: "Technology/Science",
+                            tags: ['technology', 'science'],
+                            id: 'c5'
                         },
                         {
-                            name : "Faith/Religion",
-                            tags : ['faith', 'religion'],
-                            id : 'c55'
+                            name: "Faith/Religion",
+                            tags: ['faith', 'religion'],
+                            id: 'c55'
                         },
                         {
-                            name : "Investing/Finance",
-                            tags : ['investing', 'finance'],
-                            id : 'c6'
-                        },
-
-                        {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
+                            name: "Investing/Finance",
+                            tags: ['investing', 'finance'],
+                            id: 'c6'
                         },
 
                         {
-                            name : "COVID/Lockdowns",
-                            tags : ['covid', 'lockdowns'],
-                            id : 'c72'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "Auto/Racing",
-                            tags : ['auto', 'racing'],
-                            id : 'c7'
+                            name: "COVID/Lockdowns",
+                            tags: ['covid', 'lockdowns'],
+                            id: 'c72'
+                        },
+
+                        {
+                            name: "Auto/Racing",
+                            tags: ['auto', 'racing'],
+                            id: 'c7'
                         },
                         {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
                         },
                         {
-                            name : "Sports",
-                            tags : ['sports'],
-                            id : 'c8'
+                            name: "Sports",
+                            tags: ['sports'],
+                            id: 'c8'
                         },
                         {
-                            name : "Gaming",
-                            tags : ['gaming'],
-                            id : 'c9'
+                            name: "Gaming",
+                            tags: ['gaming'],
+                            id: 'c9'
                         },
 
 
                         {
-                            name : "Art/Music",
-                            tags : ['art', 'music'],
-                            id : 'c11'
+                            name: "Art/Music",
+                            tags: ['art', 'music'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "News/Commentary",
-                            tags : ['news', 'commentary'],
-                            id : 'c12'
+                            name: "News/Commentary",
+                            tags: ['news', 'commentary'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "History",
-                            tags : ['history'],
-                            id : 'c13'
+                            name: "History",
+                            tags: ['history'],
+                            id: 'c13'
                         },
                         {
-                            name : "Story time",
-                            tags : ['storytime'],
-                            id : 'c14'
-                        },
-
-                        {
-                            name : "Film/Animation",
-                            tags : ['film', 'animation'],
-                            id : 'c15'
+                            name: "Story time",
+                            tags: ['storytime'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Nature/Animals",
-                            tags : ['nature', 'animals'],
-                            id : 'c16'
+                            name: "Film/Animation",
+                            tags: ['film', 'animation'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Travel/Architecture",
-                            tags : ['travel', 'architecture'],
-                            id : 'c17'
+                            name: "Nature/Animals",
+                            tags: ['nature', 'animals'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "DIY",
-                            tags : ['diy'],
-                            id : 'c18'
+                            name: "Travel/Architecture",
+                            tags: ['travel', 'architecture'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "DIY",
+                            tags: ['diy'],
+                            id: 'c18'
                         }
                     ],
-                    ru : [
-                        {
-                            name : "Мемы/Юмор",
-                            tags : ['мемы', 'юмор'],
-                            id : 'c2'
+                    ru: [{
+                            name: "Мемы/Юмор",
+                            tags: ['мемы', 'юмор'],
+                            id: 'c2'
                         },
                         {
-                            name : "Политика",
-                            tags : ['политика'],
-                            id : 'c3'
+                            name: "Политика",
+                            tags: ['политика'],
+                            id: 'c3'
                         },
                         {
-                            name : "Криптовалюта",
-                            tags : ['Криптовалюта'],
-                            id : 'c4'
+                            name: "Криптовалюта",
+                            tags: ['Криптовалюта'],
+                            id: 'c4'
                         },
                         {
-                            name : "Наука/Технологии",
-                            tags : ['технологии', 'наука'],
-                            id : 'c5'
+                            name: "Наука/Технологии",
+                            tags: ['технологии', 'наука'],
+                            id: 'c5'
                         },
                         {
-                            name : "Вера/Религия",
-                            tags : ['вера', 'религия'],
-                            id : 'c55'
+                            name: "Вера/Религия",
+                            tags: ['вера', 'религия'],
+                            id: 'c55'
                         },
                         {
-                            name : "Финансы/Инвестиции",
-                            tags : ['финансы', 'инвестиции'],
-                            id : 'c6'
-                        },
-
-                        {
-                            name : "PKOIN/из рук в руки",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-
-                        {
-                            name : "COVID/локдаун",
-                            tags : ['covid', 'локдаун'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "Автомобили/Гонки",
-                            tags : ['auto', 'racing'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
+                            name: "Финансы/Инвестиции",
+                            tags: ['финансы', 'инвестиции'],
+                            id: 'c6'
                         },
 
                         {
-                            name : "Спорт",
-                            tags : ['спорт'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "Игры",
-                            tags : ['игры'],
-                            id : 'c9'
+                            name: "PKOIN/из рук в руки",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
 
                         {
-                            name : "Искусство/Музыка",
-                            tags : ['искусство', 'музыка'],
-                            id : 'c11'
+                            name: "COVID/локдаун",
+                            tags: ['covid', 'локдаун'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "Автомобили/Гонки",
+                            tags: ['auto', 'racing'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
                         },
 
                         {
-                            name : "Новости/Комментарии",
-                            tags : ['новости', 'комментарии'],
-                            id : 'c12'
+                            name: "Спорт",
+                            tags: ['спорт'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "Игры",
+                            tags: ['игры'],
+                            id: 'c9'
+                        },
+
+
+                        {
+                            name: "Искусство/Музыка",
+                            tags: ['искусство', 'музыка'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "История",
-                            tags : ['история'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "Время историй",
-                            tags : ['истории'],
-                            id : 'c14'
+                            name: "Новости/Комментарии",
+                            tags: ['новости', 'комментарии'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "Кино/Анимация",
-                            tags : ['кино', 'анимация'],
-                            id : 'c15'
+                            name: "История",
+                            tags: ['история'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "Время историй",
+                            tags: ['истории'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Природа/Животные",
-                            tags : ['Природа', 'животные'],
-                            id : 'c16'
+                            name: "Кино/Анимация",
+                            tags: ['кино', 'анимация'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Путешествия/Архитектура",
-                            tags : ['путешествия', 'архитектура'],
-                            id : 'c17'
+                            name: "Природа/Животные",
+                            tags: ['Природа', 'животные'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "Сделай сам",
-                            tags : ['сделайсам'],
-                            id : 'c18'
+                            name: "Путешествия/Архитектура",
+                            tags: ['путешествия', 'архитектура'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "Сделай сам",
+                            tags: ['сделайсам'],
+                            id: 'c18'
                         }
                     ],
-                    cmn : [
-                        {
-                            name : "模因/幽默",
-                            tags : ['模因', '幽默'],
-                            id : 'c2'
+                    cmn: [{
+                            name: "模因/幽默",
+                            tags: ['模因', '幽默'],
+                            id: 'c2'
                         },
                         {
-                            name : "政治",
-                            tags : ['政治'],
-                            id : 'c3'
+                            name: "政治",
+                            tags: ['政治'],
+                            id: 'c3'
                         },
                         {
-                            name : "加密貨幣",
-                            tags : ['加密貨幣'],
-                            id : 'c4'
+                            name: "加密貨幣",
+                            tags: ['加密貨幣'],
+                            id: 'c4'
                         },
                         {
-                            name : "科學/技術",
-                            tags : ['技術', '科學'],
-                            id : 'c5'
+                            name: "科學/技術",
+                            tags: ['技術', '科學'],
+                            id: 'c5'
                         },
                         {
-                            name : "信仰/宗教",
-                            tags : ['信仰', '宗教'],
-                            id : 'c55'
+                            name: "信仰/宗教",
+                            tags: ['信仰', '宗教'],
+                            id: 'c55'
                         },
                         {
-                            name : "金融/投資",
-                            tags : ['金融', '投資'],
-                            id : 'c6'
+                            name: "金融/投資",
+                            tags: ['金融', '投資'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-                            name : "冠狀病毒病/封鎖",
-                            tags : ['冠狀病毒病', '封鎖'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "汽車/賽車",
-                            tags : ['汽車', '賽車'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
-                        },
-                        {
-                            name : "運動",
-                            tags : ['運動'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "遊戲",
-                            tags : ['遊戲'],
-                            id : 'c9'
-                        },
-
-
-                        {
-                            name : "藝術/音樂",
-                            tags : ['藝術', '音樂'],
-                            id : 'c11'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "新聞/評論",
-                            tags : ['新聞', '評論'],
-                            id : 'c12'
+                            name: "冠狀病毒病/封鎖",
+                            tags: ['冠狀病毒病', '封鎖'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "汽車/賽車",
+                            tags: ['汽車', '賽車'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
+                        },
+                        {
+                            name: "運動",
+                            tags: ['運動'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "遊戲",
+                            tags: ['遊戲'],
+                            id: 'c9'
+                        },
+
+
+                        {
+                            name: "藝術/音樂",
+                            tags: ['藝術', '音樂'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "歷史",
-                            tags : ['歷史'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "故事時間",
-                            tags : ['故事時間'],
-                            id : 'c14'
+                            name: "新聞/評論",
+                            tags: ['新聞', '評論'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "電影/動畫",
-                            tags : ['電影', '動畫'],
-                            id : 'c15'
+                            name: "歷史",
+                            tags: ['歷史'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "故事時間",
+                            tags: ['故事時間'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "自然/動物",
-                            tags : ['自然', '動物'],
-                            id : 'c16'
+                            name: "電影/動畫",
+                            tags: ['電影', '動畫'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "旅遊/建築",
-                            tags : ['旅遊', '建築'],
-                            id : 'c17'
+                            name: "自然/動物",
+                            tags: ['自然', '動物'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "自己做",
-                            tags : ['自己做'],
-                            id : 'c18'
+                            name: "旅遊/建築",
+                            tags: ['旅遊', '建築'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "自己做",
+                            tags: ['自己做'],
+                            id: 'c18'
                         }
                     ],
-                    kr : [
-                        {
-                            name : "밈/유머",
-                            tags : ['밈', '유머'],
-                            id : 'c2'
+                    kr: [{
+                            name: "밈/유머",
+                            tags: ['밈', '유머'],
+                            id: 'c2'
                         },
                         {
-                            name : "정치",
-                            tags : ['정치'],
-                            id : 'c3'
+                            name: "정치",
+                            tags: ['정치'],
+                            id: 'c3'
                         },
                         {
-                            name : "암호 화폐",
-                            tags : ['암호 화폐'],
-                            id : 'c4'
+                            name: "암호 화폐",
+                            tags: ['암호 화폐'],
+                            id: 'c4'
                         },
                         {
-                            name : "과학/기술",
-                            tags : ['기술', '과학'],
-                            id : 'c5'
+                            name: "과학/기술",
+                            tags: ['기술', '과학'],
+                            id: 'c5'
                         },
                         {
-                            name : "신앙/종교",
-                            tags : ['신앙', '종교'],
-                            id : 'c55'
+                            name: "신앙/종교",
+                            tags: ['신앙', '종교'],
+                            id: 'c55'
                         },
                         {
-                            name : "금융/투자",
-                            tags : ['금융', '투자'],
-                            id : 'c6'
+                            name: "금융/투자",
+                            tags: ['금융', '투자'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-
-
-                            name : "COVID/Lockdowns",
-                            tags : ['코로나', '잠금'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "자동차/레이싱 ",
-                            tags : ['자동차', '레이싱'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
-                        },
-                        {
-                            name : "스포츠",
-                            tags : ['스포츠'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "계략",
-                            tags : ['계략'],
-                            id : 'c9'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "예술/음악",
-                            tags : ['예술', '음악'],
-                            id : 'c11'
+
+
+                            name: "COVID/Lockdowns",
+                            tags: ['코로나', '잠금'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "자동차/레이싱 ",
+                            tags: ['자동차', '레이싱'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
+                        },
+                        {
+                            name: "스포츠",
+                            tags: ['스포츠'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "계략",
+                            tags: ['계략'],
+                            id: 'c9'
                         },
 
                         {
-                            name : "뉴스/댓글",
-                            tags : ['뉴스', '댓글'],
-                            id : 'c12'
+                            name: "예술/음악",
+                            tags: ['예술', '음악'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "역사",
-                            tags : ['역사'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "이야기의 시간",
-                            tags : ['이야기의시간'],
-                            id : 'c14'
+                            name: "뉴스/댓글",
+                            tags: ['뉴스', '댓글'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "영화/애니메이션",
-                            tags : ['영화', '애니메이션'],
-                            id : 'c15'
+                            name: "역사",
+                            tags: ['역사'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "이야기의 시간",
+                            tags: ['이야기의시간'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "자연/동물",
-                            tags : ['자연', '동물'],
-                            id : 'c16'
+                            name: "영화/애니메이션",
+                            tags: ['영화', '애니메이션'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "여행/건축",
-                            tags : ['여행', '건축'],
-                            id : 'c17'
+                            name: "자연/동물",
+                            tags: ['자연', '동물'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "너 스스로해라",
-                            tags : ['너스스로해라'],
-                            id : 'c18'
+                            name: "여행/건축",
+                            tags: ['여행', '건축'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "너 스스로해라",
+                            tags: ['너스스로해라'],
+                            id: 'c18'
                         }
                     ],
-                    fr : [
-                        {
-                            name : "Mèmes/Humour",
-                            tags : ['mèmes', 'humour'],
-                            id : 'c2'
+                    fr: [{
+                            name: "Mèmes/Humour",
+                            tags: ['mèmes', 'humour'],
+                            id: 'c2'
                         },
                         {
-                            name : "Politique",
-                            tags : ['politique'],
-                            id : 'c3'
+                            name: "Politique",
+                            tags: ['politique'],
+                            id: 'c3'
                         },
                         {
-                            name : "Crypto-monnaie",
-                            tags : ['Crypto-monnaie'],
-                            id : 'c4'
+                            name: "Crypto-monnaie",
+                            tags: ['Crypto-monnaie'],
+                            id: 'c4'
                         },
                         {
-                            name : "Technologie/Scientifique",
-                            tags : ['technologie', 'scientifique'],
-                            id : 'c5'
+                            name: "Technologie/Scientifique",
+                            tags: ['technologie', 'scientifique'],
+                            id: 'c5'
                         },
                         {
-                            name : "Foi/Religion ",
-                            tags : ['foi', 'religion'],
-                            id : 'c55'
+                            name: "Foi/Religion ",
+                            tags: ['foi', 'religion'],
+                            id: 'c55'
                         },
                         {
-                            name : "Finances/Investissements",
-                            tags : ['finances', 'investissements'],
-                            id : 'c6'
+                            name: "Finances/Investissements",
+                            tags: ['finances', 'investissements'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-
-                            name : "COVID/Verrouillages",
-                            tags : ['covid', 'Verrouillages'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "Voitures/Courses",
-                            tags : ['voitures', 'courses'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
-                        },
-                        {
-                            name : "Sport",
-                            tags : ['Sport'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "Jeux",
-                            tags : ['jeux'],
-                            id : 'c9'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "Art/Musique",
-                            tags : ['art', 'musique'],
-                            id : 'c11'
+
+                            name: "COVID/Verrouillages",
+                            tags: ['covid', 'Verrouillages'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "Voitures/Courses",
+                            tags: ['voitures', 'courses'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
+                        },
+                        {
+                            name: "Sport",
+                            tags: ['Sport'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "Jeux",
+                            tags: ['jeux'],
+                            id: 'c9'
                         },
 
                         {
-                            name : "Nouvelles/Commentaires",
-                            tags : ['nouvelles', 'commentaires'],
-                            id : 'c12'
+                            name: "Art/Musique",
+                            tags: ['art', 'musique'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "histoire",
-                            tags : ['histoire'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "Le temps des histoires",
-                            tags : ['Letempsdeshistoires'],
-                            id : 'c14'
+                            name: "Nouvelles/Commentaires",
+                            tags: ['nouvelles', 'commentaires'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "Cinéma/Animation",
-                            tags : ['cinéma', 'animation'],
-                            id : 'c15'
+                            name: "histoire",
+                            tags: ['histoire'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "Le temps des histoires",
+                            tags: ['Letempsdeshistoires'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Nature/Animaux",
-                            tags : ['nature', 'animaux'],
-                            id : 'c16'
+                            name: "Cinéma/Animation",
+                            tags: ['cinéma', 'animation'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Voyage/Architecture",
-                            tags : ['voyage', 'architecture'],
-                            id : 'c17'
+                            name: "Nature/Animaux",
+                            tags: ['nature', 'animaux'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "Fais le toi-même",
-                            tags : ['faisletoi-même'],
-                            id : 'c18'
+                            name: "Voyage/Architecture",
+                            tags: ['voyage', 'architecture'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "Fais le toi-même",
+                            tags: ['faisletoi-même'],
+                            id: 'c18'
                         }
                     ],
-                    es : [
-                        {
-                            name : "Memes/Humor ",
-                            tags : ['мемы', 'юмор'],
-                            id : 'c2'
+                    es: [{
+                            name: "Memes/Humor ",
+                            tags: ['мемы', 'юмор'],
+                            id: 'c2'
                         },
                         {
-                            name : "Política",
-                            tags : ['política'],
-                            id : 'c3'
+                            name: "Política",
+                            tags: ['política'],
+                            id: 'c3'
                         },
                         {
-                            name : "Criptomoneda",
-                            tags : ['criptomoneda'],
-                            id : 'c4'
+                            name: "Criptomoneda",
+                            tags: ['criptomoneda'],
+                            id: 'c4'
                         },
                         {
-                            name : "Tecnología/Сientífica ",
-                            tags : ['tecnología', 'científica'],
-                            id : 'c5'
+                            name: "Tecnología/Сientífica ",
+                            tags: ['tecnología', 'científica'],
+                            id: 'c5'
                         },
                         {
-                            name : "Fe/Religión ",
-                            tags : ['fe', 'religión'],
-                            id : 'c55'
+                            name: "Fe/Religión ",
+                            tags: ['fe', 'religión'],
+                            id: 'c55'
                         },
                         {
-                            name : "Finanzas/Inversiones",
-                            tags : ['finanzas', 'inversiones'],
-                            id : 'c6'
+                            name: "Finanzas/Inversiones",
+                            tags: ['finanzas', 'inversiones'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-                            name : "COVID/Cierres",
-                            tags : ['covid', 'сierres'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "Coches/Carreras",
-                            tags : ['coches', 'carreras'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
-                        },
-                        {
-                            name : "Deporte",
-                            tags : ['deporte'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "Juegos",
-                            tags : ['juegos'],
-                            id : 'c9'
-                        },
-
-
-                        {
-                            name : "Arte/Musical ",
-                            tags : ['arte', 'musical'],
-                            id : 'c11'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "Noticias/Comentarios",
-                            tags : ['noticias', 'comentarios'],
-                            id : 'c12'
+                            name: "COVID/Cierres",
+                            tags: ['covid', 'сierres'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "Coches/Carreras",
+                            tags: ['coches', 'carreras'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
+                        },
+                        {
+                            name: "Deporte",
+                            tags: ['deporte'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "Juegos",
+                            tags: ['juegos'],
+                            id: 'c9'
+                        },
+
+
+                        {
+                            name: "Arte/Musical ",
+                            tags: ['arte', 'musical'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "Historia",
-                            tags : ['historia'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "Tiempo de historias",
-                            tags : ['Tiempo de historias'],
-                            id : 'c14'
+                            name: "Noticias/Comentarios",
+                            tags: ['noticias', 'comentarios'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "Cine/Animación",
-                            tags : ['cine', 'animación'],
-                            id : 'c15'
+                            name: "Historia",
+                            tags: ['historia'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "Tiempo de historias",
+                            tags: ['Tiempo de historias'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Naturaleza/Animales",
-                            tags : ['naturaleza', 'animales'],
-                            id : 'c16'
+                            name: "Cine/Animación",
+                            tags: ['cine', 'animación'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Viajes/Arquitectura",
-                            tags : ['viajes', 'arquitectura'],
-                            id : 'c17'
+                            name: "Naturaleza/Animales",
+                            tags: ['naturaleza', 'animales'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "Hazlo tu mismo",
-                            tags : ['hazlotumismo'],
-                            id : 'c18'
+                            name: "Viajes/Arquitectura",
+                            tags: ['viajes', 'arquitectura'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "Hazlo tu mismo",
+                            tags: ['hazlotumismo'],
+                            id: 'c18'
                         }
                     ],
-                    de : [
-                        {
-                            name : "Meme/Humor ",
-                            tags : ['meme', 'hunor'],
-                            id : 'c2'
+                    de: [{
+                            name: "Meme/Humor ",
+                            tags: ['meme', 'hunor'],
+                            id: 'c2'
                         },
                         {
-                            name : "Politik",
-                            tags : ['politik'],
-                            id : 'c3'
+                            name: "Politik",
+                            tags: ['politik'],
+                            id: 'c3'
                         },
                         {
-                            name : "Kryptowährung",
-                            tags : ['Kryptowährung'],
-                            id : 'c4'
+                            name: "Kryptowährung",
+                            tags: ['Kryptowährung'],
+                            id: 'c4'
                         },
                         {
-                            name : "Wissenschaft/Technologie ",
-                            tags : ['technologie', 'wissenschaft'],
-                            id : 'c5'
+                            name: "Wissenschaft/Technologie ",
+                            tags: ['technologie', 'wissenschaft'],
+                            id: 'c5'
                         },
                         {
-                            name : "Glaube/Religion",
-                            tags : ['glaube', 'religion'],
-                            id : 'c55'
+                            name: "Glaube/Religion",
+                            tags: ['glaube', 'religion'],
+                            id: 'c55'
                         },
                         {
-                            name : "Finanzen/Investitionen ",
-                            tags : ['finanzen', 'investitionen'],
-                            id : 'c6'
+                            name: "Finanzen/Investitionen ",
+                            tags: ['finanzen', 'investitionen'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-                            name : "COVID/Sperren",
-                            tags : ['covid', 'Sperren'],
-                            id : 'c72'
-                        },
-                        {
-                            name : "Autos/Rennen ",
-                            tags : ['autos', 'rennen'],
-                            id : 'c7'
-                        },
-                        {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
-                        },
-                        {
-                            name : "Sport",
-                            tags : ['sport'],
-                            id : 'c8'
-                        },
-                        {
-                            name : "Spielen",
-                            tags : ['spielen'],
-                            id : 'c9'
-                        },
-
-
-                        {
-                            name : "Kunst/Musik ",
-                            tags : ['kunst', 'music'],
-                            id : 'c11'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "Neuigkeiten/Kommentare",
-                            tags : ['neuigkeiten', 'kommentare'],
-                            id : 'c12'
+                            name: "COVID/Sperren",
+                            tags: ['covid', 'Sperren'],
+                            id: 'c72'
+                        },
+                        {
+                            name: "Autos/Rennen ",
+                            tags: ['autos', 'rennen'],
+                            id: 'c7'
+                        },
+                        {
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
+                        },
+                        {
+                            name: "Sport",
+                            tags: ['sport'],
+                            id: 'c8'
+                        },
+                        {
+                            name: "Spielen",
+                            tags: ['spielen'],
+                            id: 'c9'
+                        },
+
+
+                        {
+                            name: "Kunst/Musik ",
+                            tags: ['kunst', 'music'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "Geschichte",
-                            tags : ['geschichte'],
-                            id : 'c13'
-                        },
-                        {
-                            name : "Zeit der Geschichten",
-                            tags : ['zeit der geschichten '],
-                            id : 'c14'
+                            name: "Neuigkeiten/Kommentare",
+                            tags: ['neuigkeiten', 'kommentare'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "Film/Animation ",
-                            tags : ['film', 'animation'],
-                            id : 'c15'
+                            name: "Geschichte",
+                            tags: ['geschichte'],
+                            id: 'c13'
+                        },
+                        {
+                            name: "Zeit der Geschichten",
+                            tags: ['zeit der geschichten '],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Natur/Tiere ",
-                            tags : ['natur', 'tiere'],
-                            id : 'c16'
+                            name: "Film/Animation ",
+                            tags: ['film', 'animation'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Reisen/Architektur ",
-                            tags : ['reisen', 'architektur'],
-                            id : 'c17'
+                            name: "Natur/Tiere ",
+                            tags: ['natur', 'tiere'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "Mach es selbst",
-                            tags : ['machesselbst'],
-                            id : 'c18'
+                            name: "Reisen/Architektur ",
+                            tags: ['reisen', 'architektur'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "Mach es selbst",
+                            tags: ['machesselbst'],
+                            id: 'c18'
                         }
                     ],
-                    it : [
-                        {
-                            name : "Meme/divertente",
-                            tags : ['divertente', 'meme'],
-                            id : 'c2'
+                    it: [{
+                            name: "Meme/divertente",
+                            tags: ['divertente', 'meme'],
+                            id: 'c2'
                         },
                         {
-                            name : "Politica",
-                            tags : ['politica'],
-                            id : 'c3'
+                            name: "Politica",
+                            tags: ['politica'],
+                            id: 'c3'
                         },
                         {
-                            name : "Cripto",
-                            tags : ['cripto'],
-                            id : 'c4'
+                            name: "Cripto",
+                            tags: ['cripto'],
+                            id: 'c4'
                         },
                         {
-                            name : "Tecnologia/Scienza",
-                            tags : ['tecnologia', 'scienza'],
-                            id : 'c5'
+                            name: "Tecnologia/Scienza",
+                            tags: ['tecnologia', 'scienza'],
+                            id: 'c5'
                         },
                         {
-                            name : "Fede/Religione",
-                            tags : ['fede', 'religione'],
-                            id : 'c55'
+                            name: "Fede/Religione",
+                            tags: ['fede', 'religione'],
+                            id: 'c55'
                         },
                         {
-                            name : "Investire/Finanza",
-                            tags : ['investire', 'finanza'],
-                            id : 'c6'
+                            name: "Investire/Finanza",
+                            tags: ['investire', 'finanza'],
+                            id: 'c6'
                         },
                         {
-                            name : "PKOIN/peer-to-peer",
-                            tags : ['pkoin_commerce'],
-                            id : 'c63',
-                            new : true
-                        },
-
-                        {
-                            name : "COVID/Quarantena",
-                            tags : ['covid', 'quarantena'],
-                            id : 'c72'
+                            name: "PKOIN/peer-to-peer",
+                            tags: ['pkoin_commerce'],
+                            id: 'c63',
+                            new: app.pkoindisable ? false : true
                         },
 
                         {
-                            name : "Auto/Da corsa",
-                            tags : ['auto', 'dacorsa'],
-                            id : 'c7'
+                            name: "COVID/Quarantena",
+                            tags: ['covid', 'quarantena'],
+                            id: 'c72'
+                        },
+
+                        {
+                            name: "Auto/Da corsa",
+                            tags: ['auto', 'dacorsa'],
+                            id: 'c7'
                         },
                         {
-                            name : "Bastyon/Pocketnet",
-                            tags : ['bastyon', 'pocketnet'],
-                            id : 'c71'
+                            name: "Bastyon/Pocketnet",
+                            tags: ['bastyon', 'pocketnet'],
+                            id: 'c71'
                         },
                         {
-                            name : "Sport",
-                            tags : ['sport'],
-                            id : 'c8'
+                            name: "Sport",
+                            tags: ['sport'],
+                            id: 'c8'
                         },
                         {
-                            name : "Gioco",
-                            tags : ['gioco'],
-                            id : 'c9'
+                            name: "Gioco",
+                            tags: ['gioco'],
+                            id: 'c9'
                         },
 
 
                         {
-                            name : "Arte/Musica",
-                            tags : ['arte', 'musica'],
-                            id : 'c11'
+                            name: "Arte/Musica",
+                            tags: ['arte', 'musica'],
+                            id: 'c11'
                         },
 
                         {
-                            name : "Notizia/Commento",
-                            tags : ['notizia', 'commento'],
-                            id : 'c12'
+                            name: "Notizia/Commento",
+                            tags: ['notizia', 'commento'],
+                            id: 'c12'
                         },
 
                         {
-                            name : "Storia",
-                            tags : ['storia'],
-                            id : 'c13'
+                            name: "Storia",
+                            tags: ['storia'],
+                            id: 'c13'
                         },
                         {
-                            name : "Ora della favola",
-                            tags : ['oradellafavola'],
-                            id : 'c14'
-                        },
-
-                        {
-                            name : "Film/Animazione",
-                            tags : ['film', 'animazione'],
-                            id : 'c15'
+                            name: "Ora della favola",
+                            tags: ['oradellafavola'],
+                            id: 'c14'
                         },
 
                         {
-                            name : "Natura/Animali",
-                            tags : ['nature', 'animali'],
-                            id : 'c16'
+                            name: "Film/Animazione",
+                            tags: ['film', 'animazione'],
+                            id: 'c15'
                         },
 
                         {
-                            name : "Viaggiare/Architettura",
-                            tags : ['viaggiare', 'architettura'],
-                            id : 'c17'
+                            name: "Natura/Animali",
+                            tags: ['nature', 'animali'],
+                            id: 'c16'
                         },
 
                         {
-                            name : "Fai da te",
-                            tags : ['faidate'],
-                            id : 'c18'
+                            name: "Viaggiare/Architettura",
+                            tags: ['viaggiare', 'architettura'],
+                            id: 'c17'
+                        },
+
+                        {
+                            name: "Fai da te",
+                            tags: ['faidate'],
+                            id: 'c18'
                         }
                     ]
                 },
 
-                categoryIcons : [
-                    {
+                categoryIcons: [{
                         "id": "c2",
                         "icon": "far fa-smile"
                     },
@@ -13895,139 +14610,139 @@ Platform = function (app, listofnodes) {
                 ]
             },
 
-            settings : {
-                tags : {},
-                selected : {},
-                added : {},
-                excluded : {}
+            settings: {
+                tags: {},
+                selected: {},
+                added: {},
+                excluded: {}
             },
 
-            clbks : {
-                selected : {},
-                added : {},
-                tags  : {},
-                removed : {},
-                excluded : {}
+            clbks: {
+                selected: {},
+                added: {},
+                tags: {},
+                removed: {},
+                excluded: {}
             },
 
-            fromTags : function(tags, _k){
+            fromTags: function (tags, _k) {
                 var result = {
-                    categories : [],
-                    tags : []
+                    categories: [],
+                    tags: []
                 }
 
                 var usedtags = {}
 
                 var all = self.sdk.categories.get()
 
-                _.each(all, function(ca){
-                    var addedtags = _.filter(tags, function(tag){
+                _.each(all, function (ca) {
+                    var addedtags = _.filter(tags, function (tag) {
                         return _.indexOf(ca.tags, tag.toLowerCase()) > -1
                     })
 
-                    if(addedtags.length == ca.tags.length){
+                    if (addedtags.length == ca.tags.length) {
                         result.categories.push(ca)
 
-                        _.each(ca.tags, function(t){
+                        _.each(ca.tags, function (t) {
                             usedtags[t] = true
                         })
                     }
                 })
 
-                _.each(tags, function(tag){
-                    if(!usedtags[tag]) result.tags.push(tag)
+                _.each(tags, function (tag) {
+                    if (!usedtags[tag]) result.tags.push(tag)
                 })
 
                 return result
             },
 
-            getaddedtags : function(_k){
+            getaddedtags: function (_k) {
 
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
-                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function(v, i){
+                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function (v, i) {
                     return i
                 })
 
                 return addedtags
             },
 
-            gettagsexcluded : function(_k, onlycategories){
+            gettagsexcluded: function (_k, onlycategories) {
                 var tags = []
 
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 var excluded = self.sdk.categories.settings.excluded[k] || {};
 
                 var all = self.sdk.categories.get(k)
 
-                _.each(all, function(c){
-                    if(excluded[c.id]) tags = tags.concat(c.tags)
+                _.each(all, function (c) {
+                    if (excluded[c.id]) tags = tags.concat(c.tags)
                 })
 
 
-                if(onlycategories === 'onlytags') tags = excluded
+                if (onlycategories === 'onlytags') tags = excluded
 
                 return tags
             },
 
 
-            gettags : function(_k, onlycategories){
+            gettags: function (_k, onlycategories) {
                 var tags = []
 
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
-                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function(v, i){
+                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function (v, i) {
                     return i
                 })
 
                 var all = self.sdk.categories.get(k)
 
-                _.each(all, function(c){
-                    if(selected[c.id]) tags = tags.concat(c.tags)
+                _.each(all, function (c) {
+                    if (selected[c.id]) tags = tags.concat(c.tags)
                 })
 
-                if(!onlycategories)
+                if (!onlycategories)
                     tags = tags.concat(addedtags)
 
-                if(onlycategories === 'onlytags') tags = addedtags
+                if (onlycategories === 'onlytags') tags = addedtags
 
                 return tags
             },
 
-            getalltagsmap : function(){
+            getalltagsmap: function () {
                 var t = {}
                 _.each(self.sdk.categories.data.all, (l) => {
                     _.each(l, (c) => {
                         _.each(c.tags, (tg) => {
-                        
+
                             t[tg] = true
                         })
                     })
                 })
 
-                return  t                
+                return t
             },
 
-            gettagsmap : function(_k){
+            gettagsmap: function (_k) {
                 var ctags = self.sdk.categories.gettags(_k, true)
                 var alltags = self.sdk.categories.gettags(_k)
 
 
                 var mp = {}
 
-                _.each(alltags, function(tag){
+                _.each(alltags, function (tag) {
                     mp[tag] = {
-                        selected : true,
-                        fixed : _.indexOf(ctags, tag) > -1
+                        selected: true,
+                        fixed: _.indexOf(ctags, tag) > -1
                     }
 
                 })
@@ -14035,11 +14750,11 @@ Platform = function (app, listofnodes) {
                 return mp
             },
 
-            remove : function(id, _k){
+            remove: function (id, _k) {
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 delete s.added[k][id]
 
@@ -14051,51 +14766,51 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.categories.save()
 
-                if(changeselected){
-                    _.each(self.sdk.categories.clbks.selected, function(f){
+                if (changeselected) {
+                    _.each(self.sdk.categories.clbks.selected, function (f) {
                         f(id, false, k)
                     })
                 }
 
-                _.each(self.sdk.categories.clbks.removed, function(f){
+                _.each(self.sdk.categories.clbks.removed, function (f) {
                     f(id, k)
                 })
             },
 
-            add : function(category, _k){
+            add: function (category, _k) {
 
-                if(!category.id) return 'id'
-                if(!category.name.trim()) return 'name'
-                if(!category.tags) return 'tags'
-                if(!category.tags.length) return 'tags'
+                if (!category.id) return 'id'
+                if (!category.name.trim()) return 'name'
+                if (!category.tags) return 'tags'
+                if (!category.tags.length) return 'tags'
 
-                category.tags = _.map(category.tags, function(t){
+                category.tags = _.map(category.tags, function (t) {
                     return t.replace("#", '').toLowerCase()
                 })
 
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
-                var exist = _.find(s.added[k], function(ca){
-                    if(ca.name == category.name) return true
+                var exist = _.find(s.added[k], function (ca) {
+                    if (ca.name == category.name) return true
                 })
 
-                if(exist){
-                    if(exist.id != category.id){
+                if (exist) {
+                    if (exist.id != category.id) {
                         return 'doublename'
                     }
                 }
 
                 s.added[k] || (s.added[k] = {})
                 s.added[k][category.id] = {
-                    name : category.name,
-                    id : category.id,
-                    tags : category.tags
+                    name: category.name,
+                    id: category.id,
+                    tags: category.tags
                 }
 
-                _.each(self.sdk.categories.clbks.added, function(f){
+                _.each(self.sdk.categories.clbks.added, function (f) {
                     f(id, k)
                 })
 
@@ -14104,15 +14819,15 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            tag : function(tag, _k){
+            tag: function (tag, _k) {
 
-                if(!tag) return 'emptyid'
+                if (!tag) return 'emptyid'
 
 
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 s.tags[k] || (s.tags[k] = {})
 
@@ -14129,7 +14844,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.categories.save()
 
-                _.each(self.sdk.categories.clbks.tags, function(f){
+                _.each(self.sdk.categories.clbks.tags, function (f) {
                     f(tag, s.tags[k][tag], k)
                 })
 
@@ -14137,60 +14852,60 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            geteslected : function(_k){
+            geteslected: function (_k) {
                 var allcats = self.sdk.categories.get()
 
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 s.selected[k] || (s.selected[k] = {})
 
-                return _.filter(allcats, function(c){
+                return _.filter(allcats, function (c) {
                     return s.selected[k][c.id]
                 })
 
             },
 
-            clear : function(_k, onlytags){
+            clear: function (_k, onlytags) {
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
-                if(!onlytags)
+                if (!onlytags)
                     s.selected[k] = {}
-                    s.excluded[k] = {}
+                s.excluded[k] = {}
 
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
 
-                _.each(self.sdk.categories.clbks.selected, function(f){
+                _.each(self.sdk.categories.clbks.selected, function (f) {
                     f(null, false, k)
                 })
 
-                _.each(self.sdk.categories.clbks.excluded, function(f){
+                _.each(self.sdk.categories.clbks.excluded, function (f) {
                     f(null, false, k)
                 })
             },
 
-            select : function(id, _k){
-                if(!id) return 'emptyid'
+            select: function (id, _k) {
+                if (!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
 
-                var cat = _.find(allcats, function(c){
+                var cat = _.find(allcats, function (c) {
                     return c.id == id
                 })
 
-                if(!cat) return 'cantonfound'
+                if (!cat) return 'cantonfound'
 
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 s.selected[k] || (s.selected[k] = {})
 
@@ -14209,34 +14924,34 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.categories.save();
 
-                _.each(self.sdk.categories.clbks.selected, function(f){
+                _.each(self.sdk.categories.clbks.selected, function (f) {
                     f(id, s.selected[k][id], k)
                 })
 
                 return false
             },
 
-            exclude : function(id, _k){
+            exclude: function (id, _k) {
 
-                if(!id) return 'emptyid'
+                if (!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
 
-                var cat = _.find(allcats, function(c){
+                var cat = _.find(allcats, function (c) {
                     return c.id == id
                 })
 
-                if(!cat) return 'cantonfound'
+                if (!cat) return 'cantonfound'
 
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 s.excluded[k] || (s.excluded[k] = {})
 
 
-                if (s.excluded[k][id]){
+                if (s.excluded[k][id]) {
 
                     delete s.excluded[k][id];
 
@@ -14245,11 +14960,11 @@ Platform = function (app, listofnodes) {
 
                     s.selected[k] || (s.selected[k] = {})
 
-                    if (s.selected[k][id]){
+                    if (s.selected[k][id]) {
                         delete s.selected[k][id]
 
 
-                        _.each(self.sdk.categories.clbks.selected, function(f){
+                        _.each(self.sdk.categories.clbks.selected, function (f) {
                             f(id, s.selected[k][id], k)
                         })
                     }
@@ -14258,7 +14973,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.categories.save()
 
-                _.each(self.sdk.categories.clbks.excluded, function(f){
+                _.each(self.sdk.categories.clbks.excluded, function (f) {
                     f(id, s.excluded[k][id], k)
                 })
 
@@ -14266,50 +14981,50 @@ Platform = function (app, listofnodes) {
                 return false
             },
 
-            get : function(_k){
+            get: function (_k) {
                 var k = _k || self.app.localization.key;
 
-                var added = _.map(self.sdk.categories.settings.added[k]|| {},
-                function(c){
-                    var cc = _.clone(c);
+                var added = _.map(self.sdk.categories.settings.added[k] || {},
+                    function (c) {
+                        var cc = _.clone(c);
 
-                    cc.added = true;
+                        cc.added = true;
 
 
-                    return cc
-                })
+                        return cc
+                    })
 
                 var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
 
                 var categoryIcons = self.sdk.categories.data.categoryIcons;
 
-				categories = _.map(categories, function(k){
-					var withIcon = categoryIcons.find(function(ki){
-						return ki.id === k.id;
-					})
+                categories = _.map(categories, function (k) {
+                    var withIcon = categoryIcons.find(function (ki) {
+                        return ki.id === k.id;
+                    })
 
-					if (withIcon){
-						k.icon = withIcon.icon;
-					} else {
+                    if (withIcon) {
+                        k.icon = withIcon.icon;
+                    } else {
                         k.icon = 'fa fa-mouse-pointer'
                     }
 
-					return k;
-				})
+                    return k;
+                })
 
                 return (categories).concat(added)
             },
 
-            getByIdForLogs : function(id) {
+            getByIdForLogs: function (id) {
                 var categories = self.sdk.categories.data.all['en'];
 
                 return categories.find(category => category.id === id) || {};
             },
 
-            getbyid : function(id, _k){
+            getbyid: function (id, _k) {
                 var allcats = self.sdk.categories.get(_k)
 
-                var cat = _.find(allcats, function(c){
+                var cat = _.find(allcats, function (c) {
                     return c.id == id
                 })
 
@@ -14317,28 +15032,39 @@ Platform = function (app, listofnodes) {
 
             },
 
-            search : function(name){
+            getbyids: function (ids = [], _k) {
+                var allcats = self.sdk.categories.get(_k)
 
-                return _.filter(self.sdk.categories.get(), function(c){
+                var cats = _.filter(allcats, function (c) {
+                    return ids.indexOf(c.id > -1)
+                })
 
-                    if(c.name.toLowerCase().indexOf(name) > -1) return true
+                return cats
+
+            },
+
+            search: function (name) {
+
+                return _.filter(self.sdk.categories.get(), function (c) {
+
+                    if (c.name.toLowerCase().indexOf(name) > -1) return true
 
                     return stringEqTrig(c.name, name) > 0.7
                 })
 
             },
 
-            getwithselected : function(_k){
+            getwithselected: function (_k) {
                 var k = _k || self.app.localization.key
 
-                if(!self.sdk.categories.data.all[k]) k = 'en'
+                if (!self.sdk.categories.data.all[k]) k = 'en'
 
                 var selected = self.sdk.categories.settings.selected[k] || {}
                 var excluded = self.sdk.categories.settings.excluded[k] || {}
 
                 var all = self.sdk.categories.get()
 
-                return _.map(all, function(c){
+                return _.map(all, function (c) {
                     var cs = _.clone(c)
 
                     cs.selected = selected[c.id] ? true : false
@@ -14350,15 +15076,15 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-                try{
+                try {
                     localStorage['categoriessettings'] = JSON.stringify({
-                        settings : self.sdk.categories.settings
+                        settings: self.sdk.categories.settings
                     })
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
 
-                
+
             },
 
             load: function (clbk) {
@@ -14374,11 +15100,25 @@ Platform = function (app, listofnodes) {
 
                 try {
                     p = JSON.parse(localStorage['categoriessettings'] || '{}');
+                } catch (e) {}
+
+
+                if(!p.settings) {
+                    p.settings = {}
+
+                    if(window.project_config.preferredtags && window.project_config.preferredtags.length){
+
+                        p.settings.selected = {}
+
+                        _.each(self.sdk.categories.data.all, (cats, k) => {
+                            p.settings.selected[k] = {}
+
+                            _.each(window.project_config.preferredtags, (id) => {
+                                p.settings.selected[k][id] = true
+                            })
+                        })
+                    }
                 }
-                catch (e) {}
-
-
-                if(!p.settings) p.settings = {}
 
                 self.sdk.categories.settings = p.settings
 
@@ -14387,7 +15127,8 @@ Platform = function (app, listofnodes) {
                 self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
                 self.sdk.categories.settings.excluded || (self.sdk.categories.settings.excluded = {})
 
-                if(clbk) clbk()
+
+                if (clbk) clbk()
             }
 
         },
@@ -14398,32 +15139,40 @@ Platform = function (app, listofnodes) {
                 cloud: null,
 
                 all: {
-                    default : ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
+                    default: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
                 },
 
 
             },
 
-            additional : [{
-                tag : 'pkoin_commerce',
-                new : true,
-                class : 'bright',
-                info : 'pkoin_commerce_info'
+            additional: [{
+                tag: 'pkoin_commerce',
+                new: true,
+                class: 'bright',
+                info: 'pkoin_commerce_info'
             }],
 
-            findadditional : function(tag){
-                return _.find(this.additional, function(v){
+            findadditional: function (tag) {
+                return _.find(this.additional, function (v) {
                     return v.tag == tag
                 })
             },
 
-            ex: {'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
+            ex: {
+                'news': true,
+                'images': true,
+                'videos': true,
+                'politics': true,
+                'funny': true,
+                'art': true,
+                'photo': true
+            },
 
             search: function (str, clbk) {
                 var all = []
                 str = clearTagString(str);
 
-                _.each(self.sdk.tags.storage.all, function(st){
+                _.each(self.sdk.tags.storage.all, function (st) {
                     var s = _.filter(st, function (t) {
 
                         if (t.indexOf(str) > -1) return true;
@@ -14453,17 +15202,17 @@ Platform = function (app, listofnodes) {
                 parameters.push(localization || self.app.localization.key)
 
                 var cacheparameters = _.clone(parameters)
-                    cacheparameters[2] = ''
+                cacheparameters[2] = ''
 
                 self.psdk.tag.request(() => {
                     return self.app.api.rpcwt('gettags', parameters)
                 }, cacheparameters).then(data => {
-                    if(clbk) clbk(data)
+                    if (clbk) clbk(data)
                 })
 
             },
 
-            filterCats : function(tags){
+            filterCats: function (tags) {
                 var tm = self.sdk.categories.getalltagsmap()
 
                 return _.filter(tags, t => {
@@ -14487,17 +15236,17 @@ Platform = function (app, listofnodes) {
                 var t = this
                 var loc = self.app.localization.key
 
-                if(!s.all) s.all = {}
+                if (!s.all) s.all = {}
 
-                retry(function(){
+                retry(function () {
                     return self.currentBlock
-                }, function(){
+                }, function () {
 
                     var round = (a, b) => a - a % b
 
                     t.get('', 350, round(self.currentBlock, 1000) - 23700, loc, function (d) {
 
-                        if(!s.all) s.all = {}
+                        if (!s.all) s.all = {}
 
                         if (d && d.length) {
 
@@ -14505,13 +15254,12 @@ Platform = function (app, listofnodes) {
                                 return t.tag
                             })
 
-                        }
-                        else{
+                        } else {
                             s.all[loc] = []
                         }
 
-                        _.each(t.additional, function(at){
-                            if (s.all[loc].indexOf(at.tag) == -1){
+                        _.each(t.additional, function (at) {
+                            if (s.all[loc].indexOf(at.tag) == -1) {
                                 s.all[loc].unshift(at.tag)
                             }
                         })
@@ -14536,45 +15284,44 @@ Platform = function (app, listofnodes) {
                 var s = this.storage;
                 var loc = self.app.localization.key
 
-                if(!s.cloud) s.cloud = {}
+                if (!s.cloud) s.cloud = {}
 
                 if (s.cloud[loc] && !update) {
                     if (clbk) {
                         clbk(s.cloud[loc])
                     }
-                }
-                else {
+                } else {
 
                     var round = (a, b) => a - a % b
 
-                    retry(function(){
+                    retry(function () {
                         return self.currentBlock
-                    }, function(){
+                    }, function () {
 
                         t.get('', 100, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
-                            if(!s.cloud) s.cloud = {}
+                            if (!s.cloud) s.cloud = {}
 
                             if (!error) s.cloud[loc] = d
 
-                            _.each(t.additional, function(at){
+                            _.each(t.additional, function (at) {
 
-                                if (at.positionincloud){
+                                if (at.positionincloud) {
 
-                                    var lt = _.find(s.cloud, function(t){
+                                    var lt = _.find(s.cloud, function (t) {
                                         return t.tag == at.tag
                                     })
 
-                                    if(!lt){
+                                    if (!lt) {
                                         var vs = _.clone(at)
-                                            s.cloud.push(vs)
+                                        s.cloud.push(vs)
                                     }
 
-                                    if (lt){
+                                    if (lt) {
 
                                         lt.positionincloud = at.positionincloud
                                         lt.class = at.class
 
-                                        if (lt.count < 2000){
+                                        if (lt.count < 2000) {
                                             lt.new = at.new
                                         }
                                     }
@@ -14595,7 +15342,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getcloudall : function(){
+            getcloudall: function () {
                 var all = {}
                 _.each(this.storage.cloud, (c, loc) => {
                     _.each(c, (tg) => {
@@ -14606,13 +15353,15 @@ Platform = function (app, listofnodes) {
                 return all
             },
 
-            totals : function(){
-                var r = {max : 0}
+            totals: function () {
+                var r = {
+                    max: 0
+                }
 
                 _.each(this.storage.cloud, (c, loc) => {
                     r[loc] = this.total(loc)
 
-                    if(r.max < r[loc]) r.max = r[loc]
+                    if (r.max < r[loc]) r.max = r[loc]
                 })
 
 
@@ -14620,14 +15369,14 @@ Platform = function (app, listofnodes) {
                 return r
             },
 
-            total : function(loc){
+            total: function (loc) {
                 var s = this.storage;
 
                 loc || (loc = self.app.localization.key)
 
-                if(!s.cloud) s.cloud = {}
+                if (!s.cloud) s.cloud = {}
 
-                if(s.cloud[loc]){
+                if (s.cloud[loc]) {
                     return _.reduce(s.cloud[loc], (m, tag) => {
                         return m + tag.count
                     }, 0)
@@ -14636,13 +15385,15 @@ Platform = function (app, listofnodes) {
                 return 0
             },
 
-            maxs : function(){
-                var r = {max : 0}
+            maxs: function () {
+                var r = {
+                    max: 0
+                }
 
                 _.each(this.storage.cloud, (c, loc) => {
                     r[loc] = this.max(loc)
 
-                    if(r.max < r[loc]) r.max = r[loc]
+                    if (r.max < r[loc]) r.max = r[loc]
                 })
 
 
@@ -14651,15 +15402,15 @@ Platform = function (app, listofnodes) {
             },
 
 
-            max : function(loc){
+            max: function (loc) {
                 var s = this.storage;
 
                 loc || (loc = self.app.localization.key)
 
-                if(!s.cloud) s.cloud = {}
+                if (!s.cloud) s.cloud = {}
 
-                if(s.cloud[loc]){
-              
+                if (s.cloud[loc]) {
+
                     return ((_.max(s.cloud[loc], (tag) => {
                         return tag.count
                     }) || {}).count) || 0
@@ -14668,10 +15419,10 @@ Platform = function (app, listofnodes) {
                 return 0
             },
 
-            gettag : function(tag){
+            gettag: function (tag) {
                 var s = this.storage;
 
-                if(!s.cloud) s.cloud = {}
+                if (!s.cloud) s.cloud = {}
 
                 var mincount = 2
                 var res = null
@@ -14680,9 +15431,9 @@ Platform = function (app, listofnodes) {
                 _.find(s.cloud, (lg, loc) => {
                     return _.find(lg, (tg) => {
 
-                        if(mincount > tg.count) mincount = tg.count
+                        if (mincount > tg.count) mincount = tg.count
 
-                        if(tg.tag == tag){
+                        if (tg.tag == tag) {
                             res = tg
 
                             l = loc
@@ -14692,11 +15443,11 @@ Platform = function (app, listofnodes) {
                     })
                 })
 
-                if(!res) {
+                if (!res) {
                     res = {
-                        tag : tag,
-                        count : mincount / 2,
-                        loc : l
+                        tag: tag,
+                        count: mincount / 2,
+                        loc: l
                     }
                 }
 
@@ -14705,23 +15456,23 @@ Platform = function (app, listofnodes) {
 
         },
 
-        memtags : {
-            storage : {},
-            added : {},
+        memtags: {
+            storage: {},
+            added: {},
 
-            
-            getprobtags : function(count){
+
+            getprobtags: function (count) {
 
                 var tags = this.gettags()
 
-                    tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
+                tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
 
                 return _.map(randomizerarray(tags, count || 3, 'probability') || [], (t) => {
                     return t.tag
                 })
             },
 
-            gettags : function(){
+            gettags: function () {
                 var totals = self.sdk.tags.maxs()
                 var result = []
 
@@ -14737,27 +15488,27 @@ Platform = function (app, listofnodes) {
 
                 if (difference <= 0) difference = 1
 
-                if (totals.max){
+                if (totals.max) {
 
                     var tgc = _.reduce(this.storage.tags, (m, tg) => {
 
-                        if(tg.c < 0) return m
+                        if (tg.c < 0) return m
 
                         return m + tg.c
                     }, 0)
 
                     _.each(this.storage.tags, (tg, i) => {
 
-                        if(tg.c < 0) return
-                        
+                        if (tg.c < 0) return
+
                         var tag = self.sdk.tags.gettag(i)
                         var t = totals[tag.loc] || totals.max
 
                         var p = tg.c / tgc + Math.sqrt((t - tag.count) / t) * (0.5 + (tg.date - mindate.date) / difference)
 
                         result.push({
-                            tag : i,
-                            probability : p
+                            tag: i,
+                            probability: p
                         })
                     })
                 }
@@ -14766,22 +15517,24 @@ Platform = function (app, listofnodes) {
 
             },
 
-            add : function(tags, id, value){
-                if(id && this.added[id]) return
+            add: function (tags, id, value) {
+                if (id && this.added[id]) return
 
-                if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
+                if (!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
 
 
                 //var total = 0
 
                 _.each(tags, (tag) => {
-                    self.sdk.memtags.storage.tags[tag] || (self.sdk.memtags.storage.tags[tag] = {c : 0})
+                    self.sdk.memtags.storage.tags[tag] || (self.sdk.memtags.storage.tags[tag] = {
+                        c: 0
+                    })
 
                     self.sdk.memtags.storage.tags[tag].c = self.sdk.memtags.storage.tags[tag].c + (value || 1)
 
                     if ((value || 1) > 0)
                         self.sdk.memtags.storage.tags[tag].date = self.currentTime()
-                    
+
                 })
 
                 if (id)
@@ -14790,29 +15543,28 @@ Platform = function (app, listofnodes) {
                 self.sdk.memtags.saveandrun()
             },
 
-            saveandrunfast : function(){
+            saveandrunfast: function () {
                 self.sdk.memtags.save()
 
                 self.sdk.recommendations.scheduler()
             },
 
-            lskey : function(){
-                if (window.testpocketnet){
+            lskey: function () {
+                if (window.testpocketnet) {
                     return 'memtags_tn'
-                }
-                else{
+                } else {
                     return 'memtags'
                 }
             },
 
-            save : function(){
+            save: function () {
 
-                try{
+                try {
                     localStorage[self.sdk.memtags.lskey()] = JSON.stringify({
-                        tags : self.sdk.memtags.storage.tags,
+                        tags: self.sdk.memtags.storage.tags,
                     })
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
             },
 
@@ -14821,12 +15573,11 @@ Platform = function (app, listofnodes) {
 
                 try {
                     p = JSON.parse(localStorage[self.sdk.memtags.lskey()] || '{}');
-                }
-                catch (e) {}
+                } catch (e) {}
 
                 self.sdk.memtags.storage.tags = p.tags || {}
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             },
         },
 
@@ -14836,7 +15587,7 @@ Platform = function (app, listofnodes) {
                 fs: {},
                 posts: {},
                 users: {},
-                tags : {}
+                tags: {}
             },
 
             clear: function () {
@@ -14845,19 +15596,19 @@ Platform = function (app, listofnodes) {
                     fs: {},
                     posts: {},
                     users: {},
-                    tags : {}
+                    tags: {}
                 }
             },
 
-            getcached : function(value, fixedBlock, type, start, count, address){
+            getcached: function (value, fixedBlock, type, start, count, address) {
                 var s = this.storage;
                 var result = []
 
-                if(!start) start = 0
+                if (!start) start = 0
 
-                if(!s[type]) s[type] = {}
+                if (!s[type]) s[type] = {}
 
-                if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data){
+                if (s[type][value] && s[type][value][address] && s[type][value][address][fixedBlock] && s[type][value][address][fixedBlock].data) {
 
                     for (var i = 0; i < count; i++) {
                         if (s[type][value][address][fixedBlock].data[start + i])
@@ -14867,8 +15618,8 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(result.length) return {
-                    data : result
+                if (result.length) return {
+                    data: result
                 }
 
                 return null
@@ -14877,18 +15628,16 @@ Platform = function (app, listofnodes) {
             add: function (value, fixedBlock, type, result, start, count, address) {
                 var s = this.storage;
 
-                if(!start) start = 0
+                if (!start) start = 0
 
-                if(!s[type]) s[type] = {}
+                if (!s[type]) s[type] = {}
 
                 if (!s[type][value]) s[type][value] = {}
                 if (!s[type][value][address]) s[type][value][address] = {}
 
                 if (!s[type][value][address][fixedBlock]) {
-                     s[type][value][address][fixedBlock] = result;
-                }
-
-                else {
+                    s[type][value][address][fixedBlock] = result;
+                } else {
                     for (var i = 0; i < count; i++) {
 
                         if (result.data[i])
@@ -14901,13 +15650,13 @@ Platform = function (app, listofnodes) {
             preview: function (value, fixedBlock, type, start, count, address) {
                 var s = this.storage;
 
-                if(!start) start = 0
+                if (!start) start = 0
 
                 if (type != 'fs' && type != 'all') {
 
-                    if(!s[type]) s[type] = {}
+                    if (!s[type]) s[type] = {}
 
-                    if(!s[type][address])
+                    if (!s[type][address])
                         s[type][address] = {}
 
                     if (!s[type][address][fixedBlock]) return
@@ -14931,20 +15680,20 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.search;
 
-                if(typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
+                if (typeof fixedBlock == 'undefined') fixedBlock = self.currentBlock
 
                 type || (type = 'fs')
 
-                if(!s[type]) s[type] = {}
+                if (!s[type]) s[type] = {}
 
                 s.preview(fixedBlock, type, start, count, address)
 
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
 
-                if(cached && type && type != 'fs') {
-                    var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
+                if (cached && type && type != 'fs') {
+                    var g = self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
 
-                    if (g){
+                    if (g) {
                         if (clbk)
                             clbk(g, fixedBlock)
 
@@ -14958,7 +15707,7 @@ Platform = function (app, listofnodes) {
 
                 if (value.length) {
 
-                    if(type === 'users') {
+                    if (type === 'users') {
 
                         self.psdk.searchUsers.request(() => {
                             return self.app.api.rpc('searchusers', np)
@@ -14966,7 +15715,9 @@ Platform = function (app, listofnodes) {
 
                             d = _.filter(_.map(d, (a) => {
                                 return a && self.psdk.userInfo.get(a.address)
-                            }), (v) => {return v})
+                            }), (v) => {
+                                return v
+                            })
 
                             d = {
                                 data: [...d]
@@ -14988,8 +15739,25 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    //
+
                     self.psdk.search.request(() => {
-                        return self.app.api.rpc('search', np)
+
+                        var options = {}
+
+                        var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
+
+                        console.log('type', type)
+
+                        if (type == 'videos'){
+                            options.rpc = {
+                                fnode: nodes[rand(0, nodes.length - 1)]
+                            }
+                        }
+
+                        console.log('type options', options)
+
+                        return self.app.api.rpc('search', np, options)
                     }, np).then(d => {
 
                         if (type != 'fs') {
@@ -14998,10 +15766,8 @@ Platform = function (app, listofnodes) {
                                 _.each(d, function (d, k) {
                                     s.add(value, fixedBlock, k, d, start, count, address)
                                 })
-                            }
-
-                            else {
-                                d = d[type] || {
+                            } else {
+                                d = d[type == 'videos' ? 'posts' : type] || {
                                     data: []
                                 }
 
@@ -15019,10 +15785,9 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                 
 
-                }
-                else {
+
+                } else {
                     if (clbk) {
                         clbk({})
                     }
@@ -15053,41 +15818,6 @@ Platform = function (app, listofnodes) {
                 return
 
 
-                var l = self.sdk.postscores.get()
-
-                if (!l.storage[id] || update) {
-
-
-                    //// TODO_REF_ACTIONS maybe
-
-                    self.app.api.rpc('getpostscores', [id]).then(d => {
-
-                        
-
-                        _.each(d, function (d) {
-
-                            l.storage[d.posttxid] || (l.storage[d.posttxid] = [])
-
-                            l.storage[d.posttxid].push({
-                                address: d.address,
-                                value: d.value
-                            })
-                        })
-
-                        if (clbk)
-                            clbk(null)
-
-                    }).catch(e => {
-                        if (clbk) {
-                            clbk(e, null)
-                        }
-                    })
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
             }
         },
 
@@ -15110,40 +15840,38 @@ Platform = function (app, listofnodes) {
                 })
 
                 self.app.user.isState((state) => {
-                    if(!state){
-                        if(clbk) clbk()
-                    }
-                    else{
+                    if (!state) {
+                        if (clbk) clbk()
+                    } else {
 
                         self.psdk.myScore.load(shareIds, commentIds).finally(() => {
-                            if(clbk) clbk()
+                            if (clbk) clbk()
                         })
                     }
                 })
             }
         },
 
-        upvote : {
-            checkvalue : function(value, clbk, fclbk){
-                if(clbk) clbk()
+        upvote: {
+            checkvalue: function (value, clbk, fclbk) {
+                if (clbk) clbk()
             },
         },
 
         comments: {
             storage: {},
 
-            blocked : {
+            blocked: {
 
             },
 
-            sendclbks: {
-            },
+            sendclbks: {},
 
             upvoteClbks: {
 
             },
 
-            saveblocked : function(){
+            saveblocked: function () {
 
                 var a = self.sdk.address.pnet();
 
@@ -15152,14 +15880,14 @@ Platform = function (app, listofnodes) {
                 }
 
             },
-            loadblocked : function(clbk){
+            loadblocked: function (clbk) {
                 var a = self.sdk.address.pnet();
 
                 /*if (a) {
                     self.sdk.comments.blocked = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'blockedcomments') || "{}")
                 }*/
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             },
 
             address: function (id) {
@@ -15182,7 +15910,7 @@ Platform = function (app, listofnodes) {
                 }, true)
             },
 
-            
+
             ini: function (d) {
 
                 console.error("TODO_REF_ACTIONS_INI_COMMENTS")
@@ -15195,7 +15923,7 @@ Platform = function (app, listofnodes) {
 
                 if (!_.isArray(ids)) ids = [ids]
 
-                
+
                 self.psdk.comment.load(ids).then(() => {
                     var comments = self.psdk.comment.gets(ids)
 
@@ -15216,7 +15944,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-         
+
 
             getclear: function (txid, pid, clbk, ccha) {
 
@@ -15235,8 +15963,8 @@ Platform = function (app, listofnodes) {
                     comments = self.psdk.comment.tempAdd(comments, (action) => {
                         return (txid == action.postid) && ((pid || '') == (action.parentid || ''))
                     })
-                    
-                    if(clbk) clbk(comments)
+
+                    if (clbk) clbk(comments)
 
                 }).catch(e => {
 
@@ -15248,7 +15976,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-             
+
             },
 
 
@@ -15266,7 +15994,7 @@ Platform = function (app, listofnodes) {
                         return !c.deleted
                     })
 
-                    if(clbk) clbk(comments)
+                    if (clbk) clbk(comments)
 
                 }).catch(e => {
                     if (clbk)
@@ -15281,10 +16009,10 @@ Platform = function (app, listofnodes) {
                 self.app.platform.actions.addActionAndSendIfCan(upvote).then(action => {
 
                     var alias = action.get()
-              
+
                     if (clbk)
                         clbk(null, alias)
-  
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(e, null)
@@ -15301,10 +16029,10 @@ Platform = function (app, listofnodes) {
                 self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
 
                     var alias = action.get()
-              
+
                     if (clbk)
                         clbk(null, alias)
-  
+
                 }).catch(e => {
                     if (clbk) {
                         clbk(e, null)
@@ -15312,14 +16040,14 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                
+
             },
 
             send: function (comment, clbk) {
 
                 comment.uploadImages(self.app, function () {
 
-                    if (comment.checkloaded()){
+                    if (comment.checkloaded()) {
 
                         if (clbk) {
                             clbk('imageerror')
@@ -15329,17 +16057,17 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
-                        rejectIfError : true
+                        rejectIfError: true
                     }).then(action => {
 
                         var alias = action.get()
 
-                    
+
                         if (clbk)
                             clbk(null, alias)
-      
+
                     }).catch(e => {
-    
+
                         if (clbk)
                             clbk(e)
 
@@ -15369,13 +16097,13 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                timepr : function(){
+                timepr: function () {
 
-                    if (self.lasttimecheck){
+                    if (self.lasttimecheck) {
 
                         var d = new Date()
 
-                        if(self.lasttimecheck.addSeconds(10) > d){
+                        if (self.lasttimecheck.addSeconds(10) > d) {
                             return Promise.resolve()
                         }
                     }
@@ -15387,11 +16115,11 @@ Platform = function (app, listofnodes) {
                         self.currentBlock = 0
                         self.timeDifference = 0;
 
-                        try{
+                        try {
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
                             localStorage['lastblock'] = self.currentBlock
-                        }catch(e){
-                            
+                        } catch (e) {
+
                         }
 
                         if (t) {
@@ -15437,18 +16165,18 @@ Platform = function (app, listofnodes) {
                 loading: {
 
                 },
-                parameters : {
-                    stor : {},
-                    defaults : {
-                        period : '4320'
+                parameters: {
+                    stor: {},
+                    defaults: {
+                        period: '4320'
                     },
-                    get : function(){
+                    get: function () {
                         var meta = self.sdk.node.shares.parameters.meta
                         var e = {}
-                        _.each(meta, function(p, i){
+                        _.each(meta, function (p, i) {
                             e[i] = new Parameter(p())
 
-                            e[i]._onChange = function(v){
+                            e[i]._onChange = function (v) {
                                 self.sdk.node.shares.parameters.stor[i] = e[i].value
                                 self.sdk.node.shares.parameters.save()
                             }
@@ -15457,8 +16185,8 @@ Platform = function (app, listofnodes) {
 
                         return e
                     },
-                    meta : {
-                        period: function(){
+                    meta: {
+                        period: function () {
 
                             var v = self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period
 
@@ -15476,38 +16204,37 @@ Platform = function (app, listofnodes) {
                                     self.app.localization.e('period182day')
                                 ],
                                 value: v,
-                                defaultValue : v,
+                                defaultValue: v,
 
 
                             }
 
                         },
                     },
-                    load : function(clbk){
+                    load: function (clbk) {
                         var p = {};
 
                         try {
                             p = JSON.parse(localStorage['sharessettings'] || '{}');
-                        }
-                        catch (e) {
+                        } catch (e) {
 
                         }
 
                         self.sdk.node.shares.parameters.stor = p.stor || {}
 
-                        if(clbk) clbk()
+                        if (clbk) clbk()
                     },
-                    save : function(){
+                    save: function () {
 
-                        try{
+                        try {
                             localStorage['sharessettings'] = JSON.stringify({
                                 stor: self.sdk.node.shares.parameters.stor
                             })
-                        }catch(e){
-                            
+                        } catch (e) {
+
                         }
 
-                        
+
                     }
                 },
 
@@ -15520,23 +16247,32 @@ Platform = function (app, listofnodes) {
                 ////TODO_REF_ACTIONS
 
                 checkvisibility : function(share){
+
+                    if(!share.visibility) return false
+
                     var v = share.visibility()
 
                     var a = self.sdk.address.pnet()
 
-                    if(a && a.address == share.address) return false
+                    if (a && a.address == share.address) return false
 
-                    if(!v) return false
+                    if (!v) return false
 
-                    if (v == 'reg'){
+                    if (a && a.address){
+                        if(self.sdk.user.type(a.address) == 'moderator'){
+                            return false
+                        }
+                    }
 
-                        if(self.app.user.getstate()) return false
+                    if (v == 'reg') {
+
+                        if (self.app.user.getstate()) return false
 
                         return v
 
                     }
 
-                    if (v == 'sub'){
+                    if (v == 'sub') {
 
                         var me = self.psdk.userInfo.getmy()
 
@@ -15546,31 +16282,69 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    if (v == 'paid') {
+
+                        
+
+                        var me = self.psdk.userInfo.getmy()
+
+                        if (me && me.relation(share.address, 'subscribes')) {
+
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
+                                return false
+                            }
+
+                            var cache = self.sdk.paidsubscription.checkvisibilityCache(share.address)
+
+                            if (cache){
+                                if(cache.error){
+                                    return 'paid_error'
+                                }
+
+                                if(cache.result == 'paid_success'){
+                                    return false
+                                }
+                                else{
+                                    return v
+                                }
+                            }
+
+                            return 'paid_check'
+
+                        }
+                        else{
+                            if (app.pkoindisable || app.paidsubscriptiondisable){
+                                return 'sub'
+                            }
+                        }
+
+                    }
+
                     return v
 
 
                 },
 
-            
-            
+
+
                 users: function (shares, clbk, withoutlastcomment) {
                     var users = [];
 
                     _.each(shares || [], function (s) {
 
-                        if(!s) return
+                        if (!s) return
 
                         users.push(s.address)
 
-                        if(!withoutlastcomment){
+                        if (!withoutlastcomment) {
 
                             var lastComment = s.lastComment ? self.psdk.comment.get(s.lastComment) : null
 
-                            if (lastComment){
+                            if (lastComment) {
                                 users.push(lastComment.address)
                             }
 
-                            
+
                         }
 
                     })
@@ -15594,56 +16368,25 @@ Platform = function (app, listofnodes) {
                 delete: function (txid, clbk) {
 
                     var rm = new Remove()
-                        rm.txidEdit.set(txid);
+                    rm.txidEdit.set(txid);
 
                     self.app.platform.actions.addActionAndSendIfCan(rm).then(action => {
 
                         var alias = action.get()
-                    
+
                         successCheck()
-    
+
                         if (clbk) clbk(null, alias)
-        
+
                     }).catch(e => {
-    
+
                         if (clbk)
                             clbk(e, null)
-    
+
                     })
 
                     return
 
-                    self.sdk.node.transactions.create.commonFromUnspent(
-
-                        share,
-
-                        function (_alias, error) {
-
-
-                            if (!_alias) {
-
-                                if (clbk) {
-                                    clbk(error, null)
-                                }
-
-                            }
-
-                            else {
-
-                                s[txid] || (s[txid] = {})
-
-                                var c = _.find(s[txid][share.parentid || '0'] || [], function (c) {
-                                    return c.id == share.id
-                                })
-
-                                if (c) c.deleted = true
-
-                                if (clbk)
-                                    clbk(null, _alias)
-                            }
-
-                        }
-                    )
 
                 },
 
@@ -15654,7 +16397,7 @@ Platform = function (app, listofnodes) {
                 getbyidsp: function (p, clbk, refresh) {
                     this.getbyids(p.txids, p.begin, 10, clbk, refresh)
                 },
-                
+
                 getsavedbyids: function (p, clbk) {
 
                     if (!p.txids.length) {
@@ -15673,12 +16416,17 @@ Platform = function (app, listofnodes) {
                             if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
 
-                            self.psdk.share.insertFromResponseSmall([{ ...curShare.share.share, ...{ ___temp : true }}], true)
+                            self.psdk.share.insertFromResponseSmall([{
+                                ...curShare.share.share,
+                                ...{
+                                    ___temp: true
+                                }
+                            }], true)
                             //self.psdk.share.userInfo([curShare.share.share])
-                            
+
                             var newShare = self.psdk.share.get(txid)
 
-                            if (newShare){
+                            if (newShare) {
                                 if (curShare.share.timestamp)
                                     newShare.downloadedDate = new Date(curShare.share.timestamp);
 
@@ -15692,9 +16440,9 @@ Platform = function (app, listofnodes) {
 
                     // Sort by download date
 
-                    loadedShares = _.sortBy(loadedShares, function(s1){
+                    loadedShares = _.sortBy(loadedShares, function (s1) {
 
-                        if(!s1.downloadedDate){
+                        if (!s1.downloadedDate) {
                             return 1
                         }
 
@@ -15734,9 +16482,7 @@ Platform = function (app, listofnodes) {
                     if (!s.ids[key].length) {
                         begin || (begin = txids[0])
 
-                    }
-
-                    else {
+                    } else {
 
                         if (!begin) {
                             var l = s.ids[key][s.ids[key].length - 1]
@@ -15793,12 +16539,12 @@ Platform = function (app, listofnodes) {
                     self.psdk.share.request(() => {
 
                         return self.app.api.rpc(method, parameters, {
-                            rpc : rpc
+                            rpc: rpc
                         }).then(data => {
 
-                            if(_.isArray(data)){
+                            if (_.isArray(data)) {
                                 return Promise.resolve({
-                                    contents : data
+                                    contents: data
                                 })
 
                             }
@@ -15817,7 +16563,7 @@ Platform = function (app, listofnodes) {
 
                         d.contents = shares
 
-                        if(clbk) clbk(d)
+                        if (clbk) clbk(d)
 
                     }).catch(e => {
 
@@ -15832,15 +16578,15 @@ Platform = function (app, listofnodes) {
 
                 getex: function (parameters, clbk, method, rpc) {
 
-                    if(!rpc) rpc = {}
-                        rpc.ex = true
+                    if (!rpc) rpc = {}
+                    rpc.ex = true
 
                     self.sdk.node.shares.get(parameters, clbk, method, rpc)
                 },
 
                 recommended: function (p, clbk, cache, methodparams) {
 
-                    if(!methodparams) methodparams = {}
+                    if (!methodparams) methodparams = {}
 
                     if (!p) p = {};
 
@@ -15861,8 +16607,7 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        }
-                        else {
+                        } else {
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
 
@@ -15870,29 +16615,34 @@ Platform = function (app, listofnodes) {
 
                             var parameters = []
 
-                            parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],'',period]
+                            parameters = [depth, '', p.count, self.app.localization.key, [],
+                                [],
+                                [],
+                                [],
+                                [], '', period
+                            ]
 
-                            if (p.type){
+                            if (p.type) {
                                 parameters[5].push(p.type)
                             }
 
                             self.sdk.node.shares.getex(parameters, function (data, error) {
 
                                 var shares = data.contents
-                                
+
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function () {
 
-                                        if(p.type == 'video'){
-                                            shares = _.filter(shares, function(share){
+                                        if (p.type == 'video') {
+                                            shares = _.filter(shares, function (share) {
 
-                                                if(!share.url) return
+                                                if (!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+                                                if ((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -15905,9 +16655,7 @@ Platform = function (app, listofnodes) {
                                     })
 
 
-                                }
-
-                                else {
+                                } else {
                                     if (clbk)
                                         clbk(shares, error, p)
                                 }
@@ -15921,7 +16669,7 @@ Platform = function (app, listofnodes) {
                 },
                 best: function (p, clbk, cache, methodparams) {
 
-                    if(!methodparams) methodparams = {}
+                    if (!methodparams) methodparams = {}
 
                     if (!p) p = {};
 
@@ -15941,8 +16689,7 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        }
-                        else {
+                        } else {
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
 
@@ -15951,7 +16698,7 @@ Platform = function (app, listofnodes) {
                             var parameters = []
                             parameters = [p.count.toString(), period, offset || '0', self.app.localization.key]
 
-                            if (p.type){
+                            if (p.type) {
                                 parameters.push(p.type)
                             }
 
@@ -15961,7 +16708,7 @@ Platform = function (app, listofnodes) {
 
                                 if (shares) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function () {
 
                                         /*if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -15971,15 +16718,15 @@ Platform = function (app, listofnodes) {
                                             })
                                         }*/
 
-                                        if(p.type == 'video'){
-                                            shares = _.filter(shares, function(share){
+                                        if (p.type == 'video') {
+                                            shares = _.filter(shares, function (share) {
 
-                                                if(!share.url) return
+                                                if (!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
 
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
+                                                if ((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon') {
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -15996,9 +16743,7 @@ Platform = function (app, listofnodes) {
                                     })
 
 
-                                }
-
-                                else {
+                                } else {
                                     if (clbk)
                                         clbk(shares, error, p)
                                 }
@@ -16011,91 +16756,134 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                jury : function(p = {}, clbk, cache){
+
+                    if(!p.page) p.page = 0
+                    if(!p.count) p.count = 20
+                    
+
+                    self.app.user.isState(function (state) {
+
+                        if(!state){
+                            return clbk([])
+                        }
+
+                        p.address = self.sdk.address.pnet().address;
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'jury' + p.address
+                        var promise = null
+
+                        if (cache != 'clear' && storage[key]) {
+                            promise = () => {
+                                return Promise.resolve(storage[key])
+                            }
+                        }
+                        else {
+                            promise = self.app.platform.sdk.jury.getjuryassigned(p.address)
+                        }
+
+                        promise.then((items) => {
+
+                            items = _.filter(items, (item, i) => {
+                                return i >= p.page * p.count && i < (p.page + 1) * p.count
+                            })
+
+                            items =  self.psdk.jury.tempRemove(items, (i) => {return true}, (alias) => {
+
+                                return alias.actor == p.address
+                            })
+
+                            if(clbk) clbk(items, null, {})
+                        })
+
+                    })
+                },
+
                 gettopfeed : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'gettopfeed',
-                        rpc : {
-                            cache : true,
-                            fastvideo : true
+                        method: 'gettopfeed',
+                        rpc: {
+                            cache: true,
+                            fastvideo: true
                         }
                     });
 
                 },
 
-                getrecomendedcontents : function(p, clbk, cache){
+                getrecomendedcontents: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getrecommendedcontentbyaddress',
-                        rpc : {
-                            cache : true,
-                            fastvideo : true
+                        method: 'getrecommendedcontentbyaddress',
+                        rpc: {
+                            cache: true,
+                            fastvideo: true
                         }
                     });
 
                 },
 
-                loadvideoinfoifneed : function(shares, need, clbk){
+                loadvideoinfoifneed: function (shares, need, clbk) {
 
-                    if(need){
+                    if (need) {
                         self.sdk.videos.infoshares(shares).then(r => {
-                            if(clbk) clbk()
+                            if (clbk) clbk()
                         }).catch(e => {
                             console.error(e)
-                            if(clbk) clbk()
+                            if (clbk) clbk()
                         })
-                    }
-                    else{
-                        if(clbk) clbk()
+                    } else {
+                        if (clbk) clbk()
                     }
 
 
                 },
 
-                getprofilefeed : function(p, clbk, cache){
+                getprofilefeed: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getprofilefeed'
+                        method: 'getprofilefeed'
                     })
 
 
                 },
 
-                getsubscribesfeed : function(p, clbk, cache){
+                getsubscribesfeed: function (p, clbk, cache) {
 
                     p.tempSubscriptions = self.psdk.subscribe.tempAdd([], (alias) => {
-                        if(alias.actor == self.app.user.address.value) return true
+                        if (alias.actor == self.app.user.address.value) return true
                     })
-                    
+
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'getsubscribesfeed'
+                        method: 'getsubscribesfeed'
                     })
 
                 },
 
 
-                historical : function(p, clbk, cache){
+                historical: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'gethistoricalstrip'
+                        method: 'gethistoricalstrip'
                     })
 
                 },
 
-                getboost : function(p, clbk, cache){
+                getboost: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
-                        method : 'getboostfeed',
-                        rpc : {
-                            fnode : '65.21.252.135:38081'
-                        }
+                        method: 'getboostfeed',
+                        /*rpc: {
+                            fnode: '65.21.252.135:38081'
+                        }*/
                     })
                 },
 
-                lightsid : function(p, clbk, cache, methodparams){
+                lightsid: function (p, clbk, cache, methodparams) {
 
-                    if(!methodparams) methodparams = {}
+                    if (!methodparams) methodparams = {}
 
                     var mtd = methodparams.method
 
@@ -16105,7 +16893,7 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
 
-                        if(!p.lang){
+                        if (!p.lang) {
                             p.lang = self.app.localization.key || ''
                         }
 
@@ -16119,7 +16907,7 @@ Platform = function (app, listofnodes) {
 
                         var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
-                        if(p.author) key = key + p.author
+                        if (p.author) key = key + p.author
 
                         var storage = self.sdk.node.shares.storagelights;
                         var s = self.sdk.node.shares;
@@ -16129,28 +16917,27 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        }
-                        else {
+                        } else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
-                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                            p.tagsfilter = _.map(p.tagsfilter, function (t) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                            p.tagsexcluded = _.map(p.tagsexcluded, function (t) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, mtd == 'getboostfeed' ? [] : p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
-
-
-                            console.log('methodparams', methodparams)
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, mtd == 'getboostfeed' ? [] : p.tagsfilter, p.type ? [p.type] : [],
+                                [],
+                                [], p.tagsexcluded
+                            ];
 
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.boosts || []
                                 var blocknumber = data.height
-                                    p.blocknumber = blocknumber
+                                p.blocknumber = blocknumber
 
 
                                 storage[key] = shares
@@ -16167,7 +16954,7 @@ Platform = function (app, listofnodes) {
 
                 hierarchical: function (p, clbk, cache, methodparams) {
 
-                    if(!methodparams) methodparams = {}
+                    if (!methodparams) methodparams = {}
 
                     var mtd = (methodparams.method || 'gethierarchicalstrip')
 
@@ -16188,8 +16975,8 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
 
-                        if (!p.lang){
-                            (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key : p.lang = ''
+                        if (!p.lang) {
+                            (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key: p.lang = ''
                         }
 
 
@@ -16205,7 +16992,7 @@ Platform = function (app, listofnodes) {
 
                         var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
 
-                        if(p.author) key = key + p.author
+                        if (p.author) key = key + p.author
 
                         var storage = self.sdk.node.shares.storage;
                         var s = self.sdk.node.shares;
@@ -16231,8 +17018,7 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        }
-                        else {
+                        } else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
                             if (!p.txid) {
@@ -16242,8 +17028,7 @@ Platform = function (app, listofnodes) {
                                         var st = storage[key][storage[key].length - 1]
 
                                         p.txid = st.txid
-                                    }
-                                    else {
+                                    } else {
                                         var st = storage[key][0]
 
                                         p.txid = st.txid
@@ -16255,35 +17040,38 @@ Platform = function (app, listofnodes) {
                             if (!p.txid) p.txid = p.begin || ''
 
 
-                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                            p.tagsfilter = _.map(p.tagsfilter, function (t) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
 
-                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                            p.tagsexcluded = _.map(p.tagsexcluded, function (t) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
                             /////temp
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [],
+                                [],
+                                [], p.tagsexcluded
+                            ];
 
 
-                            if(p.author) {
+                            if (p.author) {
                                 parameters.push('');
                                 parameters.push(p.author)
                             }
-                            if(mtd == 'getsubscribesfeed') {
+                            if (mtd == 'getsubscribesfeed') {
                                 parameters.push('');
                                 parameters.push(p.address)
 
-                                if(p.tempSubscriptions && p.tempSubscriptions.length){
+                                if (p.tempSubscriptions && p.tempSubscriptions.length) {
                                     //parameters.push(p.tempSubscriptions) TODO_REF_ACTIONS
                                 }
                             }
 
-                            
+
 
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
@@ -16294,7 +17082,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.depth)
 
                             }
-                            
+
                             if (mtd === 'getprofilefeed') {
                                 // keyword
                                 parameters.push(p.keyword || '');
@@ -16317,23 +17105,23 @@ Platform = function (app, listofnodes) {
 
                                     if (p.author) {
 
-                                        if(!p.txid){
+                                        if (!p.txid) {
                                             shares = self.psdk.share.tempAdd(shares, (alias) => {
                                                 return alias.actor == p.author
                                             })
                                         }
                                     }
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function () {
 
-                                        if(p.video){
-                                            shares = _.filter(shares, function(share){
+                                        if (p.video) {
+                                            shares = _.filter(shares, function (share) {
 
-                                                if(!share.url) return
+                                                if (!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
+                                                if ((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon') {
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -16343,12 +17131,11 @@ Platform = function (app, listofnodes) {
 
                                         _.each(shares || [], function (s) {
 
-                                            if(!storage[key]) storage[key] = []
+                                            if (!storage[key]) storage[key] = []
 
                                             if (p.count > 0) {
                                                 storage[key].push(s)
-                                            }
-                                            else {
+                                            } else {
                                                 storage[key].unshift(s)
                                             }
                                         })
@@ -16358,9 +17145,7 @@ Platform = function (app, listofnodes) {
                                             clbk(shares, error, p)
 
                                     })
-                                }
-
-                                else {
+                                } else {
                                     if (clbk)
                                         clbk(shares, error, p)
                                 }
@@ -16372,9 +17157,9 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getboostfeed : function(p, clbk, count, cache){
+                getboostfeed: function (p, clbk, count, cache) {
 
-                    self.app.platform.sdk.node.shares.getboost(p, function(boostinfo, error){
+                    self.app.platform.sdk.node.shares.getboost(p, function (boostinfo, error) {
 
                         //// filter viewed
 
@@ -16383,7 +17168,7 @@ Platform = function (app, listofnodes) {
                                 return m + c
                             }, 0)
 
-                            if(cf < 10){
+                            if (cf < 10) {
                                 return true
                             }
 
@@ -16391,22 +17176,22 @@ Platform = function (app, listofnodes) {
                         })
                         //flags
 
-                        var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
+                        var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function (v) {
                             return v.txid
                         })
 
-                        var txids = _.map(boostedmap, function(v){
+                        var txids = _.map(boostedmap, function (v) {
                             return v.txid
                         })
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
 
-                            self.app.platform.sdk.node.shares.users(shares, function(){
+                            self.app.platform.sdk.node.shares.users(shares, function () {
 
-                                shares = _.filter(shares, function(s){
+                                shares = _.filter(shares, function (s) {
 
-                                    if(!self.sdk.user.reputationBlocked(s.address)){
+                                    if (!self.sdk.user.reputationBlocked(s.address)) {
                                         return true
                                     }
 
@@ -16439,19 +17224,52 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                getCoibaseType : function (tx, address) {
+                getfromtotransactions : function(from, to, update){
+
+                    return pretry(function () {
+                        return self.currentBlock
+                    }).then(() => {
+                        if(!self.currentBlock){
+                            return Promise.reject('currentBlock is empty')
+                        }
+    
+                        return app.psdk.getfromtotransactions.request(() => {
+    
+                            var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
+    
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
+                                rpc: {
+                                    fnode: nodes[rand(0, nodes.length - 1)]
+                                }
+                            })
+        
+                        }, from + to, {
+                            update : update
+                        }).then(function (s) {
+
+                            s = self.psdk.getfromtotransactions.tempAdd(s, from, to)
+
+                            return s
+                        })
+                    })
+
+                    
+
+                },
+
+                getCoibaseType: function (tx, address) {
 
                     var type = null;
 
 
 
-                    if(!tx.vout || !tx.vout.length || !address) return null
+                    if (!tx.vout || !tx.vout.length || !address) return null
 
                     var firstout = tx.vout[0]
 
                     var n = -1
                     var uservout = _.find(tx.vout, (v) => {
-                        n ++
+                        n++
                         return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
                             return a == address
                         })
@@ -16461,18 +17279,18 @@ Platform = function (app, listofnodes) {
                     /**/
                     var l = tx.vout.length
 
-                    if(!firstout || l <= 1 || !uservout) return null
+                    if (!firstout || l <= 1 || !uservout) return null
 
                     n = l - n
 
                     try {
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
-                        if(!chunks.length) return
+                        if (!chunks.length) return
 
                         var cl = chunks.length
 
-                        if(!cl) return null
+                        if (!cl) return null
 
                         if (chunks[cl - n]) {
                             var ch = chunks[cl - n]
@@ -16494,8 +17312,7 @@ Platform = function (app, listofnodes) {
                             }
                         }
 
-                    }
-                    catch(e){
+                    } catch (e) {
                         console.log("E", e)
                     }
 
@@ -16518,8 +17335,7 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                        }
-                        catch (e) {
+                        } catch (e) {
 
                         }
                     })
@@ -16550,8 +17366,6 @@ Platform = function (app, listofnodes) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
-
-                    console.log('address', vout, address)
 
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
@@ -16591,7 +17405,7 @@ Platform = function (app, listofnodes) {
                                 coinbase: coinbase || tx.coinstake,
                                 amount: vout.value,
                                 scriptPubKey: vout.scriptPubKey.hex,
-                                pockettx:  deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
+                                pockettx: deep(tx, 'vout.0.scriptPubKey.addresses.0') == ""
                             }
 
                             outs.push(t)
@@ -16607,9 +17421,9 @@ Platform = function (app, listofnodes) {
 
                 get: {
 
-                    tx: function (id, clbk, p) {
+                    tx: function (id, clbk, p, upd) {
 
-                        self.psdk.transaction.load(id, false, p).then(tx => {
+                        self.psdk.transaction.load(id, upd || false, p).then(tx => {
 
                             if (clbk) {
                                 clbk(tx)
@@ -16624,12 +17438,12 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    txwide: function(id){
+                    txwide: function (id) {
                         return api.rpcwide('getrawtransaction', [id, 1], {
-                            changedata : (d) => {
+                            changedata: (d) => {
                                 if (!d.confirmations) {
                                     d.confirmations = 0
-            
+
                                     if (d.height) {
                                         app.platform.currentBlock ? (d.confirmations = Math.max(app.platform.currentBlock - d.height, 0)) : null
                                     } else {
@@ -16644,16 +17458,16 @@ Platform = function (app, listofnodes) {
 
                 ///TODO_REF_ACTION - later
 
-                htls : {
-                    plcreate : function(id, amount, inputs, dummyoutputs, clbk){
+                htls: {
+                    plcreate: function (id, amount, inputs, dummyoutputs, clbk) {
 
                         var lock = 0
 
-                        self.sdk.node.shares.getbyid(id, function() {
-                            var item = self.psdk.share.get(id) 
-                            
+                        self.sdk.node.shares.getbyid(id, function () {
+                            var item = self.psdk.share.get(id)
 
-                            if(!item) return clbk('item')
+
+                            if (!item) return clbk('item')
 
                             //lock = 10
 
@@ -16661,44 +17475,47 @@ Platform = function (app, listofnodes) {
 
                             var address = item.address
 
-                            var {txb, payment} = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
+                            var {
+                                txb,
+                                payment
+                            } = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
 
                             if (clbk) clbk(txb, {
                                 address,
                                 time,
                                 //lock,
                                 payment,
-                                htlc : payment.htlc,
+                                htlc: payment.htlc,
                                 //hash,
-                                tdif : time - self.currentBlock
+                                tdif: time - self.currentBlock
                             })
 
                         })
                     },
 
-                    create : function(inputs, dummyoutputs, id, reciever, amount, time){
+                    create: function (inputs, dummyoutputs, id, reciever, amount, time) {
 
-                        var multisha = function(str, count){
+                        var multisha = function (str, count) {
 
-                            if(!count) count = 100
+                            if (!count) count = 100
 
                             var h = Buffer.from(str)
 
-                            for (var i = 0; i < count; i++){
+                            for (var i = 0; i < count; i++) {
                                 h = bitcoin.crypto.sha256(h)
                             }
 
                             return h.toString('hex')
                         }
 
-                        var createhash = function(key, seed){
+                        var createhash = function (key, seed) {
 
                             var str = multisha(multisha(key) + '_' + seed, 10)
 
                             return str
                         }
 
-                        var crrc = function(key, txid){
+                        var crrc = function (key, txid) {
                             return createhash(key, txid)
                         }
 
@@ -16707,82 +17524,86 @@ Platform = function (app, listofnodes) {
                         var secret = crrc(privatekey.toString('hex'), id)
 
                         var payment = bitcoin.payments.htlc({
-                            htlc : {
+                            htlc: {
                                 secret,
-                                lock : time,
+                                lock: time,
                                 reciever,
-                                sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                                sender: self.sdk.address.pnetsimple(keyPair.publicKey).address
                             }
                         });
 
-                        var htlcout = _.find(dummyoutputs, function(dout){
+                        var htlcout = _.find(dummyoutputs, function (dout) {
                             return dout.key == 'htlc'
                         })
 
-                        if(!htlcout){
+                        if (!htlcout) {
                             return Promise.reject('htlcout')
                         }
 
                         var outputs = [{
-                            scriptPubKey : payment.output,
-                            amount : htlcout.amount
+                            scriptPubKey: payment.output,
+                            amount: htlcout.amount
                         }]
 
                         var indexes = {}
 
-                        _.each(dummyoutputs, function(dop){
-                            if(dop.address) {
+                        _.each(dummyoutputs, function (dop) {
+                            if (dop.address) {
                                 indexes[outputs.push(dop) - 1] = true
 
                                 //dop.amount = dop.amount - 0.02
                             }
                         })
 
-                        console.log("htlc",{
+                        console.log("htlc", {
                             secret,
-                            lock : time,
+                            lock: time,
                             reciever,
-                            sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                            sender: self.sdk.address.pnetsimple(keyPair.publicKey).address
                         })
 
 
                         var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
 
-                        return {txb, payment, secret}
+                        return {
+                            txb,
+                            payment,
+                            secret
+                        }
                     },
 
-                    withdrawal : function(prevoutputs, destination, fees, htlc){
-                        if(!htlc) htlc = {}
+                    withdrawal: function (prevoutputs, destination, fees, htlc) {
+                        if (!htlc) htlc = {}
 
                         var total = 0
 
-                        if(!fees) fees = 0
+                        if (!fees) fees = 0
 
-                        var inputs = _.map(prevoutputs, function(output){
+                        var inputs = _.map(prevoutputs, function (output) {
 
                             total += output.value
 
                             return {
-                                vout : output.n,
-                                scriptPubKey : output.scriptPubKey.hex,
-                                amount : output.value,
-                                type : output.scriptPubKey.type,
-                                txid : output.txid
+                                vout: output.n,
+                                scriptPubKey: output.scriptPubKey.hex,
+                                amount: output.value,
+                                type: output.scriptPubKey.type,
+                                txid: output.txid
                             }
                         })
 
                         var outputs = [{
-                            address : destination,
-                            amount : total - fees
+                            address: destination,
+                            amount: total - fees
                         }]
 
                         var tx = self.sdk.node.transactions.create.wallet(inputs, outputs, null, false, htlc)
 
 
-                        self.sdk.node.transactions.send(tx, function(d, err){
+                        self.sdk.node.transactions.send(tx, function (d, err) {
 
 
-                            if(err){
+                            if (err) {
                                 sitemessage(err)
                             }
 
@@ -16792,7 +17613,7 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                
+
 
             },
 
@@ -16913,11 +17734,10 @@ Platform = function (app, listofnodes) {
 
                     if (!f) {
                         if (clbk)
-                            clbk(self.app.localization.e('e13293')+' /ul100')
+                            clbk(self.app.localization.e('e13293') + ' /ul100')
 
                         return
-                    }
-                    else {
+                    } else {
                         f.ws = node.ws,
                             f.port = node.port,
                             f.name = node.name;
@@ -16947,15 +17767,15 @@ Platform = function (app, listofnodes) {
 
                 save: function () {
 
-                    try{
+                    try {
                         localStorage['usernodes'] = JSON.stringify({
                             list: this.userlist
                         })
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
 
-                    
+
                 },
 
                 load: function () {
@@ -16963,8 +17783,7 @@ Platform = function (app, listofnodes) {
 
                     try {
                         p = JSON.parse(localStorage['usernodes'] || '{}');
-                    }
-                    catch (e) {
+                    } catch (e) {
 
                     }
 
@@ -16990,11 +17809,10 @@ Platform = function (app, listofnodes) {
                     if (i == -1) {
                         if (clbk)
                             clbk(null)
-                    }
-                    else
+                    } else
 
-                        if (clbk)
-                            clbk(pa.private[i])
+                    if (clbk)
+                        clbk(pa.private[i])
 
 
 
@@ -17008,8 +17826,7 @@ Platform = function (app, listofnodes) {
                     if (!state) {
                         if (clbk)
                             clbk(null, 'state')
-                    }
-                    else {
+                    } else {
                         var address = self.sdk.address.pnet().address;
 
                         var i = _.indexOf(exportedPack.addresses, address);
@@ -17020,7 +17837,7 @@ Platform = function (app, listofnodes) {
 
                             var mk = self.app.user.private.value.toString('hex');
 
-                            if(self.cryptography.disabled){
+                            if (self.cryptography.disabled) {
                                 if (clbk)
                                     clbk(null, 'disabledcryptography')
                             }
@@ -17071,8 +17888,7 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
                             })
-                        }
-                        else {
+                        } else {
                             if (clbk)
                                 clbk(null, 'address')
                         }
@@ -17170,7 +17986,7 @@ Platform = function (app, listofnodes) {
 
                 var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
 
-                if(!keyPair){
+                if (!keyPair) {
 
                     if (clbk)
                         clbk(null, 'failedkeypair')
@@ -17182,7 +17998,7 @@ Platform = function (app, listofnodes) {
 
                 var mk = keyPair.privateKey.toString('hex');
 
-                if (_.indexOf(pack.addresses, address) > -1){
+                if (_.indexOf(pack.addresses, address) > -1) {
                     if (clbk)
                         clbk(null, 'hasinthispack')
 
@@ -17194,13 +18010,12 @@ Platform = function (app, listofnodes) {
                     var id = pool.map[address];
                     var _pack = pool.packs[id];
 
-                    if (_pack.addresses.length > 1/* || _pack.addresses[0] == address*/) {
+                    if (_pack.addresses.length > 1 /* || _pack.addresses[0] == address*/ ) {
                         if (clbk)
                             clbk(null, 'hasinanotherpack')
 
                         return;
-                    }
-                    else {
+                    } else {
                         delete pool.map[address]
                         delete pool.packs[id]
                     }
@@ -17240,9 +18055,7 @@ Platform = function (app, listofnodes) {
 
                         ps[1] = 'state'
 
-                    }
-
-                    else {
+                    } else {
                         var key = app.user.private.value;
 
                         if (key) {
@@ -17270,9 +18083,7 @@ Platform = function (app, listofnodes) {
 
                             return
 
-                        }
-
-                        else {
+                        } else {
 
                             ps[1] = 'key'
                         }
@@ -17303,8 +18114,7 @@ Platform = function (app, listofnodes) {
                             s.new(function (exportedpack, error) {
                                 if (!exportedpack) {
                                     sitemessage(error);
-                                }
-                                else {
+                                } else {
                                     var id = makeid();
 
                                     pool.map[address] = id;
@@ -17316,15 +18126,12 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(exportedpack, id)
                             })
-                        }
-                        else {
+                        } else {
                             if (clbk)
                                 clbk(pool.packs[packid], packid)
 
                         }
-                    }
-
-                    else {
+                    } else {
                         if (clbk)
                             clbk()
                     }
@@ -17339,12 +18146,12 @@ Platform = function (app, listofnodes) {
                 var pool = s.current;
 
                 if (!pool) {
-                    
 
-                    try{
+
+                    try {
                         pool = localStorage['pool'];
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
 
                     if (pool) pool = JSON.parse(pool)
@@ -17396,13 +18203,13 @@ Platform = function (app, listofnodes) {
 
                         s.currentMap();
 
-                        try{
+                        try {
                             localStorage['pool'] = JSON.stringify(s.current)
-                        }catch(e){
-                            
+                        } catch (e) {
+
                         }
 
-                        
+
 
                     }
 
@@ -17635,7 +18442,7 @@ Platform = function (app, listofnodes) {
                             dbId: 'Enable'
                         },
                         BinPath: {
-                            name:  self.app.localization.e('e13317'),
+                            name: self.app.localization.e('e13317'),
                             id: 'binPath',
                             type: "FILE_SELECT",
                             upload: {},
@@ -17819,9 +18626,7 @@ Platform = function (app, listofnodes) {
                         request.clbk(message.error, message.data)
 
                     delete self.sdk.system16.requestes[message.id]
-                }
-
-                else {
+                } else {
 
                     /// another messages/ system
 
@@ -17843,12 +18648,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        videos : {
-            storage : {},
-            historykey : 'videohistory_v1_',
+        videos: {
+            storage: {},
+            historykey: 'videohistory_v1_',
 
-            unposted : {
-                remove : function(url){
+            unposted: {
+                remove: function (url) {
                     var unpostedVideos;
 
                     try {
@@ -17870,81 +18675,78 @@ Platform = function (app, listofnodes) {
 
                         try {
                             localStorage.setItem('unpostedVideos', JSON.stringify(unpostedVideos));
-                        }
-                        catch (e) { 
+                        } catch (e) {
 
                         }
 
-                        
+
                     }
                 }
             },
 
-            historygetall : function(){
+            historygetall: function () {
 
                 var data = {}
 
-                for (var i = 0; i < localStorage.length; i++){
+                for (var i = 0; i < localStorage.length; i++) {
 
                     var key = localStorage.key(i)
 
-                    if (key.indexOf(this.historykey) > -1){
-                        try{
+                    if (key.indexOf(this.historykey) > -1) {
+                        try {
                             data[key.replace(this.historykey, '')] = JSON.parse(localStorage.getItem(key))
 
-                        }
-                        catch(e){
+                        } catch (e) {
 
                         }
                     }
-                    
+
                 }
 
-                return _.map(_.sortBy(_.toArray(data),(v) => {
+                return _.map(_.sortBy(_.toArray(data), (v) => {
                     return -(new Date(v.date)).getTime()
                 }), (v) => {
-                    if(v.data && v.data.data){
+                    if (v.data && v.data.data) {
 
                         var s = new pShare();
 
                         var cleaned = self.psdk.share.cleanData([v.data.data])
 
-                        if (cleaned && cleaned.length){
+                        if (cleaned && cleaned.length) {
                             s._import(cleaned[0]);
 
                             v.data.share = s
                         }
-                        
+
                     }
 
                     return v
                 })
             },
 
-            historyget : function(txid){
+            historyget: function (txid) {
 
                 var h = {
-                    time : 0,
-                    date : null,
-                    percent : 0
+                    time: 0,
+                    date: null,
+                    percent: 0
                 }
 
 
-                try{
+                try {
                     var jsn = JSON.parse(localStorage[self.sdk.videos.historykey + txid] || "{}")
 
-                    if(jsn.time) h.time = jsn.time
-                    if(jsn.date) h.date = jsn.date
-                    if(jsn.percent) h.percent = Number(jsn.percent)
+                    if (jsn.time) h.time = jsn.time
+                    if (jsn.date) h.date = jsn.date
+                    if (jsn.percent) h.percent = Number(jsn.percent)
 
-                }
-                catch(e){}
+                } catch (e) {}
 
                 return h
             },
-            historyset : function(txid, data){
+            historyset: function (txid, data) {
 
-                if(!data) data = {}
+                if (!data) data = {}
 
                 data.time || (data.time = 0)
 
@@ -17956,76 +18758,77 @@ Platform = function (app, listofnodes) {
                 lasthistory.txid = txid
                 lasthistory.data = data
 
-                try{
+                try {
                     localStorage[self.sdk.videos.historykey + txid] = JSON.stringify(lasthistory)
-                }catch(e){}
+                } catch (e) {}
             },
 
-            infoshares : function(shares){
+            infoshares: function (shares) {
 
 
-                var links = _.filter(_.map(shares, function(s){
+                var links = _.filter(_.map(shares, function (s) {
                     return s ? s.url : null
-                }), function(l){
+                }), function (l) {
                     return l ? true : false
                 })
 
                 return self.sdk.videos.info(links)
 
             },
-            clearstorage : function(link){
+            clearstorage: function (link) {
 
-                if(!link) return
+                if (!link) return
 
                 delete this.storage[link]
 
                 var meta = parseVideo(link)
 
-                if (meta.type == 'peertube'){
+                if (meta.type == 'peertube') {
                     delete window.peertubeglobalcache[meta.id]
                 }
 
 
             },
-            info : function(links, update){
+            info: function (links, update, proxyupdate) {
+
+
                 var s = self.sdk.videos.storage
 
 
-                var lmap = _.map(links, function(l){
+                var lmap = _.map(links, function (l) {
 
                     var meta = parseVideo(l)
 
                     return {
-                        meta : meta,
-                        link : l
+                        meta: meta,
+                        link: l
                     }
                 });
 
-                lmap = _.filter(lmap, function(l){
+                lmap = _.filter(lmap, function (l) {
 
-                    if(!l.meta.type) return false
+                    if (!l.meta.type) return false
 
-                    if(s[l.link] && !s[l.link].waitTranscoding && !update) return false
+                    if (s[l.link] && !s[l.link].waitTranscoding && !update) return false
 
                     return true
                 })
 
-                if(!lmap.length) return Promise.resolve()
+                if (!lmap.length) return Promise.resolve()
 
-                var groups = group(lmap, function(l){
-                    return /*l.meta.subType || */l.meta.type;
+                var groups = group(lmap, function (l) {
+                    return /*l.meta.subType || */ l.meta.type;
                 })
 
+                var promisesmap = _.map(groups, function (links, type) {
 
-                var promisesmap = _.map(groups, function(links, type){
-
-                    if(!self.sdk.videos.types[type]){
+                    if (!self.sdk.videos.types[type]) {
                         return Promise.reject('typehandler')
                     }
 
-                    return self.sdk.videos.types[type](links).then(r => {
+                    return self.sdk.videos.types[type](links, proxyupdate).then(r => {
 
-                        _.each(r, function(l){
+                        _.each(r, function (l) {
                             s[l.link] = s[l.meta.id] = l
                         })
 
@@ -18041,20 +18844,20 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            paddingplaceholder : function(url, middle, clbk, elf){
+            paddingplaceholder: function (url, middle, clbk, elf) {
 
-                if(!url){
+                if (!url) {
                     middle(clbk)
                     return
                 }
 
-                return self.sdk.videos.info([url]).catch((e)=>{
+                return self.sdk.videos.info([url]).catch((e) => {
                     return Promise.resolve()
                 }).then(() => {
 
-                    middle(function(p){
+                    middle(function (p) {
 
-                        if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
+                        if (self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data) {
                             var info = self.sdk.videos.storage[url].data;
 
                             var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading-matte');
@@ -18065,60 +18868,60 @@ Platform = function (app, listofnodes) {
                             loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}%`);
                         }
 
-                        if(clbk) clbk(p)
+                        if (clbk) clbk(p)
                     })
 
                 })
             },
 
-            getVideoResponse : function(videos){
+            getVideoResponse: function (videos) {
                 var s = self.sdk.videos.storage
 
-                var lmap = _.map(videos, function(i, l){
+                var lmap = _.map(videos, function (i, l) {
 
                     var meta = parseVideo(l)
 
                     return {
-                        meta : meta,
-                        link : l
+                        meta: meta,
+                        link: l
                     }
                 })
 
                 self.sdk.videos.catchPeertubeLinks(videos, lmap)
 
-                _.each(lmap, function(l){
+                _.each(lmap, function (l) {
                     s[l.link] = s[l.meta.id] = l
                 })
             },
 
-            catchPeertubeLinks : function(linksInfo, links){
-                if(!window.peertubeglobalcache)
+            catchPeertubeLinks: function (linksInfo, links) {
+                if (!window.peertubeglobalcache)
                     window.peertubeglobalcache = {}
 
                 links.forEach(link => {
 
                     const linkInfo = linksInfo[link.link];
-                    
-                    if (linkInfo){
 
-                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive){
+                    if (linkInfo) {
+
+                        if ((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime() || linkInfo.isLive) {
                             linkInfo.aspectRatio = 1.78
                         }
 
                         linkInfo ? link.data = {
-                            image : 'https://' + linkInfo.from + linkInfo.previewPath,
-                            thumbnail : 'https://' + linkInfo.from + linkInfo.thumbnailPath,
-                            views : linkInfo.views,
-                            viewers : linkInfo.viewers,
-                            duration : linkInfo.duration,
-                            aspectRatio : linkInfo.aspectRatio || 1,
-                            isLive : linkInfo.isLive,
+                            image: 'https://' + linkInfo.from + linkInfo.previewPath,
+                            thumbnail: 'https://' + linkInfo.from + linkInfo.thumbnailPath,
+                            views: linkInfo.views,
+                            viewers: linkInfo.viewers,
+                            duration: linkInfo.duration,
+                            aspectRatio: linkInfo.aspectRatio || 1,
+                            isLive: linkInfo.isLive,
 
-                            isCorrect : linkInfo.uuid ? true : false,
-                            original : linkInfo
+                            isCorrect: linkInfo.uuid ? true : false,
+                            original: linkInfo
                         } : '';
 
-                        if(link.meta.id.indexOf('/audio') > -1){
+                        if (link.meta.id.indexOf('/audio') > -1) {
                             window.peertubeglobalcache[link.meta.id.replace('/audio', '')] = linkInfo
                         }
                         window.peertubeglobalcache[link.meta.id] = linkInfo
@@ -18128,13 +18931,13 @@ Platform = function (app, listofnodes) {
                 });
             },
 
-            types : {
-                youtube : function(links){
-                    var result = _.map(links, function(l){
+            types: {
+                youtube: function (links) {
+                    var result = _.map(links, function (l) {
 
                         l.data = {
-                            image : videoImage(l.link),
-                            views : 0
+                            image: videoImage(l.link),
+                            views: 0
                         }
 
                         return l
@@ -18144,11 +18947,23 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve(result)
                 },
 
-                vimeo : function(links){
+                vimeo: function (links) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                peertube : function(links){
+                peertube: function (links, update) {
+
+                    return self.app.api.fetch('peertube/videos', {
+                        urls: links.map(link => link.link),
+                        update : update ? true : false
+                    }).then(linksInfo => {
+                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
+                        return Promise.resolve(links);
+                    })
+
+                },
+
+                common: function (links) {
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
@@ -18159,47 +18974,36 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                common : function(links){
 
-                    return self.app.api.fetch('peertube/videos', {
-                        urls: links.map(link => link.link),
-                    }).then(linksInfo => {
-                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
-                        return Promise.resolve(links);
-                    })
-
-                },
-
-               
-                peertubeStream : function(links) {
+                peertubeStream: function (links) {
                     const promisesStack = links.map((link) =>
-                      self.app.peertubeHandler.api.videos
-                        .getDirectVideoInfo(
-                          { id: link.meta.id },
-                          { host: link.meta.host_name },
-                        )
+                        self.app.peertubeHandler.api.videos
+                        .getDirectVideoInfo({
+                            id: link.meta.id
+                        }, {
+                            host: link.meta.host_name
+                        }, )
                         .then((res) => ({
-                          ...res,
-                          linkFull: link.link,
+                            ...res,
+                            linkFull: link.link,
                         })),
                     );
 
                     return Promise.all(promisesStack).then((res) => {
-                      const linksInfoObject = res.reduce(
-                        (acc, curVal) => ({
-                          ...acc,
-                          [curVal.linkFull]: curVal,
-                        }),
-                        {},
-                      );
-                      self.sdk.videos.catchPeertubeLinks(linksInfoObject, links)
-                      return Promise.resolve(links);
+                        const linksInfoObject = res.reduce(
+                            (acc, curVal) => ({
+                                ...acc,
+                                [curVal.linkFull]: curVal,
+                            }), {},
+                        );
+                        self.sdk.videos.catchPeertubeLinks(linksInfoObject, links)
+                        return Promise.resolve(links);
                     });
                 },
 
-                bitchute : function(links){
+                bitchute: function (links) {
 
-                    var promises = _.map(links, function(l){
+                    var promises = _.map(links, function (l) {
                         return new Promise((resolve, reject) => {
 
                             var link = l.link.replace('/embed/', '/video/');
@@ -18214,7 +19018,7 @@ Platform = function (app, listofnodes) {
                                     reject()
                                 }
 
-                                
+
                             }).catch(reject)
 
 
@@ -18222,8 +19026,8 @@ Platform = function (app, listofnodes) {
                         }).then(r => {
 
                             l.data = {
-                                views : 0,
-                                image : r.preview
+                                views: 0,
+                                image: r.preview
                             }
 
                             return Promise.resolve(l)
@@ -18233,11 +19037,11 @@ Platform = function (app, listofnodes) {
                     return Promise.all(promises)
 
                 },
-                ipfs : function(links) {
+                ipfs: function (links) {
                     const dataMap = links.map((l) => {
                         l.data = {
-                            views : 0,
-                            image : null
+                            views: 0,
+                            image: null
                         };
 
                         return l;
@@ -18247,28 +19051,28 @@ Platform = function (app, listofnodes) {
                 },
             },
 
-            volume : 0,
-            save : function(){
+            volume: 0,
+            save: function () {
 
-                try{
+                try {
                     localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
             },
-            load : function(){
+            load: function () {
 
                 var _v = undefined
-                
-                try{
-                    _v = localStorage['pn_videovolume_2']
-                }catch(e){
-                    
-                }
-                
 
-                if(typeof _v == 'undefined') {
-                    if(self.app.mobileview && !window.cordova)
+                try {
+                    _v = localStorage['pn_videovolume_2']
+                } catch (e) {
+
+                }
+
+
+                if (typeof _v == 'undefined') {
+                    if (self.app.mobileview && !window.cordova)
                         _v = '0'
                     else
                         _v = '1'
@@ -18279,10 +19083,10 @@ Platform = function (app, listofnodes) {
 
             },
 
-            init : function(clbk){
+            init: function (clbk) {
                 self.sdk.videos.load()
 
-                if(clbk) clbk()
+                if (clbk) clbk()
             }
         },
 
@@ -18296,14 +19100,14 @@ Platform = function (app, listofnodes) {
                 this.eventListeners[lStorageProp][eventType] = callback;
             },
             off(eventType, lStorageProp) {
-                if(this.eventListeners[lStorageProp]){
+                if (this.eventListeners[lStorageProp]) {
                     delete this.eventListeners[lStorageProp][eventType];
 
                     if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
                         delete this.eventListeners[lStorageProp];
                     }
                 }
-                
+
             },
             init() {
                 window.storage_tab = makeid()
@@ -18348,7 +19152,7 @@ Platform = function (app, listofnodes) {
             return id;
         }
 
-        var getaddress = function(){
+        var getaddress = function () {
             if (platform.sdk.address.pnet())
                 return platform.sdk.address.pnet().address
 
@@ -18357,9 +19161,9 @@ Platform = function (app, listofnodes) {
 
 
         self.storage = {
-            data : {},
-            key : 'firebasetokens_v1',
-            clear : function(){
+            data: {},
+            key: 'firebasetokens_v1',
+            clear: function () {
                 self.storage.data = {}
                 this.save()
             },
@@ -18368,40 +19172,38 @@ Platform = function (app, listofnodes) {
 
                 var local = null
 
-                try{
+                try {
                     local = localStorage[self.storage.key] || "{}";
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
-                
+
 
                 if (local) {
                     try {
                         storage = JSON.parse(local)
-                    }
-                    catch (e) {
-                    }
+                    } catch (e) {}
                 }
 
                 self.storage.data = storage;
             },
             save: function () {
-                try{
+                try {
                     localStorage[self.storage.key] = JSON.stringify(self.storage.data);
-                }catch(e){
-                    
+                } catch (e) {
+
                 }
             },
 
-            get : function(proxy, address, token){
+            get: function (proxy, address, token) {
 
                 return deep(self.storage.data, appid + '.' + token + '.' + address + '.' + proxy)
             },
 
-            set : function(proxy, address, token){
-                if(!self.storage.data[appid]) self.storage.data[appid] = {}
-                if(!self.storage.data[appid][token]) self.storage.data[appid][token] = {}
-                if(!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {}
+            set: function (proxy, address, token) {
+                if (!self.storage.data[appid]) self.storage.data[appid] = {}
+                if (!self.storage.data[appid][token]) self.storage.data[appid][token] = {}
+                if (!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {}
 
                 self.storage.data[appid][token][address][proxy] = true
 
@@ -18415,25 +19217,25 @@ Platform = function (app, listofnodes) {
 
                 var address = getaddress()
 
-                if(!address) return Promise.reject()
+                if (!address) return Promise.reject()
 
             },
 
             revokeDevice: function (proxy) {
 
                 return self.app.api.fetchauth('firebase/revokedevice', {
-                    device : device()
+                    device: device()
                 }, {
-                    proxy : proxy
+                    proxy: proxy
                 })
 
             },
 
             setToken: function (address, token, proxy) {
 
-                if(!address) return Promise.reject('address')
+                if (!address) return Promise.reject('address')
 
-                if(!proxy) return Promise.reject('proxy')
+                if (!proxy) return Promise.reject('proxy')
 
                 //var exist = self.storage.get(proxy, address, token)
 
@@ -18448,33 +19250,33 @@ Platform = function (app, listofnodes) {
             },
 
             setSettings: function (proxy) {
-                if(!proxy) return Promise.reject('proxy')
+                if (!proxy) return Promise.reject('proxy')
                 return self.request.setSettings(proxy).then(r => {
                     return Promise.resolve()
                 })
             },
 
-            existanother : function(proxy, address){
+            existanother: function (proxy, address) {
                 var obj = self.storage.data[appid] || {}
 
-                var nf = function(obj, ii){
-                    return _.find(obj || {}, function(v, i){
+                var nf = function (obj, ii) {
+                    return _.find(obj || {}, function (v, i) {
                         return i != ii
                     })
                 }
 
                 obj = nf(obj, proxy)
 
-                if(obj) return true
+                if (obj) return true
 
                 obj = nf(obj, address)
 
-                if(obj) return true
+                if (obj) return true
 
                 return false
             },
 
-            exist : function(proxy, address, token){
+            exist: function (proxy, address, token) {
                 /*var exist = self.storage.get(proxy, address, token)
 
                 if (exist){
@@ -18483,11 +19285,11 @@ Platform = function (app, listofnodes) {
 
                 return self.request.mytokens(proxy).then(r => {
 
-                    var exist = _.find(r.tokens, function(t){
+                    var exist = _.find(r.tokens, function (t) {
                         return t.token == token && t.id == appid
                     })
 
-                    if (exist){
+                    if (exist) {
                         return Promise.resolve(exist)
                     }
 
@@ -18495,12 +19297,12 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            checkProxy : function(proxy){
+            checkProxy: function (proxy) {
                 return self.request.info(proxy).then(r => {
 
                     var apps = (r.id || "").split(',')
 
-                    if (apps.indexOf(appid) == -1){
+                    if (apps.indexOf(appid) == -1) {
                         return Promise.reject('proxyfirebaseid')
                     }
                     return Promise.resolve(appid)
@@ -18509,7 +19311,7 @@ Platform = function (app, listofnodes) {
             }
         }
 
-        self.revokeall = function(){
+        self.revokeall = function () {
             if (using) {
                 FirebasePlugin?.unregister();
             }
@@ -18519,20 +19321,20 @@ Platform = function (app, listofnodes) {
             return self.request.revokeall()
         }
 
-        self.set = function(proxy){
-            if(!currenttoken) return Promise.reject('emptytoken')
+        self.set = function (proxy) {
+            if (!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
             var token = currenttoken
 
 
             return self.api.checkProxy(proxy).then(r => {
-                return  self.api.exist(proxy, address, token)
+                return self.api.exist(proxy, address, token)
             }).then(exist => {
 
-                if(exist) return Promise.resolve()
+                if (exist) return Promise.resolve()
 
-                if(self.api.existanother(proxy, address)) return self.request.revokeall()
+                if (self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
 
@@ -18544,23 +19346,25 @@ Platform = function (app, listofnodes) {
 
         }
 
-        self.settings = async function(current){
+        self.settings = async function (current) {
 
-            if(!using && !usingWeb) return
-            if(!currenttoken) return
+            if (!using && !usingWeb) return
+            if (!currenttoken) return
 
-            if(!current){
-                for(const proxy of platform.app.api.get.proxies()){
-                    const {info} = await proxy.get.info();
-                    if(info.firebase.useNotifications && info.firebase.inited){
+            if (!current) {
+                for (const proxy of platform.app.api.get.proxies()) {
+                    const {
+                        info
+                    } = await proxy.get.info();
+                    if (info.firebase.useNotifications && info.firebase.inited) {
                         current = proxy;
                     }
                 }
             }
-            if(!current) return Promise.reject('proxy')
+            if (!current) return Promise.reject('proxy')
 
             return self.api.checkProxy(current).then(r => {
-                return  self.api.setSettings(current)
+                return self.api.setSettings(current)
             }).catch(e => {
                 console.log(e)
                 return Promise.resolve()
@@ -18569,23 +19373,25 @@ Platform = function (app, listofnodes) {
 
         self.request = {
 
-            revokeall : function(){
+            revokeall: function () {
 
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
-                    device : device()
+                    device: device()
                 })
 
             },
 
-            info : function(proxy){
+            info: function (proxy) {
                 return platform.app.api.fetchauth('firebase/info', {}, {
-                    proxy : proxy
+                    proxy: proxy
                 })
             },
 
-            mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
-                    proxy : proxy
+            mytokens: function (proxy) {
+                return platform.app.api.fetchauth('firebase/mytokens', {
+                    device: device()
+                }, {
+                    proxy: proxy
                 })
             },
 
@@ -18594,7 +19400,7 @@ Platform = function (app, listofnodes) {
                 return platform.app.api.fetchauth('firebase/revoke', {
                     token
                 }, {
-                    proxy : proxy
+                    proxy: proxy
                 })
 
             },
@@ -18602,9 +19408,9 @@ Platform = function (app, listofnodes) {
             revokeDevice: function (proxy) {
 
                 return platform.app.api.fetchauth('firebase/revokedevice', {
-                    device : device()
+                    device: device()
                 }, {
-                    proxy : proxy
+                    proxy: proxy
                 })
 
 
@@ -18614,28 +19420,28 @@ Platform = function (app, listofnodes) {
 
 
                 return platform.app.api.fetchauth('firebase/set', {
-                    device : device(),
-                    token : token,
-                    id : appid,
+                    device: device(),
+                    token: token,
+                    id: appid,
                     settings: self.getSettings()
                 }, {
-                    proxy : proxy
+                    proxy: proxy
                 })
 
             },
 
             setSettings: function (proxy) {
                 return platform.app.api.fetchauth('firebase/settings', {
-                    device : device(),
+                    device: device(),
                     settings: self.getSettings()
                 }, {
-                    proxy : proxy
+                    proxy: proxy
                 })
 
             }
         }
 
-        self.getSettings = function (){
+        self.getSettings = function () {
             const data = {}
             const settings = platform.sdk.usersettings.meta;
 
@@ -18646,15 +19452,15 @@ Platform = function (app, listofnodes) {
                 comments: 'c',
                 answers: 'a',
                 followers: 'f',
-                commentScore:'cs',
-                win : 'w'
+                commentScore: 'cs',
+                win: 'w'
             }
 
             _.each(keys, (key, i) => {
-                if(settings[i]){
+                if (settings[i]) {
                     data[key] = settings[i].value
                 }
-                
+
             })
 
             /*for(const key in settings){
@@ -18662,14 +19468,14 @@ Platform = function (app, listofnodes) {
             }*/
 
             data['web'] = Boolean(!window.cordova)
-            
+
             return data;
         }
 
         self.get = function (clbk) {
             if (using) {
 
-                FirebasePlugin.getToken(function(token) {
+                FirebasePlugin.getToken(function (token) {
 
                     currenttoken = token
                     platform.fcmtoken = token
@@ -18681,7 +19487,7 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk(currenttoken)
 
-                }, function(error) {
+                }, function (error) {
                     console.error(error, 'fcmToken not set on server');
 
                     if (clbk)
@@ -18689,7 +19495,7 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }else if(usingWeb) {
+            } else if (usingWeb) {
 
                 //
                 // if (clbk)
@@ -18697,8 +19503,8 @@ Platform = function (app, listofnodes) {
                 //
                 // return
 
-                try{
-                    if(!firebase.apps.length) {
+                try {
+                    if (!firebase.apps.length) {
                         firebase.initializeApp({
                             messagingSenderId: "1020521924918",
                             projectId: 'pocketnet',
@@ -18707,7 +19513,7 @@ Platform = function (app, listofnodes) {
                         });
                     }
                     const messaging = firebase.messaging();
-                    messaging.getToken().then(token=>{
+                    messaging.getToken().then(token => {
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()
@@ -18718,16 +19524,15 @@ Platform = function (app, listofnodes) {
                         console.log("E", e)
                     })
 
-                }
-                catch (e) {
+                } catch (e) {
                     console.log("E", e)
                 }
-                
+
             }
         }
 
-        self.permissions = function(clbk){
-            if(using) {
+        self.permissions = function (clbk) {
+            if (using) {
                 FirebasePlugin.hasPermission(function (hasPermission) {
 
                     if (!hasPermission) {
@@ -18743,12 +19548,11 @@ Platform = function (app, listofnodes) {
                     }
 
                 });
-            }else if (usingWeb){
+            } else if (usingWeb) {
 
-                if(typeof Notification == 'undefined'){
+                if (typeof Notification == 'undefined') {
 
-                }
-                else{
+                } else {
                     const notificationPermission = Notification.requestPermission();
 
                     if (!notificationPermission) {
@@ -18765,73 +19569,72 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                
+
             }
-		}
+        }
 
         self.events = function () {
-            if(using) {
+            if (using) {
                 FirebasePlugin.onMessageReceived((data) => {
 
-                    pretry(function(){
+                    pretry(function () {
 
                         return app.appready
-        
+
                     }).then(r => {
                         if (!data) data = {}
 
                         if (data.data)
                             platform.ws.messageHandler(data.data)
-    
-    
-    
+
+
+
                         if (data.room_id) {
-    
+
                             if (data.tap) {
                                 // Wait until we can navigate Matrix
                                 retry(function () {
-    
+
                                     return platform && platform.matrixchat && platform.matrixchat.core;
-    
+
                                 }, function () {
-    
+
                                     setTimeout(function () {
-    
+
                                         platform.matrixchat.core.goto(data.room_id);
-    
-                                    if (platform.matrixchat.core.apptochat)
-                                        platform.matrixchat.core.apptochat();
-    
+
+                                        if (platform.matrixchat.core.apptochat)
+                                            platform.matrixchat.core.apptochat();
+
                                     }, 50)
-    
-    
-    
+
+
+
                                 });
                             }
-    
-    
-    
+
+
+
                             return;
                         }
-    
+
                         if (data.tap) {
-    
+
                             platform.ws.destroyMessages();
                             const body = JSON.parse(data?.json);
                             body.url = body?.url.replace("/index", "");
-    
-                            if(body.url) {
-                                if(body.url === "/userpage?id=wallet"){
+
+                            if (body.url) {
+                                if (body.url === "/userpage?id=wallet") {
                                     platform.app.nav.api.go({
                                         open: true,
                                         href: 'wallet',
                                         history: true,
                                         inWnd: true,
-                                        essenseData: {
-                                        },
+                                        essenseData: {},
                                     });
-                                }else {
-    
+                                } else {
+
                                     const params = new URLSearchParams(body.url);
 
                                     platform.app.nav.api.load({
@@ -18842,10 +19645,10 @@ Platform = function (app, listofnodes) {
                                         clbk: function (d, p) {
                                             app.nav.wnds['post'] = p
                                         },
-    
+
                                         essenseData: {
                                             share: params.get('s'),
-    
+
                                             reply: {
                                                 answerid: params.get('commentid') || "",
                                                 parentid: params.get('parentid') || "",
@@ -18855,35 +19658,29 @@ Platform = function (app, listofnodes) {
                                     })
 
                                 }
-                            }else{
+                            } else {
                                 platform.app.nav.api.go({
-                                    open : true,
-                                    href : 'notifications',
-                                    inWnd : true,
-                                    history : true,
-                                    essenseData : {
-                                    }
+                                    open: true,
+                                    href: 'notifications',
+                                    inWnd: true,
+                                    history: true,
+                                    essenseData: {}
                                 })
                             }
                         } else {
-    
+
                             if (typeof cordova != 'undefined') {
-    
+
                                 var cordovabadge = deep(cordova, 'plugins.notification.badge')
-    
+
                                 if (cordovabadge)
-                                    cordovabadge.increase(1, function (badge) {
-                                    });
+                                    cordovabadge.increase(1, function (badge) {});
                             }
-    
+
                         }
                     })
 
-                    
-
-
-            });
-
+                });
 
                 // When token is refreshed, update the matrix element for the Vue app
                 FirebasePlugin?.onTokenRefresh(function (token) {
@@ -18897,19 +19694,22 @@ Platform = function (app, listofnodes) {
                 }, function (error) {
                     console.error(error);
                 });
+
             }
         }
 
-        var prepareclbk = async function(token){
-            if (token){
+        var prepareclbk = async function (token) {
+            if (token) {
                 let current = null;
-                for(const proxy of platform.app.api.get.proxies()){
-                    const {info} = await proxy.get.info();
-                    if(info.firebase.useNotifications && info.firebase.inited){
+                for (const proxy of platform.app.api.get.proxies()) {
+                    const {
+                        info
+                    } = await proxy.get.info();
+                    if (info.firebase.useNotifications && info.firebase.inited) {
                         current = proxy;
                     }
                 }
-                if (current){
+                if (current) {
                     self.set(current).catch(e => {
                         console.log("error", e)
                     })
@@ -18919,41 +19719,39 @@ Platform = function (app, listofnodes) {
 
         }
 
-        self.init = function(clbk){
-            
-            if(clbk) clbk()
+        self.init = function (clbk) {
+
+            if (clbk) clbk()
 
             app.user.isState(function (state) {
-            
-                if(state){
-                    self.prepare(function(token){
+
+                if (state) {
+                    self.prepare(function (token) {
 
                         prepareclbk(token)
-    
+
                     })
-                }
-                else{
+                } else {
 
                 }
-                
+
 
             })
 
         }
 
-        self.prepare = function(clbk){
+        self.prepare = function (clbk) {
             self.storage.load()
 
             if (using || usingWeb) {
 
-				self.permissions(clbk)
-			}
-            else{
+                self.permissions(clbk)
+            } else {
                 if (clbk)
-				    clbk()
+                    clbk()
             }
 
-		}
+        }
 
         self.destroy = function (clbk) {
 
@@ -19006,9 +19804,12 @@ Platform = function (app, listofnodes) {
 
                 if (typeof joypixels != 'undefined') {
                     nm = joypixels.toImage(filterXSS(trimHtml(m, c || 20)));
-                }
-                else {
+                } else {
                     nm = filterXSS(trimHtml(m, c || 20));
+                }
+
+                if (share.repost) {
+                    nm += ' + ' + self.app.localization.e('reposted')
                 }
 
                 return nm
@@ -19019,7 +19820,9 @@ Platform = function (app, listofnodes) {
 
                 var m = share.caption;
 
-                if(!m) m = share.renders.text()
+                var paidsub = share.visibility() == 'paid' && !platform.app.pkoindisable && !app.paidsubscriptiondisable
+
+                if (!m) m = share.renders.text()
 
                 var symbols = extendedpreview ? (platform.app.mobileview ? 80 : 180) : 20;
 
@@ -19036,11 +19839,11 @@ Platform = function (app, listofnodes) {
 
                 var meta = parseVideo(share.url || "")
 
-                if(app.curation()) return ''
+                if (app.curation()) return ''
 
                 h = '<div class="sharepreview"><div class="shareprwrapper">'
 
-                if (images.length && !extendedpreview) {
+                if (images.length && !extendedpreview && !paidsub) {
 
                     var img = images[0]
 
@@ -19060,69 +19863,71 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="tcell fortext">'
 
-                if(nm.length > 2){
+                if (nm.length > 2 && !paidsub) {
                     h += '<div><span>' + nm + '</span></div>'
                 }
 
+                if (paidsub){
+                    h += '<div><span><b>' + self.app.localization.e('fastmessagepaidsubscription_share') + '</b></span></div>'
+                }
 
-                if (images.length && extendedpreview) {
+                if (share.repost) {
+                    h += '<div><i class="fas fa-share"></i> <span>' + self.app.localization.e('reposted') + '</span></div>'
+                }
+
+
+                if (images.length && extendedpreview && !paidsub) {
 
 
                     h += '<div class="shareimages commentprev">'
                     h += '<div class="imagesContainer">'
-                        _.each(images, function (image) {
+                    _.each(images, function (image) {
 
-                            h += '<div class="imagesWrapper">'
-                            h += '<div class="image" image="' + image.i + '" i="' + image.i + '">'
+                        h += '<div class="imagesWrapper">'
+                        h += '<div class="image" image="' + image.i + '" i="' + image.i + '">'
 
-                            if (image.v) {
-                                h += '<div class="vstyle">'
-                                h += '<i class="fas fa-play"></i>'
-                                h += '</div>'
-                            }
-
+                        if (image.v) {
+                            h += '<div class="vstyle">'
+                            h += '<i class="fas fa-play"></i>'
                             h += '</div>'
-                            h += '</div>'
+                        }
 
-                        })
+                        h += '</div>'
+                        h += '</div>'
+
+                    })
 
                     h += '</div>'
                     h += '</div>'
 
                 }
 
-                if (images.length || links.length || share.tags.length || meta.type) {
+                if (!paidsub && (images.length || links.length || share.tags.length || meta.type)) {
 
                     h += '<div class="additionalcontent">'
 
                     var a = ' + '
 
-                        if (!meta.type){
-                            if (images.length) {
-                                a +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
-                            }
-
-                            if (links.length) {
-                                a +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
-                            }
-
-                            if (share.tags.length) {
-                                a +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
-                            }
+                    if (!meta.type) {
+                        if (images.length) {
+                            a += flb(self.app.localization.e('timages')) + ' (' + images.length + ') '
                         }
 
-                        else
-                        {
-                            a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                        if (links.length) {
+                            a += flb(self.app.localization.e('tlinks')) + ' (' + links.length + ') '
                         }
 
-                    h+=a
+                        if (share.tags.length) {
+                            a += flb(self.app.localization.e('e13280')) + ' (' + share.tags.length + ') '
+                        }
+                    } else {
+                        a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                    }
+
+                    h += a
 
                     h += '</div>'
                 }
-
-
-
 
                 h += '</div>'
 
@@ -19158,11 +19963,15 @@ Platform = function (app, listofnodes) {
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
 
 
-                    h+= " PKOIN"
+                h += " PKOIN"
 
-                    if(data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
-                        h+= ' <i class="fas fa-heart"></i>'
-                    }
+                if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization') {
+                    h += ' <i class="fas fa-heart"></i>'
+                }
+
+                if (data.opmessage == 'a:subscription') {
+                    h += ' <i class="fas fa-fire"></i>'
+                }
 
 
 
@@ -19286,8 +20095,7 @@ Platform = function (app, listofnodes) {
                     t = '👍';
 
                     if (value < 0) t = '👎';
-                }
-                else {
+                } else {
                     t = '<i class="fas fa-thumbs-up"></i>';
 
                     if (value < 0) t = '<i class="fas fa-thumbs-down fa-flip-horizontal"></i>';
@@ -19330,13 +20138,13 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(src || '') || '*') + '">'
 
-                if (!src && letter){
+                if (!src && letter) {
 
                     h += '<span class="letter">' + letter.toUpperCase() + '</span>';
                 }
 
 
-                if(self.app.platform.ui.markUser){
+                if (self.app.platform.ui.markUser) {
 
                     h += self.app.platform.ui.markUser(author.address);
 
@@ -19363,7 +20171,7 @@ Platform = function (app, listofnodes) {
 
                 if (caption) {
 
-                    if (donation){
+                    if (donation) {
 
                         h += " " + caption;
 
@@ -19417,8 +20225,8 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (author) {
 
-                var me = platform.psdk.userInfo.getmy() 
-                
+                var me = platform.psdk.userInfo.getmy()
+
                 var d = ''
 
                 if (me && me.relation(author.address, 'subscribes')) {
@@ -19437,38 +20245,38 @@ Platform = function (app, listofnodes) {
                 return h
             },
 
-            simple : function(json){
+            simple: function (json) {
 
                 h += '<div class="cwrapper">\
                         <div class="cell cellforimage">\
                             <div class="icon">'
 
 
-                h +=            '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
-                h +=            '</div>'
+                h += '<div class="usericon" contain ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h += '</div>'
 
-                h +=        '</div>\
+                h += '</div>\
                         </div>\
                         <div class="ccell">\
                             <div class="infomain">\
                                 <div class="caption">'
 
-                                if (json.caption) {
-                                    h += " " + clearStringXss(json.caption)
-                                }
+                if (json.caption) {
+                    h += " " + clearStringXss(json.caption)
+                }
 
-                h +=            '</div>\
+                h += '</div>\
                                 <div class="tips">' + clearStringXss(json.text) + '\
                                 </div>\
                             </div>'
 
-                h +=        self.tempates.time(json.time)
+                h += self.tempates.time(json.time)
 
-                h +=    '</div>'
+                h += '</div>'
 
 
                 h += '</div>'
-    
+
                 return h;
             }
 
@@ -19488,15 +20296,14 @@ Platform = function (app, listofnodes) {
                 }
             },
             connectionfailed: {
-                loadMore: function (data) {
-                }
+                loadMore: function (data) {}
             },
 
             ///
 
             cScore: {
-                electronSettings : {
-                    size : 'medium'
+                electronSettings: {
+                    size: 'medium'
                 },
                 fastMessageEvents: function (data, message, close) {
 
@@ -19510,7 +20317,7 @@ Platform = function (app, listofnodes) {
                             clbk: function (d, p) {
                                 app.nav.wnds['post'] = p
 
-                                if(close) close()
+                                if (close) close()
                             },
 
                             essenseData: {
@@ -19524,7 +20331,7 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                        
+
 
                         return false
 
@@ -19537,10 +20344,10 @@ Platform = function (app, listofnodes) {
                     platform.psdk.ws.update('cScore', data)
 
                     platform.sdk.users.get([data.addrFrom], function () {
-                        
+
 
                         data.user = platform.psdk.userInfo.get(data.addrFrom)
-                        
+
 
                         data.i = '👍';
 
@@ -19603,7 +20410,7 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    if(data.user && data.user.address){
+                    if (data.user && data.user.address) {
 
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
@@ -19630,8 +20437,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             },
 
             reshare: {
@@ -19640,7 +20446,7 @@ Platform = function (app, listofnodes) {
                     platform.sdk.users.get([data.addrFrom], function () {
 
                         data.user = platform.psdk.userInfo.get(data.addrFrom)
-                        
+
                         platform.sdk.node.shares.getbyid([data.txid, data.txidRepost], function (s, fromcashe) {
 
 
@@ -19696,7 +20502,7 @@ Platform = function (app, listofnodes) {
                     var html = '';
 
 
-                    if (data.user && data.user.address){
+                    if (data.user && data.user.address) {
 
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
@@ -19705,7 +20511,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    if(data.share && data.shareReposted){
+                    if (data.share && data.shareReposted) {
                         text = self.tempates.share(data.share, null, true) + '<div class="sharedivide"></div>' + self.tempates.share(data.shareReposted, null, true)
                     }
 
@@ -19733,7 +20539,7 @@ Platform = function (app, listofnodes) {
                             clbk: function (d, p) {
                                 app.nav.wnds['post'] = p
 
-                                if(close) close()
+                                if (close) close()
                             },
 
                             essenseData: {
@@ -19746,8 +20552,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             },
 
             postfromprivate: {
@@ -19817,7 +20622,7 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    if(data.share){
+                    if (data.share) {
                         text = self.tempates.share(data.share, null, true)
                     }
 
@@ -19841,20 +20646,19 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid([data.txid], function () {
 
-                            var share = self.app.platform.psdk.share.get(data.txid) 
+                            var share = self.app.platform.psdk.share.get(data.txid)
 
-                            if (share && share.itisstream()){
+                            if (share && (share.itisstream() || (share.itisvideo() && self.app.television))) {
 
                                 platform.app.nav.api.load({
-                                    open : true,
-                                    href : 'index?video=1&v=' + data.txid,
-                                    history : true
+                                    open: true,
+                                    href: 'index?video=1&v=' + data.txid,
+                                    history: true
                                 })
 
-                                if(close) close()
-                                
-                            }
-                            else{
+                                if (close) close()
+
+                            } else {
                                 platform.app.nav.api.load({
                                     open: true,
                                     href: 'post?s=' + data.txid,
@@ -19863,7 +20667,7 @@ Platform = function (app, listofnodes) {
                                     clbk: function (d, p) {
                                         app.nav.wnds['post'] = p
 
-                                        if(close) close()
+                                        if (close) close()
                                     },
 
                                     essenseData: {
@@ -19878,14 +20682,13 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    if(data.share && data.share.itisstream()){
+                    if (data.share && (data.share.itisstream() || (!platform.app.pkoindisable && !platform.app.paidsubscriptiondisable && data.share.visibility() == 'paid'))) {
                         message.el.addClass('bright')
                     }
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             },
 
             sharepocketnet: {
@@ -19898,7 +20701,7 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.get(data.addrFrom)
-                            
+
 
                             if (data.txids && !data.txid) data.txid = data.txids
 
@@ -19980,7 +20783,7 @@ Platform = function (app, listofnodes) {
                             clbk: function (d, p) {
                                 app.nav.wnds['post'] = p
 
-                                if(close) close()
+                                if (close) close()
                             },
 
                             essenseData: {
@@ -19993,13 +20796,12 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             },
 
             "transaction": {
-                electronSettings : {
-                    size : 'small'
+                electronSettings: {
+                    size: 'small'
                 },
                 loadMore: function (data, clbk, wa) {
 
@@ -20019,7 +20821,7 @@ Platform = function (app, listofnodes) {
 
                         var addr = platform.app.user.address.value
 
-                        if(!data.addr) data.addr = addr
+                        if (!data.addr) data.addr = addr
 
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
@@ -20041,7 +20843,7 @@ Platform = function (app, listofnodes) {
 
                             if (data.address) {
                                 data.user = platform.psdk.userInfo.getShortForm(data.address)
-                                
+
                             }
 
                             if (clbk)
@@ -20054,8 +20856,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.txinfo) {
                         _dataclbk(data.txinfo)
-                    }
-                    else {
+                    } else {
                         platform.sdk.node.transactions.get.tx(data.txid, _dataclbk)
                     }
 
@@ -20080,26 +20881,23 @@ Platform = function (app, listofnodes) {
                             var a = 'activity'
 
                             n.caption = self.app.localization.e('e13333')
-                            n.text = self.app.localization.e('e13334') + " " + platform.mp.coin(data.tx.amount) + " "+self.app.localization.e('e13335')+" '" + a + "'!"
+                            n.text = self.app.localization.e('e13334') + " " + platform.mp.coin(data.tx.amount) + " " + self.app.localization.e('e13335') + " '" + a + "'!"
                             n.topic = 'pos'
 
 
-                        }
-
-                        else {
+                        } else {
 
 
                             if (data.address != user.address && data.user) {
 
-                                if(_.indexOf(platform.sdk.addresses.storage.addresses || [], data.address) > -1) return
+                                if (_.indexOf(platform.sdk.addresses.storage.addresses || [], data.address) > -1) return
 
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
                                     if (data.opmessage && data.opmessage.indexOf('pay_') > -1) {
-                                        n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
-                                    }
-                                    else {
+                                        n.text = n.text + ' ' + self.app.localization.e('e13336') + ' "' + data.opmessage + '"'
+                                    } else {
                                         n.text = n.text + "!"
                                     }
 
@@ -20162,14 +20960,12 @@ Platform = function (app, listofnodes) {
 
                             }
 
-                        }
-
-                        else {
+                        } else {
 
                             if (!platform.sdk.address.pnet() || data.address != platform.sdk.address.pnet().address) {
 
 
-                                if (data.address){
+                                if (data.address) {
 
                                     var me = platform.sdk.user.me()
                                     if (me && me.relation(data.address, 'blocking')) {
@@ -20186,19 +20982,24 @@ Platform = function (app, listofnodes) {
 
                                         if (data.opmessage) {
 
-                                            if(data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization'){
-                                                txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+                                            if (data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization' && data.opmessage != 'a:subscription') {
+                                                txt += ' ' + self.app.localization.e('e13336') + ' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
                                             }
 
-                                            if(data.opmessage == 'a:monetization'){
-                                                txt += ' '+self.app.localization.e('fastmessagemonetization')
+                                            if (data.opmessage == 'a:monetization') {
+                                                txt += ' ' + self.app.localization.e('fastmessagemonetization')
                                             }
 
-                                            if(data.opmessage == 'a:donate'){
-                                                txt += ' '+self.app.localization.e('fastmessagedonate')
+                                            if (data.opmessage == 'a:donate') {
+                                                txt += ' ' + self.app.localization.e('fastmessagedonate')
                                             }
 
+                                            if (data.opmessage == 'a:subscription') {
+                                                txt += ' ' + self.app.localization.e('fastmessagepaidsubscription')
+                                            }
                                             
+
+
                                         }
 
                                         html += self.tempates.user(data.user, '', true, txt, self.tempates.transaction(data), data.time)
@@ -20230,19 +21031,16 @@ Platform = function (app, listofnodes) {
 
                                     return false;
                                 }
-                            }
-                            else {
+                            } else {
                                 if (data.address != platform.sdk.address.pnet().address) {
                                     if (!platform.sdk.usersettings.meta.transactions.value || app.pkoindisable) {
                                         return false;
                                     }
-                                }
-                                else {
+                                } else {
                                     return false;
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             return false;
                         }
 
@@ -20261,33 +21059,31 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
-                    if(data.opmessage == 'a:monetization' && platform.app.monetization){
-                        message.el.find('.infomain,.extra').on('click', function(){
+                    if (data.opmessage == 'a:monetization' && platform.app.monetization) {
+                        message.el.find('.infomain,.extra').on('click', function () {
 
 
-                            
+
                             platform.app.nav.api.go({
-                                open : true,
-                                href : self.app.mobileview ? 'earnings' : 'userpage?id=earnings',
-                                inWnd : self.app.mobileview ? true : false,
-                                history : true,
-                                essenseData : {
-                                }
+                                open: true,
+                                href: self.app.mobileview ? 'earnings' : 'userpage?id=earnings',
+                                inWnd: self.app.mobileview ? true : false,
+                                history: true,
+                                essenseData: {}
                             })
 
                         })
-                    }
-                    else{
-                        message.el.find('.infomain,.extra').on('click', function(){
+                    } else {
+                        message.el.find('.infomain,.extra').on('click', function () {
 
                             app.nav.api.load({
-                                open : true,
-                                id : 'transactionview',
-                                inWnd : true,
-                
-                                essenseData : {
-                                    txid : data.txid,
-                                    share : true,
+                                open: true,
+                                id: 'transactionview',
+                                inWnd: true,
+
+                                essenseData: {
+                                    txid: data.txid,
+                                    share: true,
                                 }
                             })
 
@@ -20300,12 +21096,19 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                fastMessageEventsFst : function (data, message, close) {
+                fastMessageEventsFst: function (data, message, close) {
 
-                    if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+                    if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization') {
 
-                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
-                            
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function () {
+
+                        })
+                    }
+
+                    if (data.opmessage == 'a:subscription') {
+
+                        self.app.platform.effects.templates.paidsubscription(app.el.html, function () {
+
                         })
                     }
                 },
@@ -20320,26 +21123,26 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.notifications.wsBlock(hb)
 
-                        if(clbk) clbk(0)
+                        if (clbk) clbk(0)
 
                         return
 
                     }
 
-                        var s = platform.sdk.node.transactions;
+                    var s = platform.sdk.node.transactions;
 
-                        var dif = platform.currentBlock - hb
+                    var dif = platform.currentBlock - hb
 
-                        platform.currentBlock = hb;
-                        platform.lasttimecheck = new Date()
-                        platform.lastblocktime = new Date()
+                    platform.currentBlock = hb;
+                    platform.lasttimecheck = new Date()
+                    platform.lastblocktime = new Date()
 
 
-                        try{
-                            localStorage['lastblock'] = platform.currentBlock
-                        }catch(e){
-                            
-                        }
+                    try {
+                        localStorage['lastblock'] = platform.currentBlock
+                    } catch (e) {
+
+                    }
 
 
                     if (dif)
@@ -20363,12 +21166,14 @@ Platform = function (app, listofnodes) {
 
                     platform.actions.ws.block(data)
 
+                    platform.app.apps.emit('block', {height : hb})
+
                     ////////////////
 
 
-               
 
-                    setTimeout(function(){
+
+                    setTimeout(function () {
                         platform.matrixchat.init()
                     }, 100)
                     ////////
@@ -20409,12 +21214,12 @@ Platform = function (app, listofnodes) {
 
                     platform.lasttimecheck = new Date()
                     platform.lastblocktime = new Date()
-                    try{
+                    try {
                         localStorage['lastblock'] = platform.currentBlock
-                    }catch(e){
+                    } catch (e) {
 
                     }
-                    
+
 
                     platform.sdk.notifications.wsBlock(data.height)
 
@@ -20437,15 +21242,23 @@ Platform = function (app, listofnodes) {
                     platform.actions.ws.block(data)
 
                     _.each(platform.sdk.node.transactions.storage, (tx) => {
-                        if(tx.height && tx.height != platform.currentBlock) tx.confirmations ++
+                        if (tx.height && tx.height != platform.currentBlock) tx.confirmations++
                     })
+
+
+                    platform.app.apps.emit('block', {
+                        height: data.block || data.height
+                    })
+
+
+                    platform.app.apps.emit('block', {height : data.block || data.height})
 
                     ////////////////
 
 
                     clbk()
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         platform.matrixchat.init()
                     }, 100)
                 },
@@ -20479,8 +21292,8 @@ Platform = function (app, listofnodes) {
             },
 
             comment: {
-                electronSettings : {
-                    size : 'medium'
+                electronSettings: {
+                    size: 'medium'
                 },
                 fastMessageEvents: function (data, message, close) {
 
@@ -20494,7 +21307,7 @@ Platform = function (app, listofnodes) {
                             clbk: function (d, p) {
                                 app.nav.wnds['post'] = p
 
-                                if(close) close()
+                                if (close) close()
                             },
 
                             essenseData: {
@@ -20524,7 +21337,7 @@ Platform = function (app, listofnodes) {
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
 
-                                    if(close) close()
+                                    if (close) close()
                                 },
 
                                 essenseData: {
@@ -20550,7 +21363,7 @@ Platform = function (app, listofnodes) {
                     platform.sdk.users.get([data.addrFrom], function () {
 
                         data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
-                        
+
                         data.user.address = data.addrFrom
 
                         if (!data.commentid && data.txid)
@@ -20564,7 +21377,7 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.comments.getbyid(ids, function (comments) {
 
-                            
+
                             data.comment = comments[0]
 
                             platform.psdk.ws.update('comment', data)
@@ -20597,13 +21410,13 @@ Platform = function (app, listofnodes) {
                         n.text = data.comment.renders.previewEmojidis()
                         n.topic = 'comments'
 
-                        n.caption = self.tempates._user(data.user) + " "+self.app.localization.e('e13337')+""
+                        n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13337') + ""
                     }
 
                     if (data.reason == 'answer' && data.comment && data.share && data.user) {
                         n.text = data.comment.renders.previewEmojidis()
                         n.topic = 'answers'
-                        n.caption = self.tempates._user(data.user) + ' '+self.app.localization.e('e13338')+''
+                        n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13338') + ''
                     }
 
                     if (_.isEmpty(n))
@@ -20619,10 +21432,10 @@ Platform = function (app, listofnodes) {
 
                     var extra = ''
                     extra += '<div class="tcell foranswer">'
-                    extra += '<button class="reply ghost">'+self.app.localization.e('reply')+'</button>'
+                    extra += '<button class="reply ghost">' + self.app.localization.e('reply') + '</button>'
                     extra += '</div>'
 
-                    if (data.user && data.user.address){
+                    if (data.user && data.user.address) {
 
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
@@ -20639,14 +21452,14 @@ Platform = function (app, listofnodes) {
 
                         var toptext = self.app.localization.e('e13337');
 
-                        if (data.donation && data.amount){
+                        if (data.donation && data.amount) {
 
                             var amount = String(Number(data.amount) / smulti || 0);
                             toptext = '<span>' + self.app.localization.e('donated') + '</span>' + ' <span class="donate"> +' + amount + ' PKOIN </span>';
                         }
 
                         if (text) {
-                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
+                            var toptext = self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
 
                             html += toptext
                         }
@@ -20705,28 +21518,27 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                clbks: {
-                },
+                clbks: {},
 
-                fastMessageEventsFst : function (data, message, close) {
+                fastMessageEventsFst: function (data, message, close) {
 
-                    if (data.donation && data.amount){
+                    if (data.donation && data.amount) {
                         message.el.addClass('dnt')
 
-                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
-                            
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function () {
+
                         })
                     }
                 },
             },
 
             event: {
-                electronSettings : {
-                    size : 'small'
+                electronSettings: {
+                    size: 'small'
                 },
                 loadMore: function (data, clbk, wa) {
 
-                    
+
 
                     if (data.addrFrom) {
 
@@ -20741,7 +21553,7 @@ Platform = function (app, listofnodes) {
                                 platform.psdk.ws.update('userInfo', data)
 
                                 var me = platform.psdk.userInfo.getmy()
-                                
+
                                 //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
                                 if (me) {
@@ -20781,14 +21593,13 @@ Platform = function (app, listofnodes) {
 
                                     }
 
-                                    
-                                    if(!data.electronSettings) data.electronSettings = {}
+
+                                    if (!data.electronSettings) data.electronSettings = {}
                                     data.electronSettings.size = 'medium'
 
                                     clbk()
                                 })
-                            }
-                            else {
+                            } else {
 
                                 if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe' || data.mesType == 'subscribePrivate') && !wa) {
 
@@ -20796,13 +21607,13 @@ Platform = function (app, listofnodes) {
                                     platform.psdk.ws.update(data.mesType, data)
 
                                     //var u = platform.psdk.userInfo.get(data.addrFrom)
-                                    
+
                                     ///platform.sdk.users.storage[data.addrFrom];
 
                                     //var me = platform.psdk.userInfo.getmy() 
 
-                                    
-                                    
+
+
                                     //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
@@ -20903,9 +21714,7 @@ Platform = function (app, listofnodes) {
                             be.addClass('disabled');
 
                             platform.api.actions.subscribe(data.user.address, function (tx, error) {
-                                if (tx) {
-                                }
-                                else {
+                                if (tx) {} else {
                                     self.app.platform.errorHandler(error, true)
 
                                     be.removeClass('disabled');
@@ -20930,7 +21739,7 @@ Platform = function (app, listofnodes) {
                                 clbk: function (d, p) {
                                     app.nav.wnds['post'] = p
 
-                                    if(close) close()
+                                    if (close) close()
                                 },
 
                                 essenseData: {
@@ -20966,7 +21775,7 @@ Platform = function (app, listofnodes) {
 
                         if (data.upvoteVal > 2) {
 
-                            n.text = self.tempates._user(data.user) + " "+self.app.localization.e('e13343')+", " + data.upvoteVal + ' ★'
+                            n.text = self.tempates._user(data.user) + " " + self.app.localization.e('e13343') + ", " + data.upvoteVal + ' ★'
                             n.topic = 'upvotes'
                             n.caption = self.app.localization.e('e13344')
                         }
@@ -20986,7 +21795,7 @@ Platform = function (app, listofnodes) {
                     var caption = '';
                     var extra = '';
 
-                    if (data.user && data.user.address){
+                    if (data.user && data.user.address) {
 
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
@@ -20996,7 +21805,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     if (data.mesType == 'userInfo') {
-                       
+
                     }
 
 
@@ -21019,14 +21828,13 @@ Platform = function (app, listofnodes) {
 
                             (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value) ||
 
-                            (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value)
+                            (data.upvoteVal > 2 && platform.sdk.usersettings.meta.upvotes.value)
 
-                        )
-                            {
+                        ) {
 
-                                if(data.upvoteVal <= 2){
-                                    tkey = 'downvoteShareMessage'
-                                }
+                            if (data.upvoteVal <= 2) {
+                                tkey = 'downvoteShareMessage'
+                            }
 
                             var star = self.tempates.star(data.upvoteVal)
 
@@ -21049,8 +21857,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             },
 
             message: {
@@ -21061,9 +21868,9 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.address], function () {
 
-                            data.user =  platform.psdk.userInfo.getShortForm(data.address)
-                            
-                            
+                            data.user = platform.psdk.userInfo.getShortForm(data.address)
+
+
 
                             if (data.user) {
                                 data.user.address = data.address
@@ -21095,7 +21902,7 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    if (data.user && data.user.address){
+                    if (data.user && data.user.address) {
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
                             return html
@@ -21112,8 +21919,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {
-                }
+                clbks: {}
             }
         }
 
@@ -21125,8 +21931,7 @@ Platform = function (app, listofnodes) {
 
                     self.addAccount(null, clbk, proxy)
 
-                }
-                else {
+                } else {
                     if (clbk)
                         clbk(false)
                 }
@@ -21156,7 +21961,7 @@ Platform = function (app, listofnodes) {
             platform.app.api.get.currentwss().then(wss => {
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
-                    reconnectDecay : 1
+                    reconnectDecay: 1
                 }));
 
 
@@ -21165,28 +21970,30 @@ Platform = function (app, listofnodes) {
 
                     var jm = message;
 
-                    try { jm = JSON.parse(message || "{}"); } catch (e) {
+                    try {
+                        jm = JSON.parse(message || "{}");
+                    } catch (e) {
                         console.log("E", e)
                     }
 
 
-                    if (jm){
+                    if (jm) {
 
 
-                        if (jm.type == 'proxy-message-tick'){
+                        if (jm.type == 'proxy-message-tick') {
 
                             return wss.proxy.system.tick(jm.data)
 
                         }
 
-                        if (jm.type == 'changenode'){
+                        if (jm.type == 'changenode') {
 
                             var temp = platform.sdk.node.transactions.temp
 
                             var t = [];
 
-                            _.each(temp, function(trx, s){
-                                _.each(trx, function(tr){
+                            _.each(temp, function (trx, s) {
+                                _.each(trx, function (tr) {
                                     t.push(tr)
                                 })
                             })
@@ -21198,7 +22005,7 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        if (jm.type == 'proxy-settings-changed'){
+                        if (jm.type == 'proxy-settings-changed') {
 
                             return wss.proxy.changed(jm.data)
 
@@ -21218,33 +22025,32 @@ Platform = function (app, listofnodes) {
                     self.connected = {};
 
                     //lost = platform.sdk.notifications.storage.block || platform.currentBlock || 0
-                    
-                    
-                    
+
+
+
 
                     opened = true;
 
                     auth(() => {
 
-                        self.getMissed().then(() => {
-                        })
-                        
+                        self.getMissed().then(() => {})
+
                     }, wss.proxy)
 
                     if (clbk)
                         clbk()
                 }
 
-                wss.proxy.clbks.changed.wss = function(){
+                wss.proxy.clbks.changed.wss = function () {
 
                     reconnect()
                 }
 
-                socket.onclose = function(){
+                socket.onclose = function () {
                     delete wss.proxy.clbks.changed.wss
                 }
 
-                if(socket.init) socket.init()
+                if (socket.init) socket.init()
 
             }).catch(e => {
 
@@ -21255,26 +22061,26 @@ Platform = function (app, listofnodes) {
 
         }
 
-        var rmmessageDestroy = function(message){
+        var rmmessageDestroy = function (message) {
             if (message.timeout) {
                 clearTimeout(message.timeout);
                 message.timeout = null
             }
         }
 
-        var rmmessagesDestroy = function(){
+        var rmmessagesDestroy = function () {
             _.each(self.fastMessages, function (message, i) {
                 rmmessageDestroy(message)
             })
         }
 
-        var addmessagesTime = function(time = 5000){
+        var addmessagesTime = function (time = 5000) {
 
             _.each(self.fastMessages, function (message, i) {
                 destroyMessage(message, time, false, true);
             })
 
-            
+
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
@@ -21282,13 +22088,12 @@ Platform = function (app, listofnodes) {
 
             var rmfu = function () {
 
-                
-                
 
-                if(!time){
+
+
+                if (!time) {
                     rmfu2()
-                }
-                else{
+                } else {
                     message.el.addClass('willhidden')
 
                     setTimeout(rmfu2, 200)
@@ -21296,9 +22101,7 @@ Platform = function (app, listofnodes) {
 
             }
 
-            var rmfu2 = function(){
-
-                console.log('destroyMessage', message, time)
+            var rmfu2 = function () {
 
                 message.el.remove();
 
@@ -21319,16 +22122,13 @@ Platform = function (app, listofnodes) {
 
             if (platform.focus || noarrange) {
 
-                if(time){
+                if (time) {
                     message.timeout = setTimeout(rmfu, time)
-                }
-                else{
+                } else {
                     rmfu()
                 }
-               
-            }
 
-            else {
+            } else {
                 setTimeout(function () {
                     destroyMessage(message, time, noarrange)
                 }, 1000)
@@ -21336,7 +22136,7 @@ Platform = function (app, listofnodes) {
 
         }
 
-        var hideallnotifications = function(){
+        var hideallnotifications = function () {
             hideallnotificationselement(false)
             self.destroyMessages()
 
@@ -21344,134 +22144,130 @@ Platform = function (app, listofnodes) {
 
         var hideallnotificationselementShowed = false
 
-        var hideallnotificationselement = function(show){
+        var hideallnotificationselement = function (show) {
+
+            if (hideallnotificationselementShowed == show) return
+
+            if (self.hideallnotificationsel) {
+                if (show) {
+                    self.hideallnotificationsel.html('<div class="hidenf">' + platform.app.localization.e('hideallnotifications') + '</div>')
+                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+
+                } else {
+                    self.hideallnotificationsel.addClass('willhidden')
+                    self.hideallnotificationsel.html('')
+                    self.hideallnotificationsel.removeClass('willhidden')
+                }
+            }
 
             hideallnotificationselementShowed = show
-            
-            if(self.hideallnotificationsel){
-                window.rifticker.add(() => {
-                    if(show){
-                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
-
-                    }
-                    else{
-                        self.hideallnotificationsel.addClass('willhidden')
-
-                        setTimeout(function () {
-                            if (hideallnotificationselementShowed){
-                                return
-                            }
-                            self.hideallnotificationsel.html('')
-                            self.hideallnotificationsel.removeClass('willhidden')
-                        }, 200)
-                    }
-                })
-
-            }
         }
 
-        var arrangeMessages = function(){
+        var arrangeMessages = function () {
 
-			var offset = 0;
+            var offset = 0;
 
-			var maxCount = 4;
+            var maxCount = 4;
             var showremove = 2;
 
-			var boffset = 0;
+            var boffset = 0;
 
             var mtbl = platform.app.mobileview
 
-			if (mtbl){
-				maxCount = 2;
+            if (mtbl) {
+                maxCount = 2;
                 showremove = 2;
-			}
+            }
 
-			var remove = self.fastMessages.length - maxCount;
+            var remove = self.fastMessages.length - maxCount;
 
-			var s = false;
+            var s = false;
 
-            console.log('self.fastMessages.length', self.fastMessages.length)
+            var ioffset = 0
+
+            if(window.cordova && isios()){
+                ioffset = Number((getComputedStyle(document.documentElement).getPropertyValue("--app-margin-top-i") || '0px').replace('px', ''))
+            }
 
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!m.expanded && !m.el.hasClass('smallsize')){
-						m.el.addClass('smallsize');
-						s = true
-					}
+                    if (!m.expanded && !m.el.hasClass('smallsize')) {
+                        m.el.addClass('smallsize');
+                        s = true
+                    }
 
-				})
-			}
-            else{
-                _.each(self.fastMessages, function(m, i){
-					if (m.el.hasClass('smallsize')){
-						m.el.removeClass('smallsize');
-					}
-				})
+                })
+            } else {
+                _.each(self.fastMessages, function (m, i) {
+                    if (m.el.hasClass('smallsize')) {
+                        m.el.removeClass('smallsize');
+                    }
+                })
             }
 
-            if (mtbl){
+            if (mtbl) {
                 boffset = platform.app.margintop
+
+                if(window.cordova && isios()){
+                    boffset = Math.max(ioffset, platform.app.margintop)
+                }
+                
             }
 
-            if (showremove && self.fastMessages.length >= showremove){
+            if (showremove && self.fastMessages.length >= showremove) {
                 boffset = 50
 
-                if (mtbl){
-                    boffset += platform.app.margintop
+                if (mtbl) {
+                    boffset += Math.max(ioffset, platform.app.margintop)
                 }
 
                 hideallnotificationselement(true)
-            }
-            else{
+            } else {
 
                 hideallnotificationselement(false)
             }
 
             offset = offset + boffset
 
-            _.each(self.fastMessages, function(m, i){
+            _.each(self.fastMessages, function (m, i) {
 
-                if(i < remove){
+                if (i < remove) {
                     /*if(!isMobile()) {
                         destroyMessage(m, 0, true)
                     }
                     else {*/
-                        m.el.addClass('hidden')
+                    m.el.addClass('hidden')
 
-                        rmmessageDestroy(m)
-                        
+                    rmmessageDestroy(m)
+
                     //}
-                }
+                } else {
 
-                else
-                {
-
-                    if (m.el.hasClass('hidden')){
+                    if (m.el.hasClass('hidden')) {
                         m.el.removeClass('hidden')
                         destroyMessage(m, 5000, false, true)
                     }
-                    
+
                     offset += 5;
-                
+
                     var r = offset
 
                     window.rifticker.add(() => {
-                        if(!mtbl){
+                        if (!mtbl) {
                             m.el.css('bottom', r + 'px');
-                        }else{
+                        } else {
                             m.el.css('top', r + 'px');
                         }
                     })
-                        
+
                     offset += m.el.outerHeight();
                 }
 
             })
 
 
-		}
+        }
 
         var tArrangeMessages = _.debounce(arrangeMessages, 200)
 
@@ -21487,27 +22283,28 @@ Platform = function (app, listofnodes) {
 
                 return platform.sdk.missed.get(platform.sdk.notifications.storage.block || platform.currentBlock || 0)
 
-            }).then(({block, notifications}) => {
+            }).then(({
+                block,
+                notifications
+            }) => {
 
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
-                    console.log('notifications', notifications)
 
-                    if(!notifications) return
+                    if (!notifications) return
 
                     lazyEach({
                         array: notifications,
                         action: function (p) {
-                            
+
                             p.success()
 
                             self.messageHandler(p.item)
                         },
 
                         all: {
-                            success: function () {
-                            }
+                            success: function () {}
                         }
                     })
 
@@ -21534,7 +22331,7 @@ Platform = function (app, listofnodes) {
             tArrangeMessages()
         }
 
-        self.fastMessageByJson = function(json, destroyclbk, p = {}){
+        self.fastMessageByJson = function (json, destroyclbk, p = {}) {
             var html = self.tempates.simple(json)
 
             return self.fastMessage(html, destroyclbk, p = {})
@@ -21572,11 +22369,11 @@ Platform = function (app, listofnodes) {
 
             destroyMessage(message, 5000, false, true);
 
-            message.el.on('click', function(){
+            message.el.on('click', function () {
 
                 if (p.click) {
 
-                    p.click() 
+                    p.click()
                     destroyMessage(message, 1)
 
                     setTimeout(() => {
@@ -21606,22 +22403,22 @@ Platform = function (app, listofnodes) {
 
                 }
                 else{*/
-                    if(!message.expanded){
-                        
-                        setTimeout(() => {
-                            addmessagesTime(15000)
-                        }, 50)
+                if (!message.expanded) {
 
-                        message.el.removeClass('smallsize');
+                    setTimeout(() => {
+                        addmessagesTime(15000)
+                    }, 50)
 
-                        message.expanded = true
+                    message.el.removeClass('smallsize');
 
+                    message.expanded = true
+
+                    tArrangeMessages();
+
+                    setTimeout(function () {
                         tArrangeMessages();
-
-                        setTimeout(function(){
-                            tArrangeMessages();
-                        }, 200)
-                    }
+                    }, 200)
+                }
                 //}
 
 
@@ -21647,12 +22444,12 @@ Platform = function (app, listofnodes) {
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
-                    allowPageScroll : false,
+                    allowPageScroll: false,
                     directions: {
-                        left : {
+                        left: {
                             //endmove : true,
                             trueshold: 15,
-                            distance : d,
+                            distance: d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
                             },
@@ -21682,8 +22479,8 @@ Platform = function (app, listofnodes) {
 
             data || (data = {})
 
-            if(!data.msg && !data.mesType){
-                if(data.vin && data.vout){
+            if (!data.msg && !data.mesType) {
+                if (data.vin && data.vout) {
                     data.msg = 'transaction'
                 }
             }
@@ -21699,12 +22496,12 @@ Platform = function (app, listofnodes) {
 
                 if (data.mesType) m = self.messages[data.mesType]
                 if (data.msg && !m) m = self.messages[data.msg]
-                if(!data.electronSettings) data.electronSettings = {}
+                if (!data.electronSettings) data.electronSettings = {}
 
                 if (!m) m = {}
 
 
-                if (data.txid) {
+               if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -21755,7 +22552,7 @@ Platform = function (app, listofnodes) {
 
                                 var txid = data.txid
 
-                                if(!self.showedIds[txid]) {
+                                if (!self.showedIds[txid]) {
                                     self.showedIds[txid] = true
 
 
@@ -21790,10 +22587,12 @@ Platform = function (app, listofnodes) {
                                         _el = null
 
 
-                                        drawRoundedImage(image, 100, 200, 200).then(image=>{
+                                        drawRoundedImage(image, 100, 200, 200).then(image => {
 
                                             electron.ipcRenderer.send('electron-notification-small', {
-                                                title, body, image
+                                                title,
+                                                body,
+                                                image
                                             });
 
                                         })
@@ -21802,8 +22601,7 @@ Platform = function (app, listofnodes) {
 
                                     }
 
-                                }
-                                else {
+                                } else {
                                     return
                                 }
 
@@ -21831,13 +22629,11 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(m.electronSettings) data.electronSettings = _.clone(m.electronSettings)
+                if (m.electronSettings) data.electronSettings = _.clone(m.electronSettings)
 
                 if (m.loadMore) {
                     m.loadMore(data, clbks);
-                }
-
-                else {
+                } else {
                     clbks();
                 }
 
@@ -21849,8 +22645,7 @@ Platform = function (app, listofnodes) {
             if (socket) {
                 try {
                     socket.send(message);
-                }
-                catch (e) {
+                } catch (e) {
 
                 }
             }
@@ -21944,14 +22739,14 @@ Platform = function (app, listofnodes) {
         }
 
         self.subscribe = {
-            logs : function(){
+            logs: function () {
 
                 address = platform.sdk.address.pnet(keyPair.publicKey).address
 
                 var message = {
-                    signature : platform.app.user.signature(),
+                    signature: platform.app.user.signature(),
                     address: address,
-                    action : 'subscribe.logs'
+                    action: 'subscribe.logs'
                 }
 
                 self.send(JSON.stringify(message))
@@ -21960,15 +22755,15 @@ Platform = function (app, listofnodes) {
 
         }
 
-        self.unsubscribe ={
-            logs : function(){
+        self.unsubscribe = {
+            logs: function () {
 
                 address = platform.sdk.address.pnet(keyPair.publicKey).address
 
                 var message = {
-                    signature : platform.app.user.signature(),
+                    signature: platform.app.user.signature(),
                     address: address,
-                    action : 'unsubscribe.logs'
+                    action: 'unsubscribe.logs'
                 }
 
                 self.send(JSON.stringify(message))
@@ -21982,8 +22777,7 @@ Platform = function (app, listofnodes) {
 
             if (!n) {
                 address = platform.sdk.address.pnet(keyPair.publicKey).address
-            }
-            else {
+            } else {
                 address = platform.sdk.address.wallet(n, keyPair.privateKey).address
             }
 
@@ -21999,11 +22793,11 @@ Platform = function (app, listofnodes) {
 
             var message = {
 
-                signature : platform.app.user.signature(),
+                signature: platform.app.user.signature(),
                 address: address,
                 device: platform.app.options.device,
                 block: platform.currentBlock || 0,
-                node : proxy.current ? proxy.current.key : null
+                node: proxy.current ? proxy.current.key : null
             }
 
             //platform.sdk.system.nodeex(message)
@@ -22018,8 +22812,7 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(true)
-                }
-                else {
+                } else {
                     if (clbk)
                         clbk(false)
                 }
@@ -22057,7 +22850,7 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-            if(!_OpenApi){
+            if (!_OpenApi) {
 
                 closing = false;
                 self.onlineCheck = true;
@@ -22083,9 +22876,22 @@ Platform = function (app, listofnodes) {
 
         }
 
-        setTimeout(function(){
+        setTimeout(function () {
 
             //platform.matrixchat.notify.event()
+
+
+
+            /*self.messageHandler({
+                "addr":"PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM","msg":"event",
+                "txid":"170fa3679d10d8aaa9d2ee95240cf7e5e3452f183c8c84d840163adeaa6bafaa","time":1726040005,
+                "addrFrom":"PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5","avatarFrom":"https://i.imgur.com/5kkmKpS.jpg",
+                "mesType":"postfromprivate",
+                "nameFrom":"Daniel_Satchkov",
+                "node":"185.44.127.61:38081:8087"
+            })*/
+
+
 
             /*self.messageHandler({
                 "addr": "PXqzCNZjUsCALqiNkhTsgn6gZSQLKicVY3",
@@ -22166,10 +22972,10 @@ Platform = function (app, listofnodes) {
                 "postsCnt": 1
             })*/
 
-            
-            
+
+
             /*self.messageHandler({"addr":"TXDVUUXnSMPuakN9kU1JyF1vsPLc5Le12F","msg":"transaction","txid":"426831ff4b7fe2b6c589f47a03c66e75db0065b6d39dfb4021c9e1157f3c8217","time":1688559470,"amount":"100000000","nout":"0","node":"157.90.228.34:39091:6067"})*/
-            
+
 
 
 
@@ -22248,25 +23054,27 @@ Platform = function (app, listofnodes) {
                 node: "137.135.25.73:38081:8087",
                 time: 1636521290,
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
-            })*/
+            })
 
-            
+
+            self.messageHandler({"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","msg":"transaction","txid":"02049bfc66ccf0efdd03cf715dad9d3f18c729b4012671982b115ff4d67f8069","time":1731655840,"amount":"1250000","nout":"6","node":"185.9.187.123:38081:8087"})*/
+
 
             // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
-		}, 3000)
+        }, 3000)
     }
-    
-    
+
+
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
 
         if (self.timeDifference) {
 
-            d.addSeconds(- self.timeDifference)
+            d.addSeconds(-self.timeDifference)
         }
 
         return convertDate(dateToStr(d))
@@ -22278,7 +23086,7 @@ Platform = function (app, listofnodes) {
 
         if (self.timeDifference) {
 
-            d.addSeconds(- self.timeDifference)
+            d.addSeconds(-self.timeDifference)
         }
 
         return app.reltime(d)
@@ -22318,8 +23126,7 @@ Platform = function (app, listofnodes) {
 
         if (typeof window != 'undefined') {
             crypto = window.crypto || window.msCrypto;
-        }
-        else {
+        } else {
             crypto = _crypto
         }
 
@@ -22331,8 +23138,7 @@ Platform = function (app, listofnodes) {
 
                     clbk(key)
 
-                }
-                else {
+                } else {
                     var mypbkdf2 = new PBKDF2(key, 'helper', 1, l);
 
                     mypbkdf2.deriveKey(null, function (key) {
@@ -22346,21 +23152,20 @@ Platform = function (app, listofnodes) {
 
                 var _clbk = function (key) {
 
-                    if(!crypto.subtle){
+                    if (!crypto.subtle) {
                         if (clbk)
                             clbk('')
                         return
                     }
 
                     crypto.subtle.importKey(
-                        "raw",
-                        aesjs.utils.utf8.toBytes(key),
-                        {   //this is the algorithm options
-                        name: "AES-CBC",
-                    },
-                        false,
-                        ["encrypt", "decrypt"]
-                    )
+                            "raw",
+                            aesjs.utils.utf8.toBytes(key), { //this is the algorithm options
+                                name: "AES-CBC",
+                            },
+                            false,
+                            ["encrypt", "decrypt"]
+                        )
                         .then(function (key) {
 
                             if (clbk)
@@ -22374,8 +23179,7 @@ Platform = function (app, listofnodes) {
 
                 if (key.length >= 128) {
                     _clbk(key)
-                }
-                else {
+                } else {
                     self.helpers.keyFromString(key, 16, function (key) {
 
                         _clbk(key)
@@ -22398,9 +23202,7 @@ Platform = function (app, listofnodes) {
                     if (crypto.getRandomValues) {
 
                         crypto.getRandomValues(random_num);
-                    }
-
-                    else {
+                    } else {
                         getRandomValues(random_num);
                     }
 
@@ -22427,16 +23229,17 @@ Platform = function (app, listofnodes) {
                 createKeys: function (clbk) {
                     var settings = this.settings;
 
-                    crypto.subtle.generateKey(
-                        {
-                        name: settings.name,
-                        modulusLength: settings.length, //can be 1024, 2048, or 4096
-                        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-                            hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                    },
-                        true, //whether the key is extractable (i.e. can be used in exportKey)
-                        ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
-                    )
+                    crypto.subtle.generateKey({
+                                name: settings.name,
+                                modulusLength: settings.length, //can be 1024, 2048, or 4096
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {
+                                    name: "SHA-" + settings.hashL
+                                }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                            },
+                            true, //whether the key is extractable (i.e. can be used in exportKey)
+                            ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
+                        )
                         .then(function (keys) {
 
                             if (clbk)
@@ -22476,13 +23279,17 @@ Platform = function (app, listofnodes) {
 
                     var m = 'jwk'
 
-                    if (pp == 'public') { m = 'spki' }
-                    if (pp == 'private') { m = 'pkcs8' }
+                    if (pp == 'public') {
+                        m = 'spki'
+                    }
+                    if (pp == 'private') {
+                        m = 'pkcs8'
+                    }
 
                     crypto.subtle.exportKey(
-                        m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-                        key //can be a publicKey or privateKey, as long as extractable was true
-                    )
+                            m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+                            key //can be a publicKey or privateKey, as long as extractable was true
+                        )
                         .then(function (keydata) {
                             //returns the exported key data
 
@@ -22526,26 +23333,34 @@ Platform = function (app, listofnodes) {
                     var _pp = [];
                     var m = 'jwk';
 
-                    if (pp == 'public') { _pp = ["encrypt"]; m = 'spki' }
-                    if (pp == 'private') { _pp = ["decrypt"]; m = 'pkcs8' }
+                    if (pp == 'public') {
+                        _pp = ["encrypt"];
+                        m = 'spki'
+                    }
+                    if (pp == 'private') {
+                        _pp = ["decrypt"];
+                        m = 'pkcs8'
+                    }
 
                     crypto.subtle.importKey(
-                        m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-                        convertStringToArrayBuffer(keyH),
-                        /*{   //this is an example jwk key, other key types are Uint8Array objects
-                            kty: "RSA",
-                            e: "AQAB",
-                            n: keyH,
-                            alg: settings.name + "-" + settings.hashL,
-                            ext: true,
-                        },*/
-                        { //these are the algorithm options
-                            name: settings.name,
-                            hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                        },
-                        true,
-                        _pp
-                    )
+                            m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+                            convertStringToArrayBuffer(keyH),
+                            /*{   //this is an example jwk key, other key types are Uint8Array objects
+                                kty: "RSA",
+                                e: "AQAB",
+                                n: keyH,
+                                alg: settings.name + "-" + settings.hashL,
+                                ext: true,
+                            },*/
+                            { //these are the algorithm options
+                                name: settings.name,
+                                hash: {
+                                    name: "SHA-" + settings.hashL
+                                }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                            },
+                            true,
+                            _pp
+                        )
                         .then(function (key) {
 
                             if (clbk)
@@ -22562,13 +23377,12 @@ Platform = function (app, listofnodes) {
                     //
                     var data = convertStringToArrayBuffer(text);
 
-                    crypto.subtle.encrypt(
-                        {
-                        name: "RSA-OAEP",
-                    },
-                        publicKey,
-                        data
-                    )
+                    crypto.subtle.encrypt({
+                                name: "RSA-OAEP",
+                            },
+                            publicKey,
+                            data
+                        )
                         .then(function (encrypted) {
 
                             if (clbk)
@@ -22581,14 +23395,13 @@ Platform = function (app, listofnodes) {
                 decrypt: function (privateKey, text, clbk) {
                     var data = convertStringToArrayBuffer(text);
 
-                    crypto.subtle.decrypt(
-                        {
-                        name: "RSA-OAEP",
+                    crypto.subtle.decrypt({
+                                name: "RSA-OAEP",
 
-                    },
-                        privateKey,
-                        data
-                    )
+                            },
+                            privateKey,
+                            data
+                        )
                         .then(function (decrypted) {
 
 
@@ -22667,14 +23480,13 @@ Platform = function (app, listofnodes) {
                     var strBytes = aesjs.utils[p.charsetEnc].toBytes(str);
 
                     self.helpers.keyForAes(key, function (akey) {
-                        crypto.subtle.encrypt(
-                            {
-                            name: "AES-CBC",
-                                iv: new Uint8Array(iv)/*window.crypto.getRandomValues(new Uint8Array(16)),*/
-                        },
-                            akey, //from generateKey or importKey above
-                            strBytes //ArrayBuffer of data you want to encrypt
-                        )
+                        crypto.subtle.encrypt({
+                                    name: "AES-CBC",
+                                    iv: new Uint8Array(iv) /*window.crypto.getRandomValues(new Uint8Array(16)),*/
+                                },
+                                akey, //from generateKey or importKey above
+                                strBytes //ArrayBuffer of data you want to encrypt
+                            )
                             .then(function (encrypted) {
 
                                 var _encrypted = aesjs.utils[p.charsetDec].fromBytes(new Uint8Array(encrypted));
@@ -22698,7 +23510,7 @@ Platform = function (app, listofnodes) {
 
                     self.helpers.keyForAes(key, function (akey) {
 
-                        if(!crypto.subtle){
+                        if (!crypto.subtle) {
                             if (clbk)
                                 clbk('')
 
@@ -22706,14 +23518,13 @@ Platform = function (app, listofnodes) {
                         }
 
 
-                        crypto.subtle.decrypt(
-                            {
-                            name: "AES-CBC",
-                            iv: new Uint8Array(iv), //The initialization vector you used to encrypt
-                        },
-                            akey, //from generateKey or importKey above
-                            encryptedBytes //ArrayBuffer of the data
-                        )
+                        crypto.subtle.decrypt({
+                                    name: "AES-CBC",
+                                    iv: new Uint8Array(iv), //The initialization vector you used to encrypt
+                                },
+                                akey, //from generateKey or importKey above
+                                encryptedBytes //ArrayBuffer of the data
+                            )
                             .then(function (decrypted) {
 
 
@@ -22776,17 +23587,14 @@ Platform = function (app, listofnodes) {
                                         encryptedKeys = em.keys;
 
                                         p.success()
-                                    }
-
-                                    else {
+                                    } else {
                                         p.fail()
                                     }
 
 
 
                                 }, skey)
-                            }
-                            else {
+                            } else {
                                 encryptedMessages[key] = message;
 
                                 p.success()
@@ -22819,8 +23627,7 @@ Platform = function (app, listofnodes) {
 
 
                         self.messages.encryption(publicKeys, check + message, clbk, skey)
-                    }
-                    else {
+                    } else {
                         if (clbk)
                             clbk()
                     }
@@ -22857,8 +23664,7 @@ Platform = function (app, listofnodes) {
                                     p.success()
 
                                 })
-                            }
-                            else {
+                            } else {
                                 decryptedMessages[key] = message;
 
                                 p.success()
@@ -22881,9 +23687,7 @@ Platform = function (app, listofnodes) {
 
                                 message = message.substr(check.length)
 
-                            }
-
-                            else {
+                            } else {
                                 message = ''
                                 //message = "Can't decrypt message"
                             }
@@ -22891,8 +23695,7 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(message)
                         })
-                    }
-                    else {
+                    } else {
                         if (clbk)
                             clbk('')
                     }
@@ -22914,8 +23717,7 @@ Platform = function (app, listofnodes) {
                     self.api.rsa.importKey(privateKey, 'private', function (privateKey) {
                         decryption(privateKey)
                     })
-                }
-                else {
+                } else {
                     decryption(privateKey)
                 }
 
@@ -22946,8 +23748,7 @@ Platform = function (app, listofnodes) {
                             self.api.rsa.importKey(key, 'public', function (key) {
                                 encryption(key)
                             })
-                        }
-                        else {
+                        } else {
                             encryption(key)
                         }
                     },
@@ -22974,7 +23775,7 @@ Platform = function (app, listofnodes) {
 
         self.prepare = function (clbk) {
 
-            if(!crypto.subtle) self.disabled = true
+            if (!crypto.subtle) self.disabled = true
 
             app.user.isState(function (state) {
                 if (state) {
@@ -22988,15 +23789,11 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(false)
 
-                    }
-
-                    else {
+                    } else {
                         if (clbk)
                             clbk('key')
                     }
-                }
-
-                else {
+                } else {
                     if (clbk)
                         clbk('state')
                 }
@@ -23029,8 +23826,6 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('quitAndInstall');
                         d = null;
 
-
-
                     },
 
                     fail: function () {
@@ -23047,7 +23842,7 @@ Platform = function (app, listofnodes) {
                     var _os = self.app.platform.applications.ui[os()]
                     if (_os.github && _os.github.page) {
                         d = new dialog({
-                            html:  self.app.localization.e('e13349'),
+                            html: self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
                             btn2text: self.app.localization.e('e13348'),
 
@@ -23072,8 +23867,7 @@ Platform = function (app, listofnodes) {
                     updateReady()
                 }
 
-                if (data.msg == 'download-progress') {
-                }
+                if (data.msg == 'download-progress') {}
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
                     updateAvailable()
@@ -23082,8 +23876,7 @@ Platform = function (app, listofnodes) {
                 }
             }
 
-            if (data.type == 'error') {
-            }
+            if (data.type == 'error') {}
         })
 
     }
@@ -23108,13 +23901,13 @@ Platform = function (app, listofnodes) {
     self.clearStorage = function () {
         _.each(self.sdk, function (c, id) {
 
-            if(id != 'tags' && id != 'localshares'){
+            if (id != 'tags' && id != 'localshares') {
                 if (c.storage) {
                     c.storage = {}
                 }
             }
 
-           
+
 
         })
 
@@ -23123,12 +23916,12 @@ Platform = function (app, listofnodes) {
             fs: {},
             posts: {},
             users: {},
-            tags : {}
+            tags: {}
         }
-       
+
 
         self.sdk.sharesObserver.storage = {
-            viewed : {}
+            viewed: {}
         }
 
         self.sdk.ustate.loading = {}
@@ -23151,7 +23944,7 @@ Platform = function (app, listofnodes) {
 
     }
 
-    self.clearlocal = function(){
+    self.clearlocal = function () {
         self.sdk.tags.storage.cloud = {}
 
         self.sdk.newmaterials.clear()
@@ -23177,7 +23970,7 @@ Platform = function (app, listofnodes) {
 
         fast ? self.clearStorageFast() : self.clearStorage()
 
-        if(app.peertubeHandler) app.peertubeHandler.clear()
+        if (app.peertubeHandler) app.peertubeHandler.clear()
 
         //self.sdk.node.transactions.clearUnspentoptimizationInterval()
 
@@ -23263,20 +24056,19 @@ Platform = function (app, listofnodes) {
 
     var reloading = false
 
-    self.appstateclbk = function(c){
-        if(self.loadingWithErrors){
-            self.appstate(function(){
-                setTimeout(function(){
-                    if(c) c()
+    self.appstateclbk = function (c) {
+        if (self.loadingWithErrors) {
+            self.appstate(function () {
+                setTimeout(function () {
+                    if (c) c()
                 }, 200)
             })
-        }
-        else{
-            if(c) c()
+        } else {
+            if (c) c()
         }
     }
 
-    self.appstate = function(clbk) {
+    self.appstate = function (clbk) {
 
         if (reloading) {
             return
@@ -23290,24 +24082,24 @@ Platform = function (app, listofnodes) {
         self.restart(function () {
 
             self.app.reload({
-                clbk : function () {
+                clbk: function () {
                     reloading = false
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    if(clbk) clbk()
+                    if (clbk) clbk()
                 }
             })
 
         })
     }
 
-    self.directdialog = function(proxy){
+    self.directdialog = function (proxy) {
 
         return new Promise((resolve, reject) => {
 
             var d = new dialog({
-                html:  self.app.localization.e('pdirectdialog'),
+                html: self.app.localization.e('pdirectdialog'),
                 btn1text: self.app.localization.e('dyes'),
                 btn2text: self.app.localization.e('dno'),
 
@@ -23322,7 +24114,7 @@ Platform = function (app, listofnodes) {
                     resolve()
                 },
 
-                class : 'zindex'
+                class: 'zindex'
             })
 
             self.app.api.wait.ready('useexternal').then(r => {
@@ -23359,7 +24151,7 @@ Platform = function (app, listofnodes) {
 
         //self.app.platform.sdk.node.sys.load()
 
-        setTimeout(function(){
+        setTimeout(function () {
             self.initSounds();
         }, 35000)
 
@@ -23376,15 +24168,15 @@ Platform = function (app, listofnodes) {
         self.app.api.wait.ready('use', 6000).then(r => {
 
             return new Promise((resolve, reject) => {
-                setTimeout(function(){
+                setTimeout(function () {
 
                     self.app.api.changeProxyIfNeed().then(l => {
 
-                        if(!l){
+                        if (!l) {
 
                             var d = self.app.api.get.direct()
 
-                            if (d){
+                            if (d) {
 
                                 self.directdialog(d).then(resolve)
 
@@ -23406,12 +24198,11 @@ Platform = function (app, listofnodes) {
 
             var directproxy = self.app.api.get.direct()
 
-            if (directproxy){
-                directproxy.clbks.tick.globalclbk = function(data) {
+            if (directproxy) {
+                directproxy.clbks.tick.globalclbk = function (data) {
 
                     if (data.nodeControl.state.hasUpdate) {
-                        if (!self.nodeControlUpdateNodePopup && (new Date(self.nodeControlUpdateNodeLast)).addSeconds(60 * 60) < new Date())
-                        {
+                        if (!self.nodeControlUpdateNodePopup && (new Date(self.nodeControlUpdateNodeLast)).addSeconds(60 * 60) < new Date()) {
                             self.nodeControlUpdateNodeLast = new Date()
                             self.nodeControlUpdateNodePopup = true
 
@@ -23419,14 +24210,14 @@ Platform = function (app, listofnodes) {
                                 html: self.app.localization.e('easyNode_e10062'),
                                 btn1text: self.app.localization.e('easyNode_e10015'),
                                 btn2text: self.app.localization.e('skip'),
-                                class : 'zindex',
+                                class: 'zindex',
 
                                 success: function () {
 
                                     directproxy.fetchauth('manage', {
-                                        action : 'node.update',
-                                        data : {
-                                            all : 'all'
+                                        action: 'node.update',
+                                        data: {
+                                            all: 'all'
                                         }
                                     }).then(r => {
                                         sitemessage(self.app.localization.e('easyNode_e10063'), null, 5000)
@@ -23435,7 +24226,7 @@ Platform = function (app, listofnodes) {
                                     })
 
                                 },
-                                destroy: function() {
+                                destroy: function () {
                                     self.nodeControlUpdateNodeLast = new Date()
                                     self.nodeControlUpdateNodePopup = false
                                 }
@@ -23457,7 +24248,7 @@ Platform = function (app, listofnodes) {
             self.titleManager = new self.TitleManager();
             self.sdk.captcha.load()
 
-            setTimeout(function(){
+            setTimeout(function () {
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
@@ -23468,7 +24259,7 @@ Platform = function (app, listofnodes) {
 
             self.preparePeertubeServer();
 
-            self.prepareUser(function() {
+            self.prepareUser(function () {
 
                 self.ui.externalFromCurrentUrl()
 
@@ -23487,25 +24278,30 @@ Platform = function (app, listofnodes) {
 
     }
 
-    self.preparePeertubeServer = function() {
+    self.preparePeertubeServer = function () {
         return new Promise((resolve, reject) => {
             if (self.app.options.peertubeServer)
                 return resolve();
 
-            if (typeof PeerTubePocketnet != 'undefined'){
-                
+            if (typeof PeerTubePocketnet != 'undefined') {
+
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
                 // Fetch the peertube servers
-                self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
+                self.app.peertubeHandler.api.proxy.roys({
+                    type: 'upload'
+                }).then((ptServers) => {
                     try {
                         if (ptServers)
                             self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
-                    } catch(err) {
+                    } catch (err) {
                         console.log(err);
                         return reject(err);
                     }
                     // Authenticate to this Peertube server
-                    self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
+                    self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({
+                        client_id,
+                        client_secret
+                    }) => {
                         if (client_id)
                             self.app.options.peertubeCreds.client_id = client_id;
                         if (client_secret)
@@ -23525,12 +24321,12 @@ Platform = function (app, listofnodes) {
     }
 
 
-    var checkfeatures = function(){
+    var checkfeatures = function () {
 
         self.app.user.features.telegram = 0;
         self.enablePeertube = false
 
-        if (self.app.user.address.value){
+        if (self.app.user.address.value) {
 
             var addresses = self.testchataddresses;
 
@@ -23551,36 +24347,36 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.acceptterms = function(clbk){
+    self.acceptterms = function (clbk) {
 
-        if(window.cordova && window.pocketnetstore){
+        if (window.cordova && window.pocketnetstore) {
             var key = 'acceptterms'
 
             var aterms = null
-            try{
+            try {
                 aterms = localStorage[key]
-            }catch(e){}
+            } catch (e) {}
 
-            if (!aterms){
+            if (!aterms) {
                 app.nav.api.load({
-                    open : true,
-                    id : 'terms',
-                    inWnd : true,
-                    essenseData : {
-                        success : function(){
-                            try{
+                    open: true,
+                    id: 'terms',
+                    inWnd: true,
+                    essenseData: {
+                        success: function () {
+                            try {
                                 localStorage[key] = new Date();
-                            }catch(e){}
+                            } catch (e) {}
 
 
-                            setTimeout(function(){
-                                if(clbk) clbk()
+                            setTimeout(function () {
+                                if (clbk) clbk()
                             }, 300)
 
                         }
                     },
 
-                    clbk : function(){
+                    clbk: function () {
 
                     }
                 })
@@ -23592,7 +24388,7 @@ Platform = function (app, listofnodes) {
 
 
 
-        if(clbk) clbk()
+        if (clbk) clbk()
 
     }
 
@@ -23607,24 +24403,24 @@ Platform = function (app, listofnodes) {
         self.psdk.clearStorageAndObjects()
         self.psdk.clearIdCacheAll()
 
-        app.user.isState(function(state){
+        app.user.isState(function (state) {
 
 
             if (state) {
 
                 self.actions.prepare(() => {
                     lazyActions([
-                
+
                         //self.sdk.node.transactions.loadTemp,
                         self.sdk.addresses.init,
                         self.sdk.ustate.me,
                         self.sdk.user.get,
                         self.sdk.usersettings.init,
                         self.matrixchat.importifneed,
-                        
+
                         self.firebase.init,
                         /*self.app.platform.sdk.node.transactions.get.allBalance,*/
-    
+
                         //self.sdk.exchanges.load,
                         self.sdk.articles.init,
                         self.sdk.categories.load,
@@ -23636,98 +24432,90 @@ Platform = function (app, listofnodes) {
                         self.sdk.comments.loadblocked,
                         self.sdk.notifications.initcl,
                         self.sdk.payments.prepare
-    
+
                     ], function () {
-    
+
                         //self.ui.showmykey()
 
                         self.ws.init()
-    
+
                         setTimeout(() => {
                             self.ui.showkeyafterregistration()
+                            self.app.platform.sdk.jury.updatejurycount()
                         },3000)
 
-                        
                         var account = self.actions.addAccount(self.app.user.address.value)
-    
+
                         if (self.psdk.userState.getmy()) {
                             account.setStatus(true)
                         }
-    
+
                         account.setKeys(app.user.keys())
                         account.updateUnspents().catch(e => {
                             console.error(e)
                         })
     
-                        /*self.app.api.rpc('txunspent', [[''], 1, 9999999]).then(unspents => {
-                            unspents = _.sortBy(unspents, (u) => {
-                                return u.amount
-                            })
-                            console.log("UNSPENTS", unspents)
-                        })*/
-                        
+         
     
                         self.preparingUser = false;
-    
+
                         self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-    
+
                         self.app.Logger.info({
                             actionId: 'SESSION_STARTED',
                             actionSubType: 'AUTHORIZED_SESSION',
                         });
-    
+
                         ricfbl(() => {
                             self.matrixchat.init()
                         }, 10)
-                        
+
                         self.app.initApplications()
-    
+
                         if (clbk)
                             clbk()
-    
+
                         setTimeout(self.acceptterms, 5000)
-    
-                        ricfbl(function(){
-    
+
+                        ricfbl(function () {
+
                             self.app.peertubeHandler.init()
-    
+
                             lazyActions([
                                 self.cryptography.prepare,
                                 self.sdk.pool.init,
                                 self.sdk.user.subscribeRef
-                            ], function(){
+                            ], function () {
                                 //app.notifications.subscribe()
                             })
-    
-                            if (app.curation()){
-                                if(app.user.validate()){
-                                    if(app.nav.get.href() == 'userpage?pc=1'){
+
+                            if (app.curation()) {
+                                if (app.user.validate()) {
+                                    if (app.nav.get.href() == 'userpage?pc=1') {
                                         self.matrixchat.core.apptochat()
                                     }
                                 }
                             }
-    
-                            
-    
-                            if(self.istest()){
+
+
+
+                            if (self.istest()) {
                                 $('html').addClass('testaddress')
-                            }
-                            else{
+                            } else {
                                 if ($('html').hasClass('testaddress'))
                                     $('html').removeClass('testaddress')
                             }
-    
+
                         }, 2000)
-    
-                       
-                        
+
+
+
                     })
                 })
-                
 
-                
-            }
-            else {
+
+
+            } else {
                 self.app.Logger.info({
                     actionId: 'SESSION_STARTED',
                     actionSubType: 'UNAUTHORIZED_SESSION',
@@ -23740,7 +24528,13 @@ Platform = function (app, listofnodes) {
                 if (clbk)
                     clbk()
             }
-            
+
+            setTimeout(() => {
+                console.log('self.app.television', self.app.television)
+                if (typeof initShadowPopups === 'function' && !self.app.television) initShadowPopups()
+            }, 1000)
+
+
 
         })
 
@@ -23776,29 +24570,29 @@ Platform = function (app, listofnodes) {
     }
 
     self.matrixchat = {
-        el : null,
-        inited : false,
-        initing : false,
-        chatparallax : null,
+        el: null,
+        inited: false,
+        initing: false,
+        chatparallax: null,
 
-        clbks : {
-            ALL_NOTIFICATIONS_COUNT : {},
-            NOTIFICATION : {},
-            SHOWING : {}
+        clbks: {
+            ALL_NOTIFICATIONS_COUNT: {},
+            NOTIFICATION: {},
+            SHOWING: {}
         },
 
-        deactivateAccount : function(){
-            if(self.matrixchat.core){
+        deactivateAccount: function () {
+            if (self.matrixchat.core) {
                 return self.matrixchat.core.mtrx.deactivateAccount()
             }
 
             return Promise.reject('matrixchat.core')
         },
 
-        destroy : function(){
+        destroy: function () {
 
 
-            if (self.matrixchat.chatparallax){
+            if (self.matrixchat.chatparallax) {
 
 
                 self.matrixchat.chatparallax.destroy()
@@ -23806,7 +24600,7 @@ Platform = function (app, listofnodes) {
             }
 
 
-            if (window.matrixchat){
+            if (window.matrixchat) {
                 window.matrixchat.destroy()
             }
 
@@ -23819,30 +24613,28 @@ Platform = function (app, listofnodes) {
 
 
             self.matrixchat.clbks = {
-                ALL_NOTIFICATIONS_COUNT : {},
-                NOTIFICATION : {},
-                SHOWING : {}
+                ALL_NOTIFICATIONS_COUNT: {},
+                NOTIFICATION: {},
+                SHOWING: {}
             }
 
         },
 
-        import : function(clbk){
+        import: function (clbk) {
 
 
-            if (self.matrixchat.imported){
-                if(clbk) clbk()
-            }
-            else{
+            if (self.matrixchat.imported) {
+                if (clbk) clbk()
+            } else {
                 self.matrixchat.imported = true;
 
-                if (electron){
-                    if(clbk) clbk()
-                }
-                else{
+                if (electron) {
+                    if (clbk) clbk()
+                } else {
 
                     var vs = '10'
 
-                    if (typeof numfromreleasestring != 'undefined'){
+                    if (typeof numfromreleasestring != 'undefined') {
                         vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
@@ -23855,16 +24647,15 @@ Platform = function (app, listofnodes) {
 
         },
 
-        startchat : function(address){
+        startchat: function (address) {
 
-            if (self.matrixchat.core){
+            if (self.matrixchat.core) {
 
                 var link = 'contact?id=' + hexEncode(address)
 
-                if (self.app.mobileview){
+                if (self.app.mobileview) {
                     self.matrixchat.core.apptochat(link)
-                }
-                else{
+                } else {
                     self.matrixchat.core.gopage(link)
                 }
             }
@@ -23872,12 +24663,12 @@ Platform = function (app, listofnodes) {
 
         },
 
-        importifneed : function(clbk){
+        importifneed: function (clbk) {
 
-            app.user.isState(function(state){
+            app.user.isState(function (state) {
 
-                if(self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
-                    if(clbk) clbk()
+                if (self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
+                    if (clbk) clbk()
 
                     return
                 }
@@ -23886,66 +24677,66 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        init : function(){
+        init: function () {
 
-            if(self.matrixchat.inited) return
-            if(self.matrixchat.initing) return
-            if(_OpenApi) return
+            if (self.matrixchat.inited) return
+            if (self.matrixchat.initing) return
+            if (_OpenApi) return
+            if (self.app.television) return
 
             self.matrixchat.initing = true
 
-            app.user.isState(function(state){
+            app.user.isState(function (state) {
 
                 self.matrixchat.initing = false
 
                 if (state) {
 
-                    if(self.sdk.user.reputationBlockedMe()) return
-                    if(self.sdk.user.myaccauntdeleted()) return
+                    if (self.sdk.user.reputationBlockedMe()) return
+                    if (self.sdk.user.myaccauntdeleted()) return
 
                     if (state) {
 
-                        self.matrixchat.import(function(){
+                        self.matrixchat.import(function () {
 
                             self.matrixchat.inited = true
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-                            var massmailingenabled = self.app.platform.istest() || (self.ui.usertype(self.app.user.address.value) ? true : false)
+                            var massmailingenabled = self.app.platform.istest() || (self.sdk.user.type(self.app.user.address.value) ? true : false)
                             
                             var iscallsenabled = true///self.app.platform.istest() ? true : false
 
                             var path = '/'
 
-                            if(!window.cordova && typeof _Electron == 'undefined'){
+                            if (!window.cordova && typeof _Electron == 'undefined') {
                                 path = window.pocketnetpublicpath
                             }
 
-                            if(window.cordova && isios()){
+                            if (window.cordova && isios()) {
                                 path = ''
                             }
 
-                            if(typeof _Electron != 'undefined') path = './'
+                            if (typeof _Electron != 'undefined') path = './'
 
-                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${self.app.user.address.value}"
                                     privatekey="${privatekey}"
-                                    pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    pocketnet="` + (self.app.mobileview ? '' : 'true') + `"
                                     recording="true"
-                                    iscallsenabled="`+iscallsenabled+`"
-                                    mobile="`+( self.app.mobileview ? 'true' : '')+`" 
-                                    ctheme="`+self.sdk.theme.current+`"
-                                    localization="`+self.app.localization.key+`"
-                                    fcmtoken="`+(self.fcmtoken || "")+`"
-                                    viewtype="`+(isTablet() ? "split" : "single")+`"
-                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
-                                    pkoindisabled="`+(self.app.pkoindisable)+`"
-                                    massmailingenabled="` + massmailingenabled +`"
-                                    device="` + $.md5(self.app.options.device + self.app.user.address.value) +`"
-                                    cssrules='["`+path+`css/fontawesome/css/all.min.css"]'
+                                    iscallsenabled="` + iscallsenabled + `"
+                                    mobile="` + (self.app.mobileview ? 'true' : '') + `" 
+                                    ctheme="` + self.sdk.theme.current + `"
+                                    localization="` + self.app.localization.key + `"
+                                    fcmtoken="` + (self.fcmtoken || "") + `"
+                                    viewtype="` + (isTablet() ? "split" : "single") + `"
+                                    isSoundAvailable="` + (self.sdk.usersettings.meta.sound.value) + `"
+                                    pkoindisabled="` + (self.app.pkoindisable) + `"
+                                    massmailingenabled="` + massmailingenabled + `"
+                                    device="` + $.md5(self.app.options.device + self.app.user.address.value) + `"
+                                    cssrules='["` + path + `css/fontawesome/css/all.min.css"]'
                                 >
                                 </matrix-element>
                             </div>`
@@ -23966,82 +24757,81 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        initcl : function(clbk){
+        initcl: function (clbk) {
             self.matrixchat.init()
-            if(clbk) clbk()
+            if (clbk) clbk()
         },
 
-        changeFcm : function(){
-            if (self.matrixchat.el){
+        changeFcm: function () {
+            if (self.matrixchat.el) {
                 self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
             }
         },
 
-        changeMobile : function(){
-            if (self.matrixchat.el){
-                self.matrixchat.el.find('matrix-element').attr('mobile', ( self.app.mobileview ? 'true' : ''))
-                self.matrixchat.el.find('matrix-element').attr('pocketnet', ( self.app.mobileview ? '' : 'true'))
+        changeMobile: function () {
+            if (self.matrixchat.el) {
+                self.matrixchat.el.find('matrix-element').attr('mobile', (self.app.mobileview ? 'true' : ''))
+                self.matrixchat.el.find('matrix-element').attr('pocketnet', (self.app.mobileview ? '' : 'true'))
             }
         },
 
-        changePip : function(){
-            if (self.matrixchat.el){
+        changePip: function () {
+            if (self.matrixchat.el) {
                 self.matrixchat.el.find('matrix-element').attr('pip', self.app.mobile.pip.enabled)
             }
         },
 
-        changeTheme : function(){
-            if (self.matrixchat.el){
+        changeTheme: function () {
+            if (self.matrixchat.el) {
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
             }
         },
 
-        changeLocalization : function(){
-            if (self.matrixchat.el){
+        changeLocalization: function () {
+            if (self.matrixchat.el) {
                 self.matrixchat.el.find('matrix-element').attr('localization', self.app.localization.key)
             }
         },
 
-        initevents : function(){
-            if (self.matrixchat.el){
+        initevents: function () {
+            if (self.matrixchat.el) {
 
-                if (self.app.mobileview){
+                if (self.app.mobileview) {
 
 
-                    if(self.matrixchat.chatparallax) return
+                    if (self.matrixchat.chatparallax) return
 
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
-                        el : self.matrixchat.el,
-                        transformel : self.matrixchat.el,
+                        el: self.matrixchat.el,
+                        transformel: self.matrixchat.el,
 
-                        allowPageScroll : 'vertical',
+                        allowPageScroll: 'vertical',
 
-                        directions : {
-                            left : {
-                                cancellable : true,
+                        directions: {
+                            left: {
+                                cancellable: true,
 
 
 
-                                positionclbk : function(px){
-                                },
+                                positionclbk: function (px) {},
 
-                                constraints : function(e){
+                                constraints: function (e) {
 
                                     var path = e.path
 
-                                    if(!e.path && e.composedPath) path = e.composedPath()
+                                    if (!e.path && e.composedPath) path = e.composedPath()
 
-                                    if(_.find(path, function(el){
-                                        return el.className && el.className.indexOf('noswipepnt') > -1
-                                    })) return false
+                                    if (_.find(path, function (el) {
+                                            return el.className && el.className.indexOf('noswipepnt') > -1
+                                        })) return false
 
                                     if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback())) return true
                                 },
 
-                                restrict : true,
-                                trueshold : 30,
-                                clbk : function(){
+                                restrict: true,
+                                trueshold: 30,
+                                clbk: function () {
 
                                     if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                         self.matrixchat.core.backtoapp()
@@ -24054,9 +24844,7 @@ Platform = function (app, listofnodes) {
 
                     }).init()
 
-				}
-
-                else{
+                } else {
                     if (self.matrixchat.chatparallax) {
                         self.matrixchat.chatparallax.destroy()
                         self.matrixchat.chatparallax = null
@@ -24072,10 +24860,10 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        notify : {
-            tpl : function(matrixevent){
+        notify: {
+            tpl: function (matrixevent) {
 
-                if(!self.ws) return
+                if (!self.ws) return
 
 
                 var wsntemplates = self.ws.tempates
@@ -24083,22 +24871,22 @@ Platform = function (app, listofnodes) {
                 var html = ''
 
                 var ctypes = {
-                    encrypted : 'e13345',
-                    message : 'e133452',
-                    invite : 'e133451'
+                    encrypted: 'e13345',
+                    message: 'e133452',
+                    invite: 'e133451'
                 }
 
-                if(!matrixevent.ctype) return
+                if (!matrixevent.ctype) return
 
                 var ctype = ctypes[matrixevent.ctype]
 
-                if(!ctype) return
+                if (!ctype) return
 
                 html += wsntemplates.user({
 
-                    image : matrixevent.icon,
-                    name : matrixevent.title,
-                    address : ''
+                    image: matrixevent.icon,
+                    name: matrixevent.title,
+                    address: ''
 
                 }, "", true, self.app.localization.e(ctype), '', dateNow())
 
@@ -24106,22 +24894,21 @@ Platform = function (app, listofnodes) {
                 var dtype = deep(matrixevent, 'event.event.content.msgtype')
                 var type = deep(matrixevent, 'event.event.type')
 
-                if (type != 'm.room.message'){
-                    text  = ''
+                if (type != 'm.room.message') {
+                    text = ''
 
                     return
-                }
-                else{
+                } else {
 
-                    if(dtype == 'm.image') text = self.app.localization.e('image')
-                    if(dtype == 'm.file') text = self.app.localization.e('file')
+                    if (dtype == 'm.image') text = self.app.localization.e('image')
+                    if (dtype == 'm.file') text = self.app.localization.e('file')
 
                 }
 
 
 
                 var h = '<div class="fastMessage">\
-                <div class="fmCnt">' + html + '<div class="tips">'+text+'</div></div>\
+                <div class="fmCnt">' + html + '<div class="tips">' + text + '</div></div>\
                 <div class="close">\
                     <i class="fa fa-times" aria-hidden="true"></i>\
                 </div>\
@@ -24129,12 +24916,12 @@ Platform = function (app, listofnodes) {
 
                 return h;
             },
-            event : function(matrixevent){
+            event: function (matrixevent) {
 
 
 
 
-                if(typeof _Electron != 'undefined' && !self.focus){
+                if (typeof _Electron != 'undefined' && !self.focus) {
 
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
@@ -24143,10 +24930,12 @@ Platform = function (app, listofnodes) {
                     var image = _el.find('[image]').attr('image')
                     _el = null
 
-                    drawRoundedImage(image, 100, 200, 200).then(image=>{
+                    drawRoundedImage(image, 100, 200, 200).then(image => {
 
                         electron.ipcRenderer.send('electron-notification-small', {
-                            title, body, image
+                            title,
+                            body,
+                            image
                         });
 
                     })
@@ -24158,14 +24947,14 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        shareInChat : {
-            url : function(id, url){
-                if (self.matrixchat.core){
+        shareInChat: {
+            url: function (id, url) {
+                if (self.matrixchat.core) {
 
                     self.matrixchat.core.apptochat()
 
                     return self.matrixchat.core.mtrx.shareInChat(id, {
-                        urls : [url]
+                        urls: [url]
                     }).catch(e => {
 
                         self.matrixchat.core.backtoapp()
@@ -24178,18 +24967,18 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        getNotificationsCount : function(){
-            if (self.matrixchat.core){
+        getNotificationsCount: function () {
+            if (self.matrixchat.core) {
                 return self.matrixchat.core.getNotificationsCount()
             }
 
             return 0
         },
 
-        share : {
+        share: {
 
-            object : function(sharing){
-                if (self.matrixchat.core){
+            object: function (sharing) {
+                if (self.matrixchat.core) {
 
                     self.matrixchat.core.apptochat()
 
@@ -24204,13 +24993,13 @@ Platform = function (app, listofnodes) {
                 return Promise.reject('matrixchat.core')
             },
 
-            url : function(url){
-                if (self.matrixchat.core){
+            url: function (url) {
+                if (self.matrixchat.core) {
 
                     self.matrixchat.core.apptochat()
 
                     return self.matrixchat.core.share({
-                        urls : [url]
+                        urls: [url]
                     }).catch(e => {
 
                         self.matrixchat.core.backtoapp()
@@ -24223,27 +25012,29 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        backtoapp : function(){
+        backtoapp: function () {
 
-            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){
+            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent) {
                 self.matrixchat.core.backtoapp()
 
                 return true
             }
         },
 
-        wait : function(){
-            return pretry(function(){
+        wait: function () {
+            return pretry(function () {
                 return self.matrixchat.core
             }).then(() => {
                 return self.matrixchat.core
             })
         },
 
-        showed : function(){
-            if(!self.matrixchat.core){ return false }
+        showed: function () {
+            if (!self.matrixchat.core) {
+                return false
+            }
 
-            if (self.app.mobileview){
+            if (self.app.mobileview) {
                 return !self.matrixchat.core.hiddenInParent
             }
 
@@ -24251,20 +25042,22 @@ Platform = function (app, listofnodes) {
             return self.matrixchat.core.isactive()
         },
 
-        link : function(core){
+        link: function (core) {
 
             core.update({
-                block : {
-                    height : self.currentBlock
+                block: {
+                    height: self.currentBlock
                 }
             })
 
-            core.backtoapp = function(link){
+            core.backtoapp = function (link) {
 
                 if (self.app.mobileview)
-                    app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
+                    app.nav.api.history.removeParameters(['pc'], null, {
+                        replaceState: true
+                    })
 
-                if (link){
+                if (link) {
 
                     var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
@@ -24276,7 +25069,7 @@ Platform = function (app, listofnodes) {
                         link = link.replace('index', 'post')
 
 
-                    if (link.indexOf('index') == '0'){
+                    if (link.indexOf('index') == '0') {
 
                         var arrHref = link.split("?");
 
@@ -24284,37 +25077,37 @@ Platform = function (app, listofnodes) {
 
                         var ext = params.get('ext');
 
-                        if (ext){
+                        if (ext) {
 
                             self.app.nav.api.history.addRemoveParameters([], {
-                                ext : ext
+                                ext: ext
                             }, {
-                                replaceState : true
+                                replaceState: true
                             })
 
                             self.app.platform.ui.externalFromCurrentUrl()
 
                             return false;
                         }
-        
-                        
+
+
                     }
 
                     self.app.nav.api.load({
                         open: true,
                         href: link,
                         history: true,
-                        handler : true
+                        handler: true
                     })
                 }
 
-                if(!self.matrixchat.el) return
+                if (!self.matrixchat.el) return
 
                 core.activeChange(false)
 
-                if(!self.matrixchat.el.hasClass('active')) return
-                    self.matrixchat.el.removeClass('active')
-               
+                if (!self.matrixchat.el.hasClass('active')) return
+                self.matrixchat.el.removeClass('active')
+
 
                 if (app.chatposition)
                     app.chatposition(false)
@@ -24326,74 +25119,72 @@ Platform = function (app, listofnodes) {
 
                 if (document.activeElement) document.activeElement.blur()
 
-                if (self.matrixchat.core){
-                    self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
+                if (self.matrixchat.core) {
+                    self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '';
 
-                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
+                    self.matrixchat.core.hideInParent(self.app.mobileview ? true : false)
 
                     if (self.app.mobileview)
                         self.matrixchat.core.hideOptimization(true)
                 }
 
-                if (self.app.mobileview){
+                if (self.app.mobileview) {
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         self.app.actions.onScroll()
                     }, 300)
 
                 }
 
-                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                _.each(self.matrixchat.clbks.SHOWING, function (c) {
                     c(false)
                 })
 
-                
+
 
             }
 
-            core.activeChange = function(value){
-                var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
+            core.activeChange = function (value) {
+
+                var wnds = self.app.el.windows.find('.wnd:not(.pipmini,.appwindow)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
                 window.rifticker.add(() => {
-                    if (value){
+                    if (value) {
                         wnds.css('z-index', 999)
-                    }else{
+                    } else {
                         wnds.css('z-index', '')
                     }
 
-                    if(!self.app.mobileview){
-                        if(value){
+                    if (!self.app.mobileview) {
+                        if (value) {
                             pips.css('right', '360px')
-                        }
-                        else{
+                        } else {
                             pips.css('right', '')
                         }
-                        
+
                     }
                 })
 
 
-                if(!value){
+                if (!value) {
                     app.mobile.reload.initdestroyparallaxAuto()
-                }
-                else{
+                } else {
                     app.mobile.reload.destroyparallax()
                 }
 
 
-                if(!value){
+                if (!value) {
                     self.app.mobile.unsleep(false)
-                }
-                else{
+                } else {
                     self.app.mobile.unsleep(true)
                 }
-                
+
 
 
             }
 
-            core.apptochat = function(link){
+            core.apptochat = function (link) {
 
                 /*self.app.Logger.info({
 					actionId: 'CHAT_OPENED',
@@ -24402,26 +25193,26 @@ Platform = function (app, listofnodes) {
 
                 if (document.activeElement) document.activeElement.blur()
 
-                if (self.matrixchat.core){
-                    if(link){
+                if (self.matrixchat.core) {
+                    if (link) {
                         self.matrixchat.core.gotoRoute(link)
                     }
                 }
 
-                if(!self.matrixchat.el) return
+                if (!self.matrixchat.el) return
 
                 core.activeChange(true)
 
                 if (self.matrixchat.el.hasClass('active')) return
-                    self.matrixchat.el.addClass('active')
+                self.matrixchat.el.addClass('active')
 
                 if (app.chatposition)
                     app.chatposition(true)
 
                 //self.app.actions.playingvideo()
 
-                if (self.app.mobileview){
-                    setTimeout(function(){
+                if (self.app.mobileview) {
+                    setTimeout(function () {
                         self.app.actions.offScroll(self.matrixchat.el)
                         self.app.actions.optimize()
                     })
@@ -24429,10 +25220,10 @@ Platform = function (app, listofnodes) {
 
                 if (self.app.mobileview)
                     app.nav.api.history.addParameters({
-                        'pc' : '1'
+                        'pc': '1'
                     })
 
-                if (self.matrixchat.core){
+                if (self.matrixchat.core) {
                     self.matrixchat.core.hideInParent(false)
 
 
@@ -24441,11 +25232,11 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                _.each(self.matrixchat.clbks.SHOWING, function (c) {
                     c(true)
                 })
 
-                
+
 
 
 
@@ -24458,15 +25249,15 @@ Platform = function (app, listofnodes) {
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
-            self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
+                self.app.platform.ws.messages["new block"].clbks.matrixchat = function () {
 
-                core.update({
-                    block : {
-                        height : self.currentBlock
-                    }
-                })
+                    core.update({
+                        block: {
+                            height: self.currentBlock
+                        }
+                    })
 
-            }
+                }
 
             var cm = deep(app, 'modules.menu.module.restart')
 
@@ -24479,9 +25270,9 @@ Platform = function (app, listofnodes) {
             self.matrixchat.connect()
         },
 
-        unlink : function(){
+        unlink: function () {
 
-            if (self.matrixchat.core){
+            if (self.matrixchat.core) {
                 //self.matrixchat.core.hideInParent(false)
                 self.matrixchat.core.destroyExternalLink()
             }
@@ -24504,37 +25295,37 @@ Platform = function (app, listofnodes) {
             if (c) c()
         },
 
-        update : function(){
-            if(!self.matrixchat.core) return
+        update: function () {
+            if (!self.matrixchat.core) return
 
             self.matrixchat.core.updateUser()
         },
 
-        transaction : function(id, roomid){
+        transaction: function (id, roomid) {
 
-            if(!self.matrixchat.core) return
+            if (!self.matrixchat.core) return
 
-            if(!roomid){
+            if (!roomid) {
                 /// get roomid
             }
 
-            if(!roomid) return
+            if (!roomid) return
 
             self.matrixchat.core.mtrx.transaction(roomid, id)
         },
 
 
 
-        connect : function(){
+        connect: function () {
 
-            if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
-            if(!self.matrixchat.core) return
+            if (!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
+            if (!self.matrixchat.core) return
 
 
             self.matrixchat.core.apptochat()
 
 
-            if (self.matrixchat.connectWith){
+            if (self.matrixchat.connectWith) {
                 return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
                     self.matrixchat.connectWith = null
                 }).catch(e => {
@@ -24544,7 +25335,7 @@ Platform = function (app, listofnodes) {
 
             }
 
-            if (self.matrixchat.joinRoom){
+            if (self.matrixchat.joinRoom) {
                 return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
                     self.matrixchat.joinRoom = null
                 }).catch(e => {
@@ -24558,10 +25349,14 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-        if (typeof ion != 'undefined' && !window.cordova){
+        if (typeof ion != 'undefined' && !window.cordova) {
             ion.prepare()
             ion.sound({
-                sounds: [ { name: "water_droplet"}, { name: "glass" } ],
+                sounds: [{
+                    name: "water_droplet"
+                }, {
+                    name: "glass"
+                }],
                 volume: 0.5,
                 path: "js/vendor/ion.sound/sounds/",
                 preload: true
@@ -24603,16 +25398,16 @@ Platform = function (app, listofnodes) {
                 if (account) {
                     account.updateUnspents()
                 }
-               
+
             }
 
-            if(time > 120 && window.cordova){
+            if (time > 120 && window.cordova) {
 
-                retry(function(){
+                retry(function () {
                     return platform && platform.matrixchat && platform.matrixchat.core;
-                }, function(){
+                }, function () {
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         platform.matrixchat.core.mtrx.fastsync()
                     }, 500)
                 })
@@ -24627,20 +25422,20 @@ Platform = function (app, listofnodes) {
             }
 
 
-            if(window.cordova){
+            if (window.cordova) {
 
-                if(haspip){
+                if (haspip) {
 
-                    try{
+                    try {
                         document.exitPictureInPicture()
-                    }catch(e){
+                    } catch (e) {
 
                     }
-                    
+
                     haspip = false
                 }
-                    
-                
+
+
                 //self.app.mobile.backgroundMode(false)
 
             }
@@ -24660,36 +25455,31 @@ Platform = function (app, listofnodes) {
 
             self.clbks.unfocus();
 
-            if (self.activecall){
+            if (self.activecall) {
 
-                if(window.cordova){
+                if (window.cordova) {
                     self.app.mobile.pip.supported((r) => {
 
-                        if(r){
+                        if (r) {
                             self.activecall.ui.toMini()
                             self.app.mobile.pip.enable($(self.activecall.ui.root))
-                        }
-    
-                        else{
+                        } else {
 
-    
-                            
+
+
                         }
                     })
                 }
-            }
-
-            else{
-                if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+            } else {
+                if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing') {
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
-                }
-                else{
-    
+                } else {
+
                 }
             }
 
 
-            
+
 
 
         }
@@ -24712,7 +25502,7 @@ Platform = function (app, listofnodes) {
                 document.addEventListener("resume", f, false);
 
                 return
-                
+
             }
 
             if (electron) {
@@ -24726,15 +25516,14 @@ Platform = function (app, listofnodes) {
 
 
                 electron.ipcRenderer.on('win-cross', () => {
-                    setTimeout(function(){
+                    setTimeout(function () {
 
                         if (self.focus) return
 
-                        if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+                        if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing') {
 
-                        }
-                        else{
-                            if (self.app.playingvideo){
+                        } else {
+                            if (self.app.playingvideo) {
                                 self.app.playingvideo.pause()
                             }
                         }
@@ -24742,8 +25531,8 @@ Platform = function (app, listofnodes) {
                     }, 200)
                 })
 
-                
-                
+
+
 
 
             }
@@ -24801,7 +25590,7 @@ Platform = function (app, listofnodes) {
             if (interval)
                 clearInterval(interval);
 
-            if(!initial) {
+            if (!initial) {
                 initial = document.title || app.meta.fullname //fullName
             }
 
@@ -24813,8 +25602,7 @@ Platform = function (app, listofnodes) {
 
                 if (i % 2) {
                     document.title = text;
-                }
-                else {
+                } else {
                     document.title = initial;
                 }
 
@@ -24841,14 +25629,14 @@ Platform = function (app, listofnodes) {
 
     self.state = {
         save: function () {
-            try{
+            try {
                 if (self.nodeid)
-                localStorage['nodeid2'] = JSON.stringify(self.nodeid);
+                    localStorage['nodeid2'] = JSON.stringify(self.nodeid);
 
                 else
                     delete localStorage['nodeid2']
-            }catch(e){}
-            
+            } catch (e) {}
+
 
         },
         load: function () {
@@ -24857,8 +25645,7 @@ Platform = function (app, listofnodes) {
 
                 try {
                     self.nodeid = JSON.parse(localStorage['nodeid2'])
-                }
-                catch (e) { }
+                } catch (e) {}
 
 
                 if (!self.nodeid) {
@@ -24870,39 +25657,41 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.cordovaSetup = function(){
+    self.cordovaSetup = function () {
 
         function setupOpenwith() {
 
-            if(!cordova.openwith) return
+            if (!cordova.openwith) return
 
             //cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
 
             var mime = {
 
-                'image/jpeg' : 'images',
-                'image/jpg' : 'images',
-                'image/png' : 'images',
-                'image/webp' : 'images',
-                'application/pdf' : 'files',
-                'application/msword' : 'files'
+                'image/jpeg': 'images',
+                'image/jpg': 'images',
+                'image/png': 'images',
+                'image/webp': 'images',
+                'application/pdf': 'files',
+                'application/msword': 'files'
 
             }
 
             var utitomime = {
-                'public.image' : 'image/jpeg'
+                'public.image': 'image/jpeg'
             }
 
             cordova.openwith.init();
-            cordova.openwith.addHandler(function(intent){
+            cordova.openwith.addHandler(function (intent) {
                 var sharing = {}
 
-                if(intent.action == 'VIEW') return
+                if (intent.action == 'VIEW') return
 
 
 
                 var promises = _.map(
-                    _.filter(intent.items || [], function(i){return i}),
+                    _.filter(intent.items || [], function (i) {
+                        return i
+                    }),
                     (item) => {
 
 
@@ -24911,125 +25700,130 @@ Platform = function (app, listofnodes) {
                         }*/
 
 
-                    return new Promise((resolve, reject) => {
+                        return new Promise((resolve, reject) => {
 
 
-                        if(utitomime[item.type]) item.type = utitomime[item.type]
+                            if (utitomime[item.type]) item.type = utitomime[item.type]
 
-                        if(item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
+                            if (item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
 
-                        if(!item.type || !mime[item.type] || item.data){
-                            resolve()
-                        }
-                        else{
-                            cordova.openwith.load(item, function(data) {
-
-                                item.data = 'data:' + item.type + ';base64,' + data
-
+                            if (!item.type || !mime[item.type] || item.data) {
                                 resolve()
+                            } else {
+                                cordova.openwith.load(item, function (data) {
 
-                            });
-                        }
+                                    item.data = 'data:' + item.type + ';base64,' + data
 
+                                    resolve()
 
-                    }).then(r => {
-
-                        if (item.text){
-                            if(!sharing.messages) sharing.messages = []
-
-                            sharing.messages.push(item.text)
-                        }
-
-                        if(item.type && mime[item.type] && item.data){
-                            if(!sharing[mime[item.type]]){
-                                sharing[mime[item.type]] = []
+                                });
                             }
 
-                            sharing[mime[item.type]].push(item.data)
-                        }
 
-                        return Promise.resolve()
+                        }).then(r => {
+
+                            if (item.text) {
+                                if (!sharing.messages) sharing.messages = []
+
+                                sharing.messages.push(item.text)
+                            }
+
+                            if (item.type && mime[item.type] && item.data) {
+                                if (!sharing[mime[item.type]]) {
+                                    sharing[mime[item.type]] = []
+                                }
+
+                                sharing[mime[item.type]].push(item.data)
+                            }
+
+                            return Promise.resolve()
+                        })
                     })
-                })
 
 
                 Promise.all(promises).then(r => {
 
-                    if (intent.exit) { cordova.openwith.exit(); }
-
-                    if(_.isEmpty(sharing)){
-                        sitemessage(self.app.localization.e('e13293')+' /ul101')
+                    if (intent.exit) {
+                        cordova.openwith.exit();
                     }
-                    else{
 
-                        self.app.user.isState(function (state) {
+                    if (_.isEmpty(sharing)) {
+                        sitemessage(self.app.localization.e('e13293') + ' /ul101')
+                    } else {
+
+                        self.app.platform.sdk.user.stateAction(() => {
+
+                            menuDialog({
+
+                                items: [
+
+                                    {
+                                        text: self.app.localization.e('sendToChat'),
+                                        class: 'itemmain',
+                                        action: function (clbk) {
+
+                                            self.matrixchat.wait().then(r => {
+                                                return self.matrixchat.share.object(sharing)
+                                            }).catch(r => {
+
+                                                sitemessage(self.app.localization.e('e13293') + ' /ul102')
+
+                                            })
+
+                                            clbk()
+                                        }
+                                    },
+
+                                    {
+                                        text: self.app.localization.e('createPost'),
+                                        action: function (clbk) {
+
+                                            var shareEssenseData = {
+                                                close: function () {},
+                                                post: function () {},
+                                                absolute: true,
+                                            }
+
+                                            if (sharing.messages && sharing.messages[0]) {
+                                                shareEssenseData.description = sharing.messages[0];
+                                            }
+
+                                            if (sharing.images) {
+                                                shareEssenseData.images = sharing.images;
+                                            }
+
+                                            app.nav.api.load({
+                                                open: true,
+                                                id: 'share',
+                                                inWnd: true,
+                                                eid: 'postin',
+                                                mid: 'postin',
+
+                                                clbk: function (e, p) {
+                                                    globalpreloader(false)
+                                                },
+
+                                                essenseData: shareEssenseData
+                                            })
+
+                                            clbk()
+                                        }
+                                    }
+
+
+                                ]
+                            })
+
+                        }, {})
+
+                        /*self.app.user.isState(function (state) {
 
                             if (state){
-
-                                menuDialog({
-
-                                    items: [
-        
-                                        {
-                                            text: self.app.localization.e('sendToChat'),
-                                            class: 'itemmain',
-                                            action: function (clbk) {
-        
-                                                self.matrixchat.wait().then(r => {
-                                                    return self.matrixchat.share.object(sharing)
-                                                }).catch(r => {
-                        
-                                                    sitemessage(self.app.localization.e('e13293')+' /ul102')
-                        
-                                                })
-                                                
-                                                clbk()
-                                            }
-                                        },
-        
-                                        {
-                                            text:  self.app.localization.e('createPost'),
-                                            action: function (clbk) {
-        
-                                                var shareEssenseData = {
-                                                    close : function(){
-                                                    },
-                                                    post : function(){
-                                                    },
-                                                    absolute : true,
-                                                }
-        
-                                                if (sharing.messages && sharing.messages[0]){
-                                                    shareEssenseData.description = sharing.messages[0];
-                                                }
-        
-                                                if (sharing.images){
-                                                    shareEssenseData.images = sharing.images;
-                                                }
-        
-                                                app.nav.api.load({
-                                                    open : true,
-                                                    id : 'share',
-                                                    inWnd : true,
-                                                    eid : 'postin',
-                                                    mid : 'postin',
                                 
-                                                    clbk : function(e, p){
-                                                        globalpreloader(false)
-                                                    },
+
                                 
-                                                    essenseData : shareEssenseData
-                                                })
-        
-                                                clbk()
-                                            }
-                                        }
-        
-        
-                                    ]
-                                })
                             }
-                        })
+                        })*/
 
                     }
                 })
@@ -25045,26 +25839,26 @@ Platform = function (app, listofnodes) {
                 /*setTimeout(() => {
                     self.p2pvideo.initlocalsvideo()
                 }, 3000)*/
-                
+
 
             }
-            
-        })
-        
 
-        if(window.cordova){
+        })
+
+
+        if (window.cordova) {
             setupOpenwith()
-            
+
         }
 
 
     }
 
-    self.navManager = function(){
+    self.navManager = function () {
 
-        var routing = function(route){
+        var routing = function (route) {
 
-            pretry(function(){
+            pretry(function () {
 
                 return app.appready
 
@@ -25076,47 +25870,47 @@ Platform = function (app, listofnodes) {
 
                     route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
 
-                        if (route){
+                    if (route) {
 
-                            if(!self.ui.externalFromCurrentUrl()){
+                        if (!self.ui.externalFromCurrentUrl()) {
 
-                                if(!state || route.indexOf('welcome?') == -1){
-                                    self.app.nav.api.load({
-                                        open: true,
-                                        href: route,
-                                        history: true
-                                    })
-                                }
-
+                            if (!state || route.indexOf('welcome?') == -1) {
+                                self.app.nav.api.load({
+                                    open: true,
+                                    href: route,
+                                    history: true
+                                })
                             }
 
-                            
                         }
 
-                        /////////////
 
-                        var w = parameters(url, true).connect
-                        var cr = parameters(url, true).publicroom
-                        var ps =  parameters(url, true).ps
-                        var ref =  parameters(url, true).ref
+                    }
 
-                        self.matrixchat.connectWith = w || null
-                        self.matrixchat.joinRoom = cr || null
+                    /////////////
+
+                    var w = parameters(url, true).connect
+                    var cr = parameters(url, true).publicroom
+                    var ps = parameters(url, true).ps
+                    var ref = parameters(url, true).ref
+
+                    self.matrixchat.connectWith = w || null
+                    self.matrixchat.joinRoom = cr || null
 
 
-                        if(!ps && !cr && !w && !app.curation()){
-                            self.matrixchat.backtoapp()
-                        }
+                    if (!ps && !cr && !w && !app.curation()) {
+                        self.matrixchat.backtoapp()
+                    }
 
-                        setTimeout(function(){
-                            self.matrixchat.wait().then(r => {
-                                self.matrixchat.connect()
-                            })
-                        }, 500)
+                    setTimeout(function () {
+                        self.matrixchat.wait().then(r => {
+                            self.matrixchat.connect()
+                        })
+                    }, 500)
 
-                        if (ref){
-                            self.app.setref(ref)
-                        }
+                    if (ref) {
+                        self.app.setref(ref)
+                    }
 
                 })
 
@@ -25126,7 +25920,7 @@ Platform = function (app, listofnodes) {
 
         }
 
-        if(electron && _Electron){
+        if (electron && _Electron) {
 
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
@@ -25136,7 +25930,7 @@ Platform = function (app, listofnodes) {
 
         }
 
-        if (window.cordova && typeof universalLinks != 'undefined'){
+        if (window.cordova && typeof universalLinks != 'undefined') {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
@@ -25161,21 +25955,20 @@ Platform = function (app, listofnodes) {
 
     self.matrixchat.connectWith = parameters().connect
 
-    if(!self.matrixchat.connectWith)
+    if (!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
 
     self.activecall = null
-	self.getCallsOptions = function(){
+    self.getCallsOptions = function () {
 
         var clbks = {
-            view : function(call, ui){
+            view: function (call, ui) {
 
                 setTimeout(() => {
 
-                    if(!self.activecall || self.activecall.ui.view == 'mini'){
+                    if (!self.activecall || self.activecall.ui.view == 'mini') {
                         self.app.mobile.statusbar.show()
-                    }
-                    else{
+                    } else {
                         self.app.mobile.statusbar.hide()
                     }
 
@@ -25184,43 +25977,41 @@ Platform = function (app, listofnodes) {
         }
 
 
-		return {
-			el : $("#bastyonCalls").first()[0],
-			parameters : {
-                changeTitle : function(text){
-                    if(!self.titleManager) return 
+        return {
+            el: $("#bastyonCalls").first()[0],
+            parameters: {
+                changeTitle: function (text) {
+                    if (!self.titleManager) return
 
-                    if(!text) {
+                    if (!text) {
                         self.titleManager.clear();
-                    }
-                    else{
+                    } else {
                         self.titleManager.add(text)
                     }
                 },
-				getUserInfo: async (address) => {
+                getUserInfo: async (address) => {
 
-					let res = new Promise((resolve, reject) => {
-						address = hexDecode(address.split(':')[0].replace('@',''))
-						this.sdk.users.getone(address, () => {
+                    let res = new Promise((resolve, reject) => {
+                        address = hexDecode(address.split(':')[0].replace('@', ''))
+                        this.sdk.users.getone(address, () => {
+                            resolve(self.psdk.userInfo.getShortForm(address))
+                        }, true)
+                    })
 
-							resolve(self.psdk.userInfo.getShortForm(address))
-						})
-					})
-
-					return res
-				},
-				getWithLocale: (key) => {
-					return  self.app.localization.e(key)
-				},
-				onError:(err) => {
+                    return res
+                },
+                getWithLocale: (key) => {
+                    return self.app.localization.e(key)
+                },
+                onError: (err) => {
                     console.error(err)
 
                     //add to logger
-				},
-				onInitCall:(call) => {
+                },
+                onInitCall: (call) => {
 
-				},
-				onEnded:(call, ui) => {
+                },
+                onEnded: (call, ui) => {
 
                     self.activecall = null
 
@@ -25228,20 +26019,19 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.pip.supported((r) => {
 
-                        if(r){ }
-                        else{
+                        if (r) {} else {
                             self.app.mobile.backgroundMode(false)
                         }
-                        
+
                     })
 
                     clbks.view()
-				},
-				onConnected:(call, ui)=> {
+                },
+                onConnected: (call, ui) => {
 
                     self.app.mobile.audiotoggle()
 
-                    if (self.app.playingvideo){
+                    if (self.app.playingvideo) {
                         self.app.playingvideo.pause()
                     }
 
@@ -25249,35 +26039,35 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.pip.supported((r) => {
 
-                        if(r){ }
-                        else{
+                        if (r) {} else {
                             self.app.mobile.backgroundMode('mediaPlayback')
                         }
 
                     })
 
                     self.activecall = {
-                        call, ui
+                        call,
+                        ui
                     }
 
                     clbks.view()
 
-				},
+                },
 
-                onIncomingCall : function(){
+                onIncomingCall: function () {
 
-                    if (self.app.playingvideo){
+                    if (self.app.playingvideo) {
                         self.app.playingvideo.exitFullScreen()
                         self.app.playingvideo.pause()
                     }
                 },
 
-                changeView : function(call, ui){
+                changeView: function (call, ui) {
                     clbks.view()
                 }
-			}
+            }
 
-		}
+        }
     }
 
     return self;

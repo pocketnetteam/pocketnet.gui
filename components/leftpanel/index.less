@@ -268,13 +268,18 @@
 		span{
 			font-size: 0.8em;
 		}
-
+		.likelink,
 		a{
+			white-space: nowrap;
 			.transition(0.3s);
-			
+		}
+
+		.likelink{
+			cursor: pointer;
 		}
 
 		@media (pointer:fine) {
+			.likelink,
 			a{
 				&:hover{
 					color : rgb(var(--color-txt-ac));
@@ -298,6 +303,7 @@
 
 				
 			}
+		
 		}
 
 		.copyright {

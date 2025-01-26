@@ -94,7 +94,7 @@ FX_Particle = function(p){
     }
 
     self.init = function(){
-        ctx = new PIXI.Graphics()
+        ctx = new PIXI[p.consturctor || "Graphics"]()
         p.to.addChild(ctx);       
     }
 
@@ -107,6 +107,83 @@ FX_Particle = function(p){
 
     }
 
+
+    return self
+}
+
+FX_Fire = function(p){
+
+    if(!p) p = {}
+
+    var self = new FX_Particle(p)
+
+    self.render = function(ctx, percentOfLife){
+        var x = self.x;
+        var y = self.y;
+        var width = self.size;
+        var height = self.size;
+
+        var color = Color(self.color)
+        var opacity = self.opacity - self.opacity * percentOfLife
+        const scaleX = width / 512;
+        const scaleY = height / 512;
+
+        color.darken(percentOfLife)   
+        
+        ctx.beginFill(color.rgbNumber(), opacity);
+
+        ctx.moveTo(x + 216 * scaleX, y + 23.9 * scaleY);
+        ctx.bezierCurveTo(
+            x + 216 * scaleX, y + 0 * scaleY,
+            x + 185.3 * scaleX, y - 8.9 * scaleY,
+            x + 172 * scaleX, y + 9.9 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 48 * scaleX, y + 191.9 * scaleY,
+            x + 224 * scaleX, y + 200 * scaleY,
+            x + 224 * scaleX, y + 288 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 224 * scaleX, y + 323.6 * scaleY,
+            x + 194.9 * scaleX, y + 352.5 * scaleY,
+            x + 159.1 * scaleX, y + 352 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 123.9 * scaleX, y + 351.5 * scaleY,
+            x + 95.9 * scaleX, y + 322.2 * scaleY,
+            x + 95.9 * scaleX, y + 287.1 * scaleY
+        );
+        ctx.lineTo(x + 95.9 * scaleX, y + 201.6 * scaleY);
+        ctx.bezierCurveTo(
+            x + 95.9 * scaleX, y + 179.9 * scaleY,
+            x + 69.4 * scaleX, y + 169.4 * scaleY,
+            x + 54.5 * scaleX, y + 185.1 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 27.8 * scaleX, y + 213.2 * scaleY,
+            x + 0 * scaleX, y + 261.3 * scaleY,
+            x + 0 * scaleX, y + 320 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 0 * scaleX, y + 425.9 * scaleY,
+            x + 86.1 * scaleX, y + 512 * scaleY,
+            x + 192 * scaleX, y + 512 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 297.9 * scaleX, y + 512 * scaleY,
+            x + 384 * scaleX, y + 425.9 * scaleY,
+            x + 384 * scaleX, y + 320 * scaleY
+        );
+        ctx.bezierCurveTo(
+            x + 384 * scaleX, y + 149.7 * scaleY,
+            x + 216 * scaleX, y + 127.9 * scaleY,
+            x + 216 * scaleX, y + 23.9 * scaleY
+        );
+
+        ctx.closePath();
+        ctx.endFill();
+
+    }
 
     return self
 }
@@ -159,6 +236,35 @@ FX_Heart = function(p){
         
         ctx.closePath();
         ctx.endFill();
+    }
+
+    return self
+}
+
+FX_Emoji = function(p = {}){
+
+    console.log("P", p)
+
+    if(!p) p = {}
+
+    p.consturctor = 'Text'
+
+    var self = new FX_Particle(p)
+
+    self.angle = p.angle || 0
+
+    //var color = Color(self.color)
+    //self.color = color.lighten( Math.min(Math.random() + 0.5, 1)).hex()
+
+
+    self.render = function(ctx, percentOfLife){
+
+        var opacity = self.opacity - self.opacity * percentOfLife
+
+        ctx.text = p.symbol || '👍'
+        //ctx.alpha = opacity
+        ctx.x = self.x;
+        ctx.y = self.y;
     }
 
     return self
@@ -304,7 +410,8 @@ FX_Effects = function(el){
 
                         size : parameters.size,
                         color : parameters.color,
-                        opacity : parameters.opacity * (Math.random() + 0.5)
+                        opacity : parameters.opacity * (Math.random() + 0.5),
+                        symbol : parameters.symbol
                     })
         
                     h.init()
@@ -345,6 +452,12 @@ FX_Effects = function(el){
         hearts : function(parameters, clbk){
 
             internaleffects.particles(FX_Heart, parameters, clbk)
+           
+        },
+
+        fire: function(parameters, clbk){
+
+            internaleffects.particles(FX_Fire, parameters, clbk)
            
         },
     }
@@ -448,7 +561,6 @@ FX_Manager = function(app){
 
     var importlibs = function(clbk){
 
-
         importScripts(lib, relations, function(){
 
             if (clbk)
@@ -458,7 +570,15 @@ FX_Manager = function(app){
     }
 
     self.prepare = function(clbk){
-        importlibs(clbk)
+
+
+        if (typeof _Electron != 'undefined') {
+            clbk()
+        }
+        else{
+            importlibs(clbk)
+        }
+        
 
         return self
     }

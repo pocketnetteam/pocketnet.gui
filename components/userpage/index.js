@@ -282,7 +282,7 @@ var userpage = (function(){
 			}
 
 
-			if(self.app.user.validate() && !self.app.pkoindisable) {
+			if(self.app.user.validate()) {
 
 				reports.push({
 					name : self.app.localization.e('videoCabinet'),
@@ -292,9 +292,7 @@ var userpage = (function(){
 					openReportPageMobileInWindow : true,
 					if : function(){
 
-
-
-						if (self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()) return false
+						if (self.app.platform.sdk.user.myaccauntdeleted()) return false
 
 						if (window.testpocketnet) return true
 
@@ -736,6 +734,10 @@ var userpage = (function(){
 
 							sitemessage(self.app.localization.e('successcopied'))
 						})
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ deep(self, 'app.user.address.value')))
+						})
 					})
 
 					
@@ -760,6 +762,10 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+						})
 	
 						//_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);

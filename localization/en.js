@@ -260,6 +260,8 @@ _l.stp = "Beginner";
 _l.stpg = "Top";
 _l.stpreal = "Verified";
 _l.stpdev = ""+appname+" developer";
+_l.stpmoderator = "Moderator";
+
 
 _l.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
 _l.trialreputationtipaction = "Learn more about reputation here"
@@ -2125,6 +2127,8 @@ _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
 _l.easyNode_e10064 = "Support"
+_l.easyNode_e10065 = "Export your wallet and save it in a safe place before topping up your balance!"
+
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2324,6 +2328,8 @@ _l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar_reason_5 = "Copyrighted content"
+
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
@@ -2792,7 +2798,8 @@ _l.labeltempactionszero = "No pending transactions"
 _l.deleteapplicationQuestion = "Are you sure you want to delete the application?"
 _l.deleteapplicationQuestionDevelop = "Are you sure you want to delete the application? For applications that are in development mode, this function only simulates uninstallation and resets settings until the next launch."
 _l.application_settings = "Settings"
-_l.application_close = "Close"
+_l.application_close = "Return to the " + appname;
+
 
 _l.application_notexist = "Application not found or application server not responding"
 _l.permissions_descriptions_chat = "Send "+appname+" chat messages, create groups and chats"
@@ -2800,6 +2807,9 @@ _l.permissions_name_chat = appname + " chat"
 
 _l.permissions_name_geolocation = "Access to location"
 _l.permissions_descriptions_geolocation = "The application asks for permission to access your location"
+
+_l.permissions_name_externallink = "Opening External Links";
+_l.permissions_descriptions_externallink = "The application requests permission to open external links in the browser or other applications";
 
 _l.limits = "Limits"
 _l.pay = "Pay"
@@ -2924,3 +2934,277 @@ _l.foreground_service_mediaPlayback_title = appname
 _l.foreground_service_mediaPlayback_text = "The "+appname+" is playing a video"
 _l.foreground_service_mediaUploading_title = appname
 _l.foreground_service_mediaUploading_text = "The "+appname+" is uploading video"
+
+_l.stateactionDefault = "To perform the action you must register or log in to your account."
+
+_l.incomingVideoCall = "Incoming video call"
+_l.incomingAudioCall = "Incoming audio call"
+_l.connecting = "Connecting"
+
+
+_l.quotanow = function(v){
+	return "You can upload a video no larger than"
+}
+
+
+_l.jury = "Jury"
+_l.juryQuestionPost = "Can you confirm this post does not belong on "+appname+" for the following reason"
+_l.juryQuestionComment = "Can you confirm this comment does not belong on "+appname+" for the following reason"
+_l.juryQuestionUser = "Can you confirm this user is violating the rules of "+appname+" for the following reason"
+_l.juryvote_success =  "Your vote has been successfully submitted"
+_l.juryconfirm = "Do you confirm your decision?"
+_l.openin = "Open"
+
+_l.monet_title = "A new advertising and monetization program for bloggers has been launched on Bastyon starting from September 9th." 
+_l.monet_subtitle = "What does this program entail, how does it work, who can participate, how are earnings calculated, and why is it needed?"  
+_l.monet_howworks_title = "How it works:"; 
+_l.monet_howworks_text_1 = "Advertisers promote their products or services on Bastyon (information for advertisers can be found here bastyon.com/boost). The ads appear in the main feed and in author channels. All earnings from the main feed go to nodes (information on how to earn through a simple node bastyon.com/easynode), while earnings from author channels go directly to the authors. Bastyon is not a corporation and does not operate for profit, so all advertising revenue from channels goes to the authors."; 
+_l.monet_participation_title = "Who participates and what are the payouts:"; 
+_l.monet_participation_text_1 = "At the initial stage, monetization only works on verified author channels. Over time, the program will expand to other channels with high activity. Authors can disable monetization by removing ads and forfeiting their payouts." 
+_l.monet_participation_text_2 = `If you have a channel outside of Bastyon with more than 1,000 subscribers, you can email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to request verification.` 
+_l.monet_participation_text_3 = "IMPORTANT: Authors earn proportionally to the activity and number of people on their channel. The more comments and ratings, the higher the payouts from the advertising pool. Authors have a Monetization dashboard in their settings where they can view their payout history. Payouts are made at the end of each week for activity on posts made in the past two weeks."; 
+_l.monet_monet_withdrawal_title = "How authors can withdraw earnings (very simple):"; 
+_l.monet_monet_withdrawal_text_1 = `Authors can withdraw PKOIN through exchanges like Tapbit, Digifineх, or through peer-to-peer exchanges in rubles, dollars, or any other currency. For author convenience, some older exchanges are directly available in the monetization dashboard. Other exchanges with a year or more of active history will be added to the dashboard. For withdrawal inquiries, contact support at <a href="mailto:support@bastyon.com">support@bastyon.com</a>` 
+_l.monet_calculation_title = "How payouts are calculated?"; 
+_l.monet_calculation_text1 = "Earnings vary depending on the amount of advertising in a week and how much advertisers have paid. The money from advertisers is divided among authors, but the amount depends on the total advertising revenue and the activity on the channel (ratings and comments). Audience growth attracts new advertisers, leading to increased earnings. Active channels can earn the equivalent of $50-75 per week or more.";  
+_l.monet_increaseearnings_title = "How to increase earnings:"; 
+_l.monet_increaseearnings_text1 = "Create more content"; 
+_l.monet_increaseearnings_text2 = "Invite more people to engage"; 
+_l.monet_increaseearnings_text3 = "Video length does not matter on Bastyon as ads do not interrupt the video, engagement under posts is what matters";  
+_l.monet_footer_1 = "Internal economy of Bastyon - Monetization - Pocketcoin (PKOIN)"; 
+_l.monet_signup = "SIGN UP ON BASTYON"; 
+_l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to start earning through advertising on your channel`;
+
+
+_l.miniApp_publishMessage = "Publishing the mini-app: {0}";
+_l.miniApp_requiredMessage = "This field cannot be empty";
+_l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?";
+_l.miniApp_yesButton = "Yes";
+_l.miniApp_noButton = "Cancel";
+_l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
+_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
+_l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
+_l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
+
+_l.miniApp_iconAltText = "App Icon";
+_l.miniApp_publishButton = "Publish";
+_l.miniApp_editButton = "Edit";
+_l.miniApp_deleteButton = "Delete";
+_l.miniApp_authorLabel = "Author";
+_l.miniApp_permissionsLabel = "Permissions";
+_l.miniApp_idLabel = "ID";
+_l.miniApp_linkLabel = "App Link";
+_l.miniApp_goToAppLinkText = "Go to App";
+_l.miniApp_descriptionUnavailable = "Description unavailable";
+_l.miniApp_editTitle = "Edit Application <%= id %>";
+_l.miniApp_saveButton = "Save";
+_l.miniApp_cancelButton = "Cancel";
+
+
+_l.miniApp_importManifestError = "Manifest import error. This can occur if the `b_manifest.json` file is missing, corrupted, or has an invalid JSON format.";
+_l.miniApp_importIconError = "Application icon import error. This can occur if the `b_icon.png` file is missing or inaccessible.";
+_l.miniApp_brokenManifestError = "Manifest import error on the specified domain. Check the existence and correctness of the `b_manifest.json` file. If HTTPS with a self-signed certificate is used, allow access in your browser.";
+_l.miniApp_brokenPermissionsError = "Invalid or empty permissions in the manifest. Ensure the permissions are specified correctly.";
+_l.miniApp_missingIdError = "The application ID is missing in the manifest. The `id` field must be filled.";
+_l.miniApp_missingNameError = "The application name is missing in the manifest. The `name` field must be filled.";
+_l.miniApp_missingVersionError = "The application version is missing in the manifest. The `version` field must be filled.";
+_l.miniApp_missingDescriptionEnError = "The application description in English is missing in the `descriptions` section.";
+_l.miniApp_missingScopeError = "The `scope` information is missing in the manifest. Ensure a valid `scope` value is provided.";
+_l.miniApp_brokenAuthorError = "Invalid application author. This may be caused by a missing or incorrectly formatted `author` field (expected a Base58 address).";
+_l.miniApp_discrepancyIdError = "Discrepancy between the application ID in the manifest and the application ID specified during installation.";
+_l.miniApp_discrepancyDevelopError = "Discrepancy in the development status (`develop`) between the manifest and the specified application.";
+_l.miniApp_discrepancyAuthorError = "Addition is not possible: The application author specified in the manifest does not match your address. You cannot add applications that you do not own.";
+_l.miniApp_conflictIdAlreadyExistsError = "Conflict: An application with this ID already exists. Check the new application's ID or remove the existing one.";
+_l.miniApp_permissionDeniedError = "The user denied the permission requested by the application.";
+_l.miniApp_permissionMissingError = "One of the permissions requested by the application is missing in the manifest.";
+_l.miniApp_permissionsEmptyError = "The requested permissions list is empty. The application must request at least one permission.";
+_l.miniApp_parametersMissingError = "One or more required parameters are missing during the action execution.";
+_l.miniApp_locationNotAvailableError = "Failed to retrieve location data. Check permissions or GPS status.";
+_l.miniApp_messageEmptyError = "The alert message is empty. Ensure a message text is provided.";
+_l.miniApp_versionError = "The manifest version does not match the installed application version.";
+_l.miniApp_userAuthorizedError = "The user is already authorized. Registration is not possible.";
+_l.miniApp_imagesMax10Error = "The maximum number of uploaded images (10) has been exceeded.";
+_l.miniApp_brokenZAddressesError = "Failed to retrieve the user's z-addresses. Data may be missing or invalid.";
+_l.miniApp_mobileCameraNotSupportedError = "The mobile device's camera is not supported by the application.";
+_l.miniApp_mobileCameraCancelError = "The user canceled access to the camera or image upload.";
+_l.miniApp_permissionNotExistInManifestError = "The requested permission is missing in the application's manifest.";
+_l.miniApp_permissionRequestError = "Error while requesting permission from the user. Ensure the permission is specified correctly.";
+_l.miniApp_errorCodeAppDataError = "Error in the application's local storage data.";
+_l.miniApp_missingApplicationError = "The application was not found in the installed list. It may have been removed or the ID is incorrect.";
+
+_l.miniApp_publishSuccessMessage = "The application has been successfully published.";
+_l.miniApp_publishErrorMessage = "An error occurred while publishing the application.";
+_l.miniApp_publishOnlyTestNetworkMessage = "Currently, publishing is only available on the test network.";
+_l.miniApp_localhostScopeWarningMessage = "Publishing an application with a local scope ('localhost') is not allowed. Please change the scope in the editing tab.";
+_l.miniApp_createTitle = "Create a New Mini-Application";
+_l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
+_l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";
+_l.miniApp_extendedTags = "The maximum number of tags you can add is ";
+
+
+_l.miniApp_documentationButtonLabel = "Documentation";
+_l.miniApp_createButtonLabel = "Create Mini App";
+_l.miniApp_myAppsButtonLabel = "Created by Me";
+_l.miniApp_appsButtonLabel = "Applications";
+
+_l.miniApp_heroTitle = "A Powerful Platform for Your Projects";
+_l.miniApp_heroSubtitle = "Develop applications and leverage all the capabilities of Bastion in your business.";
+_l.miniApp_heroCtaButton = "Get Started";
+
+_l.miniApp_featuresTitle = "Features";
+_l.miniApp_featureDecentralizedTitle = "Decentralized";
+_l.miniApp_featureDecentralizedDescription = "Build applications without centralized control, ensuring your data is secure.";
+_l.miniApp_featureScalableTitle = "Scalable";
+_l.miniApp_featureScalableDescription = "Leverage Bastion's network to support applications of any size.";
+_l.miniApp_featureCryptoIntegrationTitle = "Easy Cryptocurrency Payment Integration";
+_l.miniApp_featureCryptoIntegrationDescription = "Embed cryptocurrency payments in your applications for user convenience.";
+_l.miniApp_featureApiAccessTitle = "Full Access to Bastion API";
+_l.miniApp_featureApiAccessDescription = "Utilize all the features of Bastion API to create functional and innovative applications.";
+
+_l.miniApp_iconAltText = "Application Icon";
+_l.miniApp_createTitle = "Create a New Mini-Application";
+_l.miniApp_createDescription = "Ensure that all data matches the fields specified in the application's b_manifest.json file. Any discrepancies may cause errors during installation.";
+
+_l.miniApp_instructionsTitle = "Deployment Instructions";
+_l.miniApp_instructionsIntro = "Deploying the application is quite simple. You need to provide two files: b_manifest and b_icon.";
+_l.miniApp_instructionsFilesNeeded = "To ensure a successful deployment, make sure the following files are available on your domain:";
+_l.miniApp_instructionsManifest = "b_manifest - JSON file containing information about the application.";
+_l.miniApp_instructionsIcon = "b_icon.png - the application icon in PNG format, available at the URL: https://[scope]/b_icon.png, where scope is your domain.";
+_l.miniApp_instructionsManifestExample = "Example content of the b_manifest file:";
+_l.miniApp_instructionsDataMatch = "Important: all form data (id, name) must match the corresponding fields in the b_manifest file exactly. The author field must match the current user adding the application. The scope field specifies the domain where the application is hosted. For testing, you can use a local address such as localhost:3333. This address can later be replaced with your domain, e.g., example.com.";
+_l.miniApp_instructionsDevMode = "After saving, your mini-application will be created in development mode (dev mode). It will only be available to you locally. Later, you can publish the application for all users through the management panel.";
+
+_l.miniApp_nameLabel = "Name";
+_l.miniApp_scopeLabel = "Domain";
+_l.miniApp_tagsLabel = "Tags";
+
+_l.miniApp_idInstructions = "The ID must be in domain name format, such as app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
+_l.miniApp_nameInstructions = "Enter a clear name that users will see (e.g., Demo).";
+_l.miniApp_scopeDescription = 
+  "Enter the domain name without the protocol (for example, 'example.com'). " +
+  "The application must support the HTTPS protocol, which means if you specify 'example.com', " +
+  "it should be accessible at https://example.com. " +
+  "Do not include 'https://' or any other prefixes. Only lowercase letters, " +
+  "digits, and dots are allowed (for example, 'my-app.bastyonapps.com' or 'subdomain.example.com').";
+
+_l.miniApp_iconInstructions = "In the display section, you configure the appearance of your application. The icon is automatically loaded from the URL https://[scope]/b_icon.png, where [scope] is the domain of your application (e.g., example.com). Ensure the b_icon.png file is accessible and in PNG format.";
+_l.miniApp_iconLabelInstructions = "After entering the domain, you will see a preview of the loaded icon. If the file is missing or the domain is incorrect, an error message will appear.";
+_l.miniApp_showManifestButton = "Show b_manifest content";
+
+_l.miniApp_tagsCountRequirement = "Add 2 tags that describe your application.";
+_l.miniApp_tagsInstructions = "Tags help users find your application.";
+
+_l.miniApp_saveButton = "Save";
+_l.miniApp_cancelButton = "Cancel";
+
+_l.miniApp_placeholderId = "For example: example.app";
+_l.miniApp_placeholderName = "For example: My Super App";
+_l.miniApp_placeholderScope = "For example: demo.bastyonapps.com";
+_l.miniApp_infoSectionTitle = "Information";
+_l.miniApp_deploymentSectionTitle = "Deployment";
+_l.miniApp_displaySectionTitle = "Display";
+
+_l.miniApp_editAppTitle = "Edit Mini-Application";
+_l.miniApp_editDescriptionIntro = "All the data specified in the form (id, name) must match the fields in the manifest (b_manifest).";
+_l.miniApp_editDescriptionAuthor = "The 'author' field in the manifest must correspond to the user who adds this application (the owner).";
+_l.miniApp_editDescriptionScope = "If you change the scope (domain), make sure the new domain has the required files: b_manifest (a JSON file describing the application) and b_icon.png (the PNG icon), available at https://[scope]/b_icon.png.";
+_l.miniApp_editDescriptionId = "Changing the id effectively creates a new mini-application, so it's generally best not to change the id if you're simply updating an existing one.";
+_l.miniApp_editDescriptionOutro = "After making the necessary changes, don't forget to click Save so that the updated information takes effect.";
+_l.miniApp_tagsEditInstruction = "You can add or remove tags.";
+_l.miniApp_fieldsLockedInfo = "The ID, name, and scope of your application cannot be changed after creation.";
+
+
+
+_l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionReason = "Reason"
+_l.juryYes = "Yes, it does"
+_l.juryNo = "No, it does not violate"
+
+_l.makePost = "Make a publication"
+
+_l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
+_l.redirectminiappsuccess = function(appname){ return "Link opened in "+appname+" mini-app"};
+_l.chat = "Chat"
+_l.emptyntime1 = 'Please select the date and time of publication'
+
+
+_l.postWaitDelayed = function(time){
+    return 'The publication will be published: ' + time 
+}
+
+_l.fordevelopers = "For developers"
+_l.interfacemobilelayoutmenu = "Chat button in the middle of the bottom bar"
+_l.interface = "Interface"
+
+
+_l.managePaidSubscription = "Privileged subscriptions"
+
+
+_l.paidsubscription_condition_caption = "Setting up privileged subscriptions"
+_l.paidsubscription_condition_text = "Set the price of a privileged subscription to your channel and then you can make publications only for those users who support you. In order for the user to see your content, the amount of money transfers for the period must be equal to or exceed the level you set."
+_l.paidsubscription_condition_hyvalue = "In six months"
+_l.paidsubscription_condition_yvalue = "Per year"
+_l.paidsubscription_condition_value = "Monthly Privileged Subscription Cost"
+_l.paidsubscription_removecondition = "Disable privileged subscriptions"
+_l.paidsubscription_removecondition_question = "Do you really want to disable privileged subscriptions to you? Then your materials will be visible to all users."
+_l.paidsubscription_addcondition = "Add privileged subscription terms"
+_l.paidsubscription_updatecondition = "Update your privileged subscription terms"
+_l.paidsubscription_updatecondition_question = "Are you sure you want to update the price of your privileged subscription? The conditions for viewing publications will be updated for previous materials as well."
+
+_l.paidsubscription_updatecondition_success = "The terms of your privileged subscription have been changed. The changes will be applied to users within a day."
+
+_l.visibleonlytopaid = "Visible to privileged subscribers only"
+
+
+_l.sharevisibility_paid = 'For privileged subscribers'
+_l.sharevisibilitylabel_paid_post = 'The author has decided to make this <b>publication</b> visible only to privileged subscribers'
+_l.sharevisibilitylabel_paid_article = 'The author has decided to make this <b>article</b> visible only to privileged subscribers'
+_l.sharevisibilitylabel_paid_video = 'The author decided to make this <b>video</b> visible only to privileged subscribers'
+
+_l.sharevisibilitylabel_paid_error = 'We were unable to verify that you have a premium subscription. Please try again later.'
+
+_l.getpaidsubscription = 'Become a privileged subscriber'
+_l.getpaidsubscription2 = 'Become a privileged subscriber'
+_l.getpaidsubscription3 = 'Apply for a privileged subscription'
+
+_l.getpaidsubscription_text = 'Get a privileged subscription and get access to all the author`s publications!'
+
+_l.getpaidsubscription_acceptQuestion = 'Do you confirm the following actions: '
+
+_l.getpaidsubscription_acceptQuestion_paid = function({name, amount}){return 'Transfer to <b>' + name +'</b> <b>' + amount +' PKOIN</b> for privileged subscription' }
+_l.getpaidsubscription_acceptQuestion_subscribe = function({name}){return 'Subscribe to <b>' + name +'</b>'}
+
+_l.getpaidsubscription_option_1m = 'Buy a 1 month subscription'
+_l.getpaidsubscription_option_6m = 'Buy a 6 month subscription'
+_l.getpaidsubscription_option_1y = 'Buy a 1 year subscription'
+
+_l.getpaidsubscription_option_1m_p = 'Pay extra for a 1 month subscription'
+_l.getpaidsubscription_option_6m_p = 'Pay extra for a 6 month subscription'
+_l.getpaidsubscription_option_1y_p = 'Pay extra for a 1 year subscription'
+
+_l.getpaidsubscription_select_option = 'Please select the premium subscription payment option'
+
+
+_l.getpaidsubscription_option_p = function(date){ return 'The subscription will end on ' + date + ', but can be renewed later for less money.' }
+
+_l.getPaidSubscription = "Privileged subscription"
+_l.fastmessagepaidsubscription = 'as payment for a privileged subscription'
+_l.getpaidsubscription_paidsuccess_text = "Your privileged subscription has already been paid for."
+
+_l.getpaidsubscription_paidsuccess_until= function(date){ return 'Subscription paid until <b>' + date + '</b>'}
+_l.getpaidsubscription_paidsuccess_text_relation="Access to materials for privileged subscribers has already been paid for, all that remains is to subscribe to the author"
+
+_l.fastmessagepaidsubscription_share = 'Publication for privileged subscribers'
+_l.uploadwallpappercaption = "Set profile cover"
+_l.uploadwallpapperuploadTitle = "Select a profile cover image"
+_l.uploadwallpapperGiferror = "Gif images are not allowed"
+
+_l.setcoverquestion = 'Would you like to save this photo as your profile cover?'
+_l.setcoverquestionyes = 'Yes, set cover'
+_l.setcoverquestionno = 'No'
+
+_l.hiddenCommentLabelLink = "The comment has been hidden because it contains a link to an external resource from a user with insufficient rating."
+_l.getpaidsubscription_paidsuccess_removecodition_text = "The author has disabled the ability to issue a privileged access to it. Therefore, previously posted materials for privileged subscribers are available free of charge to everyone."

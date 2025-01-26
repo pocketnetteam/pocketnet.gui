@@ -82,6 +82,7 @@ class Notifications{
             const ts = Date.now();
             try {
 
+
                 this.logger.w('system', 'info', `Notification: Generate Events: ${item.height}`)
 
                 const {events, block} = await this.generateEvents(item)
@@ -333,7 +334,6 @@ class Notifications{
             try{
                 this.run()
             }catch(e){
-                console.log('run2', e)
             }
 
             

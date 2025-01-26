@@ -349,6 +349,11 @@ var taginput = (function(){
 		return {
 			primary : primary,
 
+			focus : function(){
+				if (s)
+					s.focus()
+			},
+
 			getdata : function(clbk, p){
 
 				essenseData = p.settings.essenseData || {}

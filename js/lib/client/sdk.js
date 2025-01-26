@@ -32,7 +32,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         userInfoLight: {
-            time: 30000
+            time: 120000
         },
 
         userState: {
@@ -106,6 +106,26 @@ var pSDK = function ({ app, api, actions }) {
         transactionsRequest : {
             time : 60
         },
+
+        jury : {
+            time : 360
+        },
+
+        defaultRpcRequest : {
+            time : 60
+        },
+        
+        miniappRequest: {
+            time: 60 * 60 // temp
+        },
+        miniapp : {
+            time : 60 * 60
+        },
+
+    
+        getfromtotransactions : {
+            time : 60 * 60 * 60
+        }
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -151,7 +171,7 @@ var pSDK = function ({ app, api, actions }) {
         if(!baddata[key]) baddata[key] = {}
     }
 
-    var settodb = function (dbname, result) {
+    var settodb = function (dbname, result, p = {}) {
         if (!dbname || !dbmeta[dbname]) {
             return Promise.resolve()
         }
@@ -164,7 +184,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
-            return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
+            return self.db.set(dbname, p.cachetime || dbmeta[dbname].time, key, data).catch(e => {
                 console.error(e)
                 return Promise.resolve()
             })
@@ -194,14 +214,14 @@ var pSDK = function ({ app, api, actions }) {
         return self.db.clearAll(dbname)
     }
 
-    var settodbone = function (dbname, hash, data) {
+    var settodbone = function (dbname, hash, data, p) {
 
         if (!hash || !data) return Promise.resolve()
 
         return settodb(dbname, [{
             key: hash,
             data
-        }])
+        }], p)
     }
 
     var getfromdbone = function (dbname, hash, getold) {
@@ -607,7 +627,9 @@ var pSDK = function ({ app, api, actions }) {
 
     var request = function (key, hash, executor, p = {
         requestIndexedDb: null,
-        insertFromResponse: null
+        insertFromResponse: null,
+        cachetime : undefined,
+        update : false
     }) {
 
         if (_.isObject(hash)) {
@@ -621,7 +643,7 @@ var pSDK = function ({ app, api, actions }) {
 
         if (temp[key][hash]) return temp[key][hash]
 
-        temp[key][hash] = getfromdbone(p.requestIndexedDb, hash).then((r) => {
+        temp[key][hash] = (p.update ? Promise.resolve(null) : getfromdbone(p.requestIndexedDb, hash)).then((r) => {
 
             if (r) return Promise.resolve(r)
 
@@ -632,7 +654,7 @@ var pSDK = function ({ app, api, actions }) {
                     r = p.transformResult(r)
                 }
 
-                settodbone(p.requestIndexedDb, hash, r)
+                settodbone(p.requestIndexedDb, hash, r, {cachetime : p.cachetime})
 
                 return Promise.resolve(r)
             }).catch(e => {
@@ -742,6 +764,17 @@ var pSDK = function ({ app, api, actions }) {
 
     self.userInfo = {
         keys: ['userInfoFull', 'userInfoLight'],
+
+        objkey : 'address',
+
+        searchIndex : function(obj){
+            var sobj = {
+                name : {v : (obj.n || obj.name), c : 5},
+                about : {v : (obj.a || obj.about), c : 1}
+            }
+
+            return sobj
+        },
 
         cleanData: function (rawinfo) {
             return _.filter(_.map(rawinfo, (c) => {
@@ -1132,6 +1165,8 @@ var pSDK = function ({ app, api, actions }) {
             if (object.address == exp.actor) {
                 object.pin = exp.pin
                 object.monetization = exp.monetization
+                object.paidsubscription = exp.paidsubscription
+                object.cover = exp.cover
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true
@@ -1180,6 +1215,153 @@ var pSDK = function ({ app, api, actions }) {
         }
 
     }
+
+    self.jury = {
+        keys : ['jury'],
+        getjuryassigned : function (address) {
+
+            
+
+            return request('jury', address, (data) => {
+                return api.rpc('getjuryassigned', [address], {
+                    rpc : {
+                        fnode : '65.21.252.135:38081'
+                    }
+                }).then(items => {
+
+                    /*items.push({
+                        id : '9b4788f9a6d55330e30416af16f39fef10cf84c30adff32d589396d99454afbc',
+                        postid : 'ff48022c117497c3e080e9f7bef64ba2f415984aae26cdfc3f8c693e4b1a84a3',
+                        parentid : '52858212de5ec997385969e568f0585d1e7962f3afe109da6ae24db365403573',
+                        answerid : '52858212de5ec997385969e568f0585d1e7962f3afe109da6ae24db365403573',
+                        jury : {
+                            "juryid": "12828e0458c778458a3ca4899f753559b015572be367a45e4b2acef7fde43a81",
+                            "height": 2856615,
+                            "reason": 2
+                        },
+
+                        type : 'comment',
+                        address : 'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX'
+                    })
+
+                    items.push({
+                        jury : {
+                            "juryid": "155528e0458c778458a3ca4899f753559b015572be367a45e4b2acef7fde43a81",
+                            "height": 2856615,
+                            "reason": 1
+                        },
+
+                        type : 100,
+                        address : 'PSdjmyvT9qQZxbYMB7jfmsgKokQtP6KkiX'
+                    })*/
+
+                    var converted = _.map(items, (item) => {
+
+                        var i = {
+                            info : item.jury
+                        }
+
+                        i.address = item.a || item.address
+
+
+                        if(item.type == 'share'){ i.type = 'share'; i.key = item.txid || item.id }
+                        if(item.type == 'video'){ i.type = 'share'; i.key = item.txid || item.id }
+                        if(item.type == 100 || item.k){ i.type = 'channel'; i.key = i.address }
+
+                        if(!i.type){ 
+                            i.type = 'comment'; 
+                            i.key = item.id;
+
+                            i.commentPs = {
+                                commentid : item.id,
+                                postid : item.postid,
+                                parentid : item.parentid,
+                                answerid : item.answerid,
+                            }
+                        }
+
+                        i.txid = i.address + '_' + i.key
+                        i.objecttype = 'jury'
+                        i.id = item.jury.juryid
+
+                        return i
+
+                    })
+
+
+                    return converted
+
+                }).catch(e => {
+
+                    return Promise.reject(e)
+                })
+
+            }, {
+                requestIndexedDb: 'jury',
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+            
+        },
+
+        tempRemove: function (objects = [], filter) {
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('modVote'), filter)
+
+                _.each(actions, (action) => {
+
+                    var txid = deep(action, 'object.s2.v')
+                    
+                    objects = _.filter(objects, (o) => {
+                        return o.id == txid
+                    })
+                })
+            })
+
+            return objects
+
+        },
+        insertFromResponseEx: function (data) {
+            return Promise.resolve(this.insertFromResponse(data))
+        },
+        
+        insertFromResponse: function (data) {
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.id,
+                    data: r
+                }
+            })
+
+            var key = 'jury'
+
+            var filtered = []
+
+            _.each(result, (r) => {
+
+                if (r && r.key && r.data) {
+                    storage[key][r.key] = r.data
+                    filtered.push(r)
+                }
+
+            })
+
+            return filtered
+
+        },
+
+        get: function (id) {
+            return storage.jury[id] || null
+        },
+
+        clear : function(){
+            clearallfromdb('jury')
+        }
+    }
+
     /// content
 
     self.comment = {
@@ -1207,12 +1389,12 @@ var pSDK = function ({ app, api, actions }) {
                 
                 //if(c.deleted) return
 
-                /*if(!c.msgparsed && !c.msg) {
-                    if(!c.deleted){
-                        return null
-                    }
-                    
-                }*/
+                //// TODO
+                if(!c.msgparsed && !c.msg) {
+                
+                    return null
+                  
+                }
 
                 if(c.msgparsed || c.msg) {
 
@@ -1240,7 +1422,6 @@ var pSDK = function ({ app, api, actions }) {
                     }
                     catch (e) {
                         console.error(e)
-                        console.log(c)
                         return null
                     }
 
@@ -1575,11 +1756,197 @@ var pSDK = function ({ app, api, actions }) {
 
     }
 
+    self.getfromtotransactions = {
+
+        keys : ['getfromtotransactions'],
+
+        request: function (executor, hash, p = {}) {
+
+            console.log("UPDATE", p.update)
+
+
+            return request('getfromtotransactions', hash, (data) => {
+                
+                return executor(data)
+
+            }, {
+                requestIndexedDb: 'getfromtotransactions',
+                update : p.update,
+            })
+        },
+        tempAdd : function(ar = [], from, to){
+
+            var add = []
+
+            _.each(actions.getAccounts(), (account) => {
+
+                if(account.address != from) return
+
+
+                _.each(account.getTempActions(''), (action) => {
+
+                    console.log('temp', action)
+
+                    _.each(action.outputs, (out) => {
+                        if(out.address == to){
+                            add.unshift({
+                                amount : out.amount * 100000000,
+                                time : Date.now() / 1000,
+                                height : app.platform.currentBlock,
+                                temp : true
+                            })
+                        }
+                    })
+                    
+                })
+
+               
+            })
+
+            return ar.concat(add)
+        }
+    }
+    
+    self.miniapp = {
+        keys : ['miniapp'],
+        request: function (executor, hash) {
+
+            return request('miniapp', hash, (data) => {
+                
+                return executor(data).then(r => {
+                    return this.cleanData(r)
+                })
+
+            }, {
+                requestIndexedDb: 'miniappRequest',
+
+                insertFromResponse: (r) => this.insertFromResponse(r)
+            })
+        },
+
+        insertFromResponse: function (data) {
+
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.id,
+                    data: r
+                }
+            })
+
+            var indexedDb = 'miniapp'
+            var key = 'miniapp'
+
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data) {
+                        storage[key][r.key] = r.data // ADD STORAGE
+                        filtered.push(r)
+                    }
+
+                    var object = this.transform(r)  // ADD STORAGE (TR)
+
+                    if (object) {
+                        objects[key][r.key] = object
+
+                        checkObjectInActions([object])
+                    }
+
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        cleanData : function(rawapps){
+            return _.filter(_.map(rawapps, (c) => {
+
+                if(!c) return false
+
+                var miniappjson = {}
+
+                try {
+
+                    
+                        miniappjson.address = superXSS(c.s1 || '')
+                        miniappjson.hash = superXSS(c.s2 || '')
+
+                    if(c.p){
+                        if(c.p.s1){
+                            var js = JSON.parse(c.p.s1)
+            
+                            miniappjson.name = superXSS(js.n || '');
+                            miniappjson.scope = superXSS(js.s || '');
+                            miniappjson.tscope = superXSS(js.ts || '');
+                            miniappjson.description = superXSS(js.d || '');
+                            miniappjson.tags = _.map(js.t || [], (t) => {
+                                return superXSS(t)
+                            });
+                        }
+                        else{
+                            return null
+                        }
+            
+                        if (c.p.s2){
+                            miniappjson.id = superXSS(c.p.s2)
+                        }else{
+                            return null
+                        }
+                    }
+                    else{
+                        return null
+                    }
+
+                }
+                catch (e) {
+                    console.error(e)
+
+                    return null
+                }
+
+                return miniappjson
+
+            }), c => c)
+        },
+
+        transform: function ({ key, data: miniapp }) {
+
+            var s = new pMiniapp();
+
+            s._import(miniapp);
+
+            return s
+        },
+
+        get: function (id) {
+            return objects.miniapp[id] || null
+        },
+    }
+
     self.share = {
         keys: ['share'],
 
-        request: function (executor, hash, cacheIndex) {
+        objkey : 'txid',
 
+        searchIndex : function(obj){
+            var sobj = {
+                caption : {v : (obj.c || obj.caption), c : 2},
+                message : {v : (obj.b || obj.message), c : 1},
+                tags : {v : (obj.t || obj.tags || []).join(' '), c : 1}
+            }
+
+            return sobj
+        },
+
+        request: function (executor, hash, cacheIndex) {
 
             return request('share', hash, (data) => {
                 
@@ -1589,15 +1956,10 @@ var pSDK = function ({ app, api, actions }) {
                         return r
                     }
 
-
-
                     if(_.isArray(r)){
                         r = {
                             contents : r
                         }
-                        /*return Promise.resolve({
-                            contents : data
-                        })*/
                     }
 
 
@@ -1892,7 +2254,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 })
             }, {
-                queue: true,
+                //queue: true,
                 transform: (r) => this.transform(r),
                 update,
                 indexedDb: 'share',
@@ -2312,6 +2674,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getrawtransaction', [ids[0], 1], {rpc : p}).then(d => {
 
+                    console.log("getrawtransaction D", d)
+
                     if(_.isEmpty(d)) {
                         return []
                     }
@@ -2366,8 +2730,45 @@ var pSDK = function ({ app, api, actions }) {
                 requestIndexedDb: 'transactionsRequest'
             })
             
+        },
+        listener: function (exp, address, status, action) {
+            if (status == 'completed') {
+
+
+                var keys = []
+
+                _.each(action.outputs, (output) => {
+                    if(output.address != address){
+                        keys.push(address + output.address)
+                    }
+                })
+
+                keys = _.filter(_.uniq(keys), k => k)
+
+                if (keys.length){
+                    clearfromdb('getfromtotransactions', keys)
+                }
+                
+            }
+        },
+    }
+
+    self.rpc = {
+        keys : ['defaultRpcRequest'],
+        request : function(action, parameters, p = {}){
+
+            var hash = action + '_' + JSON.stringify(parameters)
+
+            return request('defaultRpcRequest', hash, (data) => {
+                return api.rpc(action, parameters, p.rpc)
+            }, {
+                update : p.update,
+                requestIndexedDb: 'defaultRpcRequest',
+                cachetime : p.cachetime
+            })
         }
     }
+
 
     self.postScores = {
         keys: ['postScores'],
@@ -2712,7 +3113,7 @@ var pSDK = function ({ app, api, actions }) {
 
             var alias = action.get()
 
-            self[action.object.type].listener(alias, address, status)
+            self[action.object.type].listener(alias, address, status, action)
 
             if (status == 'completed' && action.object.ustate) {
 
@@ -2743,6 +3144,52 @@ var pSDK = function ({ app, api, actions }) {
         self.objects = objects = {}
 
         prepareStorages()
+    }
+
+    self.localSearch = function(type, str = ''){
+        if(!self[type]) return []
+
+        var meta = self[type]
+
+        var objs = []
+
+        _.each(meta.keys, (key) => {
+            objs = objs.concat(_.toArray(objects[key]))
+        })
+
+        if (meta.objkey){
+            objs = _.uniq(objs, (o) => {
+                return o[meta.objkey]
+            })
+        }
+
+        var si = meta.searchIndex
+
+        var executor = function(obj){
+            var ind = si(obj)
+            var value = 0
+
+            _.each(ind, ({v = '', c = 1}) => {
+
+                console.log('localSearch(v, str)', localSearch(v, str), v, str, c)
+
+                value += localSearch(v, str) * c
+            })
+
+            return value
+        }
+
+        console.log('objs', objs)
+
+        var resultObjects = _.map(objs, (obj) => {
+            var value = executor(obj)
+
+            return {
+                obj, value
+            }
+        })
+
+        return Promise.resolve(resultObjects)
     }
 
     self.ws = {

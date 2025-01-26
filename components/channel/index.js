@@ -164,6 +164,49 @@ var channel = (function(){
 
 		}
 
+		var make = function(){
+
+			Circles({
+				target: el.c.find('.bgwallpaper')[0],
+				quantity: 15,
+				radius: {
+					min: 2,
+					max: 400
+				},
+				zIndex: {
+					min: 0,
+					max: 20
+				},
+				hue: {
+					min: 0,
+					max: 180
+				},
+				saturation: {
+					min: 50,
+					max: 100
+				},
+				light: {
+					min: 25,
+					max: 75
+				},
+				alpha: {
+					min: 0.2,
+					max: 0.8
+				}
+			})
+			
+			self.app.platform.sdk.users.getCover(author.address).then(cover => {
+				if(!cover){
+					
+				}
+				else{
+
+					el.c.find('.bgwallpaper').attr('image', cover)
+					bgImages(el.c)
+				}
+			})
+		}
+
 		return {
 			primary : primary,
 			id : eid,
@@ -171,8 +214,11 @@ var channel = (function(){
 
 				ed = p.settings.essenseData || {}
 
+				if(!ed.id) ed.id = parameters().addressid
+
 				if(!ed.id){
 					clbk({
+						author : null,
 						ed : ed
 					})
 
@@ -221,12 +267,13 @@ var channel = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents();
+				make();
 
 				p.clbk(null, p);
 			},
 
 			wnd : {			
-				class : 'normalizedmobile',
+				class : 'normalizedmobile channelwnd',
 			}
 		}
 	};

@@ -65,6 +65,7 @@
 	}
 
 	.settingsWrapper{
+		
 		.visibilityWrapper{
 			.vc_valuecustom{
 				width: auto;
@@ -88,9 +89,65 @@
 					border : 0;
 				}
 			}
-
-			
 		}
+
+		.timewrapper{
+			margin-top: @rhythm;
+
+			.timelabel{
+				display: none;
+				margin-left: @rhythm;
+				cursor: pointer;
+				span{
+					text-decoration: underline;
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+
+			.cleartimelabel{
+				display: none;
+				cursor: pointer;
+				padding : @rhythm;
+				width: 33px;
+				text-align: right;
+
+				i{
+					font-size: 0.8em;
+					.transition(0.3s);
+					color : rgb(var(--neutral-grad-2));
+				}
+
+				&:hover{
+					i{
+						color : rgb(var(--neutral-grad-4));
+					}
+				}
+
+			}
+		}
+
+		.wrpsflex{
+			display: flex;
+			align-items: center;
+		}
+
+		.settings{
+			&.showtimepicker{
+				.timechanger{
+					width: 50%;
+				}
+
+				.timelabel{
+					display: block;
+				}
+
+				.cleartimelabel{
+					display: block;
+				}
+			}
+		}
+
+		
 	}
 
 	.postlineWrapper{
@@ -608,6 +665,31 @@
 		.urlhtmlcontent{
 			font-size: 0.8em;
 
+			.applicationCaption{
+				display: flex;
+				align-items: center;
+
+				.appicon{
+					width: 22px;
+
+					.bgimage{
+						width: 22px;
+						height: 22px;
+					}
+				}
+
+				.appname{
+					margin-left: @rhythm;
+					span{
+						font-weight: 700;
+					}
+				}
+
+				
+			}
+			.applicationButton{
+				margin-top: 2 * @rhythm;
+			}
 			.ogtable{
 				>div{
 					vertical-align: top;
@@ -983,6 +1065,16 @@
 
 
 .sharedate{
+
+	
+	.selectDateWrapper{
+		select{
+			cursor: pointer;
+			border-radius: 3px;
+			background: rgb(var(--neutral-grad-1));
+		}
+	}
+
 	.selectDateTableWrapper{
 		width : 500px;
 		>div{
@@ -1014,6 +1106,8 @@
 		float: right;
 	}
 }
+
+
 
 .wnd.wndsharepost{
 
@@ -1166,6 +1260,34 @@ html.mobileview{
 }
 
 /*t*/ @media only screen and (max-width: 768px){
+
+	.sharedate{
+
+		.selectDateWrapper{
+
+			select{
+				width: 100%;
+				text-align: center;
+				padding : 2 * @rhythm;
+			}
+
+			.selectDateTableWrapper{
+				width: 100%;
+
+				>div{
+					&.dateWrapper{
+						width : 47%;
+					}
+
+					&.dWrapper {
+						width: 10px;
+					}
+				}
+			}
+		
+			
+		}
+	}
 
 	.wnd.wndsharepost{
 
@@ -1331,12 +1453,22 @@ html.mobileview{
 		}	
 
 		.settingsWrapper{
+
+			
 			.settings{
-				background: rgb(var(--background-total-theme));
-				padding : 1.6 * @rhythm @rhythm;
+				
+				
 				margin-bottom: @rhythm;
 
+				.wrpsflex{
+					.timechanger{
+						flex-grow: 2;
+					}
+				}
+
 				.visibilityWrapper{
+					background: rgb(var(--background-total-theme));
+					padding : 1.6 * @rhythm @rhythm;
 					.vc_valuecustom{
 						width: auto;
 						padding-top : 0;

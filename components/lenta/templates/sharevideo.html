@@ -124,7 +124,7 @@ var metadisplay = function(){ %>
 								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
 									<span class="sbtnxs">
-										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
+										&middot; <span class="subscribeLabel asubscribe tvfocusedopacity"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
 							
 									</span>
 
@@ -162,7 +162,7 @@ var metadisplay = function(){ %>
 		<% if(!checkvisibility && state && (typeof repost == 'undefined' || !repost)) { %>			
 
 			<div class="metapanel">
-				<div class="metapanelitem metmenu">
+				<div class="metapanelitem metmenu tvfocusedzoom">
 					<i class="fas fa-ellipsis-h"></i>
 				</div>
 			</div>
@@ -332,12 +332,42 @@ var metadisplay = function(){ %>
 	
 	
 							<% } %>
+
+							<% if(checkvisibility == 'paid' || checkvisibility == 'paid_check' || checkvisibility == 'paid_error'){ %>
+
+								<div class="hiddenlabeltext">
+									<%=e('sharevisibilitylabel_paid_' + cview)%>
+								</div>
+				
+								<% if(state) {%>
+				
+									<% if(checkvisibility == 'paid_check'){ %>
+										<div class="hiddenlabelaction">
+											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+										</div>
+									<% } %>
+				
+									<% if(checkvisibility == 'paid_error'){ %>
+										<div class="hiddenlabelaction">
+											<%=e('sharevisibilitylabel_paid_error')%>
+										</div>
+									<% } %>
+				
+									<% if(checkvisibility == 'paid'){ %>
+										<div class="hiddenlabelaction">
+											<button elementsid="hrefregistration" class="orange medium button getpaidsubscription"><%=e('getpaidsubscription')%></button>
+										</div>
+									<% } %>
+				
+								<% } %>
+				
+							<% } %>
 	
 	
 							<% if(!state) {%>
 
 								<div class="hiddenlabelaction">
-									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+									<button elementsid="hrefregistration" class="orange medium button toregistration"><%=e('signupmenu')%></button>
 								</div>
 	
 							<% } %>
@@ -463,7 +493,7 @@ var metadisplay = function(){ %>
 	
 											<div class="itemwr table">
 												<div class="iconwr">
-													<div class="icon">
+													<div class="icon tvfocusedopacity">
 														<i class="fas fa-share-alt"></i>
 													</div>
 												</div>

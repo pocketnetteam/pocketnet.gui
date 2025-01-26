@@ -156,7 +156,11 @@ var Node = function(options, manager){
             wss.service.on('disconnected', function(){
                 wss.service = null
                 wssconnected = false
-                serviceConnection()
+
+
+                setTimeout(() => {
+                    serviceConnection()
+                }, 60000)
             })
 
         }
@@ -311,7 +315,7 @@ var Node = function(options, manager){
         host: self.host,
         port: webport,
         portPrivate: self.portPrivate,
-        transports : manager ? manager.transports : null
+        transports : global.USE_NODE_TRANSPORTS && manager ? manager.transports : null
     })
 
     self.rpcs = function(method, parsed){
@@ -675,7 +679,9 @@ var Node = function(options, manager){
         rating : function(){
 
             if(cachedrating){
-                if(f.date.addseconds(cachedrating.time, 30) > new Date()){
+
+
+                if(cachedrating.time + 130000 > Date.now()){
                     return cachedrating.result || 0
                 }
             }
@@ -742,7 +748,7 @@ var Node = function(options, manager){
             if(!notcache){
                 cachedrating = {
                     result : result,
-                    time : new Date()
+                    time : Date.now()
                 }
             }
             
@@ -993,7 +999,7 @@ var Node = function(options, manager){
 
             if (lastinfo && lastinfoTime){
     
-                var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
+                var dif = Math.floor((Date.now()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
 
                 if (dif < 55){
     

@@ -334,8 +334,6 @@ var Monetization = function(app, {url, auth}){
             EndDate : end
         }).then(r => {
 
-            console.log("CLEAR RESULT ", r)
-
 
             return group(r, (f) => {
                 return f.boostAddressHash
@@ -667,7 +665,6 @@ var Monetization = function(app, {url, auth}){
                 r.amountBoost = ((r.amountBoost - 1) / 100000000)
             })
 
-            console.log('groupping.boosts[group](r, year)', groupping.boosts[group](r, year))
 
             return groupping.boosts[group](r, year)
 

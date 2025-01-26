@@ -11,27 +11,29 @@
     </div>
 <% } %>
 <div class="captionRow">
-    <div class="back iconwrapper">
-        <a href="home">
+    <% if(!app.mobileview || !state) {%>
+        <div class="back iconwrapper">
             <div class="icon">
                 <i class="fas fa-chevron-left"></i>
             </div>
-        </a>
-    </div>
+        </div>
+    <% } %>
     <div class="caption">
         <span><%-application.manifest.name%></span>
     </div>
-    <div class="settings iconwrapper">
-        <div class="icon">
-            <i class="fas fa-ellipsis-v"></i>
+    <% if(app.mobileview) {%>
+        <div class="settings iconwrapper">
+            <div class="icon">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
         </div>
-    </div>
+    <% } %>
 
-    <div class="abssettings iconwrapper">
+    <!--<div class="abssettings iconwrapper">
         <div class="icon">
             <i class="fas fa-ellipsis-h"></i>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <div class="iframewrapper">

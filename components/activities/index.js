@@ -44,7 +44,7 @@ var activities = (function () {
 						try {
 							i.description = JSON.parse(i.description)
 						} catch (e) {
-
+							console.error(e)
 						}
 
 					}
@@ -55,6 +55,8 @@ var activities = (function () {
 						} catch (e) {
 							i.description = {}
 							i.description.message = i.relatedContent.description
+							console.error(e)
+
 						}
 					}
 					if (i.time) {
@@ -129,7 +131,7 @@ var activities = (function () {
 
 				end = false
 
-				if(filter) {
+				if (filter) {
 					currentFilter = filter;
 
 					try{
@@ -144,7 +146,9 @@ var activities = (function () {
 
 				var promise = currentFilter === 'video' ? actions.getDataVideos : (currentFilter === 'pending' ? actions.getActions : actions.getdata)
 
-				promise().then((data) => {
+				promise(filter, true).then((data) => {
+
+					if(currentFilter != filter) return
 
 					if(currentFilter === 'pending'){
 						renders.actions(data)
@@ -175,17 +179,19 @@ var activities = (function () {
 
 			},
 
-			getdata: function () {
+			getdata: function (filter, clear) {
 				actions.setloading(true)
 
-				activitiesByGroup[currentFilter] || (activitiesByGroup[currentFilter] = [])
+				activitiesByGroup[filter] || (activitiesByGroup[filter] = [])
 
-				var activities = activitiesByGroup[currentFilter]
+				if(clear) activitiesByGroup[filter] = []
+
+				var activities = activitiesByGroup[filter]
 
 				var blockNumber = activities.length ? activities[activities.length - 1].height : self.app.platform.currentBlock
 
 				return self.app.api.rpc('getactivities', 
-					[self.user.address.value, blockNumber, null, getters.getFilters(currentFilter)]
+					[self.user.address.value, blockNumber, null, getters.getFilters(filter)]
 				).then((data) => {
 
 					if (!data.length) {
@@ -197,7 +203,7 @@ var activities = (function () {
 					})
 
 					
-					activitiesByGroup[currentFilter].push(...data)
+					activitiesByGroup[filter].push(...data)
 
 					return Promise.resolve(data)
 
@@ -405,7 +411,8 @@ var activities = (function () {
 				let scrollEnd = scnt ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight - 500 : false;
 
 				if (scrollEnd && !loading && !end && currentFilter !== 'video' && currentFilter !== 'pending') {
-					actions.getdata().then(data => {
+
+					actions.getdata(currentFilter).then(data => {
 
 						var ids = _.map(data, (v) => {
 							return v.hash
@@ -608,7 +615,7 @@ var activities = (function () {
 				
 				if (!scnt.length) scnt = self.app.el.window;
 
-				actions.applyFilter()
+				actions.applyFilter(currentFilter)
 
 				initEvents();
 

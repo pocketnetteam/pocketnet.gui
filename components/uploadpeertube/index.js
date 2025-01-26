@@ -19,7 +19,7 @@ var uploadpeertube = (function () {
 		var wndObj;
 		var errorcomp = null;
 
-		var uploader, uploading = false, cancel = null;
+		var uploader, uploading = false, cancel = null, hasAccess = false;
 
 
 		/*var events = {
@@ -40,6 +40,24 @@ var uploadpeertube = (function () {
 		};*/
 
 		var renders = {
+			quota : function(r){
+				if(r){
+					self.shell({
+
+						name: 'quota',
+						el: el.quota,
+						inner: html,
+						data: {
+							quota : r
+						},
+	
+					}, function (_p) {
+	
+	
+					})
+				}
+				
+			},
 			videoErrorContainer: function () {
 
 				var errorel = el.c.find('.videoErrorContainer')
@@ -67,6 +85,20 @@ var uploadpeertube = (function () {
 
 			},
 		};
+
+		var actions = {
+			getQuota : function(){
+				return self.app.peertubeHandler.api.videos.checkQuota().then((rme) => {
+					
+					return Promise.resolve(rme)
+				}).catch(e => {
+					console.error(e)
+
+					return Promise.resolve(null)
+
+				})
+			}
+		} 
 
 
 		var state = {
@@ -501,11 +533,11 @@ var uploadpeertube = (function () {
 
 					if (window.cordova || isMobile()) {
 						/** Mobile slow 3G chunking */
-						return 256 * 1024;
+						return 2 * 256 * 1024;
 					}
 
 					/** Regular internet (60 mbit/s) */
-					return 256 * 4096;
+					return 2 * 256 * 4096;
 				};
 
 				initCancelListener(() => {
@@ -646,6 +678,20 @@ var uploadpeertube = (function () {
 			});
 		};
 
+		var make = function(){
+			initEvents();
+
+			if (hasAccess){
+				actions.getQuota().then(r => {
+					renders.quota(r)
+				})
+			}
+			else{
+				renders.videoErrorContainer()
+			}
+			
+		}
+
 		return {
 			primary: primary,
 
@@ -705,8 +751,8 @@ var uploadpeertube = (function () {
 						}
 
 						data.hasAccess = true;
-
-						console.log('video', res)
+						hasAccess = true
+						
 
 						clbk(data);
 					})
@@ -720,6 +766,7 @@ var uploadpeertube = (function () {
 
 						data.e = e.response || e;
 						error = true;
+						hasAccess = false
 
 						clbk(data);
 
@@ -797,13 +844,16 @@ var uploadpeertube = (function () {
 
 				el.header = el.c.find('.upload-header');
 
+				el.quota =  el.c.find('.quotafieldcontainer')
+
 				self.app.settings.delete('common', 'lastuploadedvideo');
 				//el.preloaderElement = el.c.find('.iconwr');
 
-				initEvents();
+				
 
+				make()
 
-				renders.videoErrorContainer()
+				
 
 				//if (error) el.c.closest('.wnd').addClass('witherror');
 

@@ -1,0 +1,25 @@
+#fastsend .caption {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+#fastsend .caption span {
+  font-size: 2em;
+  font-weight: 700;
+}
+#fastsend textarea {
+  height: 160px;
+  resize: none;
+}
+#fastsend textarea:placeholder-shown {
+  color: rgb(var(--neutral-grad-3));
+}
+#fastsend input:placeholder-shown {
+  color: rgb(var(--neutral-grad-3));
+}
+#fastsend .buttonswrapper,
+#fastsend .infowrapper {
+  margin-top: 2em;
+}
+#fastsend button {
+  min-width: 180px;
+}

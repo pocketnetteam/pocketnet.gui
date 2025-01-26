@@ -453,7 +453,7 @@ var camerapreview = (function(){
 
 
 						dimensions = _.filter(dimensions, function(d){
-							return d.width * d.height < 3 * 1000 * 1000
+							return d.width * d.height < (ed.mp || 3) * 1000 * 1000
 						})
 		
 						var maxdimension = _.max(dimensions, function(d){
@@ -722,7 +722,6 @@ var camerapreview = (function(){
 				actions.stopcamera()
 			}
 
-			console.log(ed)
 
 			initUpload({
 				el : el.openexternal,
@@ -734,11 +733,9 @@ var camerapreview = (function(){
 				onError : ed.onError,
 				onSuccess : function(){
 
-					console.log("SA")
 
 					if(ed.onSuccess) ed.onSuccess()
 
-					console.log("STOP")
 
 					self.stop()
 				},

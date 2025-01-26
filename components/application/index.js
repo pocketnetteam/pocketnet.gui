@@ -16,15 +16,14 @@ var application = (function(){
 
 				globalpreloader(true)
 
-				var pr = self.app.apps.install({...application, version : numfromreleasestring(application.version)})
-				
-				
-				pr.promise.then(() => {
+				self.app.apps.install({
+					...application,
+					develop: true,
+					version: numfromreleasestring(application.version || '1.0.0')
+				}).then(() => {
 					successCheck()
 				}).catch(e => {
-
 					console.error(e)
-
 					sitemessage(JSON.stringify(e), null, 5000)
 				}).finally(() => {
 					globalpreloader(false)
@@ -32,13 +31,22 @@ var application = (function(){
 	
 			},
 			gotohome : function(){
-				self.app.nav.api.load({
-					open : true,
-					href : 'index',
 
-					///href : 'home',
-					history : true,
-				})
+				if(self.container){
+					self.closeContainer()
+				}
+				else{
+					self.app.platform.ui.goback('index')
+					/*self.app.nav.api.load({
+						open : true,
+						href : 'index',
+	
+						///href : 'home',
+						history : true,
+					})*/
+				}
+
+				
 			},
 			openinfo : function(){
 				app.nav.api.load({
@@ -81,28 +89,35 @@ var application = (function(){
 
 				var sl = '.settings .icon'
 
-				if(isMobile() && !s) sl = '.abssettings .icon'
+				//if(isMobile() && !s) sl = '.abssettings .icon'
 
 				p.el.find(sl).on('click', function(){
 					renders.menu($(this))
 				})
 
-				var chatel = p.el.find('.chatDoubleRow')
+				p.el.find('.info').on('click', function(){
+					actions.openinfo()
+				})
+
+				var chatel = p.el.find('.chat')
 
 				chatel.on('click', events.chats.click)
 				events.chats.init(chatel)
 			},
 
 			loaded : function(p){
-
+				
 				if(!application) return
-
+				
 				if (p.application == application.manifest.id){
 					el.c.find('.iframewrapper').addClass('loaded')
 				}
 
-				if (el.c)
-					el.c.find('.captionRow').addClass('notactive')
+				setTimeout(() => {
+					if (el.c)
+						el.c.find('.captionRow').addClass('notactive')
+				}, 2000)
+				
 			},
 
 			changestate : function(p = {}){
@@ -123,9 +138,9 @@ var application = (function(){
 				}
 			},
 
-			installed : function(p = {}){
-				if (p.application.manifest.id == application.manifest.id){
-					remake(p.application.manifest.id)
+			installed : function(p = {}){				
+				if (p.application?.id == application?.id){
+					remake(p.application.id)
 				}
 			},
 
@@ -221,6 +236,10 @@ var application = (function(){
 						actions.install()
 					})
 
+					p.el.find('.back').on('click', function(){
+						actions.gotohome()
+					})
+
 					events.pageevents(p, true)
 					
 					if (clbk)
@@ -276,6 +295,10 @@ var application = (function(){
 
 					events.pageevents(p)
 
+					p.el.find('.back').on('click', function(){
+						actions.gotohome()
+					})
+
 					if (clbk)
 						clbk();
 				})
@@ -295,12 +318,35 @@ var application = (function(){
 
 					data : {
 						application,
-						src 
+						src
 					},
 
 				}, function(p){
 
 					events.pageevents(p)
+
+					p.el.find('.back').on('click', function(){
+						if(self.app.electronview && history.length){
+							history.back()
+						}
+						else{
+							actions.gotohome()
+						}
+					})
+
+					p.el.find('.forward').on('click', function(){
+						if (history.length) {
+							history.forward() 
+						}
+					})
+
+					p.el.find('.refresh').on('click',()=>{
+
+						var electron = require('electron');
+
+						if (electron)
+							electron.ipcRenderer.send('electron-refresh');
+					})
 
 					if (clbk)
 						clbk();
@@ -324,7 +370,7 @@ var application = (function(){
 			self.app.apps.on('installed', events.installed)
 			self.app.apps.on('removed', events.removed)
 
-			
+
 		}
 
 		var remake = function(id){
@@ -353,7 +399,7 @@ var application = (function(){
 				return
 			}
 
-			if(!application.installed){
+		if(!application.installed){
 				renders.install()
 				return
 			}
@@ -409,13 +455,17 @@ var application = (function(){
 			},
 
 			getdata : function(clbk, p){
+
+				ed = p.settings.essenseData || {}
 				
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent_application')
 					self.app.mobile.reload.destroyparallax()
 				})
 
-				var id = parameters().id
+				var id = ed.application || parameters().id
+
+				var path = ed.path || ''
 
 				application = null
 				appdata = null
@@ -425,10 +475,24 @@ var application = (function(){
 					if (f){
 						application = f.application
 						appdata = f.appdata
+
+						if (ed.application){
+
+							var ps = {}
+
+							if(path) ps.p = path
+
+							if(!ed.inWnd)
+								ps.id = id
+
+							self.app.nav.api.history.addRemoveParameters([], ps, {
+								replaceState: true
+							})
+						}
 					}
 					
-	
-					ed = p.settings.essenseData
+					
+					
 	
 					var data = {
 						ed
@@ -482,7 +546,7 @@ var application = (function(){
 				curpath = ''
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find('#' + self.map.id + "fx");
 
 				initEvents();
 
@@ -491,6 +555,12 @@ var application = (function(){
 				p.clbk(null, p);
 
 			
+			},
+
+			clearparameters: ['id', 'p'],
+
+			wnd : {			
+				class : 'appwindow',
 			}
 		}
 	};

@@ -6,7 +6,7 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
-        <meta http-equiv="X-Frame-Options: SAMEORIGIN">
+        <meta http-equiv="X-Frame-Options" content="sameorigin" />
         
         <link rel="alternate" href="android-app://pocketnet.app/https/pocketnet.app" />
         <link rel="alternate" href="android-app://pocketnet.app/https/test.pocketnet.app" />
@@ -44,7 +44,7 @@
         
             require_once('php/og.php'); 
 
-            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project");
+            $og = new OG($_GET, __VAR__.proxypath, "__VAR__.domain", "__VAR__.project", $_SERVER['REQUEST_URI'], '__VAR__.strconfig');
 
             $og->get();
             $og->echotags();
@@ -108,6 +108,7 @@
             <div id="footerWrapper">
                 
             </div>
+            <div id="miniappscnt"></div>
 
         </div>
 

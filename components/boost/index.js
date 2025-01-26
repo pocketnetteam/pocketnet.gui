@@ -150,7 +150,7 @@ var boost = (function(){
 			},
 
 			wnd : {
-				class : 'normalizedmobile maxheight',
+				class : 'wndboostpr normalizedmobile maxheight withoutButtons',
 			}
 		}
 	};

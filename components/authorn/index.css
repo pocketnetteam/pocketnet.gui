@@ -28,9 +28,10 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 200px;
+  height: 265px;
   /*aspect-ratio: 4;*/
   z-index: 0;
+  filter: brightness(90%);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -41,6 +42,16 @@
   top: 0;
   background: #051b48;
   bottom: 0;
+  opacity: 1!important;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper[imageloaded="true"] [circle="circle"] {
+  opacity: 0;
+}
+#authorn .bgwallpaperWrapper .bgwallpaper [circle="circle"] {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel {
   position: absolute;
@@ -58,14 +69,15 @@
   max-width: 1076px;
 }
 #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel .item {
+  margin-left: 0.5em;
   cursor: pointer;
   border-radius: 12px;
   min-width: 44px;
   line-height: 42px;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  background: rgba(var(--background-main-contrast), 0.3);
-  border: 1px solid rgba(var(--background-main), 0.8);
+  background: rgba(var(--background-main-contrast), 0.2);
+  border: 1px solid rgba(var(--background-main), 0.6);
   color: rgba(var(--background-main), 0.7);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -116,7 +128,7 @@
   height: 100%;
 }
 #authorn .acontentps {
-  height: 200px;
+  height: 265px;
   /*aspect-ratio: 4;*/
 }
 #authorn .blocking,
@@ -272,6 +284,10 @@
 #authorn .buttonsrow button.icon {
   min-width: 44px;
   max-width: 88px;
+}
+#authorn .buttonsrow .getPaidSubscription i,
+#authorn .buttonsrow .managePaidSubscription i {
+  color: rgb(var(--color-bg-orange));
 }
 #authorn .aucaption {
   position: relative;
@@ -571,6 +587,9 @@
 #authorn .fxdsmall {
   top: 75px;
 }
+.html.television #authorn .lentacellsvi {
+  padding-top: 0;
+}
 @media only screen and (max-width: 768px) {
   #authorn .aucaption {
     position: relative;
@@ -582,13 +601,13 @@
     padding-top: 3em;
   }
   #authorn .bgwallpaperWrapper {
-    height: 130px;
+    height: 195px;
   }
   #authorn .bgwallpaperWrapper .bgwallpaper .bgpanel .panel {
     padding: 0.5em;
   }
   #authorn .acontentps {
-    height: 130px;
+    height: 195px;
   }
   #authorn .fbuttonsrow button {
     height: 45px;
@@ -629,13 +648,31 @@
   #authorn .uinfo .item {
     display: none;
   }
-  #authorn .uinfo.showall .ucaption {
-    margin-bottom: 0.5em;
+  #authorn .uinfo .item.about {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  #authorn .uinfo .fa-chevron-down {
+    color: rgb(var(--neutral-grad-2));
+  }
+  #authorn .uinfo.showall .fa-chevron-down {
+    transform: rotate(-180deg);
   }
   #authorn .uinfo.showall .ucaption i {
     display: block;
   }
   #authorn .uinfo.showall .item {
     display: block;
+  }
+  #authorn .uinfo.showall .item.about {
+    display: block;
+    -webkit-line-clamp: inherit;
+    margin-bottom: 1em;
   }
 }

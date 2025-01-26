@@ -1,0 +1,9 @@
+<div class="info">
+    <div>
+        <span>Addresses: <%-list.length%>, Amount: <%- app.platform.mp.coin(_.reduce(list, function(m,v){return m + v.value}, 0))%></span>
+    </div>
+    <div class="message">
+        <%- message %> <% if(message == 'a:monetization' || message == 'a:donate') {%><i class="fas fa-check-circle"></i><% } %>
+    </div>
+   
+</div>

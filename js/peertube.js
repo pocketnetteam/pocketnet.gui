@@ -121,7 +121,7 @@ var PeertubeRequest = function (app = {}) {
 PeerTubePocketnet = function (app) {
 	var self = this;
 
-	var VIDEO_QUOTA_CORRECTION = 100 * 1024 * 1024;
+	var VIDEO_QUOTA_CORRECTION = 0 * 1024 * 1024;
 	var PEERTUBE_ID = 'peertube://';
 	var SLASH = '/';
 
@@ -160,6 +160,7 @@ PeerTubePocketnet = function (app) {
 	self.checkTranscoding = function(url) {
 		return app.api.fetch('peertube/videos', {
 			urls: [url],
+			update : true
 		}).then(r => {
 			var result = r[url]
 
@@ -1094,7 +1095,16 @@ PeerTubePocketnet = function (app) {
 						const videoQuota = Number(rme.videoQuota) || 0;
 						const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
 
+						rme.videoQuotaUsedDaily = videoQuotaUsedDaily 
+						rme.videoQuotaUsed = videoQuotaUsed 
+
+
+						rme.quotanow =  videoQuotaDaily - videoQuotaUsedDaily + VIDEO_QUOTA_CORRECTION
+						
+						//Math.min() 
+
 						if (!sizeNumbered || !videoQuotaDaily || !videoQuota) {
+							
 							return Promise.resolve(rme);
 						}
 
@@ -1196,8 +1206,6 @@ PeerTubePocketnet = function (app) {
 
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
-
-					console.log('video options', options)
 
 					data.session = sessions[options.host]
 
@@ -1306,12 +1314,9 @@ PeerTubePocketnet = function (app) {
 				if (data.refresh_token) data.grant_type = 'refresh_token';
 				else data.grant_type = 'password';
 
-				console.log('video 23', data)
-
 
 				return request('getToken', data, options)
 					.then((res) => {
-						console.log('video 2', res)
 						if (!res.access_token || !res.refresh_token) {
 							return Promise.reject(error('getToken'));
 						}

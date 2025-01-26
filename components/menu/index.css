@@ -15,7 +15,28 @@
 #menu .sitenamelabel {
   text-transform: uppercase;
 }
+#menu .icon a {
+  display: block;
+}
+#menu .menuspace {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(165px + var(--app-margin-top));
+  contain: strict;
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  display: none;
+  z-index: 19;
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
 #menu .menuWrapper {
+  /*-webkit-app-region: drag;*/
   width: 100%;
   position: fixed;
   left: 0;
@@ -36,6 +57,9 @@
 				-webkit-app-region: none;
 			  }
 		}*/
+}
+#menu .menuWrapper .onlyblackallcontent {
+  display: none;
 }
 #menu .usericon {
   position: relative;
@@ -81,6 +105,10 @@
   bottom: auto;
   white-space: nowrap;
   font-size: 0.9em;
+}
+#menu .navicon .fa-plus-circle {
+  font-size: 1.2em;
+  color: #0026ff;
 }
 #menu.searchactive .sections .items.searchWrapper {
   display: block;
@@ -573,6 +601,13 @@
 #menu .searchFastResultWrapper .user:hover {
   color: rgb(var(--color-txt-ac));
 }
+#menu .searchFastResultWrapper .appicon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
+  position: relative;
+}
 #menu .searchFastResultWrapper .searchbywrapper .caption {
   padding-bottom: 0.5em;
 }
@@ -580,6 +615,17 @@
   font-weight: 700;
   color: rgb(var(--color-txt-ac));
   font-size: 0.9em;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra > div.label {
+  font-weight: 700;
+  text-align: left;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp {
   width: 100%;
@@ -672,6 +718,7 @@
   min-height: 33px;
 }
 #menu .postssearch :placeholder-shown {
+  text-align: center;
   color: rgba(var(--color-txt-gray-dark), 0.5);
 }
 #menu .postssearch .searchIconLabel,
@@ -731,132 +778,174 @@ html.allcontent #menu .usericon {
 html.allcontent #menu .far.fa-comment {
   font-weight: 700;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #menu {
-    z-index: 4;
-  }
-  #menu .signup {
-    margin-left: 1em;
-    margin-right: 1em;
-  }
-  #menu .sections {
-    width: 100%;
-    max-width: none;
-    padding: 0 1em;
-    padding-right: 0;
-  }
-  #menu .sections .section {
-    padding: 0;
-    width: auto;
-  }
-  #menu .sections .section.leftpart {
-    min-width: 0;
-  }
-  #menu .sections .section.right {
-    min-width: 0;
-    padding-right: 0;
-  }
-  #menu .sections .section.centerpart {
-    margin-left: auto;
-  }
-  #menu .sections .section:nth-child(1) {
-    padding-left: 0;
-  }
-  #menu .sections .items {
-    float: left;
-    height: 100%;
-  }
-  #menu .sections .items.sitenames {
-    width: auto;
-  }
-  #menu .sections .items.searchWrapper {
-    padding-right: 1em;
-  }
-  #menu .sections .items.searchWrapper .item {
-    min-width: 0;
-  }
-  #menu .sections .items .item.signout,
-  #menu .sections .items .item.signin {
-    text-align: right;
-    padding-right: 1em;
-  }
-  #menu .sections .items .item.wallets {
-    margin-right: 0.5em;
-  }
-  #menu .sections .items .item.wallets .pkoinlabel {
-    font-size: 0.7em;
-  }
-  #menu .sections .items .item.signin {
-    display: none;
-  }
-  #menu .sections .items .item.sitename .label {
-    text-align: center;
-  }
-  #menu .sections .items .item.user {
-    margin-right: 0.5em;
-  }
-  #menu .sections .items .item.user .userpic {
-    float: right;
-    width: 34px;
-    height: 34px;
-    line-height: 34px;
-    font-size: 0.9em;
-  }
-  #menu .searchFastResultWrapper .fastsearch {
-    padding-left: 40px;
-  }
-  #menu .searchFastResultWrapper .users {
-    padding-left: 0px;
-  }
-  #menu:not(.searchactive) .postssearch .searchPanel,
-  #menu:not(.searchactive) .postssearch .searchInputWrapper {
-    display: none;
-  }
-  #menu:not(.searchactive) .postssearch .searchInput {
-    background: transparent!important;
-    border: 1px solid transparent!important;
-  }
-  #menu:not(.searchactive) .postssearch input {
-    color: rgb(var(--text-color));
-    background: transparent;
-  }
-  #menu:not(.searchactive) .postssearch .searchIconLabel,
-  #menu:not(.searchactive) .postssearch .searchPanel {
-    color: rgb(var(--text-color));
-    background: transparent;
-  }
-  #menu:not(.searchactive) .postssearch .searchFastResultWrapper {
-    display: none;
-  }
-  #menu:not(.searchactive) .sections .items.searchWrapper {
-    max-width: 40px;
-  }
-  #menu .postssearch input {
-    padding: 0;
-  }
-  #menu .sections .items .item.user {
-    margin-right: 0;
-  }
-  #menu .sections .items .item.user .icon {
-    padding-right: 0.5em;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchIconLabel {
-    width: 40px;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchPanel {
-    width: 40px;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear] {
-    display: block!important;
-  }
-  #menu .sections .items.navWrapper {
-    display: none!important;
-  }
-  html.allcontent #menu .sitenames {
-    overflow: hidden;
-    width: 24px!important;
-  }
+html.television #menu,
+html.mobileview #menu {
+  z-index: 4;
+}
+html.television #menu .signup,
+html.mobileview #menu .signup {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+html.television #menu .menuspace,
+html.mobileview #menu .menuspace {
+  height: calc(95px + var(--app-margin-top));
+}
+html.television #menu .sections,
+html.mobileview #menu .sections {
+  width: 100%;
+  max-width: none;
+  padding: 0 1em;
+  padding-right: 0;
+}
+html.television #menu .sections .section,
+html.mobileview #menu .sections .section {
+  padding: 0;
+  width: auto;
+}
+html.television #menu .sections .section.leftpart,
+html.mobileview #menu .sections .section.leftpart {
+  min-width: 0;
+}
+html.television #menu .sections .section.right,
+html.mobileview #menu .sections .section.right {
+  min-width: 0;
+  padding-right: 0;
+}
+html.television #menu .sections .section.centerpart,
+html.mobileview #menu .sections .section.centerpart {
+  margin-left: auto;
+}
+html.television #menu .sections .section:nth-child(1),
+html.mobileview #menu .sections .section:nth-child(1) {
+  padding-left: 0;
+}
+html.television #menu .sections .items,
+html.mobileview #menu .sections .items {
+  float: left;
+  height: 100%;
+}
+html.television #menu .sections .items.sitenames,
+html.mobileview #menu .sections .items.sitenames {
+  width: auto;
+}
+html.television #menu .sections .items.searchWrapper,
+html.mobileview #menu .sections .items.searchWrapper {
+  padding-right: 1em;
+}
+html.television #menu .sections .items.searchWrapper .item,
+html.mobileview #menu .sections .items.searchWrapper .item {
+  min-width: 0;
+}
+html.television #menu .sections .items .item.signout,
+html.mobileview #menu .sections .items .item.signout,
+html.television #menu .sections .items .item.signin,
+html.mobileview #menu .sections .items .item.signin {
+  text-align: right;
+  padding-right: 1em;
+}
+html.television #menu .sections .items .item.wallets,
+html.mobileview #menu .sections .items .item.wallets {
+  margin-right: 0.5em;
+}
+html.television #menu .sections .items .item.wallets .pkoinlabel,
+html.mobileview #menu .sections .items .item.wallets .pkoinlabel {
+  font-size: 0.7em;
+}
+html.television #menu .sections .items .item.signin,
+html.mobileview #menu .sections .items .item.signin {
+  display: none;
+}
+html.television #menu .sections .items .item.sitename .label,
+html.mobileview #menu .sections .items .item.sitename .label {
+  text-align: center;
+}
+html.television #menu .sections .items .item.user,
+html.mobileview #menu .sections .items .item.user {
+  margin-right: 0.5em;
+}
+html.television #menu .sections .items .item.user .userpic,
+html.mobileview #menu .sections .items .item.user .userpic {
+  float: right;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 0.9em;
+}
+html.television #menu .searchFastResultWrapper .fastsearch,
+html.mobileview #menu .searchFastResultWrapper .fastsearch {
+  padding-left: 40px;
+}
+html.television #menu .searchFastResultWrapper .users,
+html.mobileview #menu .searchFastResultWrapper .users {
+  padding-left: 0px;
+}
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchPanel,
+html.television #menu:not(.searchactive) .postssearch .searchInputWrapper,
+html.mobileview #menu:not(.searchactive) .postssearch .searchInputWrapper {
+  display: none;
+}
+html.television #menu:not(.searchactive) .postssearch .searchInput,
+html.mobileview #menu:not(.searchactive) .postssearch .searchInput {
+  background: transparent!important;
+  border: 1px solid transparent!important;
+}
+html.television #menu:not(.searchactive) .postssearch input,
+html.mobileview #menu:not(.searchactive) .postssearch input {
+  color: rgb(var(--text-color));
+  background: transparent;
+}
+html.television #menu:not(.searchactive) .postssearch .searchIconLabel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchIconLabel,
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchPanel {
+  color: rgb(var(--text-color));
+  background: transparent;
+}
+html.television #menu:not(.searchactive) .postssearch .searchFastResultWrapper,
+html.mobileview #menu:not(.searchactive) .postssearch .searchFastResultWrapper {
+  display: none;
+}
+html.television #menu:not(.searchactive) .sections .items.searchWrapper,
+html.mobileview #menu:not(.searchactive) .sections .items.searchWrapper {
+  max-width: 40px;
+}
+html.television #menu .postssearch input,
+html.mobileview #menu .postssearch input {
+  padding: 0;
+}
+html.television #menu .sections .items .item.user,
+html.mobileview #menu .sections .items .item.user {
+  margin-right: 0;
+}
+html.television #menu .sections .items .item.user .icon,
+html.mobileview #menu .sections .items .item.user .icon {
+  padding-right: 0.5em;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchIconLabel,
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchIconLabel {
+  width: 40px;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel,
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel {
+  width: 40px;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear],
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear] {
+  display: block!important;
+}
+html.television #menu .sections .items.navWrapper,
+html.mobileview #menu .sections .items.navWrapper {
+  display: none!important;
+}
+html.television html.allcontent #menu .sitenames,
+html.mobileview html.allcontent #menu .sitenames {
+  overflow: hidden;
+  width: 24px!important;
+}
+html.television #menu .sections .items .item.signin {
+  display: flex;
 }
 html[theme="black"] #menu .sections .items .item .icn svg,
 html[theme="gray"] #menu .sections .items .item .icn svg {

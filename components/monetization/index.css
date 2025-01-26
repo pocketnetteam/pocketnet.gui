@@ -1,0 +1,166 @@
+#monetization {
+  padding: 2em 0;
+}
+#monetization .work {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 850px;
+}
+#monetization .work .top {
+  font-size: 1.5em;
+  text-align: center;
+}
+#monetization .work.minimal .top,
+#monetization .work.minimal .header__title {
+  display: none;
+}
+#monetization .work.minimal .header {
+  margin-top: 0;
+}
+#monetization .content-monet {
+  margin-top: 40px;
+  text-align: center;
+  padding: 10px 0;
+}
+#monetization .content-monet__title {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+#monetization .content-monet__subtitle {
+  margin-top: 1rem;
+  font-size: 2.2rem;
+  font-weight: normal;
+}
+#monetization .display {
+  display: block;
+}
+#monetization .hide {
+  display: none;
+}
+#monetization .tips-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#monetization .ul-tips {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-top: 5px;
+  margin-left: 20px;
+  list-style: disc;
+}
+#monetization .li-tip {
+  text-align: left;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+#monetization .yellow {
+  color: #f0b811;
+}
+#monetization .red {
+  color: #d63c3c;
+}
+#monetization .video {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+#monetization .video h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 15px 0;
+}
+#monetization .video iframe {
+  margin-top: 1em;
+  width: 640px;
+}
+#monetization .columns {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 1px 0;
+}
+#monetization .columns .column {
+  text-align: left;
+  width: 90%;
+}
+#monetization .columns .column ul li {
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 200;
+}
+#monetization .buy-pkoin {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#monetization .buy-pkoin .yellow {
+  margin-top: 2em;
+}
+#monetization .buy-pkoin h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+#monetization .buy-pkoin p {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+#monetization .buy-pkoin .text {
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 200;
+  margin-top: 2em;
+}
+#monetization .buy-pkoin img {
+  max-width: 500px;
+}
+#monetization .buy-pkoin .img {
+  margin-top: 1.5em;
+  max-width: 850px;
+}
+#monetization .registration {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: white;
+  margin: 30px 0;
+  padding: 25px 35px;
+  text-transform: uppercase;
+  background: #f0b811;
+  border-radius: 5px;
+}
+.wndmonetizationtpr .wndinner {
+  width: 90%;
+  max-width: 860px;
+  height: 95%;
+}
+.wndmonetizationtpr #monetization .header {
+  margin-top: 0;
+  border-top: 0;
+}
+.wndmonetizationtpr #monetization .container {
+  padding-top: 0;
+}
+@media only screen and (max-width: 768px) {
+  #monetization {
+    padding: 0.5em 1em;
+  }
+  #monetization .video iframe {
+    width: 100%;
+    padding: 0 10px;
+  }
+  #monetization .buy-pkoin img {
+    width: 100%;
+    padding: 0 10px;
+  }
+  #monetization .buy-pkoin .cta {
+    font-size: 0.8em;
+    padding: 15px;
+  }
+  #monetization .formula img {
+    width: 100%;
+  }
+}

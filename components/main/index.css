@@ -209,7 +209,6 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  background: rgb(var(--background-main));
   color: rgb(var(--neutral-grad-3));
   padding: 1em;
   text-align: center;
@@ -225,6 +224,9 @@
 #main .addbutton span,
 #main .addbutton i {
   font-size: 0.8em;
+}
+#main .addbutton i {
+  width: 22px;
 }
 #main .addbutton.scrollactive {
   display: block;
