@@ -1759,17 +1759,32 @@ var lenta = (function(){
 
 				if (share.itisstream()){
 
+					console.log("HERE")
+
 					if(essenseData.opensvi && essenseData.opensviStream){
 						
 						actions.opensvi(id)
 						return
 					}
 
-					self.nav.api.load({
-						open : true,
-						href : (essenseData.urlprefix || 'index') + '?video=1&v=' + id,
-						history : true,
-					})
+					console.log("HERE2")
+
+					if(isMobile() && !self.app.television){
+						self.nav.api.load({
+							open : true,
+							href : 'post?s=' + id,
+							history : true,
+						})
+					}
+					else{
+						self.nav.api.load({
+							open : true,
+							href : (essenseData.urlprefix || 'index') + '?video=1&v=' + id,
+							history : true,
+						})
+					}
+
+					
 
 					return
 				}
