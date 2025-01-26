@@ -225,7 +225,7 @@ var authorn = (function(){
 			default : true,
 			extend : function(params){
 				params.getpin = true
-				params.opensviStream = !isMobile() || self.app.television ? true : null
+				//params.opensviStream = !isMobile() || self.app.television ? true : null
 				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
 				
 				return params
