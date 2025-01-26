@@ -337,7 +337,7 @@ var Action = function(account, object, priority, settings){
             self.sending = new Date(e.sending)
 
         if (e.rejectWait) 
-            self.rejectWait = new Date(rejectWait)
+            self.rejectWait = new Date(e.rejectWait)
 
         if (e.checkedUntil)
             self.checkedUntil = new Date(e.checkedUntil)
