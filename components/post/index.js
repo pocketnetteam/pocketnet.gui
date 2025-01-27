@@ -1934,6 +1934,9 @@ var post = (function () {
 			},
 			
 			stream : function(clbk) {
+
+				if(!el.stream) return
+
 				const
 					parent = el.stream.parent(),
 					toggle = parent.find('.toggle'),
