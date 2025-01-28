@@ -14,7 +14,7 @@ jobs:
         with:
           ref: master
           fetch-depth: 0 # We need a complete history for merging branches
-      - uses: andyoknen/combine-pull-requests@v1
+      - uses: bobvanderlinden/combine-pull-requests@v4
         with:
           label: deploy.dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
