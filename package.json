@@ -175,6 +175,9 @@
                 },
                 {
                     "target": "rpm"
+                },
+                {
+                    "target": "pacman"
                 }
             ],
             "artifactName": "${productName}Setup.${ext}",
