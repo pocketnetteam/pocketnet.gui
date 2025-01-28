@@ -6,7 +6,7 @@ on:
 jobs:
 
   # Merge all 'deploy.dev' PRs to master branch
-  merge:
+  combine-pulls:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
@@ -36,8 +36,8 @@ jobs:
           path: ./head.txt
 
   # Deploy test & pre sites
-  deploy-pre:
-    needs: merge
+  deploy-web-pre:
+    needs: combine-pulls
     runs-on: gui
     steps:
       - name: Download artifact
@@ -58,8 +58,8 @@ jobs:
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
 
-  deploy-test:
-    needs: merge
+  deploy-web-test:
+    needs: combine-pulls
     runs-on: gui
     steps:
       - name: Download artifact
@@ -82,7 +82,7 @@ jobs:
 
   # Build & Deploy proxy services
   build-proxy:
-    needs: merge
+    needs: combine-pulls
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
@@ -126,7 +126,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  deploy-proxy:
+  deploy-proxy-pre:
     needs: build-proxy
     runs-on: proxy.test
     steps:
@@ -150,7 +150,7 @@ jobs:
 
   # Build applications
   build-app-macos:
-    needs: merge
+    needs: combine-pulls
     runs-on: macos-latest
     steps:
       - name: Download artifact
@@ -191,7 +191,7 @@ jobs:
           path: ./dist/BastyonSetup.dmg
 
   build-app-unix:
-    needs: merge
+    needs: combine-pulls
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
@@ -224,7 +224,7 @@ jobs:
             ./dist/Bastyon.AppImage
 
   build-app-windows:
-    needs: merge
+    needs: combine-pulls
     runs-on: windows-latest
     steps:
       - name: Download artifact
@@ -253,7 +253,7 @@ jobs:
           path: ./dist/BastyonSetup.exe
 
   build-app-android:
-    needs: merge
+    needs: combine-pulls
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
@@ -315,7 +315,7 @@ jobs:
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
   build-app-android-gf:
-    needs: merge
+    needs: combine-pulls
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
