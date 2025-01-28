@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Bastyon
+Exec=/opt/Bastyon/bastyon %U
+Terminal=false
+Type=Application
+Icon=bastyon
+StartupWMClass=Bastyon
+Description=A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.
+MimeType=x-scheme-handler/bastyon;
+Categories=Network;
