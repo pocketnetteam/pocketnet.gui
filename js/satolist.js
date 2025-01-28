@@ -22522,7 +22522,7 @@ Platform = function (app, listofnodes) {
                         clbk(data, loadedData);
                     })
 
-                    if (!_Node) {
+                    if (!_Node && !platform.app.television) {
                         if (audio && !window.cordova && platform.sdk.usersettings.meta.sound.value) {
 
                             if (!audio.if || audio.if(data, loadedData)) {
