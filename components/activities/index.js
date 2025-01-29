@@ -318,11 +318,17 @@ var activities = (function () {
 
 				let href, answer, parent
 
+				console.log('data', data)
+
 				if (data) {
 					if (data?.txid) {
 						href = data.txid
 					} else {
 						href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : (data.relatedContent.rootTxHash || data.relatedContent.hash)
+
+						if(data.txType == 204){
+							href += '&commentid=' + data.rootTxHash 
+						}
 					}
 
 				} else {

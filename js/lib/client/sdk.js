@@ -1387,10 +1387,11 @@ var pSDK = function ({ app, api, actions }) {
             return _.filter(_.map(rawcomments, (c) => {
                 
                 
-                //if(c.deleted) return
+                if(c.deleted) return c
 
                 //// TODO
                 if(!c.msgparsed && !c.msg) {
+
                 
                     return null
                   
