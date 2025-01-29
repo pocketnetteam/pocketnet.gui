@@ -1,6 +1,6 @@
 <?PHP
 
-class API {
+class PAPI {
 
     protected $aapi = 'https://pocketnet.app:8899/';
 

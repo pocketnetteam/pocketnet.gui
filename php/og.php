@@ -44,7 +44,7 @@ class OG {
         //echo $this->upath;
         
         $this->rpc = new RPC($proxypath);
-        $this->lapi = new API($proxypath);
+        $this->lapi = new PAPI($proxypath);
 
         $this->project = $project;
         $this->domain = $domain;
