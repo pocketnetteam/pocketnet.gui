@@ -12627,6 +12627,8 @@ Platform = function (app, listofnodes) {
 
                 var appinfo = self.app.apps.isApplicationLink(url)
 
+                console.log('appinfo', appinfo, url)
+
                 var apppromise = (() => {
                     return Promise.resolve(null)
                 })()
