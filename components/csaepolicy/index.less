@@ -1,0 +1,89 @@
+@import "../../css/__cssvar";
+
+#csaepolicy{
+	padding : 2 * @rhythm;
+	
+	.caption{
+		margin-top: 6 * @rhythm;
+		font-size: 1.9em;
+		color : rgb(var(--neutral-grad-3));
+	}
+
+	.captionWrapper,
+	.acceptWrapper,
+	.textWrapper{
+		padding : 2 * @rhythm;
+	}
+
+	.acceptWrapper{
+		button{
+			width: 100%;
+			border-radius: 30px;
+		}
+	}
+
+	.captionWrapper{
+		span{
+			font-size: 2.5em;
+			font-weight: 700;
+		}
+	}
+
+	.text{
+		max-width: 700px;
+		margin-top: 4 * @rhythm;
+		margin-bottom: 8 * @rhythm;
+
+		p{
+			margin-top : 4 * @rhythm;
+			margin-bottom : 4 * @rhythm;
+
+
+			&.subcaption{
+				text-transform: uppercase;
+				margin-bottom : 2 * @rhythm;
+				color: rgb(var(--color-txt-ac));
+				font-size: 1.1em;
+			}
+
+			&.subcaption2{
+				text-transform: uppercase;
+				margin-bottom : 2 * @rhythm;
+				margin-top: 6 * @rhythm;
+				color: rgb(var(--color-txt-ac));
+				font-size: 1.1em;
+				font-weight: 500;
+			}
+
+			&.bright{
+				color : rgb(var(--color-txt-ac-2));
+			}
+
+
+		}
+	}
+}
+.wnd{
+	#csaepolicy{
+		padding-top : 8 * @rhythm;
+
+		/*.text{
+			color : rgb(var(--neutral-grad-1));
+		}
+
+		.caption{
+			color :  rgb(var(--neutral-grad-0));
+		}*/
+	}
+}
+/*t*/ @media only screen and (max-width: 768px){
+	#csaepolicy{
+		padding-left:  0;
+	}
+	.wnd{
+		#csaepolicy{
+			padding-left: 2 * @rhythm;
+			padding-right:  @rhythm;
+		}
+	}
+}
