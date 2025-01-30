@@ -1,0 +1,20 @@
+name: Build Release (AUR)
+
+on:
+  release:
+    types: [published]
+    
+permissions:
+  contents: write
+  
+jobs:
+  aur-update-git:
+    runs-on: ubuntu-latest 
+    container:
+      image: archlinux
+      options: --privileged
+    steps:
+      - name: AUR Update
+        uses: TheWisker/aur-update@master
+        with:
+          aur_key: ${{ secrets.AUR_KEY }}
