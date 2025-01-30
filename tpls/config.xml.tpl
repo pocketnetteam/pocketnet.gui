@@ -220,9 +220,14 @@
 
         <config-file parent="/manifest" target="AndroidManifest.xml">
             <uses-feature android:name="android.software.leanback" android:required="false" />
-            <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-
-            
+            <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+            <uses-feature android:name="android.hardware.faketouch" android:required="false"/>
+            <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+            <uses-feature android:name="android.hardware.camera" android:required="false"/>
+            <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+            <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+            <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+            <uses-feature android:name="android.hardware.sensor" android:required="false"/>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
