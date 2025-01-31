@@ -756,24 +756,27 @@ var share = (function(){
 					//var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
 					var r = /(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|(bastyon:\/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi
 
+					var tkns = linkify.tokenize(text)
+
+
+
+					var matches = _.map(_.filter(tkns, (t) => {
+						return t.t == 'url'
+					}), (t) => {
+						return t.v
+					})
 					
 					//var r = new RegExp(rtpl, 'gi')
 
-					var matches = text.match(r);
+					//var matches = text.match(r);
+
+					console.log('matches url', tkns, matches)
 
 
 					if(matches && matches.length > 0){
 
 						_.each(matches, async function(url){
 							if(actions.checkUrlForImage(url)){
-
-								/*if (currentShare.images.v.indexOf(url) == -1){
-									currentShare.images.set(url)
-
-									renders['images']()
-								}*/
-
-
 
 							}
 							else
@@ -791,6 +794,8 @@ var share = (function(){
 										url += '?type=video'
 									}
 								}
+
+								console.log("MATCH url", url)
 
 								currentShare.url.set(url)
 
@@ -2085,12 +2090,12 @@ var share = (function(){
 
 			url : function(clbk){
 
-				console.log("RENDER URL")
 
 				destroyPlayer()
 				
 				var url = currentShare.url.v;
 
+				console.log("RENDER URL", url)
 
 				var meta = self.app.platform.parseUrl(url);
 

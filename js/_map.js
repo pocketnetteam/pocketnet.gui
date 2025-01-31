@@ -446,6 +446,17 @@ __map =  {
 
 	},
 
+	csaepolicy : {
+		uri : "csaepolicy",
+		href : "csaepolicy",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
+	},
+
 	
 	page404 : {
 		uri : "page404",
