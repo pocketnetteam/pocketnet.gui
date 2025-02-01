@@ -632,6 +632,9 @@ html.television #lenta.mainvideo .shares {
   flex-direction: row;
   margin-right: 0.5em;
 }
+#lenta.horizontal .authorgroup {
+  margin-right: 0.5em;
+}
 #lenta.horizontal .loader,
 #lenta.horizontal .ended {
   display: none!important;

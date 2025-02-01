@@ -18,22 +18,26 @@ var groupshares = group(shares, function(s){
 	return s.address
 })
 
-if (typeof video != 'undefined' && video) groupshares = group(shares, function(s){
-	return s.txid
-})
-
+if (typeof recommended == 'undefined' || recommended != 'hot'){
+	if (typeof video != 'undefined' && video) groupshares = group(shares, function(s){
+		return s.txid
+	})
+}
 
 var me = app.platform.sdk.user.me()
 
 _.each(groupshares, function(gs, address){ 	%>
 
-	<div class="authorgroup <% if(me && me.relation(address, 'blocking')) {%>blocking<% } %>">
+	<div class="authorgroup <% if(me && me.relation(address, 'blocking')) {%>blocking<% } %>" l="<%- gs.length %>">
 
 		<% _.each(gs, function(share, j){
 
 			var h = '';
 
 			if (j) h = 'hidden'
+			if (j && typeof recommended != 'undefined' && recommended == 'hot'){
+				return
+			}
 
 		%>
 				<div class="share <%- typeof video != 'undefined' && video ? 'rendered' : '' %> <% if(gs.length > 1) { %> hashiddengroup <% } %> share_common <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %> shareinlenta" id="<%-share.txid%>" style="">
@@ -47,17 +51,21 @@ _.each(groupshares, function(gs, address){ 	%>
 
 		}) %>
 
-		<% if(gs.length > 1) { 
-			
-			var name = app.platform.api.clearname((psdk.userInfo.get(address) || {}).name, true) || address
-			
-			
-			%>
+		<% if (typeof video != 'undefined' && video) {%>
 
-			<div elementsid="lenta_showmorebyauthor" class="showmorebyauthor">
-				<%=e('e13123')%> (<%- gs.length - 1 %>) <%=e('fromsh')%> <span class="adr"><%-name %></span>
-			</div>
+		<% } else { %> 
+			<% if(gs.length > 1) { 
+				
+				var name = app.platform.api.clearname((psdk.userInfo.get(address) || {}).name, true) || address
+				
+				
+				%>
 
+				<div elementsid="lenta_showmorebyauthor" class="showmorebyauthor">
+					<%=e('e13123')%> (<%- gs.length - 1 %>) <%=e('fromsh')%> <span class="adr"><%-name %></span>
+				</div>
+
+			<% } %>
 		<% } %>
 
 	</div>
