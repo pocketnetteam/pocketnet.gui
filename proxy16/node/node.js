@@ -957,6 +957,15 @@ var Node = function(options, manager){
 
         return self.rpcs('getPeerInfo').then(result => {
 
+            result = _.filter(result || [], function(peer){
+
+                if(!peer.addr || peer.addr.indexOf('.i2p') > -1){
+                    return false
+                }
+
+                return true
+
+            })
 
             var nodes = _.map(result || [], function(peer){
 
