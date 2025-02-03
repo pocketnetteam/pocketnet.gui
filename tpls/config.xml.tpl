@@ -218,6 +218,10 @@
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
 
+        <config-file parent="/manifest/application/activity[@android:name='MainActivity']/intent-filter" target="AndroidManifest.xml">
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        </config-file>
+
         <config-file parent="/manifest" target="AndroidManifest.xml">
             <uses-feature android:name="android.software.leanback" android:required="false" />
             <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
@@ -230,24 +234,6 @@
             <uses-feature android:name="android.hardware.sensor" android:required="false"/>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity
-                android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-                android:launchMode="singleTask"
-                android:exported="true"
-                android:name="TvActivity"
-                android:label="@string/activity_name"
-                android:windowSoftInputMode="adjustPan"
-                android:theme="@style/Theme.App.SplashScreen">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-                </intent-filter>
-
-            </activity>
-        </config-file>
-        
-        
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>
