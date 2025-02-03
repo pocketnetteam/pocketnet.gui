@@ -1313,6 +1313,7 @@ var Nodemanager = function(p){
             //return Promise.resolve()
   
             return node.peers().then(nodes => {
+
                 
 
                 nodes = _.filter(nodes, function(n){

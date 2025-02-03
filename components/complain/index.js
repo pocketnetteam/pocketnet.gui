@@ -29,10 +29,10 @@ var complain = (function () {
 					name: self.app.localization.e('lowstar_reason_4'),
 					gid: 4
 				},
-				{
+				/*{
 					name: self.app.localization.e('lowstar_reason_5'),
 					gid: 5
-				},
+				},*/
 				{
 					name: self.app.localization.e('lowstar_reason_6'),
 					gid: 6
