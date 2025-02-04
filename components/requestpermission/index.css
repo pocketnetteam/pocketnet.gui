@@ -44,6 +44,7 @@
 #requestpermission .paymentForm .reciever .userName {
   flex-grow: 2;
   margin-left: 0.5em;
+  padding-right: 1em;
 }
 #requestpermission .paymentForm .reciever .amount {
   margin-left: auto;

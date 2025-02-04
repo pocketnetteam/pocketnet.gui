@@ -56,6 +56,10 @@ var requestpermission = (function(){
 			payment : function(data){
 
 				return new Promise((resolve, reject) => {
+					
+					if (data.novalidation){
+						return resolve({});
+					}
 
 					var result = {}
 
