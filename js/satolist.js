@@ -19218,6 +19218,21 @@ Platform = function (app, listofnodes) {
         }
 
         self.api = {
+            addToken: function (appId, address, proxy) {
+                if (!self.isFirebaseConfigured) return Promise.reject('firebase:not_configured')
+                return self.request.addToken(appId, address, proxy)
+                    .then(r => {
+                        const port = proxy.port ? `:${proxy.port}` : ''
+                        return Promise.resolve({
+                            token: r.token,
+                            address: r.address,
+                            proxy: `https://${proxy.host}${port}`
+                        });
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
             revoke: function (token, proxy) {
 
                 var address = getaddress()
@@ -19325,7 +19340,10 @@ Platform = function (app, listofnodes) {
 
             return self.request.revokeall()
         }
-
+        self.isFirebaseConfigured = async function () {
+            const tokensData = self.storage.data[appid] || {};
+            return Object.keys(tokensData).length > 0;
+        }
         self.set = function (proxy) {
             if (!currenttoken) return Promise.reject('emptytoken')
 
@@ -19349,6 +19367,26 @@ Platform = function (app, listofnodes) {
                 return Promise.resolve()
             })
 
+        }
+
+        self.getNotificationsProxy = async function () {
+            let current = null;
+            for (const proxy of platform.app.api.get.proxies()) {
+                const {
+                    info
+                } = await proxy.get.info();
+                
+                if (info.firebase.useNotifications && info.firebase.inited) {   
+                    current = proxy;
+                }
+            }
+            if (current) {
+                return self.api.checkProxy(current).then(r => {
+                    return Promise.resolve(current)
+                })
+            } else {
+                return Promise.reject('none')
+            }
         }
 
         self.settings = async function (current) {
@@ -19377,7 +19415,14 @@ Platform = function (app, listofnodes) {
         }
 
         self.request = {
-
+            addToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/addToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
             revokeall: function () {
 
                 return platform.app.api.fetchauthall('firebase/revokedevice', {

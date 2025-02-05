@@ -223,6 +223,11 @@ var BastyonApps = function (app) {
             description : 'permissions_descriptions_zaddress',
             level : 4
         },
+        'notifications' : {
+            name : 'permissions_name_notifications',
+            description : 'permissions_descriptions_notifications',
+            level : 9
+        },
     }
 
     var actions = {
@@ -428,6 +433,27 @@ var BastyonApps = function (app) {
                 })
 
             }
+      registerForNotifications: {
+          authorization: true,
+          permissions: ["notifications"],
+          action: async function ({
+              application
+          }) {
+              try {
+                   const applicationId = application.manifest.id;
+                   const userAddress = app.user.address.value;
+                   const proxy = await app.platform.firebase.getNotificationsProxy();
+                   return await app.platform.firebase.api.addToken(
+                       applicationId,
+                       userAddress,
+                       proxy
+                   );
+              } catch (e) {
+                  console.error("Notification registration failed:", error);
+                  throw error;
+              }
+          },
+      },
         },
 
         payment: {
