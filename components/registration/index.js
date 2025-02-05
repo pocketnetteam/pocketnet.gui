@@ -175,7 +175,6 @@ var registration = (function(){
 					"PTp3FuDD2y4pJMzwokdDAR3PFHUXaETVet",
 					"PG1Qm7azCwHwbpUtW2Pudumjg4cQNKwksQ",
 					"PKXv5WXGzGgQedF5vjKAqBPNjNky6e7LuK",
-					"PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv",
 					"PWffxNdLTED2fw3KjFZY4thCC5NrXjgXxR",
 					"PTdrNLoQDWY7JakFcBd2Dp4ddYG2mcysKt",
 					"PGuYTV1x7DTuv6JZ3gdH3uEvQS6hm1nirT",
@@ -215,6 +214,7 @@ var registration = (function(){
 					"PTr9PMngM7iaNV5ApLJ5hkkqnXPekQWmpk",
 					"PNyouYhkgvErgpNfWhDCmLLn3xTBtpDzk7",
 					"PUZfvyHG8qpcTkLmqFi8eMdMrXFffosysX",
+					"PVy2rTBn1avrNapV9wfmQVSADNr7Rz5XwV"
 				],
 				ru : [
 					"PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw",
@@ -262,6 +262,7 @@ var registration = (function(){
 					"PUAReaFjwyLwPz7UVfQSXHRzeA9R38guAN",
 					"PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr",
 					"PCsDDAkkqmZCiE6EzTSUdsN5R9gAwVVAA3",
+					"PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv",
 					"PRtwPBwazZM7U9BZQKFvF9N1uK3Tro5gAC",
 					"PEtDfca1HGUoMzCPxwE5u6CnxkDsUodQoN",
 					"PVKBpAURkwhZhnSQktndTHQJhnkuNfq2bY",
@@ -315,7 +316,6 @@ var registration = (function(){
 					"PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46",
 					"PXkJiHrAwPNk2uKNrN1odK4SDeEdHNGw9j",
 					"PGf7dNWLaKUfWCQm3fyyaY6zxPexKYALhF",
-					"PNKnabA25HAwMfEr2HDjmovd9bTkfuGtnp",
 				],
 				test : [
 					'TEgrDd5Arx9fLPk8gcyr1XLL1GU6dkhHLi',
