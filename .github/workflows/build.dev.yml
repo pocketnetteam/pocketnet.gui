@@ -157,7 +157,7 @@ jobs:
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/
       - name: Copy HEAD information

@@ -41,7 +41,7 @@ jobs:
     runs-on: gui
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Install Node.js, NPM and Yarn
@@ -63,7 +63,7 @@ jobs:
     runs-on: gui
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Install Node.js, NPM and Yarn
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Prepare
@@ -154,7 +154,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -195,7 +195,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -228,7 +228,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -257,7 +257,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -319,7 +319,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -379,7 +379,7 @@ jobs:
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/dev/
       - name: Copy HEAD information
