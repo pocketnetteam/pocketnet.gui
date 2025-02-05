@@ -65,7 +65,7 @@ jobs:
           npm run distm
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
@@ -94,7 +94,7 @@ jobs:
           npm run distl
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: unix
           path: |
@@ -124,7 +124,7 @@ jobs:
           npm run dist
           ls .\dist\
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
@@ -183,7 +183,7 @@ jobs:
           ls -lh
           mv app-release.apk Bastyon.apk
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk

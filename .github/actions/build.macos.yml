@@ -30,7 +30,7 @@ runs:
         npm run distm
         ls -lh ./dist/
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: macos
         path: ./dist/BastyonSetup.dmg
