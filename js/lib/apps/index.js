@@ -223,10 +223,21 @@ var BastyonApps = function (app) {
             description : 'permissions_descriptions_zaddress',
             level : 4
         },
-        'notifications' : {
-            name : 'permissions_name_notifications',
-            description : 'permissions_descriptions_notifications',
-            level : 9
+        'notifications': {
+            name: 'permissions_name_notifications',
+            description: 'permissions_descriptions_notifications',
+            level: 9,
+            ensure: async (application) => {
+                const applicationId = application.manifest.id;
+                const userAddress = app.user.address.value;
+                const proxy = await app.platform.firebase.getNotificationsProxy();
+                const tokenCheckResult = await app.platform.firebase.api.checkMiniappToken(
+                    applicationId,
+                    userAddress,
+                    proxy
+                );
+                return tokenCheckResult.exists ?? false
+            }
         },
     }
 
@@ -432,7 +443,8 @@ var BastyonApps = function (app) {
                     return Promise.reject(e)
                 })
 
-            }
+            },
+        },
       registerForNotifications: {
           authorization: true,
           permissions: ["notifications"],
@@ -440,22 +452,20 @@ var BastyonApps = function (app) {
               application
           }) {
               try {
-                   const applicationId = application.manifest.id;
-                   const userAddress = app.user.address.value;
-                   const proxy = await app.platform.firebase.getNotificationsProxy();
-                   return await app.platform.firebase.api.addToken(
-                       applicationId,
-                       userAddress,
-                       proxy
-                   );
+                  const applicationId = application.manifest.id;
+                  const userAddress = app.user.address.value;
+                  const proxy = await app.platform.firebase.getNotificationsProxy();
+                  return await app.platform.firebase.api.addMiniappToken(
+                      applicationId,
+                      userAddress,
+                      proxy
+                  );
               } catch (e) {
                   console.error("Notification registration failed:", error);
                   throw error;
               }
           },
       },
-        },
-
         payment: {
             parameters: ['recievers', 'feemode'],
             permissions: ['account', 'payment'],
@@ -1368,7 +1378,7 @@ var BastyonApps = function (app) {
         if (data.action) {
 
             var action = deep(actions, data.action)
-
+            
             if (!action) {
                 promise = Promise.reject(appsError('missing:action in actions (' + data.action + ')'))
             } else {
@@ -1487,29 +1497,46 @@ var BastyonApps = function (app) {
             return Promise.reject(appsError('permission:request:cantrequest:' + permission))
         }
 
+
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                return app.platform.ui.requestPermission({
-                    application,
-                    meta,
-                    permission,
-                    data
-                }, p).then((reason) => {
-                    return resolve(reason)
-                }).catch(reason => {
+            const showPermissionModal = () => {
+                setTimeout(() => {
+                    app.platform.ui.requestPermission({
+                            application,
+                            meta,
+                            permission,
+                            data
+                        }, p)
+                        .then(reason => {
+                            resolve(reason);
+                        })
+                        .catch(reason => {
 
-                    if (reason == 'error') {
-                        return Promise.reject(appsError('permission:request:error:' + permission))
-                    }
+                            if (reason == 'error') {
+                                return Promise.reject(appsError('permission:request:error:' + permission))
+                            }
 
-                    return reject(reason)
-                })
-            }, 250)
+                            return reject(reason)
+                        })
+                }, 250);
+            };
+
+
+            if (typeof meta.ensure === 'function') {
+                meta.ensure(application)
+                    .then(isGranted => {
+                        if (isGranted) {
+                            resolve({
+                                state: 'granted',
+                            });
+                        } else {
+                            showPermissionModal();
+                        }
+                    }).catch(showPermissionModal)
+            } else {
+                showPermissionModal();
+            }
         })
-
-
-
-
     }
 
     var givePermission = function (application, permission) {

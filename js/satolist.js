@@ -19218,9 +19218,9 @@ Platform = function (app, listofnodes) {
         }
 
         self.api = {
-            addToken: function (appId, address, proxy) {
+            addMiniappToken: function (appId, address, proxy) {
                 if (!self.isFirebaseConfigured) return Promise.reject('firebase:not_configured')
-                return self.request.addToken(appId, address, proxy)
+                return self.request.addMiniappToken(appId, address, proxy)
                     .then(r => {
                         const port = proxy.port ? `:${proxy.port}` : ''
                         return Promise.resolve({
@@ -19228,6 +19228,15 @@ Platform = function (app, listofnodes) {
                             address: r.address,
                             proxy: `https://${proxy.host}${port}`
                         });
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return self.request.checkMiniappToken(appId, address, proxy)
+                    .then(r => {
+                        return Promise.resolve(r);
                     })
                     .catch(e => {
                         return Promise.reject(e);
@@ -19415,8 +19424,16 @@ Platform = function (app, listofnodes) {
         }
 
         self.request = {
-            addToken: function (appId, address, proxy) {
+            addMiniappToken: function (appId, address, proxy) {
                 return platform.app.api.fetchauth('miniapp/addToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/checkToken', {
                     appId: appId,
                     address: address
                 }, {
