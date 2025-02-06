@@ -2349,7 +2349,6 @@ brtOffer = function(){
 		if(!self.condition) return 'condition';
 		if(!self.images) return 'images';
 		if(!self.geohash) return 'geohash';
-		if(!self.currencyPrice) return 'currencyPrice';
 		if(!(self.price > -1)) return 'price';
 	}
 
