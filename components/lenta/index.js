@@ -4054,9 +4054,11 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if ((essenseData.author && !essenseData.video) || recommended || essenseData.horizontal || essenseData.txids || ((essenseData.searchValue || essenseData.searchTags) && !self.app.television)){
+				if ((essenseData.author && !essenseData.video) || (recommended && recommended!='hot') || essenseData.txids || ((essenseData.searchValue || essenseData.searchTags) && !self.app.television)){
 					tpl = 'shares'
 				}
+
+				console.log('tpl recommended', tpl, recommended)
 
 				if (recommended == 'jury'){
 					tpl = 'juryitems'
@@ -4086,7 +4088,8 @@ var lenta = (function(){
 						shares : shares || [],
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
-						boosted : p.boosted
+						boosted : p.boosted,
+						recommended
 					},
 					animation : false,
 					delayRender : isotopeinited,

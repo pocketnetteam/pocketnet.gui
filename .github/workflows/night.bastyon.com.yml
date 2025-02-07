@@ -24,12 +24,12 @@ jobs:
           cd /tmp/repo
           tar czf /tmp/repo.tgz ./
       - name: Upload artifact repo.tgz
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: repo.tgz
           path: /tmp/repo.tgz
       - name: Save artifact head.txt
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: head
           path: ./head.txt
@@ -39,7 +39,7 @@ jobs:
     runs-on: gui
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Install Node.js, NPM and Yarn
@@ -66,7 +66,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -97,7 +97,7 @@ jobs:
           npm run distm
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -127,7 +127,7 @@ jobs:
           npm run distl
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: unix
           path: |
@@ -140,7 +140,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -159,7 +159,7 @@ jobs:
           npm run dist
           ls .\dist\
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
@@ -169,7 +169,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -221,7 +221,7 @@ jobs:
           ls -lh
           mv app-release.apk Bastyon.apk
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
@@ -231,7 +231,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.tgz
       - name: Unpack artifact
@@ -281,7 +281,7 @@ jobs:
           ls -lh
           mv app-release.apk BastyonGF.apk
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-gfree
           path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
@@ -291,7 +291,7 @@ jobs:
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/night/
       - name: Copy HEAD information

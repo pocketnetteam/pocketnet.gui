@@ -44,7 +44,7 @@
 									if (src){
 								%>
 
-									<img class="usericonQ" src="<%-src || '*'%>">
+									<img class="usericonQ" src="<%-src || '*'%>" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='rgb(var(--neutral-grad-0))';">
 
 								<% } else if(!src && letter) {%>
 									<div class="usericon">
@@ -78,7 +78,7 @@
 												if (src){
 											%>
 			
-												<img class="usericonQ" src="<%-src || '*'%>">
+												<img class="usericonQ" src="<%-src || '*'%>" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='rgb(var(--neutral-grad-0))';">
 			
 											<% } else if(!src && letter) {%>
 												<div class="usericon">
@@ -141,7 +141,7 @@
 									</div>
 							
 								</div>
-								<div class="aboutWrapper">
+								<div class="aboutWrapper <%-_class%>">
 									<%- decodeURIComponent(about || '') %>
 								</div>
 								
