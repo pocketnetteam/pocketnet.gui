@@ -2,6 +2,19 @@
 
     <% if(!app.television) {%>
 
+        <% 
+        
+        var dapp = _.find(app.developapps, (da) => {
+            return da.id == 'barteron.pocketnet.app'
+        })
+        
+        
+        if (!isMobile() && dapp) {%>
+            <div class="dapp">
+                <button class="button small orange"><%= e('Barteron') %></button>
+            </div>
+        <% } %>
+
         <% if (!window.cordova && typeof _Electron == 'undefined' && !isMobile()) {%>
             <div class="downloadapplication">
                 <button class="button small"><%= e('e13120') %></button>
@@ -14,6 +27,8 @@
                 <button class="button small good"><%= e('donate') %></button>
             </div>
         <% } %>
+
+        
 
     <% } %>
 
