@@ -200,6 +200,15 @@ var leftpanel = (function(){
 
 				}, function(_p){
 
+					_p.el.find('.dapp').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'application?id=barteron.pocketnet.app',
+							history : true
+						})
+					})
+
 					_p.el.find(".downloadapplication button").on('click', function(){
 						var wnd = isMobile() || isTablet()
 

@@ -12,13 +12,18 @@
 		}
 	}*/
 }
+#leftpanel .dapp,
 #leftpanel .downloadapplication,
 #leftpanel .donations {
   width: 150px;
 }
+#leftpanel .dapp button,
 #leftpanel .downloadapplication button,
 #leftpanel .donations button {
   width: 100%;
+}
+#leftpanel .dapp {
+  margin-bottom: 0.5em;
 }
 #leftpanel .donations {
   margin-top: 0.5em;
