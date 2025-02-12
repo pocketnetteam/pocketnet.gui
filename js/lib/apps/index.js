@@ -724,7 +724,8 @@ var BastyonApps = function (app) {
                     theme: app.platform.sdk.theme.all[app.platform.sdk.theme.current],
                     margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || document.documentElement.style.getPropertyValue('--app-margin-top-default') || '0px',
                     application: application.manifest,
-                    project: project_config
+                    project: project_config,
+                    transactionsApiVersion: 2
                 })
             }
         },
