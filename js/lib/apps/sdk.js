@@ -319,6 +319,10 @@ var BastyonSdk = function(){
         })
     }
 
+    self.sign = function(string){
+        return action('sign', {string})
+    }
+
     self.get = {
         videos : function(urls){
             return action('get.videos', {urls})
