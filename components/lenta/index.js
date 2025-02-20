@@ -3903,15 +3903,12 @@ var lenta = (function(){
 
 					if (share.address == address && share.visibility()) {
 
-						if(reason && reason == 'sub' && share.visibility() != 'sub') return
-						if(reason && reason == 'paid' && share.visibility() != 'paid') return
+						if (reason && reason == 'sub' && share.visibility() != 'sub') return
+						if (reason && reason == 'paid' && share.visibility() != 'paid') return
 
 						var ns = self.app.platform.sdk.node.shares.checkvisibility(share)
 
-						console.log("ns", ns, visibilityStatus)
-
-						if(visibilityStatus[share.txid] == ns) {
-							console.log("RELOAD no")
+						if (visibilityStatus[share.txid] == ns) {
 							return
 						}
 
@@ -5139,6 +5136,17 @@ var lenta = (function(){
 								
 								if (essenseData.shuffle) {
 									shares = _.shuffle(shares)
+								}
+
+								if (essenseData.filterTopAuthors) {
+									shares = _.filter(shares, (s) => {
+										if(!_.find(sharesInview, (s2) => {
+											return s2.address == s.address
+										})) return true
+										else{
+											console.log("filtered by authors")
+										}
+									})
 								}
 
 								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				

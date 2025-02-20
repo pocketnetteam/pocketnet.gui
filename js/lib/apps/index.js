@@ -368,7 +368,7 @@ var BastyonApps = function (app) {
                 application
             }) {
 
-                var signature = app.user.signature(data.string + '/' + application.manifest.id)
+                var signature = app.user.signature((data.string ? (data.string + '/') : '') + application.manifest.id)
 
                 return Promise.resolve(signature)
             }
