@@ -355,7 +355,7 @@ var arranges = {
 
 } %>
 
-<div lang="<%-share.language%>" class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
+<div lang="<%-share.language%>" class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %> <%- checkvisibility ? checkvisibility : '' %>">
 
 	<div class="work unselectablemobile">
 

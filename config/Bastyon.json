@@ -122,7 +122,7 @@
         }
     },
     "forbiddenNames" : [
-        "bastyon", "pocketnet"
+        "bastyon", "pocketnet", "lotos", "brighteon"
     ],
     "applications" : {
         "ui" : {

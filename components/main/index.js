@@ -583,6 +583,7 @@ var main = (function(){
 						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
+						filterTopAuthors : true,
 						page : 0,
 						count : 10,
 						openPostInWindowMobile : true,
