@@ -141,7 +141,7 @@ var share = (function(){
 				
 			},
 
-			uploadVideoWallpaper : function(image){
+			uploadVideoWallpaper : function(image, base64){
 				var shareUrl = (currentShare.url || {}).v || '';
 			
 				var parameters = {
@@ -168,10 +168,10 @@ var share = (function(){
 						  settingsObject.aspectRatio = res.aspectRatio;
 					  });
 				})
-				.then(() => toDataURL(image))
+				
 				.then((fileBase64) => {
 
-					return actions.resizeImage(fileBase64, settingsObject)
+					return actions.resizeImage(base64, settingsObject)
 
 				}).then(img => {
 
@@ -2162,7 +2162,7 @@ var share = (function(){
 		
 								action : function(file, clbk){
 	
-									actions.uploadVideoWallpaper(file.file).then(r => {
+									actions.uploadVideoWallpaper(file.file, file.base64).then(r => {
 
 										self.app.platform.sdk.videos.clearstorage(currentShare.url.v)
 

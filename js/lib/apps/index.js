@@ -2268,9 +2268,26 @@ var BastyonApps = function (app) {
 
                 if (!application) {
 
-                    var a = _.find(app.developapps, (dapp) => {
+                    var a = _.find(_.filter(app.developapps, (dapp) => {
+
+                        if (window.cordova && window.pocketnetstore) {
+                            if (isios()) {
+                                if (!dapp.store['i']) {
+                                    return false
+                                }
+                            } else {
+                                if (!dapp.store['g']) {
+                                    return false
+                                }
+                            }
+                        }
+
+                        return true
+
+                    }), (dapp) => {
                         return dapp.id == id
                     })
+                    
 
                     if(!a) {
                         a = cached?.manifest
