@@ -8,14 +8,12 @@
     {
         "id" : "wpkoin.app",
         "version": "0.0.1",
-        "scope" : "localhost:8080",
+        "scope" : "pkoin.net/wpkoinui",
         "cantdelete" : true,
         "name" : "WPkoin",
         "install" : true,
         "store" : {"g" : true},
-        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
-        "installed" : true,
-        "installing" : true
+        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
     },
     {
 		"id" : "swipelux.app",

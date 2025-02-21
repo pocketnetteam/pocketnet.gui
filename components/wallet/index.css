@@ -706,7 +706,8 @@
   font-size: 0.8em;
   color: rgb(var(--color-txt-ac));
 }
-#wallet .buypkoin {
+#wallet .buypkoin,
+#wallet .stakepkoin {
   background: rgb(var(--background-total-theme));
   padding: 1.5em 0;
   border-radius: 6px;
@@ -714,87 +715,107 @@
   border-right: 1px solid rgba(var(--color-medium-theme), 0.3);
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
-#wallet .buypkoin .ways {
+#wallet .buypkoin .ways,
+#wallet .stakepkoin .ways {
   display: flex;
   align-items: flex-start;
   margin-bottom: 1em;
 }
-#wallet .buypkoin .ways .subcaption {
+#wallet .buypkoin .ways .subcaption,
+#wallet .stakepkoin .ways .subcaption {
   color: rgb(var(--color-txt-ac));
 }
-#wallet .buypkoin .ways:nth-child(2n) {
+#wallet .buypkoin .ways:nth-child(2n),
+#wallet .stakepkoin .ways:nth-child(2n) {
   background: rgba(var(--color-medium-theme), 0.3);
   padding-top: 1em;
   padding-bottom: 1em;
 }
-#wallet .buypkoin .ways > div {
+#wallet .buypkoin .ways > div,
+#wallet .stakepkoin .ways > div {
   flex-shrink: 1;
   flex-basis: 0;
   flex-grow: 1;
 }
-#wallet .buypkoin .ways .actionbutton {
+#wallet .buypkoin .ways .actionbutton,
+#wallet .stakepkoin .ways .actionbutton {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-#wallet .buypkoin .row {
+#wallet .buypkoin .row,
+#wallet .stakepkoin .row {
   display: flex;
   flex-wrap: wrap;
   padding: 0 1em;
 }
-#wallet .buypkoin .row.one {
+#wallet .buypkoin .row.one,
+#wallet .stakepkoin .row.one {
   display: block;
   padding: 1em;
   margin-bottom: 1.5em;
 }
-#wallet .buypkoin .row.one .wrp {
+#wallet .buypkoin .row.one .wrp,
+#wallet .stakepkoin .row.one .wrp {
   padding: 2em 1em;
   text-align: left;
   border-radius: 5px;
   border: 1px dashed rgba(var(--color-medium-theme), 0.7);
   background: rgb(var(--color-shadow-var));
 }
-#wallet .buypkoin .row.one .flxbtn {
+#wallet .buypkoin .row.one .flxbtn,
+#wallet .stakepkoin .row.one .flxbtn {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#wallet .buypkoin .row.one .flxbtn div {
+#wallet .buypkoin .row.one .flxbtn div,
+#wallet .stakepkoin .row.one .flxbtn div {
   margin-right: 1em;
 }
-#wallet .buypkoin .row.one .flxbtn span {
+#wallet .buypkoin .row.one .flxbtn span,
+#wallet .stakepkoin .row.one .flxbtn span {
   color: rgb(var(--text-on-bg-shadow-color));
   font-size: 0.8em;
 }
-#wallet .buypkoin .row .button {
+#wallet .buypkoin .row .button,
+#wallet .stakepkoin .row .button {
   min-width: 220px;
 }
-#wallet .buypkoin .row .button.ghost {
+#wallet .buypkoin .row .button.ghost,
+#wallet .stakepkoin .row .button.ghost {
   min-width: 0;
 }
-#wallet .buypkoin .row > div {
+#wallet .buypkoin .row > div,
+#wallet .stakepkoin .row > div {
   padding: 0.5em 1em;
   min-width: 60px;
 }
-#wallet .buypkoin .row > div .clogo {
+#wallet .buypkoin .row > div .clogo,
+#wallet .stakepkoin .row > div .clogo {
   height: 24px;
 }
-#wallet .buypkoin .row > div img {
+#wallet .buypkoin .row > div img,
+#wallet .stakepkoin .row > div img {
   width: 18px;
   height: 18px;
 }
-#wallet .buypkoin .row > div img.wh {
+#wallet .buypkoin .row > div img.wh,
+#wallet .stakepkoin .row > div img.wh {
   height: 8px;
   width: auto;
 }
-#wallet .buypkoin .row > div img.wh2 {
+#wallet .buypkoin .row > div img.wh2,
+#wallet .stakepkoin .row > div img.wh2 {
   height: 18px;
   width: auto;
 }
-#wallet .buypkoin .row > div img.wh3 {
+#wallet .buypkoin .row > div img.wh3,
+#wallet .stakepkoin .row > div img.wh3 {
   height: 22px;
   width: auto;
 }
-#wallet .buypkoin .row > div .label {
+#wallet .buypkoin .row > div .label,
+#wallet .stakepkoin .row > div .label {
   padding: 0.5em 0;
   font-size: 0.8em;
   font-weight: 500;
@@ -1340,68 +1361,85 @@
 .walletwindow #wallet .send .row > div.label {
   width: 100%;
 }
-.walletwindow #wallet .buypkoin {
+.walletwindow #wallet .buypkoin,
+.walletwindow #wallet .stakepkoin {
   padding: 0.5em;
   border-top: 0;
 }
-.walletwindow #wallet .buypkoin .ways {
+.walletwindow #wallet .buypkoin .ways,
+.walletwindow #wallet .stakepkoin .ways {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
 }
-.walletwindow #wallet .buypkoin .ways > div {
+.walletwindow #wallet .buypkoin .ways > div,
+.walletwindow #wallet .stakepkoin .ways > div {
   flex-shrink: 1;
   flex-basis: content;
   flex-grow: 1;
   padding-bottom: 3em;
 }
-.walletwindow #wallet .buypkoin .row {
+.walletwindow #wallet .buypkoin .row,
+.walletwindow #wallet .stakepkoin .row {
   padding: 0;
 }
-.walletwindow #wallet .buypkoin .row .button {
+.walletwindow #wallet .buypkoin .row .button,
+.walletwindow #wallet .stakepkoin .row .button {
   min-width: 310px;
 }
-.walletwindow #wallet .buypkoin .row.flx {
+.walletwindow #wallet .buypkoin .row.flx,
+.walletwindow #wallet .stakepkoin .row.flx {
   justify-content: center;
 }
-.walletwindow #wallet .buypkoin .row.flx > div {
+.walletwindow #wallet .buypkoin .row.flx > div,
+.walletwindow #wallet .stakepkoin .row.flx > div {
   width: 12.5%;
   padding: 0.5em 0.5em;
   text-align: center;
 }
-.walletwindow #wallet .buypkoin .row.forfiats {
+.walletwindow #wallet .buypkoin .row.forfiats,
+.walletwindow #wallet .stakepkoin .row.forfiats {
   justify-content: center;
 }
-.walletwindow #wallet .buypkoin .row.forfiats > div {
+.walletwindow #wallet .buypkoin .row.forfiats > div,
+.walletwindow #wallet .stakepkoin .row.forfiats > div {
   width: 25%;
 }
-.walletwindow #wallet .buypkoin .row.one {
+.walletwindow #wallet .buypkoin .row.one,
+.walletwindow #wallet .stakepkoin .row.one {
   display: block;
   padding: 0.5em 0;
   margin-bottom: 1.5em;
 }
-.walletwindow #wallet .buypkoin .row.one .wrp {
+.walletwindow #wallet .buypkoin .row.one .wrp,
+.walletwindow #wallet .stakepkoin .row.one .wrp {
   padding: 2em 1em;
 }
-.walletwindow #wallet .buypkoin .row.one .flxbtn {
+.walletwindow #wallet .buypkoin .row.one .flxbtn,
+.walletwindow #wallet .stakepkoin .row.one .flxbtn {
   flex-direction: column;
   text-align: center;
   justify-content: center;
 }
-.walletwindow #wallet .buypkoin .row.one .flxbtn div {
+.walletwindow #wallet .buypkoin .row.one .flxbtn div,
+.walletwindow #wallet .stakepkoin .row.one .flxbtn div {
   margin-right: 0;
 }
-.walletwindow #wallet .buypkoin .row.one .flxbtnlbk {
+.walletwindow #wallet .buypkoin .row.one .flxbtnlbk,
+.walletwindow #wallet .stakepkoin .row.one .flxbtnlbk {
   margin-top: 1em;
 }
-.walletwindow #wallet .buypkoin .row.table {
+.walletwindow #wallet .buypkoin .row.table,
+.walletwindow #wallet .stakepkoin .row.table {
   display: block;
   text-align: center;
 }
-.walletwindow #wallet .buypkoin .row.table > div {
+.walletwindow #wallet .buypkoin .row.table > div,
+.walletwindow #wallet .stakepkoin .row.table > div {
   display: block;
 }
-.walletwindow #wallet .buypkoin .row.table .reciever {
+.walletwindow #wallet .buypkoin .row.table .reciever,
+.walletwindow #wallet .stakepkoin .row.table .reciever {
   margin: 0 auto;
 }
 .walletwindow #wallet .crowdfunding {
@@ -1589,73 +1627,92 @@
     text-align: center;
     padding: 1.5em;
   }
-  #wallet .buypkoin {
+  #wallet .buypkoin,
+  #wallet .stakepkoin {
     padding: 0.5em;
   }
-  #wallet .buypkoin .ways {
+  #wallet .buypkoin .ways,
+  #wallet .stakepkoin .ways {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
   }
-  #wallet .buypkoin .ways > div {
+  #wallet .buypkoin .ways > div,
+  #wallet .stakepkoin .ways > div {
     flex-shrink: 1;
     flex-basis: content;
     flex-grow: 1;
     padding-bottom: 3em;
   }
-  #wallet .buypkoin .ways .subcaption {
+  #wallet .buypkoin .ways .subcaption,
+  #wallet .stakepkoin .ways .subcaption {
     text-align: center;
   }
-  #wallet .buypkoin .ways .wrp {
+  #wallet .buypkoin .ways .wrp,
+  #wallet .stakepkoin .ways .wrp {
     width: 100%;
   }
-  #wallet .buypkoin .row {
+  #wallet .buypkoin .row,
+  #wallet .stakepkoin .row {
     padding: 0;
   }
-  #wallet .buypkoin .row .button {
+  #wallet .buypkoin .row .button,
+  #wallet .stakepkoin .row .button {
     min-width: 310px;
   }
-  #wallet .buypkoin .row.flx {
+  #wallet .buypkoin .row.flx,
+  #wallet .stakepkoin .row.flx {
     justify-content: center;
   }
-  #wallet .buypkoin .row.flx > div {
+  #wallet .buypkoin .row.flx > div,
+  #wallet .stakepkoin .row.flx > div {
     width: 12.5%;
     padding: 0.5em 0.5em;
     text-align: center;
   }
-  #wallet .buypkoin .row.forfiats {
+  #wallet .buypkoin .row.forfiats,
+  #wallet .stakepkoin .row.forfiats {
     justify-content: center;
   }
-  #wallet .buypkoin .row.forfiats > div {
+  #wallet .buypkoin .row.forfiats > div,
+  #wallet .stakepkoin .row.forfiats > div {
     width: 25%;
   }
-  #wallet .buypkoin .row.one {
+  #wallet .buypkoin .row.one,
+  #wallet .stakepkoin .row.one {
     display: block;
     padding: 0.5em 0;
     margin-bottom: 1.5em;
   }
-  #wallet .buypkoin .row.one .wrp {
+  #wallet .buypkoin .row.one .wrp,
+  #wallet .stakepkoin .row.one .wrp {
     padding: 2em 1em;
   }
-  #wallet .buypkoin .row.one .flxbtn {
+  #wallet .buypkoin .row.one .flxbtn,
+  #wallet .stakepkoin .row.one .flxbtn {
     flex-direction: column;
     text-align: center;
     justify-content: center;
   }
-  #wallet .buypkoin .row.one .flxbtn div {
+  #wallet .buypkoin .row.one .flxbtn div,
+  #wallet .stakepkoin .row.one .flxbtn div {
     margin-right: 0;
   }
-  #wallet .buypkoin .row.one .flxbtnlbk {
+  #wallet .buypkoin .row.one .flxbtnlbk,
+  #wallet .stakepkoin .row.one .flxbtnlbk {
     margin-top: 1em;
   }
-  #wallet .buypkoin .row.table {
+  #wallet .buypkoin .row.table,
+  #wallet .stakepkoin .row.table {
     display: block;
     text-align: center;
   }
-  #wallet .buypkoin .row.table > div {
+  #wallet .buypkoin .row.table > div,
+  #wallet .stakepkoin .row.table > div {
     display: block;
   }
-  #wallet .buypkoin .row.table .reciever {
+  #wallet .buypkoin .row.table .reciever,
+  #wallet .stakepkoin .row.table .reciever {
     margin: 0 auto;
   }
   #wallet .htls,
