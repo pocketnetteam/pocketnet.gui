@@ -5,48 +5,72 @@
     "fullname" : "Bastyon",
     "preferredtags" : [],
     "developapps" : [{
-		"id" : "swipelux.app",
+		"id": "swipelux.app",
 		"version": "0.0.1",
-		"scope" : "app.swipelux.pocketnet.app",
-		"cantdelete" : true,
-		"name" : "Swipelux",
-        "develop" : true,
-        "install" : true,
-        "store" : {"g" : true},
-        "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
-	},{
-        "id" : "barteron.pocketnet.app",
-        "version": "1.0.0",
-        "scope" : "barteron.club",
-        "cantdelete" : true,
-        "develop" : true,
-        "install" : true,
-        "name" : "Barteron",
-        "grantedPermissions" : ["account", "chat"],
-        "includeinsearch" : true,
-        "includeminiapps" : true,
-        "store" : {"g" : true}
-    },{
-        "id" : "app.pocketnet.docs",
-        "version": "1.0.0",
-        "scope" : "docs.pocketnet.app",
-        "cantdelete" : true,
-        "develop" : true,
-        "install" : true,
-        "name" : "Bastyon documentation",
-        "grantedPermissions" : [],
-        "store" : {"g" : true, "i" : true}
-    },{
-        "id": "app.pocketnet.blockexplorer",
-        "version": "0.0.1",
-        "scope": "bastyon.com/blockexplorer",
-        "cantdelete": true,
-        "name": "Block Explorer",
-        "develop": true,
-        "install": true,
-        "store": {"g" : true, "i" : true},
-        "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
-    }],
+		"scope": "app.swipelux.pocketnet.app",
+		"cantdelete": true,
+		"name": "Swipelux",
+		"develop": true,
+		"install": true,
+		"store": {
+		    "g": true
+		},
+		"author": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+		}, {
+		    "id": "barteron.pocketnet.app",
+		    "version": "1.0.0",
+		    "scope": "barteron.club",
+		    "cantdelete": true,
+		    "develop": true,
+		    "install": true,
+		    "name": "Barteron",
+		    "grantedPermissions": ["account", "chat"],
+		    "includeinsearch": true,
+		    "includeminiapps": true,
+		    "store": {
+		        "g": true
+		    }
+		}, {
+		    "id": "app.pocketnet.docs",
+		    "version": "1.0.0",
+		    "scope": "docs.pocketnet.app",
+		    "cantdelete": true,
+		    "develop": true,
+		    "install": true,
+		    "name": "Bastyon documentation",
+		    "grantedPermissions": [],
+		    "store": {
+		        "g": true,
+		        "i": true
+		    }
+		}, {
+		    "id": "app.pocketnet.blockexplorer",
+		    "version": "0.0.1",
+		    "scope": "bastyon.com/blockexplorer",
+		    "cantdelete": true,
+		    "name": "Block Explorer",
+		    "develop": true,
+		    "install": true,
+		    "store": {
+		        "g": true,
+		        "i": true
+		    },
+		    "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
+		}, {
+		    "id": "p2p.pkoin.app",
+		    "version": "0.0.1",
+		    "scope": "pkoin.net/p2p",
+		    "cantdelete": true,
+		    "name": "P2P PKOIN app",
+		    "develop": true,
+		    "install": true,
+		    "store": {
+		        "g": true,
+		        "i": true
+		    },
+		    "author": "TQsidN3F7qcctiJ1Y5FgZnTjzQqQCt6ydG"
+		}
+		],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
