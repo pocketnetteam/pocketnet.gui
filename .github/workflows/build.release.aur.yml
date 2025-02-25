@@ -1,7 +1,6 @@
 name: Build Release (AUR)
 
 on:
-  workflow_dispatch:
   release:
     types: [published]
     
@@ -22,4 +21,4 @@ jobs:
         with:
           aur_key: ${{ secrets.AUR_KEY }}
           repo_name: pocketnet
-          tag_name: ${{ github.event.release.tag_name && github.event.release.tag_name.replace('v', '') || 'no-tag' }}
+          tag_name: ${{ github.event.release.tag_name.removePrefix('v') }}
