@@ -1,6 +1,7 @@
 name: Build Release (AUR)
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
     
@@ -14,6 +15,8 @@ jobs:
       image: archlinux
       options: --privileged
     steps:
+      - name: Prepare structure
+        run: mkdir -p ./aur/pocketnet
       - name: AUR Update
         uses: TheWisker/aur-update@master
         with:
