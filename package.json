@@ -1,13 +1,10 @@
 {
     "name": "pocketnet",
     "project": "Bastyon",
-
     "version": "0.9.114",
-
     "versionsuffix": "2",
     "cordovaversion": "1.8.114",
     "cordovaversioncode": "1801142",
-
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -21,6 +18,7 @@
         "pack": "electron-builder -w --dir --x64",
         "packl": "electron-builder -l --dir --x64",
         "build": "npm run build:proxy16 && npm run dev:bastyon",
+        "build:store": "npm run build:proxy16 && npm run dev:bastyon:store",
         "build:proxy16": "cd proxy16 && npm run build",
         "dist": "electron-builder -w --x64 --ia32 -p never",
         "distl": "electron-builder -l --x64 -p never",
@@ -39,7 +37,7 @@
         "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
-        "dev:bastyon:rmupdate": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon -rmupdate=true",
+        "dev:bastyon:store": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon -silentupdate=true",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
         "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/"
     },

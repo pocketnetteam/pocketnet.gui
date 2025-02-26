@@ -260,6 +260,13 @@
 }
 #leftpanel .rightbottomnav .copyright .app-update-available {
   display: none;
+  margin: 3px 0px;
+  color: rgb(var(--color-bg-ac-bright));
+}
+#leftpanel .rightbottomnav .copyright .app-update-available i {
+  font-size: 1em;
+  color: rgb(var(--color-bg-ac-bright));
+  vertical-align: middle;
 }
 #leftpanel .vc_valuecustom {
   font-size: 1.5em;
