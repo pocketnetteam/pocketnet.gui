@@ -258,6 +258,9 @@
   border-radius: 2px;
   cursor: pointer;
 }
+#leftpanel .rightbottomnav .copyright .app-update-available {
+  display: none;
+}
 #leftpanel .vc_valuecustom {
   font-size: 1.5em;
   font-weight: 100;

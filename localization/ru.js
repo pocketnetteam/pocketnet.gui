@@ -2574,6 +2574,7 @@ _l.updateNotifier_button2 = 'Позже...';
 _l.updateNotifier_stateStart = 'Начинаем...';
 _l.updateNotifier_stateDownload = 'Загружено';
 _l.updateNotifier_stateError = 'Произошла ошибка';
+_l.updateNotifier_availableSilent = "Доступно обновление"
 /** ↑ Component UpdateNotifier ↑ */
 _l.error408 = 'Ошибка, проблема с соединением'
 

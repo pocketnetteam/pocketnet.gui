@@ -909,4 +909,5 @@ _l.updateNotifier_button2 = 'Später...';
 _l.updateNotifier_stateStart = 'Starten...';
 _l.updateNotifier_stateDownload = 'Heruntergeladen';
 _l.updateNotifier_stateError = 'Fehler aufgetreten';
+_l.updateNotifier_availableSilent = "Aktualisierung verfügbar"
 /** ↑ Component UpdateNotifier ↑ */
