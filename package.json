@@ -167,10 +167,10 @@
         "linux": {
             "target": [
                 {
-                    "target": "AppImage"
+                    "target": "deb"
                 },
                 {
-                    "target": "deb"
+                    "target": "AppImage"
                 },
                 {
                     "target": "rpm"
@@ -179,7 +179,10 @@
             "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
-            "description": "${productName} Desktop Browser"
+            "description": "Revolutionary anti-censorship decentralized publishing and social platform. Based on blockchain technology, running on computers worldwide without central control. Self-policed by users with good reputation, protecting your privacy.",
+            "desktop": {
+                "StartupWMClass": "pocketnet"
+            }
         },
         "appImage": {
             "artifactName": "${productName}.${ext}"
