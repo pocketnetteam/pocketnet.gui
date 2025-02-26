@@ -101,7 +101,6 @@ var tpls = [
 		name : 'main.js', 
 		underscoreTemplate : true
 	}, 
-	,
 
 	{
 		name : 'privacy_a.html', 
