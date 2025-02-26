@@ -451,7 +451,27 @@ Platform = function (app, listofnodes) {
         'PFPUjAhCAdPJN8PbxK3pvHX8pv969RJ198': true,
         'PCja68KWVefRuX8ZKVstkK9HtVCirhLAj4': true,
         'P9HKxUQ9TKn9kEc1sivMPeggxMsssS92FK': true,
-        
+        'PWRx3VnQmMrLbjP4Aqc2wS71gfLVDdanvz': true,
+        'PLEF1tkHHzXs9eTsCBVEWGghHNp2WnKCAz': true,
+        'PJbeXQMgvFzkBXEDqUzjS42dDqbGsX6dsh': true,
+        'PMNvtzYjYZYmz99wA8QsuZxMP7FV461P2c': true,
+        'PGwSefeA5e9G766TF14F2R4tcMD3GG5fMW': true,
+        'PARGWiFEf7pTqvZNE4iTy9AHEQWPhSnY95': true,
+        'PHTD9tGhXScCFk9LEHDUVHKgac3z7mXBmt': true,
+        'PUsuz1f3edKc4t1sVrvMySvJosfKS5rEYG': true,
+        'PUBxem8UZ17SJWjJ2rP6TDAshGr5hNZ4Kj': true,
+        'P99D5sk16h7wkksCuynVad65jKF2nFmF8Z': true,
+        'P9k99NNoPBAf6UjVe7zFJ4iBECtdeeTeHR': true,
+        'PAEyWuijzv7yMHofRBi4i8tL3pk2iAntXX': true,
+        'PHewj72LB2vUvqhWiCCe7kxrrBGfsgUyPe': true,
+        'PPrv7fY1a4f4opsMaCjwX9qPjw7sXi1Ff2': true,
+        'PBmDEeHA7xKT5FnJwV9yRXcfWaF8DSSh9n': true,
+        'PTdpmuCY645A2XQK5H24axiJSpNanHHWMP': true,
+        'PRXCtW5apMV2JM4CjNnqZ5ijdQc8xcfEJP': true,
+        'P8tNMA6QtBooqxw8EieKcL5uP1cTpt9vi9': true,
+        'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
+        'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
+        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true
     }
 
     self.bch = {
@@ -3007,6 +3027,7 @@ Platform = function (app, listofnodes) {
                     compact: p.compact,
                     r: p.r,
                     shuffle: p.shuffle,
+                    filterTopAuthors : p.filterTopAuthors,
                     page: p.page,
                     tags: p.tags,
                     lang: p.lang,
@@ -9953,7 +9974,7 @@ Platform = function (app, listofnodes) {
 
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
-                if(ustate.likers_count > 100){
+                if (ustate.likers_count > 100 && ustate.blockers_count < 100){
                     isOverComplained = false
                 }
 
@@ -9963,6 +9984,14 @@ Platform = function (app, listofnodes) {
 
                 if (self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova) {
                     return true
+                }
+
+                if (ustate.reputation < 100 && ustate.blockers_count > 100 && ustate.subscribers_count < ustate.blockers_count){
+                    var tf = _.reduce(ustate.flags, (m, f) => {
+                        return m + f
+                    }, 0)
+
+                    if(tf > 50 && tf * 2 > ustate.likers_count) return true
                 }
 
 
@@ -16289,15 +16318,13 @@ Platform = function (app, listofnodes) {
 
                     if (v == 'paid') {
 
-                        
-
                         var me = self.psdk.userInfo.getmy()
 
                         if (me && me.relation(share.address, 'subscribes')) {
 
-                            if (app.pkoindisable || app.paidsubscriptiondisable){
+                            /*if (app.paidsubscriptiondisable){
                                 return false
-                            }
+                            }*/
 
                             var cache = self.sdk.paidsubscription.checkvisibilityCache(share.address)
 
@@ -16310,6 +16337,11 @@ Platform = function (app, listofnodes) {
                                     return false
                                 }
                                 else{
+
+                                    if(v == 'paid' && app.paidsubscriptiondisable){
+                                        return 'paid_paidsubscriptiondisable'
+                                    }
+                                    
                                     return v
                                 }
                             }
@@ -16318,11 +16350,15 @@ Platform = function (app, listofnodes) {
 
                         }
                         else{
-                            if (app.pkoindisable || app.paidsubscriptiondisable){
+                            /*if (app.paidsubscriptiondisable){
                                 return 'sub'
-                            }
+                            }*/
                         }
 
+                    }
+
+                    if(v == 'paid' && app.paidsubscriptiondisable){
+                        return 'paid_paidsubscriptiondisable'
                     }
 
                     return v

@@ -2632,6 +2632,7 @@ pUserInfo = function(){
 	self.subscribes_count = 0
 	self.blockings_count = 0
 	self.likers_count = 0
+	self.blockers_count = 0
 
 	self.flags = {}
 	self.firstFlags = {}
@@ -2687,6 +2688,7 @@ pUserInfo = function(){
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		if(v.likers_count) self.likers_count = v.likers_count
+		if(v.blockers_count) self.blockers_count = v.blockers_count
 
 		if(v.content) self.content = v.content
 
@@ -2780,6 +2782,7 @@ pUserInfo = function(){
 		v.subscribes_count = self.subscribes_count
 		v.blockings_count = self.blockings_count
 		v.likers_count = self.likers_count
+		v.blockers_count = self.blockers_count
 		v.postcnt = self.postcnt
 		v.content = _.clone(self.content)
 

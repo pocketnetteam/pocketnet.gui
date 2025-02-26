@@ -132,12 +132,12 @@ var hexEncode= function(text)
     return result;
 }
 
-var BastyonSdk = function(){
+var BastyonSdk = function(settings = {}){
     var self = this
     var clbks = {}
     var listenid = makeid()
     var listeners = {}
-    var currentState = (document.location.pathname + document.location.search).replace('/', '');
+    var currentState = (document.location.pathname.replace(settings.publicPath || '', '') + document.location.search).replace('/', '');
 
     const popstateEventHandler = function() {
         onChangeState()
@@ -148,7 +148,7 @@ var BastyonSdk = function(){
     const onChangeState = (state, title, url, isReplace) => { 
 
         setTimeout(() => {
-            var link = (document.location.pathname + document.location.search).replace('/', '');
+            var link = (document.location.pathname.replace(settings.publicPath || '', '') + document.location.search).replace('/', '');
 
             if(currentState == link) return
     
@@ -317,6 +317,10 @@ var BastyonSdk = function(){
             parameters,
             options
         })
+    }
+
+    self.sign = function(string){
+        return action('sign', {string})
     }
 
     self.get = {

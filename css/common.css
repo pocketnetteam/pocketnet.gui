@@ -999,6 +999,15 @@
   padding-bottom: 1.5em;
   color: rgb(var(--neutral-grad-2));
 }
+.share_common .sharecnt.paid_paidsubscriptiondisable {
+  display: none!important;
+}
+.share_common .sharecnt.paid_paidsubscriptiondisable .sys {
+  display: none;
+}
+.share_common .sharecnt.paid_paidsubscriptiondisable .sharecaption {
+  display: none;
+}
 .share_common .sharecnt.deleted .cntscontent,
 .share_common .sharecnt.deleted .repostWrapper,
 .share_common .sharecnt.deleted .commentsWrapperHb,
