@@ -348,11 +348,15 @@ function initApp() {
 
         log.info('First check updates...');
 
-        autoUpdater.checkForUpdates();
-
-        setInterval(() => {
+        <% if(!rmupdate) {%>
             autoUpdater.checkForUpdates();
-        }, 60 * 60 * 1000); // Every 1 hour
+
+            setInterval(() => {
+                autoUpdater.checkForUpdates();
+            }, 60 * 60 * 1000); // Every 1 hour
+        <% } %>
+
+        
     }
 
     powerMonitor.on('suspend', () => {
@@ -684,7 +688,9 @@ function createWindow() {
 
         if (proxyInterface)
             proxyInterface.destroy().catch(e => {}).then(r => {
-                autoUpdater.quitAndInstall(true, true)
+                <% if(!rmupdate) { %>
+                    autoUpdater.quitAndInstall(true, true)
+                <% } %>
             })
 
         if (ipcbridge)
@@ -692,9 +698,13 @@ function createWindow() {
 
     })
 
+    <% if(!rmupdate) {%>
+
     ipcMain.on('electron-checkForUpdates', function(e) {
         autoUpdater.checkForUpdates();
     })
+
+    <% } %>
 
 
     ipcMain.on('electron-autoLaunchManage', function(e, p) {
