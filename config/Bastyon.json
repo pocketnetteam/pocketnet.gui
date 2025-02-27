@@ -3,20 +3,33 @@
     "turl" : "test.pocketnet.app",
     "name" : "Bastyon",
     "fullname" : "Bastyon",
-    "preferredtags" : [],
-    "developapps" : [{
-		"id": "swipelux.app",
-		"version": "0.0.1",
-		"scope": "app.swipelux.pocketnet.app",
-		"cantdelete": true,
-		"name": "Swipelux",
-		"develop": true,
-		"install": true,
-		"store": {
-		    "g": true
-		},
-		"author": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
-		}, {
+
+    "developapps" : [
+        {
+            "id" : "wpkoin.app",
+            "version": "0.0.1",
+            "scope" : "pkoin.net/wpkoinui",
+            "cantdelete" : true,
+            "name" : "WPkoin",
+            "install" : true,
+            "develop": true,
+            "store" : {"g" : true},
+            "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+        },
+        {
+            "id" : "swipelux.app",
+            "version": "0.0.1",
+            "scope": "app.swipelux.pocketnet.app",
+            "cantdelete": true,
+            "name": "Swipelux",
+            "develop": true,
+            "install": true,
+            "store": {
+                "g": true
+            },
+		    "author": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+		}, 
+        {
 		    "id": "barteron.pocketnet.app",
 		    "version": "1.0.0",
 		    "scope": "barteron.club",
@@ -30,7 +43,8 @@
 		    "store": {
 		        "g": true
 		    }
-		}, {
+		}, 
+        {
 		    "id": "app.pocketnet.docs",
 		    "version": "1.0.0",
 		    "scope": "docs.pocketnet.app",
@@ -43,7 +57,8 @@
 		        "g": true,
 		        "i": true
 		    }
-		}, {
+		}, 
+        {
 		    "id": "app.pocketnet.blockexplorer",
 		    "version": "0.0.1",
 		    "scope": "bastyon.com/blockexplorer",
@@ -56,7 +71,8 @@
 		        "i": true
 		    },
 		    "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
-		}, {
+		}, 
+        {
 		    "id": "p2p.pkoin.app"   ,
 		    "version": "0.0.1",
 		    "scope": "pkoin.net/p2p",
@@ -66,8 +82,7 @@
 		    "develop": true,
 		    "install": true,
 		    "store": {
-		        "g": true,
-		        "i": true
+		        "g": true
 		    },
 		    "author": "TQsidN3F7qcctiJ1Y5FgZnTjzQqQCt6ydG"
 		}

@@ -23,47 +23,54 @@
 						
 						var sUserInfo = psdk.userInfo.getShortForm(reciever.address)
 
+						console.log('sUserInfo', sUserInfo, ed.data.recievers, reciever);
+
 						if(!sUserInfo) return
 
 						var src = sUserInfo.image;
 						var name = sUserInfo.name;
 						var letter = sUserInfo.letter;  
-						
+												
 						%> 
 
 						<div class="reciever">
-							<div class="userIcon">
 
-								<div class="icon">
-		
-									<div  ban=".gif" contain="none" class="usericon" <%=bgImagesClApplyTemplate(src)%>>
-		
-										<% if(!src && letter) { %>
-		
-											<span class="letter">
-												<%-letter.toUpperCase()%>
-											</span>
-						
-										<% } %>
-		
-										<% if(app.platform.ui.markUser) {%>
-		
-											<%= app.platform.ui.markUser(reciever.address)%>
-		
-										<% } %>
-		
+							<% if(sUserInfo.name !== sUserInfo.address) { %>
+
+								<div class="userIcon">
+
+									<div class="icon">
+			
+										<div  ban=".gif" contain="none" class="usericon" <%=bgImagesClApplyTemplate(src)%>>
+			
+											<% if(!src && letter) { %>
+			
+												<span class="letter">
+													<%-letter.toUpperCase()%>
+												</span>
+							
+											<% } %>
+			
+											<% if(app.platform.ui.markUser) {%>
+			
+												<%= app.platform.ui.markUser(reciever.address)%>
+			
+											<% } %>
+			
+										</div>
+										
 									</div>
-									
+
 								</div>
 
-							</div>
+							<% } %>
 
 							<div class="userName">
 								<span class="adr"><%-sUserInfo.name %></span>
 							</div>
 
 							<div class="amount">
-								<span><%- app.platform.mp.coin(reciever.amount) %> PKOIN</span>
+								<span><%- Number(app.platform.mp.coin(reciever.amount)) %> PKOIN</span>
 							</div>
 						</div>
 						
