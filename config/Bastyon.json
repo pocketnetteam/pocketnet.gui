@@ -57,11 +57,12 @@
 		    },
 		    "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
 		}, {
-		    "id": "p2p.pkoin.app",
+		    "id": "p2p.pkoin.app"   ,
 		    "version": "0.0.1",
 		    "scope": "pkoin.net/p2p",
 		    "cantdelete": true,
-		    "name": "P2P PKOIN app",
+		    "name": "PKOIN Exchange",
+		    "grantedPermissions": ["account", "sign", "chat"],
 		    "develop": true,
 		    "install": true,
 		    "store": {
