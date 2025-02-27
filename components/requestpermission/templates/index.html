@@ -30,14 +30,16 @@
 						var src = sUserInfo.image;
 						var name = sUserInfo.name;
 						var letter = sUserInfo.letter;  
+
+						console.log('sUserInfo!!!', sUserInfo, ed.data.recievers, reciever);
 						
 						%> 
 
 						<div class="reciever">
 
-							<% if(sUserInfo.real) { %>
+							<% if(sUserInfo.name !== sUserInfo.address) { %>
 
-								<div class="userIcon sss">
+								<div class="userIcon">
 
 									<div class="icon">
 			
