@@ -722,7 +722,7 @@ _l.e13134 = "There aren't any results for this search string"
 _l.e13135 = "User haven't private key"
 _l.discussed = "Most Discussed"
 _l.e13136 = "All Posts"
-_l.e13137 = "My Subscriptions" // This is the equivalent of a 'News feed'. Don't change the word 'Pocket' however, it's a feature of "+appname+".
+_l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"
 _l["Top Posts Over"] = "Top Posts Over"
 _l.bestFirst = "The best first"
@@ -1073,7 +1073,7 @@ _l.e14044 = "Will there be a downloadable executable for Mac?"
 _l.e14045 = "Yes - we are working of Mac platform. Target is for mid-April."
 _l.e14046 = "Pocketcoin"
 _l.e14047 = "What can I do with Pocketcoin?"
-_l.e14048 = "Currently you can win it or send as a gift. However, if and when "+appname+" takes off, Pocketcoin will be the main method of buying advertising on the platform. Advertisers will be able to easily find content authors with the right audience and then offer them advertising opportunities. This will be a trustless endeavor (i.e. neither side can cheat), because of something called multi-signature contracts. Multisig contract requires a digital signature of both parties to be valid. When advertiser offers an ad to the content creator, he creates the first of two required signatures. He signs the actual ad and the amount bid. Content creator reviews this partially signed multisig and if it is accepted, then he appends the second signature. When a blockchain sees both signatures, content creator is automatically paid and an ad is automatically shown on creator's channel. These transactions will only be done through Pocketcoin. Thus, if Pocketcoin becomes big, it will be an immensely valuable token."
+_l.e14048 = "Currently you can win it or send as a gift. However, if and when "+appname+" takes off, Pocketcoin will be the main method of buying advertising on the platform. Advertisers will be able to easily find content authors with the right audience and then offer them advertising opportunities. This will be a trustless endeavor (i.e. neither side can cheat), because of something called multi-signature contracts. Multisig contract requires a digital signature of both parties to be valid. When advertiser offers an ad to the content creator, he creates the first of two required signatures. He signs the actual ad and the amount bid. Content creator reviews this partially signed multisig and if it is accepted, then he appends the second signature. When a blockchain sees both signatures, content creator is automatically paid and an ad is automatically shown on creator’s channel. These transactions will only be done through Pocketcoin. Thus, if Pocketcoin becomes big, it will be an immensely valuable token."
 _l.e14049 = "Is Pocketcoin like a share of stock in "+appname+"?"
 _l.e14050 = "Definitely no. "+appname+" is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, "+appname+" will include a marketplace where goods and services will be sold directly for Pocketcoin"
 _l.e14051 = "Can I buy additional Pocketcoin?"
@@ -1097,15 +1097,15 @@ _l.e14068 = "This is a very important question and we will be releasing many vid
 _l.e14069 = "Specifics of curation on "+appname+"."
 _l.e14070 = "When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community)."
 _l.e140701 = "We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?"
-_l.e140702 = "Do NOT complain about stuff that you simply don't like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries."
-_l.e140703 = "We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn't mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e140702 = "Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries."
+_l.e140703 = "We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
 _l.e14071 = "Important Note on Racism."
 _l.e14072 = "Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn "+appname+" into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on "+appname+". Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. "+appname+" team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on "+appname+". Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic."
 _l.e14073 = "Specifics of curation on "+appname+"."
 _l.e14074 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
-_l.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone's reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts."
+_l.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts."
 _l.e14076 = "Flagging a specific post"
-_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don't like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn't mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
 _l.e14078 = "How is "+appname+" different from..."
 _l.e14079 = "Twitter, Facebook, Reddit & other centralized platforms?"
 _l.e14080 = "There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users."
@@ -1493,7 +1493,7 @@ _l.aboutServices3 = "Not even "+appname+" developers can ban anyone, the platfor
 
 _l.aboutServices4 = 'Bitcoin of Social Media';
 _l.aboutServices5 = ""+appname+" runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content.";
-_l.aboutServices6 = ""+appname+" is the "Bitcoin of social media"";
+_l.aboutServices6 = ""+appname+" is the “Bitcoin of social media”";
 
 _l.aboutServices7 = 'Privacy Protection';
 _l.aboutServices8 = ""+appname+" account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. "+appname+" also features a peer-to-peer encrypted messenger.";
@@ -1522,7 +1522,7 @@ _l.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the 
 _l.aboutNewBlock3 = 'Bonus Program';
 _l.aboutNewBlock4 = ""+appname+" has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.";
 _l.aboutNewBlock5 = 'Decentralized Ads ';
-_l.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers' channel will go directly to blogger's wallet, 100% of ad proceeds.';
+_l.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
 
 
 
@@ -1554,7 +1554,7 @@ _l.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't
 _l.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
 _l.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
 _l.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it's too late. We can import your videos without effort";
+_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort";
 _l.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
 
 _l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
@@ -1573,7 +1573,7 @@ _l.aboutYoutubeImgAndText11 = ""+appname+" is based on the blockchain: there is 
 _l.aboutYoutubeImgAndText12 = 'Each video is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
 _l.aboutYoutubeImgAndText13 = 'Each video you publish will be there forever. No one, really, can censor them. No one can remove your videos, subscribers and account.';
 _l.aboutYoutubeImgAndText14 = 'Censorship Resistance ';
-_l.aboutYoutubeImgAndText15 = ""+appname+" runs on a network of nodes on users' machines. Even if the main website "+appname+".com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on "+appname+" that users do not want.";
+_l.aboutYoutubeImgAndText15 = ""+appname+" runs on a network of nodes on users’ machines. Even if the main website "+appname+".com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on "+appname+" that users do not want.";
 _l.aboutYoutubeImgAndText16 = ""+appname+" is a Protocol, Not a Company or a Social Network";
 _l.aboutYoutubeImgAndText17 = "Unlike Facebook and the main Social Networks, there is no company behind "+appname+". It is an open source project. This means that there is no company that can control the contents posted on "+appname+"";
 
@@ -1633,7 +1633,7 @@ _l.aboutYoutubeThirdBoard27 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutYoutubeThirdBoard29 = '';
 _l.aboutYoutubeThirdBoard30 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
-_l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as "CREATOR" so that you can post unlimited videos and get paid!';
+_l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 _l.aboutYoutubeOpenBoard1 = "Discover "+appname+"";
 _l.aboutYoutubeOpenBoard2 = "You can use "+appname+" from your browser or dowload the mobile and desktop app.";
@@ -1671,7 +1671,7 @@ _l.aboutTitterBannedAcc7 = 'Date';
 _l.aboutTitterBannedAcc8 = 'Duration';
 _l.aboutTitterBannedAcc9 = 'Reason for suspension';
 _l.aboutTitterBannedAcc10 = 'Followers at the time of suspension';
-_l.aboutTitterBannedAcc11 = '"Darren Mills" ';
+_l.aboutTitterBannedAcc11 = '“Darren Mills” ';
 _l.aboutTitterBannedAcc12 = 'Russian-linked account ';
 _l.aboutTitterBannedAcc13 = '43285';
 _l.aboutTitterBannedAcc14 = 'Permanent';
@@ -1748,7 +1748,7 @@ _l.aboutTitterMainBoard33 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutTitterMainBoard35 = '';
 _l.aboutTitterMainBoard36 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
-_l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as "CREATOR" so that you can post unlimited videos and get paid!';
+_l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
 _l.aboutTitterOpen1 = "Discover "+appname+"";
@@ -1787,7 +1787,7 @@ _l.aboutFbImgAndText8 = 'No arbitrary censorship';
 _l.aboutFbImgAndText9 = 'Does not take personal information';
 _l.aboutFbImgAndText10 = 'No corporation behind it';
 _l.aboutFbImgAndText11 = "Chat sessions are entirely private and encrypted and not even "+appname+" can access them.";
-_l.aboutFbImgAndText12 = 'Mark Zuckerberg won't bother you!';
+_l.aboutFbImgAndText12 = 'Mark Zuckerberg won’t bother you!';
 
 
 
@@ -1838,7 +1838,7 @@ _l.aboutFbMainBoard32 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
 _l.aboutFbMainBoard34 = '';
 _l.aboutFbMainBoard34 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
-_l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as "CREATOR" so that you can post unlimited videos and get paid!';
+_l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
 
 _l.aboutFbOpen = "Discover "+appname+"";
@@ -1863,11 +1863,11 @@ _l.aboutHowItWMD = ""+appname+" is the Bitcoin of social networks.";
 
 _l.aboutHowItWImgAndText = 'Blockchain based';
 _l.aboutHowItWImgAndText1 = 'What is the blockchain?';
-_l.aboutHowItWImgAndText2 = 'As Wikipedia mentions, "A blockchain is a growing list of records, called blocks, that are linked together using cryptography.';
-_l.aboutHowItWImgAndText3 = 'It's also described as a "trustless and fully decentralized peer-to-peer immutable data storage" that is spread over a network of participants often referred to as nodes. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data.';
+_l.aboutHowItWImgAndText2 = 'As Wikipedia mentions, “A blockchain is a growing list of records, called blocks, that are linked together using cryptography.';
+_l.aboutHowItWImgAndText3 = 'It’s also described as a “trustless and fully decentralized peer-to-peer immutable data storage” that is spread over a network of participants often referred to as nodes. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data.';
 _l.aboutHowItWImgAndText4 = 'The timestamp proves that the transaction data existed when the block was published in order to get into its hash.';
 _l.aboutHowItWImgAndText5 = 'As blocks each contain information about the block previous to it, they form a chain, with each additional block reinforcing the ones before it.';
-_l.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks."';
+_l.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks.”';
 _l.aboutHowItWImgAndText7 = 'So, how does the blockchain  protects from censorship?';
 _l.aboutHowItWImgAndText8 = "From Bitcoins to "+appname+".";
 _l.aboutHowItWImgAndText9 = 'The blockchain is the technology behind all the cryptocurrencies. Bitcoins, Ethereum, Dogecoins and so on are all powered by the Blockchain.';
@@ -1893,7 +1893,7 @@ _l.aboutHowItWImgAndText28 = ""+appname+" does not ask for your real name to pro
 _l.aboutHowItWImgAndText29 = ""+appname+" does not collect IP addresses and does not track you";
 _l.aboutHowItWImgAndText291 = ""+appname+" allows multiple accounts for different purposes";
 _l.aboutHowItWImgAndText30 = ""+appname+" will never know who you are, unless you explicitly share your personal data.";
-_l.aboutHowItWImgAndText31 = 'If you don't share your data, no one, no company, no government, can know who you are.';
+_l.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
 
 
 _l.aboutHowItWImgAndText51 = 'Why is Cryptocurrency Good for Freedom?';
@@ -1935,7 +1935,7 @@ _l.aboutHowItWImgAndText35 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
 _l.aboutHowItWImgAndText37 = '';
 _l.aboutHowItWImgAndText38 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
-_l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as "CREATOR" so that you can post unlimited videos and get paid!';
+_l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 _l.aboutHowItWImgAndText40 = "Next step: contact us to get your "+appname+" account verified and to access the bonus program.";
 _l.aboutHowItWImgAndText41 = 'Contact Us Now';
 
@@ -1999,20 +1999,15 @@ _l.howItWorks = 'How it works';
 _l.insteadOf = 'Instead of';
 _l.alternativeTo = 'Alternative to...';
 
-_l.stakelogo = 'Stake Pocketcoin (WPKOIN)'
-_l.stakewrap = "Wrap & Stake PKOIN"
-_l.pkoin_stake_info = "Connect your wallet and start staking with WPKOIN"
-_l.stakewpkoin = "Stake WPKOIN"
-
 
 _l.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
 
 _l.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
 
+
 _l.buyforcrypto = 'Buy for crypto'
 _l.buywithcreditcard = 'Buy with credit card'
 _l.buylogo = 'Buy Pocketcoin (PKOIN)'
-
 
 _l.comment = 'Comment';
 _l.sendToAuthor = 'Send to author';
@@ -2871,12 +2866,18 @@ _l.external_tTotal = "Account or wallet"
 _l.description = 'Description'
 _l.getqrcode = 'Show QR code'
 
+_l.stakelogo = 'Stake Pocketcoin (WPKOIN)'
+_l.stakewrap = "Wrap & Stake PKOIN"
+_l.pkoin_stake_info = "Connect your wallet and start staking with WPKOIN"
+_l.stakewpkoin = "Stake WPKOIN"
 
 _l.pkoin_application_info = "Buy via Swipelux mini-application"
 _l.buyswipelux = "Buy via Swipelux"
 _l.buycard = "VISA/Mastercard"
 _l.buyusers = "Buy from users"
 _l.buyviacrypto = "Buy via cryptocurrency"
+
+
 _l.installApplication = "Install the app "+appname+" to upload videos"
 _l.boostlabel= "How to advertise on Bastyon"
 
