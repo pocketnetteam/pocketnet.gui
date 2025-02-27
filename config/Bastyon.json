@@ -8,7 +8,7 @@
     {
         "id" : "wpkoin.app",
         "version": "0.0.1",
-        "scope" : "localhost:8080/wpkoinui",
+        "scope" : "pkoin.net/wpkoinui",
         "cantdelete" : true,
         "name" : "WPkoin",
         "install" : true,
