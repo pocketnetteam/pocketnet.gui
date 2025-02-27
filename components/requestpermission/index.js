@@ -68,16 +68,6 @@ var requestpermission = (function(){
 							return self.psdk.userInfo.get(r)
 						})
 
-						var unloaded = _.find(recievers, (r) => {
-							return !_.find(result.recieversInfo, (reciever) => {
-								return reciever.address == r
-							})
-						})
-
-						if (unloaded){
-							return reject('unableGetData:recieverInfo:' + unloaded)
-						}
-
 						resolve(result)
 					})
 				})

@@ -786,10 +786,27 @@ var wallet = (function(){
 				})
 			},
 
+			showStakeInStep : function(action, step, name, clbk){
+
+
+				renders.step(function(el){
+
+
+					renders.stake(function(_el){
+
+						if(clbk) clbk()
+					}, el)
+				}, step, {
+					class : 'stake'
+				})
+			},
+
 			showBuyInStep : function(action, step, name, clbk){
 
 
 				renders.step(function(el){
+
+
 					renders.buy(function(_el){
 
 						//actions[action](_el)
@@ -1123,7 +1140,8 @@ var wallet = (function(){
 					el.payments = el.c.find('.payments')
 					el.stats = el.c.find('.stats')
 					el.buy = el.c.find('.buy');
-					
+					el.stake = el.c.find('.stake');
+
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
@@ -2357,6 +2375,33 @@ var wallet = (function(){
 
 			////
 
+			stake : function(clbk, _el){
+
+				if (self.app.pkoindisable || (typeof self.app.platform.sdk.user.myaccauntdeleted != 'undefined' && self.app.platform.sdk.user.myaccauntdeleted())){
+					clbk()
+					return
+				}
+
+
+				self.shell({
+
+					name :  'stake',
+					el : _el || el.stake,
+					data : {
+						coins : coins,
+						address : self.app.user.address.value
+					},
+
+				}, function(_p){
+
+					
+					if (clbk)
+						clbk(_p.el)
+
+				})
+				
+			},
+
 			buy : function(clbk, _el){
 
 				if (self.app.pkoindisable || (typeof self.app.platform.sdk.user.myaccauntdeleted != 'undefined' && self.app.platform.sdk.user.myaccauntdeleted())){
@@ -2856,7 +2901,7 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments, renders.stats/*, renders.htls*/]
+				var actions = [renders.send, renders.stake, renders.buy, renders.deposit, renders.addresses, renders.payments, renders.stats/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 
@@ -2995,6 +3040,12 @@ var wallet = (function(){
 						
 							if(_p.action == 'buy' && !self.app.pkoindisable){
 								actions.showBuyInStep('buy', 1, '', function(){
+									el.c.removeClass('loading')
+								})
+							}
+
+							if(_p.action == 'stake' && !self.app.pkoindisable){
+								actions.showStakeInStep('stake', 1, '', function(){
 									el.c.removeClass('loading')
 								})
 							}
