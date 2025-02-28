@@ -53,7 +53,11 @@ contextMenu({
 
 var updatesLoading = false;
 
-if (is.linux()) {
+<% if(silentupdate) {%>
+    autoUpdater.silentUpdate = true
+<% } %>
+
+if (autoUpdater.silentUpdate || is.linux()) {
     autoUpdater.autoDownload = false;
     autoUpdater.autoInstallOnAppQuit = false;
 }
@@ -67,7 +71,7 @@ autoUpdater.on('checking-for-update', (ev) => {
 
 autoUpdater.on('update-available', (ev) => {
     if (!is.linux()) updatesLoading = true
-    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev, linux: is.linux(), macos: is.macOS() })
+    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev, linux: is.linux(), macos: is.macOS(), silent: autoUpdater.silentUpdate })
 })
 
 autoUpdater.on('update-not-available', (ev) => {
@@ -344,20 +348,12 @@ function initApp() {
 
     if (isDevelopment) {
         //win.toggleDevTools();
-    } else {
-
-        log.info('First check updates...');
-
-        <% if(!rmupdate) {%>
-            autoUpdater.checkForUpdates();
-
-            setInterval(() => {
-                autoUpdater.checkForUpdates();
-            }, 60 * 60 * 1000); // Every 1 hour
-        <% } %>
-
-        
     }
+
+    autoUpdater.checkForUpdates();
+    setInterval(() => {
+        autoUpdater.checkForUpdates();
+    }, 60 * 60 * 1000); // Every 1 hour  
 
     powerMonitor.on('suspend', () => {
 
@@ -688,9 +684,7 @@ function createWindow() {
 
         if (proxyInterface)
             proxyInterface.destroy().catch(e => {}).then(r => {
-                <% if(!rmupdate) { %>
-                    autoUpdater.quitAndInstall(true, true)
-                <% } %>
+                autoUpdater.quitAndInstall(true, true)
             })
 
         if (ipcbridge)
@@ -698,14 +692,9 @@ function createWindow() {
 
     })
 
-    <% if(!rmupdate) {%>
-
     ipcMain.on('electron-checkForUpdates', function(e) {
         autoUpdater.checkForUpdates();
     })
-
-    <% } %>
-
 
     ipcMain.on('electron-autoLaunchManage', function(e, p) {
 

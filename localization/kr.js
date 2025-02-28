@@ -909,4 +909,5 @@ _l.updateNotifier_button2 = '나중에...';
 _l.updateNotifier_stateStart = '시작...';
 _l.updateNotifier_stateDownload = '다운로드됨';
 _l.updateNotifier_stateError = '오류 발생';
+_l.updateNotifier_availableSilent = "업데이트 사용 가능"
 /** ↑ Component UpdateNotifier ↑ */

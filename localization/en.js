@@ -2774,6 +2774,7 @@ _l.updateNotifier_button2 = 'Maybe later...';
 _l.updateNotifier_stateStart = 'Starting...';
 _l.updateNotifier_stateDownload = 'Downloaded';
 _l.updateNotifier_stateError = 'Error occurred, stopping';
+_l.updateNotifier_availableSilent = "Update available"
 /** ↑ Component UpdateNotifier ↑ */
 
 _l.error408 = 'Error, connection problem'

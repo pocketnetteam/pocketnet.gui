@@ -1272,4 +1272,5 @@ _l.updateNotifier_button2 = 'Più tardi...';
 _l.updateNotifier_stateStart = 'Avvio...';
 _l.updateNotifier_stateDownload = 'Scaricato';
 _l.updateNotifier_stateError = 'Errore verificatosi';
+_l.updateNotifier_availableSilent = "Aggiornamento disponibile"
 /** ↑ Component UpdateNotifier ↑ */

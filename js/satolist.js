@@ -23902,16 +23902,26 @@ Platform = function (app, listofnodes) {
             }
         }
 
+        var silentUpdateAvailable = function() {
+            $('.app-update-available').show()
+        }
+
         electron.ipcRenderer.on('updater-message', function (event, data) {
             if (data.type == 'info') {
                 if (data.msg == 'update-downloaded') {
                     updateReady()
                 }
 
-                if (data.msg == 'download-progress') {}
+                if (data.msg == 'download-progress') {
+
+                }
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
-                    updateAvailable()
+
+                    if (data.linux && data.silent)
+                        silentUpdateAvailable()
+                    else
+                        updateAvailable()
 
                     // TODO APPLICATIONS PAGE
                 }

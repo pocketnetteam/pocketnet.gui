@@ -1080,4 +1080,5 @@ _l.updateNotifier_button2 = '稍后...';
 _l.updateNotifier_stateStart = '开始...';
 _l.updateNotifier_stateDownload = '已下载';
 _l.updateNotifier_stateError = '发生错误';
+_l.updateNotifier_availableSilent = "更新可用"
 /** ↑ Component UpdateNotifier ↑ */
