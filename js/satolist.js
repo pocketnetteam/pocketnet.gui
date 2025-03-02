@@ -24979,7 +24979,7 @@ Platform = function (app, listofnodes) {
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
                     var title = _el.find('.caption').text()
-                    var body = _el.find('.tips').text()
+                    var body = _el.find('.tips').text().trim()
                     var image = _el.find('[image]').attr('image')
                     _el = null
 
