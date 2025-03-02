@@ -1,5 +1,3 @@
-
-
 /* DATE */
 
 
@@ -10031,52 +10029,90 @@ drawRoundedImage = (url, radius, sWidth, sHeight) => {
 	return new Promise(resolve => {
 		if (!url) {
 			resolve("");
+			return;
 		}
+		
+		// Check if URL is external
+		const isExternalUrl = url.startsWith('http') && !url.includes(window.location.hostname);
+		
 		const image = new Image();
-		image.src = url
-		image.onload = () => {
-			const canvas = document.createElement('canvas');
-			canvas.width = sWidth;
-			canvas.height = sHeight;
-			const ctx = canvas.getContext('2d');
-
-			const x = 0;
-			const y = 0;
-			const width = sWidth || image.naturalWidth;
-			const height = sHeight || image.naturalHeight;
-			const r = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
-
-			var imgSize = Math.min(image.naturalWidth, image.naturalHeight);
-			var left = (image.width - imgSize) / 2;
-			var top = (image.height - imgSize) / 2;
-
-			if (!Array.isArray(radius)) {
-				radius = [radius];
-			}
-			r.topLeft = radius[0];
-			r.topRight = radius[1] || (radius[1] === undefined) * radius[0];
-			r.bottomRight = radius[2] || (radius[2] === undefined) * radius[0];
-			r.bottomLeft = radius[3] || (radius[3] === undefined) * (radius[1] || (radius[1] === undefined) * radius[0]);
-			ctx.beginPath();
-			ctx.arc(x + r.topLeft, y + r.topLeft, r.topLeft, Math.PI, Math.PI + Math.PI / 2);
-			ctx.lineTo(x + width - r.topRight, y);
-			ctx.arc(x + width - r.topRight, y + r.topRight, r.topRight, Math.PI + Math.PI / 2, Math.PI * 2);
-			ctx.lineTo(x + width, y + height - r.bottomRight);
-			ctx.arc(x + width - r.bottomRight, y + height - r.bottomRight, r.bottomRight, Math.PI * 2, Math.PI / 2);
-			ctx.lineTo(x + r.bottomLeft, y + height);
-			ctx.arc(x + r.bottomLeft, y + height - r.bottomLeft, r.bottomLeft, Math.PI / 2, Math.PI);
-			ctx.closePath();
-			ctx.save();
-			ctx.clip();
-
-			ctx.drawImage(image, left, top, imgSize, imgSize, 0, 0, ctx.canvas.width, ctx.canvas.height);
-
-			ctx.restore();
-			resolve(ctx.canvas.toDataURL('image/png', 1.0))
+		
+		// Set crossOrigin only for external URLs
+		if (isExternalUrl) {
+			image.crossOrigin = "anonymous";
 		}
+		
 		image.onerror = (e) => {
+			console.error("Ошибка загрузки изображения:", url, e);
 			resolve("");
+			return;
 		}
+		
+		image.onload = () => {
+			try {
+				const canvas = document.createElement('canvas');
+				canvas.width = sWidth || image.naturalWidth;
+				canvas.height = sHeight || image.naturalHeight;
+				const ctx = canvas.getContext('2d');
+
+				const x = 0;
+				const y = 0;
+				const width = sWidth || image.naturalWidth;
+				const height = sHeight || image.naturalHeight;
+				const r = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+
+				var imgSize = Math.min(image.naturalWidth, image.naturalHeight);
+				var left = (image.width - imgSize) / 2;
+				var top = (image.height - imgSize) / 2;
+
+				if (!Array.isArray(radius)) {
+					radius = [radius];
+				}
+				r.topLeft = radius[0];
+				r.topRight = radius[1] || (radius[1] === undefined) * radius[0];
+				r.bottomRight = radius[2] || (radius[2] === undefined) * radius[0];
+				r.bottomLeft = radius[3] || (radius[3] === undefined) * (radius[1] || (radius[1] === undefined) * radius[0]);
+				ctx.beginPath();
+				ctx.arc(x + r.topLeft, y + r.topLeft, r.topLeft, Math.PI, Math.PI + Math.PI / 2);
+				ctx.lineTo(x + width - r.topRight, y);
+				ctx.arc(x + width - r.topRight, y + r.topRight, r.topRight, Math.PI + Math.PI / 2, Math.PI * 2);
+				ctx.lineTo(x + width, y + height - r.bottomRight);
+				ctx.arc(x + width - r.bottomRight, y + height - r.bottomRight, r.bottomRight, Math.PI * 2, Math.PI / 2);
+				ctx.lineTo(x + r.bottomLeft, y + height);
+				ctx.arc(x + r.bottomLeft, y + height - r.bottomLeft, r.bottomLeft, Math.PI / 2, Math.PI);
+				ctx.closePath();
+				ctx.save();
+				ctx.clip();
+
+				ctx.drawImage(image, left, top, imgSize, imgSize, 0, 0, ctx.canvas.width, ctx.canvas.height);
+
+				ctx.restore();
+				
+				try {
+					resolve(canvas.toDataURL('image/png', 1.0));
+					return;
+				} catch (exportErr) {
+					// If export failed due to CORS, return the original URL
+					resolve("");
+					return;
+				}
+				} catch (err) {
+				resolve("");
+				return;
+			}
+		}
+		
+		// Set src after defining handlers to avoid a situation
+		// where the image loads before event handlers are declared
+		image.src = url;
+		
+		// Add a timeout in case the image loading hangs
+		setTimeout(() => {
+			if (!image.complete) {
+				resolve("");
+				return;
+			}
+		}, 10000);
 	})
 }
 

@@ -10745,6 +10745,11 @@ Platform = function (app, listofnodes) {
                         notification.seen = self.app.platform.currentTime()
                 })
 
+                // Close all system OS notifications
+                if (typeof electron !== 'undefined') {
+                    electron.ipcRenderer.send('electron-notification-close', 'all');
+                }
+
                 n.save()
 
                 _.each(n.clbks.seen, function (f) {
@@ -22637,9 +22642,6 @@ Platform = function (app, listofnodes) {
                                             });
 
                                         })
-
-
-
                                     }
 
                                 } else {
@@ -24990,10 +24992,6 @@ Platform = function (app, listofnodes) {
                         });
 
                     })
-
-
-
-
                 }
             }
         },

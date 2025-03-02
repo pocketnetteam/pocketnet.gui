@@ -408,7 +408,7 @@ function createWindow() {
 
     win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
-    electronLocalshortcut.register(win, 'f5', function() {
+    electronLocalshortcut.register(win, 'F5', function() {
 		refresh()
 	})
 
@@ -417,7 +417,7 @@ function createWindow() {
 		refresh()
 	})
 
-  electronLocalshortcut.register(win, 'f5', function() {
+  electronLocalshortcut.register(win, 'F5', function() {
 		refresh()
 	})
 
@@ -641,6 +641,9 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
+
+        let notificationId = p.id || require('crypto').createHash('md5').update(p.title + p.body + Date.now().toString()).digest('hex');
+
         if (!is.windows()) {
             const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
             n.onclick = function(){
@@ -652,6 +655,10 @@ function createWindow() {
             }
 
             n.show()
+            
+            // Save notification reference with its ID for later closing
+            if (!global.activeNotifications) global.activeNotifications = {};
+            global.activeNotifications[notificationId] = n;
         }
         else {
 
@@ -676,6 +683,26 @@ function createWindow() {
 
         }
 
+    })
+
+    const notificationClose = (id, n) => {
+        if (n.close) {
+            n.close();
+        }
+
+        delete global.activeNotifications[id];
+    }
+
+    ipcMain.on('electron-notification-close', (e, notificationId) => {
+        if (global.activeNotifications) {
+            if (notificationId === 'all') {
+                _.each(global.activeNotifications, (id, n) => {
+                    notificationClose(id, n);
+                });
+            } else if (global.activeNotifications[notificationId]) {
+                notificationClose(notificationId, global.activeNotifications[notificationId]);
+            }
+        }
     })
 
     ipcMain.on('quitAndInstall', function(e) {
