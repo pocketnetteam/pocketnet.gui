@@ -398,7 +398,7 @@ function createWindow() {
             nodeIntegration: true,
             enableRemoteModule: true,
             allowRendererProcessReuse: false,
-            spellcheck: true
+            spellcheck: true,
         }
     });
 
@@ -412,18 +412,12 @@ function createWindow() {
 		refresh()
 	})
 
-
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
 	})
 
-  electronLocalshortcut.register(win, 'F5', function() {
-		refresh()
-	})
-
-
-	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
-		refresh()
+	electronLocalshortcut.register(win, 'F12', function() {
+		win.webContents.toggleDevTools()
 	})
 
     var refresh = function(){
