@@ -690,7 +690,7 @@ function createWindow() {
     ipcMain.on('electron-notification-close', (e, notificationId) => {
         if (global.activeNotifications) {
             if (notificationId === 'all') {
-                _.each(global.activeNotifications, (id, n) => {
+                _.each(global.activeNotifications, (n, id) => {
                     notificationClose(id, n);
                 });
             } else if (global.activeNotifications[notificationId]) {
