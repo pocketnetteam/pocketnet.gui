@@ -75,7 +75,7 @@
         {
 		    "id": "p2p.pkoin.app"   ,
 		    "version": "0.0.1",
-		    "scope": "pkoin.net/p2p",
+		    "scope": "p2p.pocketnet.app",
 		    "cantdelete": true,
 		    "name": "PKOIN Exchange",
 		    "grantedPermissions": ["account", "sign", "chat"],
