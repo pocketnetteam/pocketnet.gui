@@ -1,3 +1,9 @@
+#applications .disclaimerWrapper {
+  padding: 1em;
+  text-align: center;
+  background: rgba(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-shadow-color));
+}
 #applications .oss {
   margin-top: 2em;
   display: grid;
