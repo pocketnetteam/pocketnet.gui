@@ -469,7 +469,9 @@ Platform = function (app, listofnodes) {
         'PTdpmuCY645A2XQK5H24axiJSpNanHHWMP': true,
         'PRXCtW5apMV2JM4CjNnqZ5ijdQc8xcfEJP': true,
         'P8tNMA6QtBooqxw8EieKcL5uP1cTpt9vi9': true,
-        'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true
+        'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
+        'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
+        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true
     }
 
     self.bch = {
@@ -23900,16 +23902,26 @@ Platform = function (app, listofnodes) {
             }
         }
 
+        var silentUpdateAvailable = function() {
+            $('.app-update-available').show()
+        }
+
         electron.ipcRenderer.on('updater-message', function (event, data) {
             if (data.type == 'info') {
                 if (data.msg == 'update-downloaded') {
                     updateReady()
                 }
 
-                if (data.msg == 'download-progress') {}
+                if (data.msg == 'download-progress') {
+
+                }
 
                 if (data.msg == 'update-available' && (data.linux || data.macos)) {
-                    updateAvailable()
+
+                    if (data.linux && data.silent)
+                        silentUpdateAvailable()
+                    else
+                        updateAvailable()
 
                     // TODO APPLICATIONS PAGE
                 }

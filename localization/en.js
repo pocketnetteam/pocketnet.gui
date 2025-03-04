@@ -2774,6 +2774,7 @@ _l.updateNotifier_button2 = 'Maybe later...';
 _l.updateNotifier_stateStart = 'Starting...';
 _l.updateNotifier_stateDownload = 'Downloaded';
 _l.updateNotifier_stateError = 'Error occurred, stopping';
+_l.updateNotifier_availableSilent = "Update available"
 /** ↑ Component UpdateNotifier ↑ */
 
 _l.error408 = 'Error, connection problem'
@@ -2866,6 +2867,10 @@ _l.external_tTotal = "Account or wallet"
 _l.description = 'Description'
 _l.getqrcode = 'Show QR code'
 
+_l.stakelogo = 'Stake Pocketcoin (WPKOIN)'
+_l.stakewrap = "Wrap & Stake PKOIN"
+_l.pkoin_stake_info = "Connect your wallet and start staking with WPKOIN"
+_l.stakewpkoin = "Stake WPKOIN"
 
 _l.pkoin_application_info = "Buy via Swipelux mini-application"
 _l.buyswipelux = "Buy via Swipelux"

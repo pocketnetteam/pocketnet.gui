@@ -96,7 +96,11 @@ var tpls = [
 	'openapi.html', 
 	'service-worker.js', 
 	'manifest.json', 
-	'main.js',
+
+	{
+		name : 'main.js', 
+		underscoreTemplate : true
+	}, 
 
 	{
 		name : 'privacy_a.html', 
@@ -147,6 +151,7 @@ var vars = {
 		project : args.project,
 		store : args.store || false,
 		gfree : args.gfree || false,
+		silentupdate : args.silentupdate || false,
 		name : config.name,
 		sha : args.sha || false,
 		run : args.run || false,
@@ -166,6 +171,7 @@ var vars = {
 		project : args.project,
 		store : args.store || false,
 		gfree : args.gfree || false,
+		silentupdate : args.silentupdate || false,
 		name : config.name,
 		lname : config.lname || config.name,
 		sha : args.sha || false,
