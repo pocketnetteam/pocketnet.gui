@@ -3214,3 +3214,10 @@ _l.setcoverquestionno = 'No'
 
 _l.hiddenCommentLabelLink = "The comment has been hidden because it contains a link to an external resource from a user with insufficient rating."
 _l.getpaidsubscription_paidsuccess_removecodition_text = "The author has disabled the ability to issue a privileged access to it. Therefore, previously posted materials for privileged subscribers are available free of charge to everyone."
+
+
+_l.buypkoinexchnage='Buy from an exchanger';
+_l.buypkoinexchnage_info='Buy from a trusted p2p exchanger via the PKOIN Exchange mini app';
+_l.buypkoinexchnagep2p='Buy via PKOIN Exchange';
+
+_l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
