@@ -3022,3 +3022,9 @@ _l.setcoverquestionno = 'Нет'
 
 _l.hiddenCommentLabelLink = "Комментарий скрыт из-за того, что содержит ссылку на внешний ресурс от пользователя с недостаточным рейтингом"
 _l.getpaidsubscription_paidsuccess_removecodition_text = "Автор отключил возможность оформить привилегированную подпуску на него. Поэтому  размещенные ранее материалы для привилегированных подписчиков доступны беслатно для всех."
+
+_l.buypkoinexchnage='Купить у обменника';
+_l.buypkoinexchnage_info='Купить у проверенного p2p обменника через миниприложение PKOIN Exchange';
+_l.buypkoinexchnagep2p='Купить через PKOIN Exchange';
+_l.appsdisclaimer='Каждое приложение уже является кошельком для pkoin. За исключением приложения для IOS';
+
