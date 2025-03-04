@@ -10,7 +10,7 @@
             "version": "0.0.1",
             "scope" : "pkoin.net/wpkoinui",
             "cantdelete" : true,
-            "name" : "WPkoin",
+            "name" : "WPKOIN",
             "install" : true,
             "develop": true,
             "store" : {"g" : true},
