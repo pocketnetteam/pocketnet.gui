@@ -2669,10 +2669,10 @@ _l.external_tTotal = "Аккаунт или кошелёк"
 _l.description = 'Описание'
 _l.getqrcode = 'Показать QR код'
 
-_l.stakelogo = "Стейкинг Pocketcoin (WPKOIN)"
-_l.stakewrap = "Приобрести WPKOIN для стейкинга"
-_l.pkoin_stake_info = "Подключить кошелек, приобрести WPKOIN и начать стейкинг"
-_l.stakewpkoin = "Начать стейкинг"
+_l.stakelogo = "WPKOIN"
+_l.stakewrap = "Купить через Metamask"
+_l.pkoin_stake_info = "Подключить кошелек к Metamask и приобрести WPKOIN"
+_l.stakewpkoin = "Купить WPKOIN через Metamask"
 
 _l.pkoin_application_info = "Купить через миниприложение Swipelux"
 _l.buyswipelux = "Купить через Swipelux"

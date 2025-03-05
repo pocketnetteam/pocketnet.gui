@@ -2867,10 +2867,10 @@ _l.external_tTotal = "Account or wallet"
 _l.description = 'Description'
 _l.getqrcode = 'Show QR code'
 
-_l.stakelogo = 'Stake Pocketcoin (WPKOIN)'
-_l.stakewrap = "Get WPKOIN for staking"
-_l.pkoin_stake_info = "Connect your wallet, purchase WPKOIN and start staking"
-_l.stakewpkoin = "Stake WPKOIN"
+_l.stakelogo = 'WPKOIN'
+_l.stakewrap = "Buy via Metamask"
+_l.pkoin_stake_info = "Connect your wallet to Metamask and purchase WPKOIN"
+_l.stakewpkoin = "Buy WPKOIN via Metamask"
 
 _l.pkoin_application_info = "Buy via Swipelux mini-application"
 _l.buyswipelux = "Buy via Swipelux"
