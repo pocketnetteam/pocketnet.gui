@@ -2284,8 +2284,8 @@ resize = function (srcData, width, height, clbk, format, quality) {
 		newWidth = imageObj.width;
 
 		if (newHeight <= height && newWidth <= width && !quality) {
-			clbk(srcData);
-			return
+			// clbk(srcData);
+			// return
 		}
 		else {
 			if (newWidth > width) {
